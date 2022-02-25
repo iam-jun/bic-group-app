@@ -24,6 +24,12 @@ describe('_MentionInput component', () => {
     textInputStyle: null,
   };
 
+  let Platform: any;
+  beforeEach(() => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    Platform = require('react-native').Platform;
+  });
+
   const mockStore = configureStore([]);
 
   const store = mockStore(initialState);
@@ -33,6 +39,14 @@ describe('_MentionInput component', () => {
 
     const rendered = wrapper.toJSON();
     expect(rendered).toMatchSnapshot();
+  });
+
+  it(`should show "_MentionInput" with zIndex 1`, async () => {
+    const wrapper = renderWithRedux(<_MentionInput {...baseProps} />, store);
+
+    const component = wrapper.getByTestId('_mention_input');
+    const flattenedStyle = StyleSheet.flatten(component.props.style);
+    expect(flattenedStyle.zIndex).toBe(1);
   });
 
   it(`should show "_MentionInput" with CommmentInput`, async () => {
@@ -109,5 +123,42 @@ describe('_MentionInput component', () => {
     const commentInput = wrapper.getByTestId('_mention_input.input');
     fireEvent.changeText(commentInput);
     expect(onChangeText).toHaveBeenCalled();
+  });
+
+  it(`should hide "ComponentInput" with hidden style on ios`, async () => {
+    Platform.OS = 'ios';
+    const wrapper = renderWithRedux(<_MentionInput {...baseProps} />, store);
+
+    const comonentInput = wrapper.queryByTestId('_mention_input.input.web');
+    expect(comonentInput).toBeNull();
+  });
+
+  it(`should show "ComponentInput" with hidden style on web`, async () => {
+    Platform.OS = 'web';
+    const wrapper = renderWithRedux(<_MentionInput {...baseProps} />, store);
+
+    const comonentInput = wrapper.getByTestId('_mention_input.input.web');
+    const flattenedStyle = StyleSheet.flatten(comonentInput.props.style);
+    expect(flattenedStyle.height).toBe(0);
+  });
+
+  it(`should show "ComponentInput" with multiline on web`, async () => {
+    Platform.OS = 'web';
+    const wrapper = renderWithRedux(<_MentionInput {...baseProps} />, store);
+
+    const comonentInput = wrapper.getByTestId('_mention_input.input.web');
+    expect(comonentInput.props.multiline).toBe(true);
+  });
+
+  it(`should show "_MentionInput" with disabled input on web`, async () => {
+    Platform.OS = 'web';
+    const props = {
+      ...baseProps,
+      disabled: true,
+    };
+    const wrapper = renderWithRedux(<_MentionInput {...props} />, store);
+
+    const commentInput = wrapper.getByTestId('_mention_input.input.web');
+    expect(commentInput.props.editable).toBeFalsy();
   });
 });

@@ -6,7 +6,7 @@ import {makeHttpRequest} from '~/services/httpApiRequest';
 import actions from './actions';
 import types from './types';
 
-export default function* menuSaga() {
+export default function* saga() {
   yield takeLatest(types.RUN_SEARCH, runSearch);
 }
 

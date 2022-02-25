@@ -172,11 +172,6 @@ const createStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
-    textTitle: {
-      marginVertical: spacing.margin.small,
-      marginHorizontal: spacing.margin.base,
-      color: colors.textSecondary,
-    },
     textEmpty: {
       color: colors.textDisabled,
       padding: spacing.padding.tiny,
@@ -185,22 +180,6 @@ const createStyles = (theme: ITheme) => {
     emptyContainer: {
       minHeight: 40,
       justifyContent: 'center',
-    },
-    hidden: {
-      height: 0,
-      flex: undefined,
-      marginTop: 0,
-      marginBottom: 0,
-      paddingTop: 0,
-      paddingBottom: 0,
-      borderWidth: 0,
-      ...Platform.select({
-        web: {
-          border: 'none',
-          marginTop: '0px important',
-          marginBottom: '0px important',
-        },
-      }),
     },
   });
 };

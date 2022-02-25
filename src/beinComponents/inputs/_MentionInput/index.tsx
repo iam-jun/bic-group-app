@@ -171,7 +171,7 @@ const _MentionInput = ({
         Make sure this and the below ComponentInput share the same styling
         */
           <ComponentInput
-            useTestID={false}
+            testID="_mention_input.input.web"
             nativeID="component-input--hidden"
             multiline
             editable={!disabled}
