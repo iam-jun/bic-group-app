@@ -351,7 +351,7 @@ const Header: React.FC<HeaderProps> = ({
               }}
               textColor={colors.primary6}
               onPress={onPressButton}
-              textProps={{testID: 'header.button.text', useI18n: true}}
+              textProps={{testID: 'header.button.text'}}
               {...buttonProps}>
               {buttonText}
             </Button.Secondary>
