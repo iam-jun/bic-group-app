@@ -5,9 +5,9 @@ import {
   StyleProp,
   ViewStyle,
   Platform,
-  useWindowDimensions,
   TouchableOpacity,
   DeviceEventEmitter,
+  useWindowDimensions,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -32,6 +32,7 @@ import Button from '~/beinComponents/Button';
 import {ImageProps} from '../Image';
 import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
+// import useWindowDimensions from '~/hooks/windowSize';
 
 export interface HeaderProps {
   headerRef?: any;
@@ -222,7 +223,8 @@ const Header: React.FC<HeaderProps> = ({
           },
           removeBorderAndShadow ? {} : styles.bottomBorderAndShadow,
           style,
-        ]}>
+        ]}
+        testID="header.content">
         <View
           style={{
             height: contentHeight,
@@ -242,10 +244,14 @@ const Header: React.FC<HeaderProps> = ({
               size={24}
               hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
               style={styles.iconBack}
+              buttonTestID="header.back.button"
             />
           )}
           {!!avatar && (
-            <TouchableOpacity onPress={onPressHeader} disabled={!onPressHeader}>
+            <TouchableOpacity
+              onPress={onPressHeader}
+              disabled={!onPressHeader}
+              testID="header.avatar">
               <Avatar.Group
                 source={avatar}
                 style={styles.avatar}
@@ -261,6 +267,7 @@ const Header: React.FC<HeaderProps> = ({
               icon={leftIcon}
               onPress={onPressHeader}
               {...leftIconProps}
+              testID="header.leftIcon"
             />
           )}
           <View style={styles.titleContainer}>
@@ -281,7 +288,10 @@ const Header: React.FC<HeaderProps> = ({
               <TouchableOpacity
                 onPress={onPressHeader}
                 disabled={!onPressHeader}>
-                <Text.Subtitle style={styles.subtitle} {...subTitleTextProps}>
+                <Text.Subtitle
+                  style={styles.subtitle}
+                  {...subTitleTextProps}
+                  testID="header.subTitle">
                   {subTitle}
                 </Text.Subtitle>
               </TouchableOpacity>
@@ -294,6 +304,8 @@ const Header: React.FC<HeaderProps> = ({
               style={styles.icon}
               onPress={onPressIcon}
               backgroundColor={colors.bgSecondary}
+              testID="header.icon"
+              buttonTestID="header.icon.button"
             />
           )}
           {onSearchText && (
@@ -304,6 +316,7 @@ const Header: React.FC<HeaderProps> = ({
               style={styles.icon}
               onPress={_onPressSearch}
               backgroundColor={colors.bgSecondary}
+              buttonTestID="header.searchIcon.button"
             />
           )}
           {onPressChat && (
@@ -313,6 +326,8 @@ const Header: React.FC<HeaderProps> = ({
               style={styles.icon}
               onPress={onPressChat}
               backgroundColor={colors.bgSecondary}
+              buttonTestID="header.iconChat.button"
+              testID="header.iconChat"
             />
           )}
           {onPressMenu && (
@@ -322,9 +337,11 @@ const Header: React.FC<HeaderProps> = ({
               style={styles.icon}
               onPress={onPressMenu}
               backgroundColor={colors.bgSecondary}
+              testID="header.menuIcon"
+              buttonTestID="header.menuIcon.button"
             />
           )}
-          {buttonText && onPressButton && (
+          {!!buttonText && onPressButton && (
             <Button.Secondary
               testID="header.button"
               style={{
@@ -335,6 +352,7 @@ const Header: React.FC<HeaderProps> = ({
               }}
               textColor={colors.primary6}
               onPress={onPressButton}
+              textProps={{testID: 'header.button.text'}}
               {...buttonProps}>
               {buttonText}
             </Button.Secondary>
@@ -347,6 +365,8 @@ const Header: React.FC<HeaderProps> = ({
               onPress={onRightPress}
               backgroundColor={colors.bgSecondary}
               {...rightIconProps}
+              testID="header.rightIcon"
+              buttonTestID="header.rightIcon.button"
             />
           )}
           <HeaderSearch
@@ -375,7 +395,7 @@ const Header: React.FC<HeaderProps> = ({
     );
   };
 
-  return <View>{children ? children : renderContent()}</View>;
+  return <View testID="header">{children ? children : renderContent()}</View>;
 };
 
 const createStyle = (theme: ITheme) => {

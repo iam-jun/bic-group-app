@@ -49,10 +49,10 @@ const ButtonDanger: React.FC<ButtonDangerProps> = ({
     <ButtonWrapper
       disabled={disabled}
       style={containerStyle}
-      textProps={{color: textColor, useI18n}}
       underlayColor={underlayColor}
       TouchableComponent={TouchableHighlight}
-      {...props}>
+      {...props}
+      textProps={{color: textColor, useI18n, ...props?.textProps}}>
       {children}
     </ButtonWrapper>
   );

@@ -20,6 +20,7 @@ export interface CollapsibleTextProps extends TextProps {
   useMarkdownIt?: boolean;
   onPressAudience?: (audience: any, e?: any) => any;
   limitMarkdownTypes?: boolean;
+  parentCommentId?: string;
   testID?: string;
   [x: string]: any;
 }
@@ -35,6 +36,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   useMarkdownIt,
   onPressAudience,
   limitMarkdownTypes,
+  parentCommentId,
   testID,
   ...textProps
 }: CollapsibleTextProps) => {
@@ -84,6 +86,11 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
         ) : (
           <Markdown
             {...textProps}
+            textTestID={
+              parentCommentId
+                ? 'collapsible_text.level_2.content'
+                : 'collapsible_text.level_1.content'
+            }
             onPressAudience={onPressAudience}
             value={
               !shortContent ? content : contentShowAll ? content : shortContent

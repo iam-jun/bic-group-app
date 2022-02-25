@@ -29,6 +29,7 @@ exports[`ButtonDanger conponent renders correctly 1`] = `
         "justifyContent": "center",
       }
     }
+    testID="button_wrapper.content"
   >
     <Text
       style={

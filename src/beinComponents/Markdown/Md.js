@@ -59,6 +59,7 @@ export default class Md extends PureComponent {
     showModal: PropTypes.func,
     onPressAudience: PropTypes.func,
     selector: PropTypes.string,
+    textTestID: PropTypes.string,
   };
 
   static defaultProps = {
@@ -165,14 +166,16 @@ export default class Md extends PureComponent {
     const {context, literal} = data;
     if (context.indexOf('image') !== -1) {
       // If this text is displayed, it will be styled by the image component
-      return <Text testID="markdown_text">{literal}</Text>;
+      return (
+        <Text testID={this.props.textTestID || 'markdown_text'}>{literal}</Text>
+      );
     }
 
     // Construct the text style based off of the parents of this node since RN's inheritance is limited
     const style = this.computeTextStyle(this.props.baseTextStyle, context);
 
     return (
-      <Text testID="markdown_text" style={style}>
+      <Text testID={this.props.textTestID || 'markdown_text'} style={style}>
         {literal}
       </Text>
     );
@@ -193,7 +196,9 @@ export default class Md extends PureComponent {
   renderImage = ({src}) => {
     //Just render as link because of not have metadata from server
     return (
-      <Text testID="markdown_text" style={this.props.baseTextStyle}>
+      <Text
+        testID={this.props.textTestID || 'markdown_text'}
+        style={this.props.baseTextStyle}>
         {src}
       </Text>
     );
