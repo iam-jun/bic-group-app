@@ -61,10 +61,10 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
     <ButtonWrapper
       disabled={disabled}
       style={containerStyle}
-      textProps={{color: _textColor, useI18n}}
       underlayColor={_colorHover}
       TouchableComponent={TouchableHighlight}
-      {...props}>
+      {...props}
+      textProps={{color: _textColor, useI18n, ...props?.textProps}}>
       {children}
     </ButtonWrapper>
   );
