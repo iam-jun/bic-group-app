@@ -1,6 +1,5 @@
-import {Dimensions} from 'react-native';
-
 import {useEffect, useState} from 'react';
+import {useWindowDimensions as useWindow} from 'react-native';
 
 export interface windowProps {
   width: number;
@@ -10,28 +9,17 @@ export interface windowProps {
 }
 
 export default function useWindowDimensions() {
-  const [dimensions, setDimensions] = useState(() => Dimensions.get('window'));
-  useEffect(() => {
-    const subscription = Dimensions.addEventListener('change', ({window}) =>
-      handleChange(window),
-    );
-    const newWindow = Dimensions.get('window');
-    handleChange(newWindow);
-    return () => {
-      subscription.remove();
-    };
-  }, [dimensions]);
+  const {height, width, scale, fontScale} = useWindow();
+  const [dimensions, setDimensions] = useState<windowProps>({
+    height,
+    width,
+    scale,
+    fontScale,
+  });
 
-  const handleChange = (window: windowProps) => {
-    if (
-      dimensions.width !== window.width ||
-      dimensions.height !== window.height ||
-      dimensions.scale !== window.scale ||
-      dimensions.fontScale !== window.fontScale
-    ) {
-      setDimensions(window);
-    }
-  };
+  useEffect(() => {
+    setDimensions(s => ({...s, height, width, scale, fontScale}));
+  }, [height, width, scale, fontScale]);
 
   return dimensions;
 }
