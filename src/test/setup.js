@@ -1,3 +1,4 @@
+import * as React from 'react';
 import * as ReactNative from 'react-native';
 import {configure} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
@@ -47,16 +48,21 @@ jest.doMock('i18next', () => ({
   t: str => str,
 }));
 
-jest.doMock('react-native-paper', () => ({
-  useTheme: () => {
-    return {
+jest.doMock('react-native-paper', () => {
+  const RealModule = jest.requireActual('react-native-paper');
+  const MockedModule = {
+    ...RealModule,
+    // eslint-disable-next-line react/prop-types
+    Portal: ({children}) => <ReactNative.View>{children}</ReactNative.View>,
+    useTheme: () => ({
       colors: colors.light.colors,
       spacing: spacing,
       dimension: dimension,
-    };
-  },
-  TextInput: ReactNative.TextInput,
-}));
+    }),
+    TextInput: ReactNative.TextInput,
+  };
+  return MockedModule;
+});
 
 jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 
