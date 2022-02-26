@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Platform, ScrollView, StyleSheet, View} from 'react-native';
 import HeaderAvatar from '~/beinComponents/Header/HeaderAvatar';
 import MenuSidebarItem from './MenuSidebarItem';
 import Divider from '~/beinComponents/Divider';
@@ -35,6 +35,9 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
   const theme = useTheme() as ITheme;
   const {colors} = theme || {};
   const styles = themeStyles(theme);
+
+  const Container = Platform.OS === 'ios' ? View : ScrollView;
+  // ScrollView not work with GestureHandler on iOS, in future if menu setting add more item, should test UI
 
   const {id, fullname, avatar} =
     useKeySelector(menuKeySelector.myProfile) || {};
@@ -100,7 +103,7 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <Container style={styles.container}>
       <HeaderAvatar
         firstLabel={fullname}
         secondLabel="profile:title_view_profile"
@@ -128,7 +131,7 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
       {renderData({
         data: settings,
       })}
-    </View>
+    </Container>
   );
 };
 

@@ -51,7 +51,7 @@ const MenuSidebarDrawer = () => {
     left: interpolate(showValue.value, [0, 1], [DeviceWidth, 0]),
   }));
 
-  const hide = (duration = 200) => {
+  const hide = (duration = 300) => {
     const onHideDone = () => {
       setIsShow(false);
     };
@@ -60,7 +60,7 @@ const MenuSidebarDrawer = () => {
     });
   };
 
-  const show = (duration = 200) => {
+  const show = (duration = 400) => {
     setIsShow(true);
     showValue.value = withTiming(1, {duration});
   };
