@@ -4,6 +4,7 @@ import {
   DeviceEventEmitter,
   TouchableOpacity,
   StyleSheet,
+  Dimensions,
 } from 'react-native';
 import Animated, {
   useAnimatedStyle,
@@ -15,6 +16,8 @@ import Animated, {
 import {useTheme} from 'react-native-paper';
 import {useBackHandler} from '@react-native-community/hooks';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+
+const DeviceWidth = Dimensions.get('window').width;
 
 import MenuSidebarContent from '~/router/components/MenuSidebarDrawer/MenuSidebarContent';
 import {ITheme} from '~/theme/interfaces';
@@ -39,6 +42,10 @@ const MenuSidebarDrawer = () => {
       [0, 1],
       [0, 0.64],
     )})`,
+  }));
+
+  const animatedContentStyle = useAnimatedStyle(() => ({
+    left: interpolate(showValue.value, [0, 1], [DeviceWidth, 0]),
   }));
 
   const hide = () => {
@@ -85,7 +92,7 @@ const MenuSidebarDrawer = () => {
     <Animated.View style={containerStyle}>
       <Animated.View style={styles.status} />
       <TouchableOpacity activeOpacity={1} style={{flex: 1}} onPress={hide}>
-        <Animated.View>
+        <Animated.View style={animatedContentStyle}>
           <TouchableOpacity
             style={styles.contentContainer}
             activeOpacity={1}
