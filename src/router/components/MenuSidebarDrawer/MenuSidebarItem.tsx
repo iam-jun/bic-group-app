@@ -38,7 +38,7 @@ interface DrawerItemProps {
   RightComponent?: React.ReactNode | React.ReactElement;
 }
 
-const DrawerItem: React.FC<DrawerItemProps> = ({
+const MenuSidebarItem: React.FC<DrawerItemProps> = ({
   disabled,
   onPress,
   style,
@@ -151,4 +151,4 @@ const themeStyles = (theme: ITheme) => {
   });
 };
 
-export default DrawerItem;
+export default MenuSidebarItem;

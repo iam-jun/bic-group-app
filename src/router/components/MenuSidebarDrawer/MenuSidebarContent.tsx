@@ -1,9 +1,8 @@
-import React from 'react';
-import {StyleSheet} from 'react-native';
+import React, {FC} from 'react';
+import {ScrollView, StyleSheet} from 'react-native';
 import HeaderAvatar from '~/beinComponents/Header/HeaderAvatar';
-import DrawerItem from './DrawerItem';
+import MenuSidebarItem from './MenuSidebarItem';
 import Divider from '~/beinComponents/Divider';
-import {DrawerContentScrollView} from '@react-navigation/drawer';
 
 import {useKeySelector} from '~/hooks/selector';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -21,7 +20,13 @@ import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 
 import settings, {settingsMenu, infoMenu} from '~/constants/settings';
 
-const CustomDrawerContent = (props: any) => {
+interface MenuSidebarContentProps {
+  onCloseSidebar?: () => void;
+}
+
+const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
+  onCloseSidebar,
+}: MenuSidebarContentProps) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
@@ -35,6 +40,7 @@ const CustomDrawerContent = (props: any) => {
     useKeySelector(menuKeySelector.myProfile) || {};
 
   const onPressItem = (type: string) => () => {
+    onCloseSidebar?.();
     switch (type) {
       case 'myProfile':
         return rootNavigation.navigate(mainStack.userProfile, {userId: id});
@@ -77,7 +83,7 @@ const CustomDrawerContent = (props: any) => {
       <>
         {data.map((item, index) => {
           return (
-            <DrawerItem
+            <MenuSidebarItem
               key={`${index}_menu_${item?.type}`}
               icon={item?.icon}
               testID={itemTestID ? `${itemTestID}.item.${index}` : undefined}
@@ -94,7 +100,10 @@ const CustomDrawerContent = (props: any) => {
   };
 
   return (
-    <DrawerContentScrollView {...props}>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      bounces={false}
+      style={styles.container}>
       <HeaderAvatar
         firstLabel={fullname}
         secondLabel="profile:title_view_profile"
@@ -111,7 +120,7 @@ const CustomDrawerContent = (props: any) => {
         data: infoMenu,
       })}
       {renderDivider()}
-      <DrawerItem
+      <MenuSidebarItem
         icon="UilSignOutAlt"
         tintColor={colors.error}
         title="auth:text_sign_out"
@@ -122,7 +131,7 @@ const CustomDrawerContent = (props: any) => {
       {renderData({
         data: settings,
       })}
-    </DrawerContentScrollView>
+    </ScrollView>
   );
 };
 
@@ -130,6 +139,9 @@ const themeStyles = (theme: ITheme) => {
   const {spacing, colors} = theme;
 
   return StyleSheet.create({
+    container: {
+      backgroundColor: colors.background,
+    },
     divider: {
       marginVertical: spacing.margin.small,
       backgroundColor: colors.bgFocus,
@@ -137,4 +149,4 @@ const themeStyles = (theme: ITheme) => {
   });
 };
 
-export default CustomDrawerContent;
+export default MenuSidebarContent;
