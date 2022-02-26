@@ -12,10 +12,12 @@ import Animated, {
   interpolate,
   runOnJS,
   withTiming,
+  useAnimatedGestureHandler,
 } from 'react-native-reanimated';
 import {useTheme} from 'react-native-paper';
 import {useBackHandler} from '@react-native-community/hooks';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {PanGestureHandler} from 'react-native-gesture-handler';
 
 const DeviceWidth = Dimensions.get('window').width;
 
@@ -25,6 +27,7 @@ import {ITheme} from '~/theme/interfaces';
 const MenuSidebarDrawer = () => {
   const [isShow, setIsShow] = useState(false);
   const showValue = useSharedValue(0);
+  const xValue = useSharedValue(0);
 
   const insets = useSafeAreaInsets();
   const theme: ITheme = useTheme() as ITheme;
@@ -48,18 +51,18 @@ const MenuSidebarDrawer = () => {
     left: interpolate(showValue.value, [0, 1], [DeviceWidth, 0]),
   }));
 
-  const hide = () => {
+  const hide = (duration = 200) => {
     const onHideDone = () => {
       setIsShow(false);
     };
-    showValue.value = withTiming(0, undefined, () => {
+    showValue.value = withTiming(0, {duration}, () => {
       runOnJS(onHideDone)();
     });
   };
 
-  const show = () => {
+  const show = (duration = 200) => {
     setIsShow(true);
-    showValue.value = withTiming(1);
+    showValue.value = withTiming(1, {duration});
   };
 
   useBackHandler(() => {
@@ -85,21 +88,48 @@ const MenuSidebarDrawer = () => {
     };
   }, []);
 
+  const gestureHandler = useAnimatedGestureHandler({
+    onStart(event: any) {
+      xValue.value = withTiming(event?.x, {duration: 16});
+    },
+    onActive(event: any) {
+      const absoluteX = event?.absoluteX || 0;
+      const delta = absoluteX - xValue.value;
+      const newShowValue = Math.min(1, 1 - delta / DeviceWidth);
+      showValue.value = withTiming(newShowValue, {duration: 0});
+    },
+    onFinish(event: any) {
+      const absoluteX = event?.absoluteX || 0;
+      const delta = absoluteX - xValue.value;
+      const newShowValue = Math.min(1, 1 - delta / DeviceWidth);
+      if (newShowValue < 0.8) {
+        runOnJS(hide)();
+      } else {
+        runOnJS(show)(50);
+      }
+    },
+  });
+
   if (Platform.OS === 'web' || !isShow) {
     return null;
   }
   return (
     <Animated.View style={containerStyle}>
       <Animated.View style={styles.status} />
-      <TouchableOpacity activeOpacity={1} style={{flex: 1}} onPress={hide}>
-        <Animated.View style={animatedContentStyle}>
-          <TouchableOpacity
-            style={styles.contentContainer}
-            activeOpacity={1}
-            onPress={undefined}>
-            <MenuSidebarContent onCloseSidebar={hide} />
-          </TouchableOpacity>
-        </Animated.View>
+      <TouchableOpacity
+        activeOpacity={1}
+        style={{flex: 1}}
+        onPress={() => hide()}>
+        <PanGestureHandler onGestureEvent={gestureHandler}>
+          <Animated.View style={animatedContentStyle}>
+            <TouchableOpacity
+              style={styles.contentContainer}
+              activeOpacity={1}
+              onPress={undefined}>
+              <MenuSidebarContent onCloseSidebar={hide} />
+            </TouchableOpacity>
+          </Animated.View>
+        </PanGestureHandler>
       </TouchableOpacity>
     </Animated.View>
   );
@@ -117,6 +147,7 @@ const themeStyles = (theme: ITheme, insets: any) => {
       width: '86%',
       height: '100%',
       alignSelf: 'flex-end',
+      backgroundColor: colors.background,
     },
   });
 };

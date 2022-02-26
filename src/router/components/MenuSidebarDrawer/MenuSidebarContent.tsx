@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {ScrollView, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import HeaderAvatar from '~/beinComponents/Header/HeaderAvatar';
 import MenuSidebarItem from './MenuSidebarItem';
 import Divider from '~/beinComponents/Divider';
@@ -100,10 +100,7 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
   };
 
   return (
-    <ScrollView
-      showsVerticalScrollIndicator={false}
-      bounces={false}
-      style={styles.container}>
+    <View style={styles.container}>
       <HeaderAvatar
         firstLabel={fullname}
         secondLabel="profile:title_view_profile"
@@ -131,7 +128,7 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
       {renderData({
         data: settings,
       })}
-    </ScrollView>
+    </View>
   );
 };
 
