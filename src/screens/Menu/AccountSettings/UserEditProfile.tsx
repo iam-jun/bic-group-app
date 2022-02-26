@@ -77,6 +77,7 @@ const UserEditProfile = (props: any) => {
   const loadingAvatar = useKeySelector(menuKeySelector.loadingAvatar);
   const loadingCover = useKeySelector(menuKeySelector.loadingCover);
   const myWorkExperience = useKeySelector(menuKeySelector.myWorkExperience);
+  const userWorkExperience = useKeySelector(menuKeySelector.userWorkExperience);
 
   const currentUserId = useUserIdAuth();
 
@@ -99,6 +100,7 @@ const UserEditProfile = (props: any) => {
     } else {
       setUserData(params);
     }
+    dispatch(menuActions.getUserWorkExperience(userId));
   }, [myProfile, params]);
 
   useEffect(() => {
@@ -444,6 +446,25 @@ const UserEditProfile = (props: any) => {
   };
 
   const renderWorkExperience = () => {
+    if (!showEditButton && userWorkExperience?.length > 0) {
+      return (
+        <View style={styles.paddingBottom}>
+          <Divider style={styles.divider} />
+          <View style={styles.headerItem}>
+            <Text.H5 color={colors.iconTint} variant="body" useI18n>
+              settings:text_work
+            </Text.H5>
+          </View>
+          <View style={styles.infoItem}>
+            {userWorkExperience.map((item: IUserWorkExperience) => (
+              <View key={item?.company + item?.titlePosition}>
+                {renderWorkItem({item})}
+              </View>
+            ))}
+          </View>
+        </View>
+      );
+    }
     return showEditButton ? (
       <View>
         <Divider style={styles.divider} />
@@ -453,22 +474,20 @@ const UserEditProfile = (props: any) => {
           </Text.H5>
         </View>
         <View style={styles.infoItem}>
-          {myWorkExperience?.map((item: IUserWorkExperience) => (
+          {(myWorkExperience || [])?.map((item: IUserWorkExperience) => (
             <View key={item?.company + item?.titlePosition}>
               {renderWorkItem({item})}
             </View>
           ))}
         </View>
-        {showEditButton ? (
-          <Button.Secondary
-            color={colors.primary1}
-            textColor={colors.primary6}
-            onPress={goToAddWork}
-            style={styles.buttonAddWork}
-            testID="user_edit_profile.work.add_work">
-            {i18next.t('settings:text_add_work')}
-          </Button.Secondary>
-        ) : null}
+        <Button.Secondary
+          color={colors.primary1}
+          textColor={colors.primary6}
+          onPress={goToAddWork}
+          style={styles.buttonAddWork}
+          testID="user_edit_profile.work.add_work">
+          {i18next.t('settings:text_add_work')}
+        </Button.Secondary>
       </View>
     ) : null;
   };
@@ -476,7 +495,7 @@ const UserEditProfile = (props: any) => {
   return (
     <ScreenWrapper testID="UserEditProfile" style={styles.container} isFullView>
       <Header
-        title={i18next.t('settings:title_user_profile')}
+        title={i18next.t('settings:title_about')}
         hideBackOnLaptop={navigation.canGoBack() ? false : true}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -544,6 +563,9 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     descriptionText: {
       marginHorizontal: spacing.margin.large,
       marginTop: spacing.margin.small,
+    },
+    paddingBottom: {
+      paddingBottom: spacing.margin.extraLarge,
     },
   });
 };

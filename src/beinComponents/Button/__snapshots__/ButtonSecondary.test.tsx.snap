@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ButtonSecondary conponent renders correctly 1`] = `
+<View
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#FFFFFF",
+      "borderRadius": 6,
+      "padding": 8,
+    }
+  }
+  testID="button_secondary.test"
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "center",
+      }
+    }
+    testID="button_wrapper.content"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#5D2C9A",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 16,
+          "textAlign": "center",
+        }
+      }
+    >
+      Button Secondary
+    </Text>
+  </View>
+</View>
+`;

@@ -10,7 +10,7 @@ import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
 import ReactionDetailBottomSheet from '~/beinFragments/reaction/ReactionDetailBottomSheet';
 import {AppConfig} from '~/configs';
 import BaseStackNavigator from '~/router/components/BaseStackNavigator';
-import BaseDrawerNavigator from '~/router/components/BaseDrawerNavigator';
+import MenuSidebarDrawer from '~/router/components/MenuSidebarDrawer';
 import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 import RightCol from '~/screens/RightCol';
 import {deviceDimensions} from '~/theme/dimension';
@@ -28,8 +28,6 @@ const MainStack = (): React.ReactElement => {
   const styles = createStyles(theme);
   const showLeftCol = dimensions.width >= deviceDimensions.laptop;
   const showRightCol = dimensions.width >= deviceDimensions.desktop;
-  const BaseNavigator =
-    Platform.OS === 'web' ? BaseStackNavigator : BaseDrawerNavigator;
 
   const renderLeftCol = () => (
     <View style={styles.leftCol}>
@@ -65,11 +63,12 @@ const MainStack = (): React.ReactElement => {
         {showLeftCol && renderLeftCol()}
         <View style={styles.centerAndRightCol}>
           <View style={styles.centerCol}>
-            <BaseNavigator stack={stack} screens={screens} />
+            <BaseStackNavigator stack={stack} screens={screens} />
           </View>
           {showRightCol && renderRightCol()}
         </View>
       </View>
+      <MenuSidebarDrawer />
       <PostAudiencesBottomSheet />
       <ReactionBottomSheet />
       <ReactionDetailBottomSheet />

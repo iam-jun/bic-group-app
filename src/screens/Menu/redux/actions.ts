@@ -143,6 +143,17 @@ const menuActions = {
     type: menuTypes.SET_LOADING_COVER,
     payload,
   }),
+
+  getUserWorkExperience: (id: number) => ({
+    type: menuTypes.GET_USER_WORK_EXPERIENCE,
+    id,
+  }),
+  setUserWorkExperience: (payload: IUserWorkExperience[]) => {
+    return {
+      type: menuTypes.SET_USER_WORK_EXPERIENCE,
+      payload,
+    };
+  },
 };
 
 export default menuActions;

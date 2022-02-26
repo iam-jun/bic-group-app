@@ -104,6 +104,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
             "justifyContent": "center",
           }
         }
+        testID="button_wrapper.content"
       >
         <Text
           style={

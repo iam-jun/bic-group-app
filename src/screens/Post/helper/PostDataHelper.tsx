@@ -225,9 +225,9 @@ export const postApiConfig = {
     idLessThan?: string,
     limit?: number,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}reactions`,
+    url: `${provider.url}api/reactions/statistics`,
     method: 'get',
-    provider: ApiConfig.providers.bein,
+    provider: provider,
     useRetry: true,
     params: {
       kind: reactionType,
@@ -556,7 +556,7 @@ const postDataHelper = {
       if (response && response?.data?.data) {
         return Promise.resolve({
           data: response?.data?.data?.results || [],
-          canLoadMore: !!response?.data?.data?.next?.offset,
+          canLoadMore: !!response?.data?.data?.next,
         });
       } else {
         return Promise.reject(response);

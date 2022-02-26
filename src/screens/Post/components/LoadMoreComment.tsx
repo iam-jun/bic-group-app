@@ -102,7 +102,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   return (
     <View>
       <View style={StyleSheet.flatten([styles.container, style])}>
-        <Button onPress={onPressLoadMore}>
+        <Button onPress={onPressLoadMore} testID="load_more_comments.button">
           <Text.H6 style={styles.textLoadMoreComment} useI18n>
             {title}
           </Text.H6>
