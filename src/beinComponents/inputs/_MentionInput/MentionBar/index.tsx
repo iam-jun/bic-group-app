@@ -106,6 +106,7 @@ const createStyle = (theme: ITheme) => {
       borderTopWidth: 1,
       borderBottomWidth: 1,
       borderColor: colors.borderDivider,
+      backgroundColor: colors.background
     },
   });
 };
