@@ -89,7 +89,7 @@ const MentionBar: FC<MentionBarProps> = ({
           <Divider
             horizontal
             style={{marginVertical: spacing.margin.small}}
-            color={colors.bgFocus}
+            color={colors.borderFocus}
           />
         )}
         renderItem={renderItem}
@@ -104,9 +104,8 @@ const createStyle = (theme: ITheme) => {
     container: {
       minHeight: 44,
       borderTopWidth: 1,
-      borderBottomWidth: 1,
-      borderColor: colors.borderDivider,
-      backgroundColor: colors.background
+      borderColor: colors.borderFocus,
+      backgroundColor: colors.background,
     },
   });
 };
