@@ -64,7 +64,12 @@ const _MentionInput = ({
   const dispatch = useDispatch();
 
   React.useEffect(() => {
+    const onCompleteMentionListener = DeviceEventEmitter.addListener(
+      'mention-input-on-complete-mention',
+      _setContent,
+    );
     return () => {
+      onCompleteMentionListener?.remove?.();
       dispatch(actionsMention.setData([]));
     };
   }, []);
@@ -204,7 +209,6 @@ const _MentionInput = ({
         topPosition={topPosition}
         measuredHeight={measuredHeight}
         cursorPosition={cursorPosition.current}
-        onCompletePress={_setContent}
       />
     </>
   );
