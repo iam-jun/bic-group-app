@@ -5,6 +5,12 @@ import {
 } from '~/constants/autocomplete';
 import actions from '~/beinComponents/inputs/_MentionInput/redux/actions';
 
+export interface ICursorPositionChange {
+  position: number;
+  value: string;
+  groupIds: string;
+}
+
 export const getMatchTermForAtMention = (() => {
   let lastMatchTerm: string | null = null;
   let lastValue: string;
@@ -85,4 +91,14 @@ export const completeMention = ({
   }
   DeviceEventEmitter.emit('mention-input-on-complete-mention', completedDraft);
   dispatch(actions.setData([]));
+};
+
+export const checkRunSearch = (text: string, groupIds: any, dispatch: any) => {
+  const _matchTerm = getMatchTermForAtMention(text, false);
+
+  if (_matchTerm !== null && !_matchTerm.endsWith(' ')) {
+    dispatch(actions.runSearch({group_ids: groupIds, key: _matchTerm}));
+  } else {
+    dispatch(actions.setData([]));
+  }
 };

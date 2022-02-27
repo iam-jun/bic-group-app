@@ -14,7 +14,11 @@ import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
 import {AutocompleteProps} from '../../Autocomplete';
-import {completeMention, getMatchTermForAtMention} from '../../helper';
+import {
+  checkRunSearch,
+  completeMention,
+  ICursorPositionChange,
+} from '../../helper';
 import actions from '../../redux/actions';
 import AtMentionItem from './AtMentionItem';
 
@@ -64,20 +68,9 @@ const AtMention = ({
     position,
     value,
     groupIds,
-  }: {
-    position: number;
-    value: string;
-    groupIds: string;
-  }) => {
+  }: ICursorPositionChange) => {
     text.current = value;
-    const _text = value.substring(0, position);
-    const _matchTerm = getMatchTermForAtMention(_text, false);
-
-    if (_matchTerm !== null && !_matchTerm.endsWith(' ')) {
-      dispatch(actions.runSearch({group_ids: groupIds, key: _matchTerm}));
-    } else {
-      dispatch(actions.setData([]));
-    }
+    checkRunSearch(value.substring(0, position), groupIds, dispatch);
   };
 
   const _completeMention = (item: any) => {
