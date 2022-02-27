@@ -1,8 +1,9 @@
-import {Platform} from 'react-native';
+import {DeviceEventEmitter, Platform} from 'react-native';
 import {
   AT_MENTION_REGEX,
   AT_MENTION_SEARCH_REGEX,
 } from '~/constants/autocomplete';
+import actions from '~/beinComponents/inputs/_MentionInput/redux/actions';
 
 export const getMatchTermForAtMention = (() => {
   let lastMatchTerm: string | null = null;
@@ -59,3 +60,29 @@ export function switchKeyboardForCodeBlocks(
 
   return 'default';
 }
+
+export const completeMention = ({
+  item,
+  cursorPosition,
+  text,
+  dispatch,
+}: {
+  item: any;
+  cursorPosition?: number;
+  text: string;
+  dispatch: any;
+}) => {
+  if (!cursorPosition) {
+    cursorPosition = text.length;
+  }
+  const mention = item.username;
+  const mentionPart = text.substring(0, cursorPosition);
+
+  let completedDraft = mentionPart.replace(AT_MENTION_REGEX, `@${mention} `);
+
+  if (text.length > cursorPosition) {
+    completedDraft += text.substring(cursorPosition);
+  }
+  DeviceEventEmitter.emit('mention-input-on-complete-mention', completedDraft);
+  dispatch(actions.setData([]));
+};

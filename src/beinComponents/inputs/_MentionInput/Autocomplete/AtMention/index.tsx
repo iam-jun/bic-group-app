@@ -11,11 +11,10 @@ import {
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Text from '~/beinComponents/Text';
-import {AT_MENTION_REGEX} from '~/constants/autocomplete';
 import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
 import {AutocompleteProps} from '../../Autocomplete';
-import {getMatchTermForAtMention} from '../../helper';
+import {completeMention, getMatchTermForAtMention} from '../../helper';
 import actions from '../../redux/actions';
 import AtMentionItem from './AtMentionItem';
 
@@ -27,7 +26,6 @@ const AtMention = ({
   showSpectialItems,
   emptyContent,
   cursorPosition,
-  onCompletePress,
 }: Props) => {
   const dispatch = useDispatch();
 
@@ -82,17 +80,8 @@ const AtMention = ({
     }
   };
 
-  const completeMention = (item: any) => {
-    const mention = item.username;
-    const mentionPart = text.current.substring(0, cursorPosition);
-
-    let completedDraft = mentionPart.replace(AT_MENTION_REGEX, `@${mention} `);
-
-    if (text.current.length > cursorPosition) {
-      completedDraft += text.current.substring(cursorPosition);
-    }
-    onCompletePress?.(completedDraft);
-    dispatch(actions.setData([]));
+  const _completeMention = (item: any) => {
+    completeMention({item, dispatch, text: text.current, cursorPosition});
   };
 
   const handleMentionKey = (event: any) => {
@@ -100,7 +89,7 @@ const AtMention = ({
       event.preventDefault();
       const {key} = event || {};
       if (key === 'Enter' && data?.[highlightIndex]) {
-        completeMention(data?.[highlightIndex]);
+        _completeMention(data[highlightIndex]);
         return;
       }
       const step = key === 'ArrowUp' ? -1 : 1;
@@ -144,7 +133,7 @@ const AtMention = ({
       <AtMentionItem
         item={item}
         testID="at_mention.item"
-        onPress={completeMention}
+        onPress={_completeMention}
       />
     );
   };
