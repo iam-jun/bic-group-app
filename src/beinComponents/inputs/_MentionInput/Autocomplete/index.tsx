@@ -29,7 +29,6 @@ export interface AutocompleteProps {
   modalStyle?: StyleProp<ViewStyle>;
   showSpectialItems?: boolean;
   emptyContent?: string;
-  onCompletePress: (value: string) => void;
 }
 
 const Autocomplete = ({

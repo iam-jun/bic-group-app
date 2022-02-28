@@ -293,6 +293,16 @@ export interface IParamSearchMentionAudiences {
   take?: number;
 }
 
+export interface IMentionUser {
+  id: number;
+  username: string;
+  email?: string;
+  fullname: string;
+  avatar: string;
+  bein_staff_role?: string;
+  chat_user_id?: string;
+}
+
 export interface IParamGetReactionDetail {
   reactionType: ReactionType;
   postId?: string;
