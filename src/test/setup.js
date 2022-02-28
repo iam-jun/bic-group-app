@@ -64,15 +64,15 @@ jest.doMock('react-native-paper', () => {
   return MockedModule;
 });
 
-jest.doMock('react-native-modalize', ()=>{
+jest.doMock('react-native-modalize', () => {
   const RealModule = jest.requireActual('react-native-modalize');
-const MockedModule = {
+  const MockedModule = {
     ...RealModule,
     // eslint-disable-next-line react/prop-types
     Modalize: ({children}) => <ReactNative.View>{children}</ReactNative.View>,
   };
   return MockedModule;
-})
+});
 
 jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 
