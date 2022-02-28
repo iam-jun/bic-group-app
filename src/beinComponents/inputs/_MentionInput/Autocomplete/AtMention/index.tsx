@@ -73,7 +73,7 @@ const AtMention = ({
   }) => {
     text.current = value;
     const _text = value.substring(0, position);
-    const _matchTerm = getMatchTermForAtMention(_text, false);
+    const _matchTerm = getMatchTermForAtMention(_text);
 
     if (_matchTerm !== null && !_matchTerm.endsWith(' ')) {
       dispatch(actions.runSearch({group_ids: groupIds, key: _matchTerm}));
