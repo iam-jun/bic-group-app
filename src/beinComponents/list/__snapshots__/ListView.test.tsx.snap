@@ -40,69 +40,17 @@ exports[`ListView component renders correctly 1`] = `
         onLayout={[Function]}
         style={null}
       >
-        <View
-          accessibilityState={
-            Object {
-              "disabled": true,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          nativeID="animatedComponent"
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+        <Text
           style={
             Object {
-              "opacity": 1,
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 16,
             }
           }
         >
-          <View
-            className=""
-          >
-            <View
-              accessibilityState={
-                Object {
-                  "disabled": true,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={false}
-              nativeID="animatedComponent"
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "height": 64,
-                  "opacity": 1,
-                  "paddingHorizontal": 12,
-                }
-              }
-            >
-              <View
-                style={
-                  Object {
-                    "flex": 1,
-                  }
-                }
-              />
-            </View>
-          </View>
-        </View>
+          1
+        </Text>
         <View
           style={
             Object {
@@ -118,69 +66,17 @@ exports[`ListView component renders correctly 1`] = `
         onLayout={[Function]}
         style={null}
       >
-        <View
-          accessibilityState={
-            Object {
-              "disabled": true,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          nativeID="animatedComponent"
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+        <Text
           style={
             Object {
-              "opacity": 1,
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 16,
             }
           }
         >
-          <View
-            className=""
-          >
-            <View
-              accessibilityState={
-                Object {
-                  "disabled": true,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={false}
-              nativeID="animatedComponent"
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "height": 64,
-                  "opacity": 1,
-                  "paddingHorizontal": 12,
-                }
-              }
-            >
-              <View
-                style={
-                  Object {
-                    "flex": 1,
-                  }
-                }
-              />
-            </View>
-          </View>
-        </View>
+          2
+        </Text>
         <View
           style={
             Object {
@@ -196,69 +92,17 @@ exports[`ListView component renders correctly 1`] = `
         onLayout={[Function]}
         style={null}
       >
-        <View
-          accessibilityState={
-            Object {
-              "disabled": true,
-            }
-          }
-          accessible={true}
-          collapsable={false}
-          focusable={true}
-          nativeID="animatedComponent"
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
+        <Text
           style={
             Object {
-              "opacity": 1,
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 16,
             }
           }
         >
-          <View
-            className=""
-          >
-            <View
-              accessibilityState={
-                Object {
-                  "disabled": true,
-                }
-              }
-              accessible={true}
-              collapsable={false}
-              focusable={false}
-              nativeID="animatedComponent"
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "height": 64,
-                  "opacity": 1,
-                  "paddingHorizontal": 12,
-                }
-              }
-            >
-              <View
-                style={
-                  Object {
-                    "flex": 1,
-                  }
-                }
-              />
-            </View>
-          </View>
-        </View>
+          3
+        </Text>
       </View>
     </View>
   </RCTScrollView>
