@@ -63,6 +63,7 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   const renderItem = (item: any) => {
     return (
       <PrimaryItem
+        testID="reaction_detail_bottomSheet.user_item"
         showAvatar
         height={44}
         onPress={() => _onPressItem(item)}

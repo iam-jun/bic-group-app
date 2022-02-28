@@ -41,4 +41,21 @@ describe('ReactionDetailBottomSheet component', () => {
     ).toJSON();
     expect(rendered).toMatchSnapshot();
   });
+
+  it(`should call navigate to user profile when click item`, () => {
+    const storeData = {...initialState};
+
+    // @ts-ignore
+    storeData.modal.reactionDetailBottomSheet = fake_data;
+    const store = mockStore(storeData);
+
+    const rendered = renderWithRedux(<ReactionDetailBottomSheet />, store);
+    expect(rendered).toMatchSnapshot();
+
+    const btnComponent = rendered.getByTestId(
+      'reaction_detail_bottomSheet.user_item',
+    );
+    expect(btnComponent).toBeDefined();
+    fireEvent.press(btnComponent);
+  });
 });
