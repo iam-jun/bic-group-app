@@ -487,7 +487,8 @@
       "title_delete_comment": "Delete this comment",
       "text_delete_comment": "When you delete this comment, all of its reply will also be deleted. Continue?",
       "text_delete_comment_error": "Delete comment failed!",
-      "text_delete_comment_success": "Comment deleted"
+      "text_delete_comment_success": "Comment deleted",
+      "text_edited": "Edited"
     },
     "settings": "Post Settings",
     "people_can_comment": "People can comment on this post",
