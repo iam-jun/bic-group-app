@@ -179,7 +179,7 @@ const ListView: React.FC<ListViewProps> = ({
       }
       if (LoadingPlaceholder) {
         return (
-          <View>
+          <View testID="list_view.loading_placeholder">
             {Array.from(Array(10).keys()).map(item => (
               <LoadingPlaceholder key={`loading_placeholder_${item}`} />
             ))}
@@ -190,7 +190,7 @@ const ListView: React.FC<ListViewProps> = ({
         <View style={{marginTop: spacing.margin.large}}>
           <ActivityIndicator
             color={colors.borderDisable}
-            testID="list_view.indicator"
+            testID="list_view.indicator.loading"
           />
         </View>
       );
@@ -244,7 +244,9 @@ const ListView: React.FC<ListViewProps> = ({
         onEndReachedThreshold={onEndReachedThreshold}
         {...props}
       />
-      {loadingMore && <ActivityIndicator />}
+      {loadingMore && (
+        <ActivityIndicator testID={'list_view.indicator.loading_more'} />
+      )}
     </View>
   );
 };
