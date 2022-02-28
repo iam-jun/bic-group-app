@@ -56,6 +56,7 @@ export interface IActivityData {
   images?: IActivityDataImage[];
   videos?: string[];
   files?: string[];
+  edited?: boolean;
 }
 
 export interface IActivityImportant {
@@ -291,6 +292,16 @@ export interface IParamSearchMentionAudiences {
   user_ids?: string;
   skip?: number;
   take?: number;
+}
+
+export interface IMentionUser {
+  id: number;
+  username: string;
+  email?: string;
+  fullname: string;
+  avatar: string;
+  bein_staff_role?: string;
+  chat_user_id?: string;
 }
 
 export interface IParamGetReactionDetail {
