@@ -36,6 +36,7 @@ import {IFilePicked} from '~/interfaces/common';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {openLink} from '~/utils/common';
 import {chatSchemes} from '~/constants/chat';
+import homeActions from '~/screens/Home/redux/actions';
 
 const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
@@ -75,6 +76,7 @@ const UserProfile = (props: any) => {
     ) {
       if (avatarState !== _avatar) {
         setAvatarState(_avatar);
+        dispatch(homeActions.getHomePosts({isRefresh: true}));
       }
       if (_bgIm !== bgImgState) {
         setBgImgState(_bgIm);
