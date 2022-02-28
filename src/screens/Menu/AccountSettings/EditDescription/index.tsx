@@ -47,14 +47,13 @@ const EditDescription = () => {
   };
 
   const onSave = () => {
-    if (descriptionText?.trim?.()?.length > 0) {
-      dispatch(
-        menuActions.editMyProfile({
-          id,
-          description: descriptionText,
-        }),
-      );
-    }
+    dispatch(
+      menuActions.editMyProfile({
+        id,
+        description:
+          descriptionText?.trim?.()?.length > 0 ? descriptionText : '',
+      }),
+    );
     navigateBack();
   };
 
