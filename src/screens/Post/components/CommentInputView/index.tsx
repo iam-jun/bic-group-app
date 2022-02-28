@@ -95,6 +95,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   const _onCommentSuccess = () => {
     _commentInputRef?.current?.clear?.();
+    mentionInputRef?.current?.setContent?.('');
   };
 
   const onPressSend = (sendData?: ICommentInputSendParam) => {

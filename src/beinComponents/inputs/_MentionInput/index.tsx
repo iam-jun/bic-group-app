@@ -16,7 +16,7 @@ import {useKeyboardStatus} from '~/hooks/keyboard';
 import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
 import Autocomplete from './Autocomplete';
-import {switchKeyboardForCodeBlocks} from './helper';
+import {ICursorPositionChange, switchKeyboardForCodeBlocks} from './helper';
 import {useDispatch} from 'react-redux';
 import actionsMention from '~/beinComponents/inputs/_MentionInput/redux/actions';
 
@@ -32,6 +32,7 @@ interface Props {
   style?: StyleProp<ViewStyle>;
   textInputStyle?: StyleProp<TextStyle>;
   onKeyPress?: (e: any) => void;
+  disableAutoComplete?: boolean;
 }
 
 const _MentionInput = ({
@@ -45,6 +46,7 @@ const _MentionInput = ({
   style,
   textInputStyle,
   onKeyPress,
+  disableAutoComplete,
 }: Props) => {
   const inputRef = textInputRef || useRef<TextInput>();
   const _mentionInputRef = mentionInputRef || useRef<any>();
@@ -64,7 +66,12 @@ const _MentionInput = ({
   const dispatch = useDispatch();
 
   React.useEffect(() => {
+    const onCompleteMentionListener = DeviceEventEmitter.addListener(
+      'mention-input-on-complete-mention',
+      _setContent,
+    );
     return () => {
+      onCompleteMentionListener?.remove?.();
       dispatch(actionsMention.setData([]));
     };
   }, []);
@@ -91,20 +98,22 @@ const _MentionInput = ({
     }
     cursorPosition.current = position;
 
-    DeviceEventEmitter.emit('autocomplete-on-selection-change', {
+    const param: ICursorPositionChange = {
       position,
       value: text,
       groupIds,
-    });
+    };
+    DeviceEventEmitter.emit('autocomplete-on-selection-change', param);
   };
 
   const onChangeText = (value: string) => {
     componentInputProps.onChangeText?.(value);
-    DeviceEventEmitter.emit('autocomplete-on-selection-change', {
+    const param: ICursorPositionChange = {
       position: cursorPosition.current,
       value,
       groupIds,
-    });
+    };
+    DeviceEventEmitter.emit('autocomplete-on-selection-change', param);
   };
 
   const handleKeyPress = (event: any) => {
@@ -198,14 +207,15 @@ const _MentionInput = ({
           onChangeText={onChangeText}
         />
       </View>
-      <Autocomplete
-        {...autocompleteProps}
-        type="mentionInput"
-        topPosition={topPosition}
-        measuredHeight={measuredHeight}
-        cursorPosition={cursorPosition.current}
-        onCompletePress={_setContent}
-      />
+      {!disableAutoComplete && (
+        <Autocomplete
+          {...autocompleteProps}
+          type="mentionInput"
+          topPosition={topPosition}
+          measuredHeight={measuredHeight}
+          cursorPosition={cursorPosition.current}
+        />
+      )}
     </>
   );
 };

@@ -248,6 +248,7 @@ function* postCreateNewComment({
     );
 
     yield put(postActions.setCreateComment({loading: false, content: ''}));
+    onSuccess?.(); // call second time to make sure content is cleared on low performance device
   } catch (e) {
     console.log('err:', e);
     if (preComment) {
