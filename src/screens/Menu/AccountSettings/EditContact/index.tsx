@@ -66,6 +66,9 @@ const EditContact = () => {
 
   useEffect(() => {
     phoneNumberEditError && showErrors();
+    return () => {
+      dispatch(menuActions.setPhoneNumberEditError(''));
+    };
   }, [phoneNumberEditError]);
 
   const onSave = async () => {
@@ -85,9 +88,11 @@ const EditContact = () => {
           city: cityState,
         },
         i18next.t('settings:text_contact_info_update_success'),
+        () => {
+          navigateBack();
+        },
       ),
     );
-    navigateBack();
   };
 
   const validateInputs = async () => {
