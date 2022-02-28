@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {render, cleanup} from '@testing-library/react-native';
+import {cleanup} from '@testing-library/react-native';
 import ReactionView from '~/beinComponents/ReactionView';
 import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
 import initialState from '~/store/initialState';
@@ -37,7 +37,145 @@ describe('ReactionView component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`renders correctly with Reactions empty `, () => {
+  it(`renders correctly with props Reactions Order `, () => {
+    const onAddReaction = jest.fn();
+    const onRemoveReaction = jest.fn();
+    const onPressSelectReaction = jest.fn();
+    const onLongPressReaction = jest.fn();
+    const rendered = renderWithRedux(
+      <ReactionView
+        ownReactions={ownReactions}
+        reactionCounts={reactionCounts}
+        reactionsOrder={reactionsOrder}
+        showSelectReactionWhenEmpty
+        onAddReaction={onAddReaction}
+        onRemoveReaction={onRemoveReaction}
+        onPressSelectReaction={onPressSelectReaction}
+        onLongPressReaction={onLongPressReaction}
+      />,
+      store,
+    );
+    expect(rendered.toJSON()).toMatchSnapshot();
+  });
+
+  it(`renders correctly with props Reactions Order empty `, () => {
+    const onAddReaction = jest.fn();
+    const onRemoveReaction = jest.fn();
+    const onPressSelectReaction = jest.fn();
+    const onLongPressReaction = jest.fn();
+    const rendered = renderWithRedux(
+      <ReactionView
+        style={{}}
+        ownReactions={ownReactionsEmpty}
+        reactionCounts={reactionCountsEmpty}
+        reactionsOrder={[]}
+        showSelectReactionWhenEmpty
+        onAddReaction={onAddReaction}
+        onRemoveReaction={onRemoveReaction}
+        onPressSelectReaction={onPressSelectReaction}
+        onLongPressReaction={onLongPressReaction}
+      />,
+      store,
+    );
+    expect(rendered.toJSON()).toMatchSnapshot();
+  });
+
+  it(`renders correctly with props showSelectReactionWhenEmpty`, () => {
+    const onAddReaction = jest.fn();
+    const onRemoveReaction = jest.fn();
+    const onPressSelectReaction = jest.fn();
+    const onLongPressReaction = jest.fn();
+    const rendered = renderWithRedux(
+      <ReactionView
+        style={{}}
+        ownReactions={ownReactionsEmpty}
+        reactionCounts={reactionCountsEmpty}
+        reactionsOrder={[]}
+        showSelectReactionWhenEmpty
+        onAddReaction={onAddReaction}
+        onRemoveReaction={onRemoveReaction}
+        onPressSelectReaction={onPressSelectReaction}
+        onLongPressReaction={onLongPressReaction}
+      />,
+      store,
+    );
+    expect(rendered.toJSON()).toMatchSnapshot();
+  });
+
+  it(`renders correctly with props showSelectReactionWhenEmpty = false `, () => {
+    const onAddReaction = jest.fn();
+    const onRemoveReaction = jest.fn();
+    const onPressSelectReaction = jest.fn();
+    const onLongPressReaction = jest.fn();
+    const rendered = renderWithRedux(
+      <ReactionView
+        style={{}}
+        ownReactions={ownReactionsEmpty}
+        reactionCounts={reactionCountsEmpty}
+        reactionsOrder={[]}
+        showSelectReactionWhenEmpty={false}
+        onAddReaction={onAddReaction}
+        onRemoveReaction={onRemoveReaction}
+        onPressSelectReaction={onPressSelectReaction}
+        onLongPressReaction={onLongPressReaction}
+      />,
+      store,
+    );
+    expect(rendered.toJSON()).toMatchSnapshot();
+  });
+
+  it(`renders correctly with props style`, () => {
+    const onAddReaction = jest.fn();
+    const onRemoveReaction = jest.fn();
+    const onPressSelectReaction = jest.fn();
+    const onLongPressReaction = jest.fn();
+    const rendered = renderWithRedux(
+      <ReactionView
+        style={{backgroundColor: '#FF9800'}}
+        ownReactions={ownReactions}
+        reactionCounts={reactionCounts}
+        reactionsOrder={reactionsOrder}
+        showSelectReactionWhenEmpty
+        onAddReaction={onAddReaction}
+        onRemoveReaction={onRemoveReaction}
+        onPressSelectReaction={onPressSelectReaction}
+        onLongPressReaction={onLongPressReaction}
+      />,
+      store,
+    );
+    expect(rendered.toJSON()).toMatchSnapshot();
+    const reractionViewComp = rendered.getByTestId('reaction_view');
+    expect(reractionViewComp).toBeDefined();
+    expect(reractionViewComp.props.style[1]).toMatchObject({
+      backgroundColor: '#FF9800',
+    });
+  });
+
+  it(`renders correctly with props onPressSelectReaction `, () => {
+    const onAddReaction = jest.fn();
+    const onRemoveReaction = jest.fn();
+    const onPressSelectReaction = jest.fn();
+    const onLongPressReaction = jest.fn();
+    const rendered = renderWithRedux(
+      <ReactionView
+        style={{}}
+        ownReactions={ownReactionsEmpty}
+        reactionCounts={reactionCountsEmpty}
+        reactionsOrder={reactionsOrder}
+        showSelectReactionWhenEmpty
+        onAddReaction={onAddReaction}
+        onRemoveReaction={onRemoveReaction}
+        onPressSelectReaction={onPressSelectReaction}
+        onLongPressReaction={onLongPressReaction}
+      />,
+      store,
+    );
+    const reactComponent = rendered.getByTestId('reaction_view.react');
+    fireEvent.press(reactComponent);
+    expect(onPressSelectReaction).toBeCalled();
+  });
+
+  it(`renders correctly with props onLongPressReaction `, () => {
     const onAddReaction = jest.fn();
     const onRemoveReaction = jest.fn();
     const onPressSelectReaction = jest.fn();
@@ -56,9 +194,72 @@ describe('ReactionView component', () => {
       />,
       store,
     );
-    expect(rendered.toJSON()).toMatchSnapshot();
+    const reactComponent = rendered.getByTestId('reaction.button.grinning');
+    fireEvent(reactComponent, 'onLongPress');
+    expect(onLongPressReaction).toBeCalledWith('grinning');
+  });
+
+  it(`renders correctly with props onAddReaction `, () => {
+    const reactionCounts = {
+      comment: 1,
+      comment_count: 6,
+      rolling_on_the_floor_laughing: 1,
+    };
+    const reactionsOrder = ['rolling_on_the_floor_laughing'];
+
+    const onAddReaction = jest.fn();
+    const onRemoveReaction = jest.fn();
+    const onPressSelectReaction = jest.fn();
+    const onLongPressReaction = jest.fn();
+    const rendered = renderWithRedux(
+      <ReactionView
+        style={{}}
+        ownReactions={ownReactionsEmpty}
+        reactionCounts={reactionCounts}
+        reactionsOrder={reactionsOrder}
+        showSelectReactionWhenEmpty
+        onAddReaction={onAddReaction}
+        onRemoveReaction={onRemoveReaction}
+        onPressSelectReaction={onPressSelectReaction}
+        onLongPressReaction={onLongPressReaction}
+      />,
+      store,
+    );
+    const reactComponent = rendered.getByTestId(
+      'reaction.button.rolling_on_the_floor_laughing',
+    );
+    fireEvent.press(reactComponent);
+    expect(onAddReaction).toBeCalledWith('rolling_on_the_floor_laughing');
+  });
+
+  it(`renders correctly with props onRemoveReaction `, () => {
+    const onAddReaction = jest.fn();
+    const onRemoveReaction = jest.fn();
+    const onPressSelectReaction = jest.fn();
+    const onLongPressReaction = jest.fn();
+    const rendered = renderWithRedux(
+      <ReactionView
+        style={{}}
+        ownReactions={ownReactions}
+        reactionCounts={reactionCounts}
+        reactionsOrder={reactionsOrder}
+        showSelectReactionWhenEmpty
+        onAddReaction={onAddReaction}
+        onRemoveReaction={onRemoveReaction}
+        onPressSelectReaction={onPressSelectReaction}
+        onLongPressReaction={onLongPressReaction}
+      />,
+      store,
+    );
+    const reactComponent = rendered.getByTestId('reaction.button.grinning');
+    fireEvent.press(reactComponent);
+    expect(onRemoveReaction).toBeCalledWith('grinning');
   });
 });
+
+const ownReactionsEmpty = {comment: [], comment_count: []};
+
+const reactionCountsEmpty = {};
 
 const ownReactions = {
   comment: [],
