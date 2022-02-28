@@ -1,0 +1,1616 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ReactionView component renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 8,
+        "paddingTop": 8,
+      },
+      Object {},
+    ]
+  }
+  testID="reaction_view"
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EADFFE",
+        "borderColor": "#7843DD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.kissing_smiling_eyes"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#421187",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 14,
+          "marginBottom": 2,
+        }
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 13,
+          }
+        }
+        testID="reaction.kissing_smiling_eyes"
+      >
+        😙
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EADFFE",
+        "borderColor": "#7843DD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.wink"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#421187",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 14,
+          "marginBottom": 2,
+        }
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 13,
+          }
+        }
+        testID="reaction.wink"
+      >
+        😉
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EADFFE",
+        "borderColor": "#7843DD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.grinning_face_with_star_eyes"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#421187",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 14,
+          "marginBottom": 2,
+        }
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 13,
+          }
+        }
+        testID="reaction.grinning_face_with_star_eyes"
+      >
+        🤩
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EADFFE",
+        "borderColor": "#7843DD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.grinning"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#421187",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 14,
+          "marginBottom": 2,
+        }
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 13,
+          }
+        }
+        testID="reaction.grinning"
+      >
+        😀
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "borderColor": "#B2BDCD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "justifyContent": "center",
+        "marginHorizontal": 6,
+        "marginVertical": 2,
+        "opacity": 1,
+        "paddingHorizontal": 4,
+        "paddingVertical": 4,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
+      }
+      testID="button_wrapper.content"
+    >
+      <View
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        nativeID="animatedComponent"
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              undefined,
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View
+              className="icon-wrapper"
+              testID="reaction_view.react"
+            >
+              <View
+                onLayout={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                    "position": "relative",
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                  nativeID="animatedComponent"
+                  style={
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "opacity": 1,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#f9f9f9",
+                        "height": 16,
+                        "justifyContent": "center",
+                        "width": 16,
+                      }
+                    }
+                    testID="Image__placeholder"
+                  />
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "overflow": "hidden",
+                      },
+                      Object {
+                        "height": 16,
+                        "width": 16,
+                      },
+                    ]
+                  }
+                >
+                  <FastImageView
+                    onFastImageError={[Function]}
+                    onFastImageLoadEnd={[Function]}
+                    resizeMode="cover"
+                    size={16}
+                    source={
+                      Object {
+                        "testUri": "../../../assets/icons/icon_react.svg",
+                      }
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ReactionView component renders correctly with props Reactions Order  1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 8,
+        "paddingTop": 8,
+      },
+      undefined,
+    ]
+  }
+  testID="reaction_view"
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EADFFE",
+        "borderColor": "#7843DD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.kissing_smiling_eyes"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#421187",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 14,
+          "marginBottom": 2,
+        }
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 13,
+          }
+        }
+        testID="reaction.kissing_smiling_eyes"
+      >
+        😙
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EADFFE",
+        "borderColor": "#7843DD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.wink"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#421187",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 14,
+          "marginBottom": 2,
+        }
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 13,
+          }
+        }
+        testID="reaction.wink"
+      >
+        😉
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EADFFE",
+        "borderColor": "#7843DD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.grinning_face_with_star_eyes"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#421187",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 14,
+          "marginBottom": 2,
+        }
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 13,
+          }
+        }
+        testID="reaction.grinning_face_with_star_eyes"
+      >
+        🤩
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EADFFE",
+        "borderColor": "#7843DD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.grinning"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#421187",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 14,
+          "marginBottom": 2,
+        }
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 13,
+          }
+        }
+        testID="reaction.grinning"
+      >
+        😀
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "borderColor": "#B2BDCD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "justifyContent": "center",
+        "marginHorizontal": 6,
+        "marginVertical": 2,
+        "opacity": 1,
+        "paddingHorizontal": 4,
+        "paddingVertical": 4,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
+      }
+      testID="button_wrapper.content"
+    >
+      <View
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        nativeID="animatedComponent"
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              undefined,
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View
+              className="icon-wrapper"
+              testID="reaction_view.react"
+            >
+              <View
+                onLayout={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                    "position": "relative",
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                  nativeID="animatedComponent"
+                  style={
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "opacity": 1,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#f9f9f9",
+                        "height": 16,
+                        "justifyContent": "center",
+                        "width": 16,
+                      }
+                    }
+                    testID="Image__placeholder"
+                  />
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "overflow": "hidden",
+                      },
+                      Object {
+                        "height": 16,
+                        "width": 16,
+                      },
+                    ]
+                  }
+                >
+                  <FastImageView
+                    onFastImageError={[Function]}
+                    onFastImageLoadEnd={[Function]}
+                    resizeMode="cover"
+                    size={16}
+                    source={
+                      Object {
+                        "testUri": "../../../assets/icons/icon_react.svg",
+                      }
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ReactionView component renders correctly with props Reactions Order empty  1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "flex-start",
+      "flex": 1,
+      "paddingTop": 8,
+    }
+  }
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "borderColor": "#B2BDCD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "justifyContent": "center",
+        "marginVertical": 2,
+        "opacity": 1,
+        "paddingHorizontal": 4,
+        "paddingVertical": 4,
+      }
+    }
+    testID="reaction_view.react"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
+      }
+      testID="button_wrapper.content"
+    >
+      <View
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        nativeID="animatedComponent"
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              undefined,
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View
+              className="icon-wrapper"
+            >
+              <View
+                onLayout={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                    "position": "relative",
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                  nativeID="animatedComponent"
+                  style={
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "opacity": 1,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#f9f9f9",
+                        "height": 16,
+                        "justifyContent": "center",
+                        "width": 16,
+                      }
+                    }
+                    testID="Image__placeholder"
+                  />
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "overflow": "hidden",
+                      },
+                      Object {
+                        "height": 16,
+                        "width": 16,
+                      },
+                    ]
+                  }
+                >
+                  <FastImageView
+                    onFastImageError={[Function]}
+                    onFastImageLoadEnd={[Function]}
+                    resizeMode="cover"
+                    size={16}
+                    source={
+                      Object {
+                        "testUri": "../../../assets/icons/icon_react.svg",
+                      }
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ReactionView component renders correctly with props showSelectReactionWhenEmpty = false  1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "flex-start",
+      "flex": 1,
+      "paddingTop": 8,
+    }
+  }
+/>
+`;
+
+exports[`ReactionView component renders correctly with props showSelectReactionWhenEmpty 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "flex-start",
+      "flex": 1,
+      "paddingTop": 8,
+    }
+  }
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "borderColor": "#B2BDCD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "justifyContent": "center",
+        "marginVertical": 2,
+        "opacity": 1,
+        "paddingHorizontal": 4,
+        "paddingVertical": 4,
+      }
+    }
+    testID="reaction_view.react"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
+      }
+      testID="button_wrapper.content"
+    >
+      <View
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        nativeID="animatedComponent"
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              undefined,
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View
+              className="icon-wrapper"
+            >
+              <View
+                onLayout={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                    "position": "relative",
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                  nativeID="animatedComponent"
+                  style={
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "opacity": 1,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#f9f9f9",
+                        "height": 16,
+                        "justifyContent": "center",
+                        "width": 16,
+                      }
+                    }
+                    testID="Image__placeholder"
+                  />
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "overflow": "hidden",
+                      },
+                      Object {
+                        "height": 16,
+                        "width": 16,
+                      },
+                    ]
+                  }
+                >
+                  <FastImageView
+                    onFastImageError={[Function]}
+                    onFastImageLoadEnd={[Function]}
+                    resizeMode="cover"
+                    size={16}
+                    source={
+                      Object {
+                        "testUri": "../../../assets/icons/icon_react.svg",
+                      }
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
+
+exports[`ReactionView component renders correctly with props style 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "flex": 1,
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "paddingBottom": 8,
+        "paddingTop": 8,
+      },
+      Object {
+        "backgroundColor": "#FF9800",
+      },
+    ]
+  }
+  testID="reaction_view"
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EADFFE",
+        "borderColor": "#7843DD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.kissing_smiling_eyes"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#421187",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 14,
+          "marginBottom": 2,
+        }
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 13,
+          }
+        }
+        testID="reaction.kissing_smiling_eyes"
+      >
+        😙
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EADFFE",
+        "borderColor": "#7843DD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.wink"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#421187",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 14,
+          "marginBottom": 2,
+        }
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 13,
+          }
+        }
+        testID="reaction.wink"
+      >
+        😉
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EADFFE",
+        "borderColor": "#7843DD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.grinning_face_with_star_eyes"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#421187",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 14,
+          "marginBottom": 2,
+        }
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 13,
+          }
+        }
+        testID="reaction.grinning_face_with_star_eyes"
+      >
+        🤩
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EADFFE",
+        "borderColor": "#7843DD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.grinning"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#421187",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 14,
+          "marginBottom": 2,
+        }
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 13,
+          }
+        }
+        testID="reaction.grinning"
+      >
+        😀
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "borderColor": "#B2BDCD",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "justifyContent": "center",
+        "marginHorizontal": 6,
+        "marginVertical": 2,
+        "opacity": 1,
+        "paddingHorizontal": 4,
+        "paddingVertical": 4,
+      }
+    }
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
+      }
+      testID="button_wrapper.content"
+    >
+      <View
+        accessibilityState={
+          Object {
+            "disabled": true,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={false}
+        hitSlop={
+          Object {
+            "bottom": 10,
+            "left": 10,
+            "right": 10,
+            "top": 10,
+          }
+        }
+        nativeID="animatedComponent"
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              undefined,
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View
+              className="icon-wrapper"
+              testID="reaction_view.react"
+            >
+              <View
+                onLayout={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                    "position": "relative",
+                  }
+                }
+              >
+                <View
+                  collapsable={false}
+                  nativeID="animatedComponent"
+                  style={
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "opacity": 1,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#f9f9f9",
+                        "height": 16,
+                        "justifyContent": "center",
+                        "width": 16,
+                      }
+                    }
+                    testID="Image__placeholder"
+                  />
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "overflow": "hidden",
+                      },
+                      Object {
+                        "height": 16,
+                        "width": 16,
+                      },
+                    ]
+                  }
+                >
+                  <FastImageView
+                    onFastImageError={[Function]}
+                    onFastImageLoadEnd={[Function]}
+                    resizeMode="cover"
+                    size={16}
+                    source={
+                      Object {
+                        "testUri": "../../../assets/icons/icon_react.svg",
+                      }
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+</View>
+`;
