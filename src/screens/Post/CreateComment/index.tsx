@@ -82,7 +82,9 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
       const {name, origin_name, width, height} = oldImages[0];
       const file: any = {width: width || 1, height: height || 1};
       setSelectedImg({
-        url: getResourceUrl(uploadTypes.commentImage, name),
+        url: name?.includes('http')
+          ? name
+          : getResourceUrl(uploadTypes.commentImage, name),
         fileName: origin_name,
         file,
       });
@@ -92,13 +94,17 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   const onPressSave = () => {
     Keyboard.dismiss();
     if (commentId && comment) {
-      const imageData: IActivityDataImage = {
-        name: selectedImg?.url || selectedImg?.fileName || '',
-        origin_name: selectedImg?.fileName,
-        width: selectedImg?.file?.width,
-        height: selectedImg?.file?.height,
-      };
-      const newData: IActivityData = {content, images: [imageData]};
+      const images = [];
+      if (selectedImg) {
+        const imageData: IActivityDataImage = {
+          name: selectedImg?.url || selectedImg?.fileName || '',
+          origin_name: selectedImg?.fileName,
+          width: selectedImg?.file?.width,
+          height: selectedImg?.file?.height,
+        };
+        images.push(imageData);
+      }
+      const newData: IActivityData = {content, images};
       console.log(`\x1b[35m🐣️ index onPressSave `, newData, `\x1b[0m`);
       dispatch(
         postActions.putEditComment({
