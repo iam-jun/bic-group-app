@@ -80,7 +80,7 @@ const UserProfile = (props: any) => {
         setBgImgState(_bgIm);
       }
     }
-  }, [isFocused, userId]);
+  }, [isFocused, userId, myProfileData]);
 
   const onEditProfileButton = () =>
     rootNavigation.navigate(mainStack.userEdit, {userId, params});
