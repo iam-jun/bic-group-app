@@ -49,13 +49,18 @@ const EditDescription = () => {
   const onSave = () => {
     if (descriptionText?.trim?.()?.length > 0) {
       dispatch(
-        menuActions.editMyProfile({
-          id,
-          description: descriptionText,
-        }),
+        menuActions.editMyProfile(
+          {
+            id,
+            description: descriptionText,
+          },
+          '',
+          () => {
+            navigateBack();
+          },
+        ),
       );
     }
-    navigateBack();
   };
 
   const onFocusDescription = () => {
