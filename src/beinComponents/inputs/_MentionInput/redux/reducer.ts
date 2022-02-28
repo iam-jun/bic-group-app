@@ -25,6 +25,11 @@ const reducer = (state = mentionInputInitState, action: any = {}) => {
         ...state,
         cursorPosition: payload,
       };
+    case types.SET_LOADING:
+      return {
+        ...state,
+        loading: payload,
+      };
     case types.RUN_SEARCH:
       return {
         ...state,

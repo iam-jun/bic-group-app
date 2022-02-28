@@ -86,16 +86,28 @@ export const completeMention = ({
   }
   DeviceEventEmitter.emit('mention-input-on-complete-mention', completedDraft);
   dispatch(actions.setData([]));
+
+  // For testing output
+  return {
+    cursorPosition,
+    completedDraft,
+  };
 };
 
 export const checkRunSearch = (text: string, groupIds: any, dispatch: any) => {
+  let flagRun = false;
+
   if (!text) return dispatch(actions.setData([]));
 
   const _matchTerm = getMatchTermForAtMention(text);
 
   if (_matchTerm !== null && !_matchTerm.endsWith(' ')) {
+    flagRun = true;
     dispatch(actions.runSearch({group_ids: groupIds, key: _matchTerm}));
   } else {
     dispatch(actions.setData([]));
   }
+
+  // For testing output
+  return flagRun;
 };

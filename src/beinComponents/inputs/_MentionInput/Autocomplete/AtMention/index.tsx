@@ -16,7 +16,6 @@ import {AutocompleteProps} from '../../Autocomplete';
 import {
   checkRunSearch,
   completeMention,
-  getMatchTermForAtMention,
   ICursorPositionChange,
 } from '../../helper';
 import actions from '../../redux/actions';
@@ -70,16 +69,7 @@ const AtMention = ({
     groupIds,
   }: ICursorPositionChange) => {
     text.current = value;
-    const _text = value.substring(0, position);
-    if (!text) return dispatch(actions.setData([]));
-
-    const _matchTerm = getMatchTermForAtMention(_text);
-
-    if (_matchTerm !== null && !_matchTerm.endsWith(' ')) {
-      dispatch(actions.runSearch({group_ids: groupIds, key: _matchTerm}));
-    } else {
-      dispatch(actions.setData([]));
-    }
+    checkRunSearch(value.substring(0, position), groupIds, dispatch);
   };
 
   const _completeMention = (item: any) => {
