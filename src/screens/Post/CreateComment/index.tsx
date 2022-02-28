@@ -1,31 +1,32 @@
 import React, {FC, useRef, useEffect, useState} from 'react';
-import {Keyboard, ScrollView, StyleSheet} from 'react-native';
+import {Keyboard, Platform, ScrollView, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import {ITheme} from '~/theme/interfaces';
-
+import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
+import * as modalActions from '~/store/modal/actions';
+import {useRootNavigation} from '~/hooks/navigation';
+import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
 import {
   IActivityData,
   IActivityDataImage,
   ICreatePostImage,
   IReaction,
 } from '~/interfaces/IPost';
-import * as modalActions from '~/store/modal/actions';
-import {useRootNavigation} from '~/hooks/navigation';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostInput from '~/beinComponents/inputs/PostInput';
-import i18n from '~/localization';
 import _MentionInput from '~/beinComponents/inputs/_MentionInput';
 import CommentToolbar from '~/screens/Post/components/CommentToolbar';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import UploadingImage from '~/beinComponents/UploadingImage';
-import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
+import MentionBar from '~/beinComponents/inputs/_MentionInput/MentionBar';
+import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 
 export interface CreateCommentProps {
   route?: {
@@ -44,6 +45,7 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   const {commentId, groupIds} = route?.params || {};
 
   const dispatch = useDispatch();
+  const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
   const {dimension} = theme;
@@ -135,12 +137,12 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
     if (isEditHasChange) {
       dispatch(
         modalActions.showAlert({
-          title: i18n.t('common:label_discard_changes'),
-          content: i18n.t('common:text_discard_warning'),
+          title: t('common:label_discard_changes'),
+          content: t('common:text_discard_warning'),
           showCloseButton: true,
           cancelBtn: true,
-          cancelLabel: i18n.t('common:btn_continue_editing'),
-          confirmLabel: i18n.t('common:btn_discard'),
+          cancelLabel: t('common:btn_continue_editing'),
+          confirmLabel: t('common:btn_discard'),
           onConfirm: () => rootNavigation.goBack(),
           stretchOnWeb: true,
         }),
@@ -204,6 +206,7 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
       <ScrollView keyboardShouldPersistTaps={'handled'}>
         <_MentionInput
           groupIds={groupIds || ''}
+          disableAutoComplete={Platform.OS !== 'web'}
           mentionInputRef={mentionInputRef}
           style={styles.flex1}
           textInputStyle={styles.flex1}
@@ -213,19 +216,21 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
             value: content,
             loading: loading,
             isHandleUpload: true,
-            placeholder: i18n.t('post:placeholder_write_comment'),
+            placeholder: t('post:placeholder_write_comment'),
             onChangeText,
           }}
           autocompleteProps={{
             modalPosition: 'top',
-            title: i18n.t('post:mention_title'),
-            emptyContent: i18n.t('post:mention_empty_content'),
+            title: t('post:mention_title'),
+            emptyContent: t('post:mention_empty_content'),
             modalStyle: styles.mentionInputModal,
           }}
         />
         {renderImage()}
       </ScrollView>
       {showToolbar && <CommentToolbar onSelectImage={onSelectImage} />}
+      {Platform.OS !== 'web' && <MentionBar />}
+      <KeyboardSpacer iosOnly />
     </ScreenWrapper>
   );
 };

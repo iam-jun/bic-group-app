@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -7,6 +7,7 @@ import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 
 interface CommentToolbarProps {
+  style?: StyleProp<ViewStyle>;
   onSelectImage?: () => void;
   onSelectFile?: () => void;
   onSelectGif?: () => void;
@@ -14,6 +15,7 @@ interface CommentToolbarProps {
 }
 
 const CommentToolbar: FC<CommentToolbarProps> = ({
+  style,
   onSelectImage,
   onSelectFile,
   onSelectGif,
@@ -27,7 +29,7 @@ const CommentToolbar: FC<CommentToolbarProps> = ({
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       {!!onSelectImage && (
         <Button
           testID={'comment_toolbar.btn_image'}
@@ -75,7 +77,7 @@ const createStyle = (theme: ITheme) => {
       paddingHorizontal: spacing.padding.large,
       backgroundColor: colors.background,
       borderTopWidth: 1,
-      borderColor: colors.bgFocus,
+      borderColor: colors.borderFocus,
     },
     button: {
       padding: 2,
