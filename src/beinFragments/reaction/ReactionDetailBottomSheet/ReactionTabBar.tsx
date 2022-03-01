@@ -91,7 +91,10 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
     const emoji = NodeEmoji.find(reactionType || '')?.emoji || '';
     return (
       <View>
-        <Button style={styles.tabItem} onPress={() => _onPressTab(index)}>
+        <Button
+          testID="reaction_detail_bottomSheet.react_item"
+          style={styles.tabItem}
+          onPress={() => _onPressTab(index)}>
           <Text.H5 color={isActive ? colors.primary7 : colors.textPrimary}>
             {emoji}
           </Text.H5>
