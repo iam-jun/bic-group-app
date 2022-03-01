@@ -74,6 +74,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
     user_id,
     data,
     created_at,
+    updated_at,
     user,
     children_counts,
     own_children,
@@ -395,7 +396,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                       </Text.H6>
                     )}
                     <TimeView
-                      time={created_at}
+                      time={edited ? updated_at : created_at}
                       style={styles.textTime}
                       type="short"
                       textProps={{variant: 'h6'}}
