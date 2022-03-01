@@ -59,7 +59,11 @@ const postActions = {
     type: postTypes.SET_CREATE_POST_DATA_IMAGES,
     payload,
   }),
-  setCreateComment: (payload: {loading?: boolean; content?: string}) => ({
+  setCreateComment: (payload: {
+    loading?: boolean;
+    content?: string;
+    image?: any;
+  }) => ({
     type: postTypes.SET_CREATE_COMMENT,
     payload,
   }),

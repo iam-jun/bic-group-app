@@ -86,7 +86,11 @@ const AddWork = () => {
   }, [selectedWorkItem]);
 
   useEffect(() => {
-    isWorkHere && setEndDateValue(null);
+    if (isWorkHere) {
+      setEndDateValue(null);
+    } else {
+      setEndDateValue(endDate || null);
+    }
   }, [isWorkHere]);
 
   const navigateBack = () => {
@@ -96,19 +100,6 @@ const AddWork = () => {
     } else {
       rootNavigation.replace(mainStack.userEdit);
     }
-  };
-
-  const resetData = () => {
-    setCompanyValue(selectedWorkItem?.company || '');
-    setPositionValue(selectedWorkItem?.titlePosition || '');
-    setLocationValue(selectedWorkItem?.location || '');
-    setDescriptionValue(selectedWorkItem?.description || '');
-    setIsWorkHere(value => {
-      if (isEmpty(selectedWorkItem)) return true;
-      return selectedWorkItem?.currently_work_here;
-    });
-    setStartDateValue(selectedWorkItem?.startDate || new Date().toISOString());
-    setEndDateValue(selectedWorkItem?.endDate || null);
   };
 
   const onSave = () => {
@@ -153,7 +144,6 @@ const AddWork = () => {
       : dispatch(
           menuActions.addWorkExperience(data, () => {
             navigateBack();
-            resetData();
           }),
         );
   };
@@ -364,10 +354,7 @@ const AddWork = () => {
           borderRadius: theme.spacing.borderRadius.small,
         }}
         onPressButton={onSave}
-        onPressBack={() => {
-          resetData();
-          navigateBack();
-        }}
+        onPressBack={navigateBack}
       />
 
       <ScrollView
