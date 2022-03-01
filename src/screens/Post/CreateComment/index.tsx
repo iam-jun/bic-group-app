@@ -82,7 +82,7 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   const isImageHasChange =
     selectedImg?.fileName !== oldImages?.[0]?.origin_name;
   const isEditHasChange = isImageHasChange || isContentHasChange;
-  const isEmpty = !content && !selectedImg?.fileName;
+  const isEmpty = !content?.trim?.() && !selectedImg?.fileName;
 
   const disableButton =
     (!isContentHasChange && !isImageHasChange) ||
