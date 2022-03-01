@@ -71,7 +71,13 @@ const MentionBar: FC<MentionBarProps> = ({
   };
 
   const renderItem = ({item}: any) => {
-    return <MentionBarItem data={item} onPress={onPressItem} />;
+    return (
+      <MentionBarItem
+        testID="mention_bar.item"
+        data={item}
+        onPress={onPressItem}
+      />
+    );
   };
 
   if (!data?.length) {
@@ -79,14 +85,16 @@ const MentionBar: FC<MentionBarProps> = ({
   }
 
   return (
-    <View style={[styles.container, style]}>
+    <View testID="mention_bar" style={[styles.container, style]}>
       <FlatList
+        testID="mention_bar.list"
         horizontal
         showsHorizontalScrollIndicator={false}
         data={data}
         keyboardShouldPersistTaps={'handled'}
         ItemSeparatorComponent={() => (
           <Divider
+            testID="mention_bar.list.divider"
             horizontal
             style={{marginVertical: spacing.margin.small}}
             color={colors.borderFocus}
