@@ -1,8 +1,5 @@
 import {DeviceEventEmitter, Platform} from 'react-native';
-import {
-  AT_MENTION_REGEX,
-  AT_MENTION_SEARCH_REGEX,
-} from '~/constants/autocomplete';
+import {AT_MENTION_REGEX} from '~/constants/autocomplete';
 import actions from '~/beinComponents/inputs/_MentionInput/redux/actions';
 
 export interface ICursorPositionChange {
@@ -14,10 +11,9 @@ export interface ICursorPositionChange {
 export const getMatchTermForAtMention = (() => {
   let lastMatchTerm: string | null = null;
   let lastValue: string;
-  let lastIsSearch: boolean;
-  return (value: string, isSearch: boolean): string | null => {
-    if (value !== lastValue || isSearch !== lastIsSearch) {
-      const regex = isSearch ? AT_MENTION_SEARCH_REGEX : AT_MENTION_REGEX;
+  return (value: string): string | null => {
+    if (value !== lastValue) {
+      const regex = AT_MENTION_REGEX;
       let term = value;
       if (term.startsWith('from: @') || term.startsWith('from:@')) {
         term = term.replace('@', '');
@@ -25,9 +21,8 @@ export const getMatchTermForAtMention = (() => {
 
       const match = term.match(regex);
       lastValue = value;
-      lastIsSearch = isSearch;
       if (match) {
-        lastMatchTerm = (isSearch ? match[1] : match[2]).toLowerCase();
+        lastMatchTerm = match[2].toLowerCase();
       } else {
         lastMatchTerm = null;
       }
@@ -91,14 +86,28 @@ export const completeMention = ({
   }
   DeviceEventEmitter.emit('mention-input-on-complete-mention', completedDraft);
   dispatch(actions.setData([]));
+
+  // For testing output
+  return {
+    cursorPosition,
+    completedDraft,
+  };
 };
 
 export const checkRunSearch = (text: string, groupIds: any, dispatch: any) => {
-  const _matchTerm = getMatchTermForAtMention(text, false);
+  let flagRun = false;
+
+  if (!text) return dispatch(actions.setData([]));
+
+  const _matchTerm = getMatchTermForAtMention(text);
 
   if (_matchTerm !== null && !_matchTerm.endsWith(' ')) {
+    flagRun = true;
     dispatch(actions.runSearch({group_ids: groupIds, key: _matchTerm}));
   } else {
     dispatch(actions.setData([]));
   }
+
+  // For testing output
+  return flagRun;
 };
