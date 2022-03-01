@@ -43,7 +43,6 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
-  const {navigation} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {colors, dimension} = theme;
   const styles = createStyle(theme);
@@ -63,12 +62,16 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
     }
   }, [avatar]);
 
-  const onPressCreate = () => {
-    const params: ICreatePostParams = {createFromGroupId};
+  const navigateToCreatePost = (name = homeStack.createPost, param = {}) => {
+    const params: ICreatePostParams = {createFromGroupId, ...param};
     if (audience) {
       params.initAudience = audience;
     }
-    navigation.navigate(homeStack.createPost, params);
+    rootNavigation.navigate(name, params as any);
+  };
+
+  const onPressCreate = () => {
+    navigateToCreatePost(homeStack.postSelectAudience, {isFirstStep: true});
   };
 
   const onPressDraft = () => {
@@ -76,7 +79,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   };
 
   const onPressImage = () => {
-    rootNavigation.navigate(homeStack.createPost);
+    navigateToCreatePost();
     ImagePicker.openPickerMultiple().then(images => {
       const newImages: ICreatePostImage[] = [];
       images.map(item => {
