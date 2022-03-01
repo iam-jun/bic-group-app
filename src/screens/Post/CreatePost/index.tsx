@@ -543,7 +543,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       if (
         (!newContent &&
           images.length === 0 &&
-          chosenAudiences.length < 2 &&
+          chosenAudiences.length < 1 &&
           !important?.active &&
           !sPostId) ||
         !isAutoSave ||
