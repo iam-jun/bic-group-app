@@ -465,10 +465,13 @@
     "create_post": {
       "title_discard_changes": "Discard Changes",
       "title_audience_changed": "Audience has changed",
+      "title_discard_audience": "Discard Audiences",
+      "text_discard_audience": "If you discard now, you’ll lose all your selection.",
       "text_discard_change": "Are you sure to want to discard changes?",
       "text_discard_change_audience": "Are you sure to change the audience? This change will also effect on post's permission",
       "btn_save_change": "Save Changes",
-      "btn_keep_edit": "Keep Editing"
+      "btn_keep_edit": "Keep Editing",
+      "btn_keep_selecting": "Keep Selecting"
     },
     "draft": {
       "btn_post_now": "Post Now",

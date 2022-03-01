@@ -402,10 +402,13 @@
     "create_post": {
       "title_discard_changes": "Huỷ thay đổi",
       "title_audience_changed": "Đối tượng đã thay đổi",
+      "title_discard_audience": "Bỏ chọn đối tượng",
+      "text_discard_audience": "Nếu huỷ bỏ, bạn sẽ mất những đối tượng bài viết đã chọn",
       "text_discard_change": "Bạn có chắc muốn huỷ những thay đổi?",
       "text_discard_change_audience": "Bạn có chắc muốn đổi đối tượng? Thay đổi này đồng thời sẽ ảnh hưởng tới quyền của bài viết",
       "btn_save_change": "Lưu thay đổi",
-      "btn_keep_edit": "Tiếp tục sửa"
+      "btn_keep_edit": "Tiếp tục sửa",
+      "btn_keep_selecting": "Tiếp tục chọn"
     },
     "draft": {
       "btn_post_now": "Đăng ngay",
