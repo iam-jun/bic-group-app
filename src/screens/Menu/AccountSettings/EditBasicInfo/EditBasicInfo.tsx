@@ -221,7 +221,9 @@ const EditBasicInfo = () => {
           contentStyle={styles.buttonDropDownContent}
           rightIcon={'AngleDown'}
           onPress={e => onGenderEditOpen(e)}>
-          {titleCase(genderState) || i18next.t('common:text_not_set')}
+          {!!genderState
+            ? i18next.t(genders[genderState])
+            : i18next.t('common:text_not_set')}
         </Button>
         <TitleComponent icon="Calender" title="settings:title_birthday" />
         <Button
