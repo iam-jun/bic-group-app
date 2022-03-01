@@ -402,10 +402,13 @@
     "create_post": {
       "title_discard_changes": "Huỷ thay đổi",
       "title_audience_changed": "Đối tượng đã thay đổi",
+      "title_discard_audience": "Bỏ chọn đối tượng",
+      "text_discard_audience": "Nếu huỷ bỏ, bạn sẽ mất những đối tượng bài viết đã chọn",
       "text_discard_change": "Bạn có chắc muốn huỷ những thay đổi?",
       "text_discard_change_audience": "Bạn có chắc muốn đổi đối tượng? Thay đổi này đồng thời sẽ ảnh hưởng tới quyền của bài viết",
       "btn_save_change": "Lưu thay đổi",
-      "btn_keep_edit": "Tiếp tục sửa"
+      "btn_keep_edit": "Tiếp tục sửa",
+      "btn_keep_selecting": "Tiếp tục chọn"
     },
     "draft": {
       "btn_post_now": "Đăng ngay",
@@ -424,7 +427,8 @@
       "title_delete_comment": "Xoá bình luận",
       "text_delete_comment": "Nếu xoá, toàn bộ trả lời của bình luận này cũng sẽ bị xoá. Bạn có muốn tiếp tục?",
       "text_delete_comment_error": "Xoá bình luận thất bại!",
-      "text_delete_comment_success": "Bình luận đã được xoá"
+      "text_delete_comment_success": "Bình luận đã được xoá",
+      "text_edited": "Đã sửa"
     },
     "settings": "Thiết lập bài viết",
     "people_can_comment": "Mọi người có thể bình luận trên bài viết",

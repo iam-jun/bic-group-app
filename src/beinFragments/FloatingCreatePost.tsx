@@ -15,6 +15,7 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
+import {ISelectAudienceParams} from '~/screens/Post/PostSelectAudience/SelectAudienceHelper';
 
 export interface FloatingCreatePostProps {
   audience?: any;
@@ -49,11 +50,14 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
   }, []);
 
   const onPress = () => {
-    const params: any = {createFromGroupId};
+    const params: ISelectAudienceParams = {
+      createFromGroupId,
+      isFirstStep: true,
+    };
     if (audience) {
       params.initAudience = audience;
     }
-    rootNavigation.navigate(homeStack.createPost, params);
+    rootNavigation.navigate(homeStack.postSelectAudience, params as any);
   };
 
   const containerStyle = useAnimatedStyle(() => ({

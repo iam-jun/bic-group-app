@@ -7,7 +7,6 @@ import uuid from 'react-native-uuid';
 import CommentInput, {
   ICommentInputSendParam,
 } from '~/beinComponents/inputs/CommentInput';
-import MentionInput from '~/beinComponents/inputs/MentionInput';
 import _MentionInput from '~/beinComponents/inputs/_MentionInput';
 
 import {useBaseHook} from '~/hooks';
@@ -95,7 +94,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   const _onCommentSuccess = () => {
     _commentInputRef?.current?.clear?.();
-    mentionInputRef?.current?.setContent?.('');
+    mentionInputRef?.current?.setContent?.('', false);
   };
 
   const onPressSend = (sendData?: ICommentInputSendParam) => {
