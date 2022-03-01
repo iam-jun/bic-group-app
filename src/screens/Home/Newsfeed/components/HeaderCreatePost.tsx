@@ -26,6 +26,7 @@ import ImagePicker from '~/beinComponents/ImagePicker';
 import appConfig from '~/configs/appConfig';
 import {showHideToastMessage} from '~/store/modal/actions';
 import postActions from '~/screens/Post/redux/actions';
+import {ISelectAudienceParams} from '~/screens/Post/PostSelectAudience/SelectAudienceHelper';
 
 export interface HeaderCreatePostProps {
   audience?: any;
@@ -62,16 +63,21 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
     }
   }, [avatar]);
 
-  const navigateToCreatePost = (name = homeStack.createPost, param = {}) => {
-    const params: ICreatePostParams = {createFromGroupId, ...param};
+  const navigateToCreatePost = () => {
+    let screen = homeStack.createPost;
+    const params: ISelectAudienceParams = {createFromGroupId};
     if (audience) {
       params.initAudience = audience;
     }
-    rootNavigation.navigate(name, params as any);
+    if (!createFromGroupId) {
+      screen = homeStack.postSelectAudience;
+      params.isFirstStep = true;
+    }
+    rootNavigation.navigate(screen, params as any);
   };
 
   const onPressCreate = () => {
-    navigateToCreatePost(homeStack.postSelectAudience, {isFirstStep: true});
+    navigateToCreatePost();
   };
 
   const onPressDraft = () => {
