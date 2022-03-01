@@ -81,6 +81,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     replaceWithDetail,
     initAudience,
     createFromGroupId,
+    initAutoSaveDraft,
   } = route?.params || {};
   let deviceVersion = 0;
   const isAndroid = Platform.OS === 'android';
@@ -275,16 +276,22 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   }, [initPostData?.id]);
 
   useEffect(() => {
-    dispatch(postActions.clearCreatPostData());
-    dispatch(postActions.setSearchResultAudienceGroups([]));
-    dispatch(postActions.setSearchResultAudienceUsers([]));
+    // disable clear data for flow select audience before create post
+    // dispatch(postActions.clearCreatPostData());
+    // dispatch(postActions.setSearchResultAudienceGroups([]));
+    // dispatch(postActions.setSearchResultAudienceUsers([]));
     if (initAudience?.id) {
       dispatch(
         postActions.setCreatePostChosenAudiences(new Array(initAudience)),
       );
     }
+    if (initAutoSaveDraft) {
+      autoSaveDraftPost();
+    }
     return () => {
       dispatch(postActions.clearCreatPostData());
+      dispatch(postActions.setSearchResultAudienceGroups([]));
+      dispatch(postActions.setSearchResultAudienceUsers([]));
       dispatch(postActions.setCreatePostImagesDraft([]));
     };
   }, []);

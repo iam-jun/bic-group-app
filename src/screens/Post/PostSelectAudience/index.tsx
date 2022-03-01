@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, FC} from 'react';
 import {View, StyleSheet, SectionList, ActivityIndicator} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -28,8 +28,21 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import {isEqual} from 'lodash';
 import modalActions from '~/store/modal/actions';
 import i18n from '~/localization';
+import {ISelectAudienceParams} from './SelectAudienceHelper';
+import {ICreatePostParams} from '~/interfaces/IPost';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
-const PostSelectAudience = () => {
+export interface PostSelectAudienceProps {
+  route?: {
+    params?: ISelectAudienceParams;
+  };
+}
+
+const PostSelectAudience: FC<PostSelectAudienceProps> = ({
+  route,
+}: PostSelectAudienceProps) => {
+  const {isFirstStep, ...createPostParams} = route?.params || {};
+
   const [lossInternet, setLossInternet] = useState(false);
   const [loading, setLoading] = useState(true);
   const [selectingAudiences, setSelectingAudiences] = useState<
@@ -106,10 +119,15 @@ const PostSelectAudience = () => {
   };
 
   useEffect(() => {
+    if (isFirstStep) {
+      dispatch(postActions.clearCreatPostData());
+      dispatch(postActions.setSearchResultAudienceGroups([]));
+      dispatch(postActions.setSearchResultAudienceUsers([]));
+    }
     if (initAudiences) {
       handleSearchResult(initAudiences);
       setLoading(false);
-    } else if (sectionListData.length === 0) {
+    } else if (sectionListData.length === 0 || isFirstStep) {
       onSearch('');
     } else {
       setLoading(false);
@@ -152,7 +170,15 @@ const PostSelectAudience = () => {
   }, [selectingUsers]);
 
   const onPressSave = () => {
-    if (isEditAudience) {
+    // first step in flow select audience before create post
+    if (isFirstStep) {
+      dispatch(postActions.setCreatePostChosenAudiences(selectingAudiences));
+      const params: ICreatePostParams = {
+        ...createPostParams,
+        initAutoSaveDraft: true,
+      };
+      rootNavigation.replace(homeStack.createPost, params as any);
+    } else if (isEditAudience) {
       if (isAudiencesHasChanged) {
         dispatch(
           modalActions.showAlert({
@@ -182,7 +208,24 @@ const PostSelectAudience = () => {
   };
 
   const onPressBack = () => {
-    if (isEditAudience) {
+    if (isFirstStep) {
+      if (isAudiencesHasChanged) {
+        dispatch(
+          modalActions.showAlert({
+            title: i18n.t('post:create_post:title_discard_audience'),
+            content: i18n.t('post:create_post:text_discard_audience'),
+            showCloseButton: true,
+            cancelBtn: true,
+            cancelLabel: i18n.t('common:btn_discard'),
+            confirmLabel: i18n.t('post:create_post:btn_keep_selecting'),
+            onDismiss: () => rootNavigation.goBack(),
+            stretchOnWeb: true,
+          }),
+        );
+      } else {
+        rootNavigation.goBack();
+      }
+    } else if (isEditAudience || isFirstStep) {
       if (isAudiencesHasChanged) {
         dispatch(
           modalActions.showAlert({
@@ -362,7 +405,7 @@ const PostSelectAudience = () => {
       <Header
         title={'post:select_audience'}
         titleTextProps={{useI18n: true}}
-        buttonText={'common:btn_done'}
+        buttonText={isFirstStep ? 'common:btn_next' : 'common:btn_done'}
         buttonProps={{
           useI18n: true,
           disabled: disableButtonSave,
