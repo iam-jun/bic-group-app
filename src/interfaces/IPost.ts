@@ -368,6 +368,7 @@ export interface ICreatePostParams {
   replaceWithDetail?: boolean;
   initAudience?: any;
   createFromGroupId?: number;
+  initAutoSaveDraft?: boolean;
 }
 
 export interface IPayloadReplying {

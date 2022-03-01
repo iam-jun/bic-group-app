@@ -14,6 +14,12 @@ export default {
       payload,
     };
   },
+  setLoading: (payload: boolean) => {
+    return {
+      type: types.SET_LOADING,
+      payload,
+    };
+  },
   runSearch: (payload: IParamSearchMentionAudiences) => {
     return {
       type: types.RUN_SEARCH,

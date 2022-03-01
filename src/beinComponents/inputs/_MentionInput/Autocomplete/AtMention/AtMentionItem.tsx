@@ -11,12 +11,12 @@ import {ITheme} from '~/theme/interfaces';
 import actions from '../../redux/actions';
 
 interface Props {
-  item: any;
   testID?: string;
+  item: any;
   onPress: (item: any) => void;
 }
 
-const AtMentionItem = ({item, testID, onPress}: Props) => {
+const AtMentionItem = ({item, onPress}: Props) => {
   const dispatch = useDispatch();
   const {highlightItem} = useKeySelector('mentionInput');
 
@@ -49,7 +49,9 @@ const AtMentionItem = ({item, testID, onPress}: Props) => {
 
     return (
       <Div onMouseOver={onHoverItem} onMouseLeave={onLeaveItem}>
-        <TouchableOpacity onPress={_onPressItem}>
+        <TouchableOpacity
+          testID="at_mention_item.item_all"
+          onPress={_onPressItem}>
           <View style={[styles.mentionAll, {backgroundColor}]}>
             <Text.ButtonBase style={styles.textMentionAll}>
               @all
@@ -65,13 +67,14 @@ const AtMentionItem = ({item, testID, onPress}: Props) => {
 
   return (
     <Div
+      testID={'at_mention_item'}
       style={{backgroundColor}}
       onMouseOver={onHoverItem}
       onMouseLeave={onLeaveItem}>
       <TouchableOpacity
         style={styles.container}
         onPress={_onPressItem}
-        testID={testID}>
+        testID={'at_mention_item.touchable'}>
         <Avatar.Medium
           style={styles.avatar}
           source={item.avatar || item.icon}

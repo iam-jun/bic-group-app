@@ -256,7 +256,7 @@ const _PostDetailContent = (props: any) => {
         sectionData?.map?.((section, index) => {
           if (section?.comment?.id === parentCommentId) {
             sectionIndex = index;
-            itemIndex = (section?.data?.length || 0) + 1;
+            itemIndex = section?.data?.length || 0;
           }
         });
       } else {

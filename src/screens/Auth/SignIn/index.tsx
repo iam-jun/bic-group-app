@@ -182,7 +182,7 @@ const SignIn = () => {
                   value={value}
                   error={errors.email}
                   onChangeText={text => {
-                    onChange(text);
+                    onChange(text?.trim?.());
                     clearFieldError('email');
                     checkDisableSignIn();
                   }}
