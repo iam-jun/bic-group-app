@@ -53,6 +53,7 @@ const UserProfile = (props: any) => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const [avatarState, setAvatarState] = useState<string>(avatar);
   const [bgImgState, setBgImgState] = useState<string>(background_img_url);
+  const [isChangeImg, setIsChangeImg] = useState<string>('');
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme, coverHeight);
@@ -64,8 +65,15 @@ const UserProfile = (props: any) => {
 
   const getUserProfile = () => {
     dispatch(menuActions.clearUserProfile());
-    if (!!userId) dispatch(menuActions.getUserProfile({userId, params}));
+    if (!!userId) {
+      dispatch(menuActions.getUserProfile({userId, params}));
+    }
   };
+
+  useEffect(() => {
+    setAvatarState(userProfileData?.avatar);
+    setBgImgState(userProfileData?.background_img_url);
+  }, [userProfileData]);
 
   useEffect(() => {
     isFocused && getUserProfile();
@@ -74,15 +82,26 @@ const UserProfile = (props: any) => {
       userId?.toString?.() === currentUserId?.toString?.() ||
       userId?.toString?.() === currentUsername?.toString?.()
     ) {
-      if (avatarState !== _avatar) {
-        setAvatarState(_avatar);
+      if (avatarState !== _avatar || _bgIm !== bgImgState) {
+        dispatch(menuActions.getMyProfile({userId, params}));
         dispatch(homeActions.getHomePosts({isRefresh: true}));
       }
-      if (_bgIm !== bgImgState) {
-        setBgImgState(_bgIm);
+    }
+  }, [isFocused, userId]);
+
+  useEffect(() => {
+    if (
+      userId?.toString?.() === currentUserId?.toString?.() ||
+      userId?.toString?.() === currentUsername?.toString?.()
+    ) {
+      if (isChangeImg === 'avatar') {
+        dispatch(homeActions.getHomePosts({isRefresh: true}));
+        setAvatarState(myProfileData?.avatar);
+      } else if (isChangeImg === 'background_img_url') {
+        setBgImgState(myProfileData?.background_img_url);
       }
     }
-  }, [isFocused, userId, myProfileData]);
+  }, [myProfileData]);
 
   const onEditProfileButton = () =>
     rootNavigation.navigate(mainStack.userEdit, {userId, params});
@@ -93,12 +112,17 @@ const UserProfile = (props: any) => {
     uploadType: IUploadType,
   ) => {
     dispatch(
-      menuActions.uploadImage({
-        id,
-        file,
-        fieldName,
-        uploadType,
-      }),
+      menuActions.uploadImage(
+        {
+          id,
+          file,
+          fieldName,
+          uploadType,
+        },
+        () => {
+          setIsChangeImg(fieldName);
+        },
+      ),
     );
   };
 

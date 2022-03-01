@@ -312,7 +312,7 @@ const AddWork = () => {
             />
 
             <Text.BodyS testID="add_work.end_date" color={colors.textSecondary}>
-              {(endDateValue && formatDate(endDateValue, 'MMM Do, YYYY')) ||
+              {(endDateValue && formatDate(endDateValue, 'MMMM DD, YYYY')) ||
                 i18next.t('common:text_not_set')}
             </Text.BodyS>
           </ButtonWrapper>
