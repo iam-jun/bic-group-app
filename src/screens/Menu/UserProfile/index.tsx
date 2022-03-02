@@ -344,6 +344,11 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       position: 'absolute',
       bottom: 0,
       right: spacing?.margin.small,
+      ...Platform.select({
+        web: {
+          right: 0,
+        },
+      }),
     },
     buttonEdit: {
       marginHorizontal: spacing.margin.large,

@@ -60,13 +60,18 @@
     },
     "message_remove_member_success": "Đã xóa {n} khỏi nhóm",
     "label_discard_changes": "Huỷ thay đổi",
+    "text_not_saved_changes_warning": "Những thay đổi của bạn chưa được lưu. Bạn có muốn huỷ bỏ những thay đổi này?",
     "text_discard_warning": "Nếu bạn hủy thay đổi, bạn sẽ mất những thay đổi mà bạn đã thực hiện",
     "btn_continue_editing": "Tiếp tục chỉnh sửa",
     "text_updated_successfully": "cập nhật thành công",
     "text_save": "Lưu",
     "text_add": "Thêm",
     "text_start_date": "Ngày bắt đầu",
-    "text_end_date": "Ngày kết thúc"
+    "text_end_date": "Ngày kết thúc",
+    "text_present": "Hiện tại",
+        "text_group": "Nhóm",
+    "text_at": "tại",
+    "text_to": "tới"
   },
   "auth": {
     "text_kickout_title": "Notice",

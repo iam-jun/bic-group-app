@@ -169,6 +169,7 @@ const AddWork = () => {
   };
 
   const onToggleCurrentlyWorkHere = () => {
+    Keyboard.dismiss();
     setIsWorkHere(!isWorkHere);
   };
 

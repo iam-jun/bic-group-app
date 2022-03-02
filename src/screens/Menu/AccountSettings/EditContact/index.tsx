@@ -164,7 +164,7 @@ const EditContact = () => {
         }}
         onPressButton={onSave}
       />
-      <ScrollView keyboardShouldPersistTaps="handled" scrollEnabled={false}>
+      <ScrollView keyboardShouldPersistTaps="always" scrollEnabled={false}>
         <View style={styles.infoItem}>
           <EditPhoneNumber
             countryCode={country_code}
