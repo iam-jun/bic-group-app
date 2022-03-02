@@ -152,7 +152,14 @@ const requestEditMyProfile = async (data: IUserEdit) => {
   return response.data;
 };
 
-function* uploadImage({payload}: {type: string; payload: IUserImageUpload}) {
+function* uploadImage({
+  payload,
+  callback,
+}: {
+  type: string;
+  payload: IUserImageUpload;
+  callback?: () => void;
+}) {
   try {
     const {file, id, fieldName, uploadType} = payload;
     yield updateLoadingImageState(fieldName, true);
@@ -163,6 +170,7 @@ function* uploadImage({payload}: {type: string; payload: IUserImageUpload}) {
     });
 
     yield put(menuActions.editMyProfile({id, [fieldName]: data}));
+    if (callback) return callback();
   } catch (err) {
     console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
     yield updateLoadingImageState(payload.fieldName, false);

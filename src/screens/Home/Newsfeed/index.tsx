@@ -23,6 +23,8 @@ import homeKeySelector from '~/screens/Home/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
 import appActions from '~/store/app/actions';
 import {deviceDimensions} from '~/theme/dimension';
+import menuActions from '~/screens/Menu/redux/actions';
+import {useUserIdAuth} from '~/hooks/auth';
 
 import {ITheme} from '~/theme/interfaces';
 import NewsfeedSearch from '~/screens/Home/Newsfeed/NewsfeedSearch';
@@ -55,6 +57,8 @@ const Newsfeed = () => {
   const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
   const noMoreHomePosts = useKeySelector(homeKeySelector.noMoreHomePosts);
   const homePosts = useKeySelector(homeKeySelector.homePosts) || [];
+
+  const currentUserId = useUserIdAuth();
 
   const isFocused = useIsFocused();
 
@@ -100,6 +104,10 @@ const Newsfeed = () => {
       setLossInternet(true);
     }
   }, [isInternetReachable]);
+
+  useEffect(() => {
+    dispatch(menuActions.getMyProfile({userId: currentUserId}));
+  }, []);
 
   const onShowSearch = (isShow: boolean, searchInputRef?: any) => {
     if (isShow) {
