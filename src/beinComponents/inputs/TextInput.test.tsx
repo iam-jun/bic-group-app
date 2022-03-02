@@ -37,7 +37,7 @@ describe('TextInput component', () => {
     );
   });
 
-  it(`should show "TextInput" disabled`, async () => {
+  it(`onChangeText should be called`, async () => {
     const onChangeText = jest.fn();
     const props = {
       onChangeText,
