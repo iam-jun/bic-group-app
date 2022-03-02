@@ -55,6 +55,7 @@ jest.doMock('react-native-paper', () => ({
       dimension: dimension,
     };
   },
+  TextInput: ReactNative.TextInput,
 }));
 
 jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
