@@ -219,11 +219,20 @@ const _PostDetailContent = (props: any) => {
         itemIndex = sectionData?.[sectionIndex]?.data?.length || 0;
       }
 
-      listRef?.current?.scrollToLocation?.({
-        itemIndex: itemIndex,
-        sectionIndex: sectionIndex,
-        animated: true,
-      });
+      try {
+        listRef?.current?.scrollToLocation?.({
+          itemIndex: itemIndex,
+          sectionIndex: sectionIndex,
+          animated: true,
+        });
+      } catch (error) {
+        // scroll to the first comment to avoid scroll error
+        listRef?.current?.scrollToLocation?.({
+          itemIndex: 0,
+          sectionIndex: 0,
+          animated: true,
+        });
+      }
     }
   };
 
