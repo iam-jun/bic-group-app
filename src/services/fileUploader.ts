@@ -121,6 +121,7 @@ export default class FileUploader {
       } else {
         onError?.(response?.data);
         this.callbackError?.[file.name]?.(response?.data);
+        console.log(`\x1b[31m🐣️ fileUploader upload err`, response, `\x1b[0m`);
         return Promise.reject(response?.data);
       }
     } catch (e) {

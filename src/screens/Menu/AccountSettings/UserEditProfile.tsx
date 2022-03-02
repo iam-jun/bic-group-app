@@ -40,6 +40,7 @@ import {IUserWorkExperience} from '~/interfaces/IAuth';
 import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
 import {isEmpty} from 'lodash';
+import homeActions from '~/screens/Home/redux/actions';
 
 const UserEditProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
@@ -96,6 +97,7 @@ const UserEditProfile = (props: any) => {
         userId?.toString?.() === currentUsername?.toString?.()) &&
       isEmpty(params)
     ) {
+      dispatch(homeActions.getHomePosts({isRefresh: true}));
       setUserData(myProfile);
     } else {
       setUserData(params);

@@ -6,6 +6,7 @@ import iconAddPost from '../../assets/icons/icon_add_post.svg';
 import iconAddSquareDone from '../../assets/icons/icon_add_square_done.svg';
 import iconAddSquareGroupFilled from '../../assets/icons/icon_add_square_gr_filled.svg';
 import iconAddSquareGroup from '../../assets/icons/icon_add_square_group.svg';
+import iconAddGif from '../../assets/icons/icon_add_gif.svg';
 import iconArrowDown from '../../assets/icons/icon_arrow_down.svg';
 import iconCheckbox from '../../assets/icons/icon_checkbox.svg';
 import iconCopy from '../../assets/icons/icon_copy.svg';
@@ -155,6 +156,7 @@ const icons = {
   iconAddSquareDone,
   iconAddSquareGroup,
   iconAddSquareGroupFilled,
+  iconAddGif,
   iconShieldStar,
   iconMenuMoon,
   iconMenuBookmark,
@@ -203,6 +205,7 @@ const icons = {
   Feedback: 'Feedback',
   Save: 'Save',
   File: 'File',
+  Video: 'Video',
   PlayVideo: iconPlay,
   Star: 'Star',
   iconStar: iconStar,

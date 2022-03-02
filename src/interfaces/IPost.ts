@@ -56,6 +56,7 @@ export interface IActivityData {
   images?: IActivityDataImage[];
   videos?: string[];
   files?: string[];
+  edited?: boolean;
 }
 
 export interface IActivityImportant {
@@ -367,6 +368,7 @@ export interface ICreatePostParams {
   replaceWithDetail?: boolean;
   initAudience?: any;
   createFromGroupId?: number;
+  initAutoSaveDraft?: boolean;
 }
 
 export interface IPayloadReplying {

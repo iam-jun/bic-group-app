@@ -360,7 +360,8 @@ function* putEditComment({
     yield postDataHelper.putEditComment(id, data);
 
     const newComment = {...comment};
-    newComment.data = Object.assign({}, newComment.data, data);
+    newComment.data = Object.assign({}, newComment.data, data, {edited: true});
+    newComment.updated_at = new Date().toISOString();
     yield put(postActions.addToAllComments(newComment));
     yield put(
       modalActions.showHideToastMessage({

@@ -75,6 +75,7 @@ const ReactionView: FC<ReactionViewProps> = ({
       if (!blacklistReactions?.[react] && _reactionCounts?.[key]) {
         rendered.push(
           <Reaction
+            testId={`reaction.button.${key}`}
             key={`${key}`}
             style={{margin: 2}}
             value={_reactionCounts[key]}
@@ -108,7 +109,7 @@ const ReactionView: FC<ReactionViewProps> = ({
     );
   } else {
     return (
-      <View style={[styles.container, style]}>
+      <View style={[styles.container, style]} testID="reaction_view">
         {renderReactions()}
         {!!onPressSelectReaction &&
           renderedReactions.length < appConfig.limitReactionCount && (

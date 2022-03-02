@@ -78,9 +78,11 @@ const _MentionInput = ({
 
   const getContent = () => componentInputProps?.value;
 
-  const _setContent = (c: string) => {
+  const _setContent = (c: string, disableFocus?: boolean) => {
     componentInputProps.onChangeText?.(c);
-    componentInputProps?.commentInputRef?.current?.focus?.();
+    if (!disableFocus) {
+      componentInputProps?.commentInputRef?.current?.focus?.();
+    }
   };
 
   useImperativeHandle(_mentionInputRef, () => ({
@@ -170,6 +172,7 @@ const _MentionInput = ({
   return (
     <>
       <View
+        testID="_mention_input"
         style={[styles.containerWrapper, style]}
         onLayout={_onLayoutContainer}>
         {Platform.OS === 'web' && (
@@ -179,7 +182,7 @@ const _MentionInput = ({
         Make sure this and the below ComponentInput share the same styling
         */
           <ComponentInput
-            useTestID={false}
+            testID="_mention_input.input.web"
             nativeID="component-input--hidden"
             multiline
             editable={!disabled}
@@ -191,6 +194,7 @@ const _MentionInput = ({
           />
         )}
         <ComponentInput
+          testID="_mention_input.input"
           {...componentInputProps}
           keyboardType={keyboardType}
           textInputRef={inputRef}
@@ -210,6 +214,7 @@ const _MentionInput = ({
       {!disableAutoComplete && (
         <Autocomplete
           {...autocompleteProps}
+          testID="_mention_input.autocomplete"
           type="mentionInput"
           topPosition={topPosition}
           measuredHeight={measuredHeight}

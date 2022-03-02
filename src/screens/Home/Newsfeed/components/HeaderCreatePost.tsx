@@ -26,6 +26,7 @@ import ImagePicker from '~/beinComponents/ImagePicker';
 import appConfig from '~/configs/appConfig';
 import {showHideToastMessage} from '~/store/modal/actions';
 import postActions from '~/screens/Post/redux/actions';
+import {ISelectAudienceParams} from '~/screens/Post/PostSelectAudience/SelectAudienceHelper';
 
 export interface HeaderCreatePostProps {
   audience?: any;
@@ -43,7 +44,6 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
-  const {navigation} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {colors, dimension} = theme;
   const styles = createStyle(theme);
@@ -63,12 +63,21 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
     }
   }, [avatar]);
 
-  const onPressCreate = () => {
-    const params: ICreatePostParams = {createFromGroupId};
+  const navigateToCreatePost = () => {
+    let screen = homeStack.createPost;
+    const params: ISelectAudienceParams = {createFromGroupId};
     if (audience) {
       params.initAudience = audience;
     }
-    navigation.navigate(homeStack.createPost, params);
+    if (!createFromGroupId) {
+      screen = homeStack.postSelectAudience;
+      params.isFirstStep = true;
+    }
+    rootNavigation.navigate(screen, params as any);
+  };
+
+  const onPressCreate = () => {
+    navigateToCreatePost();
   };
 
   const onPressDraft = () => {
@@ -76,7 +85,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   };
 
   const onPressImage = () => {
-    rootNavigation.navigate(homeStack.createPost);
+    navigateToCreatePost();
     ImagePicker.openPickerMultiple().then(images => {
       const newImages: ICreatePostImage[] = [];
       images.map(item => {

@@ -4,7 +4,6 @@ import {
   ActivityIndicator,
   DeviceEventEmitter,
   FlatList,
-  Platform,
   StyleSheet,
   View,
 } from 'react-native';
@@ -24,7 +23,7 @@ import AtMentionItem from './AtMentionItem';
 
 const DEFAULT_INDEX = -1;
 
-interface Props extends Partial<AutocompleteProps> {}
+type Props = Partial<AutocompleteProps>;
 
 const AtMention = ({
   showSpectialItems,
@@ -33,7 +32,7 @@ const AtMention = ({
 }: Props) => {
   const dispatch = useDispatch();
 
-  const {data, isLoading, highlightIndex} = useKeySelector('mentionInput');
+  const {data, loading, highlightIndex} = useKeySelector('mentionInput');
 
   const text = useRef('');
 
@@ -112,34 +111,38 @@ const AtMention = ({
   const renderEmpty = () => {
     return (
       <View style={styles.emptyContainer}>
-        {isLoading ? (
-          <ActivityIndicator color={colors.disabled} />
+        {loading ? (
+          <ActivityIndicator
+            testID="at_mention.loading"
+            color={colors.disabled}
+          />
         ) : (
-          <Text.H6 style={styles.textEmpty}>{emptyContent}</Text.H6>
+          <Text.H6 testID="at_mention.empty_content" style={styles.textEmpty}>
+            {emptyContent}
+          </Text.H6>
         )}
       </View>
     );
   };
 
-  const renderItem = ({item}: {item: any; index: number}) => {
+  const renderItem = ({item, index}: {item: any; index: number}) => {
     return (
       <AtMentionItem
+        testID={`at_mention.item_${index}`}
         item={item}
-        testID="at_mention.item"
         onPress={_completeMention}
       />
     );
   };
 
-  if (isEmpty(data)) return null;
-
   const _data = showSpectialItems ? [{username: 'all'}, ...data] : data;
 
   return (
     <FlatList
+      testID="at_mention"
       ref={listRef}
       data={_data}
-      keyExtractor={item => `list-mention-${item.id}`}
+      keyExtractor={item => `list-mention-${item.username}`}
       renderItem={renderItem}
       ListEmptyComponent={renderEmpty}
     />
@@ -150,11 +153,6 @@ const createStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
-    textTitle: {
-      marginVertical: spacing.margin.small,
-      marginHorizontal: spacing.margin.base,
-      color: colors.textSecondary,
-    },
     textEmpty: {
       color: colors.textDisabled,
       padding: spacing.padding.tiny,
@@ -164,23 +162,8 @@ const createStyles = (theme: ITheme) => {
       minHeight: 40,
       justifyContent: 'center',
     },
-    hidden: {
-      height: 0,
-      flex: undefined,
-      marginTop: 0,
-      marginBottom: 0,
-      paddingTop: 0,
-      paddingBottom: 0,
-      borderWidth: 0,
-      ...Platform.select({
-        web: {
-          border: 'none',
-          marginTop: '0px important',
-          marginBottom: '0px important',
-        },
-      }),
-    },
   });
 };
 
 export default AtMention;
+``;

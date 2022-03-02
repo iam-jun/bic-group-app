@@ -74,12 +74,13 @@ const _CommentView: React.FC<CommentViewProps> = ({
     user_id,
     data,
     created_at,
+    updated_at,
     user,
     children_counts,
     own_children,
     reactions_order,
   } = comment || commentData || {};
-  const {content} = data || {};
+  const {content, edited, images} = data || {};
   const avatar = user?.data?.avatar || '';
   const name = user?.data?.fullname || '';
 
@@ -91,7 +92,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
       ? true
       : commentStatus === 'success' || commentStatus === null;
 
-  const progress = useSharedValue(0);
+  const progress = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({opacity: progress.value}));
 
   const ViewComponent: any = Platform.OS === 'web' ? View : Animated.View;
@@ -389,10 +390,16 @@ const _CommentView: React.FC<CommentViewProps> = ({
                     </ButtonWrapper>
                   </View>
                   <View style={{flexDirection: 'row'}}>
+                    {edited && (
+                      <Text.H6 color={colors.textSecondary}>
+                        {t('post:comment:text_edited')} •{' '}
+                      </Text.H6>
+                    )}
                     <TimeView
-                      time={created_at}
+                      time={edited ? updated_at : created_at}
                       style={styles.textTime}
                       type="short"
+                      textProps={{variant: 'h6'}}
                     />
                     {/* <Icon icon="EllipsisH" size={16} style={styles.options} /> */}
                   </View>
@@ -457,6 +464,7 @@ const createStyle = (theme: ITheme) => {
     },
     textTime: {
       marginLeft: 2,
+      color: colors.textSecondary,
     },
     userName: {
       flex: 1,
