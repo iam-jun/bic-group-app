@@ -78,9 +78,9 @@ const _MentionInput = ({
 
   const getContent = () => componentInputProps?.value;
 
-  const _setContent = (c: string, disableFocus?: boolean) => {
+  const _setContent = (c: string) => {
     componentInputProps.onChangeText?.(c);
-    if (!disableFocus) {
+    if (Platform.OS === 'web') {
       componentInputProps?.commentInputRef?.current?.focus?.();
     }
   };
