@@ -92,7 +92,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
       ? true
       : commentStatus === 'success' || commentStatus === null;
 
-  const progress = useSharedValue(0);
+  const progress = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({opacity: progress.value}));
 
   const ViewComponent: any = Platform.OS === 'web' ? View : Animated.View;

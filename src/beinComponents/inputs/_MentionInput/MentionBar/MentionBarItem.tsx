@@ -9,6 +9,7 @@ import Text from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
 
 export interface MentionbarItemProps {
+  testID?: string;
   data: IMentionUser;
   onPress?: (data: IMentionUser) => void;
 }
@@ -20,15 +21,20 @@ const MentionBarItem: FC<MentionbarItemProps> = ({
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const {avatar, fullname} = data || {};
-
   return (
     <TouchableOpacity
+      testID="mention_bar_item"
       disabled={!onPress}
       onPress={() => onPress?.(data)}
       style={styles.container}>
-      <Avatar.Small isRounded source={avatar} />
-      <Text.BodyS style={styles.text}>{fullname}</Text.BodyS>
+      <Avatar.Small
+        testID="mention_bar_item.avatar"
+        isRounded
+        source={data?.avatar}
+      />
+      <Text.BodyS testID="mention_bar_item.name" style={styles.text}>
+        {data?.fullname}
+      </Text.BodyS>
     </TouchableOpacity>
   );
 };

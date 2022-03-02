@@ -95,13 +95,13 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   useEffect(() => {
     if (!content) {
       _commentInputRef?.current?.clear?.();
-      mentionInputRef?.current?.setContent?.('', false);
+      mentionInputRef?.current?.setContent?.('');
     }
   }, [content]);
 
   const _onCommentSuccess = () => {
     _commentInputRef?.current?.clear?.();
-    mentionInputRef?.current?.setContent?.('', false);
+    mentionInputRef?.current?.setContent?.('');
   };
 
   const onPressSend = (sendData?: ICommentInputSendParam) => {

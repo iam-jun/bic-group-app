@@ -102,7 +102,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const [cloneTextForWeb, setCloneTextForWeb] = useState<string>(value || '');
   const [selection, setSelection] = useState<{start: number; end: number}>();
   const [addToEnd, setAddToEnd] = useState(true);
-  const disableInputRef = useRef(false);
 
   const [textTextInputHeight, setTextInputHeight] = useState(DEFAULT_HEIGHT);
   const heightAnimated = useRef(new Animated.Value(DEFAULT_HEIGHT)).current;
@@ -241,13 +240,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const _onPressSend = () => {
-    // Manual disable set text because of update state editable too slow, user still can type content
-    disableInputRef.current = true;
-    setTimeout(() => {
-      if (disableInputRef?.current) {
-        disableInputRef.current = false;
-      }
-    }, 1000);
     if (!_loading) {
       blurOnSubmit && Keyboard.dismiss();
       if (!isHandleUpload) {
@@ -263,10 +255,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const _onChangeText = (value: string) => {
-    if (!disableInputRef.current || Platform.OS === 'web') {
-      setText(value);
-      onChangeText?.(value);
-    }
+    setText(value);
+    onChangeText?.(value);
   };
 
   const _onSelectionChange = (event: any) => {
@@ -511,7 +501,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
               onContentSizeChange={_onContentSizeChange}
               ref={_textInputRef}
               style={inputStyle}
-              selectionColor={colors.textInput}
+              selectionColor={colors.textSecondary}
               multiline={true}
               autoFocus={autoFocus}
               placeholder={placeholder}

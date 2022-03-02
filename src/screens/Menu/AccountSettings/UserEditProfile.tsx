@@ -421,9 +421,14 @@ const UserEditProfile = (props: any) => {
               <Text>
                 {`${formatDate(item.startDate, 'MMM Do, YYYY')} ${
                   item?.currentlyWorkHere
-                    ? `to ${i18next.t('common:text_present')}`
+                    ? `${i18next.t('common:text_to')} ${i18next.t(
+                        'common:text_present',
+                      )}`
                     : item?.endDate
-                    ? `to ${formatDate(item.endDate, 'MMM Do, YYYY')}`
+                    ? `${i18next.t('common:text_to')} ${formatDate(
+                        item.endDate,
+                        'MMM Do, YYYY',
+                      )}`
                     : ''
                 }`}
               </Text>

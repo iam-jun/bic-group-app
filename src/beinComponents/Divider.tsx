@@ -4,6 +4,7 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 
 export interface DividerProps {
+  testID?: string;
   color?: string;
   size?: number;
   horizontal?: boolean;
@@ -12,6 +13,7 @@ export interface DividerProps {
 }
 
 const Divider: React.FC<DividerProps> = ({
+  testID,
   color,
   horizontal,
   size = 1,
@@ -21,7 +23,7 @@ const Divider: React.FC<DividerProps> = ({
   const {colors}: ITheme = useTheme() as ITheme;
   return (
     <View
-      testID={'divider'}
+      testID={testID || 'divider'}
       style={[
         {
           height: horizontal ? undefined : size,

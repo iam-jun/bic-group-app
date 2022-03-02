@@ -127,7 +127,7 @@ const TextInput: React.FC<TextInputProps> = ({
       <TextInputPaper
         label={label}
         placeholder={placeholder}
-        selectionColor={colors.textInput}
+        selectionColor={colors.textSecondary}
         // @ts-ignore
         outlineColor={colors.textInput}
         mode={'outlined'}
