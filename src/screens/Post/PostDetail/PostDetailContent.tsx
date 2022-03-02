@@ -226,18 +226,10 @@ const _PostDetailContent = (props: any) => {
           animated: true,
         });
       } catch (error) {
-        /**
-         * avoid crash app due to scrollToIndex out of range. When first loading a post
-         * detail, the last comment usually loads all replies before grouping into
-         * "View x replies", only the last 1 reply is kept. However, after grouping,
-         * the `latest_children` value remains the same, so there's a difference btw
-         * new and old replies count -> old and new itemIndex are different => still
-         * scroll to old itemIndex, which is not correct => out of range => crash
-         */
-        console.log('error:', error);
+        // scroll to the first comment to avoid scroll error
         listRef?.current?.scrollToLocation?.({
-          itemIndex: 1, // the only loaded reply
-          sectionIndex: sectionIndex,
+          itemIndex: 0,
+          sectionIndex: 0,
           animated: true,
         });
       }
