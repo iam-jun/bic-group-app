@@ -7,6 +7,7 @@ import {
   View,
   Animated,
   Easing,
+  TouchableOpacity,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -59,6 +60,7 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   const inputHeightAnim = new Animated.Value(inputMinHeight);
 
   const mentionInputRef = useRef<any>();
+  const refTextInput = useRef<any>();
   const {commentId, groupIds} = route?.params || {};
 
   const dispatch = useDispatch();
@@ -200,6 +202,8 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
     setUploading(false);
   };
 
+  const onPressInput = () => refTextInput?.current?.setFocus?.();
+
   const renderImage = () => {
     if (!selectedImg) {
       return null;
@@ -235,6 +239,7 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
           disabled: disableButton,
           useI18n: true,
           highEmphasis: true,
+          style: {borderWidth: 0},
         }}
         onPressBack={onPressBack}
         onPressButton={onPressSave}
@@ -246,36 +251,45 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
           </RNText>
         </View>
       )}
-      <Animated.ScrollView keyboardShouldPersistTaps={'handled'}>
-        <Animated.View
-          style={{height: isAnimated ? inputHeightAnim : undefined, zIndex: 5}}>
-          <_MentionInput
-            groupIds={groupIds || ''}
-            disableAutoComplete={Platform.OS !== 'web'}
-            style={styles.flex1}
-            textInputStyle={styles.flex1}
-            mentionInputRef={mentionInputRef}
-            ComponentInput={PostInput}
-            componentInputProps={{
-              modalStyle: styles.mentionInputModal,
-              value: content,
-              loading: loading,
-              isHandleUpload: true,
-              placeholder: t('post:placeholder_write_comment'),
-              onChangeText,
-              scrollEnabled: false,
-            }}
-            autocompleteProps={{
-              modalPosition: 'bottom',
-              title: t('post:mention_title'),
-              emptyContent: t('post:mention_empty_content'),
-              showShadow: true,
-              modalStyle: {maxHeight: 350},
-            }}
-          />
-        </Animated.View>
-        {renderImage()}
-      </Animated.ScrollView>
+      <TouchableOpacity
+        style={styles.flex1}
+        activeOpacity={1}
+        onPress={onPressInput}>
+        <Animated.ScrollView keyboardShouldPersistTaps={'handled'}>
+          <Animated.View
+            style={{
+              height: isAnimated ? inputHeightAnim : undefined,
+              zIndex: 5,
+            }}>
+            <_MentionInput
+              groupIds={groupIds || ''}
+              disableAutoComplete={Platform.OS !== 'web'}
+              style={styles.flex1}
+              textInputStyle={styles.flex1}
+              mentionInputRef={mentionInputRef}
+              ComponentInput={PostInput}
+              componentInputProps={{
+                modalStyle: styles.mentionInputModal,
+                value: content,
+                loading: loading,
+                isHandleUpload: true,
+                placeholder: t('post:placeholder_write_comment'),
+                onChangeText,
+                scrollEnabled: false,
+                inputRef: refTextInput,
+              }}
+              autocompleteProps={{
+                modalPosition: 'bottom',
+                title: t('post:mention_title'),
+                emptyContent: t('post:mention_empty_content'),
+                showShadow: true,
+                modalStyle: {maxHeight: 350},
+              }}
+            />
+          </Animated.View>
+          {renderImage()}
+        </Animated.ScrollView>
+      </TouchableOpacity>
       {showToolbar && <CommentToolbar onSelectImage={onSelectImage} />}
       {Platform.OS !== 'web' && <MentionBar />}
       <KeyboardSpacer iosOnly />
