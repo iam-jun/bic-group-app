@@ -4,7 +4,7 @@ import {cleanup} from '@testing-library/react-native';
 import {configureStore, renderWithRedux} from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import {colors} from '~/theme';
-import MentionBar from '.';
+import MentionBar from './index.test';
 import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);
