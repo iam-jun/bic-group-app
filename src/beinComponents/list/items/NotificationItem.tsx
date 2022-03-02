@@ -1,16 +1,16 @@
+import NodeEmoji from 'node-emoji';
 import React from 'react';
-import {View, StyleSheet, ViewProps, Platform} from 'react-native';
+import {Platform, StyleSheet, View, ViewProps} from 'react-native';
 import {useTheme} from 'react-native-paper';
-
 import Avatar from '~/beinComponents/Avatar';
+import Div from '~/beinComponents/Div';
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+import TimeView from '~/beinComponents/TimeView';
+import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 import {IGetStreamNotificationActivity} from '~/interfaces/INotification';
 import i18n from '~/localization';
-import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
-import NodeEmoji from 'node-emoji';
-import TimeView from '~/beinComponents/TimeView';
-import Div from '~/beinComponents/Div';
+import {ITheme} from '~/theme/interfaces';
+import {getCombinedInfo, processNotiBody} from '~/utils/notification';
 
 export interface NotificationItemProps {
   activities: IGetStreamNotificationActivity[];
@@ -29,8 +29,6 @@ const VERB = {
   MENTION: 'mention',
 };
 
-const MENTION_USER_REG = /@\[u:(\d+):(\S.*?)\]/gm;
-
 const COMMENT_TARGET = {
   POST: 'post',
   COMMENT: 'comment',
@@ -38,12 +36,7 @@ const COMMENT_TARGET = {
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
   activities,
-  verb,
-  is_seen,
   is_read,
-  activity_count,
-  actor_count,
-  created_at,
   updated_at,
   isActive = false,
 }: NotificationItemProps) => {
@@ -51,7 +44,6 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   const styles = createStyles(theme);
 
   const activity = activities[0];
-  const avatar = activity.actor.data?.avatar || activity.actor.data?.avatarUrl;
 
   let className = 'notification-item';
   if (isActive) className = 'notification-item--active';
@@ -402,7 +394,6 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         <View style={styles.avatarContainer}>{renderAvatar(activities)}</View>
         <View style={styles.flex1}>{renderNotiContent(activities)}</View>
         <TimeView time={updated_at} style={styles.timeCreated} type={'short'} />
-        {/*<Icon style={styles.iconOptions} icon="EllipsisH" size={16} />*/}
       </View>
     </Div>
   );
@@ -464,71 +455,6 @@ const createStyles = (theme: ITheme) => {
       transform: [{translateY: 4}],
     },
   });
-};
-
-// process a text, strip markdown, cut the text off
-const processNotiBody = (text: string) => {
-  text = text.trim();
-  text = escapeMarkDown(text);
-  text = sliceText(text);
-  return text;
-};
-
-// get first line of text for noti body, if this line has more than 20 chars
-// cut it off
-const sliceText = (text: string, maxChars = 20) => {
-  const firstLine = text.split('\n')[0];
-  const firstLineCharacters = firstLine.split(' ');
-  if (firstLineCharacters.length > maxChars) {
-    return firstLineCharacters.splice(0, maxChars).join(' ') + '...';
-  } else {
-    return firstLine;
-  }
-};
-
-// change mention markdown to mentioned name
-// for future, handle other markdown here
-const escapeMarkDown = (text: string) => {
-  let match;
-  while ((match = MENTION_USER_REG.exec(text))) {
-    text = text.replace(match[0], match[2]);
-    MENTION_USER_REG.lastIndex = 0;
-  }
-  return text;
-};
-
-// count, get actorName text and get action times if all actions belong to only one actor
-const getCombinedInfo = (
-  activities: IGetStreamNotificationActivity[],
-  verbText = '',
-) => {
-  const combinedInfo: {actorNames: string | undefined; verbText: string} = {
-    actorNames: '',
-    verbText: verbText,
-  };
-  const actorIds: any[] = [];
-  activities.forEach(act => {
-    if (!actorIds.includes(act.actor.id)) {
-      actorIds.push(act.actor.id);
-    }
-  });
-  if (actorIds.length > 1) {
-    combinedInfo.actorNames = i18n
-      .t('notification:number_people')
-      .replace('{number}', actorIds.length.toString());
-  } else {
-    combinedInfo.actorNames = activities[0].actor.data?.fullname;
-    if (activities.length > 1 && verbText !== '') {
-      combinedInfo.verbText =
-        verbText +
-        ' ' +
-        i18n
-          .t('notification:number_times')
-          .replace('{number}', activities.length.toString());
-    }
-  }
-
-  return combinedInfo;
 };
 
 export default NotificationItem;
