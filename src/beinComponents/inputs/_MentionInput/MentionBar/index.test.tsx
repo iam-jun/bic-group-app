@@ -29,7 +29,9 @@ describe('MentionBar component', () => {
   });
 
   it(`renders null`, async () => {
-    const store = mockStore(initialState);
+    const storeData = {...initialState};
+    storeData.mentionInput.data = [];
+    const store = mockStore(storeData);
     const wrapper = renderWithRedux(<MentionBar {...baseProps} />, store);
 
     const rendered = wrapper.toJSON();
