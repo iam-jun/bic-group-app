@@ -101,6 +101,7 @@ const TextInput: React.FC<TextInputProps> = ({
 
     return (
       <Text.H6
+        testID="text_input.text_helper_action"
         onPress={helperActionOnPress}
         {..._textHelperProps}
         style={helperActionStyle.style}>
@@ -119,12 +120,9 @@ const TextInput: React.FC<TextInputProps> = ({
   };
 
   return (
-    <View
-      style={StyleSheet.flatten([
-        {marginVertical: spacing?.margin.tiny},
-        style,
-      ])}>
+    <View testID="text_input" style={[styles.container, style]}>
       <TextInputPaper
+        testID="text_input.input"
         label={label}
         placeholder={placeholder}
         selectionColor={colors.textInput}
@@ -144,7 +142,12 @@ const TextInput: React.FC<TextInputProps> = ({
           !!text && (
             <TextInputPaper.Icon
               name={() => (
-                <Icon icon="iconClose" size={14} onPress={_onClearText} />
+                <Icon
+                  testID="text_input.clear_icon"
+                  icon="iconClose"
+                  size={14}
+                  onPress={_onClearText}
+                />
               )}
             />
           )
@@ -153,7 +156,7 @@ const TextInput: React.FC<TextInputProps> = ({
         {...props}
       />
       {!!helperContent && (
-        <Text.Subtitle {..._textHelperProps}>
+        <Text.Subtitle testID="text_input.text_helper" {..._textHelperProps}>
           {helperContent}
           {renderHelperAction()}
         </Text.Subtitle>
@@ -166,6 +169,9 @@ const createStyles = (theme: ITheme) => {
   const {spacing} = theme;
 
   return StyleSheet.create({
+    container: {
+      marginVertical: spacing?.margin.tiny,
+    },
     input: {},
     iconClear: {
       position: 'absolute',
