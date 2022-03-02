@@ -92,7 +92,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
     return (
       <View>
         <Button
-          testID="reaction_detail_bottomSheet.react_item"
+          testID={`reaction_detail_bottomSheet.${reactionType}`}
           style={styles.tabItem}
           onPress={() => _onPressTab(index)}>
           <Text.H5 color={isActive ? colors.primary7 : colors.textPrimary}>
