@@ -1,11 +1,8 @@
-import React from 'react';
 import {cleanup, fireEvent} from '@testing-library/react-native';
-
-import {configureStore, renderWithRedux} from '~/test/testUtils';
+import React from 'react';
 import initialState from '~/store/initialState';
-import {colors} from '~/theme';
+import {configureStore, renderWithRedux} from '~/test/testUtils';
 import MentionBarItem from './MentionBarItem';
-import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);
 
@@ -28,16 +25,6 @@ describe('MentionBarItem component', () => {
     const rendered = wrapper.toJSON();
     expect(rendered).toMatchSnapshot();
   });
-
-  // it(`should show "MentionBarItem" disabled`, async () => {
-  //   const store = mockStore(initialState);
-  //   const onPress = jest.fn();
-  //   const props = {...baseProps, onPress};
-  //   const wrapper = renderWithRedux(<MentionBarItem {...props} />, store);
-  //   const component = wrapper.getByTestId('mention_bar_item');
-
-  //   expect(component.props.disabled).toBeTruthy();
-  // });
 
   it(`should show "MentionBarItem" and onPress should be called`, async () => {
     const store = mockStore(initialState);
