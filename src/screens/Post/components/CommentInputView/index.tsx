@@ -92,6 +92,13 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     }
   }, [replyTargetName, replyTargetUserId]);
 
+  useEffect(() => {
+    if (!content) {
+      _commentInputRef?.current?.clear?.();
+      mentionInputRef?.current?.setContent?.('', false);
+    }
+  }, [content]);
+
   const _onCommentSuccess = () => {
     _commentInputRef?.current?.clear?.();
     mentionInputRef?.current?.setContent?.('', false);
