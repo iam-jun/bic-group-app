@@ -6,8 +6,8 @@ import {
   useWindowDimensions,
   View,
   Keyboard,
+  ScrollView,
 } from 'react-native';
-import {ScrollView} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
 import {isEqual} from 'lodash';
 
@@ -147,19 +147,22 @@ const LanguageOptionMenu = ({
               {title}
             </Text.ButtonSmall>
             <Divider />
-            <ScrollView>
+            <ScrollView
+              keyboardShouldPersistTaps="always"
+              showsVerticalScrollIndicator={false}>
               {(languages || []).map((item: ILanguageItem) => (
                 <View key={item?.code + item?.fullName}>
                   {renderItem({item})}
                 </View>
               ))}
             </ScrollView>
-            <Button.Primary
-              testID="edit_basic_info.save_language"
-              onPress={onConfirmLanguage}
-              style={styles.btnConfirmLanguage}>
-              {i18next.t('btn_save')}
-            </Button.Primary>
+            <View style={styles.btnConfirmLanguage}>
+              <Button.Primary
+                testID="edit_basic_info.save_language"
+                onPress={onConfirmLanguage}>
+                {i18next.t('btn_save')}
+              </Button.Primary>
+            </View>
           </View>
         }
       />
@@ -174,10 +177,11 @@ const themeStyles = (theme: ITheme, screenHeight: number) => {
 
   return StyleSheet.create({
     contentComponent: {
-      maxHeight: 0.9 * screenHeight,
+      maxHeight: 0.8 * screenHeight,
       ...Platform.select({
         web: {
           maxHeight: 0.55 * screenHeight,
+          paddingBottom: spacing.padding.base,
         },
       }),
     },
@@ -198,8 +202,8 @@ const themeStyles = (theme: ITheme, screenHeight: number) => {
       justifyContent: 'space-between',
     },
     btnConfirmLanguage: {
-      marginHorizontal: spacing.margin.large,
-      marginTop: spacing.margin.large,
+      paddingHorizontal: spacing.margin.large,
+      paddingTop: spacing.margin.large,
     },
   });
 };

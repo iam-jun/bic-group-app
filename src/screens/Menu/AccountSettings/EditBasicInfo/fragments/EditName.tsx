@@ -37,6 +37,7 @@ const EditName = ({onChangeName, fullname, error}: EditNameProps) => {
         }
         activeOutlineColor={theme.colors.primary6}
         outlineColor={theme.colors.borderCard}
+        maxLength={100}
       />
     </View>
   );
