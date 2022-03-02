@@ -1,9 +1,15 @@
 import * as React from 'react';
-import {cleanup} from '@testing-library/react-native';
+import {cleanup, waitFor, act} from '@testing-library/react-native';
 
-import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
+import {
+  fireEvent,
+  renderWithRedux,
+  configureStore,
+  waitForComponentToPaint,
+} from '~/test/testUtils';
 import ReactionDetailBottomSheet from './index';
 import initialState from '~/store/initialState';
+// import {waitFor} from 'react-test-renderer';
 
 afterEach(cleanup);
 
@@ -30,16 +36,17 @@ describe('ReactionDetailBottomSheet component', () => {
       id: '58',
     },
   ];
-  const getDataPromise = jest.fn().mockImplementation(() => {
-    Promise.resolve(listUserReact);
-  });
+  const getDataPromise = jest
+    .fn()
+    .mockImplementation((): Promise<any> => Promise.resolve(listUserReact));
+
   const fake_data = {
     getDataParam: {
       commentId: undefined,
       postId: 'efe9c800-92be-11ec-8080-800124087730',
     },
     getDataPromise: getDataPromise,
-    initReaction: 'sweat_smile',
+    initReaction: 'grinning_face_with_star_eyes',
     isOpen: true,
     reactionCounts: {
       comment: 9,
@@ -50,37 +57,60 @@ describe('ReactionDetailBottomSheet component', () => {
       sweat_smile: 3,
     },
   };
-  it('renders correctly', () => {
+  it('renders correctly', async () => {
+    const storeData = {...initialState};
+
+    // @ts-ignore
+    storeData.modal.reactionDetailBottomSheet = fake_data;
+    const store = mockStore(storeData);
+    const rendered = await waitFor(() =>
+      renderWithRedux(<ReactionDetailBottomSheet />, store),
+    );
+    expect(rendered.toJSON()).toMatchSnapshot();
+  });
+
+  it(`should render list user react correspondingly when clicking reaction item on ReactionTabBar`, async () => {
     const storeData = {...initialState};
 
     // @ts-ignore
     storeData.modal.reactionDetailBottomSheet = fake_data;
     const store = mockStore(storeData);
 
-    const rendered = renderWithRedux(
-      <ReactionDetailBottomSheet />,
-      store,
-    ).toJSON();
-    expect(rendered).toMatchSnapshot();
+    const rendered = await waitFor(() =>
+      renderWithRedux(<ReactionDetailBottomSheet />, store),
+    );
+
+    const btnComponent = rendered.getByTestId(
+      'reaction_detail_bottomSheet.kissing_closed_eyes',
+    );
+    expect(btnComponent).toBeDefined();
+    fireEvent.press(btnComponent);
   });
 
-  // reaction_detail_bottomSheet.react_item;
+  it(`should render list empty user react if call api failed`, async () => {
+    const getDataPromiseFail = jest.fn().mockImplementation(() => {
+      Promise.reject();
+    });
 
-  //   it(`should call navigate to user profile when click item`, () => {
-  //     const storeData = {...initialState};
+    const storeData = {...initialState};
 
-  //     // @ts-ignore
-  //     storeData.modal.reactionDetailBottomSheet = fake_data;
-  //     const store = mockStore(storeData);
+    // @ts-ignore
+    storeData.modal.reactionDetailBottomSheet = {
+      ...fake_data,
+      getDataPromise: getDataPromiseFail,
+      isOpen: false,
+    };
+    const store = mockStore(storeData);
 
-  //     const rendered = renderWithRedux(<ReactionDetailBottomSheet />, store);
+    const rendered = await waitFor(() =>
+      renderWithRedux(<ReactionDetailBottomSheet />, store),
+    );
+    const listUserComponent = rendered.getByTestId(
+      'reaction_detail_bottomSheet.list_user',
+    );
 
-  //     const btnComponent = rendered.getByTestId(
-  //       'reaction_detail_bottomSheet.user_item',
-  //     );
-  //     expect(btnComponent).toBeDefined();
-  //     fireEvent.press(btnComponent);
-  //   });
+    expect(listUserComponent.props?.data?.length).toEqual(0);
+  });
 
   // it(`should call navigate to user profile when click item`, () => {
   //   const storeData = {...initialState};
