@@ -67,13 +67,15 @@ describe('TextInput component', () => {
     const props = {
       value: 'test',
       helperContent: 'helperContent',
-      helperType: 'error' as any,
+      error: true,
     };
     const wrapper = render(<TextInput {...props} />);
+    const component = wrapper.getByTestId('text_input.input');
 
-    const component = wrapper.getByTestId('text_input.text_helper');
-    const flattenedStyle = StyleSheet.flatten(component.props.style);
-    expect(component).not.toBeNull();
+    expect(component.props.theme.colors.text).toBe(colors.light.colors.error);
+    const textHelper = wrapper.getByTestId('text_input.text_helper');
+    const flattenedStyle = StyleSheet.flatten(textHelper.props.style);
+    expect(textHelper).not.toBeNull();
     expect(flattenedStyle.color).toBe(colors.light.colors.error);
   });
 
