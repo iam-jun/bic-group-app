@@ -9,6 +9,7 @@ import mockAsyncStorage from '@react-native-async-storage/async-storage/jest/asy
 import 'react-native-gesture-handler/jestSetup';
 import {initReactI18next} from 'react-i18next';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 require('react-native-reanimated/lib/reanimated2/jestUtils').setUpTests();
 
 import colors from '~/theme/colors';
@@ -47,10 +48,7 @@ jest.doMock('i18next', () => ({
   t: str => str,
 }));
 
-jest.doMock('react-native-paper', () => {
-  const RealModule = jest.requireActual('react-native-paper');
-  const MockedModule = {
-    ...RealModule,
+jest.doMock('react-native-paper', () => ({
     // eslint-disable-next-line react/prop-types
     Portal: ({children}) => children,
     useTheme: () => ({
@@ -58,9 +56,8 @@ jest.doMock('react-native-paper', () => {
       spacing: spacing,
       dimension: dimension,
     }),
-  };
-  return MockedModule;
-});
+    TextInput: ReactNative.TextInput,
+}));
 
 jest.doMock('react-native-modalize', () => {
   const RealModule = jest.requireActual('react-native-modalize');
