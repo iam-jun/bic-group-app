@@ -1,35 +1,16 @@
-import {MENTION_USER_REG} from '~/constants/commonRegex';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 import {IGetStreamNotificationActivity} from '~/interfaces/INotification';
-import i18n from '~/localization';
+import i18n from 'i18next';
 import NodeEmoji from 'node-emoji';
-const VERB = {
-  POST: 'post',
-  MENTION: 'mention',
-};
+import {NotificationTitleProps} from './NotificationContent/NotificationTitle';
+import {COMMENT_TARGET, VERB} from './constants';
 
-const COMMENT_TARGET = {
-  POST: 'post',
-  COMMENT: 'comment',
-};
-
-// change mention markdown to mentioned name
-// for future, handle other markdown here
-const escapeMarkDown = (text: string) => {
-  let match;
-  while ((match = MENTION_USER_REG.exec(text))) {
-    text = text.replace(match[0], match[2]);
-    MENTION_USER_REG.lastIndex = 0;
-  }
-  return text;
-};
-
-// count, get actorName text and get action times if all actions belong to only one actor
-const getCombinedInfo = (
+// count, get actorNames text and get action times if all actions belong to only one actor
+export const getCombinedInfo = (
   activities: IGetStreamNotificationActivity[],
   verbText = '',
-) => {
-  const combinedInfo: {actorNames: string | undefined; verbText: string} = {
+): NotificationTitleProps => {
+  const combinedInfo = {
     actorNames: '',
     verbText: verbText,
   };
@@ -44,7 +25,7 @@ const getCombinedInfo = (
       .t('notification:number_people')
       .replace('{number}', actorIds.length.toString());
   } else {
-    combinedInfo.actorNames = activities[0].actor.data?.fullname;
+    combinedInfo.actorNames = activities[0].actor.data?.fullname || '';
     if (activities.length > 1 && verbText !== '') {
       combinedInfo.verbText =
         verbText +
@@ -58,28 +39,37 @@ const getCombinedInfo = (
   return combinedInfo;
 };
 
-// get first line of text for noti body, if this line has more than 20 chars
-// cut it off
-const sliceText = (text: string, maxChars = 20) => {
+/**
+ * Get first line of text for noti body,
+ * if this line has more than 20 chars cut it off.
+ * e.g: ('1234 5678 \n9', 3) => '123
+ *
+ * @param text string
+ * @param maxChars number
+ *
+ * @returns string
+ */
+export const sliceText = (text: string, maxChars = 20) => {
   const firstLine = text.split('\n')[0];
-  const firstLineCharacters = firstLine.split(' ');
-  if (firstLineCharacters.length > maxChars) {
-    return firstLineCharacters.splice(0, maxChars).join(' ') + '...';
+  // const firstLineCharacters = firstLine.split(' ');
+  // console.log('[DEBUG] firstLineCharacters', firstLineCharacters);
+
+  if (firstLine.length > maxChars) {
+    return firstLine.substring(0, maxChars) + '...';
   } else {
     return firstLine;
   }
 };
 
 // process a text, strip markdown, cut the text off
-const processNotiBody = (text: string) => {
+export const processNotiBody = (text: string) => {
   text = text.trim();
-  text = escapeMarkDown(text);
   text = sliceText(text);
   return text;
 };
 
 // render verb text and icon for noti type 9, 10
-const getReactVerb = (react: string, target: string) => {
+export const getReactVerb = (react: string, target: string) => {
   let targetText;
   switch (target) {
     case COMMENT_TARGET.COMMENT:
@@ -99,7 +89,7 @@ const getReactVerb = (react: string, target: string) => {
 
 // render notification for type 8, 18, 22
 // these types may be combined by Aggregation
-const getReplyToCommentNotiContent = (
+export const getReplyToCommentNotiContent = (
   activities: IGetStreamNotificationActivity[],
 ) => {
   const act = activities[0];
@@ -120,7 +110,7 @@ const getReplyToCommentNotiContent = (
   }
 
   const combinedInfo = getCombinedInfo(activities, verbText);
-  let body = act.reaction.data?.content || null;
+  let body = act.reaction?.data?.content || null;
   if (body) {
     body = processNotiBody(body);
   }
@@ -133,7 +123,7 @@ const getReplyToCommentNotiContent = (
 
 // render content for noti type 7, 19, 20, 21
 // these types may be combined by Aggregation
-const getCommentToPostNotiContent = (
+export const getCommentToPostNotiContent = (
   activities: IGetStreamNotificationActivity[],
 ) => {
   const act = activities[0];
@@ -154,7 +144,7 @@ const getCommentToPostNotiContent = (
   }
 
   const combinedInfo = getCombinedInfo(activities, verbText);
-  let body = act.reaction.data?.content || null;
+  let body = act.reaction?.data?.content || null;
   if (body) {
     body = processNotiBody(body);
   }
@@ -167,7 +157,7 @@ const getCommentToPostNotiContent = (
 // render content for noti type 9
 // this type may be combined by Aggregation by actors
 // there isn't case that one actor react 1 emoji many times
-const getReactionToPostNotiContent = (
+export const getReactionToPostNotiContent = (
   activities: IGetStreamNotificationActivity[],
 ) => {
   const act = activities[0];
@@ -190,7 +180,7 @@ const getReactionToPostNotiContent = (
 // render content for noti type 10
 // this type may be combined by Aggregation by actors
 // there isn't case that one actor react 1 emoji many times
-const getReactionToCommentNotiContent = (
+export const getReactionToCommentNotiContent = (
   activities: IGetStreamNotificationActivity[],
 ) => {
   const act = activities[0];
@@ -211,14 +201,14 @@ const getReactionToCommentNotiContent = (
 
 // render noti content for type 16, 17
 // this type may be combined by Aggregation
-const getMentionYouInCommentNotiContent = (
+export const getMentionYouInCommentNotiContent = (
   activities: IGetStreamNotificationActivity[],
 ) => {
   const act = activities[0];
   const verbText = i18n.t('notification:mentioned_you_in_a_comment');
   const combinedInfo = getCombinedInfo(activities, verbText);
   let body =
-    act.parent_reaction?.data?.content || act.reaction.data?.content || null;
+    act.parent_reaction?.data?.content || act.reaction?.data?.content || null;
   if (body) {
     body = processNotiBody(body);
   }
@@ -234,7 +224,7 @@ const getMentionYouInCommentNotiContent = (
 // render content of default notification type
 // such as: create a post, mention a user
 // these types won't be combined by Aggregation, so we can pass an action object
-const getPostNotiContent = (act: IGetStreamNotificationActivity) => {
+export const getPostNotiContent = (act: IGetStreamNotificationActivity) => {
   let realActivityObject;
   let verbText = '';
   // create verb text depends on verb of notification
@@ -251,7 +241,7 @@ const getPostNotiContent = (act: IGetStreamNotificationActivity) => {
       verbText = i18n.t('notification:created_a_post');
       break;
   }
-  const actorName =
+  const actorNames =
     realActivityObject?.actor?.data?.fullname ||
     act?.actor?.data?.fullname ||
     'Someone';
@@ -283,7 +273,7 @@ const getPostNotiContent = (act: IGetStreamNotificationActivity) => {
 
   return {
     title: {
-      actorName,
+      actorNames,
       verbText,
       groupText,
     },

@@ -18,5 +18,3 @@ export const audienceRegex = /@\[([^:@]+):([^:@]+):([^@\]]+)]/;
 export const linkRegex =
   /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
 export const phoneNumberRegex = /^[0-9]+$/;
-
-export const MENTION_USER_REG = /@\[u:(\d+):(\S.*?)\]/gm;

@@ -2,7 +2,6 @@ import React from 'react';
 import {Platform, StyleSheet, View, ViewProps} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Div from '~/beinComponents/Div';
-import Text from '~/beinComponents/Text';
 import TimeView from '~/beinComponents/TimeView';
 import {IGetStreamNotificationActivity} from '~/interfaces/INotification';
 import {ITheme} from '~/theme/interfaces';
@@ -51,21 +50,19 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     }
   };
 
-  // render notification body, it can be post content, comment content
-  const renderNotiBody = (body: any) => {
-    return <Text.BodyS style={styles.subContent}>{body}</Text.BodyS>;
-  };
-
   // render notification item
   return (
     <Div className={className}>
       <View style={styles.container}>
         {renderIndicator()}
         <NotificationAvatar activities={activities} />
-        <View style={styles.flex1}>
-          <NotificationContent activities={activities} />
-        </View>
-        <TimeView time={updated_at} style={styles.timeCreated} type={'short'} />
+        <NotificationContent activities={activities} />
+        <TimeView
+          testID="notification_item.time_view"
+          time={updated_at}
+          style={styles.timeCreated}
+          type={'short'}
+        />
       </View>
     </Div>
   );
@@ -81,7 +78,6 @@ const createStyles = (theme: ITheme) => {
   } as ViewProps;
 
   return StyleSheet.create({
-    flex1: {flex: 1},
     container: {
       flexDirection: 'row',
       alignItems: 'flex-start',
@@ -104,22 +100,10 @@ const createStyles = (theme: ITheme) => {
       height: 6,
       borderRadius: 6,
     },
-    content: {
-      marginStart: spacing?.margin.base,
-      flex: 1,
-    },
-
-    subContent: {
-      color: colors.textSecondary,
-    },
-    iconOptions: {},
     timeCreated: {
       marginTop: 1,
       marginLeft: spacing.margin.base,
       color: colors.textSecondary,
-    },
-    reactIcon: {
-      transform: [{translateY: 4}],
     },
   });
 };

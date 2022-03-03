@@ -1,11 +1,10 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {IGetStreamNotificationActivity} from '~/interfaces/INotification';
-import NotificationTitle from '../NotificationTitle';
+import NotificationTitle from './NotificationTitle';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
-import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 import {getNotificationContent} from '../helper';
 
 interface Props {
@@ -24,15 +23,22 @@ const NotificationContent = ({activities}: Props) => {
 
   return (
     <View style={styles.container}>
-      <NotificationTitle actorNames={title.actorNames} />
+      <NotificationTitle {...title} />
       {!!body && <Text.BodyS style={styles.subContent}>{body}</Text.BodyS>}
     </View>
   );
 };
 
 const createStyle = (theme: ITheme) => {
+  const {colors, spacing} = theme;
   return StyleSheet.create({
-    container: {},
+    container: {
+      marginStart: spacing?.margin.base,
+      flex: 1,
+    },
+    subContent: {
+      color: colors.textSecondary,
+    },
   });
 };
 

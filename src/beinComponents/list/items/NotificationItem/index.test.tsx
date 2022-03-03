@@ -1,75 +1,77 @@
+import {cleanup, render} from '@testing-library/react-native';
 import React from 'react';
-import {cleanup} from '@testing-library/react-native';
-
-import {configureStore, renderWithRedux} from '~/test/testUtils';
-import initialState from '~/store/initialState';
-import {colors} from '~/theme';
-import MentionBar from './index.test';
-import {StyleSheet} from 'react-native';
+import NotificationItem from '.';
+import {SAMPLE_ACTIVITIES} from './constants';
 
 afterEach(cleanup);
 
-describe('MentionBar component', () => {
+describe('NotificationItem component', () => {
   const baseProps = {
-    type: 'mentionInput',
+    activities: SAMPLE_ACTIVITIES[0] as any,
+    is_read: false,
+    is_seen: false,
+    isActive: false,
+    verb: 'verb',
+    actor_count: 1,
+    activity_count: 1,
+    created_at: '2022-02-17T07:17:28.295691',
+    updated_at: '2022-02-17T07:17:28.295691',
   };
 
-  const mockStore = configureStore([]);
+  let Platform: any;
+  beforeEach(() => {
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    Platform = require('react-native').Platform;
+  });
 
   it(`renders correctly`, async () => {
-    const storeData = {...initialState};
-    storeData.mentionInput.data = [
-      {username: 'test', name: 'test', avatar: 'test'},
-    ] as any;
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<MentionBar {...baseProps} />, store);
+    const wrapper = render(<NotificationItem {...baseProps} />);
 
     const rendered = wrapper.toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders null`, async () => {
-    const storeData = {...initialState};
-    storeData.mentionInput.data = [];
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<MentionBar {...baseProps} />, store);
+  it(`should show "NotificationItem" without indicator`, async () => {
+    Platform.OS = 'ios';
 
-    const rendered = wrapper.toJSON();
-    expect(rendered).toMatchSnapshot();
-  });
-
-  it(`should show "MentionBar" in horizontal`, async () => {
-    const storeData = {...initialState};
-    storeData.mentionInput.data = [
-      {username: 'test', name: 'test', avatar: 'test'},
-    ] as any;
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<MentionBar {...baseProps} />, store);
-    const component = wrapper.getByTestId('mention_bar.list');
-
-    expect(component).not.toBeNull();
-
-    expect(component.props.horizontal).toBeTruthy();
-    expect(component.props.showsHorizontalScrollIndicator).toBeFalsy();
-  });
-
-  it(`should show "MentionBar" with Divider`, async () => {
-    const storeData = {...initialState};
-    storeData.mentionInput.data = [
-      {username: 'test', name: 'test', avatar: 'test'},
-      {username: 'test2', name: 'test2', avatar: 'test2'},
-    ] as any;
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(<MentionBar {...baseProps} />, store);
-    const component = wrapper.getByTestId('mention_bar.list.divider');
-
-    expect(component).not.toBeNull();
-
-    const flattenedStyle = StyleSheet.flatten(component.props.style);
-
-    expect(flattenedStyle.height).toBe(undefined);
-    expect(flattenedStyle.backgroundColor).toBe(
-      colors.light.colors.borderFocus,
+    const props = {
+      ...baseProps,
+      is_read: true,
+    };
+    const wrapper = render(<NotificationItem {...props} />);
+    const component = wrapper.queryByTestId('notification_item.indicator');
+    const componentWeb = wrapper.queryByTestId(
+      'notification_item.indicator.web',
     );
+    expect(component).toBeNull();
+    expect(componentWeb).toBeNull();
+  });
+
+  it(`should show "NotificationItem" with indicator`, async () => {
+    Platform.OS = 'ios';
+
+    const wrapper = render(<NotificationItem {...baseProps} />);
+    const component = wrapper.getByTestId('notification_item.indicator');
+
+    expect(component).not.toBeNull();
+  });
+
+  it(`should show "NotificationItem" with indicator web style`, async () => {
+    Platform.OS = 'web';
+    const props = {
+      ...baseProps,
+      isActive: true,
+    };
+    const wrapper = render(<NotificationItem {...props} />);
+    const component = wrapper.getByTestId('notification_item.indicator.web');
+
+    expect(component).not.toBeNull();
+  });
+
+  it(`should show "NotificationItem" with time view`, async () => {
+    const wrapper = render(<NotificationItem {...baseProps} />);
+    const component = wrapper.getByTestId('notification_item.time_view');
+
+    expect(component).not.toBeNull();
   });
 });

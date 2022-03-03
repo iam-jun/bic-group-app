@@ -1,37 +1,40 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
+import i18n from 'i18next';
+
 import Text from '~/beinComponents/Text';
-import i18n from '~/localization';
-interface Props {
+
+export interface NotificationTitleProps {
   actorNames: string;
   verbText?: any;
   groupText?: string;
 }
 
-const NotificationTitle = ({actorNames, verbText, groupText}: Props) => {
+const NotificationTitle = ({
+  actorNames,
+  verbText,
+  groupText,
+}: NotificationTitleProps) => {
   const styles = createStyle();
 
-  const renderReactVerb = () => {
-    if (!verbText) return null;
-
-    if (typeof verbText === 'string') return verbText;
-
+  let _verbText = verbText;
+  if (typeof _verbText === 'object') {
     const {emoji, targetText} = verbText;
 
-    return (
+    _verbText = (
       <React.Fragment>
         {i18n.t('reacted') + ' '}
         {emoji}
         {' ' + targetText}
       </React.Fragment>
     );
-  };
+  }
 
   return (
     <Text.BodyM style={styles.title}>
       {actorNames + ' '}
       <Text.Body>
-        {renderReactVerb}
+        {_verbText}
         {groupText && <Text.BodyM>{' ' + groupText}</Text.BodyM>}
       </Text.Body>
     </Text.BodyM>
