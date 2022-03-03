@@ -876,3 +876,413 @@ exports[`ReactionDetailBottomSheet component renders correctly 1`] = `
   </View>
 </View>
 `;
+
+exports[`ReactionDetailBottomSheet component should render list user react correspondingly when clicking reaction item on ReactionTabBar 1`] = `
+<View>
+  <View>
+    <RCTScrollView
+      data={
+        Array [
+          Object {
+            "count": 2,
+            "reactionType": "grinning_face_with_star_eyes",
+          },
+          Object {
+            "count": 2,
+            "reactionType": "kissing_closed_eyes",
+          },
+          Object {
+            "count": 2,
+            "reactionType": "kissing_smiling_eyes",
+          },
+          Object {
+            "count": 3,
+            "reactionType": "sweat_smile",
+          },
+        ]
+      }
+      getItem={[Function]}
+      getItemCount={[Function]}
+      getItemLayout={[Function]}
+      horizontal={true}
+      keyExtractor={[Function]}
+      onContentSizeChange={[Function]}
+      onLayout={[Function]}
+      onMomentumScrollBegin={[Function]}
+      onMomentumScrollEnd={[Function]}
+      onScroll={[Function]}
+      onScrollBeginDrag={[Function]}
+      onScrollEndDrag={[Function]}
+      onScrollToIndexFailed={[Function]}
+      removeClippedSubviews={false}
+      renderItem={[Function]}
+      scrollEventThrottle={50}
+      showsHorizontalScrollIndicator={false}
+      snapToAlignment="center"
+      snapToInterval={80}
+      stickyHeaderIndices={Array []}
+      style={
+        Object {
+          "borderBottomWidth": 1,
+          "borderColor": "#B2BDCD",
+          "maxWidth": 500,
+        }
+      }
+      viewabilityConfigCallbackPairs={Array []}
+    >
+      <View>
+        <View
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "height": 44,
+                  "justifyContent": "center",
+                  "opacity": 1,
+                  "width": 80,
+                }
+              }
+              testID="reaction_detail_bottomSheet.grinning_face_with_star_eyes"
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  }
+                }
+                testID="button_wrapper.content"
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 16,
+                    }
+                  }
+                >
+                  🤩
+                </Text>
+                <Text
+                  style={
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 14,
+                    }
+                  }
+                >
+                   2
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "height": 44,
+                  "justifyContent": "center",
+                  "opacity": 1,
+                  "width": 80,
+                }
+              }
+              testID="reaction_detail_bottomSheet.kissing_closed_eyes"
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  }
+                }
+                testID="button_wrapper.content"
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "#421187",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 16,
+                    }
+                  }
+                >
+                  😚
+                </Text>
+                <Text
+                  style={
+                    Object {
+                      "color": "#421187",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 14,
+                    }
+                  }
+                >
+                   2
+                </Text>
+              </View>
+            </View>
+            <View
+              style={
+                Object {
+                  "backgroundColor": "#421187",
+                  "bottom": 0,
+                  "height": 2,
+                  "position": "absolute",
+                  "width": 80,
+                }
+              }
+              testID="reaction_detail_bottomSheet.active_kissing_closed_eyes"
+            />
+          </View>
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "height": 44,
+                  "justifyContent": "center",
+                  "opacity": 1,
+                  "width": 80,
+                }
+              }
+              testID="reaction_detail_bottomSheet.kissing_smiling_eyes"
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  }
+                }
+                testID="button_wrapper.content"
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 16,
+                    }
+                  }
+                >
+                  😙
+                </Text>
+                <Text
+                  style={
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 14,
+                    }
+                  }
+                >
+                   2
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "flexDirection": "row",
+              },
+              null,
+            ]
+          }
+        >
+          <View>
+            <View
+              accessible={true}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "alignItems": "center",
+                  "flexDirection": "row",
+                  "height": 44,
+                  "justifyContent": "center",
+                  "opacity": 1,
+                  "width": 80,
+                }
+              }
+              testID="reaction_detail_bottomSheet.sweat_smile"
+            >
+              <View
+                style={
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "justifyContent": "center",
+                  }
+                }
+                testID="button_wrapper.content"
+              >
+                <Text
+                  style={
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 16,
+                    }
+                  }
+                >
+                  😅
+                </Text>
+                <Text
+                  style={
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 14,
+                    }
+                  }
+                >
+                   3
+                </Text>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={
+            Object {
+              "width": 240,
+            }
+          }
+        />
+      </View>
+    </RCTScrollView>
+    <View
+      style={
+        Object {
+          "height": 800.4,
+        }
+      }
+    >
+      <RCTScrollView
+        ListFooterComponent={[Function]}
+        ListHeaderComponent={[Function]}
+        data={Array []}
+        getItem={[Function]}
+        getItemCount={[Function]}
+        keyExtractor={[Function]}
+        onContentSizeChange={[Function]}
+        onLayout={[Function]}
+        onMomentumScrollBegin={[Function]}
+        onMomentumScrollEnd={[Function]}
+        onScroll={[Function]}
+        onScrollBeginDrag={[Function]}
+        onScrollEndDrag={[Function]}
+        removeClippedSubviews={false}
+        renderItem={[Function]}
+        scrollEventThrottle={50}
+        stickyHeaderIndices={Array []}
+        style={
+          Object {
+            "paddingTop": 4,
+          }
+        }
+        testID="reaction_detail_bottomSheet.list_user"
+        viewabilityConfigCallbackPairs={Array []}
+      >
+        <View>
+          <View
+            onLayout={[Function]}
+          >
+            <View
+              style={
+                Object {
+                  "paddingTop": 4,
+                }
+              }
+            />
+          </View>
+          <View
+            onLayout={[Function]}
+          >
+            <ActivityIndicator
+              color="#B2BDCD"
+            />
+          </View>
+        </View>
+      </RCTScrollView>
+    </View>
+  </View>
+</View>
+`;
