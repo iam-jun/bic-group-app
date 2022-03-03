@@ -4,7 +4,6 @@ import {cleanup} from '@testing-library/react-native';
 import {renderWithRedux, fireEvent} from '~/test/testUtils';
 import ListView from './ListView';
 import Text from '~/beinComponents/Text';
-import {colors} from '~/theme';
 import {View} from 'react-native';
 
 afterEach(cleanup);
@@ -168,5 +167,30 @@ describe('ListView component', () => {
     const flatList = getByTestId('list_view.flat_list');
     expect(flatList).toBeDefined();
     expect(flatList.props.onEndReached()).toEqual('onLoadMore');
+  });
+
+  it('should call prop onItemPress correctly', () => {
+    const onItemPress = jest.fn();
+    const {getByTestId} = renderWithRedux(
+      <ListView data={data} onItemPress={onItemPress} />,
+    );
+    const item = getByTestId('list_view.item_wrapper.1');
+    fireEvent.press(item);
+    expect(onItemPress).toBeCalled();
+  });
+
+  it('should call prop onItemLongPress correctly', () => {
+    const onItemPress = jest.fn();
+    const onItemLongPress = jest.fn();
+    const {getByTestId} = renderWithRedux(
+      <ListView
+        data={data}
+        onItemPress={onItemPress}
+        onItemLongPress={onItemLongPress}
+      />,
+    );
+    const item = getByTestId('list_view.item_wrapper.1');
+    fireEvent(item, 'onLongPress');
+    expect(onItemLongPress).toBeCalled();
   });
 });
