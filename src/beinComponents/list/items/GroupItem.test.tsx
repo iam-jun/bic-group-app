@@ -58,7 +58,7 @@ describe('Group Item component', () => {
       <GroupItem {...groupItemData} onPressItem={onPress} />,
     );
 
-    const btnComponent = rendered.getByTestId('group_item');
+    const btnComponent = rendered.getByTestId('group_item.container');
     expect(btnComponent).toBeDefined();
     fireEvent.press(btnComponent);
     expect(onPress).toBeCalled();
@@ -78,8 +78,6 @@ describe('Group Item component', () => {
   });
 
   it(`should render toggle button when childrenUiIds.length > 0`, () => {
-    const onPress = jest.fn();
-
     //@ts-ignore
     const rendered = renderWithRedux(
       <GroupItem
@@ -147,24 +145,39 @@ describe('Group Item component', () => {
     expect(onCheckedItem).toBeCalled();
   });
 
-  // it(`should navigate to groupDetail screen when press Group Item`, () => {
-  //   const mockNavigate = jest.fn();
-
-  //   jest.mock('~/hooks/navigation', () => {
-  //     // const {useRootNavigation} = jest.requireActual('~/hooks/navigation');
-  //     // console.log('useRootNavigation>>>>>', JSON.stringify(...useRootNavigation()));
-
-  //     return {
-  //       rootNavigation: {
-  //         navigate: mockNavigate,
-  //       },
-  //     };
-  //   });
-  //   //@ts-ignore
-  //   const rendered = renderWithRedux(<GroupItem {...groupItemData} />);
-  //   const btnComponent = rendered.getByTestId('group_item');
-  //   expect(btnComponent).toBeDefined();
-  //   fireEvent.press(btnComponent);
-  //   expect(mockNavigate).toHaveBeenCalledTimes(1);
-  // });
+  it(`should render default prop`, () => {
+    const fakeGroupItemData = {
+      background_img_url: null,
+      chat_id: 'rpq3unai7i8ztprmoz97rdjr7w',
+      children: [],
+      created_at: '2022-01-10T10:04:48.685Z',
+      deleted_at: null,
+      description: 'The greatest community ever',
+      disabled: false,
+      group_type: 'COMPANY',
+      icon: '',
+      id: 1,
+      index: 0,
+      isActive: false,
+      level: 0,
+      name: 'EVOL Community',
+      onActionPress: 0,
+      owner_id: 1,
+      parentUiId: 'tree',
+      parent_id: null,
+      parents: null,
+      privacy: 'PUBLIC',
+      slug: 'evol-community-1641809088',
+      subTitle: 0,
+      title: 0,
+      total: 3,
+      uiId: 'tree_0',
+      unique: '60fbc06f-99a7-40ba-95f0-4a2a76116edf',
+      updated_at: '2022-01-10T10:04:48.928Z',
+      user_count: '24',
+    };
+    //@ts-ignore
+    const rendered = renderWithRedux(<GroupItem {...fakeGroupItemData} />);
+    expect(rendered.toJSON()).toMatchSnapshot();
+  });
 });

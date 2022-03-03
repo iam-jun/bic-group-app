@@ -106,7 +106,11 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
         style={styles.toggleContainer}>
         {hasChild && (
           <View style={styles.toggleContent}>
-            <Icon size={18} icon={isCollapsing ? 'AngleRight' : 'AngleDown'} />
+            <Icon
+              testID="group_item.button_wrapper.icon"
+              size={18}
+              icon={isCollapsing ? 'AngleRight' : 'AngleDown'}
+            />
           </View>
         )}
       </ButtonWrapper>
@@ -123,7 +127,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
   return (
     <TouchableOpacity
-      testID="group_item"
+      testID="group_item.container"
       disabled={!isInternetReachable || disableOnPressItem}
       onPress={_onPressItem}>
       <View style={{flexDirection: 'row'}} testID={testID}>
