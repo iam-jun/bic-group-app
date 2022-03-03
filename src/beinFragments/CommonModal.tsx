@@ -40,6 +40,7 @@ const CommonModal = () => {
           dispatch(modalActions.hideModal());
         }}>
         <TouchableOpacity
+          testID="common_modal.center"
           activeOpacity={1}
           style={StyleSheet.flatten([appModalStyle, styles.appModalContainer])}
           onPress={_onClose}>
