@@ -67,7 +67,6 @@ const App = {
       method: 'get',
       provider: providers.bein,
       useRetry: true,
-      withCredentials: true,
     };
   },
   pushToken: (
