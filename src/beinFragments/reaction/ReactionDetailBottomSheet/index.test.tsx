@@ -88,9 +88,9 @@ describe('ReactionDetailBottomSheet component', () => {
   });
 
   it(`should render list empty user react if call api failed`, async () => {
-    const getDataPromiseFail = jest.fn().mockImplementation(() => {
-      Promise.reject();
-    });
+    const getDataPromiseFail = jest
+      .fn()
+      .mockImplementation((): Promise<any> => Promise.reject());
 
     const storeData = {...initialState};
 
@@ -112,19 +112,79 @@ describe('ReactionDetailBottomSheet component', () => {
     expect(listUserComponent.props?.data?.length).toEqual(0);
   });
 
-  // it(`should call navigate to user profile when click item`, () => {
-  //   const storeData = {...initialState};
+  it(`should call navigate to user profile by id when click item`, async () => {
+    const storeData = {...initialState};
 
-  //   // @ts-ignore
-  //   storeData.modal.reactionDetailBottomSheet = fake_data;
-  //   const store = mockStore(storeData);
+    // @ts-ignore
+    storeData.modal.reactionDetailBottomSheet = fake_data;
+    const store = mockStore(storeData);
 
-  //   const rendered = renderWithRedux(<ReactionDetailBottomSheet />, store);
+    const rendered = await waitFor(() =>
+      renderWithRedux(<ReactionDetailBottomSheet />, store),
+    );
 
-  //   const btnComponent = rendered.getByTestId(
-  //     'reaction_detail_bottomSheet.user_item',
-  //   );
-  //   expect(btnComponent).toBeDefined();
-  //   fireEvent.press(btnComponent);
-  // });
+    const itemComponent = rendered.getByTestId(
+      'reaction_detail_bottomSheet.Hoàng Minh Trọng',
+    );
+    expect(itemComponent).toBeDefined();
+    fireEvent.press(itemComponent);
+  });
+
+  it(`should call navigate to user profile by username when click item`, async () => {
+    const storeData = {...initialState};
+    const _getDataPromise = jest.fn().mockImplementation(
+      (): Promise<any> =>
+        Promise.resolve([
+          {
+            avatar:
+              'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/75f92c17-843b-49de-8445-93531854fd65.jpeg',
+            fullname: 'Hoàng Minh Trọng',
+            username: 'tronghoang',
+            id: '',
+          },
+        ]),
+    );
+
+    // @ts-ignore
+    storeData.modal.reactionDetailBottomSheet = {
+      ...fake_data,
+      getDataPromise: _getDataPromise,
+    };
+    const store = mockStore(storeData);
+
+    const rendered = await waitFor(() =>
+      renderWithRedux(<ReactionDetailBottomSheet />, store),
+    );
+
+    const itemComponent = rendered.getByTestId(
+      'reaction_detail_bottomSheet.Hoàng Minh Trọng',
+    );
+    expect(itemComponent).toBeDefined();
+    fireEvent.press(itemComponent);
+  });
+
+  it(`should render list empty user react if call api return null`, async () => {
+    const getDataPromiseFail = jest
+      .fn()
+      .mockImplementation((): Promise<any> => Promise.resolve(null));
+
+    const storeData = {...initialState};
+
+    // @ts-ignore
+    storeData.modal.reactionDetailBottomSheet = {
+      ...fake_data,
+      getDataPromise: getDataPromiseFail,
+      isOpen: false,
+    };
+    const store = mockStore(storeData);
+
+    const rendered = await waitFor(() =>
+      renderWithRedux(<ReactionDetailBottomSheet />, store),
+    );
+    const listUserComponent = rendered.getByTestId(
+      'reaction_detail_bottomSheet.list_user',
+    );
+
+    expect(listUserComponent.props?.data?.length).toEqual(0);
+  });
 });
