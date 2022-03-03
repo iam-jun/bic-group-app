@@ -1,15 +1,9 @@
 import * as React from 'react';
-import {cleanup, waitFor, act} from '@testing-library/react-native';
+import {cleanup, waitFor} from '@testing-library/react-native';
 
-import {
-  fireEvent,
-  renderWithRedux,
-  configureStore,
-  waitForComponentToPaint,
-} from '~/test/testUtils';
+import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
 import ReactionDetailBottomSheet from './index';
 import initialState from '~/store/initialState';
-// import {waitFor} from 'react-test-renderer';
 
 afterEach(cleanup);
 
@@ -85,6 +79,13 @@ describe('ReactionDetailBottomSheet component', () => {
     );
     expect(btnComponent).toBeDefined();
     fireEvent.press(btnComponent);
+
+    const activeStatusComponent = rendered.getByTestId(
+      'reaction_detail_bottomSheet.active_kissing_closed_eyes',
+    );
+    expect(activeStatusComponent).toBeDefined();
+
+    expect(rendered.toJSON()).toMatchSnapshot();
   });
 
   it(`should render list empty user react if call api failed`, async () => {
@@ -128,6 +129,8 @@ describe('ReactionDetailBottomSheet component', () => {
     );
     expect(itemComponent).toBeDefined();
     fireEvent.press(itemComponent);
+
+    //will update when find solution with navigation.navigate func
   });
 
   it(`should call navigate to user profile by username when click item`, async () => {
@@ -161,6 +164,8 @@ describe('ReactionDetailBottomSheet component', () => {
     );
     expect(itemComponent).toBeDefined();
     fireEvent.press(itemComponent);
+
+    //will update when find solution with navigation.navigate func
   });
 
   it(`should render list empty user react if call api return null`, async () => {
