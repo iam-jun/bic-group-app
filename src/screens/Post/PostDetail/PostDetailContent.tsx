@@ -219,11 +219,20 @@ const _PostDetailContent = (props: any) => {
         itemIndex = sectionData?.[sectionIndex]?.data?.length || 0;
       }
 
-      listRef?.current?.scrollToLocation?.({
-        itemIndex: itemIndex,
-        sectionIndex: sectionIndex,
-        animated: true,
-      });
+      try {
+        listRef?.current?.scrollToLocation?.({
+          itemIndex: itemIndex,
+          sectionIndex: sectionIndex,
+          animated: true,
+        });
+      } catch (error) {
+        // scroll to the first comment to avoid scroll error
+        listRef?.current?.scrollToLocation?.({
+          itemIndex: 0,
+          sectionIndex: 0,
+          animated: true,
+        });
+      }
     }
   };
 
@@ -256,7 +265,7 @@ const _PostDetailContent = (props: any) => {
         sectionData?.map?.((section, index) => {
           if (section?.comment?.id === parentCommentId) {
             sectionIndex = index;
-            itemIndex = (section?.data?.length || 0) + 1;
+            itemIndex = section?.data?.length || 0;
           }
         });
       } else {

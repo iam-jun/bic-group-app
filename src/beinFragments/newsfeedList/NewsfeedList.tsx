@@ -27,6 +27,7 @@ import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import FloatingCreatePost from '~/beinFragments/FloatingCreatePost';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useFocusEffect} from '@react-navigation/native';
 
 export interface NewsfeedListProps {
   style?: StyleProp<ViewStyle>;
@@ -90,6 +91,17 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
         HeaderComponent ? [{header: true}, ...data] : data,
       ),
     [data, HeaderComponent],
+  );
+
+  useFocusEffect(
+    React.useCallback(() => {
+      return () => {
+        setTimeout(() => {
+          DeviceEventEmitter.emit('showHeader', true);
+          DeviceEventEmitter.emit('showBottomBar', true);
+        }, 100);
+      };
+    }, []),
   );
 
   useTabPressListener(

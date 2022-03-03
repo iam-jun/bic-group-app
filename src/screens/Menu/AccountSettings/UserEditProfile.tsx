@@ -40,6 +40,7 @@ import {IUserWorkExperience} from '~/interfaces/IAuth';
 import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
 import {isEmpty} from 'lodash';
+import homeActions from '~/screens/Home/redux/actions';
 
 const UserEditProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
@@ -96,6 +97,7 @@ const UserEditProfile = (props: any) => {
         userId?.toString?.() === currentUsername?.toString?.()) &&
       isEmpty(params)
     ) {
+      dispatch(homeActions.getHomePosts({isRefresh: true}));
       setUserData(myProfile);
     } else {
       setUserData(params);
@@ -419,9 +421,14 @@ const UserEditProfile = (props: any) => {
               <Text>
                 {`${formatDate(item.startDate, 'MMM Do, YYYY')} ${
                   item?.currentlyWorkHere
-                    ? `to ${i18next.t('common:text_present')}`
+                    ? `${i18next.t('common:text_to')} ${i18next.t(
+                        'common:text_present',
+                      )}`
                     : item?.endDate
-                    ? `to ${formatDate(item.endDate, 'MMM Do, YYYY')}`
+                    ? `${i18next.t('common:text_to')} ${formatDate(
+                        item.endDate,
+                        'MMM Do, YYYY',
+                      )}`
                     : ''
                 }`}
               </Text>

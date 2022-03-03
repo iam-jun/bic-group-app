@@ -56,6 +56,7 @@ export interface IActivityData {
   images?: IActivityDataImage[];
   videos?: string[];
   files?: string[];
+  edited?: boolean;
 }
 
 export interface IActivityImportant {
@@ -293,6 +294,16 @@ export interface IParamSearchMentionAudiences {
   take?: number;
 }
 
+export interface IMentionUser {
+  id: number;
+  username: string;
+  email?: string;
+  fullname: string;
+  avatar: string;
+  bein_staff_role?: string;
+  chat_user_id?: string;
+}
+
 export interface IParamGetReactionDetail {
   reactionType: ReactionType;
   postId?: string;
@@ -357,6 +368,7 @@ export interface ICreatePostParams {
   replaceWithDetail?: boolean;
   initAudience?: any;
   createFromGroupId?: number;
+  initAutoSaveDraft?: boolean;
 }
 
 export interface IPayloadReplying {

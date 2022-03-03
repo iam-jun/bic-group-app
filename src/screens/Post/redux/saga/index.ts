@@ -248,6 +248,7 @@ function* postCreateNewComment({
     );
 
     yield put(postActions.setCreateComment({loading: false, content: ''}));
+    onSuccess?.(); // call second time to make sure content is cleared on low performance device
   } catch (e) {
     console.log('err:', e);
     if (preComment) {
@@ -359,7 +360,8 @@ function* putEditComment({
     yield postDataHelper.putEditComment(id, data);
 
     const newComment = {...comment};
-    newComment.data = Object.assign({}, newComment.data, data);
+    newComment.data = Object.assign({}, newComment.data, data, {edited: true});
+    newComment.updated_at = new Date().toISOString();
     yield put(postActions.addToAllComments(newComment));
     yield put(
       modalActions.showHideToastMessage({

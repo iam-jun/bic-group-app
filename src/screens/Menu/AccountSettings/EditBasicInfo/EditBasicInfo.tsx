@@ -7,7 +7,6 @@ import {isEqual} from 'lodash';
 
 import {ITheme} from '~/theme/interfaces';
 import genders from '~/constants/genders';
-import {titleCase} from '~/utils/common';
 import {formatDate} from '~/utils/formatData';
 import relationshipStatus from '~/constants/relationshipStatus';
 import menuActions from '~/screens/Menu/redux/actions';
@@ -31,6 +30,7 @@ import EditName from './fragments/EditName';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
 import TitleComponent from '../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
+import Div from '~/beinComponents/Div';
 
 const EditBasicInfo = () => {
   const theme = useTheme() as ITheme;
@@ -206,7 +206,7 @@ const EditBasicInfo = () => {
       />
 
       <ScrollView
-        keyboardShouldPersistTaps="handled"
+        keyboardShouldPersistTaps="always"
         contentContainerStyle={styles.content}>
         <EditName
           error={error}
@@ -221,7 +221,9 @@ const EditBasicInfo = () => {
           contentStyle={styles.buttonDropDownContent}
           rightIcon={'AngleDown'}
           onPress={e => onGenderEditOpen(e)}>
-          {titleCase(genderState) || i18next.t('common:text_not_set')}
+          {!!genderState
+            ? i18next.t(genders[genderState])
+            : i18next.t('common:text_not_set')}
         </Button>
         <TitleComponent icon="Calender" title="settings:title_birthday" />
         <Button
@@ -233,7 +235,18 @@ const EditBasicInfo = () => {
           {formatDate(birthdayState, 'DD/MM/YYYY') ||
             i18next.t('common:text_not_set')}
         </Button>
-
+        {selectingDate && (
+          <Div className="react-datepicker-container-important">
+            <DateTimePicker
+              isVisible={selectingDate}
+              date={maxBirthday()}
+              mode={Platform.OS === 'web' ? 'time' : 'date'}
+              onConfirm={onSetBirthday}
+              onCancel={onDateEditClose}
+              maxDate={maxBirthday()}
+            />
+          </Div>
+        )}
         <LanguageOptionMenu
           title={'settings:title_choose_languages'}
           onChangeLanguages={_onChangeLanguages}
@@ -255,7 +268,6 @@ const EditBasicInfo = () => {
             i18next.t('common:text_not_set')}
         </Button>
       </ScrollView>
-
       <OptionMenu
         data={gendersList}
         value={genderState}
@@ -270,17 +282,6 @@ const EditBasicInfo = () => {
         menuRef={relationshipSheetRef}
         onItemPress={onRelationshipItemPress}
       />
-
-      {selectingDate && (
-        <DateTimePicker
-          isVisible={selectingDate}
-          date={maxBirthday()}
-          mode={Platform.OS === 'web' ? 'time' : 'date'}
-          onConfirm={onSetBirthday}
-          onCancel={onDateEditClose}
-          maxDate={maxBirthday()}
-        />
-      )}
     </ScreenWrapper>
   );
 };

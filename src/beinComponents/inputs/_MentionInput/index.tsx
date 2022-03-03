@@ -16,7 +16,7 @@ import {useKeyboardStatus} from '~/hooks/keyboard';
 import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
 import Autocomplete from './Autocomplete';
-import {switchKeyboardForCodeBlocks} from './helper';
+import {ICursorPositionChange, switchKeyboardForCodeBlocks} from './helper';
 import {useDispatch} from 'react-redux';
 import actionsMention from '~/beinComponents/inputs/_MentionInput/redux/actions';
 
@@ -32,6 +32,7 @@ interface Props {
   style?: StyleProp<ViewStyle>;
   textInputStyle?: StyleProp<TextStyle>;
   onKeyPress?: (e: any) => void;
+  disableAutoComplete?: boolean;
 }
 
 const _MentionInput = ({
@@ -45,6 +46,7 @@ const _MentionInput = ({
   style,
   textInputStyle,
   onKeyPress,
+  disableAutoComplete,
 }: Props) => {
   const inputRef = textInputRef || useRef<TextInput>();
   const _mentionInputRef = mentionInputRef || useRef<any>();
@@ -64,7 +66,12 @@ const _MentionInput = ({
   const dispatch = useDispatch();
 
   React.useEffect(() => {
+    const onCompleteMentionListener = DeviceEventEmitter.addListener(
+      'mention-input-on-complete-mention',
+      _setContent,
+    );
     return () => {
+      onCompleteMentionListener?.remove?.();
       dispatch(actionsMention.setData([]));
     };
   }, []);
@@ -73,7 +80,9 @@ const _MentionInput = ({
 
   const _setContent = (c: string) => {
     componentInputProps.onChangeText?.(c);
-    componentInputProps?.commentInputRef?.current?.focus?.();
+    if (Platform.OS === 'web') {
+      componentInputProps?.commentInputRef?.current?.focus?.();
+    }
   };
 
   useImperativeHandle(_mentionInputRef, () => ({
@@ -91,20 +100,22 @@ const _MentionInput = ({
     }
     cursorPosition.current = position;
 
-    DeviceEventEmitter.emit('autocomplete-on-selection-change', {
+    const param: ICursorPositionChange = {
       position,
       value: text,
       groupIds,
-    });
+    };
+    DeviceEventEmitter.emit('autocomplete-on-selection-change', param);
   };
 
   const onChangeText = (value: string) => {
     componentInputProps.onChangeText?.(value);
-    DeviceEventEmitter.emit('autocomplete-on-selection-change', {
+    const param: ICursorPositionChange = {
       position: cursorPosition.current,
       value,
       groupIds,
-    });
+    };
+    DeviceEventEmitter.emit('autocomplete-on-selection-change', param);
   };
 
   const handleKeyPress = (event: any) => {
@@ -161,6 +172,7 @@ const _MentionInput = ({
   return (
     <>
       <View
+        testID="_mention_input"
         style={[styles.containerWrapper, style]}
         onLayout={_onLayoutContainer}>
         {Platform.OS === 'web' && (
@@ -170,7 +182,7 @@ const _MentionInput = ({
         Make sure this and the below ComponentInput share the same styling
         */
           <ComponentInput
-            useTestID={false}
+            testID="_mention_input.input.web"
             nativeID="component-input--hidden"
             multiline
             editable={!disabled}
@@ -182,6 +194,7 @@ const _MentionInput = ({
           />
         )}
         <ComponentInput
+          testID="_mention_input.input"
           {...componentInputProps}
           keyboardType={keyboardType}
           textInputRef={inputRef}
@@ -198,14 +211,16 @@ const _MentionInput = ({
           onChangeText={onChangeText}
         />
       </View>
-      <Autocomplete
-        {...autocompleteProps}
-        type="mentionInput"
-        topPosition={topPosition}
-        measuredHeight={measuredHeight}
-        cursorPosition={cursorPosition.current}
-        onCompletePress={_setContent}
-      />
+      {!disableAutoComplete && (
+        <Autocomplete
+          {...autocompleteProps}
+          testID="_mention_input.autocomplete"
+          type="mentionInput"
+          topPosition={topPosition}
+          measuredHeight={measuredHeight}
+          cursorPosition={cursorPosition.current}
+        />
+      )}
     </>
   );
 };

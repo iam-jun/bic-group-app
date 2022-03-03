@@ -1,16 +1,19 @@
-import {Platform} from 'react-native';
-import {
-  AT_MENTION_REGEX,
-  AT_MENTION_SEARCH_REGEX,
-} from '~/constants/autocomplete';
+import {DeviceEventEmitter, Platform} from 'react-native';
+import {AT_MENTION_REGEX} from '~/constants/autocomplete';
+import actions from '~/beinComponents/inputs/_MentionInput/redux/actions';
+
+export interface ICursorPositionChange {
+  position: number;
+  value: string;
+  groupIds: string;
+}
 
 export const getMatchTermForAtMention = (() => {
   let lastMatchTerm: string | null = null;
   let lastValue: string;
-  let lastIsSearch: boolean;
-  return (value: string, isSearch: boolean): string | null => {
-    if (value !== lastValue || isSearch !== lastIsSearch) {
-      const regex = isSearch ? AT_MENTION_SEARCH_REGEX : AT_MENTION_REGEX;
+  return (value: string): string | null => {
+    if (value !== lastValue) {
+      const regex = AT_MENTION_REGEX;
       let term = value;
       if (term.startsWith('from: @') || term.startsWith('from:@')) {
         term = term.replace('@', '');
@@ -18,9 +21,8 @@ export const getMatchTermForAtMention = (() => {
 
       const match = term.match(regex);
       lastValue = value;
-      lastIsSearch = isSearch;
       if (match) {
-        lastMatchTerm = (isSearch ? match[1] : match[2]).toLowerCase();
+        lastMatchTerm = match[2].toLowerCase();
       } else {
         lastMatchTerm = null;
       }
@@ -59,3 +61,53 @@ export function switchKeyboardForCodeBlocks(
 
   return 'default';
 }
+
+export const completeMention = ({
+  item,
+  cursorPosition,
+  text,
+  dispatch,
+}: {
+  item: any;
+  cursorPosition?: number;
+  text: string;
+  dispatch: any;
+}) => {
+  if (!cursorPosition) {
+    cursorPosition = text.length;
+  }
+  const mention = item.username;
+  const mentionPart = text.substring(0, cursorPosition);
+
+  let completedDraft = mentionPart.replace(AT_MENTION_REGEX, `@${mention} `);
+
+  if (text.length > cursorPosition) {
+    completedDraft += text.substring(cursorPosition);
+  }
+  DeviceEventEmitter.emit('mention-input-on-complete-mention', completedDraft);
+  dispatch(actions.setData([]));
+
+  // For testing output
+  return {
+    cursorPosition,
+    completedDraft,
+  };
+};
+
+export const checkRunSearch = (text: string, groupIds: any, dispatch: any) => {
+  let flagRun = false;
+
+  if (!text) return dispatch(actions.setData([]));
+
+  const _matchTerm = getMatchTermForAtMention(text);
+
+  if (_matchTerm !== null && !_matchTerm.endsWith(' ')) {
+    flagRun = true;
+    dispatch(actions.runSearch({group_ids: groupIds, key: _matchTerm}));
+  } else {
+    dispatch(actions.setData([]));
+  }
+
+  // For testing output
+  return flagRun;
+};

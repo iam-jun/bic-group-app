@@ -63,6 +63,7 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   const renderItem = (item: any) => {
     return (
       <PrimaryItem
+        testID={`reaction_detail_bottomSheet.${item?.item?.fullname}`}
         showAvatar
         height={44}
         onPress={() => _onPressItem(item)}
@@ -86,6 +87,7 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   return (
     <View style={{height}}>
       <FlatList
+        testID="reaction_detail_bottomSheet.list_user"
         style={styles.listContainer}
         data={data}
         renderItem={renderItem}

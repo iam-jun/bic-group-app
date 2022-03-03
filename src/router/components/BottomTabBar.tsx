@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   useWindowDimensions,
   View,
-  Platform,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -33,7 +32,6 @@ import useTabBadge from '~/hooks/tabBadge';
 import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import {fontFamilies} from '~/theme/fonts';
-import {DrawerActions} from '@react-navigation/native';
 
 const BottomTabBar: FC<BottomTabBarProps> = ({
   state,
@@ -139,7 +137,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
 
     const onPress = () => {
       if (name === 'menus') {
-        navigation.dispatch(DrawerActions.openDrawer());
+        DeviceEventEmitter.emit('showMenuSidebarDrawer', true);
       } else {
         DeviceEventEmitter.emit('onTabPress', name);
         const event: any = navigation.emit({

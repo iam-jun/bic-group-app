@@ -1,0 +1,163 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header Avatar View component renders correctly 1`] = `
+<View
+  accessibilityState={
+    Object {
+      "disabled": false,
+    }
+  }
+  accessible={true}
+  collapsable={false}
+  focusable={false}
+  nativeID="animatedComponent"
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#FF9800",
+      "borderColor": "#FFB74D",
+      "borderRadius": 8,
+      "borderWidth": 2,
+      "flexDirection": "row",
+      "marginTop": 8,
+      "opacity": 1,
+      "paddingHorizontal": 16,
+    }
+  }
+  testID="header_avatar_view"
+>
+  <View
+    style={
+      Object {
+        "borderRadius": 6,
+        "height": 48,
+        "marginRight": 12,
+        "width": 48,
+      }
+    }
+    testID="avatar"
+  >
+    <View
+      style={
+        Object {
+          "borderRadius": 6,
+          "height": 48,
+          "width": 48,
+        }
+      }
+      testID="avatar_container"
+    >
+      <View
+        onLayout={[Function]}
+        style={
+          Object {
+            "backgroundColor": "transparent",
+            "position": "relative",
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "opacity": 1,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#f9f9f9",
+                "borderRadius": 6,
+                "height": 48,
+                "justifyContent": "center",
+                "width": 48,
+              }
+            }
+            testID="Image__placeholder"
+          />
+        </View>
+        <View
+          style={
+            Array [
+              Object {
+                "overflow": "hidden",
+              },
+              Object {
+                "borderRadius": 6,
+                "height": 48,
+                "width": 48,
+              },
+            ]
+          }
+        >
+          <FastImageView
+            onFastImageError={[Function]}
+            onFastImageLoadEnd={[Function]}
+            resizeMode="cover"
+            source={
+              Object {
+                "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+              }
+            }
+            style={
+              Object {
+                "bottom": 0,
+                "left": 0,
+                "position": "absolute",
+                "right": 0,
+                "top": 0,
+              }
+            }
+            testID="avatar.image"
+          />
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <Text
+      style={
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 14,
+        }
+      }
+      testID="header_avatar_view.first_label"
+    >
+      First Label
+    </Text>
+    <Text
+      style={
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 12,
+        }
+      }
+      testID="header_avatar_view.second_label"
+    >
+      Second Label
+    </Text>
+  </View>
+</View>
+`;

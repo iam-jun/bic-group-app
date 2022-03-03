@@ -1,3 +1,4 @@
+import * as React from 'react';
 import * as ReactNative from 'react-native';
 import {configure} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
@@ -8,6 +9,7 @@ import mockAsyncStorage from '@react-native-async-storage/async-storage/jest/asy
 import 'react-native-gesture-handler/jestSetup';
 import {initReactI18next} from 'react-i18next';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 require('react-native-reanimated/lib/reanimated2/jestUtils').setUpTests();
 
 import colors from '~/theme/colors';
@@ -16,6 +18,15 @@ import dimension from '~/theme/dimension';
 import mockSafeAreaContext from '~/test/mockSafeAreaContext';
 
 configure({adapter: new Adapter()});
+
+jest.mock('react-native-image-crop-picker', () => ({
+  openPicker: jest.fn().mockImplementation(() =>
+    Promise.resolve({
+      mime: 'test',
+      data: 'test',
+    }),
+  ),
+}));
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
@@ -38,14 +49,25 @@ jest.doMock('i18next', () => ({
 }));
 
 jest.doMock('react-native-paper', () => ({
-  useTheme: () => {
-    return {
+    // eslint-disable-next-line react/prop-types
+    Portal: ({children}) => children,
+    useTheme: () => ({
       colors: colors.light.colors,
       spacing: spacing,
       dimension: dimension,
-    };
-  },
+    }),
+    TextInput: ReactNative.TextInput,
 }));
+
+jest.doMock('react-native-modalize', () => {
+  const RealModule = jest.requireActual('react-native-modalize');
+  const MockedModule = {
+    ...RealModule,
+    // eslint-disable-next-line react/prop-types
+    Modalize: ({children}) => <ReactNative.View>{children}</ReactNative.View>,
+  };
+  return MockedModule;
+});
 
 jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 

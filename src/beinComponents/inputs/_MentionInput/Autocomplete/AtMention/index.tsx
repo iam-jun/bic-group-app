@@ -4,34 +4,35 @@ import {
   ActivityIndicator,
   DeviceEventEmitter,
   FlatList,
-  Platform,
   StyleSheet,
   View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Text from '~/beinComponents/Text';
-import {AT_MENTION_REGEX} from '~/constants/autocomplete';
 import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
 import {AutocompleteProps} from '../../Autocomplete';
-import {getMatchTermForAtMention} from '../../helper';
+import {
+  checkRunSearch,
+  completeMention,
+  ICursorPositionChange,
+} from '../../helper';
 import actions from '../../redux/actions';
 import AtMentionItem from './AtMentionItem';
 
 const DEFAULT_INDEX = -1;
 
-interface Props extends Partial<AutocompleteProps> {}
+type Props = Partial<AutocompleteProps>;
 
 const AtMention = ({
   showSpectialItems,
   emptyContent,
   cursorPosition,
-  onCompletePress,
 }: Props) => {
   const dispatch = useDispatch();
 
-  const {data, isLoading, highlightIndex} = useKeySelector('mentionInput');
+  const {data, loading, highlightIndex} = useKeySelector('mentionInput');
 
   const text = useRef('');
 
@@ -66,33 +67,13 @@ const AtMention = ({
     position,
     value,
     groupIds,
-  }: {
-    position: number;
-    value: string;
-    groupIds: string;
-  }) => {
+  }: ICursorPositionChange) => {
     text.current = value;
-    const _text = value.substring(0, position);
-    const _matchTerm = getMatchTermForAtMention(_text, false);
-
-    if (_matchTerm !== null && !_matchTerm.endsWith(' ')) {
-      dispatch(actions.runSearch({group_ids: groupIds, key: _matchTerm}));
-    } else {
-      dispatch(actions.setData([]));
-    }
+    checkRunSearch(value.substring(0, position), groupIds, dispatch);
   };
 
-  const completeMention = (item: any) => {
-    const mention = item.username;
-    const mentionPart = text.current.substring(0, cursorPosition);
-
-    let completedDraft = mentionPart.replace(AT_MENTION_REGEX, `@${mention} `);
-
-    if (text.current.length > cursorPosition) {
-      completedDraft += text.current.substring(cursorPosition);
-    }
-    onCompletePress?.(completedDraft);
-    dispatch(actions.setData([]));
+  const _completeMention = (item: any) => {
+    completeMention({item, dispatch, text: text.current, cursorPosition});
   };
 
   const handleMentionKey = (event: any) => {
@@ -100,7 +81,7 @@ const AtMention = ({
       event.preventDefault();
       const {key} = event || {};
       if (key === 'Enter' && data?.[highlightIndex]) {
-        completeMention(data?.[highlightIndex]);
+        _completeMention(data[highlightIndex]);
         return;
       }
       const step = key === 'ArrowUp' ? -1 : 1;
@@ -130,34 +111,38 @@ const AtMention = ({
   const renderEmpty = () => {
     return (
       <View style={styles.emptyContainer}>
-        {isLoading ? (
-          <ActivityIndicator color={colors.disabled} />
+        {loading ? (
+          <ActivityIndicator
+            testID="at_mention.loading"
+            color={colors.disabled}
+          />
         ) : (
-          <Text.H6 style={styles.textEmpty}>{emptyContent}</Text.H6>
+          <Text.H6 testID="at_mention.empty_content" style={styles.textEmpty}>
+            {emptyContent}
+          </Text.H6>
         )}
       </View>
     );
   };
 
-  const renderItem = ({item}: {item: any; index: number}) => {
+  const renderItem = ({item, index}: {item: any; index: number}) => {
     return (
       <AtMentionItem
+        testID={`at_mention.item_${index}`}
         item={item}
-        testID="at_mention.item"
-        onPress={completeMention}
+        onPress={_completeMention}
       />
     );
   };
-
-  if (isEmpty(data)) return null;
 
   const _data = showSpectialItems ? [{username: 'all'}, ...data] : data;
 
   return (
     <FlatList
+      testID="at_mention"
       ref={listRef}
       data={_data}
-      keyExtractor={item => `list-mention-${item.id}`}
+      keyExtractor={item => `list-mention-${item.username}`}
       renderItem={renderItem}
       ListEmptyComponent={renderEmpty}
     />
@@ -168,11 +153,6 @@ const createStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
-    textTitle: {
-      marginVertical: spacing.margin.small,
-      marginHorizontal: spacing.margin.base,
-      color: colors.textSecondary,
-    },
     textEmpty: {
       color: colors.textDisabled,
       padding: spacing.padding.tiny,
@@ -182,23 +162,8 @@ const createStyles = (theme: ITheme) => {
       minHeight: 40,
       justifyContent: 'center',
     },
-    hidden: {
-      height: 0,
-      flex: undefined,
-      marginTop: 0,
-      marginBottom: 0,
-      paddingTop: 0,
-      paddingBottom: 0,
-      borderWidth: 0,
-      ...Platform.select({
-        web: {
-          border: 'none',
-          marginTop: '0px important',
-          marginBottom: '0px important',
-        },
-      }),
-    },
   });
 };
 
 export default AtMention;
+``;

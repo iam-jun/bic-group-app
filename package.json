@@ -28,7 +28,9 @@
     "android-deploy-production": "cd android && fastlane deploy_production",
     "test": "detox",
     "jest": "jest",
-    "jest:cov": "jest --coverage --silent"
+    "jest:cov": "jest --coverage --silent",
+    "jest:open-cov": "open ./coverage/lcov-report/index.html",
+    "reverse": "adb reverse tcp:8081 tcp:8081 && adb reverse tcp:9090 tcp:9090"
   },
   "dependencies": {
     "@iconscout/react-native-unicons": "1.0.3",

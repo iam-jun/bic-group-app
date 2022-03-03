@@ -16,6 +16,7 @@ import NodeEmoji from 'node-emoji';
 import {useKeySelector} from '~/hooks/selector';
 
 interface ReactionProps {
+  testId?: string;
   value: number;
   icon: any;
   selected: boolean;
@@ -27,6 +28,7 @@ interface ReactionProps {
 }
 
 const Reaction: React.FC<ReactionProps> = ({
+  testId,
   value,
   icon,
   selected,
@@ -69,7 +71,7 @@ const Reaction: React.FC<ReactionProps> = ({
 
   return (
     <TouchableOpacity
-      testID="reaction"
+      testID={testId || 'reaction'}
       disabled={!isInternetReachable || loading}
       style={StyleSheet.flatten([styles.container, style])}
       onPress={_onChangeValue}

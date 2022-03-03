@@ -86,7 +86,11 @@ const AddWork = () => {
   }, [selectedWorkItem]);
 
   useEffect(() => {
-    isWorkHere && setEndDateValue(null);
+    if (isWorkHere) {
+      setEndDateValue(null);
+    } else {
+      setEndDateValue(endDate || null);
+    }
   }, [isWorkHere]);
 
   const navigateBack = () => {
@@ -96,19 +100,6 @@ const AddWork = () => {
     } else {
       rootNavigation.replace(mainStack.userEdit);
     }
-  };
-
-  const resetData = () => {
-    setCompanyValue(selectedWorkItem?.company || '');
-    setPositionValue(selectedWorkItem?.titlePosition || '');
-    setLocationValue(selectedWorkItem?.location || '');
-    setDescriptionValue(selectedWorkItem?.description || '');
-    setIsWorkHere(value => {
-      if (isEmpty(selectedWorkItem)) return true;
-      return selectedWorkItem?.currently_work_here;
-    });
-    setStartDateValue(selectedWorkItem?.startDate || new Date().toISOString());
-    setEndDateValue(selectedWorkItem?.endDate || null);
   };
 
   const onSave = () => {
@@ -153,7 +144,6 @@ const AddWork = () => {
       : dispatch(
           menuActions.addWorkExperience(data, () => {
             navigateBack();
-            resetData();
           }),
         );
   };
@@ -179,6 +169,7 @@ const AddWork = () => {
   };
 
   const onToggleCurrentlyWorkHere = () => {
+    Keyboard.dismiss();
     setIsWorkHere(!isWorkHere);
   };
 
@@ -322,7 +313,7 @@ const AddWork = () => {
             />
 
             <Text.BodyS testID="add_work.end_date" color={colors.textSecondary}>
-              {(endDateValue && formatDate(endDateValue, 'MMM Do, YYYY')) ||
+              {(endDateValue && formatDate(endDateValue, 'MMMM DD, YYYY')) ||
                 i18next.t('common:text_not_set')}
             </Text.BodyS>
           </ButtonWrapper>
@@ -364,10 +355,7 @@ const AddWork = () => {
           borderRadius: theme.spacing.borderRadius.small,
         }}
         onPressButton={onSave}
-        onPressBack={() => {
-          resetData();
-          navigateBack();
-        }}
+        onPressBack={navigateBack}
       />
 
       <ScrollView
