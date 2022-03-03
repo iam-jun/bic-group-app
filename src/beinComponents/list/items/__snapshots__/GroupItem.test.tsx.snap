@@ -18,7 +18,7 @@ exports[`Group Item component renders correctly 1`] = `
       "opacity": 1,
     }
   }
-  testID="group_item"
+  testID="group_item.container"
 >
   <View
     style={
@@ -141,6 +141,7 @@ exports[`Group Item component renders correctly 1`] = `
               >
                 <View
                   className="icon-wrapper"
+                  testID="group_item.button_wrapper.icon"
                 >
                   <RNSVGSvgView
                     align="xMidYMid"
@@ -469,7 +470,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
       "opacity": 1,
     }
   }
-  testID="group_item"
+  testID="group_item.container"
 >
   <View
     style={
@@ -603,6 +604,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
               >
                 <View
                   className="icon-wrapper"
+                  testID="group_item.button_wrapper.icon"
                 >
                   <RNSVGSvgView
                     align="xMidYMid"
@@ -931,7 +933,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
       "opacity": 1,
     }
   }
-  testID="group_item"
+  testID="group_item.container"
 >
   <View
     style={
@@ -1054,6 +1056,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
               >
                 <View
                   className="icon-wrapper"
+                  testID="group_item.button_wrapper.icon"
                 >
                   <RNSVGSvgView
                     align="xMidYMid"
