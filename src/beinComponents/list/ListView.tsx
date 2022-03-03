@@ -135,6 +135,7 @@ const ListView: React.FC<ListViewProps> = ({
 
     return (
       <TouchableOpacity
+        testID={`list_view.item_wrapper.${index}`}
         disabled={!isInternetReachable || !onItemPress || item.disableClick}
         onPress={(e: any) => onItemPress && onItemPress(item, e)}
         onLongPress={(e: any) => onItemLongPress && onItemLongPress(item, e)}>
@@ -145,11 +146,6 @@ const ListView: React.FC<ListViewProps> = ({
           title={item[titleField || 'title']}
           subTitle={item[subTitleField || 'subTitle']}
           style={itemStyle}
-          onActionPress={
-            onActionPress
-              ? (action: IAction) => onActionPress(action, item)
-              : undefined
-          }
           // eslint-disable-next-line react/prop-types
           total={data && data?.length}
           index={index}
