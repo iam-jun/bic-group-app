@@ -1,11 +1,18 @@
 import React, {FC} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  interpolate,
+  withTiming,
+} from 'react-native-reanimated';
 
 import {ITheme} from '~/theme/interfaces';
 
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
+import MentionBar from '~/beinComponents/inputs/_MentionInput/MentionBar';
 
 export interface CommentInputFooterProps {
   useTestID?: boolean;
@@ -28,12 +35,29 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
   loading,
   disabledBtnSend,
 }: CommentInputFooterProps) => {
+  const showMentionValue = useSharedValue(0);
+
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
-  return (
-    <View style={styles.container}>
+  const mentionContainerStyle = useAnimatedStyle(() => ({
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    opacity: interpolate(showMentionValue.value, [0, 1], [0, 1]),
+  }));
+
+  const onVisibleMentionBar = (isVisible: boolean) => {
+    if (isVisible) {
+      showMentionValue.value = withTiming(1);
+    } else {
+      showMentionValue.value = withTiming(0);
+    }
+  };
+
+  const renderButtons = () => {
+    return (
       <View style={styles.buttonsContainer}>
         <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
           <Button
@@ -90,6 +114,20 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
           common:text_send
         </Button.Secondary>
       </View>
+    );
+  };
+
+  return (
+    <View style={styles.container}>
+      {renderButtons()}
+      {Platform.OS !== 'web' && (
+        <Animated.View style={mentionContainerStyle}>
+          <MentionBar
+            onVisible={onVisibleMentionBar}
+            style={styles.mentionBar}
+          />
+        </Animated.View>
+      )}
     </View>
   );
 };
@@ -97,13 +135,23 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
 const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
-    container: {},
+    container: {
+      borderTopWidth: 1,
+      borderColor: colors.borderDivider,
+    },
     buttonsContainer: {
+      minHeight: 48,
       flexDirection: 'row',
       backgroundColor: colors.background,
+      paddingTop: spacing.padding.small,
       paddingLeft: spacing.padding.large,
       paddingRight: spacing.padding.small,
-      paddingBottom: spacing.padding.small,
+    },
+    mentionBar: {
+      borderTopWidth: 0,
+      minHeight: 48,
+      justifyContent: 'center',
+      backgroundColor: colors.background,
     },
     icon: {marginRight: spacing.margin.large},
     buttonSend: {paddingLeft: spacing.padding.large},
