@@ -449,7 +449,7 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
         ...requestConfig.headers,
         ...tokenHeaders,
       };
-      requestConfig.withCredentials = true
+      requestConfig.withCredentials = true;
       break;
     case apiConfig.providers.beinFeed.name:
       interceptorRequestSuccess = interceptorsRequestSuccess;
