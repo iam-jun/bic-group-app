@@ -449,6 +449,7 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
         ...requestConfig.headers,
         ...tokenHeaders,
       };
+      requestConfig.withCredentials = true
       break;
     case apiConfig.providers.beinFeed.name:
       interceptorRequestSuccess = interceptorsRequestSuccess;
@@ -471,7 +472,6 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
 
   const axiosInstance = axios.create();
   axiosInstance.defaults.timeout = requestConfig.timeout || defaultTimeout;
-  axiosInstance.defaults.withCredentials = true;
   axiosInstance.interceptors.request.use(interceptorRequestSuccess, undefined);
   axiosInstance.interceptors.response.use(
     interceptorResponseSuccess,
