@@ -60,7 +60,7 @@ import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import {useKeyboardStatus} from '~/hooks/keyboard';
 import DeviceInfo from 'react-native-device-info';
-import MentionBar from '~/beinComponents/inputs/_MentionInput/MentionBar';
+import CreatePostFooter from '~/screens/Post/CreatePost/CreatePostFooter';
 
 export interface CreatePostProps {
   route?: {
@@ -830,10 +830,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             </Button.Secondary>
           </View>
         )}
-        <Div className="post-toolbar-container">
-          <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
-          <MentionBar style={{borderColor: colors.borderDivider}} />
-        </Div>
+        <CreatePostFooter
+          toolbarModalizeRef={toolbarModalizeRef}
+          loading={loading}
+        />
       </TouchableOpacity>
     </ScreenWrapper>
   );
