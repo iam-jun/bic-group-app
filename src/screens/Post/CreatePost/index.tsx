@@ -60,6 +60,7 @@ import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import {useKeyboardStatus} from '~/hooks/keyboard';
 import DeviceInfo from 'react-native-device-info';
+import MentionBar from '~/beinComponents/inputs/_MentionInput/MentionBar';
 
 export interface CreatePostProps {
   route?: {
@@ -721,11 +722,12 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             </RNText>
           </View>
         )}
-        <ScrollView>
+        <ScrollView keyboardShouldPersistTaps="always">
           <View style={styles.flex1}>
             <Animated.View
               style={isAnimated ? {height: heightAnimated} : styles.flex1}>
               <_MentionInput
+                disableAutoComplete={Platform.OS !== 'web'}
                 groupIds={strGroupIds}
                 mentionInputRef={mentionInputRef}
                 style={styles.flex1}
@@ -737,7 +739,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                   showShadow: true,
                   modalStyle: {maxHeight: 350},
                 }}
-                // onPress={onPressMentionAudience}
                 ComponentInput={PostInput}
                 componentInputProps={{
                   value: content,
@@ -831,6 +832,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         )}
         <Div className="post-toolbar-container">
           <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
+          <MentionBar style={{borderColor: colors.borderDivider}} />
         </Div>
       </TouchableOpacity>
     </ScreenWrapper>
