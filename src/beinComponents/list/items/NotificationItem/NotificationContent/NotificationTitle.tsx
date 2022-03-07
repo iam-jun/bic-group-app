@@ -5,12 +5,14 @@ import i18n from 'i18next';
 import Text from '~/beinComponents/Text';
 
 export interface NotificationTitleProps {
+  testID?: string;
   actorNames: string;
   verbText?: any;
   groupText?: string;
 }
 
 const NotificationTitle = ({
+  testID,
   actorNames,
   verbText,
   groupText,
@@ -31,11 +33,15 @@ const NotificationTitle = ({
   }
 
   return (
-    <Text.BodyM style={styles.title}>
+    <Text.BodyM testID={testID || 'notification_title'} style={styles.title}>
       {actorNames + ' '}
-      <Text.Body>
+      <Text.Body testID="notification_title.verb_text">
         {_verbText}
-        {groupText && <Text.BodyM>{' ' + groupText}</Text.BodyM>}
+        {groupText && (
+          <Text.BodyM testID="notification_title.group_text">
+            {' ' + groupText}
+          </Text.BodyM>
+        )}
       </Text.Body>
     </Text.BodyM>
   );

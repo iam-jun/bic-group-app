@@ -19,12 +19,19 @@ const NotificationContent = ({activities}: Props) => {
   const data = getNotificationContent(activities);
 
   if (!data) return null;
+
   const {title, body} = data;
 
   return (
-    <View style={styles.container}>
-      <NotificationTitle {...title} />
-      {!!body && <Text.BodyS style={styles.subContent}>{body}</Text.BodyS>}
+    <View testID="notification_content" style={styles.container}>
+      <NotificationTitle testID="notification_content.title" {...title} />
+      {!!body && (
+        <Text.BodyS
+          testID="notification_content.body"
+          style={styles.subContent}>
+          {body}
+        </Text.BodyS>
+      )}
     </View>
   );
 };

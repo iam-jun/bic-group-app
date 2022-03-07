@@ -1,13 +1,13 @@
 import {cleanup, render} from '@testing-library/react-native';
 import React from 'react';
 import NotificationItem from '.';
-import {SAMPLE_ACTIVITIES} from './constants';
+import {SAMPLE_ACTIVITY_1} from './constants';
 
 afterEach(cleanup);
 
 describe('NotificationItem component', () => {
   const baseProps = {
-    activities: SAMPLE_ACTIVITIES[0] as any,
+    activities: [SAMPLE_ACTIVITY_1] as any,
     is_read: false,
     is_seen: false,
     isActive: false,

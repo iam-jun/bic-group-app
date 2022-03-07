@@ -110,7 +110,7 @@ exports[`NotificationItem component renders correctly 1`] = `
                 resizeMode="cover"
                 source={
                   Object {
-                    "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                    "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
                   }
                 }
                 style={
@@ -130,6 +130,38 @@ exports[`NotificationItem component renders correctly 1`] = `
         </View>
       </View>
     </View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+          "marginStart": 12,
+        }
+      }
+    >
+      <Text
+        style={
+          Object {
+            "alignItems": "baseline",
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 16,
+          }
+        }
+      >
+        Trần Nam Anh 
+        <Text
+          style={
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 16,
+            }
+          }
+        >
+          commented on your post
+        </Text>
+      </Text>
+    </View>
     <Text
       style={
         Object {
@@ -142,7 +174,7 @@ exports[`NotificationItem component renders correctly 1`] = `
       }
       testID="notification_item.time_view"
     >
-      2common:time:short_week
+      3undefined
     </Text>
   </View>
 </View>
