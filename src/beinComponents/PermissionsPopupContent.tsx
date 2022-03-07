@@ -3,11 +3,11 @@ import {View, StyleSheet, StyleProp, ViewStyle, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
+import {useBaseHook} from '~/hooks';
 
 import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
 import Text, {TextProps} from '~/beinComponents/Text';
-import {useBaseHook} from '~/hooks';
 import {getResourceUrl, IUploadType} from '~/configs/resourceConfig';
 import PrimaryItem, {
   PrimaryItemProps,
@@ -34,7 +34,9 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
   onClose,
   goToSetting,
 }: PermissionsPopupContentProps) => {
+  const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   return (
@@ -48,15 +50,28 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
         </Text.BodyS>
       </View>
       {(steps || []).map((item: PrimaryItemProps, index: number) => (
-        <View key={`${index}_${item.title}`}>
+        <View key={`${index}_${item.title}`} style={styles.itemContainer}>
           <PrimaryItem
             title={item.title}
             titleProps={{variant: 'subtitle'}}
             leftIcon={item.leftIcon}
-            leftIconProps={{icon: item.leftIcon, size: 20}}
+            leftIconProps={{style: styles.iconStyle, ...item.leftIconProps}}
           />
         </View>
       ))}
+      <View style={styles.btnContainer}>
+        <Button.Secondary
+          color={colors.primary1}
+          textColor={colors.primary6}
+          onPress={onClose}
+          // style={styles.btn}
+        >
+          {t('settings:text_add_work')}
+        </Button.Secondary>
+        <Button.Primary onPress={goToSetting}>
+          {t('settings:text_add_work')}
+        </Button.Primary>
+      </View>
     </View>
   );
 };
@@ -67,6 +82,7 @@ const createStyle = (theme: ITheme) => {
     container: {
       backgroundColor: colors.background,
       borderRadius: spacing.borderRadius.small,
+      marginHorizontal: spacing.margin.extraLarge,
     },
     textContainer: {
       paddingHorizontal: spacing.padding.extraLarge,
@@ -75,6 +91,17 @@ const createStyle = (theme: ITheme) => {
     },
     description: {
       marginTop: spacing.margin.tiny,
+    },
+    btnContainer: {
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      padding: spacing.padding.large,
+    },
+    iconStyle: {
+      marginRight: spacing.margin.small,
+    },
+    itemContainer: {
+      paddingHorizontal: spacing.padding.extraLarge,
     },
   });
 };

@@ -49,14 +49,14 @@ jest.doMock('i18next', () => ({
 }));
 
 jest.doMock('react-native-paper', () => ({
-    // eslint-disable-next-line react/prop-types
-    Portal: ({children}) => children,
-    useTheme: () => ({
-      colors: colors.light.colors,
-      spacing: spacing,
-      dimension: dimension,
-    }),
-    TextInput: ReactNative.TextInput,
+  // eslint-disable-next-line react/prop-types
+  Portal: ({children}) => children,
+  useTheme: () => ({
+    colors: colors.light.colors,
+    spacing: spacing,
+    dimension: dimension,
+  }),
+  TextInput: ReactNative.TextInput,
 }));
 
 jest.doMock('react-native-modalize', () => {
