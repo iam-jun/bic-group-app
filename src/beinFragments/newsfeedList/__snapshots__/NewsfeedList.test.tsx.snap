@@ -1,0 +1,2095 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewsfeedList component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+    }
+  }
+>
+  <View
+    pointerEvents="box-none"
+    style={
+      Object {
+        "zIndex": 1,
+      }
+    }
+  >
+    <View
+      accessibilityElementsHidden={false}
+      importantForAccessibility="auto"
+      onLayout={[Function]}
+      pointerEvents="box-none"
+      style={null}
+    >
+      <View
+        pointerEvents="box-none"
+        style={
+          Object {
+            "bottom": 0,
+            "left": 0,
+            "opacity": 1,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 0,
+          }
+        }
+      >
+        <View
+          style={
+            Object {
+              "backgroundColor": "rgb(255, 255, 255)",
+              "borderBottomColor": "rgb(216, 216, 216)",
+              "flex": 1,
+              "shadowColor": "rgb(216, 216, 216)",
+              "shadowOffset": Object {
+                "height": 0.5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.85,
+              "shadowRadius": 0,
+            }
+          }
+        />
+      </View>
+      <View
+        pointerEvents="box-none"
+        style={
+          Object {
+            "height": 44,
+            "maxHeight": undefined,
+            "minHeight": undefined,
+            "opacity": undefined,
+            "transform": undefined,
+          }
+        }
+      >
+        <View
+          pointerEvents="none"
+          style={
+            Object {
+              "height": 0,
+            }
+          }
+        />
+        <View
+          pointerEvents="box-none"
+          style={
+            Object {
+              "alignItems": "center",
+              "flex": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
+            }
+          }
+        >
+          <View
+            pointerEvents="box-none"
+            style={
+              Object {
+                "marginHorizontal": 16,
+                "opacity": 1,
+              }
+            }
+          >
+            <Text
+              accessibilityRole="header"
+              aria-level="1"
+              collapsable={false}
+              nativeID="animatedComponent"
+              numberOfLines={1}
+              onLayout={[Function]}
+              style={
+                Object {
+                  "color": "rgb(28, 28, 30)",
+                  "fontSize": 17,
+                  "fontWeight": "600",
+                }
+              }
+            >
+              MockedScreen
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <RNSScreenContainer
+    onLayout={[Function]}
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <RNSScreen
+      activityState={2}
+      forwardedRef={[Function]}
+      pointerEvents="box-none"
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      />
+      <View
+        accessibilityElementsHidden={false}
+        closing={false}
+        gestureVelocityImpact={0.3}
+        importantForAccessibility="auto"
+        onClose={[Function]}
+        onGestureBegin={[Function]}
+        onGestureCanceled={[Function]}
+        onGestureEnd={[Function]}
+        onOpen={[Function]}
+        onTransition={[Function]}
+        pointerEvents="box-none"
+        style={
+          Array [
+            Object {
+              "overflow": undefined,
+            },
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            },
+          ]
+        }
+        transitionSpec={
+          Object {
+            "close": Object {
+              "animation": "spring",
+              "config": Object {
+                "damping": 500,
+                "mass": 3,
+                "overshootClamping": true,
+                "restDisplacementThreshold": 10,
+                "restSpeedThreshold": 10,
+                "stiffness": 1000,
+              },
+            },
+            "open": Object {
+              "animation": "spring",
+              "config": Object {
+                "damping": 500,
+                "mass": 3,
+                "overshootClamping": true,
+                "restDisplacementThreshold": 10,
+                "restSpeedThreshold": 10,
+                "stiffness": 1000,
+              },
+            },
+          }
+        }
+      >
+        <View
+          collapsable={false}
+          nativeID="animatedComponent"
+          needsOffscreenAlphaCompositing={false}
+          pointerEvents="box-none"
+          style={
+            Object {
+              "flex": 1,
+            }
+          }
+        >
+          <View
+            collapsable={false}
+            forwardedRef={[Function]}
+            onGestureHandlerEvent={[Function]}
+            onGestureHandlerStateChange={[Function]}
+            style={
+              Object {
+                "flex": 1,
+                "transform": Array [
+                  Object {
+                    "translateX": 0,
+                  },
+                  Object {
+                    "translateX": 0,
+                  },
+                ],
+              }
+            }
+          >
+            <View
+              pointerEvents="none"
+              style={
+                Object {
+                  "backgroundColor": "rgb(242, 242, 242)",
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "shadowColor": "#000",
+                  "shadowOffset": Object {
+                    "height": 1,
+                    "width": -1,
+                  },
+                  "shadowOpacity": 0.3,
+                  "shadowRadius": 5,
+                  "top": 0,
+                  "width": 3,
+                }
+              }
+            />
+            <View
+              style={
+                Array [
+                  Object {
+                    "flex": 1,
+                    "overflow": "hidden",
+                  },
+                  Array [
+                    Object {
+                      "backgroundColor": "rgb(242, 242, 242)",
+                    },
+                    undefined,
+                  ],
+                ]
+              }
+            >
+              <View
+                style={
+                  Object {
+                    "flex": 1,
+                    "flexDirection": "column-reverse",
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "flex": 1,
+                    }
+                  }
+                >
+                  <View
+                    onLayout={[Function]}
+                    style={
+                      Object {
+                        "flex": 1,
+                      }
+                    }
+                    testID="newsfeed_list"
+                  >
+                    <RCTScrollView
+                      canChangeSize={false}
+                      contentHeight={0}
+                      contentWidth={0}
+                      dataProvider={
+                        DataProvider {
+                          "_data": Array [
+                            Object {
+                              "actor": Object {
+                                "created_at": "2022-01-24T08:35:18.713097Z",
+                                "data": Object {
+                                  "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/fcf59b2c-bce9-4964-8750-b40d154e2d7a.png",
+                                  "fullname": "Nguyen Thi Thu Quyền",
+                                },
+                                "id": "58",
+                                "updated_at": "2022-03-02T03:44:45.622302Z",
+                              },
+                              "audience": Object {
+                                "groups": Array [
+                                  Object {
+                                    "collection": "groups",
+                                    "created_at": "2022-01-10T17:15:08.331554Z",
+                                    "data": Object {
+                                      "icon": null,
+                                      "name": "Bein Community",
+                                    },
+                                    "foreign_id": "groups:10",
+                                    "id": "10",
+                                    "updated_at": "2022-01-10T17:15:08.331554Z",
+                                  },
+                                ],
+                                "users": Array [],
+                              },
+                              "foreign_id": "82a5455b-ea3b-407c-ac7a-211e5b4fc9c5",
+                              "id": "65840600-9384-11ec-8080-800070890dfb",
+                              "important": Object {
+                                "active": false,
+                                "expires_time": "",
+                              },
+                              "is_draft": false,
+                              "latest_reactions": Object {
+                                "comment": Array [
+                                  Object {
+                                    "activity_id": "65840600-9384-11ec-8080-800070890dfb",
+                                    "children_counts": Object {
+                                      "comment_count": 0,
+                                    },
+                                    "created_at": "2022-02-22T07:45:44.654021Z",
+                                    "data": Object {
+                                      "content": "10",
+                                      "edited": false,
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "a607373c-eb51-4990-84ef-6f08741a6e77",
+                                    "kind": "comment",
+                                    "latest_children": Object {},
+                                    "own_children": Object {},
+                                    "parent": "",
+                                    "target_feeds": Array [
+                                      "notification:u-58",
+                                    ],
+                                    "updated_at": "2022-02-22T07:45:44.654021Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                  Object {
+                                    "activity_id": "65840600-9384-11ec-8080-800070890dfb",
+                                    "children_counts": Object {
+                                      "comment_count": 0,
+                                    },
+                                    "created_at": "2022-02-22T07:45:43.660622Z",
+                                    "data": Object {
+                                      "content": "9",
+                                      "edited": false,
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "cbe5666d-2d2b-4b0c-ad96-1daab28b3f70",
+                                    "kind": "comment",
+                                    "latest_children": Object {},
+                                    "own_children": Object {},
+                                    "parent": "",
+                                    "target_feeds": Array [
+                                      "notification:u-58",
+                                    ],
+                                    "updated_at": "2022-02-22T07:45:43.660622Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                  Object {
+                                    "activity_id": "65840600-9384-11ec-8080-800070890dfb",
+                                    "children_counts": Object {
+                                      "comment_count": 0,
+                                    },
+                                    "created_at": "2022-02-22T07:45:43.004720Z",
+                                    "data": Object {
+                                      "content": "8",
+                                      "edited": false,
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "9d49788d-fcd3-48d5-81b6-7469585f917b",
+                                    "kind": "comment",
+                                    "latest_children": Object {},
+                                    "own_children": Object {},
+                                    "parent": "",
+                                    "target_feeds": Array [
+                                      "notification:u-58",
+                                    ],
+                                    "updated_at": "2022-02-22T07:45:43.004720Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                  Object {
+                                    "activity_id": "65840600-9384-11ec-8080-800070890dfb",
+                                    "children_counts": Object {
+                                      "comment_count": 0,
+                                    },
+                                    "created_at": "2022-02-22T07:45:42.192763Z",
+                                    "data": Object {
+                                      "content": "7",
+                                      "edited": false,
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "a3f6cca3-652f-442c-901c-bdaffdcbd21f",
+                                    "kind": "comment",
+                                    "latest_children": Object {},
+                                    "own_children": Object {},
+                                    "parent": "",
+                                    "target_feeds": Array [
+                                      "notification:u-58",
+                                    ],
+                                    "updated_at": "2022-02-22T07:45:42.192763Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                  Object {
+                                    "activity_id": "65840600-9384-11ec-8080-800070890dfb",
+                                    "children_counts": Object {
+                                      "comment_count": 0,
+                                    },
+                                    "created_at": "2022-02-22T07:45:41.415369Z",
+                                    "data": Object {
+                                      "content": "6",
+                                      "edited": false,
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "1e8f20a0-0db3-4207-afeb-127cdf832b3f",
+                                    "kind": "comment",
+                                    "latest_children": Object {},
+                                    "own_children": Object {},
+                                    "parent": "",
+                                    "target_feeds": Array [
+                                      "notification:u-58",
+                                    ],
+                                    "updated_at": "2022-02-22T07:45:41.415369Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                ],
+                                "comment_count": Array [
+                                  Object {
+                                    "activity_id": "65840600-9384-11ec-8080-800070890dfb",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-22T07:45:44.692320Z",
+                                    "data": Object {},
+                                    "id": "9176be95-15f2-4113-86d1-9a4fd1791478",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-22T07:45:44.692320Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                  Object {
+                                    "activity_id": "65840600-9384-11ec-8080-800070890dfb",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-22T07:45:43.698166Z",
+                                    "data": Object {},
+                                    "id": "82164011-1e36-42c6-9943-32513cdbec39",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-22T07:45:43.698166Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                  Object {
+                                    "activity_id": "65840600-9384-11ec-8080-800070890dfb",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-22T07:45:43.035197Z",
+                                    "data": Object {},
+                                    "id": "30163213-4302-4990-8db3-49cbdbb6d5bf",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-22T07:45:43.035197Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                  Object {
+                                    "activity_id": "65840600-9384-11ec-8080-800070890dfb",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-22T07:45:42.226021Z",
+                                    "data": Object {},
+                                    "id": "b42b5b30-503f-4a3e-be05-adb2a86720c8",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-22T07:45:42.226021Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                  Object {
+                                    "activity_id": "65840600-9384-11ec-8080-800070890dfb",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-22T07:45:41.449327Z",
+                                    "data": Object {},
+                                    "id": "f55da862-32b1-4d90-b74d-34ff3834c848",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-22T07:45:41.449327Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                ],
+                              },
+                              "latest_reactions_extra": Object {
+                                "comment_count": Object {
+                                  "next": "?limit=5",
+                                },
+                              },
+                              "mentions": Object {
+                                "groups": Object {},
+                                "users": Object {
+                                  "trankimmai": Object {
+                                    "created_at": "2022-01-11T02:46:13.178254Z",
+                                    "data": Object {
+                                      "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                      "fullname": "Trần Thị Kim Mai",
+                                      "username": "trankimmai",
+                                    },
+                                    "id": "40",
+                                    "updated_at": "2022-01-11T02:46:13.178254Z",
+                                  },
+                                },
+                              },
+                              "object": Object {
+                                "collection": "post",
+                                "created_at": "2022-02-22T02:08:51.783198Z",
+                                "data": Object {
+                                  "content": "@trankimmai ",
+                                  "files": Array [],
+                                  "images": Array [],
+                                  "videos": Array [],
+                                },
+                                "foreign_id": "post:38d498d2-3328-45d5-9803-96059a66d392",
+                                "id": "38d498d2-3328-45d5-9803-96059a66d392",
+                                "updated_at": "2022-02-22T02:08:58.477589Z",
+                              },
+                              "origin": "timeline:g-10",
+                              "own_reactions": Object {
+                                "comment": Array [],
+                              },
+                              "reaction_counts": Object {
+                                "comment": 10,
+                                "comment_count": 10,
+                              },
+                              "reactions_order": Array [],
+                              "settings": Object {
+                                "can_comment": true,
+                                "can_react": true,
+                                "can_share": true,
+                              },
+                              "target": "",
+                              "time": "2022-02-22T02:08:58.976000",
+                              "type": "post",
+                              "verb": "post",
+                            },
+                            Object {
+                              "actor": Object {
+                                "created_at": "2022-01-10T03:45:06.563478Z",
+                                "data": Object {
+                                  "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                                  "fullname": "Trần Nam Anh",
+                                },
+                                "id": "2",
+                                "updated_at": "2022-02-28T07:49:26.224174Z",
+                              },
+                              "audience": Object {
+                                "groups": Array [
+                                  Object {
+                                    "collection": "groups",
+                                    "created_at": "2022-01-10T10:04:48.724936Z",
+                                    "data": Object {
+                                      "icon": "",
+                                      "name": "EVOL Community",
+                                    },
+                                    "foreign_id": "groups:1",
+                                    "id": "1",
+                                    "updated_at": "2022-01-10T10:04:48.724936Z",
+                                  },
+                                ],
+                                "users": Array [],
+                              },
+                              "foreign_id": "c5a91587-b5c0-459f-9eef-c503954f2a6c",
+                              "id": "efe9c800-92be-11ec-8080-800124087730",
+                              "important": Object {
+                                "active": false,
+                                "expires_time": "",
+                              },
+                              "is_draft": false,
+                              "latest_reactions": Object {
+                                "comment": Array [
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "children_counts": Object {
+                                      "comment_count": 0,
+                                    },
+                                    "created_at": "2022-02-22T08:23:02.338820Z",
+                                    "data": Object {
+                                      "content": "10",
+                                      "edited": false,
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "de9eb75c-d2ae-428d-ae00-7fcf0badb3a1",
+                                    "kind": "comment",
+                                    "latest_children": Object {},
+                                    "own_children": Object {},
+                                    "parent": "",
+                                    "target_feeds": Array [
+                                      "notification:u-2",
+                                    ],
+                                    "updated_at": "2022-02-22T08:23:02.338820Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "children_counts": Object {
+                                      "comment_count": 0,
+                                    },
+                                    "created_at": "2022-02-22T08:23:00.465396Z",
+                                    "data": Object {
+                                      "content": "9",
+                                      "edited": false,
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "1963786d-b714-4fc1-b2a1-fada04be87a7",
+                                    "kind": "comment",
+                                    "latest_children": Object {},
+                                    "own_children": Object {},
+                                    "parent": "",
+                                    "target_feeds": Array [
+                                      "notification:u-2",
+                                    ],
+                                    "updated_at": "2022-02-22T08:23:00.465396Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "children_counts": Object {
+                                      "comment_count": 0,
+                                    },
+                                    "created_at": "2022-02-22T08:22:59.671081Z",
+                                    "data": Object {
+                                      "content": "8",
+                                      "edited": false,
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "cc668848-227e-4dcf-87e4-7ea87d858aaa",
+                                    "kind": "comment",
+                                    "latest_children": Object {},
+                                    "own_children": Object {},
+                                    "parent": "",
+                                    "target_feeds": Array [
+                                      "notification:u-2",
+                                    ],
+                                    "updated_at": "2022-02-22T08:22:59.671081Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "children_counts": Object {
+                                      "comment_count": 0,
+                                    },
+                                    "created_at": "2022-02-22T08:22:57.336367Z",
+                                    "data": Object {
+                                      "content": "6",
+                                      "edited": false,
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "e128cde8-71ce-4682-abd1-f880ea15582d",
+                                    "kind": "comment",
+                                    "latest_children": Object {},
+                                    "own_children": Object {},
+                                    "parent": "",
+                                    "target_feeds": Array [
+                                      "notification:u-2",
+                                    ],
+                                    "updated_at": "2022-02-22T08:22:57.336367Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "children_counts": Object {
+                                      "comment_count": 0,
+                                    },
+                                    "created_at": "2022-02-21T02:35:37.453515Z",
+                                    "data": Object {
+                                      "content": "5",
+                                      "edited": false,
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "d6f61c9e-8661-430e-9f5a-fc251055ddc0",
+                                    "kind": "comment",
+                                    "latest_children": Object {},
+                                    "own_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-21T02:35:37.453515Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:45:06.563478Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                                        "fullname": "Trần Nam Anh",
+                                      },
+                                      "id": "2",
+                                      "updated_at": "2022-02-28T07:49:26.224174Z",
+                                    },
+                                    "user_id": "2",
+                                  },
+                                ],
+                                "comment_count": Array [
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-22T08:23:02.378264Z",
+                                    "data": Object {},
+                                    "id": "00f3f023-3fce-49ac-8811-fa95723a1f87",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-22T08:23:02.378264Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-22T08:23:00.507506Z",
+                                    "data": Object {},
+                                    "id": "ad62f4d1-a6ad-4e61-8bb4-a01fe47f4214",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-22T08:23:00.507506Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-22T08:22:59.706646Z",
+                                    "data": Object {},
+                                    "id": "17c694d4-a427-454f-a389-41939e584084",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-22T08:22:59.706646Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-22T08:22:57.372284Z",
+                                    "data": Object {},
+                                    "id": "ecb8bd28-ac0e-46cc-bcb5-7d5601f1c959",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-22T08:22:57.372284Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T10:03:39.466126Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "trang edit",
+                                      },
+                                      "id": "12",
+                                      "updated_at": "2022-02-28T03:54:47.220540Z",
+                                    },
+                                    "user_id": "12",
+                                  },
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-21T02:35:50.698084Z",
+                                    "data": Object {},
+                                    "id": "273e1ade-80e2-4d90-aed6-fe2f3cf03af3",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-21T02:35:50.698084Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:45:06.563478Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                                        "fullname": "Trần Nam Anh",
+                                      },
+                                      "id": "2",
+                                      "updated_at": "2022-02-28T07:49:26.224174Z",
+                                    },
+                                    "user_id": "2",
+                                  },
+                                ],
+                                "grinning_face_with_star_eyes": Array [
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "created_at": "2022-02-21T04:24:37.809894Z",
+                                    "id": "4f15edd3-3f7f-43a2-a55b-2725d50d24a9",
+                                    "kind": "grinning_face_with_star_eyes",
+                                    "parent": "",
+                                    "updated_at": "2022-02-21T04:24:37.809894Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-11T02:46:10.540203Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "Nguyễn Thị Ngọc Linh",
+                                        "username": "ngoclinh",
+                                      },
+                                      "id": "33",
+                                      "updated_at": "2022-01-11T02:46:10.540203Z",
+                                    },
+                                    "user_id": "33",
+                                  },
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "created_at": "2022-02-21T02:35:46.852048Z",
+                                    "id": "dc174c3e-ff68-48ea-80d0-43ef549f8bef",
+                                    "kind": "grinning_face_with_star_eyes",
+                                    "parent": "",
+                                    "updated_at": "2022-02-21T02:35:46.852048Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:45:06.563478Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                                        "fullname": "Trần Nam Anh",
+                                      },
+                                      "id": "2",
+                                      "updated_at": "2022-02-28T07:49:26.224174Z",
+                                    },
+                                    "user_id": "2",
+                                  },
+                                ],
+                                "kissing_closed_eyes": Array [
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "created_at": "2022-02-21T04:24:36.505240Z",
+                                    "id": "c2fd1c04-2867-4b68-a05a-15d8bdd9f8db",
+                                    "kind": "kissing_closed_eyes",
+                                    "parent": "",
+                                    "updated_at": "2022-02-21T04:24:36.505240Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-11T02:46:10.540203Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "Nguyễn Thị Ngọc Linh",
+                                        "username": "ngoclinh",
+                                      },
+                                      "id": "33",
+                                      "updated_at": "2022-01-11T02:46:10.540203Z",
+                                    },
+                                    "user_id": "33",
+                                  },
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "created_at": "2022-02-21T02:35:43.340843Z",
+                                    "id": "20037d75-7176-42d3-9ee8-1c8990b24646",
+                                    "kind": "kissing_closed_eyes",
+                                    "parent": "",
+                                    "updated_at": "2022-02-21T02:35:43.340843Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:45:06.563478Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                                        "fullname": "Trần Nam Anh",
+                                      },
+                                      "id": "2",
+                                      "updated_at": "2022-02-28T07:49:26.224174Z",
+                                    },
+                                    "user_id": "2",
+                                  },
+                                ],
+                                "kissing_smiling_eyes": Array [
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "created_at": "2022-02-21T04:24:38.865725Z",
+                                    "id": "80e6372b-d64f-4a86-a77e-547e4ce18eec",
+                                    "kind": "kissing_smiling_eyes",
+                                    "parent": "",
+                                    "updated_at": "2022-02-21T04:24:38.865725Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-11T02:46:10.540203Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "Nguyễn Thị Ngọc Linh",
+                                        "username": "ngoclinh",
+                                      },
+                                      "id": "33",
+                                      "updated_at": "2022-01-11T02:46:10.540203Z",
+                                    },
+                                    "user_id": "33",
+                                  },
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "created_at": "2022-02-21T02:35:57.124828Z",
+                                    "id": "f83e1f31-d8e2-4760-ba57-b2d4ec255cab",
+                                    "kind": "kissing_smiling_eyes",
+                                    "parent": "",
+                                    "updated_at": "2022-02-21T02:35:57.124828Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:45:06.563478Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                                        "fullname": "Trần Nam Anh",
+                                      },
+                                      "id": "2",
+                                      "updated_at": "2022-02-28T07:49:26.224174Z",
+                                    },
+                                    "user_id": "2",
+                                  },
+                                ],
+                                "sweat_smile": Array [
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "created_at": "2022-02-25T10:16:40.677491Z",
+                                    "id": "1326894f-3417-4acc-bf04-6a08bc66c00b",
+                                    "kind": "sweat_smile",
+                                    "parent": "",
+                                    "updated_at": "2022-02-25T10:16:40.677491Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-24T08:35:18.713097Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/fcf59b2c-bce9-4964-8750-b40d154e2d7a.png",
+                                        "fullname": "Nguyen Thi Thu Quyền",
+                                      },
+                                      "id": "58",
+                                      "updated_at": "2022-03-02T03:44:45.622302Z",
+                                    },
+                                    "user_id": "58",
+                                  },
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "created_at": "2022-02-21T04:24:39.910089Z",
+                                    "id": "496880fa-86f2-4707-92ba-31c9ffc29530",
+                                    "kind": "sweat_smile",
+                                    "parent": "",
+                                    "updated_at": "2022-02-21T04:24:39.910089Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-11T02:46:10.540203Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                                        "fullname": "Nguyễn Thị Ngọc Linh",
+                                        "username": "ngoclinh",
+                                      },
+                                      "id": "33",
+                                      "updated_at": "2022-01-11T02:46:10.540203Z",
+                                    },
+                                    "user_id": "33",
+                                  },
+                                  Object {
+                                    "activity_id": "efe9c800-92be-11ec-8080-800124087730",
+                                    "created_at": "2022-02-21T02:45:15.397671Z",
+                                    "id": "1811e0d4-4d20-413c-a0ed-0c60b48a10d5",
+                                    "kind": "sweat_smile",
+                                    "parent": "",
+                                    "updated_at": "2022-02-21T02:45:15.397671Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:45:06.563478Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                                        "fullname": "Trần Nam Anh",
+                                      },
+                                      "id": "2",
+                                      "updated_at": "2022-02-28T07:49:26.224174Z",
+                                    },
+                                    "user_id": "2",
+                                  },
+                                ],
+                              },
+                              "latest_reactions_extra": Object {
+                                "comment_count": Object {
+                                  "next": "?limit=5",
+                                },
+                              },
+                              "mentions": Object {
+                                "groups": Object {},
+                                "users": Object {},
+                              },
+                              "object": Object {
+                                "collection": "post",
+                                "created_at": "2022-02-21T02:35:29.885223Z",
+                                "data": Object {
+                                  "content": "new post",
+                                  "files": Array [],
+                                  "images": Array [],
+                                  "videos": Array [],
+                                },
+                                "foreign_id": "post:541dd07d-5c26-489b-931a-5ac36b2d1aa4",
+                                "id": "541dd07d-5c26-489b-931a-5ac36b2d1aa4",
+                                "updated_at": "2022-02-21T02:35:30.271191Z",
+                              },
+                              "origin": "timeline:g-1",
+                              "own_reactions": Object {
+                                "comment": Array [],
+                              },
+                              "reaction_counts": Object {
+                                "comment": 9,
+                                "comment_count": 9,
+                                "grinning_face_with_star_eyes": 2,
+                                "kissing_closed_eyes": 2,
+                                "kissing_smiling_eyes": 2,
+                                "sweat_smile": 3,
+                              },
+                              "reactions_order": Array [
+                                "kissing_closed_eyes",
+                                "grinning_face_with_star_eyes",
+                                "kissing_smiling_eyes",
+                                "sweat_smile",
+                              ],
+                              "settings": Object {
+                                "can_comment": true,
+                                "can_react": true,
+                                "can_share": true,
+                              },
+                              "target": "",
+                              "time": "2022-02-21T02:35:30.816000",
+                              "type": "post",
+                              "verb": "post",
+                            },
+                            Object {
+                              "actor": Object {
+                                "created_at": "2022-01-10T03:45:06.563478Z",
+                                "data": Object {
+                                  "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                                  "fullname": "Trần Nam Anh",
+                                },
+                                "id": "2",
+                                "updated_at": "2022-02-28T07:49:26.224174Z",
+                              },
+                              "audience": Object {
+                                "groups": Array [
+                                  Object {
+                                    "collection": "groups",
+                                    "created_at": "2022-01-10T10:04:48.724936Z",
+                                    "data": Object {
+                                      "icon": "",
+                                      "name": "EVOL Community",
+                                    },
+                                    "foreign_id": "groups:1",
+                                    "id": "1",
+                                    "updated_at": "2022-01-10T10:04:48.724936Z",
+                                  },
+                                ],
+                                "users": Array [],
+                              },
+                              "foreign_id": "16e0be14-19c5-4647-be51-554ab250574d",
+                              "id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                              "important": Object {
+                                "active": false,
+                                "expires_time": "",
+                              },
+                              "is_draft": false,
+                              "latest_reactions": Object {
+                                "comment": Array [
+                                  Object {
+                                    "activity_id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                                    "children_counts": Object {
+                                      "comment_count": 0,
+                                    },
+                                    "created_at": "2022-02-18T07:37:53.327008Z",
+                                    "data": Object {
+                                      "content": "4333",
+                                      "edited": false,
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "85c05927-3e4d-4670-a088-6eec3f2791e3",
+                                    "kind": "comment",
+                                    "latest_children": Object {},
+                                    "own_children": Object {},
+                                    "parent": "",
+                                    "target_feeds": Array [
+                                      "notification:u-2",
+                                    ],
+                                    "updated_at": "2022-02-18T07:37:53.327008Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:50:58.527007Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
+                                        "fullname": "Huỳnh Phương Khanh",
+                                      },
+                                      "id": "3",
+                                      "updated_at": "2022-02-11T09:08:10.989228Z",
+                                    },
+                                    "user_id": "3",
+                                  },
+                                  Object {
+                                    "activity_id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                                    "children_counts": Object {
+                                      "comment_count": 0,
+                                    },
+                                    "created_at": "2022-02-18T07:37:49.263375Z",
+                                    "data": Object {
+                                      "content": "hi",
+                                      "edited": false,
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "9d0af8fe-71ba-4fc8-8a60-73fbf96f95b6",
+                                    "kind": "comment",
+                                    "latest_children": Object {},
+                                    "own_children": Object {},
+                                    "parent": "",
+                                    "target_feeds": Array [
+                                      "notification:u-2",
+                                    ],
+                                    "updated_at": "2022-02-18T07:37:49.263375Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:50:58.527007Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
+                                        "fullname": "Huỳnh Phương Khanh",
+                                      },
+                                      "id": "3",
+                                      "updated_at": "2022-02-11T09:08:10.989228Z",
+                                    },
+                                    "user_id": "3",
+                                  },
+                                  Object {
+                                    "activity_id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                                    "children_counts": Object {
+                                      "comment_count": 0,
+                                    },
+                                    "created_at": "2022-02-17T07:17:33.619524Z",
+                                    "data": Object {
+                                      "content": "5",
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "78538b79-f3c3-496e-bd10-1e6a5fb72452",
+                                    "kind": "comment",
+                                    "latest_children": Object {},
+                                    "own_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-17T07:17:33.619524Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:45:06.563478Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                                        "fullname": "Trần Nam Anh",
+                                      },
+                                      "id": "2",
+                                      "updated_at": "2022-02-28T07:49:26.224174Z",
+                                    },
+                                    "user_id": "2",
+                                  },
+                                  Object {
+                                    "activity_id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                                    "children_counts": Object {
+                                      "comment_count": 0,
+                                      "satisfied": 1,
+                                      "sweat_smile": 1,
+                                    },
+                                    "created_at": "2022-02-17T07:17:32.974049Z",
+                                    "data": Object {
+                                      "content": "3",
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "8a3be95b-b302-4471-981f-27205bf663d7",
+                                    "kind": "comment",
+                                    "latest_children": Object {
+                                      "satisfied": Array [
+                                        Object {
+                                          "activity_id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                                          "created_at": "2022-02-18T11:10:41.184686Z",
+                                          "id": "030585e7-7981-4284-a913-e6d4510a76c6",
+                                          "kind": "satisfied",
+                                          "parent": "8a3be95b-b302-4471-981f-27205bf663d7",
+                                          "updated_at": "2022-02-18T11:10:41.184686Z",
+                                          "user": Object {
+                                            "created_at": "2022-01-10T03:45:06.563478Z",
+                                            "data": Object {
+                                              "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                                              "fullname": "Trần Nam Anh",
+                                            },
+                                            "id": "2",
+                                            "updated_at": "2022-02-28T07:49:26.224174Z",
+                                          },
+                                          "user_id": "2",
+                                        },
+                                      ],
+                                      "sweat_smile": Array [
+                                        Object {
+                                          "activity_id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                                          "created_at": "2022-02-18T11:10:40.145761Z",
+                                          "id": "420068b1-77d3-435f-9b15-7a5da5aab5c0",
+                                          "kind": "sweat_smile",
+                                          "parent": "8a3be95b-b302-4471-981f-27205bf663d7",
+                                          "updated_at": "2022-02-18T11:10:40.145761Z",
+                                          "user": Object {
+                                            "created_at": "2022-01-10T03:45:06.563478Z",
+                                            "data": Object {
+                                              "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                                              "fullname": "Trần Nam Anh",
+                                            },
+                                            "id": "2",
+                                            "updated_at": "2022-02-28T07:49:26.224174Z",
+                                          },
+                                          "user_id": "2",
+                                        },
+                                      ],
+                                    },
+                                    "own_children": Object {
+                                      "satisfied": Array [],
+                                      "sweat_smile": Array [],
+                                    },
+                                    "parent": "",
+                                    "updated_at": "2022-02-17T07:17:32.974049Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:45:06.563478Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                                        "fullname": "Trần Nam Anh",
+                                      },
+                                      "id": "2",
+                                      "updated_at": "2022-02-28T07:49:26.224174Z",
+                                    },
+                                    "user_id": "2",
+                                  },
+                                  Object {
+                                    "activity_id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                                    "children_counts": Object {
+                                      "comment": 0,
+                                      "comment_count": 0,
+                                    },
+                                    "created_at": "2022-02-17T07:17:32.565512Z",
+                                    "data": Object {
+                                      "content": "2",
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "d7e07123-be38-4755-9616-27cbfa6244f5",
+                                    "kind": "comment",
+                                    "latest_children": Object {},
+                                    "own_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-17T07:17:32.565512Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:45:06.563478Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                                        "fullname": "Trần Nam Anh",
+                                      },
+                                      "id": "2",
+                                      "updated_at": "2022-02-28T07:49:26.224174Z",
+                                    },
+                                    "user_id": "2",
+                                  },
+                                ],
+                                "comment_count": Array [
+                                  Object {
+                                    "activity_id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-18T09:20:02.232590Z",
+                                    "data": Object {},
+                                    "id": "f6a43bec-9289-47bb-804e-48287b5b4314",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-18T09:20:02.232590Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:45:06.563478Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                                        "fullname": "Trần Nam Anh",
+                                      },
+                                      "id": "2",
+                                      "updated_at": "2022-02-28T07:49:26.224174Z",
+                                    },
+                                    "user_id": "2",
+                                  },
+                                  Object {
+                                    "activity_id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-18T09:19:58.216818Z",
+                                    "data": Object {},
+                                    "id": "86a70ed1-3c76-42e7-be0b-3303e6cb85fd",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-18T09:19:58.216818Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:45:06.563478Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                                        "fullname": "Trần Nam Anh",
+                                      },
+                                      "id": "2",
+                                      "updated_at": "2022-02-28T07:49:26.224174Z",
+                                    },
+                                    "user_id": "2",
+                                  },
+                                  Object {
+                                    "activity_id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-18T09:19:54.426507Z",
+                                    "data": Object {},
+                                    "id": "5380227a-5cb5-4e9b-8a65-78a38b70e3f0",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-18T09:19:54.426507Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:45:06.563478Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
+                                        "fullname": "Trần Nam Anh",
+                                      },
+                                      "id": "2",
+                                      "updated_at": "2022-02-28T07:49:26.224174Z",
+                                    },
+                                    "user_id": "2",
+                                  },
+                                  Object {
+                                    "activity_id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-18T07:37:53.372107Z",
+                                    "data": Object {},
+                                    "id": "d38fd55b-7142-4979-8ede-ac7f94b98439",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-18T07:37:53.372107Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:50:58.527007Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
+                                        "fullname": "Huỳnh Phương Khanh",
+                                      },
+                                      "id": "3",
+                                      "updated_at": "2022-02-11T09:08:10.989228Z",
+                                    },
+                                    "user_id": "3",
+                                  },
+                                  Object {
+                                    "activity_id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-18T07:37:49.319422Z",
+                                    "data": Object {},
+                                    "id": "3008f4e2-9b4e-4e7e-8e50-99d166a6d20c",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-18T07:37:49.319422Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:50:58.527007Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
+                                        "fullname": "Huỳnh Phương Khanh",
+                                      },
+                                      "id": "3",
+                                      "updated_at": "2022-02-11T09:08:10.989228Z",
+                                    },
+                                    "user_id": "3",
+                                  },
+                                ],
+                              },
+                              "latest_reactions_extra": Object {
+                                "comment_count": Object {
+                                  "next": "?limit=5",
+                                },
+                              },
+                              "mentions": Object {
+                                "groups": Object {},
+                                "users": Object {},
+                              },
+                              "object": Object {
+                                "collection": "post",
+                                "created_at": "2022-02-17T07:17:27.076695Z",
+                                "data": Object {
+                                  "content": "delete comment",
+                                  "files": Array [],
+                                  "images": Array [],
+                                  "videos": Array [],
+                                },
+                                "foreign_id": "post:86580091-f3b2-4c3c-bd2a-1284a17a1b5e",
+                                "id": "86580091-f3b2-4c3c-bd2a-1284a17a1b5e",
+                                "updated_at": "2022-02-17T07:17:27.814295Z",
+                              },
+                              "origin": "timeline:g-1",
+                              "own_reactions": Object {
+                                "comment": Array [
+                                  Object {
+                                    "activity_id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                                    "children_counts": Object {
+                                      "comment_count": 0,
+                                    },
+                                    "created_at": "2022-02-18T07:37:53.327008Z",
+                                    "data": Object {
+                                      "content": "4333",
+                                      "edited": false,
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "85c05927-3e4d-4670-a088-6eec3f2791e3",
+                                    "kind": "comment",
+                                    "latest_children": Object {},
+                                    "own_children": Object {},
+                                    "parent": "",
+                                    "target_feeds": Array [
+                                      "notification:u-2",
+                                    ],
+                                    "updated_at": "2022-02-18T07:37:53.327008Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:50:58.527007Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
+                                        "fullname": "Huỳnh Phương Khanh",
+                                      },
+                                      "id": "3",
+                                      "updated_at": "2022-02-11T09:08:10.989228Z",
+                                    },
+                                    "user_id": "3",
+                                  },
+                                  Object {
+                                    "activity_id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                                    "children_counts": Object {
+                                      "comment_count": 0,
+                                    },
+                                    "created_at": "2022-02-18T07:37:49.263375Z",
+                                    "data": Object {
+                                      "content": "hi",
+                                      "edited": false,
+                                      "images": Array [],
+                                      "mentions": Object {
+                                        "groups": Array [],
+                                        "users": Array [],
+                                      },
+                                    },
+                                    "id": "9d0af8fe-71ba-4fc8-8a60-73fbf96f95b6",
+                                    "kind": "comment",
+                                    "latest_children": Object {},
+                                    "own_children": Object {},
+                                    "parent": "",
+                                    "target_feeds": Array [
+                                      "notification:u-2",
+                                    ],
+                                    "updated_at": "2022-02-18T07:37:49.263375Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:50:58.527007Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
+                                        "fullname": "Huỳnh Phương Khanh",
+                                      },
+                                      "id": "3",
+                                      "updated_at": "2022-02-11T09:08:10.989228Z",
+                                    },
+                                    "user_id": "3",
+                                  },
+                                ],
+                                "comment_count": Array [
+                                  Object {
+                                    "activity_id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-18T07:37:53.372107Z",
+                                    "data": Object {},
+                                    "id": "d38fd55b-7142-4979-8ede-ac7f94b98439",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-18T07:37:53.372107Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:50:58.527007Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
+                                        "fullname": "Huỳnh Phương Khanh",
+                                      },
+                                      "id": "3",
+                                      "updated_at": "2022-02-11T09:08:10.989228Z",
+                                    },
+                                    "user_id": "3",
+                                  },
+                                  Object {
+                                    "activity_id": "a9daed80-8fc1-11ec-8080-800124a908a7",
+                                    "children_counts": Object {},
+                                    "created_at": "2022-02-18T07:37:49.319422Z",
+                                    "data": Object {},
+                                    "id": "3008f4e2-9b4e-4e7e-8e50-99d166a6d20c",
+                                    "kind": "comment_count",
+                                    "latest_children": Object {},
+                                    "parent": "",
+                                    "updated_at": "2022-02-18T07:37:49.319422Z",
+                                    "user": Object {
+                                      "created_at": "2022-01-10T03:50:58.527007Z",
+                                      "data": Object {
+                                        "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
+                                        "fullname": "Huỳnh Phương Khanh",
+                                      },
+                                      "id": "3",
+                                      "updated_at": "2022-02-11T09:08:10.989228Z",
+                                    },
+                                    "user_id": "3",
+                                  },
+                                ],
+                              },
+                              "reaction_counts": Object {
+                                "blush": 0,
+                                "comment": 5,
+                                "comment_count": 5,
+                                "grin": 0,
+                                "grinning": 0,
+                                "joy": 0,
+                                "kissing_closed_eyes": 0,
+                                "kissing_heart": 0,
+                                "nauseated_face": 0,
+                                "rolling_on_the_floor_laughing": 0,
+                                "satisfied": 0,
+                                "slightly_smiling_face": 0,
+                                "smile": 0,
+                                "smiley": 0,
+                                "smiling_face_with_smiling_eyes_and_hand_covering_mouth": 0,
+                                "stuck_out_tongue": 0,
+                                "stuck_out_tongue_closed_eyes": 0,
+                                "stuck_out_tongue_winking_eye": 0,
+                                "sweat_smile": 0,
+                                "upside_down_face": 0,
+                                "wink": 0,
+                              },
+                              "reactions_order": Array [],
+                              "settings": Object {
+                                "can_comment": true,
+                                "can_react": true,
+                                "can_share": true,
+                              },
+                              "target": "",
+                              "time": "2022-02-17T07:17:28.280000",
+                              "type": "post",
+                              "verb": "post",
+                            },
+                          ],
+                          "_firstIndexToProcess": 0,
+                          "_hasStableIds": true,
+                          "_requiresDataChangeHandling": false,
+                          "_size": 3,
+                          "getStableId": [Function],
+                          "rowHasChanged": [Function],
+                        }
+                      }
+                      disableRecycling={false}
+                      externalScrollView={[Function]}
+                      forceNonDeterministicRendering={true}
+                      horizontal={false}
+                      initialOffset={0}
+                      initialRenderIndex={0}
+                      isHorizontal={false}
+                      layoutProvider={
+                        LayoutProvider {
+                          "_getLayoutTypeForIndex": [Function],
+                          "_setLayoutForType": [Function],
+                          "_tempDim": Object {
+                            "height": 0,
+                            "width": 0,
+                          },
+                          "shouldRefreshWithAnchoring": true,
+                        }
+                      }
+                      onEndReached={[Function]}
+                      onEndReachedThreshold={2668}
+                      onItemLayout={[Function]}
+                      onLayout={[Function]}
+                      onScroll={[Function]}
+                      onSizeChanged={[Function]}
+                      onVisibleIndicesChanged={[Function]}
+                      refreshControl={
+                        <RefreshControlMock
+                          onRefresh={[Function]}
+                          progressViewOffset={60}
+                          refreshing={false}
+                        />
+                      }
+                      removeClippedSubviews={false}
+                      renderAheadOffset={1334}
+                      renderFooter={[Function]}
+                      rowRenderer={[Function]}
+                      scrollEventThrottle={16}
+                      scrollThrottle={16}
+                      scrollViewProps={
+                        Object {
+                          "refreshControl": <RefreshControlMock
+                            onRefresh={[Function]}
+                            progressViewOffset={60}
+                            refreshing={false}
+                          />,
+                        }
+                      }
+                    >
+                      <RCTRefreshControl />
+                      <View>
+                        <View
+                          style={
+                            Object {
+                              "flexDirection": "column",
+                            }
+                          }
+                        >
+                          <View
+                            horizontal={false}
+                            scrollOffset={0}
+                            style={
+                              Object {
+                                "height": 0,
+                                "width": 0,
+                              }
+                            }
+                            windowSize={1334}
+                          />
+                          <View
+                            style={
+                              Object {
+                                "alignItems": "center",
+                                "justifyContent": "center",
+                                "minHeight": 150,
+                                "paddingVertical": 16,
+                              }
+                            }
+                          >
+                            <View
+                              onLayout={[Function]}
+                              style={
+                                Object {
+                                  "backgroundColor": "transparent",
+                                  "position": "relative",
+                                }
+                              }
+                            >
+                              <View
+                                style={
+                                  Object {
+                                    "bottom": 0,
+                                    "left": 0,
+                                    "opacity": 1,
+                                    "position": "absolute",
+                                    "right": 0,
+                                    "top": 0,
+                                  }
+                                }
+                              >
+                                <View
+                                  style={
+                                    Object {
+                                      "alignItems": "center",
+                                      "backgroundColor": "#f9f9f9",
+                                      "height": 320,
+                                      "justifyContent": "center",
+                                      "marginBottom": 16,
+                                      "marginTop": 12,
+                                      "maxHeight": 160,
+                                      "maxWidth": 240,
+                                      "width": 480,
+                                    }
+                                  }
+                                  testID="Image__placeholder"
+                                />
+                              </View>
+                              <View
+                                style={
+                                  Array [
+                                    Object {
+                                      "overflow": "hidden",
+                                    },
+                                    Object {
+                                      "height": 320,
+                                      "marginBottom": 16,
+                                      "marginTop": 12,
+                                      "maxHeight": 160,
+                                      "maxWidth": 240,
+                                      "width": 480,
+                                    },
+                                  ]
+                                }
+                              >
+                                <FastImageView
+                                  onFastImageError={[Function]}
+                                  onFastImageLoadEnd={[Function]}
+                                  resizeMode="contain"
+                                  source={
+                                    Object {
+                                      "testUri": "../../../assets/images/img_empty_cant_load_more.png",
+                                    }
+                                  }
+                                  style={
+                                    Object {
+                                      "bottom": 0,
+                                      "left": 0,
+                                      "position": "absolute",
+                                      "right": 0,
+                                      "top": 0,
+                                    }
+                                  }
+                                />
+                              </View>
+                            </View>
+                            <Text
+                              style={
+                                Object {
+                                  "color": "#2F3945",
+                                  "fontFamily": "OpenSans-SemiBold",
+                                  "fontSize": 14,
+                                }
+                              }
+                            >
+                              post:newsfeed:title_empty_cant_load_more
+                            </Text>
+                            <Text
+                              style={
+                                Object {
+                                  "color": "#627286",
+                                  "fontFamily": "OpenSans-Regular",
+                                  "fontSize": 12,
+                                  "marginBottom": 16,
+                                }
+                              }
+                            >
+                              post:newsfeed:text_empty_cant_load_more
+                            </Text>
+                          </View>
+                        </View>
+                      </View>
+                    </RCTScrollView>
+                    <View
+                      animatedStyle={
+                        Object {
+                          "value": Object {
+                            "bottom": -50,
+                            "opacity": 0,
+                            "position": "absolute",
+                            "right": 8,
+                          },
+                        }
+                      }
+                      collapsable={false}
+                      style={
+                        Object {
+                          "bottom": -50,
+                          "opacity": 0,
+                          "position": "absolute",
+                          "right": 8,
+                        }
+                      }
+                    >
+                      <View
+                        accessible={true}
+                        focusable={true}
+                        onClick={[Function]}
+                        onResponderGrant={[Function]}
+                        onResponderMove={[Function]}
+                        onResponderRelease={[Function]}
+                        onResponderTerminate={[Function]}
+                        onResponderTerminationRequest={[Function]}
+                        onStartShouldSetResponder={[Function]}
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "backgroundColor": "#421187",
+                            "borderRadius": 4,
+                            "height": 44,
+                            "justifyContent": "center",
+                            "opacity": 1,
+                            "width": 44,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                              "justifyContent": "center",
+                            }
+                          }
+                          testID="button_wrapper.content"
+                        >
+                          <View
+                            accessibilityState={
+                              Object {
+                                "disabled": true,
+                              }
+                            }
+                            accessible={true}
+                            focusable={false}
+                            hitSlop={
+                              Object {
+                                "bottom": 10,
+                                "left": 10,
+                                "right": 10,
+                                "top": 10,
+                              }
+                            }
+                            onClick={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
+                            style={
+                              Object {
+                                "opacity": 1,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                Array [
+                                  Object {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                  },
+                                  undefined,
+                                  Object {
+                                    "backgroundColor": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              <View
+                                style={
+                                  Array [
+                                    undefined,
+                                    undefined,
+                                    undefined,
+                                  ]
+                                }
+                              >
+                                <View
+                                  className="icon-wrapper"
+                                >
+                                  <RNSVGSvgView
+                                    align="xMidYMid"
+                                    bbHeight={20}
+                                    bbWidth={20}
+                                    fill="#FFFFFF"
+                                    focusable={false}
+                                    height={20}
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
+                                    style={
+                                      Array [
+                                        Object {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        Object {},
+                                        Object {
+                                          "flex": 0,
+                                          "height": 20,
+                                          "width": 20,
+                                        },
+                                      ]
+                                    }
+                                    vbHeight={24}
+                                    vbWidth={24}
+                                    width={20}
+                                  >
+                                    <RNSVGGroup
+                                      fill={4294967295}
+                                      propList={
+                                        Array [
+                                          "fill",
+                                        ]
+                                      }
+                                    >
+                                      <RNSVGPath
+                                        d="M21,12a1,1,0,0,0-1,1v6a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4h6a1,1,0,0,0,0-2H5A3,3,0,0,0,2,5V19a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V13A1,1,0,0,0,21,12ZM6,12.76V17a1,1,0,0,0,1,1h4.24a1,1,0,0,0,.71-.29l6.92-6.93h0L21.71,8a1,1,0,0,0,0-1.42L17.47,2.29a1,1,0,0,0-1.42,0L13.23,5.12h0L6.29,12.05A1,1,0,0,0,6,12.76ZM16.76,4.41l2.83,2.83L18.17,8.66,15.34,5.83ZM8,13.17l5.93-5.93,2.83,2.83L10.83,16H8Z"
+                                      />
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </RNSScreen>
+  </RNSScreenContainer>
+</View>
+`;

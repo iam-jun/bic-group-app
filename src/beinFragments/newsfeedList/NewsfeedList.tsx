@@ -282,6 +282,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   return (
     <View
+      testID="newsfeed_list"
       style={styles.container}
       onLayout={event => setNewsfeedWidth(event.nativeEvent.layout.width)}>
       {data && data.length > 0 && (
