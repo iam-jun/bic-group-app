@@ -4,6 +4,12 @@ import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 import initialState from '~/store/initialState';
 import {act} from 'react-test-renderer';
+import {
+  withReanimatedTimer,
+  advanceAnimationByTime,
+  advanceAnimationByFrame,
+  getAnimatedStyle,
+} from 'react-native-reanimated/src/reanimated2/jestUtils';
 
 const mockStore = configureStore([]);
 const defaultStore = mockStore(initialState);
@@ -13,7 +19,16 @@ export function renderWithRedux(component, store = defaultStore) {
 }
 
 export * from '@testing-library/react-native';
-export {defaultStore as store, cleanup, fireEvent, configureStore};
+export {
+  defaultStore as store,
+  cleanup,
+  fireEvent,
+  configureStore,
+  withReanimatedTimer,
+  advanceAnimationByTime,
+  advanceAnimationByFrame,
+  getAnimatedStyle,
+};
 
 export const waitForComponentToPaint = async wrapper => {
   await act(async () => {

@@ -61,6 +61,7 @@ jest.doMock('react-native-paper', () => ({
 
 jest.doMock('react-native-modalize', () => {
   const RealModule = jest.requireActual('react-native-modalize');
+  // noinspection UnnecessaryLocalVariableJS
   const MockedModule = {
     ...RealModule,
     // eslint-disable-next-line react/prop-types
@@ -97,6 +98,7 @@ jest.doMock('react-native', () => {
     runAfterInteractions: jest.fn(cb => cb()),
   };
 
+  // noinspection JSUnusedGlobalSymbols
   const NativeModules = {
     ...RNNativeModules,
     UIManager: {
