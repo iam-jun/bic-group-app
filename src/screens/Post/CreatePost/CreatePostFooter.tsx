@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -24,7 +24,9 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
   return (
     <Div className="post-toolbar-container">
       <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
-      <MentionBar style={{borderColor: colors.borderDivider}} />
+      {Platform.OS !== 'web' && (
+        <MentionBar style={{borderColor: colors.borderDivider}} />
+      )}
     </Div>
   );
 };

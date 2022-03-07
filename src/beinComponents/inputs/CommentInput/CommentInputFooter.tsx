@@ -121,7 +121,9 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
     <View style={styles.container}>
       {renderButtons()}
       {Platform.OS !== 'web' && (
-        <Animated.View style={mentionContainerStyle}>
+        <Animated.View
+          testID={'comment_input_footer.mention_bar_container'}
+          style={mentionContainerStyle}>
           <MentionBar
             onVisible={onVisibleMentionBar}
             style={styles.mentionBar}
