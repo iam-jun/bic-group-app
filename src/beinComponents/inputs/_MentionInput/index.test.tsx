@@ -65,9 +65,8 @@ describe('_MentionInput component', () => {
       },
     };
     const wrapper = renderWithRedux(<_MentionInput {...props} />, store);
-
-    const commentInput = wrapper.getByTestId('comment_input');
-    expect(commentInput).not.toBeNull();
+    const rendered = wrapper.toJSON();
+    expect(rendered).toMatchSnapshot();
   });
 
   it(`should show "_MentionInput" with PostInput`, async () => {
@@ -82,8 +81,8 @@ describe('_MentionInput component', () => {
     };
     const wrapper = renderWithRedux(<_MentionInput {...props} />, store);
 
-    const postInput = wrapper.findByTestId('post_input');
-    expect(postInput).not.toBeNull();
+    const rendered = wrapper.toJSON();
+    expect(rendered).toMatchSnapshot();
   });
 
   it(`should show "_MentionInput" with disabled input`, async () => {
@@ -120,9 +119,9 @@ describe('_MentionInput component', () => {
     };
     const wrapper = renderWithRedux(<_MentionInput {...props} />, store);
 
-    const commentInput = wrapper.getByTestId('_mention_input.input');
-    fireEvent.changeText(commentInput);
-    expect(onChangeText).toHaveBeenCalled();
+    const component = wrapper.getByTestId('_mention_input.input');
+    fireEvent.changeText(component, 'abc');
+    expect(onChangeText).toBeCalledWith('abc');
   });
 
   it(`should hide "ComponentInput" with hidden style on ios`, async () => {
