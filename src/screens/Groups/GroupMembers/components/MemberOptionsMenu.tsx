@@ -166,7 +166,7 @@ const MemberOptionsMenu = ({
     groupsDataHelper
       .getGroupMembers(groupId, {offset: 0, limit: 1})
       .then(data => {
-        const adminCount = data?.GROUP_ADMIN?.user_count;
+        const adminCount = data?.group_admin?.user_count;
         if (adminCount > 1) {
           callback();
         } else {

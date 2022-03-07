@@ -20,4 +20,5 @@ module.exports = {
     '!src/beinComponents/MarkdownView/**/*.{js,jsx,ts,tsx}',
   ],
   setupFiles: ['<rootDir>/src/test/setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/src/test/setupAfterEnv.js'],
 };
