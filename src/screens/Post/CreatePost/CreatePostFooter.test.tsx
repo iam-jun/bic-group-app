@@ -37,4 +37,27 @@ describe('CreatePostFooter component', () => {
     const items = wrapper.getAllByTestId('mention_bar_item');
     expect(items?.length).toBe(2);
   });
+
+  // Expect correct but got error new Date.
+  // it(`renders correctly opacity = 1`, async () => {
+  //   withReanimatedTimer(() => {
+  //     const storeData = {...initialState};
+  //     storeData.mentionInput.data = [
+  //       {
+  //         id: 7,
+  //         username: 'testaccount2',
+  //         fullname: 'Test account 2',
+  //         avatar:
+  //           'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png',
+  //       },
+  //     ] as any;
+  //     const store = mockStore(storeData);
+  //     const wrapper = renderWithRedux(<CreatePostFooter />, store);
+  //     const container = wrapper.getByTestId(
+  //       'create_post_footer.mention_bar_container',
+  //     );
+  //     advanceAnimationByTime(600);
+  //     expect(container).toHaveAnimatedStyle({opacity: 1});
+  //   });
+  // });
 });
