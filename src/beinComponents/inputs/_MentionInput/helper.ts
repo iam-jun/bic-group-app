@@ -97,8 +97,6 @@ export const completeMention = ({
 export const checkRunSearch = (text: string, groupIds: any, dispatch: any) => {
   let flagRun = false;
 
-  if (!text) return dispatch(actions.setData([]));
-
   const _matchTerm = getMatchTermForAtMention(text);
 
   if (_matchTerm !== null && !_matchTerm.endsWith(' ')) {
