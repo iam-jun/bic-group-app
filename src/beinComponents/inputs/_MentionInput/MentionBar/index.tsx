@@ -23,6 +23,7 @@ import MentionBarItem from '~/beinComponents/inputs/_MentionInput/MentionBar/Men
 import Divider from '~/beinComponents/Divider';
 
 interface MentionBarProps {
+  testID?: string;
   style?: StyleProp<ViewStyle>;
   type?: string;
   onVisible?: (isVisible: boolean) => void;
