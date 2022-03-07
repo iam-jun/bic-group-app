@@ -58,24 +58,20 @@ jest.doMock('i18next', () => ({
   },
 }));
 
-jest.doMock('react-native-paper', () => {
-  const RealModule = jest.requireActual('react-native-paper');
-  const MockedModule = {
-    ...RealModule,
-    // eslint-disable-next-line react/prop-types
-    Portal: ({children}) => children,
-    useTheme: () => ({
-      colors: colors.light.colors,
-      spacing: spacing,
-      dimension: dimension,
-    }),
-    TextInput: ReactNative.TextInput,
-  };
-  return MockedModule;
-});
+jest.doMock('react-native-paper', () => ({
+  // eslint-disable-next-line react/prop-types
+  Portal: ({children}) => children,
+  useTheme: () => ({
+    colors: colors.light.colors,
+    spacing: spacing,
+    dimension: dimension,
+  }),
+  TextInput: ReactNative.TextInput,
+}));
 
 jest.doMock('react-native-modalize', () => {
   const RealModule = jest.requireActual('react-native-modalize');
+  // noinspection UnnecessaryLocalVariableJS
   const MockedModule = {
     ...RealModule,
     // eslint-disable-next-line react/prop-types
@@ -112,6 +108,7 @@ jest.doMock('react-native', () => {
     runAfterInteractions: jest.fn(cb => cb()),
   };
 
+  // noinspection JSUnusedGlobalSymbols
   const NativeModules = {
     ...RNNativeModules,
     UIManager: {

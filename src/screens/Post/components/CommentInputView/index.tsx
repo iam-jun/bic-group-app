@@ -148,6 +148,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   return (
     <View>
       <_MentionInput
+        disableAutoComplete={Platform.OS !== 'web'}
         groupIds={groupIds}
         ComponentInput={CommentInput}
         mentionInputRef={mentionInputRef}

@@ -149,6 +149,7 @@ const Newsfeed = () => {
           titleTextProps={{useI18n: true}}
           style={styles.headerOnLaptop}
           removeBorderAndShadow
+          onPressChat={navigateToChat}
           onShowSearch={onShowSearch}
           onSearchText={onSearchText}
           searchPlaceholder={t('input:search_post')}

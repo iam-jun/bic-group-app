@@ -1,7 +1,7 @@
 import {IParamSearchMentionAudiences} from '~/interfaces/IPost';
 import types from './types';
 
-export default {
+const mentionActions = {
   setText: (payload: string) => {
     return {
       type: types.SET_TEXT,
@@ -45,3 +45,5 @@ export default {
     };
   },
 };
+
+export default mentionActions;

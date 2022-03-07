@@ -464,7 +464,7 @@ const UserEditProfile = (props: any) => {
           </View>
           <View style={styles.infoItem}>
             {userWorkExperience.map((item: IUserWorkExperience) => (
-              <View key={item?.company + item?.titlePosition}>
+              <View key={item?.id + item?.company}>
                 {renderWorkItem({item})}
               </View>
             ))}
@@ -482,7 +482,7 @@ const UserEditProfile = (props: any) => {
         </View>
         <View style={styles.infoItem}>
           {(myWorkExperience || [])?.map((item: IUserWorkExperience) => (
-            <View key={item?.company + item?.titlePosition}>
+            <View key={item?.id + item?.company + item?.titlePosition}>
               {renderWorkItem({item})}
             </View>
           ))}

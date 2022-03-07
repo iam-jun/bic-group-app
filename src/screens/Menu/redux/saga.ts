@@ -288,9 +288,14 @@ function* deleteWorkExperience({
   callback?: () => void;
 }) {
   try {
-    yield menuDataHelper.deleteWorkExperience(id);
-
-    yield put(menuActions.getMyWorkExperience());
+    const response: IResponseData = yield menuDataHelper.deleteWorkExperience(
+      id,
+    );
+    if (!!response?.data) {
+      yield put(
+        menuActions.setMyWorkExperience(mapWorkExperience(response.data)),
+      );
+    }
 
     if (callback) return callback();
   } catch (err) {

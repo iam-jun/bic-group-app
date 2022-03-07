@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import DocumentPicker from '~/beinComponents/DocumentPicker';
 import Icon from '~/beinComponents/Icon';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
@@ -33,6 +32,7 @@ import EmojiBoardAnimated from '~/beinComponents/emoji/EmojiBoardAnimated';
 import modalActions from '~/store/modal/actions';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import CommentInputFooter from '~/beinComponents/inputs/CommentInput/CommentInputFooter';
 
 export interface ICommentInputSendParam {
   content: string;
@@ -390,55 +390,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
     Platform.OS === 'web' ? {outlineWidth: 0, height: textTextInputHeight} : {},
   ]);
 
-  const renderButtons = () => {
-    return (
-      <View style={styles.buttonsContainer}>
-        <View style={{flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-          <Button onPress={_onPressFile}>
-            <Icon
-              style={styles.icon}
-              tintColor={colors.iconTintLight}
-              icon={'Paperclip'}
-            />
-          </Button>
-          <Button onPress={_onPressSelectImage}>
-            <Icon
-              size={18}
-              style={styles.icon}
-              tintColor={colors.iconTintLight}
-              icon={'ImageV'}
-            />
-          </Button>
-          <Button onPress={onPressCamera}>
-            <Icon
-              style={styles.icon}
-              tintColor={colors.iconTintLight}
-              icon={'Camera'}
-            />
-          </Button>
-          <Button onPress={onPressEmoji}>
-            <Icon
-              style={styles.icon}
-              tintColor={colors.iconTintLight}
-              icon={'Smile'}
-            />
-          </Button>
-        </View>
-        <Button.Secondary
-          testID={useTestID ? 'comment_input.send' : undefined}
-          onPress={_onPressSend}
-          style={styles.buttonSend}
-          rightIcon={'iconSendComment'}
-          loading={_loading}
-          disabled={_loading || (!text.trim() && !selectedImage)}
-          useI18n
-          highEmphasis>
-          common:text_send
-        </Button.Secondary>
-      </View>
-    );
-  };
-
   const renderSelectedImage = () => {
     if (!selectedImage || !isHandleUpload) {
       return null;
@@ -528,7 +479,16 @@ const CommentInput: React.FC<CommentInputProps> = ({
           </Animated.View>
         </View>
         {renderSelectedImage()}
-        {renderButtons()}
+        <CommentInputFooter
+          useTestID={useTestID}
+          onPressFile={_onPressFile}
+          onPressImage={_onPressSelectImage}
+          onPressCamera={onPressCamera}
+          onPressEmoji={onPressEmoji}
+          onPressSend={_onPressSend}
+          loading={_loading}
+          disabledBtnSend={_loading || (!text.trim() && !selectedImage)}
+        />
       </View>
       {!isWeb && (
         <EmojiBoardAnimated
@@ -558,13 +518,6 @@ const createStyle = (theme: ITheme, insets: any, loading: boolean) => {
       flexDirection: 'row',
       alignItems: 'flex-end',
       paddingBottom: spacing?.padding.small,
-    },
-    buttonsContainer: {
-      flexDirection: 'row',
-      backgroundColor: colors.background,
-      paddingLeft: spacing.padding.large,
-      paddingRight: spacing.padding.small,
-      paddingBottom: spacing.padding.small,
     },
     iconContainer: {
       width: 24,
@@ -648,8 +601,6 @@ const createStyle = (theme: ITheme, insets: any, loading: boolean) => {
       marginHorizontal: spacing.margin.base,
       paddingBottom: spacing.margin.tiny,
     },
-    icon: {marginRight: spacing.margin.large},
-    buttonSend: {paddingLeft: spacing.padding.large},
   });
 };
 
