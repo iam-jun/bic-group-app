@@ -23,13 +23,16 @@ import MentionBarItem from '~/beinComponents/inputs/_MentionInput/MentionBar/Men
 import Divider from '~/beinComponents/Divider';
 
 interface MentionBarProps {
+  testID?: string;
   style?: StyleProp<ViewStyle>;
   type?: string;
+  onVisible?: (isVisible: boolean) => void;
 }
 
 const MentionBar: FC<MentionBarProps> = ({
   style,
   type = 'mentionInput',
+  onVisible,
 }: MentionBarProps) => {
   const text = useRef('');
   const cursorPosition = useRef(0);
@@ -41,6 +44,8 @@ const MentionBar: FC<MentionBarProps> = ({
   const {spacing, colors} = theme;
   const styles = createStyle(theme);
 
+  const isShow = !!data?.length;
+
   useEffect(() => {
     const listener = DeviceEventEmitter.addListener(
       'autocomplete-on-selection-change',
@@ -50,6 +55,10 @@ const MentionBar: FC<MentionBarProps> = ({
       listener?.remove?.();
     };
   }, []);
+
+  useEffect(() => {
+    onVisible?.(isShow);
+  }, [isShow]);
 
   const onCursorPositionChange = ({
     position,
@@ -80,7 +89,7 @@ const MentionBar: FC<MentionBarProps> = ({
     );
   };
 
-  if (!data?.length) {
+  if (!isShow) {
     return null;
   }
 

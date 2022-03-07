@@ -1,12 +1,12 @@
 import React from 'react';
 import {View, StyleSheet, ViewProps, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import i18next from 'i18next';
 
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {IGetStreamNotificationActivity} from '~/interfaces/INotification';
-import i18n from '~/localization';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 import NodeEmoji from 'node-emoji';
 import TimeView from '~/beinComponents/TimeView';
@@ -189,12 +189,12 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     switch (act.verb) {
       case VERB.MENTION:
         realActivityObject = act.object;
-        verbText = i18n.t('notification:mentioned_you_in_a_post');
+        verbText = i18next.t('notification:mentioned_you_in_a_post');
         break;
       case VERB.POST:
       default:
         realActivityObject = act;
-        verbText = i18n.t('notification:created_a_post');
+        verbText = i18next.t('notification:created_a_post');
         break;
     }
     const actorName =
@@ -207,11 +207,11 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     if (realActivityObject.audience?.groups?.length === 1) {
       const groupName =
         realActivityObject.audience.groups[0].data?.name || 'a group';
-      groupText = i18n
+      groupText = i18next
         .t('notification:in_group')
         .replace('{group_name}', groupName);
     } else if (realActivityObject.audience?.groups?.length > 1) {
-      groupText = i18n
+      groupText = i18next
         .t('notification:in_n_groups')
         .replace(
           '{group_count}',
@@ -245,15 +245,15 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     switch (act.notification_type) {
       case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED:
       case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED_IN_ITS_REPLY:
-        verbText = i18n.t(
+        verbText = i18next.t(
           'notification:replied_to_a_comment_you_are_mentioned',
         );
         break;
       case NOTIFICATION_TYPE.NEW_REPLY_TO_YOUR_COMMENT:
-        verbText = i18n.t('notification:replied_to_your_comment');
+        verbText = i18next.t('notification:replied_to_your_comment');
         break;
       case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_REPLIED:
-        verbText = i18n.t('notification:replied_to_comment_you_replied');
+        verbText = i18next.t('notification:replied_to_comment_you_replied');
         break;
       default:
         break;
@@ -282,14 +282,16 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     let verbText = '';
     switch (act.notification_type) {
       case NOTIFICATION_TYPE.NEW_COMMENT_TO_YOUR_POST:
-        verbText = i18n.t('notification:commented_on_your_post');
+        verbText = i18next.t('notification:commented_on_your_post');
         break;
       case NOTIFICATION_TYPE.NEW_COMMENT_TO_A_POST:
-        verbText = i18n.t('notification:also_commented_on_a_post');
+        verbText = i18next.t('notification:also_commented_on_a_post');
         break;
       case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED:
       case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED_IN_COMMENT:
-        verbText = i18n.t('notification:commented_on_a_post_you_are_mentioned');
+        verbText = i18next.t(
+          'notification:commented_on_a_post_you_are_mentioned',
+        );
         break;
       default:
         break;
@@ -314,17 +316,17 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     let targetText;
     switch (target) {
       case COMMENT_TARGET.COMMENT:
-        targetText = i18n.t('notification:to_your_comment');
+        targetText = i18next.t('notification:to_your_comment');
         break;
       case COMMENT_TARGET.POST:
       default:
-        targetText = i18n.t('notification:to_your_post');
+        targetText = i18next.t('notification:to_your_post');
         break;
     }
     const emoji = NodeEmoji.find(react || '')?.emoji || '';
     return (
       <React.Fragment>
-        {i18n.t('reacted') + ' '}
+        {i18next.t('reacted') + ' '}
         {emoji}
         {' ' + targetText}
       </React.Fragment>
@@ -379,7 +381,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     activities: IGetStreamNotificationActivity[],
   ) => {
     const act = activities[0];
-    const verbText = i18n.t('notification:mentioned_you_in_a_comment');
+    const verbText = i18next.t('notification:mentioned_you_in_a_comment');
     const combinedInfo = getCombinedInfo(activities, verbText);
     let body =
       act.parent_reaction?.data?.content || act.reaction.data?.content || null;
@@ -513,7 +515,7 @@ const getCombinedInfo = (
     }
   });
   if (actorIds.length > 1) {
-    combinedInfo.actorNames = i18n
+    combinedInfo.actorNames = i18next
       .t('notification:number_people')
       .replace('{number}', actorIds.length.toString());
   } else {
@@ -522,7 +524,7 @@ const getCombinedInfo = (
       combinedInfo.verbText =
         verbText +
         ' ' +
-        i18n
+        i18next
           .t('notification:number_times')
           .replace('{number}', activities.length.toString());
     }

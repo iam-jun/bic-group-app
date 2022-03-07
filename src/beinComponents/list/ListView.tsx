@@ -135,6 +135,7 @@ const ListView: React.FC<ListViewProps> = ({
 
     return (
       <TouchableOpacity
+        testID={`list_view.item_wrapper.${index}`}
         disabled={!isInternetReachable || !onItemPress || item.disableClick}
         onPress={(e: any) => onItemPress && onItemPress(item, e)}
         onLongPress={(e: any) => onItemLongPress && onItemLongPress(item, e)}>
@@ -145,11 +146,6 @@ const ListView: React.FC<ListViewProps> = ({
           title={item[titleField || 'title']}
           subTitle={item[subTitleField || 'subTitle']}
           style={itemStyle}
-          onActionPress={
-            onActionPress
-              ? (action: IAction) => onActionPress(action, item)
-              : undefined
-          }
           // eslint-disable-next-line react/prop-types
           total={data && data?.length}
           index={index}
@@ -179,7 +175,7 @@ const ListView: React.FC<ListViewProps> = ({
       }
       if (LoadingPlaceholder) {
         return (
-          <View>
+          <View testID="list_view.loading_placeholder">
             {Array.from(Array(10).keys()).map(item => (
               <LoadingPlaceholder key={`loading_placeholder_${item}`} />
             ))}
@@ -188,16 +184,22 @@ const ListView: React.FC<ListViewProps> = ({
       }
       return (
         <View style={{marginTop: spacing.margin.large}}>
-          <ActivityIndicator color={colors.borderDisable} />
+          <ActivityIndicator
+            color={colors.borderDisable}
+            testID="list_view.indicator.loading"
+          />
         </View>
       );
     }
   };
 
   return (
-    <View style={[isFullView && {flex: 1}, containerStyle]}>
+    <View
+      style={StyleSheet.flatten([isFullView && {flex: 1}, containerStyle])}
+      testID="list_view">
       {title && (
         <Text.ButtonBase
+          testID="list_view.title"
           style={{
             marginVertical: spacing.margin.small,
             marginHorizontal: spacing.margin.base,
@@ -207,6 +209,7 @@ const ListView: React.FC<ListViewProps> = ({
       )}
       {_renderLoading()}
       <FlatList
+        testID="list_view.flat_list"
         showsVerticalScrollIndicator={Platform.OS !== 'web'}
         ref={listRef}
         data={data}
@@ -237,7 +240,9 @@ const ListView: React.FC<ListViewProps> = ({
         onEndReachedThreshold={onEndReachedThreshold}
         {...props}
       />
-      {loadingMore && <ActivityIndicator />}
+      {loadingMore && (
+        <ActivityIndicator testID={'list_view.indicator.loading_more'} />
+      )}
     </View>
   );
 };

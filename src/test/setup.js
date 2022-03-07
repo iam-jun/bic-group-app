@@ -1,3 +1,4 @@
+import * as React from 'react';
 import * as ReactNative from 'react-native';
 import {configure} from 'enzyme';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
@@ -48,15 +49,26 @@ jest.doMock('i18next', () => ({
 }));
 
 jest.doMock('react-native-paper', () => ({
-  useTheme: () => {
-    return {
-      colors: colors.light.colors,
-      spacing: spacing,
-      dimension: dimension,
-    };
-  },
+  // eslint-disable-next-line react/prop-types
+  Portal: ({children}) => children,
+  useTheme: () => ({
+    colors: colors.light.colors,
+    spacing: spacing,
+    dimension: dimension,
+  }),
   TextInput: ReactNative.TextInput,
 }));
+
+jest.doMock('react-native-modalize', () => {
+  const RealModule = jest.requireActual('react-native-modalize');
+  // noinspection UnnecessaryLocalVariableJS
+  const MockedModule = {
+    ...RealModule,
+    // eslint-disable-next-line react/prop-types
+    Modalize: ({children}) => <ReactNative.View>{children}</ReactNative.View>,
+  };
+  return MockedModule;
+});
 
 jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 
@@ -86,6 +98,7 @@ jest.doMock('react-native', () => {
     runAfterInteractions: jest.fn(cb => cb()),
   };
 
+  // noinspection JSUnusedGlobalSymbols
   const NativeModules = {
     ...RNNativeModules,
     UIManager: {

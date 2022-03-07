@@ -82,6 +82,7 @@ const _MentionInput = ({
     componentInputProps.onChangeText?.(c);
     if (Platform.OS === 'web') {
       componentInputProps?.commentInputRef?.current?.focus?.();
+      componentInputProps?.inputRef?.current?.setFocus?.();
     }
   };
 

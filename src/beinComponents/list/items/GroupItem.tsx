@@ -81,7 +81,13 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   };
 
   const renderLine = (uiLevel: number) => {
-    return <View key={generateUniqueId()} style={styles.line} />;
+    return (
+      <View
+        testID="group_item.ui_level"
+        key={generateUniqueId()}
+        style={styles.line}
+      />
+    );
   };
 
   const renderToggle = () => {
@@ -92,6 +98,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
     return (
       <ButtonWrapper
+        testID="group_item.button_wrapper"
         onPress={_onToggleItem}
         disabled={!hasChild}
         activeOpacity={1}
@@ -99,7 +106,11 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
         style={styles.toggleContainer}>
         {hasChild && (
           <View style={styles.toggleContent}>
-            <Icon size={18} icon={isCollapsing ? 'AngleRight' : 'AngleDown'} />
+            <Icon
+              testID="group_item.button_wrapper.icon"
+              size={18}
+              icon={isCollapsing ? 'AngleRight' : 'AngleDown'}
+            />
           </View>
         )}
       </ButtonWrapper>
@@ -116,6 +127,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
   return (
     <TouchableOpacity
+      testID="group_item.container"
       disabled={!isInternetReachable || disableOnPressItem}
       onPress={_onPressItem}>
       <View style={{flexDirection: 'row'}} testID={testID}>
@@ -126,6 +138,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
             <Avatar.Medium source={icon} />
             {onCheckedItem && (
               <Checkbox
+                testID="group_item.check_box"
                 style={styles.checkbox}
                 isChecked={isChecked}
                 onActionPress={_onCheckedItem}
