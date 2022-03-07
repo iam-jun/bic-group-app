@@ -1,9 +1,16 @@
 import {useNavigation} from '@react-navigation/native';
 import i18next from 'i18next';
 import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, ScrollView, StyleSheet, View} from 'react-native';
+import {
+  ActivityIndicator,
+  ScrollView,
+  StyleSheet,
+  View,
+  Linking,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {RESULTS} from 'react-native-permissions';
 
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Divider from '~/beinComponents/Divider';
@@ -41,6 +48,9 @@ import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
 import {isEmpty} from 'lodash';
 import homeActions from '~/screens/Home/redux/actions';
+import AppPermission from '~/utils/permission';
+import modalActions from '~/store/modal/actions';
+import PermissionsPopupContent from '~/beinComponents/PermissionsPopupContent';
 
 const UserEditProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
@@ -150,10 +160,53 @@ const UserEditProfile = (props: any) => {
 
   // fieldName: field name in group profile to be edited
   // 'avatar' for avatar and 'background_img_url' for cover
-  const _openImagePicker = (
+  const _openImagePicker = async (
     fieldName: 'avatar' | 'background_img_url',
     uploadType: IUploadType,
   ) => {
+    const checkPermission = await AppPermission.checkPermission('photo');
+    console.log('checkPermission', checkPermission);
+
+    if (!checkPermission || checkPermission === RESULTS.BLOCKED) {
+      dispatch(
+        modalActions.showModal({
+          isOpen: true,
+          useAppBottomSheet: false,
+          ContentComponent: (
+            <PermissionsPopupContent
+              title={i18next.t('settings:text_add_work')}
+              description={i18next.t('settings:text_add_work')}
+              steps={[
+                {
+                  title: '11111',
+                  leftIcon: 'Bell',
+                  leftIconProps: {
+                    icon: 'Bell',
+                    size: 20,
+                  },
+                },
+                {
+                  title: '22222',
+                  leftIcon: 'Bell',
+                  leftIconProps: {
+                    icon: 'Bell',
+                    size: 20,
+                  },
+                },
+              ]}
+              onClose={() => {
+                dispatch(modalActions.hideModal());
+                return;
+              }}
+              goToSetting={() => {
+                Linking.openSettings();
+              }}
+            />
+          ),
+        }),
+      );
+    }
+    return;
     ImagePicker.openPickerSingle({
       ...userProfileImageCropRatio[fieldName],
       cropping: true,

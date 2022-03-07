@@ -17,25 +17,15 @@ const REQUEST_PERMISSION_TYPE = {
 
 export default class AppPermission {
   static checkPermission = async (type: permissionTypes) => {
+    //@ts-ignore
     const permissions = REQUEST_PERMISSION_TYPE[type][Platform.OS];
-    console.log(
-      'permissions>',
-      permissions,
-      '>>>>>>>',
-      PLATFORM_PHOTO_PERMISSIONS.ios,
-    );
 
-    if (!permissions) {
-      return true;
-    }
     try {
       const result = await check(permissions);
-      console.log('>>>>>>>RESULT>>>>>>>>', result);
-      if (result === RESULTS.GRANTED) return true;
+      if (result === RESULTS.GRANTED) return RESULTS.GRANTED;
       return AppPermission.requestPermission(type);
     } catch (error) {
-      console.log('>>>>>>>PERMISSTION ERROR>>>>>', error);
-
+      console.log('>>>>>>>CHECK PERMISSION ERROR>>>>>', error);
       return false;
     }
     //   check(!!type ? _permissionTypes[type] : _permissionTypes.photo)
@@ -68,13 +58,13 @@ export default class AppPermission {
   };
 
   static requestPermission = async (type: permissionTypes) => {
+    //@ts-ignore
     const permissions = REQUEST_PERMISSION_TYPE[type][Platform.OS];
     try {
       const result = await request(permissions);
-      console.log('requestPermission>>>>>>>>>>>', result);
-      return result === RESULTS.GRANTED;
+      return result;
     } catch (error) {
-      console.log('>>>>>>>PERMISSTION ERROR>>>>>', error);
+      console.log('>>>>>>>REQUEST PERMISSION ERROR>>>>>', error);
       return false;
     }
   };
