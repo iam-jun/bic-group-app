@@ -1,17 +1,19 @@
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle, Platform} from 'react-native';
+import React from 'react';
+import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
 import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
 
-import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
 import Text, {TextProps} from '~/beinComponents/Text';
-import {getResourceUrl, IUploadType} from '~/configs/resourceConfig';
 import PrimaryItem, {
   PrimaryItemProps,
 } from '~/beinComponents/list/items/PrimaryItem';
+import ViewSpacing from './ViewSpacing';
+import {openSettings} from 'react-native-permissions';
+import modalActions from '~/store/modal/actions';
 
 export interface PermissionsPopupContentProps {
   style?: StyleProp<ViewStyle>;
@@ -20,7 +22,7 @@ export interface PermissionsPopupContentProps {
   description?: string;
   descriptionProps?: TextProps;
   steps: Array<any>;
-  onClose: () => void;
+  onClose?: () => void;
   goToSetting?: () => void;
 }
 
@@ -36,8 +38,20 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
 }: PermissionsPopupContentProps) => {
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
-  const {colors} = theme;
+  const {colors, spacing} = theme;
   const styles = createStyle(theme);
+
+  const dispatch = useDispatch();
+
+  const onClickRightButton = () => {
+    openSettings();
+    goToSetting && goToSetting();
+  };
+
+  const _onClose = () => {
+    dispatch(modalActions.hideModal());
+    onClose && onClose();
+  };
 
   return (
     <View style={[styles.container, style]}>
@@ -56,6 +70,8 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
             titleProps={{variant: 'subtitle'}}
             leftIcon={item.leftIcon}
             leftIconProps={{style: styles.iconStyle, ...item.leftIconProps}}
+            height={28}
+            style={{paddingLeft: 0}}
           />
         </View>
       ))}
@@ -63,13 +79,13 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
         <Button.Secondary
           color={colors.primary1}
           textColor={colors.primary6}
-          onPress={onClose}
-          // style={styles.btn}
-        >
-          {t('settings:text_add_work')}
+          onPress={_onClose}
+          style={styles.btnNotNow}>
+          {t('common:text_not_now')}
         </Button.Secondary>
-        <Button.Primary onPress={goToSetting}>
-          {t('settings:text_add_work')}
+        <ViewSpacing width={spacing.margin.large} />
+        <Button.Primary onPress={onClickRightButton} style={styles.btnSetting}>
+          {t('common:text_go_to_settings')}
         </Button.Primary>
       </View>
     </View>
@@ -102,6 +118,14 @@ const createStyle = (theme: ITheme) => {
     },
     itemContainer: {
       paddingHorizontal: spacing.padding.extraLarge,
+    },
+    btnNotNow: {
+      flex: 1,
+      justifyContent: 'center',
+    },
+    btnSetting: {
+      flex: 1,
+      justifyContent: 'center',
     },
   });
 };

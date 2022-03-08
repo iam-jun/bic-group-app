@@ -1,16 +1,9 @@
 import {useNavigation} from '@react-navigation/native';
 import i18next from 'i18next';
 import React, {useEffect, useState} from 'react';
-import {
-  ActivityIndicator,
-  ScrollView,
-  StyleSheet,
-  View,
-  Linking,
-} from 'react-native';
+import {ActivityIndicator, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {RESULTS} from 'react-native-permissions';
 
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Divider from '~/beinComponents/Divider';
@@ -50,6 +43,7 @@ import {isEmpty} from 'lodash';
 import homeActions from '~/screens/Home/redux/actions';
 import AppPermission from '~/utils/permission';
 import modalActions from '~/store/modal/actions';
+import {photo_permission_steps} from '~/constants/permissions';
 import PermissionsPopupContent from '~/beinComponents/PermissionsPopupContent';
 
 const UserEditProfile = (props: any) => {
@@ -164,56 +158,39 @@ const UserEditProfile = (props: any) => {
     fieldName: 'avatar' | 'background_img_url',
     uploadType: IUploadType,
   ) => {
-    const checkPermission = await AppPermission.checkPermission('photo');
-    console.log('checkPermission', checkPermission);
-
-    if (!checkPermission || checkPermission === RESULTS.BLOCKED) {
-      dispatch(
-        modalActions.showModal({
-          isOpen: true,
-          useAppBottomSheet: false,
-          ContentComponent: (
-            <PermissionsPopupContent
-              title={i18next.t('settings:text_add_work')}
-              description={i18next.t('settings:text_add_work')}
-              steps={[
-                {
-                  title: '11111',
-                  leftIcon: 'Bell',
-                  leftIconProps: {
-                    icon: 'Bell',
-                    size: 20,
-                  },
-                },
-                {
-                  title: '22222',
-                  leftIcon: 'Bell',
-                  leftIconProps: {
-                    icon: 'Bell',
-                    size: 20,
-                  },
-                },
-              ]}
-              onClose={() => {
-                dispatch(modalActions.hideModal());
-                return;
-              }}
-              goToSetting={() => {
-                Linking.openSettings();
-              }}
-            />
-          ),
-        }),
-      );
-    }
-    return;
-    ImagePicker.openPickerSingle({
-      ...userProfileImageCropRatio[fieldName],
-      cropping: true,
-      mediaType: 'photo',
-    }).then(file => {
-      uploadFile(file, fieldName, uploadType);
-    });
+    AppPermission.checkPermission(
+      'photo',
+      () => {
+        dispatch(
+          modalActions.showModal({
+            isOpen: true,
+            closeOutSide: false,
+            useAppBottomSheet: false,
+            ContentComponent: (
+              <PermissionsPopupContent
+                title={i18next.t('common:permission_photo_title')}
+                description={i18next.t('common:permission_photo_description')}
+                steps={photo_permission_steps}
+                goToSetting={() => {
+                  dispatch(modalActions.hideModal());
+                }}
+              />
+            ),
+          }),
+        );
+      },
+      canOpenPicker => {
+        if (canOpenPicker) {
+          ImagePicker.openPickerSingle({
+            ...userProfileImageCropRatio[fieldName],
+            cropping: true,
+            mediaType: 'photo',
+          }).then(file => {
+            uploadFile(file, fieldName, uploadType);
+          });
+        }
+      },
+    );
   };
 
   const onEditAvatar = () => _openImagePicker('avatar', uploadTypes.userAvatar);

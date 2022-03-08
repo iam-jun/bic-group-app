@@ -19,6 +19,7 @@ const CommonModal = () => {
     props,
     useAppBottomSheet = true,
     appModalStyle = {},
+    closeOutSide = true,
   } = modal || {};
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const CommonModal = () => {
   }, [isOpen]);
 
   const _onClose = () => {
-    dispatch(modalActions.hideModal());
+    closeOutSide && dispatch(modalActions.hideModal());
   };
 
   if (Platform.OS !== 'web' && !useAppBottomSheet) {
