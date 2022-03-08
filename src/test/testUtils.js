@@ -11,6 +11,9 @@ import {
   getAnimatedStyle,
 } from 'react-native-reanimated/src/reanimated2/jestUtils';
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const languages = require('~/localization/en.json');
+
 const mockStore = configureStore([]);
 const defaultStore = mockStore(initialState);
 
@@ -28,6 +31,7 @@ export {
   advanceAnimationByTime,
   advanceAnimationByFrame,
   getAnimatedStyle,
+  languages,
 };
 
 export const waitForComponentToPaint = async wrapper => {

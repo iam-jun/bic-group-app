@@ -101,20 +101,3 @@ export const nonAccentVietnamese = (text: string) => {
   text = text.replace(/\u02C6|\u0306|\u031B/g, ''); // Â, Ê, Ă, Ơ, Ư
   return text;
 };
-
-export const getPropertyByKeyPath = (targetObj: any, keyPath: string) => {
-  let keys = keyPath.split('.');
-  if (keys.length == 0) return undefined;
-  keys = keys.reverse();
-  let subObject = targetObj;
-  while (keys.length) {
-    const k = keys.pop();
-    // eslint-disable-next-line no-prototype-builtins
-    if (!subObject.hasOwnProperty(k)) {
-      return undefined;
-    } else {
-      subObject = subObject[k || ''];
-    }
-  }
-  return subObject;
-};

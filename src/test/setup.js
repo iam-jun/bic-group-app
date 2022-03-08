@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactNative from 'react-native';
 import {configure} from 'enzyme';
+import {get} from 'lodash';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-info-mock';
@@ -16,7 +17,6 @@ import colors from '~/theme/colors';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 import mockSafeAreaContext from '~/test/mockSafeAreaContext';
-import {getPropertyByKeyPath} from '~/utils/common';
 
 configure({adapter: new Adapter()});
 
@@ -39,10 +39,7 @@ jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
 jest.doMock('react-i18next', () => ({
   useTranslation: () => {
     return {
-      t: str => {
-        const key = str.replace(':', '.');
-        return getPropertyByKeyPath(languages, key);
-      },
+      t: str => get(languages, str?.replaceAll?.(':', '.')),
       i18n: {
         changeLanguage: () => new Promise(() => undefined),
       },
@@ -52,10 +49,7 @@ jest.doMock('react-i18next', () => ({
 }));
 
 jest.doMock('i18next', () => ({
-  t: str => {
-    const key = str.replace(':', '.');
-    return getPropertyByKeyPath(languages, key);
-  },
+  t: str => get(languages, str?.replaceAll?.(':', '.')),
 }));
 
 jest.doMock('react-native-paper', () => ({
@@ -66,7 +60,10 @@ jest.doMock('react-native-paper', () => ({
     spacing: spacing,
     dimension: dimension,
   }),
-  TextInput: ReactNative.TextInput,
+  TextInput: {
+    ...ReactNative.TextInput,
+    Icon: ReactNative.View,
+  },
 }));
 
 jest.doMock('react-native-modalize', () => {

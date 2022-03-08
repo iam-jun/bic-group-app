@@ -17,6 +17,7 @@ const PasswordInput: React.FC<Props> = ({
   const [hidePassword, setHidePassword] = React.useState(true);
   const EyeIcon = (
     <TextInputPaper.Icon
+      testID={'password_input.eye_icon'}
       name={() => (
         <Icon
           icon={hidePassword ? 'iconEye' : 'iconEyeOff'}
@@ -32,6 +33,7 @@ const PasswordInput: React.FC<Props> = ({
       secureTextEntry={hidePassword}
       right={!hideEyeIcon && EyeIcon}
       ref={passwordInputRef}
+      testID={'password_input'}
       {...props}
     />
   );

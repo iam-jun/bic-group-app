@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`_MentionInput component renders correctly 1`] = `
+exports[`MentionInput component renders correctly 1`] = `
 Array [
   <View
     onLayout={[Function]}
@@ -123,7 +123,7 @@ Array [
 ]
 `;
 
-exports[`_MentionInput component should show "_MentionInput" with CommmentInput 1`] = `
+exports[`MentionInput component should show "MentionInput" with CommmentInput 1`] = `
 Array [
   <View
     onLayout={[Function]}
@@ -1996,7 +1996,7 @@ Array [
 ]
 `;
 
-exports[`_MentionInput component should show "_MentionInput" with PostInput 1`] = `
+exports[`MentionInput component should show "MentionInput" with PostInput 1`] = `
 Array [
   <View
     onLayout={[Function]}

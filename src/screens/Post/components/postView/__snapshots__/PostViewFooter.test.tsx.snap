@@ -202,7 +202,7 @@ exports[`PostViewFooter component should render correctly 1`] = `
             }
           }
         >
-          post:button_react
+          React
         </Text>
       </View>
     </View>
@@ -384,9 +384,7 @@ exports[`PostViewFooter component should render correctly 1`] = `
               "textAlign": "center",
             }
           }
-        >
-          Comment
-        </Text>
+        />
       </View>
     </View>
   </View>
