@@ -137,6 +137,7 @@ exports[`NotificationItem component renders correctly 1`] = `
           "marginStart": 12,
         }
       }
+      testID="notification_content"
     >
       <Text
         style={
@@ -147,6 +148,7 @@ exports[`NotificationItem component renders correctly 1`] = `
             "fontSize": 16,
           }
         }
+        testID="notification_content.title"
       >
         Trần Nam Anh 
         <Text
@@ -157,6 +159,7 @@ exports[`NotificationItem component renders correctly 1`] = `
               "fontSize": 16,
             }
           }
+          testID="notification_title.verb_text"
         >
           commented on your post
         </Text>
@@ -174,7 +177,7 @@ exports[`NotificationItem component renders correctly 1`] = `
       }
       testID="notification_item.time_view"
     >
-      3undefined
+      3w
     </Text>
   </View>
 </View>

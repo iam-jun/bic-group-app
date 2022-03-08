@@ -627,7 +627,7 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
             }
           }
         >
-          common:text_send
+          Send
         </Text>
         <View
           accessibilityState={
@@ -1419,7 +1419,7 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
             }
           }
         >
-          common:text_send
+          Send
         </Text>
         <View
           accessibilityState={
