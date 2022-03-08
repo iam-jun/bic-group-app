@@ -25,10 +25,11 @@ import {IUser} from '~/interfaces/IAuth';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
-import {isEqual} from 'lodash';
 import modalActions from '~/store/modal/actions';
-import i18n from '~/localization';
-import {ISelectAudienceParams} from './SelectAudienceHelper';
+import {
+  checkChangeAudiences,
+  ISelectAudienceParams,
+} from './SelectAudienceHelper';
 import {ICreatePostParams} from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
@@ -182,12 +183,12 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       if (isAudiencesHasChanged) {
         dispatch(
           modalActions.showAlert({
-            title: i18n.t('post:create_post:title_audience_changed'),
-            content: i18n.t('post:create_post:text_discard_change_audience'),
+            title: t('post:create_post:title_audience_changed'),
+            content: t('post:create_post:text_discard_change_audience'),
             showCloseButton: true,
             cancelBtn: true,
-            cancelLabel: i18n.t('common:btn_discard'),
-            confirmLabel: i18n.t('post:create_post:btn_save_change'),
+            cancelLabel: t('common:btn_discard'),
+            confirmLabel: t('post:create_post:btn_save_change'),
             onConfirm: () => {
               dispatch(
                 postActions.setCreatePostChosenAudiences(selectingAudiences),
@@ -212,12 +213,12 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       if (isAudiencesHasChanged) {
         dispatch(
           modalActions.showAlert({
-            title: i18n.t('post:create_post:title_discard_audience'),
-            content: i18n.t('post:create_post:text_discard_audience'),
+            title: t('post:create_post:title_discard_audience'),
+            content: t('post:create_post:text_discard_audience'),
             showCloseButton: true,
             cancelBtn: true,
-            cancelLabel: i18n.t('common:btn_discard'),
-            confirmLabel: i18n.t('post:create_post:btn_keep_selecting'),
+            cancelLabel: t('common:btn_discard'),
+            confirmLabel: t('post:create_post:btn_keep_selecting'),
             onDismiss: () => rootNavigation.goBack(),
             stretchOnWeb: true,
           }),
@@ -229,12 +230,12 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       if (isAudiencesHasChanged) {
         dispatch(
           modalActions.showAlert({
-            title: i18n.t('post:create_post:title_audience_changed'),
-            content: i18n.t('post:create_post:text_discard_change'),
+            title: t('post:create_post:title_audience_changed'),
+            content: t('post:create_post:text_discard_change'),
             showCloseButton: true,
             cancelBtn: true,
-            cancelLabel: i18n.t('common:btn_discard'),
-            confirmLabel: i18n.t('post:create_post:btn_keep_edit'),
+            cancelLabel: t('common:btn_discard'),
+            confirmLabel: t('post:create_post:btn_keep_edit'),
             onDismiss: () => rootNavigation.goBack(),
             stretchOnWeb: true,
           }),
@@ -261,22 +262,6 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
 
   const onChangeCheckedGroups = (data: OnChangeCheckedGroupsData) => {
     setSelectingGroups({...selectingGroups, ...data} as any);
-  };
-
-  const getSmallestChild = (
-    smallestGroup: IGroup,
-    newGroups: IGroup[],
-    treeData: IGroup,
-  ): any => {
-    if (smallestGroup?.children?.[0]) {
-      return getSmallestChild(
-        smallestGroup?.children?.[0],
-        newGroups,
-        treeData,
-      );
-    } else {
-      newGroups.push({...smallestGroup, treeData: treeData});
-    }
   };
 
   const handleSearchResult = (data: any) => {
@@ -442,18 +427,6 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       />
     </ScreenWrapper>
   );
-};
-
-const checkChangeAudiences = (a1: any, a2: any) => {
-  if (a1?.length !== a2?.length) {
-    return true;
-  }
-  const compare = (x: any, y: any) => (x > y ? 1 : -1);
-  const ids1: number[] = [];
-  const ids2: number[] = [];
-  a1?.map?.((a: any) => ids1.push(Number(a?.id)));
-  a2?.map?.((a: any) => ids2.push(Number(a?.id)));
-  return !isEqual(ids1.sort(compare), ids2.sort(compare));
 };
 
 const createStyle = (theme: ITheme) => {
