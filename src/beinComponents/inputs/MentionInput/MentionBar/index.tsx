@@ -18,8 +18,8 @@ import {
   checkRunSearch,
   completeMention,
   ICursorPositionChange,
-} from '~/beinComponents/inputs/_MentionInput/helper';
-import MentionBarItem from '~/beinComponents/inputs/_MentionInput/MentionBar/MentionBarItem';
+} from '~/beinComponents/inputs/MentionInput/helper';
+import MentionBarItem from '~/beinComponents/inputs/MentionInput/MentionBar/MentionBarItem';
 import Divider from '~/beinComponents/Divider';
 
 interface MentionBarProps {
