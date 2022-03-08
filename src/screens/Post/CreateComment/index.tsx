@@ -32,11 +32,11 @@ import {
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PostInput from '~/beinComponents/inputs/PostInput';
-import _MentionInput from '~/beinComponents/inputs/_MentionInput';
+import MentionInput from '~/beinComponents/inputs/MentionInput';
 import CommentToolbar from '~/screens/Post/components/CommentToolbar';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import UploadingImage from '~/beinComponents/UploadingImage';
-import MentionBar from '~/beinComponents/inputs/_MentionInput/MentionBar';
+import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 
 const inputMinHeight = 66;
@@ -261,7 +261,7 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
               height: isAnimated ? inputHeightAnim : undefined,
               zIndex: 5,
             }}>
-            <_MentionInput
+            <MentionInput
               groupIds={groupIds || ''}
               disableAutoComplete={Platform.OS !== 'web'}
               style={styles.flex1}

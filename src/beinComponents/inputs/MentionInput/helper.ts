@@ -1,6 +1,6 @@
 import {DeviceEventEmitter, Platform} from 'react-native';
 import {AT_MENTION_REGEX} from '~/constants/autocomplete';
-import actions from '~/beinComponents/inputs/_MentionInput/redux/actions';
+import actions from '~/beinComponents/inputs/MentionInput/redux/actions';
 
 export interface ICursorPositionChange {
   position: number;
