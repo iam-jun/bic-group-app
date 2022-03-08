@@ -1,7 +1,7 @@
 import React from 'react';
 import {cleanup} from '@testing-library/react-native';
 
-import {renderWithRedux, fireEvent, configureStore} from '~/test/testUtils';
+import {renderWithRedux, configureStore} from '~/test/testUtils';
 import GroupInfoHeader from './GroupInfoHeader';
 import initialState from '~/store/initialState';
 import groupJoinStatus from '~/constants/groupJoinStatus';
@@ -12,29 +12,43 @@ describe('GroupInfoHeader component', () => {
   const mockStore = configureStore([]);
 
   it('renders correctly', () => {
-    const storeData = {...initialState};
-    const store = mockStore(storeData);
-
-    const rendered = renderWithRedux(<GroupInfoHeader />, store);
+    const rendered = renderWithRedux(<GroupInfoHeader />);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
   it('renders button Join correctly', () => {
-    const storeData = {...initialState};
-    const store = mockStore(storeData);
+    const {queryByTestId} = renderWithRedux(<GroupInfoHeader />);
 
-    const {getByTestId} = renderWithRedux(<GroupInfoHeader />, store);
-    const joinButton = getByTestId('group_info_header.join');
+    // onbly Join button is available
+    const joinButton = queryByTestId('group_info_header.join');
     expect(joinButton).toBeDefined();
+    const cancelButton = queryByTestId('group_info_header.cancel');
+    expect(cancelButton).toBeNull();
   });
 
   it('renders button Cancel Request correctly', () => {
     const storeData = {...initialState};
     storeData.groups.groupDetail.join_status = groupJoinStatus.requested;
     const store = mockStore(storeData);
-    const {getByTestId} = renderWithRedux(<GroupInfoHeader />, store);
+    const {queryByTestId} = renderWithRedux(<GroupInfoHeader />, store);
 
-    const cancelButton = getByTestId('group_info_header.cancel');
+    //  only Cancel button is available
+    const joinButton = queryByTestId('group_info_header.join');
+    expect(joinButton).toBeNull();
+    const cancelButton = queryByTestId('group_info_header.cancel');
     expect(cancelButton).toBeDefined();
+  });
+
+  it('should hide Join and Cancel buttons when user is a group member correctly', () => {
+    const storeData = {...initialState};
+    storeData.groups.groupDetail.join_status = groupJoinStatus.member;
+    const store = mockStore(storeData);
+    const {queryByTestId} = renderWithRedux(<GroupInfoHeader />, store);
+
+    // Join and Cancel buttons are not available
+    const joinButton = queryByTestId('group_info_header.join');
+    expect(joinButton).toBeNull();
+    const cancelButton = queryByTestId('group_info_header.cancel');
+    expect(cancelButton).toBeNull();
   });
 });

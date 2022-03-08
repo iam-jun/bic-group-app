@@ -61,4 +61,23 @@ describe('Join New Group Saga', () => {
       .put(groupsActions.getGroupDetail(groupId))
       .run();
   });
+
+  it('should show error when calling server and error occurs', () => {
+    const error = {meta: {message: 'Some error occurs!'}};
+
+    return expectSaga(joinNewGroup, action)
+      .provide([
+        [matchers.call.fn(groupsDataHelper.joinGroup), Promise.reject(error)],
+      ])
+      .put(
+        modalActions.showHideToastMessage({
+          content: error.meta.message,
+          props: {
+            textProps: {useI18n: true},
+            type: 'error',
+          },
+        }),
+      )
+      .run();
+  });
 });
