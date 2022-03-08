@@ -60,7 +60,10 @@ jest.doMock('react-native-paper', () => ({
     spacing: spacing,
     dimension: dimension,
   }),
-  TextInput: ReactNative.TextInput,
+  TextInput: {
+    ...ReactNative.TextInput,
+    Icon: ReactNative.View,
+  },
 }));
 
 jest.doMock('react-native-modalize', () => {
