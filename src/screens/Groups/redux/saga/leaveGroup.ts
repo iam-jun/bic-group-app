@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import {Platform} from 'react-native';
-import {put, select} from 'redux-saga/effects';
+import {put, select, call} from 'redux-saga/effects';
 
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
@@ -24,7 +24,7 @@ export default function* leaveGroup({
     const {groups} = yield select();
     const privacy = groups?.groupDetail?.group?.privacy;
 
-    yield groupsDataHelper.leaveGroup(payload);
+    yield call(groupsDataHelper.leaveGroup, payload);
     yield put(groupsActions.getJoinedGroups());
 
     if (privacy === groupPrivacy.secret) {
