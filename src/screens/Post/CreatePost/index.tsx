@@ -16,10 +16,8 @@ import {useDispatch} from 'react-redux';
 import {useBackHandler} from '@react-native-community/hooks';
 import {isEqual, isEmpty, differenceWith} from 'lodash';
 
-import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
-// import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
@@ -52,10 +50,9 @@ import {useBaseHook} from '~/hooks';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
-import Div from '~/beinComponents/Div';
 import {fontFamilies} from '~/theme/fonts';
 import Button from '~/beinComponents/Button';
-import _MentionInput from '~/beinComponents/inputs/_MentionInput';
+import MentionInput from '~/beinComponents/inputs/MentionInput';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import {useKeyboardStatus} from '~/hooks/keyboard';
@@ -726,7 +723,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           <View style={styles.flex1}>
             <Animated.View
               style={isAnimated ? {height: heightAnimated} : styles.flex1}>
-              <_MentionInput
+              <MentionInput
                 disableAutoComplete={Platform.OS !== 'web'}
                 groupIds={strGroupIds}
                 mentionInputRef={mentionInputRef}

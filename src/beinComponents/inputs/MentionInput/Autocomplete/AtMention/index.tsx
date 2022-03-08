@@ -12,7 +12,7 @@ import {useDispatch} from 'react-redux';
 import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
-import {AutocompleteProps} from '../../Autocomplete';
+import {AutocompleteProps} from '..';
 import {
   checkRunSearch,
   completeMention,

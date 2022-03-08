@@ -15,7 +15,7 @@ import {ActionTypes} from '~/utils';
 import {setChatAuthenticationInfo} from '~/utils/common';
 import auth from '../screens/Auth/redux/reducer';
 import noInternetReducer from '../screens/NoInternet/redux/reducer';
-import mentionInputReducer from '~/beinComponents/inputs/_MentionInput/redux/reducer';
+import mentionInputReducer from '~/beinComponents/inputs/MentionInput/redux/reducer';
 
 import app from './app/reducer';
 import modal from './modal/reducer';

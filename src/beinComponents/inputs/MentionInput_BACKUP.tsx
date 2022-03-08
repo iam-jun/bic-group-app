@@ -63,7 +63,7 @@ export interface MentionInputProps extends TextInputProps {
   getDataResponseKey?: string;
 }
 
-const MentionInput: React.FC<MentionInputProps> = ({
+const MentionInput_BACKUP: React.FC<MentionInputProps> = ({
   mentionInputRef,
   textInputRef,
   style,
@@ -741,4 +741,4 @@ const createStyles = (
   });
 };
 
-export default MentionInput;
+export default MentionInput_BACKUP;
