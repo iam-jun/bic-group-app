@@ -38,6 +38,9 @@ import ImagePicker from '~/beinComponents/ImagePicker';
 import UploadingImage from '~/beinComponents/UploadingImage';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+import AppPermission from '~/utils/permission';
+import PermissionsPopupContent from '~/beinComponents/PermissionsPopupContent';
+import {photo_permission_steps} from '~/constants/permissions';
 
 const inputMinHeight = 66;
 const isAndroid8 =
@@ -142,12 +145,41 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   };
 
   const onSelectImage = () => {
-    ImagePicker.openPickerSingle().then(file => {
-      if (!file) return;
-      setUploading(true);
-      const image: ICreatePostImage = {fileName: file.filename, file: file};
-      setSelectedImg(image);
-    });
+    AppPermission.checkPermission(
+      'photo',
+      () => {
+        dispatch(
+          modalActions.showModal({
+            isOpen: true,
+            closeOutSide: false,
+            useAppBottomSheet: false,
+            ContentComponent: (
+              <PermissionsPopupContent
+                title={t('common:permission_photo_title')}
+                description={t('common:permission_photo_description')}
+                steps={photo_permission_steps}
+                goToSetting={() => {
+                  dispatch(modalActions.hideModal());
+                }}
+              />
+            ),
+          }),
+        );
+      },
+      canOpenPicker => {
+        if (canOpenPicker) {
+          ImagePicker.openPickerSingle().then(file => {
+            if (!file) return;
+            setUploading(true);
+            const image: ICreatePostImage = {
+              fileName: file.filename,
+              file: file,
+            };
+            setSelectedImg(image);
+          });
+        }
+      },
+    );
   };
 
   const onChangeText = (text: string) => {

@@ -41,6 +41,9 @@ import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import Markdown from '~/beinComponents/Markdown';
+import AppPermission from '~/utils/permission';
+import PermissionsPopupContent from '~/beinComponents/PermissionsPopupContent';
+import {photo_permission_steps} from '~/constants/permissions';
 
 const GeneralInformation = (props: any) => {
   const params = props.route.params;
@@ -186,13 +189,39 @@ const GeneralInformation = (props: any) => {
     fieldName: 'icon' | 'background_img_url',
     uploadType: IUploadType,
   ) => {
-    ImagePicker.openPickerSingle({
-      ...groupProfileImageCropRatio[fieldName],
-      cropping: true,
-      mediaType: 'photo',
-    }).then(file => {
-      uploadFile(file, fieldName, uploadType);
-    });
+    AppPermission.checkPermission(
+      'photo',
+      () => {
+        dispatch(
+          modalActions.showModal({
+            isOpen: true,
+            closeOutSide: false,
+            useAppBottomSheet: false,
+            ContentComponent: (
+              <PermissionsPopupContent
+                title={i18next.t('common:permission_photo_title')}
+                description={i18next.t('common:permission_photo_description')}
+                steps={photo_permission_steps}
+                goToSetting={() => {
+                  dispatch(modalActions.hideModal());
+                }}
+              />
+            ),
+          }),
+        );
+      },
+      canOpenPicker => {
+        if (canOpenPicker) {
+          ImagePicker.openPickerSingle({
+            ...groupProfileImageCropRatio[fieldName],
+            cropping: true,
+            mediaType: 'photo',
+          }).then(file => {
+            uploadFile(file, fieldName, uploadType);
+          });
+        }
+      },
+    );
   };
 
   const onEditAvatar = () => _openImagePicker('icon', uploadTypes.groupAvatar);

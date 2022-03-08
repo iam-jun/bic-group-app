@@ -12,6 +12,7 @@ import {
   ViewStyle,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
+import i18next from 'i18next';
 
 import Icon from '~/beinComponents/Icon';
 import ImagePicker from '~/beinComponents/ImagePicker';
@@ -33,6 +34,9 @@ import modalActions from '~/store/modal/actions';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CommentInputFooter from '~/beinComponents/inputs/CommentInput/CommentInputFooter';
+import AppPermission from '~/utils/permission';
+import PermissionsPopupContent from '~/beinComponents/PermissionsPopupContent';
+import {photo_permission_steps} from '~/constants/permissions';
 
 export interface ICommentInputSendParam {
   content: string;
@@ -155,16 +159,42 @@ const CommentInput: React.FC<CommentInputProps> = ({
   }, [text, selectedImage]);
 
   const _onPressSelectImage = () => {
-    ImagePicker.openPickerSingle().then(file => {
-      if (!file) return;
-      if (!isHandleUpload) {
-        onPressSelectImage?.(file);
-      } else {
-        setUploadError('');
-        setSelectedImage(file);
-      }
-      focus();
-    });
+    AppPermission.checkPermission(
+      'photo',
+      () => {
+        dispatch(
+          modalActions.showModal({
+            isOpen: true,
+            closeOutSide: false,
+            useAppBottomSheet: false,
+            ContentComponent: (
+              <PermissionsPopupContent
+                title={i18next.t('common:permission_photo_title')}
+                description={i18next.t('common:permission_photo_description')}
+                steps={photo_permission_steps}
+                goToSetting={() => {
+                  dispatch(modalActions.hideModal());
+                }}
+              />
+            ),
+          }),
+        );
+      },
+      canOpenPicker => {
+        if (canOpenPicker) {
+          ImagePicker.openPickerSingle().then(file => {
+            if (!file) return;
+            if (!isHandleUpload) {
+              onPressSelectImage?.(file);
+            } else {
+              setUploadError('');
+              setSelectedImage(file);
+            }
+            focus();
+          });
+        }
+      },
+    );
   };
 
   const _onPressFile = async () => {
