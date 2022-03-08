@@ -29,6 +29,7 @@
     "test": "detox",
     "jest": "jest",
     "jest:cov": "jest --coverage --silent",
+    "jest:cov-open": "jest --coverage --silent && open ./coverage/lcov-report/index.html",
     "jest:open-cov": "open ./coverage/lcov-report/index.html",
     "reverse": "adb reverse tcp:8081 tcp:8081 && adb reverse tcp:9090 tcp:9090"
   },

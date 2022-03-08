@@ -5,7 +5,7 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 
 import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
-import MentionBar from '~/beinComponents/inputs/_MentionInput/MentionBar';
+import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import Div from '~/beinComponents/Div';
 import Animated, {
   useAnimatedStyle,
