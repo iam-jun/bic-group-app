@@ -8,7 +8,7 @@ import homeSaga from '~/screens/Home/redux/saga';
 import notifications from '~/screens/Notification/redux/saga';
 import menuSaga from '~/screens/Menu/redux/saga';
 import noInternetSaga from '~/screens/NoInternet/redux/saga';
-import mentionInputSaga from '~/beinComponents/inputs/_MentionInput/redux/saga';
+import mentionInputSaga from '~/beinComponents/inputs/MentionInput/redux/saga';
 
 export default function* rootSagas() {
   yield all([

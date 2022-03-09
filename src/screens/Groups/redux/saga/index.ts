@@ -19,7 +19,7 @@ import groupsTypes from '~/screens/Groups/redux/types';
 import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
-import {mapData, mapRequestMembers} from '../helper/mapper';
+import {mapData, mapRequestMembers} from '../../helper/mapper';
 import appConfig from '~/configs/appConfig';
 import FileUploader from '~/services/fileUploader';
 import groupJoinStatus from '~/constants/groupJoinStatus';
@@ -30,6 +30,7 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import errorCode from '~/constants/errorCode';
 import memberRequestStatus from '~/constants/memberRequestStatus';
 import approveDeclineCode from '~/constants/approveDeclineCode';
+import joinNewGroup from './joinNewGroup';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -428,52 +429,6 @@ function* removeMember({
   }
 }
 
-function* joinNewGroup({
-  payload,
-}: {
-  type: string;
-  payload: {groupId: number; groupName: string};
-}) {
-  try {
-    const {groupId, groupName} = payload;
-
-    // @ts-ignore
-    const response = yield groupsDataHelper.joinGroup(groupId);
-    const join_status = response?.data?.join_status;
-    const hasRequested = join_status === groupJoinStatus.requested;
-
-    if (hasRequested) {
-      yield put(groupsActions.getGroupDetail(groupId));
-      const toastMessage: IToastMessage = {
-        content: `${i18next.t('groups:text_request_join_group')} ${groupName}`,
-        props: {
-          type: 'success',
-        },
-      };
-      yield put(modalActions.showHideToastMessage(toastMessage));
-      return;
-    }
-
-    yield put(groupsActions.getJoinedGroups());
-
-    const toastMessage: IToastMessage = {
-      content: `${i18next.t(
-        'groups:text_successfully_join_group',
-      )} ${groupName}`,
-      props: {
-        type: 'success',
-      },
-    };
-
-    yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.setLoadingPage(true));
-    yield put(groupsActions.getGroupDetail(groupId));
-  } catch (err) {
-    console.error('joinNewGroup catch', err);
-    yield showError(err);
-  }
-}
-
 function* cancelJoinGroup({
   payload,
 }: {
@@ -769,7 +724,7 @@ function* declineAllMemberRequests({
   }
 }
 
-function* showError(err: any) {
+export function* showError(err: any) {
   if (err.code === errorCode.systemIssue) return;
 
   const toastMessage: IToastMessage = {

@@ -12,7 +12,7 @@ import {ITheme} from '~/theme/interfaces';
 
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
-import MentionBar from '~/beinComponents/inputs/_MentionInput/MentionBar';
+import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 
 export interface CommentInputFooterProps {
   useTestID?: boolean;

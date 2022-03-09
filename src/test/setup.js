@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactNative from 'react-native';
 import {configure} from 'enzyme';
+import {get} from 'lodash';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-info-mock';
@@ -19,6 +20,9 @@ import mockSafeAreaContext from '~/test/mockSafeAreaContext';
 
 configure({adapter: new Adapter()});
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const languages = require('~/localization/en.json');
+
 jest.mock('react-native-image-crop-picker', () => ({
   openPicker: jest.fn().mockImplementation(() =>
     Promise.resolve({
@@ -35,7 +39,7 @@ jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
 jest.doMock('react-i18next', () => ({
   useTranslation: () => {
     return {
-      t: str => str,
+      t: str => get(languages, str?.replaceAll?.(':', '.')),
       i18n: {
         changeLanguage: () => new Promise(() => undefined),
       },
@@ -45,7 +49,7 @@ jest.doMock('react-i18next', () => ({
 }));
 
 jest.doMock('i18next', () => ({
-  t: str => str,
+  t: str => get(languages, str?.replaceAll?.(':', '.')),
 }));
 
 jest.doMock('react-native-paper', () => ({
@@ -56,7 +60,10 @@ jest.doMock('react-native-paper', () => ({
     spacing: spacing,
     dimension: dimension,
   }),
-  TextInput: ReactNative.TextInput,
+  TextInput: {
+    ...ReactNative.TextInput,
+    Icon: ReactNative.View,
+  },
 }));
 
 jest.doMock('react-native-modalize', () => {

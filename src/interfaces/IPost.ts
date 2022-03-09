@@ -261,6 +261,7 @@ export interface IGetStreamAudienceGroup {
   foreign_id: string;
   data?: {
     avatar?: string;
+    icon?: string;
     name?: string;
   };
   created_at: string;

@@ -29,6 +29,7 @@
     "test": "detox",
     "jest": "jest",
     "jest:cov": "jest --coverage --silent",
+    "jest:cov-open": "jest --coverage --silent && open ./coverage/lcov-report/index.html",
     "jest:open-cov": "open ./coverage/lcov-report/index.html",
     "reverse": "adb reverse tcp:8081 tcp:8081 && adb reverse tcp:9090 tcp:9090"
   },
@@ -96,6 +97,7 @@
     "react-native-pager-view": "5.4.8",
     "react-native-paper": "4.11.2",
     "react-native-parsed-text": "0.0.22",
+    "react-native-permissions": "3.3.0",
     "react-native-reanimated": "2.2.3",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "3.2.0",

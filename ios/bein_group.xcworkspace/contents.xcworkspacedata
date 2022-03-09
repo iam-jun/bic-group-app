@@ -2,12 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:/Users/admin/Documents/projects/bein-group-app/ios/bein_group.xcodeproj">
+      location = "group:bein_group.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pods/Pods.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:bein_group.xcodeproj">
    </FileRef>
 </Workspace>

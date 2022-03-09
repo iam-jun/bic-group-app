@@ -1,6 +1,6 @@
 import {DeviceEventEmitter, Platform} from 'react-native';
 import {AT_MENTION_REGEX} from '~/constants/autocomplete';
-import actions from '~/beinComponents/inputs/_MentionInput/redux/actions';
+import actions from '~/beinComponents/inputs/MentionInput/redux/actions';
 
 export interface ICursorPositionChange {
   position: number;
@@ -96,8 +96,6 @@ export const completeMention = ({
 
 export const checkRunSearch = (text: string, groupIds: any, dispatch: any) => {
   let flagRun = false;
-
-  if (!text) return dispatch(actions.setData([]));
 
   const _matchTerm = getMatchTermForAtMention(text);
 

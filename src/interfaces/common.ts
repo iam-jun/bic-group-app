@@ -64,6 +64,7 @@ export interface IPayloadShowModal {
   props?: BaseBottomSheetProps | any;
   useAppBottomSheet?: boolean;
   appModalStyle?: any;
+  closeOutSide?: boolean;
 }
 
 export interface IUserPreview {

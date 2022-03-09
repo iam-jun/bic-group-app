@@ -47,7 +47,7 @@ exports[`CreatePostFooter component renders correctly 1`] = `
           }
         }
       >
-        post:text_add_to_post
+        Add to your post
       </Text>
       <View
         style={
@@ -454,7 +454,7 @@ exports[`CreatePostFooter component renders correctly 1`] = `
                 }
               }
             >
-              post:add_photo
+              Add Photo
             </Text>
           </View>
         </View>
@@ -611,7 +611,7 @@ exports[`CreatePostFooter component renders correctly 1`] = `
                 }
               }
             >
-              post:add_file
+              Add Files
             </Text>
           </View>
         </View>
