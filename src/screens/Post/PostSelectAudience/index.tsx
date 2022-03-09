@@ -45,18 +45,9 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const {isFirstStep, ...createPostParams} = route?.params || {};
 
   const [lossInternet, setLossInternet] = useState(false);
-  const [selectingAudiences, setSelectingAudiences] = useState<
-    (IGroup | IUser)[]
-  >([]);
-  const [selectingGroups, setSelectingGroups] = useState<{[x: string]: IGroup}>(
-    {},
-  );
-  const [selectingUsers, setSelectingUsers] = useState<{[x: string]: IUser}>(
-    {},
-  );
 
   const state = useKeySelector(postKeySelector.postSelectAudienceState);
-  const {loading} = state;
+  const {loading, selectingAudiences, selectingGroups, selectingUsers} = state;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
   const initAudiences = useKeySelector(
@@ -108,17 +99,18 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
 
   const updateSelectingAudiences = () => {
     const newSelectingAudiences: (IUser | IGroup)[] = [];
-    Object.values(selectingGroups).map((group: IGroup) => {
+    Object.values(selectingGroups).map(group => {
       if (group) {
-        newSelectingAudiences.push(group);
+        newSelectingAudiences.push(group as IGroup);
       }
     });
-    Object.values(selectingUsers).map((user: IUser) => {
+    Object.values(selectingUsers).map(user => {
       if (user) {
-        newSelectingAudiences.push(user);
+        newSelectingAudiences.push(user as IUser);
       }
     });
-    setSelectingAudiences(newSelectingAudiences);
+    const p = {selectingAudiences: newSelectingAudiences};
+    dispatch(postActions.setPostSelectAudienceState(p));
   };
 
   useEffect(() => {
@@ -163,8 +155,12 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           newSelectingGroups[item.id] = item;
         }
       });
-      setSelectingUsers(newSelectingUsers);
-      setSelectingGroups(newSelectingGroups);
+
+      const p = {
+        selectingUsers: newSelectingUsers,
+        selectingGroups: newSelectingGroups,
+      };
+      dispatch(postActions.setPostSelectAudienceState(p));
     }
   }, [chosenAudiences]);
 
@@ -258,16 +254,19 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     if (item.type === 'user') {
       const newSelectingUsers: any = {...selectingUsers};
       newSelectingUsers[item.id] = false;
-      setSelectingUsers(newSelectingUsers);
+      const p = {selectingUsers: newSelectingUsers};
+      dispatch(postActions.setPostSelectAudienceState(p));
     } else {
       const newSelectingGroups: any = {...selectingGroups};
       newSelectingGroups[item.id] = false;
-      setSelectingGroups(newSelectingGroups);
+      const p = {selectingGroups: newSelectingGroups};
+      dispatch(postActions.setPostSelectAudienceState(p));
     }
   };
 
   const onChangeCheckedGroups = (data: OnChangeCheckedGroupsData) => {
-    setSelectingGroups({...selectingGroups, ...data} as any);
+    const p = {selectingGroups: {...selectingGroups, ...data}};
+    dispatch(postActions.setPostSelectAudienceState(p));
   };
 
   const handleSearchResult = (data: any) => {
@@ -314,7 +313,8 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     } else {
       newSelectingUsers[user.id] = user;
     }
-    setSelectingUsers(newSelectingUsers);
+    const p = {selectingUsers: newSelectingUsers};
+    dispatch(postActions.setPostSelectAudienceState(p));
   };
 
   const renderItem = ({item}: any) => {

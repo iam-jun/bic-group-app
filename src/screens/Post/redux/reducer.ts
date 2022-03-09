@@ -64,6 +64,9 @@ export const postInitState = {
   scrollToLatestItem: null,
   postSelectAudienceState: {
     loading: true,
+    selectingAudiences: [],
+    selectingGroups: {},
+    selectingUsers: {},
   },
 };
 
@@ -314,7 +317,7 @@ function postReducer(state = postInitState, action: any = {}) {
       return {
         ...state,
         postSelectAudienceState: payload
-          ? {...payload}
+          ? {...state.postSelectAudienceState, ...payload}
           : postInitState.postSelectAudienceState,
       };
     default:

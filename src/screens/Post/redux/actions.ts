@@ -125,7 +125,12 @@ const postActions = {
     type: postTypes.SET_SHOW_REACTION_BOTTOM_SHEET,
     payload,
   }),
-  setPostSelectAudienceState: (payload?: any) => ({
+  setPostSelectAudienceState: (payload?: {
+    loading?: boolean;
+    selectingAudiences?: (IGroup | IUser)[];
+    selectingGroups?: {[x: string]: IGroup};
+    selectingUsers?: {[x: string]: IUser};
+  }) => ({
     type: postTypes.SET_POST_SELECT_AUDIENCE_STATE,
     payload,
   }),
