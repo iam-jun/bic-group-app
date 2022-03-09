@@ -19,6 +19,7 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupsActions from '../../redux/actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
+import {alertLeaveGroup, checkLastAdmin} from '../../helper';
 
 interface MemberOptionsMenuProps {
   groupId: number;
@@ -122,9 +123,14 @@ const MemberOptionsMenu = ({
     if (selectedMember) {
       // check if the current user is the last admin before revoking admin
       if (can_setting)
-        return checkLastAdmin('remove', () =>
-          alertRemovingAdmin(selectedMember),
+        return checkLastAdmin(
+          groupId,
+          dispatch,
+          () => alertRemovingAdmin(selectedMember),
+          onPressMemberButton,
+          'remove',
         );
+
       alertRemovingAdmin(selectedMember);
     }
   };
@@ -160,40 +166,6 @@ const MemberOptionsMenu = ({
 
   const onPressMemberButton = () => {
     dispatch(modalActions.clearToastMessage());
-  };
-
-  const checkLastAdmin = (type: string, callback: () => void) => {
-    groupsDataHelper
-      .getGroupMembers(groupId, {offset: 0, limit: 1})
-      .then(data => {
-        const adminCount = data?.group_admin?.user_count;
-        if (adminCount > 1) {
-          callback();
-        } else {
-          dispatch(
-            modalActions.showHideToastMessage({
-              content: `groups:error:last_admin_${type}`,
-              props: {
-                type: 'error',
-                textProps: {useI18n: true},
-                rightIcon: 'UsersAlt',
-                rightText: 'Members',
-                onPressRight: onPressMemberButton,
-              },
-              toastType: 'normal',
-            }),
-          );
-        }
-      })
-      .catch(err => {
-        console.error('[ERROR] error while fetching group members', err);
-        dispatch(
-          modalActions.showHideToastMessage({
-            content: 'error:http:unknown',
-            props: {textProps: {useI18n: true}, type: 'error'},
-          }),
-        );
-      });
   };
 
   const alertRemovingMember = (selectedMember?: IGroupMembers) => {
@@ -323,46 +295,19 @@ const MemberOptionsMenu = ({
       });
   };
 
+  const onAlertLeaveGroup = () =>
+    alertLeaveGroup(groupId, dispatch, user.username, theme, doLeaveGroup);
+
   const onPressLeave = () => {
     // check if the current user is the last admin before leaving group
-    if (can_setting) return checkLastAdmin('leave', alertLeaveGroup);
-    alertLeaveGroup();
-  };
-
-  const alertLeaveGroup = () => {
-    const alertPayload = {
-      iconName: 'SignOutAlt',
-      title: i18next.t('groups:modal_confirm_leave_group:title'),
-      content: i18next.t('groups:modal_confirm_leave_group:description'),
-      ContentComponent: Text.BodyS,
-      cancelBtn: true,
-      cancelBtnProps: {
-        textColor: theme.colors.primary7,
-      },
-      onConfirm: () => doLeaveGroup(),
-      confirmLabel: i18next.t('groups:modal_confirm_leave_group:button_leave'),
-      ConfirmBtnComponent: Button.Danger,
-    };
-
-    const getInnerGroupsNames = (innerGroups: any) => {
-      if (innerGroups.length > 0) {
-        alertPayload.content =
-          alertPayload.content +
-          ` ${i18next.t(
-            'groups:modal_confirm_leave_group:leave_inner_groups',
-          )}`;
-
-        const groupsLeaveToString = innerGroups.join(', ');
-        alertPayload.content = alertPayload.content.replace(
-          '{0}',
-          groupsLeaveToString,
-        );
-      }
-
-      dispatch(modalActions.showAlert(alertPayload));
-    };
-
-    handleLeaveInnerGroups(user.username, getInnerGroupsNames);
+    if (can_setting)
+      return checkLastAdmin(
+        groupId,
+        dispatch,
+        onAlertLeaveGroup,
+        onPressMemberButton,
+      );
+    onAlertLeaveGroup();
   };
 
   const doLeaveGroup = () => {
