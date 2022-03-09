@@ -27,6 +27,7 @@ import appConfig from '~/configs/appConfig';
 import {showHideToastMessage} from '~/store/modal/actions';
 import postActions from '~/screens/Post/redux/actions';
 import {ISelectAudienceParams} from '~/screens/Post/PostSelectAudience/SelectAudienceHelper';
+import {checkPermission} from '~/utils/permission';
 
 export interface HeaderCreatePostProps {
   audience?: any;
@@ -84,29 +85,32 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
     rootNavigation.navigate(homeStack.draftPost);
   };
 
-  const onPressImage = () => {
-    navigateToCreatePost();
-    ImagePicker.openPickerMultiple().then(images => {
-      const newImages: ICreatePostImage[] = [];
-      images.map(item => {
-        newImages.push({fileName: item.filename, file: item});
-      });
-      let newImageDraft = [...newImages];
-      if (newImageDraft.length > appConfig.postPhotoLimit) {
-        newImageDraft = newImageDraft.slice(0, appConfig.postPhotoLimit);
-        const errorContent = t('post:error_reach_upload_photo_limit').replace(
-          '%LIMIT%',
-          appConfig.postPhotoLimit,
-        );
-        dispatch(
-          showHideToastMessage({
-            content: errorContent,
-            props: {textProps: {useI18n: true}, type: 'error'},
-          }),
-        );
+  const onPressImage = async () => {
+    checkPermission('photo', dispatch, canOpenPicker => {
+      if (canOpenPicker) {
+        navigateToCreatePost();
+        ImagePicker.openPickerMultiple().then(images => {
+          const newImages: ICreatePostImage[] = [];
+          images.map(item => {
+            newImages.push({fileName: item.filename, file: item});
+          });
+          let newImageDraft = [...newImages];
+          if (newImageDraft.length > appConfig.postPhotoLimit) {
+            newImageDraft = newImageDraft.slice(0, appConfig.postPhotoLimit);
+            const errorContent = t(
+              'post:error_reach_upload_photo_limit',
+            ).replace('%LIMIT%', appConfig.postPhotoLimit);
+            dispatch(
+              showHideToastMessage({
+                content: errorContent,
+                props: {textProps: {useI18n: true}, type: 'error'},
+              }),
+            );
+          }
+          dispatch(postActions.setCreatePostImagesDraft(newImageDraft));
+          rootNavigation.navigate(homeStack.postSelectImage);
+        });
       }
-      dispatch(postActions.setCreatePostImagesDraft(newImageDraft));
-      rootNavigation.navigate(homeStack.postSelectImage);
     });
   };
 

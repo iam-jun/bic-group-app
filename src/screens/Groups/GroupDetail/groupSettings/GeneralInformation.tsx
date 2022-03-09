@@ -41,6 +41,7 @@ import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import Markdown from '~/beinComponents/Markdown';
+import {checkPermission} from '~/utils/permission';
 
 const GeneralInformation = (props: any) => {
   const params = props.route.params;
@@ -186,12 +187,16 @@ const GeneralInformation = (props: any) => {
     fieldName: 'icon' | 'background_img_url',
     uploadType: IUploadType,
   ) => {
-    ImagePicker.openPickerSingle({
-      ...groupProfileImageCropRatio[fieldName],
-      cropping: true,
-      mediaType: 'photo',
-    }).then(file => {
-      uploadFile(file, fieldName, uploadType);
+    checkPermission('photo', dispatch, canOpenPicker => {
+      if (canOpenPicker) {
+        ImagePicker.openPickerSingle({
+          ...groupProfileImageCropRatio[fieldName],
+          cropping: true,
+          mediaType: 'photo',
+        }).then(file => {
+          uploadFile(file, fieldName, uploadType);
+        });
+      }
     });
   };
 

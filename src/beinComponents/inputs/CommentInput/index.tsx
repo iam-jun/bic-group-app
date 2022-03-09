@@ -33,6 +33,7 @@ import modalActions from '~/store/modal/actions';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CommentInputFooter from '~/beinComponents/inputs/CommentInput/CommentInputFooter';
+import {checkPermission} from '~/utils/permission';
 
 export interface ICommentInputSendParam {
   content: string;
@@ -155,15 +156,19 @@ const CommentInput: React.FC<CommentInputProps> = ({
   }, [text, selectedImage]);
 
   const _onPressSelectImage = () => {
-    ImagePicker.openPickerSingle().then(file => {
-      if (!file) return;
-      if (!isHandleUpload) {
-        onPressSelectImage?.(file);
-      } else {
-        setUploadError('');
-        setSelectedImage(file);
+    checkPermission('photo', dispatch, canOpenPicker => {
+      if (canOpenPicker) {
+        ImagePicker.openPickerSingle().then(file => {
+          if (!file) return;
+          if (!isHandleUpload) {
+            onPressSelectImage?.(file);
+          } else {
+            setUploadError('');
+            setSelectedImage(file);
+          }
+          focus();
+        });
       }
-      focus();
     });
   };
 
