@@ -51,7 +51,7 @@
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSPhotoLibraryUsageDescription</key>
-	<string>The app requires access to your photo library to allow you to upload your avatar to update your profile.</string>
+	<string>Upload photos and video to Bein or save them to your device. Open Settings to grant Bein Read and Write access to your photo and video library</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>

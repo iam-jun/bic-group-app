@@ -37,6 +37,7 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {openLink} from '~/utils/common';
 import {chatSchemes} from '~/constants/chat';
 import homeActions from '~/screens/Home/redux/actions';
+import {checkPermission} from '~/utils/permission';
 
 const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
@@ -126,16 +127,20 @@ const UserProfile = (props: any) => {
     );
   };
 
-  const _openImagePicker = (
+  const _openImagePicker = async (
     fieldName: 'avatar' | 'background_img_url',
     uploadType: IUploadType,
   ) => {
-    ImagePicker.openPickerSingle({
-      ...userProfileImageCropRatio[fieldName],
-      cropping: true,
-      mediaType: 'photo',
-    }).then(file => {
-      uploadFile(file, fieldName, uploadType);
+    checkPermission('photo', dispatch, canOpenPicker => {
+      if (canOpenPicker) {
+        ImagePicker.openPickerSingle({
+          ...userProfileImageCropRatio[fieldName],
+          cropping: true,
+          mediaType: 'photo',
+        }).then(file => {
+          uploadFile(file, fieldName, uploadType);
+        });
+      }
     });
   };
 
@@ -201,12 +206,17 @@ const UserProfile = (props: any) => {
   };
 
   const renderUserHeader = () => {
+    //in web, we need show text in <span>, so from RN to RJ we can do as nesting text as text inside will consider as span like html
     return (
       <View style={styles.headerName}>
-        <Text.H4>{fullname}</Text.H4>
+        <Text>
+          <Text.H4>{fullname}</Text.H4>
+        </Text>
         {!!username && <Text.Subtitle>{`@${username}`}</Text.Subtitle>}
         {!!description && (
-          <Text style={styles.subtitleText}>{description}</Text>
+          <Text>
+            <Text style={styles.subtitleText}>{description}</Text>
+          </Text>
         )}
       </View>
     );
@@ -315,10 +325,10 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     headerName: {
       alignItems: 'center',
       paddingVertical: spacing.margin.base,
+      paddingHorizontal: spacing.margin.large,
     },
     subtitleText: {
       marginTop: spacing.margin.small,
-      marginHorizontal: spacing.margin.large,
     },
     button: {
       marginHorizontal: spacing.margin.large,

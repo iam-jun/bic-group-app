@@ -34,6 +34,7 @@ import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import appConfig from '~/configs/appConfig';
 import {showHideToastMessage} from '~/store/modal/actions';
+import {checkPermission} from '~/utils/permission';
 
 export interface PostToolbarProps extends BaseBottomSheetProps {
   modalizeRef: any;
@@ -76,6 +77,14 @@ const PostToolbar = ({
 
   const _onPressSelectImage = () => {
     modalizeRef?.current?.close?.();
+    checkPermission('photo', dispatch, canOpenPicker => {
+      if (canOpenPicker) {
+        openGallery();
+      }
+    });
+  };
+
+  const openGallery = () => {
     ImagePicker.openPickerMultiple().then(images => {
       const newImages: ICreatePostImage[] = [];
       images.map(item => {
