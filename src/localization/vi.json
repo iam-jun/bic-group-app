@@ -71,7 +71,25 @@
     "text_present": "Hiện tại",
         "text_group": "Nhóm",
     "text_at": "tại",
-    "text_to": "tới"
+    "text_to": "tới",
+    "permission_photo_title":"Cho phép Bein truy cập thư viện ảnh và video của bạn",
+    "permission_photo_description": "Yêu cầu truy cập của bạn đã bị từ chối gần đây. Vui lòng cấp quyền truy cập từ Cài đặt bằng các bước sau:",
+    "permission_photo_list":{
+      "ios":{
+        "step_1":"Mở Cài đặt",
+        "step_2":"Nhấn vào Quyền riêng tư",
+        "step_3":"Mở Ảnh",
+        "step_4":"Chọn Tùy chọn “Tất cả ảnh”"
+      },
+      "android":{
+        "step_1":"Đi tới Cài đặt",
+        "step_2":"Tìm Cài đặt ứng dụng",
+        "step_3":"Tìm biểu tượng Bein",
+        "step_4":"Bật quyền truy cập Ảnh"
+      }
+    },
+    "text_not_now":"Không phải bây giờ",
+    "text_go_to_settings":"Đi tới Cài đặt"
   },
   "auth": {
     "text_kickout_title": "Notice",

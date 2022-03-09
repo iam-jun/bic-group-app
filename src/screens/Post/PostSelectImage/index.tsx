@@ -21,6 +21,7 @@ import ImagePicker from '~/beinComponents/ImagePicker';
 import appConfig from '~/configs/appConfig';
 import {showHideToastMessage} from '~/store/modal/actions';
 import {uploadTypes} from '~/configs/resourceConfig';
+import {checkPermission} from '~/utils/permission';
 
 const PostSelectImage = () => {
   const [currentImages, setCurrentImages] = useState<ICreatePostImage[]>([]);
@@ -85,26 +86,32 @@ const PostSelectImage = () => {
   };
 
   const onPressAddImage = () => {
-    ImagePicker.openPickerMultiple().then(images => {
-      const newImages: ICreatePostImage[] = [];
-      images.map(item => {
-        newImages.push({fileName: item.filename, file: item});
-      });
-      let newCurrentImages = [...currentImages, ...newImages];
-      if (newCurrentImages.length > appConfig.postPhotoLimit) {
-        newCurrentImages = newCurrentImages.slice(0, appConfig.postPhotoLimit);
-        const errorContent = t('post:error_reach_upload_photo_limit').replace(
-          '%LIMIT%',
-          appConfig.postPhotoLimit,
-        );
-        dispatch(
-          showHideToastMessage({
-            content: errorContent,
-            props: {textProps: {useI18n: true}, type: 'error'},
-          }),
-        );
+    checkPermission('photo', dispatch, canOpenPicker => {
+      if (canOpenPicker) {
+        ImagePicker.openPickerMultiple().then(images => {
+          const newImages: ICreatePostImage[] = [];
+          images.map(item => {
+            newImages.push({fileName: item.filename, file: item});
+          });
+          let newCurrentImages = [...currentImages, ...newImages];
+          if (newCurrentImages.length > appConfig.postPhotoLimit) {
+            newCurrentImages = newCurrentImages.slice(
+              0,
+              appConfig.postPhotoLimit,
+            );
+            const errorContent = t(
+              'post:error_reach_upload_photo_limit',
+            ).replace('%LIMIT%', appConfig.postPhotoLimit);
+            dispatch(
+              showHideToastMessage({
+                content: errorContent,
+                props: {textProps: {useI18n: true}, type: 'error'},
+              }),
+            );
+          }
+          setCurrentImages(newCurrentImages);
+        });
       }
-      setCurrentImages(newCurrentImages);
     });
   };
 

@@ -38,6 +38,7 @@ import ImagePicker from '~/beinComponents/ImagePicker';
 import UploadingImage from '~/beinComponents/UploadingImage';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+import {checkPermission} from '~/utils/permission';
 
 const inputMinHeight = 66;
 const isAndroid8 =
@@ -142,11 +143,18 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   };
 
   const onSelectImage = () => {
-    ImagePicker.openPickerSingle().then(file => {
-      if (!file) return;
-      setUploading(true);
-      const image: ICreatePostImage = {fileName: file.filename, file: file};
-      setSelectedImg(image);
+    checkPermission('photo', dispatch, canOpenPicker => {
+      if (canOpenPicker) {
+        ImagePicker.openPickerSingle().then(file => {
+          if (!file) return;
+          setUploading(true);
+          const image: ICreatePostImage = {
+            fileName: file.filename,
+            file: file,
+          };
+          setSelectedImg(image);
+        });
+      }
     });
   };
 

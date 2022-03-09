@@ -37,6 +37,7 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {openLink} from '~/utils/common';
 import {chatSchemes} from '~/constants/chat';
 import homeActions from '~/screens/Home/redux/actions';
+import {checkPermission} from '~/utils/permission';
 
 const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
@@ -126,16 +127,20 @@ const UserProfile = (props: any) => {
     );
   };
 
-  const _openImagePicker = (
+  const _openImagePicker = async (
     fieldName: 'avatar' | 'background_img_url',
     uploadType: IUploadType,
   ) => {
-    ImagePicker.openPickerSingle({
-      ...userProfileImageCropRatio[fieldName],
-      cropping: true,
-      mediaType: 'photo',
-    }).then(file => {
-      uploadFile(file, fieldName, uploadType);
+    checkPermission('photo', dispatch, canOpenPicker => {
+      if (canOpenPicker) {
+        ImagePicker.openPickerSingle({
+          ...userProfileImageCropRatio[fieldName],
+          cropping: true,
+          mediaType: 'photo',
+        }).then(file => {
+          uploadFile(file, fieldName, uploadType);
+        });
+      }
     });
   };
 

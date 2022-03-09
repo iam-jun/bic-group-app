@@ -41,6 +41,7 @@ import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
 import {isEmpty} from 'lodash';
 import homeActions from '~/screens/Home/redux/actions';
+import {checkPermission} from '~/utils/permission';
 
 const UserEditProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
@@ -150,16 +151,20 @@ const UserEditProfile = (props: any) => {
 
   // fieldName: field name in group profile to be edited
   // 'avatar' for avatar and 'background_img_url' for cover
-  const _openImagePicker = (
+  const _openImagePicker = async (
     fieldName: 'avatar' | 'background_img_url',
     uploadType: IUploadType,
   ) => {
-    ImagePicker.openPickerSingle({
-      ...userProfileImageCropRatio[fieldName],
-      cropping: true,
-      mediaType: 'photo',
-    }).then(file => {
-      uploadFile(file, fieldName, uploadType);
+    checkPermission('photo', dispatch, canOpenPicker => {
+      if (canOpenPicker) {
+        ImagePicker.openPickerSingle({
+          ...userProfileImageCropRatio[fieldName],
+          cropping: true,
+          mediaType: 'photo',
+        }).then(file => {
+          uploadFile(file, fieldName, uploadType);
+        });
+      }
     });
   };
 
