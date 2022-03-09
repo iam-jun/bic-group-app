@@ -149,27 +149,36 @@ const SignIn = () => {
     dispatch(modalActions.showAlertNewFeature());
   };
 
+  const hideKeyboard = () => {
+    isWeb && Keyboard.dismiss();
+  };
+
+  const goToForgotPassword = () =>
+    navigation.navigate(authStack.forgotPassword);
+
   return (
     <ScreenWrapper testID="SignInScreen" style={styles.root} isFullView>
       <TouchableWithoutFeedback
-        onPress={() => Platform.OS !== 'web' && Keyboard.dismiss()}
+        testID="SignInScreen.button_hide_keyboard"
+        onPress={hideKeyboard}
         accessible={false}
-        style={{flex: 1}}>
+        style={styles.flex1}>
         <View style={styles.container}>
           <View>
             <Image
+              testID="SignInScreen.logo"
               resizeMode="contain"
               style={styles.logo}
               source={images.logo_bein}
             />
-            <Text.H6 style={styles.title} useI18n>
+            <Text.H6 testID="SignInScreen.title" style={styles.title} useI18n>
               auth:text_sign_in_desc
             </Text.H6>
             <Controller
               control={control}
               render={({field: {onChange, value}}) => (
                 <Input
-                  testID="inputEmail"
+                  testID="SignInScreen.input_email"
                   label={
                     !isWeb && !loading ? t('auth:input_label_email') : undefined
                   }
@@ -209,7 +218,7 @@ const SignIn = () => {
               control={control}
               render={({field: {onChange, value}}) => (
                 <PasswordInput
-                  testID="inputPassword"
+                  testID="SignInScreen.input_password"
                   ref={inputPasswordRef}
                   label={
                     !isWeb && !loading
@@ -245,20 +254,24 @@ const SignIn = () => {
             />
             <View style={styles.forgotButton}>
               <TouchableOpacity
-                testID="btnSignInForgotPassword"
-                onPress={() => navigation.navigate(authStack.forgotPassword)}>
+                testID="SignInScreen.btn_forgot_password"
+                onPress={goToForgotPassword}>
                 <Text.H6 style={styles.transparentButton} useI18n>
                   auth:btn_forgot_password
                 </Text.H6>
               </TouchableOpacity>
             </View>
             <Button.Primary
-              testID="btnLogin"
+              testID="SignInScreen.btn_login"
               style={styles.btnSignIn}
               disabled={disableSignIn}
               onPress={onSignIn}
               useI18n>
-              {loading ? <LoadingIndicator /> : 'auth:btn_sign_in'}
+              {loading ? (
+                <LoadingIndicator testID="SignInScreen.loading" />
+              ) : (
+                'auth:btn_sign_in'
+              )}
             </Button.Primary>
           </View>
           {/*<Text.H5 style={styles.orText} useI18n>auth:text_or</Text.H5>*/}
@@ -305,6 +318,7 @@ const themeStyles = (theme: ITheme) => {
         },
       }),
     },
+    flex1: {flex: 1},
     logo: {
       alignSelf: 'center',
       width: 64,

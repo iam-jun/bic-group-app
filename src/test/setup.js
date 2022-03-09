@@ -1,5 +1,6 @@
 import * as React from 'react';
 import * as ReactNative from 'react-native';
+import * as ReactFormHook from 'react-hook-form';
 import {configure} from 'enzyme';
 import {get} from 'lodash';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
@@ -22,6 +23,10 @@ configure({adapter: new Adapter()});
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const languages = require('~/localization/en.json');
+
+jest.mock('~/services/sharePreferences', () => ({
+  getUserFromSharedPreferences: jest.fn(),
+}));
 
 jest.mock('react-native-image-crop-picker', () => ({
   openPicker: jest.fn().mockImplementation(() =>
@@ -66,6 +71,14 @@ jest.doMock('react-native-paper', () => ({
   },
 }));
 
+jest.doMock('@react-navigation/native', () => ({
+  useNavigation: () => ({
+    navigate: (screen, params) => {
+      return {screen, params};
+    },
+  }),
+}));
+
 jest.doMock('react-native-modalize', () => {
   const RealModule = jest.requireActual('react-native-modalize');
   // noinspection UnnecessaryLocalVariableJS
@@ -93,6 +106,7 @@ jest.doMock('react-native', () => {
     InteractionManager: RNInteractionManager,
     NativeModules: RNNativeModules,
     Linking: RNLinking,
+    Keyboard: RNKeyboard,
   } = ReactNative;
 
   const Alert = {
@@ -165,6 +179,11 @@ jest.doMock('react-native', () => {
     openURL: jest.fn(),
   };
 
+  const Keyboard = {
+    ...RNKeyboard,
+    dismiss: jest.fn(),
+  };
+
   return Object.setPrototypeOf(
     {
       Platform: {
@@ -181,7 +200,16 @@ jest.doMock('react-native', () => {
       InteractionManager,
       NativeModules,
       Linking,
+      Keyboard,
     },
     ReactNative,
   );
 });
+
+// jest.doMock('react', () => {
+//   const setState = jest.fn();
+//   return {
+//     ...jest.requireActual('react'),
+//     useState: jest.fn().mockImplementation(init => [init, setState]),
+//   };
+// });
