@@ -24,12 +24,10 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import appConfig from '~/configs/appConfig';
-import modalActions, {showHideToastMessage} from '~/store/modal/actions';
+import {showHideToastMessage} from '~/store/modal/actions';
 import postActions from '~/screens/Post/redux/actions';
 import {ISelectAudienceParams} from '~/screens/Post/PostSelectAudience/SelectAudienceHelper';
-import AppPermission from '~/utils/permission';
-import PermissionsPopupContent from '~/beinComponents/PermissionsPopupContent';
-import {photo_permission_steps} from '~/constants/permissions';
+import {checkPermission} from '~/utils/permission';
 
 export interface HeaderCreatePostProps {
   audience?: any;
@@ -88,54 +86,32 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   };
 
   const onPressImage = async () => {
-    AppPermission.checkPermission(
-      'photo',
-      () => {
-        dispatch(
-          modalActions.showModal({
-            isOpen: true,
-            closeOutSide: false,
-            useAppBottomSheet: false,
-            ContentComponent: (
-              <PermissionsPopupContent
-                title={t('common:permission_photo_title')}
-                description={t('common:permission_photo_description')}
-                steps={photo_permission_steps}
-                goToSetting={() => {
-                  dispatch(modalActions.hideModal());
-                }}
-              />
-            ),
-          }),
-        );
-      },
-      canOpenPicker => {
-        if (canOpenPicker) {
-          navigateToCreatePost();
-          ImagePicker.openPickerMultiple().then(images => {
-            const newImages: ICreatePostImage[] = [];
-            images.map(item => {
-              newImages.push({fileName: item.filename, file: item});
-            });
-            let newImageDraft = [...newImages];
-            if (newImageDraft.length > appConfig.postPhotoLimit) {
-              newImageDraft = newImageDraft.slice(0, appConfig.postPhotoLimit);
-              const errorContent = t(
-                'post:error_reach_upload_photo_limit',
-              ).replace('%LIMIT%', appConfig.postPhotoLimit);
-              dispatch(
-                showHideToastMessage({
-                  content: errorContent,
-                  props: {textProps: {useI18n: true}, type: 'error'},
-                }),
-              );
-            }
-            dispatch(postActions.setCreatePostImagesDraft(newImageDraft));
-            rootNavigation.navigate(homeStack.postSelectImage);
+    checkPermission('photo', dispatch, canOpenPicker => {
+      if (canOpenPicker) {
+        navigateToCreatePost();
+        ImagePicker.openPickerMultiple().then(images => {
+          const newImages: ICreatePostImage[] = [];
+          images.map(item => {
+            newImages.push({fileName: item.filename, file: item});
           });
-        }
-      },
-    );
+          let newImageDraft = [...newImages];
+          if (newImageDraft.length > appConfig.postPhotoLimit) {
+            newImageDraft = newImageDraft.slice(0, appConfig.postPhotoLimit);
+            const errorContent = t(
+              'post:error_reach_upload_photo_limit',
+            ).replace('%LIMIT%', appConfig.postPhotoLimit);
+            dispatch(
+              showHideToastMessage({
+                content: errorContent,
+                props: {textProps: {useI18n: true}, type: 'error'},
+              }),
+            );
+          }
+          dispatch(postActions.setCreatePostImagesDraft(newImageDraft));
+          rootNavigation.navigate(homeStack.postSelectImage);
+        });
+      }
+    });
   };
 
   return (
