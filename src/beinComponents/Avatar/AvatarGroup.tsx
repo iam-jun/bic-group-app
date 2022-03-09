@@ -48,6 +48,7 @@ const AvatarGroup = ({
   ) => {
     return (
       <View
+        testID={`avatar_group.item_${index}`}
         style={StyleSheet.flatten([
           {
             width: itemContainerSize,
@@ -88,14 +89,14 @@ const AvatarGroup = ({
         return renderItem(0, source?.[0]);
       case 2:
         return (
-          <View style={{flexDirection: 'row'}}>
+          <View testID="avatar_group.group_2" style={{flexDirection: 'row'}}>
             {renderItem(0, source?.[0])}
             {renderItem(1, source?.[1], {marginLeft: -6})}
           </View>
         );
       case 3:
         return (
-          <View>
+          <View testID="avatar_group.group_3">
             <View style={{flexDirection: 'row'}}>
               {renderItem(0, source?.[0])}
               {renderItem(1, source?.[1], {marginLeft: -6})}
@@ -112,7 +113,7 @@ const AvatarGroup = ({
         );
       case 4:
         return (
-          <View>
+          <View testID="avatar_group.group_4">
             <View style={{flexDirection: 'row'}}>
               {renderItem(0, source?.[0])}
               {renderItem(1, source?.[1], {marginLeft: -6})}
@@ -130,7 +131,7 @@ const AvatarGroup = ({
         );
       default:
         return (
-          <View>
+          <View testID="avatar_group.group_4_plus">
             <View style={{flexDirection: 'row'}}>
               {renderItem(0, source?.[0])}
               {renderItem(1, source?.[1], {marginLeft: -6})}
@@ -154,6 +155,7 @@ const AvatarGroup = ({
                 }}>
                 {totalMember ? (
                   <Text
+                    testID="avatar_group.total_member"
                     style={{
                       fontFamily: fontFamilies.OpenSans,
                       marginTop: 2,
@@ -173,6 +175,7 @@ const AvatarGroup = ({
 
   return (
     <View
+      testID="avatar_group"
       style={StyleSheet.flatten([
         {
           width: containerSize,

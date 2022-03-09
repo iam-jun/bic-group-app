@@ -6,6 +6,7 @@ import iconAddPost from '../../assets/icons/icon_add_post.svg';
 import iconAddSquareDone from '../../assets/icons/icon_add_square_done.svg';
 import iconAddSquareGroupFilled from '../../assets/icons/icon_add_square_gr_filled.svg';
 import iconAddSquareGroup from '../../assets/icons/icon_add_square_group.svg';
+import iconAddGif from '../../assets/icons/icon_add_gif.svg';
 import iconArrowDown from '../../assets/icons/icon_arrow_down.svg';
 import iconCheckbox from '../../assets/icons/icon_checkbox.svg';
 import iconCopy from '../../assets/icons/icon_copy.svg';
@@ -65,6 +66,14 @@ import addUsers from '../../assets/icons/add_users.svg';
 import iconMapPin from '../../assets/icons/ic_map_pin.svg';
 import iconChat from '../../assets/icons/icon_chat.svg';
 import iconCheckCircle from '../../assets/icons/icon_check_circle.svg';
+import iconPermissionGuide1Android from '../../assets/icons/icon_permission_guide_1_android.svg';
+import iconPermissionGuide2Android from '../../assets/icons/icon_permission_guide_2_android.svg';
+import iconPermissionGuide3Android from '../../assets/icons/icon_permission_guide_3_android.svg';
+import iconPermissionGuide4Android from '../../assets/icons/icon_permission_guide_4_android.svg';
+import iconPermissionGuide1Ios from '../../assets/icons/icon_permission_guide_1_ios.svg';
+import iconPermissionGuide2Ios from '../../assets/icons/icon_permission_guide_2_ios.svg';
+import iconPermissionGuide3Ios from '../../assets/icons/icon_permission_guide_3_ios.svg';
+import iconPermissionGuide4Ios from '../../assets/icons/icon_permission_guide_4_ios.svg';
 
 const icons = {
   iconTabHome,
@@ -155,6 +164,7 @@ const icons = {
   iconAddSquareDone,
   iconAddSquareGroup,
   iconAddSquareGroupFilled,
+  iconAddGif,
   iconShieldStar,
   iconMenuMoon,
   iconMenuBookmark,
@@ -203,6 +213,7 @@ const icons = {
   Feedback: 'Feedback',
   Save: 'Save',
   File: 'File',
+  Video: 'Video',
   PlayVideo: iconPlay,
   Star: 'Star',
   iconStar: iconStar,
@@ -229,6 +240,14 @@ const icons = {
   iconMapPin,
   iconChat,
   iconCheckCircle,
+  iconPermissionGuide1Android,
+  iconPermissionGuide2Android,
+  iconPermissionGuide3Android,
+  iconPermissionGuide4Android,
+  iconPermissionGuide1Ios,
+  iconPermissionGuide2Ios,
+  iconPermissionGuide3Ios,
+  iconPermissionGuide4Ios,
 };
 
 export default icons;

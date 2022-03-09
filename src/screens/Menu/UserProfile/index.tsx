@@ -1,5 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, ScrollView, ActivityIndicator} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  ScrollView,
+  ActivityIndicator,
+  Platform,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -13,11 +19,7 @@ import Header from '~/beinComponents/Header';
 import Avatar from '~/beinComponents/Avatar';
 
 import {ITheme} from '~/theme/interfaces';
-import {
-  scaleSize,
-  scaleCoverHeight,
-  userProfileImageCropRatio,
-} from '~/theme/dimension';
+import {scaleCoverHeight, userProfileImageCropRatio} from '~/theme/dimension';
 import images from '~/resources/images';
 import {useRootNavigation} from '~/hooks/navigation';
 import ProfileBlock from './components/ProfileBlock';
@@ -32,12 +34,16 @@ import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import {IFilePicked} from '~/interfaces/common';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import {openLink} from '~/utils/common';
+import {chatSchemes} from '~/constants/chat';
+import homeActions from '~/screens/Home/redux/actions';
+import {checkPermission} from '~/utils/permission';
 
 const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
 
   const userProfileData = useKeySelector(menuKeySelector.userProfile);
-  const {fullname, description, avatar, background_img_url, email} =
+  const {fullname, description, avatar, background_img_url, username} =
     userProfileData || {};
   const loadingUserProfile = useKeySelector(menuKeySelector.loadingUserProfile);
 
@@ -46,6 +52,9 @@ const UserProfile = (props: any) => {
   const showUserNotFound = useKeySelector(menuKeySelector.showUserNotFound);
 
   const [coverHeight, setCoverHeight] = useState<number>(210);
+  const [avatarState, setAvatarState] = useState<string>(avatar);
+  const [bgImgState, setBgImgState] = useState<string>(background_img_url);
+  const [isChangeImg, setIsChangeImg] = useState<string>('');
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme, coverHeight);
@@ -57,12 +66,43 @@ const UserProfile = (props: any) => {
 
   const getUserProfile = () => {
     dispatch(menuActions.clearUserProfile());
-    if (!!userId) dispatch(menuActions.getUserProfile({userId, params}));
+    if (!!userId) {
+      dispatch(menuActions.getUserProfile({userId, params}));
+    }
   };
 
   useEffect(() => {
+    setAvatarState(userProfileData?.avatar);
+    setBgImgState(userProfileData?.background_img_url);
+  }, [userProfileData]);
+
+  useEffect(() => {
     isFocused && getUserProfile();
+    const {avatar: _avatar, background_img_url: _bgIm} = myProfileData;
+    if (
+      userId?.toString?.() === currentUserId?.toString?.() ||
+      userId?.toString?.() === currentUsername?.toString?.()
+    ) {
+      if (avatarState !== _avatar || _bgIm !== bgImgState) {
+        dispatch(menuActions.getMyProfile({userId, params}));
+        dispatch(homeActions.getHomePosts({isRefresh: true}));
+      }
+    }
   }, [isFocused, userId]);
+
+  useEffect(() => {
+    if (
+      userId?.toString?.() === currentUserId?.toString?.() ||
+      userId?.toString?.() === currentUsername?.toString?.()
+    ) {
+      if (isChangeImg === 'avatar') {
+        dispatch(homeActions.getHomePosts({isRefresh: true}));
+        setAvatarState(myProfileData?.avatar);
+      } else if (isChangeImg === 'background_img_url') {
+        setBgImgState(myProfileData?.background_img_url);
+      }
+    }
+  }, [myProfileData]);
 
   const onEditProfileButton = () =>
     rootNavigation.navigate(mainStack.userEdit, {userId, params});
@@ -73,25 +113,34 @@ const UserProfile = (props: any) => {
     uploadType: IUploadType,
   ) => {
     dispatch(
-      menuActions.uploadImage({
-        id,
-        file,
-        fieldName,
-        uploadType,
-      }),
+      menuActions.uploadImage(
+        {
+          id,
+          file,
+          fieldName,
+          uploadType,
+        },
+        () => {
+          setIsChangeImg(fieldName);
+        },
+      ),
     );
   };
 
-  const _openImagePicker = (
+  const _openImagePicker = async (
     fieldName: 'avatar' | 'background_img_url',
     uploadType: IUploadType,
   ) => {
-    ImagePicker.openPickerSingle({
-      ...userProfileImageCropRatio[fieldName],
-      cropping: true,
-      mediaType: 'photo',
-    }).then(file => {
-      uploadFile(file, fieldName, uploadType);
+    checkPermission('photo', dispatch, canOpenPicker => {
+      if (canOpenPicker) {
+        ImagePicker.openPickerSingle({
+          ...userProfileImageCropRatio[fieldName],
+          cropping: true,
+          mediaType: 'photo',
+        }).then(file => {
+          uploadFile(file, fieldName, uploadType);
+        });
+      }
     });
   };
 
@@ -133,7 +182,7 @@ const UserProfile = (props: any) => {
       <View onLayout={onCoverLayout}>
         <Image
           style={styles.cover}
-          source={background_img_url || images.img_cover_default}
+          source={bgImgState || images.img_cover_default}
         />
         {renderEditButton(styles.editCoverPhoto, onEditCover)}
       </View>
@@ -146,7 +195,7 @@ const UserProfile = (props: any) => {
         <View>
           <Avatar.UltraSuperLarge
             style={styles.avatar}
-            source={avatar || images.img_user_avatar_default}
+            source={avatarState || images.img_user_avatar_default}
             isRounded={true}
             showBorder={true}
           />
@@ -157,12 +206,17 @@ const UserProfile = (props: any) => {
   };
 
   const renderUserHeader = () => {
+    //in web, we need show text in <span>, so from RN to RJ we can do as nesting text as text inside will consider as span like html
     return (
       <View style={styles.headerName}>
-        <Text.H4>{fullname}</Text.H4>
-        <Text.Subtitle>{email}</Text.Subtitle>
+        <Text>
+          <Text.H4>{fullname}</Text.H4>
+        </Text>
+        {!!username && <Text.Subtitle>{`@${username}`}</Text.Subtitle>}
         {!!description && (
-          <Text style={styles.subtitleText}>{description}</Text>
+          <Text>
+            <Text style={styles.subtitleText}>{description}</Text>
+          </Text>
         )}
       </View>
     );
@@ -173,9 +227,13 @@ const UserProfile = (props: any) => {
       <Button.Secondary
         testID="user_profile.edit"
         textColor={theme.colors.primary6}
-        style={styles.buttonEdit}
+        style={Platform.OS === 'web' ? styles.buttonEditWeb : styles.buttonEdit}
         leftIcon={'EditAlt'}
-        onPress={onEditProfileButton}>
+        onPress={onEditProfileButton}
+        borderRadius={theme.spacing.borderRadius.small}
+        contentStyle={
+          Platform.OS === 'web' ? styles.buttonEditWebContainer : {}
+        }>
         {i18next.t('profile:title_edit_profile')}
       </Button.Secondary>
     ) : (
@@ -185,7 +243,13 @@ const UserProfile = (props: any) => {
         textColor={theme.colors.bgSecondary}
         color={theme.colors.primary6}
         colorHover={theme.colors.primary5}
-        rightIcon={'Message'}>
+        rightIcon={'Message'}
+        borderRadius={theme.spacing.borderRadius.small}
+        onPress={() => {
+          openLink(
+            `${chatSchemes.DIRECT_MESSAGE}/@${userProfileData.username}`,
+          );
+        }}>
         {i18next.t('profile:title_direct_message')}
       </Button.Secondary>
     );
@@ -261,6 +325,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     headerName: {
       alignItems: 'center',
       paddingVertical: spacing.margin.base,
+      paddingHorizontal: spacing.margin.large,
     },
     subtitleText: {
       marginTop: spacing.margin.small,
@@ -289,9 +354,22 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       position: 'absolute',
       bottom: 0,
       right: spacing?.margin.small,
+      ...Platform.select({
+        web: {
+          right: 0,
+        },
+      }),
     },
     buttonEdit: {
       marginHorizontal: spacing.margin.large,
+      borderWidth: 1,
+      borderColor: colors.primary6,
+    },
+    buttonEditWeb: {
+      marginHorizontal: spacing.margin.large,
+    },
+    buttonEditWebContainer: {
+      marginHorizontal: 0,
       borderWidth: 1,
       borderColor: colors.primary6,
     },

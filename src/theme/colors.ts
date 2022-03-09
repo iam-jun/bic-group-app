@@ -18,6 +18,7 @@ export default {
       bgDisable: '#D5DCE5', //Neutral10
       bgButtonPrimary: '#7843DD', //Primary50
       bgButtonSecondary: '#FFFFFF', //Neutral0'
+      bgError: '#FFF2F7', //Neutral/90
       borderButtonSecondary: '#7843DD',
       borderFocus: '#B2BDCD', //Neutral20
       borderDisable: '#B2BDCD', //Neutral20
@@ -91,6 +92,7 @@ export default {
       bgButtonPrimary: '#7843DD', //Primary50
       bgButtonSecondary: '#FFFFFF', //Neutral0'
       borderButtonSecondary: '#7843DD',
+      bgError: '#FFF2F7', //Red / 1
       borderFocus: '#B2BDCD', //Neutral20
       borderDisable: '#B2BDCD', //Neutral20
       borderCard: '#B2BDCD', //Neutral20

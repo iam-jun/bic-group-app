@@ -56,6 +56,7 @@ export interface IActivityData {
   images?: IActivityDataImage[];
   videos?: string[];
   files?: string[];
+  edited?: boolean;
 }
 
 export interface IActivityImportant {
@@ -101,6 +102,7 @@ export interface IPostActivity {
   latest_reactions?: any;
   own_reactions?: any;
   reaction_counts?: IObject<number>;
+  reactions_order?: string[];
   deleted?: boolean;
   is_draft?: boolean;
 }
@@ -233,6 +235,7 @@ export interface IReaction {
   parent?: string;
   latest_children?: any;
   children_counts?: any;
+  reactions_order?: string[];
   own_children?: any;
   loading?: boolean;
   status?: 'pending' | 'success' | 'failed';
@@ -258,6 +261,7 @@ export interface IGetStreamAudienceGroup {
   foreign_id: string;
   data?: {
     avatar?: string;
+    icon?: string;
     name?: string;
   };
   created_at: string;
@@ -289,6 +293,16 @@ export interface IParamSearchMentionAudiences {
   user_ids?: string;
   skip?: number;
   take?: number;
+}
+
+export interface IMentionUser {
+  id: number;
+  username: string;
+  email?: string;
+  fullname: string;
+  avatar: string;
+  bein_staff_role?: string;
+  chat_user_id?: string;
 }
 
 export interface IParamGetReactionDetail {
@@ -355,6 +369,7 @@ export interface ICreatePostParams {
   replaceWithDetail?: boolean;
   initAudience?: any;
   createFromGroupId?: number;
+  initAutoSaveDraft?: boolean;
 }
 
 export interface IPayloadReplying {
@@ -427,13 +442,21 @@ export interface ISocketReaction {
   post: {
     post_id?: string;
     reaction_counts?: IReactionCounts;
+    reactions_order?: string[];
   };
   comment: {
     comment_id?: string;
     reaction_counts?: IReactionCounts;
+    reactions_order?: string[];
   };
 }
 
 export interface ICreatePostCurrentSettings {
   important: IActivityImportant;
+}
+
+export interface IPayloadDeleteComment {
+  commentId: string;
+  parentCommentId?: string;
+  postId: string;
 }

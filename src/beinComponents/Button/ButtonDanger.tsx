@@ -26,12 +26,13 @@ const ButtonDanger: React.FC<ButtonDangerProps> = ({
   const {colors, spacing}: ITheme = useTheme() as ITheme;
 
   const underlayColor = colors.placeholder;
-  let backgroundColor = colors.primary1;
+  let backgroundColor = colors.bgError;
   let textColor = colors.error;
 
   if (disabled) {
     backgroundColor = colors.bgDisable;
-    textColor = colors.textDisabled ? colors.textDisabled : '#BDBDBD';
+    // @ts-ignore
+    textColor = colors.textDisabled;
   }
 
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
@@ -48,10 +49,10 @@ const ButtonDanger: React.FC<ButtonDangerProps> = ({
     <ButtonWrapper
       disabled={disabled}
       style={containerStyle}
-      textProps={{color: textColor, useI18n}}
       underlayColor={underlayColor}
       TouchableComponent={TouchableHighlight}
-      {...props}>
+      {...props}
+      textProps={{color: textColor, useI18n, ...props?.textProps}}>
       {children}
     </ButtonWrapper>
   );

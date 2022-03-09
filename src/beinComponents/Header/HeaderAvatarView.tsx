@@ -41,8 +41,10 @@ const HeaderAvatarView = ({
       onPress={onPress}>
       <Avatar.Large source={avatar} style={styles.avatar} />
       <View style={{flex: 1}}>
-        <Text.H6>{firstLabel}</Text.H6>
-        <Text.Subtitle>{secondLabel}</Text.Subtitle>
+        <Text.H6 testID="header_avatar_view.first_label">{firstLabel}</Text.H6>
+        <Text.Subtitle testID="header_avatar_view.second_label">
+          {secondLabel}
+        </Text.Subtitle>
       </View>
     </TouchableOpacity>
   );

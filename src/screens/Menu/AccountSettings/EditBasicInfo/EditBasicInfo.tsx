@@ -1,15 +1,12 @@
 import React, {useState, useRef} from 'react';
-import {StyleSheet, View, Platform, Keyboard} from 'react-native';
+import {StyleSheet, Platform, Keyboard, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {useNavigation} from '@react-navigation/core';
 import i18next from 'i18next';
 import {isEqual} from 'lodash';
 
 import {ITheme} from '~/theme/interfaces';
-import useMenu from '~/hooks/menu';
 import genders from '~/constants/genders';
-import {titleCase} from '~/utils/common';
 import {formatDate} from '~/utils/formatData';
 import relationshipStatus from '~/constants/relationshipStatus';
 import menuActions from '~/screens/Menu/redux/actions';
@@ -23,6 +20,9 @@ import {
 import OptionMenu from './fragments/OptionMenu';
 import LanguageOptionMenu from './fragments/LanguageOptionMenu';
 import * as modalActions from '~/store/modal/actions';
+import {useKeySelector} from '~/hooks/selector';
+import menuKeySelector from '../../redux/keySelector';
+import {useRootNavigation} from '~/hooks/navigation';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -30,6 +30,7 @@ import EditName from './fragments/EditName';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
 import TitleComponent from '../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
+import Div from '~/beinComponents/Div';
 
 const EditBasicInfo = () => {
   const theme = useTheme() as ITheme;
@@ -37,10 +38,11 @@ const EditBasicInfo = () => {
 
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
-  const navigation = useNavigation();
-  const {myProfile} = useMenu();
+  const {rootNavigation} = useRootNavigation();
+
+  const myProfileData = useKeySelector(menuKeySelector.myProfile);
   const {id, fullname, gender, birthday, relationship_status, language} =
-    myProfile;
+    myProfileData;
 
   const genderSheetRef = useRef<any>();
   const relationshipSheetRef = useRef<any>();
@@ -53,6 +55,8 @@ const EditBasicInfo = () => {
   const [relationshipState, setRelationshipState] =
     useState<RELATIONSHIP_TYPE>(relationship_status);
 
+  const [error, setError] = useState<boolean>(false);
+
   const dataMapping = (dataObject: any): IOptionItem[] => {
     const dataList = Object.keys(dataObject).map(type => ({
       type,
@@ -64,7 +68,33 @@ const EditBasicInfo = () => {
   const relationshipStatusList = dataMapping(relationshipStatus);
   const gendersList = dataMapping(genders);
 
+  const checkIsValid = (
+    nameState: string,
+    genderState: string,
+    birthdayState: string,
+    languageState: string[],
+    relationshipState: string,
+  ) => {
+    return (
+      (fullname !== nameState ||
+        gender !== genderState ||
+        birthday !== birthdayState ||
+        !isEqual(language, languageState) ||
+        relationship_status !== relationshipState) &&
+      nameState?.trim?.()?.length > 0
+    );
+  };
+
+  const isValid = checkIsValid(
+    nameState,
+    genderState,
+    birthdayState,
+    languageState,
+    relationshipState,
+  );
+
   const onSave = () => {
+    Keyboard.dismiss();
     dispatch(
       menuActions.editMyProfile({
         id,
@@ -75,7 +105,7 @@ const EditBasicInfo = () => {
         relationship_status: relationshipState,
       }),
     );
-    navigation.goBack();
+    rootNavigation.goBack();
   };
 
   const onGenderItemPress = (item: IGenderItem) => {
@@ -111,28 +141,24 @@ const EditBasicInfo = () => {
   };
 
   const _onPressBack = () => {
-    const isChanged =
-      fullname !== nameState ||
-      gender !== genderState ||
-      birthday !== birthdayState ||
-      !isEqual(language, languageState) ||
-      relationship_status !== relationshipState;
-
-    if (isChanged) {
+    if (isValid) {
+      Keyboard.dismiss();
       dispatch(
         modalActions.showAlert({
           title: i18next.t('common:label_discard_changes'),
           showCloseButton: true,
           cancelBtn: true,
           isDismissible: false,
-          onConfirm: () => navigation.goBack(),
+          onConfirm: () => {
+            rootNavigation.goBack();
+          },
           confirmLabel: i18next.t('common:btn_discard'),
           content: i18next.t('common:text_not_saved_changes_warning'),
           stretchOnWeb: true,
         }),
       );
     } else {
-      navigation.goBack();
+      rootNavigation.goBack();
     }
   };
 
@@ -152,6 +178,16 @@ const EditBasicInfo = () => {
     relationshipSheetRef?.current?.open?.(e?.pageX, e?.pageY);
   };
 
+  const onChangeName = (text: string) => {
+    const newName = text?.trim?.();
+    setNameState(newName);
+    if (!!newName) {
+      error && setError(false);
+    } else {
+      setError(true);
+    }
+  };
+
   return (
     <ScreenWrapper testID="EditBasicInfo" style={styles.container} isFullView>
       <Header
@@ -162,13 +198,21 @@ const EditBasicInfo = () => {
           useI18n: true,
           color: theme.colors.primary6,
           textColor: theme.colors.background,
+          borderRadius: theme.spacing.borderRadius.small,
+          disabled: !isValid,
         }}
         onPressButton={onSave}
         onPressBack={_onPressBack}
       />
 
-      <View style={styles.content}>
-        <EditName onChangeName={setNameState} />
+      <ScrollView
+        keyboardShouldPersistTaps="always"
+        contentContainerStyle={styles.content}>
+        <EditName
+          error={error}
+          fullname={nameState}
+          onChangeName={onChangeName}
+        />
         <TitleComponent icon="UserSquare" title="settings:title_gender" />
         <Button
           testID="edit_basic_info.gender"
@@ -177,7 +221,9 @@ const EditBasicInfo = () => {
           contentStyle={styles.buttonDropDownContent}
           rightIcon={'AngleDown'}
           onPress={e => onGenderEditOpen(e)}>
-          {titleCase(genderState) || i18next.t('common:text_not_set')}
+          {!!genderState
+            ? i18next.t(genders[genderState])
+            : i18next.t('common:text_not_set')}
         </Button>
         <TitleComponent icon="Calender" title="settings:title_birthday" />
         <Button
@@ -186,13 +232,25 @@ const EditBasicInfo = () => {
           style={styles.buttonDropDown}
           contentStyle={styles.buttonDropDownContent}
           onPress={() => onDateEditOpen()}>
-          {formatDate(birthdayState, 'MMM Do, YYYY') ||
+          {formatDate(birthdayState, 'DD/MM/YYYY') ||
             i18next.t('common:text_not_set')}
         </Button>
-
+        {selectingDate && (
+          <Div className="react-datepicker-container-important">
+            <DateTimePicker
+              isVisible={selectingDate}
+              date={maxBirthday()}
+              mode={Platform.OS === 'web' ? 'time' : 'date'}
+              onConfirm={onSetBirthday}
+              onCancel={onDateEditClose}
+              maxDate={maxBirthday()}
+            />
+          </Div>
+        )}
         <LanguageOptionMenu
           title={'settings:title_choose_languages'}
           onChangeLanguages={_onChangeLanguages}
+          selectedLanguages={languageState}
         />
 
         <TitleComponent
@@ -209,8 +267,7 @@ const EditBasicInfo = () => {
           {i18next.t(relationshipStatus[relationshipState]) ||
             i18next.t('common:text_not_set')}
         </Button>
-      </View>
-
+      </ScrollView>
       <OptionMenu
         data={gendersList}
         value={genderState}
@@ -225,17 +282,6 @@ const EditBasicInfo = () => {
         menuRef={relationshipSheetRef}
         onItemPress={onRelationshipItemPress}
       />
-
-      {selectingDate && (
-        <DateTimePicker
-          isVisible={selectingDate}
-          date={maxBirthday()}
-          mode={Platform.OS === 'web' ? 'time' : 'date'}
-          onConfirm={onSetBirthday}
-          onCancel={onDateEditClose}
-          maxDate={maxBirthday()}
-        />
-      )}
     </ScreenWrapper>
   );
 };

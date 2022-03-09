@@ -86,6 +86,12 @@ export const postApiConfig = {
     useRetry: true,
     ...(isDraftPost ? {params: {is_draft: true}} : {}),
   }),
+  deleteComment: (id: string): HttpApiRequestConfig => ({
+    url: `${provider.url}api/comments/${id}`,
+    method: 'delete',
+    provider,
+    useRetry: true,
+  }),
   getAudienceGroups: (userId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/groups-be-in`,
     method: 'get',
@@ -219,9 +225,9 @@ export const postApiConfig = {
     idLessThan?: string,
     limit?: number,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}reactions`,
+    url: `${provider.url}api/reactions/statistics`,
     method: 'get',
-    provider: ApiConfig.providers.bein,
+    provider: provider,
     useRetry: true,
     params: {
       kind: reactionType,
@@ -303,6 +309,20 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  deleteComment: async (id: string) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.deleteComment(id),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data?.data);
       } else {
         return Promise.reject(response);
       }
@@ -536,7 +556,7 @@ const postDataHelper = {
       if (response && response?.data?.data) {
         return Promise.resolve({
           data: response?.data?.data?.results || [],
-          canLoadMore: !!response?.data?.data?.next?.offset,
+          canLoadMore: !!response?.data?.data?.next,
         });
       } else {
         return Promise.reject(response);

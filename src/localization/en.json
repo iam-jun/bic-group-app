@@ -103,6 +103,7 @@
     "text_end_date": "End Date",
     "text_group": "Group",
     "text_at": "at",
+    "text_to": "to",
     "text_updated_successfully": "updated successfully",
     "text_avatar": "Avatar",
     "text_cover": "Cover",
@@ -114,7 +115,25 @@
     "text_request": "Request",
     "text_request_other": "Requests",
     "text_admin": "Admin",
-    "text_failed_to_upload": "Failed to upload"
+    "text_failed_to_upload": "Failed to upload",
+    "permission_photo_title":"Allow Bein to access your photo and video library",
+    "permission_photo_description": "Your access request has been denied recently. Please grant access from Settings with following steps:",
+    "permission_photo_list":{
+      "ios":{
+        "step_1":"Open Settings",
+        "step_2":"Tap Privacy",
+        "step_3":"Open Photos",
+        "step_4":"Choose Option “All Photos”"
+      },
+      "android":{
+        "step_1":"Go to Settings",
+        "step_2":"Find App Settings",
+        "step_3":"Find Icon Bein",
+        "step_4":"Turn on Permission for Photos"
+      }
+    },
+    "text_not_now":"Not now",
+    "text_go_to_settings":"Go to Settings"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -302,6 +321,7 @@
     "text_description_optional": "Description (optional)",
     "text_since": "Since",
     "text_enddate_after_startdate": "The End Date must come after the Start Date",
+    "text_enddate_must_choose": "Please select End Date",
     "text_education": "Education",
     "text_social": "Social",
     "text_social_link":"Social Link",
@@ -464,10 +484,13 @@
     "create_post": {
       "title_discard_changes": "Discard Changes",
       "title_audience_changed": "Audience has changed",
+      "title_discard_audience": "Discard Audiences",
+      "text_discard_audience": "If you discard now, you’ll lose all your selection.",
       "text_discard_change": "Are you sure to want to discard changes?",
       "text_discard_change_audience": "Are you sure to change the audience? This change will also effect on post's permission",
       "btn_save_change": "Save Changes",
-      "btn_keep_edit": "Keep Editing"
+      "btn_keep_edit": "Keep Editing",
+      "btn_keep_selecting": "Keep Selecting"
     },
     "draft": {
       "btn_post_now": "Post Now",
@@ -481,6 +504,13 @@
       "text_draft_published": "Your post has been published",
       "text_draft_saved": "Your draft has been saved",
       "text_draft_deleted": "Your draft has been deleted"
+    },
+    "comment": {
+      "title_delete_comment": "Delete this comment",
+      "text_delete_comment": "When you delete this comment, all of its reply will also be deleted. Continue?",
+      "text_delete_comment_error": "Delete comment failed!",
+      "text_delete_comment_success": "Comment deleted",
+      "text_edited": "Edited"
     },
     "settings": "Post Settings",
     "people_can_comment": "People can comment on this post",
@@ -604,18 +634,20 @@
       }
     },
     "text_requested_at": "Requested at",
-    "text_declined_user": "Declined user",
+    "text_declining_user": "Declining user",
     "text_approved_user": "Approved user",
     "text_approved_all_one": "Approved {{count}} user",
     "text_approved_all_other": "Approved {{count}} users",
-    "text_declined_all_one": "Declined {{count}} user",
-    "text_declined_all_other": "Declined {{count}} users",
+    "text_declining_all_one": "Declining {{count}} user",
+    "text_declining_all_other": "Declining {{count}} users",
     "text_request_join_group": "Requested to join group",
     "text_cancel_join_group": "Cancelled the member request to group",
     "text_approved_member_group": "You have been approved to be a member of this group",
     "title_members": "Members",
     "text_cannot_approve_all": "Cannot approve all because there are changes in the pending member list. Please review again",
     "text_cannot_decline_all": "Cannot decline all because there are changes in the pending member list. Please review again",
+    "text_cannot_approve_single": "Cannot approve because {0} has canceled the request",
+    "text_cannot_decline_single": "Cannot decline because {0} has canceled the request",
     "text_this_place_looks_lonely": "This place looks lonely",
     "text_join_community_get_updated": "Join in a community to get updated",
     "update_privacy_modal": {

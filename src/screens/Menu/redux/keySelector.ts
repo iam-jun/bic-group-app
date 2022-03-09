@@ -1,5 +1,6 @@
 const menuKeySelector = {
   userProfile: 'menu.userProfile',
+  userWorkExperience: 'menu.userWorkExperience',
   myProfile: 'menu.myProfile',
   myWorkExperience: 'menu.myWorkExperience',
   selectedWorkItem: 'menu.selectedWorkItem',

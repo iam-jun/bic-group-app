@@ -16,10 +16,8 @@ import {useDispatch} from 'react-redux';
 import {useBackHandler} from '@react-native-community/hooks';
 import {isEqual, isEmpty, differenceWith} from 'lodash';
 
-import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
-// import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
@@ -52,14 +50,14 @@ import {useBaseHook} from '~/hooks';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
-import Div from '~/beinComponents/Div';
 import {fontFamilies} from '~/theme/fonts';
 import Button from '~/beinComponents/Button';
-import _MentionInput from '~/beinComponents/inputs/_MentionInput';
+import MentionInput from '~/beinComponents/inputs/MentionInput';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import {useKeyboardStatus} from '~/hooks/keyboard';
 import DeviceInfo from 'react-native-device-info';
+import CreatePostFooter from '~/screens/Post/CreatePost/CreatePostFooter';
 
 export interface CreatePostProps {
   route?: {
@@ -81,6 +79,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     replaceWithDetail,
     initAudience,
     createFromGroupId,
+    initAutoSaveDraft,
   } = route?.params || {};
   let deviceVersion = 0;
   const isAndroid = Platform.OS === 'android';
@@ -275,16 +274,22 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   }, [initPostData?.id]);
 
   useEffect(() => {
-    dispatch(postActions.clearCreatPostData());
-    dispatch(postActions.setSearchResultAudienceGroups([]));
-    dispatch(postActions.setSearchResultAudienceUsers([]));
+    // disable clear data for flow select audience before create post
+    // dispatch(postActions.clearCreatPostData());
+    // dispatch(postActions.setSearchResultAudienceGroups([]));
+    // dispatch(postActions.setSearchResultAudienceUsers([]));
     if (initAudience?.id) {
       dispatch(
         postActions.setCreatePostChosenAudiences(new Array(initAudience)),
       );
     }
+    if (initAutoSaveDraft) {
+      autoSaveDraftPost();
+    }
     return () => {
       dispatch(postActions.clearCreatPostData());
+      dispatch(postActions.setSearchResultAudienceGroups([]));
+      dispatch(postActions.setSearchResultAudienceUsers([]));
       dispatch(postActions.setCreatePostImagesDraft([]));
     };
   }, []);
@@ -536,7 +541,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       if (
         (!newContent &&
           images.length === 0 &&
-          chosenAudiences.length < 2 &&
+          chosenAudiences.length < 1 &&
           !important?.active &&
           !sPostId) ||
         !isAutoSave ||
@@ -714,11 +719,12 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             </RNText>
           </View>
         )}
-        <ScrollView>
+        <ScrollView keyboardShouldPersistTaps="always">
           <View style={styles.flex1}>
             <Animated.View
               style={isAnimated ? {height: heightAnimated} : styles.flex1}>
-              <_MentionInput
+              <MentionInput
+                disableAutoComplete={Platform.OS !== 'web'}
                 groupIds={strGroupIds}
                 mentionInputRef={mentionInputRef}
                 style={styles.flex1}
@@ -730,7 +736,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                   showShadow: true,
                   modalStyle: {maxHeight: 350},
                 }}
-                // onPress={onPressMentionAudience}
                 ComponentInput={PostInput}
                 componentInputProps={{
                   value: content,
@@ -812,6 +817,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         {(!sPostId || isDraftPost) && (
           <View style={styles.setting}>
             <Button.Secondary
+              testID="create_post.btn_post_settings"
               color={colors.bgHover}
               leftIcon="SlidersVAlt"
               style={styles.buttonSettings}
@@ -821,9 +827,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             </Button.Secondary>
           </View>
         )}
-        <Div className="post-toolbar-container">
-          <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
-        </Div>
+        <CreatePostFooter
+          toolbarModalizeRef={toolbarModalizeRef}
+          loading={loading}
+        />
       </TouchableOpacity>
     </ScreenWrapper>
   );

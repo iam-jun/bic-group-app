@@ -1,0 +1,49 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ButtonPrimary conponent renders correctly 1`] = `
+<View
+  accessible={true}
+  focusable={false}
+  onClick={[Function]}
+  onResponderGrant={[Function]}
+  onResponderMove={[Function]}
+  onResponderRelease={[Function]}
+  onResponderTerminate={[Function]}
+  onResponderTerminationRequest={[Function]}
+  onStartShouldSetResponder={[Function]}
+  style={
+    Object {
+      "alignItems": "center",
+      "backgroundColor": "#7843DD",
+      "borderRadius": 6,
+      "paddingHorizontal": 12,
+      "paddingVertical": 8,
+    }
+  }
+  testID="button_primary.test"
+>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "justifyContent": "center",
+      }
+    }
+    testID="button_wrapper.content"
+  >
+    <Text
+      style={
+        Object {
+          "color": "#FFFFFF",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 16,
+          "textAlign": "center",
+        }
+      }
+    >
+      Button Primary
+    </Text>
+  </View>
+</View>
+`;

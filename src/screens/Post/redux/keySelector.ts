@@ -2,6 +2,7 @@ const postKeySelector = {
   createComment: {
     loading: 'post.createComment.loading',
     content: 'post.createComment.content',
+    image: 'post.createComment.image',
   },
   createPost: {
     images: 'post.createPost.images',
@@ -29,6 +30,7 @@ const postKeySelector = {
   postImportantById: (id: string) => `post.allPosts.${id}.important`,
   postOwnReactionById: (id: string) => `post.allPosts.${id}.own_reactions`,
   postReactionCountsById: (id: string) => `post.allPosts.${id}.reaction_counts`,
+  postReactionsOrderById: (id: string) => `post.allPosts.${id}.reactions_order`,
   postIsDraftById: (id: string) => `post.allPosts.${id}.is_draft`,
   postDeletedById: (id: string) => `post.allPosts.${id}.deleted`,
   postLatestReactionsComments: (id: string) =>

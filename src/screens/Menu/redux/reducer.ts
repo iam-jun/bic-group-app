@@ -11,6 +11,7 @@ export const menuInitState = {
 
   loadingUserProfile: false,
   userProfile: {} as IUserProfile,
+  userWorkExperience: [],
   showUserNotFound: false,
 
   myProfile: {} as IUserProfile,
@@ -145,6 +146,11 @@ const menuReducer = (state = menuInitState, action: any = {}) => {
       return {
         ...state,
         selectedWorkItem: payload,
+      };
+    case menuTypes.SET_USER_WORK_EXPERIENCE:
+      return {
+        ...state,
+        userWorkExperience: payload || [],
       };
 
     default:

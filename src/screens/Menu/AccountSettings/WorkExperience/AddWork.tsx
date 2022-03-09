@@ -1,12 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import i18next from 'i18next';
-import {
-  View,
-  StyleSheet,
-  ScrollView,
-  TouchableOpacity,
-  TextInput,
-} from 'react-native';
+import {View, StyleSheet, ScrollView, TextInput, Keyboard} from 'react-native';
 import {useTheme, TextInput as TextInputPaper} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -14,7 +8,6 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import TextInputBein from '~/beinComponents/inputs/TextInput';
 import Icon from '~/beinComponents/Icon';
-import Divider from '~/beinComponents/Divider';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
 import Text from '~/beinComponents/Text';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
@@ -31,7 +24,7 @@ import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '../../redux/keySelector';
 import {showHideToastMessage} from '~/store/modal/actions';
 import {IToastMessage} from '~/interfaces/common';
-import {isEqual} from 'lodash';
+import {isEmpty, isEqual} from 'lodash';
 import Button from '~/beinComponents/Button';
 
 const AddWork = () => {
@@ -79,27 +72,29 @@ const AddWork = () => {
 
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
-  const [privateSelectedWorkItem, setPrivateSelectedWorkItem] =
-    useState<any>(selectedWorkItem);
-
   useEffect(() => {
-    if (!isEqual(selectedWorkItem, privateSelectedWorkItem)) {
-      setCompanyValue(selectedWorkItem.company);
-      setPositionValue(selectedWorkItem.titlePosition);
-      setLocationValue(selectedWorkItem.location);
-      setDescriptionValue(selectedWorkItem.description);
-      setIsWorkHere(selectedWorkItem.currentlyWorkHere);
-      setStartDateValue(selectedWorkItem.startDate);
-      setEndDateValue(selectedWorkItem.endDate);
-      setPrivateSelectedWorkItem(selectedWorkItem);
-    }
+    setCompanyValue(selectedWorkItem?.company || '');
+    setPositionValue(selectedWorkItem?.titlePosition || '');
+    setLocationValue(selectedWorkItem?.location || '');
+    setDescriptionValue(selectedWorkItem?.description || '');
+    setIsWorkHere(value => {
+      if (isEmpty(selectedWorkItem)) return true;
+      return selectedWorkItem?.currently_work_here;
+    });
+    setStartDateValue(selectedWorkItem?.startDate || new Date().toISOString());
+    setEndDateValue(selectedWorkItem?.endDate || null);
   }, [selectedWorkItem]);
 
   useEffect(() => {
-    isWorkHere && setEndDateValue(null);
+    if (isWorkHere) {
+      setEndDateValue(null);
+    } else {
+      setEndDateValue(endDate || null);
+    }
   }, [isWorkHere]);
 
   const navigateBack = () => {
+    Keyboard.dismiss();
     if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
     } else {
@@ -123,6 +118,18 @@ const AddWork = () => {
       return;
     }
 
+    if (!isWorkHere && !endDateValue) {
+      const toastMessage: IToastMessage = {
+        content: 'settings:text_enddate_must_choose',
+        props: {
+          textProps: {useI18n: true},
+          type: 'error',
+        },
+      };
+      dispatch(showHideToastMessage(toastMessage));
+      return;
+    }
+
     const data = {
       company: companyValue.trim(),
       titlePosition: positionValue.trim(),
@@ -134,7 +141,11 @@ const AddWork = () => {
     };
     selectedWorkItem
       ? dispatch(menuActions.editWorkExperience(id, data, navigateBack))
-      : dispatch(menuActions.addWorkExperience(data, navigateBack));
+      : dispatch(
+          menuActions.addWorkExperience(data, () => {
+            navigateBack();
+          }),
+        );
   };
 
   const onDelete = () => {
@@ -158,6 +169,7 @@ const AddWork = () => {
   };
 
   const onToggleCurrentlyWorkHere = () => {
+    Keyboard.dismiss();
     setIsWorkHere(!isWorkHere);
   };
 
@@ -280,7 +292,7 @@ const AddWork = () => {
             style={styles.calendarIcon}
           />
           <Text.BodyS testID="add_work.start_date" color={colors.textSecondary}>
-            {formatDate(startDateValue, 'MMM Do, YYYY') ||
+            {formatDate(startDateValue, 'MMMM DD, YYYY') ||
               i18next.t('common:text_not_set')}
           </Text.BodyS>
         </ButtonWrapper>
@@ -301,7 +313,7 @@ const AddWork = () => {
             />
 
             <Text.BodyS testID="add_work.end_date" color={colors.textSecondary}>
-              {(endDateValue && formatDate(endDateValue, 'MMM Do, YYYY')) ||
+              {(endDateValue && formatDate(endDateValue, 'MMMM DD, YYYY')) ||
                 i18next.t('common:text_not_set')}
             </Text.BodyS>
           </ButtonWrapper>
@@ -313,7 +325,11 @@ const AddWork = () => {
   const renderDeleteButton = () => {
     return (
       selectedWorkItem && (
-        <Button.Danger testID="add_work.delete" onPress={onDelete} useI18n>
+        <Button.Danger
+          testID="add_work.delete"
+          onPress={onDelete}
+          useI18n
+          style={styles.buttonDelete}>
           settings:text_delete_work
         </Button.Danger>
       )
@@ -332,7 +348,11 @@ const AddWork = () => {
         buttonText={selectedWorkItem ? 'common:text_save' : 'common:text_add'}
         buttonProps={{
           useI18n: true,
-          disabled: companyValue.trim() && positionValue.trim() ? false : true,
+          color: theme.colors.primary6,
+          textColor: theme.colors.background,
+          disabled:
+            companyValue?.trim?.() && positionValue?.trim?.() ? false : true,
+          borderRadius: theme.spacing.borderRadius.small,
         }}
         onPressButton={onSave}
         onPressBack={navigateBack}
@@ -396,12 +416,13 @@ const createStyles = (theme: ITheme) => {
       borderWidth: 1,
       padding: spacing.margin.base,
       marginTop: spacing.margin.small,
+      height: 88,
     },
     textInput: {
       fontFamily: fontFamilies.OpenSans,
       fontSize: dimension.sizes.body,
       color: colors.textPrimary,
-      height: 64,
+      flex: 1,
     },
     textInputFocus: {
       borderColor: colors.primary6,
@@ -425,6 +446,9 @@ const createStyles = (theme: ITheme) => {
     },
     calendarIcon: {
       marginRight: spacing.margin.small,
+    },
+    buttonDelete: {
+      borderRadius: spacing.borderRadius.small,
     },
   });
 };

@@ -222,6 +222,8 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
       const newToken = sessionData?.getAccessToken().getJwtToken();
       const refreshToken = sessionData?.getRefreshToken().getToken();
       const idToken = sessionData?.getIdToken().getJwtToken();
+      const exp = sessionData?.getIdToken().getExpiration();
+
       if (idToken === oldBeinToken) {
         await Auth.currentAuthenticatedUser(); // TODO: verify when change password kickout
         refreshFailKickOut();
@@ -231,7 +233,7 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
         _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken);
 
         //For sharing data between Group and Chat
-        await updateUserFromSharedPreferences({token: idToken});
+        await updateUserFromSharedPreferences({token: idToken, exp});
       }
       const isRefreshSuccess = await refreshAuthTokens();
       if (!isRefreshSuccess) {
@@ -447,6 +449,7 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
         ...requestConfig.headers,
         ...tokenHeaders,
       };
+      requestConfig.withCredentials = true;
       break;
     case apiConfig.providers.beinFeed.name:
       interceptorRequestSuccess = interceptorsRequestSuccess;

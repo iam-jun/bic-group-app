@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TextInput component renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "marginVertical": 4,
+      },
+      undefined,
+    ]
+  }
+  testID="text_input"
+>
+  <RCTSinglelineTextInputView
+    accessible={true}
+    allowFontScaling={true}
+    blurOnSubmit={true}
+    dense={true}
+    focusable={true}
+    forwardedRef={null}
+    mode="outlined"
+    mostRecentEventCount={0}
+    onBlur={[Function]}
+    onChange={[Function]}
+    onChangeText={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onScroll={[Function]}
+    onSelectionChange={[Function]}
+    onSelectionChangeShouldSetResponder={[Function]}
+    onStartShouldSetResponder={[Function]}
+    outlineColor="#2F3945"
+    placeholderTextColor="#627286"
+    rejectResponderTermination={true}
+    selection={null}
+    selectionColor="#627286"
+    style={Object {}}
+    testID="text_input.input"
+    text=""
+    theme={
+      Object {
+        "colors": Object {
+          "background": "#FFFFFF",
+          "placeholder": "#627286",
+          "primary": "#B2BDCD",
+          "text": "#2F3945",
+        },
+        "fonts": Object {
+          "regular": Object {
+            "fontFamily": "OpenSans-Regular",
+          },
+        },
+        "roundness": 6,
+      }
+    }
+    underlineColorAndroid="transparent"
+    value=""
+  />
+</View>
+`;

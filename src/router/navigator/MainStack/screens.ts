@@ -8,6 +8,8 @@ import AddWork from '~/screens/Menu/AccountSettings/WorkExperience/AddWork';
 import EditDescription from '~/screens/Menu/AccountSettings/EditDescription';
 import AccoutSettings from '~/screens/Menu/AccountSettings';
 import ComponentCollection from '~/screens/Menu/ComponentCollection';
+import SecurityLogin from '~/screens/Menu/AccountSettings/SecurityLogin';
+import ChangePassword from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword';
 
 export default {
   main: MainTabs,
@@ -20,4 +22,6 @@ export default {
   'edit-description': EditDescription,
   'account-settings': AccoutSettings,
   'component-collection': ComponentCollection,
+  'security-and-login': SecurityLogin,
+  'change-password': ChangePassword,
 };

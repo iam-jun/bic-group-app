@@ -19,6 +19,7 @@ const CommonModal = () => {
     props,
     useAppBottomSheet = true,
     appModalStyle = {},
+    closeOutSide = true,
   } = modal || {};
 
   useEffect(() => {
@@ -28,7 +29,7 @@ const CommonModal = () => {
   }, [isOpen]);
 
   const _onClose = () => {
-    dispatch(modalActions.hideModal());
+    closeOutSide && dispatch(modalActions.hideModal());
   };
 
   if (Platform.OS !== 'web' && !useAppBottomSheet) {
@@ -40,6 +41,7 @@ const CommonModal = () => {
           dispatch(modalActions.hideModal());
         }}>
         <TouchableOpacity
+          testID="common_modal.center"
           activeOpacity={1}
           style={StyleSheet.flatten([appModalStyle, styles.appModalContainer])}
           onPress={_onClose}>

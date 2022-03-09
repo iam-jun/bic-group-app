@@ -22,13 +22,17 @@ const ButtonPrimary: React.FC<ButtonDangerProps> = ({
       <Div className={className}>
         <ButtonWrapper
           disabled={disabled}
-          textProps={{color: 'inherit', useI18n}}
           TouchableComponent={TouchableWithoutFeedback}
-          contentStyle={{
-            paddingVertical: spacing.padding.small,
-            paddingHorizontal: spacing.padding.base,
-          }}
-          {...props}>
+          style={style}
+          contentStyle={[
+            {
+              paddingVertical: spacing.padding.small,
+              paddingHorizontal: spacing.padding.base,
+            },
+            style,
+          ]}
+          {...props}
+          textProps={{color: 'inherit', useI18n, ...props?.textProps}}>
           {children}
         </ButtonWrapper>
       </Div>

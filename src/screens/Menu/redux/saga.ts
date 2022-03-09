@@ -26,6 +26,7 @@ export default function* menuSaga() {
   yield takeLatest(menuTypes.ADD_WORK_EXPERIENCE, addWorkExperience);
   yield takeLatest(menuTypes.EDIT_WORK_EXPERIENCE, editWorkExperience);
   yield takeLatest(menuTypes.DELETE_WORK_EXPERIENCE, deleteWorkExperience);
+  yield takeLatest(menuTypes.GET_USER_WORK_EXPERIENCE, getWorkExperience);
 }
 
 function* getUserProfile({payload}: {type: string; payload: IGetUserProfile}) {
@@ -151,7 +152,14 @@ const requestEditMyProfile = async (data: IUserEdit) => {
   return response.data;
 };
 
-function* uploadImage({payload}: {type: string; payload: IUserImageUpload}) {
+function* uploadImage({
+  payload,
+  callback,
+}: {
+  type: string;
+  payload: IUserImageUpload;
+  callback?: () => void;
+}) {
   try {
     const {file, id, fieldName, uploadType} = payload;
     yield updateLoadingImageState(fieldName, true);
@@ -162,6 +170,7 @@ function* uploadImage({payload}: {type: string; payload: IUserImageUpload}) {
     });
 
     yield put(menuActions.editMyProfile({id, [fieldName]: data}));
+    if (callback) return callback();
   } catch (err) {
     console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
     yield updateLoadingImageState(payload.fieldName, false);
@@ -182,7 +191,7 @@ function* updateLoadingImageState(
 
 function* getMyWorkExperience() {
   try {
-    const response: IResponseData = yield menuDataHelper.getWorkExperience();
+    const response: IResponseData = yield menuDataHelper.getMyWorkExperience();
 
     yield put(
       menuActions.setMyWorkExperience(mapWorkExperience(response?.data)),
@@ -279,9 +288,14 @@ function* deleteWorkExperience({
   callback?: () => void;
 }) {
   try {
-    yield menuDataHelper.deleteWorkExperience(id);
-
-    yield put(menuActions.getMyWorkExperience());
+    const response: IResponseData = yield menuDataHelper.deleteWorkExperience(
+      id,
+    );
+    if (!!response?.data) {
+      yield put(
+        menuActions.setMyWorkExperience(mapWorkExperience(response.data)),
+      );
+    }
 
     if (callback) return callback();
   } catch (err) {
@@ -304,4 +318,17 @@ function* showError(err: any) {
     },
   };
   yield put(modalActions.showHideToastMessage(toastMessage));
+}
+
+function* getWorkExperience({id}: {id: number}) {
+  try {
+    const response: IResponseData = yield menuDataHelper.getWorkExperience(id);
+    if (response?.data) {
+      yield put(
+        menuActions.setUserWorkExperience(mapWorkExperience(response.data)),
+      );
+    }
+  } catch (err) {
+    console.log('getWorkExperience error:', err);
+  }
 }

@@ -16,6 +16,7 @@ export interface ReactionViewProps {
   style?: StyleProp<ViewStyle>;
   ownReactions: IOwnReaction;
   reactionCounts: IReactionCounts;
+  reactionsOrder: string[];
   showSelectReactionWhenEmpty?: boolean;
   onAddReaction: (reaction: ReactionType) => void;
   onRemoveReaction: (reaction: ReactionType) => void;
@@ -27,6 +28,7 @@ const ReactionView: FC<ReactionViewProps> = ({
   style,
   ownReactions,
   reactionCounts,
+  reactionsOrder,
   onAddReaction,
   onRemoveReaction,
   onPressSelectReaction,
@@ -49,15 +51,34 @@ const ReactionView: FC<ReactionViewProps> = ({
   };
 
   const renderReactions = () => {
+    //When return reactionCounts, backend auto sort by alphabet
+    //so we need use reactionsOrder to sort
+    const reactionMap = new Map();
+    const _reactionCounts: IReactionCounts = reactionCounts;
+    if (reactionsOrder?.length > 0) {
+      reactionsOrder.map(rKey => {
+        if (reactionCounts?.[rKey]) {
+          reactionMap.set(rKey, reactionCounts?.[rKey]);
+        }
+      });
+      //add reaction in reaction counts but not in order, such as loading
+      Object.keys(reactionCounts)?.map?.(rKey => {
+        if (reactionCounts?.[rKey]) {
+          reactionMap.set(rKey, reactionCounts?.[rKey]);
+        }
+      });
+    }
+
     const rendered: React.ReactNode[] = [];
-    Object.keys(reactionCounts || {})?.map?.((key, index) => {
+    for (const [key] of reactionMap) {
       const react = key as ReactionType;
-      if (!blacklistReactions?.[react] && reactionCounts?.[key]) {
+      if (!blacklistReactions?.[react] && _reactionCounts?.[key]) {
         rendered.push(
           <Reaction
-            key={`${index}_${key}`}
+            testId={`reaction.button.${key}`}
+            key={`${key}`}
             style={{margin: 2}}
-            value={reactionCounts[key]}
+            value={_reactionCounts[key]}
             icon={key}
             disableUpdateState
             onLongPress={() => _onLongPressItem(react)}
@@ -67,7 +88,7 @@ const ReactionView: FC<ReactionViewProps> = ({
           />,
         );
       }
-    });
+    }
     return rendered;
   };
 
@@ -88,7 +109,7 @@ const ReactionView: FC<ReactionViewProps> = ({
     );
   } else {
     return (
-      <View style={[styles.container, style]}>
+      <View style={[styles.container, style]} testID="reaction_view">
         {renderReactions()}
         {!!onPressSelectReaction &&
           renderedReactions.length < appConfig.limitReactionCount && (

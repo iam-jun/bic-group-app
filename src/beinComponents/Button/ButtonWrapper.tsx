@@ -74,6 +74,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
 
       return (
         <Icon
+          testID="button_wrapper.icon"
           icon={iconSource}
           tintColor={textProps?.color}
           style={styles.icon}
@@ -92,6 +93,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
           color={colors.textDisabled}
           style={styles.loading}
           size={12}
+          testID="button_wrapper.loading"
         />
       );
     }
@@ -110,6 +112,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
       activeOpacity={activeOpacity}
       style={StyleSheet.flatten([style])}>
       <View
+        testID="button_wrapper.content"
         style={StyleSheet.flatten([
           {
             flexDirection: 'row',

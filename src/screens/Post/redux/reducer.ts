@@ -33,6 +33,7 @@ export const postInitState = {
   createComment: {
     loading: false,
     content: '',
+    image: undefined,
   },
   reactionBottomSheet: {
     show: false,

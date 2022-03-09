@@ -25,6 +25,7 @@ import {useKeySelector} from '~/hooks/selector';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import {
   IMarkdownAudience,
+  IPayloadDeleteComment,
   IPayloadReactToComment,
   IReaction,
 } from '~/interfaces/IPost';
@@ -37,6 +38,7 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import * as modalActions from '~/store/modal/actions';
 import {showReactionDetailBottomSheet} from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
+import {useBaseHook} from '~/hooks';
 
 export interface CommentViewProps {
   postId: string;
@@ -58,6 +60,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const animated = useRef(new RNAnimated.Value(0)).current;
 
   const {rootNavigation} = useRootNavigation();
+  const {t} = useBaseHook();
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const {colors, spacing, dimension} = theme;
@@ -66,9 +69,18 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const currentUserId = useUserIdAuth();
 
   const comment = useKeySelector(postKeySelector.commentById(commentData?.id));
-  const {id, user_id, data, created_at, user, children_counts, own_children} =
-    comment || commentData || {};
-  const {content} = data || {};
+  const {
+    id,
+    user_id,
+    data,
+    created_at,
+    updated_at,
+    user,
+    children_counts,
+    own_children,
+    reactions_order,
+  } = comment || commentData || {};
+  const {content, edited, images} = data || {};
   const avatar = user?.data?.avatar || '';
   const name = user?.data?.fullname || '';
 
@@ -80,7 +92,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
       ? true
       : commentStatus === 'success' || commentStatus === null;
 
-  const progress = useSharedValue(0);
+  const progress = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({opacity: progress.value}));
 
   const ViewComponent: any = Platform.OS === 'web' ? View : Animated.View;
@@ -180,6 +192,29 @@ const _CommentView: React.FC<CommentViewProps> = ({
     onPressReply?.(commentData);
   };
 
+  const _onPressDelete = () => {
+    const alertPayload = {
+      title: t('post:comment:title_delete_comment'),
+      content: t('post:comment:text_delete_comment'),
+      ContentComponent: Text.BodyS,
+      cancelBtn: true,
+      cancelBtnProps: {
+        textColor: theme.colors.primary7,
+      },
+      onConfirm: () => {
+        const payload: IPayloadDeleteComment = {
+          commentId: id,
+          parentCommentId: parentCommentId,
+          postId: postId,
+        };
+        dispatch(postActions.deleteComment(payload));
+      },
+      confirmLabel: t('common:btn_delete'),
+      ConfirmBtnComponent: Button.Danger,
+    };
+    dispatch(modalActions.showAlert(alertPayload));
+  };
+
   const onLongPress = (event?: any) => {
     dispatch(
       modalActions.showModal({
@@ -193,6 +228,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
             onPressMoreReaction={onPressReact}
             onAddReaction={onAddReaction}
             onPressReply={_onPressReply}
+            onPressDelete={_onPressDelete}
           />
         ),
         props: {
@@ -275,6 +311,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
           <ReactionView
             ownReactions={own_children}
             reactionCounts={children_counts}
+            reactionsOrder={reactions_order}
             onAddReaction={onAddReaction}
             onRemoveReaction={onRemoveReaction}
             onPressSelectReaction={onPressReact}
@@ -343,14 +380,26 @@ const _CommentView: React.FC<CommentViewProps> = ({
                 <View style={styles.header}>
                   <View style={styles.userName}>
                     <ButtonWrapper onPress={onPressUser}>
-                      <Text.H6 numberOfLines={1}>{`${name}`}</Text.H6>
+                      <Text.H6
+                        numberOfLines={1}
+                        testID={
+                          parentCommentId
+                            ? 'comment_view.level_2.user_name'
+                            : 'comment_view.level_1.user_name'
+                        }>{`${name}`}</Text.H6>
                     </ButtonWrapper>
                   </View>
                   <View style={{flexDirection: 'row'}}>
+                    {edited && (
+                      <Text.H6 color={colors.textSecondary}>
+                        {t('post:comment:text_edited')} •{' '}
+                      </Text.H6>
+                    )}
                     <TimeView
-                      time={created_at}
+                      time={edited ? updated_at : created_at}
                       style={styles.textTime}
                       type="short"
+                      textProps={{variant: 'h6'}}
                     />
                     {/* <Icon icon="EllipsisH" size={16} style={styles.options} /> */}
                   </View>
@@ -358,6 +407,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                 <CollapsibleText
                   useMarkdown
                   limitMarkdownTypes
+                  parentCommentId={parentCommentId}
                   shortLength={200}
                   limitLength={200}
                   content={content || ''}
@@ -414,6 +464,7 @@ const createStyle = (theme: ITheme) => {
     },
     textTime: {
       marginLeft: 2,
+      color: colors.textSecondary,
     },
     userName: {
       flex: 1,

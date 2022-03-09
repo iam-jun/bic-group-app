@@ -28,6 +28,7 @@ import {
   userProfileImageCropRatio,
 } from '~/theme/dimension';
 import {useUserIdAuth} from '~/hooks/auth';
+import {useRootNavigation} from '~/hooks/navigation';
 
 import {ITheme} from '~/theme/interfaces';
 import {formatDate} from '~/utils/formatData';
@@ -39,12 +40,15 @@ import {IUserWorkExperience} from '~/interfaces/IAuth';
 import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
 import {isEmpty} from 'lodash';
+import homeActions from '~/screens/Home/redux/actions';
+import {checkPermission} from '~/utils/permission';
 
 const UserEditProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
 
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const [userData, setUserData] = useState<any>({});
+  const [showEditButton, setShowEditButton] = useState<boolean>(false);
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
@@ -54,6 +58,7 @@ const UserEditProfile = (props: any) => {
 
   const myProfile: any = useKeySelector(menuKeySelector.myProfile);
   const {username: currentUsername, id} = myProfile || {};
+  const {rootNavigation} = useRootNavigation();
 
   const {
     fullname,
@@ -74,6 +79,7 @@ const UserEditProfile = (props: any) => {
   const loadingAvatar = useKeySelector(menuKeySelector.loadingAvatar);
   const loadingCover = useKeySelector(menuKeySelector.loadingCover);
   const myWorkExperience = useKeySelector(menuKeySelector.myWorkExperience);
+  const userWorkExperience = useKeySelector(menuKeySelector.userWorkExperience);
 
   const currentUserId = useUserIdAuth();
 
@@ -83,14 +89,21 @@ const UserEditProfile = (props: any) => {
   };
 
   useEffect(() => {
+    setShowEditButton(
+      userId?.toString?.() === currentUserId?.toString?.() ||
+        userId?.toString?.() === currentUsername?.toString?.(),
+    );
     if (
-      (userId == currentUserId || userId == currentUsername) &&
+      (userId?.toString?.() === currentUserId?.toString?.() ||
+        userId?.toString?.() === currentUsername?.toString?.()) &&
       isEmpty(params)
     ) {
+      dispatch(homeActions.getHomePosts({isRefresh: true}));
       setUserData(myProfile);
     } else {
       setUserData(params);
     }
+    dispatch(menuActions.getUserWorkExperience(userId));
   }, [myProfile, params]);
 
   useEffect(() => {
@@ -138,16 +151,20 @@ const UserEditProfile = (props: any) => {
 
   // fieldName: field name in group profile to be edited
   // 'avatar' for avatar and 'background_img_url' for cover
-  const _openImagePicker = (
+  const _openImagePicker = async (
     fieldName: 'avatar' | 'background_img_url',
     uploadType: IUploadType,
   ) => {
-    ImagePicker.openPickerSingle({
-      ...userProfileImageCropRatio[fieldName],
-      cropping: true,
-      mediaType: 'photo',
-    }).then(file => {
-      uploadFile(file, fieldName, uploadType);
+    checkPermission('photo', dispatch, canOpenPicker => {
+      if (canOpenPicker) {
+        ImagePicker.openPickerSingle({
+          ...userProfileImageCropRatio[fieldName],
+          cropping: true,
+          mediaType: 'photo',
+        }).then(file => {
+          uploadFile(file, fieldName, uploadType);
+        });
+      }
     });
   };
 
@@ -164,29 +181,28 @@ const UserEditProfile = (props: any) => {
   };
 
   const goToEditDescription = () => {
-    navigation.navigate(mainStack.editDescription);
+    rootNavigation.navigate(mainStack.editDescription);
   };
 
   const renderAvatar = () => {
+    if (!showEditButton) {
+      return null;
+    }
     return (
       <View>
         <View style={styles.headerItem}>
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:title_avatar
           </Text.H5>
-          {userId == currentUserId || userId == currentUsername ? (
-            <ButtonWrapper onPress={onEditAvatar} disabled={loadingAvatar}>
-              <Text.H6
-                testID="user_edit_profile.avatar.edit"
-                color={
-                  !loadingAvatar ? colors.textPrimary : colors.textDisabled
-                }
-                style={styles.editBtn}
-                useI18n>
-                settings:title_edit
-              </Text.H6>
-            </ButtonWrapper>
-          ) : null}
+          <ButtonWrapper onPress={onEditAvatar} disabled={loadingAvatar}>
+            <Text.H6
+              testID="user_edit_profile.avatar.edit"
+              color={!loadingAvatar ? colors.textPrimary : colors.textDisabled}
+              style={styles.editBtn}
+              useI18n>
+              settings:title_edit
+            </Text.H6>
+          </ButtonWrapper>
         </View>
         <View style={styles.imageButton}>
           {!loadingAvatar ? (
@@ -207,23 +223,24 @@ const UserEditProfile = (props: any) => {
   };
 
   const renderCover = () => {
+    if (!showEditButton) {
+      return null;
+    }
     return (
       <View>
         <View style={styles.headerItem}>
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:title_cover
           </Text.H5>
-          {userId == currentUserId || userId == currentUsername ? (
-            <ButtonWrapper onPress={onEditCover} disabled={loadingCover}>
-              <Text.H6
-                testID="user_edit_profile.cover.edit"
-                color={!loadingCover ? colors.textPrimary : colors.textDisabled}
-                style={styles.editBtn}
-                useI18n>
-                settings:title_edit
-              </Text.H6>
-            </ButtonWrapper>
-          ) : null}
+          <ButtonWrapper onPress={onEditCover} disabled={loadingCover}>
+            <Text.H6
+              testID="user_edit_profile.cover.edit"
+              color={!loadingCover ? colors.textPrimary : colors.textDisabled}
+              style={styles.editBtn}
+              useI18n>
+              settings:title_edit
+            </Text.H6>
+          </ButtonWrapper>
         </View>
         <View
           style={{paddingHorizontal: theme.spacing.padding.large}}
@@ -244,23 +261,24 @@ const UserEditProfile = (props: any) => {
   };
 
   const renderDescription = () => {
+    if (!showEditButton) {
+      return null;
+    }
     return (
       <View style={{paddingTop: theme.spacing.padding.base}}>
         <View style={styles.headerItem}>
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:text_description
           </Text.H5>
-          {userId == currentUserId || userId == currentUsername ? (
-            <ButtonWrapper onPress={goToEditDescription}>
-              <Text.H6
-                testID="user_edit_profile.basic_info.edit"
-                color={colors.textPrimary}
-                style={styles.editBtn}
-                useI18n>
-                settings:title_edit
-              </Text.H6>
-            </ButtonWrapper>
-          ) : null}
+          <ButtonWrapper onPress={goToEditDescription}>
+            <Text.H6
+              testID="user_edit_profile.description.edit"
+              color={colors.textPrimary}
+              style={styles.editBtn}
+              useI18n>
+              settings:title_edit
+            </Text.H6>
+          </ButtonWrapper>
         </View>
         <Text.BodyS style={styles.descriptionText}>
           {description || i18next.t('common:text_not_set')}
@@ -277,7 +295,7 @@ const UserEditProfile = (props: any) => {
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:title_basic_info
           </Text.H5>
-          {userId == currentUserId || userId == currentUsername ? (
+          {showEditButton ? (
             <ButtonWrapper style={styles.editBtn} onPress={goToEditInfo}>
               <Text.H6
                 testID="user_edit_profile.basic_info.edit"
@@ -307,7 +325,7 @@ const UserEditProfile = (props: any) => {
           <SettingItem
             title={'settings:title_birthday'}
             subtitle={
-              formatDate(birthday, 'MMM Do, YYYY') ||
+              formatDate(birthday, 'MMMM DD, YYYY') ||
               i18next.t('common:text_not_set')
             }
             leftIcon={'Calender'}
@@ -329,7 +347,6 @@ const UserEditProfile = (props: any) => {
             leftIcon={'Heart'}
             isTouchDisabled
           />
-          <Divider style={styles.divider} />
         </View>
       </View>
     );
@@ -338,11 +355,12 @@ const UserEditProfile = (props: any) => {
   const renderContact = () => {
     return (
       <View>
+        <Divider style={styles.divider} />
         <View style={styles.headerItem}>
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:title_contact
           </Text.H5>
-          {userId == currentUserId || userId == currentUsername ? (
+          {showEditButton ? (
             <ButtonWrapper onPress={goToEditContact}>
               <Text.H6
                 testID="user_edit_profile.contact.edit"
@@ -382,7 +400,6 @@ const UserEditProfile = (props: any) => {
             isTouchDisabled
           />
         </View>
-        <Divider style={styles.divider} />
       </View>
     );
   };
@@ -398,9 +415,7 @@ const UserEditProfile = (props: any) => {
           size: 24,
         }}
         RightComponent={
-          userId == currentUserId || userId == currentUsername ? (
-            <Icon icon={'EditAlt'} size={20} />
-          ) : null
+          showEditButton ? <Icon icon={'EditAlt'} size={20} /> : null
         }
         ContentComponent={
           <View>
@@ -411,9 +426,14 @@ const UserEditProfile = (props: any) => {
               <Text>
                 {`${formatDate(item.startDate, 'MMM Do, YYYY')} ${
                   item?.currentlyWorkHere
-                    ? `to ${i18next.t('common:text_present')}`
+                    ? `${i18next.t('common:text_to')} ${i18next.t(
+                        'common:text_present',
+                      )}`
                     : item?.endDate
-                    ? `to ${formatDate(item.endDate, 'MMM Do, YYYY')}`
+                    ? `${i18next.t('common:text_to')} ${formatDate(
+                        item.endDate,
+                        'MMM Do, YYYY',
+                      )}`
                     : ''
                 }`}
               </Text>
@@ -431,36 +451,55 @@ const UserEditProfile = (props: any) => {
           </View>
         }
         onPress={() => {
-          (userId == currentUserId || userId == currentUsername) &&
-            selectWorkItem(item);
+          showEditButton && selectWorkItem(item);
         }}
       />
     );
   };
 
   const renderWorkExperience = () => {
-    return userId == currentUserId || userId == currentUsername ? (
+    if (!showEditButton && userWorkExperience?.length > 0) {
+      return (
+        <View style={styles.paddingBottom}>
+          <Divider style={styles.divider} />
+          <View style={styles.headerItem}>
+            <Text.H5 color={colors.iconTint} variant="body" useI18n>
+              settings:text_work
+            </Text.H5>
+          </View>
+          <View style={styles.infoItem}>
+            {userWorkExperience.map((item: IUserWorkExperience) => (
+              <View key={item?.id + item?.company}>
+                {renderWorkItem({item})}
+              </View>
+            ))}
+          </View>
+        </View>
+      );
+    }
+    return showEditButton ? (
       <View>
+        <Divider style={styles.divider} />
         <View style={styles.headerItem}>
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:text_work
           </Text.H5>
         </View>
         <View style={styles.infoItem}>
-          {myWorkExperience?.map((item: IUserWorkExperience) =>
-            renderWorkItem({item}),
-          )}
+          {(myWorkExperience || [])?.map((item: IUserWorkExperience) => (
+            <View key={item?.id + item?.company + item?.titlePosition}>
+              {renderWorkItem({item})}
+            </View>
+          ))}
         </View>
-        {userId == currentUserId || userId == currentUsername ? (
-          <Button.Secondary
-            color={colors.primary1}
-            textColor={colors.primary6}
-            onPress={goToAddWork}
-            style={styles.buttonAddWork}
-            testID="user_edit_profile.work.add_work">
-            {i18next.t('settings:text_add_work')}
-          </Button.Secondary>
-        ) : null}
+        <Button.Secondary
+          color={colors.primary1}
+          textColor={colors.primary6}
+          onPress={goToAddWork}
+          style={styles.buttonAddWork}
+          testID="user_edit_profile.work.add_work">
+          {i18next.t('settings:text_add_work')}
+        </Button.Secondary>
       </View>
     ) : null;
   };
@@ -468,7 +507,7 @@ const UserEditProfile = (props: any) => {
   return (
     <ScreenWrapper testID="UserEditProfile" style={styles.container} isFullView>
       <Header
-        title={i18next.t('settings:title_user_profile')}
+        title={i18next.t('settings:title_about')}
         hideBackOnLaptop={navigation.canGoBack() ? false : true}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
@@ -534,15 +573,11 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       marginVertical: spacing.margin.base,
     },
     descriptionText: {
-      marginLeft: spacing.margin.large,
+      marginHorizontal: spacing.margin.large,
       marginTop: spacing.margin.small,
     },
-    rightIcon: {
-      marginLeft: spacing.margin.small,
-    },
-    editBtnIcon: {
-      padding: spacing.padding.small,
-      marginLeft: spacing.padding.base,
+    paddingBottom: {
+      paddingBottom: spacing.margin.extraLarge,
     },
   });
 };

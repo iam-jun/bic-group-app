@@ -20,7 +20,7 @@ export const menuApiConfig = {
       ...data,
     },
   }),
-  getWorkExperience: (): HttpApiRequestConfig => ({
+  getMyWorkExperience: (): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/work-experience`,
     method: 'get',
     provider: ApiConfig.providers.bein,
@@ -48,6 +48,13 @@ export const menuApiConfig = {
     method: 'delete',
     provider: ApiConfig.providers.bein,
     useRetry: false,
+  }),
+  //get others work experience data
+  getWorkExperience: (id: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}users/${id}/work-experience`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
   }),
 };
 
@@ -80,10 +87,10 @@ const menuDataHelper = {
       return Promise.reject(e);
     }
   },
-  getWorkExperience: async () => {
+  getMyWorkExperience: async () => {
     try {
       const response: any = await makeHttpRequest(
-        menuApiConfig.getWorkExperience(),
+        menuApiConfig.getMyWorkExperience(),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -126,6 +133,20 @@ const menuDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         menuApiConfig.deleteWorkExperience(id),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getWorkExperience: async (id: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        menuApiConfig.getWorkExperience(id),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

@@ -45,7 +45,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
       }),
     );
     onPressReply?.(commentData, section, index);
-  }, [commentData, commentParent]);
+  }, [commentData, commentParent, section, index]);
 
   const childCommentCount = commentData?.children_counts?.comment || 0;
   const loadedChildComment = commentData?.latest_children?.comment?.length || 0;
@@ -57,6 +57,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
       <CommentView
         postId={postId}
         groupIds={groupIds}
+        parentCommentId={commentParent?.id}
         commentData={commentData}
         onPressReply={_onPressReply}
         contentBackgroundColor={contentBackgroundColor}

@@ -38,14 +38,14 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
         style={{backgroundColor: disabled ? colorDisabled : color}}>
         <ButtonWrapper
           disabled={disabled}
-          textProps={{color: _textColor, useI18n}}
           underlayColor={_colorHover}
           TouchableComponent={TouchableWithoutFeedback}
           contentStyle={{
             paddingVertical: spacing.padding.small,
             paddingHorizontal: spacing.padding.base,
           }}
-          {...props}>
+          {...props}
+          textProps={{color: _textColor, useI18n, ...props?.textProps}}>
           {children}
         </ButtonWrapper>
       </Div>

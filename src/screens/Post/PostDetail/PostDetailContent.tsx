@@ -219,11 +219,20 @@ const _PostDetailContent = (props: any) => {
         itemIndex = sectionData?.[sectionIndex]?.data?.length || 0;
       }
 
-      listRef?.current?.scrollToLocation?.({
-        itemIndex: itemIndex,
-        sectionIndex: sectionIndex,
-        animated: true,
-      });
+      try {
+        listRef?.current?.scrollToLocation?.({
+          itemIndex: itemIndex,
+          sectionIndex: sectionIndex,
+          animated: true,
+        });
+      } catch (error) {
+        // scroll to the first comment to avoid scroll error
+        listRef?.current?.scrollToLocation?.({
+          itemIndex: 0,
+          sectionIndex: 0,
+          animated: true,
+        });
+      }
     }
   };
 
@@ -231,7 +240,8 @@ const _PostDetailContent = (props: any) => {
     countRetryScrollToBottom = countRetryScrollToBottom + 1;
     if (countRetryScrollToBottom < 20) {
       setTimeout(() => {
-        scrollTo(Math.min(9, sectionData.length - 1), -1);
+        scrollTo(-1, -1);
+        // scrollTo(Math.min(9, sectionData.length - 1), -1);
       }, 100);
     }
   };
@@ -255,7 +265,7 @@ const _PostDetailContent = (props: any) => {
         sectionData?.map?.((section, index) => {
           if (section?.comment?.id === parentCommentId) {
             sectionIndex = index;
-            itemIndex = (section?.data?.length || 0) + 1;
+            itemIndex = section?.data?.length || 0;
           }
         });
       } else {
@@ -274,7 +284,7 @@ const _PostDetailContent = (props: any) => {
         commentInputRef?.current?.focus?.();
       }, 200);
     },
-    [],
+    [sectionData],
   );
 
   const renderSectionHeader = (sectionData: any) => {
@@ -296,13 +306,16 @@ const _PostDetailContent = (props: any) => {
     );
   };
 
-  const onPressReplyCommentItem = useCallback((commentData, section, index) => {
-    scrollTo(section?.index, index + 1);
-    // set time out to wait hide context menu on web
-    setTimeout(() => {
-      commentInputRef?.current?.focus?.();
-    }, 200);
-  }, []);
+  const onPressReplyCommentItem = useCallback(
+    (commentData, section, index) => {
+      scrollTo(section?.index, index + 1);
+      // set time out to wait hide context menu on web
+      setTimeout(() => {
+        commentInputRef?.current?.focus?.();
+      }, 200);
+    },
+    [sectionData],
+  );
 
   const renderCommentItem = (data: any) => {
     const {item, index, section} = data || {};

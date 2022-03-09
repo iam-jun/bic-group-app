@@ -1,8 +1,9 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import {StyleSheet, View, Keyboard, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
 import {useDispatch} from 'react-redux';
+import {useForm} from 'react-hook-form';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -31,13 +32,31 @@ const EditContact = () => {
   const myProfile = useKeySelector(menuKeySelector.myProfile);
   const {email, phone, country_code, country, city, id} = myProfile || {};
 
-  const [phoneState, setPhoneState] = useState<string>(phone);
   const [countryCodeState, setCountryCountryCodeState] =
     useState<string>(country_code);
   const [countryState, setCountryState] = useState<string>(country);
   const [cityState, setCityState] = useState<string>(city);
+  const phoneNumberEditError = useKeySelector(
+    menuKeySelector.phoneNumberEditError,
+  );
+
+  const {
+    control,
+    formState: {errors},
+    trigger,
+    getValues,
+    setError,
+    clearErrors,
+    setValue,
+    watch,
+  } = useForm();
+
+  useEffect(() => {
+    setValue('phoneNumber', phone);
+  }, []);
 
   const navigateBack = () => {
+    Keyboard.dismiss();
     if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
     } else {
@@ -45,23 +64,55 @@ const EditContact = () => {
     }
   };
 
-  const onSave = () => {
+  useEffect(() => {
+    phoneNumberEditError && showErrors();
+    return () => {
+      dispatch(menuActions.setPhoneNumberEditError(''));
+    };
+  }, [phoneNumberEditError]);
+
+  const onSave = async () => {
+    const validInputs = await validateInputs();
+    if (!validInputs) {
+      return;
+    }
+    const phoneNumber = getValues('phoneNumber');
+
     dispatch(
       menuActions.editMyProfile(
         {
           id,
-          phone: phoneState,
+          phone: phoneNumber,
           country_code: countryCodeState,
           country: countryState,
           city: cityState,
         },
         i18next.t('settings:text_contact_info_update_success'),
+        () => {
+          navigateBack();
+        },
       ),
     );
-    navigateBack();
+  };
+
+  const validateInputs = async () => {
+    return await trigger('phoneNumber');
+  };
+
+  const showErrors = () => {
+    setError('phoneNumber', {
+      type: 'validate',
+      message: phoneNumberEditError,
+    });
+  };
+
+  const clearAllErrors = () => {
+    clearErrors('phoneNumber');
+    dispatch(menuActions.setPhoneNumberEditError(''));
   };
 
   const onEditLocationOpen = (e: any) => {
+    Keyboard.dismiss();
     locationRef?.current?.open?.(e?.pageX, e?.pageY);
   };
 
@@ -72,13 +123,30 @@ const EditContact = () => {
     Keyboard.dismiss();
   };
 
-  const onChangePhoneNumber = (_phone: string) => {
-    setPhoneState(_phone);
-  };
-
   const onChangeCountryCode = (_countryCode: string) => {
     setCountryCountryCodeState(_countryCode);
   };
+
+  const checkIsValid = (
+    countryCodeState: string,
+    countryState: string,
+    cityState: string,
+    phoneNumber: string,
+  ) => {
+    return (
+      country_code !== countryCodeState ||
+      country !== countryState ||
+      city !== cityState ||
+      phone !== phoneNumber
+    );
+  };
+
+  const isValid = checkIsValid(
+    countryCodeState,
+    countryState,
+    cityState,
+    watch('phoneNumber'),
+  );
 
   return (
     <ScreenWrapper testID="EditContact" isFullView>
@@ -91,24 +159,28 @@ const EditContact = () => {
           useI18n: true,
           color: theme.colors.primary6,
           textColor: theme.colors.background,
+          borderRadius: theme.spacing.borderRadius.small,
+          disabled: !isValid,
         }}
         onPressButton={onSave}
       />
-      <ScrollView keyboardShouldPersistTaps="handled" scrollEnabled={false}>
+      <ScrollView keyboardShouldPersistTaps="always" scrollEnabled={false}>
         <View style={styles.infoItem}>
           <EditPhoneNumber
             countryCode={country_code}
             phoneNumber={phone}
             onChangeCountryCode={onChangeCountryCode}
-            onChangePhoneNumber={onChangePhoneNumber}
+            control={control}
+            errorsState={errors}
+            clearAllErrors={clearAllErrors}
           />
           <TitleComponent icon="EnvelopeAlt" title="settings:title_email" />
           <Button
             testID="edit_contact.phone"
-            textProps={{color: theme.colors.textInput, variant: 'body'}}
+            textProps={{color: theme.colors.borderCard, variant: 'body'}}
             style={[
               styles.buttonDropDown,
-              {backgroundColor: theme.colors.placeholder},
+              {backgroundColor: theme.colors.bgHover},
             ]}
             contentStyle={styles.buttonDropDownContent}
             activeOpacity={1}>

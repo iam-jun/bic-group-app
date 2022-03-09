@@ -1,11 +1,5 @@
 import {useIsFocused} from '@react-navigation/core';
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   InteractionManager,
   Platform,
@@ -29,6 +23,8 @@ import homeKeySelector from '~/screens/Home/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
 import appActions from '~/store/app/actions';
 import {deviceDimensions} from '~/theme/dimension';
+import menuActions from '~/screens/Menu/redux/actions';
+import {useUserIdAuth} from '~/hooks/auth';
 
 import {ITheme} from '~/theme/interfaces';
 import NewsfeedSearch from '~/screens/Home/Newsfeed/NewsfeedSearch';
@@ -61,6 +57,8 @@ const Newsfeed = () => {
   const refreshing = useKeySelector(homeKeySelector.refreshingHomePosts);
   const noMoreHomePosts = useKeySelector(homeKeySelector.noMoreHomePosts);
   const homePosts = useKeySelector(homeKeySelector.homePosts) || [];
+
+  const currentUserId = useUserIdAuth();
 
   const isFocused = useIsFocused();
 
@@ -97,12 +95,6 @@ const Newsfeed = () => {
   }, [token, isInternetReachable, homePosts]);
 
   useEffect(() => {
-    InteractionManager.runAfterInteractions(() => {
-      dispatch(postActions.addToAllPosts({data: homePosts}));
-    });
-  }, [homePosts]);
-
-  useEffect(() => {
     if (isInternetReachable) {
       if (lossInternet && homePosts?.length > 0) {
         setLossInternet(false);
@@ -112,6 +104,10 @@ const Newsfeed = () => {
       setLossInternet(true);
     }
   }, [isInternetReachable]);
+
+  useEffect(() => {
+    dispatch(menuActions.getMyProfile({userId: currentUserId}));
+  }, []);
 
   const onShowSearch = (isShow: boolean, searchInputRef?: any) => {
     if (isShow) {
@@ -153,6 +149,7 @@ const Newsfeed = () => {
           titleTextProps={{useI18n: true}}
           style={styles.headerOnLaptop}
           removeBorderAndShadow
+          onPressChat={navigateToChat}
           onShowSearch={onShowSearch}
           onSearchText={onSearchText}
           searchPlaceholder={t('input:search_post')}

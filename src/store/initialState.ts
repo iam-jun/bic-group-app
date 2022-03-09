@@ -7,7 +7,7 @@ import {homeInitState} from '~/screens/Home/redux/reducer';
 import {notiInitState} from '~/screens/Notification/redux/reducer';
 import {menuInitState} from '~/screens/Menu/redux/reducer';
 import {noInternetInitState} from '~/screens/NoInternet/redux/reducer';
-import {mentionInputInitState} from '~/beinComponents/inputs/_MentionInput/redux/reducer';
+import {mentionInputInitState} from '~/beinComponents/inputs/MentionInput/redux/reducer';
 
 const initialState = {
   app: appInitState,
