@@ -108,7 +108,7 @@ const GroupTopBar = () => {
       <ButtonWrapper onPress={onPressChat}>
         <Icon
           testID="group_top_bar.option_menu"
-          icon={'CommentsAlt'}
+          icon={'iconChat'}
           size={24}
           tintColor={theme.colors.iconTint}
           style={styles.iconShieldStar}
