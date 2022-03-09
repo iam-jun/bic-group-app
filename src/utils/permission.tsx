@@ -1,11 +1,12 @@
 import React from 'react';
-import {Platform, View} from 'react-native';
+import {Platform} from 'react-native';
 import {check, request, PERMISSIONS, RESULTS} from 'react-native-permissions';
 import modalActions from '~/store/modal/actions';
 import {photo_permission_steps} from '~/constants/permissions';
 import PermissionsPopupContent from '~/beinComponents/PermissionsPopupContent';
 import {IPayloadShowModal} from '~/interfaces/common';
-import i18next from 'i18next';
+import {useBaseHook} from '~/hooks';
+
 type permissionTypes = 'photo';
 
 const PLATFORM_STORAGE_PERMISSIONS = {
@@ -15,6 +16,8 @@ const PLATFORM_STORAGE_PERMISSIONS = {
 const REQUEST_PERMISSION_TYPE = {
   photo: PLATFORM_STORAGE_PERMISSIONS,
 };
+
+const {t} = useBaseHook();
 
 const requestPermission = async (type: permissionTypes) => {
   //@ts-ignore
@@ -58,8 +61,8 @@ export const checkPermission = async (
           useAppBottomSheet: false,
           ContentComponent: (
             <PermissionsPopupContent
-              title={i18next.t('common:permission_photo_title')}
-              description={i18next.t('common:permission_photo_description')}
+              title={t('common:permission_photo_title')}
+              description={t('common:permission_photo_description')}
               steps={photo_permission_steps}
               goToSetting={() => {
                 dispatch(modalActions.hideModal());
