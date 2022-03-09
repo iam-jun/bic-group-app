@@ -436,6 +436,7 @@ const MemberOptionsMenu = ({
           )}
           {selectedMember?.username === user?.username && (
             <PrimaryItem
+              testID="member_options_menu.leave_group"
               style={styles.menuOption}
               leftIcon={'SignOutAlt'}
               leftIconProps={{icon: 'SignOutAlt', size: 24}}
