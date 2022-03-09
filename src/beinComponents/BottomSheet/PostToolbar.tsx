@@ -13,7 +13,6 @@ import {useTheme} from 'react-native-paper';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {GestureEvent} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
 import {useDispatch} from 'react-redux';
-import i18next from 'i18next';
 
 import BottomSheet from '~/beinComponents/BottomSheet/index';
 import {BaseBottomSheetProps} from '~/beinComponents/BottomSheet/BaseBottomSheet';
@@ -34,10 +33,8 @@ import {ICreatePostImage} from '~/interfaces/IPost';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import appConfig from '~/configs/appConfig';
-import modalActions, {showHideToastMessage} from '~/store/modal/actions';
-import AppPermission from '~/utils/permission';
-import PermissionsPopupContent from '../PermissionsPopupContent';
-import {photo_permission_steps} from '~/constants/permissions';
+import {showHideToastMessage} from '~/store/modal/actions';
+import {checkPermission} from '~/utils/permission';
 
 export interface PostToolbarProps extends BaseBottomSheetProps {
   modalizeRef: any;
@@ -80,33 +77,11 @@ const PostToolbar = ({
 
   const _onPressSelectImage = () => {
     modalizeRef?.current?.close?.();
-    AppPermission.checkPermission(
-      'photo',
-      () => {
-        dispatch(
-          modalActions.showModal({
-            isOpen: true,
-            closeOutSide: false,
-            useAppBottomSheet: false,
-            ContentComponent: (
-              <PermissionsPopupContent
-                title={i18next.t('common:permission_photo_title')}
-                description={i18next.t('common:permission_photo_description')}
-                steps={photo_permission_steps}
-                goToSetting={() => {
-                  dispatch(modalActions.hideModal());
-                }}
-              />
-            ),
-          }),
-        );
-      },
-      canOpenPicker => {
-        if (canOpenPicker) {
-          openGallery();
-        }
-      },
-    );
+    checkPermission('photo', dispatch, canOpenPicker => {
+      if (canOpenPicker) {
+        openGallery();
+      }
+    });
   };
 
   const openGallery = () => {

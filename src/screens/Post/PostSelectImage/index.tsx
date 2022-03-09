@@ -21,9 +21,7 @@ import ImagePicker from '~/beinComponents/ImagePicker';
 import appConfig from '~/configs/appConfig';
 import {showHideToastMessage} from '~/store/modal/actions';
 import {uploadTypes} from '~/configs/resourceConfig';
-import AppPermission from '~/utils/permission';
-import PermissionsPopupContent from '~/beinComponents/PermissionsPopupContent';
-import {photo_permission_steps} from '~/constants/permissions';
+import {checkPermission} from '~/utils/permission';
 
 const PostSelectImage = () => {
   const [currentImages, setCurrentImages] = useState<ICreatePostImage[]>([]);
@@ -88,55 +86,33 @@ const PostSelectImage = () => {
   };
 
   const onPressAddImage = () => {
-    AppPermission.checkPermission(
-      'photo',
-      () => {
-        dispatch(
-          modalActions.showModal({
-            isOpen: true,
-            closeOutSide: false,
-            useAppBottomSheet: false,
-            ContentComponent: (
-              <PermissionsPopupContent
-                title={t('common:permission_photo_title')}
-                description={t('common:permission_photo_description')}
-                steps={photo_permission_steps}
-                goToSetting={() => {
-                  dispatch(modalActions.hideModal());
-                }}
-              />
-            ),
-          }),
-        );
-      },
-      canOpenPicker => {
-        if (canOpenPicker) {
-          ImagePicker.openPickerMultiple().then(images => {
-            const newImages: ICreatePostImage[] = [];
-            images.map(item => {
-              newImages.push({fileName: item.filename, file: item});
-            });
-            let newCurrentImages = [...currentImages, ...newImages];
-            if (newCurrentImages.length > appConfig.postPhotoLimit) {
-              newCurrentImages = newCurrentImages.slice(
-                0,
-                appConfig.postPhotoLimit,
-              );
-              const errorContent = t(
-                'post:error_reach_upload_photo_limit',
-              ).replace('%LIMIT%', appConfig.postPhotoLimit);
-              dispatch(
-                showHideToastMessage({
-                  content: errorContent,
-                  props: {textProps: {useI18n: true}, type: 'error'},
-                }),
-              );
-            }
-            setCurrentImages(newCurrentImages);
+    checkPermission('photo', dispatch, canOpenPicker => {
+      if (canOpenPicker) {
+        ImagePicker.openPickerMultiple().then(images => {
+          const newImages: ICreatePostImage[] = [];
+          images.map(item => {
+            newImages.push({fileName: item.filename, file: item});
           });
-        }
-      },
-    );
+          let newCurrentImages = [...currentImages, ...newImages];
+          if (newCurrentImages.length > appConfig.postPhotoLimit) {
+            newCurrentImages = newCurrentImages.slice(
+              0,
+              appConfig.postPhotoLimit,
+            );
+            const errorContent = t(
+              'post:error_reach_upload_photo_limit',
+            ).replace('%LIMIT%', appConfig.postPhotoLimit);
+            dispatch(
+              showHideToastMessage({
+                content: errorContent,
+                props: {textProps: {useI18n: true}, type: 'error'},
+              }),
+            );
+          }
+          setCurrentImages(newCurrentImages);
+        });
+      }
+    });
   };
 
   const renderItem = ({
