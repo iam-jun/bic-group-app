@@ -5,7 +5,7 @@ import modalActions from '~/store/modal/actions';
 import {photo_permission_steps} from '~/constants/permissions';
 import PermissionsPopupContent from '~/beinComponents/PermissionsPopupContent';
 import {IPayloadShowModal} from '~/interfaces/common';
-import {useBaseHook} from '~/hooks';
+import i18next from 'i18next';
 
 type permissionTypes = 'photo';
 
@@ -16,8 +16,6 @@ const PLATFORM_STORAGE_PERMISSIONS = {
 const REQUEST_PERMISSION_TYPE = {
   photo: PLATFORM_STORAGE_PERMISSIONS,
 };
-
-const {t} = useBaseHook();
 
 const requestPermission = async (type: permissionTypes) => {
   //@ts-ignore
@@ -36,15 +34,16 @@ export const checkPermission = async (
   dispatch: any,
   callback: (canOpenPicker: boolean) => void,
 ) => {
+  if (Platform.OS === 'web') {
+    callback(true);
+    return;
+  }
   //@ts-ignore
   const permissions = REQUEST_PERMISSION_TYPE[type][Platform.OS];
 
   try {
     const result = await check(permissions);
-    if (Platform.OS === 'web') {
-      callback(true);
-      return;
-    }
+
     if (result === RESULTS.DENIED || result === RESULTS.BLOCKED) {
       if (result === RESULTS.DENIED) {
         const request = await requestPermission('photo');
@@ -61,8 +60,8 @@ export const checkPermission = async (
           useAppBottomSheet: false,
           ContentComponent: (
             <PermissionsPopupContent
-              title={t('common:permission_photo_title')}
-              description={t('common:permission_photo_description')}
+              title={i18next.t('common:permission_photo_title')}
+              description={i18next.t('common:permission_photo_description')}
               steps={photo_permission_steps}
               goToSetting={() => {
                 dispatch(modalActions.hideModal());
