@@ -201,12 +201,17 @@ const UserProfile = (props: any) => {
   };
 
   const renderUserHeader = () => {
+    //in web, we need show text in <span>, so from RN to RJ we can do as nesting text as text inside will consider as span like html
     return (
       <View style={styles.headerName}>
-        <Text.H4>{fullname}</Text.H4>
+        <Text>
+          <Text.H4>{fullname}</Text.H4>
+        </Text>
         {!!username && <Text.Subtitle>{`@${username}`}</Text.Subtitle>}
         {!!description && (
-          <Text style={styles.subtitleText}>{description}</Text>
+          <Text>
+            <Text style={styles.subtitleText}>{description}</Text>
+          </Text>
         )}
       </View>
     );
@@ -315,10 +320,10 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     headerName: {
       alignItems: 'center',
       paddingVertical: spacing.margin.base,
+      paddingHorizontal: spacing.margin.large,
     },
     subtitleText: {
       marginTop: spacing.margin.small,
-      marginHorizontal: spacing.margin.large,
     },
     button: {
       marginHorizontal: spacing.margin.large,
