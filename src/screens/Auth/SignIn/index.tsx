@@ -93,7 +93,7 @@ const SignIn = () => {
   const checkAuthSessions = async () => {
     const user = await getUserFromSharedPreferences();
     setValue('email', user?.email);
-    setAuthSessions(user);
+    if (user) setAuthSessions(user);
   };
 
   const clearAllErrors = () => {
@@ -150,7 +150,7 @@ const SignIn = () => {
   };
 
   const hideKeyboard = () => {
-    isWeb && Keyboard.dismiss();
+    !isWeb && Keyboard.dismiss();
   };
 
   const goToForgotPassword = () =>

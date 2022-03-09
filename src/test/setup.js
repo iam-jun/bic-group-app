@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as ReactNative from 'react-native';
-import * as ReactFormHook from 'react-hook-form';
 import {configure} from 'enzyme';
 import {get} from 'lodash';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
@@ -24,8 +23,17 @@ configure({adapter: new Adapter()});
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const languages = require('~/localization/en.json');
 
+jest.mock('@react-native-firebase/messaging', () => {
+  return () => ({
+    ...jest.requireActual('@react-native-firebase/messaging'),
+    deleteToken: jest.fn(() => Promise.resolve(true)),
+  });
+});
+
 jest.mock('~/services/sharePreferences', () => ({
   getUserFromSharedPreferences: jest.fn(),
+  saveUserToSharedPreferences: jest.fn(),
+  updateUserFromSharedPreferences: jest.fn(),
 }));
 
 jest.mock('react-native-image-crop-picker', () => ({
@@ -106,7 +114,6 @@ jest.doMock('react-native', () => {
     InteractionManager: RNInteractionManager,
     NativeModules: RNNativeModules,
     Linking: RNLinking,
-    Keyboard: RNKeyboard,
   } = ReactNative;
 
   const Alert = {
@@ -179,11 +186,6 @@ jest.doMock('react-native', () => {
     openURL: jest.fn(),
   };
 
-  const Keyboard = {
-    ...RNKeyboard,
-    dismiss: jest.fn(),
-  };
-
   return Object.setPrototypeOf(
     {
       Platform: {
@@ -200,7 +202,6 @@ jest.doMock('react-native', () => {
       InteractionManager,
       NativeModules,
       Linking,
-      Keyboard,
     },
     ReactNative,
   );

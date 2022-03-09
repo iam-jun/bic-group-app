@@ -50,6 +50,7 @@ exports[`NFSSuggestion component should render NFSResult 1`] = `
               "justifyContent": "center",
             }
           }
+          testID="LoadingIndicator"
         />
       </View>
     </View>
