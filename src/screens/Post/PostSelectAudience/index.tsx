@@ -45,7 +45,6 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const {isFirstStep, ...createPostParams} = route?.params || {};
 
   const [lossInternet, setLossInternet] = useState(false);
-  const [loading, setLoading] = useState(true);
   const [selectingAudiences, setSelectingAudiences] = useState<
     (IGroup | IUser)[]
   >([]);
@@ -55,6 +54,9 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const [selectingUsers, setSelectingUsers] = useState<{[x: string]: IUser}>(
     {},
   );
+
+  const state = useKeySelector(postKeySelector.postSelectAudienceState);
+  const {loading} = state;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
   const initAudiences = useKeySelector(
@@ -127,12 +129,16 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     }
     if (initAudiences) {
       handleSearchResult(initAudiences);
-      setLoading(false);
+      dispatch(postActions.setPostSelectAudienceState({loading: false}));
     } else if (sectionListData.length === 0 || isFirstStep) {
       onSearch('');
     } else {
-      setLoading(false);
+      dispatch(postActions.setPostSelectAudienceState({loading: false}));
     }
+
+    return () => {
+      dispatch(postActions.setPostSelectAudienceState());
+    };
   }, []);
 
   useEffect(() => {
@@ -282,17 +288,17 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   };
 
   const onSearch = debounce((searchText: string) => {
-    setLoading(true);
+    dispatch(postActions.setPostSelectAudienceState({loading: true}));
     postDataHelper
       .getSearchAudiences(searchText)
       .then(response => {
         if (response && response.data) {
           handleSearchResult(response.data);
         }
-        setLoading(false);
+        dispatch(postActions.setPostSelectAudienceState({loading: false}));
       })
       .catch(e => {
-        setLoading(false);
+        dispatch(postActions.setPostSelectAudienceState({loading: false}));
         console.log('\x1b[31m', '🐣️ getSearchAudiences |  : ', e, '\x1b[0m');
       });
   }, 500);

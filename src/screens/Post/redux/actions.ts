@@ -125,6 +125,10 @@ const postActions = {
     type: postTypes.SET_SHOW_REACTION_BOTTOM_SHEET,
     payload,
   }),
+  setPostSelectAudienceState: (payload?: any) => ({
+    type: postTypes.SET_POST_SELECT_AUDIENCE_STATE,
+    payload,
+  }),
 
   //saga
   postCreateNewPost: (payload: IPostCreatePost) => ({
