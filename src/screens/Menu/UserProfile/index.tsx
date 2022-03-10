@@ -105,7 +105,7 @@ const UserProfile = (props: any) => {
   }, [myProfileData]);
 
   const onEditProfileButton = () =>
-    rootNavigation.navigate(mainStack.userEdit, {userId, params});
+    rootNavigation.navigate(mainStack.userEdit, {userId});
 
   const uploadFile = (
     file: IFilePicked,
@@ -159,10 +159,6 @@ const UserProfile = (props: any) => {
   const onSeeMore = () => {
     rootNavigation.navigate(mainStack.userEdit, {
       userId,
-      params:
-        userId == currentUserId || userId == currentUsername
-          ? {}
-          : {...userProfileData},
     });
   };
 
