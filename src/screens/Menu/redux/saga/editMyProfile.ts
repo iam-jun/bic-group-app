@@ -1,7 +1,7 @@
 import i18next from 'i18next';
-import {put} from 'redux-saga/effects';
+import {put, call} from 'redux-saga/effects';
 
-import {IToastMessage} from '~/interfaces/common';
+import {IResponseData, IToastMessage} from '~/interfaces/common';
 import {IUserEdit} from '~/interfaces/IAuth';
 import modalActions from '~/store/modal/actions';
 import menuActions from '../actions';
@@ -20,7 +20,14 @@ export default function* editMyProfile({
   callback?: () => void;
 }) {
   try {
-    const result: unknown = yield requestEditMyProfile(payload);
+    const userId = payload.id;
+    delete payload.id; // edit data should not contain user's id
+
+    // @ts-ignore
+    const result: IResponseData = yield call(menuDataHelper.editMyProfile, {
+      userId,
+      payload,
+    });
 
     // checking if uploading avatar/cover image
     // to use different toast message content
@@ -85,13 +92,3 @@ export default function* editMyProfile({
     yield put(menuActions.setLoadingCover(false));
   }
 }
-
-const requestEditMyProfile = async (data: IUserEdit) => {
-  const userId = data.id;
-  delete data.id; // edit data should not contain user's id
-
-  // @ts-ignore
-  const response = await menuDataHelper.editMyProfile(userId, data);
-
-  return response.data;
-};
