@@ -76,6 +76,10 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
         </View>
       ))}
       <View style={styles.btnContainer}>
+        <Button.Primary onPress={onClickRightButton} style={styles.btnSetting}>
+          {t('common:text_go_to_settings')}
+        </Button.Primary>
+        <ViewSpacing height={spacing.margin.small} />
         <Button.Secondary
           color={colors.primary1}
           textColor={colors.primary6}
@@ -83,10 +87,6 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
           style={styles.btnNotNow}>
           {t('common:text_not_now')}
         </Button.Secondary>
-        <ViewSpacing width={spacing.margin.large} />
-        <Button.Primary onPress={onClickRightButton} style={styles.btnSetting}>
-          {t('common:text_go_to_settings')}
-        </Button.Primary>
       </View>
     </View>
   );
@@ -109,8 +109,6 @@ const createStyle = (theme: ITheme) => {
       marginTop: spacing.margin.tiny,
     },
     btnContainer: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
       padding: spacing.padding.large,
     },
     iconStyle: {
@@ -120,12 +118,12 @@ const createStyle = (theme: ITheme) => {
       paddingHorizontal: spacing.padding.extraLarge,
     },
     btnNotNow: {
-      flex: 1,
-      justifyContent: 'center',
+      // flex: 1,
+      // justifyContent: 'center',
     },
     btnSetting: {
-      flex: 1,
-      justifyContent: 'center',
+      // flex: 1,
+      // justifyContent: 'center',
     },
   });
 };
