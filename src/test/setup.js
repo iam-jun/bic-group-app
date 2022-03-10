@@ -24,6 +24,8 @@ configure({adapter: new Adapter()});
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const languages = require('~/localization/en.json');
 
+jest.mock('~/screens/Groups/helper/GroupsDataHelper.ts');
+
 jest.mock('react-native-image-crop-picker', () => ({
   openPicker: jest.fn().mockImplementation(() =>
     Promise.resolve({

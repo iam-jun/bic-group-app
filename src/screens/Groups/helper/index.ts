@@ -7,47 +7,54 @@ import Button from '~/beinComponents/Button';
 import {IGroup} from '~/interfaces/IGroup';
 import {ITheme} from '~/theme/interfaces';
 
-export const checkLastAdmin = (
+export const checkLastAdmin = async (
   groupId: string | number,
   dispatch: any,
   mainCallback: () => void,
   onPressRight: () => void,
   type: 'leave' | 'remove' = 'leave',
 ) => {
-  groupsDataHelper
-    .getGroupMembers(Number(groupId), {offset: 0, limit: 1})
-    .then(data => {
-      const adminCount = data?.group_admin?.user_count;
-      if (adminCount > 1) {
-        mainCallback();
-      } else {
-        dispatch(
-          modalActions.showHideToastMessage({
-            content: `groups:error:last_admin_${type}`,
-            props: {
-              type: 'error',
-              textProps: {useI18n: true},
-              rightIcon: 'UsersAlt',
-              rightText: 'Members',
-              onPressRight: onPressRight,
-            },
-            toastType: 'normal',
-          }),
-        );
-      }
-    })
-    .catch(err => {
-      console.error('[ERROR] error while fetching group members', err);
+  let testingAdminCount: number; // for testing purpose
+  try {
+    const data = await groupsDataHelper.getGroupMembers(Number(groupId), {
+      offset: 0,
+      limit: 1,
+    });
+    const adminCount = data?.group_admin?.user_count;
+    testingAdminCount = adminCount;
+
+    if (adminCount > 1) {
+      mainCallback();
+    } else {
       dispatch(
         modalActions.showHideToastMessage({
-          content: 'error:http:unknown',
-          props: {textProps: {useI18n: true}, type: 'error'},
+          content: `groups:error:last_admin_${type}`,
+          props: {
+            type: 'error',
+            textProps: {useI18n: true},
+            rightIcon: 'UsersAlt',
+            rightText: 'Members',
+            onPressRight: onPressRight,
+          },
+          toastType: 'normal',
         }),
       );
-    });
+    }
+  } catch (err) {
+    testingAdminCount = -1;
+    console.error('[ERROR] error while fetching group members', err);
+    dispatch(
+      modalActions.showHideToastMessage({
+        content: 'error:http:unknown',
+        props: {textProps: {useI18n: true}, type: 'error'},
+      }),
+    );
+  }
+
+  return testingAdminCount;
 };
 
-export const alertLeaveGroup = (
+export const alertLeaveGroup = async (
   groupId: string | number,
   dispatch: any,
   username: string,
@@ -68,36 +75,42 @@ export const alertLeaveGroup = (
     ConfirmBtnComponent: Button.Danger,
   };
 
+  let testingInnerGroupCount: number; // for testing purpose
+
   // Handling leaving other inner groups
-  groupsDataHelper
-    .getUserInnerGroups(Number(groupId), username)
-    .then(res => {
-      const innerGroups = res.data.inner_groups.map(
-        (group: IGroup) => group.name,
-      );
-      if (innerGroups.length > 0) {
-        alertPayload.content =
-          alertPayload.content +
-          ` ${i18next.t(
-            'groups:modal_confirm_leave_group:leave_inner_groups',
-          )}`;
+  try {
+    const res = await groupsDataHelper.getUserInnerGroups(
+      Number(groupId),
+      username,
+    );
+    const innerGroups = res.data.inner_groups.map(
+      (group: IGroup) => group.name,
+    );
+    testingInnerGroupCount = innerGroups.length;
 
-        const groupsLeaveToString = innerGroups.join(', ');
-        alertPayload.content = alertPayload.content.replace(
-          '{0}',
-          groupsLeaveToString,
-        );
-      }
+    if (innerGroups.length > 0) {
+      alertPayload.content =
+        alertPayload.content +
+        ` ${i18next.t('groups:modal_confirm_leave_group:leave_inner_groups')}`;
 
-      dispatch(modalActions.showAlert(alertPayload));
-    })
-    .catch(err => {
-      console.log('[ERROR] error while fetching user inner groups', err);
-      dispatch(
-        modalActions.showHideToastMessage({
-          content: 'error:http:unknown',
-          props: {textProps: {useI18n: true}, type: 'error'},
-        }),
+      const groupsLeaveToString = innerGroups.join(', ');
+      alertPayload.content = alertPayload.content.replace(
+        '{0}',
+        groupsLeaveToString,
       );
-    });
+    }
+
+    dispatch(modalActions.showAlert(alertPayload));
+  } catch (err) {
+    testingInnerGroupCount = -1;
+    console.log('[ERROR] error while fetching user inner groups', err);
+    dispatch(
+      modalActions.showHideToastMessage({
+        content: 'error:http:unknown',
+        props: {textProps: {useI18n: true}, type: 'error'},
+      }),
+    );
+  }
+
+  return testingInnerGroupCount;
 };
