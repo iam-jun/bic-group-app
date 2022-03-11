@@ -32,6 +32,10 @@ export function renderWithRedux(component, store = createTestStore()) {
   return render(<Provider store={store}>{component}</Provider>);
 }
 
+const waitForUpdateRedux = (timeout = 500) => {
+  return new Promise(r => setTimeout(r, timeout));
+};
+
 export * from '@testing-library/react-native';
 export {
   defaultStore as store,
@@ -45,4 +49,5 @@ export {
   languages,
   act,
   createTestStore,
+  waitForUpdateRedux,
 };
