@@ -16,9 +16,14 @@ describe('Update User Profile Saga', () => {
 
   it('should request to update user profile successfully', () => {
     const expectData = {
-      id: 58,
-      description: 'Fake fake description',
+      code: 200,
+      data: {
+        id: 58,
+        description: 'Fake fake description',
+      },
+      meta: {},
     };
+    // @ts-ignorets
     return expectSaga(editMyProfile, action)
       .provide([[matchers.call.fn(menuDataHelper.editMyProfile), expectData]])
       .put(
@@ -30,7 +35,7 @@ describe('Update User Profile Saga', () => {
           },
         }),
       )
-      .put(menuActions.setMyProfile(mapProfile(expectData)))
+      .put(menuActions.setMyProfile(mapProfile(expectData.data)))
       .run();
   });
 
@@ -44,9 +49,13 @@ describe('Update User Profile Saga', () => {
       },
     };
     const expectData = {
-      id: 58,
-      avatar:
-        'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/27f0c878-ac63-4cfe-99f9-793d360dce54.png',
+      code: 200,
+      data: {
+        id: 58,
+        avatar:
+          'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/27f0c878-ac63-4cfe-99f9-793d360dce54.png',
+      },
+      meta: {},
     };
     return expectSaga(editMyProfile, actionUpdateAvatar)
       .provide([[matchers.call.fn(menuDataHelper.editMyProfile), expectData]])
@@ -59,7 +68,7 @@ describe('Update User Profile Saga', () => {
           },
         }),
       )
-      .put(menuActions.setMyProfile(mapProfile(expectData)))
+      .put(menuActions.setMyProfile(mapProfile(expectData.data)))
       .run();
   });
 
@@ -73,9 +82,13 @@ describe('Update User Profile Saga', () => {
       },
     };
     const expectData = {
-      id: 58,
-      background_img_url:
-        'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/27f0c878-ac63-4cfe-99f9-793d360dce54.png',
+      code: 200,
+      data: {
+        id: 58,
+        background_img_url:
+          'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/27f0c878-ac63-4cfe-99f9-793d360dce54.png',
+      },
+      meta: {},
     };
     return expectSaga(editMyProfile, actionUpdateCoverPhoto)
       .provide([[matchers.call.fn(menuDataHelper.editMyProfile), expectData]])
@@ -88,14 +101,18 @@ describe('Update User Profile Saga', () => {
           },
         }),
       )
-      .put(menuActions.setMyProfile(mapProfile(expectData)))
+      .put(menuActions.setMyProfile(mapProfile(expectData.data)))
       .run();
   });
 
   it('should request to update user profile successfully and show toast with custom content', () => {
     const expectData = {
-      id: 58,
-      description: 'Fake fake description',
+      code: 200,
+      data: {
+        id: 58,
+        description: 'Fake fake description',
+      },
+      meta: {},
     };
     const editFieldToastMessage = 'common:btn_update';
 
@@ -110,7 +127,7 @@ describe('Update User Profile Saga', () => {
           },
         }),
       )
-      .put(menuActions.setMyProfile(mapProfile(expectData)))
+      .put(menuActions.setMyProfile(mapProfile(expectData.data)))
       .run();
   });
 

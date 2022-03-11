@@ -26,7 +26,7 @@ export default function* editMyProfile({
     // @ts-ignore
     const result: IResponseData = yield call(menuDataHelper.editMyProfile, {
       userId,
-      payload,
+      data: payload,
     });
 
     // checking if uploading avatar/cover image
@@ -56,8 +56,9 @@ export default function* editMyProfile({
       },
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
+    console.log('result.data', result);
 
-    yield put(menuActions.setMyProfile(mapProfile(result)));
+    yield put(menuActions.setMyProfile(mapProfile(result.data)));
 
     if (callback) return callback();
   } catch (err) {
