@@ -80,7 +80,10 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
   }
 
   return (
-    <View style={styles.container} onLayout={onLayoutContainer}>
+    <View
+      testID={'selecting_audience.container'}
+      style={styles.container}
+      onLayout={onLayoutContainer}>
       <View style={styles.headerContainer}>
         <Text.H6 style={{flex: 1}}>Chosen Audiences</Text.H6>
         {showBtnShowAll && (
