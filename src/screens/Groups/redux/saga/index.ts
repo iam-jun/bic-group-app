@@ -1,5 +1,4 @@
 import i18next from 'i18next';
-import {Platform} from 'react-native';
 import {put, select, takeLatest} from 'redux-saga/effects';
 
 import {
@@ -22,8 +21,6 @@ import {IResponseData, IToastMessage} from '~/interfaces/common';
 import {mapData, mapRequestMembers} from '../../helper/mapper';
 import appConfig from '~/configs/appConfig';
 import FileUploader from '~/services/fileUploader';
-import groupJoinStatus from '~/constants/groupJoinStatus';
-import {groupPrivacy} from '~/constants/privacyTypes';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
@@ -32,6 +29,7 @@ import memberRequestStatus from '~/constants/memberRequestStatus';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 import joinNewGroup from './joinNewGroup';
 import leaveGroup from './leaveGroup';
+import getGroupDetail from './getGroupDetail';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -87,27 +85,6 @@ function* getJoinedGroups({payload}: {type: string; payload?: any}) {
       `\x1b[31m🐣️ saga getJoinedGroups`,
       `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
     );
-  }
-}
-
-function* getGroupDetail({payload}: {type: string; payload: number}) {
-  try {
-    // @ts-ignore
-    const result = yield requestGroupDetail(payload);
-    yield put(groupsActions.setGroupDetail(result));
-
-    const {groups} = yield select();
-    const join_status = groups?.groupDetail?.join_status;
-    const isMember = join_status === groupJoinStatus.member;
-
-    const privacy = groups?.groupDetail?.group?.privacy;
-    const isPublic = privacy === groupPrivacy.public;
-
-    if (!isMember && !isPublic) yield put(groupsActions.setLoadingPage(false));
-  } catch (e) {
-    console.log('[getGroupDetail]', e);
-    yield put(groupsActions.setLoadingPage(false));
-    yield put(groupsActions.setGroupDetail(null));
   }
 }
 
@@ -269,15 +246,6 @@ function* mergeExtraGroupPosts({payload}: {type: string; payload: string}) {
     yield put(groupsActions.getGroupPosts(payload));
   }
 }
-
-const requestGroupDetail = async (userId: number) => {
-  const response = await groupsDataHelper.getGroupDetail(userId);
-  if (response.code === 200) {
-    return response.data;
-  }
-
-  throw new Error('Error when fetching group detail');
-};
 
 const requestEditGroupDetail = async (data: IGroupDetailEdit) => {
   const groupId = data.id;

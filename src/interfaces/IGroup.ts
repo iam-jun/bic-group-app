@@ -22,7 +22,8 @@ export interface IGroup {
   owner_id?: number;
   created_at?: string;
   updated_at?: string;
-  deleted_at?: string;
+  deleted_at?: string | null;
+  chat_id?: string;
 
   path?: string;
   treeData?: IGroup;
