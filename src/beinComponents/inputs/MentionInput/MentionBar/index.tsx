@@ -34,6 +34,7 @@ const MentionBar: FC<MentionBarProps> = ({
   type = 'mentionInput',
   onVisible,
 }: MentionBarProps) => {
+  const listRef = useRef<any>();
   const text = useRef('');
   const cursorPosition = useRef(0);
 
@@ -55,6 +56,12 @@ const MentionBar: FC<MentionBarProps> = ({
       listener?.remove?.();
     };
   }, []);
+
+  useEffect(() => {
+    if (data?.length > 0) {
+      listRef?.current?.scrollToOffset?.({offset: 0, animated: true});
+    }
+  }, [data?.length]);
 
   useEffect(() => {
     onVisible?.(isShow);
@@ -96,6 +103,7 @@ const MentionBar: FC<MentionBarProps> = ({
   return (
     <View testID="mention_bar" style={[styles.container, style]}>
       <FlatList
+        ref={listRef}
         testID="mention_bar.list"
         horizontal
         showsHorizontalScrollIndicator={false}
