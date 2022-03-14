@@ -3,19 +3,16 @@ import {put, select, takeLatest} from 'redux-saga/effects';
 
 import {
   IGroupAddMembers,
-  IGroupDetailEdit,
   IGroupGetJoinableMembers,
   IGroupGetMembers,
   IGroupImageUpload,
   IGroupRemoveAdmin,
   IGroupSetAdmin,
   IJoiningMember,
-  IParamGetGroupPosts,
 } from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsTypes from '~/screens/Groups/redux/types';
-import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
 import {mapData, mapRequestMembers} from '../../helper/mapper';
@@ -31,6 +28,8 @@ import joinNewGroup from './joinNewGroup';
 import leaveGroup from './leaveGroup';
 import getGroupDetail from './getGroupDetail';
 import editGroupDetail from './editGroupDetail';
+import getGroupPosts from './getGroupPosts';
+import mergeExtraGroupPosts from './mergeExtraGroupPosts';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -159,45 +158,6 @@ function* getGroupMember({payload}: {type: string; payload: IGroupGetMembers}) {
     yield put(groupsActions.setLoadingGroupMembers(false));
   } catch (e) {
     console.log(`\x1b[31m🐣️ getGroupMember | getGroupMember : ${e} \x1b[0m`);
-  }
-}
-
-function* getGroupPosts({payload}: {type: string; payload: string}): any {
-  try {
-    const {groups} = yield select();
-    const {offset, data} = groups.posts;
-
-    const param: IParamGetGroupPosts = {group_id: payload, offset};
-    const result = yield groupsDataHelper.getGroupPosts(param);
-
-    if (data.length === 0) {
-      yield put(postActions.addToAllPosts({data: result}));
-      yield put(groupsActions.setGroupPosts(result));
-      if (result.length === appConfig.recordsPerPage) {
-        yield put(groupsActions.getGroupPosts(payload));
-      }
-    } else {
-      yield put(postActions.addToAllPosts({data: result}));
-      yield put(groupsActions.setExtraGroupPosts(result));
-    }
-
-    yield put(groupsActions.setLoadingPage(false));
-  } catch (e) {
-    yield put(groupsActions.setLoadingPage(false));
-    console.log(
-      '\x1b[33m',
-      'namanh --- getGroupPosts | getGroupPosts : error',
-      e,
-      '\x1b[0m',
-    );
-  }
-}
-
-function* mergeExtraGroupPosts({payload}: {type: string; payload: string}) {
-  const {groups} = yield select();
-  const {canLoadMore, loading} = groups.posts;
-  if (!loading && canLoadMore) {
-    yield put(groupsActions.getGroupPosts(payload));
   }
 }
 
