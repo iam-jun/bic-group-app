@@ -1,12 +1,15 @@
 import i18next from 'i18next';
 import {expectSaga} from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
+import {cleanup} from '@testing-library/react-native';
 
 import editMyProfile from './editMyProfile';
 import menuActions from '../actions';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
 import * as modalActions from '~/store/modal/actions';
 import {mapProfile} from '../helper';
+
+afterEach(cleanup);
 
 describe('Update User Profile Saga', () => {
   const action = {

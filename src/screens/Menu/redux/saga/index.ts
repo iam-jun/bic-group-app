@@ -1,17 +1,17 @@
-import {select, put, takeLatest} from 'redux-saga/effects';
+import {put, takeLatest} from 'redux-saga/effects';
 
-import menuActions from '../actions';
 import menuTypes from '../types';
-import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
-import {IGetUserProfile, IUserAddWorkExperience} from '~/interfaces/IAuth';
 import * as modalActions from '~/store/modal/actions';
-import {mapProfile, mapWorkExperience} from '../helper';
-import {IUserImageUpload} from '~/interfaces/IEditUser';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
-import FileUploader from '~/services/fileUploader';
 import errorCode from '~/constants/errorCode';
-import {updateUserFromSharedPreferences} from '~/services/sharePreferences';
 import editMyProfile from './editMyProfile';
+import uploadImage from './uploadImage';
+import getMyProfile from './getMyProfile';
+import getUserProfile from './getUserProfile';
+import menuDataHelper from '../../helper/MenuDataHelper';
+import menuActions from '../actions';
+import {mapWorkExperience} from '../helper';
+import {IUserAddWorkExperience} from '~/interfaces/IAuth';
 
 export default function* menuSaga() {
   yield takeLatest(menuTypes.GET_USER_PROFILE, getUserProfile);
@@ -23,79 +23,6 @@ export default function* menuSaga() {
   yield takeLatest(menuTypes.EDIT_WORK_EXPERIENCE, editWorkExperience);
   yield takeLatest(menuTypes.DELETE_WORK_EXPERIENCE, deleteWorkExperience);
   yield takeLatest(menuTypes.GET_USER_WORK_EXPERIENCE, getWorkExperience);
-}
-
-function* getUserProfile({payload}: {type: string; payload: IGetUserProfile}) {
-  const {userId, params} = payload;
-  try {
-    const response: IResponseData = yield menuDataHelper.getUserProfile(
-      userId,
-      params,
-    );
-
-    yield put(menuActions.setUserProfile(mapProfile(response.data)));
-  } catch (err) {
-    yield put(menuActions.setUserProfile(null));
-    yield put(menuActions.setShowUserNotFound());
-    console.log('getUserProfile error:', err);
-  }
-}
-
-function* getMyProfile({payload}: {type: string; payload: IGetUserProfile}) {
-  const {menu} = yield select();
-  const {myProfile} = menu;
-  const {userId, params} = payload;
-  try {
-    const response: IResponseData = yield menuDataHelper.getUserProfile(
-      userId,
-      params,
-    );
-    yield updateUserFromSharedPreferences({
-      name: response?.data?.fullname,
-      avatar: response?.data?.avatar,
-    });
-    yield put(menuActions.setMyProfile(mapProfile(response.data)));
-  } catch (err) {
-    yield put(menuActions.setMyProfile(myProfile));
-    console.log('getMyProfile error:', err);
-  }
-}
-
-function* uploadImage({
-  payload,
-  callback,
-}: {
-  type: string;
-  payload: IUserImageUpload;
-  callback?: () => void;
-}) {
-  try {
-    const {file, id, fieldName, uploadType} = payload;
-    yield updateLoadingImageState(fieldName, true);
-
-    const data: string = yield FileUploader.getInstance().upload({
-      file,
-      uploadType,
-    });
-
-    yield put(menuActions.editMyProfile({id, [fieldName]: data}));
-    if (callback) return callback();
-  } catch (err) {
-    console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
-    yield updateLoadingImageState(payload.fieldName, false);
-    yield showError(err);
-  }
-}
-
-function* updateLoadingImageState(
-  fieldName: 'avatar' | 'background_img_url',
-  value: boolean,
-) {
-  if (fieldName === 'avatar') {
-    yield put(menuActions.setLoadingAvatar(value));
-  } else {
-    yield put(menuActions.setLoadingCover(value));
-  }
 }
 
 function* getMyWorkExperience() {
@@ -214,7 +141,7 @@ function* deleteWorkExperience({
 }
 
 export function* showError(err: any) {
-  if (err.code === errorCode.systemIssue) return;
+  if (err?.code === errorCode.systemIssue) return;
 
   const toastMessage: IToastMessage = {
     content:

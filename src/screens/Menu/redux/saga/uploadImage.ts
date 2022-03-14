@@ -1,4 +1,6 @@
 import {put, call} from 'redux-saga/effects';
+import {IUploadType} from '~/configs/resourceConfig';
+import {IFilePicked} from '~/interfaces/common';
 
 import {IUserImageUpload} from '~/interfaces/IEditUser';
 import FileUploader from '~/services/fileUploader';
@@ -16,11 +18,8 @@ export default function* uploadImage({
   try {
     const {file, id, fieldName, uploadType} = payload;
     yield updateLoadingImageState(fieldName, true);
-    const data: string = yield FileUploader.getInstance().upload({
-      file,
-      uploadType,
-    });
-    console.log('data>>>>>>>>>>>>>>>>>>', data);
+    const data: string = yield call(upload, file, uploadType);
+
     yield put(menuActions.editMyProfile({id, [fieldName]: data}));
     if (callback) return callback();
   } catch (err) {
@@ -28,6 +27,14 @@ export default function* uploadImage({
     yield updateLoadingImageState(payload.fieldName, false);
     yield showError(err);
   }
+}
+
+function* upload(file: IFilePicked, uploadType: IUploadType) {
+  const data: string = yield FileUploader.getInstance().upload({
+    file,
+    uploadType,
+  });
+  return data;
 }
 
 function* updateLoadingImageState(

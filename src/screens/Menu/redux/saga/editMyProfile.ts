@@ -56,8 +56,6 @@ export default function* editMyProfile({
       },
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
-    console.log('result.data', result);
-
     yield put(menuActions.setMyProfile(mapProfile(result.data)));
 
     if (callback) return callback();
