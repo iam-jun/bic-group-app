@@ -25,7 +25,6 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {useCreatePost} from '~/hooks/post';
 import {useKeySelector} from '~/hooks/selector';
 import {
-  IActivityDataImage,
   IAudience,
   ICreatePostParams,
   IParamGetPostAudiences,
@@ -43,9 +42,7 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import {ITheme} from '~/theme/interfaces';
 import {padding} from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
-import {IFilePicked} from '~/interfaces/common';
 import modalActions from '~/store/modal/actions';
-import FileUploader from '~/services/fileUploader';
 import {useBaseHook} from '~/hooks';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
@@ -58,6 +55,7 @@ import Text from '~/beinComponents/Text';
 import {useKeyboardStatus} from '~/hooks/keyboard';
 import DeviceInfo from 'react-native-device-info';
 import CreatePostFooter from '~/screens/Post/CreatePost/CreatePostFooter';
+import {validateImages} from './helper';
 
 export interface CreatePostProps {
   route?: {
@@ -206,7 +204,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const isDraftPost = !!(sPostId && sPostData?.is_draft);
   const isNewsfeed = !(initPostData?.id && initPostData?.is_draft);
 
-  const isAutoSave = isDraftPost || !isEdit ? true : false;
+  const isAutoSave = isDraftPost || !isEdit;
 
   useBackHandler(() => {
     onPressBack();
@@ -834,41 +832,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       </TouchableOpacity>
     </ScreenWrapper>
   );
-};
-
-const validateImages = (
-  selectingImages: IFilePicked[] | IActivityDataImage[],
-  t: any,
-) => {
-  let imageError = '';
-  const images: IActivityDataImage[] = [];
-  // @ts-ignore
-  selectingImages?.map?.((item: any) => {
-    if (item?.url) {
-      images.push({
-        name: item?.url || '',
-        origin_name: item?.fileName,
-        width: item?.file?.width,
-        height: item?.file?.height,
-      });
-    } else {
-      const {file, fileName} = item || {};
-      const {url, uploading} =
-        FileUploader.getInstance().getFile(fileName) || {};
-      if (uploading) {
-        imageError = t('post:error_wait_uploading');
-      } else if (!url) {
-        imageError = t('error_upload_failed');
-      }
-      images.push({
-        name: url || '',
-        origin_name: fileName,
-        width: file?.width,
-        height: file?.height,
-      });
-    }
-  });
-  return {imageError, images};
 };
 
 const themeStyles = (theme: ITheme) => {
