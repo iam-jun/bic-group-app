@@ -109,11 +109,12 @@ function* editMyProfile({
     yield put(menuActions.setMyProfile(mapProfile(result)));
 
     if (callback) return callback();
-  } catch (err) {
+  } catch (err: any) {
     console.log('\x1b[33m', 'editMyProfile : error', err, '\x1b[0m');
 
     // @ts-ignore
-    const errorMessage: string = err?.meta?.message;
+    const errorMessage: string =
+      err?.meta?.errors?.[0]?.message || err?.meta?.message;
 
     switch (errorMessage) {
       case 'This Email is used':
@@ -309,8 +310,8 @@ function* showError(err: any) {
 
   const toastMessage: IToastMessage = {
     content:
-      err?.meta?.message ||
       err?.meta?.errors?.[0]?.message ||
+      err?.meta?.message ||
       'common:text_error_message',
     props: {
       textProps: {useI18n: true},
