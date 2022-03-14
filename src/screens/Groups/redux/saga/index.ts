@@ -30,6 +30,7 @@ import approveDeclineCode from '~/constants/approveDeclineCode';
 import joinNewGroup from './joinNewGroup';
 import leaveGroup from './leaveGroup';
 import getGroupDetail from './getGroupDetail';
+import editGroupDetail from './editGroupDetail';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -108,53 +109,6 @@ function* getGroupSearch({payload}: {type: string; payload: string}) {
     console.log(`\x1b[31m🐣️ saga getGroupSearch error: ${err}\x1b[0m`);
     yield put(groupsActions.setGroupSearch({loading: false, result: []}));
     // yield showError(err);
-  }
-}
-
-function* editGroupDetail({
-  payload,
-  editFieldName,
-  callback,
-}: {
-  type: string;
-  payload: IGroupDetailEdit;
-  editFieldName?: string;
-  callback?: () => void;
-}) {
-  try {
-    // @ts-ignore
-    const result = yield requestEditGroupDetail(payload);
-
-    // this field is used to indicate which parts of
-    // the profile have been updated
-    let toastContent: string;
-    if (editFieldName) {
-      toastContent = `${editFieldName} ${i18next.t(
-        'common:text_updated_successfully',
-      )}`;
-    } else {
-      toastContent = 'common:text_edit_success';
-    }
-
-    const toastMessage: IToastMessage = {
-      content: toastContent,
-      props: {
-        textProps: {useI18n: true},
-        type: 'success',
-      },
-    };
-    yield put(modalActions.showHideToastMessage(toastMessage));
-
-    yield put(groupsActions.setGroupDetail(result));
-    if (callback) callback();
-
-    yield put(groupsActions.getJoinedGroups());
-  } catch (err) {
-    console.log('\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m');
-    yield showError(err);
-    // just in case there is some error regarding editing images url
-    yield put(groupsActions.setLoadingAvatar(false));
-    yield put(groupsActions.setLoadingCover(false));
   }
 }
 
@@ -247,16 +201,6 @@ function* mergeExtraGroupPosts({payload}: {type: string; payload: string}) {
   }
 }
 
-const requestEditGroupDetail = async (data: IGroupDetailEdit) => {
-  const groupId = data.id;
-  delete data.id; // edit data should not contain group's id
-
-  // @ts-ignore
-  const response = await groupsDataHelper.editGroupDetail(groupId, data);
-
-  return response.data;
-};
-
 function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
   try {
     const {file, id, fieldName, uploadType} = payload;
@@ -268,12 +212,13 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
     });
 
     yield put(
-      groupsActions.editGroupDetail(
-        {id, [fieldName]: data},
-        fieldName === 'icon'
-          ? i18next.t('common:text_avatar')
-          : i18next.t('common:text_cover'),
-      ),
+      groupsActions.editGroupDetail({
+        data: {id, [fieldName]: data},
+        editFieldName:
+          fieldName === 'icon'
+            ? i18next.t('common:text_avatar')
+            : i18next.t('common:text_cover'),
+      }),
     );
   } catch (err) {
     console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
