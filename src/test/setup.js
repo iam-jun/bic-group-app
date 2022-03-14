@@ -6,6 +6,7 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-info-mock';
 import mockAsyncStorage from '@react-native-async-storage/async-storage/jest/async-storage-mock';
+import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js';
 
 import 'react-native-gesture-handler/jestSetup';
 import {initReactI18next} from 'react-i18next';
@@ -98,6 +99,8 @@ jest.doMock('react-native-modalize', () => {
 jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 
 jest.mock('react-native-device-info', () => mockRNDeviceInfo);
+
+jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo);
 
 jest.doMock('react-native', () => {
   const {

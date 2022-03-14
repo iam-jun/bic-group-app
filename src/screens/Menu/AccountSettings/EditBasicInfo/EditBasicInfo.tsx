@@ -202,6 +202,7 @@ const EditBasicInfo = () => {
           textColor: theme.colors.background,
           borderRadius: theme.spacing.borderRadius.small,
           disabled: !isValid,
+          testID: 'edit_basic_info.save',
         }}
         onPressButton={onSave}
         onPressBack={_onPressBack}
@@ -238,7 +239,9 @@ const EditBasicInfo = () => {
             i18next.t('common:text_not_set')}
         </Button>
         {selectingDate && (
-          <Div className="react-datepicker-container-important">
+          <Div
+            testID="edit_basic_info.date_picker"
+            className="react-datepicker-container-important">
             <DateTimePicker
               isVisible={selectingDate}
               date={maxBirthday()}
@@ -271,6 +274,7 @@ const EditBasicInfo = () => {
         </Button>
       </ScrollView>
       <OptionMenu
+        testID="edit_basic_info.gender_list"
         data={gendersList}
         value={genderState}
         title={'settings:title_choose_gender'}
@@ -278,6 +282,7 @@ const EditBasicInfo = () => {
         onItemPress={onGenderItemPress}
       />
       <OptionMenu
+        testID="edit_basic_info.relationship_status_list"
         data={relationshipStatusList}
         value={relationshipState}
         title={'settings:title_choose_relationship'}

@@ -62,6 +62,12 @@ export const postInitState = {
     fromStack: '',
   },
   scrollToLatestItem: null,
+  postSelectAudienceState: {
+    loading: true,
+    selectingAudiences: [],
+    selectingGroups: {},
+    selectingUsers: {},
+  },
 };
 
 function postReducer(state = postInitState, action: any = {}) {
@@ -306,6 +312,13 @@ function postReducer(state = postInitState, action: any = {}) {
       return {
         ...state,
         reactionBottomSheet: payload || postInitState.reactionBottomSheet,
+      };
+    case postTypes.SET_POST_SELECT_AUDIENCE_STATE:
+      return {
+        ...state,
+        postSelectAudienceState: payload
+          ? {...state.postSelectAudienceState, ...payload}
+          : postInitState.postSelectAudienceState,
       };
     default:
       return state;

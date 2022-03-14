@@ -729,8 +729,8 @@ export function* showError(err: any) {
 
   const toastMessage: IToastMessage = {
     content:
-      err?.meta?.message ||
       err?.meta?.errors?.[0]?.message ||
+      err?.meta?.message ||
       'common:text_error_message',
     props: {
       textProps: {useI18n: true},

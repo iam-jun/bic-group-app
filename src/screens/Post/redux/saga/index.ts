@@ -1285,8 +1285,8 @@ function* showError(err: any) {
   yield put(
     modalActions.showHideToastMessage({
       content:
-        err?.meta?.message ||
         err?.meta?.errors?.[0]?.message ||
+        err?.meta?.message ||
         'common:text_error_message',
       props: {
         textProps: {useI18n: true},

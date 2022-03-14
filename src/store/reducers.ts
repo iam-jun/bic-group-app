@@ -32,7 +32,7 @@ const notiPersistConfig = {
   whitelist: ['pushToken'],
 };
 
-const appReducer = combineReducers({
+export const appReducer = combineReducers({
   app,
   modal,
   auth: persistReducer(authPersistConfig, auth),

@@ -18,6 +18,7 @@ interface OptionMenuProps {
   value: string;
   title: string;
   onItemPress: (item: any) => void;
+  testID?: string;
 }
 
 const OptionMenu = ({
@@ -26,6 +27,7 @@ const OptionMenu = ({
   title,
   menuRef,
   onItemPress,
+  testID,
 }: OptionMenuProps) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -53,7 +55,7 @@ const OptionMenu = ({
   };
 
   return (
-    <View>
+    <View testID={testID}>
       <BottomSheet
         modalizeRef={menuRef}
         ContentComponent={
