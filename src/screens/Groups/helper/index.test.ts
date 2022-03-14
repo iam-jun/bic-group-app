@@ -15,8 +15,7 @@ describe('Group functions helper', () => {
   const onConfirm = jest.fn();
 
   it('checkLastAdmin: should call mainCallback correctly', async () => {
-    // @ts-ignorets
-    groupsDataHelper.getGroupMembers.mockImplementation(() =>
+    jest.spyOn(groupsDataHelper, 'getGroupMembers').mockImplementation(() =>
       Promise.resolve({
         group_admin: {user_count: 5},
       }),
@@ -32,8 +31,7 @@ describe('Group functions helper', () => {
   });
 
   it('checkLastAdmin: should dispatch last admin error correctly', async () => {
-    // @ts-ignorets
-    groupsDataHelper.getGroupMembers.mockImplementation(() =>
+    jest.spyOn(groupsDataHelper, 'getGroupMembers').mockImplementation(() =>
       Promise.resolve({
         group_admin: {user_count: 1},
       }),
@@ -49,8 +47,9 @@ describe('Group functions helper', () => {
   });
 
   it('checkLastAdmin: should show server error message', async () => {
-    // @ts-ignore
-    groupsDataHelper.getGroupMembers.mockImplementation(() => Promise.reject());
+    jest
+      .spyOn(groupsDataHelper, 'getGroupMembers')
+      .mockImplementation(() => Promise.reject());
     const result = await checkLastAdmin(
       groupId,
       dispatch,
@@ -62,8 +61,7 @@ describe('Group functions helper', () => {
   });
 
   it('alertLeaveGroup: should leave group with no inner groups successfully', async () => {
-    // @ts-ignore
-    groupsDataHelper.getUserInnerGroups.mockImplementation(() =>
+    jest.spyOn(groupsDataHelper, 'getUserInnerGroups').mockImplementation(() =>
       Promise.resolve({
         data: {
           current_group: {},
@@ -82,8 +80,7 @@ describe('Group functions helper', () => {
   });
 
   it('alertLeaveGroup: should leave group with at least 1 inner group successfully', async () => {
-    // @ts-ignore
-    groupsDataHelper.getUserInnerGroups.mockImplementation(() =>
+    jest.spyOn(groupsDataHelper, 'getUserInnerGroups').mockImplementation(() =>
       Promise.resolve({
         data: {
           current_group: {},
@@ -106,10 +103,9 @@ describe('Group functions helper', () => {
   });
 
   it('alertLeaveGroup: should show error message from server', async () => {
-    // @ts-ignore
-    groupsDataHelper.getUserInnerGroups.mockImplementation(() =>
-      Promise.reject(),
-    );
+    jest
+      .spyOn(groupsDataHelper, 'getUserInnerGroups')
+      .mockImplementation(() => Promise.reject());
     const result = await alertLeaveGroup(
       groupId,
       dispatch,

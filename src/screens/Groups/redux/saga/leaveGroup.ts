@@ -28,19 +28,14 @@ export default function* leaveGroup({
     yield put(groupsActions.getJoinedGroups());
 
     if (privacy === groupPrivacy.secret) {
-      if (Platform.OS !== 'web') navigation.replace(groupStack.groups);
-      else {
+      if (Platform.OS !== 'web') {
+        yield call(navigationReplace);
+      } else {
         const topParentGroupId = groups?.joinedGroups[0]?.id;
-        navigation.navigate(groupStack.groupDetail, {
-          groupId: topParentGroupId,
-          initial: true,
-        });
+        yield call(navigateToGroup, topParentGroupId);
       }
     } else {
-      navigation.navigate(groupStack.groupDetail, {
-        groupId: payload,
-        initial: true,
-      });
+      yield call(navigateToGroup, payload);
     }
 
     yield put(groupsActions.setLoadingPage(true));
@@ -57,4 +52,15 @@ export default function* leaveGroup({
     console.log('leaveGroup:', err);
     yield showError(err);
   }
+}
+
+export function* navigationReplace() {
+  yield navigation.replace(groupStack.groups);
+}
+
+export function* navigateToGroup(groupId: number) {
+  yield navigation.navigate(groupStack.groupDetail, {
+    groupId: groupId,
+    initial: true,
+  });
 }
