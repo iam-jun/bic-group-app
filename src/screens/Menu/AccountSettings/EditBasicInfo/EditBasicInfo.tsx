@@ -108,6 +108,8 @@ const EditBasicInfo = () => {
     rootNavigation.goBack();
   };
 
+  console.log('languageState', gendersList, genderState);
+
   const onGenderItemPress = (item: IGenderItem) => {
     setGenderState(item.type);
     genderSheetRef.current?.close();

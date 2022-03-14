@@ -32,7 +32,9 @@ const OptionMenu = ({
 
   const renderItem = ({item}: {item: IOptionItem}) => {
     return (
-      <TouchableOpacity onPress={() => onItemPress(item)}>
+      <TouchableOpacity
+        testID={`eidt_user_info.option_menu.item_${item.type}`}
+        onPress={() => onItemPress(item)}>
         <PrimaryItem
           title={i18next.t(item.title)}
           height={36}
@@ -63,7 +65,7 @@ const OptionMenu = ({
               {title}
             </Text.ButtonSmall>
             <Divider />
-            {(data || []).map((item: IOptionItem) => (
+            {data.map((item: IOptionItem) => (
               <View key={item?.title + item?.type}>{renderItem({item})}</View>
             ))}
           </View>
