@@ -22,7 +22,6 @@ import {
 import * as actionsCommon from '~/store/modal/actions';
 import * as modalActions from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
-import {clearUserCookies} from '~/utils/cookie';
 import actions from './actions';
 import types from './types';
 
@@ -305,7 +304,6 @@ function* signOut({payload}: any) {
     if (payload) {
       navigation.replace(rootSwitch.authStack);
     }
-    clearUserCookies();
     yield Auth.signOut();
     // Check if chat auth session is still active
     const sessionData: IObject<any> = yield getUserFromSharedPreferences();

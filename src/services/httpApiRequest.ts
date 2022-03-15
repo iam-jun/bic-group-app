@@ -19,6 +19,7 @@ import noInternetActions from '~/screens/NoInternet/redux/actions';
 import {ActionTypes, createAction} from '~/utils';
 import {getEnv} from '~/utils/env';
 import {updateUserFromSharedPreferences} from './sharePreferences';
+import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -30,7 +31,15 @@ const beinFeedHeaders = {
   'X-Version': getEnv('BEIN_FEED_VERSION'),
 };
 
-const _dispatchLogout = () => {
+const _dispatchLogout = async () => {
+  /**
+   * Need calling this API before sign out to remove cookies
+   * And not putting it in saga as it needs field Authorization, which is extract from store.
+   * If we call it in saga, it will be null, and we cannot call API.
+   */
+  if (Platform.OS === 'web') {
+    await menuDataHelper.logout();
+  }
   Store.store.dispatch(createAction(ActionTypes.UnauthorizedLogout));
 };
 
