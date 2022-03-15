@@ -21,6 +21,7 @@ import {
 } from '~/beinComponents/inputs/MentionInput/helper';
 import MentionBarItem from '~/beinComponents/inputs/MentionInput/MentionBar/MentionBarItem';
 import Divider from '~/beinComponents/Divider';
+import {debounce} from 'lodash';
 
 interface MentionBarProps {
   testID?: string;
@@ -67,15 +68,14 @@ const MentionBar: FC<MentionBarProps> = ({
     onVisible?.(isShow);
   }, [isShow]);
 
-  const onCursorPositionChange = ({
-    position,
-    value,
-    groupIds,
-  }: ICursorPositionChange) => {
-    text.current = value;
-    cursorPosition.current = position;
-    checkRunSearch(value.substring(0, position), groupIds, dispatch);
-  };
+  const onCursorPositionChange = debounce(
+    ({position, value, groupIds}: ICursorPositionChange) => {
+      text.current = value;
+      cursorPosition.current = position;
+      checkRunSearch(value.substring(0, position), groupIds, dispatch);
+    },
+    100,
+  );
 
   const onPressItem = (item: IMentionUser) => {
     completeMention({
