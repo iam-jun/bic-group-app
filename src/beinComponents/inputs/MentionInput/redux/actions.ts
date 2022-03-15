@@ -44,6 +44,12 @@ const mentionActions = {
       payload,
     };
   },
+  addTempSelected: (payload: {[x: string]: any}) => {
+    return {
+      type: types.ADD_TEMP_SELECTED,
+      payload,
+    };
+  },
 };
 
 export default mentionActions;
