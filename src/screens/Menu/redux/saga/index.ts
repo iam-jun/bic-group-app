@@ -1,8 +1,8 @@
 import {select, put, takeLatest} from 'redux-saga/effects';
 import i18next from 'i18next';
 
-import menuActions from './actions';
-import menuTypes from './types';
+import menuActions from '../actions';
+import menuTypes from '../types';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
 import {
   IUserEdit,
@@ -10,12 +10,16 @@ import {
   IUserAddWorkExperience,
 } from '~/interfaces/IAuth';
 import * as modalActions from '~/store/modal/actions';
-import {mapProfile, mapWorkExperience} from './helper';
+import {mapProfile, mapWorkExperience} from '../helper';
 import {IUserImageUpload} from '~/interfaces/IEditUser';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
 import FileUploader from '~/services/fileUploader';
 import errorCode from '~/constants/errorCode';
 import {updateUserFromSharedPreferences} from '~/services/sharePreferences';
+import deleteWorkExperience from './deleteWorkExperience';
+import getMyWorkExperience from './getMyWorkExperience';
+import addWorkExperience from './addWorkExperience';
+import editWorkExperience from './editWorkExperience';
 
 export default function* menuSaga() {
   yield takeLatest(menuTypes.GET_USER_PROFILE, getUserProfile);
@@ -190,121 +194,6 @@ function* updateLoadingImageState(
   }
 }
 
-function* getMyWorkExperience() {
-  try {
-    const response: IResponseData = yield menuDataHelper.getMyWorkExperience();
-
-    yield put(
-      menuActions.setMyWorkExperience(mapWorkExperience(response?.data)),
-    );
-  } catch (err) {
-    console.log('getMyWorkExperience error:', err);
-  }
-}
-
-function* addWorkExperience({
-  payload,
-  callback,
-}: {
-  type: string;
-  payload: IUserAddWorkExperience;
-  callback?: () => void;
-}) {
-  try {
-    const {
-      company,
-      titlePosition,
-      location,
-      description,
-      currentlyWorkHere,
-      startDate,
-      endDate,
-    } = payload;
-
-    yield menuDataHelper.addWorkExperience({
-      company,
-      title_position: titlePosition,
-      location,
-      description,
-      currently_work_here: currentlyWorkHere,
-      start_date: startDate,
-      end_date: endDate,
-    });
-
-    yield put(menuActions.getMyWorkExperience());
-
-    if (callback) return callback();
-  } catch (err) {
-    console.log('addWorkExperience:', err);
-    yield showError(err);
-  }
-}
-
-function* editWorkExperience({
-  payload,
-  callback,
-  id,
-}: {
-  type: string;
-  id: number;
-  payload: IUserAddWorkExperience;
-  callback?: () => void;
-}) {
-  try {
-    const {
-      company,
-      titlePosition,
-      location,
-      description,
-      currentlyWorkHere,
-      startDate,
-      endDate,
-    } = payload;
-
-    yield menuDataHelper.editWorkExperience(id, {
-      company,
-      title_position: titlePosition,
-      location,
-      description,
-      currently_work_here: currentlyWorkHere,
-      start_date: startDate,
-      end_date: endDate,
-    });
-
-    yield put(menuActions.getMyWorkExperience());
-
-    if (callback) return callback();
-  } catch (err) {
-    console.log('editWorkExperience:', err);
-    yield showError(err);
-  }
-}
-
-function* deleteWorkExperience({
-  id,
-  callback,
-}: {
-  type: string;
-  id: number;
-  callback?: () => void;
-}) {
-  try {
-    const response: IResponseData = yield menuDataHelper.deleteWorkExperience(
-      id,
-    );
-    if (!!response?.data) {
-      yield put(
-        menuActions.setMyWorkExperience(mapWorkExperience(response.data)),
-      );
-    }
-
-    if (callback) return callback();
-  } catch (err) {
-    console.log('deleteWorkExperience:', err);
-    yield showError(err);
-  }
-}
-
 function* showError(err: any) {
   if (err.code === errorCode.systemIssue) return;
 
@@ -319,17 +208,4 @@ function* showError(err: any) {
     },
   };
   yield put(modalActions.showHideToastMessage(toastMessage));
-}
-
-function* getWorkExperience({id}: {id: number}) {
-  try {
-    const response: IResponseData = yield menuDataHelper.getWorkExperience(id);
-    if (response?.data) {
-      yield put(
-        menuActions.setUserWorkExperience(mapWorkExperience(response.data)),
-      );
-    }
-  } catch (err) {
-    console.log('getWorkExperience error:', err);
-  }
 }

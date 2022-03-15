@@ -9,10 +9,12 @@ export const mapWorkExperience = (data: []): IUserWorkExperience[] => {
 };
 
 export const mapWorkExp = (data: any): IUserWorkExperience => {
+  console.log('IUserWorkExperience', data);
+
   return {
     ...data,
     titlePosition: data?.title_position || '',
-    currentlyWorkHere: data?.currently_work_here || null,
+    currentlyWorkHere: data?.currently_work_here,
     startDate: data?.start_date || null,
     endDate: data?.end_date || null,
   };

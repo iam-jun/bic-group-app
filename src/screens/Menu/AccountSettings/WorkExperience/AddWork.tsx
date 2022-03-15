@@ -57,7 +57,9 @@ const AddWork = () => {
     description || '',
   );
   const [isWorkHere, setIsWorkHere] = useState<boolean>(
-    currentlyWorkHere || true,
+    !isEmpty(selectedWorkItem) && currentlyWorkHere !== null
+      ? currentlyWorkHere
+      : true,
   );
 
   const [startDateValue, setStartDateValue] = useState<string>(
@@ -73,19 +75,6 @@ const AddWork = () => {
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
   useEffect(() => {
-    setCompanyValue(selectedWorkItem?.company || '');
-    setPositionValue(selectedWorkItem?.titlePosition || '');
-    setLocationValue(selectedWorkItem?.location || '');
-    setDescriptionValue(selectedWorkItem?.description || '');
-    setIsWorkHere(value => {
-      if (isEmpty(selectedWorkItem)) return true;
-      return selectedWorkItem?.currently_work_here;
-    });
-    setStartDateValue(selectedWorkItem?.startDate || new Date().toISOString());
-    setEndDateValue(selectedWorkItem?.endDate || null);
-  }, [selectedWorkItem]);
-
-  useEffect(() => {
     if (isWorkHere) {
       setEndDateValue(null);
     } else {
@@ -96,6 +85,8 @@ const AddWork = () => {
   const navigateBack = () => {
     Keyboard.dismiss();
     if (rootNavigation.canGoBack) {
+      console.log('rootNavigation.canGoBack');
+
       rootNavigation.goBack();
     } else {
       rootNavigation.replace(mainStack.userEdit);
@@ -282,10 +273,13 @@ const AddWork = () => {
   const renderStartDate = () => {
     return (
       <View style={styles.selectionLineView}>
-        <Text.H6 useI18n>
+        <Text.H6 testID="add_work.start_date.title" useI18n>
           {isWorkHere ? 'settings:text_since' : 'common:text_start_date'}
         </Text.H6>
-        <ButtonWrapper style={styles.buttonDate} onPress={onStartDateEditOpen}>
+        <ButtonWrapper
+          testID="add_work.start_date.button"
+          style={styles.buttonDate}
+          onPress={onStartDateEditOpen}>
           <Icon
             icon="CalendarAlt"
             tintColor={colors.textSecondary}
@@ -301,24 +295,26 @@ const AddWork = () => {
   };
 
   const renderEndDate = () => {
+    if (isWorkHere) return null;
     return (
-      !isWorkHere && (
-        <View style={styles.selectionLineView}>
-          <Text.H6 useI18n>common:text_end_date</Text.H6>
-          <ButtonWrapper style={styles.buttonDate} onPress={onEndDateEditOpen}>
-            <Icon
-              icon="CalendarAlt"
-              tintColor={colors.textSecondary}
-              style={styles.calendarIcon}
-            />
+      <View testID="add_work.end_date_view" style={styles.selectionLineView}>
+        <Text.H6 useI18n>common:text_end_date</Text.H6>
+        <ButtonWrapper
+          testID="add_work.end_date.button"
+          style={styles.buttonDate}
+          onPress={onEndDateEditOpen}>
+          <Icon
+            icon="CalendarAlt"
+            tintColor={colors.textSecondary}
+            style={styles.calendarIcon}
+          />
 
-            <Text.BodyS testID="add_work.end_date" color={colors.textSecondary}>
-              {(endDateValue && formatDate(endDateValue, 'MMMM DD, YYYY')) ||
-                i18next.t('common:text_not_set')}
-            </Text.BodyS>
-          </ButtonWrapper>
-        </View>
-      )
+          <Text.BodyS testID="add_work.end_date" color={colors.textSecondary}>
+            {(endDateValue && formatDate(endDateValue, 'MMMM DD, YYYY')) ||
+              i18next.t('common:text_not_set')}
+          </Text.BodyS>
+        </ButtonWrapper>
+      </View>
     );
   };
 
@@ -353,6 +349,7 @@ const AddWork = () => {
           disabled:
             companyValue?.trim?.() && positionValue?.trim?.() ? false : true,
           borderRadius: theme.spacing.borderRadius.small,
+          testID: 'add_work.save',
         }}
         onPressButton={onSave}
         onPressBack={navigateBack}
@@ -375,7 +372,9 @@ const AddWork = () => {
       </ScrollView>
 
       {selectingStartDate && (
-        <Div className="react-datepicker-container">
+        <Div
+          testID="add_work.start_date.bottom_sheet"
+          className="react-datepicker-container">
           <DateTimePicker
             isVisible={selectingStartDate}
             date={new Date()}
@@ -387,7 +386,9 @@ const AddWork = () => {
       )}
 
       {selectingEndDate && (
-        <Div className="react-datepicker-container">
+        <Div
+          testID="add_work.end_date.bottom_sheet"
+          className="react-datepicker-container">
           <DateTimePicker
             isVisible={selectingEndDate}
             date={new Date()}
