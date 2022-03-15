@@ -34,6 +34,7 @@ describe('Get group posts saga', () => {
         .provide([
           [matchers.call.fn(groupsDataHelper.getGroupPosts), groupPostData],
         ])
+        // @ts-ignore
         .put(postActions.addToAllPosts({data: groupPostData}))
         // @ts-ignore
         .put(groupsActions.setGroupPosts(groupPostData))

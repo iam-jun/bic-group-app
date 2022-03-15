@@ -58,11 +58,11 @@ const GroupContent = ({
   };
 
   const onPressFiles = () => {
-    rootNavigation.navigate(groupStack.groupFiles);
+    rootNavigation.navigate(groupStack.groupFiles, {groupId});
   };
 
   const onPressChannel = () => {
-    rootNavigation.navigate(groupStack.groupFiles);
+    rootNavigation.navigate(groupStack.groupFiles, {groupId});
   };
 
   const loadMoreData = () => {
@@ -72,7 +72,7 @@ const GroupContent = ({
   };
 
   const renderItem = ({item}: any) => {
-    return <PostItem postData={item} />;
+    return <PostItem postData={item} testID="group_content.post.item" />;
   };
 
   const _onRefresh = () => {
