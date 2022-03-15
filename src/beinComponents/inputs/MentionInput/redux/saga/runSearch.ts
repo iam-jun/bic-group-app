@@ -1,4 +1,4 @@
-import {call, put} from 'redux-saga/effects';
+import {call, put, select} from 'redux-saga/effects';
 import {IObject} from '~/interfaces/common';
 import {IParamSearchMentionAudiences} from '~/interfaces/IPost';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
@@ -15,8 +15,13 @@ export default function* runSearch({
       postDataHelper.getSearchMentionAudiences,
       payload,
     );
-
-    yield put(actions.setData(response?.data || []));
+    const fullContent: string =
+      (yield select(state => state?.mentionInput?.fullContent)) || '';
+    if (!!fullContent) {
+      yield put(actions.setData(response?.data || []));
+    } else {
+      yield put(actions.setData([]));
+    }
   } catch (e) {
     yield put(actions.setLoading(false));
     console.log('runSearch', e);

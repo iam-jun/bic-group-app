@@ -19,6 +19,7 @@ import Autocomplete from './Autocomplete';
 import {ICursorPositionChange, switchKeyboardForCodeBlocks} from './helper';
 import {useDispatch} from 'react-redux';
 import actionsMention from '~/beinComponents/inputs/MentionInput/redux/actions';
+import actions from '~/beinComponents/inputs/MentionInput/redux/actions';
 
 interface Props {
   textInputRef?: any;
@@ -110,6 +111,7 @@ const _MentionInput = ({
   };
 
   const onChangeText = (value: string) => {
+    dispatch(actions.setFullContent(value));
     componentInputProps.onChangeText?.(value);
     const param: ICursorPositionChange = {
       position: cursorPosition.current,

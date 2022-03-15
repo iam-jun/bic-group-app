@@ -2,6 +2,7 @@ import types from './types';
 
 export const mentionInputInitState = {
   text: '',
+  fullContent: '',
   key: null,
   cursorPosition: -2, // follow MatterMost
   topPosition: 0,
@@ -19,6 +20,11 @@ const reducer = (state = mentionInputInitState, action: any = {}) => {
       return {
         ...state,
         text: payload,
+      };
+    case types.SET_FULL_CONTENT:
+      return {
+        ...state,
+        fullContent: payload,
       };
     case types.SET_CURSOR_POSITION:
       return {

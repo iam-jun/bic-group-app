@@ -8,6 +8,12 @@ const mentionActions = {
       payload,
     };
   },
+  setFullContent: (payload: string) => {
+    return {
+      type: types.SET_FULL_CONTENT,
+      payload,
+    };
+  },
   setCursorPosition: (payload: number) => {
     return {
       type: types.SET_CURSOR_POSITION,
