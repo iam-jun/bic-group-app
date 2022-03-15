@@ -53,9 +53,9 @@ const rootReducers = (state, action) => {
   ) {
     if (Platform.OS !== 'web') {
       if (state?.auth?.user) {
-        makeRemovePushTokenRequest(
-          state?.auth?.user?.signInUserSession.idToken.jwtToken,
-        ).catch(e => console.log('error when call api logout', e));
+        makeRemovePushTokenRequest().catch(e =>
+          console.log('error when call api logout', e),
+        );
       }
       initPushTokenMessage()
         .then(messaging => {
