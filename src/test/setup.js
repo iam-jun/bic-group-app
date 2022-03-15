@@ -1,10 +1,12 @@
 import * as React from 'react';
 import * as ReactNative from 'react-native';
 import {configure} from 'enzyme';
+import {get} from 'lodash';
 import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-info-mock';
 import mockAsyncStorage from '@react-native-async-storage/async-storage/jest/async-storage-mock';
+import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js';
 
 import 'react-native-gesture-handler/jestSetup';
 import {initReactI18next} from 'react-i18next';
@@ -18,6 +20,9 @@ import dimension from '~/theme/dimension';
 import mockSafeAreaContext from '~/test/mockSafeAreaContext';
 
 configure({adapter: new Adapter()});
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const languages = require('~/localization/en.json');
 
 jest.mock('react-native-image-crop-picker', () => ({
   openPicker: jest.fn().mockImplementation(() =>
@@ -35,7 +40,7 @@ jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
 jest.doMock('react-i18next', () => ({
   useTranslation: () => {
     return {
-      t: str => str,
+      t: str => get(languages, str?.replaceAll?.(':', '.')),
       i18n: {
         changeLanguage: () => new Promise(() => undefined),
       },
@@ -45,22 +50,26 @@ jest.doMock('react-i18next', () => ({
 }));
 
 jest.doMock('i18next', () => ({
-  t: str => str,
+  t: str => get(languages, str?.replaceAll?.(':', '.')),
 }));
 
 jest.doMock('react-native-paper', () => ({
-    // eslint-disable-next-line react/prop-types
-    Portal: ({children}) => children,
-    useTheme: () => ({
-      colors: colors.light.colors,
-      spacing: spacing,
-      dimension: dimension,
-    }),
-    TextInput: ReactNative.TextInput,
+  // eslint-disable-next-line react/prop-types
+  Portal: ({children}) => children,
+  useTheme: () => ({
+    colors: colors.light.colors,
+    spacing: spacing,
+    dimension: dimension,
+  }),
+  TextInput: {
+    ...ReactNative.TextInput,
+    Icon: ReactNative.View,
+  },
 }));
 
 jest.doMock('react-native-modalize', () => {
   const RealModule = jest.requireActual('react-native-modalize');
+  // noinspection UnnecessaryLocalVariableJS
   const MockedModule = {
     ...RealModule,
     // eslint-disable-next-line react/prop-types
@@ -72,6 +81,8 @@ jest.doMock('react-native-modalize', () => {
 jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 
 jest.mock('react-native-device-info', () => mockRNDeviceInfo);
+
+jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo);
 
 jest.doMock('react-native', () => {
   const {
@@ -97,6 +108,7 @@ jest.doMock('react-native', () => {
     runAfterInteractions: jest.fn(cb => cb()),
   };
 
+  // noinspection JSUnusedGlobalSymbols
   const NativeModules = {
     ...RNNativeModules,
     UIManager: {

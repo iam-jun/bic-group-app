@@ -315,9 +315,7 @@ exports[`Button Wrapper component renders correctly children with useI18n 1`] = 
           "textAlign": "center",
         }
       }
-    >
-      common:text_show_less
-    </Text>
+    />
   </View>
 </View>
 `;

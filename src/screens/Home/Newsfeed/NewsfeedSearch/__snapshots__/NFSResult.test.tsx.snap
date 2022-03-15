@@ -68,6 +68,7 @@ exports[`NFSResult component should render empty search result 1`] = `
                   }
                 }
                 accessible={true}
+                collapsable={false}
                 focusable={false}
                 hitSlop={
                   Object {
@@ -77,6 +78,7 @@ exports[`NFSResult component should render empty search result 1`] = `
                     "top": 10,
                   }
                 }
+                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -175,7 +177,7 @@ exports[`NFSResult component should render empty search result 1`] = `
                   }
                 }
               >
-                home:newsfeed_search:filter
+                Filter
               </Text>
             </View>
           </View>
@@ -219,7 +221,7 @@ exports[`NFSResult component should render empty search result 1`] = `
                   }
                 }
               >
-                home:newsfeed_search:filter_created_by
+                Created by
               </Text>
             </View>
           </View>
@@ -263,7 +265,7 @@ exports[`NFSResult component should render empty search result 1`] = `
                   }
                 }
               >
-                home:newsfeed_search:filter_date
+                Date
               </Text>
             </View>
           </View>
@@ -449,7 +451,8 @@ exports[`NFSResult component should render empty search result 1`] = `
             }
           }
         >
-          post:newsfeed:text_empty_search_post
+          Sorry, we couldn’t find anything related
+to your search.
         </Text>
       </View>
       <View
@@ -536,6 +539,7 @@ exports[`NFSResult component should render list search result 1`] = `
                   }
                 }
                 accessible={true}
+                collapsable={false}
                 focusable={false}
                 hitSlop={
                   Object {
@@ -545,6 +549,7 @@ exports[`NFSResult component should render list search result 1`] = `
                     "top": 10,
                   }
                 }
+                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -643,7 +648,7 @@ exports[`NFSResult component should render list search result 1`] = `
                   }
                 }
               >
-                home:newsfeed_search:filter
+                Filter
               </Text>
             </View>
           </View>
@@ -687,7 +692,7 @@ exports[`NFSResult component should render list search result 1`] = `
                   }
                 }
               >
-                home:newsfeed_search:filter_created_by
+                Created by
               </Text>
             </View>
           </View>
@@ -731,7 +736,7 @@ exports[`NFSResult component should render list search result 1`] = `
                   }
                 }
               >
-                home:newsfeed_search:filter_date
+                Date
               </Text>
             </View>
           </View>
@@ -1136,7 +1141,7 @@ exports[`NFSResult component should render list search result 1`] = `
                       }
                     }
                   >
-                    post:to
+                    to
                   </Text>
                   <Text
                     onPress={[Function]}
@@ -1170,7 +1175,7 @@ exports[`NFSResult component should render list search result 1`] = `
                     }
                     testID="time_view"
                   >
-                    Jan 24 common:time:at 11:17 AM
+                    Jan 24 at 11:17 AM
                   </Text>
                 </View>
               </View>
@@ -1188,6 +1193,7 @@ exports[`NFSResult component should render list search result 1`] = `
                     }
                   }
                   accessible={true}
+                  collapsable={false}
                   focusable={true}
                   hitSlop={
                     Object {
@@ -1197,6 +1203,7 @@ exports[`NFSResult component should render list search result 1`] = `
                       "top": 10,
                     }
                   }
+                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -1589,7 +1596,7 @@ exports[`NFSResult component should render loading search result 1`] = `
                   }
                 }
               >
-                home:newsfeed_search:filter
+                Filter
               </Text>
             </View>
           </View>
@@ -1633,7 +1640,7 @@ exports[`NFSResult component should render loading search result 1`] = `
                   }
                 }
               >
-                home:newsfeed_search:filter_created_by
+                Created by
               </Text>
             </View>
           </View>
@@ -1677,7 +1684,7 @@ exports[`NFSResult component should render loading search result 1`] = `
                   }
                 }
               >
-                home:newsfeed_search:filter_date
+                Date
               </Text>
             </View>
           </View>

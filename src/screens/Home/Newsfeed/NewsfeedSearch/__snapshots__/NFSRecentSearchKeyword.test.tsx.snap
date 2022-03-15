@@ -27,7 +27,7 @@ exports[`NFSRecentSearchKeyword component should render empty recent search keyw
         }
       }
     >
-      home:newsfeed_search:label_recent_search
+      Recent Search
     </Text>
   </View>
   <Text
@@ -41,7 +41,7 @@ exports[`NFSRecentSearchKeyword component should render empty recent search keyw
       }
     }
   >
-    home:newsfeed_search:no_recent_search
+    No recent search
   </Text>
 </View>
 `;
@@ -73,7 +73,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
         }
       }
     >
-      home:newsfeed_search:label_recent_search
+      Recent Search
     </Text>
     <View
       accessible={true}
@@ -116,7 +116,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
             }
           }
         >
-          HOME:NEWSFEED_SEARCH:CLEAR
+          CLEAR
         </Text>
       </View>
     </View>
@@ -329,7 +329,7 @@ exports[`NFSRecentSearchKeyword component should render loading recent search ke
         }
       }
     >
-      home:newsfeed_search:label_recent_search
+      Recent Search
     </Text>
   </View>
   <ActivityIndicator

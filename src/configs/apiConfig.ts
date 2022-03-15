@@ -44,7 +44,7 @@ const Upload = {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-      useRetry: false,
+      useRetry: true,
       provider: providers.bein,
       onUploadProgress: onUploadProgress,
       data,

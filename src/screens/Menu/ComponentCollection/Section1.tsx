@@ -8,7 +8,7 @@ import FlashMessage from '~/beinComponents/FlashMessage';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import NormalToastMessage from '~/beinComponents/ToastMessage/NormalToastMessage';
-import {copyDeviceToken} from '~/store/app/actions';
+// import {copyDeviceToken} from '~/store/app/actions';
 import {ITheme} from '~/theme/interfaces';
 import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
@@ -24,9 +24,9 @@ const Section1 = () => {
   const [showSuccess, setShowSuccess] = useState(true);
   const dispatch = useDispatch();
 
-  const copyToken = async () => {
-    dispatch(copyDeviceToken());
-  };
+  // const copyToken = async () => {
+  //   dispatch(copyDeviceToken());
+  // };
 
   const renderSection = (title: string, child: React.ReactNode) => {
     return (
@@ -379,47 +379,26 @@ const Section1 = () => {
             paddingHorizontal: spacing?.padding.base,
           }}
         />
-        <Text.H5>{`<Button.BottomFixed></Button.BottomFixed>`}</Text.H5>
-        <View
-          style={{
-            backgroundColor: colors.bgButtonPrimary,
-            marginHorizontal: -12,
-            paddingTop: spacing?.padding.base,
-            paddingBottom: spacing?.padding.large,
-          }}>
-          <Button.BottomFixed
-            absoluteBottom={false}
-            onPress={() => alert('onPress BottomButton')}>
-            Bottom Button
-          </Button.BottomFixed>
-        </View>
         <Divider
           style={{
             margin: spacing?.margin.base,
             paddingHorizontal: spacing?.padding.base,
           }}
         />
-        <Text.H5>{`<Button.BottomSecondary>`}</Text.H5>
         <View
           style={{
             backgroundColor: colors.bgButtonPrimary,
             marginHorizontal: -12,
             paddingTop: spacing?.padding.base,
             paddingBottom: spacing?.padding.large,
-          }}>
-          <Button.BottomSecondary
-            absoluteBottom={false}
-            onPress={() => alert('onPress BottomButton')}>
-            Bottom Secondary Button
-          </Button.BottomSecondary>
-        </View>
+          }}></View>
       </View>,
     );
   };
 
   return (
     <View style={{}}>
-      <Button.Primary onPress={copyToken}>Copy Device Token</Button.Primary>
+      {/*<Button.Primary onPress={copyToken}>Copy Device Token</Button.Primary>*/}
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 1</Text.H5>
       {renderButton()}
       {renderFlashMessage()}
@@ -427,11 +406,6 @@ const Section1 = () => {
       {renderBannerMessage()}
       {renderIcon()}
       {renderText()}
-      <Button.BottomFixed
-        absoluteBottom={false}
-        onPress={() => alert('onPress BottomButton')}>
-        Bottom Button - absoluteBottom
-      </Button.BottomFixed>
     </View>
   );
 };

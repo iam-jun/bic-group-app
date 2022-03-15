@@ -13,8 +13,8 @@ export interface IGetStreamNotificationActivity {
   id: string;
   notification_type: number;
   object: IGetStreamPost | any;
-  origin: null;
-  reaction: IReaction;
+  origin?: string;
+  reaction?: IReaction;
   target: string;
   time: string;
   verb: string;

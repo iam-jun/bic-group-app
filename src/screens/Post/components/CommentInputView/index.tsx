@@ -1,14 +1,11 @@
 import React, {FC, useEffect, useRef} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
+import {Platform, View} from 'react-native';
 import uuid from 'react-native-uuid';
-
+import {useDispatch} from 'react-redux';
 import CommentInput, {
   ICommentInputSendParam,
 } from '~/beinComponents/inputs/CommentInput';
-import _MentionInput from '~/beinComponents/inputs/_MentionInput';
-
+import MentionInput from '~/beinComponents/inputs/MentionInput';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useKeySelector} from '~/hooks/selector';
@@ -20,8 +17,6 @@ import {
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
-
-import {ITheme} from '~/theme/interfaces';
 import ReplyingView from './ReplyingView';
 
 export interface CommentInputViewProps {
@@ -40,17 +35,12 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   groupIds = '',
   autoFocus,
   commentInputRef,
-  onCommentSuccess,
 }: CommentInputViewProps) => {
   const _commentInputRef = commentInputRef || useRef<any>();
   const mentionInputRef = useRef<any>();
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-
-  const theme = useTheme() as ITheme;
-  const {colors} = theme;
-  const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
   const myProfile = useKeySelector(menuKeySelector.myProfile);
@@ -78,6 +68,12 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       dispatch(postActions.setPostDetailReplyingComment());
     };
   }, []);
+
+  useEffect(() => {
+    //clean data when post id change, in case sometime cache data on web
+    dispatch(postActions.setCreateComment({content: '', loading: false}));
+    dispatch(postActions.setPostDetailReplyingComment());
+  }, [postId]);
 
   useEffect(() => {
     if (replyTargetUserId && replyTargetUser?.data?.username) {
@@ -147,7 +143,8 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   return (
     <View>
-      <_MentionInput
+      <MentionInput
+        disableAutoComplete={Platform.OS !== 'web'}
         groupIds={groupIds}
         ComponentInput={CommentInput}
         mentionInputRef={mentionInputRef}
@@ -168,29 +165,6 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       />
     </View>
   );
-};
-
-const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
-
-  return StyleSheet.create({
-    container: {},
-    flex1: {flex: 1},
-    row: {flexDirection: 'row'},
-    commentInputHeader: {
-      flexDirection: 'row',
-      paddingHorizontal: spacing.padding.small,
-      paddingBottom: spacing.padding.small,
-      marginHorizontal: spacing?.margin.small,
-      marginTop: spacing?.margin.small,
-      borderBottomWidth: 1,
-      borderColor: colors.borderDivider,
-    },
-    headerContent: {
-      flex: 1,
-      flexDirection: 'row',
-    },
-  });
 };
 
 export default CommentInputView;

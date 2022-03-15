@@ -38,7 +38,7 @@ exports[`NFSSuggestion component should render NFSResult 1`] = `
               }
             }
           >
-            home:newsfeed_search:label_recent_search
+            Recent Search
           </Text>
         </View>
         <ActivityIndicator
@@ -214,7 +214,7 @@ exports[`NFSSuggestion component should render button search keyword 1`] = `
             }
           }
         >
-          home:newsfeed_search:text_cta_see_result_for_search_text
+          See result for "hello"
         </Text>
       </View>
     </View>

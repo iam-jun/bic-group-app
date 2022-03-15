@@ -12,15 +12,37 @@ exports[`TextInput component renders correctly 1`] = `
   }
   testID="text_input"
 >
-  <TextInput
+  <RCTSinglelineTextInputView
+    accessible={true}
+    allowFontScaling={true}
+    blurOnSubmit={true}
     dense={true}
+    focusable={true}
+    forwardedRef={null}
     mode="outlined"
+    mostRecentEventCount={0}
+    onBlur={[Function]}
+    onChange={[Function]}
     onChangeText={[Function]}
+    onClick={[Function]}
+    onFocus={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onScroll={[Function]}
+    onSelectionChange={[Function]}
+    onSelectionChangeShouldSetResponder={[Function]}
+    onStartShouldSetResponder={[Function]}
     outlineColor="#2F3945"
     placeholderTextColor="#627286"
+    rejectResponderTermination={true}
+    selection={null}
     selectionColor="#627286"
     style={Object {}}
     testID="text_input.input"
+    text=""
     theme={
       Object {
         "colors": Object {
@@ -37,6 +59,7 @@ exports[`TextInput component renders correctly 1`] = `
         "roundness": 6,
       }
     }
+    underlineColorAndroid="transparent"
     value=""
   />
 </View>

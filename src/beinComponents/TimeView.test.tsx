@@ -6,6 +6,7 @@ import TimeView, {
   formatDateTime,
 } from '~/beinComponents/TimeView';
 import moment from 'moment';
+import {languages} from '~/test/testUtils';
 
 afterEach(cleanup);
 
@@ -48,58 +49,73 @@ describe('TimeView component', () => {
   });
 
   it(`renders correctly with propstime`, () => {
+    const date = new Date('2022-02-02 00:00:00');
     const {getByTestId, getByText} = render(<TimeView time={date} />);
     const timeComponent = getByTestId('time_view');
     expect(timeComponent.children).toBeDefined();
-    expect(getByText(/common:time:today common:time:at/)).toBeDefined();
+    expect(
+      getByText(`Feb 02 ${languages.common.time.at} 12:00 AM`),
+    ).toBeDefined();
   });
 
   it(`renders correctly with props type fullDateTime`, () => {
+    const date = new Date('2022-02-02 00:00:00');
     const {getByTestId, getByText} = render(
       <TimeView time={date} type="fullDateTime" />,
     );
     const timeComponent = getByTestId('time_view');
     expect(timeComponent.children).toBeDefined();
-    expect(getByText(/common:time:today common:time:at/)).toBeDefined();
+    expect(
+      getByText(`Feb 02 ${languages.common.time.at} 12:00 AM`),
+    ).toBeDefined();
   });
 
   it(`renders correctly with props type dateTime`, () => {
+    const date = new Date('2022-02-02 00:00:00');
     const {getByTestId, getByText} = render(
       <TimeView time={date} type="dateTime" />,
     );
     const timeComponent = getByTestId('time_view');
     expect(timeComponent.children).toBeDefined();
-    expect(getByText(/common:time:today/)).toBeDefined();
+    expect(getByText(`Feb 02, 2022`)).toBeDefined();
   });
 
   it(`renders correctly with props type short`, () => {
+    const dateTime = new Date();
+    const time = new Date(
+      dateTime.setMinutes(dateTime.getMinutes() - 5),
+    ).toISOString();
     const {getByTestId, getByText} = render(
-      <TimeView time={date} type="short" />,
+      <TimeView time={time} type="short" />,
     );
     const timeComponent = getByTestId('time_view');
     expect(timeComponent.children).toBeDefined();
-    expect(getByText(/common:time:short_hour/)).toBeDefined();
-  });
-
-  it(`function formatShortTime`, () => {
-    expect(formatShortTime(date, 'vi')).toMatch(/common:time:short_hour/);
+    expect(getByText(`5${languages.common.time.short_min}`)).toBeDefined();
   });
 
   it(`function formatShortTime with now`, () => {
     const now = moment.utc();
-    expect(formatShortTime(now, 'vi')).toMatch(/common:time:now/);
+    expect(formatShortTime(now, 'vi')).toMatch(languages.common.time.now);
   });
 
   it(`function formatShortTime with 5 minutes ago`, () => {
     const dateTime = new Date();
-    const time = new Date(dateTime.setMinutes(5, 0, 0)).toISOString();
-    expect(formatShortTime(time, 'vi')).toMatch(/common:time:short_min/);
+    const time = new Date(
+      dateTime.setMinutes(dateTime.getMinutes() - 5),
+    ).toISOString();
+    expect(formatShortTime(time, 'en')).toMatch(
+      `5${languages.common.time.short_min}`,
+    );
   });
 
   it(`function formatShortTime with 5 hour ago`, () => {
     const dateTime = new Date();
-    const time = new Date(dateTime.setHours(5, 0, 0, 0)).toISOString();
-    expect(formatShortTime(time, 'vi')).toMatch(/common:time:short_hour/);
+    const time = new Date(
+      dateTime.setHours(dateTime.getHours() - 5),
+    ).toISOString();
+    expect(formatShortTime(time, 'en')).toMatch(
+      `5${languages.common.time.short_hour}`,
+    );
   });
 
   it(`function formatShortTime with 5 days ago`, () => {
@@ -107,7 +123,9 @@ describe('TimeView component', () => {
     const time = new Date(
       dateTime.setDate(dateTime.getDate() - 5),
     ).toISOString();
-    expect(formatShortTime(time, 'vi')).toMatch(/common:time:short_day/);
+    expect(formatShortTime(time, 'en')).toMatch(
+      `5${languages.common.time.short_day}`,
+    );
   });
 
   it(`function formatShortTime with 1 weeks ago`, () => {
@@ -115,7 +133,9 @@ describe('TimeView component', () => {
     const time = new Date(
       dateTime.setDate(dateTime.getDate() - 10),
     ).toISOString();
-    expect(formatShortTime(time, 'vi')).toMatch(/common:time:short_week/);
+    expect(formatShortTime(time, 'en')).toMatch(
+      `1${languages.common.time.short_week}`,
+    );
   });
 
   it(`function formatShortTime with date display`, () => {
@@ -130,7 +150,7 @@ describe('TimeView component', () => {
 
   it(`function formatFullTime`, () => {
     expect(formatFullTime(date, 'vi')).toMatch(
-      /common:time:today common:time:at/,
+      `${languages.common.time.today} ${languages.common.time.at}`,
     );
   });
 
@@ -140,7 +160,7 @@ describe('TimeView component', () => {
       dateTime.setDate(dateTime.getDate() - 1),
     ).toISOString();
     expect(formatFullTime(time, 'vi')).toMatch(
-      /common:time:yesterday common:time:at/,
+      `${languages.common.time.yesterday} ${languages.common.time.at}`,
     );
   });
 
@@ -155,7 +175,7 @@ describe('TimeView component', () => {
   });
 
   it(`funtion formatDateTime`, () => {
-    expect(formatDateTime(date, 'vi')).toMatch(/common:time:today/);
+    expect(formatDateTime(date, 'vi')).toMatch(languages.common.time.today);
   });
 
   it(`funtion formatDateTime with yesterday`, () => {
@@ -163,7 +183,7 @@ describe('TimeView component', () => {
     const time = new Date(
       dateTime.setDate(dateTime.getDate() - 1),
     ).toISOString();
-    expect(formatDateTime(time, 'vi')).toMatch(/common:time:yesterday/);
+    expect(formatDateTime(time, 'vi')).toMatch(languages.common.time.yesterday);
   });
 
   it(`funtion formatDateTime with date display`, () => {

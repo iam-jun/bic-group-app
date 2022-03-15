@@ -52,7 +52,7 @@ exports[`NewsfeedSearch component should render search 1`] = `
                 }
               }
             >
-              home:newsfeed_search:label_recent_search
+              Recent Search
             </Text>
           </View>
           <ActivityIndicator
@@ -132,7 +132,7 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
                 }
               }
             >
-              home:newsfeed_search:label_recent_search
+              Recent Search
             </Text>
           </View>
           <ActivityIndicator

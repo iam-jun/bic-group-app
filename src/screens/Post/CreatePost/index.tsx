@@ -16,10 +16,8 @@ import {useDispatch} from 'react-redux';
 import {useBackHandler} from '@react-native-community/hooks';
 import {isEqual, isEmpty, differenceWith} from 'lodash';
 
-import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
-// import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
@@ -52,14 +50,14 @@ import {useBaseHook} from '~/hooks';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
-import Div from '~/beinComponents/Div';
 import {fontFamilies} from '~/theme/fonts';
 import Button from '~/beinComponents/Button';
-import _MentionInput from '~/beinComponents/inputs/_MentionInput';
+import MentionInput from '~/beinComponents/inputs/MentionInput';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import {useKeyboardStatus} from '~/hooks/keyboard';
 import DeviceInfo from 'react-native-device-info';
+import CreatePostFooter from '~/screens/Post/CreatePost/CreatePostFooter';
 
 export interface CreatePostProps {
   route?: {
@@ -293,6 +291,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       dispatch(postActions.setSearchResultAudienceGroups([]));
       dispatch(postActions.setSearchResultAudienceUsers([]));
       dispatch(postActions.setCreatePostImagesDraft([]));
+
+      //clear comment because of comment input view listen emit event change text
+      dispatch(postActions.setCreateComment({content: '', loading: false}));
     };
   }, []);
 
@@ -721,11 +722,12 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             </RNText>
           </View>
         )}
-        <ScrollView>
+        <ScrollView keyboardShouldPersistTaps="always">
           <View style={styles.flex1}>
             <Animated.View
               style={isAnimated ? {height: heightAnimated} : styles.flex1}>
-              <_MentionInput
+              <MentionInput
+                disableAutoComplete={Platform.OS !== 'web'}
                 groupIds={strGroupIds}
                 mentionInputRef={mentionInputRef}
                 style={styles.flex1}
@@ -737,7 +739,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                   showShadow: true,
                   modalStyle: {maxHeight: 350},
                 }}
-                // onPress={onPressMentionAudience}
                 ComponentInput={PostInput}
                 componentInputProps={{
                   value: content,
@@ -829,9 +830,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             </Button.Secondary>
           </View>
         )}
-        <Div className="post-toolbar-container">
-          <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
-        </Div>
+        <CreatePostFooter
+          toolbarModalizeRef={toolbarModalizeRef}
+          loading={loading}
+        />
       </TouchableOpacity>
     </ScreenWrapper>
   );

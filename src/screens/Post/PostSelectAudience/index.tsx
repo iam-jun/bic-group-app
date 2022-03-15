@@ -25,10 +25,11 @@ import {IUser} from '~/interfaces/IAuth';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
-import {isEqual} from 'lodash';
 import modalActions from '~/store/modal/actions';
-import i18n from '~/localization';
-import {ISelectAudienceParams} from './SelectAudienceHelper';
+import {
+  checkChangeAudiences,
+  ISelectAudienceParams,
+} from './SelectAudienceHelper';
 import {ICreatePostParams} from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
@@ -44,16 +45,9 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const {isFirstStep, ...createPostParams} = route?.params || {};
 
   const [lossInternet, setLossInternet] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [selectingAudiences, setSelectingAudiences] = useState<
-    (IGroup | IUser)[]
-  >([]);
-  const [selectingGroups, setSelectingGroups] = useState<{[x: string]: IGroup}>(
-    {},
-  );
-  const [selectingUsers, setSelectingUsers] = useState<{[x: string]: IUser}>(
-    {},
-  );
+
+  const state = useKeySelector(postKeySelector.postSelectAudienceState);
+  const {loading, selectingAudiences, selectingGroups, selectingUsers} = state;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
   const initAudiences = useKeySelector(
@@ -105,17 +99,18 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
 
   const updateSelectingAudiences = () => {
     const newSelectingAudiences: (IUser | IGroup)[] = [];
-    Object.values(selectingGroups).map((group: IGroup) => {
+    Object.values(selectingGroups).map(group => {
       if (group) {
-        newSelectingAudiences.push(group);
+        newSelectingAudiences.push(group as IGroup);
       }
     });
-    Object.values(selectingUsers).map((user: IUser) => {
+    Object.values(selectingUsers).map(user => {
       if (user) {
-        newSelectingAudiences.push(user);
+        newSelectingAudiences.push(user as IUser);
       }
     });
-    setSelectingAudiences(newSelectingAudiences);
+    const p = {selectingAudiences: newSelectingAudiences};
+    dispatch(postActions.setPostSelectAudienceState(p));
   };
 
   useEffect(() => {
@@ -126,12 +121,16 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     }
     if (initAudiences) {
       handleSearchResult(initAudiences);
-      setLoading(false);
+      dispatch(postActions.setPostSelectAudienceState({loading: false}));
     } else if (sectionListData.length === 0 || isFirstStep) {
       onSearch('');
     } else {
-      setLoading(false);
+      dispatch(postActions.setPostSelectAudienceState({loading: false}));
     }
+
+    return () => {
+      dispatch(postActions.setPostSelectAudienceState());
+    };
   }, []);
 
   useEffect(() => {
@@ -156,8 +155,12 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           newSelectingGroups[item.id] = item;
         }
       });
-      setSelectingUsers(newSelectingUsers);
-      setSelectingGroups(newSelectingGroups);
+
+      const p = {
+        selectingUsers: newSelectingUsers,
+        selectingGroups: newSelectingGroups,
+      };
+      dispatch(postActions.setPostSelectAudienceState(p));
     }
   }, [chosenAudiences]);
 
@@ -182,12 +185,12 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       if (isAudiencesHasChanged) {
         dispatch(
           modalActions.showAlert({
-            title: i18n.t('post:create_post:title_audience_changed'),
-            content: i18n.t('post:create_post:text_discard_change_audience'),
+            title: t('post:create_post:title_audience_changed'),
+            content: t('post:create_post:text_discard_change_audience'),
             showCloseButton: true,
             cancelBtn: true,
-            cancelLabel: i18n.t('common:btn_discard'),
-            confirmLabel: i18n.t('post:create_post:btn_save_change'),
+            cancelLabel: t('common:btn_discard'),
+            confirmLabel: t('post:create_post:btn_save_change'),
             onConfirm: () => {
               dispatch(
                 postActions.setCreatePostChosenAudiences(selectingAudiences),
@@ -212,12 +215,12 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       if (isAudiencesHasChanged) {
         dispatch(
           modalActions.showAlert({
-            title: i18n.t('post:create_post:title_discard_audience'),
-            content: i18n.t('post:create_post:text_discard_audience'),
+            title: t('post:create_post:title_discard_audience'),
+            content: t('post:create_post:text_discard_audience'),
             showCloseButton: true,
             cancelBtn: true,
-            cancelLabel: i18n.t('common:btn_discard'),
-            confirmLabel: i18n.t('post:create_post:btn_keep_selecting'),
+            cancelLabel: t('common:btn_discard'),
+            confirmLabel: t('post:create_post:btn_keep_selecting'),
             onDismiss: () => rootNavigation.goBack(),
             stretchOnWeb: true,
           }),
@@ -229,12 +232,12 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       if (isAudiencesHasChanged) {
         dispatch(
           modalActions.showAlert({
-            title: i18n.t('post:create_post:title_audience_changed'),
-            content: i18n.t('post:create_post:text_discard_change'),
+            title: t('post:create_post:title_audience_changed'),
+            content: t('post:create_post:text_discard_change'),
             showCloseButton: true,
             cancelBtn: true,
-            cancelLabel: i18n.t('common:btn_discard'),
-            confirmLabel: i18n.t('post:create_post:btn_keep_edit'),
+            cancelLabel: t('common:btn_discard'),
+            confirmLabel: t('post:create_post:btn_keep_edit'),
             onDismiss: () => rootNavigation.goBack(),
             stretchOnWeb: true,
           }),
@@ -251,32 +254,19 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     if (item.type === 'user') {
       const newSelectingUsers: any = {...selectingUsers};
       newSelectingUsers[item.id] = false;
-      setSelectingUsers(newSelectingUsers);
+      const p = {selectingUsers: newSelectingUsers};
+      dispatch(postActions.setPostSelectAudienceState(p));
     } else {
       const newSelectingGroups: any = {...selectingGroups};
       newSelectingGroups[item.id] = false;
-      setSelectingGroups(newSelectingGroups);
+      const p = {selectingGroups: newSelectingGroups};
+      dispatch(postActions.setPostSelectAudienceState(p));
     }
   };
 
   const onChangeCheckedGroups = (data: OnChangeCheckedGroupsData) => {
-    setSelectingGroups({...selectingGroups, ...data} as any);
-  };
-
-  const getSmallestChild = (
-    smallestGroup: IGroup,
-    newGroups: IGroup[],
-    treeData: IGroup,
-  ): any => {
-    if (smallestGroup?.children?.[0]) {
-      return getSmallestChild(
-        smallestGroup?.children?.[0],
-        newGroups,
-        treeData,
-      );
-    } else {
-      newGroups.push({...smallestGroup, treeData: treeData});
-    }
+    const p = {selectingGroups: {...selectingGroups, ...data}};
+    dispatch(postActions.setPostSelectAudienceState(p));
   };
 
   const handleSearchResult = (data: any) => {
@@ -297,17 +287,17 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   };
 
   const onSearch = debounce((searchText: string) => {
-    setLoading(true);
+    dispatch(postActions.setPostSelectAudienceState({loading: true}));
     postDataHelper
       .getSearchAudiences(searchText)
       .then(response => {
         if (response && response.data) {
           handleSearchResult(response.data);
         }
-        setLoading(false);
+        dispatch(postActions.setPostSelectAudienceState({loading: false}));
       })
       .catch(e => {
-        setLoading(false);
+        dispatch(postActions.setPostSelectAudienceState({loading: false}));
         console.log('\x1b[31m', '🐣️ getSearchAudiences |  : ', e, '\x1b[0m');
       });
   }, 500);
@@ -323,7 +313,8 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     } else {
       newSelectingUsers[user.id] = user;
     }
-    setSelectingUsers(newSelectingUsers);
+    const p = {selectingUsers: newSelectingUsers};
+    dispatch(postActions.setPostSelectAudienceState(p));
   };
 
   const renderItem = ({item}: any) => {
@@ -442,18 +433,6 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       />
     </ScreenWrapper>
   );
-};
-
-const checkChangeAudiences = (a1: any, a2: any) => {
-  if (a1?.length !== a2?.length) {
-    return true;
-  }
-  const compare = (x: any, y: any) => (x > y ? 1 : -1);
-  const ids1: number[] = [];
-  const ids2: number[] = [];
-  a1?.map?.((a: any) => ids1.push(Number(a?.id)));
-  a2?.map?.((a: any) => ids2.push(Number(a?.id)));
-  return !isEqual(ids1.sort(compare), ids2.sort(compare));
 };
 
 const createStyle = (theme: ITheme) => {

@@ -14,6 +14,7 @@ const intervalTime = 1000 * 60; //1 min
 const limitInterval = 1000 * 60 * 60; //60 mins
 
 export interface TimeViewProps {
+  testID?: string;
   style?: StyleProp<TextStyle>;
   textProps?: any;
   time: any;
@@ -21,6 +22,7 @@ export interface TimeViewProps {
 }
 
 const TimeView: FC<TimeViewProps> = ({
+  testID,
   style,
   textProps,
   time,
@@ -70,7 +72,7 @@ const TimeView: FC<TimeViewProps> = ({
 
   return (
     <Text.BodyS
-      testID="time_view"
+      testID={testID || 'time_view'}
       color={colors.textSecondary}
       style={style}
       {...textProps}>
