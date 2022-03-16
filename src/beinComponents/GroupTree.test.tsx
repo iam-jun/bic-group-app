@@ -84,7 +84,7 @@ describe('GroupTree component', () => {
     });
   });
 
-  it('should render correctly uncheck item', async() => {
+  it('should render correctly uncheck item', async () => {
     const callback = jest.fn();
     const wrapper = renderWithRedux(
       <GroupTree
