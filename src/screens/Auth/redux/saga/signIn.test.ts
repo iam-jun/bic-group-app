@@ -21,13 +21,6 @@ describe('signIn Saga', () => {
     Platform = require('react-native').Platform;
   });
 
-  it('signIn should call loading', () => {
-    return expectSaga(signIn, action)
-      .provide([[matchers.call.fn(Auth.signIn), null]])
-      .put(actions.setLoading(true))
-      .run();
-  });
-
   it('signIn should be called to server failure', () => {
     return expectSaga(signIn, action)
       .provide([

@@ -37,7 +37,7 @@ describe('SignIn screen', () => {
     Keyboard.dismiss = jest.fn();
     const store = mockStore(initialState);
     const wrapper = renderWithRedux(<SignIn />, store);
-    const component = wrapper.getByTestId('SignInScreen.button_hide_keyboard');
+    const component = wrapper.getByTestId('sign_in.button_hide_keyboard');
     fireEvent.press(component);
 
     expect(Keyboard.dismiss).toBeCalled();
@@ -48,7 +48,7 @@ describe('SignIn screen', () => {
     Keyboard.dismiss = jest.fn();
     const store = mockStore(initialState);
     const wrapper = renderWithRedux(<SignIn />, store);
-    const component = wrapper.getByTestId('SignInScreen.button_hide_keyboard');
+    const component = wrapper.getByTestId('sign_in.button_hide_keyboard');
     fireEvent.press(component);
 
     expect(Keyboard.dismiss).not.toBeCalled();
@@ -64,8 +64,8 @@ describe('SignIn screen', () => {
     });
 
     const wrapper = renderWithRedux(<SignIn />, store);
-    const inputEmail = wrapper.getByTestId('SignInScreen.input_email');
-    const inputPassword = wrapper.getByTestId('SignInScreen.input_password');
+    const inputEmail = wrapper.getByTestId('sign_in.input_email');
+    const inputPassword = wrapper.getByTestId('sign_in.input_password');
 
     expect(inputEmail.props.disabled).toBeTruthy();
     expect(inputPassword.props.disabled).toBeTruthy();
@@ -81,7 +81,7 @@ describe('SignIn screen', () => {
 
     const store = mockStore(initialState);
     const wrapper = await waitFor(() => renderWithRedux(<SignIn />, store));
-    const inputEmail = wrapper.getByTestId('SignInScreen.input_email');
+    const inputEmail = wrapper.getByTestId('sign_in.input_email');
 
     expect(inputEmail.props.disabled).toBeTruthy();
   });
@@ -97,8 +97,8 @@ describe('SignIn screen', () => {
     Platform.OS = 'ios';
 
     const wrapper = renderWithRedux(<SignIn />, store);
-    const inputEmail = wrapper.getByTestId('SignInScreen.input_email');
-    const inputPassword = wrapper.getByTestId('SignInScreen.input_password');
+    const inputEmail = wrapper.getByTestId('sign_in.input_email');
+    const inputPassword = wrapper.getByTestId('sign_in.input_password');
 
     expect(inputEmail.props.label).toBe('Email Address');
     expect(inputPassword.props.label).toBe('Password');
@@ -109,8 +109,8 @@ describe('SignIn screen', () => {
     Platform.OS = 'web';
 
     const wrapper = renderWithRedux(<SignIn />, store);
-    const inputEmail = wrapper.getByTestId('SignInScreen.input_email');
-    const inputPassword = wrapper.getByTestId('SignInScreen.input_password');
+    const inputEmail = wrapper.getByTestId('sign_in.input_email');
+    const inputPassword = wrapper.getByTestId('sign_in.input_password');
 
     expect(inputEmail.props.label).toBe(undefined);
     expect(inputPassword.props.label).toBe(undefined);
@@ -121,7 +121,7 @@ describe('SignIn screen', () => {
     Platform.OS = 'ios';
 
     const wrapper = renderWithRedux(<SignIn />, store);
-    const inputEmail = wrapper.getByTestId('SignInScreen.input_email');
+    const inputEmail = wrapper.getByTestId('sign_in.input_email');
 
     expect(inputEmail.props.placeholder).toBe('sample@email.com');
   });
@@ -131,7 +131,7 @@ describe('SignIn screen', () => {
     Platform.OS = 'web';
 
     const wrapper = renderWithRedux(<SignIn />, store);
-    const inputEmail = wrapper.getByTestId('SignInScreen.input_email');
+    const inputEmail = wrapper.getByTestId('sign_in.input_email');
 
     expect(inputEmail.props.placeholder).toBe('Email Address');
   });
@@ -140,9 +140,9 @@ describe('SignIn screen', () => {
     const store = mockStore(initialState);
 
     const wrapper = await waitFor(() => renderWithRedux(<SignIn />, store));
-    const buttonLogin = wrapper.getByTestId('SignInScreen.btn_login');
-    const inputEmail = wrapper.getByTestId('SignInScreen.input_email');
-    const inputPassword = wrapper.getByTestId('SignInScreen.input_password');
+    const buttonLogin = wrapper.getByTestId('sign_in.btn_login');
+    const inputEmail = wrapper.getByTestId('sign_in.input_email');
+    const inputPassword = wrapper.getByTestId('sign_in.input_password');
 
     fireEvent.changeText(inputEmail, 'email@domain.com');
     fireEvent.changeText(inputPassword, '12345678');
@@ -158,7 +158,7 @@ describe('SignIn screen', () => {
       },
     });
     const wrapper = renderWithRedux(<SignIn />, store);
-    const loadingIndicator = wrapper.getByTestId('SignInScreen.loading');
+    const loadingIndicator = wrapper.getByTestId('sign_in.loading');
 
     expect(loadingIndicator).not.toBeNull();
   });
@@ -188,9 +188,9 @@ describe('SignIn screen', () => {
   //     });
 
   //     const wrapper = renderWithRedux(<SignIn />, store);
-  //     const inputEmail = wrapper.getByTestId('SignInScreen.input_email');
-  //     const inputPassword = wrapper.getByTestId('SignInScreen.input_password');
-  //     // const buttonLogin = wrapper.getByTestId('SignInScreen.btn_login');
+  //     const inputEmail = wrapper.getByTestId('sign_in.input_email');
+  //     const inputPassword = wrapper.getByTestId('sign_in.input_password');
+  //     // const buttonLogin = wrapper.getByTestId('sign_in.btn_login');
 
   //     // fireEvent.changeText(inputEmail, 'email');
   //     // fireEvent.changeText(inputPassword, '1234');

@@ -157,28 +157,28 @@ const SignIn = () => {
     navigation.navigate(authStack.forgotPassword);
 
   return (
-    <ScreenWrapper testID="SignInScreen" style={styles.root} isFullView>
+    <ScreenWrapper testID="sign_in" style={styles.root} isFullView>
       <TouchableWithoutFeedback
-        testID="SignInScreen.button_hide_keyboard"
+        testID="sign_in.button_hide_keyboard"
         onPress={hideKeyboard}
         accessible={false}
         style={styles.flex1}>
         <View style={styles.container}>
           <View>
             <Image
-              testID="SignInScreen.logo"
+              testID="sign_in.logo"
               resizeMode="contain"
               style={styles.logo}
               source={images.logo_bein}
             />
-            <Text.H6 testID="SignInScreen.title" style={styles.title} useI18n>
+            <Text.H6 testID="sign_in.title" style={styles.title} useI18n>
               auth:text_sign_in_desc
             </Text.H6>
             <Controller
               control={control}
               render={({field: {onChange, value}}) => (
                 <Input
-                  testID="SignInScreen.input_email"
+                  testID="sign_in.input_email"
                   label={
                     !isWeb && !loading ? t('auth:input_label_email') : undefined
                   }
@@ -218,7 +218,7 @@ const SignIn = () => {
               control={control}
               render={({field: {onChange, value}}) => (
                 <PasswordInput
-                  testID="SignInScreen.input_password"
+                  testID="sign_in.input_password"
                   ref={inputPasswordRef}
                   label={
                     !isWeb && !loading
@@ -254,7 +254,7 @@ const SignIn = () => {
             />
             <View style={styles.forgotButton}>
               <TouchableOpacity
-                testID="SignInScreen.btn_forgot_password"
+                testID="sign_in.btn_forgot_password"
                 onPress={goToForgotPassword}>
                 <Text.H6 style={styles.transparentButton} useI18n>
                   auth:btn_forgot_password
@@ -262,13 +262,13 @@ const SignIn = () => {
               </TouchableOpacity>
             </View>
             <Button.Primary
-              testID="SignInScreen.btn_login"
+              testID="sign_in.btn_login"
               style={styles.btnSignIn}
               disabled={disableSignIn}
               onPress={onSignIn}
               useI18n>
               {loading ? (
-                <LoadingIndicator testID="SignInScreen.loading" />
+                <LoadingIndicator testID="sign_in.loading" />
               ) : (
                 'auth:btn_sign_in'
               )}
