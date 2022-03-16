@@ -18,6 +18,8 @@ const isOnHTTPS = () => {
   return getEnv('SELF_DOMAIN')?.includes('https');
 };
 
+const COOKIE_PREFIX_FOR_SECURE = '__Secure-';
+
 /**
  * As cookies' name is different between localhost and other environments,
  * we need to get the correct cookie name via this function
@@ -25,7 +27,7 @@ const isOnHTTPS = () => {
 const getCookieName = (cookie: CookieNameType) => {
   let cookiePrefix = '';
   if (isOnHTTPS()) {
-    cookiePrefix = '__Secure-';
+    cookiePrefix = COOKIE_PREFIX_FOR_SECURE;
   }
 
   return `${cookiePrefix}${cookie}`;
