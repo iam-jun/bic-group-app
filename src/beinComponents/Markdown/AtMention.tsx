@@ -11,7 +11,14 @@ interface Props {
 }
 
 const AtMention = ({mentionName, selector, style, onPress}: Props) => {
-  const audience = useKeySelector(`${selector}.${mentionName}`);
+  let audience = useKeySelector(`${selector}.${mentionName}`);
+  const tempSelectedUser = useKeySelector(
+    `mentionInput.tempSelected.${mentionName}`,
+  );
+  if (!audience) {
+    audience = tempSelectedUser || {};
+  }
+
   const name = audience?.data?.fullname;
 
   const _onPress = (e: any) => {

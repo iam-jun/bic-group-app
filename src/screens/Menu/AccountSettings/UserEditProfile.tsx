@@ -44,7 +44,7 @@ import homeActions from '~/screens/Home/redux/actions';
 import {checkPermission} from '~/utils/permission';
 
 const UserEditProfile = (props: any) => {
-  const {userId, params} = props?.route?.params || {};
+  const {userId} = props?.route?.params || {};
 
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const [userData, setUserData] = useState<any>({});
@@ -76,6 +76,8 @@ const UserEditProfile = (props: any) => {
     description,
   } = userData || {};
 
+  const userProfileData = useKeySelector(menuKeySelector.userProfile);
+
   const loadingAvatar = useKeySelector(menuKeySelector.loadingAvatar);
   const loadingCover = useKeySelector(menuKeySelector.loadingCover);
   const myWorkExperience = useKeySelector(menuKeySelector.myWorkExperience);
@@ -85,7 +87,7 @@ const UserEditProfile = (props: any) => {
 
   const getUserProfile = () => {
     dispatch(menuActions.clearUserProfile());
-    if (!!userId) dispatch(menuActions.getUserProfile({userId, params}));
+    if (!!userId) dispatch(menuActions.getUserProfile({userId}));
   };
 
   useEffect(() => {
@@ -94,17 +96,16 @@ const UserEditProfile = (props: any) => {
         userId?.toString?.() === currentUsername?.toString?.(),
     );
     if (
-      (userId?.toString?.() === currentUserId?.toString?.() ||
-        userId?.toString?.() === currentUsername?.toString?.()) &&
-      isEmpty(params)
+      userId?.toString?.() === currentUserId?.toString?.() ||
+      userId?.toString?.() === currentUsername?.toString?.()
     ) {
       dispatch(homeActions.getHomePosts({isRefresh: true}));
       setUserData(myProfile);
     } else {
-      setUserData(params);
+      setUserData(userProfileData);
     }
     dispatch(menuActions.getUserWorkExperience(userId));
-  }, [myProfile, params]);
+  }, [myProfile, userProfileData, userId]);
 
   useEffect(() => {
     getUserProfile();

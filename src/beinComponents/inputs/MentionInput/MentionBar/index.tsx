@@ -21,6 +21,7 @@ import {
 } from '~/beinComponents/inputs/MentionInput/helper';
 import MentionBarItem from '~/beinComponents/inputs/MentionInput/MentionBar/MentionBarItem';
 import Divider from '~/beinComponents/Divider';
+import {debounce} from 'lodash';
 
 interface MentionBarProps {
   testID?: string;
@@ -34,6 +35,7 @@ const MentionBar: FC<MentionBarProps> = ({
   type = 'mentionInput',
   onVisible,
 }: MentionBarProps) => {
+  const listRef = useRef<any>();
   const text = useRef('');
   const cursorPosition = useRef(0);
 
@@ -57,18 +59,23 @@ const MentionBar: FC<MentionBarProps> = ({
   }, []);
 
   useEffect(() => {
+    if (data?.length > 0) {
+      listRef?.current?.scrollToOffset?.({offset: 0, animated: true});
+    }
+  }, [data?.length]);
+
+  useEffect(() => {
     onVisible?.(isShow);
   }, [isShow]);
 
-  const onCursorPositionChange = ({
-    position,
-    value,
-    groupIds,
-  }: ICursorPositionChange) => {
-    text.current = value;
-    cursorPosition.current = position;
-    checkRunSearch(value.substring(0, position), groupIds, dispatch);
-  };
+  const onCursorPositionChange = debounce(
+    ({position, value, groupIds}: ICursorPositionChange) => {
+      text.current = value;
+      cursorPosition.current = position;
+      checkRunSearch(value.substring(0, position), groupIds, dispatch);
+    },
+    100,
+  );
 
   const onPressItem = (item: IMentionUser) => {
     completeMention({
@@ -96,6 +103,7 @@ const MentionBar: FC<MentionBarProps> = ({
   return (
     <View testID="mention_bar" style={[styles.container, style]}>
       <FlatList
+        ref={listRef}
         testID="mention_bar.list"
         horizontal
         showsHorizontalScrollIndicator={false}

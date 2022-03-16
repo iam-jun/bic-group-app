@@ -8,6 +8,12 @@ const mentionActions = {
       payload,
     };
   },
+  setFullContent: (payload: string) => {
+    return {
+      type: types.SET_FULL_CONTENT,
+      payload,
+    };
+  },
   setCursorPosition: (payload: number) => {
     return {
       type: types.SET_CURSOR_POSITION,
@@ -41,6 +47,12 @@ const mentionActions = {
   sethHighlightItem: (payload: any) => {
     return {
       type: types.SET_HIGHLIGHT_ITEM,
+      payload,
+    };
+  },
+  addTempSelected: (payload: {[x: string]: any}) => {
+    return {
+      type: types.ADD_TEMP_SELECTED,
       payload,
     };
   },
