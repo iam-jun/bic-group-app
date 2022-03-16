@@ -338,8 +338,7 @@ function* cancelJoinGroup({
         },
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
-      yield put(groupsActions.setLoadingPage(true));
-      yield put(groupsActions.getGroupDetail(payload.groupId));
+      yield put(groupsActions.getGroupDetail(payload.groupId, true));
       yield put(groupsActions.getJoinedGroups());
 
       return;

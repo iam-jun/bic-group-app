@@ -57,7 +57,7 @@ const GroupDetail = (props: any) => {
   });
 
   const getGroupDetail = () => {
-    dispatch(groupsActions.getGroupDetail(groupId));
+    dispatch(groupsActions.getGroupDetail(groupId, true));
   };
 
   const getGroupPosts = () => {
@@ -75,7 +75,6 @@ const GroupDetail = (props: any) => {
   };
 
   useEffect(() => {
-    dispatch(groupsActions.setLoadingPage(true));
     getGroupDetail();
   }, [groupId]);
 

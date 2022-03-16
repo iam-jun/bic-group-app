@@ -122,10 +122,11 @@ const groupsActions = {
     type: groupsTypes.CLEAR_ADD_MEMBERS_MESSAGE,
   }),
 
-  getGroupDetail: function (payload: number) {
+  getGroupDetail: function (payload: number, loadingPage = false) {
     return {
       type: groupsTypes.GET_GROUP_DETAIL,
       payload,
+      loadingPage,
     };
   },
 

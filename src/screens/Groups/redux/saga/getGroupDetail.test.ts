@@ -9,9 +9,10 @@ describe('Get group detail saga', () => {
   const action = {
     type: 'test',
     payload: 1,
+    loadingPage: false,
   };
 
-  it('should get group detail data successfully when user is a group member', () => {
+  it('should get group detail data with loadingPage = false successfully when user is a group member', () => {
     const resp = {
       data: {
         group: {
@@ -28,6 +29,33 @@ describe('Get group detail saga', () => {
 
     return (
       expectSaga(getGroupDetail, action)
+        .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), resp]])
+        // @ts-ignore
+        .put(groupsActions.setGroupDetail(resp.data))
+        .withState(state)
+        .not.put(groupsActions.setLoadingPage(false))
+        .run()
+    );
+  });
+
+  it('should get group detail data with loadingPage = true successfully when user is a group member', () => {
+    const resp = {
+      data: {
+        group: {
+          privacy: 'PUBLIC',
+        },
+        join_status: 2,
+      },
+    };
+    const state = {
+      groups: {
+        groupDetail: resp.data,
+      },
+    };
+
+    return (
+      expectSaga(getGroupDetail, {...action, loadingPage: true})
+        .put(groupsActions.setLoadingPage(true))
         .provide([[matchers.call.fn(groupsDataHelper.getGroupDetail), resp]])
         // @ts-ignore
         .put(groupsActions.setGroupDetail(resp.data))

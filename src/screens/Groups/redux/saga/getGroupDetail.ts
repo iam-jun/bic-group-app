@@ -7,11 +7,14 @@ import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 
 export default function* getGroupDetail({
   payload,
+  loadingPage,
 }: {
   type: string;
   payload: number;
+  loadingPage: boolean;
 }) {
   try {
+    if (loadingPage) yield put(groupsActions.setLoadingPage(true));
     // @ts-ignore
     const resp = yield call(groupsDataHelper.getGroupDetail, payload);
     yield put(groupsActions.setGroupDetail(resp?.data));
