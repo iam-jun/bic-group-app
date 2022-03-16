@@ -224,11 +224,12 @@ describe('GroupContent component', () => {
     // @ts-ignore
     state.groups.posts.data = [...groupPostData];
     const store = createTestStore(state);
-    const {getByTestId} = renderWithRedux(
+    const wrapper = renderWithRedux(
       <GroupContent getGroupPosts={getGroupPosts} />,
       store,
     );
-    const listView = getByTestId('list_view.flat_list');
+    const listView = wrapper.getByTestId('list_view.flat_list');
     expect(listView.props.data.length).toBe(groupPostData.length);
+    expect(wrapper).toMatchSnapshot();
   });
 });

@@ -118,7 +118,7 @@ const GroupTopBar = () => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="group_top_bar">
       <View style={styles.leftComponent}>
         {!isLaptop && (
           <Icon

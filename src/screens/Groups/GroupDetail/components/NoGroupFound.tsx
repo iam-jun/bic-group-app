@@ -28,7 +28,7 @@ const NoGroupFound = () => {
         title={i18next.t('error:no_group_found_title')}
         hideBackOnLaptop
       />
-      <View style={styles.mainContainer}>
+      <View style={styles.mainContainer} testID="no_group_found">
         <SVGIcon
           // @ts-ignore
           source={NoGroupFoundImg}

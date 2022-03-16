@@ -16,7 +16,7 @@ const GroupPrivateWelcome = ({parentWidth}: {parentWidth?: number}) => {
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
-      <View style={styles.content}>
+      <View style={styles.content} testID="group_private_welcome">
         <View style={styles.contentSection}>
           <GroupInfoHeader />
         </View>
