@@ -85,8 +85,6 @@ const AddWork = () => {
   const navigateBack = () => {
     Keyboard.dismiss();
     if (rootNavigation.canGoBack) {
-      console.log('rootNavigation.canGoBack');
-
       rootNavigation.goBack();
     } else {
       rootNavigation.replace(mainStack.userEdit);
@@ -239,6 +237,7 @@ const AddWork = () => {
   const renderDescriptionInput = () => {
     return (
       <View
+        testID="add_work.description.view"
         style={[styles.textInputView, isFocus ? styles.textInputFocus : {}]}>
         <TextInput
           value={descriptionValue}

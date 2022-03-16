@@ -20,6 +20,7 @@ import deleteWorkExperience from './deleteWorkExperience';
 import getMyWorkExperience from './getMyWorkExperience';
 import addWorkExperience from './addWorkExperience';
 import editWorkExperience from './editWorkExperience';
+import getWorkExperience from './getWorkExperience';
 
 export default function* menuSaga() {
   yield takeLatest(menuTypes.GET_USER_PROFILE, getUserProfile);

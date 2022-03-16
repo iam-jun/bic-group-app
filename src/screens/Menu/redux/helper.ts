@@ -9,8 +9,6 @@ export const mapWorkExperience = (data: []): IUserWorkExperience[] => {
 };
 
 export const mapWorkExp = (data: any): IUserWorkExperience => {
-  console.log('IUserWorkExperience', data);
-
   return {
     ...data,
     titlePosition: data?.title_position || '',

@@ -9,7 +9,6 @@ export default function* getMyWorkExperience() {
     const response: IResponseData = yield call(
       menuDataHelper.getMyWorkExperience,
     );
-
     yield put(
       menuActions.setMyWorkExperience(mapWorkExperience(response?.data)),
     );

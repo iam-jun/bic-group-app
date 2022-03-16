@@ -24,9 +24,6 @@ describe('Add Work Experience Saga', () => {
   const action = {
     type: 'test',
     payload: workItem,
-    callback: () => {
-      console.log('callback');
-    },
   };
 
   it('should request to add user work experience successfully', () => {
@@ -46,6 +43,35 @@ describe('Add Work Experience Saga', () => {
 
     // @ts-ignorets
     return expectSaga(addWorkExperience, action)
+      .provide([
+        [matchers.call.fn(menuDataHelper.addWorkExperience), expectData],
+      ])
+      .put(menuActions.getMyWorkExperience())
+      .run();
+  });
+
+  it('should request to add user work experience successfully with callback', () => {
+    const expectWorkItem = {
+      ...workItem,
+      currentlyWorkHere: true,
+      endDate: null,
+      id: 77,
+      startDate: '2022-03-07T07:58:05.436Z',
+      titlePosition: 'test 1',
+    };
+    const expectData = {
+      code: 200,
+      data: [expectWorkItem],
+      meta: {},
+    };
+
+    // @ts-ignorets
+    return expectSaga(addWorkExperience, {
+      ...action,
+      callback: () => {
+        console.log('callback');
+      },
+    })
       .provide([
         [matchers.call.fn(menuDataHelper.addWorkExperience), expectData],
       ])

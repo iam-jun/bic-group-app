@@ -10,11 +10,9 @@ export default function* getWorkExperience({id}: {id: number}) {
       menuDataHelper.getWorkExperience,
       id,
     );
-    if (response?.data) {
-      yield put(
-        menuActions.setUserWorkExperience(mapWorkExperience(response.data)),
-      );
-    }
+    yield put(
+      menuActions.setUserWorkExperience(mapWorkExperience(response.data)),
+    );
   } catch (err) {
     console.log('getWorkExperience error:', err);
   }

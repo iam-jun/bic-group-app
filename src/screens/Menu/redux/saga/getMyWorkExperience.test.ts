@@ -1,4 +1,3 @@
-import i18next from 'i18next';
 import {expectSaga} from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import {cleanup} from '@testing-library/react-native';
@@ -19,16 +18,12 @@ describe('Get My Work Experience Saga', () => {
 
   const workItem = {
     company: 'test 1',
-    currentlyWorkHere: true,
     currently_work_here: true,
     description: '',
-    endDate: null,
     end_date: null,
     id: 77,
     location: 'test 1',
-    startDate: '2022-03-07T07:58:05.436Z',
     start_date: '2022-03-07T07:58:05.436Z',
-    titlePosition: 'test 1',
     title_position: 'test 1',
   };
 
@@ -44,9 +39,7 @@ describe('Get My Work Experience Saga', () => {
       .provide([
         [matchers.call.fn(menuDataHelper.getMyWorkExperience), expectData],
       ])
-      .put(
-        menuActions.setUserWorkExperience(mapWorkExperience(expectData.data)),
-      )
+      .put(menuActions.setMyWorkExperience(mapWorkExperience(expectData.data)))
       .run();
   });
 

@@ -17,9 +17,6 @@ describe('Delete Work Experience Saga', () => {
     payload: {
       id: 1,
     },
-    callback: () => {
-      console.log('callback');
-    },
   };
 
   it('should request to delete user work experience successfully', () => {
@@ -45,9 +42,39 @@ describe('Delete Work Experience Saga', () => {
       .provide([
         [matchers.call.fn(menuDataHelper.deleteWorkExperience), expectData],
       ])
-      .put(
-        menuActions.setUserWorkExperience(mapWorkExperience(expectData.data)),
-      )
+      .put(menuActions.setMyWorkExperience(mapWorkExperience(expectData.data)))
+      .run();
+  });
+
+  it('should request to delete user work experience successfully with callback', () => {
+    const expectData = {
+      code: 200,
+      data: [
+        {
+          id: 2,
+          company: 'test 1',
+          currently_work_here: true,
+          description: '',
+          end_date: null,
+          location: 'test 1',
+          start_date: '2022-03-07T07:58:05.436Z',
+          title_position: 'test 1',
+        },
+      ],
+      meta: {},
+    };
+
+    // @ts-ignorets
+    return expectSaga(deleteWorkExperience, {
+      ...action,
+      callback: () => {
+        console.log('callback');
+      },
+    })
+      .provide([
+        [matchers.call.fn(menuDataHelper.deleteWorkExperience), expectData],
+      ])
+      .put(menuActions.setMyWorkExperience(mapWorkExperience(expectData.data)))
       .run();
   });
 

@@ -25,8 +25,6 @@ export default function* deleteWorkExperience({
         menuActions.setMyWorkExperience(mapWorkExperience(response.data)),
       );
     }
-    console.log('response', response);
-
     if (callback) return callback();
   } catch (err) {
     console.log('deleteWorkExperience:', err);

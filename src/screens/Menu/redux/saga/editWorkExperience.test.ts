@@ -25,9 +25,6 @@ describe('Edit Work Experience Saga', () => {
       id: 1,
       payload: workItem,
     },
-    callback: () => {
-      console.log('callback');
-    },
   };
 
   it('should request to edit user work experience successfully', () => {
@@ -50,6 +47,38 @@ describe('Edit Work Experience Saga', () => {
 
     // @ts-ignorets
     return expectSaga(editWorkExperience, action)
+      .provide([
+        [matchers.call.fn(menuDataHelper.editWorkExperience), expectData],
+      ])
+      .put(menuActions.getMyWorkExperience())
+      .run();
+  });
+
+  it('should request to edit user work experience successfully with callback', () => {
+    const expectData = {
+      code: 200,
+      data: [
+        {
+          id: 2,
+          company: 'test 1',
+          currently_work_here: true,
+          description: '',
+          end_date: null,
+          location: 'test 1',
+          start_date: '2022-03-07T07:58:05.436Z',
+          title_position: 'test 1',
+        },
+      ],
+      meta: {},
+    };
+
+    // @ts-ignorets
+    return expectSaga(editWorkExperience, {
+      ...action,
+      callback: () => {
+        console.log('callback');
+      },
+    })
       .provide([
         [matchers.call.fn(menuDataHelper.editWorkExperience), expectData],
       ])

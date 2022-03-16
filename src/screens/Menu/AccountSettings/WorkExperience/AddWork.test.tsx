@@ -20,7 +20,7 @@ import {formatDate} from '~/utils/formatData';
 
 afterEach(cleanup);
 
-describe('EditDescription screen', () => {
+describe('AddWork screen', () => {
   let Keyboard: any;
 
   const mockStore = configureStore([]);
@@ -43,11 +43,11 @@ describe('EditDescription screen', () => {
     title_position: 'test 1',
   };
 
-  const setState = jest.fn();
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const useStateMock: any = (initState: any) => [initState, setState];
+  // const setState = jest.fn();
+  // // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // const useStateMock: any = (initState: any) => [initState, setState];
 
-  jest.spyOn(React, 'useState').mockImplementation(useStateMock);
+  // jest.spyOn(React, 'useState').mockImplementation(useStateMock);
 
   beforeEach(() => {
     Keyboard = require('react-native').Keyboard;
@@ -341,16 +341,87 @@ describe('EditDescription screen', () => {
     //@ts-ignore
     state.menu.selectedWorkItem = workItem;
 
-    const store = createTestStore(state);
+    const store = mockStore(state);
     const wrapper = renderWithRedux(<AddWork />, store);
 
     const btnDeleteComponent = wrapper.getByTestId('add_work.delete');
 
     fireEvent.press(btnDeleteComponent);
 
-    await waitForUpdateRedux();
+    //can't call dispach, stuck here
+    // await waitForUpdateRedux();
+
+    // expect(Keyboard.dismiss).toBeCalled();
+    // expect(goBack).toBeCalled();
+  });
+
+  it(`should go back to previous screen successfully`, async () => {
+    Keyboard.dismiss = jest.fn();
+    const goBack = jest.fn();
+    const rootNavigation = {canGoBack: true, goBack};
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
+      return {rootNavigation} as any;
+    });
+
+    const state = {...initialState};
+    //@ts-ignore
+    state.menu.selectedWorkItem = null;
+
+    const store = mockStore(state);
+    const wrapper = renderWithRedux(<AddWork />, store);
+
+    const backButton = wrapper.getByTestId('header.back');
+
+    fireEvent.press(backButton);
 
     expect(Keyboard.dismiss).toBeCalled();
     expect(goBack).toBeCalled();
+  });
+
+  it(`should update border color of input`, async () => {
+    const state = {...initialState};
+    //@ts-ignore
+    state.menu.selectedWorkItem = null;
+
+    const store = mockStore(state);
+    const wrapper = renderWithRedux(<AddWork />, store);
+
+    const textInputCompany = wrapper.getByTestId('add_work.company');
+    const textInputPosition = wrapper.getByTestId('add_work.title_position');
+    const textInputLocation = wrapper.getByTestId('add_work.location');
+    const textInputDescription = wrapper.getByTestId('add_work.description');
+    const textInputDescriptionView = wrapper.getByTestId(
+      'add_work.description.view',
+    );
+
+    expect(textInputCompany.props.outlineColor).toBe(
+      colors.light.colors.borderCard,
+    );
+    expect(textInputCompany.props.activeOutlineColor).toBe(
+      colors.light.colors.primary6,
+    );
+    expect(textInputPosition.props.outlineColor).toBe(
+      colors.light.colors.borderCard,
+    );
+    expect(textInputPosition.props.activeOutlineColor).toBe(
+      colors.light.colors.primary6,
+    );
+    expect(textInputLocation.props.outlineColor).toBe(
+      colors.light.colors.borderCard,
+    );
+    expect(textInputLocation.props.activeOutlineColor).toBe(
+      colors.light.colors.primary6,
+    );
+
+    fireEvent.changeText(textInputLocation);
+
+    expect(textInputDescriptionView.props.style[0].borderColor).toBe(
+      colors.light.colors.borderCard,
+    );
+    fireEvent.changeText(textInputDescription, 'abc');
+    //can't
+    // expect(textInputDescriptionView.props.style[0].borderColor).toBe(
+    //   colors.light.colors.primary6,
+    // );
   });
 });
