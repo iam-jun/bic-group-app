@@ -482,28 +482,14 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
   return axiosInstance(requestConfig);
 };
 
-const makePushTokenRequest = async (deviceToken: string) => {
-  const deviceName = await DeviceInfo.getDeviceName();
-  return makeHttpRequest(
-    apiConfig.App.pushToken(
-      deviceToken,
-      Platform.OS,
-      DeviceInfo.getBundleId(),
-      DeviceInfo.getDeviceType(),
-      deviceName,
-    ),
-  );
+const makePushTokenRequest = (deviceToken: string) => {
+  const deviceId = DeviceInfo.getUniqueId();
+  return makeHttpRequest(apiConfig.App.pushToken(deviceToken, deviceId));
 };
 
-const makeRemovePushTokenRequest = async (authToken: string) => {
-  const deviceName = await DeviceInfo.getDeviceName();
-  const requestConfig = apiConfig.App.removePushToken(
-    authToken,
-    Platform.OS,
-    DeviceInfo.getBundleId(),
-    DeviceInfo.getDeviceType(),
-    deviceName,
-  );
+const makeRemovePushTokenRequest = async () => {
+  const deviceId = DeviceInfo.getUniqueId();
+  const requestConfig = apiConfig.App.removePushToken(deviceId);
   const axiosInstance = axios.create();
   axiosInstance.defaults.timeout = requestConfig.timeout;
   return axiosInstance(requestConfig);

@@ -109,6 +109,12 @@ const _PostDetailContent = (props: any) => {
     : t('post:title_post_detail');
 
   useEffect(() => {
+    return () => {
+      dispatch(postActions.setCreatePostInitAudiences());
+    };
+  }, []);
+
+  useEffect(() => {
     if (!user && Platform.OS === 'web') {
       rootNavigation.replace(rootSwitch.authStack);
     }
