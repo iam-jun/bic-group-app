@@ -2,8 +2,6 @@ import React, {FC, memo, useEffect, useMemo, useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
-  StyleProp,
-  ViewStyle,
   Dimensions,
   Platform,
   ActivityIndicator,
@@ -95,10 +93,10 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   useFocusEffect(
     React.useCallback(() => {
       return () => {
-        setTimeout(() => {
-          DeviceEventEmitter.emit('showHeader', true);
-          DeviceEventEmitter.emit('showBottomBar', true);
-        }, 100);
+        // setTimeout(() => {
+        DeviceEventEmitter.emit('showHeader', true);
+        DeviceEventEmitter.emit('showBottomBar', true);
+        // }, 100);
       };
     }, []),
   );
