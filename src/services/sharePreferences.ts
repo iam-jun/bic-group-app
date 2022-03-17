@@ -11,6 +11,8 @@ type DataType = {
 };
 
 const saveDataToCookie = (data: DataType) => {
+  if (!data) return;
+
   const {name, email, avatar, username} = data;
 
   if (name) {
