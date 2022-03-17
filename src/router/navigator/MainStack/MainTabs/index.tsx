@@ -52,6 +52,8 @@ const MainTabs = () => {
 
   const userId = useUserIdAuth();
   useEffect(() => {
+    let tokenRefreshSubscription: any;
+
     // only valid if user logged in
     if (!userId) {
       return;
@@ -59,7 +61,6 @@ const MainTabs = () => {
     dispatch(postActions.getDraftPosts({}));
     if (Platform.OS !== 'web') {
       dispatch(notificationsActions.registerPushToken());
-      let tokenRefreshSubscription;
       initPushTokenMessage()
         .then(messaging => {
           tokenRefreshSubscription = messaging().onTokenRefresh(
@@ -71,8 +72,10 @@ const MainTabs = () => {
           console.log('error when delete push token at auth stack', e),
         );
       // @ts-ignore
-      return tokenRefreshSubscription && tokenRefreshSubscription();
     }
+    return () => {
+      tokenRefreshSubscription && tokenRefreshSubscription();
+    };
   }, [userId]);
 
   useEffect(() => {

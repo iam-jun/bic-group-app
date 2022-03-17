@@ -50,6 +50,7 @@ import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
 import SystemIssueModal from '~/screens/NoInternet/components/SystemIssueModal';
 import noInternetActions from '~/screens/NoInternet/redux/actions';
 import InternetConnectionStatus from '~/screens/NoInternet/components/InternetConnectionStatus';
+import {makeRemovePushTokenRequest} from '~/services/httpApiRequest';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -100,6 +101,10 @@ const StackNavigator = (): React.ReactElement => {
     handleDeepLink();
     // Linking.addEventListener('url', handleOpenURL);
     dispatch(noInternetActions.setSystemIssue(false));
+
+    if (!user && Platform.OS !== 'web') {
+      makeRemovePushTokenRequest();
+    }
   }, []);
 
   /*Handle when app killed*/
