@@ -1,29 +1,25 @@
 import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
 import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
-import {Platform} from 'react-native';
-import {delay, put, takeLatest} from 'redux-saga/effects';
+import {put, takeLatest} from 'redux-saga/effects';
 import {authStack} from '~/configs/navigator';
 import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
 import errorCode from '~/constants/errorCode';
 import {IObject, IToastMessage} from '~/interfaces/common';
 import * as IAuth from '~/interfaces/IAuth';
-import {IUserResponse} from '~/interfaces/IAuth';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {rootSwitch} from '~/router/stack';
-import notificationsActions from '~/screens/Notification/redux/actions';
-import {initPushTokenMessage} from '~/services/helper';
-import {refreshAuthTokens} from '~/services/httpApiRequest';
 import {
   getUserFromSharedPreferences,
   saveUserToSharedPreferences,
 } from '~/services/sharePreferences';
 import * as actionsCommon from '~/store/modal/actions';
-import * as modalActions from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
-import actions from './actions';
-import types from './types';
+import actions from '../actions';
+import types from '../types';
+import signIn from './signIn';
+import signInSuccess from './signInSuccess';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -36,37 +32,6 @@ export default function* authSaga() {
   yield takeLatest(types.FORGOT_PASSWORD_REQUEST, forgotPasswordRequest);
   yield takeLatest(types.FORGOT_PASSWORD_CONFIRM, forgotPasswordConfirm);
   yield takeLatest(types.CHANGE_PASSWORD, changePassword);
-}
-
-function* signIn({payload}: {type: string; payload: IAuth.ISignIn}): any {
-  try {
-    yield put(actions.setLoading(true));
-    yield put(actions.setSigningInError(''));
-    // make sure to delete push token of older logged in acc in case delete token in AuthStack failed
-    if (Platform.OS !== 'web') {
-      const messaging = yield initPushTokenMessage();
-      yield messaging()
-        .deleteToken()
-        .catch((e: any) => {
-          console.log('error when delete push token before log in', e);
-          return true;
-        });
-      put(notificationsActions.savePushToken(''));
-    }
-    const {email, password} = payload;
-    yield Auth.signIn(email, password); //handle result in useAuthHub
-  } catch (error: any) {
-    let errorMessage;
-    switch (error?.code) {
-      case authErrors.NOT_AUTHORIZED_EXCEPTION:
-        errorMessage = i18n.t('auth:text_err_id_password_not_matched');
-        break;
-      default:
-        errorMessage =
-          error?.message || i18n.t('auth:text_err_id_password_not_matched');
-    }
-    yield onSignInFailed(errorMessage);
-  }
 }
 
 function* changePassword({
@@ -132,58 +97,6 @@ function* signInOAuth({
     yield put(actions.setLoading(false));
     console.log(e);
   }
-}
-
-function* signInSuccess({payload}: {type: string; payload: IUserResponse}) {
-  yield put(modalActions.showLoading());
-
-  const name =
-    payload?.attributes?.name?.length < 50
-      ? payload?.attributes?.name
-      : payload?.attributes?.email?.match?.(/^([^@]*)@/)[1];
-
-  const userResponse: IUserResponse = {
-    username: payload?.username || '',
-    signInUserSession: payload?.signInUserSession || {},
-    attributes: payload?.attributes || {},
-    name: name || '',
-    email: payload?.attributes?.email || '',
-
-    id: payload?.username,
-    role: payload?.username,
-  };
-  const sessionData: IObject<any> = yield getUserFromSharedPreferences();
-  const activeSessions = sessionData?.activeSessions || [];
-  //For sharing data between Group and Chat
-  yield saveUserToSharedPreferences({
-    username: userResponse.username,
-    email: userResponse.email,
-    name,
-    token: userResponse.signInUserSession.idToken?.jwtToken,
-    exp: userResponse.signInUserSession.idToken?.payload?.exp,
-    activeSessions: [...activeSessions, 'community'],
-  });
-
-  yield put(actions.setUser(userResponse));
-
-  // @ts-ignore
-  const refreshSuccess = yield refreshAuthTokens();
-  if (!refreshSuccess) {
-    yield put(actions.signOut(false));
-    yield onSignInFailed(i18n.t('error:http:unknown'));
-    return;
-  }
-
-  navigation.replace(rootSwitch.mainStack);
-  yield put(actions.setLoading(false));
-  yield delay(500); // Delay to avoid showing authStack
-  yield put(modalActions.hideLoading());
-}
-
-function* onSignInFailed(errorMessage: string) {
-  yield put(modalActions.hideLoading());
-  yield put(actions.setLoading(false));
-  yield put(actions.setSigningInError(errorMessage));
 }
 
 function* signUp({payload}: {type: string; payload: IAuth.ISignUp}) {

@@ -31,6 +31,7 @@ import errorCode from '~/constants/errorCode';
 import memberRequestStatus from '~/constants/memberRequestStatus';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 import joinNewGroup from './joinNewGroup';
+import leaveGroup from './leaveGroup';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -471,46 +472,6 @@ function* cancelJoinGroup({
       return;
     }
 
-    yield showError(err);
-  }
-}
-
-function* leaveGroup({payload}: {payload: number; type: string}) {
-  try {
-    const {groups} = yield select();
-    const privacy = groups?.groupDetail?.group?.privacy;
-
-    yield groupsDataHelper.leaveGroup(payload);
-    yield put(groupsActions.getJoinedGroups());
-
-    if (privacy === groupPrivacy.secret) {
-      if (Platform.OS !== 'web') navigation.replace(groupStack.groups);
-      else {
-        const topParentGroupId = groups?.joinedGroups[0]?.id;
-        navigation.navigate(groupStack.groupDetail, {
-          groupId: topParentGroupId,
-          initial: true,
-        });
-      }
-    } else {
-      navigation.navigate(groupStack.groupDetail, {
-        groupId: payload,
-        initial: true,
-      });
-    }
-
-    yield put(groupsActions.setLoadingPage(true));
-    yield put(groupsActions.getGroupDetail(payload));
-
-    const toastMessage: IToastMessage = {
-      content: i18next.t('groups:modal_confirm_leave_group:success_message'),
-      props: {
-        type: 'success',
-      },
-    };
-    yield put(modalActions.showHideToastMessage(toastMessage));
-  } catch (err) {
-    console.log('leaveGroup:', err);
     yield showError(err);
   }
 }

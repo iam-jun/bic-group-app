@@ -21,7 +21,7 @@ describe('GroupInfoHeader component', () => {
 
     // onbly Join button is available
     const joinButton = queryByTestId('group_info_header.join');
-    expect(joinButton).toBeDefined();
+    expect(joinButton).not.toBeNull();
     const cancelButton = queryByTestId('group_info_header.cancel');
     expect(cancelButton).toBeNull();
   });
@@ -36,7 +36,7 @@ describe('GroupInfoHeader component', () => {
     const joinButton = queryByTestId('group_info_header.join');
     expect(joinButton).toBeNull();
     const cancelButton = queryByTestId('group_info_header.cancel');
-    expect(cancelButton).toBeDefined();
+    expect(cancelButton).not.toBeNull();
   });
 
   it('should hide Join and Cancel buttons when user is a group member correctly', () => {

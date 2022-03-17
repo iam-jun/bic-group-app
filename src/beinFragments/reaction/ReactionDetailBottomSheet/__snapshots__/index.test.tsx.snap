@@ -1278,6 +1278,7 @@ exports[`ReactionDetailBottomSheet component should render list user react corre
           >
             <ActivityIndicator
               color="#B2BDCD"
+              testID="LoadingIndicator"
             />
           </View>
         </View>
