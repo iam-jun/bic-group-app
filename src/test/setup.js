@@ -104,6 +104,7 @@ jest.doMock('@react-navigation/native', () => ({
       return {screen, params};
     },
   }),
+  useIsFocused: jest.fn(),
 }));
 
 jest.doMock('react-native-modalize', () => {

@@ -11,12 +11,13 @@ import {
   createTestStore,
   fireEvent,
   renderWithRedux,
-  waitForUpdateRedux,
 } from '~/test/testUtils';
 import * as navigationHook from '~/hooks/navigation';
 
 import EditDescription from '.';
-import menuDataHelper from '../../helper/MenuDataHelper';
+import menuTypes from '../../redux/types';
+import {USER_PROFILE} from '~/test/mock_data/menu';
+import menuActions from '../../redux/actions';
 
 afterEach(cleanup);
 
@@ -54,10 +55,44 @@ describe('EditDescription screen', () => {
     expect(component.props.accessibilityState.disabled).toBeFalsy();
   });
 
-  it(`should back to `, async () => {
+  it(`should back to previous screen successfully `, () => {
     Keyboard.dismiss = jest.fn();
-    const store = createTestStore(initialState);
+    const goBack = jest.fn();
 
+    const rootNavigation = {canGoBack: true, goBack};
+
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
+      return {rootNavigation} as any;
+    });
+
+    const store = mockStore(initialState);
+
+    const wrapper = renderWithRedux(<EditDescription />, store);
+
+    const component = wrapper.getByTestId('edit_description.save');
+    expect(component.props.accessibilityState.disabled).toBeTruthy();
+
+    const buttonBack = wrapper.getByTestId('header.back');
+    fireEvent.press(buttonBack);
+    expect(Keyboard.dismiss).toBeCalled();
+    expect(goBack).toBeCalled();
+  });
+
+  it(`should update userProfile successfully when click save button `, async () => {
+    Keyboard.dismiss = jest.fn();
+
+    const mockActionEditMyProfile = () => {
+      return {
+        type: menuTypes.SET_MY_PROFILE,
+        payload: USER_PROFILE,
+      };
+    };
+
+    jest
+      .spyOn(menuActions, 'editMyProfile')
+      .mockImplementation(mockActionEditMyProfile as any);
+
+    const store = createTestStore(initialState);
     const wrapper = renderWithRedux(<EditDescription />, store);
 
     const buttonComponent = wrapper.getByTestId('edit_description.save');
@@ -66,31 +101,8 @@ describe('EditDescription screen', () => {
     fireEvent.changeText(textInputComponent, 'abc');
     expect(buttonComponent.props.accessibilityState.disabled).toBeFalsy();
 
-    const goBack = jest.fn();
-    const rootNavigation = {canGoBack: true, goBack};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
-
-    jest.spyOn(menuDataHelper, 'editMyProfile').mockImplementation(() => {
-      return Promise.resolve({
-        code: 200,
-        data: {
-          id: 58,
-          description: 'Fake fake description',
-        },
-        meta: {},
-      });
-    });
-
     fireEvent.press(buttonComponent);
 
-    // await waitFor(() =>
-    //   expect(wrapper.queryByTestId('edit_description')).toBeTruthy(),
-    // );
-    // await waitForUpdateRedux();
-
-    // expect(Keyboard.dismiss).toBeCalled();
-    // expect(goBack).toBeCalled();
+    //this test case can't be done bc can mock dispatch
   });
 });

@@ -35,23 +35,15 @@ describe('Update User Profile Image Saga', () => {
       avatar: avatar,
     };
 
-    jest.mock('~/services/fileUploader', () => {
-      const imgURL =
-        'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/4a8c0ce3-0813-4387-9547-eadcd7fee38b.jpg';
-
-      return {
-        getInstance: jest.fn().mockReturnThis(() => {
-          return {
-            upload: jest.fn().mockResolvedValue(imgURL),
-          };
-        }),
-      };
+    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
+      return {upload: jest.fn().mockResolvedValue(avatar)} as any;
     });
 
     const fileUploader = FileUploader.getInstance();
+    //@ts-ignore
     return expectSaga(uploadImage, action)
       .put(menuActions.setLoadingAvatar(true))
-      .provide([[matchers.call.fn(fileUploader.upload, avatar)]])
+      .provide([[matchers.call.fn(fileUploader.upload), avatar]])
       .put(menuActions.editMyProfile(expectData))
       .run();
   });
@@ -82,32 +74,37 @@ describe('Update User Profile Image Saga', () => {
       background_img_url: background_img_url,
     };
 
+    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
+      return {upload: jest.fn().mockResolvedValue(background_img_url)} as any;
+    });
+
+    const fileUploader = FileUploader.getInstance();
+    //@ts-ignore
     return expectSaga(uploadImage, coverPhotoAction)
       .put(menuActions.setLoadingCover(true))
-      .provide([
-        [
-          matchers.call.fn(FileUploader.getInstance().upload),
-          background_img_url,
-        ],
-      ])
+      .provide([[matchers.call.fn(fileUploader.upload), background_img_url]])
       .put(menuActions.editMyProfile(expectData))
       .run();
   });
 
   it('should request to upload image failure', () => {
     const error = {meta: {message: 'Something went wrong'}};
+
+    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
+      return {
+        upload: jest.fn().mockRejectedValue(false),
+      } as any;
+    });
+
+    const fileUploader = FileUploader.getInstance();
+    //@ts-ignore
     return expectSaga(uploadImage, action)
       .put(menuActions.setLoadingAvatar(true))
-      .provide([
-        [
-          matchers.call.fn(FileUploader.getInstance().upload),
-          Promise.reject(error),
-        ],
-      ])
+      .provide([[matchers.call.fn(fileUploader.upload), Promise.reject(error)]])
       .put(menuActions.setLoadingAvatar(false))
       .put(
         modalActions.showHideToastMessage({
-          content: error.meta.message,
+          content: 'common:text_error_message',
           props: {
             textProps: {useI18n: true},
             type: 'error',

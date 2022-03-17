@@ -345,7 +345,6 @@ exports[`LanguageOptionMenu conponent renders correctly 1`] = `
                     "paddingHorizontal": 12,
                   }
                 }
-                testID="language_option_menu.checkbox_"
               >
                 <View
                   style={
@@ -547,7 +546,6 @@ exports[`LanguageOptionMenu conponent renders correctly 1`] = `
                     "paddingHorizontal": 12,
                   }
                 }
-                testID="language_option_menu.checkbox_"
               >
                 <View
                   style={
@@ -749,7 +747,6 @@ exports[`LanguageOptionMenu conponent renders correctly 1`] = `
                     "paddingHorizontal": 12,
                   }
                 }
-                testID="language_option_menu.checkbox_"
               >
                 <View
                   style={
@@ -951,7 +948,6 @@ exports[`LanguageOptionMenu conponent renders correctly 1`] = `
                     "paddingHorizontal": 12,
                   }
                 }
-                testID="language_option_menu.checkbox_"
               >
                 <View
                   style={
@@ -1153,7 +1149,6 @@ exports[`LanguageOptionMenu conponent renders correctly 1`] = `
                     "paddingHorizontal": 12,
                   }
                 }
-                testID="language_option_menu.checkbox_"
               >
                 <View
                   style={
@@ -1355,7 +1350,6 @@ exports[`LanguageOptionMenu conponent renders correctly 1`] = `
                     "paddingHorizontal": 12,
                   }
                 }
-                testID="language_option_menu.checkbox_"
               >
                 <View
                   style={
@@ -1557,7 +1551,6 @@ exports[`LanguageOptionMenu conponent renders correctly 1`] = `
                     "paddingHorizontal": 12,
                   }
                 }
-                testID="language_option_menu.checkbox_"
               >
                 <View
                   style={
@@ -1759,7 +1752,6 @@ exports[`LanguageOptionMenu conponent renders correctly 1`] = `
                     "paddingHorizontal": 12,
                   }
                 }
-                testID="language_option_menu.checkbox_"
               >
                 <View
                   style={
@@ -1961,7 +1953,6 @@ exports[`LanguageOptionMenu conponent renders correctly 1`] = `
                     "paddingHorizontal": 12,
                   }
                 }
-                testID="language_option_menu.checkbox_"
               >
                 <View
                   style={
@@ -2163,7 +2154,6 @@ exports[`LanguageOptionMenu conponent renders correctly 1`] = `
                     "paddingHorizontal": 12,
                   }
                 }
-                testID="language_option_menu.checkbox_"
               >
                 <View
                   style={
@@ -2365,7 +2355,6 @@ exports[`LanguageOptionMenu conponent renders correctly 1`] = `
                     "paddingHorizontal": 12,
                   }
                 }
-                testID="language_option_menu.checkbox_"
               >
                 <View
                   style={
@@ -2567,7 +2556,6 @@ exports[`LanguageOptionMenu conponent renders correctly 1`] = `
                     "paddingHorizontal": 12,
                   }
                 }
-                testID="language_option_menu.checkbox_"
               >
                 <View
                   style={
@@ -2769,7 +2757,6 @@ exports[`LanguageOptionMenu conponent renders correctly 1`] = `
                     "paddingHorizontal": 12,
                   }
                 }
-                testID="language_option_menu.checkbox_"
               >
                 <View
                   style={

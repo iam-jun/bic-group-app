@@ -66,8 +66,6 @@ export default class FileUploader {
       onError?.('Input file not found');
       return Promise.reject({meta: {message: 'Input file not found'}});
     }
-    console.log('async upload(params: IUploadParam)', this.fileUploaded);
-
     if (this.fileUploaded[file.name]) {
       const uploaded = this.fileUploaded[file.name];
       if (

@@ -11,12 +11,13 @@ import {
   createTestStore,
   fireEvent,
   renderWithRedux,
-  waitForUpdateRedux,
 } from '~/test/testUtils';
 import * as navigationHook from '~/hooks/navigation';
 
 import EditBasicInfo from './EditBasicInfo';
-import menuDataHelper from '../../helper/MenuDataHelper';
+import menuTypes from '../../redux/types';
+import {USER_PROFILE} from '~/test/mock_data/menu';
+import menuActions from '../../redux/actions';
 
 afterEach(cleanup);
 
@@ -33,7 +34,7 @@ describe('EditDescription screen', () => {
     jest.clearAllMocks();
   });
 
-  it(`should disable save button when not change description`, async () => {
+  it(`should disable save button when not change any value`, async () => {
     const store = mockStore(initialState);
 
     const wrapper = renderWithRedux(<EditBasicInfo />, store);
@@ -52,6 +53,8 @@ describe('EditDescription screen', () => {
 
     fireEvent.changeText(inputComponent, 'Test name');
     expect(component.props.accessibilityState.disabled).toBeFalsy();
+
+    fireEvent.press(component);
   });
 
   it(`should render gender bottom sheet when click gender item`, async () => {
@@ -65,12 +68,8 @@ describe('EditDescription screen', () => {
 
     fireEvent.press(component);
     expect(Keyboard.dismiss).toBeCalled();
-    //   const bottomSheet = wrapper.getByTestId(
-    //     'edit_basic_info.gender_list',
-    //   );
-
-    //   fireEvent.changeText(inputCompoent, 'Test name');
-    //   expect(component.props.accessibilityState.disabled).toBeFalsy();
+    const bottomSheet = wrapper.getByTestId('edit_basic_info.gender_list');
+    expect(bottomSheet).toBeDefined();
   });
 
   it(`should render show date picker when click birthday item`, async () => {
@@ -85,15 +84,22 @@ describe('EditDescription screen', () => {
     await waitFor(() =>
       expect(wrapper.queryByTestId('edit_basic_info.date_picker')).toBeTruthy(),
     );
-    //   const datePicker = wrapper.getByTestId('edit_basic_info.date_picker');
-
-    //   fireEvent.changeText(datePicker, 'Test name');
-    //   expect(component.props.accessibilityState.disabled).toBeFalsy();
   });
 
-  it(`should render language option bottom sheet when click language item`, async () => {
+  it(`should render language option bottom sheet when click language item`, () => {
     Keyboard.dismiss = jest.fn();
-    const store = mockStore(initialState);
+    const mockActionEditMyProfile = () => {
+      return {
+        type: menuTypes.SET_MY_PROFILE,
+        payload: USER_PROFILE,
+      };
+    };
+
+    jest
+      .spyOn(menuActions, 'editMyProfile')
+      .mockImplementation(mockActionEditMyProfile as any);
+
+    const store = createTestStore(initialState);
 
     const wrapper = renderWithRedux(<EditBasicInfo />, store);
 
@@ -102,17 +108,30 @@ describe('EditDescription screen', () => {
 
     fireEvent.press(component);
     expect(Keyboard.dismiss).toBeCalled();
-    //   const bottomSheet = wrapper.getByTestId(
-    //     'edit_basic_info.gender_list',
-    //   );
 
-    //   fireEvent.changeText(inputCompoent, 'Test name');
-    //   expect(component.props.accessibilityState.disabled).toBeFalsy();
+    const item0Component = wrapper.getByTestId(
+      'language_option_menu.checkbox.item_0',
+    );
+    expect(item0Component).toBeDefined();
+
+    fireEvent.press(item0Component);
+
+    const btnSaveComponent = wrapper.getByTestId(
+      'edit_basic_info.save_language',
+    );
+    expect(btnSaveComponent).toBeDefined();
+    fireEvent.press(btnSaveComponent);
+
+    const buttonSave = wrapper.getByTestId('edit_basic_info.save');
+    expect(buttonSave).toBeDefined();
+
+    fireEvent.press(buttonSave);
+    //this test case can't be done bc can mock dispatch
   });
 
-  it(`should render relationship bottom sheet when click relationship item`, async () => {
+  it(`should render relationship bottom sheet when click relationship item`, () => {
     Keyboard.dismiss = jest.fn();
-    const store = mockStore(initialState);
+    const store = createTestStore(initialState);
 
     const wrapper = renderWithRedux(<EditBasicInfo />, store);
 
@@ -127,5 +146,53 @@ describe('EditDescription screen', () => {
     );
 
     expect(bottomSheet).toBeDefined();
+
+    const relationshipItemBottomSheet = wrapper.getByTestId(
+      'eidt_user_info.option_menu.item_MALE',
+    );
+    expect(relationshipItemBottomSheet).toBeDefined();
+    fireEvent.press(relationshipItemBottomSheet);
+
+    const buttonSave = wrapper.getByTestId('edit_basic_info.save');
+    expect(buttonSave).toBeDefined();
+
+    fireEvent.press(buttonSave);
+  });
+
+  it(`should back to previous screen successfully `, () => {
+    const goBack = jest.fn();
+
+    const rootNavigation = {canGoBack: true, goBack};
+
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
+      return {rootNavigation} as any;
+    });
+
+    const store = mockStore(initialState);
+
+    const wrapper = renderWithRedux(<EditBasicInfo />, store);
+
+    const component = wrapper.getByTestId('edit_basic_info.save');
+    expect(component.props.accessibilityState.disabled).toBeTruthy();
+
+    const buttonBack = wrapper.getByTestId('header.back');
+    fireEvent.press(buttonBack);
+    expect(goBack).toBeCalled();
+  });
+
+  it(`should show alert when changed value and click back `, () => {
+    Keyboard.dismiss = jest.fn();
+
+    const store = mockStore(initialState);
+
+    const wrapper = renderWithRedux(<EditBasicInfo />, store);
+
+    const inputComponent = wrapper.getByTestId('edit_name.text_input');
+
+    fireEvent.changeText(inputComponent, 'Test name');
+
+    const buttonBack = wrapper.getByTestId('header.back');
+    fireEvent.press(buttonBack);
+    expect(Keyboard.dismiss).toBeCalled();
   });
 });
