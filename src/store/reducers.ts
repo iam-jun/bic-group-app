@@ -19,6 +19,7 @@ import mentionInputReducer from '~/beinComponents/inputs/MentionInput/redux/redu
 
 import app from './app/reducer';
 import modal from './modal/reducer';
+import {clearUserCookies} from '~/utils/cookie';
 
 const authPersistConfig = {
   key: 'auth',
@@ -63,6 +64,10 @@ const rootReducers = (state, action) => {
         })
         .catch(e => console.log('error when delete token', e));
     } else {
+      /**
+       * To clear all cookies in web browser
+       */
+      clearUserCookies();
       setChatAuthenticationInfo('', 0);
     }
     AsyncStorage.multiRemove([
