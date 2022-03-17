@@ -2330,6 +2330,7 @@ exports[`GroupDetail component renders NoGroupFound when there is no group info 
                               "paddingVertical": 8,
                             }
                           }
+                          testID="no_group_found.back"
                         >
                           <View
                             style={
@@ -2941,6 +2942,7 @@ exports[`GroupDetail component renders NoGroupFound when user is not a member an
                             "paddingVertical": 8,
                           }
                         }
+                        testID="no_group_found.back"
                       >
                         <View
                           style={

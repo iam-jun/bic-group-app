@@ -1,6 +1,6 @@
 import React from 'react';
 import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useRootNavigation} from '~/hooks/navigation';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
 
@@ -17,10 +17,12 @@ import {deviceDimensions} from '~/theme/dimension';
 const NoGroupFound = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
-  const navigation = useNavigation();
+  const {rootNavigation} = useRootNavigation();
 
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
+
+  const onPressBack = () => rootNavigation.navigate(groupStack.groups);
 
   return (
     <ScreenWrapper style={styles.root} isFullView>
@@ -41,8 +43,7 @@ const NoGroupFound = () => {
           <Text.Body>{i18next.t('error:no_group_found_second_desc')}</Text.Body>
         </View>
         {!isLaptop && (
-          <Button.Primary
-            onPress={() => navigation.navigate(groupStack.groups)}>
+          <Button.Primary testID="no_group_found.back" onPress={onPressBack}>
             {i18next.t('error:button_back_to_safety')}
           </Button.Primary>
         )}
