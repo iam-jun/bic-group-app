@@ -50,6 +50,7 @@ describe('GroupContent component', () => {
     );
     const postButton = getByTestId('group_content.post');
     expect(postButton).toBeDefined();
+    fireEvent.press(postButton);
   });
 
   it('should not render Post button when user is not a group member correctly', () => {

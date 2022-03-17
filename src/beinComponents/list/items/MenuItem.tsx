@@ -80,7 +80,9 @@ const MenuItem: React.FC<MenuItemProps> = ({
         <View style={[styles.container, style]}>
           {icon && <Icon icon={icon} size={24} {...iconProps} />}
           <View style={styles.titleContainer}>
-            <Text.ButtonBase useI18n>{title}</Text.ButtonBase>
+            <Text.ButtonBase testID="menu_item.title" useI18n>
+              {title}
+            </Text.ButtonBase>
             {!!subTitle && (
               <Text.Subtitle
                 testID="menu_item.sub_title"

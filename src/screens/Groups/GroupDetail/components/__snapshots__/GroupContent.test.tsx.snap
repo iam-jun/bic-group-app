@@ -81,9 +81,11 @@ exports[`GroupContent component renders on mobile correctly 1`] = `
                 "backgroundColor": "#FFFFFF",
               }
             }
+            testID="group_info_header"
           >
             <View
               onLayout={[Function]}
+              testID="group_info_header.cover"
             >
               <View
                 onLayout={[Function]}
@@ -283,6 +285,7 @@ exports[`GroupContent component renders on mobile correctly 1`] = `
                           "fontSize": 20,
                         }
                       }
+                      testID="group_info_header.name"
                     />
                     <View
                       style={
@@ -431,6 +434,7 @@ exports[`GroupContent component renders on mobile correctly 1`] = `
                             "fontSize": 12,
                           }
                         }
+                        testID="group_info_header.privacy"
                       />
                       <Text
                         style={
@@ -451,6 +455,7 @@ exports[`GroupContent component renders on mobile correctly 1`] = `
                             "fontSize": 14,
                           }
                         }
+                        testID="group_info_header.member_count"
                       />
                       <Text
                         style={
@@ -906,9 +911,11 @@ exports[`GroupContent component renders on web correctly 1`] = `
                 "backgroundColor": "#FFFFFF",
               }
             }
+            testID="group_info_header"
           >
             <View
               onLayout={[Function]}
+              testID="group_info_header.cover"
             >
               <View
                 onLayout={[Function]}
@@ -1111,6 +1118,7 @@ exports[`GroupContent component renders on web correctly 1`] = `
                           "fontSize": 20,
                         }
                       }
+                      testID="group_info_header.name"
                     />
                     <View
                       style={
@@ -1256,6 +1264,7 @@ exports[`GroupContent component renders on web correctly 1`] = `
                             "fontSize": 12,
                           }
                         }
+                        testID="group_info_header.privacy"
                       />
                       <Text
                         style={
@@ -1276,6 +1285,7 @@ exports[`GroupContent component renders on web correctly 1`] = `
                             "fontSize": 14,
                           }
                         }
+                        testID="group_info_header.member_count"
                       />
                       <Text
                         style={
@@ -15567,9 +15577,11 @@ Let’s get started.",
                 "backgroundColor": "#FFFFFF",
               }
             }
+            testID="group_info_header"
           >
             <View
               onLayout={[Function]}
+              testID="group_info_header.cover"
             >
               <View
                 onLayout={[Function]}
@@ -15772,6 +15784,7 @@ Let’s get started.",
                           "fontSize": 20,
                         }
                       }
+                      testID="group_info_header.name"
                     >
                       EVOL Community
                     </Text>
@@ -15893,6 +15906,7 @@ Let’s get started.",
                             "fontSize": 12,
                           }
                         }
+                        testID="group_info_header.privacy"
                       >
                         Public Group
                       </Text>
@@ -15915,6 +15929,7 @@ Let’s get started.",
                             "fontSize": 14,
                           }
                         }
+                        testID="group_info_header.member_count"
                       >
                         25
                       </Text>
@@ -17256,11 +17271,7 @@ Let’s get started.",
                                   onFastImageLoadEnd={[Function]}
                                   resizeMode="cover"
                                   size={14}
-                                  source={
-                                    Object {
-                                      "testUri": "../../../assets/icons/icon_react.svg",
-                                    }
-                                  }
+                                  source={null}
                                   style={
                                     Object {
                                       "bottom": 0,
@@ -18056,11 +18067,7 @@ Let’s get started.",
                                   onFastImageLoadEnd={[Function]}
                                   resizeMode="cover"
                                   size={14}
-                                  source={
-                                    Object {
-                                      "testUri": "../../../assets/icons/icon_react.svg",
-                                    }
-                                  }
+                                  source={null}
                                   style={
                                     Object {
                                       "bottom": 0,
@@ -18856,11 +18863,7 @@ Let’s get started.",
                                   onFastImageLoadEnd={[Function]}
                                   resizeMode="cover"
                                   size={14}
-                                  source={
-                                    Object {
-                                      "testUri": "../../../assets/icons/icon_react.svg",
-                                    }
-                                  }
+                                  source={null}
                                   style={
                                     Object {
                                       "bottom": 0,
@@ -19656,11 +19659,7 @@ Let’s get started.",
                                   onFastImageLoadEnd={[Function]}
                                   resizeMode="cover"
                                   size={14}
-                                  source={
-                                    Object {
-                                      "testUri": "../../../assets/icons/icon_react.svg",
-                                    }
-                                  }
+                                  source={null}
                                   style={
                                     Object {
                                       "bottom": 0,
@@ -20456,11 +20455,7 @@ Let’s get started.",
                                   onFastImageLoadEnd={[Function]}
                                   resizeMode="cover"
                                   size={14}
-                                  source={
-                                    Object {
-                                      "testUri": "../../../assets/icons/icon_react.svg",
-                                    }
-                                  }
+                                  source={null}
                                   style={
                                     Object {
                                       "bottom": 0,
@@ -21256,11 +21251,7 @@ Let’s get started.",
                                   onFastImageLoadEnd={[Function]}
                                   resizeMode="cover"
                                   size={14}
-                                  source={
-                                    Object {
-                                      "testUri": "../../../assets/icons/icon_react.svg",
-                                    }
-                                  }
+                                  source={null}
                                   style={
                                     Object {
                                       "bottom": 0,
@@ -22056,11 +22047,7 @@ Let’s get started.",
                                   onFastImageLoadEnd={[Function]}
                                   resizeMode="cover"
                                   size={14}
-                                  source={
-                                    Object {
-                                      "testUri": "../../../assets/icons/icon_react.svg",
-                                    }
-                                  }
+                                  source={null}
                                   style={
                                     Object {
                                       "bottom": 0,
@@ -22856,11 +22843,7 @@ Let’s get started.",
                                   onFastImageLoadEnd={[Function]}
                                   resizeMode="cover"
                                   size={14}
-                                  source={
-                                    Object {
-                                      "testUri": "../../../assets/icons/icon_react.svg",
-                                    }
-                                  }
+                                  source={null}
                                   style={
                                     Object {
                                       "bottom": 0,
@@ -23656,11 +23639,7 @@ Let’s get started.",
                                   onFastImageLoadEnd={[Function]}
                                   resizeMode="cover"
                                   size={14}
-                                  source={
-                                    Object {
-                                      "testUri": "../../../assets/icons/icon_react.svg",
-                                    }
-                                  }
+                                  source={null}
                                   style={
                                     Object {
                                       "bottom": 0,
@@ -24456,11 +24435,7 @@ Let’s get started.",
                                   onFastImageLoadEnd={[Function]}
                                   resizeMode="cover"
                                   size={14}
-                                  source={
-                                    Object {
-                                      "testUri": "../../../assets/icons/icon_react.svg",
-                                    }
-                                  }
+                                  source={null}
                                   style={
                                     Object {
                                       "bottom": 0,

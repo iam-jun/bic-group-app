@@ -23,7 +23,9 @@ const GroupPrivateWelcome = ({parentWidth}: {parentWidth?: number}) => {
         <View style={[styles.contentSection, styles.marginTop]}>
           <GroupAboutContent />
         </View>
-        <View style={styles.svgSection}>
+        <View
+          style={styles.svgSection}
+          testID="group_private_welcome.bottom_image">
           {/* @ts-ignore */}
           <SVGIcon source={LockImg} size={160} tintColor="none" />
           <Text.H6 useI18n>groups:private_group_welcome_message:title</Text.H6>

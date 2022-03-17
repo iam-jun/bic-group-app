@@ -19,6 +19,7 @@ const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
 
   return (
     <ActivityIndicator
+      testID="loading_indicator"
       style={style}
       size={size}
       color={color || colors.borderDisable}

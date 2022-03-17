@@ -56,8 +56,8 @@ describe('GroupDetail component', () => {
       store,
     );
     expect(wrapper).toMatchSnapshot();
-    // const groupPrivateWelcome = wrapper.getByTestId('group_private_welcome');
-    // expect(groupPrivateWelcome).toBeDefined();
+    const groupPrivateWelcome = wrapper.getByTestId('group_private_welcome');
+    expect(groupPrivateWelcome).toBeDefined();
   });
 
   it('renders NoGroupFound when there is no group info', () => {
@@ -72,8 +72,8 @@ describe('GroupDetail component', () => {
       store,
     );
     expect(wrapper).toMatchSnapshot();
-    // const groupPrivateWelcome = wrapper.getByTestId('no_group_found');
-    // expect(groupPrivateWelcome).toBeDefined();
+    const groupPrivateWelcome = wrapper.getByTestId('no_group_found');
+    expect(groupPrivateWelcome).toBeDefined();
   });
 
   it('renders NoGroupFound when user is not a member and the group is secret', () => {
@@ -91,7 +91,7 @@ describe('GroupDetail component', () => {
       store,
     );
     expect(wrapper).toMatchSnapshot();
-    // const groupPrivateWelcome = wrapper.getByTestId('no_group_found');
-    // expect(groupPrivateWelcome).toBeDefined();
+    const groupPrivateWelcome = wrapper.getByTestId('no_group_found');
+    expect(groupPrivateWelcome).toBeDefined();
   });
 });

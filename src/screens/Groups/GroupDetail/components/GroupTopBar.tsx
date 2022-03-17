@@ -60,16 +60,15 @@ const GroupTopBar = () => {
     openLink(`${chatSchemes.CHANNELS}/${groupInfo.slug}`);
   };
 
+  const onPressSearch = () => {
+    dispatch(modalActions.showAlertNewFeature());
+  };
+
   const renderAdminButton = () => {
     // only admin can see this button
     return (
-      <ButtonWrapper onPress={onPressMenu}>
-        <Icon
-          testID="group_top_bar.admin_button"
-          icon={'iconShieldStar'}
-          fill={theme.colors.iconTint}
-          size={24}
-        />
+      <ButtonWrapper onPress={onPressMenu} testID="group_top_bar.admin_button">
+        <Icon icon={'iconShieldStar'} fill={theme.colors.iconTint} size={24} />
       </ButtonWrapper>
     );
   };
@@ -78,9 +77,8 @@ const GroupTopBar = () => {
     // only members can see this icon
     return (
       join_status === groupJoinStatus.member && (
-        <ButtonWrapper onPress={() => alert('Press search')}>
+        <ButtonWrapper onPress={onPressSearch} testID="group_top_bar.search">
           <Icon
-            testID="group_top_bar.search"
             icon={'iconSearch'}
             size={22}
             style={styles.iconSearch}
@@ -93,21 +91,16 @@ const GroupTopBar = () => {
 
   const renderGroupOption = () => {
     return (
-      <ButtonWrapper onPress={onPressMenu}>
-        <Icon
-          testID="group_top_bar.option_menu"
-          icon={'EllipsisH'}
-          tintColor={theme.colors.iconTint}
-        />
+      <ButtonWrapper onPress={onPressMenu} testID="group_top_bar.option_menu">
+        <Icon icon={'EllipsisH'} tintColor={theme.colors.iconTint} />
       </ButtonWrapper>
     );
   };
 
   const renderChatIcon = () => {
     return (
-      <ButtonWrapper onPress={onPressChat}>
+      <ButtonWrapper onPress={onPressChat} testID="group_top_bar.chat">
         <Icon
-          testID="group_top_bar.option_menu"
           icon={'iconChat'}
           size={24}
           tintColor={theme.colors.iconTint}
@@ -122,6 +115,7 @@ const GroupTopBar = () => {
       <View style={styles.leftComponent}>
         {!isLaptop && (
           <Icon
+            buttonTestID="group_top_bar.back"
             icon="iconBack"
             size={28}
             hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
