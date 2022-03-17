@@ -2,8 +2,6 @@ import React, {FC, memo, useEffect, useMemo, useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
-  StyleProp,
-  ViewStyle,
   Dimensions,
   Platform,
   ActivityIndicator,
@@ -30,7 +28,6 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
 
 export interface NewsfeedListProps {
-  style?: StyleProp<ViewStyle>;
   data?: any;
   refreshing?: boolean;
   canLoadMore?: boolean;
@@ -96,10 +93,10 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   useFocusEffect(
     React.useCallback(() => {
       return () => {
-        setTimeout(() => {
-          DeviceEventEmitter.emit('showHeader', true);
-          DeviceEventEmitter.emit('showBottomBar', true);
-        }, 100);
+        // setTimeout(() => {
+        DeviceEventEmitter.emit('showHeader', true);
+        DeviceEventEmitter.emit('showBottomBar', true);
+        // }, 100);
       };
     }, []),
   );
@@ -235,7 +232,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     if (data?.length === 0 && !canLoadMore) {
       //todo waiting for design
       return (
-        <View style={styles.emptyContainer}>
+        <View testID={'newsfeed_list.empty_view'} style={styles.emptyContainer}>
           {!!HeaderComponent && HeaderComponent}
           <View style={styles.listFooter}>
             <Image
@@ -258,7 +255,10 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     return (
       <View style={styles.listFooter}>
         {canLoadMore && !refreshing && (
-          <ActivityIndicator color={theme.colors.bgFocus} />
+          <ActivityIndicator
+            testID={'newsfeed_list.activity_indicator'}
+            color={theme.colors.bgFocus}
+          />
         )}
         {!refreshing && !canLoadMore && (
           <>
@@ -282,10 +282,12 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   return (
     <View
+      testID="newsfeed_list"
       style={styles.container}
       onLayout={event => setNewsfeedWidth(event.nativeEvent.layout.width)}>
       {data && data.length > 0 && (
         <RecyclerListView
+          testID="newsfeed_list.list"
           ref={listView}
           layoutProvider={layoutProvider}
           dataProvider={dataProvider}
@@ -303,6 +305,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           scrollViewProps={{
             refreshControl: (
               <RefreshControl
+                testID={'newsfeed_list.refresh_control'}
                 progressViewOffset={refreshControlOffset}
                 refreshing={refreshing}
                 onRefresh={() => onRefresh?.()}

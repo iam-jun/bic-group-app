@@ -26,6 +26,19 @@ const languages = require('~/localization/en.json');
 
 jest.mock('@react-native-clipboard/clipboard');
 
+jest.mock('@react-native-firebase/messaging', () => {
+  return () => ({
+    ...jest.requireActual('@react-native-firebase/messaging'),
+    deleteToken: jest.fn(() => Promise.resolve(true)),
+  });
+});
+
+jest.mock('~/services/sharePreferences', () => ({
+  getUserFromSharedPreferences: jest.fn(),
+  saveUserToSharedPreferences: jest.fn(),
+  updateUserFromSharedPreferences: jest.fn(),
+}));
+
 jest.mock('react-native-image-crop-picker', () => ({
   openPicker: jest.fn().mockImplementation(() =>
     Promise.resolve({
@@ -67,6 +80,14 @@ jest.doMock('react-native-paper', () => ({
     ...ReactNative.TextInput,
     Icon: ReactNative.View,
   },
+}));
+
+jest.doMock('@react-navigation/native', () => ({
+  useNavigation: () => ({
+    navigate: (screen, params) => {
+      return {screen, params};
+    },
+  }),
 }));
 
 jest.doMock('react-native-modalize', () => {
@@ -190,3 +211,11 @@ jest.doMock('react-native', () => {
     ReactNative,
   );
 });
+
+// jest.doMock('react', () => {
+//   const setState = jest.fn();
+//   return {
+//     ...jest.requireActual('react'),
+//     useState: jest.fn().mockImplementation(init => [init, setState]),
+//   };
+// });
