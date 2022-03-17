@@ -83,6 +83,7 @@ jest.doMock('react-native-paper', () => ({
 }));
 
 jest.doMock('@react-navigation/native', () => ({
+  ...jest.requireActual('@react-navigation/native'),
   useNavigation: () => ({
     navigate: (screen, params) => {
       return {screen, params};
