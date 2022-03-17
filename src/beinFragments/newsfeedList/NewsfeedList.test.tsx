@@ -20,10 +20,6 @@ import Text from '~/beinComponents/Text';
 //   POST_DETAIL,
 // ];
 
-beforeEach(() => {
-  jest.useFakeTimers();
-});
-
 describe('NewsfeedList component', () => {
   it('renders correctly with 1 item', async () => {
     const wrapper = renderWithRedux(
@@ -36,8 +32,6 @@ describe('NewsfeedList component', () => {
   });
 
   it('renders correctly loading more', async () => {
-    jest.useFakeTimers('legacy');
-
     const wrapper = renderWithRedux(
       <MockedNavigator
         component={() => (
@@ -60,8 +54,6 @@ describe('NewsfeedList component', () => {
   });
 
   it('renders correctly cant load more', async () => {
-    jest.useFakeTimers('legacy');
-
     const wrapper = renderWithRedux(
       <MockedNavigator
         component={() => (
