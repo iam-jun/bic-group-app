@@ -44,7 +44,7 @@ const Upload = {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
-      useRetry: false,
+      useRetry: true,
       provider: providers.bein,
       onUploadProgress: onUploadProgress,
       data,
@@ -69,13 +69,7 @@ const App = {
       useRetry: true,
     };
   },
-  pushToken: (
-    deviceToken: string,
-    deviceOS: string,
-    appBundleId: string,
-    deviceType: string,
-    deviceName: string,
-  ): HttpApiRequestConfig => {
+  pushToken: (deviceToken: string, deviceId: string): HttpApiRequestConfig => {
     return {
       url: `${providers.bein.url}notification/token`,
       method: 'post',
@@ -83,34 +77,19 @@ const App = {
       useRetry: true,
       data: {
         token: deviceToken,
-        device_os: deviceOS,
-        app_name: appBundleId,
-        device_type: deviceType,
-        device_name: deviceName,
+        device_id: deviceId,
       },
     };
   },
-  removePushToken: (
-    authToken: string,
-    deviceOS: string,
-    appBundleId: string,
-    deviceType: string,
-    deviceName: string,
-  ): HttpApiRequestConfig => {
+  removePushToken: (deviceId: string): HttpApiRequestConfig => {
     return {
       url: `${providers.bein.url}notification/token`,
       method: 'delete',
       provider: providers.bein,
       useRetry: false,
       timeout: 5000,
-      headers: {
-        Authorization: authToken,
-      },
       data: {
-        device_os: deviceOS,
-        app_name: appBundleId,
-        device_type: deviceType,
-        device_name: deviceName,
+        device_id: deviceId,
       },
     };
   },

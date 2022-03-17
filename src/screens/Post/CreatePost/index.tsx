@@ -289,6 +289,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       dispatch(postActions.setSearchResultAudienceGroups([]));
       dispatch(postActions.setSearchResultAudienceUsers([]));
       dispatch(postActions.setCreatePostImagesDraft([]));
+
+      //clear comment because of comment input view listen emit event change text
+      dispatch(postActions.setCreateComment({content: '', loading: false}));
     };
   }, []);
 

@@ -87,6 +87,8 @@ export const completeMention = ({
   DeviceEventEmitter.emit('mention-input-on-complete-mention', completedDraft);
   dispatch(actions.setData([]));
 
+  dispatch(actions.addTempSelected({[mention]: {id: item?.id, data: item}}));
+
   // For testing output
   return {
     cursorPosition,

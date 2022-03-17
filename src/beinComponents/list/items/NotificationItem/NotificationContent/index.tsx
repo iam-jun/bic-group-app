@@ -28,6 +28,7 @@ const NotificationContent = ({activities}: Props) => {
       {!!body && (
         <Text.BodyS
           testID="notification_content.body"
+          numberOfLines={1}
           style={styles.subContent}>
           {body}
         </Text.BodyS>
