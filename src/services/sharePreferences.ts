@@ -67,7 +67,6 @@ export const loadFromSharedStorage = async (
 };
 
 export const saveUserToSharedPreferences = async (payload: any) => {
-  console.log('[DEBUG] saveUserToSharedPreferences', payload);
   await saveDataToSharedStorage(
     getEnv(`APP_GROUP_PACKAGE_NAME_${Platform.OS.toUpperCase()}`),
     'pref_user_info',
@@ -84,7 +83,6 @@ export const getUserFromSharedPreferences = () => {
 
 export const updateUserFromSharedPreferences = async (payload: any) => {
   const user = await getUserFromSharedPreferences();
-  console.log('[DEBUG] updateUserFromSharedPreferences', user, payload);
 
   await saveDataToSharedStorage(
     getEnv(`APP_GROUP_PACKAGE_NAME_${Platform.OS.toUpperCase()}`),
