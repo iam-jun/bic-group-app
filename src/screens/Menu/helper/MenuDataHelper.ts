@@ -79,13 +79,16 @@ const menuDataHelper = {
       return Promise.reject(e);
     }
   },
-  editMyProfile: async (userId: number, data: IUserEdit) => {
+  editMyProfile: async (params: any) => {
     try {
+      const {userId, data} = params;
+
       const response: any = await makeHttpRequest(
         menuApiConfig.editMyProfile(userId, data),
       );
+
       if (response && response?.data) {
-        return Promise.resolve(response?.data);
+        return Promise.resolve(response.data);
       } else {
         return Promise.reject(response);
       }

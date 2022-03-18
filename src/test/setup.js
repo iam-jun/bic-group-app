@@ -48,6 +48,24 @@ jest.mock('react-native-image-crop-picker', () => ({
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
+jest.mock('~/screens/Menu/helper/MenuDataHelper');
+
+// jest.mock('~/services/fileUploader', () => {
+//   const imgURL =
+//     'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/4a8c0ce3-0813-4387-9547-eadcd7fee38b.jpg';
+
+//   return {
+//     getInstance: jest.fn().mockReturnThis(() => {
+//       return {
+//         upload: jest.fn().mockResolvedValue(imgURL),
+//       };
+//     }),
+//   };
+// });
+
+// @ts-ignore
+global.FormData = require('react-native/Libraries/Network/FormData');
+
 jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
 
 jest.doMock('react-i18next', () => ({
@@ -86,6 +104,7 @@ jest.doMock('@react-navigation/native', () => ({
       return {screen, params};
     },
   }),
+  useIsFocused: jest.fn(),
 }));
 
 jest.doMock('react-native-modalize', () => {

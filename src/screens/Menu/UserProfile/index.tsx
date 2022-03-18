@@ -162,9 +162,12 @@ const UserProfile = (props: any) => {
     });
   };
 
-  const renderEditButton = (style: any, onPress: any) => {
+  const renderEditButton = (style: any, onPress: any, testID: string) => {
+    console.log('renderEditButton', userId, currentUserId);
+
     return userId == currentUserId || userId == currentUsername ? (
       <ButtonWrapper
+        testID={testID}
         style={[styles.editButton, style]}
         activeOpacity={0.9}
         onPress={onPress}>
@@ -180,7 +183,11 @@ const UserProfile = (props: any) => {
           style={styles.cover}
           source={bgImgState || images.img_cover_default}
         />
-        {renderEditButton(styles.editCoverPhoto, onEditCover)}
+        {renderEditButton(
+          styles.editCoverPhoto,
+          onEditCover,
+          'user_profile.edit.cover_image',
+        )}
       </View>
     );
   };
@@ -195,7 +202,11 @@ const UserProfile = (props: any) => {
             isRounded={true}
             showBorder={true}
           />
-          {renderEditButton(styles.editAvatar, onEditAvatar)}
+          {renderEditButton(
+            styles.editAvatar,
+            onEditAvatar,
+            'user_profile.edit.avatar',
+          )}
         </View>
       </View>
     );
@@ -253,7 +264,7 @@ const UserProfile = (props: any) => {
 
   const renderLoading = () => {
     return (
-      <View style={styles.loadingProfile}>
+      <View testID="user_profile.loading" style={styles.loadingProfile}>
         <ActivityIndicator size="large" />
       </View>
     );

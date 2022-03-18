@@ -161,6 +161,7 @@ const EditContact = () => {
           textColor: theme.colors.background,
           borderRadius: theme.spacing.borderRadius.small,
           disabled: !isValid,
+          testID: 'edit_contact.save',
         }}
         onPressButton={onSave}
       />
@@ -176,14 +177,15 @@ const EditContact = () => {
           />
           <TitleComponent icon="EnvelopeAlt" title="settings:title_email" />
           <Button
-            testID="edit_contact.phone"
+            testID="edit_contact.email"
             textProps={{color: theme.colors.borderCard, variant: 'body'}}
             style={[
               styles.buttonDropDown,
               {backgroundColor: theme.colors.bgHover},
             ]}
             contentStyle={styles.buttonDropDownContent}
-            activeOpacity={1}>
+            activeOpacity={1}
+            disabled>
             {email || i18next.t('common:text_not_set')}
           </Button>
 

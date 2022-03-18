@@ -13,7 +13,6 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 interface SettingItemProps {
   title: string;
   subtitle?: string;
-  rightIcon?: IconType;
   leftIcon?: IconType;
   privacyIcon?: IconType;
   isTouchDisabled?: boolean;
@@ -34,7 +33,10 @@ const SettingItem = ({
   const styles = themeStyles(theme);
 
   return (
-    <TouchableOpacity onPress={onPress} disabled={isTouchDisabled}>
+    <TouchableOpacity
+      testID="edit_user_info.setting_item"
+      onPress={onPress}
+      disabled={isTouchDisabled}>
       <PrimaryItem
         testID={testID}
         title={i18next.t(title)}
@@ -43,6 +45,7 @@ const SettingItem = ({
         LeftComponent={
           leftIcon ? (
             <Icon
+              testID="edit_user_info.setting_item.left_component"
               icon={leftIcon}
               size={24}
               tintColor={theme.colors.primary6}
@@ -54,6 +57,7 @@ const SettingItem = ({
           <>
             {!!privacyIcon && (
               <ButtonWrapper
+                testID="edit_user_info.setting_item.right_component"
                 onPress={() => {
                   //do something next sprint
                 }}>
