@@ -15,9 +15,7 @@ import {
 import * as navigationHook from '~/hooks/navigation';
 
 import EditBasicInfo from './EditBasicInfo';
-import menuTypes from '../../redux/types';
 import {USER_PROFILE} from '~/test/mock_data/menu';
-import menuActions from '../../redux/actions';
 
 afterEach(cleanup);
 
@@ -53,8 +51,6 @@ describe('EditDescription screen', () => {
 
     fireEvent.changeText(inputComponent, 'Test name');
     expect(component.props.accessibilityState.disabled).toBeFalsy();
-
-    fireEvent.press(component);
   });
 
   it(`should render gender bottom sheet when click gender item`, async () => {
@@ -86,20 +82,18 @@ describe('EditDescription screen', () => {
     );
   });
 
-  it(`should render language option bottom sheet when click language item`, () => {
-    Keyboard.dismiss = jest.fn();
-    const mockActionEditMyProfile = () => {
-      return {
-        type: menuTypes.SET_MY_PROFILE,
-        payload: USER_PROFILE,
-      };
+  it(`should render language option bottom sheet and enable Save button when click language item`, () => {
+    const user = {
+      signInUserSession: {
+        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+      },
     };
+    Keyboard.dismiss = jest.fn();
 
-    jest
-      .spyOn(menuActions, 'editMyProfile')
-      .mockImplementation(mockActionEditMyProfile as any);
-
-    const store = createTestStore(initialState);
+    const storeData = {...initialState};
+    storeData.auth.user = user as any;
+    storeData.menu.myProfile = USER_PROFILE as any;
+    const store = createTestStore(storeData);
 
     const wrapper = renderWithRedux(<EditBasicInfo />, store);
 
@@ -125,13 +119,21 @@ describe('EditDescription screen', () => {
     const buttonSave = wrapper.getByTestId('edit_basic_info.save');
     expect(buttonSave).toBeDefined();
 
-    fireEvent.press(buttonSave);
-    //this test case can't be done bc can mock dispatch
+    expect(buttonSave.props.accessibilityState.disabled).toBeFalsy();
   });
 
   it(`should render relationship bottom sheet when click relationship item`, () => {
     Keyboard.dismiss = jest.fn();
-    const store = createTestStore(initialState);
+    const user = {
+      signInUserSession: {
+        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+      },
+    };
+
+    const storeData = {...initialState};
+    storeData.auth.user = user as any;
+    storeData.menu.myProfile = USER_PROFILE as any;
+    const store = createTestStore(storeData);
 
     const wrapper = renderWithRedux(<EditBasicInfo />, store);
 
@@ -146,17 +148,6 @@ describe('EditDescription screen', () => {
     );
 
     expect(bottomSheet).toBeDefined();
-
-    const relationshipItemBottomSheet = wrapper.getByTestId(
-      'eidt_user_info.option_menu.item_MALE',
-    );
-    expect(relationshipItemBottomSheet).toBeDefined();
-    fireEvent.press(relationshipItemBottomSheet);
-
-    const buttonSave = wrapper.getByTestId('edit_basic_info.save');
-    expect(buttonSave).toBeDefined();
-
-    fireEvent.press(buttonSave);
   });
 
   it(`should back to previous screen successfully `, () => {

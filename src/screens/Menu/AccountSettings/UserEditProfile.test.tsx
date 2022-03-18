@@ -34,7 +34,7 @@ describe('UserEditProfile screen', () => {
   });
 
   it(`should hide avatar, cover image, description, add work exp button and edit button in each item if is not current user`, async () => {
-    const mockActionGetMyProfile = () => {
+    const mockActionGetUserProfile = () => {
       return {
         type: menuTypes.SET_USER_PROFILE,
         payload: {...USER_PROFILE, id: 1},
@@ -43,9 +43,9 @@ describe('UserEditProfile screen', () => {
 
     jest
       .spyOn(menuActions, 'getUserProfile')
-      .mockImplementation(mockActionGetMyProfile as any);
+      .mockImplementation(mockActionGetUserProfile as any);
 
-    const mockActionGetMyWorkEXP = () => {
+    const mockActionGetUserWorkEXP = () => {
       return {
         type: menuTypes.SET_USER_WORK_EXPERIENCE,
         payload: WORK_EXPERIENCE,
@@ -54,7 +54,7 @@ describe('UserEditProfile screen', () => {
 
     jest
       .spyOn(menuActions, 'getMyWorkExperience')
-      .mockImplementation(mockActionGetMyWorkEXP as any);
+      .mockImplementation(mockActionGetUserWorkEXP as any);
 
     const storeData = {...initialState};
     //@ts-ignore
@@ -108,7 +108,7 @@ describe('UserEditProfile screen', () => {
 
     const mockActionGetMyProfile = () => {
       return {
-        type: menuTypes.SET_MY_PROFILE,
+        type: menuTypes.SET_USER_PROFILE,
         payload: USER_PROFILE,
       };
     };
@@ -174,7 +174,7 @@ describe('UserEditProfile screen', () => {
 
     const mockActionGetMyProfile = () => {
       return {
-        type: menuTypes.SET_MY_PROFILE,
+        type: menuTypes.SET_USER_PROFILE,
         payload: USER_PROFILE,
       };
     };
@@ -218,7 +218,7 @@ describe('UserEditProfile screen', () => {
 
     const mockActionGetMyProfile = () => {
       return {
-        type: menuTypes.SET_MY_PROFILE,
+        type: menuTypes.SET_USER_PROFILE,
         payload: USER_PROFILE,
       };
     };
@@ -269,7 +269,7 @@ describe('UserEditProfile screen', () => {
 
     const mockActionGetMyProfile = () => {
       return {
-        type: menuTypes.SET_MY_PROFILE,
+        type: menuTypes.SET_USER_PROFILE,
         payload: USER_PROFILE,
       };
     };
@@ -314,7 +314,7 @@ describe('UserEditProfile screen', () => {
 
     const mockActionGetMyProfile = () => {
       return {
-        type: menuTypes.SET_MY_PROFILE,
+        type: menuTypes.SET_USER_PROFILE,
         payload: USER_PROFILE,
       };
     };
@@ -366,7 +366,7 @@ describe('UserEditProfile screen', () => {
 
     const mockActionGetMyProfile = () => {
       return {
-        type: menuTypes.SET_MY_PROFILE,
+        type: menuTypes.SET_USER_PROFILE,
         payload: USER_PROFILE,
       };
     };
@@ -419,12 +419,11 @@ describe('UserEditProfile screen', () => {
     const storeData = {...initialState};
 
     storeData.auth.user = user as any;
-    //@ts-ignore
-    storeData.menu.myProfile = USER_PROFILE;
+    storeData.menu.myProfile = USER_PROFILE as any;
 
     const mockActionGetMyProfile = () => {
       return {
-        type: menuTypes.SET_MY_PROFILE,
+        type: menuTypes.SET_USER_PROFILE,
         payload: USER_PROFILE,
       };
     };
@@ -452,5 +451,50 @@ describe('UserEditProfile screen', () => {
     const buttonEdit = wrapper.getByTestId('user_edit_profile.avatar.edit');
     expect(buttonEdit).toBeDefined();
     fireEvent.press(buttonEdit);
+  });
+
+  it(`should checkPermission when click edit cover photo`, async () => {
+    const user = {
+      signInUserSession: {
+        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+      },
+    };
+    const storeData = {...initialState};
+
+    storeData.auth.user = user as any;
+    storeData.menu.myProfile = USER_PROFILE as any;
+
+    const mockActionGetMyProfile = () => {
+      return {
+        type: menuTypes.SET_USER_PROFILE,
+        payload: USER_PROFILE,
+      };
+    };
+
+    jest
+      .spyOn(menuActions, 'getUserProfile')
+      .mockImplementation(mockActionGetMyProfile as any);
+
+    const mockActionGetMyWorkEXP = () => {
+      return {
+        type: menuTypes.SET_MY_WORK_EXPERIENCE,
+        payload: [],
+      };
+    };
+
+    jest
+      .spyOn(menuActions, 'getMyWorkExperience')
+      .mockImplementation(mockActionGetMyWorkEXP as any);
+
+    const store = mockStore(storeData);
+    const props = {route: {params: {userId: USER_PROFILE.id}}};
+
+    const wrapper = renderWithRedux(<UserEditProfile {...props} />, store);
+
+    const buttonEdit = wrapper.getByTestId('user_edit_profile.cover.edit');
+    expect(buttonEdit).toBeDefined();
+    fireEvent.press(buttonEdit);
+
+    //
   });
 });

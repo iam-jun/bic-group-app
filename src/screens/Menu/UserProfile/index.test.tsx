@@ -12,14 +12,9 @@ import {USER_PROFILE} from '~/test/mock_data/menu';
 import mainStack from '~/router/navigator/MainStack/stack';
 import menuTypes from '../redux/types';
 import menuActions from '../redux/actions';
+import {checkPermission} from '~/utils/permission';
 
 afterEach(cleanup);
-
-jest.mock('~/utils/permission', () => ({
-  checkPermission: jest.fn().mockImplementation(() => {
-    return true;
-  }),
-}));
 
 describe('UserProfile screen', () => {
   const mockStore = configureStore([]);
@@ -63,7 +58,7 @@ describe('UserProfile screen', () => {
     expect(buttonSendMessage).not.toBeNull();
   });
 
-  it(`should hide avatar edit button, cover image edit button add edit profile button if is not current user`, () => {
+  it(`should show avatar edit button, cover image edit button add edit profile button, hide Direct Message button if is current user`, () => {
     const mockActionGetMyProfile = () => {
       return {
         type: menuTypes.SET_USER_PROFILE,
@@ -99,7 +94,7 @@ describe('UserProfile screen', () => {
     const buttonEditUserProfile = wrapper.queryByTestId('user_profile.edit');
     expect(buttonEditUserProfile).toBeDefined();
 
-    const buttonSendMessage = wrapper.queryByTestId('"user_profile.message');
+    const buttonSendMessage = wrapper.queryByTestId('user_profile.message');
     expect(buttonSendMessage).toBeNull();
   });
 
@@ -239,44 +234,4 @@ describe('UserProfile screen', () => {
     const loadingView = wrapper.getByTestId('user_profile.loading');
     expect(loadingView).toBeDefined();
   });
-
-  //   it(`should call checkPermission function when click edit avatar`, () => {
-  //     const storeData = {...initialState};
-  //     //@ts-ignore
-  //     storeData.menu.loadingUserProfile = true;
-  //     const user = {
-  //       signInUserSession: {
-  //         idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
-  //       },
-  //     };
-  //     storeData.auth.user = user as any;
-
-  //     const store = mockStore(storeData);
-  //     const props = {route: {params: {userId: USER_PROFILE.id}}};
-  //     const wrapper = renderWithRedux(<UserProfile {...props} />, store);
-
-  //     const editButton = wrapper.getByTestId('user_profile.edit.avatar');
-  //     expect(editButton).toBeDefined();
-  //     fireEvent.press(editButton);
-  //   });
-
-  //   it(`should call checkPermission function when click edit cover image`, () => {
-  //     const storeData = {...initialState};
-  //     //@ts-ignore
-  //     storeData.menu.loadingUserProfile = true;
-  //     const user = {
-  //       signInUserSession: {
-  //         idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
-  //       },
-  //     };
-  //     storeData.auth.user = user as any;
-
-  //     const store = mockStore(storeData);
-  //     const props = {route: {params: {userId: USER_PROFILE.id}}};
-  //     const wrapper = renderWithRedux(<UserProfile {...props} />, store);
-
-  //     const editButton = wrapper.getByTestId('user_profile.edit.cover_image');
-  //     expect(editButton).toBeDefined();
-  //     fireEvent.press(editButton);
-  //   });
 });

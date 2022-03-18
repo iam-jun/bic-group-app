@@ -163,6 +163,8 @@ const UserProfile = (props: any) => {
   };
 
   const renderEditButton = (style: any, onPress: any, testID: string) => {
+    console.log('renderEditButton', userId, currentUserId);
+
     return userId == currentUserId || userId == currentUsername ? (
       <ButtonWrapper
         testID={testID}

@@ -154,6 +154,8 @@ const UserEditProfile = (props: any) => {
     uploadType: IUploadType,
   ) => {
     checkPermission('photo', dispatch, canOpenPicker => {
+      console.log('checkPermission', canOpenPicker);
+
       if (canOpenPicker) {
         ImagePicker.openPickerSingle({
           ...userProfileImageCropRatio[fieldName],
