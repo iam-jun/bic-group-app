@@ -9,20 +9,6 @@ afterEach(cleanup);
 describe('LanguageOptionMenu conponent', () => {
   const languageState = ['vi', 'en'];
 
-  it('renders correctly', () => {
-    const onChagneLanguage = jest.fn();
-
-    const rendered = renderWithRedux(
-      <LanguageOptionMenu
-        title={'settings:title_choose_languages'}
-        onChangeLanguages={onChagneLanguage}
-        selectedLanguages={languageState}
-      />,
-    ).toJSON();
-
-    expect(rendered).toMatchSnapshot();
-  });
-
   it('should call props onChangeLanguages', () => {
     const onChagneLanguage = jest.fn();
 

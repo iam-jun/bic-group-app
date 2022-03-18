@@ -22,18 +22,6 @@ describe('EditLocation conponent', () => {
   const modalizeRef = null;
   const mockStore = configureStore([]);
 
-  it('renders correctly', () => {
-    const store = mockStore(initialState);
-    const onPress = jest.fn();
-
-    const rendered = renderWithRedux(
-      <EditLocation modalizeRef={modalizeRef} onItemPress={onPress} />,
-      store,
-    ).toJSON();
-
-    expect(rendered).toMatchSnapshot();
-  });
-
   it('should call prop onItemPress', () => {
     const store = mockStore(initialState);
     const onPress = jest.fn();

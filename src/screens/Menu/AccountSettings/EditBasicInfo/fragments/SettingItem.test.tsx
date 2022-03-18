@@ -55,24 +55,14 @@ describe('SettingItem conponent', () => {
     expect(component.props.accessibilityState.disabled).toBeTruthy();
   });
 
-  it(`should render right component`, () => {
+  it(`should render left, right component`, () => {
     //@ts-ignore
     const rendered = renderWithRedux(
-      <SettingItem {...baseProps} privacyIcon="AngleDown" />,
-    );
-
-    const rightComponent = rendered.getByTestId(
-      'edit_user_info.setting_item.right_component',
-    );
-
-    expect(rightComponent).toBeDefined();
-    expect(rendered.toJSON()).toMatchSnapshot();
-  });
-
-  it(`should render left icon`, () => {
-    //@ts-ignore
-    const rendered = render(
-      <SettingItem {...baseProps} leftIcon="AngleDown" />,
+      <SettingItem
+        {...baseProps}
+        privacyIcon="AngleDown"
+        leftIcon="AngleDown"
+      />,
     );
 
     const leftComponent = rendered.getByTestId(
@@ -80,6 +70,12 @@ describe('SettingItem conponent', () => {
     );
 
     expect(leftComponent).toBeDefined();
+
+    const rightComponent = rendered.getByTestId(
+      'edit_user_info.setting_item.right_component',
+    );
+
+    expect(rightComponent).toBeDefined();
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 });
