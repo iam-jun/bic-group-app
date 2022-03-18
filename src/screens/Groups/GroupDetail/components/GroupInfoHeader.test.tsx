@@ -59,7 +59,6 @@ describe('GroupInfoHeader component', () => {
     const wrapper = renderWithRedux(<GroupInfoHeader />, store);
     const name = wrapper.getByTestId('group_info_header.name');
     expect(name.props.children).toBe(groupDetailData.group.name);
-    expect(wrapper).toMatchSnapshot();
   });
 
   it('should render group privacy correctly', () => {
@@ -69,7 +68,6 @@ describe('GroupInfoHeader component', () => {
     const wrapper = renderWithRedux(<GroupInfoHeader />, store);
     const privacy = wrapper.getByTestId('group_info_header.privacy');
     expect(privacy.props.children).toBe('Public Group');
-    expect(wrapper).toMatchSnapshot();
   });
 
   it('should render group member count correctly', () => {
@@ -79,7 +77,6 @@ describe('GroupInfoHeader component', () => {
     const wrapper = renderWithRedux(<GroupInfoHeader />, store);
     const member = wrapper.getByTestId('group_info_header.member_count');
     expect(member.props.children).toBe(groupDetailData.group.user_count);
-    expect(wrapper).toMatchSnapshot();
   });
 
   it('should render cover image', () => {
@@ -89,7 +86,6 @@ describe('GroupInfoHeader component', () => {
     const wrapper = renderWithRedux(<GroupInfoHeader />, store);
     const cover = wrapper.getByTestId('group_info_header.cover');
     expect(cover).toBeDefined();
-    expect(wrapper).toMatchSnapshot();
   });
 
   it('should render avatar image', () => {
@@ -99,6 +95,5 @@ describe('GroupInfoHeader component', () => {
     const wrapper = renderWithRedux(<GroupInfoHeader />, store);
     const avatar = wrapper.getByTestId('avatar');
     expect(avatar).toBeDefined();
-    expect(wrapper).toMatchSnapshot();
   });
 });

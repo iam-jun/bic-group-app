@@ -21,7 +21,6 @@ describe('GroupTopBar component', () => {
     const component = wrapper.getByTestId('group_top_bar.search');
     expect(component).toBeDefined();
     fireEvent.press(component);
-    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders Chat icon correctly', () => {
@@ -36,7 +35,6 @@ describe('GroupTopBar component', () => {
     const component = wrapper.getByTestId('group_top_bar.chat');
     expect(component).toBeDefined();
     fireEvent.press(component);
-    expect(wrapper).toMatchSnapshot();
   });
 
   it('renders Admin icon correctly when user is an admin', () => {
@@ -54,7 +52,6 @@ describe('GroupTopBar component', () => {
     fireEvent.press(component);
     const optionMenu = wrapper.queryByTestId('group_top_bar.option_menu');
     expect(optionMenu).toBeNull();
-    expect(wrapper).toMatchSnapshot();
   });
 
   it('should render group option menu correctly when user is not an admin', () => {
@@ -72,7 +69,6 @@ describe('GroupTopBar component', () => {
     const optionMenu = wrapper.getByTestId('group_top_bar.option_menu');
     expect(optionMenu).toBeDefined();
     fireEvent.press(optionMenu);
-    expect(wrapper).toMatchSnapshot();
   });
 
   it('should replace with screen groups', () => {

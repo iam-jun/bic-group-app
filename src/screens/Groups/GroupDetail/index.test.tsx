@@ -33,7 +33,6 @@ describe('GroupDetail component', () => {
       <MockedNavigator component={component} />,
       store,
     );
-    expect(wrapper).toMatchSnapshot();
     const detailView = wrapper.getByTestId('group_detail.content');
     expect(detailView).toBeDefined();
     const listView = wrapper.getByTestId('list_view');
@@ -55,7 +54,6 @@ describe('GroupDetail component', () => {
       <MockedNavigator component={component} />,
       store,
     );
-    expect(wrapper).toMatchSnapshot();
     const groupPrivateWelcome = wrapper.getByTestId('group_private_welcome');
     expect(groupPrivateWelcome).toBeDefined();
   });
@@ -71,7 +69,6 @@ describe('GroupDetail component', () => {
       <MockedNavigator component={component} />,
       store,
     );
-    expect(wrapper).toMatchSnapshot();
     const groupPrivateWelcome = wrapper.getByTestId('no_group_found');
     expect(groupPrivateWelcome).toBeDefined();
   });
@@ -90,7 +87,6 @@ describe('GroupDetail component', () => {
       <MockedNavigator component={component} />,
       store,
     );
-    expect(wrapper).toMatchSnapshot();
     const groupPrivateWelcome = wrapper.getByTestId('no_group_found');
     expect(groupPrivateWelcome).toBeDefined();
   });

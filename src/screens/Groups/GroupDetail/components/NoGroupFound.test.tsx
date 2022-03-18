@@ -18,7 +18,6 @@ describe('NoGroupFound component', () => {
       return {rootNavigation} as any;
     });
     const wrapper = renderWithRedux(<NoGroupFound />);
-    expect(wrapper).toMatchSnapshot();
     const button = wrapper.getByTestId('no_group_found.back');
     fireEvent.press(button);
     expect(navigate).toBeCalledWith(groupStack.groups);

@@ -14,7 +14,6 @@ describe('GroupAboutContent component', () => {
     const wrapper = renderWithRedux(<GroupAboutContent />, store);
     const member = wrapper.getByTestId('loading_indicator');
     expect(member).toBeDefined();
-    expect(wrapper).toMatchSnapshot();
   });
 
   it('should render description text correctly', () => {
@@ -25,10 +24,9 @@ describe('GroupAboutContent component', () => {
     const wrapper = renderWithRedux(<GroupAboutContent />, store);
     const description = wrapper.getByTestId('collapsible_text.content');
     expect(description.props.children).toBe(groupDetailData.group.description);
-    expect(wrapper).toMatchSnapshot();
   });
 
-  it('should render member correctly', () => {
+  it('should render member item correctly', () => {
     const wrapper = renderWithRedux(<GroupAboutContent />);
     const member = wrapper.getByTestId('group_about_content.members');
     expect(member).toBeDefined();
@@ -54,10 +52,9 @@ describe('GroupAboutContent component', () => {
     expect(navigate).toBeCalledWith(groupStack.groupMembers, {
       groupId: groupDetailData.group.id,
     });
-    expect(wrapper).toMatchSnapshot();
   });
 
-  it('should render group privacy correctly', () => {
+  it('should render group privacy item correctly', () => {
     const wrapper = renderWithRedux(<GroupAboutContent />);
     const member = wrapper.getByTestId('group_about_content.privacy');
     expect(member).toBeDefined();

@@ -1,5 +1,4 @@
 import React from 'react';
-import {Platform as RNPlatform} from 'react-native';
 import * as navigationHook from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
@@ -7,37 +6,9 @@ import {createTestStore, renderWithRedux, fireEvent} from '~/test/testUtils';
 import GroupContent from './GroupContent';
 import initialState from '~/store/initialState';
 import {groupDetailData, groupPostData} from '~/test/mock_data/group';
-import {deviceDimensions} from '~/theme/dimension';
 
 describe('GroupContent component', () => {
-  let Platform: any;
   const getGroupPosts = jest.fn();
-
-  beforeEach(() => {
-    Platform = RNPlatform;
-  });
-
-  it('renders on mobile correctly', () => {
-    Platform.OS = 'ios';
-    const rendered = renderWithRedux(
-      <GroupContent
-        getGroupPosts={getGroupPosts}
-        parentWidth={deviceDimensions.phone}
-      />,
-    ).toJSON();
-    expect(rendered).toMatchSnapshot();
-  });
-
-  it('renders on web correctly', () => {
-    Platform.OS = 'web';
-    const rendered = renderWithRedux(
-      <GroupContent
-        getGroupPosts={getGroupPosts}
-        parentWidth={deviceDimensions.laptop}
-      />,
-    ).toJSON();
-    expect(rendered).toMatchSnapshot();
-  });
 
   it('renders Post button when user is a group member correctly', () => {
     const state = {...initialState};
@@ -231,6 +202,5 @@ describe('GroupContent component', () => {
     );
     const listView = wrapper.getByTestId('list_view.flat_list');
     expect(listView.props.data.length).toBe(groupPostData.length);
-    expect(wrapper).toMatchSnapshot();
   });
 });

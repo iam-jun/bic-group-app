@@ -90,6 +90,76 @@ export const GROUP_TREE_WITH_SELECTING = {
   },
 };
 
+/**
+ * Mock data of tree
+ *  - EVOL Community
+ *  - - Bein Community
+ *  - - - Bein Product Team
+ */
+export const GROUP_TREE = {
+  id: 1,
+  parent_id: null,
+  name: 'EVOL Community',
+  slug: 'evol-community-1641809088',
+  description: 'The greatest community ever',
+  level: 0,
+  parents: null,
+  owner_id: 1,
+  icon: '',
+  background_img_url: null,
+  group_type: 'COMPANY',
+  privacy: 'PUBLIC',
+  chat_id: 'rpq3unai7i8ztprmoz97rdjr7w',
+  created_at: '2022-01-10T10:04:48.685Z',
+  updated_at: '2022-01-10T10:04:48.928Z',
+  deleted_at: null,
+  children: [
+    {
+      id: 10,
+      parent_id: 1,
+      name: 'Bein Community',
+      slug: '863b7fce-2a88-4441-aa24-4803f7b6d1ec-1641834908',
+      description: null,
+      level: 1,
+      parents: [1],
+      owner_id: 1,
+      icon: null,
+      background_img_url: null,
+      group_type: 'GENERIC',
+      privacy: 'PUBLIC',
+      chat_id: 'nc1m1i78fpdaiktp7bdzdnntgh',
+      created_at: '2022-01-10T17:15:08.123Z',
+      updated_at: '2022-01-10T17:15:08.592Z',
+      deleted_at: null,
+      children: [
+        {
+          id: 17,
+          parent_id: 10,
+          name: 'Bein Product Team',
+          slug: 'cd99ab19-a7bf-461b-9b0e-35f809774821-1641835298',
+          description: null,
+          level: 2,
+          parents: [1, 10],
+          owner_id: 1,
+          icon: null,
+          background_img_url: null,
+          group_type: 'GENERIC',
+          privacy: 'PUBLIC',
+          chat_id: '3typp5m3b3r7byuu5q3fjqmaaa',
+          created_at: '2022-01-10T17:21:38.026Z',
+          updated_at: '2022-01-10T17:47:03.538Z',
+          deleted_at: null,
+          children: [],
+          user_count: '18',
+        },
+      ],
+      user_count: '19',
+    },
+  ],
+  user_count: '25',
+  unique: 'ad26adcf-2827-42e2-9f3e-19ae2192b6d0',
+};
+
 // contains 25 data for testing
 export const groupPostData = [
   {
@@ -13778,72 +13848,3 @@ export const groupPostData = [
     reactions_order: [],
   },
 ];
-/**
- * Mock data of tree
- *  - EVOL Community
- *  - - Bein Community
- *  - - - Bein Product Team
- */
-export const GROUP_TREE = {
-  id: 1,
-  parent_id: null,
-  name: 'EVOL Community',
-  slug: 'evol-community-1641809088',
-  description: 'The greatest community ever',
-  level: 0,
-  parents: null,
-  owner_id: 1,
-  icon: '',
-  background_img_url: null,
-  group_type: 'COMPANY',
-  privacy: 'PUBLIC',
-  chat_id: 'rpq3unai7i8ztprmoz97rdjr7w',
-  created_at: '2022-01-10T10:04:48.685Z',
-  updated_at: '2022-01-10T10:04:48.928Z',
-  deleted_at: null,
-  children: [
-    {
-      id: 10,
-      parent_id: 1,
-      name: 'Bein Community',
-      slug: '863b7fce-2a88-4441-aa24-4803f7b6d1ec-1641834908',
-      description: null,
-      level: 1,
-      parents: [1],
-      owner_id: 1,
-      icon: null,
-      background_img_url: null,
-      group_type: 'GENERIC',
-      privacy: 'PUBLIC',
-      chat_id: 'nc1m1i78fpdaiktp7bdzdnntgh',
-      created_at: '2022-01-10T17:15:08.123Z',
-      updated_at: '2022-01-10T17:15:08.592Z',
-      deleted_at: null,
-      children: [
-        {
-          id: 17,
-          parent_id: 10,
-          name: 'Bein Product Team',
-          slug: 'cd99ab19-a7bf-461b-9b0e-35f809774821-1641835298',
-          description: null,
-          level: 2,
-          parents: [1, 10],
-          owner_id: 1,
-          icon: null,
-          background_img_url: null,
-          group_type: 'GENERIC',
-          privacy: 'PUBLIC',
-          chat_id: '3typp5m3b3r7byuu5q3fjqmaaa',
-          created_at: '2022-01-10T17:21:38.026Z',
-          updated_at: '2022-01-10T17:47:03.538Z',
-          deleted_at: null,
-          children: [],
-          user_count: '18',
-        },
-      ],
-      user_count: '19',
-    },
-  ],
-  user_count: '25',
-  unique: 'ad26adcf-2827-42e2-9f3e-19ae2192b6d0',
-};
