@@ -122,23 +122,22 @@ const groupsActions = {
     type: groupsTypes.CLEAR_ADD_MEMBERS_MESSAGE,
   }),
 
-  getGroupDetail: function (payload: number) {
+  getGroupDetail: function (payload: number, loadingPage = false) {
     return {
       type: groupsTypes.GET_GROUP_DETAIL,
       payload,
+      loadingPage,
     };
   },
 
-  editGroupDetail: function (
-    payload: IGroupDetailEdit,
-    editFieldName?: string,
-    callback?: () => void,
-  ) {
+  editGroupDetail: function (payload: {
+    data: IGroupDetailEdit;
+    editFieldName?: string;
+    callback?: () => void;
+  }) {
     return {
       type: groupsTypes.EDIT_GROUP_DETAIL,
       payload,
-      editFieldName,
-      callback,
     };
   },
   uploadImage: function (payload: IGroupImageUpload) {

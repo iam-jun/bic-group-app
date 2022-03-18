@@ -46,8 +46,7 @@ export default function* joinNewGroup({
     };
 
     yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.setLoadingPage(true));
-    yield put(groupsActions.getGroupDetail(groupId));
+    yield put(groupsActions.getGroupDetail(groupId, true));
   } catch (err) {
     console.error('joinNewGroup catch', err);
     yield showError(err);

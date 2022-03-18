@@ -24,6 +24,8 @@ configure({adapter: new Adapter()});
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const languages = require('~/localization/en.json');
 
+jest.mock('@react-native-clipboard/clipboard');
+
 jest.mock('@react-native-firebase/messaging', () => {
   return () => ({
     ...jest.requireActual('@react-native-firebase/messaging'),
@@ -99,6 +101,7 @@ jest.doMock('react-native-paper', () => ({
 }));
 
 jest.doMock('@react-navigation/native', () => ({
+  ...jest.requireActual('@react-navigation/native'),
   useNavigation: () => ({
     navigate: (screen, params) => {
       return {screen, params};
