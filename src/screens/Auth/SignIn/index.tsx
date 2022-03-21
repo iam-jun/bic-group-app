@@ -2,6 +2,7 @@ import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
+  AppState,
   Image,
   Keyboard,
   Platform,
@@ -68,6 +69,15 @@ const SignIn = () => {
     dispatch(actions.setSigningInError(''));
     checkDisableSignIn();
     setDisableSignIn(true);
+
+    const appStateChangeEvent = AppState.addEventListener(
+      'change',
+      checkAuthSessions,
+    );
+
+    return () => {
+      appStateChangeEvent.remove();
+    };
   }, []);
 
   useEffect(() => {
@@ -93,7 +103,7 @@ const SignIn = () => {
   const checkAuthSessions = async () => {
     const user = await getUserFromSharedPreferences();
     setValue('email', user?.email);
-    if (user) setAuthSessions(user);
+    setAuthSessions(user);
   };
 
   const clearAllErrors = () => {

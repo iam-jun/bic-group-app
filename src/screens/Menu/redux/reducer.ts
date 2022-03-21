@@ -90,7 +90,7 @@ const menuReducer = (state = menuInitState, action: any = {}) => {
         myProfile: {
           ...state.myProfile,
           ...payload,
-          country_code: payload.country_code || '84',
+          country_code: payload.country_code,
         },
       };
     case menuTypes.SEARCH_COUNTRY_CODE:
