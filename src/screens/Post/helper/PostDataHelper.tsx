@@ -536,6 +536,7 @@ const postDataHelper = {
           with_own_children: true,
           with_recent_reactions: true,
           with_reaction_counts: true,
+          recent_reactions_limit: 10,
           ...params,
         }),
       );

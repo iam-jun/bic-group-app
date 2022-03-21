@@ -175,6 +175,7 @@ export interface IParamGetPostDetail {
   with_own_children?: boolean;
   with_recent_reactions?: boolean;
   with_reaction_counts?: boolean;
+  recent_reactions_limit?: number;
 }
 
 export interface IParamPutEditPost {
