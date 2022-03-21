@@ -64,7 +64,7 @@ exports[`NewsfeedSearch component should render search 1`] = `
                 "justifyContent": "center",
               }
             }
-            testID="LoadingIndicator"
+            testID="loading_indicator"
           />
         </View>
       </View>
@@ -145,7 +145,7 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
                 "justifyContent": "center",
               }
             }
-            testID="LoadingIndicator"
+            testID="loading_indicator"
           />
         </View>
       </View>

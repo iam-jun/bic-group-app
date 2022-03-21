@@ -467,11 +467,7 @@ exports[`GroupHeaderMenu component renders correctly 1`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_add_square_done.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -654,11 +650,7 @@ exports[`GroupHeaderMenu component renders correctly 1`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/ic_map_pin.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,

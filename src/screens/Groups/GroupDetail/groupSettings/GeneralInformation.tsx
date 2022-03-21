@@ -86,10 +86,10 @@ const GeneralInformation = (props: any) => {
 
   const editGroupPrivacy = (item: any) => {
     dispatch(
-      groupsActions.editGroupDetail(
-        {id, privacy: item.type},
-        i18next.t('common:text_privacy'),
-      ),
+      groupsActions.editGroupDetail({
+        data: {id, privacy: item.type},
+        editFieldName: i18next.t('common:text_privacy'),
+      }),
     );
   };
 

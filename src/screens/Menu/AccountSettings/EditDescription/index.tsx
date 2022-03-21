@@ -92,6 +92,7 @@ const EditDescription = () => {
           textColor: theme.colors.background,
           borderRadius: theme.spacing.borderRadius.small,
           disabled: !isValid,
+          testID: 'edit_description.save',
         }}
         onPressButton={onSave}
         onPressBack={navigateBack}

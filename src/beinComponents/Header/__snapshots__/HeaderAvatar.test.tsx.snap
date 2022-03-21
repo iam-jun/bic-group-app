@@ -930,11 +930,7 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
                         onFastImageLoadEnd={[Function]}
                         resizeMode="cover"
                         size={12}
-                        source={
-                          Object {
-                            "testUri": "../../../assets/icons/icon_check_circle.svg",
-                          }
-                        }
+                        source={null}
                         style={
                           Object {
                             "bottom": 0,

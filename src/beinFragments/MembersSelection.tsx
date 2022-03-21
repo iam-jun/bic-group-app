@@ -55,7 +55,12 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
 
     return (
       <PrimaryItem
-        title={item.name}
+        ContentComponent={
+          <Text.H6 numberOfLines={2}>
+            {item.name}
+            <Text.Subtitle>{` @${item.username}`}</Text.Subtitle>
+          </Text.H6>
+        }
         isChecked={!!selected}
         checkboxProps={{testID: 'members_selection.checkbox'}}
         onPressMenu={onPressMenu ? () => onPressMenu(item) : undefined}

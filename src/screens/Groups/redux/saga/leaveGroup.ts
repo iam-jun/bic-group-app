@@ -38,8 +38,7 @@ export default function* leaveGroup({
       yield call(navigateToGroup, payload);
     }
 
-    yield put(groupsActions.setLoadingPage(true));
-    yield put(groupsActions.getGroupDetail(payload));
+    yield put(groupsActions.getGroupDetail(payload, true));
 
     const toastMessage: IToastMessage = {
       content: i18next.t('groups:modal_confirm_leave_group:success_message'),

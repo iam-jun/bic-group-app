@@ -94,6 +94,7 @@ const ProfileBlock = ({
       ) : null}
       {!hideSeeMore ? (
         <ButtonWrapper
+          testID="user_profile.view_more"
           onPress={onSeeMore}
           activeOpacity={1}
           style={styles.buttonWrapper}>

@@ -69,6 +69,7 @@ const GroupAboutContent = () => {
         </>
       )}
       <MenuItem
+        testID="group_about_content.members"
         style={styles.memberItem}
         icon={'UsersAlt'}
         onPress={isMember ? onPressMembers : undefined}
@@ -77,6 +78,7 @@ const GroupAboutContent = () => {
         rightSubIcon={isMember ? 'AngleRightB' : undefined}
       />
       <MenuItem
+        testID="group_about_content.privacy"
         style={styles.privacyItem}
         icon={icon}
         title={i18next.t(title)}
@@ -87,7 +89,7 @@ const GroupAboutContent = () => {
   );
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="group_about_content">
       {isEmpty(groupData) ? <LoadingIndicator /> : renderContent()}
     </View>
   );

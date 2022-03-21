@@ -487,11 +487,7 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_search.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -809,11 +805,7 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_search.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -4323,11 +4315,7 @@ exports[`Header component renders correctly with props on focus search 1`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_search.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -4645,11 +4633,7 @@ exports[`Header component renders correctly with props on focus search 2`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_search.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -5532,11 +5516,7 @@ exports[`Header component renders correctly with props on press chat 1`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_chat.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -7075,11 +7055,7 @@ exports[`Header component renders correctly with props on show search 1`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_search.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -7397,11 +7373,7 @@ exports[`Header component renders correctly with props on show search 2`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_search.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -8049,11 +8021,7 @@ exports[`Header component renders correctly with props on submit search 1`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_search.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -8371,11 +8339,7 @@ exports[`Header component renders correctly with props on submit search 2`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_search.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -9023,11 +8987,7 @@ exports[`Header component renders correctly with props on text search 1`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_search.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -9345,11 +9305,7 @@ exports[`Header component renders correctly with props on text search 2`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_search.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -10769,11 +10725,7 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_search.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -11097,11 +11049,7 @@ exports[`Header component renders correctly with props search input test ID 1`] 
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_search.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -11419,11 +11367,7 @@ exports[`Header component renders correctly with props search input test ID 2`] 
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_search.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -12071,11 +12015,7 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_search.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -12393,11 +12333,7 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={24}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_search.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
