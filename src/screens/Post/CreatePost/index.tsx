@@ -22,7 +22,6 @@ import PostInput from '~/beinComponents/inputs/PostInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 import {useRootNavigation} from '~/hooks/navigation';
-import {useCreatePost} from '~/hooks/post';
 import {useKeySelector} from '~/hooks/selector';
 import {
   IAudience,
@@ -116,7 +115,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     );
   }
 
-  const createPostData = useCreatePost();
+  const createPostData = useKeySelector(postKeySelector.createPost.all);
   const {
     loading,
     data,
