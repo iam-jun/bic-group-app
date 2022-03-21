@@ -3,7 +3,6 @@ import {View, StyleSheet, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
-import {titleCase} from '~/utils/common';
 import {ITheme} from '~/theme/interfaces';
 import images from '~/resources/images';
 import {useKeySelector} from '~/hooks/selector';
@@ -53,7 +52,7 @@ const GroupInfoHeader = () => {
 
   const renderCoverImage = () => {
     return (
-      <View onLayout={onCoverLayout}>
+      <View onLayout={onCoverLayout} testID="group_info_header.cover">
         <Image
           style={styles.cover}
           source={background_img_url || images.img_cover_default}
@@ -65,7 +64,9 @@ const GroupInfoHeader = () => {
   const renderGroupInfoHeader = () => {
     return (
       <View style={styles.nameHeader}>
-        <Text.H4 style={styles.nameHeader}>{groupName}</Text.H4>
+        <Text.H4 style={styles.nameHeader} testID="group_info_header.name">
+          {groupName}
+        </Text.H4>
         <View style={styles.groupInfo}>
           <Icon
             style={styles.iconSmall}
@@ -73,9 +74,13 @@ const GroupInfoHeader = () => {
             size={16}
             tintColor={theme.colors.iconTint}
           />
-          <Text.Subtitle useI18n>{groupTitle}</Text.Subtitle>
+          <Text.Subtitle testID="group_info_header.privacy" useI18n>
+            {groupTitle}
+          </Text.Subtitle>
           <Text.Subtitle> • </Text.Subtitle>
-          <Text.BodySM>{user_count}</Text.BodySM>
+          <Text.BodySM testID="group_info_header.member_count">
+            {user_count}
+          </Text.BodySM>
           <Text.Subtitle>{` ${t('groups:text_members')}`}</Text.Subtitle>
         </View>
       </View>
@@ -123,7 +128,7 @@ const GroupInfoHeader = () => {
   };
 
   return (
-    <View style={styles.coverAndInfoHeader}>
+    <View style={styles.coverAndInfoHeader} testID="group_info_header">
       {renderCoverImage()}
 
       {/* Group info header */}

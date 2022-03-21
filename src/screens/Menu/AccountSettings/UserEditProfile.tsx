@@ -1,4 +1,3 @@
-import {useNavigation} from '@react-navigation/native';
 import i18next from 'i18next';
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, ScrollView, StyleSheet, View} from 'react-native';
@@ -39,7 +38,6 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {IUserWorkExperience} from '~/interfaces/IAuth';
 import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
-import {isEmpty} from 'lodash';
 import homeActions from '~/screens/Home/redux/actions';
 import {checkPermission} from '~/utils/permission';
 
@@ -54,7 +52,6 @@ const UserEditProfile = (props: any) => {
   const {colors} = theme;
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
-  const navigation = useNavigation();
 
   const myProfile: any = useKeySelector(menuKeySelector.myProfile);
   const {username: currentUsername, id} = myProfile || {};
@@ -121,18 +118,18 @@ const UserEditProfile = (props: any) => {
   );
   const userLanguages = userLanguageList?.join(', ');
 
-  const goToEditInfo = () => navigation.navigate(mainStack.editBasicInfo);
+  const goToEditInfo = () => rootNavigation.navigate(mainStack.editBasicInfo);
 
-  const goToEditContact = () => navigation.navigate(mainStack.editContact);
+  const goToEditContact = () => rootNavigation.navigate(mainStack.editContact);
 
   const goToAddWork = () => {
     dispatch(menuActions.setSelectedWorkItem(null));
-    navigation.navigate(mainStack.addWork);
+    rootNavigation.navigate(mainStack.addWork);
   };
 
   const selectWorkItem = (item: IUserWorkExperience) => {
     dispatch(menuActions.setSelectedWorkItem(item));
-    navigation.navigate(mainStack.addWork);
+    rootNavigation.navigate(mainStack.addWork);
   };
 
   const uploadFile = (
@@ -157,6 +154,8 @@ const UserEditProfile = (props: any) => {
     uploadType: IUploadType,
   ) => {
     checkPermission('photo', dispatch, canOpenPicker => {
+      console.log('checkPermission', canOpenPicker);
+
       if (canOpenPicker) {
         ImagePicker.openPickerSingle({
           ...userProfileImageCropRatio[fieldName],
@@ -509,7 +508,7 @@ const UserEditProfile = (props: any) => {
     <ScreenWrapper testID="UserEditProfile" style={styles.container} isFullView>
       <Header
         title={i18next.t('settings:title_about')}
-        hideBackOnLaptop={navigation.canGoBack() ? false : true}
+        hideBackOnLaptop={rootNavigation.canGoBack ? false : true}
       />
       <ScrollView showsVerticalScrollIndicator={false}>
         {renderAvatar()}

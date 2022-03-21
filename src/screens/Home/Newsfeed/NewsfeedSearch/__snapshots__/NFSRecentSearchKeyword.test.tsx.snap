@@ -341,6 +341,7 @@ exports[`NFSRecentSearchKeyword component should render loading recent search ke
         "justifyContent": "center",
       }
     }
+    testID="LoadingIndicator"
   />
 </View>
 `;

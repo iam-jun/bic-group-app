@@ -56,6 +56,12 @@ export const menuApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
+  logout: (): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}auth/logout`,
+    method: 'post',
+    provider: ApiConfig.providers.bein,
+    useRetry: false,
+  }),
 };
 
 const menuDataHelper = {
@@ -73,13 +79,16 @@ const menuDataHelper = {
       return Promise.reject(e);
     }
   },
-  editMyProfile: async (userId: number, data: IUserEdit) => {
+  editMyProfile: async (params: any) => {
     try {
+      const {userId, data} = params;
+
       const response: any = await makeHttpRequest(
         menuApiConfig.editMyProfile(userId, data),
       );
+
       if (response && response?.data) {
-        return Promise.resolve(response?.data);
+        return Promise.resolve(response.data);
       } else {
         return Promise.reject(response);
       }
@@ -150,6 +159,18 @@ const menuDataHelper = {
       const response: any = await makeHttpRequest(
         menuApiConfig.getWorkExperience(id),
       );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  logout: async () => {
+    try {
+      const response: any = await makeHttpRequest(menuApiConfig.logout());
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       } else {

@@ -18,7 +18,11 @@ import * as modalActions from '~/store/modal/actions';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 
-import settings, {settingsMenu, infoMenu} from '~/constants/settings';
+import settings, {
+  settingsMenu,
+  infoMenu,
+  postFeatureMenu,
+} from '~/constants/settings';
 
 interface MenuSidebarContentProps {
   onCloseSidebar?: () => void;
@@ -111,6 +115,11 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
         avatar={avatar || images.img_user_avatar_default}
         onPress={onPressItem('myProfile')}
       />
+      {renderData({
+        data: postFeatureMenu,
+        itemTestID: 'menu.draft_posts',
+      })}
+      {renderDivider()}
       {renderData({
         data: settingsMenu,
         itemTestID: 'menu.account_settings',

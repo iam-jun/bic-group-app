@@ -70,6 +70,12 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   }, []);
 
   useEffect(() => {
+    //clean data when post id change, in case sometime cache data on web
+    dispatch(postActions.setCreateComment({content: '', loading: false}));
+    dispatch(postActions.setPostDetailReplyingComment());
+  }, [postId]);
+
+  useEffect(() => {
     if (replyTargetUserId && replyTargetUser?.data?.username) {
       let content = `@${replyTargetUser?.data?.username} `;
       if (replyTargetUserId === userId) {

@@ -17,6 +17,7 @@ export interface CheckboxProps {
   style?: StyleProp<ViewStyle>;
   isChecked?: boolean;
   onActionPress?: (action: IAction) => void;
+  checkboxTestID?: string;
 }
 
 const Checkbox: React.FC<CheckboxProps> = ({
@@ -24,6 +25,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
   style,
   isChecked = false,
   onActionPress,
+  checkboxTestID,
 }: CheckboxProps) => {
   const [checked, setChecked] = useState<boolean>(isChecked);
   const theme: ITheme = useTheme();
@@ -44,7 +46,10 @@ const Checkbox: React.FC<CheckboxProps> = ({
   };
 
   return (
-    <TouchableOpacity style={style} onPress={_onChangeValue}>
+    <TouchableOpacity
+      testID={checkboxTestID}
+      style={style}
+      onPress={_onChangeValue}>
       <View style={styles.checkbox} testID={testID}>
         <Icon
           icon="iconCheckbox"
