@@ -9,7 +9,6 @@ import Newsfeed from '~/screens/Home';
 import AccoutSettings from '~/screens/Menu/AccountSettings';
 import EditBasicInfo from '~/screens/Menu/AccountSettings/EditBasicInfo/EditBasicInfo';
 import EditContact from '~/screens/Menu/AccountSettings/EditContact';
-import EditEmail from '~/screens/Menu/AccountSettings/EditContact/EditEmail';
 import SecurityLogin from '~/screens/Menu/AccountSettings/SecurityLogin';
 import ChangePassword from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword';
 import UserEdit from '~/screens/Menu/AccountSettings/UserEditProfile';
@@ -72,7 +71,6 @@ export const screensWebLaptop = {
   'change-password': ChangePassword,
   'edit-basic-info': EditBasicInfo,
   'edit-contact': EditContact,
-  'edit-email': EditEmail,
   'add-work': AddWork,
   'edit-description': EditDescription,
 

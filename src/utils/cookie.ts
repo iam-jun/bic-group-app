@@ -33,26 +33,25 @@ const getCookieName = (cookie: CookieNameType) => {
   return `${cookiePrefix}${cookie}`;
 };
 
-export const saveCookie = (cookie: CookieNameType, value: string) => {
+export const saveCookie = (
+  cookie: CookieNameType,
+  value: string,
+  expires?: string,
+) => {
   const cookieName = getCookieName(cookie);
+  const secureAttribute = isOnHTTPS() ? 'Secure' : '';
 
-  let secureAttribute = '';
-  if (isOnHTTPS()) {
-    secureAttribute = 'Secure';
-  }
+  document.cookie = `${cookieName}=${value}; Domain=${window.location.hostname}; SameSite=strict; ${secureAttribute}; ${expires}`;
+};
 
-  document.cookie = `${cookieName}=${value}; Domain=${window.location.hostname}; SameSite=strict; ${secureAttribute}`;
+const clearCookie = (cookie: CookieNameType) => {
+  const expires = 'expires=Thu, 01 Jan 1970 00:00:01 GMT';
+  saveCookie(cookie, '', expires);
 };
 
 export const clearUserCookies = () => {
   if (Platform.OS !== 'web') return;
 
   const cookieList = Object.values(COOKIE_DICTIONARY) as CookieNameType[];
-
-  cookieList.forEach(cookie => {
-    const cookieName = getCookieName(cookie);
-
-    document.cookie = `${cookieName}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/`;
-    document.cookie = `${cookieName}=;expires=Thu, 01 Jan 1970 00:00:01 GMT;domain=${window.location.hostname};path=/`;
-  });
+  cookieList.forEach(cookie => clearCookie(cookie));
 };

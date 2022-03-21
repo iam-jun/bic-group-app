@@ -6,7 +6,8 @@ export const postFeatureMenu = [
   {
     type: 'draftPost',
     title: 'settings:title_post_feature_draft',
-    icon: 'iconMenuDraft',
+    icon: 'FileEditAlt',
+    rightIcon: 'UilAngleRightB',
   },
 ];
 

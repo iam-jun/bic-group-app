@@ -32,7 +32,6 @@ const mainTabStack = {
   'change-password': 'change-password',
   'edit-basic-info': 'edit-basic-info',
   'edit-contact': 'edit-contact',
-  'edit-email': 'edit-email',
   'add-work': 'add-work',
   'edit-description': 'edit-description',
 

@@ -21,7 +21,7 @@ const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
 
   return (
     <ActivityIndicator
-      testID={testID || 'LoadingIndicator'}
+      testID={testID || 'loading_indicator'}
       style={style}
       size={size}
       color={color || colors.borderDisable}

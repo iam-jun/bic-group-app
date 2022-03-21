@@ -57,7 +57,7 @@ const GroupDetail = (props: any) => {
   });
 
   const getGroupDetail = () => {
-    dispatch(groupsActions.getGroupDetail(groupId));
+    dispatch(groupsActions.getGroupDetail(groupId, true));
   };
 
   const getGroupPosts = () => {
@@ -75,7 +75,6 @@ const GroupDetail = (props: any) => {
   };
 
   useEffect(() => {
-    dispatch(groupsActions.setLoadingPage(true));
     getGroupDetail();
   }, [groupId]);
 
@@ -97,7 +96,7 @@ const GroupDetail = (props: any) => {
 
   const renderPlaceholder = () => {
     return (
-      <View style={styles.contentContainer}>
+      <View style={styles.contentContainer} testID="group_detail.placeholder">
         <View style={styles.placeholder}>
           <GroupProfilePlaceholder disableRandom />
           <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
@@ -116,6 +115,7 @@ const GroupDetail = (props: any) => {
           <GroupTopBar />
         </Header>
         <View
+          testID="group_detail.content"
           style={styles.contentContainer}
           onLayout={event => setViewWidth(event.nativeEvent.layout.width)}>
           {renderGroupContent()}

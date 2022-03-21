@@ -1,12 +1,12 @@
 import i18next from 'i18next';
 import {expectSaga} from 'redux-saga-test-plan';
-import {throwError} from 'redux-saga-test-plan/providers';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import joinNewGroup from './joinNewGroup';
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
+import groupJoinStatus from '~/constants/groupJoinStatus';
 
 describe('Join New Group Saga', () => {
   const action = {
@@ -21,7 +21,7 @@ describe('Join New Group Saga', () => {
       .provide([
         [
           matchers.call.fn(groupsDataHelper.joinGroup),
-          {data: {join_status: 3}},
+          {data: {join_status: groupJoinStatus.requested}},
         ],
       ])
       .put(groupsActions.getGroupDetail(groupId))
@@ -43,7 +43,7 @@ describe('Join New Group Saga', () => {
       .provide([
         [
           matchers.call.fn(groupsDataHelper.joinGroup),
-          {data: {join_status: 2}},
+          {data: {join_status: groupJoinStatus.member}},
         ],
       ])
       .put(groupsActions.getJoinedGroups())
@@ -57,8 +57,7 @@ describe('Join New Group Saga', () => {
           },
         }),
       )
-      .put(groupsActions.setLoadingPage(true))
-      .put(groupsActions.getGroupDetail(groupId))
+      .put(groupsActions.getGroupDetail(groupId, true))
       .run();
   });
 
