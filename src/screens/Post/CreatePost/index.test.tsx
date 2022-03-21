@@ -12,7 +12,7 @@ import {GROUP_AUDIENCE} from '~/test/mock_data/post';
 import * as navigationHook from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
-describe('', () => {
+describe('Create Post screen', () => {
   const navigate = jest.fn();
   const rootNavigation = {navigate};
   jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {

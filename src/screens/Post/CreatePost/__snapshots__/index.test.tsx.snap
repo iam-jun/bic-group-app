@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[` renders correctly with 1 audience selected, empty content, button post disabled 1`] = `
+exports[`Create Post screen renders correctly with 1 audience selected, empty content, button post disabled 1`] = `
 <View
   style={
     Object {
