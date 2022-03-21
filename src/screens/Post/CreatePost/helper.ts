@@ -24,7 +24,7 @@ export const validateImages = (
       if (uploading) {
         imageError = t('post:error_wait_uploading');
       } else if (!url) {
-        imageError = t('error_upload_failed');
+        imageError = t('post:error_upload_failed');
       }
       images.push({
         name: url || '',

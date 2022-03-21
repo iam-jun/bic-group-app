@@ -323,7 +323,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     return (
       <>
         {isAnimated && (
-          <View style={styles.textCloneContainer}>
+          <View
+            testID={'create_post.clone_text_container'}
+            style={styles.textCloneContainer}>
             <RNText
               style={styles.textContentClone}
               onLayout={onLayoutCloneText}
