@@ -29,13 +29,9 @@ import {
   IParamGetPostAudiences,
   IPayloadPutEditDraftPost,
   IPayloadPutEditPost,
-  IPostActivity,
   IPostCreatePost,
-  IPayloadCreateAutoSave,
-  IPayloadPutEditAutoSave,
 } from '~/interfaces/IPost';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {ITheme} from '~/theme/interfaces';
@@ -55,6 +51,7 @@ import {useKeyboardStatus} from '~/hooks/keyboard';
 import DeviceInfo from 'react-native-device-info';
 import CreatePostFooter from '~/screens/Post/CreatePost/CreatePostFooter';
 import {validateImages} from './helper';
+import useCreatePost from '~/screens/Post/hooks/useCreatePost';
 
 export interface CreatePostProps {
   route?: {
@@ -104,16 +101,17 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const {colors, spacing} = theme;
   const styles = themeStyles(theme);
 
-  let initPostData: IPostActivity = {};
-  if (postId) {
-    initPostData = useKeySelector(postKeySelector.postById(postId));
-  }
-  if (draftPostId) {
-    const draftPosts = useKeySelector(postKeySelector.draft.posts) || [];
-    initPostData = draftPosts?.find(
-      (item: IPostActivity) => item?.id === draftPostId,
-    );
-  }
+  const {
+    autoSaveDraftPost,
+    debouncedStopsTyping,
+    isPause,
+    setPause,
+    clearAutoSaveTimeout,
+    initPostData,
+    refIsRefresh,
+    isShowToastAutoSave,
+    sPostData,
+  } = useCreatePost({postId, draftPostId, createFromGroupId, mentionInputRef});
 
   const createPostData = useKeySelector(postKeySelector.createPost.all);
   const {
@@ -172,15 +170,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     chosenAudiences.length === 0 ||
     (isEditPost && !isEditPostHasChange && !isEditDraftPost);
 
-  const [isPause, setPause] = React.useState<boolean>(true);
-  const [isShowToastAutoSave, setShowToastAutoSave] =
-    React.useState<boolean>(false);
-  const [sPostData, setPostData] = React.useState<IPostActivity>({
-    ...initPostData,
-  });
   const [photosHeight, setPhotosHeight] = React.useState<number>(0);
   const [inputHeight, setInputHeight] = React.useState<number>(0);
-  const [sIsLoading, setLoading] = React.useState<boolean>(false);
   const [contentInput, setContentInput] = React.useState<string>(content);
 
   const prevData = useRef<any>({
@@ -189,11 +180,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     count,
     important,
   });
-  const refStopsTyping = useRef<any>();
-  const refAutoSave = useRef<any>();
   const refIsFocus = useRef<boolean>(false);
-  const refIsRefresh = useRef<boolean>(false);
-  const refToastAutoSave = useRef<any>();
   const refTextInput = useRef<any>();
   const refRNText = useRef<any>();
   const currentInputHeight = useRef<number>(contentMinHeight);
@@ -209,15 +196,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     onPressBack();
     return true;
   });
-
-  useEffect(() => {
-    debouncedAutoSave();
-    return () => {
-      clearTimeout(refToastAutoSave?.current);
-      clearTimeout(refAutoSave?.current);
-      clearTimeout(refStopsTyping?.current);
-    };
-  }, [isPause]);
 
   useEffect(() => {
     if (content !== contentInput && isAnimated) {
@@ -265,10 +243,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       onLayoutAnimated();
     }
   }, [photosHeight, isShowToastAutoSave, inputHeight, isKeyboardOpen]);
-
-  useEffect(() => {
-    setPostData({...initPostData});
-  }, [initPostData?.id]);
 
   useEffect(() => {
     // disable clear data for flow select audience before create post
@@ -454,8 +428,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     }
 
     if (!isEdit) {
-      clearTimeout(refAutoSave?.current);
-      clearTimeout(refStopsTyping?.current);
+      clearAutoSaveTimeout();
     }
 
     const {imageError, images} = validateImages(selectingImages, t);
@@ -525,117 +498,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       dispatch(postActions.postCreateNewPost(payload));
     }
     Keyboard.dismiss();
-  };
-
-  const autoSaveDraftPost = async () => {
-    setPause(true);
-
-    try {
-      if ((sIsLoading && !sPostId) || loading) {
-        return;
-      }
-      const {imageError, images} = validateImages(selectingImages, t);
-
-      const newContent = mentionInputRef?.current?.getContent?.() || content;
-
-      if (
-        (!newContent &&
-          images.length === 0 &&
-          chosenAudiences.length < 1 &&
-          !important?.active &&
-          !sPostId) ||
-        !isAutoSave ||
-        imageError
-      ) {
-        if (imageError) {
-          dispatch(
-            modalActions.showHideToastMessage({
-              content: imageError,
-              props: {textProps: {useI18n: true}, type: 'error'},
-            }),
-          );
-        }
-        return;
-      }
-
-      const payload: IPayloadCreateAutoSave = {
-        data: {
-          content: newContent,
-          images,
-          videos: [],
-          files: [],
-        },
-        audience,
-        createFromGroupId,
-      };
-
-      if (important?.active) {
-        payload.important = {
-          active: important?.active,
-          expires_time: important?.expires_time,
-        };
-      }
-
-      if (!isEdit) {
-        dispatch(postActions.setSavingDraftPost(true));
-      }
-
-      if (isDraftPost && sPostId) {
-        const newPayload: IPayloadPutEditAutoSave = {
-          id: sPostId,
-          data: payload,
-        };
-        await postDataHelper.putEditPost({
-          postId: newPayload?.id,
-          data: newPayload?.data,
-        });
-        refIsRefresh.current = true;
-      } else if (isEdit && sPostId) {
-        if (__DEV__) console.log('payload: ', payload);
-      } else {
-        setLoading(true);
-        payload.is_draft = true;
-        const resp = await postDataHelper.postCreateNewPost(payload);
-        refIsRefresh.current = true;
-        if (resp?.data) {
-          const newData = resp?.data || {};
-          setPostData({...newData});
-        }
-        setLoading(false);
-      }
-      if (!isEdit) {
-        dispatch(postActions.setSavingDraftPost(false));
-        setShowToastAutoSave(true);
-        clearTimeout(refToastAutoSave?.current);
-        refToastAutoSave.current = setTimeout(() => {
-          setShowToastAutoSave(false);
-        }, 3000);
-      }
-    } catch (error) {
-      if (!isEdit) {
-        dispatch(postActions.setSavingDraftPost(false));
-      }
-      if (__DEV__) console.log('error: ', error);
-    }
-  };
-
-  const debouncedAutoSave = () => {
-    if (!isPause) {
-      refAutoSave.current = setTimeout(() => {
-        setPause(true);
-        autoSaveDraftPost();
-      }, 5000);
-    }
-  };
-
-  const debouncedStopsTyping = () => {
-    if (isAutoSave && refIsFocus.current) {
-      clearTimeout(refStopsTyping?.current);
-      refStopsTyping.current = setTimeout(() => {
-        clearTimeout(refAutoSave?.current);
-        autoSaveDraftPost();
-      }, 500);
-    }
   };
 
   const onChangeText = (text: string) => {
