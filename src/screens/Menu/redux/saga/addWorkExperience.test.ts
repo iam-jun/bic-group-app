@@ -81,24 +81,32 @@ describe('Add Work Experience Saga', () => {
 
   it('should request to add user work experience failure', () => {
     const error = {
-      meta: {message: 'Something went wrong'},
+      code: 10000,
+      data: null,
+      meta: {
+        errors: [
+          {
+            message: 'endDate must be a valid ISO 8601 date string',
+            title: 'Bad Request',
+          },
+        ],
+        message: 'Bad Request',
+      },
     };
 
     // @ts-ignorets
     return expectSaga(addWorkExperience, action)
       .provide([
         [
-          matchers.call.fn(menuDataHelper.getMyWorkExperience),
+          matchers.call.fn(menuDataHelper.addWorkExperience),
           Promise.reject(error),
         ],
       ])
       .put(
         modalActions.showHideToastMessage({
-          content: error.meta.message,
-
+          content: error.meta.errors[0].message,
           props: {
             textProps: {useI18n: true},
-
             type: 'error',
           },
         }),

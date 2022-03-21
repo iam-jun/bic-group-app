@@ -1,6 +1,6 @@
 import {put, call} from 'redux-saga/effects';
 import {IUserAddWorkExperience} from '~/interfaces/IAuth';
-import {showError} from '~/screens/Groups/redux/saga';
+import {showError} from '.';
 import menuDataHelper from '../../helper/MenuDataHelper';
 import menuActions from '../actions';
 

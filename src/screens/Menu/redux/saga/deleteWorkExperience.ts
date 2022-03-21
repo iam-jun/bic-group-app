@@ -1,7 +1,7 @@
 import {put, call} from 'redux-saga/effects';
 
 import {IResponseData} from '~/interfaces/common';
-import {showError} from '~/screens/Groups/redux/saga';
+import {showError} from '.';
 import menuDataHelper from '../../helper/MenuDataHelper';
 import menuActions from '../actions';
 import {mapWorkExperience} from '../helper';

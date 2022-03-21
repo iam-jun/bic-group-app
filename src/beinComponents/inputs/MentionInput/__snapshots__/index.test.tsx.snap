@@ -957,11 +957,7 @@ Array [
                               onFastImageLoadEnd={[Function]}
                               resizeMode="cover"
                               size={20}
-                              source={
-                                Object {
-                                  "testUri": "../../../assets/icons/icon_send_comment.svg",
-                                }
-                              }
+                              source={null}
                               style={
                                 Object {
                                   "bottom": 0,
