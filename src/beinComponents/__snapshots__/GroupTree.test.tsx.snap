@@ -492,11 +492,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                                 onFastImageLoadEnd={[Function]}
                                 resizeMode="cover"
                                 size={18}
-                                source={
-                                  Object {
-                                    "testUri": "../../../assets/icons/icon_checkbox.svg",
-                                  }
-                                }
+                                source={null}
                                 style={
                                   Object {
                                     "bottom": 0,
@@ -1121,11 +1117,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                                 onFastImageLoadEnd={[Function]}
                                 resizeMode="cover"
                                 size={18}
-                                source={
-                                  Object {
-                                    "testUri": "../../../assets/icons/icon_checkbox.svg",
-                                  }
-                                }
+                                source={null}
                                 style={
                                   Object {
                                     "bottom": 0,
@@ -1646,11 +1638,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                                 onFastImageLoadEnd={[Function]}
                                 resizeMode="cover"
                                 size={18}
-                                source={
-                                  Object {
-                                    "testUri": "../../../assets/icons/icon_checkbox.svg",
-                                  }
-                                }
+                                source={null}
                                 style={
                                   Object {
                                     "bottom": 0,
@@ -2268,11 +2256,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                                 onFastImageLoadEnd={[Function]}
                                 resizeMode="cover"
                                 size={18}
-                                source={
-                                  Object {
-                                    "testUri": "../../../assets/icons/icon_checkbox.svg",
-                                  }
-                                }
+                                source={null}
                                 style={
                                   Object {
                                     "bottom": 0,
@@ -2881,11 +2865,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                                 onFastImageLoadEnd={[Function]}
                                 resizeMode="cover"
                                 size={18}
-                                source={
-                                  Object {
-                                    "testUri": "../../../assets/icons/icon_checkbox.svg",
-                                  }
-                                }
+                                source={null}
                                 style={
                                   Object {
                                     "bottom": 0,
@@ -3392,11 +3372,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                                 onFastImageLoadEnd={[Function]}
                                 resizeMode="cover"
                                 size={18}
-                                source={
-                                  Object {
-                                    "testUri": "../../../assets/icons/icon_checkbox.svg",
-                                  }
-                                }
+                                source={null}
                                 style={
                                   Object {
                                     "bottom": 0,

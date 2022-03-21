@@ -146,7 +146,7 @@ const EditPhoneNumber = ({
         contentStyle={styles.buttonDropDownContent}
         rightIcon={'AngleDown'}
         onPress={e => onOpenCountryCode(e)}>
-        {`+${codeValue}`}
+        {`+${codeValue || '84'}`}
       </Button>
     );
   };

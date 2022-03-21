@@ -385,11 +385,7 @@ exports[`ReactionView component renders correctly 1`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={16}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_react.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -796,11 +792,7 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={16}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_react.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -980,11 +972,7 @@ exports[`ReactionView component renders correctly with props Reactions Order emp
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={16}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_react.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -1176,11 +1164,7 @@ exports[`ReactionView component renders correctly with props showSelectReactionW
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={16}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_react.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -1589,11 +1573,7 @@ exports[`ReactionView component renders correctly with props style 1`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={16}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_react.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,

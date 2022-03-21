@@ -328,11 +328,7 @@ exports[`Avatar component renders correctly badge 1`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={10.8}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_reaction_love.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,
@@ -584,11 +580,7 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={10.8}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_reaction_love.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,

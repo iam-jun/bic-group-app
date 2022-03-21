@@ -1001,11 +1001,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                                     onFastImageLoadEnd={[Function]}
                                     resizeMode="cover"
                                     size={18}
-                                    source={
-                                      Object {
-                                        "testUri": "../../../assets/icons/icon_checkbox.svg",
-                                      }
-                                    }
+                                    source={null}
                                     style={
                                       Object {
                                         "bottom": 0,
@@ -2189,11 +2185,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                                     onFastImageLoadEnd={[Function]}
                                     resizeMode="cover"
                                     size={18}
-                                    source={
-                                      Object {
-                                        "testUri": "../../../assets/icons/icon_checkbox.svg",
-                                      }
-                                    }
+                                    source={null}
                                     style={
                                       Object {
                                         "bottom": 0,
