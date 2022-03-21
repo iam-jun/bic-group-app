@@ -139,6 +139,8 @@ const menuDataHelper = {
     }
   },
   deleteWorkExperience: async (id: number) => {
+    console.log('deleteWorkExperience', id);
+
     try {
       const response: any = await makeHttpRequest(
         menuApiConfig.deleteWorkExperience(id),

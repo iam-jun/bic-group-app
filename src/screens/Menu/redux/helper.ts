@@ -12,7 +12,7 @@ export const mapWorkExp = (data: any): IUserWorkExperience => {
   return {
     ...data,
     titlePosition: data?.title_position || '',
-    currentlyWorkHere: data?.currently_work_here || null,
+    currentlyWorkHere: data?.currently_work_here,
     startDate: data?.start_date || null,
     endDate: data?.end_date || null,
   };
