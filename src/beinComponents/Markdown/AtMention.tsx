@@ -1,7 +1,12 @@
 import React from 'react';
-import {StyleProp, Text, TextStyle} from 'react-native';
+import {StyleProp, Text, TextStyle, StyleSheet} from 'react-native';
+import {useTheme} from 'react-native-paper';
+import isEmpty from 'lodash/isEmpty';
+
 import {useKeySelector} from '~/hooks/selector';
 import {IMarkdownAudience} from '~/interfaces/IPost';
+import {ITheme} from '~/theme/interfaces';
+import {fontFamilies} from '~/theme/fonts';
 
 interface Props {
   selector: string;
@@ -11,6 +16,9 @@ interface Props {
 }
 
 const AtMention = ({mentionName, selector, style, onPress}: Props) => {
+  const theme = useTheme() as ITheme;
+  const styles = createStyles(theme);
+
   let audience = useKeySelector(`${selector}.${mentionName}`);
   const tempSelectedUser = useKeySelector(
     `mentionInput.tempSelected.${mentionName}`,
@@ -20,16 +28,30 @@ const AtMention = ({mentionName, selector, style, onPress}: Props) => {
   }
 
   const name = audience?.data?.fullname;
+  const withAudience = !isEmpty(audience);
 
   const _onPress = (e: any) => {
-    if (audience) onPress?.(audience, e);
+    onPress?.(audience, e);
   };
 
   return (
-    <Text testID="text_mention" style={style} onPress={_onPress}>{`@${
+    <Text
+      testID="text_mention"
+      style={withAudience ? style : styles.baseStyle}
+      onPress={withAudience ? _onPress : undefined}>{`@${
       name || mentionName
     }`}</Text>
   );
 };
 
 export default AtMention;
+
+const createStyles = (theme: ITheme) => {
+  const {colors} = theme;
+  return StyleSheet.create({
+    baseStyle: {
+      color: colors.textPrimary,
+      fontFamily: fontFamilies.OpenSans,
+    },
+  });
+};
