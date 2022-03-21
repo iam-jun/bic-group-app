@@ -1,29 +1,23 @@
 import i18next from 'i18next';
-import {Platform} from 'react-native';
 import {put, select, takeLatest} from 'redux-saga/effects';
 
 import {
   IGroupAddMembers,
-  IGroupDetailEdit,
   IGroupGetJoinableMembers,
   IGroupGetMembers,
   IGroupImageUpload,
   IGroupRemoveAdmin,
   IGroupSetAdmin,
   IJoiningMember,
-  IParamGetGroupPosts,
 } from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsTypes from '~/screens/Groups/redux/types';
-import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
 import {mapData, mapRequestMembers} from '../../helper/mapper';
 import appConfig from '~/configs/appConfig';
 import FileUploader from '~/services/fileUploader';
-import groupJoinStatus from '~/constants/groupJoinStatus';
-import {groupPrivacy} from '~/constants/privacyTypes';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
@@ -32,6 +26,10 @@ import memberRequestStatus from '~/constants/memberRequestStatus';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 import joinNewGroup from './joinNewGroup';
 import leaveGroup from './leaveGroup';
+import getGroupDetail from './getGroupDetail';
+import editGroupDetail from './editGroupDetail';
+import getGroupPosts from './getGroupPosts';
+import mergeExtraGroupPosts from './mergeExtraGroupPosts';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -90,27 +88,6 @@ function* getJoinedGroups({payload}: {type: string; payload?: any}) {
   }
 }
 
-function* getGroupDetail({payload}: {type: string; payload: number}) {
-  try {
-    // @ts-ignore
-    const result = yield requestGroupDetail(payload);
-    yield put(groupsActions.setGroupDetail(result));
-
-    const {groups} = yield select();
-    const join_status = groups?.groupDetail?.join_status;
-    const isMember = join_status === groupJoinStatus.member;
-
-    const privacy = groups?.groupDetail?.group?.privacy;
-    const isPublic = privacy === groupPrivacy.public;
-
-    if (!isMember && !isPublic) yield put(groupsActions.setLoadingPage(false));
-  } catch (e) {
-    console.log('[getGroupDetail]', e);
-    yield put(groupsActions.setLoadingPage(false));
-    yield put(groupsActions.setGroupDetail(null));
-  }
-}
-
 function* getGroupSearch({payload}: {type: string; payload: string}) {
   try {
     yield put(groupsActions.setGroupSearch({loading: true}));
@@ -131,53 +108,6 @@ function* getGroupSearch({payload}: {type: string; payload: string}) {
     console.log(`\x1b[31m🐣️ saga getGroupSearch error: ${err}\x1b[0m`);
     yield put(groupsActions.setGroupSearch({loading: false, result: []}));
     // yield showError(err);
-  }
-}
-
-function* editGroupDetail({
-  payload,
-  editFieldName,
-  callback,
-}: {
-  type: string;
-  payload: IGroupDetailEdit;
-  editFieldName?: string;
-  callback?: () => void;
-}) {
-  try {
-    // @ts-ignore
-    const result = yield requestEditGroupDetail(payload);
-
-    // this field is used to indicate which parts of
-    // the profile have been updated
-    let toastContent: string;
-    if (editFieldName) {
-      toastContent = `${editFieldName} ${i18next.t(
-        'common:text_updated_successfully',
-      )}`;
-    } else {
-      toastContent = 'common:text_edit_success';
-    }
-
-    const toastMessage: IToastMessage = {
-      content: toastContent,
-      props: {
-        textProps: {useI18n: true},
-        type: 'success',
-      },
-    };
-    yield put(modalActions.showHideToastMessage(toastMessage));
-
-    yield put(groupsActions.setGroupDetail(result));
-    if (callback) callback();
-
-    yield put(groupsActions.getJoinedGroups());
-  } catch (err) {
-    console.log('\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m');
-    yield showError(err);
-    // just in case there is some error regarding editing images url
-    yield put(groupsActions.setLoadingAvatar(false));
-    yield put(groupsActions.setLoadingCover(false));
   }
 }
 
@@ -231,64 +161,6 @@ function* getGroupMember({payload}: {type: string; payload: IGroupGetMembers}) {
   }
 }
 
-function* getGroupPosts({payload}: {type: string; payload: string}): any {
-  try {
-    const {groups} = yield select();
-    const {offset, data} = groups.posts;
-
-    const param: IParamGetGroupPosts = {group_id: payload, offset};
-    const result = yield groupsDataHelper.getGroupPosts(param);
-
-    if (data.length === 0) {
-      yield put(postActions.addToAllPosts({data: result}));
-      yield put(groupsActions.setGroupPosts(result));
-      if (result.length === appConfig.recordsPerPage) {
-        yield put(groupsActions.getGroupPosts(payload));
-      }
-    } else {
-      yield put(postActions.addToAllPosts({data: result}));
-      yield put(groupsActions.setExtraGroupPosts(result));
-    }
-
-    yield put(groupsActions.setLoadingPage(false));
-  } catch (e) {
-    yield put(groupsActions.setLoadingPage(false));
-    console.log(
-      '\x1b[33m',
-      'namanh --- getGroupPosts | getGroupPosts : error',
-      e,
-      '\x1b[0m',
-    );
-  }
-}
-
-function* mergeExtraGroupPosts({payload}: {type: string; payload: string}) {
-  const {groups} = yield select();
-  const {canLoadMore, loading} = groups.posts;
-  if (!loading && canLoadMore) {
-    yield put(groupsActions.getGroupPosts(payload));
-  }
-}
-
-const requestGroupDetail = async (userId: number) => {
-  const response = await groupsDataHelper.getGroupDetail(userId);
-  if (response.code === 200) {
-    return response.data;
-  }
-
-  throw new Error('Error when fetching group detail');
-};
-
-const requestEditGroupDetail = async (data: IGroupDetailEdit) => {
-  const groupId = data.id;
-  delete data.id; // edit data should not contain group's id
-
-  // @ts-ignore
-  const response = await groupsDataHelper.editGroupDetail(groupId, data);
-
-  return response.data;
-};
-
 function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
   try {
     const {file, id, fieldName, uploadType} = payload;
@@ -300,12 +172,13 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
     });
 
     yield put(
-      groupsActions.editGroupDetail(
-        {id, [fieldName]: data},
-        fieldName === 'icon'
-          ? i18next.t('common:text_avatar')
-          : i18next.t('common:text_cover'),
-      ),
+      groupsActions.editGroupDetail({
+        data: {id, [fieldName]: data},
+        editFieldName:
+          fieldName === 'icon'
+            ? i18next.t('common:text_avatar')
+            : i18next.t('common:text_cover'),
+      }),
     );
   } catch (err) {
     console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
@@ -465,8 +338,7 @@ function* cancelJoinGroup({
         },
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
-      yield put(groupsActions.setLoadingPage(true));
-      yield put(groupsActions.getGroupDetail(payload.groupId));
+      yield put(groupsActions.getGroupDetail(payload.groupId, true));
       yield put(groupsActions.getJoinedGroups());
 
       return;

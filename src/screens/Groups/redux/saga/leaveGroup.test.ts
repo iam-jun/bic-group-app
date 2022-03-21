@@ -34,8 +34,7 @@ describe('Leave Group Saga', () => {
       .provide([[matchers.call.fn(groupsDataHelper.leaveGroup), {}]])
       .put(groupsActions.getJoinedGroups())
       .call(navigationReplace)
-      .put(groupsActions.setLoadingPage(true))
-      .put(groupsActions.getGroupDetail(action.payload))
+      .put(groupsActions.getGroupDetail(action.payload, true))
       .put(
         modalActions.showHideToastMessage({
           content: i18next.t(
@@ -64,8 +63,7 @@ describe('Leave Group Saga', () => {
       .provide([[matchers.call.fn(groupsDataHelper.leaveGroup), {}]])
       .put(groupsActions.getJoinedGroups())
       .call(navigateToGroup, state.groups.joinedGroups[0].id)
-      .put(groupsActions.setLoadingPage(true))
-      .put(groupsActions.getGroupDetail(action.payload))
+      .put(groupsActions.getGroupDetail(action.payload, true))
       .put(
         modalActions.showHideToastMessage({
           content: i18next.t(
@@ -90,8 +88,7 @@ describe('Leave Group Saga', () => {
       .provide([[matchers.call.fn(groupsDataHelper.leaveGroup), {}]])
       .put(groupsActions.getJoinedGroups())
       .call(navigateToGroup, action.payload)
-      .put(groupsActions.setLoadingPage(true))
-      .put(groupsActions.getGroupDetail(action.payload))
+      .put(groupsActions.getGroupDetail(action.payload, true))
       .put(
         modalActions.showHideToastMessage({
           content: i18next.t(

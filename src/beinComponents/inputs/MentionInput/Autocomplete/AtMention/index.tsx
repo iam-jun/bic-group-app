@@ -165,4 +165,3 @@ const createStyles = (theme: ITheme) => {
 };
 
 export default AtMention;
-``;

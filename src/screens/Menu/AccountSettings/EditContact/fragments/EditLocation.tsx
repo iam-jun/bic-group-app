@@ -79,6 +79,7 @@ const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
       menuMinWidth={Platform.OS === 'web' && 360}
       ContentComponent={
         <KeyboardAvoidingView
+          testID="edit_location.keyboard_avoiding_view"
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
           enabled={true}
           style={styles.contentComponent}
