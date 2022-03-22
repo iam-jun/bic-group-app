@@ -743,11 +743,7 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
                       onFastImageLoadEnd={[Function]}
                       resizeMode="cover"
                       size={20}
-                      source={
-                        Object {
-                          "testUri": "../../../assets/icons/icon_send_comment.svg",
-                        }
-                      }
+                      source={null}
                       style={
                         Object {
                           "bottom": 0,
@@ -1535,11 +1531,7 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
                       onFastImageLoadEnd={[Function]}
                       resizeMode="cover"
                       size={20}
-                      source={
-                        Object {
-                          "testUri": "../../../assets/icons/icon_send_comment.svg",
-                        }
-                      }
+                      source={null}
                       style={
                         Object {
                           "bottom": 0,

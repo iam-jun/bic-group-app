@@ -171,11 +171,7 @@ exports[`PostViewFooter component should render correctly 1`] = `
                       onFastImageLoadEnd={[Function]}
                       resizeMode="cover"
                       size={14}
-                      source={
-                        Object {
-                          "testUri": "../../../assets/icons/icon_react.svg",
-                        }
-                      }
+                      source={null}
                       style={
                         Object {
                           "bottom": 0,
