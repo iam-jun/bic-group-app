@@ -14,6 +14,7 @@ const menuStack = {
   postDetail: 'post-detail',
   draftPost: 'draft-post',
   postSettings: 'post-settings',
+  commentDetail: 'comment-detail',
 };
 
 export default menuStack;

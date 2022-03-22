@@ -85,16 +85,16 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
           );
         }, 150);
       } else {
-        dispatch(
-          postActions.getCommentsByPostId({
-            postId: postId,
-            idLt: idLessThan,
-            commentId: commentId,
-            recentReactionsLimit: commentId ? 3 : 10,
-            isMerge: true,
-            callbackLoading: loading => setLoadingMore(loading),
-          }),
-        );
+        // dispatch(
+        //   postActions.getCommentsByPostId({
+        //     postId: postId,
+        //     idLt: idLessThan,
+        //     commentId: commentId,
+        //     recentReactionsLimit: commentId ? 3 : 10,
+        //     isMerge: true,
+        //     callbackLoading: loading => setLoadingMore(loading),
+        //   }),
+        // );
       }
     }
   };

@@ -65,10 +65,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
       {childCommentLeft > 0 ? (
         <LoadMoreComment
           style={styles.childLoadMore}
-          title={t('post:text_load_more_x_replies').replace(
-            '%VALUE%',
-            childCommentLeft,
-          )}
+          title={t('post:text_load_more_replies')}
           postId={postId}
           commentId={commentData?.id}
           idLessThan={idLessThan}

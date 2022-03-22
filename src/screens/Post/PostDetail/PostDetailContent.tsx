@@ -282,13 +282,28 @@ const _PostDetailContent = (props: any) => {
     [sectionData],
   );
 
+  const navigateToCommentDetailScreen = () => {
+    rootNavigation.navigate(homeStack.commentDetail, params);
+  };
+
   const onPressReplySectionHeader = useCallback(
     (commentData, section, index) => {
-      scrollTo(index, 0);
-      // set time out to wait hide context menu on web
-      setTimeout(() => {
-        commentInputRef?.current?.focus?.();
-      }, 200);
+      if (Platform.OS === 'web') {
+        scrollTo(index, 0);
+        // set time out to wait hide context menu on web
+        setTimeout(() => {
+          commentInputRef?.current?.focus?.();
+        }, 200);
+      } else {
+        console.log(
+          'onPressReplySectionHeader',
+          section,
+          '\ncommentData',
+          commentData,
+        );
+
+        navigateToCommentDetailScreen();
+      }
     },
     [sectionData],
   );
@@ -314,11 +329,15 @@ const _PostDetailContent = (props: any) => {
 
   const onPressReplyCommentItem = useCallback(
     (commentData, section, index) => {
-      scrollTo(section?.index, index + 1);
-      // set time out to wait hide context menu on web
-      setTimeout(() => {
-        commentInputRef?.current?.focus?.();
-      }, 200);
+      if (Platform.OS === 'web') {
+        scrollTo(section?.index, index + 1);
+        // set time out to wait hide context menu on web
+        setTimeout(() => {
+          commentInputRef?.current?.focus?.();
+        }, 200);
+      } else {
+        navigateToCommentDetailScreen();
+      }
     },
     [sectionData],
   );

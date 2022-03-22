@@ -442,7 +442,7 @@
     "people_search": "People",
     "show_all": "Show all",
     "text_load_more_comments": "View previous comments...",
-    "text_load_more_x_replies": "View %VALUE% replies",
+    "text_load_more_replies": "View previous replies...",
     "text_add_to_post": "Add to your post",
     "comment_menu_reply": "Reply this comment",
     "comment_menu_copy_text": "Copy text",
@@ -474,6 +474,8 @@
     "btn_discard_comment": "Discard",
     "text_edit_post_success": "Post has been published successfully",
     "text_edit_post_failed": "Post was failed to publish",
+    "text_comment_from": "This is comment from ",
+    "title_comment_detail_of": "%NAME%'s post",
     "newsfeed": {
       "title_empty_no_post": "This place looks lonely...",
       "text_empty_no_post": "Join in a community to get updated",

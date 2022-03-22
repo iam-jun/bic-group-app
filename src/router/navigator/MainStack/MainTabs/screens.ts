@@ -30,6 +30,7 @@ import DraftPost from '~/screens/Post/DraftPost';
 import AddWork from '~/screens/Menu/AccountSettings/WorkExperience/AddWork';
 import PendingMembers from '~/screens/Groups/GroupDetail/groupModerating/PendingMembers';
 import EditDescription from '~/screens/Menu/AccountSettings/EditDescription';
+import CommentDetail from '~/screens/Post/CommentDetail';
 
 export const screens = {
   home: HomeStack,
@@ -48,6 +49,7 @@ export const screensWebLaptop = {
   'post-detail': PostDetail,
   'draft-post': DraftPost,
   'post-settings': PostSettings,
+  'comment-detail': CommentDetail,
 
   //GROUP STACK
   // 'group-list': Groups,
