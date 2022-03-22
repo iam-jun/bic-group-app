@@ -2,25 +2,13 @@ import {validateImages} from '~/screens/Post/CreatePost/helper';
 import {get} from 'lodash';
 import {languages} from '~/test/testUtils';
 import FileUploader from '~/services/fileUploader';
+import {imagePicked} from '~/test/mock_data/file';
 
 describe('CreatePost helper', () => {
   // @ts-ignore
   const t = (path: string) => get(languages, path?.replaceAll?.(':', '.'));
   const imageUrl =
     'https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/d47669b1-fd3c-4e15-9eb0-24162b4342bc.jpg';
-  const filePicked = {
-    fileName: '20220107_223640.jpg',
-    file: {
-      name: '20220107_223640.jpg',
-      filename: '20220107_223640.jpg',
-      type: 'image/jpeg',
-      mime: 'image/jpeg',
-      size: 4030798,
-      uri: 'file:///data/user/0/com.evol.bein.group.development/cache/react-native-image-crop-picker/20220107_223640.jpg',
-      width: 4032,
-      height: 3024,
-    },
-  };
   const fileParseFromEditPost = {
     fileName: '20220107_223640.jpg',
     file: {
@@ -50,7 +38,7 @@ describe('CreatePost helper', () => {
       } as any;
     });
 
-    const result = validateImages([filePicked] as any, t);
+    const result = validateImages([imagePicked] as any, t);
     expect(result).toEqual({images: [fileValidated], imageError: ''});
   });
 
@@ -63,7 +51,7 @@ describe('CreatePost helper', () => {
       } as any;
     });
 
-    const result = validateImages([filePicked] as any, t);
+    const result = validateImages([imagePicked] as any, t);
     expect(result).toEqual({
       images: [fileValidated],
       imageError: languages.post.error_wait_uploading,
@@ -77,7 +65,7 @@ describe('CreatePost helper', () => {
       } as any;
     });
 
-    const result = validateImages([filePicked] as any, t);
+    const result = validateImages([imagePicked] as any, t);
     expect(result).toEqual({
       images: [{...fileValidated, name: ''}],
       imageError: languages.post.error_upload_failed,

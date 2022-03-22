@@ -248,11 +248,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     }
   };
 
-  const onPressPost = async (
-    isSaveAsDraft?: boolean,
-    isEditDraft?: boolean,
-  ) => {
-    handlePressPost(isSaveAsDraft, isEditDraft);
+  const onPressPost = async () => {
+    handlePressPost();
   };
 
   const onChangeText = (text: string) => {
@@ -417,7 +414,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           testID: 'create_post.btn_post',
         }}
         onPressBack={onPressBack}
-        onPressButton={() => onPressPost(false)}
+        onPressButton={onPressPost}
       />
       <TouchableOpacity
         style={styles.flex1}

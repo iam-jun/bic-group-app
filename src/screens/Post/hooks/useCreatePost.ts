@@ -28,6 +28,13 @@ interface IUseCreatePost {
   mentionInputRef?: any;
 }
 
+export type handlePressPostResultType =
+  | 'loading'
+  | 'attachmentError'
+  | 'editDraft'
+  | 'editPost'
+  | 'newPost';
+
 const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -373,9 +380,9 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     }
   };
 
-  const handlePressPost = (isSaveAsDraft?: boolean, isEditDraft?: boolean) => {
+  const handlePressPost = () => {
     if (loading) {
-      return;
+      return 'loading';
     }
 
     if (!isEdit) {
@@ -391,9 +398,11 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
           props: {textProps: {useI18n: true}, type: 'error'},
         }),
       );
-      return;
+      return 'attachmentError';
     }
 
+    let result: handlePressPostResultType;
+    // case edit draft post or create new post in auto save mode
     if (isDraftPost && sPostId) {
       const postData = {content, images, videos: [], files: []};
       const draftData: IPostCreatePost = {
@@ -410,9 +419,10 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         id: sPostId,
         replaceWithDetail: true,
         data: draftData,
-        publishNow: !isEditDraft,
+        publishNow: true,
       };
       dispatch(postActions.putEditDraftPost(payload));
+      result = 'editDraft';
     } else if (isEditPost && initPostData?.id) {
       const editPostData = {content, images, videos: [], files: []};
       const newEditData: IPostCreatePost = {
@@ -429,15 +439,16 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         id: initPostData?.id,
         replaceWithDetail: replaceWithDetail,
         data: newEditData,
-        onRetry: () => handlePressPost(isSaveAsDraft, isEditDraft),
+        onRetry: () => handlePressPost(),
       };
       dispatch(postActions.putEditPost(payload));
+      result = 'editPost';
     } else {
       const postData = {content, images, videos: [], files: []};
       const payload: IPostCreatePost = {
         data: postData,
         audience,
-        is_draft: isSaveAsDraft,
+        is_draft: false,
         createFromGroupId,
       };
       if (important?.active) {
@@ -447,8 +458,10 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         };
       }
       dispatch(postActions.postCreateNewPost(payload));
+      result = 'newPost';
     }
     Keyboard.dismiss();
+    return result;
   };
 
   const handleChangeContent = (text: string) => {
@@ -472,6 +485,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     handlePressPost,
     handleChangeContent,
     isNewsfeed,
+    content,
   };
 };
 

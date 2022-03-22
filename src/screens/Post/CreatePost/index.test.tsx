@@ -2,9 +2,12 @@ import React from 'react';
 import DeviceInfo from 'react-native-device-info';
 
 import {
+  act,
   createTestStore,
   fireEvent,
+  getHookReduxWrapper,
   languages,
+  renderHook,
   renderWithRedux,
   waitForUpdateRedux,
 } from '~/test/testUtils';
@@ -14,6 +17,10 @@ import {GROUP_AUDIENCE, POST_DETAIL} from '~/test/mock_data/post';
 import * as navigationHook from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import modalActions from '~/store/modal/actions';
+import useCreatePost, {
+  handlePressPostResultType,
+} from '~/screens/Post/hooks/useCreatePost';
+import {imagePicked} from "~/test/mock_data/file";
 
 describe('Create Post screen', () => {
   let Platform: any;
@@ -25,6 +32,11 @@ describe('Create Post screen', () => {
   const editPostStoreData = {
     ...initialState,
     ...{post: {allPosts: {[POST_DETAIL.id]: POST_DETAIL}}},
+  } as any;
+
+  const editDraftStoreData = {
+    ...initialState,
+    ...{post: {allPosts: {[POST_DETAIL.id]: {...POST_DETAIL, is_draft: true}}}},
   } as any;
 
   const navigate = jest.fn();
@@ -120,5 +132,68 @@ describe('Create Post screen', () => {
     fireEvent.changeText(input, 'hello');
     fireEvent.press(btnBack);
     expect(spy).toBeCalled();
+  });
+
+  //test hook for some case can't cover by interact to UI
+  it('handlePressPost should done with newPost', async () => {
+    const wrapper = getHookReduxWrapper();
+    const {result} = renderHook(() => useCreatePost({screenParams: {}}), {
+      wrapper,
+    });
+    let pressResult: handlePressPostResultType;
+    act(() => {
+      pressResult = result.current.handlePressPost();
+      expect(pressResult).toBe('newPost');
+    });
+  });
+
+  it('handlePressPost should done with editPost', async () => {
+    const store = createTestStore(editPostStoreData);
+    const wrapper = getHookReduxWrapper(store);
+    const {result} = renderHook(
+      () => useCreatePost({screenParams: {postId: POST_DETAIL.id}}),
+      {
+        wrapper,
+      },
+    );
+    let pressResult: handlePressPostResultType;
+    act(() => {
+      pressResult = result.current.handlePressPost();
+      expect(pressResult).toBe('editPost');
+    });
+  });
+
+  it('handlePressPost should done with editDraft', async () => {
+    const store = createTestStore(editDraftStoreData);
+    const wrapper = getHookReduxWrapper(store);
+    const {result} = renderHook(
+      () => useCreatePost({screenParams: {postId: POST_DETAIL.id}}),
+      {
+        wrapper,
+      },
+    );
+    let pressResult: handlePressPostResultType;
+    act(() => {
+      pressResult = result.current.handlePressPost();
+      expect(pressResult).toBe('editDraft');
+    });
+  });
+
+  it('handlePressPost should done with loading', async () => {
+    const state = {...editDraftStoreData};
+    state.post.createPost = {loading: true};
+    const store = createTestStore(editDraftStoreData);
+    const wrapper = getHookReduxWrapper(store);
+    const {result} = renderHook(
+      () => useCreatePost({screenParams: {postId: POST_DETAIL.id}}),
+      {
+        wrapper,
+      },
+    );
+    let pressResult: handlePressPostResultType;
+    act(() => {
+      pressResult = result.current.handlePressPost();
+      expect(pressResult).toBe('loading');
+    });
   });
 });
