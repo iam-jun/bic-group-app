@@ -1,10 +1,7 @@
 import React from 'react';
-import {cleanup} from '@testing-library/react-native';
 
-import {renderWithRedux} from '~/test/testUtils';
+import {renderWithRedux, fireEvent} from '~/test/testUtils';
 import MemberOptionsMenu from './MemberOptionsMenu';
-
-afterEach(cleanup);
 
 describe('MemberOptionsMenu component', () => {
   const baseSheetRef = jest.fn();
@@ -32,5 +29,6 @@ describe('MemberOptionsMenu component', () => {
     );
     const itemComponent = getByTestId('member_options_menu.leave_group');
     expect(itemComponent).toBeDefined();
+    fireEvent.press(itemComponent);
   });
 });

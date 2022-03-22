@@ -24,7 +24,7 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import groupsActions from '../../redux/actions';
-import useAuth from '~/hooks/auth';
+import useAuth, {useUserIdAuth} from '~/hooks/auth';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import Icon from '~/beinComponents/Icon';
@@ -44,6 +44,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
   const {user} = useAuth();
+  const userId = useUserIdAuth();
   const {rootNavigation} = useRootNavigation();
 
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
@@ -87,15 +88,13 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
   const onPressLeave = () => {
     dispatch(modalActions.hideModal());
 
-    // check if the current user is admin or member
-    if (can_setting)
-      return checkLastAdmin(
-        groupId,
-        dispatch,
-        onAlertLeaveGroup,
-        navigateToMembers,
-      );
-    onAlertLeaveGroup();
+    return checkLastAdmin(
+      groupId,
+      userId,
+      dispatch,
+      onAlertLeaveGroup,
+      navigateToMembers,
+    );
   };
 
   const navigateToMembers = () => {

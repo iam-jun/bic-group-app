@@ -116,24 +116,24 @@
     "text_request_other": "Requests",
     "text_admin": "Admin",
     "text_failed_to_upload": "Failed to upload",
-    "permission_photo_title":"Allow Bein to access your photo and video library",
+    "permission_photo_title": "Allow Bein to access your photo and video library",
     "permission_photo_description": "Your access request has been denied recently. Please grant access from Settings with following steps:",
-    "permission_photo_list":{
-      "ios":{
-        "step_1":"Open Settings",
-        "step_2":"Tap Privacy",
-        "step_3":"Open Photos",
-        "step_4":"Choose Option “All Photos”"
+    "permission_photo_list": {
+      "ios": {
+        "step_1": "Open Settings",
+        "step_2": "Tap Privacy",
+        "step_3": "Open Photos",
+        "step_4": "Choose Option “All Photos”"
       },
-      "android":{
-        "step_1":"Go to Settings",
-        "step_2":"Find App Settings",
-        "step_3":"Find Icon Bein",
-        "step_4":"Turn on Permission for Photos"
+      "android": {
+        "step_1": "Go to Settings",
+        "step_2": "Find App Settings",
+        "step_3": "Find Icon Bein",
+        "step_4": "Turn on Permission for Photos"
       }
     },
-    "text_not_now":"Not now",
-    "text_go_to_settings":"Go to Settings"
+    "text_not_now": "Not now",
+    "text_go_to_settings": "Go to Settings"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -324,12 +324,12 @@
     "text_enddate_must_choose": "Please select End Date",
     "text_education": "Education",
     "text_social": "Social",
-    "text_social_link":"Social Link",
+    "text_social_link": "Social Link",
     "text_description": "Description",
-    "text_add_school":"Add School",
+    "text_add_school": "Add School",
     "text_add_link": "Add Social Link",
     "text_contact_info_update_success": "Contact Info Update Successfully",
-    "text_view_more_info":"View more about info...",
+    "text_view_more_info": "View more about info...",
     "title_set_a_custom_status": "Set a custom status",
     "title_about_bein_app": "About Bein App",
     "title_help_and_support": "Help & Support",
@@ -556,7 +556,7 @@
   "groups": {
     "group_content": {
       "btn_post": "Post",
-      "btn_channel":"Channel",
+      "btn_channel": "Channel",
       "btn_about": "About",
       "btn_members": "Members",
       "btn_files": "Files"
@@ -615,8 +615,10 @@
       "success_message": "You have left the group"
     },
     "error": {
-      "last_admin_leave": "You are the last admin of the group. Kindly set another admin before leaving",
-      "last_admin_remove": "You are the last admin of the group. Kindly set another admin before removing the admin role"
+      "last_admin_leave": "You are the last admin of this group. Kindly set another admin before leaving",
+      "last_admin_inner_group_leave": "Cannot leave. You are the last admin of an inner group",
+      "last_admin_remove": "You are the last admin of this group. Kindly set another admin before removing the admin role",
+      "last_admin_inner_group_remove": "Cannot remove. This user is the last admin of an inner group"
     },
     "text_successfully_join_group": "Successfully join group",
     "text_no_pending_members_notice": "There's no pending members",
