@@ -149,7 +149,10 @@ const _GroupMembers = (props: any) => {
         ContentComponent={
           <Text.H6 numberOfLines={2}>
             {fullname}
-            <Text.Subtitle>{` @${username}`}</Text.Subtitle>
+            <Text.Subtitle
+              color={
+                theme.colors.textSecondary
+              }>{` @${username}`}</Text.Subtitle>
           </Text.H6>
         }
         onPressMenu={(e: any) => onPressMenu(e, item)}
