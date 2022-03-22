@@ -19,8 +19,7 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import modalActions from '~/store/modal/actions';
 import useCreatePost, {
   handlePressPostResultType,
-} from '~/screens/Post/hooks/useCreatePost';
-import {imagePicked} from "~/test/mock_data/file";
+} from '~/screens/Post/CreatePost/useCreatePost';
 
 describe('Create Post screen', () => {
   let Platform: any;
@@ -36,7 +35,12 @@ describe('Create Post screen', () => {
 
   const editDraftStoreData = {
     ...initialState,
-    ...{post: {allPosts: {[POST_DETAIL.id]: {...POST_DETAIL, is_draft: true}}}},
+    ...{
+      post: {
+        allPosts: {[POST_DETAIL.id]: {...POST_DETAIL, is_draft: true}},
+        draftPosts: {posts: [{...POST_DETAIL, is_draft: true}]},
+      },
+    },
   } as any;
 
   const navigate = jest.fn();
@@ -167,7 +171,7 @@ describe('Create Post screen', () => {
     const store = createTestStore(editDraftStoreData);
     const wrapper = getHookReduxWrapper(store);
     const {result} = renderHook(
-      () => useCreatePost({screenParams: {postId: POST_DETAIL.id}}),
+      () => useCreatePost({screenParams: {draftPostId: POST_DETAIL.id}}),
       {
         wrapper,
       },
@@ -180,9 +184,9 @@ describe('Create Post screen', () => {
   });
 
   it('handlePressPost should done with loading', async () => {
-    const state = {...editDraftStoreData};
-    state.post.createPost = {loading: true};
-    const store = createTestStore(editDraftStoreData);
+    const stateData = {...editPostStoreData};
+    stateData.post.createPost = {loading: true};
+    const store = createTestStore(stateData);
     const wrapper = getHookReduxWrapper(store);
     const {result} = renderHook(
       () => useCreatePost({screenParams: {postId: POST_DETAIL.id}}),

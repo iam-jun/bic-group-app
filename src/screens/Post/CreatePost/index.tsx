@@ -40,7 +40,7 @@ import Text from '~/beinComponents/Text';
 import {useKeyboardStatus} from '~/hooks/keyboard';
 import DeviceInfo from 'react-native-device-info';
 import CreatePostFooter from '~/screens/Post/CreatePost/CreatePostFooter';
-import useCreatePost from '~/screens/Post/hooks/useCreatePost';
+import useCreatePost from '~/screens/Post/CreatePost/useCreatePost';
 
 export interface CreatePostProps {
   route?: {
