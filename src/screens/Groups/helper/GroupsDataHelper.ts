@@ -188,6 +188,15 @@ export const groupsApiConfig = {
       totalJoiningRequests: total,
     },
   }),
+  getInnerGroupsLastAdmin: (
+    groupId: number,
+    userId: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}groups/${groupId}/inner-groups-have-last-admin/${userId}`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
 };
 
 const groupsDataHelper = {
@@ -492,6 +501,20 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getInnerGroupsLastAdmin: async (groupId: number, userId: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getInnerGroupsLastAdmin(groupId, userId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data?.data);
       } else {
         return Promise.reject(response);
       }

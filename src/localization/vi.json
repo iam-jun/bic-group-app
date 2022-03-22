@@ -69,27 +69,27 @@
     "text_start_date": "Ngày bắt đầu",
     "text_end_date": "Ngày kết thúc",
     "text_present": "Hiện tại",
-        "text_group": "Nhóm",
+    "text_group": "Nhóm",
     "text_at": "tại",
     "text_to": "tới",
-    "permission_photo_title":"Cho phép Bein truy cập thư viện ảnh và video của bạn",
+    "permission_photo_title": "Cho phép Bein truy cập thư viện ảnh và video của bạn",
     "permission_photo_description": "Yêu cầu truy cập của bạn đã bị từ chối gần đây. Vui lòng cấp quyền truy cập từ Cài đặt bằng các bước sau:",
-    "permission_photo_list":{
-      "ios":{
-        "step_1":"Mở Cài đặt",
-        "step_2":"Nhấn vào Quyền riêng tư",
-        "step_3":"Mở Ảnh",
-        "step_4":"Chọn Tùy chọn “Tất cả ảnh”"
+    "permission_photo_list": {
+      "ios": {
+        "step_1": "Mở Cài đặt",
+        "step_2": "Nhấn vào Quyền riêng tư",
+        "step_3": "Mở Ảnh",
+        "step_4": "Chọn Tùy chọn “Tất cả ảnh”"
       },
-      "android":{
-        "step_1":"Đi tới Cài đặt",
-        "step_2":"Tìm Cài đặt ứng dụng",
-        "step_3":"Tìm biểu tượng Bein",
-        "step_4":"Bật quyền truy cập Ảnh"
+      "android": {
+        "step_1": "Đi tới Cài đặt",
+        "step_2": "Tìm Cài đặt ứng dụng",
+        "step_3": "Tìm biểu tượng Bein",
+        "step_4": "Bật quyền truy cập Ảnh"
       }
     },
-    "text_not_now":"Không phải bây giờ",
-    "text_go_to_settings":"Đi tới Cài đặt"
+    "text_not_now": "Không phải bây giờ",
+    "text_go_to_settings": "Đi tới Cài đặt"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -268,12 +268,12 @@
     "text_enddate_must_choose": "Hãy chọn ngày kết thúc",
     "text_education": "Education",
     "text_social": "Social",
-    "text_social_link":"Social Link",
+    "text_social_link": "Social Link",
     "text_description": "Mô tả",
-    "text_add_school":"Add School",
+    "text_add_school": "Add School",
     "text_add_link": "Add Social Link",
     "text_contact_info_update_success": "Cập nhật thông tin liên hệ thành công!",
-    "text_view_more_info":"Xem thêm thông tin...",
+    "text_view_more_info": "Xem thêm thông tin...",
     "title_set_a_custom_status": "Tuỳ chỉnh trạng thái",
     "title_about_bein_app": "Giới thiệu",
     "title_help_and_support": "Trợ giúp & hỗ trợ",
@@ -501,7 +501,7 @@
   "groups": {
     "group_content": {
       "btn_post": "Bài đăng",
-      "btn_channel":"Kênh",
+      "btn_channel": "Kênh",
       "btn_about": "Về nhóm",
       "btn_members": "Thành viên",
       "btn_files": "Files"
@@ -530,6 +530,12 @@
       "alert_inner_groups": "Thành viên này cũng sẽ bị xóa khỏi {0} nhóm khác:",
       "final_alert": "Bạn có chắc muốn xóa người này khỏi nhóm?",
       "button_remove": "Xác nhận"
+    },
+    "error": {
+      "last_admin_leave": "Bạn là quản trị viên cuối cùng của nhóm này. Vui lòng đặt quản trị viên khác trước khi rời đi",
+      "last_admin_inner_group_leave": "Không thể rời đi. Bạn là quản trị viên cuối cùng của một nhóm bên trong",
+      "last_admin_remove": "Bạn là quản trị viên cuối cùng của nhóm này. Vui lòng đặt một quản trị viên khác trước khi xóa vai trò quản trị viên",
+      "last_admin_inner_group_remove": "Không thể loại khỏi nhóm. Người dùng này là quản trị viên cuối cùng của một nhóm bên trong"
     }
   },
   "profile": {
