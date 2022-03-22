@@ -83,7 +83,8 @@ const EditContact = () => {
         {
           id,
           phone: phoneNumber,
-          country_code: countryCodeState,
+          //@ts-ignore
+          country_code: !!phoneNumber ? countryCodeState : null,
           country: countryState,
           city: cityState,
         },
