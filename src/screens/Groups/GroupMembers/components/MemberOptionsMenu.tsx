@@ -44,6 +44,7 @@ const MemberOptionsMenu = ({
     groupsKeySelector.groupDetail.can_manage_member,
   );
   const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
+  const groupMember = useKeySelector(groupsKeySelector.groupMember);
 
   const onPressMenuOption = (
     type:
@@ -66,7 +67,7 @@ const MemberOptionsMenu = ({
         onPressRemoveAdmin(selectedMember);
         break;
       case 'remove-member':
-        alertRemovingMember(selectedMember);
+        onPressRemoveMember(selectedMember);
         break;
       case 'leave-group':
         onPressLeave();
@@ -121,17 +122,24 @@ const MemberOptionsMenu = ({
 
   const onPressRemoveAdmin = (selectedMember?: IGroupMembers) => {
     if (selectedMember) {
-      // check if the current user is the last admin before revoking admin
-      if (can_setting)
-        return checkLastAdmin(
-          groupId,
-          dispatch,
-          () => alertRemovingAdmin(selectedMember),
-          onPressMemberButton,
-          'remove',
+      const adminCount = groupMember?.group_admin?.user_count;
+      if (adminCount > 1) {
+        alertRemovingAdmin(selectedMember);
+      } else {
+        dispatch(
+          modalActions.showHideToastMessage({
+            content: 'groups:error:last_admin_remove',
+            props: {
+              type: 'error',
+              textProps: {useI18n: true},
+              rightIcon: 'UsersAlt',
+              rightText: 'Members',
+              onPressRight: onPressMemberButton,
+            },
+            toastType: 'normal',
+          }),
         );
-
-      alertRemovingAdmin(selectedMember);
+      }
     }
   };
 
@@ -167,18 +175,27 @@ const MemberOptionsMenu = ({
   const onPressMemberButton = () => {
     dispatch(modalActions.clearToastMessage());
   };
-
-  const alertRemovingMember = (selectedMember?: IGroupMembers) => {
-    if (!selectedMember) {
+  const onPressRemoveMember = (selectedMember?: IGroupMembers) => {
+    if (selectedMember) {
+      return checkLastAdmin(
+        groupId,
+        selectedMember.id,
+        dispatch,
+        () => alertRemovingMember(selectedMember),
+        onPressMemberButton,
+        'remove',
+      );
+    } else {
       dispatch(
         modalActions.showHideToastMessage({
           content: 'No member selected',
           props: {type: 'error'},
         }),
       );
-      return;
     }
+  };
 
+  const alertRemovingMember = (selectedMember: IGroupMembers) => {
     const {id: userId, fullname, username} = selectedMember;
 
     const content = i18next
@@ -300,14 +317,15 @@ const MemberOptionsMenu = ({
 
   const onPressLeave = () => {
     // check if the current user is the last admin before leaving group
-    if (can_setting)
+    if (selectedMember) {
       return checkLastAdmin(
         groupId,
+        selectedMember.id,
         dispatch,
         onAlertLeaveGroup,
         onPressMemberButton,
       );
-    onAlertLeaveGroup();
+    }
   };
 
   const doLeaveGroup = () => {

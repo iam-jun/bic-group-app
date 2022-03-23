@@ -9,6 +9,7 @@ import {ITheme} from '~/theme/interfaces';
 
 export const checkLastAdmin = async (
   groupId: string | number,
+  userId: number,
   dispatch: any,
   mainCallback: () => void,
   onPressRight: () => void,
@@ -16,19 +17,19 @@ export const checkLastAdmin = async (
 ) => {
   let testingAdminCount: number; // for testing purpose
   try {
-    const data = await groupsDataHelper.getGroupMembers(Number(groupId), {
-      offset: 0,
-      limit: 1,
-    });
-    const adminCount = data?.group_admin?.user_count;
-    testingAdminCount = adminCount;
+    const data = await groupsDataHelper.getInnerGroupsLastAdmin(
+      Number(groupId),
+      userId,
+    );
 
-    if (adminCount > 1) {
+    if (data === null || data.length === 0) {
+      testingAdminCount = 1;
       mainCallback();
-    } else {
+    } else if (data.length === 1 && data[0].id === Number(groupId)) {
+      testingAdminCount = 2;
       dispatch(
         modalActions.showHideToastMessage({
-          content: `groups:error:last_admin_${type}`,
+          content: `groups:error:last_admin_leave`,
           props: {
             type: 'error',
             textProps: {useI18n: true},
@@ -39,13 +40,28 @@ export const checkLastAdmin = async (
           toastType: 'normal',
         }),
       );
+    } else {
+      testingAdminCount = 3;
+      dispatch(
+        modalActions.showHideToastMessage({
+          content: `groups:error:last_admin_inner_group_${type}`,
+          props: {
+            type: 'error',
+            textProps: {useI18n: true},
+          },
+          toastType: 'normal',
+        }),
+      );
     }
-  } catch (err) {
+  } catch (err: any) {
     testingAdminCount = -1;
     console.error('[ERROR] error while fetching group members', err);
     dispatch(
       modalActions.showHideToastMessage({
-        content: 'error:http:unknown',
+        content:
+          err?.meta?.errors?.[0]?.message ||
+          err?.meta?.message ||
+          'common:text_error_message',
         props: {textProps: {useI18n: true}, type: 'error'},
       }),
     );
@@ -101,12 +117,15 @@ export const alertLeaveGroup = async (
     }
 
     dispatch(modalActions.showAlert(alertPayload));
-  } catch (err) {
+  } catch (err: any) {
     testingInnerGroupCount = -1;
     console.log('[ERROR] error while fetching user inner groups', err);
     dispatch(
       modalActions.showHideToastMessage({
-        content: 'error:http:unknown',
+        content:
+          err?.meta?.errors?.[0]?.message ||
+          err?.meta?.message ||
+          'common:text_error_message',
         props: {textProps: {useI18n: true}, type: 'error'},
       }),
     );
