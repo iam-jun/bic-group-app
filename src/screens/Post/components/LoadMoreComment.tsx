@@ -29,6 +29,7 @@ export interface LoadMoreCommentProps {
   postId: string;
   commentId?: string;
   idLessThan: string;
+  onPress?: () => void;
 }
 
 const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
@@ -37,6 +38,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   postId,
   commentId,
   idLessThan,
+  onPress,
 }: LoadMoreCommentProps) => {
   const [loadingMore, setLoadingMore] = useState(false);
 
@@ -68,9 +70,13 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
     }
   }, [loadingMore]);
 
-  const onPressLoadMore = () => {
+  const onPressLoadMore = useCallback(() => {
     if (idLessThan) {
       if (Platform.OS !== 'web') {
+        if (!!onPress) {
+          onPress();
+          return;
+        }
         setLoadingMore(true);
         setTimeout(() => {
           dispatch(
@@ -78,26 +84,26 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
               postId: postId,
               idLt: idLessThan,
               commentId: commentId,
-              recentReactionsLimit: commentId ? 3 : 10,
+              recentReactionsLimit: 10,
               isMerge: true,
               callbackLoading: loading => setLoadingMore(loading),
             }),
           );
         }, 150);
       } else {
-        // dispatch(
-        //   postActions.getCommentsByPostId({
-        //     postId: postId,
-        //     idLt: idLessThan,
-        //     commentId: commentId,
-        //     recentReactionsLimit: commentId ? 3 : 10,
-        //     isMerge: true,
-        //     callbackLoading: loading => setLoadingMore(loading),
-        //   }),
-        // );
+        dispatch(
+          postActions.getCommentsByPostId({
+            postId: postId,
+            idLt: idLessThan,
+            commentId: commentId,
+            recentReactionsLimit: commentId ? 3 : 10,
+            isMerge: true,
+            callbackLoading: loading => setLoadingMore(loading),
+          }),
+        );
       }
     }
-  };
+  }, [commentId]);
 
   return (
     <View>

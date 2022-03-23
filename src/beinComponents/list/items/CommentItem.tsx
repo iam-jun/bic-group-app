@@ -1,5 +1,5 @@
 import React, {useCallback} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
 
@@ -20,6 +20,8 @@ export interface CommentItemProps {
   section?: any;
   index?: number;
   onPressReply?: (data: IReaction, section?: any, index?: number) => void;
+  onPressLoadMore?: (data: any) => void;
+  isNotReplyingComment?: boolean;
 }
 
 const CommentItem: React.FC<CommentItemProps> = ({
@@ -31,6 +33,8 @@ const CommentItem: React.FC<CommentItemProps> = ({
   section,
   index,
   onPressReply,
+  onPressLoadMore,
+  isNotReplyingComment,
 }: CommentItemProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -38,18 +42,26 @@ const CommentItem: React.FC<CommentItemProps> = ({
   const styles = React.useMemo(() => createStyle(theme), [theme]);
 
   const _onPressReply = useCallback(() => {
-    dispatch(
-      postActions.setPostDetailReplyingComment({
-        comment: commentData,
-        parentComment: commentParent,
-      }),
-    );
+    if (Platform.OS === 'web' || !isNotReplyingComment) {
+      dispatch(
+        postActions.setPostDetailReplyingComment({
+          comment: commentData,
+          parentComment: commentParent,
+        }),
+      );
+    }
     onPressReply?.(commentData, section, index);
   }, [commentData, commentParent, section, index]);
 
+  const _onPressLoadMore = useCallback(() => {
+    onPressLoadMore && onPressLoadMore(commentData);
+  }, [commentData]);
+
   const childCommentCount = commentData?.children_counts?.comment || 0;
   const loadedChildComment = commentData?.latest_children?.comment?.length || 0;
-  const childCommentLeft = childCommentCount - loadedChildComment;
+  const childCommentLeft = !!onPressLoadMore
+    ? childCommentCount - 1
+    : childCommentCount - loadedChildComment;
   const idLessThan = commentData?.latest_children?.comment?.[0]?.id;
 
   return (
@@ -69,6 +81,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
           postId={postId}
           commentId={commentData?.id}
           idLessThan={idLessThan}
+          onPress={!!onPressLoadMore ? _onPressLoadMore : undefined}
         />
       ) : (
         <ViewSpacing height={0} />
