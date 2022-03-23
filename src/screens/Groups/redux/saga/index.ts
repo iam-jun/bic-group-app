@@ -24,12 +24,14 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import errorCode from '~/constants/errorCode';
 import memberRequestStatus from '~/constants/memberRequestStatus';
 import approveDeclineCode from '~/constants/approveDeclineCode';
+
 import joinNewGroup from './joinNewGroup';
 import leaveGroup from './leaveGroup';
 import getGroupDetail from './getGroupDetail';
 import editGroupDetail from './editGroupDetail';
 import getGroupPosts from './getGroupPosts';
 import mergeExtraGroupPosts from './mergeExtraGroupPosts';
+import removeMember from './removeMember';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -258,40 +260,6 @@ function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
     yield put(modalActions.showHideToastMessage(toastMessage));
 
     navigation.navigate(groupStack.groupMembers, {groupId});
-  } catch (err) {
-    console.log(
-      '\x1b[33m',
-      'addMembers catch: ',
-      JSON.stringify(err, undefined, 2),
-      '\x1b[0m',
-    );
-    yield showError(err);
-  }
-}
-
-function* removeMember({
-  payload,
-}: {
-  type: string;
-  payload: {groupId: number; userId: string; userFullname: string};
-}) {
-  try {
-    const {groupId, userId, userFullname} = payload;
-
-    yield groupsDataHelper.removeUsers(groupId, [userId]);
-
-    yield refreshGroupMembers(groupId);
-
-    const toastMessage: IToastMessage = {
-      content: i18next
-        .t('common:message_remove_member_success')
-        .replace('{n}', userFullname),
-      props: {
-        textProps: {useI18n: true},
-        type: 'success',
-      },
-    };
-    yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.log(
       '\x1b[33m',
@@ -584,7 +552,7 @@ function* updateLoadingImageState(
   }
 }
 
-function* refreshGroupMembers(groupId: number) {
+export function* refreshGroupMembers(groupId: number) {
   yield put(groupsActions.clearGroupMembers());
   yield put(groupsActions.getGroupMembers({groupId}));
   yield put(groupsActions.getGroupDetail(groupId));
