@@ -6,9 +6,11 @@ import {useTheme} from 'react-native-paper';
 import {useBaseHook} from '~/hooks';
 import Button from '~/beinComponents/Button';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import {useCreatePost} from '~/hooks/post';
 import {IAudience} from '~/interfaces/IPost';
 import Icon from '~/beinComponents/Icon';
+import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 interface CreatePostChosenAudiencesProps {
   disabled?: boolean;
@@ -17,17 +19,20 @@ interface CreatePostChosenAudiencesProps {
 const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
   disabled,
 }: CreatePostChosenAudiencesProps) => {
-  const {t, navigation} = useBaseHook();
+  const {t} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
+
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const createPostData = useCreatePost();
-  const {chosenAudiences} = createPostData || {};
+  const chosenAudiences = useKeySelector(
+    postKeySelector.createPost.chosenAudiences,
+  );
 
   const names = getNames(chosenAudiences, t);
 
   const onPressSelectAudience = () => {
-    navigation.navigate(homeStack.postSelectAudience);
+    rootNavigation.navigate(homeStack.postSelectAudience);
   };
 
   return (

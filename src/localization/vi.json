@@ -50,8 +50,8 @@
     "text_important_posts": "Bài viết quan trọng",
     "text_files": "Files",
     "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
-    "text_read_more": "Read more",
-    "text_show_less": "Show less",
+    "text_read_more": "Xem thêm",
+    "text_show_less": "Thu gọn",
     "text_send": "Gửi",
     "error": {
       "file": {

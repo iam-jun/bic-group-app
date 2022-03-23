@@ -5,6 +5,7 @@ const postKeySelector = {
     image: 'post.createComment.image',
   },
   createPost: {
+    all: 'post.createPost',
     images: 'post.createPost.images',
     imagesDraft: 'post.createPost.imagesDraft',
     initAudiences: 'post.createPost.initAudiences',
