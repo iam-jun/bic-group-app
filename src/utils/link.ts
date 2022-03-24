@@ -1,4 +1,6 @@
+import {chatSchemes} from '~/constants/chat';
 import {getEnv} from '~/utils/env';
+import {getWebDomain} from './common';
 
 const LINK_POST = 'LINK_POST';
 const LINK_GROUP = 'LINK_GROUP';
@@ -29,3 +31,16 @@ const getLink = (linkType: string, id?: string, params?: any): string => {
 };
 
 export {LINK_POST, LINK_GROUP, getLink};
+
+export const getChatDomain = () => {
+  return (
+    chatSchemes.PREFIX_HTTPS +
+    getWebDomain(
+      getEnv('BEIN_CHAT_DEEPLINK').replace(
+        chatSchemes.PREFIX_DEEPLINK,
+        chatSchemes.PREFIX_HTTPS,
+      ),
+      true,
+    )
+  );
+};

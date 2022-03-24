@@ -102,7 +102,7 @@ export const nonAccentVietnamese = (text: string) => {
   return text;
 };
 
-export const getDomain = (url: any, subdomain: boolean) => {
+export const getWebDomain = (url: any, subdomain: boolean) => {
   subdomain = subdomain || false;
 
   url = url.replace(/(https?:\/\/)?(www.)?/i, '');
