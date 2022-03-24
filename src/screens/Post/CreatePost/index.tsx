@@ -331,7 +331,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             </RNText>
           </View>
         )}
-        <ScrollView keyboardShouldPersistTaps="always">
+        <ScrollView bounces={false} keyboardShouldPersistTaps="always">
           <View style={styles.flex1}>
             <Animated.View
               style={isAnimated ? {height: heightAnimated} : styles.flex1}>
@@ -353,6 +353,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                   value: content,
                   onChangeText,
                   inputRef: refTextInput,
+                  scrollEnabled: false,
                 }}
                 disabled={loading}
               />
