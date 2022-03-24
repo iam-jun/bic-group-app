@@ -50,8 +50,8 @@
     "text_important_posts": "Bài viết quan trọng",
     "text_files": "Files",
     "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
-    "text_read_more": "Read more",
-    "text_show_less": "Show less",
+    "text_read_more": "Xem thêm",
+    "text_show_less": "Thu gọn",
     "text_send": "Gửi",
     "error": {
       "file": {
@@ -89,7 +89,8 @@
       }
     },
     "text_not_now": "Không phải bây giờ",
-    "text_go_to_settings": "Đi tới Cài đặt"
+    "text_go_to_settings": "Đi tới Cài đặt",
+    "text_help": "Trợ giúp"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -462,7 +463,8 @@
     "people_can_share": "Mọi người có thể chia sẻ trên bài viết",
     "people_can_react": "Mọi người có thể tương tác trên bài viết",
     "auto_saved": "Bài viết đã lưu tự động",
-    "saved_to_draft": "Bài viết đã lưu vào nháp."
+    "saved_to_draft": "Bài viết đã lưu vào nháp.",
+    "text_review_markdown": "Xem trước nội dung"
   },
   "comment": {
     "placeholder_comment": "Để lại bình luận ...",

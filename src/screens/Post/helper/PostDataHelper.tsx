@@ -15,7 +15,6 @@ import {
   IRequestPostComment,
   IRequestReplyComment,
 } from '~/interfaces/IPost';
-import postDataMocks from '~/screens/Post/helper/PostDataMocks';
 import {ReactionType} from '~/constants/reactions';
 
 const provider = ApiConfig.providers.beinFeed;
@@ -323,40 +322,6 @@ const postDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  getAudienceGroups: async (userId: number) => {
-    return Promise.resolve(postDataMocks.getGroups);
-    return;
-
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getAudienceGroups(userId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  getAudienceUsers: async (userId: number) => {
-    return Promise.resolve(postDataMocks.getUsers);
-    return;
-
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getAudienceUsers(userId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);
       }

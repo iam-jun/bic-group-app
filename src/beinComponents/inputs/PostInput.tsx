@@ -5,13 +5,14 @@ import {
   ReturnKeyType,
   StyleProp,
   StyleSheet,
-  TextInput,
   TextInputProps,
   ViewStyle,
   Platform,
   NativeSyntheticEvent,
   TextInputSelectionChangeEventData,
 } from 'react-native';
+import AutoGrowingTextInput from '~/beinComponents/inputs/AutoGrowingTextInput';
+
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import {fontFamilies} from '~/theme/fonts';
@@ -86,7 +87,7 @@ const PostInput: React.FC<PostInputProps> = ({
   }));
 
   return (
-    <TextInput
+    <AutoGrowingTextInput
       ref={refTextinput}
       testID="post_input"
       textAlignVertical={textAlignVertical}

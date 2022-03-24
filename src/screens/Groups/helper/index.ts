@@ -53,12 +53,15 @@ export const checkLastAdmin = async (
         }),
       );
     }
-  } catch (err) {
+  } catch (err: any) {
     testingAdminCount = -1;
     console.error('[ERROR] error while fetching group members', err);
     dispatch(
       modalActions.showHideToastMessage({
-        content: 'error:http:unknown',
+        content:
+          err?.meta?.errors?.[0]?.message ||
+          err?.meta?.message ||
+          'common:text_error_message',
         props: {textProps: {useI18n: true}, type: 'error'},
       }),
     );
@@ -114,12 +117,15 @@ export const alertLeaveGroup = async (
     }
 
     dispatch(modalActions.showAlert(alertPayload));
-  } catch (err) {
+  } catch (err: any) {
     testingInnerGroupCount = -1;
     console.log('[ERROR] error while fetching user inner groups', err);
     dispatch(
       modalActions.showHideToastMessage({
-        content: 'error:http:unknown',
+        content:
+          err?.meta?.errors?.[0]?.message ||
+          err?.meta?.message ||
+          'common:text_error_message',
         props: {textProps: {useI18n: true}, type: 'error'},
       }),
     );
