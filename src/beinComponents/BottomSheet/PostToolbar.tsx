@@ -4,7 +4,6 @@ import {
   Keyboard,
   StyleProp,
   StyleSheet,
-  TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
@@ -17,7 +16,6 @@ import {useDispatch} from 'react-redux';
 import BottomSheet from '~/beinComponents/BottomSheet/index';
 import {BaseBottomSheetProps} from '~/beinComponents/BottomSheet/BaseBottomSheet';
 import Text from '~/beinComponents/Text';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 
@@ -35,6 +33,8 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import appConfig from '~/configs/appConfig';
 import {showHideToastMessage} from '~/store/modal/actions';
 import {checkPermission} from '~/utils/permission';
+import {tryOpenURL} from '~/beinComponents/Markdown/utils/url.js';
+import ReviewMarkdown from './ReviewMarkdown';
 
 export interface PostToolbarProps extends BaseBottomSheetProps {
   modalizeRef: any;
@@ -56,23 +56,30 @@ const PostToolbar = ({
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const selectedImage: ICreatePostImage[] = useKeySelector(
     postKeySelector.createPost.images,
   );
+  const content = useKeySelector(postKeySelector.createPost.content);
 
   const openModal = throttle((e?: any) => {
     Keyboard.dismiss();
     modalizeRef?.current?.open?.(e?.pageX, e?.pageY);
   }, 500);
 
+  const closeModal = () => modalizeRef?.current?.close?.();
+
   const handleGesture = (event: GestureEvent<any>) => {
     const {nativeEvent} = event;
     if (nativeEvent.velocityY < 0) {
       openModal();
     }
+  };
+
+  const onPressMarkdownPreview = () => {
+    openModal();
   };
 
   const _onPressSelectImage = () => {
@@ -109,14 +116,24 @@ const PostToolbar = ({
     });
   };
 
-  const onPressSelectFile = () => {
-    alert('select file');
+  const onPressHelp = () => {
+    tryOpenURL('https://chat.stg.bein.group/help/formatting');
   };
 
-  const renderToolbarButton = (icon: any) => {
+  const renderToolbarButton = (
+    icon: any,
+    testID: string,
+    onPressIcon?: () => void,
+  ) => {
     return (
       <View style={styles.toolbarButton}>
-        <Icon size={16} tintColor={colors.primary7} icon={icon} />
+        <Icon
+          size={20}
+          tintColor={colors.textSecondary}
+          icon={icon}
+          buttonTestID={testID}
+          onPress={onPressIcon}
+        />
       </View>
     );
   };
@@ -125,53 +142,42 @@ const PostToolbar = ({
     return (
       <PanGestureHandler onGestureEvent={handleGesture}>
         <Animated.View style={containerStyle}>
-          <TouchableOpacity
-            activeOpacity={1}
+          <View
             style={StyleSheet.flatten([styles.toolbarStyle, style])}
-            disabled={disabled}
-            onPress={openModal}
             testID="post_toolbar">
-            <Text.Subtitle style={{flex: 1}} useI18n>
-              post:text_add_to_post
-            </Text.Subtitle>
-            {renderToolbarButton('ImagePlus')}
-            {renderToolbarButton('Link')}
-          </TouchableOpacity>
+            {!!content &&
+              renderToolbarButton(
+                'CreditCardSearch',
+                'post_toolbar.markdown_preview',
+                onPressMarkdownPreview,
+              )}
+            {renderToolbarButton(
+              'ImagePlus',
+              'post_toolbar.add_photo',
+              _onPressSelectImage,
+            )}
+            {renderToolbarButton('Link', 'post_toolbar.add_file')}
+          </View>
+          {!!content && renderMarkdownHelp()}
           <KeyboardSpacer iosOnly />
         </Animated.View>
       </PanGestureHandler>
     );
   };
 
-  const renderContent = () => {
+  const renderMarkdownHelp = () => {
     return (
-      <View style={styles.contentContainer}>
-        <PrimaryItem
-          testID="post_toolbar.add_photo"
-          height={48}
-          title={t('post:add_photo')}
-          leftIcon={'ImagePlus'}
-          leftIconProps={{
-            icon: 'ImagePlus',
-            size: 20,
-            tintColor: colors.primary7,
-            style: {marginRight: spacing?.margin.base},
-          }}
-          onPress={_onPressSelectImage}
-        />
-        <PrimaryItem
-          testID="post_toolbar.add_file"
-          height={48}
-          title={t('post:add_file')}
-          leftIcon={'Link'}
-          leftIconProps={{
-            icon: 'Link',
-            size: 20,
-            tintColor: colors.primary7,
-            style: {marginRight: spacing?.margin.base},
-          }}
-          // onPress={onPressSelectFile}
-        />
+      <View style={styles.markdownView}>
+        <Text.Subtitle style={styles.markdownText} numberOfLines={1}>
+          **bold**, *italic*, ~~strike~~, # Heading 1, ## Heading 2,...
+        </Text.Subtitle>
+        <Text.Subtitle
+          style={{fontFamily: 'OpenSans-SemiBold'}}
+          color={theme.colors.link}
+          onPress={onPressHelp}
+          useI18n>
+          common:text_help
+        </Text.Subtitle>
       </View>
     );
   };
@@ -179,12 +185,10 @@ const PostToolbar = ({
   return (
     <BottomSheet
       modalizeRef={modalizeRef}
-      ContentComponent={renderContent()}
+      ContentComponent={<ReviewMarkdown onPressDone={closeModal} />}
       panGestureAnimatedValue={animated}
-      overlayStyle={{backgroundColor: 'transparent'}}
+      modalStyle={styles.modalStyle}
       side={'center'}
-      menuMinWidth={400}
-      menuMinHeight={300}
       {...props}>
       {renderToolbar()}
     </BottomSheet>
@@ -199,24 +203,34 @@ const createStyle = (theme: ITheme) => {
     toolbarStyle: {
       height: 52,
       backgroundColor: colors.background,
-      borderTopWidth: 1,
+      borderWidth: 1,
       borderColor: colors.borderDivider,
-      paddingHorizontal: spacing?.padding.extraLarge,
+      paddingHorizontal: spacing?.padding.large,
       alignItems: 'center',
       flexDirection: 'row',
     },
     toolbarButton: {
-      backgroundColor: colors.primary1,
       width: 36,
       height: 36,
       justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: spacing?.borderRadius.small,
-      marginLeft: spacing?.padding.small,
     },
     contentContainer: {
       paddingHorizontal: spacing?.padding.base,
       paddingBottom: spacing?.padding.base,
+    },
+    markdownView: {
+      flexDirection: 'row',
+      marginHorizontal: spacing.margin.large,
+      marginVertical: spacing.margin.base,
+    },
+    markdownText: {
+      marginRight: spacing.margin.base,
+      flex: 1,
+    },
+    modalStyle: {
+      borderRadius: spacing.borderRadius.small,
+      borderTopRightRadius: 20,
+      borderTopLeftRadius: 20,
     },
   });
 };
