@@ -35,7 +35,7 @@ import {showHideToastMessage} from '~/store/modal/actions';
 import {checkPermission} from '~/utils/permission';
 import {tryOpenURL} from '~/beinComponents/Markdown/utils/url.js';
 import ReviewMarkdown from './ReviewMarkdown';
-import {chatSchemes} from '~/constants/chat';
+import {getChatDomain} from '~/utils/link';
 
 export interface PostToolbarProps extends BaseBottomSheetProps {
   modalizeRef: any;
@@ -118,7 +118,8 @@ const PostToolbar = ({
   };
 
   const onPressHelp = () => {
-    tryOpenURL(`${chatSchemes.DOMAIN}/help/formatting`);
+    const DOMAIN = getChatDomain();
+    tryOpenURL(`${DOMAIN}/help/formatting`);
   };
 
   const renderToolbarButton = (
