@@ -8,7 +8,7 @@ import BottomSheet from '~/beinComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import TextInput from '~/beinComponents/inputs/TextInput';
-import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
+import PostToolbar from '~/screens/Post/components/PostToolbar';
 
 const Section4 = () => {
   const {spacing} = useTheme() as ITheme;

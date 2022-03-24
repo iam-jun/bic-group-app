@@ -35,6 +35,7 @@ import {showHideToastMessage} from '~/store/modal/actions';
 import {checkPermission} from '~/utils/permission';
 import {tryOpenURL} from '~/beinComponents/Markdown/utils/url.js';
 import ReviewMarkdown from './ReviewMarkdown';
+import {chatSchemes} from '~/constants/chat';
 
 export interface PostToolbarProps extends BaseBottomSheetProps {
   modalizeRef: any;
@@ -117,7 +118,7 @@ const PostToolbar = ({
   };
 
   const onPressHelp = () => {
-    tryOpenURL('https://chat.stg.bein.group/help/formatting');
+    tryOpenURL(`${chatSchemes.DOMAIN}/help/formatting`);
   };
 
   const renderToolbarButton = (
