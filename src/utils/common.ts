@@ -101,3 +101,21 @@ export const nonAccentVietnamese = (text: string) => {
   text = text.replace(/\u02C6|\u0306|\u031B/g, ''); // Â, Ê, Ă, Ơ, Ư
   return text;
 };
+
+export const getDomain = (url: any, subdomain: boolean) => {
+  subdomain = subdomain || false;
+
+  url = url.replace(/(https?:\/\/)?(www.)?/i, '');
+
+  if (!subdomain) {
+    url = url.split('.');
+
+    url = url.slice(url.length - 2).join('.');
+  }
+
+  if (url.indexOf('/') !== -1) {
+    return url.split('/')[0];
+  }
+
+  return url;
+};

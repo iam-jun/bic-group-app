@@ -133,7 +133,8 @@
       }
     },
     "text_not_now": "Not now",
-    "text_go_to_settings": "Go to Settings"
+    "text_go_to_settings": "Go to Settings",
+    "text_help": "Help"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -517,7 +518,8 @@
     "people_can_share": "People can share on this post",
     "people_can_react": "People can react on this post",
     "auto_saved": "Post auto-saved",
-    "saved_to_draft": "Post Saved to Draft."
+    "saved_to_draft": "Post Saved to Draft.",
+    "text_review_markdown": "Review Markdown"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

@@ -10,6 +10,7 @@ const postKeySelector = {
     imagesDraft: 'post.createPost.imagesDraft',
     initAudiences: 'post.createPost.initAudiences',
     chosenAudiences: 'post.createPost.chosenAudiences',
+    content: 'post.createPost.data.content',
   },
   reactionBottomSheet: 'post.reactionBottomSheet',
   replyingComment: 'post.replyingComment',
