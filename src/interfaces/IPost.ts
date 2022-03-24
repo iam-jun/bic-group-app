@@ -145,6 +145,7 @@ export interface IPayloadCreateComment {
     parentCommentId?: string;
   };
   onSuccess?: () => void;
+  isCommentLevel1Screen?: boolean;
 }
 
 export interface IPayloadPutEditPost {

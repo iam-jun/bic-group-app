@@ -96,8 +96,6 @@ const _PostDetailContent = (props: any) => {
   );
   const scrollToLatestItem = useKeySelector(postKeySelector.scrollToLatestItem);
 
-  console.log('>>>>post_id>>>', post_id);
-
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const listComment = comments || sortComments(latest_reactions) || [];
   const sectionData = getSectionData(listComment) || [];
@@ -435,7 +433,6 @@ const _PostDetailContent = (props: any) => {
             postId={id}
             groupIds={groupIds}
             autoFocus={!!focus_comment}
-            onCommentSuccess={onCommentSuccess}
           />
         </View>
       </View>

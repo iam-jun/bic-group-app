@@ -28,6 +28,9 @@ export interface CommentInputViewProps {
     newCommentId: string;
     parentCommentId?: string;
   }) => void;
+  isCommentLevel1Screen?: boolean;
+  showHeader?: boolean;
+  defaultReplyTargetId?: string;
 }
 
 const CommentInputView: FC<CommentInputViewProps> = ({
@@ -35,6 +38,9 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   groupIds = '',
   autoFocus,
   commentInputRef,
+  isCommentLevel1Screen,
+  showHeader,
+  defaultReplyTargetId,
 }: CommentInputViewProps) => {
   const _commentInputRef = commentInputRef || useRef<any>();
   const mentionInputRef = useRef<any>();
@@ -108,10 +114,11 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       }
       const payload: IPayloadCreateComment = {
         postId,
-        parentCommentId: replyTargetId,
+        parentCommentId: replyTargetId || defaultReplyTargetId,
         commentData: {content: content?.trim(), images},
         userId: userId,
         onSuccess: _onCommentSuccess,
+        isCommentLevel1Screen: isCommentLevel1Screen,
         preComment: {
           status: 'pending',
           // localId is used for finding and updating comment data from API later
@@ -129,7 +136,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
           own_children: {},
           latest_children: {},
           created_at: new Date().toISOString(),
-          parentCommentId: replyTargetId,
+          parentCommentId: replyTargetId || defaultReplyTargetId,
         },
       };
       dispatch(postActions.postCreateNewComment(payload));
@@ -152,7 +159,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
           commentInputRef: _commentInputRef,
           value: content,
           autoFocus: autoFocus,
-          HeaderComponent: <ReplyingView />,
+          HeaderComponent: (!!showHeader && <ReplyingView />) || null,
           loading: loading,
           isHandleUpload: true,
           placeholder: t('post:placeholder_write_comment'),

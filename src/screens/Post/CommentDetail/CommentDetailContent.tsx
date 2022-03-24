@@ -1,21 +1,6 @@
 import {get} from 'lodash';
-import React, {
-  memo,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
-import {
-  Platform,
-  RefreshControl,
-  SectionList,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {SectionList, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -44,32 +29,22 @@ const CommentDetailContent = (props: any) => {
   const listRef = useRef<any>();
   const layoutSet = useRef(false);
   const commentInputRef = useRef<any>();
-  const internetReachableRef = useRef(true);
 
   const params = props?.route?.params;
-  const {commentData, postId, focus_comment, replyItem, commentParent} =
-    params || {};
+  const {commentData, postId, replyItem, commentParent} = params || {};
 
   const id = postId;
   const actor = useKeySelector(postKeySelector.postActorById(id));
-  const deleted = useKeySelector(postKeySelector.postDeletedById(id));
-  const postTime = useKeySelector(postKeySelector.postTimeById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
-  const latest_reactions = useKeySelector(
-    postKeySelector.postLatestReactionsComments(id),
-  );
+  const comment = useKeySelector(postKeySelector.commentsByParentId(id));
   const commentCount = useKeySelector(
     postKeySelector.postCommentCountsById(id),
   );
-  const scrollToLatestItem = useKeySelector(postKeySelector.scrollToLatestItem);
-
-  const comments = useKeySelector(postKeySelector.commentsByParentId(id));
-  const listComment = comments || sortComments(latest_reactions) || [];
-
-  const sectionData = useMemo(
-    () => getSectionData([commentData]),
-    [commentData],
+  const latest_reactions = useKeySelector(
+    postKeySelector.postLatestReactionsComments(id),
   );
+
+  const sectionData = getSectionData([commentData]);
 
   const headerTitle = t('post:title_comment_detail_of').replace(
     '%NAME%',
@@ -88,6 +63,16 @@ const CommentDetailContent = (props: any) => {
     const _commentData = get(commentData, 'latest_children.comment', []);
     if (_commentData.length > 1 || !_commentData?.[0]) {
       setLoading(false);
+      if (!!replyItem) {
+        setTimeout(() => {
+          dispatch(
+            postActions.setPostDetailReplyingComment({
+              comment: replyItem,
+              parentComment: commentParent,
+            }),
+          );
+        }, 50);
+      }
       return;
     } else {
       dispatch(
@@ -113,20 +98,21 @@ const CommentDetailContent = (props: any) => {
     }
   }, []);
 
+  useEffect(() => {
+    const _commentData = get(commentData, 'latest_children.comment', []);
+    const timer = setTimeout(() => {
+      scrollTo(0, _commentData?.length > 0 ? _commentData.length : -1);
+    }, 100);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, []);
+
   const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
     if (sectionData.length > 0) {
-      if (sectionIndex > sectionData.length - 1 || sectionIndex === -1) {
-        sectionIndex = sectionData.length - 1;
-      }
-      if (
-        itemIndex > sectionData?.[sectionIndex]?.data?.length ||
-        itemIndex === -1
-      ) {
-        itemIndex = sectionData?.[sectionIndex]?.data?.length || 0;
-      }
-
       try {
-        listRef?.current?.scrollToLocation?.({
+        listRef.current?.scrollToLocation?.({
           itemIndex: itemIndex,
           sectionIndex: sectionIndex,
           animated: true,
@@ -145,26 +131,9 @@ const CommentDetailContent = (props: any) => {
   const onLayout = useCallback(() => {
     if (!layoutSet.current) {
       layoutSet.current = true;
-      if (focus_comment && listComment?.length > 0) {
-        //limit section index to default comment length = 10 to avoid scroll crash. it happen when init with large amount of comment, then scroll, then reload, result only 10 latest comment, scroll to out of index
-        const sectionIndex = Math.min(9, sectionData.length - 1);
-        scrollTo(sectionIndex, -1);
-      }
+      scrollTo(0, -1);
     }
-  }, [layoutSet, sectionData.length, focus_comment, listComment?.length]);
-
-  // const onPressReplyCommentItem = useCallback(
-  //   (commentData, section, index) => {
-  //       scrollTo(section?.index, index + 1);
-  //       // set time out to wait hide context menu on web
-  //       setTimeout(() => {
-  //         commentInputRef?.current?.focus?.();
-  //       }, 200);
-
-  //   },
-  //   [sectionData],
-  // );
-  const onPressReplyCommentItem = () => {};
+  }, [layoutSet]);
 
   const onCommentSuccess = useCallback(
     ({
@@ -174,24 +143,10 @@ const CommentDetailContent = (props: any) => {
       newCommentId: string;
       parentCommentId?: string;
     }) => {
-      let sectionIndex;
-      let itemIndex = 0;
-      if (parentCommentId) {
-        sectionData?.map?.((section, index) => {
-          if (section?.comment?.id === parentCommentId) {
-            sectionIndex = index;
-            itemIndex = section?.data?.length || 0;
-          }
-        });
-      } else {
-        sectionIndex = sectionData.length - 1;
-      }
-      scrollTo(sectionIndex, itemIndex);
+      scrollTo(0, -1);
     },
     [sectionData],
   );
-
-  const onPressReplySectionHeader = () => {};
 
   const renderHeaderText = () => {
     return (
@@ -214,7 +169,6 @@ const CommentDetailContent = (props: any) => {
         groupIds={groupIds}
         index={index}
         section={section}
-        onPressReply={onPressReplyCommentItem}
       />
     );
   };
@@ -232,9 +186,12 @@ const CommentDetailContent = (props: any) => {
         commentData={comment}
         groupIds={groupIds}
         index={index}
-        onPressReply={onPressReplySectionHeader}
       />
     );
+  };
+
+  const renderFooter = () => {
+    return <View style={styles.footer} />;
   };
 
   if (loading) {
@@ -249,27 +206,25 @@ const CommentDetailContent = (props: any) => {
         renderItem={renderCommentItem}
         renderSectionHeader={renderSectionHeader}
         ListHeaderComponent={renderHeaderText}
-        //   ListFooterComponent={commentCount && renderFooter}
+        ListFooterComponent={commentCount && renderFooter}
         stickySectionHeadersEnabled={false}
         ItemSeparatorComponent={() => <View />}
         keyboardShouldPersistTaps={'handled'}
         onLayout={onLayout}
         onContentSizeChange={onLayout}
         //   onScrollToIndexFailed={onScrollToIndexFailed}
-        //   refreshControl={
-        //     <RefreshControl
-        //       refreshing={refreshing}
-        //       onRefresh={onRefresh}
-        //       tintColor={colors.borderDisable}
-        //     />
-        //   }
+        keyExtractor={(item, index) =>
+          `CommentDetailContent_${index}_${item?.id || ''}`
+        }
       />
       <CommentInputView
         commentInputRef={commentInputRef}
         postId={id}
         groupIds={groupIds}
-        autoFocus={!!focus_comment}
-        onCommentSuccess={onCommentSuccess}
+        autoFocus={!!replyItem}
+        isCommentLevel1Screen
+        showHeader
+        defaultReplyTargetId={commentData?.id || ''}
       />
     </View>
   );
@@ -303,6 +258,7 @@ const createStyle = (theme: ITheme) => {
     headerText: {
       fontSize: 14,
     },
+    footer: {height: spacing.margin.base, backgroundColor: colors.background},
   });
 };
 
