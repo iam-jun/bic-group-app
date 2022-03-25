@@ -8,6 +8,7 @@ const homeStack = {
   draftPost: 'draft-post',
   userProfile: 'user-profile',
   postSettings: 'post-settings',
+  commentDetail: 'comment-detail',
 };
 
 export default homeStack;
