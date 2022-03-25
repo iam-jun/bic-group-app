@@ -79,8 +79,8 @@ const PostToolbar = ({
     }
   };
 
-  const onPressMarkdownPreview = () => {
-    openModal();
+  const onPressMarkdownPreview = (e: any) => {
+    openModal(e);
   };
 
   const _onPressSelectImage = () => {
@@ -125,7 +125,7 @@ const PostToolbar = ({
   const renderToolbarButton = (
     icon: any,
     testID: string,
-    onPressIcon?: () => void,
+    onPressIcon?: (e: any) => void,
   ) => {
     return (
       <View style={styles.toolbarButton}>
@@ -190,7 +190,7 @@ const PostToolbar = ({
       ContentComponent={<ReviewMarkdown onPressDone={closeModal} />}
       panGestureAnimatedValue={animated}
       modalStyle={styles.modalStyle}
-      side={'center'}
+      side={'right'}
       {...props}>
       {renderToolbar()}
     </BottomSheet>
