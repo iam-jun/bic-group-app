@@ -27,8 +27,9 @@ const CommentDetailContent = (props: any) => {
   const dispatch = useDispatch();
 
   const listRef = useRef<any>();
-  const layoutSet = useRef(false);
   const commentInputRef = useRef<any>();
+  let countRetryScrollToBottom = useRef(0).current;
+  const layoutSet = useRef(false);
 
   const params = props?.route?.params;
   const {commentData, postId, replyItem, commentParent} = params || {};
@@ -111,6 +112,13 @@ const CommentDetailContent = (props: any) => {
 
   const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
     if (sectionData.length > 0) {
+      if (
+        itemIndex > sectionData?.[sectionIndex]?.data?.length ||
+        itemIndex === -1
+      ) {
+        itemIndex = sectionData?.[sectionIndex]?.data?.length || 0;
+      }
+
       try {
         listRef.current?.scrollToLocation?.({
           itemIndex: itemIndex,
@@ -128,25 +136,29 @@ const CommentDetailContent = (props: any) => {
     }
   };
 
+  const onCommentSuccess = () => {
+    scrollTo(0, -1);
+  };
+
+  const onScrollToIndexFailed = () => {
+    countRetryScrollToBottom = countRetryScrollToBottom + 1;
+    if (countRetryScrollToBottom < 20) {
+      setTimeout(() => {
+        scrollTo(0, -1);
+      }, 100);
+    }
+  };
+
   const onLayout = useCallback(() => {
     if (!layoutSet.current) {
       layoutSet.current = true;
-      scrollTo(0, -1);
-    }
-  }, [layoutSet]);
+      const _commentData = get(commentData, 'latest_children.comment', []);
 
-  const onCommentSuccess = useCallback(
-    ({
-      newCommentId,
-      parentCommentId,
-    }: {
-      newCommentId: string;
-      parentCommentId?: string;
-    }) => {
-      scrollTo(0, -1);
-    },
-    [sectionData],
-  );
+      if (_commentData?.length > 0) {
+        scrollTo(0, -1);
+      }
+    }
+  }, [sectionData.length]);
 
   const renderHeaderText = () => {
     return (
@@ -210,12 +222,12 @@ const CommentDetailContent = (props: any) => {
         stickySectionHeadersEnabled={false}
         ItemSeparatorComponent={() => <View />}
         keyboardShouldPersistTaps={'handled'}
-        onLayout={onLayout}
-        onContentSizeChange={onLayout}
-        //   onScrollToIndexFailed={onScrollToIndexFailed}
         keyExtractor={(item, index) =>
           `CommentDetailContent_${index}_${item?.id || ''}`
         }
+        onLayout={onLayout}
+        onContentSizeChange={onLayout}
+        onScrollToIndexFailed={onScrollToIndexFailed}
       />
       <CommentInputView
         commentInputRef={commentInputRef}
@@ -225,6 +237,7 @@ const CommentDetailContent = (props: any) => {
         isCommentLevel1Screen
         showHeader
         defaultReplyTargetId={commentData?.id || ''}
+        onCommentSuccess={onCommentSuccess}
       />
     </View>
   );

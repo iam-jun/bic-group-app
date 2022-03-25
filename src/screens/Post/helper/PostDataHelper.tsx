@@ -16,6 +16,7 @@ import {
   IRequestReplyComment,
 } from '~/interfaces/IPost';
 import {ReactionType} from '~/constants/reactions';
+import {Platform} from 'react-native';
 
 const provider = ApiConfig.providers.beinFeed;
 
@@ -501,7 +502,7 @@ const postDataHelper = {
           with_own_children: true,
           with_recent_reactions: true,
           with_reaction_counts: true,
-          recent_reactions_limit: 10,
+          recent_reactions_limit: Platform.OS === 'web' ? 5 : 10,
           ...params,
         }),
       );

@@ -494,7 +494,7 @@ const getSectionData = (listComment: IReaction[]) => {
         : [];
     item.comment = comment;
     item.index = index;
-    item.data = _data;
+    item.data = Platform.OS === 'web' ? lastChildComment : _data;
     result.push(item);
   });
   // long post without comment cant scroll to bottom

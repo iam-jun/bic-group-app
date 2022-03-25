@@ -24,10 +24,7 @@ export interface CommentInputViewProps {
   groupIds: string;
   autoFocus?: boolean;
   commentInputRef?: any;
-  onCommentSuccess?: (data: {
-    newCommentId: string;
-    parentCommentId?: string;
-  }) => void;
+  onCommentSuccess?: () => void;
   isCommentLevel1Screen?: boolean;
   showHeader?: boolean;
   defaultReplyTargetId?: string;
@@ -41,6 +38,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   isCommentLevel1Screen,
   showHeader,
   defaultReplyTargetId,
+  onCommentSuccess,
 }: CommentInputViewProps) => {
   const _commentInputRef = commentInputRef || useRef<any>();
   const mentionInputRef = useRef<any>();
@@ -104,6 +102,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   const _onCommentSuccess = () => {
     _commentInputRef?.current?.clear?.();
     mentionInputRef?.current?.setContent?.('');
+    onCommentSuccess && onCommentSuccess();
   };
 
   const onPressSend = (sendData?: ICommentInputSendParam) => {
@@ -159,7 +158,9 @@ const CommentInputView: FC<CommentInputViewProps> = ({
           commentInputRef: _commentInputRef,
           value: content,
           autoFocus: autoFocus,
-          HeaderComponent: (!!showHeader && <ReplyingView />) || null,
+          HeaderComponent:
+            ((!!showHeader || Platform.OS === 'web') && <ReplyingView />) ||
+            null,
           loading: loading,
           isHandleUpload: true,
           placeholder: t('post:placeholder_write_comment'),

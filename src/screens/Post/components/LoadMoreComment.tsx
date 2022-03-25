@@ -103,7 +103,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
         );
       }
     }
-  }, [commentId]);
+  }, [commentId, idLessThan]);
 
   return (
     <View>
