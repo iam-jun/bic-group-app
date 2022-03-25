@@ -1,6 +1,6 @@
 import {get} from 'lodash';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {SectionList, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -44,8 +44,6 @@ const CommentDetailContent = (props: any) => {
   const latest_reactions = useKeySelector(
     postKeySelector.postLatestReactionsComments(id),
   );
-
-  const sectionData = getSectionData([commentData]);
 
   const headerTitle = t('post:title_comment_detail_of').replace(
     '%NAME%',
@@ -97,105 +95,57 @@ const CommentDetailContent = (props: any) => {
         }),
       );
     }
+
+    scrollToEnd();
   }, []);
 
-  useEffect(() => {
-    const _commentData = get(commentData, 'latest_children.comment', []);
-    const timer = setTimeout(() => {
-      scrollTo(0, _commentData?.length > 0 ? _commentData.length : -1);
-    }, 100);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, []);
-
-  const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
-    if (sectionData.length > 0) {
-      if (
-        itemIndex > sectionData?.[sectionIndex]?.data?.length ||
-        itemIndex === -1
-      ) {
-        itemIndex = sectionData?.[sectionIndex]?.data?.length || 0;
-      }
-
-      try {
-        listRef.current?.scrollToLocation?.({
-          itemIndex: itemIndex,
-          sectionIndex: sectionIndex,
-          animated: true,
-        });
-      } catch (error) {
-        // scroll to the first comment to avoid scroll error
-        listRef?.current?.scrollToLocation?.({
-          itemIndex: 0,
-          sectionIndex: 0,
-          animated: true,
-        });
-      }
-    }
+  const scrollToEnd = () => {
+    listRef.current?.scrollToEnd?.({animated: true});
   };
 
   const onCommentSuccess = () => {
-    scrollTo(0, -1);
+    scrollToEnd();
   };
 
   const onScrollToIndexFailed = () => {
     countRetryScrollToBottom = countRetryScrollToBottom + 1;
     if (countRetryScrollToBottom < 20) {
       setTimeout(() => {
-        scrollTo(0, -1);
+        scrollToEnd();
       }, 100);
     }
   };
 
   const onLayout = useCallback(() => {
-    if (!layoutSet.current) {
-      layoutSet.current = true;
-      const _commentData = get(commentData, 'latest_children.comment', []);
+    scrollToEnd();
+  }, [commentData?.latest_children?.comment?.length]);
 
-      if (_commentData?.length > 0) {
-        scrollTo(0, -1);
-      }
-    }
-  }, [sectionData.length]);
-
-  const renderHeaderText = () => {
+  const renderHeader = () => {
     return (
-      <View style={styles.container}>
-        <Text.BodySM>
-          {t('post:text_comment_from')}
-          <Text.BodyM style={styles.highlightText}>{headerTitle}</Text.BodyM>
-        </Text.BodySM>
+      <View>
+        <View style={styles.container}>
+          <Text.BodySM>
+            {t('post:text_comment_from')}
+            <Text.BodyM style={styles.highlightText}>{headerTitle}</Text.BodyM>
+          </Text.BodySM>
+        </View>
+        <CommentItem
+          postId={id}
+          commentData={commentData}
+          groupIds={groupIds}
+          index={0}
+        />
       </View>
     );
   };
 
   const renderCommentItem = (data: any) => {
-    const {item, index, section} = data || {};
+    const {item, index} = data || {};
     return (
       <CommentItem
         postId={id}
         commentData={item}
-        commentParent={section?.comment}
-        groupIds={groupIds}
-        index={index}
-        section={section}
-      />
-    );
-  };
-
-  const renderSectionHeader = (sectionData: any) => {
-    const {section} = sectionData || {};
-    const {comment, index} = section || {};
-    if (sectionData?.section?.type === 'empty') {
-      return <View />;
-    }
-
-    return (
-      <CommentItem
-        postId={id}
-        commentData={comment}
+        commentParent={commentData}
         groupIds={groupIds}
         index={index}
       />
@@ -212,22 +162,22 @@ const CommentDetailContent = (props: any) => {
 
   return (
     <View style={{flex: 1}}>
-      <SectionList
+      <FlatList
         ref={listRef}
-        sections={sectionData}
+        data={commentData?.latest_children?.comment || []}
+        extraData={commentData?.latest_children?.comment}
         renderItem={renderCommentItem}
-        renderSectionHeader={renderSectionHeader}
-        ListHeaderComponent={renderHeaderText}
+        ListHeaderComponent={renderHeader}
         ListFooterComponent={commentCount && renderFooter}
-        stickySectionHeadersEnabled={false}
         ItemSeparatorComponent={() => <View />}
         keyboardShouldPersistTaps={'handled'}
         keyExtractor={(item, index) =>
           `CommentDetailContent_${index}_${item?.id || ''}`
         }
         onLayout={onLayout}
-        onContentSizeChange={onLayout}
+        onContentSizeChange={scrollToEnd}
         onScrollToIndexFailed={onScrollToIndexFailed}
+        scrollEventThrottle={16}
       />
       <CommentInputView
         commentInputRef={commentInputRef}
@@ -241,20 +191,6 @@ const CommentDetailContent = (props: any) => {
       />
     </View>
   );
-};
-
-const getSectionData = (listComment: IReaction[]) => {
-  const result: any[] = [];
-  listComment?.map?.((comment, index) => {
-    const item: any = {};
-    item.comment = comment;
-    item.index = index;
-    item.data = comment?.latest_children?.comment || [];
-    result.push(item);
-  });
-  // long post without comment cant scroll to bottom
-  // so need default list with an empty item to trigger scroll
-  return result?.length > 0 ? result : [];
 };
 
 const createStyle = (theme: ITheme) => {
