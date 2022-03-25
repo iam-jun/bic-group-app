@@ -16,6 +16,7 @@ import DraftPost from '~/screens/Post/DraftPost';
 import UserProfile from '~/screens/Menu/UserProfile';
 import PendingMembers from '~/screens/Groups/GroupDetail/groupModerating/PendingMembers';
 import PostSettings from '~/screens/Post/PostSettings';
+import CommentDetail from '~/screens/Post/CommentDetail';
 
 export default {
   'group-list': Groups,
@@ -35,6 +36,7 @@ export default {
   'edit-group-description': EditGroupDescription,
   'invite-members': AddMembersToGroup,
   'user-profile': UserProfile,
+  'comment-detail': CommentDetail,
 
   // group moderating
   'pending-members': PendingMembers,
