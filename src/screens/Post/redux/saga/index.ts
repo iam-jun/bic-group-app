@@ -160,6 +160,7 @@ function* postCreateNewComment({
     userId,
     preComment,
     onSuccess,
+    isCommentLevel1Screen,
   } = payload || {};
   if (
     !postId ||
@@ -204,8 +205,9 @@ function* postCreateNewComment({
         });
       }
     }
-
-    yield put(postActions.setScrollToLatestItem({parentCommentId}));
+    if (!isCommentLevel1Screen) {
+      yield put(postActions.setScrollToLatestItem({parentCommentId}));
+    }
 
     onSuccess?.(); // clear content in text input
 

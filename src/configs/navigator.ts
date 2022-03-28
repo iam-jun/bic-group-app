@@ -14,6 +14,7 @@ export const hideBottomTabRoutes = [
   'create-comment',
   'comment-view',
   'add-members',
+  'comment-detail',
   //Setting: Account setting, Edit account, Security, Privacy
   'user-edit',
   'user-profile',

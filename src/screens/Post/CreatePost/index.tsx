@@ -13,7 +13,6 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {useBackHandler} from '@react-native-community/hooks';
 
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
@@ -129,11 +128,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const sPostId = sPostData?.id;
   const isEdit = !!(sPostId && !sPostData?.is_draft);
   const isDraftPost = !!(sPostId && sPostData?.is_draft);
-
-  useBackHandler(() => {
-    onPressBack();
-    return true;
-  });
 
   useEffect(() => {
     if (content !== contentInput && isAnimated) {
@@ -443,6 +437,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         <CreatePostFooter
           toolbarModalizeRef={toolbarModalizeRef}
           loading={loading}
+          onPressBack={onPressBack}
         />
       </TouchableOpacity>
     </ScreenWrapper>
