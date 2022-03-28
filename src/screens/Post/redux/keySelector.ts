@@ -44,6 +44,7 @@ const postKeySelector = {
   commentById: (id?: string) => `post.allComments.${id}`,
   scrollToLatestItem: 'post.scrollToLatestItem',
   postSelectAudienceState: 'post.postSelectAudienceState',
+  scrollToCommentsPosition: 'post.scrollToCommentsPosition',
 };
 
 export default postKeySelector;
