@@ -35,6 +35,7 @@ import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../redux/actions';
 import {getUserFromSharedPreferences} from '~/services/sharePreferences';
+import {getUserEmailFromChatCookie} from '~/utils/cookie';
 
 const SignIn = () => {
   useAuthAmplifyHub();
@@ -75,8 +76,15 @@ const SignIn = () => {
       checkAuthSessions,
     );
 
+    if (isWeb) {
+      document.addEventListener('visibilitychange', checkAuthSessions);
+    }
+
     return () => {
       appStateChangeEvent.remove();
+      if (isWeb) {
+        document.removeEventListener('visibilitychange', checkAuthSessions);
+      }
     };
   }, []);
 
@@ -101,9 +109,22 @@ const SignIn = () => {
   }, [signingInError]);
 
   const checkAuthSessions = async () => {
+    if (isWeb) {
+      checkChatWebLogin();
+      return;
+    }
+
     const user = await getUserFromSharedPreferences();
     setValue('email', user?.email);
     setAuthSessions(user);
+  };
+
+  const checkChatWebLogin = () => {
+    const userEmail = getUserEmailFromChatCookie();
+    setValue('email', userEmail);
+
+    const newAuthSessions = userEmail === '' ? {} : {email: userEmail};
+    setAuthSessions(newAuthSessions);
   };
 
   const clearAllErrors = () => {
