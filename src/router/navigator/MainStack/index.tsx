@@ -23,6 +23,7 @@ import LeftTabs from './LeftTabs';
 import screens from './screens';
 import stack from './stack';
 import chatAction from '~/store/chat/actions';
+import {getEnv} from '~/utils/env';
 
 const Stack = createStackNavigator();
 
@@ -32,7 +33,7 @@ const MainStack = (): React.ReactElement => {
   const styles = createStyles(theme);
   const showLeftCol = dimensions.width >= deviceDimensions.laptop;
   const showRightCol = dimensions.width >= deviceDimensions.desktop;
-  const connUrl = 'wss://chat.sbx.bein.group/api/v4/websocket';
+  const connUrl = getEnv('BEIN_CHAT_SOCKET');
   const token = getBeinIdToken();
   const dispatch = useDispatch();
 
