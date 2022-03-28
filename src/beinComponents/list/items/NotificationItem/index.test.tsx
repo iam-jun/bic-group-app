@@ -6,6 +6,8 @@ import {SAMPLE_ACTIVITY_1} from './constants';
 afterEach(cleanup);
 
 describe('NotificationItem component', () => {
+  const now = new Date();
+  const threeWeekAgo = new Date(now.setDate(now.getDate() - 20)).toISOString();
   const baseProps = {
     activities: [SAMPLE_ACTIVITY_1] as any,
     is_read: false,
@@ -14,8 +16,8 @@ describe('NotificationItem component', () => {
     verb: 'verb',
     actor_count: 1,
     activity_count: 1,
-    created_at: '2022-02-17T07:17:28.295691',
-    updated_at: '2022-02-17T07:17:28.295691',
+    created_at: threeWeekAgo,
+    updated_at: threeWeekAgo,
   };
 
   let Platform: any;

@@ -58,7 +58,10 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
         ContentComponent={
           <Text.H6 numberOfLines={2}>
             {item.name}
-            <Text.Subtitle>{` @${item.username}`}</Text.Subtitle>
+            <Text.Subtitle
+              color={
+                theme.colors.textSecondary
+              }>{` @${item.username}`}</Text.Subtitle>
           </Text.H6>
         }
         isChecked={!!selected}

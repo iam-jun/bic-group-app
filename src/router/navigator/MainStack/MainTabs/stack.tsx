@@ -8,6 +8,7 @@ const mainTabStack = {
   'post-detail': 'post-detail',
   'draft-post': 'draft-post',
   'post-settings': 'post-settings',
+  'comment-detail': 'comment-detail',
 
   //GROUP
   // 'group-list': Groups,

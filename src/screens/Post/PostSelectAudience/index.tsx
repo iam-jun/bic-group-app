@@ -5,7 +5,6 @@ import {useDispatch} from 'react-redux';
 import debounce from 'lodash/debounce';
 
 import {useBaseHook} from '~/hooks';
-import {useCreatePost} from '~/hooks/post';
 import {ITheme} from '~/theme/interfaces';
 import postActions from '~/screens/Post/redux/actions';
 
@@ -76,7 +75,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const {spacing, colors} = theme;
   const styles = createStyle(theme);
 
-  const createPostData = useCreatePost();
+  const createPostData = useKeySelector(postKeySelector.createPost.all);
   const {
     chosenAudiences,
     searchResultAudienceGroups,

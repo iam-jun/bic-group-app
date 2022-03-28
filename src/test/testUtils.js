@@ -1,5 +1,6 @@
 import React from 'react';
 import {act, render, cleanup, fireEvent} from '@testing-library/react-native';
+import {renderHook} from '@testing-library/react-hooks';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 import initialState from '~/store/initialState';
@@ -36,6 +37,11 @@ const waitForUpdateRedux = (timeout = 500) => {
   return new Promise(r => setTimeout(r, timeout));
 };
 
+const getHookReduxWrapper = (store = createTestStore()) => {
+  const wrapper = ({children}) => <Provider store={store}>{children}</Provider>;
+  return wrapper;
+};
+
 export * from '@testing-library/react-native';
 export {
   defaultStore as store,
@@ -50,4 +56,6 @@ export {
   act,
   createTestStore,
   waitForUpdateRedux,
+  renderHook,
+  getHookReduxWrapper,
 };
