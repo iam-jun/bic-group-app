@@ -140,12 +140,15 @@ export const handleLeaveInnerGroups = async (
   dispatch: any,
   callback: (innerGroups: any) => void,
 ) => {
+  let testingFlag = false; // for testing purpose
+
   // Get inner groups info (if any) when user leave/being removed from a group
   try {
     const resp = await groupsDataHelper.getUserInnerGroups(groupId, username);
     const innerGroups = resp.data.inner_groups.map(
       (group: IGroup) => group.name,
     );
+    testingFlag = true;
     callback(innerGroups);
   } catch (err: any) {
     console.error('Error while fetching user inner groups', err);
@@ -159,4 +162,5 @@ export const handleLeaveInnerGroups = async (
       }),
     );
   }
+  return testingFlag;
 };

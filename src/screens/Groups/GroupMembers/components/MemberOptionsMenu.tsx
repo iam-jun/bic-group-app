@@ -74,10 +74,9 @@ const MemberOptionsMenu = ({
       case 'remove-admin':
         onPressRemoveAdmin(selectedMember);
         break;
-      case 'remove-member': {
+      case 'remove-member':
         onPressRemoveMember(selectedMember);
         break;
-      }
       case 'leave-group':
         onPressLeave();
         break;

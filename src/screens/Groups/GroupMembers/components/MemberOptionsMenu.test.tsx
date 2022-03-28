@@ -9,11 +9,13 @@ describe('MemberOptionsMenu component', () => {
   const baseSheetRef = jest.fn();
   const groupId = 1;
   const onOptionsClosed = jest.fn();
+  const selectedMember = {};
 
   it('renders correctly', () => {
     const rendered = renderWithRedux(
       <MemberOptionsMenu
         groupId={groupId}
+        selectedMember={selectedMember}
         modalizeRef={baseSheetRef}
         onOptionsClosed={onOptionsClosed}
       />,
@@ -25,6 +27,7 @@ describe('MemberOptionsMenu component', () => {
     const {getByTestId} = renderWithRedux(
       <MemberOptionsMenu
         groupId={groupId}
+        selectedMember={selectedMember}
         modalizeRef={baseSheetRef}
         onOptionsClosed={onOptionsClosed}
       />,
