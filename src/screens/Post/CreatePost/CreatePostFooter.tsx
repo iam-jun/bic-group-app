@@ -16,11 +16,13 @@ import Animated, {
 export interface CreatePostFooterProps {
   toolbarModalizeRef?: any;
   loading?: boolean;
+  onPressBack?: () => void;
 }
 
 const CreatePostFooter: FC<CreatePostFooterProps> = ({
   toolbarModalizeRef,
   loading,
+  onPressBack,
 }: CreatePostFooterProps) => {
   const showMentionValue = useSharedValue(0);
 
@@ -44,7 +46,11 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
 
   return (
     <Div className="post-toolbar-container">
-      <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
+      <PostToolbar
+        modalizeRef={toolbarModalizeRef}
+        disabled={loading}
+        onPressBack={onPressBack}
+      />
       {Platform.OS !== 'web' && (
         <Animated.View
           testID={'create_post_footer.mention_bar_container'}
