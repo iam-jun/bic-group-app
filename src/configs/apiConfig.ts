@@ -112,6 +112,17 @@ const App = {
   },
 };
 
+const Chat = {
+  init: (): HttpApiRequestConfig => {
+    return {
+      url: `${providers.bein.url}chat/channels/unread`,
+      method: 'get',
+      provider: providers.bein,
+      useRetry: true,
+    };
+  },
+};
+
 export interface HttpApiRequestConfig extends AxiosRequestConfig {
   provider: Provider;
   useRetry: boolean;
@@ -145,4 +156,5 @@ export default {
   providers,
   App,
   Upload,
+  Chat,
 };

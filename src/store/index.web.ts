@@ -11,7 +11,15 @@ import rootReducer from './reducers';
 const persistConfig = {
   key: 'root',
   storage: AsyncStorage,
-  blacklist: ['modal', 'groups', 'post', 'home', 'noInternet', 'mentionInput'],
+  blacklist: [
+    'modal',
+    'groups',
+    'post',
+    'home',
+    'noInternet',
+    'mentionInput',
+    'chat',
+  ],
 };
 
 // @ts-ignore

@@ -1,11 +1,12 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
+
 import CommonModal from '~/beinFragments/CommonModal';
 import UserProfilePreviewBottomSheet from '~/beinFragments/Preview/UserProfilePreviewBottomSheet';
-
 import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
 import ReactionDetailBottomSheet from '~/beinFragments/reaction/ReactionDetailBottomSheet';
 import {AppConfig} from '~/configs';
@@ -13,12 +14,15 @@ import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import MenuSidebarDrawer from '~/router/components/MenuSidebarDrawer';
 import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 import RightCol from '~/screens/RightCol';
+import websocketClient from '~/services/chatSocket';
+import {getBeinIdToken} from '~/services/httpApiRequest';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {leftNavigationRef, rightNavigationRef} from '../refs';
 import LeftTabs from './LeftTabs';
 import screens from './screens';
 import stack from './stack';
+import chatAction from '~/store/chat/actions';
 
 const Stack = createStackNavigator();
 
@@ -28,6 +32,28 @@ const MainStack = (): React.ReactElement => {
   const styles = createStyles(theme);
   const showLeftCol = dimensions.width >= deviceDimensions.laptop;
   const showRightCol = dimensions.width >= deviceDimensions.desktop;
+  const connUrl = 'wss://chat.sbx.bein.group/api/v4/websocket';
+  const token = getBeinIdToken();
+  const dispatch = useDispatch();
+
+  const websocketOpts = {
+    connectionUrl: connUrl,
+  };
+
+  useEffect(() => {
+    dispatch(chatAction.initChat());
+    websocketClient.setEventCallback((evt: any) =>
+      dispatch(chatAction.handleChatEvent(evt)),
+    );
+
+    return () => {
+      websocketClient.close();
+    };
+  }, []);
+
+  useEffect(() => {
+    websocketClient.initialize(token, websocketOpts);
+  }, [token]);
 
   const renderLeftCol = () => (
     <View style={styles.leftCol}>

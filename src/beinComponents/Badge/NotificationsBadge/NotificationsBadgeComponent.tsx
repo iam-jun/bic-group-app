@@ -31,10 +31,8 @@ const NotificationsBadgeComponent: React.FC<NotificationsBadgeComponentProps> =
     const numberInText = number > maxNumber ? `${maxNumber}+` : `${number}`;
 
     return (
-      <View style={StyleSheet.flatten([styles.dot, style])} testID={testID}>
-        <Text
-          variant="subtitle"
-          style={StyleSheet.flatten([styles.text, textStyle])}>
+      <View style={[styles.dot, style]} testID={testID}>
+        <Text variant="subtitle" style={[styles.text, textStyle]}>
           {numberInText}
         </Text>
       </View>
