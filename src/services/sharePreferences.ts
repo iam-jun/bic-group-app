@@ -100,6 +100,6 @@ export const isAppInstalled = () => {
       getEnv('APP_GROUP_PACKAGE_NAME_ANDROID'),
     );
   } else {
-    Linking.canOpenURL(chatSchemes.PREFIX_DEEPLINK);
+    return Linking.canOpenURL(chatSchemes.PREFIX_DEEPLINK);
   }
 };
