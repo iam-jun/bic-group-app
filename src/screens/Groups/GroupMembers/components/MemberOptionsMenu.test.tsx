@@ -1,9 +1,17 @@
 import React from 'react';
 
-import {renderWithRedux, fireEvent, createTestStore} from '~/test/testUtils';
+import {
+  renderWithRedux,
+  fireEvent,
+  createTestStore,
+  getHookReduxWrapper,
+  renderHook,
+  act,
+} from '~/test/testUtils';
 import MemberOptionsMenu from './MemberOptionsMenu';
 import initialState from '~/store/initialState';
 import {IGroupMembers} from '~/interfaces/IGroup';
+import useRemoveMember from './useRemoveMember';
 
 describe('MemberOptionsMenu component', () => {
   const baseSheetRef = jest.fn();
@@ -43,7 +51,7 @@ describe('MemberOptionsMenu component', () => {
     // @ts-ignore
     state.auth.user = {username: 'testname1'};
     const store = createTestStore(state);
-    const selectedUser = {
+    const selectedMember = {
       id: 1,
       username: 'testname2',
     } as IGroupMembers;
@@ -52,7 +60,7 @@ describe('MemberOptionsMenu component', () => {
       <MemberOptionsMenu
         groupId={groupId}
         modalizeRef={baseSheetRef}
-        selectedMember={selectedUser}
+        selectedMember={selectedMember}
         onOptionsClosed={onOptionsClosed}
       />,
       store,
@@ -68,7 +76,7 @@ describe('MemberOptionsMenu component', () => {
     // @ts-ignore
     state.auth.user = {username: 'testname1'};
     const store = createTestStore(state);
-    const selectedUser = {
+    const selectedMember = {
       id: 1,
       username: 'testname1',
     } as IGroupMembers;
@@ -77,12 +85,78 @@ describe('MemberOptionsMenu component', () => {
       <MemberOptionsMenu
         groupId={groupId}
         modalizeRef={baseSheetRef}
-        selectedMember={selectedUser}
+        selectedMember={selectedMember}
         onOptionsClosed={onOptionsClosed}
       />,
       store,
     );
     const itemComponent = queryByTestId('member_options_menu.remove_member');
     expect(itemComponent).toBeNull();
+  });
+
+  it('getInnerGroupsNames should be done when there is no inner groups', () => {
+    const renderInnerGroupsAlert = jest.fn();
+    const state = {...initialState};
+    const store = createTestStore(state);
+
+    const wrapper = getHookReduxWrapper(store);
+    const {result} = renderHook(
+      () => useRemoveMember({groupId, selectedMember}),
+      {
+        wrapper,
+      },
+    );
+    let pressResult;
+    act(() => {
+      pressResult = result.current.getInnerGroupsNames(
+        [],
+        renderInnerGroupsAlert,
+      );
+    });
+    expect(pressResult).toBe(0);
+  });
+
+  it('getInnerGroupsNames should be done when there is 1 inner group', () => {
+    const renderInnerGroupsAlert = jest.fn();
+    const state = {...initialState};
+    const store = createTestStore(state);
+
+    const wrapper = getHookReduxWrapper(store);
+    const {result} = renderHook(
+      () => useRemoveMember({groupId, selectedMember}),
+      {
+        wrapper,
+      },
+    );
+    let pressResult;
+    act(() => {
+      pressResult = result.current.getInnerGroupsNames(
+        ['inner group 1'],
+        renderInnerGroupsAlert,
+      );
+    });
+    expect(pressResult).toBe(1);
+  });
+
+  it('getInnerGroupsNames should be done when there are at least 2 inner groups', () => {
+    const renderInnerGroupsAlert = jest.fn();
+    const state = {...initialState};
+    const store = createTestStore(state);
+
+    const wrapper = getHookReduxWrapper(store);
+    const {result} = renderHook(
+      () => useRemoveMember({groupId, selectedMember}),
+      {
+        wrapper,
+      },
+    );
+    let pressResult;
+    act(() => {
+      pressResult = result.current.getInnerGroupsNames(
+        ['inner group 1', 'inner group 2', 'inner group 3'],
+        renderInnerGroupsAlert,
+      );
+    });
+    expect(pressResult).toBe(1);
   });
 });

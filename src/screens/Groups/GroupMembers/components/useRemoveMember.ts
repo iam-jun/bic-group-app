@@ -58,10 +58,12 @@ const useRemoveMember = ({groupId, selectedMember}: IUseRemoveMember) => {
       innerGroups: string[],
     ) => React.ReactNode,
   ) => {
+    let result: number; // for testing purpose
     const groupsRemovedFrom = [...innerGroups];
 
     if (groupsRemovedFrom.length === 0) {
       alertPayload.content = alertPayload.content.replace('{other groups}', '');
+      result = 0;
     } else {
       const otherGroups = groupsRemovedFromToString(groupsRemovedFrom);
       alertPayload.content = alertPayload.content.replace(
@@ -70,8 +72,6 @@ const useRemoveMember = ({groupId, selectedMember}: IUseRemoveMember) => {
       );
 
       // renderInnerGroupsText
-      if (innerGroups.length === 0) return null;
-
       const count = innerGroups.length;
       let message = i18next
         .t('groups:modal_confirm_remove_member:alert_inner_groups')
@@ -84,9 +84,11 @@ const useRemoveMember = ({groupId, selectedMember}: IUseRemoveMember) => {
         );
 
       alertPayload.children = renderInnerGroupsAlert(message, innerGroups);
+      result = 1;
     }
 
     dispatch(modalActions.showAlert(alertPayload));
+    return result;
   };
 
   return {
