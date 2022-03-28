@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   Animated,
   Keyboard,
@@ -12,6 +12,7 @@ import {useTheme} from 'react-native-paper';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {GestureEvent} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
 import {useDispatch} from 'react-redux';
+import {useBackHandler} from '@react-native-community/hooks';
 
 import BottomSheet from '~/beinComponents/BottomSheet/index';
 import {BaseBottomSheetProps} from '~/beinComponents/BottomSheet/BaseBottomSheet';
@@ -41,6 +42,7 @@ export interface PostToolbarProps extends BaseBottomSheetProps {
   modalizeRef: any;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
+  onPressBack?: () => void;
   disabled?: boolean;
 }
 
@@ -49,6 +51,7 @@ const PostToolbar = ({
   style,
   containerStyle,
   disabled,
+  onPressBack,
   ...props
 }: PostToolbarProps) => {
   const animated = useRef(new Animated.Value(0)).current;
@@ -64,13 +67,27 @@ const PostToolbar = ({
     postKeySelector.createPost.images,
   );
   const content = useKeySelector(postKeySelector.createPost.content);
+  const [isOpen, setIsOpen] = useState(false);
 
   const openModal = throttle((e?: any) => {
     Keyboard.dismiss();
+    setIsOpen(true);
     modalizeRef?.current?.open?.(e?.pageX, e?.pageY);
   }, 500);
 
-  const closeModal = () => modalizeRef?.current?.close?.();
+  const closeModal = () => {
+    setIsOpen(false);
+    modalizeRef?.current?.close?.();
+  };
+
+  useBackHandler(() => {
+    if (isOpen) {
+      closeModal();
+    } else {
+      onPressBack?.();
+    }
+    return true;
+  });
 
   const handleGesture = (event: GestureEvent<any>) => {
     const {nativeEvent} = event;
