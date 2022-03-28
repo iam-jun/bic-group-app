@@ -55,3 +55,23 @@ export const clearUserCookies = () => {
   const cookieList = Object.values(COOKIE_DICTIONARY) as CookieNameType[];
   cookieList.forEach(cookie => clearCookie(cookie));
 };
+
+export const getUserEmailFromChatCookie = () => {
+  if (Platform.OS !== 'web') return '';
+
+  const COOKIE_EMAIL_STARTER = 'CUSER_EMAIL=';
+  if (
+    typeof document !== 'undefined' &&
+    typeof document.cookie !== 'undefined'
+  ) {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(COOKIE_EMAIL_STARTER)) {
+        return cookie.replace(COOKIE_EMAIL_STARTER, '');
+      }
+    }
+  }
+
+  return '';
+};
