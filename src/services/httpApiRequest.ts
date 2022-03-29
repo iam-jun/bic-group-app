@@ -139,7 +139,7 @@ const logInterceptorsResponseError = (error: AxiosError) => {
   );
 };
 
-export const getBeinIdToken = (): string => {
+const getBeinIdToken = (): string => {
   return _.get(
     Store.getCurrentUser(),
     'signInUserSession.idToken.jwtToken',

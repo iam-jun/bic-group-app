@@ -1,9 +1,8 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
 
 import CommonModal from '~/beinFragments/CommonModal';
 import UserProfilePreviewBottomSheet from '~/beinFragments/Preview/UserProfilePreviewBottomSheet';
@@ -14,16 +13,12 @@ import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import MenuSidebarDrawer from '~/router/components/MenuSidebarDrawer';
 import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 import RightCol from '~/screens/RightCol';
-import websocketClient from '~/services/chatSocket';
-import {getBeinIdToken} from '~/services/httpApiRequest';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {leftNavigationRef, rightNavigationRef} from '../refs';
 import LeftTabs from './LeftTabs';
 import screens from './screens';
 import stack from './stack';
-import chatAction from '~/store/chat/actions';
-import {getEnv} from '~/utils/env';
 
 const Stack = createStackNavigator();
 
@@ -33,28 +28,6 @@ const MainStack = (): React.ReactElement => {
   const styles = createStyles(theme);
   const showLeftCol = dimensions.width >= deviceDimensions.laptop;
   const showRightCol = dimensions.width >= deviceDimensions.desktop;
-  const connUrl = getEnv('BEIN_CHAT_SOCKET');
-  const token = getBeinIdToken();
-  const dispatch = useDispatch();
-
-  const websocketOpts = {
-    connectionUrl: connUrl,
-  };
-
-  useEffect(() => {
-    dispatch(chatAction.initChat());
-    websocketClient.setEventCallback((evt: any) =>
-      dispatch(chatAction.handleChatEvent(evt)),
-    );
-
-    return () => {
-      websocketClient.close();
-    };
-  }, []);
-
-  useEffect(() => {
-    websocketClient.initialize(token, websocketOpts);
-  }, [token]);
 
   const renderLeftCol = () => (
     <View style={styles.leftCol}>
