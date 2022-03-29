@@ -18,6 +18,7 @@ import {useDispatch} from 'react-redux';
 import GroupHeaderMenu from '~/screens/Groups/GroupDetail/components/GroupHeaderMenu';
 import {openLink} from '~/utils/common';
 import {chatSchemes} from '~/constants/chat';
+import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 
 const GroupTopBar = () => {
   const dispatch = useDispatch();
@@ -28,10 +29,13 @@ const GroupTopBar = () => {
   const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
-  const {id: groupId} = groupInfo || {};
+  const {id: groupId, chat_id: chatId} = groupInfo || {};
 
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
+  const count = useKeySelector(
+    `chat.unreadChannels.${chatId}.mention_count_root`,
+  );
 
   const route = useRoute<RouteProp<RootStackParamList, 'GroupDetail'>>();
 
@@ -106,6 +110,11 @@ const GroupTopBar = () => {
           tintColor={theme.colors.iconTint}
           style={styles.iconShieldStar}
         />
+        <NotificationsBadge.Alert
+          style={styles.badge}
+          number={count}
+          maxNumber={99}
+        />
       </ButtonWrapper>
     );
   };
@@ -156,6 +165,11 @@ const themeStyles = (theme: ITheme) => {
     },
     iconSearch: {
       marginRight: spacing.margin.extraLarge,
+    },
+    badge: {
+      position: 'absolute',
+      top: -6,
+      right: 10,
     },
   });
 };

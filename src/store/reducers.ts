@@ -16,6 +16,7 @@ import {setChatAuthenticationInfo} from '~/utils/common';
 import auth from '../screens/Auth/redux/reducer';
 import noInternetReducer from '../screens/NoInternet/redux/reducer';
 import mentionInputReducer from '~/beinComponents/inputs/MentionInput/redux/reducer';
+import chatReducer from './chat/reducer';
 
 import app from './app/reducer';
 import modal from './modal/reducer';
@@ -44,6 +45,7 @@ export const appReducer = combineReducers({
   menu: menuReducer,
   noInternet: noInternetReducer,
   mentionInput: mentionInputReducer,
+  chat: chatReducer,
 });
 
 // @ts-ignore
