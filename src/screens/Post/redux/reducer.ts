@@ -62,6 +62,7 @@ export const postInitState = {
     fromStack: '',
   },
   scrollToLatestItem: null,
+  scrollToCommentsPosition: null,
   postSelectAudienceState: {
     loading: true,
     selectingAudiences: [],
@@ -319,6 +320,11 @@ function postReducer(state = postInitState, action: any = {}) {
         postSelectAudienceState: payload
           ? {...state.postSelectAudienceState, ...payload}
           : postInitState.postSelectAudienceState,
+      };
+    case postTypes.SET_SCROLL_TO_COMMENTS_POSITION:
+      return {
+        ...state,
+        scrollToCommentsPosition: payload,
       };
     default:
       return state;

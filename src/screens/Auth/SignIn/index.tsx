@@ -38,6 +38,7 @@ import {
   getUserFromSharedPreferences,
   isAppInstalled,
 } from '~/services/sharePreferences';
+import {getUserEmailFromChatCookie} from '~/utils/cookie';
 
 const SignIn = () => {
   useAuthAmplifyHub();
@@ -78,8 +79,15 @@ const SignIn = () => {
       checkAuthSessions,
     );
 
+    if (isWeb) {
+      document.addEventListener('visibilitychange', checkAuthSessions);
+    }
+
     return () => {
       appStateChangeEvent.remove();
+      if (isWeb) {
+        document.removeEventListener('visibilitychange', checkAuthSessions);
+      }
     };
   }, []);
 
@@ -104,12 +112,25 @@ const SignIn = () => {
   }, [signingInError]);
 
   const checkAuthSessions = async () => {
+    if (isWeb) {
+      checkChatWebLogin();
+      return;
+    }
+
     const isInstalled = await isAppInstalled();
     if (isInstalled) {
       const user = await getUserFromSharedPreferences();
       setValue('email', user?.email);
       setAuthSessions(user);
     }
+  };
+
+  const checkChatWebLogin = () => {
+    const userEmail = getUserEmailFromChatCookie();
+    setValue('email', userEmail);
+
+    const newAuthSessions = userEmail === '' ? {} : {email: userEmail};
+    setAuthSessions(newAuthSessions);
   };
 
   const clearAllErrors = () => {
