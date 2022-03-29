@@ -1,7 +1,8 @@
-import {Platform} from 'react-native';
+import {Linking, Platform} from 'react-native';
 import SharedGroupPreferences from 'react-native-shared-group-preferences';
 import {saveCookie} from '~/utils/cookie';
 import {getEnv} from '~/utils/env';
+import {chatSchemes} from '~/constants/chat';
 
 type DataType = {
   name?: string; // will save to fullname
@@ -91,4 +92,14 @@ export const updateUserFromSharedPreferences = async (payload: any) => {
     'pref_user_info',
     {...user, ...payload},
   );
+};
+
+export const isAppInstalled = () => {
+  if (Platform.OS === 'android') {
+    return SharedGroupPreferences.isAppInstalledAndroid(
+      getEnv('APP_GROUP_PACKAGE_NAME_ANDROID'),
+    );
+  } else {
+    return Linking.canOpenURL(chatSchemes.PREFIX_DEEPLINK);
+  }
 };

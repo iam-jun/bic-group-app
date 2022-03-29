@@ -12,7 +12,6 @@ import {useKeySelector} from '~/hooks/selector';
 import {IAudienceGroup, IReaction} from '~/interfaces/IPost';
 import {ITheme} from '~/theme/interfaces';
 import CommentInputView from '../components/CommentInputView';
-import {sortComments} from '../helper/PostUtils';
 import postActions from '../redux/actions';
 import postKeySelector from '../redux/keySelector';
 
@@ -29,7 +28,6 @@ const CommentDetailContent = (props: any) => {
   const listRef = useRef<any>();
   const commentInputRef = useRef<any>();
   let countRetryScrollToBottom = useRef(0).current;
-  const layoutSet = useRef(false);
 
   const params = props?.route?.params;
   const {commentData, postId, replyItem, commentParent} = params || {};
@@ -43,6 +41,9 @@ const CommentDetailContent = (props: any) => {
   );
   const latest_reactions = useKeySelector(
     postKeySelector.postLatestReactionsComments(id),
+  );
+  const scrollToCommentsPosition = useKeySelector(
+    postKeySelector.scrollToCommentsPosition,
   );
 
   const headerTitle = t('post:title_comment_detail_of').replace(
@@ -59,9 +60,11 @@ const CommentDetailContent = (props: any) => {
   }, [audience?.groups]);
 
   useEffect(() => {
+    dispatch(postActions.setScrollCommentsPosition(null));
     const _commentData = get(commentData, 'latest_children.comment', []);
     if (_commentData.length > 1 || !_commentData?.[0]) {
       setLoading(false);
+      dispatch(postActions.setScrollCommentsPosition({position: 'bottom'}));
       if (!!replyItem) {
         setTimeout(() => {
           dispatch(
@@ -72,7 +75,6 @@ const CommentDetailContent = (props: any) => {
           );
         }, 50);
       }
-      return;
     } else {
       dispatch(
         postActions.getCommentsByPostId({
@@ -81,6 +83,7 @@ const CommentDetailContent = (props: any) => {
           commentId: commentData?.id || '',
           recentReactionsLimit: 9,
           isMerge: true,
+          position: 'bottom',
           callbackLoading: loading => {
             setLoading(loading);
             if (!loading && !!replyItem) {
@@ -95,16 +98,10 @@ const CommentDetailContent = (props: any) => {
         }),
       );
     }
-
-    scrollToEnd();
   }, []);
 
   const scrollToEnd = () => {
     listRef.current?.scrollToEnd?.({animated: true});
-  };
-
-  const onCommentSuccess = () => {
-    scrollToEnd();
   };
 
   const onScrollToIndexFailed = () => {
@@ -117,27 +114,15 @@ const CommentDetailContent = (props: any) => {
   };
 
   const onLayout = useCallback(() => {
-    scrollToEnd();
-  }, [commentData?.latest_children?.comment?.length]);
-
-  const renderHeader = () => {
-    return (
-      <View>
-        <View style={styles.container}>
-          <Text.BodySM>
-            {t('post:text_comment_from')}
-            <Text.BodyM style={styles.highlightText}>{headerTitle}</Text.BodyM>
-          </Text.BodySM>
-        </View>
-        <CommentItem
-          postId={id}
-          commentData={commentData}
-          groupIds={groupIds}
-          index={0}
-        />
-      </View>
-    );
-  };
+    setTimeout(() => {
+      if (scrollToCommentsPosition?.position === 'top') {
+        dispatch(postActions.setScrollCommentsPosition(null));
+      } else if (scrollToCommentsPosition?.position === 'bottom') {
+        listRef.current?.scrollToEnd?.({animated: true});
+        dispatch(postActions.setScrollCommentsPosition(null));
+      }
+    }, 100);
+  }, [commentData?.latest_children?.comment?.length, scrollToCommentsPosition]);
 
   const renderCommentItem = (data: any) => {
     const {item, index} = data || {};
@@ -167,15 +152,20 @@ const CommentDetailContent = (props: any) => {
         data={commentData?.latest_children?.comment || []}
         extraData={commentData?.latest_children?.comment}
         renderItem={renderCommentItem}
-        ListHeaderComponent={renderHeader}
+        ListHeaderComponent={
+          <CommentLevel1
+            headerTitle={headerTitle}
+            commentData={commentData}
+            groupIds={groupIds}
+            id={id}
+          />
+        }
         ListFooterComponent={commentCount && renderFooter}
-        ItemSeparatorComponent={() => <View />}
         keyboardShouldPersistTaps={'handled'}
         keyExtractor={(item, index) =>
           `CommentDetailContent_${index}_${item?.id || ''}`
         }
-        onLayout={onLayout}
-        onContentSizeChange={scrollToEnd}
+        onContentSizeChange={onLayout}
         onScrollToIndexFailed={onScrollToIndexFailed}
         scrollEventThrottle={16}
       />
@@ -187,7 +177,32 @@ const CommentDetailContent = (props: any) => {
         isCommentLevel1Screen
         showHeader
         defaultReplyTargetId={commentData?.id || ''}
-        onCommentSuccess={onCommentSuccess}
+      />
+    </View>
+  );
+};
+
+const CommentLevel1 = ({id, headerTitle, commentData, groupIds}: any) => {
+  if (!id) {
+    return null;
+  }
+  const {t} = useBaseHook();
+  const theme = useTheme() as ITheme;
+  const styles = createStyle(theme);
+
+  return (
+    <View>
+      <View style={styles.container}>
+        <Text.BodySM>
+          {t('post:text_comment_from')}
+          <Text.BodyM style={styles.highlightText}>{headerTitle}</Text.BodyM>
+        </Text.BodySM>
+      </View>
+      <CommentItem
+        postId={id}
+        commentData={commentData}
+        groupIds={groupIds}
+        index={0}
       />
     </View>
   );

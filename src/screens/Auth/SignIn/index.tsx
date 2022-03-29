@@ -34,7 +34,10 @@ import * as modalActions from '~/store/modal/actions';
 // import SignInOAuth from '../components/SignInOAuth';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../redux/actions';
-import {getUserFromSharedPreferences} from '~/services/sharePreferences';
+import {
+  getUserFromSharedPreferences,
+  isAppInstalled,
+} from '~/services/sharePreferences';
 import {getUserEmailFromChatCookie} from '~/utils/cookie';
 
 const SignIn = () => {
@@ -114,9 +117,12 @@ const SignIn = () => {
       return;
     }
 
-    const user = await getUserFromSharedPreferences();
-    setValue('email', user?.email);
-    setAuthSessions(user);
+    const isInstalled = await isAppInstalled();
+    if (isInstalled) {
+      const user = await getUserFromSharedPreferences();
+      setValue('email', user?.email);
+      setAuthSessions(user);
+    }
   };
 
   const checkChatWebLogin = () => {
