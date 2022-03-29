@@ -24,6 +24,7 @@ import {
   handleLeaveInnerGroups,
 } from '../../helper';
 import useRemoveMember from './useRemoveMember';
+import useRemoveAdmin from './useRemoveAdmin';
 
 interface MemberOptionsMenuProps {
   groupId: number;
@@ -53,6 +54,7 @@ const MemberOptionsMenu = ({
     groupId,
     selectedMember,
   });
+  const alertRemovingAdmin = useRemoveAdmin({groupId, selectedMember});
 
   const onPressMenuOption = (
     type:
@@ -72,7 +74,7 @@ const MemberOptionsMenu = ({
         alertSettingAdmin(selectedMember);
         break;
       case 'remove-admin':
-        onPressRemoveAdmin(selectedMember);
+        onPressRemoveAdmin();
         break;
       case 'remove-member':
         onPressRemoveMember(selectedMember);
@@ -87,7 +89,7 @@ const MemberOptionsMenu = ({
   };
 
   const goToUserProfile = (selectedMember?: IGroupMembers) => {
-    if (selectedMember) {
+    if (selectedMember?.id) {
       rootNavigation.navigate(mainStack.userProfile, {
         userId: selectedMember.id,
       });
@@ -129,11 +131,11 @@ const MemberOptionsMenu = ({
       );
   };
 
-  const onPressRemoveAdmin = (selectedMember?: IGroupMembers) => {
-    if (selectedMember) {
+  const onPressRemoveAdmin = () => {
+    if (selectedMember?.id) {
       const adminCount = groupMember?.group_admin?.user_count;
       if (adminCount > 1) {
-        alertRemovingAdmin(selectedMember);
+        alertRemovingAdmin();
       } else {
         dispatch(
           modalActions.showHideToastMessage({
@@ -150,36 +152,6 @@ const MemberOptionsMenu = ({
         );
       }
     }
-  };
-
-  const alertRemovingAdmin = (selectedMember: IGroupMembers) => {
-    const alertPayload = {
-      iconName: 'StarHalfAlt',
-      title: i18next.t('groups:modal_confirm_remove_admin:title'),
-      content: i18next.t('groups:modal_confirm_remove_admin:description'),
-      ContentComponent: Text.BodyS,
-      cancelBtn: true,
-      cancelBtnProps: {
-        textColor: theme.colors.primary7,
-      },
-      onConfirm: () => doRemoveAdmin(selectedMember),
-      confirmLabel: i18next.t(
-        'groups:modal_confirm_remove_admin:button_confirm',
-      ),
-      ConfirmBtnComponent: Button.Danger,
-    };
-    alertPayload.content = alertPayload.content.replace(
-      '{0}',
-      `"${selectedMember?.fullname}"`,
-    );
-    dispatch(modalActions.showAlert(alertPayload));
-  };
-
-  const doRemoveAdmin = (selectedMember: IGroupMembers) => {
-    selectedMember?.id &&
-      dispatch(
-        groupsActions.removeGroupAdmin({groupId, userId: selectedMember?.id}),
-      );
   };
 
   const onPressMemberButton = () => {
