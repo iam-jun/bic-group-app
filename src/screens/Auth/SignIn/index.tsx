@@ -118,7 +118,6 @@ const SignIn = () => {
     }
 
     const isInstalled = await isAppInstalled();
-    console.log({isInstalled});
     if (isInstalled) {
       const user = await getUserFromSharedPreferences();
       setValue('email', user?.email);
