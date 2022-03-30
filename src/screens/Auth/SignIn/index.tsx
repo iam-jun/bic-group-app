@@ -122,6 +122,9 @@ const SignIn = () => {
       const user = await getUserFromSharedPreferences();
       setValue('email', user?.email);
       setAuthSessions(user);
+    } else {
+      setValue('email', '');
+      setAuthSessions(null);
     }
   };
 
