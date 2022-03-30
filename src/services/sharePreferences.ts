@@ -95,11 +95,5 @@ export const updateUserFromSharedPreferences = async (payload: any) => {
 };
 
 export const isAppInstalled = () => {
-  if (Platform.OS === 'android') {
-    return SharedGroupPreferences.isAppInstalledAndroid(
-      getEnv('APP_GROUP_PACKAGE_NAME_ANDROID'),
-    );
-  } else {
-    return Linking.canOpenURL(chatSchemes.PREFIX_DEEPLINK);
-  }
+  return Linking.canOpenURL(chatSchemes.PREFIX_DEEPLINK);
 };
