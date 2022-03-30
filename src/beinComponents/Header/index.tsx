@@ -33,6 +33,7 @@ import {ImageProps} from '../Image';
 import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
 import useWindowDimensions from '~/hooks/windowSize';
+import IconChat from '../IconChat';
 
 export interface HeaderProps {
   headerRef?: any;
@@ -319,17 +320,7 @@ const Header: React.FC<HeaderProps> = ({
               buttonTestID="header.searchIcon.button"
             />
           )}
-          {onPressChat && (
-            <Icon
-              icon="iconChat"
-              size={24}
-              style={styles.icon}
-              onPress={onPressChat}
-              backgroundColor={colors.bgSecondary}
-              buttonTestID="header.iconChat.button"
-              testID="header.iconChat"
-            />
-          )}
+          {onPressChat && <IconChat onPress={onPressChat} />}
           {onPressMenu && (
             <Icon
               icon={menuIcon || 'menu'}

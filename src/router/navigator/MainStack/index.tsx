@@ -3,9 +3,9 @@ import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
 import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+
 import CommonModal from '~/beinFragments/CommonModal';
 import UserProfilePreviewBottomSheet from '~/beinFragments/Preview/UserProfilePreviewBottomSheet';
-
 import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
 import ReactionDetailBottomSheet from '~/beinFragments/reaction/ReactionDetailBottomSheet';
 import {AppConfig} from '~/configs';
