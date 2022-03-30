@@ -207,6 +207,8 @@ function* postCreateNewComment({
     }
     if (!isCommentLevel1Screen) {
       yield put(postActions.setScrollToLatestItem({parentCommentId}));
+    } else {
+      yield put(postActions.setScrollCommentsPosition({position: 'bottom'}));
     }
 
     onSuccess?.(); // clear content in text input
@@ -232,6 +234,10 @@ function* postCreateNewComment({
     const post = newAllPosts[postId] || {};
     const newReactionCount = post.reaction_counts || {};
     newReactionCount.comment_count = (newReactionCount.comment_count || 0) + 1;
+    newReactionCount.comment =
+      !!preComment && !!parentCommentId
+        ? newReactionCount.comment
+        : newReactionCount.comment + 1;
     post.reaction_counts = {...newReactionCount};
     newAllPosts[postId] = post;
     yield put(postActions.setAllPosts(newAllPosts));
@@ -1185,7 +1191,7 @@ function* getCommentsByPostId({
   type: string;
   payload: IPayloadGetCommentsById;
 }): any {
-  const {postId, commentId, isMerge, callbackLoading} = payload || {};
+  const {postId, commentId, isMerge, callbackLoading, position} = payload || {};
   try {
     callbackLoading?.(true);
     const response = yield call(postDataHelper.getCommentsByPostId, payload);
@@ -1200,6 +1206,9 @@ function* getCommentsByPostId({
           childComments: newList,
         });
         yield put(postActions.addToAllComments(newList));
+        yield put(
+          postActions.setScrollCommentsPosition({position: position || 'top'}),
+        );
       } else {
         //get comment of post
         const payload = {id: postId, comments: newList, isMerge};

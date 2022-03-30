@@ -267,6 +267,10 @@ const postActions = {
     type: postTypes.DELETE_COMMENT,
     payload,
   }),
+  setScrollCommentsPosition: (payload: null | {position?: string}) => ({
+    type: postTypes.SET_SCROLL_TO_COMMENTS_POSITION,
+    payload,
+  }),
 };
 
 export default postActions;

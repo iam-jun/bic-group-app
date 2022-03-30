@@ -223,6 +223,7 @@ export interface IRequestGetPostComment {
 export interface IPayloadGetCommentsById extends IRequestGetPostComment {
   isMerge: boolean;
   callbackLoading?: (loading: boolean, canLoadMore?: boolean) => void;
+  position?: string;
 }
 
 export interface IReaction {
