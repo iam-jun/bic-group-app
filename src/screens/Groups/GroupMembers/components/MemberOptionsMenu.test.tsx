@@ -12,6 +12,7 @@ import MemberOptionsMenu from './MemberOptionsMenu';
 import initialState from '~/store/initialState';
 import {IGroupMembers} from '~/interfaces/IGroup';
 import useRemoveMember from './useRemoveMember';
+import useRemoveAdmin from './useRemoveAdmin';
 
 describe('MemberOptionsMenu component', () => {
   const baseSheetRef = jest.fn();
@@ -158,5 +159,85 @@ describe('MemberOptionsMenu component', () => {
       );
     });
     expect(pressResult).toBe(1);
+  });
+
+  it('should render Remove admin option correctly', () => {
+    const state = {...initialState};
+    state.groups.groupDetail.can_setting = true;
+    const store = createTestStore(state);
+
+    const selectedMember = {
+      id: 1,
+      roles: [{type: 'GROUP_ADMIN'}],
+    } as IGroupMembers;
+
+    const {getByTestId} = renderWithRedux(
+      <MemberOptionsMenu
+        groupId={groupId}
+        modalizeRef={baseSheetRef}
+        selectedMember={selectedMember}
+        onOptionsClosed={onOptionsClosed}
+      />,
+      store,
+    );
+
+    const item = getByTestId('member_options_menu.remove_admin');
+    expect(item).toBeDefined();
+  });
+
+  it('should dispatch alertRemovingAdmin correctly', () => {
+    const state = {...initialState};
+    state.groups.groupDetail.can_setting = true;
+    state.groups.groupMember = {
+      group_admin: {user_count: 2},
+    };
+    const store = createTestStore(state);
+
+    const selectedMember = {
+      id: 1,
+      roles: [{type: 'GROUP_ADMIN'}],
+    } as IGroupMembers;
+
+    const {getByTestId} = renderWithRedux(
+      <MemberOptionsMenu
+        groupId={groupId}
+        modalizeRef={baseSheetRef}
+        selectedMember={selectedMember}
+        onOptionsClosed={onOptionsClosed}
+      />,
+      store,
+    );
+
+    const item = getByTestId('member_options_menu.remove_admin');
+    expect(item).toBeDefined();
+    fireEvent.press(item);
+  });
+
+  it('should dispatch alert last admin error correctly', () => {
+    const state = {...initialState};
+    state.groups.groupDetail.can_setting = true;
+    state.groups.groupMember = {
+      group_admin: {user_count: 1},
+    };
+    const store = createTestStore(state);
+
+    const selectedMember = {
+      id: 1,
+      roles: [{type: 'GROUP_ADMIN'}],
+    } as IGroupMembers;
+
+    const {getByTestId} = renderWithRedux(
+      <MemberOptionsMenu
+        groupId={groupId}
+        modalizeRef={baseSheetRef}
+        selectedMember={selectedMember}
+        onOptionsClosed={onOptionsClosed}
+      />,
+      store,
+    );
+
+    const item = getByTestId('member_options_menu.remove_admin');
+    expect(item).toBeDefined();
+    fireEvent.press(item);
   });
 });
