@@ -133,3 +133,34 @@ export const alertLeaveGroup = async (
 
   return testingInnerGroupCount;
 };
+
+export const handleLeaveInnerGroups = async (
+  groupId: number,
+  username: string,
+  dispatch: any,
+  callback: (innerGroups: any) => void,
+) => {
+  let testingFlag = false; // for testing purpose
+
+  // Get inner groups info (if any) when user leave/being removed from a group
+  try {
+    const resp = await groupsDataHelper.getUserInnerGroups(groupId, username);
+    const innerGroups = resp.data.inner_groups.map(
+      (group: IGroup) => group.name,
+    );
+    testingFlag = true;
+    callback(innerGroups);
+  } catch (err: any) {
+    console.error('Error while fetching user inner groups', err);
+    dispatch(
+      modalActions.showHideToastMessage({
+        content:
+          err?.meta?.errors?.[0]?.message ||
+          err?.meta?.message ||
+          'common:text_error_message',
+        props: {textProps: {useI18n: true}, type: 'error'},
+      }),
+    );
+  }
+  return testingFlag;
+};
