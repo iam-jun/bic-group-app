@@ -9,7 +9,7 @@ import BottomSheet from '~/beinComponents/BottomSheet';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 
-import {IGroup, IGroupMemberRole, IGroupMembers} from '~/interfaces/IGroup';
+import {IGroupMemberRole, IGroupMembers} from '~/interfaces/IGroup';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import {ITheme} from '~/theme/interfaces';
@@ -18,12 +18,18 @@ import modalActions from '~/store/modal/actions';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupsActions from '../../redux/actions';
-import groupsDataHelper from '../../helper/GroupsDataHelper';
+import {
+  alertLeaveGroup,
+  checkLastAdmin,
+  handleLeaveInnerGroups,
+} from '../../helper';
+import useRemoveMember from './useRemoveMember';
+import useRemoveAdmin from './useRemoveAdmin';
 
 interface MemberOptionsMenuProps {
   groupId: number;
   modalizeRef: any;
-  selectedMember?: IGroupMembers;
+  selectedMember: IGroupMembers;
   onOptionsClosed: () => void;
 }
 
@@ -43,6 +49,12 @@ const MemberOptionsMenu = ({
     groupsKeySelector.groupDetail.can_manage_member,
   );
   const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
+  const groupMember = useKeySelector(groupsKeySelector.groupMember);
+  const {getInnerGroupsNames} = useRemoveMember({
+    groupId,
+    selectedMember,
+  });
+  const alertRemovingAdmin = useRemoveAdmin({groupId, selectedMember});
 
   const onPressMenuOption = (
     type:
@@ -62,10 +74,10 @@ const MemberOptionsMenu = ({
         alertSettingAdmin(selectedMember);
         break;
       case 'remove-admin':
-        onPressRemoveAdmin(selectedMember);
+        onPressRemoveAdmin();
         break;
       case 'remove-member':
-        alertRemovingMember(selectedMember);
+        onPressRemoveMember(selectedMember);
         break;
       case 'leave-group':
         onPressLeave();
@@ -77,7 +89,7 @@ const MemberOptionsMenu = ({
   };
 
   const goToUserProfile = (selectedMember?: IGroupMembers) => {
-    if (selectedMember) {
+    if (selectedMember?.id) {
       rootNavigation.navigate(mainStack.userProfile, {
         userId: selectedMember.id,
       });
@@ -113,256 +125,102 @@ const MemberOptionsMenu = ({
   };
 
   const doSetAdmin = (selectedMember: IGroupMembers) => {
-    dispatch(
-      groupsActions.setGroupAdmin({groupId, userIds: [selectedMember.id]}),
-    );
+    selectedMember?.id &&
+      dispatch(
+        groupsActions.setGroupAdmin({groupId, userIds: [selectedMember.id]}),
+      );
   };
 
-  const onPressRemoveAdmin = (selectedMember?: IGroupMembers) => {
-    if (selectedMember) {
-      // check if the current user is the last admin before revoking admin
-      if (can_setting)
-        return checkLastAdmin('remove', () =>
-          alertRemovingAdmin(selectedMember),
+  const onPressRemoveAdmin = () => {
+    if (selectedMember?.id) {
+      const adminCount = groupMember?.group_admin?.user_count;
+      if (adminCount > 1) {
+        alertRemovingAdmin();
+      } else {
+        dispatch(
+          modalActions.showHideToastMessage({
+            content: 'groups:error:last_admin_remove',
+            props: {
+              type: 'error',
+              textProps: {useI18n: true},
+              rightIcon: 'UsersAlt',
+              rightText: 'Members',
+              onPressRight: onPressMemberButton,
+            },
+            toastType: 'normal',
+          }),
         );
-      alertRemovingAdmin(selectedMember);
+      }
     }
-  };
-
-  const alertRemovingAdmin = (selectedMember: IGroupMembers) => {
-    const alertPayload = {
-      iconName: 'StarHalfAlt',
-      title: i18next.t('groups:modal_confirm_remove_admin:title'),
-      content: i18next.t('groups:modal_confirm_remove_admin:description'),
-      ContentComponent: Text.BodyS,
-      cancelBtn: true,
-      cancelBtnProps: {
-        textColor: theme.colors.primary7,
-      },
-      onConfirm: () => doRemoveAdmin(selectedMember),
-      confirmLabel: i18next.t(
-        'groups:modal_confirm_remove_admin:button_confirm',
-      ),
-      ConfirmBtnComponent: Button.Danger,
-    };
-    alertPayload.content = alertPayload.content.replace(
-      '{0}',
-      `"${selectedMember?.fullname}"`,
-    );
-    dispatch(modalActions.showAlert(alertPayload));
-  };
-
-  const doRemoveAdmin = (selectedMember: IGroupMembers) => {
-    dispatch(
-      groupsActions.removeGroupAdmin({groupId, userId: selectedMember?.id}),
-    );
   };
 
   const onPressMemberButton = () => {
     dispatch(modalActions.clearToastMessage());
   };
 
-  const checkLastAdmin = (type: string, callback: () => void) => {
-    groupsDataHelper
-      .getGroupMembers(groupId, {offset: 0, limit: 1})
-      .then(data => {
-        const adminCount = data?.group_admin?.user_count;
-        if (adminCount > 1) {
-          callback();
-        } else {
-          dispatch(
-            modalActions.showHideToastMessage({
-              content: `groups:error:last_admin_${type}`,
-              props: {
-                type: 'error',
-                textProps: {useI18n: true},
-                rightIcon: 'UsersAlt',
-                rightText: 'Members',
-                onPressRight: onPressMemberButton,
-              },
-              toastType: 'normal',
-            }),
-          );
-        }
-      })
-      .catch(err => {
-        console.error('[ERROR] error while fetching group members', err);
-        dispatch(
-          modalActions.showHideToastMessage({
-            content: 'error:http:unknown',
-            props: {textProps: {useI18n: true}, type: 'error'},
-          }),
-        );
-      });
-  };
-
-  const alertRemovingMember = (selectedMember?: IGroupMembers) => {
-    if (!selectedMember) {
-      dispatch(
-        modalActions.showHideToastMessage({
-          content: 'No member selected',
-          props: {type: 'error'},
-        }),
+  const onPressRemoveMember = (selectedMember: IGroupMembers) => {
+    if (selectedMember?.id)
+      return checkLastAdmin(
+        groupId,
+        selectedMember.id,
+        dispatch,
+        () => alertRemovingMember(selectedMember),
+        onPressMemberButton,
+        'remove',
       );
-      return;
-    }
+  };
 
-    const {id: userId, fullname, username} = selectedMember;
-
-    const content = i18next
-      .t(`groups:modal_confirm_remove_member:final_alert`)
-      .replace('{name}', `"${fullname}"`);
-
-    const alertPayload = {
-      iconName: 'RemoveUser',
-      title: i18next.t('groups:modal_confirm_remove_member:title'),
-      content: content,
-      ContentComponent: Text.BodyS,
-      cancelBtn: true,
-      cancelBtnProps: {
-        textColor: theme.colors.primary7,
-      },
-      onConfirm: () => removeMember(userId, fullname),
-      confirmLabel: i18next.t(
-        'groups:modal_confirm_remove_member:button_remove',
-      ),
-      ConfirmBtnComponent: Button.Danger,
-      children: null as React.ReactNode,
-    };
-
-    const renderAlertInnerGroups = (innerGroups: string[]) => {
-      if (innerGroups.length === 0) return null;
-
-      const count = innerGroups.length;
-      let message = i18next
-        .t('groups:modal_confirm_remove_member:alert_inner_groups')
-        .replace('{0}', `${count}`);
-
-      if (count === 1)
-        message = message.replace(
-          '1 other inner groups',
-          'another inner group',
-        );
-
-      const first3groups = innerGroups.slice(0, 3);
-      const groupsList = () => (
-        <View style={styles.alertRemoveGroupsList}>
-          {first3groups.map((name, index) => (
-            <Text.BodyM key={index} style={styles.alertRemoveGroupsListItem}>
-              • {name}
-            </Text.BodyM>
-          ))}
-          {count > 3 && <Text.BodyS>...</Text.BodyS>}
-        </View>
+  const alertRemovingMember = (selectedMember: IGroupMembers) => {
+    selectedMember?.username &&
+      handleLeaveInnerGroups(
+        groupId,
+        selectedMember.username,
+        dispatch,
+        getAlertPayloadWithInnerGroups,
       );
-
-      return (
-        <>
-          <Text.BodyS>{message}</Text.BodyS>
-          {groupsList()}
-        </>
-      );
-    };
-
-    const getInnerGroupsNames = (innerGroups: any) => {
-      const groupsRemovedFrom = [...innerGroups];
-
-      if (groupsRemovedFrom.length === 0) {
-        alertPayload.content = alertPayload.content.replace(
-          '{other groups}',
-          '',
-        );
-      } else {
-        const otherGroups = groupsRemovedFromToString(groupsRemovedFrom);
-        alertPayload.content = alertPayload.content.replace(
-          '{other groups}',
-          ` and ${otherGroups}`,
-        );
-        alertPayload.children = renderAlertInnerGroups(innerGroups);
-      }
-
-      dispatch(modalActions.showAlert(alertPayload));
-    };
-
-    handleLeaveInnerGroups(username, getInnerGroupsNames);
   };
 
-  const removeMember = (userId: number, userFullname: string) => {
-    dispatch(groupsActions.removeMember({groupId, userId, userFullname}));
+  const getAlertPayloadWithInnerGroups = (innerGroups: any) => {
+    getInnerGroupsNames(innerGroups, renderInnerGroupsAlert);
   };
 
-  const groupsRemovedFromToString = (groupList: string[]) => {
-    if (groupList.length === 1) {
-      return groupList[0];
-    }
+  const renderInnerGroupsAlert = (message: string, innerGroups: string[]) => {
+    const first3groups = innerGroups.slice(0, 3);
+    const count = innerGroups.length;
 
-    return `${groupList.length} other inner groups: ${groupList.join(', ')}`;
+    const groupsList = () => (
+      <View style={styles.alertRemoveGroupsList}>
+        {first3groups.map((name, index) => (
+          <Text.BodyM key={index} style={styles.alertRemoveGroupsListItem}>
+            • {name}
+          </Text.BodyM>
+        ))}
+        {count > 3 && <Text.BodyS>...</Text.BodyS>}
+      </View>
+    );
+
+    return (
+      <>
+        <Text.BodyS>{message}</Text.BodyS>
+        {groupsList()}
+      </>
+    );
   };
 
-  const handleLeaveInnerGroups = (
-    username: string,
-    callback: (innerGroups: any) => void,
-  ) => {
-    // Get inner groups info (if any) when user leave/being removed from a group
-    groupsDataHelper
-      .getUserInnerGroups(groupId, username)
-      .then(res => {
-        const innerGroups = res.data.inner_groups.map(
-          (group: IGroup) => group.name,
-        );
-        callback(innerGroups);
-      })
-      .catch(err => {
-        console.error('Error while fetching user inner groups', err);
-        dispatch(
-          modalActions.showHideToastMessage({
-            content: 'error:http:unknown',
-            props: {textProps: {useI18n: true}, type: 'error'},
-          }),
-        );
-      });
-  };
+  const onAlertLeaveGroup = () =>
+    alertLeaveGroup(groupId, dispatch, user.username, theme, doLeaveGroup);
 
   const onPressLeave = () => {
     // check if the current user is the last admin before leaving group
-    if (can_setting) return checkLastAdmin('leave', alertLeaveGroup);
-    alertLeaveGroup();
-  };
-
-  const alertLeaveGroup = () => {
-    const alertPayload = {
-      iconName: 'SignOutAlt',
-      title: i18next.t('groups:modal_confirm_leave_group:title'),
-      content: i18next.t('groups:modal_confirm_leave_group:description'),
-      ContentComponent: Text.BodyS,
-      cancelBtn: true,
-      cancelBtnProps: {
-        textColor: theme.colors.primary7,
-      },
-      onConfirm: () => doLeaveGroup(),
-      confirmLabel: i18next.t('groups:modal_confirm_leave_group:button_leave'),
-      ConfirmBtnComponent: Button.Danger,
-    };
-
-    const getInnerGroupsNames = (innerGroups: any) => {
-      if (innerGroups.length > 0) {
-        alertPayload.content =
-          alertPayload.content +
-          ` ${i18next.t(
-            'groups:modal_confirm_leave_group:leave_inner_groups',
-          )}`;
-
-        const groupsLeaveToString = innerGroups.join(', ');
-        alertPayload.content = alertPayload.content.replace(
-          '{0}',
-          groupsLeaveToString,
-        );
-      }
-
-      dispatch(modalActions.showAlert(alertPayload));
-    };
-
-    handleLeaveInnerGroups(user.username, getInnerGroupsNames);
+    if (selectedMember?.id) {
+      return checkLastAdmin(
+        groupId,
+        selectedMember.id,
+        dispatch,
+        onAlertLeaveGroup,
+        onPressMemberButton,
+      );
+    }
   };
 
   const doLeaveGroup = () => {
@@ -378,7 +236,7 @@ const MemberOptionsMenu = ({
   return (
     <BottomSheet
       modalizeRef={modalizeRef}
-      onClosed={onOptionsClosed}
+      onClose={onOptionsClosed}
       ContentComponent={
         <View style={styles.bottomSheet}>
           <PrimaryItem
@@ -436,6 +294,7 @@ const MemberOptionsMenu = ({
           )}
           {selectedMember?.username === user?.username && (
             <PrimaryItem
+              testID="member_options_menu.leave_group"
               style={styles.menuOption}
               leftIcon={'SignOutAlt'}
               leftIconProps={{icon: 'SignOutAlt', size: 24}}

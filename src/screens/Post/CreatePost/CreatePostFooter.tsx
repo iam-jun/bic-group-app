@@ -4,7 +4,7 @@ import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 
-import PostToolbar from '~/beinComponents/BottomSheet/PostToolbar';
+import PostToolbar from '~/screens/Post/components/PostToolbar';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import Div from '~/beinComponents/Div';
 import Animated, {
@@ -16,11 +16,13 @@ import Animated, {
 export interface CreatePostFooterProps {
   toolbarModalizeRef?: any;
   loading?: boolean;
+  onPressBack?: () => void;
 }
 
 const CreatePostFooter: FC<CreatePostFooterProps> = ({
   toolbarModalizeRef,
   loading,
+  onPressBack,
 }: CreatePostFooterProps) => {
   const showMentionValue = useSharedValue(0);
 
@@ -44,7 +46,11 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
 
   return (
     <Div className="post-toolbar-container">
-      <PostToolbar modalizeRef={toolbarModalizeRef} disabled={loading} />
+      <PostToolbar
+        modalizeRef={toolbarModalizeRef}
+        disabled={loading}
+        onPressBack={onPressBack}
+      />
       {Platform.OS !== 'web' && (
         <Animated.View
           testID={'create_post_footer.mention_bar_container'}

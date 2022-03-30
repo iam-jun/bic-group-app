@@ -19,11 +19,12 @@ import {useRootNavigation} from '~/hooks/navigation';
 import * as modalActions from '~/store/modal/actions';
 
 import {useBaseHook} from '~/hooks';
-import {useCreatePost} from '~/hooks/post';
 import {formatDate} from '~/utils/formatData';
 import {isEqual} from 'lodash';
 
 import {IActivityImportant} from '~/interfaces/IPost';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 const MAX_DAYS = 7;
 
@@ -35,8 +36,9 @@ const PostSettings = () => {
   const {colors, spacing} = theme;
 
   const styles = createStyle(theme);
-  const createPostData = useCreatePost();
-  const {important, currentSettings} = createPostData || {};
+  const {important, currentSettings} = useKeySelector(
+    postKeySelector.createPost.all,
+  );
 
   const [selectingDate, setSelectingDate] = useState<boolean>();
   const [selectingTime, setSelectingTime] = useState<boolean>();

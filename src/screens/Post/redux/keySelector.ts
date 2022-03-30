@@ -5,10 +5,12 @@ const postKeySelector = {
     image: 'post.createComment.image',
   },
   createPost: {
+    all: 'post.createPost',
     images: 'post.createPost.images',
     imagesDraft: 'post.createPost.imagesDraft',
     initAudiences: 'post.createPost.initAudiences',
     chosenAudiences: 'post.createPost.chosenAudiences',
+    content: 'post.createPost.data.content',
   },
   reactionBottomSheet: 'post.reactionBottomSheet',
   replyingComment: 'post.replyingComment',
@@ -41,6 +43,8 @@ const postKeySelector = {
   commentsByParentId: (id: string) => `post.allCommentsByParentIds.${id}`,
   commentById: (id?: string) => `post.allComments.${id}`,
   scrollToLatestItem: 'post.scrollToLatestItem',
+  postSelectAudienceState: 'post.postSelectAudienceState',
+  scrollToCommentsPosition: 'post.scrollToCommentsPosition',
 };
 
 export default postKeySelector;

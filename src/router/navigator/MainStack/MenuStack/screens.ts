@@ -11,6 +11,7 @@ import CreatePost from '~/screens/Post/CreatePost';
 import CreateComment from '~/screens/Post/CreateComment';
 import UserProfile from '~/screens/Menu/UserProfile';
 import PostSettings from '~/screens/Post/PostSettings';
+import CommentDetail from '~/screens/Post/CommentDetail';
 
 export default {
   menu: Menu,
@@ -28,4 +29,5 @@ export default {
   'post-detail': PostDetail,
   'draft-post': DraftPost,
   'post-settings': PostSettings,
+  'comment-detail': CommentDetail,
 };

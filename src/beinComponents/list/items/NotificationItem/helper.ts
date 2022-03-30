@@ -64,7 +64,7 @@ export const sliceText = (text: string, maxChars = 20) => {
 // process a text, strip markdown, cut the text off
 export const processNotiBody = (text: string) => {
   text = text.trim();
-  text = sliceText(text);
+  // text = sliceText(text); //use number of line = 1
   return text;
 };
 

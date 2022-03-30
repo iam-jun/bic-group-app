@@ -8,6 +8,7 @@ const mainTabStack = {
   'post-detail': 'post-detail',
   'draft-post': 'draft-post',
   'post-settings': 'post-settings',
+  'comment-detail': 'comment-detail',
 
   //GROUP
   // 'group-list': Groups,
@@ -32,7 +33,6 @@ const mainTabStack = {
   'change-password': 'change-password',
   'edit-basic-info': 'edit-basic-info',
   'edit-contact': 'edit-contact',
-  'edit-email': 'edit-email',
   'add-work': 'add-work',
   'edit-description': 'edit-description',
 

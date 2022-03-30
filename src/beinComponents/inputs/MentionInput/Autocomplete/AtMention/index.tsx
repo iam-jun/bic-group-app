@@ -1,4 +1,4 @@
-import {isEmpty} from 'lodash';
+import {debounce, isEmpty} from 'lodash';
 import React, {useEffect, useRef} from 'react';
 import {
   ActivityIndicator,
@@ -63,14 +63,13 @@ const AtMention = ({
     };
   }, [data, highlightIndex]);
 
-  const onCursorPositionChange = ({
-    position,
-    value,
-    groupIds,
-  }: ICursorPositionChange) => {
-    text.current = value;
-    checkRunSearch(value.substring(0, position), groupIds, dispatch);
-  };
+  const onCursorPositionChange = debounce(
+    ({position, value, groupIds}: ICursorPositionChange) => {
+      text.current = value;
+      checkRunSearch(value.substring(0, position), groupIds, dispatch);
+    },
+    100,
+  );
 
   const _completeMention = (item: any) => {
     completeMention({item, dispatch, text: text.current, cursorPosition});
@@ -166,4 +165,3 @@ const createStyles = (theme: ITheme) => {
 };
 
 export default AtMention;
-``;

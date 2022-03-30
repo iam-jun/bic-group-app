@@ -7,9 +7,11 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
       "backgroundColor": "#FFFFFF",
     }
   }
+  testID="group_info_header"
 >
   <View
     onLayout={[Function]}
+    testID="group_info_header.cover"
   >
     <View
       onLayout={[Function]}
@@ -209,6 +211,7 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
                 "fontSize": 20,
               }
             }
+            testID="group_info_header.name"
           />
           <View
             style={
@@ -357,6 +360,7 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
                   "fontSize": 12,
                 }
               }
+              testID="group_info_header.privacy"
             />
             <Text
               style={
@@ -377,6 +381,7 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
                   "fontSize": 14,
                 }
               }
+              testID="group_info_header.member_count"
             />
             <Text
               style={

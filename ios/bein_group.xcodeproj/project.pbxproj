@@ -80,6 +80,9 @@
 		E3A040382784264F0092D778 /* OpenSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-SemiBold.ttf"; path = "../assets/fonts/OpenSans-SemiBold.ttf"; sourceTree = "<group>"; };
 		E3A040392784264F0092D778 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-Regular.ttf"; path = "../assets/fonts/OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		E3A0403A2784264F0092D778 /* OpenSans-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "OpenSans-SemiBoldItalic.ttf"; path = "../assets/fonts/OpenSans-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		E3E9B14E27F1B28200519C41 /* bein_groupReleaseStaging.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = bein_groupReleaseStaging.entitlements; path = bein_group/bein_groupReleaseStaging.entitlements; sourceTree = "<group>"; };
+		E3E9B14F27F1B29F00519C41 /* bein_groupRelease.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = bein_groupRelease.entitlements; path = bein_group/bein_groupRelease.entitlements; sourceTree = "<group>"; };
+		E3E9B15027F1B2A900519C41 /* bein_groupDebugStaging.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = bein_groupDebugStaging.entitlements; path = bein_group/bein_groupDebugStaging.entitlements; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EF9FB8E4149A4EC198CDD8D1 /* SVN-PoppinsSemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-PoppinsSemiBold.otf"; path = "../assets/fonts/SVN-PoppinsSemiBold.otf"; sourceTree = "<group>"; };
 		F75B3B9A54F552F1948432DA /* Pods-bein_group-bein_groupTests.debugstaging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bein_group-bein_groupTests.debugstaging.xcconfig"; path = "Target Support Files/Pods-bein_group-bein_groupTests/Pods-bein_group-bein_groupTests.debugstaging.xcconfig"; sourceTree = "<group>"; };
@@ -125,6 +128,9 @@
 		13B07FAE1A68108700A75B9A /* bein_group */ = {
 			isa = PBXGroup;
 			children = (
+				E3E9B15027F1B2A900519C41 /* bein_groupDebugStaging.entitlements */,
+				E3E9B14F27F1B29F00519C41 /* bein_groupRelease.entitlements */,
+				E3E9B14E27F1B28200519C41 /* bein_groupReleaseStaging.entitlements */,
 				1B685C9A26B86C7900CA4CEA /* bein_group.entitlements */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -639,8 +645,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BEIN_APP_NAME = Bein;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = bein_group/bein_group.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_ENTITLEMENTS = bein_group/bein_groupRelease.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
@@ -737,7 +743,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BEIN_APP_NAME = "Bein Staging";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = bein_group/bein_group.entitlements;
+				CODE_SIGN_ENTITLEMENTS = bein_group/bein_groupDebugStaging.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 52;
@@ -857,8 +863,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				BEIN_APP_NAME = "Bein Staging";
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = bein_group/bein_group.entitlements;
-				CODE_SIGN_IDENTITY = "Apple Distribution";
+				CODE_SIGN_ENTITLEMENTS = bein_group/bein_groupReleaseStaging.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;

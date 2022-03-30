@@ -14,6 +14,7 @@ export const hideBottomTabRoutes = [
   'create-comment',
   'comment-view',
   'add-members',
+  'comment-detail',
   //Setting: Account setting, Edit account, Security, Privacy
   'user-edit',
   'user-profile',
@@ -107,7 +108,6 @@ export const appScreens = {
   settingChangePassword: 'change-password',
   settingEditBasicInfo: 'edit-basic-info',
   settingEditContact: 'edit-contact',
-  settingEditEmail: 'edit-email',
   userProfile: 'user-profile',
   settingCreateWork: 'add-work',
   settingEditDescription: 'edit-description',
@@ -399,9 +399,6 @@ export const linkingConfigFullLaptop = {
               },
               'edit-contact': {
                 path: 'settings/account/edit-contact',
-              },
-              'edit-email': {
-                path: 'settings/account/edit-email',
               },
               'edit-location': {
                 path: 'settings/account/edit-location',

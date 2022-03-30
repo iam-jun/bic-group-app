@@ -96,14 +96,16 @@ const LanguageOptionMenu = ({
     );
   };
 
-  const renderItem = ({item}: {item: ILanguageItem}) => {
+  const renderItem = ({item, index}: {item: ILanguageItem; index: number}) => {
     return (
       <PrimaryItem
-        testID="language_option_menu.checkbox"
         title={i18next.t(item.fullName)}
         height={36}
         isChecked={item.selected}
-        checkboxProps={{testID: 'language_option_menu.checkbox'}}
+        checkboxProps={{
+          testID: 'language_option_menu.checkbox',
+          checkboxTestID: `language_option_menu.checkbox.item_${index}`,
+        }}
         onPressCheckbox={() => onSelectItem(item)}
       />
     );
@@ -150,9 +152,9 @@ const LanguageOptionMenu = ({
             <ScrollView
               keyboardShouldPersistTaps="always"
               showsVerticalScrollIndicator={false}>
-              {(languages || []).map((item: ILanguageItem) => (
+              {(languages || []).map((item: ILanguageItem, index: number) => (
                 <View key={item?.code + item?.fullName}>
-                  {renderItem({item})}
+                  {renderItem({item, index})}
                 </View>
               ))}
             </ScrollView>

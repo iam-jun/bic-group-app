@@ -145,6 +145,7 @@ export interface IPayloadCreateComment {
     parentCommentId?: string;
   };
   onSuccess?: () => void;
+  isCommentLevel1Screen?: boolean;
 }
 
 export interface IPayloadPutEditPost {
@@ -175,6 +176,7 @@ export interface IParamGetPostDetail {
   with_own_children?: boolean;
   with_recent_reactions?: boolean;
   with_reaction_counts?: boolean;
+  recent_reactions_limit?: number;
 }
 
 export interface IParamPutEditPost {
@@ -221,6 +223,7 @@ export interface IRequestGetPostComment {
 export interface IPayloadGetCommentsById extends IRequestGetPostComment {
   isMerge: boolean;
   callbackLoading?: (loading: boolean, canLoadMore?: boolean) => void;
+  position?: string;
 }
 
 export interface IReaction {

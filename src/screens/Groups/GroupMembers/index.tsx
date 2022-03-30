@@ -138,7 +138,7 @@ const _GroupMembers = (props: any) => {
   };
 
   const renderItem = ({item}: {item: IGroupMembers}) => {
-    const {fullname, avatar} = item || {};
+    const {fullname, avatar, username} = item || {};
 
     return (
       <PrimaryItem
@@ -146,7 +146,15 @@ const _GroupMembers = (props: any) => {
         menuIconTestID={'group_members.item'}
         style={styles.itemContainer}
         avatar={avatar || images.img_user_avatar_default}
-        title={fullname}
+        ContentComponent={
+          <Text.H6 numberOfLines={2}>
+            {fullname}
+            <Text.Subtitle
+              color={
+                theme.colors.textSecondary
+              }>{` @${username}`}</Text.Subtitle>
+          </Text.H6>
+        }
         onPressMenu={(e: any) => onPressMenu(e, item)}
       />
     );
@@ -266,7 +274,7 @@ const _GroupMembers = (props: any) => {
       <MemberOptionsMenu
         groupId={groupId}
         modalizeRef={baseSheetRef}
-        selectedMember={selectedMember}
+        selectedMember={selectedMember || {}}
         onOptionsClosed={clearSelectedMember}
       />
     </ScreenWrapper>

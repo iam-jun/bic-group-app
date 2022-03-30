@@ -2,6 +2,7 @@ import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {Controller, useForm} from 'react-hook-form';
 import {
+  AppState,
   Image,
   Keyboard,
   Platform,
@@ -33,7 +34,11 @@ import * as modalActions from '~/store/modal/actions';
 // import SignInOAuth from '../components/SignInOAuth';
 import {ITheme} from '~/theme/interfaces';
 import actions from '../redux/actions';
-import {getUserFromSharedPreferences} from '~/services/sharePreferences';
+import {
+  getUserFromSharedPreferences,
+  isAppInstalled,
+} from '~/services/sharePreferences';
+import {getUserEmailFromChatCookie} from '~/utils/cookie';
 
 const SignIn = () => {
   useAuthAmplifyHub();
@@ -68,6 +73,22 @@ const SignIn = () => {
     dispatch(actions.setSigningInError(''));
     checkDisableSignIn();
     setDisableSignIn(true);
+
+    const appStateChangeEvent = AppState.addEventListener(
+      'change',
+      checkAuthSessions,
+    );
+
+    if (isWeb) {
+      document.addEventListener('visibilitychange', checkAuthSessions);
+    }
+
+    return () => {
+      appStateChangeEvent.remove();
+      if (isWeb) {
+        document.removeEventListener('visibilitychange', checkAuthSessions);
+      }
+    };
   }, []);
 
   useEffect(() => {
@@ -91,9 +112,28 @@ const SignIn = () => {
   }, [signingInError]);
 
   const checkAuthSessions = async () => {
-    const user = await getUserFromSharedPreferences();
-    setValue('email', user?.email);
-    setAuthSessions(user);
+    if (isWeb) {
+      checkChatWebLogin();
+      return;
+    }
+
+    const isInstalled = await isAppInstalled();
+    if (isInstalled) {
+      const user = await getUserFromSharedPreferences();
+      setValue('email', user?.email);
+      setAuthSessions(user);
+    } else {
+      setValue('email', '');
+      setAuthSessions(null);
+    }
+  };
+
+  const checkChatWebLogin = () => {
+    const userEmail = getUserEmailFromChatCookie();
+    setValue('email', userEmail);
+
+    const newAuthSessions = userEmail === '' ? {} : {email: userEmail};
+    setAuthSessions(newAuthSessions);
   };
 
   const clearAllErrors = () => {
@@ -149,27 +189,36 @@ const SignIn = () => {
     dispatch(modalActions.showAlertNewFeature());
   };
 
+  const hideKeyboard = () => {
+    !isWeb && Keyboard.dismiss();
+  };
+
+  const goToForgotPassword = () =>
+    navigation.navigate(authStack.forgotPassword);
+
   return (
-    <ScreenWrapper testID="SignInScreen" style={styles.root} isFullView>
+    <ScreenWrapper testID="sign_in" style={styles.root} isFullView>
       <TouchableWithoutFeedback
-        onPress={() => Platform.OS !== 'web' && Keyboard.dismiss()}
+        testID="sign_in.button_hide_keyboard"
+        onPress={hideKeyboard}
         accessible={false}
-        style={{flex: 1}}>
+        style={styles.flex1}>
         <View style={styles.container}>
           <View>
             <Image
+              testID="sign_in.logo"
               resizeMode="contain"
               style={styles.logo}
               source={images.logo_bein}
             />
-            <Text.H6 style={styles.title} useI18n>
+            <Text.H6 testID="sign_in.title" style={styles.title} useI18n>
               auth:text_sign_in_desc
             </Text.H6>
             <Controller
               control={control}
               render={({field: {onChange, value}}) => (
                 <Input
-                  testID="inputEmail"
+                  testID="sign_in.input_email"
                   label={
                     !isWeb && !loading ? t('auth:input_label_email') : undefined
                   }
@@ -209,7 +258,7 @@ const SignIn = () => {
               control={control}
               render={({field: {onChange, value}}) => (
                 <PasswordInput
-                  testID="inputPassword"
+                  testID="sign_in.input_password"
                   ref={inputPasswordRef}
                   label={
                     !isWeb && !loading
@@ -245,20 +294,24 @@ const SignIn = () => {
             />
             <View style={styles.forgotButton}>
               <TouchableOpacity
-                testID="btnSignInForgotPassword"
-                onPress={() => navigation.navigate(authStack.forgotPassword)}>
+                testID="sign_in.btn_forgot_password"
+                onPress={goToForgotPassword}>
                 <Text.H6 style={styles.transparentButton} useI18n>
                   auth:btn_forgot_password
                 </Text.H6>
               </TouchableOpacity>
             </View>
             <Button.Primary
-              testID="btnLogin"
+              testID="sign_in.btn_login"
               style={styles.btnSignIn}
               disabled={disableSignIn}
               onPress={onSignIn}
               useI18n>
-              {loading ? <LoadingIndicator /> : 'auth:btn_sign_in'}
+              {loading ? (
+                <LoadingIndicator testID="sign_in.loading" />
+              ) : (
+                'auth:btn_sign_in'
+              )}
             </Button.Primary>
           </View>
           {/*<Text.H5 style={styles.orText} useI18n>auth:text_or</Text.H5>*/}
@@ -305,6 +358,7 @@ const themeStyles = (theme: ITheme) => {
         },
       }),
     },
+    flex1: {flex: 1},
     logo: {
       alignSelf: 'center',
       width: 64,

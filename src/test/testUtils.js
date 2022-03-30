@@ -1,15 +1,20 @@
 import React from 'react';
-import {render, cleanup, fireEvent} from '@testing-library/react-native';
+import {act, render, cleanup, fireEvent} from '@testing-library/react-native';
+import {renderHook} from '@testing-library/react-hooks';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 import initialState from '~/store/initialState';
-import {act} from 'react-test-renderer';
 import {
   withReanimatedTimer,
   advanceAnimationByTime,
   advanceAnimationByFrame,
   getAnimatedStyle,
 } from 'react-native-reanimated/src/reanimated2/jestUtils';
+import Store from '~/store';
+
+import {applyMiddleware, compose, createStore} from 'redux';
+import createSagaMiddleware from 'redux-saga';
+import {appReducer} from '~/store/reducers';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const languages = require('~/localization/en.json');
@@ -17,9 +22,25 @@ const languages = require('~/localization/en.json');
 const mockStore = configureStore([]);
 const defaultStore = mockStore(initialState);
 
-export function renderWithRedux(component, store = defaultStore) {
+function createTestStore(state = initialState) {
+  const sagaMiddleware = createSagaMiddleware();
+  const enhancer = compose(applyMiddleware(sagaMiddleware));
+  return createStore(appReducer, state, enhancer);
+  // return Store.store;
+}
+
+export function renderWithRedux(component, store = createTestStore()) {
   return render(<Provider store={store}>{component}</Provider>);
 }
+
+const waitForUpdateRedux = (timeout = 500) => {
+  return new Promise(r => setTimeout(r, timeout));
+};
+
+const getHookReduxWrapper = (store = createTestStore()) => {
+  const wrapper = ({children}) => <Provider store={store}>{children}</Provider>;
+  return wrapper;
+};
 
 export * from '@testing-library/react-native';
 export {
@@ -32,11 +53,9 @@ export {
   advanceAnimationByFrame,
   getAnimatedStyle,
   languages,
-};
-
-export const waitForComponentToPaint = async wrapper => {
-  await act(async () => {
-    await new Promise(resolve => setTimeout(resolve));
-    wrapper.update();
-  });
+  act,
+  createTestStore,
+  waitForUpdateRedux,
+  renderHook,
+  getHookReduxWrapper,
 };

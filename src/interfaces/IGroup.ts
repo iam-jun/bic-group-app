@@ -10,19 +10,20 @@ export interface IGroup {
   parentId?: number;
   children?: IGroup[];
   icon?: string;
-  parent_id?: number;
+  parent_id?: number | null;
   slug?: string;
   description?: string;
-  background_img_url?: string;
+  background_img_url?: string | null;
   privacy?: string;
   group_type?: GROUP_TYPE;
   verified?: boolean;
   level?: number;
-  parents?: number[];
+  parents?: number[] | null;
   owner_id?: number;
   created_at?: string;
   updated_at?: string;
-  deleted_at?: string;
+  deleted_at?: string | null;
+  chat_id?: string;
 
   path?: string;
   treeData?: IGroup;
@@ -113,12 +114,12 @@ export interface IGroupSearchPayload {
 }
 
 export interface IGroupMembers {
-  id: number;
-  username: string;
-  fullname: string;
-  avatar: string;
-  roles_ids: number[];
-  roles: IGroupMemberRole[];
+  id?: number;
+  username?: string;
+  fullname?: string;
+  avatar?: string;
+  roles_ids?: number[];
+  roles?: IGroupMemberRole[];
 }
 
 export interface IGroupMemberRole {

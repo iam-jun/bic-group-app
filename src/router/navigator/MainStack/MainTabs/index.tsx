@@ -11,21 +11,22 @@ import {useDispatch} from 'react-redux';
 import {io} from 'socket.io-client';
 
 import {useAuthToken, useUserIdAuth} from '~/hooks/auth';
+import {ISocketReaction} from '~/interfaces/IPost';
 import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import BottomTabBar from '~/router/components/BottomTabBar';
 import mainTabStack from '~/router/navigator/MainStack/MainTabs/stack';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
+import chatSocketClient from '~/services/chatSocket';
 import {initPushTokenMessage} from '~/services/helper';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
+import {parseSafe} from '~/utils/common';
+import {getEnv} from '~/utils/env';
+import {getMsgPackParser} from '~/utils/socket';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens, screensWebLaptop} from './screens';
-import {useKeySelector} from '~/hooks/selector';
-import {getEnv} from '~/utils/env';
-import {parseSafe} from '~/utils/common';
-import {getMsgPackParser} from '~/utils/socket';
-import {ISocketReaction} from '~/interfaces/IPost';
+import chatAction from '~/store/chat/actions';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -51,15 +52,27 @@ const MainTabs = () => {
   const token = useAuthToken();
 
   const userId = useUserIdAuth();
+
+  const websocketOpts = {
+    connectionUrl: getEnv('BEIN_CHAT_SOCKET'),
+  };
+
   useEffect(() => {
+    let tokenRefreshSubscription: any;
+
     // only valid if user logged in
     if (!userId) {
       return;
     }
+
+    dispatch(chatAction.initChat());
+    chatSocketClient.setEventCallback((evt: any) =>
+      dispatch(chatAction.handleChatEvent(evt)),
+    );
+
     dispatch(postActions.getDraftPosts({}));
     if (Platform.OS !== 'web') {
       dispatch(notificationsActions.registerPushToken());
-      let tokenRefreshSubscription;
       initPushTokenMessage()
         .then(messaging => {
           tokenRefreshSubscription = messaging().onTokenRefresh(
@@ -71,8 +84,11 @@ const MainTabs = () => {
           console.log('error when delete push token at auth stack', e),
         );
       // @ts-ignore
-      return tokenRefreshSubscription && tokenRefreshSubscription();
     }
+    return () => {
+      tokenRefreshSubscription && tokenRefreshSubscription();
+      chatSocketClient.close();
+    };
   }, [userId]);
 
   useEffect(() => {
@@ -82,6 +98,8 @@ const MainTabs = () => {
     }
 
     dispatch(notificationsActions.getNotifications());
+
+    chatSocketClient.initialize(token, websocketOpts);
 
     const socket = io(getEnv('BEIN_FEED'), {
       transports: ['websocket'],

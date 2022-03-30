@@ -10,7 +10,6 @@ import {
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Clipboard from '@react-native-clipboard/clipboard';
-import i18next from 'i18next';
 
 import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
@@ -25,14 +24,11 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import groupsActions from '../../redux/actions';
-import Text from '~/beinComponents/Text';
-import Button from '~/beinComponents/Button';
-import groupsDataHelper from '../../helper/GroupsDataHelper';
-import {IGroup} from '~/interfaces/IGroup';
-import useAuth from '~/hooks/auth';
+import useAuth, {useUserIdAuth} from '~/hooks/auth';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import Icon from '~/beinComponents/Icon';
+import {alertLeaveGroup, checkLastAdmin} from '../../helper';
 
 export interface GroupHeaderMenuProps {
   style?: StyleProp<ViewStyle>;
@@ -48,6 +44,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
   const {user} = useAuth();
+  const userId = useUserIdAuth();
   const {rootNavigation} = useRootNavigation();
 
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
@@ -85,100 +82,24 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
     }
   };
 
+  const onAlertLeaveGroup = () =>
+    alertLeaveGroup(groupId, dispatch, user.username, theme, doLeaveGroup);
+
   const onPressLeave = () => {
     dispatch(modalActions.hideModal());
 
-    // check if the current user is admin or member
-    if (can_setting) return checkLastAdmin();
-    alertLeaveGroup();
+    return checkLastAdmin(
+      groupId,
+      userId,
+      dispatch,
+      onAlertLeaveGroup,
+      navigateToMembers,
+    );
   };
 
   const navigateToMembers = () => {
     dispatch(clearToastMessage());
     rootNavigation.navigate(groupStack.groupMembers, {groupId});
-  };
-
-  const checkLastAdmin = () => {
-    groupsDataHelper
-      .getGroupMembers(Number(groupId), {offset: 0, limit: 1})
-      .then(data => {
-        const adminCount = data?.group_admin?.user_count;
-        if (adminCount > 1) {
-          alertLeaveGroup();
-        } else {
-          dispatch(
-            modalActions.showHideToastMessage({
-              content: 'groups:error:last_admin_leave',
-              props: {
-                type: 'error',
-                textProps: {useI18n: true},
-                rightIcon: 'UsersAlt',
-                rightText: 'Members',
-                onPressRight: navigateToMembers,
-              },
-              toastType: 'normal',
-            }),
-          );
-        }
-      })
-      .catch(err => {
-        console.log('[ERROR] error while fetching group members', err);
-        dispatch(
-          modalActions.showHideToastMessage({
-            content: 'error:http:unknown',
-            props: {textProps: {useI18n: true}, type: 'error'},
-          }),
-        );
-      });
-  };
-
-  const alertLeaveGroup = () => {
-    const alertPayload = {
-      iconName: 'SignOutAlt',
-      title: i18next.t('groups:modal_confirm_leave_group:title'),
-      content: i18next.t('groups:modal_confirm_leave_group:description'),
-      ContentComponent: Text.BodyS,
-      cancelBtn: true,
-      cancelBtnProps: {
-        textColor: theme.colors.primary7,
-      },
-      onConfirm: () => doLeaveGroup(),
-      confirmLabel: i18next.t('groups:modal_confirm_leave_group:button_leave'),
-      ConfirmBtnComponent: Button.Danger,
-    };
-
-    // Handling leaving other inner groups
-    groupsDataHelper
-      .getUserInnerGroups(Number(groupId), user.username)
-      .then(res => {
-        const innerGroups = res.data.inner_groups.map(
-          (group: IGroup) => group.name,
-        );
-        if (innerGroups.length > 0) {
-          alertPayload.content =
-            alertPayload.content +
-            ` ${i18next.t(
-              'groups:modal_confirm_leave_group:leave_inner_groups',
-            )}`;
-
-          const groupsLeaveToString = innerGroups.join(', ');
-          alertPayload.content = alertPayload.content.replace(
-            '{0}',
-            groupsLeaveToString,
-          );
-        }
-
-        dispatch(modalActions.showAlert(alertPayload));
-      })
-      .catch(err => {
-        console.log('[ERROR] error while fetching user inner groups', err);
-        dispatch(
-          modalActions.showHideToastMessage({
-            content: 'error:http:unknown',
-            props: {textProps: {useI18n: true}, type: 'error'},
-          }),
-        );
-      });
   };
 
   const doLeaveGroup = () => {

@@ -9,7 +9,6 @@ import Newsfeed from '~/screens/Home';
 import AccoutSettings from '~/screens/Menu/AccountSettings';
 import EditBasicInfo from '~/screens/Menu/AccountSettings/EditBasicInfo/EditBasicInfo';
 import EditContact from '~/screens/Menu/AccountSettings/EditContact';
-import EditEmail from '~/screens/Menu/AccountSettings/EditContact/EditEmail';
 import SecurityLogin from '~/screens/Menu/AccountSettings/SecurityLogin';
 import ChangePassword from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword';
 import UserEdit from '~/screens/Menu/AccountSettings/UserEditProfile';
@@ -31,6 +30,7 @@ import DraftPost from '~/screens/Post/DraftPost';
 import AddWork from '~/screens/Menu/AccountSettings/WorkExperience/AddWork';
 import PendingMembers from '~/screens/Groups/GroupDetail/groupModerating/PendingMembers';
 import EditDescription from '~/screens/Menu/AccountSettings/EditDescription';
+import CommentDetail from '~/screens/Post/CommentDetail';
 
 export const screens = {
   home: HomeStack,
@@ -49,6 +49,7 @@ export const screensWebLaptop = {
   'post-detail': PostDetail,
   'draft-post': DraftPost,
   'post-settings': PostSettings,
+  'comment-detail': CommentDetail,
 
   //GROUP STACK
   // 'group-list': Groups,
@@ -72,7 +73,6 @@ export const screensWebLaptop = {
   'change-password': ChangePassword,
   'edit-basic-info': EditBasicInfo,
   'edit-contact': EditContact,
-  'edit-email': EditEmail,
   'add-work': AddWork,
   'edit-description': EditDescription,
 

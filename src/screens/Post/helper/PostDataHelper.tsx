@@ -15,8 +15,8 @@ import {
   IRequestPostComment,
   IRequestReplyComment,
 } from '~/interfaces/IPost';
-import postDataMocks from '~/screens/Post/helper/PostDataMocks';
 import {ReactionType} from '~/constants/reactions';
+import {Platform} from 'react-native';
 
 const provider = ApiConfig.providers.beinFeed;
 
@@ -330,40 +330,6 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  getAudienceGroups: async (userId: number) => {
-    return Promise.resolve(postDataMocks.getGroups);
-    return;
-
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getAudienceGroups(userId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  getAudienceUsers: async (userId: number) => {
-    return Promise.resolve(postDataMocks.getUsers);
-    return;
-
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getAudienceUsers(userId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
   getCommentsByPostId: async (data: IRequestGetPostComment) => {
     if (!data?.postId) {
       return Promise.reject('Post Id not found');
@@ -536,6 +502,7 @@ const postDataHelper = {
           with_own_children: true,
           with_recent_reactions: true,
           with_reaction_counts: true,
+          recent_reactions_limit: Platform.OS === 'web' ? 5 : 10,
           ...params,
         }),
       );

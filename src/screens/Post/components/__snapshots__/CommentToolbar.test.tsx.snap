@@ -430,11 +430,7 @@ exports[`CommentToolbar component renders correctly 1`] = `
                     onFastImageLoadEnd={[Function]}
                     resizeMode="cover"
                     size={20}
-                    source={
-                      Object {
-                        "testUri": "../../../assets/icons/icon_add_gif.svg",
-                      }
-                    }
+                    source={null}
                     style={
                       Object {
                         "bottom": 0,

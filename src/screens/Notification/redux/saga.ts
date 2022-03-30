@@ -223,15 +223,22 @@ function* loadmore() {
 function* registerPushToken({payload}: any): any {
   try {
     const {notifications} = yield select();
-    const requestToken = payload?.token || notifications?.pushToken;
+    const savedToken = notifications?.pushToken;
+
     const messaging: any = yield initPushTokenMessage();
-    const newToken: string = yield messaging().getToken();
-    if (requestToken === newToken) {
+    const newToken: string = payload?.token || (yield messaging().getToken());
+
+    if (!!savedToken && newToken === savedToken) {
+      //if current token same as new token, just skip
       return;
     }
-    yield makePushTokenRequest(newToken);
+
+    //when initPushTokenMessage, onTokenRefresh will be called
+    //save token first to avoid call backend multiple times
     yield put(notificationsActions.savePushToken(newToken));
+    yield makePushTokenRequest(newToken);
   } catch (e) {
+    yield put(notificationsActions.savePushToken(''));
     console.log('register push token failed', e);
   }
 }
@@ -241,8 +248,8 @@ function* showError(err: any) {
 
   const toastMessage: IToastMessage = {
     content:
-      err?.meta?.message ||
       err?.meta?.errors?.[0]?.message ||
+      err?.meta?.message ||
       'common:text_error_message',
     props: {
       textProps: {useI18n: true},

@@ -16,9 +16,11 @@ import {setChatAuthenticationInfo} from '~/utils/common';
 import auth from '../screens/Auth/redux/reducer';
 import noInternetReducer from '../screens/NoInternet/redux/reducer';
 import mentionInputReducer from '~/beinComponents/inputs/MentionInput/redux/reducer';
+import chatReducer from './chat/reducer';
 
 import app from './app/reducer';
 import modal from './modal/reducer';
+import {clearUserCookies} from '~/utils/cookie';
 
 const authPersistConfig = {
   key: 'auth',
@@ -32,7 +34,7 @@ const notiPersistConfig = {
   whitelist: ['pushToken'],
 };
 
-const appReducer = combineReducers({
+export const appReducer = combineReducers({
   app,
   modal,
   auth: persistReducer(authPersistConfig, auth),
@@ -43,6 +45,7 @@ const appReducer = combineReducers({
   menu: menuReducer,
   noInternet: noInternetReducer,
   mentionInput: mentionInputReducer,
+  chat: chatReducer,
 });
 
 // @ts-ignore
@@ -53,9 +56,9 @@ const rootReducers = (state, action) => {
   ) {
     if (Platform.OS !== 'web') {
       if (state?.auth?.user) {
-        makeRemovePushTokenRequest(
-          state?.auth?.user?.signInUserSession.idToken.jwtToken,
-        ).catch(e => console.log('error when call api logout', e));
+        makeRemovePushTokenRequest().catch(e =>
+          console.log('error when call api logout', e),
+        );
       }
       initPushTokenMessage()
         .then(messaging => {
@@ -63,6 +66,10 @@ const rootReducers = (state, action) => {
         })
         .catch(e => console.log('error when delete token', e));
     } else {
+      /**
+       * To clear all cookies in web browser
+       */
+      clearUserCookies();
       setChatAuthenticationInfo('', 0);
     }
     AsyncStorage.multiRemove([

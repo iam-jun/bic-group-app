@@ -4,12 +4,14 @@ import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 
 export interface LoadingIndicatorProps {
+  testID?: string;
   style?: StyleProp<ViewStyle>;
   size?: number | 'small' | 'large';
   color?: string;
 }
 
 const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
+  testID,
   style,
   size,
   color,
@@ -19,6 +21,7 @@ const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
 
   return (
     <ActivityIndicator
+      testID={testID || 'loading_indicator'}
       style={style}
       size={size}
       color={color || colors.borderDisable}

@@ -24,10 +24,10 @@ export interface CommentInputViewProps {
   groupIds: string;
   autoFocus?: boolean;
   commentInputRef?: any;
-  onCommentSuccess?: (data: {
-    newCommentId: string;
-    parentCommentId?: string;
-  }) => void;
+  onCommentSuccess?: () => void;
+  isCommentLevel1Screen?: boolean;
+  showHeader?: boolean;
+  defaultReplyTargetId?: string;
 }
 
 const CommentInputView: FC<CommentInputViewProps> = ({
@@ -35,6 +35,10 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   groupIds = '',
   autoFocus,
   commentInputRef,
+  isCommentLevel1Screen,
+  showHeader,
+  defaultReplyTargetId,
+  onCommentSuccess,
 }: CommentInputViewProps) => {
   const _commentInputRef = commentInputRef || useRef<any>();
   const mentionInputRef = useRef<any>();
@@ -70,6 +74,12 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   }, []);
 
   useEffect(() => {
+    //clean data when post id change, in case sometime cache data on web
+    dispatch(postActions.setCreateComment({content: '', loading: false}));
+    dispatch(postActions.setPostDetailReplyingComment());
+  }, [postId]);
+
+  useEffect(() => {
     if (replyTargetUserId && replyTargetUser?.data?.username) {
       let content = `@${replyTargetUser?.data?.username} `;
       if (replyTargetUserId === userId) {
@@ -92,6 +102,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   const _onCommentSuccess = () => {
     _commentInputRef?.current?.clear?.();
     mentionInputRef?.current?.setContent?.('');
+    onCommentSuccess && onCommentSuccess();
   };
 
   const onPressSend = (sendData?: ICommentInputSendParam) => {
@@ -102,10 +113,11 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       }
       const payload: IPayloadCreateComment = {
         postId,
-        parentCommentId: replyTargetId,
+        parentCommentId: replyTargetId || defaultReplyTargetId,
         commentData: {content: content?.trim(), images},
         userId: userId,
         onSuccess: _onCommentSuccess,
+        isCommentLevel1Screen: isCommentLevel1Screen,
         preComment: {
           status: 'pending',
           // localId is used for finding and updating comment data from API later
@@ -123,7 +135,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
           own_children: {},
           latest_children: {},
           created_at: new Date().toISOString(),
-          parentCommentId: replyTargetId,
+          parentCommentId: replyTargetId || defaultReplyTargetId,
         },
       };
       dispatch(postActions.postCreateNewComment(payload));
@@ -146,7 +158,9 @@ const CommentInputView: FC<CommentInputViewProps> = ({
           commentInputRef: _commentInputRef,
           value: content,
           autoFocus: autoFocus,
-          HeaderComponent: <ReplyingView />,
+          HeaderComponent:
+            ((!!showHeader || Platform.OS === 'web') && <ReplyingView />) ||
+            null,
           loading: loading,
           isHandleUpload: true,
           placeholder: t('post:placeholder_write_comment'),

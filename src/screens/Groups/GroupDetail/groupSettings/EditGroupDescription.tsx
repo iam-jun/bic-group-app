@@ -41,14 +41,14 @@ const EditGroupDescription = (props: any) => {
 
   const onSave = () => {
     dispatch(
-      groupsActions.editGroupDetail(
-        {
+      groupsActions.editGroupDetail({
+        data: {
           id,
           description: text.trim() ? text.trim() : null,
         },
-        i18next.t('common:text_description'),
-        onNavigateBack,
-      ),
+        editFieldName: i18next.t('common:text_description'),
+        callback: onNavigateBack,
+      }),
     );
   };
 

@@ -6,6 +6,7 @@ import Adapter from '@wojtekmaj/enzyme-adapter-react-17';
 
 import mockRNDeviceInfo from 'react-native-device-info/jest/react-native-device-info-mock';
 import mockAsyncStorage from '@react-native-async-storage/async-storage/jest/async-storage-mock';
+import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js';
 
 import 'react-native-gesture-handler/jestSetup';
 import {initReactI18next} from 'react-i18next';
@@ -23,6 +24,21 @@ configure({adapter: new Adapter()});
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const languages = require('~/localization/en.json');
 
+jest.mock('@react-native-clipboard/clipboard');
+
+jest.mock('@react-native-firebase/messaging', () => {
+  return () => ({
+    ...jest.requireActual('@react-native-firebase/messaging'),
+    deleteToken: jest.fn(() => Promise.resolve(true)),
+  });
+});
+
+jest.mock('~/services/sharePreferences', () => ({
+  getUserFromSharedPreferences: jest.fn(),
+  saveUserToSharedPreferences: jest.fn(),
+  updateUserFromSharedPreferences: jest.fn(),
+}));
+
 jest.mock('react-native-image-crop-picker', () => ({
   openPicker: jest.fn().mockImplementation(() =>
     Promise.resolve({
@@ -33,6 +49,24 @@ jest.mock('react-native-image-crop-picker', () => ({
 }));
 
 jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
+
+jest.mock('~/screens/Menu/helper/MenuDataHelper');
+
+// jest.mock('~/services/fileUploader', () => {
+//   const imgURL =
+//     'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/4a8c0ce3-0813-4387-9547-eadcd7fee38b.jpg';
+
+//   return {
+//     getInstance: jest.fn().mockReturnThis(() => {
+//       return {
+//         upload: jest.fn().mockResolvedValue(imgURL),
+//       };
+//     }),
+//   };
+// });
+
+// @ts-ignore
+global.FormData = require('react-native/Libraries/Network/FormData');
 
 jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
 
@@ -66,6 +100,16 @@ jest.doMock('react-native-paper', () => ({
   },
 }));
 
+jest.doMock('@react-navigation/native', () => ({
+  ...jest.requireActual('@react-navigation/native'),
+  useNavigation: () => ({
+    navigate: (screen, params) => {
+      return {screen, params};
+    },
+  }),
+  useIsFocused: jest.fn(),
+}));
+
 jest.doMock('react-native-modalize', () => {
   const RealModule = jest.requireActual('react-native-modalize');
   // noinspection UnnecessaryLocalVariableJS
@@ -80,6 +124,8 @@ jest.doMock('react-native-modalize', () => {
 jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 
 jest.mock('react-native-device-info', () => mockRNDeviceInfo);
+
+jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo);
 
 jest.doMock('react-native', () => {
   const {
@@ -185,3 +231,11 @@ jest.doMock('react-native', () => {
     ReactNative,
   );
 });
+
+// jest.doMock('react', () => {
+//   const setState = jest.fn();
+//   return {
+//     ...jest.requireActual('react'),
+//     useState: jest.fn().mockImplementation(init => [init, setState]),
+//   };
+// });

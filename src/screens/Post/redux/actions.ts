@@ -87,7 +87,7 @@ const postActions = {
     type: postTypes.SET_CREATE_POST_IMAGES_DRAFT,
     payload,
   }),
-  setCreatePostInitAudiences: (payload: IPostAudience) => ({
+  setCreatePostInitAudiences: (payload?: IPostAudience) => ({
     type: postTypes.SET_CREATE_POST_INIT_AUDIENCES,
     payload,
   }),
@@ -123,6 +123,15 @@ const postActions = {
     callback?: (reactionId: ReactionType) => void;
   }) => ({
     type: postTypes.SET_SHOW_REACTION_BOTTOM_SHEET,
+    payload,
+  }),
+  setPostSelectAudienceState: (payload?: {
+    loading?: boolean;
+    selectingAudiences?: (IGroup | IUser)[];
+    selectingGroups?: {[x: string]: IGroup};
+    selectingUsers?: {[x: string]: IUser};
+  }) => ({
+    type: postTypes.SET_POST_SELECT_AUDIENCE_STATE,
     payload,
   }),
 
@@ -256,6 +265,10 @@ const postActions = {
   }),
   deleteComment: (payload: IPayloadDeleteComment) => ({
     type: postTypes.DELETE_COMMENT,
+    payload,
+  }),
+  setScrollCommentsPosition: (payload: null | {position?: string}) => ({
+    type: postTypes.SET_SCROLL_TO_COMMENTS_POSITION,
     payload,
   }),
 };

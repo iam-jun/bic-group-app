@@ -52,6 +52,7 @@ import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {sortComments} from '../helper/PostUtils';
 import images from '~/resources/images';
+import {get} from 'lodash';
 
 const defaultList = [{title: '', type: 'empty', data: []}];
 
@@ -107,6 +108,12 @@ const _PostDetailContent = (props: any) => {
   const headerTitle = actor?.data?.fullname
     ? t('post:title_post_detail_of').replace('%NAME%', actor?.data?.fullname)
     : t('post:title_post_detail');
+
+  useEffect(() => {
+    return () => {
+      dispatch(postActions.setCreatePostInitAudiences());
+    };
+  }, []);
 
   useEffect(() => {
     if (!user && Platform.OS === 'web') {
@@ -276,13 +283,38 @@ const _PostDetailContent = (props: any) => {
     [sectionData],
   );
 
+  const navigateToCommentDetailScreen = (
+    commentData: any,
+    replyItem?: any,
+    commentParent?: any,
+  ) => {
+    rootNavigation.navigate(homeStack.commentDetail, {
+      commentData,
+      postId: id,
+      replyItem,
+      focus_comment,
+      commentParent,
+    });
+  };
+
   const onPressReplySectionHeader = useCallback(
     (commentData, section, index) => {
-      scrollTo(index, 0);
-      // set time out to wait hide context menu on web
-      setTimeout(() => {
-        commentInputRef?.current?.focus?.();
-      }, 200);
+      if (Platform.OS === 'web') {
+        scrollTo(index, 0);
+        // set time out to wait hide context menu on web
+        setTimeout(() => {
+          commentInputRef?.current?.focus?.();
+        }, 200);
+      } else {
+        navigateToCommentDetailScreen(commentData, commentData);
+      }
+    },
+    [sectionData],
+  );
+
+  const onPressLoadMoreCommentLevel2 = useCallback(
+    (commentData: any) => {
+      navigateToCommentDetailScreen(commentData);
     },
     [sectionData],
   );
@@ -301,18 +333,28 @@ const _PostDetailContent = (props: any) => {
         commentData={comment}
         groupIds={groupIds}
         index={index}
+        isNotReplyingComment
         onPressReply={onPressReplySectionHeader}
+        onPressLoadMore={onPressLoadMoreCommentLevel2}
       />
     );
   };
 
   const onPressReplyCommentItem = useCallback(
     (commentData, section, index) => {
-      scrollTo(section?.index, index + 1);
-      // set time out to wait hide context menu on web
-      setTimeout(() => {
-        commentInputRef?.current?.focus?.();
-      }, 200);
+      if (Platform.OS === 'web') {
+        scrollTo(section?.index, index + 1);
+        // set time out to wait hide context menu on web
+        setTimeout(() => {
+          commentInputRef?.current?.focus?.();
+        }, 200);
+      } else {
+        navigateToCommentDetailScreen(
+          section?.comment || {},
+          commentData,
+          section?.comment,
+        );
+      }
     },
     [sectionData],
   );
@@ -327,6 +369,7 @@ const _PostDetailContent = (props: any) => {
         groupIds={groupIds}
         index={index}
         section={section}
+        isNotReplyingComment
         onPressReply={onPressReplyCommentItem}
       />
     );
@@ -390,7 +433,6 @@ const _PostDetailContent = (props: any) => {
             postId={id}
             groupIds={groupIds}
             autoFocus={!!focus_comment}
-            onCommentSuccess={onCommentSuccess}
           />
         </View>
       </View>
@@ -445,9 +487,14 @@ const getSectionData = (listComment: IReaction[]) => {
   const result: any[] = [];
   listComment?.map?.((comment, index) => {
     const item: any = {};
+    const lastChildComment = get(comment, 'latest_children.comment', []);
+    const _data =
+      lastChildComment.length > 0
+        ? [lastChildComment[lastChildComment.length - 1]]
+        : [];
     item.comment = comment;
     item.index = index;
-    item.data = comment?.latest_children?.comment || [];
+    item.data = Platform.OS === 'web' ? lastChildComment : _data;
     result.push(item);
   });
   // long post without comment cant scroll to bottom
