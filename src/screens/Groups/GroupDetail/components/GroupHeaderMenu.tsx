@@ -23,12 +23,12 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import groupJoinStatus from '~/constants/groupJoinStatus';
-import groupsActions from '../../redux/actions';
 import useAuth, {useUserIdAuth} from '~/hooks/auth';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import Icon from '~/beinComponents/Icon';
-import {alertLeaveGroup, checkLastAdmin} from '../../helper';
+import {checkLastAdmin} from '../../helper';
+import useLeaveGroup from '~/screens/Groups/GroupMembers/components/useLeaveGroup';
 
 export interface GroupHeaderMenuProps {
   style?: StyleProp<ViewStyle>;
@@ -50,6 +50,11 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
   const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
   const isMember = join_status === groupJoinStatus.member;
+
+  const alertLeaveGroup = useLeaveGroup({
+    groupId: Number(groupId),
+    username: user.username,
+  });
 
   const isWeb = Platform.OS === 'web';
 
@@ -82,9 +87,6 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
     }
   };
 
-  const onAlertLeaveGroup = () =>
-    alertLeaveGroup(groupId, dispatch, user.username, theme, doLeaveGroup);
-
   const onPressLeave = () => {
     dispatch(modalActions.hideModal());
 
@@ -92,7 +94,7 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
       groupId,
       userId,
       dispatch,
-      onAlertLeaveGroup,
+      alertLeaveGroup,
       navigateToMembers,
     );
   };
@@ -100,10 +102,6 @@ const GroupHeaderMenu: FC<GroupHeaderMenuProps> = ({
   const navigateToMembers = () => {
     dispatch(clearToastMessage());
     rootNavigation.navigate(groupStack.groupMembers, {groupId});
-  };
-
-  const doLeaveGroup = () => {
-    dispatch(groupsActions.leaveGroup(Number(groupId)));
   };
 
   const onPressShareChat = () => {

@@ -18,13 +18,10 @@ import modalActions from '~/store/modal/actions';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupsActions from '../../redux/actions';
-import {
-  alertLeaveGroup,
-  checkLastAdmin,
-  handleLeaveInnerGroups,
-} from '../../helper';
+import {checkLastAdmin, handleLeaveInnerGroups} from '../../helper';
 import useRemoveMember from './useRemoveMember';
 import useRemoveAdmin from './useRemoveAdmin';
+import useLeaveGroup from './useLeaveGroup';
 
 interface MemberOptionsMenuProps {
   groupId: number;
@@ -55,6 +52,7 @@ const MemberOptionsMenu = ({
     selectedMember,
   });
   const alertRemovingAdmin = useRemoveAdmin({groupId, selectedMember});
+  const alertLeaveGroup = useLeaveGroup({groupId, username: user.username});
 
   const onPressMenuOption = (
     type:
@@ -203,9 +201,6 @@ const MemberOptionsMenu = ({
     );
   };
 
-  const onAlertLeaveGroup = () =>
-    alertLeaveGroup(groupId, dispatch, user.username, theme, doLeaveGroup);
-
   const onPressLeave = () => {
     // check if the current user is the last admin before leaving group
     if (selectedMember?.id) {
@@ -213,14 +208,10 @@ const MemberOptionsMenu = ({
         groupId,
         selectedMember.id,
         dispatch,
-        onAlertLeaveGroup,
+        alertLeaveGroup,
         onPressMemberButton,
       );
     }
-  };
-
-  const doLeaveGroup = () => {
-    dispatch(groupsActions.leaveGroup(groupId));
   };
 
   const isGroupAdmin = () => {

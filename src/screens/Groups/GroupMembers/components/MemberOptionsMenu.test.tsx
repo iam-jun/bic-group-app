@@ -12,7 +12,6 @@ import MemberOptionsMenu from './MemberOptionsMenu';
 import initialState from '~/store/initialState';
 import {IGroupMembers} from '~/interfaces/IGroup';
 import useRemoveMember from './useRemoveMember';
-import useRemoveAdmin from './useRemoveAdmin';
 
 describe('MemberOptionsMenu component', () => {
   const baseSheetRef = jest.fn();
@@ -20,19 +19,13 @@ describe('MemberOptionsMenu component', () => {
   const onOptionsClosed = jest.fn();
   const selectedMember = {};
 
-  it('renders correctly', () => {
-    const rendered = renderWithRedux(
-      <MemberOptionsMenu
-        groupId={groupId}
-        selectedMember={selectedMember}
-        modalizeRef={baseSheetRef}
-        onOptionsClosed={onOptionsClosed}
-      />,
-    );
-    expect(rendered.toJSON()).toMatchSnapshot();
-  });
-
   it('renders leave group option correctly', () => {
+    const state = {...initialState};
+    // @ts-ignore
+    state.auth.user = {username: 'testname1'};
+    const store = createTestStore(state);
+
+    const selectedMember = {id: 1, username: 'testname1'};
     const {getByTestId} = renderWithRedux(
       <MemberOptionsMenu
         groupId={groupId}
@@ -40,6 +33,7 @@ describe('MemberOptionsMenu component', () => {
         modalizeRef={baseSheetRef}
         onOptionsClosed={onOptionsClosed}
       />,
+      store,
     );
     const itemComponent = getByTestId('member_options_menu.leave_group');
     expect(itemComponent).toBeDefined();
