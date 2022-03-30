@@ -9,7 +9,7 @@ import CommentViewPlaceholder from '~/beinComponents/placeholder/CommentViewPlac
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
-import {IAudienceGroup, IReaction} from '~/interfaces/IPost';
+import {IAudienceGroup} from '~/interfaces/IPost';
 import {ITheme} from '~/theme/interfaces';
 import CommentInputView from '../components/CommentInputView';
 import postActions from '../redux/actions';
@@ -35,13 +35,10 @@ const CommentDetailContent = (props: any) => {
   const id = postId;
   const actor = useKeySelector(postKeySelector.postActorById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
-  const comment = useKeySelector(postKeySelector.commentsByParentId(id));
-  const commentCount = useKeySelector(
-    postKeySelector.postCommentCountsById(id),
+  const comment = useKeySelector(
+    postKeySelector.commentById(commentData?.id || ''),
   );
-  const latest_reactions = useKeySelector(
-    postKeySelector.postLatestReactionsComments(id),
-  );
+
   const scrollToCommentsPosition = useKeySelector(
     postKeySelector.scrollToCommentsPosition,
   );
@@ -61,7 +58,7 @@ const CommentDetailContent = (props: any) => {
 
   useEffect(() => {
     dispatch(postActions.setScrollCommentsPosition(null));
-    const _commentData = get(commentData, 'latest_children.comment', []);
+    const _commentData = get(comment, 'latest_children.comment', []);
     if (_commentData.length > 1 || !_commentData?.[0]) {
       setLoading(false);
       dispatch(postActions.setScrollCommentsPosition({position: 'bottom'}));
@@ -122,7 +119,7 @@ const CommentDetailContent = (props: any) => {
         dispatch(postActions.setScrollCommentsPosition(null));
       }
     }, 100);
-  }, [commentData?.latest_children?.comment?.length, scrollToCommentsPosition]);
+  }, [comment?.latest_children?.comment, scrollToCommentsPosition]);
 
   const renderCommentItem = (data: any) => {
     const {item, index} = data || {};
@@ -130,7 +127,7 @@ const CommentDetailContent = (props: any) => {
       <CommentItem
         postId={id}
         commentData={item}
-        commentParent={commentData}
+        commentParent={comment}
         groupIds={groupIds}
         index={index}
       />
@@ -149,18 +146,18 @@ const CommentDetailContent = (props: any) => {
     <View style={{flex: 1}}>
       <FlatList
         ref={listRef}
-        data={commentData?.latest_children?.comment || []}
-        extraData={commentData?.latest_children?.comment}
+        data={comment?.latest_children?.comment || []}
+        extraData={comment?.latest_children?.comment}
         renderItem={renderCommentItem}
         ListHeaderComponent={
           <CommentLevel1
             headerTitle={headerTitle}
-            commentData={commentData}
+            commentData={comment}
             groupIds={groupIds}
             id={id}
           />
         }
-        ListFooterComponent={commentCount && renderFooter}
+        ListFooterComponent={renderFooter}
         keyboardShouldPersistTaps={'handled'}
         keyExtractor={(item, index) =>
           `CommentDetailContent_${index}_${item?.id || ''}`

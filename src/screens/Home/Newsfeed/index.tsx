@@ -104,7 +104,8 @@ const Newsfeed = () => {
   }, [isInternetReachable]);
 
   useEffect(() => {
-    dispatch(menuActions.getMyProfile({userId: currentUserId}));
+    if (!!currentUserId)
+      dispatch(menuActions.getMyProfile({userId: currentUserId}));
   }, []);
 
   const onShowSearch = (isShow: boolean, searchInputRef?: any) => {
