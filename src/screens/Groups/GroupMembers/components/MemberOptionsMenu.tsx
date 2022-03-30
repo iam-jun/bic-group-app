@@ -71,13 +71,13 @@ const MemberOptionsMenu = ({
         goToUserProfile(selectedMember);
         break;
       case 'set-admin':
-        alertSettingAdmin(selectedMember);
+        alertSettingAdmin();
         break;
       case 'remove-admin':
         onPressRemoveAdmin();
         break;
       case 'remove-member':
-        onPressRemoveMember(selectedMember);
+        onPressRemoveMember();
         break;
       case 'leave-group':
         onPressLeave();
@@ -96,35 +96,31 @@ const MemberOptionsMenu = ({
     }
   };
 
-  const alertSettingAdmin = (selectedMember?: IGroupMembers) => {
-    if (selectedMember) {
-      const alertPayload = {
-        iconName: 'Star',
-        title: i18next.t('groups:modal_confirm_set_admin:title'),
-        content: i18next.t('groups:modal_confirm_set_admin:description'),
-        ContentComponent: Text.BodyS,
-        cancelBtn: true,
-        cancelBtnProps: {
-          textColor: theme.colors.primary7,
-        },
-        onConfirm: () => doSetAdmin(selectedMember),
-        confirmLabel: i18next.t(
-          'groups:modal_confirm_set_admin:button_confirm',
-        ),
-        ConfirmBtnComponent: Button.Secondary,
-        confirmBtnProps: {
-          highEmphasis: true,
-        },
-      };
-      alertPayload.content = alertPayload.content.replace(
-        '{0}',
-        `"${selectedMember?.fullname}"`,
-      );
-      dispatch(modalActions.showAlert(alertPayload));
-    }
+  const alertSettingAdmin = () => {
+    const alertPayload = {
+      iconName: 'Star',
+      title: i18next.t('groups:modal_confirm_set_admin:title'),
+      content: i18next.t('groups:modal_confirm_set_admin:description'),
+      ContentComponent: Text.BodyS,
+      cancelBtn: true,
+      cancelBtnProps: {
+        textColor: theme.colors.primary7,
+      },
+      onConfirm: doSetAdmin,
+      confirmLabel: i18next.t('groups:modal_confirm_set_admin:button_confirm'),
+      ConfirmBtnComponent: Button.Secondary,
+      confirmBtnProps: {
+        highEmphasis: true,
+      },
+    };
+    alertPayload.content = alertPayload.content.replace(
+      '{0}',
+      `"${selectedMember?.fullname}"`,
+    );
+    dispatch(modalActions.showAlert(alertPayload));
   };
 
-  const doSetAdmin = (selectedMember: IGroupMembers) => {
+  const doSetAdmin = () => {
     selectedMember?.id &&
       dispatch(
         groupsActions.setGroupAdmin({groupId, userIds: [selectedMember.id]}),
@@ -158,7 +154,7 @@ const MemberOptionsMenu = ({
     dispatch(modalActions.clearToastMessage());
   };
 
-  const onPressRemoveMember = (selectedMember: IGroupMembers) => {
+  const onPressRemoveMember = () => {
     if (selectedMember?.id)
       return checkLastAdmin(
         groupId,

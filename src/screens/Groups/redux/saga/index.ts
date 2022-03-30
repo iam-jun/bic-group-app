@@ -6,7 +6,6 @@ import {
   IGroupGetJoinableMembers,
   IGroupGetMembers,
   IGroupImageUpload,
-  IGroupSetAdmin,
   IJoiningMember,
 } from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
@@ -32,6 +31,7 @@ import getGroupPosts from './getGroupPosts';
 import mergeExtraGroupPosts from './mergeExtraGroupPosts';
 import removeMember from './removeMember';
 import removeGroupAdmin from './removeGroupAdmin';
+import setGroupAdmin from './setGroupAdmin';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -312,29 +312,6 @@ function* cancelJoinGroup({
       return;
     }
 
-    yield showError(err);
-  }
-}
-
-function* setGroupAdmin({payload}: {type: string; payload: IGroupSetAdmin}) {
-  try {
-    const {groupId, userIds} = payload;
-
-    yield groupsDataHelper.setGroupAdmin(groupId, userIds);
-
-    const toastMessage: IToastMessage = {
-      content: 'groups:modal_confirm_set_admin:success_message',
-      props: {
-        textProps: {useI18n: true},
-        type: 'success',
-      },
-    };
-    yield put(modalActions.showHideToastMessage(toastMessage));
-
-    // refresh group detail after adding new admins
-    yield refreshGroupMembers(groupId);
-  } catch (err) {
-    console.log('setGroupAdmin: ', err);
     yield showError(err);
   }
 }

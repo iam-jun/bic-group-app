@@ -189,6 +189,7 @@ describe('MemberOptionsMenu component', () => {
     const state = {...initialState};
     state.groups.groupDetail.can_setting = true;
     state.groups.groupMember = {
+      // @ts-ignore
       group_admin: {user_count: 2},
     };
     const store = createTestStore(state);
@@ -217,6 +218,7 @@ describe('MemberOptionsMenu component', () => {
     const state = {...initialState};
     state.groups.groupDetail.can_setting = true;
     state.groups.groupMember = {
+      // @ts-ignore
       group_admin: {user_count: 1},
     };
     const store = createTestStore(state);
@@ -237,6 +239,31 @@ describe('MemberOptionsMenu component', () => {
     );
 
     const item = getByTestId('member_options_menu.remove_admin');
+    expect(item).toBeDefined();
+    fireEvent.press(item);
+  });
+
+  it('should render set admin option correctly', () => {
+    const state = {...initialState};
+    state.groups.groupDetail.can_setting = true;
+    const store = createTestStore(state);
+
+    const selectedMember = {
+      id: 1,
+      roles: [{type: 'MEMBER'}],
+    } as IGroupMembers;
+
+    const {getByTestId} = renderWithRedux(
+      <MemberOptionsMenu
+        groupId={groupId}
+        modalizeRef={baseSheetRef}
+        selectedMember={selectedMember}
+        onOptionsClosed={onOptionsClosed}
+      />,
+      store,
+    );
+
+    const item = getByTestId('member_options_menu.set_admin');
     expect(item).toBeDefined();
     fireEvent.press(item);
   });
