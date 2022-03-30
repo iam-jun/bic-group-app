@@ -68,7 +68,7 @@ const MemberOptionsMenu = ({
     modalizeRef.current?.close();
     switch (type) {
       case 'view-profile':
-        goToUserProfile(selectedMember);
+        goToUserProfile();
         break;
       case 'set-admin':
         alertSettingAdmin();
@@ -88,7 +88,7 @@ const MemberOptionsMenu = ({
     }
   };
 
-  const goToUserProfile = (selectedMember?: IGroupMembers) => {
+  const goToUserProfile = () => {
     if (selectedMember?.id) {
       rootNavigation.navigate(mainStack.userProfile, {
         userId: selectedMember.id,

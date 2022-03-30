@@ -267,4 +267,48 @@ describe('MemberOptionsMenu component', () => {
     expect(item).toBeDefined();
     fireEvent.press(item);
   });
+
+  it('should render View profile option correctly', () => {
+    const selectedMember = {
+      id: 1,
+      roles: [{type: 'MEMBER'}],
+    } as IGroupMembers;
+
+    const {getByTestId} = renderWithRedux(
+      <MemberOptionsMenu
+        groupId={groupId}
+        modalizeRef={baseSheetRef}
+        selectedMember={selectedMember}
+        onOptionsClosed={onOptionsClosed}
+      />,
+    );
+
+    const item = getByTestId('member_options_menu.view_profile');
+    expect(item).toBeDefined();
+    fireEvent.press(item);
+  });
+
+  it('renders Send message option correctly when admin clicks on another user', () => {
+    const state = {...initialState};
+    // @ts-ignore
+    state.auth.user = {username: 'testname1'};
+    const store = createTestStore(state);
+    const selectedMember = {
+      id: 1,
+      username: 'testname2',
+    } as IGroupMembers;
+
+    const {getByTestId} = renderWithRedux(
+      <MemberOptionsMenu
+        groupId={groupId}
+        modalizeRef={baseSheetRef}
+        selectedMember={selectedMember}
+        onOptionsClosed={onOptionsClosed}
+      />,
+      store,
+    );
+    const itemComponent = getByTestId('member_options_menu.send_message');
+    expect(itemComponent).toBeDefined();
+    fireEvent.press(itemComponent);
+  });
 });
