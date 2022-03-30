@@ -10,6 +10,7 @@ const COOKIE_DICTIONARY = {
   BUSER_FULLNAME: 'BUSER_FULLNAME',
   BUSER_EMAIL: 'BUSER_EMAIL',
   BUSER_AVATAR: 'BUSER_AVATAR',
+  CUSER_EMAIL: 'CUSER_EMAIL',
 };
 
 type CookieNameType = keyof typeof COOKIE_DICTIONARY;
@@ -59,7 +60,7 @@ export const clearUserCookies = () => {
 export const getUserEmailFromChatCookie = () => {
   if (Platform.OS !== 'web') return '';
 
-  const COOKIE_EMAIL_STARTER = 'CUSER_EMAIL=';
+  const COOKIE_EMAIL_STARTER = getCookieName('CUSER_EMAIL') + '=';
   if (
     typeof document !== 'undefined' &&
     typeof document.cookie !== 'undefined'
