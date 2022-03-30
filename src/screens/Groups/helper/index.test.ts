@@ -3,6 +3,7 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import {checkLastAdmin, alertLeaveGroup} from '.';
 import groupsDataHelper from './GroupsDataHelper';
+import {handleLeaveInnerGroups} from '.';
 
 afterEach(cleanup);
 
@@ -129,5 +130,36 @@ describe('Group functions helper', () => {
       onConfirm,
     );
     expect(result).toBe(-1);
+  });
+
+  it('handleLeaveInnerGroups should call prop callback correctly', async () => {
+    jest.spyOn(groupsDataHelper, 'getUserInnerGroups').mockImplementation(() =>
+      Promise.resolve({
+        data: {
+          current_group: {},
+          inner_groups: [{name: 'group_1'}],
+        },
+      }),
+    );
+    const result = await handleLeaveInnerGroups(
+      1,
+      'username',
+      dispatch,
+      mainCallback,
+    );
+    expect(result).toBeTruthy();
+  });
+
+  it('handleLeaveInnerGroups should show error message from server', async () => {
+    jest
+      .spyOn(groupsDataHelper, 'getUserInnerGroups')
+      .mockImplementation(() => Promise.reject());
+    const result = await handleLeaveInnerGroups(
+      1,
+      'username',
+      dispatch,
+      mainCallback,
+    );
+    expect(result).toBeFalsy();
   });
 });

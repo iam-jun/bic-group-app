@@ -114,12 +114,12 @@ export interface IGroupSearchPayload {
 }
 
 export interface IGroupMembers {
-  id: number;
-  username: string;
-  fullname: string;
-  avatar: string;
-  roles_ids: number[];
-  roles: IGroupMemberRole[];
+  id?: number;
+  username?: string;
+  fullname?: string;
+  avatar?: string;
+  roles_ids?: number[];
+  roles?: IGroupMemberRole[];
 }
 
 export interface IGroupMemberRole {

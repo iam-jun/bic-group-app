@@ -6,7 +6,6 @@ import {
   IGroupGetJoinableMembers,
   IGroupGetMembers,
   IGroupImageUpload,
-  IGroupRemoveAdmin,
   IGroupSetAdmin,
   IJoiningMember,
 } from '~/interfaces/IGroup';
@@ -24,12 +23,15 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import errorCode from '~/constants/errorCode';
 import memberRequestStatus from '~/constants/memberRequestStatus';
 import approveDeclineCode from '~/constants/approveDeclineCode';
+
 import joinNewGroup from './joinNewGroup';
 import leaveGroup from './leaveGroup';
 import getGroupDetail from './getGroupDetail';
 import editGroupDetail from './editGroupDetail';
 import getGroupPosts from './getGroupPosts';
 import mergeExtraGroupPosts from './mergeExtraGroupPosts';
+import removeMember from './removeMember';
+import removeGroupAdmin from './removeGroupAdmin';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -269,40 +271,6 @@ function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
   }
 }
 
-function* removeMember({
-  payload,
-}: {
-  type: string;
-  payload: {groupId: number; userId: string; userFullname: string};
-}) {
-  try {
-    const {groupId, userId, userFullname} = payload;
-
-    yield groupsDataHelper.removeUsers(groupId, [userId]);
-
-    yield refreshGroupMembers(groupId);
-
-    const toastMessage: IToastMessage = {
-      content: i18next
-        .t('common:message_remove_member_success')
-        .replace('{n}', userFullname),
-      props: {
-        textProps: {useI18n: true},
-        type: 'success',
-      },
-    };
-    yield put(modalActions.showHideToastMessage(toastMessage));
-  } catch (err) {
-    console.log(
-      '\x1b[33m',
-      'addMembers catch: ',
-      JSON.stringify(err, undefined, 2),
-      '\x1b[0m',
-    );
-    yield showError(err);
-  }
-}
-
 function* cancelJoinGroup({
   payload,
 }: {
@@ -356,34 +324,6 @@ function* setGroupAdmin({payload}: {type: string; payload: IGroupSetAdmin}) {
 
     const toastMessage: IToastMessage = {
       content: 'groups:modal_confirm_set_admin:success_message',
-      props: {
-        textProps: {useI18n: true},
-        type: 'success',
-      },
-    };
-    yield put(modalActions.showHideToastMessage(toastMessage));
-
-    // refresh group detail after adding new admins
-    yield refreshGroupMembers(groupId);
-  } catch (err) {
-    console.log('setGroupAdmin: ', err);
-    yield showError(err);
-  }
-}
-
-function* removeGroupAdmin({
-  payload,
-}: {
-  type: string;
-  payload: IGroupRemoveAdmin;
-}) {
-  try {
-    const {groupId, userId} = payload;
-
-    yield groupsDataHelper.removeGroupAdmin(groupId, userId);
-
-    const toastMessage: IToastMessage = {
-      content: 'groups:modal_confirm_remove_admin:success_message',
       props: {
         textProps: {useI18n: true},
         type: 'success',
@@ -584,7 +524,7 @@ function* updateLoadingImageState(
   }
 }
 
-function* refreshGroupMembers(groupId: number) {
+export function* refreshGroupMembers(groupId: number) {
   yield put(groupsActions.clearGroupMembers());
   yield put(groupsActions.getGroupMembers({groupId}));
   yield put(groupsActions.getGroupDetail(groupId));

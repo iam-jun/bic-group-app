@@ -274,7 +274,7 @@ const _GroupMembers = (props: any) => {
       <MemberOptionsMenu
         groupId={groupId}
         modalizeRef={baseSheetRef}
-        selectedMember={selectedMember}
+        selectedMember={selectedMember || {}}
         onOptionsClosed={clearSelectedMember}
       />
     </ScreenWrapper>
