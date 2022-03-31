@@ -4,6 +4,7 @@ export const appInitState = {
   configs: {},
   linkPreviews: {},
   rootScreenName: '',
+  drawerVisible: false,
 };
 
 /**
@@ -36,6 +37,11 @@ function reducer(state = appInitState, action: any = {}) {
       return {
         ...state,
         rootScreenName: payload,
+      };
+    case types.SET_DRAWER_VISIBLE:
+      return {
+        state,
+        drawerVisible: payload,
       };
     default:
       return state;

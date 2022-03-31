@@ -12,25 +12,23 @@ import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
 import NewsfeedList from '~/beinFragments/newsfeedList/NewsfeedList';
 import {appScreens} from '~/configs/navigator';
-import {useTabPressListener} from '~/hooks/navigation';
+import {chatSchemes} from '~/constants/chat';
+import {useBaseHook} from '~/hooks';
+import {useAuthToken, useUserIdAuth} from '~/hooks/auth';
+import {useBackPressListener, useTabPressListener} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
+import {IPayloadSetNewsfeedSearch} from '~/interfaces/IHome';
 import {ITabTypes} from '~/interfaces/IRouter';
 import images from '~/resources/images';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
+import NewsfeedSearch from '~/screens/Home/Newsfeed/NewsfeedSearch';
 import homeActions from '~/screens/Home/redux/actions';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
+import menuActions from '~/screens/Menu/redux/actions';
 import appActions from '~/store/app/actions';
 import {deviceDimensions} from '~/theme/dimension';
-import menuActions from '~/screens/Menu/redux/actions';
-import {useUserIdAuth} from '~/hooks/auth';
-
 import {ITheme} from '~/theme/interfaces';
-import NewsfeedSearch from '~/screens/Home/Newsfeed/NewsfeedSearch';
-import {useBaseHook} from '~/hooks';
-import {IPayloadSetNewsfeedSearch} from '~/interfaces/IHome';
 import {openLink} from '~/utils/common';
-import {chatSchemes} from '~/constants/chat';
-import {useAuthToken} from '~/hooks/auth';
 
 const Newsfeed = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -107,6 +105,12 @@ const Newsfeed = () => {
     if (!!currentUserId)
       dispatch(menuActions.getMyProfile({userId: currentUserId}));
   }, []);
+
+  const handleBackPress = () => {
+    headerRef?.current?.goBack?.();
+  };
+
+  useBackPressListener(handleBackPress);
 
   const onShowSearch = (isShow: boolean, searchInputRef?: any) => {
     if (isShow) {
