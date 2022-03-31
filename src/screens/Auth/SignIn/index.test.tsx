@@ -1,3 +1,6 @@
+/**
+ * @jest-environment jsdom
+ */
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 import {cleanup, waitFor} from '@testing-library/react-native';
