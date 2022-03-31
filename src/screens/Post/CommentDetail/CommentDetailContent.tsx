@@ -37,10 +37,8 @@ const CommentDetailContent = (props: any) => {
 
   const allComments = useKeySelector(postKeySelector.allComments);
 
-  const comment = get(
-    allComments,
-    `${commentData?.id || ''}.latest_children.comment`,
-  );
+  const comment =
+    allComments?.[commentData?.id]?.latest_children?.comment || [];
 
   const scrollToCommentsPosition = useKeySelector(
     postKeySelector.scrollToCommentsPosition,
