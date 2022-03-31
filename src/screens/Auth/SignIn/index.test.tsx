@@ -5,7 +5,10 @@
 
 import {cleanup, waitFor} from '@testing-library/react-native';
 import React from 'react';
-import {getUserFromSharedPreferences} from '~/services/sharePreferences';
+import {
+  getUserFromSharedPreferences,
+  isAppInstalled,
+} from '~/services/sharePreferences';
 import initialState from '~/store/initialState';
 import {configureStore, fireEvent, renderWithRedux} from '~/test/testUtils';
 import SignIn from '.';
@@ -75,6 +78,11 @@ describe('SignIn screen', () => {
   });
 
   it(`should disable input email when has auth session`, async () => {
+    Platform.OS = 'ios';
+
+    //@ts-ignore
+    isAppInstalled.mockImplementation(() => Promise.resolve(true));
+
     //@ts-ignore
     getUserFromSharedPreferences.mockImplementation(() =>
       Promise.resolve({
