@@ -1,5 +1,5 @@
 import {get} from 'lodash';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState, memo} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -27,7 +27,6 @@ const CommentDetailContent = (props: any) => {
 
   const listRef = useRef<any>();
   const commentInputRef = useRef<any>();
-  let countRetryScrollToBottom = useRef(0).current;
 
   const params = props?.route?.params;
   const {commentData, postId, replyItem, commentParent} = params || {};
@@ -35,8 +34,12 @@ const CommentDetailContent = (props: any) => {
   const id = postId;
   const actor = useKeySelector(postKeySelector.postActorById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
-  const comment = useKeySelector(
-    postKeySelector.commentById(commentData?.id || ''),
+
+  const allComments = useKeySelector(postKeySelector.allComments);
+
+  const comment = get(
+    allComments,
+    `${commentData?.id || ''}.latest_children.comment`,
   );
 
   const scrollToCommentsPosition = useKeySelector(
@@ -58,10 +61,9 @@ const CommentDetailContent = (props: any) => {
 
   useEffect(() => {
     dispatch(postActions.setScrollCommentsPosition(null));
-    const _commentData = get(comment, 'latest_children.comment', []);
+    const _commentData = get(commentData, 'latest_children.comment', []);
     if (_commentData.length > 1 || !_commentData?.[0]) {
       setLoading(false);
-      dispatch(postActions.setScrollCommentsPosition({position: 'bottom'}));
       if (!!replyItem) {
         setTimeout(() => {
           dispatch(
@@ -97,29 +99,35 @@ const CommentDetailContent = (props: any) => {
     }
   }, []);
 
-  const scrollToEnd = () => {
-    listRef.current?.scrollToEnd?.({animated: true});
-  };
+  useEffect(() => {
+    if (scrollToCommentsPosition?.position === 'top') {
+      dispatch(postActions.setScrollCommentsPosition(null));
+    } else if (scrollToCommentsPosition?.position === 'bottom') {
+      scrollToEnd();
+    }
+  }, [scrollToCommentsPosition]);
 
-  const onScrollToIndexFailed = () => {
-    countRetryScrollToBottom = countRetryScrollToBottom + 1;
-    if (countRetryScrollToBottom < 20) {
-      setTimeout(() => {
-        scrollToEnd();
-      }, 100);
+  const scrollToEnd = () => {
+    try {
+      listRef.current?.scrollToIndex?.({
+        animated: true,
+        index: comment?.length - 1 || 0,
+      });
+      dispatch(postActions.setScrollCommentsPosition(null));
+    } catch (error) {
+      // scroll to the first comment to avoid scroll error
+      listRef.current?.scrollToOffset?.({animated: true, offset: 0});
     }
   };
 
-  const onLayout = useCallback(() => {
-    setTimeout(() => {
-      if (scrollToCommentsPosition?.position === 'top') {
-        dispatch(postActions.setScrollCommentsPosition(null));
-      } else if (scrollToCommentsPosition?.position === 'bottom') {
-        listRef.current?.scrollToEnd?.({animated: true});
-        dispatch(postActions.setScrollCommentsPosition(null));
-      }
-    }, 100);
-  }, [comment?.latest_children?.comment, scrollToCommentsPosition]);
+  const onScrollToIndexFailed = (error: any) => {
+    const offset = error?.averageItemLength * error?.index || 0;
+    listRef.current?.scrollToOffset?.({offset});
+    setTimeout(
+      () => listRef.current?.scrollToIndex?.({index: error?.index || 0}),
+      100,
+    );
+  };
 
   const renderCommentItem = (data: any) => {
     const {item, index} = data || {};
@@ -127,7 +135,7 @@ const CommentDetailContent = (props: any) => {
       <CommentItem
         postId={id}
         commentData={item}
-        commentParent={comment}
+        commentParent={commentData}
         groupIds={groupIds}
         index={index}
       />
@@ -142,27 +150,25 @@ const CommentDetailContent = (props: any) => {
     return <CommentViewPlaceholder />;
   }
 
+  const keyExtractor = (item: any) => `CommentDetailContent_${item?.id || ''}`;
+
   return (
     <View style={{flex: 1}}>
       <FlatList
         ref={listRef}
-        data={comment?.latest_children?.comment || []}
-        extraData={comment?.latest_children?.comment}
+        data={comment || []}
         renderItem={renderCommentItem}
         ListHeaderComponent={
           <CommentLevel1
             headerTitle={headerTitle}
-            commentData={comment}
+            commentData={commentData}
             groupIds={groupIds}
             id={id}
           />
         }
         ListFooterComponent={renderFooter}
         keyboardShouldPersistTaps={'handled'}
-        keyExtractor={(item, index) =>
-          `CommentDetailContent_${index}_${item?.id || ''}`
-        }
-        onContentSizeChange={onLayout}
+        keyExtractor={keyExtractor}
         onScrollToIndexFailed={onScrollToIndexFailed}
         scrollEventThrottle={16}
       />

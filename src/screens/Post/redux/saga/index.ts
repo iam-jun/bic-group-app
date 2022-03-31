@@ -1191,7 +1191,7 @@ function* getCommentsByPostId({
   type: string;
   payload: IPayloadGetCommentsById;
 }): any {
-  const {postId, commentId, isMerge, callbackLoading, position} = payload || {};
+  const {postId, commentId, isMerge, callbackLoading} = payload || {};
   try {
     callbackLoading?.(true);
     const response = yield call(postDataHelper.getCommentsByPostId, payload);
@@ -1206,9 +1206,6 @@ function* getCommentsByPostId({
           childComments: newList,
         });
         yield put(postActions.addToAllComments(newList));
-        yield put(
-          postActions.setScrollCommentsPosition({position: position || 'top'}),
-        );
       } else {
         //get comment of post
         const payload = {id: postId, comments: newList, isMerge};
