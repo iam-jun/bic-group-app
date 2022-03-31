@@ -12,7 +12,6 @@ import {USER_PROFILE} from '~/test/mock_data/menu';
 import mainStack from '~/router/navigator/MainStack/stack';
 import menuTypes from '../redux/types';
 import menuActions from '../redux/actions';
-import {checkPermission} from '~/utils/permission';
 
 afterEach(cleanup);
 
@@ -91,11 +90,20 @@ describe('UserProfile screen', () => {
     );
     expect(buttonCoverImage).toBeDefined();
 
+    const coverImageView = wrapper.getByTestId('user_profile.cover_image');
+
+    fireEvent(coverImageView, 'layout', {
+      nativeEvent: {layout: {width: 375}},
+    });
+
     const buttonEditUserProfile = wrapper.queryByTestId('user_profile.edit');
     expect(buttonEditUserProfile).toBeDefined();
 
     const buttonSendMessage = wrapper.queryByTestId('user_profile.message');
     expect(buttonSendMessage).toBeNull();
+
+    //@ts-ignore
+    fireEvent.press(buttonEditAvatar);
   });
 
   it(`should navigate to UserEditProfile screen when click button edit profile`, () => {
@@ -233,5 +241,17 @@ describe('UserProfile screen', () => {
 
     const loadingView = wrapper.getByTestId('user_profile.loading');
     expect(loadingView).toBeDefined();
+  });
+
+  it(`should render NoUserFound if can't get user profile`, () => {
+    const storeData = {...initialState};
+    //@ts-ignore
+    storeData.menu.showUserNotFound = true;
+    const store = mockStore(storeData);
+    const props = {route: {params: {userId: 1}}};
+    const wrapper = renderWithRedux(<UserProfile {...props} />, store);
+
+    const userNotFound = wrapper.getByTestId('user_profile.not_found');
+    expect(userNotFound).toBeDefined();
   });
 });
