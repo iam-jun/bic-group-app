@@ -1,5 +1,5 @@
 import {get} from 'lodash';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState, memo} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -9,7 +9,7 @@ import CommentViewPlaceholder from '~/beinComponents/placeholder/CommentViewPlac
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
-import {IAudienceGroup, IReaction} from '~/interfaces/IPost';
+import {IAudienceGroup} from '~/interfaces/IPost';
 import {ITheme} from '~/theme/interfaces';
 import CommentInputView from '../components/CommentInputView';
 import postActions from '../redux/actions';
@@ -27,7 +27,6 @@ const CommentDetailContent = (props: any) => {
 
   const listRef = useRef<any>();
   const commentInputRef = useRef<any>();
-  let countRetryScrollToBottom = useRef(0).current;
 
   const params = props?.route?.params;
   const {commentData, postId, replyItem, commentParent} = params || {};
@@ -35,13 +34,12 @@ const CommentDetailContent = (props: any) => {
   const id = postId;
   const actor = useKeySelector(postKeySelector.postActorById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
-  const comment = useKeySelector(postKeySelector.commentsByParentId(id));
-  const commentCount = useKeySelector(
-    postKeySelector.postCommentCountsById(id),
-  );
-  const latest_reactions = useKeySelector(
-    postKeySelector.postLatestReactionsComments(id),
-  );
+
+  const allComments = useKeySelector(postKeySelector.allComments);
+
+  const comment =
+    allComments?.[commentData?.id]?.latest_children?.comment || [];
+
   const scrollToCommentsPosition = useKeySelector(
     postKeySelector.scrollToCommentsPosition,
   );
@@ -64,7 +62,6 @@ const CommentDetailContent = (props: any) => {
     const _commentData = get(commentData, 'latest_children.comment', []);
     if (_commentData.length > 1 || !_commentData?.[0]) {
       setLoading(false);
-      dispatch(postActions.setScrollCommentsPosition({position: 'bottom'}));
       if (!!replyItem) {
         setTimeout(() => {
           dispatch(
@@ -100,29 +97,35 @@ const CommentDetailContent = (props: any) => {
     }
   }, []);
 
-  const scrollToEnd = () => {
-    listRef.current?.scrollToEnd?.({animated: true});
-  };
+  useEffect(() => {
+    if (scrollToCommentsPosition?.position === 'top') {
+      dispatch(postActions.setScrollCommentsPosition(null));
+    } else if (scrollToCommentsPosition?.position === 'bottom') {
+      scrollToEnd();
+    }
+  }, [scrollToCommentsPosition]);
 
-  const onScrollToIndexFailed = () => {
-    countRetryScrollToBottom = countRetryScrollToBottom + 1;
-    if (countRetryScrollToBottom < 20) {
-      setTimeout(() => {
-        scrollToEnd();
-      }, 100);
+  const scrollToEnd = () => {
+    try {
+      listRef.current?.scrollToIndex?.({
+        animated: true,
+        index: comment?.length - 1 || 0,
+      });
+      dispatch(postActions.setScrollCommentsPosition(null));
+    } catch (error) {
+      // scroll to the first comment to avoid scroll error
+      listRef.current?.scrollToOffset?.({animated: true, offset: 0});
     }
   };
 
-  const onLayout = useCallback(() => {
-    setTimeout(() => {
-      if (scrollToCommentsPosition?.position === 'top') {
-        dispatch(postActions.setScrollCommentsPosition(null));
-      } else if (scrollToCommentsPosition?.position === 'bottom') {
-        listRef.current?.scrollToEnd?.({animated: true});
-        dispatch(postActions.setScrollCommentsPosition(null));
-      }
-    }, 100);
-  }, [commentData?.latest_children?.comment?.length, scrollToCommentsPosition]);
+  const onScrollToIndexFailed = (error: any) => {
+    const offset = error?.averageItemLength * error?.index || 0;
+    listRef.current?.scrollToOffset?.({offset});
+    setTimeout(
+      () => listRef.current?.scrollToIndex?.({index: error?.index || 0}),
+      100,
+    );
+  };
 
   const renderCommentItem = (data: any) => {
     const {item, index} = data || {};
@@ -145,12 +148,13 @@ const CommentDetailContent = (props: any) => {
     return <CommentViewPlaceholder />;
   }
 
+  const keyExtractor = (item: any) => `CommentDetailContent_${item?.id || ''}`;
+
   return (
     <View style={{flex: 1}}>
       <FlatList
         ref={listRef}
-        data={commentData?.latest_children?.comment || []}
-        extraData={commentData?.latest_children?.comment}
+        data={comment || []}
         renderItem={renderCommentItem}
         ListHeaderComponent={
           <CommentLevel1
@@ -160,12 +164,9 @@ const CommentDetailContent = (props: any) => {
             id={id}
           />
         }
-        ListFooterComponent={commentCount && renderFooter}
+        ListFooterComponent={renderFooter}
         keyboardShouldPersistTaps={'handled'}
-        keyExtractor={(item, index) =>
-          `CommentDetailContent_${index}_${item?.id || ''}`
-        }
-        onContentSizeChange={onLayout}
+        keyExtractor={keyExtractor}
         onScrollToIndexFailed={onScrollToIndexFailed}
         scrollEventThrottle={16}
       />
