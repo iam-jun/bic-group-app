@@ -1,5 +1,5 @@
-import {useBackHandler} from '@react-native-community/hooks';
 import {useIsFocused} from '@react-navigation/native';
+import {get} from 'lodash';
 import React, {
   memo,
   useCallback,
@@ -19,25 +19,23 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
-
 import {AppContext} from '~/contexts/AppContext';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
-import {useRootNavigation} from '~/hooks/navigation';
+import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import {IUserResponse} from '~/interfaces/IAuth';
-
 import {
   IAudienceGroup,
   IPayloadGetPostDetail,
   IReaction,
 } from '~/interfaces/IPost';
 import i18n from '~/localization';
+import images from '~/resources/images';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {rootSwitch} from '~/router/stack';
 import CommentInputView from '~/screens/Post/components/CommentInputView';
@@ -51,8 +49,6 @@ import {showHideToastMessage} from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {sortComments} from '../helper/PostUtils';
-import images from '~/resources/images';
-import {get} from 'lodash';
 
 const defaultList = [{title: '', type: 'empty', data: []}];
 
@@ -114,6 +110,34 @@ const _PostDetailContent = (props: any) => {
       dispatch(postActions.setCreatePostInitAudiences());
     };
   }, []);
+
+  const onPressBack = () => {
+    const newCommentInput = commentInputRef?.current?.getText?.() || '';
+    const newCommentSelectedImage =
+      commentInputRef?.current?.getSelectedImage?.();
+    if (newCommentInput !== '' || newCommentSelectedImage) {
+      dispatch(
+        modalActions.showAlert({
+          title: i18n.t('post:title_discard_comment'),
+          content: i18n.t('post:text_discard_comment'),
+          showCloseButton: true,
+          cancelBtn: true,
+          cancelLabel: i18n.t('post:btn_continue_comment'),
+          confirmLabel: i18n.t('post:btn_discard_comment'),
+          onConfirm: () => rootNavigation.goBack(),
+          stretchOnWeb: true,
+        }),
+      );
+      return;
+    }
+    if (!rootNavigation.canGoBack) {
+      rootNavigation.navigate(homeStack.newsfeed);
+      return;
+    }
+    rootNavigation.goBack();
+  };
+
+  useBackPressListener(onPressBack);
 
   useEffect(() => {
     if (!user && Platform.OS === 'web') {
@@ -183,37 +207,6 @@ const _PostDetailContent = (props: any) => {
 
   const onRefresh = () => getPostDetail(loading => setRefreshing(loading));
 
-  const onPressBack = () => {
-    const newCommentInput = commentInputRef?.current?.getText?.() || '';
-    const newCommentSelectedImage =
-      commentInputRef?.current?.getSelectedImage?.();
-    if (newCommentInput !== '' || newCommentSelectedImage) {
-      dispatch(
-        modalActions.showAlert({
-          title: i18n.t('post:title_discard_comment'),
-          content: i18n.t('post:text_discard_comment'),
-          showCloseButton: true,
-          cancelBtn: true,
-          cancelLabel: i18n.t('post:btn_continue_comment'),
-          confirmLabel: i18n.t('post:btn_discard_comment'),
-          onConfirm: () => rootNavigation.goBack(),
-          stretchOnWeb: true,
-        }),
-      );
-      return;
-    }
-    if (!rootNavigation.canGoBack) {
-      rootNavigation.navigate(homeStack.newsfeed);
-      return;
-    }
-    rootNavigation.goBack();
-  };
-
-  useBackHandler(() => {
-    onPressBack();
-    return true;
-  });
-
   const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
     if (sectionData.length > 0) {
       if (sectionIndex > sectionData.length - 1 || sectionIndex === -1) {
@@ -259,13 +252,7 @@ const _PostDetailContent = (props: any) => {
   }, [commentInputRef, sectionData.length]);
 
   const onCommentSuccess = useCallback(
-    ({
-      newCommentId,
-      parentCommentId,
-    }: {
-      newCommentId: string;
-      parentCommentId?: string;
-    }) => {
+    ({parentCommentId}: {newCommentId: string; parentCommentId?: string}) => {
       let sectionIndex;
       let itemIndex = 0;
       if (parentCommentId) {

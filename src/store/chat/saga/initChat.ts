@@ -17,8 +17,6 @@ export default function* initChat() {
       {},
     );
 
-    console.log('initChat', result);
-
     yield put(actions.setUnreadChannels(result));
   } catch (err: any) {
     console.log('initChat error', err);
