@@ -14,13 +14,13 @@ import Animated, {
 } from 'react-native-reanimated';
 
 export interface CreatePostFooterProps {
-  toolbarModalizeRef?: any;
+  toolbarRef?: any;
   loading?: boolean;
   onPressBack?: () => void;
 }
 
 const CreatePostFooter: FC<CreatePostFooterProps> = ({
-  toolbarModalizeRef,
+  toolbarRef,
   loading,
   onPressBack,
 }: CreatePostFooterProps) => {
@@ -47,7 +47,7 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
   return (
     <Div className="post-toolbar-container">
       <PostToolbar
-        modalizeRef={toolbarModalizeRef}
+        toolbarRef={toolbarRef}
         disabled={loading}
         onPressBack={onPressBack}
       />

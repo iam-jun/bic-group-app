@@ -25,6 +25,16 @@ export const hideBottomTabRoutes = [
   'pending-members',
 ];
 
+export const customBackHandlerRoutes = [
+  'home',
+  'groups',
+  'post-detail',
+  'create-post',
+  'MainStack',
+];
+
+export const NAVIGATION_BACK_PRESSED = 'navigation-back-pressed';
+
 export const navigationSetting = {
   defaultNavigationOption: {
     headerStyle: {

@@ -1,3 +1,4 @@
+import {BottomTabBarProps} from '@react-navigation/bottom-tabs/lib/typescript/src/types';
 import React, {FC, useEffect, useRef} from 'react';
 import {
   DeviceEventEmitter,
@@ -8,30 +9,28 @@ import {
   View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
-
 import Animated, {
+  interpolate,
   useAnimatedStyle,
   useSharedValue,
-  interpolate,
   withTiming,
 } from 'react-native-reanimated';
-
-import {ITheme} from '~/theme/interfaces';
-
-import Text from '~/beinComponents/Text';
-import {BottomTabBarProps} from '@react-navigation/bottom-tabs/lib/typescript/src/types';
-import {useBaseHook} from '~/hooks';
+import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useDispatch} from 'react-redux';
+import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import Icon from '~/beinComponents/Icon';
+import Text from '~/beinComponents/Text';
 import {
   bottomTabIcons,
   bottomTabIconsFocused,
   hideBottomTabRoutes,
 } from '~/configs/navigator';
-import {deviceDimensions, sizes} from '~/theme/dimension';
+import {useBaseHook} from '~/hooks';
 import useTabBadge from '~/hooks/tabBadge';
-import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
-import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
+import appActions from '~/store/app/actions';
+import {deviceDimensions, sizes} from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
+import {ITheme} from '~/theme/interfaces';
 
 const BottomTabBar: FC<BottomTabBarProps> = ({
   state,
@@ -39,7 +38,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   navigation,
 }: BottomTabBarProps) => {
   let tabBarVisible = useRef(true).current;
-
+  const dispatch = useDispatch();
   const showValue = useSharedValue(1);
 
   const theme = useTheme() as ITheme;
@@ -137,7 +136,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
 
     const onPress = () => {
       if (name === 'menus') {
-        DeviceEventEmitter.emit('showMenuSidebarDrawer', true);
+        dispatch(appActions.setDrawerVisible(true));
       } else {
         DeviceEventEmitter.emit('onTabPress', name);
         const event: any = navigation.emit({

@@ -1,37 +1,35 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Platform,
-  DeviceEventEmitter,
-  TouchableOpacity,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import {Dimensions, Platform, StyleSheet, TouchableOpacity} from 'react-native';
+import {PanGestureHandler} from 'react-native-gesture-handler';
+import {useTheme} from 'react-native-paper';
 import Animated, {
-  useAnimatedStyle,
-  useSharedValue,
   interpolate,
   runOnJS,
-  withTiming,
   useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
 } from 'react-native-reanimated';
-import {useTheme} from 'react-native-paper';
-import {useBackHandler} from '@react-native-community/hooks';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {PanGestureHandler} from 'react-native-gesture-handler';
+import {useDispatch} from 'react-redux';
+import {useKeySelector} from '~/hooks/selector';
+import MenuSidebarContent from '~/router/components/MenuSidebarDrawer/MenuSidebarContent';
+import {ITheme} from '~/theme/interfaces';
+import appActions from '~/store/app/actions';
 
 const DeviceWidth = Dimensions.get('window').width;
 
-import MenuSidebarContent from '~/router/components/MenuSidebarDrawer/MenuSidebarContent';
-import {ITheme} from '~/theme/interfaces';
-
 const MenuSidebarDrawer = () => {
   const [isShow, setIsShow] = useState(false);
+  const dispatch = useDispatch();
   const showValue = useSharedValue(0);
   const xValue = useSharedValue(0);
 
   const insets = useSafeAreaInsets();
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme, insets);
+
+  const drawerVisible = useKeySelector('app.drawerVisible');
 
   const containerStyle = useAnimatedStyle(() => ({
     position: 'absolute',
@@ -54,6 +52,7 @@ const MenuSidebarDrawer = () => {
   const hide = (duration = 300) => {
     const onHideDone = () => {
       setIsShow(false);
+      dispatch(appActions.setDrawerVisible(false));
     };
     showValue.value = withTiming(0, {duration}, () => {
       runOnJS(onHideDone)();
@@ -62,31 +61,17 @@ const MenuSidebarDrawer = () => {
 
   const show = (duration = 400) => {
     setIsShow(true);
+    dispatch(appActions.setDrawerVisible(true));
     showValue.value = withTiming(1, {duration});
   };
 
-  useBackHandler(() => {
-    if (isShow) {
+  useEffect(() => {
+    if (drawerVisible) {
+      show();
+    } else {
       hide();
     }
-    return true;
-  });
-
-  useEffect(() => {
-    const showMenuSidebarDrawerListener = DeviceEventEmitter.addListener(
-      'showMenuSidebarDrawer',
-      isShow => {
-        if (isShow) {
-          show();
-        } else {
-          hide();
-        }
-      },
-    );
-    return () => {
-      showMenuSidebarDrawerListener?.remove?.();
-    };
-  }, []);
+  }, [drawerVisible]);
 
   const gestureHandler = useAnimatedGestureHandler({
     onStart(event: any) {
@@ -113,6 +98,7 @@ const MenuSidebarDrawer = () => {
   if (Platform.OS === 'web' || !isShow) {
     return null;
   }
+
   return (
     <Animated.View style={containerStyle}>
       <Animated.View style={styles.status} />

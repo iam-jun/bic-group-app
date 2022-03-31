@@ -12,7 +12,7 @@ import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from './redux/keySelector';
 import {deviceDimensions} from '~/theme/dimension';
-import {useTabPressListener} from '~/hooks/navigation';
+import {useBackPressListener, useTabPressListener} from '~/hooks/navigation';
 import {ITabTypes} from '~/interfaces/IRouter';
 import GroupSearch from '~/screens/Groups/components/GroupSearch';
 import appActions from '~/store/app/actions';
@@ -22,6 +22,7 @@ import images from '~/resources/images';
 
 const Groups: React.FC = () => {
   const listRef = useRef<any>();
+  const headerRef = useRef<any>();
 
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
@@ -63,6 +64,12 @@ const Groups: React.FC = () => {
     },
     [listRef],
   );
+
+  const handleBackPress = () => {
+    headerRef?.current?.goBack?.();
+  };
+
+  useBackPressListener(handleBackPress);
 
   const getData = () => {
     dispatch(groupsActions.getJoinedGroups());
@@ -114,6 +121,7 @@ const Groups: React.FC = () => {
     <View style={styles.containerScreen}>
       <Header
         hideBack
+        headerRef={headerRef}
         title="tabs:groups"
         titleTextProps={{useI18n: true}}
         searchInputTestID="groups.search_input"
