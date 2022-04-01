@@ -168,12 +168,11 @@ const PostToolbar = ({
           <View
             style={StyleSheet.flatten([styles.toolbarStyle, style])}
             testID="post_toolbar">
-            {!!content &&
-              renderToolbarButton(
-                'CreditCardSearch',
-                'post_toolbar.markdown_preview',
-                onPressMarkdownPreview,
-              )}
+            {renderToolbarButton(
+              'CreditCardSearch',
+              'post_toolbar.markdown_preview',
+              content && onPressMarkdownPreview,
+            )}
             {renderToolbarButton(
               'ImagePlus',
               'post_toolbar.add_photo',
