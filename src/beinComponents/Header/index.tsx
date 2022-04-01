@@ -144,7 +144,6 @@ const Header: React.FC<HeaderProps> = ({
   }, []);
 
   const _onPressBack = () => {
-    console.log('_onPressBack', onPressBack);
     if (onPressBack) {
       onPressBack();
     } else {

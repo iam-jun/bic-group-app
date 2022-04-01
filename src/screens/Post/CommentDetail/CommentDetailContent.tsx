@@ -9,7 +9,7 @@ import CommentViewPlaceholder from '~/beinComponents/placeholder/CommentViewPlac
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
-import {IAudienceGroup} from '~/interfaces/IPost';
+import {IAudienceGroup, IReaction} from '~/interfaces/IPost';
 import {ITheme} from '~/theme/interfaces';
 import CommentInputView from '../components/CommentInputView';
 import postActions from '../redux/actions';
@@ -35,10 +35,8 @@ const CommentDetailContent = (props: any) => {
   const actor = useKeySelector(postKeySelector.postActorById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
 
-  const allComments = useKeySelector(postKeySelector.allComments);
-
-  const comment =
-    allComments?.[commentData?.id]?.latest_children?.comment || [];
+  const comments = useKeySelector(postKeySelector.commentsByParentId(id));
+  const comment = getListChildComment(comments, commentData?.id);
 
   const scrollToCommentsPosition = useKeySelector(
     postKeySelector.scrollToCommentsPosition,
@@ -207,6 +205,20 @@ const CommentLevel1 = ({id, headerTitle, commentData, groupIds}: any) => {
       />
     </View>
   );
+};
+
+const getListChildComment = (
+  listData: IReaction[],
+  parentCommentId: string,
+) => {
+  const parentCommentPosition = listData?.findIndex?.(
+    (item: IReaction) => item.id === parentCommentId,
+  );
+
+  const latestChildren =
+    listData?.[parentCommentPosition]?.latest_children || {};
+  const childrenComments = latestChildren?.comment || [];
+  return childrenComments;
 };
 
 const createStyle = (theme: ITheme) => {
