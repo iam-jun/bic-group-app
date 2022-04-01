@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useImperativeHandle, useRef, useState} from 'react';
 import {
   Animated,
   Keyboard,
@@ -12,10 +12,8 @@ import {useTheme} from 'react-native-paper';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {GestureEvent} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
 import {useDispatch} from 'react-redux';
-import {useBackHandler} from '@react-native-community/hooks';
 
 import BottomSheet from '~/beinComponents/BottomSheet/index';
-import {BaseBottomSheetProps} from '~/beinComponents/BottomSheet/BaseBottomSheet';
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
@@ -38,8 +36,8 @@ import {tryOpenURL} from '~/beinComponents/Markdown/utils/url.js';
 import ReviewMarkdown from './ReviewMarkdown';
 import {getChatDomain} from '~/utils/link';
 
-export interface PostToolbarProps extends BaseBottomSheetProps {
-  modalizeRef: any;
+export interface PostToolbarProps {
+  toolbarRef?: any;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
   onPressBack?: () => void;
@@ -47,10 +45,9 @@ export interface PostToolbarProps extends BaseBottomSheetProps {
 }
 
 const PostToolbar = ({
-  modalizeRef,
+  toolbarRef,
   style,
   containerStyle,
-  disabled,
   onPressBack,
   ...props
 }: PostToolbarProps) => {
@@ -62,6 +59,7 @@ const PostToolbar = ({
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
+  const modalizeRef = useRef<any>();
 
   const selectedImage: ICreatePostImage[] = useKeySelector(
     postKeySelector.createPost.images,
@@ -80,14 +78,20 @@ const PostToolbar = ({
     modalizeRef?.current?.close?.();
   };
 
-  useBackHandler(() => {
+  const goBack = () => {
     if (isOpen) {
       closeModal();
     } else {
       onPressBack?.();
     }
     return true;
-  });
+  };
+
+  useImperativeHandle(toolbarRef, () => ({
+    openModal,
+    closeModal,
+    goBack,
+  }));
 
   const handleGesture = (event: GestureEvent<any>) => {
     const {nativeEvent} = event;

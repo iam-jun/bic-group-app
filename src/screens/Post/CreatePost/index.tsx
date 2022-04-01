@@ -1,45 +1,43 @@
 import React, {FC, useEffect, useRef} from 'react';
 import {
   Animated,
+  Easing,
   Keyboard,
   Platform,
   ScrollView,
   StyleSheet,
-  View,
   Text as RNText,
   TouchableOpacity,
-  Easing,
   useWindowDimensions,
+  View,
 } from 'react-native';
+import DeviceInfo from 'react-native-device-info';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-
+import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
+import Icon from '~/beinComponents/Icon';
+import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-
-import {useRootNavigation} from '~/hooks/navigation';
+import Text from '~/beinComponents/Text';
+import {uploadTypes} from '~/configs/resourceConfig';
+import {useBaseHook} from '~/hooks';
+import {useKeyboardStatus} from '~/hooks/keyboard';
+import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
 import {IAudience, ICreatePostParams} from '~/interfaces/IPost';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
+import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
+import CreatePostFooter from '~/screens/Post/CreatePost/CreatePostFooter';
+import useCreatePost from '~/screens/Post/CreatePost/useCreatePost';
 import postActions from '~/screens/Post/redux/actions';
+import modalActions from '~/store/modal/actions';
+import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
 import {padding} from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
-import modalActions from '~/store/modal/actions';
-import {useBaseHook} from '~/hooks';
-import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import {uploadTypes} from '~/configs/resourceConfig';
-import {fontFamilies} from '~/theme/fonts';
-import Button from '~/beinComponents/Button';
-import MentionInput from '~/beinComponents/inputs/MentionInput';
-import Icon from '~/beinComponents/Icon';
-import Text from '~/beinComponents/Text';
-import {useKeyboardStatus} from '~/hooks/keyboard';
-import DeviceInfo from 'react-native-device-info';
-import CreatePostFooter from '~/screens/Post/CreatePost/CreatePostFooter';
-import useCreatePost from '~/screens/Post/CreatePost/useCreatePost';
 
 export interface CreatePostProps {
   route?: {
@@ -53,7 +51,7 @@ const inputMinHeight = 22;
 const toastMinHeight = 36;
 
 const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
-  const toolbarModalizeRef = useRef();
+  const toolbarRef = useRef<any>();
   const mentionInputRef = useRef<any>();
   const screenParams = route?.params || {};
   let deviceVersion = 0;
@@ -129,6 +127,12 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const isEdit = !!(sPostId && !sPostData?.is_draft);
   const isDraftPost = !!(sPostId && sPostData?.is_draft);
 
+  const handleBackPress = () => {
+    toolbarRef?.current?.goBack?.();
+  };
+
+  useBackPressListener(handleBackPress);
+
   useEffect(() => {
     if (content !== contentInput && isAnimated) {
       setContentInput(content);
@@ -172,7 +176,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const onPressBack = () => {
     Keyboard.dismiss();
-
     if (isEditPost && !isEditDraftPost) {
       if (isEditPostHasChange) {
         dispatch(
@@ -435,7 +438,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           </View>
         )}
         <CreatePostFooter
-          toolbarModalizeRef={toolbarModalizeRef}
+          toolbarRef={toolbarRef}
           loading={loading}
           onPressBack={onPressBack}
         />

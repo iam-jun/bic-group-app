@@ -20,6 +20,10 @@ export default {
     type: Actions.SET_ROOT_SCREEN_NAME,
     payload,
   }),
+  setDrawerVisible: (payload: boolean) => ({
+    type: Actions.SET_DRAWER_VISIBLE,
+    payload,
+  }),
 };
 
 // export const setupPushToken = () => ({
