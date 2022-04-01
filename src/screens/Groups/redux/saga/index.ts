@@ -103,7 +103,7 @@ function* getGroupSearch({payload}: {type: string; payload: string}) {
         loading: false,
       }),
     );
-    if (response.code !== 200) {
+    if (response.code != 200 && response.code?.toUpperCase?.() !== 'OK') {
       console.log(`\x1b[31m🐣️ saga getGroupSearch error: ${response}\x1b[0m`);
     }
   } catch (err) {
