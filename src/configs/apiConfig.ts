@@ -134,7 +134,7 @@ export interface Provider {
 }
 
 export interface HttpApiResponseFormat {
-  code: number;
+  code: string | number;
   data?: any;
   meta?: any;
 }

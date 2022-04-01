@@ -422,9 +422,8 @@ const getAuthTokens = async () => {
     const httpResponse = await makeHttpRequest(apiConfig.App.tokens());
     // @ts-ignore
     const data = mapResponseSuccessBein(httpResponse);
-    if (data.code != 200) {
-      return false;
-    }
+
+    if (data.code != 200 && data.code?.toUpperCase?.() !== 'OK') return false;
 
     const {accessToken: feedAccessToken, subscribeToken: notiSubscribeToken} =
       data.data?.stream;
