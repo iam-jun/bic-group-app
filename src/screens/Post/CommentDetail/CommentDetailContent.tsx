@@ -211,12 +211,13 @@ const getListChildComment = (
   listData: IReaction[],
   parentCommentId: string,
 ) => {
-  const parentCommentPosition = listData.findIndex(
+  const parentCommentPosition = listData?.findIndex?.(
     (item: IReaction) => item.id === parentCommentId,
   );
 
-  const latestChildren = listData[parentCommentPosition].latest_children || {};
-  const childrenComments = latestChildren.comment || [];
+  const latestChildren =
+    listData?.[parentCommentPosition]?.latest_children || {};
+  const childrenComments = latestChildren?.comment || [];
   return childrenComments;
 };
 
