@@ -12,6 +12,8 @@ import MemberOptionsMenu from './MemberOptionsMenu';
 import initialState from '~/store/initialState';
 import {IGroupMembers} from '~/interfaces/IGroup';
 import useRemoveMember from './useRemoveMember';
+import * as navigationHook from '~/hooks/navigation';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 describe('MemberOptionsMenu component', () => {
   const baseSheetRef = jest.fn();
@@ -262,11 +264,17 @@ describe('MemberOptionsMenu component', () => {
     fireEvent.press(item);
   });
 
-  it('should render View profile option correctly', () => {
+  it('should navigate to user profile correctly when pressing View profile option', () => {
     const selectedMember = {
       id: 1,
       roles: [{type: 'MEMBER'}],
     } as IGroupMembers;
+
+    const navigate = jest.fn();
+    const rootNavigation = {navigate};
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
+      return {rootNavigation} as any;
+    });
 
     const {getByTestId} = renderWithRedux(
       <MemberOptionsMenu
@@ -280,6 +288,9 @@ describe('MemberOptionsMenu component', () => {
     const item = getByTestId('member_options_menu.view_profile');
     expect(item).toBeDefined();
     fireEvent.press(item);
+    expect(navigate).toBeCalledWith(mainStack.userProfile, {
+      userId: selectedMember.id,
+    });
   });
 
   it('renders Send message option correctly when admin clicks on another user', () => {
