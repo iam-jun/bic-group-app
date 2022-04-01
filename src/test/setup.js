@@ -52,19 +52,6 @@ jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
 jest.mock('~/screens/Menu/helper/MenuDataHelper');
 
-// jest.mock('~/services/fileUploader', () => {
-//   const imgURL =
-//     'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/4a8c0ce3-0813-4387-9547-eadcd7fee38b.jpg';
-
-//   return {
-//     getInstance: jest.fn().mockReturnThis(() => {
-//       return {
-//         upload: jest.fn().mockResolvedValue(imgURL),
-//       };
-//     }),
-//   };
-// });
-
 // @ts-ignore
 global.FormData = require('react-native/Libraries/Network/FormData');
 
@@ -98,6 +85,13 @@ jest.doMock('react-native-paper', () => ({
     ...ReactNative.TextInput,
     Icon: ReactNative.View,
   },
+}));
+
+jest.doMock('react-native-autogrow-textinput', () => ({
+  // eslint-disable-next-line react/prop-types
+  AutoGrowingTextInput: ({children, ...props}) => (
+    <ReactNative.TextInput {...props}>{children}</ReactNative.TextInput>
+  ),
 }));
 
 jest.doMock('@react-navigation/native', () => ({
