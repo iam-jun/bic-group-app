@@ -20,6 +20,7 @@ import modalActions from '~/store/modal/actions';
 import useCreatePost, {
   handlePressPostResultType,
 } from '~/screens/Post/CreatePost/useCreatePost';
+import MockedNavigator from '~/test/MockedNavigator';
 
 describe('Create Post screen', () => {
   let Platform: any;
@@ -54,7 +55,10 @@ describe('Create Post screen', () => {
     const storeData = {...initialState};
     storeData.post.createPost.chosenAudiences = [GROUP_AUDIENCE] as any;
     const store = createTestStore(storeData);
-    const wrapper = renderWithRedux(<CreatePost />, store);
+    const wrapper = renderWithRedux(
+      <MockedNavigator component={CreatePost} />,
+      store,
+    );
     const btnPost = wrapper.getByTestId('create_post.btn_post');
     expect(btnPost.props?.accessibilityState?.disabled).toBe(true);
     expect(wrapper).toMatchSnapshot();
@@ -64,7 +68,10 @@ describe('Create Post screen', () => {
     const storeData = {...initialState};
     storeData.post.createPost.chosenAudiences = [GROUP_AUDIENCE] as any;
     const store = createTestStore(storeData);
-    const wrapper = renderWithRedux(<CreatePost />, store);
+    const wrapper = renderWithRedux(
+      <MockedNavigator component={CreatePost} />,
+      store,
+    );
     const btnPost = wrapper.getByTestId('create_post.btn_post');
     expect(btnPost.props?.accessibilityState?.disabled).toBe(true);
     const input = wrapper.getByTestId('_mention_input.input');
@@ -74,14 +81,14 @@ describe('Create Post screen', () => {
   });
 
   it(`should navigate to screen post settings when press button settings`, async () => {
-    const wrapper = renderWithRedux(<CreatePost />);
+    const wrapper = renderWithRedux(<MockedNavigator component={CreatePost} />);
     const btnSettings = wrapper.getByTestId('create_post.btn_post_settings');
     fireEvent.press(btnSettings);
     expect(navigate).toBeCalledWith(homeStack.postSettings);
   });
 
   it(`should navigate to screen select audience when press chosen audience view`, async () => {
-    const wrapper = renderWithRedux(<CreatePost />);
+    const wrapper = renderWithRedux(<MockedNavigator component={CreatePost} />);
     const chosenAudienceView = wrapper.getByTestId(
       'create_post_chosen_audiences',
     );
@@ -90,7 +97,7 @@ describe('Create Post screen', () => {
   });
 
   it('should show when press back', () => {
-    const wrapper = renderWithRedux(<CreatePost />);
+    const wrapper = renderWithRedux(<MockedNavigator component={CreatePost} />);
     const btnBack = wrapper.getByTestId('header.back');
     fireEvent.press(btnBack);
   });
@@ -100,7 +107,7 @@ describe('Create Post screen', () => {
     const spy = jest
       .spyOn(DeviceInfo, 'getSystemVersion')
       .mockImplementation(() => '8');
-    const wrapper = renderWithRedux(<CreatePost />);
+    const wrapper = renderWithRedux(<MockedNavigator component={CreatePost} />);
     const cloneTextContainer = wrapper.queryByTestId(
       'create_post.clone_text_container',
     );
@@ -112,7 +119,11 @@ describe('Create Post screen', () => {
     const spy = jest.spyOn(modalActions, 'showAlert');
     const store = createTestStore(editPostStoreData);
     const wrapper = renderWithRedux(
-      <CreatePost route={{params: {postId: POST_DETAIL.id}}} />,
+      <MockedNavigator
+        component={() => (
+          <CreatePost route={{params: {postId: POST_DETAIL.id}}} />
+        )}
+      />,
       store,
     );
     const headerText = wrapper.getByTestId('header.text');
@@ -126,7 +137,11 @@ describe('Create Post screen', () => {
     const spy = jest.spyOn(modalActions, 'showAlert');
     const store = createTestStore(editPostStoreData);
     const wrapper = renderWithRedux(
-      <CreatePost route={{params: {postId: POST_DETAIL.id}}} />,
+      <MockedNavigator
+        component={() => (
+          <CreatePost route={{params: {postId: POST_DETAIL.id}}} />
+        )}
+      />,
       store,
     );
     const headerText = wrapper.getByTestId('header.text');
