@@ -138,6 +138,10 @@ const PostToolbar = ({
     });
   };
 
+  const onPressAddFile = () => {
+    // TODO
+  };
+
   const onPressHelp = () => {
     const DOMAIN = getChatDomain();
     tryOpenURL(`${DOMAIN}/help/formatting`);
@@ -152,7 +156,7 @@ const PostToolbar = ({
       <View style={styles.toolbarButton}>
         <Icon
           size={20}
-          tintColor={colors.textSecondary}
+          tintColor={onPressIcon ? colors.iconTint : colors.textDisabled}
           icon={icon}
           buttonTestID={testID}
           onPress={onPressIcon}
@@ -178,7 +182,11 @@ const PostToolbar = ({
               'post_toolbar.add_photo',
               _onPressSelectImage,
             )}
-            {renderToolbarButton('Link', 'post_toolbar.add_file')}
+            {renderToolbarButton(
+              'Link',
+              'post_toolbar.add_file',
+              onPressAddFile,
+            )}
           </View>
           {!!content && renderMarkdownHelp()}
           <KeyboardSpacer iosOnly />
