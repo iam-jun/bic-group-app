@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {Platform, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {fontFamilies} from '~/theme/fonts';
@@ -7,8 +7,6 @@ import {ITheme} from '~/theme/interfaces';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
-import commonActions, {IAction} from '~/constants/commonActions';
-import postActions from '~/screens/Post/redux/actions';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
 import Button from '~/beinComponents/Button';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
@@ -20,13 +18,7 @@ import * as modalActions from '~/store/modal/actions';
 
 import {useBaseHook} from '~/hooks';
 import {formatDate} from '~/utils/formatData';
-import {isEqual} from 'lodash';
-
-import {IActivityImportant} from '~/interfaces/IPost';
-import {useKeySelector} from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-
-const MAX_DAYS = 7;
+import {usePostSettings} from '~/screens/Post/PostSettings/usePostSettings';
 
 const PostSettings = () => {
   const dispatch = useDispatch();
@@ -36,26 +28,21 @@ const PostSettings = () => {
   const {colors, spacing} = theme;
 
   const styles = createStyle(theme);
-  const {important, currentSettings} = useKeySelector(
-    postKeySelector.createPost.all,
-  );
 
-  const [selectingDate, setSelectingDate] = useState<boolean>();
-  const [selectingTime, setSelectingTime] = useState<boolean>();
-
-  const [disableButtonSave, setDisableButtonSave] = useState<boolean>(true);
-  const [sImportant, setImportant] = useState<IActivityImportant>({
-    active: false,
-    expires_time: '',
-    ...important,
-  });
-  //   const [comments, setComments] = useState<boolean>(false);
-  //   const [shares, setShares] = useState<boolean>(true);
-  //   const [reacts, setReacts] = useState<boolean>(true);
-
-  useEffect(() => {
-    checkDisableButtonSave();
-  }, [sImportant]);
+  const {
+    sImportant,
+    selectingDate,
+    selectingTime,
+    disableButtonSave,
+    setSelectingDate,
+    setSelectingTime,
+    handlePressSave,
+    handleToggleImportant,
+    handleChangeDatePicker,
+    handleChangeTimePicker,
+    getMinDate,
+    getMaxDate,
+  } = usePostSettings();
 
   const onPressBack = () => {
     if (disableButtonSave) {
@@ -75,91 +62,6 @@ const PostSettings = () => {
           stretchOnWeb: true,
         }),
       );
-    }
-  };
-
-  const onPressSave = () => {
-    const dataDefault = [
-      sImportant.active === currentSettings?.important?.active,
-      sImportant.expires_time === currentSettings?.important?.expires_time,
-    ];
-    const newCount = dataDefault.filter(i => !i);
-    dispatch(
-      postActions.setCreatePostSettings({
-        important: sImportant,
-        count: newCount?.length || 0,
-      }),
-    );
-    rootNavigation.goBack();
-  };
-
-  const checkDisableButtonSave = () => {
-    const dataCount = [
-      isEqual(sImportant, important),
-      //   comments,
-      //   shares,
-      //   reacts,
-    ];
-    const newCount = dataCount.filter(i => !i);
-    setDisableButtonSave(newCount.length === 0);
-  };
-
-  const onToggleImportant = () => {
-    const newImportant = {...sImportant};
-    newImportant.active = !sImportant.active;
-    if (!newImportant.expires_time) {
-      newImportant.expires_time = getMinDate().toDateString();
-    }
-    if (newImportant.active && newImportant.expires_time) {
-      const date = new Date(newImportant.expires_time);
-      if (date.getTime() < getMinDate().getTime()) {
-        newImportant.expires_time = getMinDate().toISOString();
-      }
-    }
-    if (!newImportant.active) {
-      newImportant.expires_time = currentSettings?.important?.expires_time;
-    }
-    setImportant(newImportant);
-  };
-
-  const onChangeDatePicker = (date?: Date) => {
-    setSelectingDate(false);
-    setSelectingTime(false);
-    if (date) {
-      const newImportant = {...sImportant};
-      let expiresTime = '';
-      if (date) {
-        const time = sImportant.expires_time
-          ? new Date(sImportant.expires_time)
-          : new Date();
-        date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
-        expiresTime = date.toISOString();
-        if (date.getTime() < getMinDate().getTime()) {
-          expiresTime = getMinDate().toISOString();
-        }
-      }
-      newImportant.expires_time = expiresTime;
-      setImportant(newImportant);
-    }
-  };
-
-  const onChangeTimePicker = (time?: Date) => {
-    setSelectingDate(false);
-    setSelectingTime(false);
-    if (time) {
-      const newImportant = {...sImportant};
-      const date = sImportant.expires_time
-        ? new Date(sImportant.expires_time)
-        : new Date();
-
-      date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
-      let expiresTime = date.toISOString();
-
-      if (date.getTime() < getMinDate().getTime()) {
-        expiresTime = getMinDate().toISOString();
-      }
-      newImportant.expires_time = expiresTime;
-      setImportant(newImportant);
     }
   };
 
@@ -232,7 +134,7 @@ const PostSettings = () => {
           <Toggle
             testID={'post_settings.toggle_important'}
             isChecked={sImportant?.active}
-            onActionPress={onToggleImportant}
+            onActionPress={handleToggleImportant}
           />
         </View>
         {!!active && renderImportantDate()}
@@ -247,7 +149,7 @@ const PostSettings = () => {
         title="post:settings"
         buttonText="post:save"
         onPressBack={onPressBack}
-        onPressButton={onPressSave}
+        onPressButton={handlePressSave}
         buttonVariant="Secondary"
         buttonProps={{
           disabled: disableButtonSave,
@@ -271,8 +173,8 @@ const PostSettings = () => {
               minDate={getMinDate()}
               maxDate={getMaxDate()}
               mode={Platform.OS === 'web' ? 'time' : 'date'}
-              onConfirm={onChangeDatePicker}
-              onCancel={onChangeDatePicker}
+              onConfirm={handleChangeDatePicker}
+              onCancel={handleChangeDatePicker}
             />
           )}
           {selectingTime && (
@@ -286,8 +188,8 @@ const PostSettings = () => {
               minDate={getMinDate()}
               maxDate={getMaxDate()}
               mode={'time'}
-              onConfirm={onChangeTimePicker}
-              onCancel={onChangeTimePicker}
+              onConfirm={handleChangeTimePicker}
+              onCancel={handleChangeTimePicker}
             />
           )}
         </View>
@@ -295,24 +197,6 @@ const PostSettings = () => {
     </ScreenWrapper>
   );
 };
-
-const getMinDate = () => {
-  const currentData = new Date();
-  const minDate = currentData.setHours(currentData.getHours() + 1);
-  return new Date(minDate);
-};
-
-const getMaxDate = () => {
-  const now = new Date();
-  const max = now.setDate(now.getDate() + MAX_DAYS);
-  return new Date(max);
-};
-
-// const getDefaultExpire = () => {
-//   const max = getMaxDate();
-//   const maxWithTime = new Date(max).setHours(23, 59, 0, 0);
-//   return new Date(maxWithTime).toISOString();
-// };
 
 const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
