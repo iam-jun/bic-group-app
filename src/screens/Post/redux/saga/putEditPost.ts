@@ -34,11 +34,7 @@ export default function* putEditPost({
           props: {textProps: {useI18n: true}, type: 'success'},
         }),
       );
-      if (replaceWithDetail) {
-        navigation.replace(homeStack.postDetail, {post_id: post?.id});
-      } else {
-        navigation.goBack();
-      }
+      yield call(navigate, replaceWithDetail, post?.id);
     }
   } catch (e) {
     yield put(postActions.setLoadingCreatePost(false));
@@ -54,5 +50,13 @@ export default function* putEditPost({
         },
       }),
     );
+  }
+}
+
+export function navigate(replaceWithDetail: boolean, postId?: string) {
+  if (replaceWithDetail) {
+    navigation.replace(homeStack.postDetail, {post_id: postId});
+  } else {
+    navigation.goBack();
   }
 }

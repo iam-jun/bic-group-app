@@ -1,7 +1,7 @@
 import {expectSaga} from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
-import putEditPost from '~/screens/Post/redux/saga/putEditPost';
-import {IPayloadPutEditPost} from '~/interfaces/IPost';
+import putEditPost, {navigate} from '~/screens/Post/redux/saga/putEditPost';
+import {IPayloadPutEditPost, IPostCreatePost} from '~/interfaces/IPost';
 import {POST_DETAIL} from '~/test/mock_data/post';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
@@ -19,18 +19,20 @@ describe('Edit Post Saga', () => {
       });
   });
 
-  it('call server edit post success', () => {
+  it('call server edit post success then replace with detail', () => {
+    const data: IPostCreatePost = {
+      data: {...POST_DETAIL.object.data, content: 'new content'},
+    };
     const payload: IPayloadPutEditPost = {
       id: POST_DETAIL.id,
-      data: {
-        data: {...POST_DETAIL.object.data, content: 'new content'},
-      },
+      data,
     };
     return expectSaga(putEditPost, {type: 'test', payload})
       .provide([
         [matchers.call.fn(postDataHelper.putEditPost), {data: POST_DETAIL}],
       ])
       .put(postActions.setLoadingCreatePost(true))
+      .call(postDataHelper.putEditPost, {postId: POST_DETAIL.id, data})
       .put(postActions.setLoadingCreatePost(false))
       .put(postActions.addToAllPosts({data: POST_DETAIL}))
       .put(
@@ -39,9 +41,40 @@ describe('Edit Post Saga', () => {
           props: {textProps: {useI18n: true}, type: 'success'},
         }),
       )
+      .call(navigate, true, POST_DETAIL.id)
       .run()
       .then(({allEffects}: any) => {
-        expect(allEffects?.length).toEqual(5);
+        expect(allEffects?.length).toEqual(6);
+      });
+  });
+
+  it('call server edit post success then go back', () => {
+    const data: IPostCreatePost = {
+      data: {...POST_DETAIL.object.data, content: 'new content'},
+    };
+    const payload: IPayloadPutEditPost = {
+      id: POST_DETAIL.id,
+      data,
+      replaceWithDetail: false,
+    };
+    return expectSaga(putEditPost, {type: 'test', payload})
+      .provide([
+        [matchers.call.fn(postDataHelper.putEditPost), {data: POST_DETAIL}],
+      ])
+      .put(postActions.setLoadingCreatePost(true))
+      .call(postDataHelper.putEditPost, {postId: POST_DETAIL.id, data})
+      .put(postActions.setLoadingCreatePost(false))
+      .put(postActions.addToAllPosts({data: POST_DETAIL}))
+      .put(
+        modalActions.showHideToastMessage({
+          content: 'post:text_edit_post_success',
+          props: {textProps: {useI18n: true}, type: 'success'},
+        }),
+      )
+      .call(navigate, false, POST_DETAIL.id)
+      .run()
+      .then(({allEffects}: any) => {
+        expect(allEffects?.length).toEqual(6);
       });
   });
 
