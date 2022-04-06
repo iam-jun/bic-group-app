@@ -20,6 +20,7 @@ import modalActions from '~/store/modal/actions';
 import useCreatePost, {
   handlePressPostResultType,
 } from '~/screens/Post/CreatePost/useCreatePost';
+import MockedNavigator from '~/test/MockedNavigator';
 
 describe('Create Post screen', () => {
   let Platform: any;
@@ -28,6 +29,110 @@ describe('Create Post screen', () => {
     Platform = require('react-native').Platform;
   });
 
+  const navigate = jest.fn();
+  const goBack = jest.fn();
+  const rootNavigation = {navigate, goBack};
+  jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
+    return {rootNavigation} as any;
+  });
+
+  it(`renders correctly with 1 audience selected, empty content, button post disabled`, async () => {
+    const storeData = {...initialState};
+    storeData.post.createPost.chosenAudiences = [GROUP_AUDIENCE] as any;
+    const store = createTestStore(storeData);
+    const wrapper = renderWithRedux(
+      <MockedNavigator component={CreatePost} />,
+      store,
+    );
+    const btnPost = wrapper.getByTestId('create_post.btn_post');
+    expect(btnPost.props?.accessibilityState?.disabled).toBe(true);
+    expect(wrapper).toMatchSnapshot();
+  });
+
+  it(`should enable button post after change text content`, async () => {
+    const storeData = {...initialState};
+    storeData.post.createPost.chosenAudiences = [GROUP_AUDIENCE] as any;
+    const store = createTestStore(storeData);
+    const wrapper = renderWithRedux(
+      <MockedNavigator component={CreatePost} />,
+      store,
+    );
+    const btnPost = wrapper.getByTestId('create_post.btn_post');
+    expect(btnPost.props?.accessibilityState?.disabled).toBe(true);
+    const input = wrapper.getByTestId('_mention_input.input');
+    fireEvent.changeText(input, 'hello');
+    await waitForUpdateRedux();
+    expect(btnPost.props?.accessibilityState?.disabled).toBe(false);
+  });
+
+  it(`should navigate to screen post settings when press button settings`, async () => {
+    const wrapper = renderWithRedux(<MockedNavigator component={CreatePost} />);
+    const btnSettings = wrapper.getByTestId('create_post.btn_post_settings');
+    fireEvent.press(btnSettings);
+    expect(navigate).toBeCalledWith(homeStack.postSettings);
+  });
+
+  it(`should navigate to screen select audience when press chosen audience view`, async () => {
+    const wrapper = renderWithRedux(<MockedNavigator component={CreatePost} />);
+    const chosenAudienceView = wrapper.getByTestId(
+      'create_post_chosen_audiences',
+    );
+    fireEvent.press(chosenAudienceView);
+    expect(navigate).toBeCalledWith(homeStack.postSelectAudience);
+  });
+
+  it('should show when press back', () => {
+    const wrapper = renderWithRedux(<MockedNavigator component={CreatePost} />);
+    const btnBack = wrapper.getByTestId('header.back');
+    fireEvent.press(btnBack);
+  });
+
+  it('should use clone text on Android 8', () => {
+    Platform.OS = 'android';
+    const spy = jest
+      .spyOn(DeviceInfo, 'getSystemVersion')
+      .mockImplementation(() => '8');
+    const wrapper = renderWithRedux(<MockedNavigator component={CreatePost} />);
+    const cloneTextContainer = wrapper.queryByTestId(
+      'create_post.clone_text_container',
+    );
+    expect(cloneTextContainer).not.toBeNull();
+    spy.mockClear();
+  });
+
+  //test hook for some case can't cover by interact to UI
+  it('handlePressPost should done with newPost', async () => {
+    const wrapper = getHookReduxWrapper();
+    const {result} = renderHook(() => useCreatePost({screenParams: {}}), {
+      wrapper,
+    });
+    let pressResult: handlePressPostResultType;
+    act(() => {
+      pressResult = result.current.handlePressPost();
+      expect(pressResult).toBe('newPost');
+    });
+  });
+
+  it('handlePressPost should done with loading', async () => {
+    const stateData = {...initialState};
+    stateData.post.createPost = {loading: true} as any;
+    const store = createTestStore(stateData);
+    const wrapper = getHookReduxWrapper(store);
+    const {result} = renderHook(
+      () => useCreatePost({screenParams: {postId: POST_DETAIL.id}}),
+      {
+        wrapper,
+      },
+    );
+    let pressResult: handlePressPostResultType;
+    act(() => {
+      pressResult = result.current.handlePressPost();
+      expect(pressResult).toBe('loading');
+    });
+  });
+});
+
+describe('Edit Post screen', () => {
   const editPostStoreData = {
     ...initialState,
     ...{post: {allPosts: {[POST_DETAIL.id]: POST_DETAIL}}},
@@ -43,76 +148,15 @@ describe('Create Post screen', () => {
     },
   } as any;
 
-  const navigate = jest.fn();
-  const goBack = jest.fn();
-  const rootNavigation = {navigate, goBack};
-  jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-    return {rootNavigation} as any;
-  });
-
-  it(`renders correctly with 1 audience selected, empty content, button post disabled`, async () => {
-    const storeData = {...initialState};
-    storeData.post.createPost.chosenAudiences = [GROUP_AUDIENCE] as any;
-    const store = createTestStore(storeData);
-    const wrapper = renderWithRedux(<CreatePost />, store);
-    const btnPost = wrapper.getByTestId('create_post.btn_post');
-    expect(btnPost.props?.accessibilityState?.disabled).toBe(true);
-    expect(wrapper).toMatchSnapshot();
-  });
-
-  it(`should enable button post after change text content`, async () => {
-    const storeData = {...initialState};
-    storeData.post.createPost.chosenAudiences = [GROUP_AUDIENCE] as any;
-    const store = createTestStore(storeData);
-    const wrapper = renderWithRedux(<CreatePost />, store);
-    const btnPost = wrapper.getByTestId('create_post.btn_post');
-    expect(btnPost.props?.accessibilityState?.disabled).toBe(true);
-    const input = wrapper.getByTestId('_mention_input.input');
-    fireEvent.changeText(input, 'hello');
-    await waitForUpdateRedux();
-    expect(btnPost.props?.accessibilityState?.disabled).toBe(false);
-  });
-
-  it(`should navigate to screen post settings when press button settings`, async () => {
-    const wrapper = renderWithRedux(<CreatePost />);
-    const btnSettings = wrapper.getByTestId('create_post.btn_post_settings');
-    fireEvent.press(btnSettings);
-    expect(navigate).toBeCalledWith(homeStack.postSettings);
-  });
-
-  it(`should navigate to screen select audience when press chosen audience view`, async () => {
-    const wrapper = renderWithRedux(<CreatePost />);
-    const chosenAudienceView = wrapper.getByTestId(
-      'create_post_chosen_audiences',
-    );
-    fireEvent.press(chosenAudienceView);
-    expect(navigate).toBeCalledWith(homeStack.postSelectAudience);
-  });
-
-  it('should show when press back', () => {
-    const wrapper = renderWithRedux(<CreatePost />);
-    const btnBack = wrapper.getByTestId('header.back');
-    fireEvent.press(btnBack);
-  });
-
-  it('should use clone text on Android 8', () => {
-    Platform.OS = 'android';
-    const spy = jest
-      .spyOn(DeviceInfo, 'getSystemVersion')
-      .mockImplementation(() => '8');
-    const wrapper = renderWithRedux(<CreatePost />);
-    const cloneTextContainer = wrapper.queryByTestId(
-      'create_post.clone_text_container',
-    );
-    expect(cloneTextContainer).not.toBeNull();
-    spy.mockClear();
-  });
-
   it('should not show alert when press back edit post without change content', () => {
     const spy = jest.spyOn(modalActions, 'showAlert');
     const store = createTestStore(editPostStoreData);
     const wrapper = renderWithRedux(
-      <CreatePost route={{params: {postId: POST_DETAIL.id}}} />,
+      <MockedNavigator
+        component={() => (
+          <CreatePost route={{params: {postId: POST_DETAIL.id}}} />
+        )}
+      />,
       store,
     );
     const headerText = wrapper.getByTestId('header.text');
@@ -126,7 +170,11 @@ describe('Create Post screen', () => {
     const spy = jest.spyOn(modalActions, 'showAlert');
     const store = createTestStore(editPostStoreData);
     const wrapper = renderWithRedux(
-      <CreatePost route={{params: {postId: POST_DETAIL.id}}} />,
+      <MockedNavigator
+        component={() => (
+          <CreatePost route={{params: {postId: POST_DETAIL.id}}} />
+        )}
+      />,
       store,
     );
     const headerText = wrapper.getByTestId('header.text');
@@ -136,19 +184,6 @@ describe('Create Post screen', () => {
     fireEvent.changeText(input, 'hello');
     fireEvent.press(btnBack);
     expect(spy).toBeCalled();
-  });
-
-  //test hook for some case can't cover by interact to UI
-  it('handlePressPost should done with newPost', async () => {
-    const wrapper = getHookReduxWrapper();
-    const {result} = renderHook(() => useCreatePost({screenParams: {}}), {
-      wrapper,
-    });
-    let pressResult: handlePressPostResultType;
-    act(() => {
-      pressResult = result.current.handlePressPost();
-      expect(pressResult).toBe('newPost');
-    });
   });
 
   it('handlePressPost should done with editPost', async () => {
@@ -180,24 +215,6 @@ describe('Create Post screen', () => {
     act(() => {
       pressResult = result.current.handlePressPost();
       expect(pressResult).toBe('editDraft');
-    });
-  });
-
-  it('handlePressPost should done with loading', async () => {
-    const stateData = {...editPostStoreData};
-    stateData.post.createPost = {loading: true};
-    const store = createTestStore(stateData);
-    const wrapper = getHookReduxWrapper(store);
-    const {result} = renderHook(
-      () => useCreatePost({screenParams: {postId: POST_DETAIL.id}}),
-      {
-        wrapper,
-      },
-    );
-    let pressResult: handlePressPostResultType;
-    act(() => {
-      pressResult = result.current.handlePressPost();
-      expect(pressResult).toBe('loading');
     });
   });
 });
