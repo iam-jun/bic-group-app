@@ -61,7 +61,7 @@ describe('UserProfile screen', () => {
     const mockActionGetMyProfile = () => {
       return {
         type: menuTypes.SET_USER_PROFILE,
-        payload: {...USER_PROFILE, id: 1},
+        payload: USER_PROFILE,
       };
     };
 
@@ -222,6 +222,41 @@ describe('UserProfile screen', () => {
     expect(navigate).toHaveBeenCalledWith(mainStack.userEdit, {
       userId: 1,
     });
+  });
+
+  it(`should show select photos when clicking the cover image edit button if is the current user`, () => {
+    const mockActionGetMyProfile = () => {
+      return {
+        type: menuTypes.SET_USER_PROFILE,
+        payload: USER_PROFILE,
+      };
+    };
+
+    jest
+      .spyOn(menuActions, 'getUserProfile')
+      .mockImplementation(mockActionGetMyProfile as any);
+    const user = {
+      signInUserSession: {
+        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+      },
+    };
+    const storeData = {...initialState};
+    //@ts-ignore
+    storeData.menu.myProfile = USER_PROFILE;
+    storeData.auth.user = user as any;
+    storeData.menu.showUserNotFound = false;
+
+    const store = mockStore(storeData);
+    const props = {route: {params: {userId: USER_PROFILE.id}}};
+    const wrapper = renderWithRedux(<UserProfile {...props} />, store);
+
+    const buttonCoverImage = wrapper.queryByTestId(
+      'user_profile.edit.cover_image',
+    );
+    expect(buttonCoverImage).toBeDefined();
+
+    //@ts-ignore
+    fireEvent.press(buttonCoverImage);
   });
 
   it(`should render loading when loadingUserProfile is true`, () => {
