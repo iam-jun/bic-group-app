@@ -90,7 +90,6 @@ describe('', () => {
       />,
       store,
     );
-    expect(wrapper).toMatchSnapshot();
     const view = wrapper.getByTestId('collapsible_text.level_1.content');
     expect(view.children?.[0]).toBe(POST_DETAIL_2.object.data.content);
   });

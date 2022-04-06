@@ -1,0 +1,81 @@
+import {expectSaga} from 'redux-saga-test-plan';
+import * as matchers from 'redux-saga-test-plan/matchers';
+import putEditPost from '~/screens/Post/redux/saga/putEditPost';
+import {IPayloadPutEditPost} from '~/interfaces/IPost';
+import {POST_DETAIL} from '~/test/mock_data/post';
+import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postActions from '~/screens/Post/redux/actions';
+import modalActions from '~/store/modal/actions';
+import {languages} from '~/test/testUtils';
+import {throwError} from 'redux-saga-test-plan/providers';
+
+describe('Edit Post Saga', () => {
+  it('should do nothing with invalid payload', async () => {
+    const payload: IPayloadPutEditPost = {} as any;
+    return expectSaga(putEditPost, {type: 'test', payload})
+      .run()
+      .then(({allEffects}: any) => {
+        expect(allEffects?.length).toEqual(0);
+      });
+  });
+
+  it('call server edit post success', () => {
+    const payload: IPayloadPutEditPost = {
+      id: POST_DETAIL.id,
+      data: {
+        data: {...POST_DETAIL.object.data, content: 'new content'},
+      },
+    };
+    return expectSaga(putEditPost, {type: 'test', payload})
+      .provide([
+        [matchers.call.fn(postDataHelper.putEditPost), {data: POST_DETAIL}],
+      ])
+      .put(postActions.setLoadingCreatePost(true))
+      .put(postActions.setLoadingCreatePost(false))
+      .put(postActions.addToAllPosts({data: POST_DETAIL}))
+      .put(
+        modalActions.showHideToastMessage({
+          content: 'post:text_edit_post_success',
+          props: {textProps: {useI18n: true}, type: 'success'},
+        }),
+      )
+      .run()
+      .then(({allEffects}: any) => {
+        expect(allEffects?.length).toEqual(5);
+      });
+  });
+
+  it('call server edit post failed', () => {
+    const payload: IPayloadPutEditPost = {
+      id: POST_DETAIL.id,
+      data: {
+        data: {...POST_DETAIL.object.data, content: 'new content'},
+      },
+    };
+    return expectSaga(putEditPost, {type: 'test', payload})
+      .provide([
+        [
+          matchers.call.fn(postDataHelper.putEditPost),
+          throwError(new Error('empty data')),
+        ],
+      ])
+      .put(postActions.setLoadingCreatePost(true))
+      .put(postActions.setLoadingCreatePost(false))
+      .put(
+        modalActions.showHideToastMessage({
+          content: languages.post.text_edit_post_failed,
+          toastType: 'normal',
+          props: {
+            textProps: {useI18n: true},
+            type: 'error',
+            rightText: languages.common.text_retry,
+            onPressRight: undefined,
+          },
+        }),
+      )
+      .run()
+      .then(({allEffects}: any) => {
+        expect(allEffects?.length).toEqual(4);
+      });
+  });
+});

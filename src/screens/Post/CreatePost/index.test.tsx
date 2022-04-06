@@ -29,21 +29,6 @@ describe('Create Post screen', () => {
     Platform = require('react-native').Platform;
   });
 
-  const editPostStoreData = {
-    ...initialState,
-    ...{post: {allPosts: {[POST_DETAIL.id]: POST_DETAIL}}},
-  } as any;
-
-  const editDraftStoreData = {
-    ...initialState,
-    ...{
-      post: {
-        allPosts: {[POST_DETAIL.id]: {...POST_DETAIL, is_draft: true}},
-        draftPosts: {posts: [{...POST_DETAIL, is_draft: true}]},
-      },
-    },
-  } as any;
-
   const navigate = jest.fn();
   const goBack = jest.fn();
   const rootNavigation = {navigate, goBack};
@@ -115,6 +100,54 @@ describe('Create Post screen', () => {
     spy.mockClear();
   });
 
+  //test hook for some case can't cover by interact to UI
+  it('handlePressPost should done with newPost', async () => {
+    const wrapper = getHookReduxWrapper();
+    const {result} = renderHook(() => useCreatePost({screenParams: {}}), {
+      wrapper,
+    });
+    let pressResult: handlePressPostResultType;
+    act(() => {
+      pressResult = result.current.handlePressPost();
+      expect(pressResult).toBe('newPost');
+    });
+  });
+
+  it('handlePressPost should done with loading', async () => {
+    const stateData = {...initialState};
+    stateData.post.createPost = {loading: true} as any;
+    const store = createTestStore(stateData);
+    const wrapper = getHookReduxWrapper(store);
+    const {result} = renderHook(
+      () => useCreatePost({screenParams: {postId: POST_DETAIL.id}}),
+      {
+        wrapper,
+      },
+    );
+    let pressResult: handlePressPostResultType;
+    act(() => {
+      pressResult = result.current.handlePressPost();
+      expect(pressResult).toBe('loading');
+    });
+  });
+});
+
+describe('Edit Post screen', () => {
+  const editPostStoreData = {
+    ...initialState,
+    ...{post: {allPosts: {[POST_DETAIL.id]: POST_DETAIL}}},
+  } as any;
+
+  const editDraftStoreData = {
+    ...initialState,
+    ...{
+      post: {
+        allPosts: {[POST_DETAIL.id]: {...POST_DETAIL, is_draft: true}},
+        draftPosts: {posts: [{...POST_DETAIL, is_draft: true}]},
+      },
+    },
+  } as any;
+
   it('should not show alert when press back edit post without change content', () => {
     const spy = jest.spyOn(modalActions, 'showAlert');
     const store = createTestStore(editPostStoreData);
@@ -153,19 +186,6 @@ describe('Create Post screen', () => {
     expect(spy).toBeCalled();
   });
 
-  //test hook for some case can't cover by interact to UI
-  it('handlePressPost should done with newPost', async () => {
-    const wrapper = getHookReduxWrapper();
-    const {result} = renderHook(() => useCreatePost({screenParams: {}}), {
-      wrapper,
-    });
-    let pressResult: handlePressPostResultType;
-    act(() => {
-      pressResult = result.current.handlePressPost();
-      expect(pressResult).toBe('newPost');
-    });
-  });
-
   it('handlePressPost should done with editPost', async () => {
     const store = createTestStore(editPostStoreData);
     const wrapper = getHookReduxWrapper(store);
@@ -195,24 +215,6 @@ describe('Create Post screen', () => {
     act(() => {
       pressResult = result.current.handlePressPost();
       expect(pressResult).toBe('editDraft');
-    });
-  });
-
-  it('handlePressPost should done with loading', async () => {
-    const stateData = {...editPostStoreData};
-    stateData.post.createPost = {loading: true};
-    const store = createTestStore(stateData);
-    const wrapper = getHookReduxWrapper(store);
-    const {result} = renderHook(
-      () => useCreatePost({screenParams: {postId: POST_DETAIL.id}}),
-      {
-        wrapper,
-      },
-    );
-    let pressResult: handlePressPostResultType;
-    act(() => {
-      pressResult = result.current.handlePressPost();
-      expect(pressResult).toBe('loading');
     });
   });
 });
