@@ -1237,6 +1237,7 @@ function* getPostDetail({
   }
   try {
     callbackLoading?.(true, false);
+    yield put(postActions.setLoadingGetPostDetail(true));
     const params: IParamGetPostDetail = {
       postId,
       //is_draft
@@ -1248,6 +1249,7 @@ function* getPostDetail({
     callbackLoading?.(false, true);
   } catch (e: any) {
     yield timeOut(500);
+    yield put(postActions.setLoadingGetPostDetail(false));
     callbackLoading?.(false, false);
     const post = yield select(state =>
       get(state, postKeySelector.postById(postId)),
