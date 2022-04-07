@@ -17,6 +17,7 @@ import AddWork from './AddWork';
 import menuDataHelper from '../../helper/MenuDataHelper';
 import i18next from 'i18next';
 import {formatDate} from '~/utils/formatData';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 afterEach(cleanup);
 
@@ -423,5 +424,25 @@ describe('AddWork screen', () => {
     // expect(textInputDescriptionView.props.style[0].borderColor).toBe(
     //   colors.light.colors.primary6,
     // );
+  });
+
+  it(`should back to userEdit screen successfully if rootNavigation.canGoBack = false `, () => {
+    Keyboard.dismiss = jest.fn();
+    const replace = jest.fn();
+
+    const rootNavigation = {canGoBack: false, replace};
+
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
+      return {rootNavigation} as any;
+    });
+
+    const store = mockStore(initialState);
+
+    const wrapper = renderWithRedux(<AddWork />, store);
+
+    const buttonBack = wrapper.getByTestId('header.back');
+    fireEvent.press(buttonBack);
+    expect(Keyboard.dismiss).toBeCalled();
+    expect(replace).toBeCalledWith(mainStack.userEdit);
   });
 });
