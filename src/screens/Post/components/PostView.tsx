@@ -30,9 +30,7 @@ import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
 import {ReactionType} from '~/constants/reactions';
-import modalActions, {
-  showReactionDetailBottomSheet,
-} from '~/store/modal/actions';
+import modalActions from '~/store/modal/actions';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import PostViewContent from '~/screens/Post/components/postView/PostViewContent';
 import PostViewHeader from '~/screens/Post/components/postView/PostViewHeader';
@@ -218,6 +216,7 @@ const _PostView: FC<PostViewProps> = ({
   };
 
   const onLongPressReaction = (reactionType: ReactionType) => {
+    console.log(`\x1b[36m🐣️ PostView onLongPressReaction\x1b[0m`);
     const payload: IPayloadReactionDetailBottomSheet = {
       isOpen: true,
       reactionCounts: reaction_counts,
@@ -225,7 +224,7 @@ const _PostView: FC<PostViewProps> = ({
       getDataParam: {postId, commentId: undefined},
       getDataPromise: getReactionStatistics,
     };
-    dispatch(showReactionDetailBottomSheet(payload));
+    dispatch(modalActions.showReactionDetailBottomSheet(payload));
   };
 
   const _onPressHeader = () => {
@@ -259,7 +258,9 @@ const _PostView: FC<PostViewProps> = ({
     return (
       <View style={StyleSheet.flatten([styles.deletedContainer, style])}>
         <Image style={styles.imageDelete} source={resourceImages.img_delete} />
-        <Text.H6 useI18n>post:label_post_deleted</Text.H6>
+        <Text.H6 testID={'post_view.label_deleted'} useI18n>
+          post:label_post_deleted
+        </Text.H6>
       </View>
     );
   }

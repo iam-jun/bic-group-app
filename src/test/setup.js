@@ -54,7 +54,7 @@ jest.mock('~/screens/Menu/helper/MenuDataHelper');
 
 import mock from 'react-native-permissions/mock';
 jest.mock('react-native-permissions', () => {
-  return mock
+  return mock;
 });
 
 // @ts-ignore
@@ -90,6 +90,13 @@ jest.doMock('react-native-paper', () => ({
     ...ReactNative.TextInput,
     Icon: ReactNative.View,
   },
+}));
+
+jest.doMock('react-native-autogrow-textinput', () => ({
+  // eslint-disable-next-line react/prop-types
+  AutoGrowingTextInput: ({children, ...props}) => (
+    <ReactNative.TextInput {...props}>{children}</ReactNative.TextInput>
+  ),
 }));
 
 jest.doMock('@react-navigation/native', () => ({
