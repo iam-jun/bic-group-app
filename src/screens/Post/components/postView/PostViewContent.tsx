@@ -58,7 +58,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
           : getResourceUrl('postImage', imageName)
         : '';
       return (
-        <View style={styles.row}>
+        <View testID={'post_view_content.lite_container'} style={styles.row}>
           <View style={styles.flex1}>
             <CollapsibleText
               testID={'post_view_content'}
