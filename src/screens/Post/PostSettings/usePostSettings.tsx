@@ -102,8 +102,8 @@ export const usePostSettings = () => {
 
   const handlePressSave = () => {
     const dataDefault = [
-      sImportant.active === currentSettings?.important?.active,
-      sImportant.expires_time === currentSettings?.important?.expires_time,
+      sImportant.active === currentSettings?.important?.active ||
+        sImportant.expires_time === currentSettings?.important?.expires_time,
     ];
     const newCount = dataDefault.filter(i => !i);
     dispatch(
@@ -116,8 +116,8 @@ export const usePostSettings = () => {
   };
 
   const getMinDate = () => {
-    const currentData = new Date();
-    const minDate = currentData.setHours(currentData.getHours() + 1);
+    const currentDate = new Date();
+    const minDate = currentDate.setHours(currentDate.getHours() + 1);
     return new Date(minDate);
   };
 
