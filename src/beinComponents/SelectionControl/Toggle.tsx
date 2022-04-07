@@ -25,7 +25,7 @@ const Toggle: React.FC<ToggleProps> = ({
   onActionPress,
 }: ToggleProps) => {
   const [checked, setChecked] = useState<boolean>(isChecked);
-  const theme: ITheme = useTheme();
+  const theme: ITheme = useTheme() as ITheme;
   const styles = createStyles(theme, checked);
 
   useEffect(() => {
@@ -45,7 +45,9 @@ const Toggle: React.FC<ToggleProps> = ({
 
   return (
     <TouchableOpacity style={style} onPress={_onChangeValue} testID={testID}>
-      <View testID="toggle.out_side_view" style={styles.outsideRectangle}>
+      <View
+        testID={testID ? `${testID}.out_side_view` : 'toggle.out_side_view'}
+        style={styles.outsideRectangle}>
         <View style={styles.insideCircle} />
       </View>
     </TouchableOpacity>

@@ -14,7 +14,7 @@ import Toggle from '~/beinComponents/SelectionControl/Toggle';
 import {useDispatch} from 'react-redux';
 
 import {useRootNavigation} from '~/hooks/navigation';
-import * as modalActions from '~/store/modal/actions';
+import modalActions from '~/store/modal/actions';
 
 import {useBaseHook} from '~/hooks';
 import {formatDate} from '~/utils/formatData';
@@ -78,7 +78,7 @@ const PostSettings = () => {
     return (
       <View style={styles.importantButtons}>
         <Button.Secondary
-          testID="post_toolbar.date"
+          testID={'post_settings.important.btn_date'}
           leftIcon={'CalendarAlt'}
           leftIconProps={{icon: 'CalendarAlt', size: 20}}
           style={styles.buttonDate}
@@ -91,7 +91,7 @@ const PostSettings = () => {
           {date}
         </Button.Secondary>
         <Button.Secondary
-          testID="post_toolbar.time"
+          testID={'post_settings.important.btn_time'}
           leftIcon={'Clock'}
           leftIconProps={{icon: 'Clock', size: 20}}
           style={styles.buttonTime}
@@ -175,6 +175,7 @@ const PostSettings = () => {
               mode={Platform.OS === 'web' ? 'time' : 'date'}
               onConfirm={handleChangeDatePicker}
               onCancel={handleChangeDatePicker}
+              testID={'post_settings.important.date_picker'}
             />
           )}
           {selectingTime && (
@@ -190,6 +191,7 @@ const PostSettings = () => {
               mode={'time'}
               onConfirm={handleChangeTimePicker}
               onCancel={handleChangeTimePicker}
+              testID={'post_settings.important.time_picker'}
             />
           )}
         </View>
