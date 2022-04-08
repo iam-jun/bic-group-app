@@ -28,23 +28,19 @@ export default function* getDraftPosts({
       if (isRefresh) {
         const newData = {...draftPostsData, refreshing: true};
         yield put(postActions.setDraftPosts(newData));
-        console.log('111111');
       } else {
         const newData = {...draftPostsData, loading: true};
         yield put(postActions.setDraftPosts(newData));
       }
-      console.log('222222');
 
       const offset = isRefresh ? 0 : draftPosts?.length || 0;
       const response = yield call(postDataHelper.getDraftPosts, {
         offset: offset,
       });
-      console.log('333333', response);
 
       const newPosts = isRefresh
         ? response?.data || []
         : draftPosts.concat(response?.data || []);
-      console.log('444444');
 
       yield put(
         postActions.setDraftPosts({
