@@ -256,11 +256,12 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
       return;
     }
 
+    isRefreshingToken = false; // move from last line to here because sometime isRefreshingToken still true
+
     unauthorizedGetStreamReqQueue.forEach(callback => callback(isSuccess));
     unauthorizedGetStreamReqQueue = [];
     unauthorizedReqQueue.forEach(callback => callback(isSuccess));
     unauthorizedReqQueue = [];
-    isRefreshingToken = false;
   }
 };
 
@@ -425,7 +426,7 @@ const getAuthTokens = async () => {
 
     if (data.code != 200 && data.code?.toUpperCase?.() !== 'OK') return false;
 
-    const {accessToken: feedAccessToken, subscribeToken: notiSubscribeToken} =
+    const {access_token: feedAccessToken, subscribe_token: notiSubscribeToken} =
       data.data?.stream;
 
     return {
@@ -536,5 +537,6 @@ export {
   mapResponseSuccessBein,
   handleResponseFailFeedActivity,
   refreshAuthTokens,
+  getTokenAndCallBackBein,
   subscribeGetstreamFeed,
 };
