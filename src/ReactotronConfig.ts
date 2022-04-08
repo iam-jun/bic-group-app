@@ -13,7 +13,7 @@ const reactotron = Reactotron
   // @ts-ignore
   .use(sagaPlugin());
 if (__DEV__) {
-  // reactotron.connect();
+  reactotron.connect();
 }
 
 export default reactotron;
