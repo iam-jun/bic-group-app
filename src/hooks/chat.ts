@@ -1,6 +1,6 @@
 import NetInfo from '@react-native-community/netinfo';
 import {useEffect, useRef} from 'react';
-import {useAuthToken, useUserIdAuth} from '~/hooks/auth';
+import {useAuthToken, useAuthTokenExpire, useUserIdAuth} from '~/hooks/auth';
 
 import chatSocketClient from '~/services/chatSocket';
 import chatAction from '~/store/chat/actions';
@@ -14,11 +14,18 @@ export const useChatSocket = () => {
 
   const userId = useUserIdAuth();
   const token = useAuthToken();
+  const tokenExp = useAuthTokenExpire();
   const dispatch = useDispatch();
 
   const websocketOpts = {
     connectionUrl: getEnv('BEIN_CHAT_SOCKET'),
   };
+
+  console.log(
+    `\x1b[32m🐣️ chat useChatSocket token will expire at: ${new Date(
+      tokenExp * 1000,
+    ).toISOString()}\x1b[0m`,
+  );
 
   // wait 1s to avoid spam init when network change
   const connectSocket = debounce(() => {
@@ -26,6 +33,11 @@ export const useChatSocket = () => {
       // reconnect when have network back
       chatSocketClient.initialize(token, websocketOpts);
     }
+  }, 1000);
+
+  // wait 1s to avoid spam init when network change
+  const refreshToken = debounce(async () => {
+    await getTokenAndCallBackBein('');
   }, 1000);
 
   useEffect(() => {
@@ -45,16 +57,16 @@ export const useChatSocket = () => {
     chatSocketClient.setEventCallback((evt: any) =>
       dispatch(chatAction.handleChatEvent(evt)),
     );
-    chatSocketClient.setErrorCallback(async (evt: any) => {
+    // chatSocketClient.setErrorCallback(async (evt: any) => {}); //error callback not work on iOS
+    chatSocketClient.setCloseCallback(() => {
       if (!isConnectedRef.current) {
         console.log(`\x1b[31m🐣️ useChatSocket network error, skipped!\x1b[0m`);
         chatSocketClient.close(true);
         return;
       }
-
-      if (evt?.isTrusted === false) {
-        chatSocketClient.close(true);
-        await getTokenAndCallBackBein('');
+      if (isTokenExpired()) {
+        chatSocketClient.close(true); //close to disable retry
+        refreshToken();
       }
     });
   }, [userId]);
@@ -72,6 +84,11 @@ export const useChatSocket = () => {
       chatSocketClient.close(true);
     };
   }, [token]);
+
+  const isTokenExpired = () => {
+    const nowMs = new Date().getTime() / 1000;
+    return (tokenExp || 0) - nowMs < 0;
+  };
 
   return {};
 };
