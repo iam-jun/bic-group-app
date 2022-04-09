@@ -210,20 +210,13 @@ let isRefreshingToken = false;
 let countLimitRetry = 0;
 let timeEndCountLimit = 0;
 const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
-  console.log(
-    `\x1b[36m🐣️ httpApiRequest getTokenAndCallBackBein 1: ${isRefreshingToken}\x1b[0m`,
-  );
   if (!isRefreshingToken) {
-    console.log(`\x1b[36m🐣️ httpApiRequest getTokenAndCallBackBein 2\x1b[0m`);
     isRefreshingToken = true;
     countLimitRetry++;
     if (countLimitRetry > 10) {
       const timeNow = moment().unix();
       if (timeNow <= timeEndCountLimit) {
         refreshFailKickOut();
-        console.log(
-          `\x1b[31m🐣️ httpApiRequest getTokenAndCallBackBein 8\x1b[0m`,
-        );
         return;
       } else {
         countLimitRetry = 0;
@@ -236,68 +229,40 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
     let isSuccess = true;
 
     try {
-      console.log(
-        `\x1b[36m🐣️ httpApiRequest getTokenAndCallBackBein 3\x1b[0m`,
-      );
       const sessionData = await Auth.currentSession();
       const newToken = sessionData?.getAccessToken().getJwtToken();
       const refreshToken = sessionData?.getRefreshToken().getToken();
       const idToken = sessionData?.getIdToken().getJwtToken();
       const exp = sessionData?.getIdToken().getExpiration();
-      console.log(
-        `\x1b[36m🐣️ httpApiRequest getTokenAndCallBackBein idToken: ${idToken}\x1b[0m`,
-      );
 
       if (idToken === oldBeinToken) {
-        console.log(
-          `\x1b[36m🐣️ httpApiRequest getTokenAndCallBackBein 4\x1b[0m`,
-        );
         await Auth.currentAuthenticatedUser(); // TODO: verify when change password kickout
         refreshFailKickOut();
         isSuccess = false;
         return;
       } else {
-        console.log(
-          `\x1b[36m🐣️ httpApiRequest getTokenAndCallBackBein 5\x1b[0m`,
-        );
         _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken, exp);
 
         //For sharing data between Group and Chat
         await updateUserFromSharedPreferences({token: idToken, exp});
-        console.log(
-          `\x1b[36m🐣️ httpApiRequest getTokenAndCallBackBein 5.1\x1b[0m`,
-        );
       }
-      console.log(
-        `\x1b[36m🐣️ httpApiRequest getTokenAndCallBackBein 5.2\x1b[0m`,
-      );
       const isRefreshSuccess = await refreshAuthTokens();
       if (!isRefreshSuccess) {
         await Auth.currentAuthenticatedUser();
         refreshFailKickOut();
         isSuccess = false;
-        console.log(
-          `\x1b[31m🐣️ httpApiRequest getTokenAndCallBackBein 6\x1b[0m`,
-        );
         return;
       }
     } catch (e) {
       refreshFailKickOut();
-      console.log(
-        `\x1b[31m🐣️ httpApiRequest getTokenAndCallBackBein 7`,
-        e,
-        `\x1b[0m`,
-      );
       return;
     }
-    console.log(`\x1b[36m🐣️ httpApiRequest getTokenAndCallBackBein 9\x1b[0m`);
     isRefreshingToken = false; // move from last line to here because sometime isRefreshingToken still true
 
     unauthorizedGetStreamReqQueue.forEach(callback => callback(isSuccess));
     unauthorizedGetStreamReqQueue = [];
     unauthorizedReqQueue.forEach(callback => callback(isSuccess));
     unauthorizedReqQueue = [];
-    console.log(`\x1b[36m🐣️ httpApiRequest getTokenAndCallBackBein 10\x1b[0m`);
   }
 };
 
@@ -443,9 +408,7 @@ const handleResponseFailFeedActivity = async (
 };
 
 const refreshAuthTokens = async () => {
-  console.log(`\x1b[36m🐣️ httpApiRequest refreshAuthTokens\x1b[0m`);
   const dataTokens = await getAuthTokens();
-  console.log(`\x1b[36m🐣️ httpApiRequest after refreshAuthTokens\x1b[0m`);
   if (!dataTokens) {
     return false;
   }
@@ -459,15 +422,8 @@ const refreshAuthTokens = async () => {
 const getAuthTokens = async () => {
   try {
     const httpResponse = await makeHttpRequest(apiConfig.App.tokens());
-    console.log(
-      `\x1b[36m🐣️ httpApiRequest getAuthTokens receive response\x1b[0m`,
-    );
     // @ts-ignore
     const data = mapResponseSuccessBein(httpResponse);
-    console.log(
-      `\x1b[34m🐣️ httpApiRequest getAuthTokens receive response data: `,
-      `${JSON.stringify(data, undefined, 2)}\x1b[0m`,
-    );
 
     if (data.code != 200 && data.code?.toUpperCase?.() !== 'OK') return false;
 
@@ -479,7 +435,6 @@ const getAuthTokens = async () => {
       notiSubscribeToken,
     };
   } catch (e) {
-    console.log('getAuthTokens failed', e);
     return false;
   }
 };
@@ -520,7 +475,6 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
       // TODO: refactor
       break;
     default:
-      console.log(`\x1b[31m🐣️ httpApiRequest unknown provider name\x1b[0m`);
       return Promise.resolve(false);
   }
 
