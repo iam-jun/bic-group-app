@@ -58,12 +58,14 @@ const _dispatchRefreshTokenSuccess = (
   newToken: string,
   refreshToken: string,
   idToken: string,
+  idTokenExp: number,
 ) => {
   Store.store.dispatch(
     createAction(ActionTypes.RefreshTokenSuccessBein, {
       newToken,
       refreshToken,
       idToken,
+      idTokenExp,
     }),
   );
 };
@@ -239,7 +241,7 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
         isSuccess = false;
         return;
       } else {
-        _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken);
+        _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken, exp);
 
         //For sharing data between Group and Chat
         await updateUserFromSharedPreferences({token: idToken, exp});
@@ -255,7 +257,6 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
       refreshFailKickOut();
       return;
     }
-
     isRefreshingToken = false; // move from last line to here because sometime isRefreshingToken still true
 
     unauthorizedGetStreamReqQueue.forEach(callback => callback(isSuccess));
@@ -434,7 +435,6 @@ const getAuthTokens = async () => {
       notiSubscribeToken,
     };
   } catch (e) {
-    console.log('getAuthTokens failed', e);
     return false;
   }
 };
@@ -475,7 +475,6 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
       // TODO: refactor
       break;
     default:
-      console.log(`\x1b[31m🐣️ httpApiRequest unknown provider name\x1b[0m`);
       return Promise.resolve(false);
   }
 

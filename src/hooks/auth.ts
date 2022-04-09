@@ -25,4 +25,13 @@ export const useAuthToken = () => {
   );
 };
 
+export const useAuthTokenExpire = () => {
+  return (
+    useSelector(
+      (state: IObject<any>) =>
+        state.auth?.user?.signInUserSession?.idToken?.payload?.exp,
+    ) || ''
+  );
+};
+
 export default useAuth;
