@@ -121,6 +121,20 @@ jest.mock('react-native-device-info', () => mockRNDeviceInfo);
 
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo);
 
+jest.doMock('aws-amplify', () => {
+  const RealModule = jest.requireActual('aws-amplify');
+  // noinspection UnnecessaryLocalVariableJS
+  const MockedModule = {
+    ...RealModule,
+    // eslint-disable-next-line react/prop-types
+    Auth: {
+      forgotPassword: jest.fn(),
+      forgotPasswordSubmit: jest.fn(),
+    }
+  };
+  return MockedModule;
+});
+
 jest.doMock('react-native', () => {
   const {
     Platform,
@@ -233,3 +247,17 @@ jest.doMock('react-native', () => {
 //     useState: jest.fn().mockImplementation(init => [init, setState]),
 //   };
 // });
+
+jest.mock('react-hook-form', () => ({
+  ...jest.requireActual('react-hook-form'),
+  useController: () => ({
+    field: {
+      onChange: jest.fn(),
+      value: '',
+    },
+  }),
+  Controller: ({children}) => [children],
+  useSubscribe: () => ({
+    r: {current: {subject: {subscribe: () => jest.fn()}}},
+  }),
+}));
