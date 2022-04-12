@@ -53,6 +53,10 @@ class WebSocketClient {
   }
 
   initialize(token: string | null, opts = {}) {
+    if (this.connectionTimeout) {
+      clearTimeout(this.connectionTimeout);
+    }
+
     const defaults = {
       forceConnection: true,
       connectionUrl: this.connectionUrl,

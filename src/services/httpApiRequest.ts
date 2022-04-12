@@ -257,18 +257,27 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
       refreshFailKickOut();
       return;
     }
-    isRefreshingToken = false; // move from last line to here because sometime isRefreshingToken still true
 
     unauthorizedGetStreamReqQueue.forEach(callback => callback(isSuccess));
     unauthorizedGetStreamReqQueue = [];
     unauthorizedReqQueue.forEach(callback => callback(isSuccess));
     unauthorizedReqQueue = [];
+
+    isRefreshingToken = false;
   }
 };
 
 const handleResponseError = async (
   error: AxiosError,
 ): Promise<HttpApiResponseFormat | unknown> => {
+  // Sometime aws return old id token, using this old id token to refresh token will return 401
+  // should reset value isRefreshingToken for refresh later
+  const authConfig = apiConfig.App.tokens();
+  if (authConfig.url === error?.config?.url) {
+    isRefreshingToken = false;
+    await timeout(5000);
+  }
+
   if (error.response) {
     // @ts-ignore
     if (error.response.status === 401 && error.config.useRetry) {
@@ -527,6 +536,10 @@ const subscribeGetstreamFeed = (
   subscription.then(subscribeSuccessCallback, subscribeFailCallback);
   return subscription;
 };
+
+function timeout(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 export {
   makeGetStreamRequest,
