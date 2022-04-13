@@ -21,7 +21,10 @@ describe('Set group admin', () => {
         }),
       )
       .call(refreshGroupMembers, action.payload.groupId)
-      .run();
+      .run()
+      .then(({allEffects}: any) => {
+        expect(allEffects?.length).toEqual(8);
+      });
   });
 
   it('should call server and error occurs', () => {
@@ -34,6 +37,9 @@ describe('Set group admin', () => {
         ],
       ])
       .call(showError, error)
-      .run();
+      .run()
+      .then(({allEffects}: any) => {
+        expect(allEffects?.length).toEqual(4);
+      });
   });
 });
