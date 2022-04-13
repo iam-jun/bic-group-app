@@ -1,15 +1,14 @@
-import debounce from 'lodash/debounce';
 import isEmpty from 'lodash/isEmpty';
 import React from 'react';
-import {Controller, useForm} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
-import PasswordInput from '~/beinComponents/inputs/PasswordInput';
+import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 
-import TextInput from '~/beinComponents/inputs/TextInput';
+import TextInputController from '~/beinComponents/inputs/TextInputController';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {authStack} from '~/configs/navigator';
 import * as validation from '~/constants/commonRegex';
@@ -22,6 +21,8 @@ import {ITheme} from '~/theme/interfaces';
 
 const SignUp = () => {
   const dispatch = useDispatch();
+  const useFormData = useForm();
+
   const {
     control,
     formState: {errors},
@@ -29,7 +30,7 @@ const SignUp = () => {
     setError,
     clearErrors,
     getValues,
-  } = useForm();
+  } = useFormData;
   const theme: ITheme = useTheme() as ITheme;
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
@@ -51,15 +52,7 @@ const SignUp = () => {
     );
   };
 
-  const onUsernameChange = (
-    value: string,
-    onChange: (param: string) => void,
-  ) => {
-    onChange(value);
-    validateUsername(value);
-  };
-
-  const validateUsername = debounce(value => {
+  const validateUsername = async (value: string) => {
     if (value.trim().length === 0) {
       setError('username', {
         type: 'required',
@@ -68,15 +61,15 @@ const SignUp = () => {
     } else {
       clearErrors('username');
     }
-  }, 50);
+  };
 
-  const validateEmail = debounce(async () => {
+  const validateEmail = async () => {
     await trigger('email');
-  }, 50);
+  };
 
-  const validatePassword = debounce(async () => {
+  const validatePassword = async () => {
     await trigger('password');
-  }, 50);
+  };
 
   const checkDisableBtn = () => {
     const email: string = getValues('email');
@@ -89,47 +82,26 @@ const SignUp = () => {
   return (
     <ScreenWrapper testID="SignUpScreen" style={styles.container} isFullView>
       <View>
-        <Controller
-          control={control}
-          render={({field: {onChange, value}}) => (
-            <TextInput
-              testID="inputUsername"
-              label={t('auth:input_label_username')}
-              placeholder={t('auth:input_label_username')}
-              autoCapitalize="none"
-              value={value}
-              editable={!loading}
-              error={errors.username}
-              onChangeText={text => onUsernameChange(text, onChange)}
-              helperType="error"
-              helperContent={errors?.username?.message}
-            />
-          )}
+        <TextInputController
+          testID="inputUsername"
+          label={t('auth:input_label_username')}
+          placeholder={t('auth:input_label_username')}
+          autoCapitalize="none"
+          useFormData={useFormData}
           rules={{required: t('auth:text_err_username_blank')}}
           name="username"
-          defaultValue=""
+          validateValue={validateUsername}
+          loading={loading}
         />
 
-        <Controller
-          control={control}
-          render={({field: {onChange, value}}) => (
-            <TextInput
-              testID="inputEmail"
-              label={t('auth:input_label_email')}
-              placeholder={t('auth:input_label_email')}
-              autoCapitalize="none"
-              keyboardType="email-address"
-              value={value}
-              editable={!loading}
-              error={errors.email}
-              onChangeText={text => {
-                onChange(text);
-                validateEmail();
-              }}
-              helperType="error"
-              helperContent={errors?.email?.message}
-            />
-          )}
+        <TextInputController
+          testID="inputEmail"
+          label={t('auth:input_label_email')}
+          placeholder={t('auth:input_label_email')}
+          autoCapitalize="none"
+          keyboardType="email-address"
+          useFormData={useFormData}
+          name="email"
           rules={{
             required: t('auth:text_err_email_blank'),
             pattern: {
@@ -137,28 +109,12 @@ const SignUp = () => {
               message: t('auth:text_err_email_format'),
             },
           }}
-          name="email"
+          validateValue={validateEmail}
+          loading={loading}
         />
-
-        <Controller
-          control={control}
-          render={({field: {onChange, value}}) => (
-            <PasswordInput
-              testID="inputPassword"
-              label={t('auth:input_label_password')}
-              placeholder={t('auth:input_label_password')}
-              error={errors.password}
-              editable={!loading}
-              value={value}
-              onChangeText={text => {
-                onChange(text);
-                validatePassword();
-              }}
-              helperType="error"
-              helperContent={errors?.password?.message}
-            />
-          )}
-          name="password"
+        <PasswordInputController
+          useFormData={useFormData}
+          name={'password'}
           rules={{
             required: t('auth:text_err_password_blank'),
             min: 8,
@@ -168,6 +124,11 @@ const SignUp = () => {
             //   message: t('auth:text_err_password_format'),
             // },
           }}
+          loading={loading}
+          testID={'inputPassword'}
+          label={t('auth:input_label_password')}
+          placeholder={t('auth:input_label_password')}
+          validateValue={validatePassword}
         />
         <Button
           testID="textSignin"

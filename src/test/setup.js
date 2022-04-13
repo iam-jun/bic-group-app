@@ -130,7 +130,7 @@ jest.doMock('aws-amplify', () => {
     Auth: {
       forgotPassword: jest.fn(),
       forgotPasswordSubmit: jest.fn(),
-    }
+    },
   };
   return MockedModule;
 });

@@ -1,7 +1,11 @@
 import * as React from 'react';
 import {cleanup, fireEvent} from '@testing-library/react-native';
 import ForgotInputId from './ForgotInputId';
-import {configureStore, renderWithRedux} from '~/test/testUtils';
+import {
+  configureStore,
+  renderWithRedux,
+  rerenderWithRedux,
+} from '~/test/testUtils';
 import initialState from '~/store/initialState';
 
 afterEach(cleanup);
@@ -120,5 +124,64 @@ describe('ForgotInputId component', () => {
     const helperText = wrapper.queryByTestId('text_input.text_helper');
     expect(helperText).not.toBeNull();
     expect(helperText?.props?.children?.[0]).toBe('signingInError');
+  });
+
+  it(`request code to forgot password with valid email`, async () => {
+    const forgotPasswordError = {
+      errBox: '',
+      errRequest: '',
+      errConfirm: '',
+    };
+    const storeData = {...initialState};
+
+    storeData.auth.forgotPasswordStage = '';
+    storeData.auth.forgotPasswordLoading = false;
+    storeData.auth.forgotPasswordError = forgotPasswordError as any;
+    const store = mockStore(storeData);
+    const wrapper = renderWithRedux(
+      <ForgotInputId useFormData={useForm} />,
+      store,
+    );
+
+    const buttonSend = wrapper.getByTestId('btnSend');
+    expect(buttonSend).toBeDefined();
+    expect(buttonSend.props?.accessibilityState?.disabled).toBe(true);
+
+    const textInputComponent = wrapper.getByTestId('inputEmail');
+    expect(textInputComponent).toBeDefined();
+    fireEvent.changeText(textInputComponent, 'thuquyen@tgm.vn');
+
+    const getValues = jest.fn().mockImplementation((input: string) => {
+      switch (input) {
+        case 'email':
+          return 'thuquyen@tgm.vn';
+        default:
+          return '';
+      }
+    });
+    const setValue = jest.fn();
+    const clearErrors = jest.fn();
+    const newUseForm = {
+      ...useForm,
+      getValues,
+      setValue,
+      clearErrors,
+      formState: {
+        errors: {},
+      },
+    };
+
+    rerenderWithRedux(
+      wrapper,
+      <ForgotInputId useFormData={newUseForm} />,
+      store,
+    );
+
+    expect(buttonSend.props?.accessibilityState?.disabled).toBe(false);
+    fireEvent.press(buttonSend);
+
+    expect(getValues).toBeCalledWith('email');
+    expect(setValue).toBeCalledWith('code', '', {shouldValidate: false});
+    expect(clearErrors).toBeCalledWith('code');
   });
 });
