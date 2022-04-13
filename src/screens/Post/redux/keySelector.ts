@@ -27,7 +27,6 @@ const postKeySelector = {
 
   //Post data
   postById: (id: string) => `post.allPosts.${id}`,
-  postObjectDataById: (id: string) => `post.allPosts.${id}.object.data`,
   postActorById: (id: string) => `post.allPosts.${id}.actor`,
   postAudienceById: (id: string) => `post.allPosts.${id}.audience`,
   postCreatedAtById: (id: string) => `post.allPosts.${id}.createdAt`,

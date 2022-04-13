@@ -123,7 +123,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
 
   const isEditPost = !!initPostData?.id;
   const isEditPostHasChange =
-    content !== initPostData?.object?.data?.content ||
+    content !== initPostData?.content ||
     isImageHasChange ||
     isAudienceHasChange;
   const isEditDraftPost = !!initPostData?.id && draftPostId;
@@ -171,7 +171,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
 
       //handle selected, uploaded post's image
       const initImages: any = [];
-      initPostData?.object?.data?.images?.map(item => {
+      initPostData?.media?.images?.map(item => {
         initImages.push({
           fileName: item?.origin_name || item?.name,
           file: {
@@ -194,7 +194,12 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
 
   useEffect(() => {
     if (initPostData?.id) {
-      const initData = initPostData?.object?.data || {};
+      const initData = {
+        content: initPostData?.content || '',
+        images: initPostData?.media?.images,
+        files: initPostData?.media?.files,
+        videos: initPostData?.media?.videos,
+      };
       dispatch(postActions.setCreatePostData(initData));
 
       const initChosenAudience: any = [];
@@ -202,20 +207,24 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         initChosenAudience.push({
           id: group?.id,
           type: 'group',
-          name: group?.data?.name,
-          avatar: group?.data?.avatar,
+          name: group?.name,
+          avatar: group?.icon,
         });
       });
       initPostData?.audience?.users?.map?.(user => {
         initChosenAudience.push({
           id: user?.id,
           type: 'user',
-          name: user?.data?.fullname,
-          avatar: user?.data?.avatar,
+          name: user?.fullname,
+          avatar: user?.avatar,
         });
       });
       dispatch(postActions.setCreatePostChosenAudiences(initChosenAudience));
-      const initImportant = initPostData?.important || {};
+
+      const initImportant = {
+        active: !!initPostData?.setting?.isImportant,
+        expires_time: initPostData?.setting?.importantExpiredAt,
+      };
       dispatch(postActions.setCreatePostImportant(initImportant));
       dispatch(
         postActions.setCreatePostCurrentSettings({important: initImportant}),
