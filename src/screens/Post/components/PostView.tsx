@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState, memo} from 'react';
+import React, {FC, memo} from 'react';
 import {
   View,
   StyleSheet,
@@ -11,13 +11,14 @@ import {useDispatch} from 'react-redux';
 
 import {ITheme} from '~/theme/interfaces';
 import {
-  IActivityImportant,
   IAudienceUser,
+  IOwnReaction,
   IPayloadReactToPost,
   IPostActivity,
   IPostAudience,
+  IPostSetting,
+  IReactionCounts,
 } from '~/interfaces/IPost';
-import {IObject} from '~/interfaces/common';
 import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import resourceImages from '~/resources/images';
@@ -75,8 +76,6 @@ const _PostView: FC<PostViewProps> = ({
   btnReactTestID,
   btnCommentTestID,
 }: PostViewProps) => {
-  const [isImportant, setIsImportant] = useState(false);
-
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
@@ -85,72 +84,61 @@ const _PostView: FC<PostViewProps> = ({
 
   let actor: IAudienceUser | undefined,
     audience: IPostAudience | undefined,
-    time: string | undefined,
-    important: IActivityImportant | undefined,
     deleted: boolean,
-    own_reactions: any,
-    reaction_counts: IObject<number>,
-    reactions_order: string[],
-    is_draft: boolean,
-    postObjectData: any;
+    ownerReactions: IOwnReaction,
+    reactionsCount: IReactionCounts,
+    isDraft: boolean,
+    createdAt: string | undefined,
+    media: any,
+    content: string,
+    highlight: string,
+    setting: IPostSetting,
+    commentsCount: number;
 
   if (isUseReduxState) {
     actor = useKeySelector(postKeySelector.postActorById(postId));
     audience = useKeySelector(postKeySelector.postAudienceById(postId));
-    time = useKeySelector(postKeySelector.postTimeById(postId));
-    important = useKeySelector(postKeySelector.postImportantById(postId));
+    isDraft = useKeySelector(postKeySelector.postIsDraftById(postId));
+    createdAt = useKeySelector(postKeySelector.postCreatedAtById(postId));
+    media = useKeySelector(postKeySelector.postMediaById(postId));
+    content = useKeySelector(postKeySelector.postContentById(postId));
+    highlight = useKeySelector(postKeySelector.postHighlightById(postId));
+    setting = useKeySelector(postKeySelector.postSettingById(postId));
     deleted = useKeySelector(postKeySelector.postDeletedById(postId));
-    own_reactions = useKeySelector(postKeySelector.postOwnReactionById(postId));
-    reaction_counts = useKeySelector(
+    commentsCount = useKeySelector(
+      postKeySelector.postCommentCountsById(postId),
+    );
+
+    ownerReactions = useKeySelector(
+      postKeySelector.postOwnerReactionById(postId),
+    );
+    reactionsCount = useKeySelector(
       postKeySelector.postReactionCountsById(postId),
     );
-    reactions_order = useKeySelector(
-      postKeySelector.postReactionsOrderById(postId),
-    );
-    is_draft = useKeySelector(postKeySelector.postIsDraftById(postId));
-    postObjectData = useKeySelector(postKeySelector.postObjectDataById(postId));
   } else {
     actor = postData?.actor;
     audience = postData?.audience;
-    time = postData?.time;
-    important = postData?.important;
+    isDraft = postData?.isDraft || false;
+    createdAt = postData?.createdAt || '';
+    media = postData?.media;
+    content = postData?.content || '';
+    highlight = postData?.highlight || '';
+    setting = postData?.setting || {};
     deleted = false;
-    own_reactions = postData?.own_reactions;
-    reaction_counts = postData?.reaction_counts || {};
-    reactions_order = postData?.reactions_order || [];
-    postObjectData = postData?.object?.data;
+    commentsCount = postData?.commentsCount || 0;
+    ownerReactions = postData?.ownerReactions || {};
+    reactionsCount = postData?.reactionsCount || {};
   }
 
-  const {content, images, highlight} = postObjectData || {};
+  const {images} = media || {};
+  const {isImportant, importantExpiredAt} = setting || {};
 
   const userId = useUserIdAuth();
 
-  const commentCount = formatLargeNumber(reaction_counts?.comment_count || 0);
+  const commentCount = formatLargeNumber(commentsCount);
   const labelButtonComment = `${t('post:button_comment')}${
     commentCount ? ` (${commentCount})` : ''
   }`;
-
-  /**
-   * Check Important
-   * - important active = true
-   * - important expiresTime > now
-   * - Not mark as read
-   * - Not called mark as read
-   */
-  const checkImportant = () => {
-    const {active = false} = important || {};
-    let notMarkAsRead = true;
-    if (own_reactions?.mark_as_read?.length > 0) {
-      notMarkAsRead = false;
-    }
-    setIsImportant(!!active && notMarkAsRead);
-  };
-
-  useEffect(() => {
-    if (important && important.active) {
-      checkImportant();
-    }
-  }, [important]);
 
   const onPressShowAudiences = () => {
     const payload = {postId, fromStack: 'somewhere'};
@@ -167,7 +155,7 @@ const _PostView: FC<PostViewProps> = ({
             postId={postId}
             isPostDetail={isPostDetail}
             isActor={actor?.id == userId}
-            isDraftPost={is_draft}
+            isDraftPost={isDraft}
           />
         ),
         props: {
@@ -183,8 +171,8 @@ const _PostView: FC<PostViewProps> = ({
     const payload: IPayloadReactToPost = {
       id: postId,
       reactionId: reactionId,
-      ownReaction: own_reactions,
-      reactionCounts: reaction_counts,
+      ownReaction: ownerReactions,
+      reactionCounts: reactionsCount,
     };
     dispatch(postActions.postReactToPost(payload));
   };
@@ -193,8 +181,8 @@ const _PostView: FC<PostViewProps> = ({
     const payload: IPayloadReactToPost = {
       id: postId,
       reactionId: reactionId,
-      ownReaction: own_reactions,
-      reactionCounts: reaction_counts,
+      ownReaction: ownerReactions,
+      reactionCounts: reactionsCount,
     };
     dispatch(postActions.deleteReactToPost(payload));
   };
@@ -219,7 +207,7 @@ const _PostView: FC<PostViewProps> = ({
     console.log(`\x1b[36m🐣️ PostView onLongPressReaction\x1b[0m`);
     const payload: IPayloadReactionDetailBottomSheet = {
       isOpen: true,
-      reactionCounts: reaction_counts,
+      reactionCounts: reactionsCount,
       initReaction: reactionType,
       getDataParam: {postId, commentId: undefined},
       getDataPromise: getReactionStatistics,
@@ -277,14 +265,14 @@ const _PostView: FC<PostViewProps> = ({
       ])}>
       <PostViewImportant
         isLite={isLite}
-        isImportant={isImportant}
-        expireTime={important?.expires_time}
+        isImportant={!!isImportant}
+        expireTime={importantExpiredAt}
       />
       <View style={[styles.container]}>
         <PostViewHeader
           audience={audience}
           actor={actor}
-          time={time}
+          time={createdAt}
           onPressHeader={_onPressHeader}
           onPressMenu={onPressMenu}
           onPressShowAudiences={onPressShowAudiences}
@@ -300,16 +288,15 @@ const _PostView: FC<PostViewProps> = ({
         {!isLite && (
           <ReactionView
             style={styles.reactions}
-            ownReactions={own_reactions}
-            reactionCounts={reaction_counts}
-            reactionsOrder={reactions_order}
+            ownerReactions={ownerReactions}
+            reactionsCount={reactionsCount}
             onAddReaction={onAddReaction}
             onRemoveReaction={onRemoveReaction}
             onLongPressReaction={onLongPressReaction}
           />
         )}
         {isLite ? (
-          <PostViewFooterLite reactionCounts={reaction_counts} />
+          <PostViewFooterLite reactionCounts={reactionsCount} />
         ) : (
           <PostViewFooter
             labelButtonComment={labelButtonComment}
@@ -317,7 +304,7 @@ const _PostView: FC<PostViewProps> = ({
             onPressComment={_onPressComment}
             btnReactTestID={btnReactTestID}
             btnCommentTestID={btnCommentTestID}
-            reactionCounts={reaction_counts}
+            reactionCounts={reactionsCount}
           />
         )}
       </View>

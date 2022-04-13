@@ -24,24 +24,32 @@ const postKeySelector = {
     loading: 'post.draftPosts.loading',
     refreshing: 'post.draftPosts.refreshing',
   },
+
+  //Post data
   postById: (id: string) => `post.allPosts.${id}`,
   postObjectDataById: (id: string) => `post.allPosts.${id}.object.data`,
   postActorById: (id: string) => `post.allPosts.${id}.actor`,
   postAudienceById: (id: string) => `post.allPosts.${id}.audience`,
-  postTimeById: (id: string) => `post.allPosts.${id}.time`,
-  postImportantById: (id: string) => `post.allPosts.${id}.important`,
-  postOwnReactionById: (id: string) => `post.allPosts.${id}.own_reactions`,
-  postReactionCountsById: (id: string) => `post.allPosts.${id}.reaction_counts`,
+  postCreatedAtById: (id: string) => `post.allPosts.${id}.createdAt`,
+  postContentById: (id: string) => `post.allPosts.${id}.content`,
+  postMediaById: (id: string) => `post.allPosts.${id}.media`,
+  postHighlightById: (id: string) => `post.allPosts.${id}.highlight`,
+  postSettingById: (id: string) => `post.allPosts.${id}.setting`,
+  postMentionsById: (id: string) => `post.allPosts.${id}.mentions`,
+  postOwnerReactionById: (id: string) => `post.allPosts.${id}.ownerReactions`,
+  postReactionCountsById: (id: string) => `post.allPosts.${id}.reactionsCount`,
+  postCommentCountsById: (id: string) => `post.allPosts.${id}.commentsCount`,
+  postIsDraftById: (id: string) => `post.allPosts.${id}.isDraft`,
   postReactionsOrderById: (id: string) => `post.allPosts.${id}.reactions_order`,
-  postIsDraftById: (id: string) => `post.allPosts.${id}.is_draft`,
   postDeletedById: (id: string) => `post.allPosts.${id}.deleted`,
   postLatestReactionsComments: (id: string) =>
     `post.allPosts.${id}.latest_reactions.comment`,
-  postCommentCountsById: (id: string) =>
-    `post.allPosts.${id}.reaction_counts.comment`,
+
+  //Comment data
   allCommentsByParentIds: 'post.allCommentsByParentIds',
   commentsByParentId: (id: string) => `post.allCommentsByParentIds.${id}`,
   commentById: (id?: string) => `post.allComments.${id}`,
+
   scrollToLatestItem: 'post.scrollToLatestItem',
   postSelectAudienceState: 'post.postSelectAudienceState',
   scrollToCommentsPosition: 'post.scrollToCommentsPosition',

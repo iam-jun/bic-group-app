@@ -1,6 +1,5 @@
-import {IFilePicked, IObject} from '~/interfaces/common';
+import {IFilePicked} from '~/interfaces/common';
 import {ReactionType} from '~/constants/reactions';
-import {StreamClient} from 'getstream';
 
 export interface IPostAudience {
   users?: IAudienceUser[];
@@ -9,18 +8,16 @@ export interface IPostAudience {
 
 export interface IAudienceUser {
   id?: number | string;
-  data?: {
-    avatar?: string;
-    fullname?: string;
-  };
+  username?: string;
+  fullname?: string;
+  avatar?: string;
 }
 
 export interface IAudienceGroup {
   id?: number | string;
-  data?: {
-    avatar?: string;
-    name?: string;
-  };
+  name?: string;
+  icon?: string;
+  child?: number[];
 }
 
 export interface IMarkdownAudience {
@@ -75,43 +72,44 @@ export interface ICreatePostSettings {
   count: number;
 }
 
-/**
-  actor: userId
-  - Getstream saved as string
-  - Backend saved as int
-    =>  When post data to Backend, actor should be NUMBER
-        Otherwhile, when get data from Backend or Getstrea, actor should be STRING
- */
+export interface IPostSetting {
+  canReact?: boolean;
+  canShare?: boolean;
+  canComment?: boolean;
+  isImportant?: boolean;
+  importantExpiredAt?: string;
+}
+
+export interface IPostMedia {
+  images?: any[];
+  videos?: any[];
+  files?: any[];
+}
+
 export interface IPostActivity {
   id?: string;
-  foreign_id?: string;
-  getstream_id?: string;
-  actor?: IAudienceUser;
-  verb?: string;
-  type?: string;
-  object?: {
-    data?: IActivityData;
-    created_at?: string;
-    updated_at?: string;
-  };
-  followers?: number[];
   audience?: IPostAudience;
-  tags?: string[];
-  time?: string;
-  important?: IActivityImportant;
-  latest_reactions?: any;
-  own_reactions?: any;
-  reaction_counts?: IObject<number>;
-  reactions_order?: string[];
-  deleted?: boolean;
-  is_draft?: boolean;
+  content?: string;
+  highlight?: string;
+  media?: IPostMedia;
+  setting?: IPostSetting;
+  isDraft?: boolean;
+  actor?: IAudienceUser;
+  mentions?: any;
+  commentsCount?: number;
+  reactionsCount?: IReactionCounts;
+  ownerReactions?: IOwnReaction;
+  createdAt?: string;
+  createdBy?: number;
 }
 
 export interface IOwnReaction {
-  [reactionKind: string]: IReaction[];
+  [x: string]: {[reactionKind: string]: IReaction};
 }
 
-export type IReactionCounts = {[reactionKind: string]: number};
+export type IReactionCounts = {
+  [x: string]: {[reactionKind: string]: number};
+};
 
 export interface IAllPosts {
   [id: string]: IPostActivity;
@@ -122,14 +120,6 @@ export interface IAllComments {
 }
 
 export interface IPostCreatePost {
-  // data?: IActivityData;
-  // audience?: {
-  //   user_ids: number[];
-  //   group_ids: number[];
-  // };
-  // tag_ids?: number[];
-  // important?: IActivityImportant;
-  // is_draft?: boolean;
   audience?: {
     userIds: number[];
     groupIds: number[];
@@ -186,15 +176,6 @@ export interface IParamGetPostDetail {
   commentOrder?: 'ASC' | 'DESC';
   commentLimit?: number;
   childCommentLimit?: number;
-  //
-  // is_draft?: boolean;
-  // enrich?: boolean;
-  // own_reactions?: boolean;
-  // with_own_reactions?: boolean;
-  // with_own_children?: boolean;
-  // with_recent_reactions?: boolean;
-  // with_reaction_counts?: boolean;
-  // recent_reactions_limit?: number;
 }
 
 export interface IParamPutEditPost {
@@ -245,19 +226,12 @@ export interface IPayloadGetCommentsById extends IRequestGetPostComment {
 }
 
 export interface IReaction {
-  created_at?: string;
-  updated_at?: string;
-  id?: string;
-  user_id?: string | number;
-  user?: IGetStreamUser;
-  kind?: IReactionKind;
-  activity_id?: string;
-  data?: IActivityData;
-  parent?: string;
-  latest_children?: any;
-  children_counts?: any;
-  reactions_order?: string[];
-  own_children?: any;
+  id?: number;
+  postId?: number;
+  reactionName?: string;
+  createdBy?: number;
+  createdAt?: string;
+
   loading?: boolean;
   status?: 'pending' | 'success' | 'failed';
   localId?: string | number[]; // from uuid-v4
@@ -370,12 +344,6 @@ export interface IParamPutReactionToPost {
 export interface IParamPutReactionToComment {
   commentId: string;
   data: string[];
-}
-
-export interface IPayloadUpdateReactionOfPostById {
-  postId: string;
-  ownReaction: IOwnReaction;
-  reactionCounts: IReactionCounts;
 }
 
 export interface IPayloadUpdateCommentsById {

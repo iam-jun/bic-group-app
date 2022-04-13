@@ -82,7 +82,7 @@ const _PostDetailContent = (props: any) => {
   const id = post_id;
   const actor = useKeySelector(postKeySelector.postActorById(id));
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
-  const postTime = useKeySelector(postKeySelector.postTimeById(id));
+  const createdAt = useKeySelector(postKeySelector.postCreatedAtById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
   const latest_reactions = useKeySelector(
     postKeySelector.postLatestReactionsComments(id),
@@ -101,8 +101,8 @@ const _PostDetailContent = (props: any) => {
   const user: IUserResponse | boolean = Store.getCurrentUser();
   const isFocused = useIsFocused();
 
-  const headerTitle = actor?.data?.fullname
-    ? t('post:title_post_detail_of').replace('%NAME%', actor?.data?.fullname)
+  const headerTitle = actor?.fullname
+    ? t('post:title_post_detail_of').replace('%NAME%', actor?.fullname)
     : t('post:title_post_detail');
 
   useEffect(() => {
@@ -380,8 +380,8 @@ const _PostDetailContent = (props: any) => {
     }
   }, [layoutSet, sectionData.length, focus_comment, listComment?.length]);
 
-  const renderComments = () => {
-    if (!postTime) return <PostViewPlaceholder />;
+  const renderContent = () => {
+    if (!createdAt) return <PostViewPlaceholder />;
 
     return (
       <View style={styles.container}>
@@ -433,7 +433,7 @@ const _PostDetailContent = (props: any) => {
         onPressBack={onPressBack}
         avatar={Platform.OS === 'web' ? undefined : images.logo_bein}
       />
-      {renderComments()}
+      {renderContent()}
     </View>
   );
 };

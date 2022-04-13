@@ -49,7 +49,7 @@ const CommentDetailContent = (props: any) => {
 
   const headerTitle = t('post:title_comment_detail_of').replace(
     '%NAME%',
-    actor?.data?.fullname || '',
+    actor?.fullname || '',
   );
 
   useEffect(() => {
