@@ -18,6 +18,8 @@ import menuDataHelper from '../../helper/MenuDataHelper';
 import i18next from 'i18next';
 import {formatDate} from '~/utils/formatData';
 import mainStack from '~/router/navigator/MainStack/stack';
+import menuActions from '../../redux/actions';
+import menuTypes from '../../redux/types';
 
 afterEach(cleanup);
 
@@ -276,6 +278,18 @@ describe('AddWork screen', () => {
       ...jest.requireActual('react'),
       useState: jest.fn(),
     }));
+
+    const mockActionAddWorkExp = jest.fn(() => {
+      return {
+        type: menuTypes.ADD_WORK_EXPERIENCE,
+        payload: {},
+      };
+    });
+
+    jest
+      .spyOn(menuActions, 'addWorkExperience')
+      .mockImplementation(mockActionAddWorkExp as any);
+
     const state = {...initialState};
     //@ts-ignore
     state.menu.selectedWorkItem = null;
@@ -317,6 +331,7 @@ describe('AddWork screen', () => {
     // expect(setState).toHaveBeenCalledWith(positionText);
 
     fireEvent.press(btnSaveComponent);
+    expect(mockActionAddWorkExp).toBeCalled();
   });
 
   it(`should delete work item successfully`, async () => {
@@ -326,6 +341,17 @@ describe('AddWork screen', () => {
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
       return {rootNavigation} as any;
     });
+
+    const mockActionDeleteExp = jest.fn(() => {
+      return {
+        type: menuTypes.UPLOAD_IMAGE,
+        payload: {},
+      };
+    });
+
+    jest
+      .spyOn(menuActions, 'deleteWorkExperience')
+      .mockImplementation(mockActionDeleteExp as any);
 
     const deleteFunc = jest.fn(() => {
       return Promise.resolve({
@@ -349,11 +375,7 @@ describe('AddWork screen', () => {
 
     fireEvent.press(btnDeleteComponent);
 
-    //can't call dispach, stuck here
-    // await waitForUpdateRedux();
-
-    // expect(Keyboard.dismiss).toBeCalled();
-    // expect(goBack).toBeCalled();
+    expect(mockActionDeleteExp).toBeCalled();
   });
 
   it(`should go back to previous screen successfully`, async () => {

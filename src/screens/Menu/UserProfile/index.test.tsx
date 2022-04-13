@@ -4,7 +4,12 @@ import React from 'react';
 import {cleanup} from '@testing-library/react-native';
 
 import initialState from '~/store/initialState';
-import {configureStore, fireEvent, renderWithRedux} from '~/test/testUtils';
+import {
+  configureStore,
+  createTestStore,
+  fireEvent,
+  renderWithRedux,
+} from '~/test/testUtils';
 import * as navigationHook from '~/hooks/navigation';
 import * as commonUtil from '~/utils/common';
 import UserProfile from '.';
@@ -78,16 +83,18 @@ describe('UserProfile screen', () => {
         idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
       },
     };
-    //@ts-ignore
-    storeData.menu.myProfile = USER_PROFILE;
+
+    storeData.menu.myProfile = USER_PROFILE as any;
     storeData.auth.user = user as any;
 
-    const store = mockStore(storeData);
+    const store = createTestStore(storeData);
     const props = {route: {params: {userId: USER_PROFILE.id}}};
     const wrapper = renderWithRedux(<UserProfile {...props} />, store);
 
     const buttonEditAvatar = wrapper.queryByTestId('user_profile.edit.avatar');
     expect(buttonEditAvatar).toBeDefined();
+    //@ts-ignore
+    fireEvent.press(buttonEditAvatar);
 
     const buttonCoverImage = wrapper.queryByTestId(
       'user_profile.edit.cover_image',
@@ -105,9 +112,6 @@ describe('UserProfile screen', () => {
 
     const buttonSendMessage = wrapper.queryByTestId('user_profile.message');
     expect(buttonSendMessage).toBeNull();
-
-    //@ts-ignore
-    fireEvent.press(buttonEditAvatar);
   });
 
   it(`should navigate to UserEditProfile screen when click button edit profile`, () => {
@@ -257,6 +261,18 @@ describe('UserProfile screen', () => {
 
     //@ts-ignore
     fireEvent.press(buttonCoverImage);
+
+    const coverImageView = wrapper.getByTestId('user_profile.cover_image');
+
+    fireEvent(coverImageView, 'layout', {
+      nativeEvent: {layout: {width: 375}},
+    });
+
+    const buttonEditUserProfile = wrapper.queryByTestId('user_profile.edit');
+    expect(buttonEditUserProfile).toBeDefined();
+
+    const buttonSendMessage = wrapper.queryByTestId('user_profile.message');
+    expect(buttonSendMessage).toBeNull();
   });
 
   it(`should render loading when loadingUserProfile is true`, () => {

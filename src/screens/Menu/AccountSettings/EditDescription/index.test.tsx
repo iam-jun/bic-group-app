@@ -82,12 +82,15 @@ describe('EditDescription screen', () => {
   it(`should update userProfile successfully when click save button `, async () => {
     Keyboard.dismiss = jest.fn();
 
-    const mockActionEditMyProfile = () => {
+    const mockActionEditMyProfile = jest.fn().mockImplementation(() => {
       return {
-        type: menuTypes.SET_MY_PROFILE,
-        payload: USER_PROFILE,
+        type: menuTypes.EDIT_MY_PROFILE,
+        payload: {
+          id: USER_PROFILE.id,
+          description: 'descriptionText',
+        },
       };
-    };
+    });
 
     jest
       .spyOn(menuActions, 'editMyProfile')
@@ -100,11 +103,11 @@ describe('EditDescription screen', () => {
     const textInputComponent = wrapper.getByTestId('edit_description');
 
     fireEvent.changeText(textInputComponent, 'abc');
-    expect(buttonComponent.props.accessibilityState.disabled).toBeFalsy();
+    expect(buttonComponent?.props?.accessibilityState?.disabled).toBeFalsy();
 
     fireEvent.press(buttonComponent);
 
-    //this test case can't be done bc can mock dispatch
+    expect(mockActionEditMyProfile).toBeCalled();
   });
 
   it(`should back to userEdit screen successfully if rootNavigation.canGoBack = false `, () => {

@@ -78,7 +78,7 @@ describe('EditDescription screen', () => {
     expect(bottomSheet).toBeDefined();
 
     const item0Component = wrapper.getByTestId(
-      'eidt_user_info.option_menu.item_MALE',
+      'edit_user_info.option_menu.item_MALE',
     );
     expect(item0Component).toBeDefined();
     fireEvent.press(item0Component);
@@ -153,6 +153,9 @@ describe('EditDescription screen', () => {
 
     const wrapper = renderWithRedux(<EditBasicInfo />, store);
 
+    const buttonSave = wrapper.getByTestId('edit_basic_info.save');
+    expect(buttonSave?.props?.accessibilityState?.disabled).toBeTruthy();
+
     const component = wrapper.getByTestId('edit_basic_info.relationship');
     expect(component).toBeDefined();
 
@@ -166,10 +169,12 @@ describe('EditDescription screen', () => {
     expect(bottomSheet).toBeDefined();
 
     const item0Component = wrapper.getByTestId(
-      'eidt_user_info.option_menu.item_SINGLE',
+      'edit_user_info.option_menu.item_MARRIED',
     );
     expect(item0Component).toBeDefined();
     fireEvent.press(item0Component);
+
+    expect(buttonSave?.props?.accessibilityState?.disabled).toBeFalsy();
   });
 
   it(`should back to previous screen successfully `, () => {

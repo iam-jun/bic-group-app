@@ -149,8 +149,6 @@ const EditContact = () => {
     watch('phoneNumber'),
   );
 
-  console.log('isValid', isValid);
-
   return (
     <ScreenWrapper testID="EditContact" isFullView>
       <Header
