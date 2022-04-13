@@ -29,7 +29,9 @@ const PostViewImportant: FC<PostViewImportantProps> = ({
 
   if (isLite) {
     return (
-      <View style={styles.liteContainer}>
+      <View
+        testID={'post_view.important_status_lite'}
+        style={styles.liteContainer}>
         <Icon
           size={12}
           icon={'iconStar'}

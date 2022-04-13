@@ -463,12 +463,13 @@ const CommentInput: React.FC<CommentInputProps> = ({
               placeholder={placeholder}
               placeholderTextColor={colors.textSecondary}
               editable={!_loading}
-              value={text}
+              value={Platform.OS === 'web' ? value : undefined}
               onFocus={_onFocus}
               onChangeText={_onChangeText}
               onSelectionChange={_onSelectionChange}
-              onKeyPress={_onKeyPress}
-            />
+              onKeyPress={_onKeyPress}>
+              {Platform.OS !== 'web' && text}
+            </TextInput>
             {isWeb && (
               /**
                * Add duplicated Text on web to handle changing

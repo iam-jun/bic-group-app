@@ -485,6 +485,80 @@ export const POST_DETAIL = {
   reactions_order: ['wink', 'satisfied'],
 };
 
+export const POST_DETAIL_2 = {
+  actor: {
+    created_at: '2022-01-10T03:45:06.563478Z',
+    updated_at: '2022-02-28T07:49:26.224174Z',
+    id: '2',
+    data: {
+      avatar:
+        'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
+      fullname: 'Trần Nam Anh',
+    },
+  },
+  audience: {
+    groups: [
+      {
+        id: '1',
+        collection: 'groups',
+        foreign_id: 'groups:1',
+        data: {
+          icon: '',
+          name: 'EVOL Community',
+        },
+        created_at: '2022-01-10T10:04:48.724936Z',
+        updated_at: '2022-01-10T10:04:48.724936Z',
+      },
+    ],
+    users: [],
+  },
+  foreign_id: '79534711-5fa7-49a8-a7cf-92c9ebfa4fd5',
+  id: '09753f30-b48d-11ec-8080-800052ac0d5b',
+  important: {
+    active: false,
+    expires_time: '',
+  },
+  is_draft: false,
+  latest_reactions: {
+    comment: [],
+  },
+  latest_reactions_extra: {},
+  mentions: {
+    users: {},
+    groups: {},
+  },
+  object: {
+    id: '5f7791ca-47df-40b7-ba71-d1e41271a9f7',
+    collection: 'post',
+    foreign_id: 'post:5f7791ca-47df-40b7-ba71-d1e41271a9f7',
+    data: {
+      images: [],
+      videos: [],
+      files: [],
+      content: 'Hello',
+    },
+    created_at: '2022-04-05T03:03:52.490318Z',
+    updated_at: '2022-04-05T03:03:57.832592Z',
+  },
+  origin: 'timeline:g-1',
+  own_reactions: {
+    comment: [],
+  },
+  reaction_counts: {
+    comment_count: 0,
+  },
+  settings: {
+    can_comment: true,
+    can_react: true,
+    can_share: true,
+  },
+  target: '',
+  time: '2022-04-05T03:03:58.371000',
+  type: 'post',
+  verb: 'post',
+  reactions_order: [],
+};
+
 export const GROUP_AUDIENCE = {
   id: 1,
   parent_id: null,

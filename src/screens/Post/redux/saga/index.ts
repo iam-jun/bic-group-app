@@ -1,6 +1,5 @@
 import {put, call, takeLatest, select, takeEvery} from 'redux-saga/effects';
 import {isArray, get, isEmpty} from 'lodash';
-import i18n from 'i18next';
 
 import {
   IOwnReaction,
@@ -15,7 +14,6 @@ import {
   IPayloadPublishDraftPost,
   IPayloadPutEditComment,
   IPayloadPutEditDraftPost,
-  IPayloadPutEditPost,
   IPayloadReactToComment,
   IPayloadReactToPost,
   IPayloadUpdateCommentsById,
@@ -42,6 +40,8 @@ import homeActions from '~/screens/Home/redux/actions';
 import groupsActions from '~/screens/Groups/redux/actions';
 import errorCode from '~/constants/errorCode';
 import deleteComment from './deleteComment';
+import putEditPost from '~/screens/Post/redux/saga/putEditPost';
+import getDraftPosts from './getDraftPosts';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -302,53 +302,6 @@ function* postRetryAddComment({
    * only need to update the data from API
    */
   yield postCreateNewComment({type, payload: currentComment});
-}
-
-function* putEditPost({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadPutEditPost;
-}): any {
-  const {id, data, replaceWithDetail = true, onRetry} = payload;
-  if (!id || !data) {
-    console.log(`\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m`);
-    return;
-  }
-  try {
-    yield put(postActions.setLoadingCreatePost(true));
-    const response = yield postDataHelper.putEditPost({postId: id, data});
-    yield put(postActions.setLoadingCreatePost(false));
-    if (response?.data) {
-      const post = response?.data;
-      yield put(postActions.addToAllPosts({data: post}));
-      yield put(
-        modalActions.showHideToastMessage({
-          content: 'post:text_edit_post_success',
-          props: {textProps: {useI18n: true}, type: 'success'},
-        }),
-      );
-      if (replaceWithDetail) {
-        navigation.replace(homeStack.postDetail, {post_id: post?.id});
-      } else {
-        navigation.goBack();
-      }
-    }
-  } catch (e) {
-    yield put(postActions.setLoadingCreatePost(false));
-    yield put(
-      modalActions.showHideToastMessage({
-        content: i18n.t('post:text_edit_post_failed'),
-        toastType: 'normal',
-        props: {
-          textProps: {useI18n: true},
-          type: 'error',
-          rightText: i18n.t('common:text_retry'),
-          onPressRight: onRetry,
-        },
-      }),
-    );
-  }
 }
 
 function* putEditComment({
@@ -1048,55 +1001,6 @@ function* addChildCommentToCommentsOfPost({
   }
 }
 
-function* getDraftPosts({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadGetDraftPosts;
-}): any {
-  const {isRefresh = true} = payload;
-  const draftPostsData = yield select(s =>
-    get(s, postKeySelector.draftPostsData),
-  );
-  const {
-    posts: draftPosts,
-    canLoadMore,
-    refreshing,
-    loading,
-  } = draftPostsData || {};
-  try {
-    if (!refreshing && !loading && (isRefresh || canLoadMore)) {
-      if (isRefresh) {
-        const newData = {...draftPostsData, refreshing: true};
-        yield put(postActions.setDraftPosts(newData));
-      } else {
-        const newData = {...draftPostsData, loading: true};
-        yield put(postActions.setDraftPosts(newData));
-      }
-
-      const offset = isRefresh ? 0 : draftPosts?.length || 0;
-      const response = yield postDataHelper.getDraftPosts({offset: offset});
-      const newPosts = isRefresh
-        ? response?.data || []
-        : draftPosts.concat(response?.data || []);
-      yield put(
-        postActions.setDraftPosts({
-          posts: newPosts,
-          canLoadMore: response?.canLoadMore,
-          loading: false,
-          refreshing: false,
-        }),
-      );
-    } else {
-      console.log(`\x1b[31m🐣️ saga getDraftPosts cant load more\x1b[0m`);
-    }
-  } catch (e) {
-    const newData = {...draftPostsData, loading: false, refreshing: false};
-    yield put(postActions.setDraftPosts(newData));
-    console.log(`\x1b[31m🐣️ saga getDraftPosts error: `, e, `\x1b[0m`);
-  }
-}
-
 function* postPublishDraftPost({
   payload,
 }: {
@@ -1191,7 +1095,7 @@ function* getCommentsByPostId({
   type: string;
   payload: IPayloadGetCommentsById;
 }): any {
-  const {postId, commentId, isMerge, callbackLoading, position} = payload || {};
+  const {postId, commentId, isMerge, callbackLoading} = payload || {};
   try {
     callbackLoading?.(true);
     const response = yield call(postDataHelper.getCommentsByPostId, payload);
@@ -1206,9 +1110,6 @@ function* getCommentsByPostId({
           childComments: newList,
         });
         yield put(postActions.addToAllComments(newList));
-        yield put(
-          postActions.setScrollCommentsPosition({position: position || 'top'}),
-        );
       } else {
         //get comment of post
         const payload = {id: postId, comments: newList, isMerge};
@@ -1240,6 +1141,7 @@ function* getPostDetail({
   }
   try {
     callbackLoading?.(true, false);
+    yield put(postActions.setLoadingGetPostDetail(true));
     const params: IParamGetPostDetail = {
       postId,
       //is_draft
@@ -1251,6 +1153,7 @@ function* getPostDetail({
     callbackLoading?.(false, true);
   } catch (e: any) {
     yield timeOut(500);
+    yield put(postActions.setLoadingGetPostDetail(false));
     callbackLoading?.(false, false);
     const post = yield select(state =>
       get(state, postKeySelector.postById(postId)),

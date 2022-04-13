@@ -13,12 +13,16 @@ const MIN_WEBSOCKET_RETRY_TIME = 3000; // 3 sec
 
 const MAX_WEBSOCKET_RETRY_TIME = 300000; // 5 mins
 
+const PING_INTERVAL_TIME = 45000; //45 sec
+
 class WebSocketClient {
   conn?: WebSocket;
   connectionUrl: string;
   connectionTimeout: any;
   connectionId: string | null;
   token: string | null;
+
+  pingInterval?: any;
 
   // responseSequence is the number to track a response sent
   // via the websocket. A response will always have the same sequence number
@@ -49,6 +53,10 @@ class WebSocketClient {
   }
 
   initialize(token: string | null, opts = {}) {
+    if (this.connectionTimeout) {
+      clearTimeout(this.connectionTimeout);
+    }
+
     const defaults = {
       forceConnection: true,
       connectionUrl: this.connectionUrl,
@@ -152,10 +160,15 @@ class WebSocketClient {
         }
 
         this.connectFailCount = 0;
+
+        this.startPing();
+
         resolve(null);
       };
 
       this.conn!.onclose = () => {
+        this.stopPing();
+
         this.conn = undefined;
         this.responseSequence = 1;
 
@@ -188,11 +201,17 @@ class WebSocketClient {
             clearTimeout(this.connectionTimeout);
             return;
           }
-          this.initialize(token, opts);
+          if (this.token === token) {
+            this.initialize(token, opts);
+          } else {
+            //skip retry init old token
+          }
         }, retryTime);
       };
 
       this.conn!.onerror = (evt: any) => {
+        this.stopPing();
+
         if (this.connectFailCount <= 1) {
           console.log('websocket error'); //eslint-disable-line no-console
           console.log(evt); //eslint-disable-line no-console
@@ -346,6 +365,19 @@ class WebSocketClient {
     this.sendMessage('get_statuses_by_ids', {
       user_ids: userIds,
     });
+  }
+
+  // mattermost close socket connection after 60s if client doesn't send or receive any message
+  // so we need ping every ~45s
+  startPing() {
+    this.stopPing();
+    this.pingInterval = setInterval(() => {
+      this.sendMessage('ping', {});
+    }, PING_INTERVAL_TIME);
+  }
+
+  stopPing() {
+    if (this.pingInterval) clearInterval(this.pingInterval);
   }
 }
 

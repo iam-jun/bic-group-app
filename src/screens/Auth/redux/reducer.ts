@@ -60,7 +60,8 @@ function authReducer(state = authInitState, action: any = {}) {
         ...state,
         changePasswordLoading: action.payload,
       };
-    case ActionTypes.RefreshTokenSuccessBein:
+    case ActionTypes.RefreshTokenSuccessBein: {
+      const user = state?.user as any;
       return _.merge({}, state, {
         user: {
           signInUserSession: {
@@ -72,14 +73,20 @@ function authReducer(state = authInitState, action: any = {}) {
             },
             idToken: {
               jwtToken: action.payload.idToken,
+              payload: {
+                ...user?.signInUserSession?.idToken?.payload,
+                exp: action.payload.idTokenExp,
+              },
             },
           },
         },
       });
+    }
     case ActionTypes.SaveAuthTokens: {
       if (Platform.OS === 'web') {
-        const username = state?.user?.username;
-        const exp = state?.user?.signInUserSession?.idToken?.payload?.exp;
+        const user = state?.user as any;
+        const username = user?.username;
+        const exp = user?.signInUserSession?.idToken?.payload?.exp;
         username && exp && setChatAuthenticationInfo(username, exp);
       }
       return _.merge({}, state, {

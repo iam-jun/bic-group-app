@@ -45,6 +45,7 @@ const postKeySelector = {
   scrollToLatestItem: 'post.scrollToLatestItem',
   postSelectAudienceState: 'post.postSelectAudienceState',
   scrollToCommentsPosition: 'post.scrollToCommentsPosition',
+  loadingGetPostDetail: 'post.loadingGetPostDetail',
 };
 
 export default postKeySelector;

@@ -29,7 +29,7 @@ const PostViewFooterLite: FC<PostViewFooterLiteProps> = ({
   }
 
   return (
-    <View style={styles.container}>
+    <View testID={'post_view_footer_lite'} style={styles.container}>
       <Text.Subtitle color={colors.textSecondary}>
         {`${commentCount} ${t(
           commentCount > 1 ? 'post:label_comments' : 'post:label_comment',

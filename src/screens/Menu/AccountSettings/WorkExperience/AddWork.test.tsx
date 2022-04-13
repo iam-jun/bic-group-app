@@ -67,7 +67,9 @@ describe('AddWork screen', () => {
 
     const component = wrapper.getByTestId('add_work.save');
     const titleComponent = wrapper.getByTestId('header.text');
-    const toggleComponent = wrapper.getByTestId('toggle.out_side_view');
+    const toggleComponent = wrapper.getByTestId(
+      'add_work.currently_work_here.out_side_view',
+    );
     const endDateComponent = wrapper.queryByTestId('add_work.end_date_view');
     const startDateTitle = wrapper.getByTestId('add_work.start_date.title');
     const startDateValueComponent = wrapper.getByTestId('add_work.start_date');
@@ -126,7 +128,9 @@ describe('AddWork screen', () => {
 
     const buttonSaveComponent = wrapper.getByTestId('add_work.save');
     const titleComponent = wrapper.getByTestId('header.text');
-    const toggleComponent = wrapper.getByTestId('toggle.out_side_view');
+    const toggleComponent = wrapper.getByTestId(
+      'add_work.currently_work_here.out_side_view',
+    );
     const endDateComponent = wrapper.queryByTestId('add_work.end_date_view');
     const startDateTitle = wrapper.getByTestId('add_work.start_date.title');
     const startDateValueComponent = wrapper.getByTestId('add_work.start_date');
@@ -181,7 +185,9 @@ describe('AddWork screen', () => {
 
     const buttonSaveComponent = wrapper.getByTestId('add_work.save');
     const titleComponent = wrapper.getByTestId('header.text');
-    const toggleComponent = wrapper.getByTestId('toggle.out_side_view');
+    const toggleComponent = wrapper.getByTestId(
+      'add_work.currently_work_here.out_side_view',
+    );
     const endDateComponent = wrapper.queryByTestId('add_work.end_date_view');
     const startDateTitle = wrapper.getByTestId('add_work.start_date.title');
     const startDateValueComponent = wrapper.getByTestId('add_work.start_date');
@@ -197,7 +203,7 @@ describe('AddWork screen', () => {
       colors.light.colors.borderCard,
     );
     expect(endDateComponent).toBeDefined();
-    expect(endDateValueComponent.props.children).toBe(
+    expect(endDateValueComponent?.props?.children).toBe(
       formatDate(endDate, 'MMMM DD, YYYY'),
     );
 
@@ -232,7 +238,9 @@ describe('AddWork screen', () => {
 
     const component = wrapper.getByTestId('add_work.save');
     const titleComponent = wrapper.getByTestId('header.text');
-    const toggleComponent = wrapper.getByTestId('toggle.out_side_view');
+    const toggleComponent = wrapper.getByTestId(
+      'add_work.currently_work_here.out_side_view',
+    );
     const endDateComponent = wrapper.queryByTestId('add_work.end_date_view');
     const startDateTitle = wrapper.getByTestId('add_work.start_date.title');
     const startDateValueComponent = wrapper.getByTestId('add_work.start_date');
@@ -260,7 +268,7 @@ describe('AddWork screen', () => {
     ).toBeDefined();
 
     fireEvent.press(toggleComponent);
-    const buttonEndDate = wrapper.queryByTestId('add_work.end_date.button');
+    const buttonEndDate = wrapper.getByTestId('add_work.end_date.button');
     expect(toggleComponent.props.style.backgroundColor).toBe(
       colors.light.colors.borderCard,
     );
@@ -284,7 +292,9 @@ describe('AddWork screen', () => {
 
     const btnSaveComponent = wrapper.getByTestId('add_work.save');
     const titleComponent = wrapper.getByTestId('header.text');
-    const toggleComponent = wrapper.getByTestId('toggle.out_side_view');
+    const toggleComponent = wrapper.getByTestId(
+      'add_work.currently_work_here.out_side_view',
+    );
     const endDateComponent = wrapper.queryByTestId('add_work.end_date_view');
     const startDateTitle = wrapper.getByTestId('add_work.start_date.title');
     const startDateValueComponent = wrapper.getByTestId('add_work.start_date');
