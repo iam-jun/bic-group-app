@@ -20,11 +20,13 @@ import {Platform} from 'react-native';
 
 const provider = ApiConfig.providers.beinFeed;
 
+const DEFAULT_LIMIT = 10;
+
 export const postApiConfig = {
   getPostDetail: (params: IParamGetPostDetail): HttpApiRequestConfig => {
     const {postId, ...restParams} = params;
     return {
-      url: `${provider.url}api/posts/${postId}`,
+      url: `${provider.url}api/v1/posts/${postId}`,
       method: 'get',
       provider,
       useRetry: true,
@@ -33,7 +35,7 @@ export const postApiConfig = {
   },
   getDraftPosts: (params: IParamGetDraftPosts): HttpApiRequestConfig => {
     return {
-      url: `${provider.url}api/feeds/draft`,
+      url: `${provider.url}api/v1/posts/draft`,
       method: 'get',
       provider,
       useRetry: true,
@@ -44,7 +46,7 @@ export const postApiConfig = {
     };
   },
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
-    url: `${provider.url}api/posts`,
+    url: `${provider.url}api/v1/posts`,
     method: 'post',
     provider,
     useRetry: true,
@@ -65,7 +67,7 @@ export const postApiConfig = {
   putEditPost: (param: IParamPutEditPost): HttpApiRequestConfig => {
     const {postId, data} = param || {};
     return {
-      url: `${provider.url}api/posts/${postId}`,
+      url: `${provider.url}api/v1/posts/${postId}`,
       method: 'put',
       provider,
       useRetry: true,
@@ -238,7 +240,7 @@ export const postApiConfig = {
     },
   }),
   postPublishDraftPost: (draftPostId: string): HttpApiRequestConfig => ({
-    url: `${provider.url}api/posts/${draftPostId}/publish`,
+    url: `${provider.url}api/v1/posts/${draftPostId}/publish`,
     method: 'put',
     provider: provider,
     useRetry: true,
@@ -247,6 +249,10 @@ export const postApiConfig = {
 
 const postDataHelper = {
   postCreateNewPost: async (data: IPostCreatePost) => {
+    console.log(
+      `\x1b[34m🐣️ PostDataHelper postCreateNewPost`,
+      `${JSON.stringify(data, undefined, 2)}\x1b[0m`,
+    );
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.postCreateNewPost(data),
@@ -280,8 +286,10 @@ const postDataHelper = {
         postApiConfig.putEditPost(param),
       );
       if (response && response?.data) {
+        console.log(`\x1b[36m🐣️ PostDataHelper putEditPost resolve\x1b[0m`);
         return Promise.resolve(response?.data);
       } else {
+        console.log(`\x1b[36m🐣️ PostDataHelper putEditPost reject\x1b[0m`);
         return Promise.reject(response);
       }
     } catch (e) {
@@ -496,13 +504,7 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.getPostDetail({
-          enrich: true,
-          own_reactions: true,
-          with_own_reactions: true,
-          with_own_children: true,
-          with_recent_reactions: true,
-          with_reaction_counts: true,
-          recent_reactions_limit: Platform.OS === 'web' ? 5 : 10,
+          commentLimit: Platform.OS === 'web' ? 5 : 10,
           ...params,
         }),
       );
@@ -522,8 +524,10 @@ const postDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve({
-          data: response?.data?.data?.results || [],
-          canLoadMore: !!response?.data?.data?.next,
+          data: response?.data?.data?.list || [],
+          canLoadMore:
+            (param?.offset || 0) + (param?.limit || DEFAULT_LIMIT) <=
+            response?.data?.data?.meta?.total,
         });
       } else {
         return Promise.reject(response);
@@ -538,11 +542,14 @@ const postDataHelper = {
         postApiConfig.postPublishDraftPost(draftPostId),
       );
       if (response && response?.data) {
+        console.log(`\x1b[36m🐣️ PostDataHelper postPublishDraftPost 1\x1b[0m`);
         return Promise.resolve(response?.data);
       } else {
+        console.log(`\x1b[36m🐣️ PostDataHelper postPublishDraftPost 2\x1b[0m`);
         return Promise.reject(response);
       }
     } catch (e) {
+      console.log(`\x1b[36m🐣️ PostDataHelper postPublishDraftPost 3\x1b[0m`);
       return Promise.reject(e);
     }
   },

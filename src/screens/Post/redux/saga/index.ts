@@ -7,6 +7,7 @@ import {
   IParamGetPostDetail,
   IPayloadAddToAllPost,
   IPayloadCreateComment,
+  IPayloadCreatePost,
   IPayloadDeletePost,
   IPayloadGetCommentsById,
   IPayloadGetDraftPosts,
@@ -20,7 +21,6 @@ import {
   IPayloadUpdateReaction,
   IPostActivity,
   IPostAudience,
-  IPostCreatePost,
   IReaction,
   IReactionCounts,
   ISocketReaction,
@@ -95,9 +95,12 @@ function* postCreateNewPost({
   payload,
 }: {
   type: string;
-  payload: IPostCreatePost;
+  payload: IPayloadCreatePost;
 }): any {
-  const {createFromGroupId, ...postPayload} = payload || {};
+  const {data, createFromGroupId} = payload || {};
+  if (!data) {
+    return;
+  }
   try {
     const creatingPost = yield select(
       state => state?.post?.createPost?.loading,
@@ -107,15 +110,14 @@ function* postCreateNewPost({
       return;
     }
     yield put(postActions.setLoadingCreatePost(true));
-    const response = yield call(postDataHelper.postCreateNewPost, postPayload);
+    const response = yield call(postDataHelper.postCreateNewPost, data);
     if (response.data) {
       const postData: IPostActivity = response.data;
       yield put(postActions.addToAllPosts({data: postData}));
 
-      if (payload?.is_draft) {
+      if (data?.isDraft) {
         yield put(postActions.getDraftPosts({}));
-      }
-      if (createFromGroupId) {
+      } else if (createFromGroupId) {
         yield put(groupsActions.clearGroupPosts());
         yield put(groupsActions.getGroupPosts(createFromGroupId));
       } else {
@@ -123,7 +125,7 @@ function* postCreateNewPost({
       }
 
       yield timeOut(500);
-      if (payload?.is_draft) {
+      if (data?.isDraft) {
         yield put(
           modalActions.showHideToastMessage({
             content: 'post:draft:text_draft_saved',
@@ -1026,12 +1028,12 @@ function* postPublishDraftPost({
       yield put(postActions.getDraftPosts(payloadGetDraftPosts));
     } else {
       onError?.();
-      showError(res);
+      yield showError(res);
     }
   } catch (e) {
     yield put(postActions.setLoadingCreatePost(false));
     onError?.();
-    showError(e);
+    yield showError(e);
   }
 }
 
@@ -1082,6 +1084,7 @@ function* putEditDraftPost({
       }
     } else {
       yield put(postActions.setLoadingCreatePost(false));
+      yield showError(response);
     }
   } catch (e) {
     yield put(postActions.setLoadingCreatePost(false));
@@ -1162,7 +1165,7 @@ function* getPostDetail({
       post.deleted = true;
       yield put(postActions.addToAllPosts({data: post}));
     }
-    showError(e);
+    yield showError(e);
   }
 }
 

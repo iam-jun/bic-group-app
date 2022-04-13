@@ -122,16 +122,31 @@ export interface IAllComments {
 }
 
 export interface IPostCreatePost {
-  data?: IActivityData;
+  // data?: IActivityData;
+  // audience?: {
+  //   user_ids: number[];
+  //   group_ids: number[];
+  // };
+  // tag_ids?: number[];
+  // important?: IActivityImportant;
+  // is_draft?: boolean;
   audience?: {
-    user_ids: number[];
-    group_ids: number[];
+    userIds: number[];
+    groupIds: number[];
   };
-  tag_ids?: number[];
-  important?: IActivityImportant;
-  is_draft?: boolean;
+  content?: string;
+  media?: any;
+  setting?: any;
+  mentions?: any;
+  isDraft?: boolean;
 
   createFromGroupId?: string | number;
+}
+
+export interface IPayloadCreatePost {
+  data?: IPostCreatePost;
+  createFromGroupId?: string | number;
+  callback?: any;
 }
 
 export interface IPayloadCreateComment {
@@ -168,15 +183,18 @@ export interface IPayloadDeletePost {
 
 export interface IParamGetPostDetail {
   postId: string;
-
-  is_draft?: boolean;
-  enrich?: boolean;
-  own_reactions?: boolean;
-  with_own_reactions?: boolean;
-  with_own_children?: boolean;
-  with_recent_reactions?: boolean;
-  with_reaction_counts?: boolean;
-  recent_reactions_limit?: number;
+  commentOrder?: 'ASC' | 'DESC';
+  commentLimit?: number;
+  childCommentLimit?: number;
+  //
+  // is_draft?: boolean;
+  // enrich?: boolean;
+  // own_reactions?: boolean;
+  // with_own_reactions?: boolean;
+  // with_own_children?: boolean;
+  // with_recent_reactions?: boolean;
+  // with_reaction_counts?: boolean;
+  // recent_reactions_limit?: number;
 }
 
 export interface IParamPutEditPost {
@@ -388,8 +406,13 @@ export interface IPayloadSetDraftPosts {
 }
 
 export interface IParamGetDraftPosts {
+  order?: 'ASC';
   offset?: number;
   limit?: number;
+  idGTE?: number;
+  idLTE?: number;
+  idGT?: number;
+  idLT?: number;
 }
 
 export interface IPayloadGetDraftPosts {
@@ -410,23 +433,12 @@ export interface IPayloadPutEditDraftPost {
   data: IPostCreatePost;
   replaceWithDetail?: boolean;
   publishNow: boolean;
-}
-
-export interface IPayloadCreateAutoSave {
-  data?: IActivityData;
-  audience?: {
-    user_ids: number[];
-    group_ids: number[];
-  };
-  tag_ids?: number[];
-  important?: IActivityImportant;
-  is_draft?: boolean;
-  createFromGroupId?: string | number;
+  callback?: any;
 }
 
 export interface IPayloadPutEditAutoSave {
   id: string;
-  data: IPayloadCreateAutoSave;
+  data: IPostCreatePost;
 }
 
 export interface IParamGetPostAudiences {

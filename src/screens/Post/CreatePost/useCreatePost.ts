@@ -7,8 +7,8 @@ import {
   IAudience,
   ICreatePostParams,
   IParamGetPostAudiences,
-  IPayloadCreateAutoSave,
-  IPayloadPutEditAutoSave,
+  IParamPutEditPost,
+  IPayloadCreatePost,
   IPayloadPutEditDraftPost,
   IPayloadPutEditPost,
   IPostActivity,
@@ -86,7 +86,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
 
   const users: number[] = [];
   const groups: number[] = [];
-  const audience = {group_ids: groups, user_ids: users};
+  const audience = {groupIds: groups, userIds: users};
   chosenAudiences.map((selected: IAudience) => {
     if (selected.type === 'user') {
       users.push(Number(selected.id));
@@ -108,9 +108,9 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
   });
 
   const sPostId = sPostData?.id;
-  const isEdit = !!(sPostId && !sPostData?.is_draft);
-  const isDraftPost = !!(sPostId && sPostData?.is_draft);
-  const isNewsfeed = !(initPostData?.id && initPostData?.is_draft);
+  const isEdit = !!(sPostId && !sPostData?.isDraft);
+  const isDraftPost = !!(sPostId && sPostData?.isDraft);
+  const isNewsfeed = !(initPostData?.id && initPostData?.isDraft);
 
   const isAutoSave = isDraftPost || !isEdit;
 
@@ -288,7 +288,28 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     }
   };
 
+  const prepareData = () => {
+    const media = {images, videos: [], files: []};
+    const setting: any = {};
+    if (important?.active) {
+      setting.isImportant = important?.active;
+      setting.importantExpiredAt = important?.expires_time;
+    }
+
+    const data: IPostCreatePost = {
+      audience,
+      content: mentionInputRef?.current?.getContent?.() || content,
+      media,
+      setting,
+      mentions: [],
+      isDraft: false,
+    };
+
+    return data;
+  };
+
   const autoSaveDraftPost = async () => {
+    console.log(`\x1b[36m🐣️ useCreatePost autoSaveDraftPost\x1b[0m`);
     setPause(true);
 
     try {
@@ -319,44 +340,26 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         return;
       }
 
-      const payload: IPayloadCreateAutoSave = {
-        data: {
-          content: newContent,
-          images,
-          videos: [],
-          files: [],
-        },
-        audience,
-        createFromGroupId,
-      };
-
-      if (important?.active) {
-        payload.important = {
-          active: important?.active,
-          expires_time: important?.expires_time,
-        };
-      }
+      const data = prepareData();
 
       if (!isEdit) {
         dispatch(postActions.setSavingDraftPost(true));
       }
 
       if (isDraftPost && sPostId) {
-        const newPayload: IPayloadPutEditAutoSave = {
-          id: sPostId,
-          data: payload,
+        data.isDraft = true;
+        const newPayload: IParamPutEditPost = {
+          postId: sPostId,
+          data,
         };
-        await postDataHelper.putEditPost({
-          postId: newPayload?.id,
-          data: newPayload?.data,
-        });
+        await postDataHelper.putEditPost(newPayload);
         refIsRefresh.current = true;
       } else if (isEdit && sPostId) {
-        if (__DEV__) console.log('payload: ', payload);
+        console.log(`\x1b[36m🐣️ useCreatePost skip autosave edit post\x1b[0m`);
       } else {
         setLoading(true);
-        payload.is_draft = true;
-        const resp = await postDataHelper.postCreateNewPost(payload);
+        data.isDraft = true;
+        const resp = await postDataHelper.postCreateNewPost(data);
         refIsRefresh.current = true;
         if (resp?.data) {
           const newData = resp?.data || {};
@@ -402,61 +405,34 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     }
 
     let result: handlePressPostResultType;
-    // case edit draft post or create new post in auto save mode
+    const data = prepareData();
+
     if (isDraftPost && sPostId) {
-      const postData = {content, images, videos: [], files: []};
-      const draftData: IPostCreatePost = {
-        data: postData,
-        audience,
-      };
-      if (important?.active) {
-        draftData.important = {
-          active: important?.active,
-          expires_time: important?.expires_time,
-        };
-      }
+      // case edit draft post or create new post in auto save mode
       const payload: IPayloadPutEditDraftPost = {
         id: sPostId,
+        data,
         replaceWithDetail: true,
-        data: draftData,
         publishNow: true,
       };
       dispatch(postActions.putEditDraftPost(payload));
       result = 'editDraft';
     } else if (isEditPost && initPostData?.id) {
-      const editPostData = {content, images, videos: [], files: []};
-      const newEditData: IPostCreatePost = {
-        data: editPostData,
-        audience,
-      };
-      newEditData.important = {
-        active: !!important?.active,
-        ...(important?.expires_time
-          ? {expires_time: important?.expires_time}
-          : {}),
-      };
+      //case edit post
       const payload: IPayloadPutEditPost = {
         id: initPostData?.id,
+        data,
         replaceWithDetail: replaceWithDetail,
-        data: newEditData,
         onRetry: () => handlePressPost(),
       };
       dispatch(postActions.putEditPost(payload));
       result = 'editPost';
     } else {
-      const postData = {content, images, videos: [], files: []};
-      const payload: IPostCreatePost = {
-        data: postData,
-        audience,
-        is_draft: false,
+      // case create new post
+      const payload: IPayloadCreatePost = {
+        data,
         createFromGroupId,
       };
-      if (important?.active) {
-        payload.important = {
-          active: important?.active,
-          expires_time: important?.expires_time,
-        };
-      }
       dispatch(postActions.postCreateNewPost(payload));
       result = 'newPost';
     }
