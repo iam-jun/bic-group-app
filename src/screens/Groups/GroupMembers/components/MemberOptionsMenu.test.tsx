@@ -14,6 +14,8 @@ import {IGroupMembers} from '~/interfaces/IGroup';
 import useRemoveMember from './useRemoveMember';
 import * as navigationHook from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
+import {checkLastAdmin} from '../../helper';
+import groupsDataHelper from '../../helper/GroupsDataHelper';
 
 describe('MemberOptionsMenu component', () => {
   const baseSheetRef = jest.fn();
@@ -39,7 +41,7 @@ describe('MemberOptionsMenu component', () => {
     );
     const itemComponent = getByTestId('member_options_menu.leave_group');
     expect(itemComponent).toBeDefined();
-    fireEvent.press(itemComponent);
+    expect(itemComponent.props).toHaveProperty('onClick');
   });
 
   it('renders Remove member option correctly when admin clicks on another user', () => {
@@ -64,7 +66,7 @@ describe('MemberOptionsMenu component', () => {
     );
     const itemComponent = getByTestId('member_options_menu.remove_member');
     expect(itemComponent).toBeDefined();
-    fireEvent.press(itemComponent);
+    expect(itemComponent.props).toHaveProperty('onClick');
   });
 
   it('should not render Remove member option correctly when admins click on themselves', () => {
@@ -207,7 +209,7 @@ describe('MemberOptionsMenu component', () => {
 
     const item = getByTestId('member_options_menu.remove_admin');
     expect(item).toBeDefined();
-    fireEvent.press(item);
+    expect(item.props).toHaveProperty('onClick');
   });
 
   it('should dispatch alert last admin error correctly', () => {
@@ -236,7 +238,7 @@ describe('MemberOptionsMenu component', () => {
 
     const item = getByTestId('member_options_menu.remove_admin');
     expect(item).toBeDefined();
-    fireEvent.press(item);
+    expect(item.props).toHaveProperty('onClick');
   });
 
   it('should render set admin option correctly', () => {
@@ -261,7 +263,7 @@ describe('MemberOptionsMenu component', () => {
 
     const item = getByTestId('member_options_menu.set_admin');
     expect(item).toBeDefined();
-    fireEvent.press(item);
+    expect(item.props).toHaveProperty('onClick');
   });
 
   it('should navigate to user profile correctly when pressing View profile option', () => {
@@ -314,6 +316,6 @@ describe('MemberOptionsMenu component', () => {
     );
     const itemComponent = getByTestId('member_options_menu.send_message');
     expect(itemComponent).toBeDefined();
-    fireEvent.press(itemComponent);
+    expect(itemComponent.props).toHaveProperty('onClick');
   });
 });
