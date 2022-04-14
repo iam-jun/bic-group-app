@@ -17,7 +17,6 @@ import BottomTabBar from '~/router/components/BottomTabBar';
 import mainTabStack from '~/router/navigator/MainStack/MainTabs/stack';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
-import chatSocketClient from '~/services/chatSocket';
 import {initPushTokenMessage} from '~/services/helper';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
@@ -26,7 +25,7 @@ import {getEnv} from '~/utils/env';
 import {getMsgPackParser} from '~/utils/socket';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens, screensWebLaptop} from './screens';
-import chatAction from '~/store/chat/actions';
+import {useChatSocket} from '~/hooks/chat';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -35,6 +34,8 @@ const MainTabs = () => {
   const theme: ITheme = useTheme() as ITheme;
 
   const backBehavior = 'history';
+
+  useChatSocket();
 
   // const {activeColor, inactiveColor, tabBarBackground} = colors;
 
@@ -53,10 +54,6 @@ const MainTabs = () => {
 
   const userId = useUserIdAuth();
 
-  const websocketOpts = {
-    connectionUrl: getEnv('BEIN_CHAT_SOCKET'),
-  };
-
   useEffect(() => {
     let tokenRefreshSubscription: any;
 
@@ -64,11 +61,6 @@ const MainTabs = () => {
     if (!userId) {
       return;
     }
-
-    dispatch(chatAction.initChat());
-    chatSocketClient.setEventCallback((evt: any) =>
-      dispatch(chatAction.handleChatEvent(evt)),
-    );
 
     dispatch(postActions.getDraftPosts({}));
     if (Platform.OS !== 'web') {
@@ -87,7 +79,6 @@ const MainTabs = () => {
     }
     return () => {
       tokenRefreshSubscription && tokenRefreshSubscription();
-      chatSocketClient.close();
     };
   }, [userId]);
 
@@ -98,8 +89,6 @@ const MainTabs = () => {
     }
 
     dispatch(notificationsActions.getNotifications());
-
-    chatSocketClient.initialize(token, websocketOpts);
 
     const socket = io(getEnv('BEIN_FEED'), {
       transports: ['websocket'],

@@ -58,12 +58,14 @@ const _dispatchRefreshTokenSuccess = (
   newToken: string,
   refreshToken: string,
   idToken: string,
+  idTokenExp: number,
 ) => {
   Store.store.dispatch(
     createAction(ActionTypes.RefreshTokenSuccessBein, {
       newToken,
       refreshToken,
       idToken,
+      idTokenExp,
     }),
   );
 };
@@ -239,7 +241,7 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
         isSuccess = false;
         return;
       } else {
-        _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken);
+        _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken, exp);
 
         //For sharing data between Group and Chat
         await updateUserFromSharedPreferences({token: idToken, exp});
@@ -260,6 +262,7 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
     unauthorizedGetStreamReqQueue = [];
     unauthorizedReqQueue.forEach(callback => callback(isSuccess));
     unauthorizedReqQueue = [];
+
     isRefreshingToken = false;
   }
 };
@@ -267,6 +270,14 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
 const handleResponseError = async (
   error: AxiosError,
 ): Promise<HttpApiResponseFormat | unknown> => {
+  // Sometime aws return old id token, using this old id token to refresh token will return 401
+  // should reset value isRefreshingToken for refresh later
+  const authConfig = apiConfig.App.tokens();
+  if (authConfig.url === error?.config?.url) {
+    isRefreshingToken = false;
+    await timeout(5000);
+  }
+
   if (error.response) {
     // @ts-ignore
     if (error.response.status === 401 && error.config.useRetry) {
@@ -422,11 +433,10 @@ const getAuthTokens = async () => {
     const httpResponse = await makeHttpRequest(apiConfig.App.tokens());
     // @ts-ignore
     const data = mapResponseSuccessBein(httpResponse);
-    if (data.code != 200) {
-      return false;
-    }
 
-    const {accessToken: feedAccessToken, subscribeToken: notiSubscribeToken} =
+    if (data.code != 200 && data.code?.toUpperCase?.() !== 'OK') return false;
+
+    const {access_token: feedAccessToken, subscribe_token: notiSubscribeToken} =
       data.data?.stream;
 
     return {
@@ -434,7 +444,6 @@ const getAuthTokens = async () => {
       notiSubscribeToken,
     };
   } catch (e) {
-    console.log('getAuthTokens failed', e);
     return false;
   }
 };
@@ -475,7 +484,6 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
       // TODO: refactor
       break;
     default:
-      console.log(`\x1b[31m🐣️ httpApiRequest unknown provider name\x1b[0m`);
       return Promise.resolve(false);
   }
 
@@ -529,6 +537,10 @@ const subscribeGetstreamFeed = (
   return subscription;
 };
 
+function timeout(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export {
   makeGetStreamRequest,
   makeHttpRequest,
@@ -537,5 +549,6 @@ export {
   mapResponseSuccessBein,
   handleResponseFailFeedActivity,
   refreshAuthTokens,
+  getTokenAndCallBackBein,
   subscribeGetstreamFeed,
 };

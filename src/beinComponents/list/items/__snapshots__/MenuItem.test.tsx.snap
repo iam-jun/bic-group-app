@@ -799,16 +799,19 @@ exports[`Menu Item component should render NotificationsBadge 1`] = `
       </View>
       <View
         style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#D5DCE5",
-            "borderRadius": 24,
-            "height": 20,
-            "justifyContent": "center",
-            "minWidth": 20,
-            "paddingBottom": 2,
-            "paddingHorizontal": 5,
-          }
+          Array [
+            Object {
+              "alignItems": "center",
+              "backgroundColor": "#D5DCE5",
+              "borderRadius": 24,
+              "height": 20,
+              "justifyContent": "center",
+              "minWidth": 20,
+              "paddingBottom": 2,
+              "paddingHorizontal": 5,
+            },
+            undefined,
+          ]
         }
         testID="menu_item.noti_badge"
       >

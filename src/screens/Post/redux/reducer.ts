@@ -69,6 +69,7 @@ export const postInitState = {
     selectingGroups: {},
     selectingUsers: {},
   },
+  loadingGetPostDetail: false,
 };
 
 function postReducer(state = postInitState, action: any = {}) {
@@ -232,6 +233,7 @@ function postReducer(state = postInitState, action: any = {}) {
       return {
         ...state,
         allCommentsByParentIds: payload,
+        loadingGetPostDetail: false,
       };
     case postTypes.SET_SCROLL_TO_LATEST_ITEM:
       return {
@@ -325,6 +327,11 @@ function postReducer(state = postInitState, action: any = {}) {
       return {
         ...state,
         scrollToCommentsPosition: payload,
+      };
+    case postTypes.LOADING_GET_POST_DETAIL:
+      return {
+        ...state,
+        loadingGetPostDetail: payload,
       };
     default:
       return state;

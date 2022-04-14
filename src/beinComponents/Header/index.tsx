@@ -7,11 +7,11 @@ import {
   Platform,
   TouchableOpacity,
   DeviceEventEmitter,
+  BackHandler,
   //   useWindowDimensions,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useBackHandler} from '@react-native-community/hooks';
 
 import Animated, {
   useAnimatedStyle,
@@ -20,7 +20,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import {deviceDimensions} from '~/theme/dimension';
 import {IconType} from '~/resources/icons';
@@ -34,6 +33,7 @@ import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
 import useWindowDimensions from '~/hooks/windowSize';
 import IconChat from '../IconChat';
+import {useRootNavigation} from '~/hooks/navigation';
 
 export interface HeaderProps {
   headerRef?: any;
@@ -127,7 +127,7 @@ const Header: React.FC<HeaderProps> = ({
 
   const showValue = useSharedValue(1);
 
-  const {navigation} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
 
   useEffect(() => {
     const listener = DeviceEventEmitter.addListener('showHeader', isShow => {
@@ -137,6 +137,7 @@ const Header: React.FC<HeaderProps> = ({
         hide();
       }
     });
+
     return () => {
       listener?.remove?.();
     };
@@ -146,8 +147,19 @@ const Header: React.FC<HeaderProps> = ({
     if (onPressBack) {
       onPressBack();
     } else {
-      navigation.goBack();
+      // avoid back pressed on root screen
+      if (rootNavigation.canGoBack) rootNavigation.goBack();
+      else BackHandler.exitApp();
     }
+  };
+
+  const goBack = () => {
+    if (isShowSearch) {
+      hideSearch();
+    } else {
+      _onPressBack();
+    }
+    return true;
   };
 
   const showSearch = () => {
@@ -168,16 +180,8 @@ const Header: React.FC<HeaderProps> = ({
     hideSearch,
     showSearch,
     setSearchText,
+    goBack,
   }));
-
-  useBackHandler(() => {
-    if (isShowSearch) {
-      hideSearch();
-    } else {
-      _onPressBack();
-    }
-    return true;
-  });
 
   const _onPressSearch = () => {
     if (isShowSearch) {

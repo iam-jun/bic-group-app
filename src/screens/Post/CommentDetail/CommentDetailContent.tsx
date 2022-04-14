@@ -1,4 +1,3 @@
-import {get} from 'lodash';
 import React, {useCallback, useEffect, useRef, useState, memo} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
@@ -9,7 +8,7 @@ import CommentViewPlaceholder from '~/beinComponents/placeholder/CommentViewPlac
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
-import {IAudienceGroup} from '~/interfaces/IPost';
+import {IAudienceGroup, IReaction} from '~/interfaces/IPost';
 import {ITheme} from '~/theme/interfaces';
 import CommentInputView from '../components/CommentInputView';
 import postActions from '../redux/actions';
@@ -34,11 +33,15 @@ const CommentDetailContent = (props: any) => {
   const id = postId;
   const actor = useKeySelector(postKeySelector.postActorById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
+  const postDetailLoadingState = useKeySelector(
+    postKeySelector.loadingGetPostDetail,
+  );
 
-  const allComments = useKeySelector(postKeySelector.allComments);
-
-  const comment =
-    allComments?.[commentData?.id]?.latest_children?.comment || [];
+  const comments = useKeySelector(postKeySelector.commentsByParentId(id));
+  const {childrenComments = [], newCommentData = {}} = getListChildComment(
+    comments,
+    commentData?.id,
+  );
 
   const scrollToCommentsPosition = useKeySelector(
     postKeySelector.scrollToCommentsPosition,
@@ -58,44 +61,49 @@ const CommentDetailContent = (props: any) => {
   }, [audience?.groups]);
 
   useEffect(() => {
-    dispatch(postActions.setScrollCommentsPosition(null));
-    const _commentData = get(commentData, 'latest_children.comment', []);
-    if (_commentData.length > 1 || !_commentData?.[0]) {
-      setLoading(false);
-      if (!!replyItem) {
-        setTimeout(() => {
-          dispatch(
-            postActions.setPostDetailReplyingComment({
-              comment: replyItem,
-              parentComment: commentParent,
-            }),
-          );
-        }, 50);
+    if (!postDetailLoadingState) {
+      dispatch(postActions.setScrollCommentsPosition(null));
+      if (
+        childrenComments?.length > 1 ||
+        !commentData?.latest_children?.comment?.[0]
+      ) {
+        setLoading(false);
+        if (!!replyItem) {
+          setTimeout(() => {
+            dispatch(
+              postActions.setPostDetailReplyingComment({
+                comment: replyItem,
+                parentComment: commentParent,
+              }),
+            );
+          }, 50);
+        }
+      } else {
+        const lastItem = newCommentData?.latest_children?.comment?.[0];
+        dispatch(
+          postActions.getCommentsByPostId({
+            postId: postId,
+            idLt: lastItem?.id || '',
+            commentId: newCommentData?.id || '',
+            recentReactionsLimit: 9,
+            isMerge: true,
+            position: 'bottom',
+            callbackLoading: loading => {
+              setLoading(loading);
+              if (!loading && !!replyItem) {
+                dispatch(
+                  postActions.setPostDetailReplyingComment({
+                    comment: replyItem,
+                    parentComment: commentParent,
+                  }),
+                );
+              }
+            },
+          }),
+        );
       }
-    } else {
-      dispatch(
-        postActions.getCommentsByPostId({
-          postId: postId,
-          idLt: _commentData?.[0]?.id || '',
-          commentId: commentData?.id || '',
-          recentReactionsLimit: 9,
-          isMerge: true,
-          position: 'bottom',
-          callbackLoading: loading => {
-            setLoading(loading);
-            if (!loading && !!replyItem) {
-              dispatch(
-                postActions.setPostDetailReplyingComment({
-                  comment: replyItem,
-                  parentComment: commentParent,
-                }),
-              );
-            }
-          },
-        }),
-      );
     }
-  }, []);
+  }, [postDetailLoadingState]);
 
   useEffect(() => {
     if (scrollToCommentsPosition?.position === 'top') {
@@ -109,7 +117,7 @@ const CommentDetailContent = (props: any) => {
     try {
       listRef.current?.scrollToIndex?.({
         animated: true,
-        index: comment?.length - 1 || 0,
+        index: childrenComments?.length - 1 || 0,
       });
       dispatch(postActions.setScrollCommentsPosition(null));
     } catch (error) {
@@ -133,7 +141,7 @@ const CommentDetailContent = (props: any) => {
       <CommentItem
         postId={id}
         commentData={item}
-        commentParent={commentData}
+        commentParent={newCommentData}
         groupIds={groupIds}
         index={index}
       />
@@ -144,7 +152,7 @@ const CommentDetailContent = (props: any) => {
     return <View style={styles.footer} />;
   };
 
-  if (loading) {
+  if (loading || postDetailLoadingState) {
     return <CommentViewPlaceholder />;
   }
 
@@ -154,12 +162,12 @@ const CommentDetailContent = (props: any) => {
     <View style={{flex: 1}}>
       <FlatList
         ref={listRef}
-        data={comment || []}
+        data={childrenComments || []}
         renderItem={renderCommentItem}
         ListHeaderComponent={
           <CommentLevel1
             headerTitle={headerTitle}
-            commentData={commentData}
+            commentData={newCommentData}
             groupIds={groupIds}
             id={id}
           />
@@ -177,7 +185,7 @@ const CommentDetailContent = (props: any) => {
         autoFocus={!!replyItem}
         isCommentLevel1Screen
         showHeader
-        defaultReplyTargetId={commentData?.id || ''}
+        defaultReplyTargetId={newCommentData?.id || ''}
       />
     </View>
   );
@@ -207,6 +215,20 @@ const CommentLevel1 = ({id, headerTitle, commentData, groupIds}: any) => {
       />
     </View>
   );
+};
+
+const getListChildComment = (
+  listData: IReaction[],
+  parentCommentId: string,
+) => {
+  const parentCommentPosition = listData?.findIndex?.(
+    (item: IReaction) => item.id === parentCommentId,
+  );
+
+  const latestChildren =
+    listData?.[parentCommentPosition]?.latest_children || {};
+  const childrenComments = latestChildren?.comment || [];
+  return {childrenComments, newCommentData: listData?.[parentCommentPosition]};
 };
 
 const createStyle = (theme: ITheme) => {

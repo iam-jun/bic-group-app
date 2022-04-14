@@ -1,11 +1,18 @@
 import React, {RefObject} from 'react';
-import {NavigationContainerRef, StackActions} from '@react-navigation/native';
+import {
+  NavigationContainerRef,
+  NavigationState,
+  PartialState,
+  StackActions,
+} from '@react-navigation/native';
 
 import {IObject} from '~/interfaces/common';
+import {isNumber} from 'lodash';
 
 export const isNavigationRefReady = React.createRef();
 
 export interface Props {
+  current?: NavigationContainerRef | null;
   canGoBack: boolean | undefined;
   navigate: (name: string, params?: IObject<unknown>) => void;
   replace: (name: string, params?: IObject<unknown>) => void;
@@ -68,6 +75,7 @@ export const withNavigation = (
   };
 
   return {
+    current: navigationRef?.current,
     canGoBack,
     navigate,
     replace,
@@ -76,4 +84,16 @@ export const withNavigation = (
     nestedNavigate,
     setParams,
   };
+};
+
+export const getActiveRouteState = function (
+  route?: NavigationState | PartialState<NavigationState>,
+): string | null {
+  if (!route || !isNumber(route?.index)) return null;
+
+  const currentRoute = route.routes[route.index];
+  if (!currentRoute.state) return route.routes[route.index].name;
+
+  const childActiveRoute = route.routes[route.index].state;
+  return getActiveRouteState(childActiveRoute);
 };
