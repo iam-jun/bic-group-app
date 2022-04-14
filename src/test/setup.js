@@ -52,6 +52,11 @@ jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
 jest.mock('~/screens/Menu/helper/MenuDataHelper');
 
+import mock from 'react-native-permissions/mock';
+jest.mock('react-native-permissions', () => {
+  return mock;
+});
+
 // @ts-ignore
 global.FormData = require('react-native/Libraries/Network/FormData');
 
