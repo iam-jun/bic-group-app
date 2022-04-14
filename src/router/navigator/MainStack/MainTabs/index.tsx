@@ -35,7 +35,7 @@ const MainTabs = () => {
 
   const backBehavior = 'history';
 
-  useChatSocket();
+  // useChatSocket();
 
   // const {activeColor, inactiveColor, tabBarBackground} = colors;
 
