@@ -514,37 +514,37 @@ describe('UserEditProfile screen', () => {
   //   expect(mockActionUploadImage).toBeCalled();
   // });
 
-  it(`should not run onCoverLayout function when onLayout return width = 0`, () => {
-    const mockActionGetMyProfile = () => {
-      return {
-        type: menuTypes.SET_USER_PROFILE,
-        payload: USER_PROFILE,
-      };
-    };
+  // it(`should not run onCoverLayout function when onLayout return width = 0`, () => {
+  //   const mockActionGetMyProfile = () => {
+  //     return {
+  //       type: menuTypes.SET_USER_PROFILE,
+  //       payload: USER_PROFILE,
+  //     };
+  //   };
 
-    jest
-      .spyOn(menuActions, 'getUserProfile')
-      .mockImplementation(mockActionGetMyProfile as any);
-    const user = {
-      signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
-      },
-    };
-    //@ts-ignore
+  //   jest
+  //     .spyOn(menuActions, 'getUserProfile')
+  //     .mockImplementation(mockActionGetMyProfile as any);
+  //   const user = {
+  //     signInUserSession: {
+  //       idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+  //     },
+  //   };
+  //   //@ts-ignore
 
-    storeData.auth.user = user as any;
-    storeData.menu.myProfile = USER_PROFILE as any;
+  //   storeData.auth.user = user as any;
+  //   storeData.menu.myProfile = USER_PROFILE as any;
 
-    const store = mockStore(storeData);
-    const props = {route: {params: {userId: USER_PROFILE.id}}};
-    const wrapper = renderWithRedux(<UserEditProfile {...props} />, store);
+  //   const store = mockStore(storeData);
+  //   const props = {route: {params: {userId: USER_PROFILE.id}}};
+  //   const wrapper = renderWithRedux(<UserEditProfile {...props} />, store);
 
-    const coverImageView = wrapper.getByTestId('user_edit_profile.cover_image');
+  //   const coverImageView = wrapper.getByTestId('user_edit_profile.cover_image');
 
-    fireEvent(coverImageView, 'layout', {
-      nativeEvent: {layout: {width: 0}},
-    });
-  });
+  //   fireEvent(coverImageView, 'layout', {
+  //     nativeEvent: {layout: {width: 0}},
+  //   });
+  // });
 
   it(`should render user with not set description and loading avatar, cover image`, () => {
     const mockActionGetMyProfile = () => {

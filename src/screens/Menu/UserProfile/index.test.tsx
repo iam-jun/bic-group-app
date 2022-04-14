@@ -304,34 +304,34 @@ describe('UserProfile screen', () => {
     expect(userNotFound).toBeDefined();
   });
 
-  it(`should not run onCoverLayout function when onLayout return width = 0`, () => {
-    const mockActionGetMyProfile = () => {
-      return {
-        type: menuTypes.SET_USER_PROFILE,
-        payload: USER_PROFILE,
-      };
-    };
+  // it(`should not run onCoverLayout function when onLayout return width = 0`, () => {
+  //   const mockActionGetMyProfile = () => {
+  //     return {
+  //       type: menuTypes.SET_USER_PROFILE,
+  //       payload: USER_PROFILE,
+  //     };
+  //   };
 
-    jest
-      .spyOn(menuActions, 'getUserProfile')
-      .mockImplementation(mockActionGetMyProfile as any);
-    const user = {
-      signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
-      },
-    };
-    //@ts-ignore
-    storeData.menu.myProfile = USER_PROFILE;
-    storeData.auth.user = user as any;
+  //   jest
+  //     .spyOn(menuActions, 'getUserProfile')
+  //     .mockImplementation(mockActionGetMyProfile as any);
+  //   const user = {
+  //     signInUserSession: {
+  //       idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+  //     },
+  //   };
+  //   //@ts-ignore
+  //   storeData.menu.myProfile = USER_PROFILE;
+  //   storeData.auth.user = user as any;
 
-    const store = mockStore(storeData);
-    const props = {route: {params: {userId: USER_PROFILE.id}}};
-    const wrapper = renderWithRedux(<UserProfile {...props} />, store);
+  //   const store = mockStore(storeData);
+  //   const props = {route: {params: {userId: USER_PROFILE.id}}};
+  //   const wrapper = renderWithRedux(<UserProfile {...props} />, store);
 
-    const coverImageView = wrapper.getByTestId('user_profile.cover_image');
+  //   const coverImageView = wrapper.getByTestId('user_profile.cover_image');
 
-    fireEvent(coverImageView, 'layout', {
-      nativeEvent: {layout: {width: 0}},
-    });
-  });
+  //   fireEvent(coverImageView, 'layout', {
+  //     nativeEvent: {layout: {width: 0}},
+  //   });
+  // });
 });
