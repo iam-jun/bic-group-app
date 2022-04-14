@@ -37,6 +37,7 @@ jest.mock('~/services/sharePreferences', () => ({
   getUserFromSharedPreferences: jest.fn(),
   saveUserToSharedPreferences: jest.fn(),
   updateUserFromSharedPreferences: jest.fn(),
+  isAppInstalled: jest.fn(),
 }));
 
 jest.mock('react-native-image-crop-picker', () => ({
