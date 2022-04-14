@@ -27,10 +27,6 @@ const commonHeaders = {
   'Content-Type': 'application/json',
 };
 
-const beinFeedHeaders = {
-  'X-Version': getEnv('BEIN_FEED_VERSION'),
-};
-
 const _dispatchLogout = async () => {
   /**
    * Need calling this API before sign out to remove cookies
@@ -477,7 +473,6 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
         ...commonHeaders,
         ...requestConfig.headers,
         ...tokenHeaders,
-        ...beinFeedHeaders,
       };
       break;
     case apiConfig.providers.getStream.name:

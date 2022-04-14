@@ -12,21 +12,18 @@ import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
 
 const homeApiConfig = {
   getNewsfeed: (param: IParamGetFeed): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/feeds/newsfeed`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/feeds/newsfeed`,
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
     params: {
-      offset: param?.offset || 0,
-      limit: param?.limit || 10,
-      recent_reactions_limit: param.recent_reactions_limit,
-      enrich: param?.enrich,
-      own_reactions: param?.own_reactions,
-      with_own_reactions: param?.with_own_reactions,
-      with_own_children: param?.with_own_children,
-      with_recent_reactions: param?.with_recent_reactions,
-      with_reaction_counts: param?.with_reaction_counts,
-      ranking: param?.ranking,
+      order: param?.order || 'ASC',
+      limit: param?.limit,
+      offset: param?.offset,
+      idGTE: param?.idGTE,
+      idLTE: param?.idLTE,
+      idGT: param?.idGT,
+      idLT: param?.idLT,
     },
   }),
   getSearchPost: (param: IParamGetSearchPost): HttpApiRequestConfig => ({
@@ -85,18 +82,10 @@ const homeDataHelper = {
   getNewsfeed: async (param: IParamGetFeed) => {
     try {
       const response: any = await makeHttpRequest(
-        homeApiConfig.getNewsfeed({
-          enrich: true,
-          own_reactions: true,
-          with_own_reactions: true,
-          with_own_children: true,
-          with_recent_reactions: true,
-          with_reaction_counts: true,
-          ...param,
-        }),
+        homeApiConfig.getNewsfeed(param),
       );
       if (response && response?.data) {
-        return Promise.resolve(response?.data?.data?.results);
+        return Promise.resolve(response?.data?.data?.list);
       } else {
         return Promise.reject(response);
       }
