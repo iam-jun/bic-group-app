@@ -318,7 +318,6 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
   };
 
   const autoSaveDraftPost = async () => {
-    console.log(`\x1b[36m🐣️ useCreatePost autoSaveDraftPost\x1b[0m`);
     setPause(true);
 
     try {

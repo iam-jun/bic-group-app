@@ -286,10 +286,8 @@ const postDataHelper = {
         postApiConfig.putEditPost(param),
       );
       if (response && response?.data) {
-        console.log(`\x1b[36m🐣️ PostDataHelper putEditPost resolve\x1b[0m`);
         return Promise.resolve(response?.data);
       } else {
-        console.log(`\x1b[36m🐣️ PostDataHelper putEditPost reject\x1b[0m`);
         return Promise.reject(response);
       }
     } catch (e) {
