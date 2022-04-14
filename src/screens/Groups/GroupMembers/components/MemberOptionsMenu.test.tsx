@@ -14,8 +14,9 @@ import {IGroupMembers} from '~/interfaces/IGroup';
 import useRemoveMember from './useRemoveMember';
 import * as navigationHook from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
-import {checkLastAdmin} from '../../helper';
-import groupsDataHelper from '../../helper/GroupsDataHelper';
+import * as helper from '../../helper';
+import modalActions from '~/store/modal/actions';
+import i18next from 'i18next';
 
 describe('MemberOptionsMenu component', () => {
   const baseSheetRef = jest.fn();
@@ -24,6 +25,8 @@ describe('MemberOptionsMenu component', () => {
   const selectedMember = {};
 
   it('renders leave group option correctly', () => {
+    const spy = jest.spyOn(helper, 'checkLastAdmin');
+
     const state = {...initialState};
     // @ts-ignore
     state.auth.user = {username: 'testname1'};
@@ -42,9 +45,13 @@ describe('MemberOptionsMenu component', () => {
     const itemComponent = getByTestId('member_options_menu.leave_group');
     expect(itemComponent).toBeDefined();
     expect(itemComponent.props).toHaveProperty('onClick');
+    fireEvent.press(itemComponent);
+    expect(spy).toBeCalled();
   });
 
   it('renders Remove member option correctly when admin clicks on another user', () => {
+    const spy = jest.spyOn(helper, 'checkLastAdmin');
+
     const state = {...initialState};
     state.groups.groupDetail.can_manage_member = true;
     // @ts-ignore
@@ -67,6 +74,8 @@ describe('MemberOptionsMenu component', () => {
     const itemComponent = getByTestId('member_options_menu.remove_member');
     expect(itemComponent).toBeDefined();
     expect(itemComponent.props).toHaveProperty('onClick');
+    fireEvent.press(itemComponent);
+    expect(spy).toBeCalled();
   });
 
   it('should not render Remove member option correctly when admins click on themselves', () => {
@@ -213,12 +222,12 @@ describe('MemberOptionsMenu component', () => {
   });
 
   it('should dispatch alert last admin error correctly', () => {
+    const spy = jest.spyOn(modalActions, 'showHideToastMessage');
+
     const state = {...initialState};
     state.groups.groupDetail.can_setting = true;
-    state.groups.groupMember = {
-      // @ts-ignore
-      group_admin: {user_count: 1},
-    };
+    state.groups.groupMember = {group_admin: {user_count: 1}} as any;
+    state.auth.user = {username: 'testname1'} as any;
     const store = createTestStore(state);
 
     const selectedMember = {
@@ -239,11 +248,16 @@ describe('MemberOptionsMenu component', () => {
     const item = getByTestId('member_options_menu.remove_admin');
     expect(item).toBeDefined();
     expect(item.props).toHaveProperty('onClick');
+    fireEvent.press(item);
+    expect(spy).toBeCalled();
   });
 
   it('should render set admin option correctly', () => {
+    const spy = jest.spyOn(modalActions, 'showAlert');
+
     const state = {...initialState};
     state.groups.groupDetail.can_setting = true;
+    state.auth.user = {username: 'testname1'} as any;
     const store = createTestStore(state);
 
     const selectedMember = {
@@ -264,6 +278,12 @@ describe('MemberOptionsMenu component', () => {
     const item = getByTestId('member_options_menu.set_admin');
     expect(item).toBeDefined();
     expect(item.props).toHaveProperty('onClick');
+    fireEvent.press(item);
+    expect(spy).toBeCalledWith(
+      expect.objectContaining({
+        title: i18next.t('groups:modal_confirm_set_admin:title'),
+      }),
+    );
   });
 
   it('should navigate to user profile correctly when pressing View profile option', () => {
@@ -296,6 +316,8 @@ describe('MemberOptionsMenu component', () => {
   });
 
   it('renders Send message option correctly when admin clicks on another user', () => {
+    const spy = jest.spyOn(modalActions, 'showAlertNewFeature');
+
     const state = {...initialState};
     // @ts-ignore
     state.auth.user = {username: 'testname1'};
@@ -317,5 +339,7 @@ describe('MemberOptionsMenu component', () => {
     const itemComponent = getByTestId('member_options_menu.send_message');
     expect(itemComponent).toBeDefined();
     expect(itemComponent.props).toHaveProperty('onClick');
+    fireEvent.press(itemComponent);
+    expect(spy).toBeCalled();
   });
 });
