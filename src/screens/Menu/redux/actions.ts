@@ -129,8 +129,6 @@ const menuActions = {
     payload,
   }),
   uploadImage: (payload: IUserImageUpload, callback?: () => void) => {
-    console.log('hihi');
-
     return {
       type: menuTypes.UPLOAD_IMAGE,
       payload,
