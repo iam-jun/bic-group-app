@@ -86,6 +86,7 @@ const ReviewMarkdown = ({onPressDone}: {onPressDone: () => void}) => {
 export default ReviewMarkdown;
 
 const getAudiences = (aud: IAudience[]) => {
+  if (!aud || aud.length === 0) return '';
   const limitLength = 25;
   let result = '';
   const total = aud.length;

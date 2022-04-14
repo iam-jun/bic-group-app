@@ -4,7 +4,12 @@ import React from 'react';
 import {cleanup} from '@testing-library/react-native';
 
 import initialState from '~/store/initialState';
-import {configureStore, fireEvent, renderWithRedux} from '~/test/testUtils';
+import {
+  configureStore,
+  createTestStore,
+  fireEvent,
+  renderWithRedux,
+} from '~/test/testUtils';
 import * as navigationHook from '~/hooks/navigation';
 import * as commonUtil from '~/utils/common';
 import UserProfile from '.';
@@ -12,15 +17,20 @@ import {USER_PROFILE} from '~/test/mock_data/menu';
 import mainStack from '~/router/navigator/MainStack/stack';
 import menuTypes from '../redux/types';
 import menuActions from '../redux/actions';
-import {checkPermission} from '~/utils/permission';
 
 afterEach(cleanup);
 
 describe('UserProfile screen', () => {
   const mockStore = configureStore([]);
+  let storeData: any;
 
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
+    storeData = {...initialState};
+    storeData.menu.myProfile = {} as any;
+    storeData.auth.user = {} as any;
+    storeData.menu.showUserNotFound = false;
+    storeData.menu.loadingUserProfile = false;
   });
 
   it(`should hide avatar edit button, cover image edit button add edit profile button if is not current user`, () => {
@@ -35,7 +45,6 @@ describe('UserProfile screen', () => {
       .spyOn(menuActions, 'getUserProfile')
       .mockImplementation(mockActionGetMyProfile as any);
 
-    const storeData = {...initialState};
     //@ts-ignore
     storeData.menu.myProfile = USER_PROFILE;
 
@@ -62,7 +71,7 @@ describe('UserProfile screen', () => {
     const mockActionGetMyProfile = () => {
       return {
         type: menuTypes.SET_USER_PROFILE,
-        payload: {...USER_PROFILE, id: 1},
+        payload: USER_PROFILE,
       };
     };
 
@@ -74,22 +83,29 @@ describe('UserProfile screen', () => {
         idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
       },
     };
-    const storeData = {...initialState};
-    //@ts-ignore
-    storeData.menu.myProfile = USER_PROFILE;
+
+    storeData.menu.myProfile = USER_PROFILE as any;
     storeData.auth.user = user as any;
 
-    const store = mockStore(storeData);
+    const store = createTestStore(storeData);
     const props = {route: {params: {userId: USER_PROFILE.id}}};
     const wrapper = renderWithRedux(<UserProfile {...props} />, store);
 
     const buttonEditAvatar = wrapper.queryByTestId('user_profile.edit.avatar');
     expect(buttonEditAvatar).toBeDefined();
+    //@ts-ignore
+    fireEvent.press(buttonEditAvatar);
 
     const buttonCoverImage = wrapper.queryByTestId(
       'user_profile.edit.cover_image',
     );
     expect(buttonCoverImage).toBeDefined();
+
+    const coverImageView = wrapper.getByTestId('user_profile.cover_image');
+
+    fireEvent(coverImageView, 'layout', {
+      nativeEvent: {layout: {width: 375}},
+    });
 
     const buttonEditUserProfile = wrapper.queryByTestId('user_profile.edit');
     expect(buttonEditUserProfile).toBeDefined();
@@ -121,7 +137,6 @@ describe('UserProfile screen', () => {
         idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
       },
     };
-    const storeData = {...initialState};
     //@ts-ignore
     storeData.menu.myProfile = USER_PROFILE;
     storeData.auth.user = user as any;
@@ -158,7 +173,6 @@ describe('UserProfile screen', () => {
         idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
       },
     };
-    const storeData = {...initialState};
     //@ts-ignore
     storeData.menu.myProfile = USER_PROFILE;
     storeData.auth.user = user as any;
@@ -197,7 +211,6 @@ describe('UserProfile screen', () => {
         idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
       },
     };
-    const storeData = {...initialState};
     //@ts-ignore
     storeData.menu.myProfile = USER_PROFILE;
     storeData.auth.user = user as any;
@@ -216,8 +229,53 @@ describe('UserProfile screen', () => {
     });
   });
 
+  it(`should show select photos when clicking the cover image edit button if is the current user`, () => {
+    const mockActionGetMyProfile = () => {
+      return {
+        type: menuTypes.SET_USER_PROFILE,
+        payload: USER_PROFILE,
+      };
+    };
+
+    jest
+      .spyOn(menuActions, 'getUserProfile')
+      .mockImplementation(mockActionGetMyProfile as any);
+    const user = {
+      signInUserSession: {
+        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+      },
+    };
+    //@ts-ignore
+    storeData.menu.myProfile = USER_PROFILE;
+    storeData.auth.user = user as any;
+    storeData.menu.showUserNotFound = false;
+
+    const store = mockStore(storeData);
+    const props = {route: {params: {userId: USER_PROFILE.id}}};
+    const wrapper = renderWithRedux(<UserProfile {...props} />, store);
+
+    const buttonCoverImage = wrapper.queryByTestId(
+      'user_profile.edit.cover_image',
+    );
+    expect(buttonCoverImage).toBeDefined();
+
+    //@ts-ignore
+    fireEvent.press(buttonCoverImage);
+
+    const coverImageView = wrapper.getByTestId('user_profile.cover_image');
+
+    fireEvent(coverImageView, 'layout', {
+      nativeEvent: {layout: {width: 375}},
+    });
+
+    const buttonEditUserProfile = wrapper.queryByTestId('user_profile.edit');
+    expect(buttonEditUserProfile).toBeDefined();
+
+    const buttonSendMessage = wrapper.queryByTestId('user_profile.message');
+    expect(buttonSendMessage).toBeNull();
+  });
+
   it(`should render loading when loadingUserProfile is true`, () => {
-    const storeData = {...initialState};
     //@ts-ignore
     storeData.menu.loadingUserProfile = true;
     const user = {
@@ -234,4 +292,46 @@ describe('UserProfile screen', () => {
     const loadingView = wrapper.getByTestId('user_profile.loading');
     expect(loadingView).toBeDefined();
   });
+
+  it(`should render NoUserFound if can't get user profile`, () => {
+    //@ts-ignore
+    storeData.menu.showUserNotFound = true;
+    const store = mockStore(storeData);
+    const props = {route: {params: {userId: 1}}};
+    const wrapper = renderWithRedux(<UserProfile {...props} />, store);
+
+    const userNotFound = wrapper.getByTestId('user_profile.not_found');
+    expect(userNotFound).toBeDefined();
+  });
+
+  // it(`should not run onCoverLayout function when onLayout return width = 0`, () => {
+  //   const mockActionGetMyProfile = () => {
+  //     return {
+  //       type: menuTypes.SET_USER_PROFILE,
+  //       payload: USER_PROFILE,
+  //     };
+  //   };
+
+  //   jest
+  //     .spyOn(menuActions, 'getUserProfile')
+  //     .mockImplementation(mockActionGetMyProfile as any);
+  //   const user = {
+  //     signInUserSession: {
+  //       idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+  //     },
+  //   };
+  //   //@ts-ignore
+  //   storeData.menu.myProfile = USER_PROFILE;
+  //   storeData.auth.user = user as any;
+
+  //   const store = mockStore(storeData);
+  //   const props = {route: {params: {userId: USER_PROFILE.id}}};
+  //   const wrapper = renderWithRedux(<UserProfile {...props} />, store);
+
+  //   const coverImageView = wrapper.getByTestId('user_profile.cover_image');
+
+  //   fireEvent(coverImageView, 'layout', {
+  //     nativeEvent: {layout: {width: 0}},
+  //   });
+  // });
 });

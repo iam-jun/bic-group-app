@@ -1,12 +1,15 @@
+import {useFocusEffect} from '@react-navigation/native';
+import {useCallback, useEffect} from 'react';
+import {DeviceEventEmitter} from 'react-native';
+
+import {NAVIGATION_BACK_PRESSED} from '~/configs/navigator';
+import {ITabTypes} from '~/interfaces/IRouter';
 import {withNavigation} from '~/router/helper';
 import {
   leftNavigationRef,
   rightNavigationRef,
   rootNavigationRef,
 } from '~/router/navigator/refs';
-import {useEffect} from 'react';
-import {DeviceEventEmitter} from 'react-native';
-import {ITabTypes} from '~/interfaces/IRouter';
 
 export const useRootNavigation = () => {
   const rootNavigation = withNavigation(rootNavigationRef);
@@ -35,4 +38,19 @@ export const useTabPressListener = (
       listener?.remove?.();
     };
   }, deps);
+};
+
+export const useBackPressListener = (callback: () => void) => {
+  useFocusEffect(
+    useCallback(() => {
+      const backEventListener = DeviceEventEmitter.addListener(
+        NAVIGATION_BACK_PRESSED,
+        callback,
+      );
+
+      return () => {
+        backEventListener?.remove?.();
+      };
+    }, []),
+  );
 };

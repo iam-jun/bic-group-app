@@ -20,7 +20,7 @@ import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import {useBaseHook} from '~/hooks';
-import {useIsFocused} from '@react-navigation/core';
+import {useIsFocused} from '@react-navigation/native';
 import appActions from '~/store/app/actions';
 import {appScreens} from '~/configs/navigator';
 
@@ -81,7 +81,7 @@ const DraftPost = () => {
     return (
       <View>
         {canLoadMore && !refreshing && (
-          <View style={styles.listFooter}>
+          <View testID="draft_post.load_more_view" style={styles.listFooter}>
             <ActivityIndicator color={theme.colors.bgFocus} />
           </View>
         )}
@@ -94,7 +94,7 @@ const DraftPost = () => {
 
   const renderEmpty = () => {
     return (
-      <View style={styles.emptyContainer}>
+      <View testID="draft_post.empty_view" style={styles.emptyContainer}>
         <Image source={images.img_empty_draft} style={styles.imgEmpty} />
         <Text.H6 useI18n color={colors.textSecondary}>
           post:draft:title_no_draft_posts

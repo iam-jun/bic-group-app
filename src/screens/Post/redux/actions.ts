@@ -271,6 +271,10 @@ const postActions = {
     type: postTypes.SET_SCROLL_TO_COMMENTS_POSITION,
     payload,
   }),
+  setLoadingGetPostDetail: (payload: boolean) => ({
+    type: postTypes.LOADING_GET_POST_DETAIL,
+    payload,
+  }),
 };
 
 export default postActions;
