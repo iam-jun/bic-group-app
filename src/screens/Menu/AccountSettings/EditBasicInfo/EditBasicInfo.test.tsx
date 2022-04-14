@@ -69,6 +69,9 @@ describe('EditDescription screen', () => {
 
     const wrapper = renderWithRedux(<EditBasicInfo />, store);
 
+    const buttonSave = wrapper.getByTestId('edit_basic_info.save');
+    expect(buttonSave?.props?.accessibilityState?.disabled).toBeTruthy();
+
     const component = wrapper.getByTestId('edit_basic_info.gender');
     expect(component).toBeDefined();
 
@@ -82,6 +85,8 @@ describe('EditDescription screen', () => {
     );
     expect(item0Component).toBeDefined();
     fireEvent.press(item0Component);
+
+    expect(buttonSave?.props?.accessibilityState?.disabled).toBeFalsy();
   });
 
   it(`should render show date picker when click birthday item`, async () => {
