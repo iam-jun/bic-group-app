@@ -46,10 +46,10 @@ export default function* getSearchPosts({
       params.actors = actors;
     }
     if (startDate) {
-      params.start_time = startDate;
+      params.startTime = startDate;
     }
     if (endDate) {
-      params.end_time = endDate;
+      params.endTime = endDate;
     }
     const response = yield call(homeDataHelper.getSearchPost, params);
     data = data.concat(response?.results);
@@ -72,7 +72,7 @@ export default function* getSearchPosts({
       yield put(
         homeActions.getRecentSearchKeywords({
           target: 'post',
-          sort: 'desc',
+          order: 'DESC',
           limit: 10,
           showLoading: false,
         }),
