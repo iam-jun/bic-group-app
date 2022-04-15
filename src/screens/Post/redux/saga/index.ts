@@ -1009,7 +1009,13 @@ function* postPublishDraftPost({
   type: string;
   payload: IPayloadPublishDraftPost;
 }): any {
-  const {draftPostId, onSuccess, onError, replaceWithDetail} = payload || {};
+  const {
+    draftPostId,
+    onSuccess,
+    onError,
+    replaceWithDetail,
+    createFromGroupId,
+  } = payload || {};
   try {
     yield put(postActions.setLoadingCreatePost(true));
     const res = yield call(postDataHelper.postPublishDraftPost, draftPostId);
@@ -1020,6 +1026,10 @@ function* postPublishDraftPost({
       yield put(postActions.addToAllPosts({data: postData}));
       if (replaceWithDetail) {
         navigation.replace(homeStack.postDetail, {post_id: postData?.id});
+      }
+      if (createFromGroupId) {
+        yield put(groupsActions.clearGroupPosts());
+        yield put(groupsActions.getGroupPosts(createFromGroupId));
       }
       const payloadGetDraftPosts: IPayloadGetDraftPosts = {
         isRefresh: true,
@@ -1043,7 +1053,8 @@ function* putEditDraftPost({
   type: string;
   payload: IPayloadPutEditDraftPost;
 }): any {
-  const {id, data, replaceWithDetail, publishNow} = payload || {};
+  const {id, data, replaceWithDetail, publishNow, createFromGroupId} =
+    payload || {};
   if (!id || !data) {
     console.log(`\x1b[31m🐣️ saga putEditDraftPost error\x1b[0m`);
     return;
@@ -1066,6 +1077,7 @@ function* putEditDraftPost({
           draftPostId: id,
           replaceWithDetail: replaceWithDetail,
           refreshDraftPosts: true,
+          createFromGroupId,
         };
         yield put(postActions.postPublishDraftPost(p));
       } else {

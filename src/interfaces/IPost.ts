@@ -394,6 +394,7 @@ export interface IPayloadPublishDraftPost {
   onSuccess?: () => void;
   onError?: () => void;
   refreshDraftPosts?: boolean;
+  createFromGroupId?: number;
 }
 
 export interface IPayloadPutEditDraftPost {
@@ -402,6 +403,7 @@ export interface IPayloadPutEditDraftPost {
   replaceWithDetail?: boolean;
   publishNow: boolean;
   callback?: any;
+  createFromGroupId?: number;
 }
 
 export interface IPayloadPutEditAutoSave {
