@@ -53,12 +53,18 @@ export interface IParamGetSearchPost {
 }
 
 export type IRecentSearchTarget = 'post' | 'user' | 'article' | 'all';
+export type IOrder = 'ASC' | 'DESC';
 
 export interface IParamGetRecentSearchKeywords {
-  sort?: 'desc' | 'asc';
   limit?: number;
   target?: IRecentSearchTarget;
   showLoading?: boolean;
+  order?: IOrder;
+  offset?: number;
+  idGTE?: number;
+  idLTE?: number;
+  idGT?: number;
+  idLT?: number;
 }
 
 export interface IParamPostNewRecentSearchKeyword {

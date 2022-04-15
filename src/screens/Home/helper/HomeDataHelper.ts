@@ -43,15 +43,11 @@ const homeApiConfig = {
   getRecentSearchKeyword: (
     param: IParamGetRecentSearchKeywords,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/recent-searches`,
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
-    params: {
-      limit: param?.limit,
-      target: param?.target,
-      sort: param?.sort,
-    },
+    params: {...param},
   }),
   postNewRecentSearchKeyword: (
     data: IParamPostNewRecentSearchKeyword,
