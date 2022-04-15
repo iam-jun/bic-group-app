@@ -27,36 +27,25 @@ const homeApiConfig = {
     },
   }),
   getSearchPost: (param: IParamGetSearchPost): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/posts`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/posts`,
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
-    params: {
-      content: param?.content,
-      actors: param?.actors,
-      start_time: param?.start_time,
-      end_time: param?.end_time,
-      offset: param?.offset,
-      limit: param?.limit,
-    },
+    params: {...param},
   }),
   getRecentSearchKeyword: (
     param: IParamGetRecentSearchKeywords,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/recent-searches`,
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
-    params: {
-      limit: param?.limit,
-      target: param?.target,
-      sort: param?.sort,
-    },
+    params: {...param},
   }),
   postNewRecentSearchKeyword: (
     data: IParamPostNewRecentSearchKeyword,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/recent-searches`,
     method: 'post',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
@@ -65,13 +54,13 @@ const homeApiConfig = {
   deleteClearRecentSearch: (
     target: IRecentSearchTarget,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches/${target}/clean`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/recent-searches/${target}/clean`,
     method: 'delete',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
   }),
   deleteRecentSearchById: (id: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches/${id}/delete`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/recent-searches/${id}/delete`,
     method: 'delete',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
