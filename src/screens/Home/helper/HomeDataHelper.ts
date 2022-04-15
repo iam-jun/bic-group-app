@@ -52,7 +52,7 @@ const homeApiConfig = {
   postNewRecentSearchKeyword: (
     data: IParamPostNewRecentSearchKeyword,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/recent-searches`,
     method: 'post',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
@@ -61,13 +61,13 @@ const homeApiConfig = {
   deleteClearRecentSearch: (
     target: IRecentSearchTarget,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches/${target}/clean`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/recent-searches/${target}/clean`,
     method: 'delete',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
   }),
   deleteRecentSearchById: (id: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches/${id}/delete`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/recent-searches/${id}/delete`,
     method: 'delete',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
