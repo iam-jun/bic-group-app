@@ -27,18 +27,11 @@ const homeApiConfig = {
     },
   }),
   getSearchPost: (param: IParamGetSearchPost): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/posts`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/posts`,
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
-    params: {
-      content: param?.content,
-      actors: param?.actors,
-      start_time: param?.start_time,
-      end_time: param?.end_time,
-      offset: param?.offset,
-      limit: param?.limit,
-    },
+    params: {...param},
   }),
   getRecentSearchKeyword: (
     param: IParamGetRecentSearchKeywords,

@@ -46,10 +46,16 @@ export interface IParamGetFeed {
 export interface IParamGetSearchPost {
   content: string;
   actors?: string;
-  start_time?: string;
-  end_time?: string;
+  startTime?: string;
+  endTime?: string;
   offset?: number;
   limit?: number;
+  order?: IOrder;
+  important?: boolean;
+  idGTE?: number;
+  idLTE?: number;
+  idGT?: number;
+  idLT?: number;
 }
 
 export type IRecentSearchTarget = 'post' | 'user' | 'article' | 'all';
