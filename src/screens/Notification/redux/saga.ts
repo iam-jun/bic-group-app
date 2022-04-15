@@ -37,13 +37,6 @@ function* getNotifications({
     yield put(notificationsActions.setLoadingNotifications(true));
     yield put(notificationsActions.setNoMoreNoti(false));
 
-    const notifications: IObject<any> =
-      (yield select(state => get(state, notificationSelector.notifications))) ||
-      [];
-
-    // load more from the last notification
-    const bottomNoti = notifications[notifications.length - 1];
-
     const response: IObject<any> =
       yield notificationsDataHelper.getNotificationList(payload || {});
 
@@ -191,11 +184,10 @@ function* loadmore() {
     const notifications: IObject<any> =
       (yield select(state => get(state, notificationSelector.notifications))) ||
       [];
-    const bottomNoti = notifications[notifications.length - 1];
 
     const response: IObject<any> =
       yield notificationsDataHelper.getNotificationList({
-        id_lt: bottomNoti?.id,
+        offset: notifications.length + 1,
       });
 
     // hide loading more spinner, set isLoadingMore = false

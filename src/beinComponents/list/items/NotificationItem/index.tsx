@@ -9,6 +9,8 @@ import NotificationAvatar from './NotificationAvatar';
 import NotificationContent from './NotificationContent';
 
 export interface NotificationItemProps {
+  actor: any;
+  description: string;
   activities: IGetStreamNotificationActivity[];
   verb: string;
   is_read: boolean;
@@ -21,6 +23,8 @@ export interface NotificationItemProps {
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
+  actor,
+  description,
   activities,
   is_read,
   updated_at,
@@ -55,8 +59,11 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     <Div className={className}>
       <View style={styles.container}>
         {renderIndicator()}
-        <NotificationAvatar activities={activities} />
-        <NotificationContent activities={activities} />
+        <NotificationAvatar actor={actor} />
+        <NotificationContent
+          description={description}
+          activities={activities}
+        />
         <TimeView
           testID="notification_item.time_view"
           time={updated_at}

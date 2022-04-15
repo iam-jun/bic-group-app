@@ -12,6 +12,10 @@ const providers = {
     url: getEnv('BEIN_FEED'),
     name: 'BeinFeed',
   },
+  beinNotification: {
+    url: `${getEnv('BEIN_NOTIFICATION')}/api/v1/`,
+    name: 'BeinNotification',
+  },
   getStream: {
     url: 'http://52.15.139.185:3000/',
     name: 'GetStream',
@@ -71,26 +75,23 @@ const App = {
   },
   pushToken: (deviceToken: string, deviceId: string): HttpApiRequestConfig => {
     return {
-      url: `${providers.bein.url}notification/token`,
+      url: `${providers.beinNotification.url}device-tokens`,
       method: 'post',
       provider: providers.bein,
       useRetry: true,
       data: {
         token: deviceToken,
-        device_id: deviceId,
+        deviceId,
       },
     };
   },
   removePushToken: (deviceId: string): HttpApiRequestConfig => {
     return {
-      url: `${providers.bein.url}notification/token`,
+      url: `${providers.beinNotification.url}device-tokens/${deviceId}`,
       method: 'delete',
       provider: providers.bein,
       useRetry: false,
       timeout: 5000,
-      data: {
-        device_id: deviceId,
-      },
     };
   },
   getLinkPreview: (link: string): HttpApiRequestConfig => {

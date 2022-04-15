@@ -90,20 +90,21 @@ const MainTabs = () => {
 
     dispatch(notificationsActions.getNotifications());
 
-    const socket = io(getEnv('BEIN_FEED'), {
+    const socket = io(getEnv('BEIN_NOTIFICATION'), {
       transports: ['websocket'],
       path: '/ws',
-      auth: {token},
+      // auth: {token},
       ...getMsgPackParser(getEnv('BEIN_FEED_WS_MSGPACK') !== 'disable'),
     });
 
     socket.on('connect', () => {
       console.log(
-        `\x1b[36m🐣️ Bein feed socket connected with id: ${socket.id}\x1b[0m`,
+        `\x1b[36m🐣️ Bein notification socket connected with id: ${socket.id}\x1b[0m`,
       );
     });
+    socket.emit('auth_challenge', token);
     socket.on('disconnect', () => {
-      console.log(`\x1b[36m🐣️ Bein feed socket disconnected\x1b[0m`);
+      console.log(`\x1b[36m🐣️ Bein notification socket disconnected\x1b[0m`);
     });
     socket.on('notification', handleSocketNoti);
     socket.on('reaction', handleSocketReaction);
