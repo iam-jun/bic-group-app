@@ -149,12 +149,12 @@ const postActions = {
     status: 'pending' | 'success' | 'failed';
     postId: string;
     resultComment: IReaction;
-    parentCommentId?: string;
+    parentCommentId?: string | number;
   }) => ({
     type: postTypes.UPDATE_COMMENT_API,
     payload,
   }),
-  setScrollToLatestItem: (payload: null | {parentCommentId?: string}) => ({
+  setScrollToLatestItem: (payload: null | {parentCommentId?: string | number}) => ({
     type: postTypes.SET_SCROLL_TO_LATEST_ITEM,
     payload,
   }),

@@ -13,6 +13,7 @@ import {
   IActivityDataImage,
   IPayloadCreateComment,
   IPayloadReplying,
+  IPostMedia,
 } from '~/interfaces/IPost';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
@@ -111,32 +112,36 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       if (sendData?.image) {
         images.push(sendData?.image);
       }
+      const media: IPostMedia = {
+        images,
+      };
       const payload: IPayloadCreateComment = {
         postId,
         parentCommentId: replyTargetId || defaultReplyTargetId,
-        commentData: {content: content?.trim(), images},
+        commentData: {content: content?.trim(), media},
         userId: userId,
         onSuccess: _onCommentSuccess,
         isCommentLevel1Screen: isCommentLevel1Screen,
-        preComment: {
-          status: 'pending',
-          // localId is used for finding and updating comment data from API later
-          localId: uuid.v4(),
-          user_id: userId,
-          user: {
-            data: {avatar, fullname, username},
-          },
-          data: {
-            content: content?.trim(),
-            images,
-          },
-          activity_id: postId,
-          children_counts: {},
-          own_children: {},
-          latest_children: {},
-          created_at: new Date().toISOString(),
-          parentCommentId: replyTargetId || defaultReplyTargetId,
-        },
+        //todo update field data
+        // preComment: {
+        //   status: 'pending',
+        //   // localId is used for finding and updating comment data from API later
+        //   localId: uuid.v4(),
+        //   user_id: userId,
+        //   user: {
+        //     data: {avatar, fullname, username},
+        //   },
+        //   data: {
+        //     content: content?.trim(),
+        //     images,
+        //   },
+        //   activity_id: postId,
+        //   children_counts: {},
+        //   own_children: {},
+        //   latest_children: {},
+        //   created_at: new Date().toISOString(),
+        //   parentCommentId: replyTargetId || defaultReplyTargetId,
+        // },
       };
       dispatch(postActions.postCreateNewComment(payload));
     }
