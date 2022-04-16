@@ -123,13 +123,15 @@ export const postApiConfig = {
     },
   }),
   postNewComment: (params: IRequestPostComment): HttpApiRequestConfig => ({
-    url: `${provider.url}api/comments`,
+    url: `${provider.url}api/v1/comments`,
     method: 'post',
     provider,
     useRetry: true,
     data: {
-      post_id: params.postId,
-      data: params.data,
+      postId: params?.postId,
+      content: params?.data?.content,
+      media: params?.data?.media,
+      mentions: params?.data?.mentions,
     },
   }),
   postReplyComment: (params: IRequestReplyComment): HttpApiRequestConfig => {
