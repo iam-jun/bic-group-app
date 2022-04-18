@@ -74,7 +74,12 @@ export interface ICommentData {
   updatedAt?: string;
   ownerReactions?: any;
   reactionsCount?: any;
-  child?: any;
+  child?: ICommentData[];
+
+  loading?: boolean;
+  status?: 'pending' | 'success' | 'failed';
+  localId?: string | number[]; // from uuid-v4
+  parentCommentId?: string | number; // used when retry/cancel adding new comment
 }
 
 export interface ICreatePostImage {
@@ -102,6 +107,14 @@ export interface IPostMedia {
   files?: any[];
 }
 
+export interface IPostComments {
+  list?: ICommentData[];
+  meta?: {
+    total?: number;
+    limit?: number;
+  };
+}
+
 export interface IPostActivity {
   id?: string;
   audience?: IPostAudience;
@@ -113,6 +126,7 @@ export interface IPostActivity {
   actor?: IAudienceUser;
   mentions?: any;
   commentsCount?: number;
+  comments?: IPostComments;
   reactionsCount?: IReactionCounts;
   ownerReactions?: IOwnReaction;
   createdAt?: string;
@@ -227,10 +241,10 @@ export interface IRequestReplyComment {
 }
 
 export interface IRequestGetPostComment {
-  postId: string;
-  commentId?: string;
-  idLt?: string; //get comment before this id
-  kind?: string;
+  postId: number;
+  commentId?: number;
+  idLt?: number; //get comment before this id
+  kind?: number;
   recentReactionsLimit?: number;
   recentChildReactionsLimit?: number;
 }
@@ -345,8 +359,8 @@ export interface IPayloadReactToPost {
 export interface IPayloadReactToComment {
   id: string;
   comment: IReaction;
-  postId?: string;
-  parentCommentId?: string;
+  postId?: number;
+  parentCommentId?: number;
   reactionId: ReactionType;
   ownReaction: IOwnReaction;
   reactionCounts: IReactionCounts;
@@ -457,7 +471,7 @@ export interface ICreatePostCurrentSettings {
 }
 
 export interface IPayloadDeleteComment {
-  commentId: string;
-  parentCommentId?: string;
-  postId: string;
+  commentId: number;
+  parentCommentId?: number;
+  postId: number;
 }

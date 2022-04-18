@@ -1,11 +1,10 @@
 import {put, call, takeLatest, select, takeEvery} from 'redux-saga/effects';
-import {isArray, get, isEmpty} from 'lodash';
+import {isArray, get} from 'lodash';
 
 import {
   IOwnReaction,
   IParamGetPostAudiences,
   IParamGetPostDetail,
-  IPayloadAddToAllPost,
   IPayloadCreateComment,
   IPayloadCreatePost,
   IPayloadDeletePost,
@@ -38,13 +37,13 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import {sortComments} from '~/screens/Post/helper/PostUtils';
 import homeActions from '~/screens/Home/redux/actions';
 import groupsActions from '~/screens/Groups/redux/actions';
-import errorCode from '~/constants/errorCode';
 import deleteComment from './deleteComment';
 import putEditPost from '~/screens/Post/redux/saga/putEditPost';
 import getDraftPosts from './getDraftPosts';
 import postCreateNewComment from '~/screens/Post/redux/saga/postCreateNewComment';
 import showError from '~/store/commonSaga/showError';
 import addChildCommentToCommentsOfPost from '~/screens/Post/redux/saga/addChildCommentToCommentsOfPost';
+import addToAllPosts from '~/screens/Post/redux/saga/addToAllPosts';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -249,63 +248,6 @@ function* deletePost({
   } catch (e) {
     yield showError(e);
   }
-}
-
-function* addToAllPosts({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadAddToAllPost;
-}): any {
-  const {data, handleComment} = payload || {};
-  const allPosts = yield select(state => state?.post?.allPosts) || {};
-  const newAllPosts = {...allPosts};
-  const newComments: IReaction[] = [];
-  const newAllCommentByParentId: any = {};
-
-  let posts: IPostActivity[] = [];
-  if (isArray(data) && data.length > 0) {
-    posts = posts.concat(data);
-  } else {
-    posts = new Array(data) as IPostActivity[];
-  }
-
-  posts.map((item: IPostActivity) => {
-    if (item?.id) {
-      if (handleComment) {
-        const postComments = sortComments(
-          item?.latest_reactions?.comment || [],
-        );
-
-        //todo update getstream query to get only 1 child comment
-        //todo @Toan is researching for solution
-        if (postComments.length > 0) {
-          for (let i = 0; i < postComments.length; i++) {
-            const cc = postComments[i]?.latest_children?.comment || [];
-            if (cc.length > 1) {
-              postComments[i].latest_children.comment = cc.slice(
-                cc.length - 1,
-                cc.length,
-              );
-            }
-          }
-        }
-        //todo remove code above later
-
-        newAllCommentByParentId[item.id] = postComments;
-        postComments.map((c: IReaction) => getAllCommentsOfCmt(c, newComments));
-      }
-      newAllPosts[item.id] = item;
-    }
-  });
-
-  if (handleComment) {
-    yield put(postActions.addToAllComments(newComments));
-    yield put(
-      postActions.updateAllCommentsByParentIds(newAllCommentByParentId),
-    );
-  }
-  yield put(postActions.setAllPosts(newAllPosts));
 }
 
 function* addToAllComments({

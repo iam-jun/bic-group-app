@@ -1,6 +1,7 @@
 import {StyleProp, ViewStyle} from 'react-native';
 import {TextInputProps} from '~/beinComponents/inputs/TextInput';
 import {ReactionType} from '~/constants/reactions';
+import {IReactionCounts} from '~/interfaces/IPost';
 
 export interface IShowAlert {
   title?: string;
@@ -22,7 +23,7 @@ export interface IShowAlert {
 
 export interface IPayloadReactionDetailBottomSheet {
   isOpen: boolean;
-  reactionCounts: {[x: string]: number};
+  reactionCounts: IReactionCounts;
   initReaction: ReactionType;
   getDataPromise?: any;
   getDataParam?: any;
