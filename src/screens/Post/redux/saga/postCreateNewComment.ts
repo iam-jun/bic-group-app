@@ -78,6 +78,7 @@ function* postCreateNewComment({
     let resComment;
     if (parentCommentId) {
       resComment = yield postDataHelper.postReplyComment({
+        postId,
         parentCommentId,
         data: commentData,
       });

@@ -138,14 +138,15 @@ export const postApiConfig = {
     },
   }),
   postReplyComment: (params: IRequestReplyComment): HttpApiRequestConfig => {
-    const {parentCommentId, data} = params;
+    const {postId, parentCommentId, data} = params;
     return {
       url: `${provider.url}api/v1/comments/${parentCommentId}/reply`,
       method: 'post',
       provider,
       useRetry: true,
       data: {
-        data,
+        postId,
+        ...data,
       },
     };
   },

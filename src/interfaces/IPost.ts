@@ -233,8 +233,9 @@ export interface IRequestPostComment {
 }
 
 export interface IRequestReplyComment {
-  parentCommentId: string | number;
-  data: IActivityData;
+  parentCommentId: number;
+  postId: number;
+  data: ICommentData;
 }
 
 export interface IRequestGetPostComment {
