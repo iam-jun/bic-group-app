@@ -1,6 +1,5 @@
 import {get, isEmpty} from 'lodash';
 import {select} from 'redux-saga/effects';
-import {ReactionType} from '~/constants/reactions';
 
 import {
   IOwnReaction,
@@ -18,16 +17,7 @@ export default function* putReactionToComment({
   type: string;
   payload: IPayloadReactToComment;
 }): any {
-  const {
-    id,
-    comment,
-    postId,
-    parentCommentId,
-    reactionId,
-    reactionCounts,
-    ownReaction,
-  } = payload;
-  const isChildComment = !!parentCommentId;
+  const {id, comment, postId, reactionId} = payload;
 
   if (!postId) {
     console.log(

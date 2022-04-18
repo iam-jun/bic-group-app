@@ -6,7 +6,7 @@ import postActions from '../actions';
 import postKeySelector from '../keySelector';
 
 export default function* onUpdateReactionOfPostById(
-  postId: string | number,
+  postId: number,
   ownReaction: IOwnReaction,
   reactionCounts: IReactionCounts,
 ): any {

@@ -350,31 +350,31 @@ export interface IPayloadAddToAllPost {
 }
 
 export interface IPayloadReactToPost {
-  id: string;
+  id: number;
   reactionId: ReactionType;
   ownReaction: IOwnReaction;
   reactionCounts: IReactionCounts;
 }
 
 export interface IPayloadReactToComment {
-  id: string;
+  id: number;
   comment: IReaction;
   postId?: number;
   parentCommentId?: number;
   reactionId: ReactionType;
-  ownReaction: IOwnReaction;
-  reactionCounts: IReactionCounts;
+  ownerReactions: IOwnReaction;
+  reactionsCount: IReactionCounts;
 }
 
-export interface IParamPutReactionToPost {
+export interface IParamPutReaction {
   reactionName: string;
   target: 'POST' | 'COMMENT';
-  targetId: string;
+  targetId: number;
 }
 
 export interface IParamDeleteReaction {
   target: 'POST' | 'COMMENT';
-  reactionId: string;
+  reactionId: number;
 }
 
 export interface IParamPutReactionToComment {
@@ -459,13 +459,13 @@ export interface IPayloadUpdateReaction {
 
 export interface ISocketReaction {
   actor: any;
-  entityId: string | number;
+  entityId: number;
   verb: 'REACT' | 'UNREACT';
   type: 'react.post_creator' | 'react.comment_creator';
 
   result: {
     reaction: IReaction;
-    verbId: string;
+    verbId: number;
     reactionsCount: IReactionCounts;
   };
 }

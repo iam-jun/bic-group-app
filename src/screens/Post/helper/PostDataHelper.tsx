@@ -9,7 +9,7 @@ import {
   IParamGetPostDetail,
   IParamGetReactionDetail,
   IParamPutEditPost,
-  IParamPutReactionToPost,
+  IParamPutReaction,
   IParamSearchMentionAudiences,
   IPostCreatePost,
   IRequestGetPostComment,
@@ -53,7 +53,7 @@ export const postApiConfig = {
     useRetry: true,
     data,
   }),
-  putReaction: (params: IParamPutReactionToPost): HttpApiRequestConfig => {
+  putReaction: (params: IParamPutReaction): HttpApiRequestConfig => {
     return {
       url: `${provider.url}api/v1/reactions`,
       method: 'post',
@@ -242,7 +242,7 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  putReaction: async (param: IParamPutReactionToPost) => {
+  putReaction: async (param: IParamPutReaction) => {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.putReaction(param),

@@ -69,9 +69,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const currentUserId = useUserIdAuth();
 
-  const comment = useKeySelector(
-    postKeySelector.commentById(commentData?.id?.toString?.()),
-  );
+  const comment = useKeySelector(postKeySelector.commentById(commentData?.id));
   const {
     id,
     actor,
@@ -143,8 +141,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
         postId,
         parentCommentId,
         reactionId: reactionId,
-        ownReaction: ownerReactions,
-        reactionCounts: reactionsCount,
+        ownerReactions: ownerReactions,
+        reactionsCount: reactionsCount,
       };
       dispatch(postActions.postReactToComment(payload));
     }
@@ -158,8 +156,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
         postId,
         parentCommentId,
         reactionId: reactionId,
-        ownReaction: ownerReactions,
-        reactionCounts: reactionsCount,
+        ownerReactions: ownerReactions,
+        reactionsCount: reactionsCount,
       };
       dispatch(postActions.deleteReactToComment(payload));
     }

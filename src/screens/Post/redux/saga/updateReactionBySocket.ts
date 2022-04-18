@@ -17,7 +17,7 @@ export default function* updateReactionBySocket({
     actor,
     type = '',
     result = {},
-    entityId = '',
+    entityId = -1,
   } = data as ISocketReaction;
 
   const isCurrentUser = userId == actor?.id;
@@ -63,7 +63,7 @@ export default function* updateReactionBySocket({
       }
     }
     yield onUpdateReactionOfCommentById(
-      entityId?.toString(),
+      entityId,
       ownReactions,
       reactionsCount,
       undefined,

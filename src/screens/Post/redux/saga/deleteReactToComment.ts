@@ -17,11 +17,12 @@ export default function* deleteReactToComment({
   type: string;
   payload: IPayloadReactToComment;
 }): any {
-  const {id, comment, reactionId, reactionCounts, ownReaction} = payload;
+  const {id, comment, reactionId, reactionsCount, ownerReactions} = payload;
   try {
     const rId =
-      ownReaction?.find((item: IReaction) => item?.reactionName === reactionId)
-        ?.id || '';
+      ownerReactions?.find(
+        (item: IReaction) => item?.reactionName === reactionId,
+      )?.id || '';
     if (rId) {
       const cComment1 = yield select(s =>
         get(s, postKeySelector.commentById(id)),
@@ -49,32 +50,12 @@ export default function* deleteReactToComment({
         reactionId: rId,
         target: 'COMMENT',
       });
-
-      // const cComment2 = yield select(s =>
-      //   get(s, postKeySelector.commentById(id)),
-      // ) || {};
-      // const cReactionCount2 = cComment2.reactionsCount || {};
-      // const cOwnReactions2 = cComment2.ownerReactions || {};
-
-      // const newChildrenCounts2 = {...cReactionCount2};
-      // newChildrenCounts2[reactionId] = Math.max(
-      //   0,
-      //   (newChildrenCounts2[reactionId] || 0) - 1,
-      // );
-      // const newOwnChildren2 = {...cOwnReactions2};
-      // newOwnChildren2[reactionId] = [];
-      // yield onUpdateReactionOfCommentById(
-      //   id,
-      //   newOwnChildren2,
-      //   newChildrenCounts2,
-      //   comment,
-      // );
     }
   } catch (e) {
     yield onUpdateReactionOfCommentById(
       id,
-      ownReaction,
-      reactionCounts,
+      ownerReactions,
+      reactionsCount,
       comment,
     );
     yield showError(e);

@@ -21,7 +21,7 @@ export default function* updateUnReactionBySocket({
     actor,
     type = '',
     result = {},
-    entityId = '',
+    entityId = -1,
   } = data as ISocketReaction;
 
   const isCurrentUser = userId == actor?.id;
@@ -68,7 +68,7 @@ export default function* updateUnReactionBySocket({
       }
     }
     yield onUpdateReactionOfCommentById(
-      entityId?.toString(),
+      entityId,
       newOwnReaction2,
       reactionsCount,
       undefined,
