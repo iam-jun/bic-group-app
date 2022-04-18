@@ -168,15 +168,12 @@ export interface IPayloadCreatePost {
 }
 
 export interface IPayloadCreateComment {
-  postId: string;
-  parentCommentId?: string | number;
+  postId: number;
+  parentCommentId?: number;
   commentData: ICommentData;
   userId: string | number;
   localId?: string | number[]; // used when retry adding new comment
-  preComment?: IReaction & {
-    localId: string | number[]; // used when creating new comment
-    parentCommentId?: string | number;
-  };
+  preComment?: ICommentData;
   onSuccess?: () => void;
   isCommentLevel1Screen?: boolean;
 }
@@ -190,8 +187,8 @@ export interface IPayloadPutEditPost {
 
 export interface IPayloadPutEditComment {
   id: string;
-  comment: IReaction;
-  data: IActivityData;
+  comment: ICommentData;
+  data: ICommentData;
 }
 
 export interface IPayloadDeletePost {
@@ -229,22 +226,26 @@ export interface IGetStreamUser {
 }
 
 export interface IRequestPostComment {
-  postId: string;
+  postId: number;
   data: ICommentData;
 }
 
 export interface IRequestReplyComment {
-  parentCommentId: string | number;
-  data: IActivityData;
+  parentCommentId: number;
+  postId: number;
+  data: ICommentData;
 }
 
 export interface IRequestGetPostComment {
+  order?: 'ASC' | 'DESC';
+  limit?: number;
+  offset?: number;
+  idGTE?: number;
+  idLTE?: number;
+  idLT?: number;
   postId: number;
-  commentId?: number;
-  idLt?: number; //get comment before this id
-  kind?: number;
-  recentReactionsLimit?: number;
-  recentChildReactionsLimit?: number;
+  parentId?: number;
+  childLimit?: number;
 }
 
 export interface IPayloadGetCommentsById extends IRequestGetPostComment {
@@ -382,8 +383,8 @@ export interface IParamPutReactionToComment {
 }
 
 export interface IPayloadUpdateCommentsById {
-  id: string;
-  comments: IReaction[];
+  id: number;
+  comments: ICommentData[];
   isMerge: boolean;
 }
 
@@ -397,8 +398,8 @@ export interface ICreatePostParams {
 }
 
 export interface IPayloadReplying {
-  comment: IReaction;
-  parentComment?: IReaction;
+  comment: ICommentData;
+  parentComment?: ICommentData;
 }
 
 export interface IPayloadSetDraftPosts {

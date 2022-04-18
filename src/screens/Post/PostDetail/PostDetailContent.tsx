@@ -83,7 +83,7 @@ const _PostDetailContent = (props: any) => {
   const createdAt = useKeySelector(postKeySelector.postCreatedAtById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
   const commentCount = useKeySelector(
-    postKeySelector.postCommentCountsById(id),
+    postKeySelector.postCommentOnlyCountById(id),
   );
   const commentList = useKeySelector(postKeySelector.postCommentListById(id));
   const scrollToLatestItem = useKeySelector(postKeySelector.scrollToLatestItem);

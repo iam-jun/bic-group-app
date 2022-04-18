@@ -8,11 +8,9 @@ import {
   IPayloadCreateComment,
   IPayloadCreatePost,
   IPayloadDeletePost,
-  IPayloadGetCommentsById,
   IPayloadGetDraftPosts,
   IPayloadGetPostDetail,
   IPayloadPublishDraftPost,
-  IPayloadPutEditComment,
   IPayloadPutEditDraftPost,
   IPayloadReactToComment,
   IPayloadReactToPost,
@@ -42,7 +40,6 @@ import putEditPost from '~/screens/Post/redux/saga/putEditPost';
 import getDraftPosts from './getDraftPosts';
 import postCreateNewComment from '~/screens/Post/redux/saga/postCreateNewComment';
 import showError from '~/store/commonSaga/showError';
-import addChildCommentToCommentsOfPost from '~/screens/Post/redux/saga/addChildCommentToCommentsOfPost';
 import addToAllPosts from '~/screens/Post/redux/saga/addToAllPosts';
 import putReactionToPost from './putReactionToPost';
 import deleteReactToPost from './deleteReactToPost';
@@ -50,12 +47,11 @@ import putReactionToComment from './putReactionToComment';
 import deleteReactToComment from './deleteReactToComment';
 import updateReactionBySocket from './updateReactionBySocket';
 import updateUnReactionBySocket from './updateUnReactionBySocket';
+import getCommentsByPostId from '~/screens/Post/redux/saga/getCommentsByPostId';
+import putEditComment from '~/screens/Post/redux/saga/putEditComment';
+import {timeOut} from '~/utils/common';
 
 const navigation = withNavigation(rootNavigationRef);
-
-function timeOut(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 export default function* postSaga() {
   yield takeEvery(postTypes.POST_CREATE_NEW_POST, postCreateNewPost);
@@ -182,41 +178,6 @@ function* postRetryAddComment({
    * only need to update the data from API
    */
   yield postCreateNewComment({type, payload: currentComment});
-}
-
-function* putEditComment({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadPutEditComment;
-}) {
-  const {id, comment, data} = payload;
-  if (!id || !data || !comment) {
-    console.log(`\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m`);
-    return;
-  }
-  try {
-    yield put(postActions.setCreateComment({loading: true}));
-
-    yield postDataHelper.putEditComment(id, data);
-
-    const newComment = {...comment};
-    newComment.data = Object.assign({}, newComment.data, data, {edited: true});
-    newComment.updated_at = new Date().toISOString();
-    yield put(postActions.addToAllComments(newComment));
-    yield put(
-      modalActions.showHideToastMessage({
-        content: 'post:edit_comment_success',
-        props: {textProps: {useI18n: true}, type: 'success'},
-      }),
-    );
-    yield timeOut(500);
-    navigation.goBack();
-    yield put(postActions.setCreateComment({loading: false, content: ''}));
-  } catch (e) {
-    yield put(postActions.setCreateComment({loading: false}));
-    yield showError(e);
-  }
 }
 
 function* deletePost({
@@ -479,46 +440,6 @@ function* putEditDraftPost({
   }
 }
 
-function* getCommentsByPostId({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadGetCommentsById;
-}): any {
-  const {postId, commentId, isMerge, callbackLoading} = payload || {};
-  try {
-    callbackLoading?.(true);
-    const response = yield call(postDataHelper.getCommentsByPostId, payload);
-    const newList = response?.results;
-    callbackLoading?.(false);
-    if (newList?.length > 0) {
-      if (commentId) {
-        //get child comment of comment
-        yield addChildCommentToCommentsOfPost({
-          postId: postId,
-          commentId: commentId,
-          childComments: newList,
-        });
-        yield put(postActions.addToAllComments(newList));
-      } else {
-        //get comment of post
-        const payload = {id: postId, comments: newList, isMerge};
-        const newAllComments: IReaction[] = [];
-        newList.map((c: IReaction) => getAllCommentsOfCmt(c, newAllComments));
-
-        yield put(postActions.addToAllComments(newAllComments));
-        yield put(
-          postActions.updateAllCommentsByParentIdsWithComments(payload),
-        );
-      }
-    }
-  } catch (e) {
-    console.log(`\x1b[31m🐣️ saga getCommentsByPostId error: `, e, `\x1b[0m`);
-    callbackLoading?.(false);
-    yield showError(e);
-  }
-}
-
 function* getPostDetail({
   payload,
 }: {
@@ -573,10 +494,3 @@ function* getCreatePostInitAudiences({
     console.log(`\x1b[31m🐣️ saga getCreatePostInitAudiences e:`, e, `\x1b[0m`);
   }
 }
-
-const getAllCommentsOfCmt = (comment: IReaction, list: IReaction[]) => {
-  if (comment && list) {
-    list.push(comment);
-    comment?.child?.map((child: IReaction) => list.push(child));
-  }
-};
