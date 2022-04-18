@@ -69,7 +69,7 @@ export default function* putReactionToPost({
 
       yield onUpdateReactionOfPostById(id, newOwnReaction1, newReactionCounts);
 
-      yield call(postDataHelper.putReactionToPost, {
+      yield call(postDataHelper.putReaction, {
         reactionName: reactionId,
         target: 'POST',
         targetId: id,

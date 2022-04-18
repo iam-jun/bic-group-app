@@ -99,7 +99,7 @@ export default function* putReactionToComment({
         comment,
       );
 
-      yield postDataHelper.putReactionToPost({
+      yield postDataHelper.putReaction({
         reactionName: reactionId,
         target: 'COMMENT',
         targetId: id,

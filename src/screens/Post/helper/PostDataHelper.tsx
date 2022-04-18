@@ -9,7 +9,6 @@ import {
   IParamGetPostDetail,
   IParamGetReactionDetail,
   IParamPutEditPost,
-  IParamPutReactionToComment,
   IParamPutReactionToPost,
   IParamSearchMentionAudiences,
   IPostCreatePost,
@@ -54,9 +53,7 @@ export const postApiConfig = {
     useRetry: true,
     data,
   }),
-  putReactionToPost: (
-    params: IParamPutReactionToPost,
-  ): HttpApiRequestConfig => {
+  putReaction: (params: IParamPutReactionToPost): HttpApiRequestConfig => {
     return {
       url: `${provider.url}api/v1/reactions`,
       method: 'post',
@@ -151,18 +148,6 @@ export const postApiConfig = {
       },
     };
   },
-  putReactionToComment: (
-    params: IParamPutReactionToComment,
-  ): HttpApiRequestConfig => {
-    const {commentId, ...restParams} = params;
-    return {
-      url: `${provider.url}api/comments/${commentId}/react`,
-      method: 'put',
-      provider,
-      useRetry: true,
-      data: restParams,
-    };
-  },
   postMarkAsRead: (postId: string, userId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}reactions/mark-as-read`,
     method: 'post',
@@ -202,23 +187,6 @@ export const postApiConfig = {
       key: params.key,
       offset: params.skip,
       limit: params.take,
-    },
-  }),
-  postReaction: (
-    referenceId: string,
-    referenceType: 'post' | 'comment',
-    data: ReactionType[],
-    userId: number,
-  ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}reactions/reacts`,
-    method: 'post',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
-    data: {
-      referenceId: referenceId,
-      referenceType: referenceType,
-      data: data,
-      userId: userId,
     },
   }),
   deleteReaction: (data: IParamDeleteReaction): HttpApiRequestConfig => ({
@@ -274,10 +242,10 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  putReactionToPost: async (param: IParamPutReactionToPost) => {
+  putReaction: async (param: IParamPutReactionToPost) => {
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.putReactionToPost(param),
+        postApiConfig.putReaction(param),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -389,20 +357,6 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  putReactionToComment: async (param: IParamPutReactionToComment) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.putReactionToComment(param),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
   postMarkAsRead: async (postId: string, userId: number) => {
     try {
       const response: any = await makeHttpRequest(
@@ -435,25 +389,6 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.getSearchMentionAudiences(params),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  postReaction: async (
-    referenceId: string,
-    referenceType: 'post' | 'comment',
-    data: ReactionType[],
-    userId: number,
-  ) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.postReaction(referenceId, referenceType, data, userId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
