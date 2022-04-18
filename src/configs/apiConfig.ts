@@ -25,19 +25,26 @@ const Upload = {
     onUploadProgress?: (progressEvent: any) => void,
   ): HttpApiRequestConfig => {
     const uploadEndPoint: any = {
-      userAvatar: 'upload/user-avatar',
-      userCover: 'upload/user-cover',
-      groupAvatar: 'upload/group-avatar',
-      groupCover: 'upload/group-cover',
-      postImage: 'upload/post-image',
-      postVideo: 'upload/post-video',
-      postFile: 'upload/post-file',
-      commentImage: 'upload/comment-image',
-      commentVideo: 'upload/comment-video',
-      commentFile: 'upload/comment-file',
+      user_avatar: 'upload/user-avatar',
+      user_cover: 'upload/user-cover',
+      group_avatar: 'upload/group-avatar',
+      group_cover: 'upload/group-cover',
     };
 
-    const url = `${providers.bein.url}${uploadEndPoint[type]}`;
+    let url: string;
+    let provider: any;
+
+    if (uploadEndPoint[type]) {
+      // upload bein group
+      url = `${providers.bein.url}${uploadEndPoint[type]}`;
+      provider = providers.bein;
+    } else {
+      // upload bein feed
+      url = `${providers.beinFeed.url}api/v1/media`;
+      provider = providers.beinFeed;
+      data.append('uploadType', type);
+    }
+
     return {
       url,
       method: 'post',
@@ -45,7 +52,7 @@ const Upload = {
         'Content-Type': 'multipart/form-data',
       },
       useRetry: true,
-      provider: providers.bein,
+      provider,
       onUploadProgress: onUploadProgress,
       data,
     };

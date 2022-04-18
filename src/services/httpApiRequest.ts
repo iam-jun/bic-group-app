@@ -430,6 +430,7 @@ const getAuthTokens = async () => {
     // @ts-ignore
     const data = mapResponseSuccessBein(httpResponse);
 
+    // @ts-ignore
     if (data.code != 200 && data.code?.toUpperCase?.() !== 'OK') return false;
 
     const {access_token: feedAccessToken, subscribe_token: notiSubscribeToken} =
