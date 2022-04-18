@@ -39,8 +39,10 @@ const postKeySelector = {
     `post.allPosts.${id}.ownerReactions`,
   postReactionCountsById: (id: string | number) =>
     `post.allPosts.${id}.reactionsCount`,
-  postCommentCountsById: (id: string | number) =>
+  postCommentsCountById: (id: string | number) =>
     `post.allPosts.${id}.commentsCount`,
+  postCommentOnlyCountById: (id: number) =>
+    `post.allPosts.${id}.comments.meta.total`,
   postCommentListById: (id: string | number) =>
     `post.allPosts.${id}.comments.list`,
   postIsDraftById: (id: string | number) => `post.allPosts.${id}.isDraft`,

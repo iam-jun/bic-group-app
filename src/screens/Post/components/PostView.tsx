@@ -106,7 +106,7 @@ const _PostView: FC<PostViewProps> = ({
     setting = useKeySelector(postKeySelector.postSettingById(postId));
     deleted = useKeySelector(postKeySelector.postDeletedById(postId));
     commentsCount = useKeySelector(
-      postKeySelector.postCommentCountsById(postId),
+      postKeySelector.postCommentsCountById(postId),
     );
 
     ownerReactions = useKeySelector(

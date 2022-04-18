@@ -88,8 +88,8 @@ export const postApiConfig = {
     useRetry: true,
     ...(isDraftPost ? {params: {is_draft: true}} : {}),
   }),
-  deleteComment: (id: string): HttpApiRequestConfig => ({
-    url: `${provider.url}api/comments/${id}`,
+  deleteComment: (id: number): HttpApiRequestConfig => ({
+    url: `${provider.url}api/v1/comments/${id}`,
     method: 'delete',
     provider,
     useRetry: true,
@@ -328,7 +328,7 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  deleteComment: async (id: string) => {
+  deleteComment: async (id: number) => {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.deleteComment(id),
