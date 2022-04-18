@@ -79,11 +79,10 @@ const _CommentView: React.FC<CommentViewProps> = ({
     reactionsCount,
     createdAt,
     updatedAt,
+    edited,
   } = comment || commentData || {};
 
   const {fullname, avatar} = actor || {};
-
-  const edited = false; //todo wait for backend update
 
   const isActor = Number(currentUserId) === actor?.id;
 

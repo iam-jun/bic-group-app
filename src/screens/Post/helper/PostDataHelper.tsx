@@ -2,6 +2,7 @@ import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import {
   IActivityData,
+  ICommentData,
   IParamGetDraftPosts,
   IParamGetPostAudiences,
   IParamGetPostDetail,
@@ -74,12 +75,12 @@ export const postApiConfig = {
       data,
     };
   },
-  putEditComment: (id: string, data: IActivityData): HttpApiRequestConfig => ({
-    url: `${provider.url}api/comments/${id}`,
+  putEditComment: (id: string, data: ICommentData): HttpApiRequestConfig => ({
+    url: `${provider.url}api/v1/comments/${id}`,
     method: 'put',
     provider,
     useRetry: true,
-    data: {data},
+    data,
   }),
   deletePost: (id: string, isDraftPost?: boolean): HttpApiRequestConfig => ({
     url: `${provider.url}api/posts/${id}`,

@@ -189,8 +189,8 @@ export interface IPayloadPutEditPost {
 
 export interface IPayloadPutEditComment {
   id: string;
-  comment: IReaction;
-  data: IActivityData;
+  comment: ICommentData;
+  data: ICommentData;
 }
 
 export interface IPayloadDeletePost {

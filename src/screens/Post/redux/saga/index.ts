@@ -8,11 +8,9 @@ import {
   IPayloadCreateComment,
   IPayloadCreatePost,
   IPayloadDeletePost,
-  IPayloadGetCommentsById,
   IPayloadGetDraftPosts,
   IPayloadGetPostDetail,
   IPayloadPublishDraftPost,
-  IPayloadPutEditComment,
   IPayloadPutEditDraftPost,
   IPayloadReactToComment,
   IPayloadReactToPost,
@@ -44,12 +42,10 @@ import postCreateNewComment from '~/screens/Post/redux/saga/postCreateNewComment
 import showError from '~/store/commonSaga/showError';
 import addToAllPosts from '~/screens/Post/redux/saga/addToAllPosts';
 import getCommentsByPostId from '~/screens/Post/redux/saga/getCommentsByPostId';
+import putEditComment from '~/screens/Post/redux/saga/putEditComment';
+import {timeOut} from '~/utils/common';
 
 const navigation = withNavigation(rootNavigationRef);
-
-function timeOut(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
 
 export default function* postSaga() {
   yield takeEvery(postTypes.POST_CREATE_NEW_POST, postCreateNewPost);
@@ -176,41 +172,6 @@ function* postRetryAddComment({
    * only need to update the data from API
    */
   yield postCreateNewComment({type, payload: currentComment});
-}
-
-function* putEditComment({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadPutEditComment;
-}) {
-  const {id, comment, data} = payload;
-  if (!id || !data || !comment) {
-    console.log(`\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m`);
-    return;
-  }
-  try {
-    yield put(postActions.setCreateComment({loading: true}));
-
-    yield postDataHelper.putEditComment(id, data);
-
-    const newComment = {...comment};
-    newComment.data = Object.assign({}, newComment.data, data, {edited: true});
-    newComment.updated_at = new Date().toISOString();
-    yield put(postActions.addToAllComments(newComment));
-    yield put(
-      modalActions.showHideToastMessage({
-        content: 'post:edit_comment_success',
-        props: {textProps: {useI18n: true}, type: 'success'},
-      }),
-    );
-    yield timeOut(500);
-    navigation.goBack();
-    yield put(postActions.setCreateComment({loading: false, content: ''}));
-  } catch (e) {
-    yield put(postActions.setCreateComment({loading: false}));
-    yield showError(e);
-  }
 }
 
 function* deletePost({
