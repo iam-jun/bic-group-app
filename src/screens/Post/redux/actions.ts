@@ -145,16 +145,18 @@ const postActions = {
     payload,
   }),
   updateCommentAPI: (payload: {
-    localId: string | number[];
+    localId?: string | number[];
     status: 'pending' | 'success' | 'failed';
-    postId: string;
+    postId: number;
     resultComment: IReaction;
-    parentCommentId?: string;
+    parentCommentId?: number;
   }) => ({
     type: postTypes.UPDATE_COMMENT_API,
     payload,
   }),
-  setScrollToLatestItem: (payload: null | {parentCommentId?: string}) => ({
+  setScrollToLatestItem: (
+    payload: null | {parentCommentId?: string | number},
+  ) => ({
     type: postTypes.SET_SCROLL_TO_LATEST_ITEM,
     payload,
   }),

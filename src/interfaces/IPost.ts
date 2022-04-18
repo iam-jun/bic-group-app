@@ -61,6 +61,27 @@ export interface IActivityImportant {
   expires_time?: string;
 }
 
+export interface ICommentData {
+  id?: number;
+  postId?: number;
+  totalReply?: number;
+  actor?: IAudienceUser;
+  parentId?: number;
+  content?: string;
+  media?: IPostMedia;
+  mentions?: any;
+  createdAt?: string;
+  updatedAt?: string;
+  ownerReactions?: any;
+  reactionsCount?: any;
+  child?: ICommentData[];
+
+  loading?: boolean;
+  status?: 'pending' | 'success' | 'failed';
+  localId?: string | number[]; // from uuid-v4
+  parentCommentId?: string | number; // used when retry/cancel adding new comment
+}
+
 export interface ICreatePostImage {
   fileName?: string;
   file?: IFilePicked;
@@ -86,6 +107,14 @@ export interface IPostMedia {
   files?: any[];
 }
 
+export interface IPostComments {
+  list?: ICommentData[];
+  meta?: {
+    total?: number;
+    limit?: number;
+  };
+}
+
 export interface IPostActivity {
   id?: string;
   audience?: IPostAudience;
@@ -97,6 +126,7 @@ export interface IPostActivity {
   actor?: IAudienceUser;
   mentions?: any;
   commentsCount?: number;
+  comments?: IPostComments;
   reactionsCount?: IReactionCounts;
   ownerReactions?: IOwnReaction;
   createdAt?: string;
@@ -140,15 +170,12 @@ export interface IPayloadCreatePost {
 }
 
 export interface IPayloadCreateComment {
-  postId: string;
-  parentCommentId?: string;
-  commentData: IActivityData;
+  postId: number;
+  parentCommentId?: number;
+  commentData: ICommentData;
   userId: string | number;
   localId?: string | number[]; // used when retry adding new comment
-  preComment?: IReaction & {
-    localId: string | number[]; // used when creating new comment
-    parentCommentId?: string;
-  };
+  preComment?: ICommentData;
   onSuccess?: () => void;
   isCommentLevel1Screen?: boolean;
 }
@@ -162,8 +189,8 @@ export interface IPayloadPutEditPost {
 
 export interface IPayloadPutEditComment {
   id: string;
-  comment: IReaction;
-  data: IActivityData;
+  comment: ICommentData;
+  data: ICommentData;
 }
 
 export interface IPayloadDeletePost {
@@ -201,22 +228,26 @@ export interface IGetStreamUser {
 }
 
 export interface IRequestPostComment {
-  postId: string;
-  data: IActivityData;
+  postId: number;
+  data: ICommentData;
 }
 
 export interface IRequestReplyComment {
-  parentCommentId: string;
-  data: IActivityData;
+  parentCommentId: number;
+  postId: number;
+  data: ICommentData;
 }
 
 export interface IRequestGetPostComment {
-  postId: string;
-  commentId?: string;
-  idLt?: string; //get comment before this id
-  kind?: string;
-  recentReactionsLimit?: number;
-  recentChildReactionsLimit?: number;
+  order?: 'ASC' | 'DESC';
+  limit?: number;
+  offset?: number;
+  idGTE?: number;
+  idLTE?: number;
+  idLT?: number;
+  postId: number;
+  parentId?: number;
+  childLimit?: number;
 }
 
 export interface IPayloadGetCommentsById extends IRequestGetPostComment {
@@ -235,7 +266,7 @@ export interface IReaction {
   loading?: boolean;
   status?: 'pending' | 'success' | 'failed';
   localId?: string | number[]; // from uuid-v4
-  parentCommentId?: string; // used when retry/cancel adding new comment
+  parentCommentId?: string | number; // used when retry/cancel adding new comment
 }
 
 export interface IGetStreamAudienceUser {
@@ -329,8 +360,8 @@ export interface IPayloadReactToPost {
 export interface IPayloadReactToComment {
   id: string;
   comment: IReaction;
-  postId?: string;
-  parentCommentId?: string;
+  postId?: number;
+  parentCommentId?: number;
   reactionId: ReactionType;
   ownReaction: IOwnReaction;
   reactionCounts: IReactionCounts;
@@ -347,8 +378,8 @@ export interface IParamPutReactionToComment {
 }
 
 export interface IPayloadUpdateCommentsById {
-  id: string;
-  comments: IReaction[];
+  id: number;
+  comments: ICommentData[];
   isMerge: boolean;
 }
 
@@ -362,8 +393,8 @@ export interface ICreatePostParams {
 }
 
 export interface IPayloadReplying {
-  comment: IReaction;
-  parentComment?: IReaction;
+  comment: ICommentData;
+  parentComment?: ICommentData;
 }
 
 export interface IPayloadSetDraftPosts {
@@ -394,6 +425,7 @@ export interface IPayloadPublishDraftPost {
   onSuccess?: () => void;
   onError?: () => void;
   refreshDraftPosts?: boolean;
+  createFromGroupId?: number;
 }
 
 export interface IPayloadPutEditDraftPost {
@@ -402,6 +434,7 @@ export interface IPayloadPutEditDraftPost {
   replaceWithDetail?: boolean;
   publishNow: boolean;
   callback?: any;
+  createFromGroupId?: number;
 }
 
 export interface IPayloadPutEditAutoSave {
@@ -439,7 +472,7 @@ export interface ICreatePostCurrentSettings {
 }
 
 export interface IPayloadDeleteComment {
-  commentId: string;
-  parentCommentId?: string;
-  postId: string;
+  commentId: number;
+  parentCommentId?: number;
+  postId: number;
 }

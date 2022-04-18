@@ -1,5 +1,4 @@
 import {useIsFocused} from '@react-navigation/native';
-import {get} from 'lodash';
 import React, {
   memo,
   useCallback,
@@ -31,8 +30,8 @@ import {useKeySelector} from '~/hooks/selector';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {
   IAudienceGroup,
+  ICommentData,
   IPayloadGetPostDetail,
-  IReaction,
 } from '~/interfaces/IPost';
 import i18n from '~/localization';
 import images from '~/resources/images';
@@ -48,7 +47,6 @@ import * as modalActions from '~/store/modal/actions';
 import {showHideToastMessage} from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
-import {sortComments} from '../helper/PostUtils';
 
 const defaultList = [{title: '', type: 'empty', data: []}];
 
@@ -84,16 +82,14 @@ const _PostDetailContent = (props: any) => {
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
   const createdAt = useKeySelector(postKeySelector.postCreatedAtById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
-  const latest_reactions = useKeySelector(
-    postKeySelector.postLatestReactionsComments(id),
-  );
   const commentCount = useKeySelector(
-    postKeySelector.postCommentCountsById(id),
+    postKeySelector.postCommentOnlyCountById(id),
   );
+  const commentList = useKeySelector(postKeySelector.postCommentListById(id));
   const scrollToLatestItem = useKeySelector(postKeySelector.scrollToLatestItem);
 
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
-  const listComment = comments || sortComments(latest_reactions) || [];
+  const listComment = comments || commentList || [];
   const sectionData = getSectionData(listComment) || [];
 
   const commentLeft = commentCount - listComment.length;
@@ -470,11 +466,11 @@ const PostDetailContentHeader = ({
   );
 };
 
-const getSectionData = (listComment: IReaction[]) => {
+const getSectionData = (listComment: ICommentData[]) => {
   const result: any[] = [];
   listComment?.map?.((comment, index) => {
     const item: any = {};
-    const lastChildComment = get(comment, 'latest_children.comment', []);
+    const lastChildComment = comment?.child || [];
     const _data =
       lastChildComment.length > 0
         ? [lastChildComment[lastChildComment.length - 1]]

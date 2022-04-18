@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState, memo} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -8,7 +8,7 @@ import CommentViewPlaceholder from '~/beinComponents/placeholder/CommentViewPlac
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
-import {IAudienceGroup, IReaction} from '~/interfaces/IPost';
+import {IAudienceGroup, ICommentData} from '~/interfaces/IPost';
 import {ITheme} from '~/theme/interfaces';
 import CommentInputView from '../components/CommentInputView';
 import postActions from '../redux/actions';
@@ -79,13 +79,13 @@ const CommentDetailContent = (props: any) => {
           }, 50);
         }
       } else {
-        const lastItem = newCommentData?.latest_children?.comment?.[0];
+        const lastItem = newCommentData?.child?.[0];
         dispatch(
           postActions.getCommentsByPostId({
             postId: postId,
-            idLt: lastItem?.id || '',
-            commentId: newCommentData?.id || '',
-            recentReactionsLimit: 9,
+            idLT: lastItem?.id,
+            parentId: newCommentData?.id,
+            limit: 9,
             isMerge: true,
             position: 'bottom',
             callbackLoading: loading => {
@@ -185,7 +185,7 @@ const CommentDetailContent = (props: any) => {
         autoFocus={!!replyItem}
         isCommentLevel1Screen
         showHeader
-        defaultReplyTargetId={newCommentData?.id || ''}
+        defaultReplyTargetId={newCommentData?.id}
       />
     </View>
   );
@@ -218,21 +218,18 @@ const CommentLevel1 = ({id, headerTitle, commentData, groupIds}: any) => {
 };
 
 const getListChildComment = (
-  listData: IReaction[],
-  parentCommentId: string,
+  listData: ICommentData[],
+  parentCommentId: number,
 ) => {
   const parentCommentPosition = listData?.findIndex?.(
-    (item: IReaction) => item.id === parentCommentId,
+    (item: ICommentData) => item.id === parentCommentId,
   );
-
-  const latestChildren =
-    listData?.[parentCommentPosition]?.latest_children || {};
-  const childrenComments = latestChildren?.comment || [];
+  const childrenComments = listData?.[parentCommentPosition]?.child || [];
   return {childrenComments, newCommentData: listData?.[parentCommentPosition]};
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing, fonts, fontFamily} = theme;
+  const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing.padding.large,

@@ -52,7 +52,7 @@ export default function* getSearchPosts({
       params.endTime = endDate;
     }
     const response = yield call(homeDataHelper.getSearchPost, params);
-    data = data.concat(response?.results);
+    data = data.concat(response?.list);
     yield put(postActions.addToAllPosts({data, handleComment: false}));
     yield put(
       homeActions.setNewsfeedSearch({

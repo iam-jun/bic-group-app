@@ -422,6 +422,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         data,
         replaceWithDetail: true,
         publishNow: true,
+        createFromGroupId,
       };
       dispatch(postActions.putEditDraftPost(payload));
       result = 'editDraft';
