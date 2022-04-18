@@ -106,8 +106,6 @@ const MainTabs = () => {
     socket.on('disconnect', () => {
       console.log(`\x1b[36m🐣️ Bein feed socket disconnected\x1b[0m`);
     });
-    console.warn('handleSocketReaction');
-
     socket.on('notifications', handleSocketNoti);
     socket.on('reaction', handleSocketReaction);
     socket.on('un_reaction', handleSocketUnReaction);
@@ -121,7 +119,6 @@ const MainTabs = () => {
     console.log(`\x1b[32m🐣️ Maintab: received socket react\x1b[0m`);
     const data: ISocketReaction = parseSafe(msg);
     const payload = {userId, data};
-    console.warn('handleSocketReaction updateReactionBySocket', payload);
     dispatch(postActions.updateReactionBySocket(payload));
   };
 
@@ -139,14 +136,8 @@ const MainTabs = () => {
   const handleSocketNoti = (msg: string) => {
     console.log(`\x1b[32m🐣️ Maintab: received socket noti\x1b[0m`);
     const msgData = parseSafe(msg);
-    console.warn(
-      'handleSocketNoti updateReactionBySocket',
-      msgData,
-      '>>>>>>>>\n',
-      JSON.stringify(msgData),
-    );
 
-    const {data} = msgData || {};
+    const {data, verb = ''} = msgData || {};
 
     // for now realtime noti include "deleted" and "new"
     // for delete actitivity event "new" is empty
@@ -166,6 +157,13 @@ const MainTabs = () => {
           notiGroupIds: data.deleted,
         }),
       );
+    }
+
+    if (verb === 'REACT') {
+      dispatch(postActions.updateReactionBySocket({userId, data: msgData}));
+    }
+    if (verb === 'UNREACT') {
+      dispatch(postActions.updateUnReactionBySocket({userId, data: msgData}));
     }
   };
 

@@ -458,16 +458,14 @@ export interface IPayloadUpdateReaction {
 
 export interface ISocketReaction {
   actor: any;
-  reaction: any;
-  post: {
-    post_id?: string;
-    reaction_counts?: IReactionCounts;
-    reactions_order?: string[];
-  };
-  comment: {
-    comment_id?: string;
-    reaction_counts?: IReactionCounts;
-    reactions_order?: string[];
+  entityId: string | number;
+  verb: 'REACT' | 'UNREACT';
+  type: 'react.post_creator' | 'react.comment_creator';
+
+  result: {
+    reaction: IReaction;
+    verbId: string;
+    reactionsCount: IReactionCounts;
   };
 }
 
