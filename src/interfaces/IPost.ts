@@ -170,15 +170,12 @@ export interface IPayloadCreatePost {
 }
 
 export interface IPayloadCreateComment {
-  postId: string;
+  postId: number;
   parentCommentId?: string | number;
   commentData: ICommentData;
   userId: string | number;
   localId?: string | number[]; // used when retry adding new comment
-  preComment?: IReaction & {
-    localId: string | number[]; // used when creating new comment
-    parentCommentId?: string | number;
-  };
+  preComment?: ICommentData;
   onSuccess?: () => void;
   isCommentLevel1Screen?: boolean;
 }
@@ -392,8 +389,8 @@ export interface ICreatePostParams {
 }
 
 export interface IPayloadReplying {
-  comment: IReaction;
-  parentComment?: IReaction;
+  comment: ICommentData;
+  parentComment?: ICommentData;
 }
 
 export interface IPayloadSetDraftPosts {
