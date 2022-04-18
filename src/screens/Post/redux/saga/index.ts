@@ -1,11 +1,10 @@
 import {put, call, takeLatest, select, takeEvery} from 'redux-saga/effects';
-import {isArray, get, isEmpty} from 'lodash';
+import {isArray, get} from 'lodash';
 
 import {
   IOwnReaction,
   IParamGetPostAudiences,
   IParamGetPostDetail,
-  IPayloadAddToAllPost,
   IPayloadCreateComment,
   IPayloadCreatePost,
   IPayloadDeletePost,
@@ -38,10 +37,13 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import {sortComments} from '~/screens/Post/helper/PostUtils';
 import homeActions from '~/screens/Home/redux/actions';
 import groupsActions from '~/screens/Groups/redux/actions';
-import errorCode from '~/constants/errorCode';
 import deleteComment from './deleteComment';
 import putEditPost from '~/screens/Post/redux/saga/putEditPost';
 import getDraftPosts from './getDraftPosts';
+import postCreateNewComment from '~/screens/Post/redux/saga/postCreateNewComment';
+import showError from '~/store/commonSaga/showError';
+import addChildCommentToCommentsOfPost from '~/screens/Post/redux/saga/addChildCommentToCommentsOfPost';
+import addToAllPosts from '~/screens/Post/redux/saga/addToAllPosts';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -148,136 +150,6 @@ function* postCreateNewPost({
   }
 }
 
-function* postCreateNewComment({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadCreateComment;
-}): any {
-  const {
-    localId,
-    postId,
-    parentCommentId,
-    commentData,
-    userId,
-    preComment,
-    onSuccess,
-    isCommentLevel1Screen,
-  } = payload || {};
-  if (
-    !postId ||
-    !commentData ||
-    !userId ||
-    (!commentData?.content &&
-      isEmpty(commentData?.images) &&
-      isEmpty(commentData?.files) &&
-      isEmpty(commentData?.videos))
-  ) {
-    console.log(`\x1b[31m🐣️ saga postCreateNewComment: invalid param\x1b[0m`);
-    return;
-  }
-  try {
-    const creatingComment = yield select(
-      state => state?.post?.createComment?.loading,
-    );
-    if (creatingComment) {
-      console.log(`\x1b[31m🐣️ saga postCreateNewComment: creating\x1b[0m`);
-      return;
-    }
-
-    yield put(postActions.setCreateComment({loading: true}));
-
-    // update comments or child comments
-    // retrying doesn't need this step
-    if (preComment) {
-      if (!parentCommentId) {
-        yield put(
-          postActions.updateAllCommentsByParentIdsWithComments({
-            id: postId,
-            comments: new Array(preComment),
-            isMerge: true,
-          }),
-        );
-      } else {
-        yield addChildCommentToCommentsOfPost({
-          postId: postId,
-          commentId: parentCommentId,
-          childComments: new Array(preComment),
-          shouldAddChildrenCount: true,
-        });
-      }
-    }
-    if (!isCommentLevel1Screen) {
-      yield put(postActions.setScrollToLatestItem({parentCommentId}));
-    } else {
-      yield put(postActions.setScrollCommentsPosition({position: 'bottom'}));
-    }
-
-    onSuccess?.(); // clear content in text input
-
-    yield put(postActions.setPostDetailReplyingComment());
-
-    let resComment;
-    if (parentCommentId) {
-      resComment = yield postDataHelper.postReplyComment({
-        parentCommentId,
-        data: commentData,
-      });
-    } else {
-      resComment = yield postDataHelper.postNewComment({
-        postId,
-        data: commentData,
-      });
-    }
-
-    //update comment_count
-    const allPosts = yield select(state => state?.post?.allPosts) || {};
-    const newAllPosts = {...allPosts};
-    const post = newAllPosts[postId] || {};
-    const newReactionCount = post.reaction_counts || {};
-    newReactionCount.comment_count = (newReactionCount.comment_count || 0) + 1;
-    newReactionCount.comment =
-      !!preComment && !!parentCommentId
-        ? newReactionCount.comment
-        : newReactionCount.comment + 1;
-    post.reaction_counts = {...newReactionCount};
-    newAllPosts[postId] = post;
-    yield put(postActions.setAllPosts(newAllPosts));
-
-    // update comments or child comments again when receiving from API
-    yield put(postActions.addToAllComments(resComment));
-    yield put(
-      postActions.updateCommentAPI({
-        status: 'success',
-        // @ts-ignore
-        localId: localId || preComment?.localId,
-        postId,
-        resultComment: resComment,
-        parentCommentId: parentCommentId,
-      }),
-    );
-
-    yield put(postActions.setCreateComment({loading: false, content: ''}));
-    onSuccess?.(); // call second time to make sure content is cleared on low performance device
-  } catch (e) {
-    console.log('err:', e);
-    if (preComment) {
-      // retrying doesn't need to update status because status = 'failed' already
-      yield put(
-        postActions.updateCommentAPI({
-          status: 'failed',
-          localId: preComment.localId,
-          postId,
-          resultComment: {},
-          parentCommentId: parentCommentId,
-        }),
-      );
-    }
-    yield put(postActions.setCreateComment({loading: false}));
-    yield showError(e);
-  }
-}
-
 function* postRetryAddComment({
   type,
   payload,
@@ -376,61 +248,6 @@ function* deletePost({
   } catch (e) {
     yield showError(e);
   }
-}
-
-function* addToAllPosts({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadAddToAllPost;
-}): any {
-  const {data, handleComment} = payload || {};
-  const allPosts = yield select(state => state?.post?.allPosts) || {};
-  const newAllPosts = {...allPosts};
-  const newComments: IReaction[] = [];
-  const newAllCommentByParentId: any = {};
-
-  let posts: IPostActivity[] = [];
-  if (isArray(data) && data.length > 0) {
-    posts = posts.concat(data);
-  } else {
-    posts = new Array(data) as IPostActivity[];
-  }
-
-  posts.map((item: IPostActivity) => {
-    if (item?.id) {
-      if (handleComment) {
-        const postComments = sortComments(item?.comments?.list || []);
-
-        //todo update getstream query to get only 1 child comment
-        //todo @Toan is researching for solution
-        if (postComments.length > 0) {
-          for (let i = 0; i < postComments.length; i++) {
-            const cc = postComments[i]?.latest_children?.comment || [];
-            if (cc.length > 1) {
-              postComments[i].latest_children.comment = cc.slice(
-                cc.length - 1,
-                cc.length,
-              );
-            }
-          }
-        }
-        //todo remove code above later
-
-        newAllCommentByParentId[item.id] = postComments;
-        postComments.map((c: IReaction) => getAllCommentsOfCmt(c, newComments));
-      }
-      newAllPosts[item.id] = item;
-    }
-  });
-
-  if (handleComment) {
-    yield put(postActions.addToAllComments(newComments));
-    yield put(
-      postActions.updateAllCommentsByParentIds(newAllCommentByParentId),
-    );
-  }
-  yield put(postActions.setAllPosts(newAllPosts));
 }
 
 function* addToAllComments({
@@ -1010,53 +827,19 @@ function* updateAllCommentsByParentIdsWithComments({
   yield put(postActions.setAllCommentsByParentIds(allComments));
 }
 
-function* addChildCommentToCommentsOfPost({
-  postId,
-  commentId,
-  childComments,
-  shouldAddChildrenCount,
-}: {
-  postId: string;
-  commentId: string;
-  childComments: IReaction[];
-  shouldAddChildrenCount?: boolean;
-}) {
-  const postComments: IReaction[] = yield select(state =>
-    get(state, postKeySelector.commentsByParentId(postId)),
-  ) || [];
-  for (let i = 0; i < postComments.length; i++) {
-    if (postComments[i].id === commentId) {
-      const latestChildren = postComments[i].latest_children || {};
-      const oldChildComments = latestChildren.comment || [];
-      const newChildComments = oldChildComments.concat(childComments) || [];
-      latestChildren.comment = sortComments(newChildComments);
-      // If manual add comment by create comment, should update children counts
-      // Load more children comment do not add children counts
-      if (shouldAddChildrenCount) {
-        const childrenCounts = postComments[i].children_counts || {};
-        childrenCounts.comment = (childrenCounts.comment || 0) + 1;
-        postComments[i].children_counts = childrenCounts;
-      }
-      postComments[i].latest_children = latestChildren;
-      yield put(
-        postActions.updateAllCommentsByParentIdsWithComments({
-          id: postId,
-          comments: new Array(postComments[i]),
-          isMerge: true,
-        }),
-      );
-      return;
-    }
-  }
-}
-
 function* postPublishDraftPost({
   payload,
 }: {
   type: string;
   payload: IPayloadPublishDraftPost;
 }): any {
-  const {draftPostId, onSuccess, onError, replaceWithDetail} = payload || {};
+  const {
+    draftPostId,
+    onSuccess,
+    onError,
+    replaceWithDetail,
+    createFromGroupId,
+  } = payload || {};
   try {
     yield put(postActions.setLoadingCreatePost(true));
     const res = yield call(postDataHelper.postPublishDraftPost, draftPostId);
@@ -1067,6 +850,10 @@ function* postPublishDraftPost({
       yield put(postActions.addToAllPosts({data: postData}));
       if (replaceWithDetail) {
         navigation.replace(homeStack.postDetail, {post_id: postData?.id});
+      }
+      if (createFromGroupId) {
+        yield put(groupsActions.clearGroupPosts());
+        yield put(groupsActions.getGroupPosts(createFromGroupId));
       }
       const payloadGetDraftPosts: IPayloadGetDraftPosts = {
         isRefresh: true,
@@ -1090,7 +877,8 @@ function* putEditDraftPost({
   type: string;
   payload: IPayloadPutEditDraftPost;
 }): any {
-  const {id, data, replaceWithDetail, publishNow} = payload || {};
+  const {id, data, replaceWithDetail, publishNow, createFromGroupId} =
+    payload || {};
   if (!id || !data) {
     console.log(`\x1b[31m🐣️ saga putEditDraftPost error\x1b[0m`);
     return;
@@ -1113,6 +901,7 @@ function* putEditDraftPost({
           draftPostId: id,
           replaceWithDetail: replaceWithDetail,
           refreshDraftPosts: true,
+          createFromGroupId,
         };
         yield put(postActions.postPublishDraftPost(p));
       } else {
@@ -1240,20 +1029,3 @@ const getAllCommentsOfCmt = (comment: IReaction, list: IReaction[]) => {
     comment?.child?.map((child: IReaction) => list.push(child));
   }
 };
-
-function* showError(err: any) {
-  if (err.code === errorCode.systemIssue) return;
-
-  yield put(
-    modalActions.showHideToastMessage({
-      content:
-        err?.meta?.errors?.[0]?.message ||
-        err?.meta?.message ||
-        'common:text_error_message',
-      props: {
-        textProps: {useI18n: true},
-        type: 'error',
-      },
-    }),
-  );
-}

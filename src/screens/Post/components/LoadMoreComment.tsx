@@ -26,9 +26,9 @@ import CommentPlaceholder from '~/beinComponents/placeholder/CommentPlaceholder'
 export interface LoadMoreCommentProps {
   style?: StyleProp<ViewStyle>;
   title: string;
-  postId: string;
-  commentId?: string;
-  idLessThan: string;
+  postId: number;
+  commentId?: number;
+  idLessThan?: number;
   onPress?: () => void;
 }
 
@@ -125,7 +125,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme, commentId?: string) => {
+const createStyle = (theme: ITheme, commentId?: number) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {

@@ -61,6 +61,27 @@ export interface IActivityImportant {
   expires_time?: string;
 }
 
+export interface ICommentData {
+  id?: number;
+  postId?: number;
+  totalReply?: number;
+  actor?: IAudienceUser;
+  parentId?: number;
+  content?: string;
+  media?: IPostMedia;
+  mentions?: any;
+  createdAt?: string;
+  updatedAt?: string;
+  ownerReactions?: any;
+  reactionsCount?: any;
+  child?: ICommentData[];
+
+  loading?: boolean;
+  status?: 'pending' | 'success' | 'failed';
+  localId?: string | number[]; // from uuid-v4
+  parentCommentId?: string | number; // used when retry/cancel adding new comment
+}
+
 export interface ICreatePostImage {
   fileName?: string;
   file?: IFilePicked;
@@ -86,6 +107,14 @@ export interface IPostMedia {
   files?: any[];
 }
 
+export interface IPostComments {
+  list?: ICommentData[];
+  meta?: {
+    total?: number;
+    limit?: number;
+  };
+}
+
 export interface IPostActivity {
   id?: string;
   audience?: IPostAudience;
@@ -97,11 +126,11 @@ export interface IPostActivity {
   actor?: IAudienceUser;
   mentions?: any;
   commentsCount?: number;
+  comments?: IPostComments;
   reactionsCount?: IReactionCounts;
   ownerReactions?: IOwnReaction;
   createdAt?: string;
   createdBy?: number;
-  comments?: any;
 }
 
 export type IOwnReaction = Array<IReaction>;
@@ -140,13 +169,13 @@ export interface IPayloadCreatePost {
 
 export interface IPayloadCreateComment {
   postId: string;
-  parentCommentId?: string;
-  commentData: IActivityData;
+  parentCommentId?: string | number;
+  commentData: ICommentData;
   userId: string | number;
   localId?: string | number[]; // used when retry adding new comment
   preComment?: IReaction & {
     localId: string | number[]; // used when creating new comment
-    parentCommentId?: string;
+    parentCommentId?: string | number;
   };
   onSuccess?: () => void;
   isCommentLevel1Screen?: boolean;
@@ -201,19 +230,19 @@ export interface IGetStreamUser {
 
 export interface IRequestPostComment {
   postId: string;
-  data: IActivityData;
+  data: ICommentData;
 }
 
 export interface IRequestReplyComment {
-  parentCommentId: string;
+  parentCommentId: string | number;
   data: IActivityData;
 }
 
 export interface IRequestGetPostComment {
-  postId: string;
-  commentId?: string;
-  idLt?: string; //get comment before this id
-  kind?: string;
+  postId: number;
+  commentId?: number;
+  idLt?: number; //get comment before this id
+  kind?: number;
   recentReactionsLimit?: number;
   recentChildReactionsLimit?: number;
 }
@@ -234,7 +263,7 @@ export interface IReaction {
   loading?: boolean;
   status?: 'pending' | 'success' | 'failed';
   localId?: string | number[]; // from uuid-v4
-  parentCommentId?: string; // used when retry/cancel adding new comment
+  parentCommentId?: string | number; // used when retry/cancel adding new comment
   child?: any;
 }
 
@@ -329,8 +358,8 @@ export interface IPayloadReactToPost {
 export interface IPayloadReactToComment {
   id: string;
   comment: IReaction;
-  postId?: string;
-  parentCommentId?: string;
+  postId?: number;
+  parentCommentId?: number;
   reactionId: ReactionType;
   ownReaction: IOwnReaction;
   reactionCounts: IReactionCounts;
@@ -400,6 +429,7 @@ export interface IPayloadPublishDraftPost {
   onSuccess?: () => void;
   onError?: () => void;
   refreshDraftPosts?: boolean;
+  createFromGroupId?: number;
 }
 
 export interface IPayloadPutEditDraftPost {
@@ -408,6 +438,7 @@ export interface IPayloadPutEditDraftPost {
   replaceWithDetail?: boolean;
   publishNow: boolean;
   callback?: any;
+  createFromGroupId?: number;
 }
 
 export interface IPayloadPutEditAutoSave {
@@ -445,7 +476,7 @@ export interface ICreatePostCurrentSettings {
 }
 
 export interface IPayloadDeleteComment {
-  commentId: string;
-  parentCommentId?: string;
-  postId: string;
+  commentId: number;
+  parentCommentId?: number;
+  postId: number;
 }

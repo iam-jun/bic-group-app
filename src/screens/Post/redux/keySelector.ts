@@ -26,28 +26,33 @@ const postKeySelector = {
   },
 
   //Post data
-  postById: (id: string) => `post.allPosts.${id}`,
-  postActorById: (id: string) => `post.allPosts.${id}.actor`,
-  postAudienceById: (id: string) => `post.allPosts.${id}.audience`,
-  postCreatedAtById: (id: string) => `post.allPosts.${id}.createdAt`,
-  postContentById: (id: string) => `post.allPosts.${id}.content`,
-  postMediaById: (id: string) => `post.allPosts.${id}.media`,
-  postHighlightById: (id: string) => `post.allPosts.${id}.highlight`,
-  postSettingById: (id: string) => `post.allPosts.${id}.setting`,
-  postMentionsById: (id: string) => `post.allPosts.${id}.mentions`,
-  postOwnerReactionById: (id: string) => `post.allPosts.${id}.ownerReactions`,
-  postReactionCountsById: (id: string) => `post.allPosts.${id}.reactionsCount`,
-  postCommentCountsById: (id: string) => `post.allPosts.${id}.commentsCount`,
-  postIsDraftById: (id: string) => `post.allPosts.${id}.isDraft`,
-  postReactionsOrderById: (id: string) => `post.allPosts.${id}.reactions_order`,
-  postDeletedById: (id: string) => `post.allPosts.${id}.deleted`,
-  postLatestReactionsComments: (id: string) =>
+  postById: (id: string | number) => `post.allPosts.${id}`,
+  postActorById: (id: string | number) => `post.allPosts.${id}.actor`,
+  postAudienceById: (id: string | number) => `post.allPosts.${id}.audience`,
+  postCreatedAtById: (id: string | number) => `post.allPosts.${id}.createdAt`,
+  postContentById: (id: string | number) => `post.allPosts.${id}.content`,
+  postMediaById: (id: string | number) => `post.allPosts.${id}.media`,
+  postHighlightById: (id: string | number) => `post.allPosts.${id}.highlight`,
+  postSettingById: (id: string | number) => `post.allPosts.${id}.setting`,
+  postMentionsById: (id: string | number) => `post.allPosts.${id}.mentions`,
+  postOwnerReactionById: (id: string | number) =>
+    `post.allPosts.${id}.ownerReactions`,
+  postReactionCountsById: (id: string | number) =>
+    `post.allPosts.${id}.reactionsCount`,
+  postCommentCountsById: (id: string | number) =>
+    `post.allPosts.${id}.commentsCount`,
+  postCommentListById: (id: string | number) =>
     `post.allPosts.${id}.comments.list`,
+  postIsDraftById: (id: string | number) => `post.allPosts.${id}.isDraft`,
+  postReactionsOrderById: (id: string | number) =>
+    `post.allPosts.${id}.reactions_order`,
+  postDeletedById: (id: string | number) => `post.allPosts.${id}.deleted`,
 
   //Comment data
   allCommentsByParentIds: 'post.allCommentsByParentIds',
-  commentsByParentId: (id: string) => `post.allCommentsByParentIds.${id}`,
-  commentById: (id?: string) => `post.allComments.${id}`,
+  commentsByParentId: (id: string | number) =>
+    `post.allCommentsByParentIds.${id}`,
+  commentById: (id?: string | number) => `post.allComments.${id}`,
 
   scrollToLatestItem: 'post.scrollToLatestItem',
   postSelectAudienceState: 'post.postSelectAudienceState',

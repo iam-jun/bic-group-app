@@ -296,7 +296,7 @@ const _PostView: FC<PostViewProps> = ({
           />
         )}
         {isLite ? (
-          <PostViewFooterLite reactionCounts={reactionsCount} />
+          <PostViewFooterLite commentsCount={commentsCount} />
         ) : (
           <PostViewFooter
             labelButtonComment={labelButtonComment}
