@@ -2,10 +2,7 @@ import {cloneDeep, get} from 'lodash';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import {IObject, IToastMessage} from '~/interfaces/common';
 import errorCode from '~/constants/errorCode';
-import {
-  ILoadNewNotifications,
-  IParamGetNotifications,
-} from '~/interfaces/INotification';
+import {IParamGetNotifications} from '~/interfaces/INotification';
 import notificationsDataHelper from '~/screens/Notification/helper/NotificationDataHelper';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import notificationsTypes from '~/screens/Notification/redux/types';
@@ -54,24 +51,18 @@ function* getNotifications({
 }
 
 // load new notifications when have realtime event
-function* loadNewNotifications({
-  payload,
-}: {
-  payload: ILoadNewNotifications;
-  type: string;
-}) {
+function* loadNewNotifications({payload}: {payload: any; type: string}) {
   try {
-    const {notiGroupId, limit} = payload;
-    const response: IObject<any> =
-      yield notificationsDataHelper.loadNewNotification(
-        notiGroupId,
-        limit, // only load a number of notifiations equal number of new notifications
-      );
+    // const {notiGroupId, limit} = payload;
+    // const response: IObject<any> =
+    //   yield notificationsDataHelper.loadNewNotification(
+    //     notiGroupId,
+    //     limit, // only load a number of notifiations equal number of new notifications
+    //   );
 
     yield put(
       notificationsActions.addNewNotifications({
-        notifications: response.results,
-        unseen: response.unseen,
+        notifications: payload,
       }),
     );
   } catch (err) {

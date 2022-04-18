@@ -25,7 +25,6 @@ import {getEnv} from '~/utils/env';
 import {getMsgPackParser} from '~/utils/socket';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens, screensWebLaptop} from './screens';
-import {useChatSocket} from '~/hooks/chat';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -93,7 +92,6 @@ const MainTabs = () => {
     const socket = io(getEnv('BEIN_NOTIFICATION'), {
       transports: ['websocket'],
       path: '/ws',
-      // auth: {token},
       ...getMsgPackParser(getEnv('BEIN_FEED_WS_MSGPACK') !== 'disable'),
     });
 
@@ -101,12 +99,12 @@ const MainTabs = () => {
       console.log(
         `\x1b[36m🐣️ Bein notification socket connected with id: ${socket.id}\x1b[0m`,
       );
+      socket.emit('auth_challenge', token);
     });
-    socket.emit('auth_challenge', token);
     socket.on('disconnect', () => {
       console.log(`\x1b[36m🐣️ Bein notification socket disconnected\x1b[0m`);
     });
-    socket.on('notification', handleSocketNoti);
+    socket.on('notifications', handleSocketNoti);
     socket.on('reaction', handleSocketReaction);
     socket.on('un_reaction', handleSocketUnReaction);
     return () => {
@@ -134,29 +132,29 @@ const MainTabs = () => {
   // load notifications again to get new unseen number (maybe increase maybe not if new activity is grouped)
   // with this, we also not to load notification again when access Notification screen
   const handleSocketNoti = (msg: string) => {
-    console.log(`\x1b[32m🐣️ Maintab: received socket noti\x1b[0m`);
+    console.log(`\x1b[32m🐣️ Maintab: received socket noti\x1b[0m`, msg);
     const msgData = parseSafe(msg);
     const {data} = msgData || {};
 
     // for now realtime noti include "deleted" and "new"
     // for delete actitivity event "new" is empty
     // and we haven't handle "delete" event yet
-    if (data?.new?.length > 0) {
-      const actorId = data.new[0]?.actor?.id;
-      const notiGroupId = data.new[0]?.id;
-      const limit = data.new.length;
-      if (actorId != userId) {
-        const payload = {notiGroupId, limit: limit};
-        dispatch(notificationsActions.loadNewNotifications(payload));
-      }
-    }
-    if (data?.deleted?.length > 0) {
-      dispatch(
-        notificationsActions.deleteNotifications({
-          notiGroupIds: data.deleted,
-        }),
-      );
-    }
+    // if (data?.verb === 'REACT') {
+    //   const actorId = data?.actor?.id;
+    // const notiGroupId = data.entityId;
+    // const limit = data.new.length;
+    // if (actorId != userId) {
+    // const payload = {notiGroupId, limit: limit};
+    // dispatch(notificationsActions.loadNewNotifications(data));
+    // }
+    // }
+    // if (data?.deleted?.length > 0) {
+    //   dispatch(
+    //     notificationsActions.deleteNotifications({
+    //       notiGroupIds: data.deleted,
+    //     }),
+    //   );
+    // }
   };
 
   const isWebLaptop = Platform.OS === 'web' && isLaptop;
