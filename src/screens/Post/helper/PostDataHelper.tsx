@@ -83,7 +83,7 @@ export const postApiConfig = {
     data,
   }),
   deletePost: (id: string, isDraftPost?: boolean): HttpApiRequestConfig => ({
-    url: `${provider.url}api/posts/${id}`,
+    url: `${provider.url}api/v1/posts/${id}`,
     method: 'delete',
     provider,
     useRetry: true,
