@@ -107,19 +107,22 @@ export const postApiConfig = {
     useRetry: true,
   }),
   getCommentsByPostId: (
-    data: IRequestGetPostComment,
+    params: IRequestGetPostComment,
   ): HttpApiRequestConfig => ({
-    url: `${provider.url}api/comments`,
+    url: `${provider.url}api/v1/comments`,
     method: 'get',
     provider,
     useRetry: true,
     params: {
-      post_id: data?.commentId ? undefined : data?.postId, //accept only one of post_id, reaction_id or user_id
-      reaction_id: data?.commentId,
-      kind: data?.kind || 'comment',
-      id_lt: data?.idLt,
-      recent_reactions_limit: data?.recentReactionsLimit || 10,
-      recent_child_reactions_limit: data?.recentChildReactionsLimit || 1,
+      order: params?.order || 'ASC',
+      limit: params?.limit || 10,
+      offset: params?.offset || 0,
+      idGTE: params?.idGTE,
+      idLTE: params?.idLTE,
+      idLT: params?.idLT,
+      postId: params?.postId,
+      parentId: params?.parentId,
+      childLimit: params?.childLimit || 1,
     },
   }),
   postNewComment: (params: IRequestPostComment): HttpApiRequestConfig => ({
@@ -137,7 +140,7 @@ export const postApiConfig = {
   postReplyComment: (params: IRequestReplyComment): HttpApiRequestConfig => {
     const {parentCommentId, data} = params;
     return {
-      url: `${provider.url}api/comments/${parentCommentId}/reply`,
+      url: `${provider.url}api/v1/comments/${parentCommentId}/reply`,
       method: 'post',
       provider,
       useRetry: true,
@@ -338,18 +341,16 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  getCommentsByPostId: async (data: IRequestGetPostComment) => {
-    if (!data?.postId) {
+  getCommentsByPostId: async (params: IRequestGetPostComment) => {
+    if (!params?.postId) {
       return Promise.reject('Post Id not found');
     }
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.getCommentsByPostId(data),
+        postApiConfig.getCommentsByPostId(params),
       );
-      if (response?.data?.data?.comment) {
-        return Promise.resolve({
-          results: response?.data?.data?.comment,
-        });
+      if (response?.data?.data?.list) {
+        return Promise.resolve(response?.data?.data);
       } else {
         return Promise.reject(response);
       }

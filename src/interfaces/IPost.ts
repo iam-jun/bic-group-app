@@ -171,7 +171,7 @@ export interface IPayloadCreatePost {
 
 export interface IPayloadCreateComment {
   postId: number;
-  parentCommentId?: string | number;
+  parentCommentId?: number;
   commentData: ICommentData;
   userId: string | number;
   localId?: string | number[]; // used when retry adding new comment
@@ -228,7 +228,7 @@ export interface IGetStreamUser {
 }
 
 export interface IRequestPostComment {
-  postId: string;
+  postId: number;
   data: ICommentData;
 }
 
@@ -238,12 +238,15 @@ export interface IRequestReplyComment {
 }
 
 export interface IRequestGetPostComment {
+  order?: 'ASC' | 'DESC';
+  limit?: number;
+  offset?: number;
+  idGTE?: number;
+  idLTE?: number;
+  idLT?: number;
   postId: number;
-  commentId?: number;
-  idLt?: number; //get comment before this id
-  kind?: number;
-  recentReactionsLimit?: number;
-  recentChildReactionsLimit?: number;
+  parentId?: number;
+  childLimit?: number;
 }
 
 export interface IPayloadGetCommentsById extends IRequestGetPostComment {
@@ -374,8 +377,8 @@ export interface IParamPutReactionToComment {
 }
 
 export interface IPayloadUpdateCommentsById {
-  id: string;
-  comments: IReaction[];
+  id: number;
+  comments: ICommentData[];
   isMerge: boolean;
 }
 

@@ -42,8 +42,8 @@ import putEditPost from '~/screens/Post/redux/saga/putEditPost';
 import getDraftPosts from './getDraftPosts';
 import postCreateNewComment from '~/screens/Post/redux/saga/postCreateNewComment';
 import showError from '~/store/commonSaga/showError';
-import addChildCommentToCommentsOfPost from '~/screens/Post/redux/saga/addChildCommentToCommentsOfPost';
 import addToAllPosts from '~/screens/Post/redux/saga/addToAllPosts';
+import getCommentsByPostId from '~/screens/Post/redux/saga/getCommentsByPostId';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -879,46 +879,6 @@ function* putEditDraftPost({
   }
 }
 
-function* getCommentsByPostId({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadGetCommentsById;
-}): any {
-  const {postId, commentId, isMerge, callbackLoading} = payload || {};
-  try {
-    callbackLoading?.(true);
-    const response = yield call(postDataHelper.getCommentsByPostId, payload);
-    const newList = response?.results;
-    callbackLoading?.(false);
-    if (newList?.length > 0) {
-      if (commentId) {
-        //get child comment of comment
-        yield addChildCommentToCommentsOfPost({
-          postId: postId,
-          commentId: commentId,
-          childComments: newList,
-        });
-        yield put(postActions.addToAllComments(newList));
-      } else {
-        //get comment of post
-        const payload = {id: postId, comments: newList, isMerge};
-        const newAllComments: IReaction[] = [];
-        newList.map((c: IReaction) => getAllCommentsOfCmt(c, newAllComments));
-
-        yield put(postActions.addToAllComments(newAllComments));
-        yield put(
-          postActions.updateAllCommentsByParentIdsWithComments(payload),
-        );
-      }
-    }
-  } catch (e) {
-    console.log(`\x1b[31m🐣️ saga getCommentsByPostId error: `, e, `\x1b[0m`);
-    callbackLoading?.(false);
-    yield showError(e);
-  }
-}
-
 function* getPostDetail({
   payload,
 }: {
@@ -973,12 +933,3 @@ function* getCreatePostInitAudiences({
     console.log(`\x1b[31m🐣️ saga getCreatePostInitAudiences e:`, e, `\x1b[0m`);
   }
 }
-
-const getAllCommentsOfCmt = (comment: IReaction, list: IReaction[]) => {
-  if (comment && list) {
-    list.push(comment);
-    comment?.latest_children?.comment?.map((child: IReaction) =>
-      list.push(child),
-    );
-  }
-};

@@ -92,13 +92,7 @@ function* postCreateNewComment({
     const allPosts = yield select(state => state?.post?.allPosts) || {};
     const newAllPosts = {...allPosts};
     const post = newAllPosts[postId] || {};
-    const newReactionCount = post.reaction_counts || {};
-    newReactionCount.comment_count = (newReactionCount.comment_count || 0) + 1;
-    newReactionCount.comment =
-      !!preComment && !!parentCommentId
-        ? newReactionCount.comment
-        : newReactionCount.comment + 1;
-    post.reaction_counts = {...newReactionCount};
+    post.commentsCount = (post.commentsCount || 0) + 1;
     newAllPosts[postId] = post;
     yield put(postActions.setAllPosts(newAllPosts));
 
@@ -107,7 +101,6 @@ function* postCreateNewComment({
     yield put(
       postActions.updateCommentAPI({
         status: 'success',
-        // @ts-ignore
         localId: localId || preComment?.localId,
         postId,
         resultComment: resComment,
@@ -124,7 +117,7 @@ function* postCreateNewComment({
       yield put(
         postActions.updateCommentAPI({
           status: 'failed',
-          localId: preComment.localId,
+          localId: preComment?.localId,
           postId,
           resultComment: {},
           parentCommentId: parentCommentId,

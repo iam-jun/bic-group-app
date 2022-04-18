@@ -82,9 +82,9 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
           dispatch(
             postActions.getCommentsByPostId({
               postId: postId,
-              idLt: idLessThan,
-              commentId: commentId,
-              recentReactionsLimit: 10,
+              idLT: idLessThan,
+              parentId: commentId,
+              limit: 10,
               isMerge: true,
               callbackLoading: loading => setLoadingMore(loading),
             }),
@@ -94,9 +94,9 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
         dispatch(
           postActions.getCommentsByPostId({
             postId: postId,
-            idLt: idLessThan,
-            commentId: commentId,
-            recentReactionsLimit: commentId ? 3 : 10,
+            idLT: idLessThan,
+            parentId: commentId,
+            limit: commentId ? 3 : 10,
             isMerge: true,
             callbackLoading: loading => setLoadingMore(loading),
           }),

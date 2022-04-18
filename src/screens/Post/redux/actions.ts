@@ -145,11 +145,11 @@ const postActions = {
     payload,
   }),
   updateCommentAPI: (payload: {
-    localId: string | number[];
+    localId?: string | number[];
     status: 'pending' | 'success' | 'failed';
-    postId: string;
+    postId: number;
     resultComment: IReaction;
-    parentCommentId?: string | number;
+    parentCommentId?: number;
   }) => ({
     type: postTypes.UPDATE_COMMENT_API,
     payload,
