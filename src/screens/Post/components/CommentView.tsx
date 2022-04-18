@@ -43,7 +43,7 @@ import {useBaseHook} from '~/hooks';
 export interface CommentViewProps {
   postId: string;
   groupIds: string;
-  parentCommentId?: string;
+  parentCommentId?: number;
   commentData: IReaction;
   onPressReply: (data: IReaction) => void;
   contentBackgroundColor?: string;
@@ -68,7 +68,9 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const currentUserId = useUserIdAuth();
 
-  const comment = useKeySelector(postKeySelector.commentById(commentData?.id));
+  const comment = useKeySelector(
+    postKeySelector.commentById(commentData?.id?.toString?.()),
+  );
   const {
     id,
     user_id,

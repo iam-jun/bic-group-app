@@ -8,7 +8,7 @@ import Button from '~/beinComponents/Button';
 
 import {ITheme} from '~/theme/interfaces';
 import {blacklistReactions, ReactionType} from '~/constants/reactions';
-import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
+import {IOwnReaction, IReaction, IReactionCounts} from '~/interfaces/IPost';
 import commonActions, {IAction} from '~/constants/commonActions';
 import appConfig from '~/configs/appConfig';
 
@@ -52,11 +52,13 @@ const ReactionView: FC<ReactionViewProps> = ({
     const _ownReactions: any = {};
     const reactionMap = new Map();
 
-    Object.values(ownerReactions || {})?.map?.((ownReaction: any) => {
-      if (ownReaction?.reactionName) {
-        _ownReactions[ownReaction.reactionName] = ownReaction;
-      }
-    });
+    if (ownerReactions?.length > 0) {
+      ownerReactions.forEach(ownReaction => {
+        if (ownReaction?.reactionName) {
+          _ownReactions[ownReaction.reactionName] = ownReaction;
+        }
+      });
+    }
     Object.values(reactionsCount || {})?.map((reaction: any) => {
       const key = Object.keys(reaction || {})?.[0];
       if (key) {

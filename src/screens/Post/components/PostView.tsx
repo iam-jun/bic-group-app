@@ -126,7 +126,7 @@ const _PostView: FC<PostViewProps> = ({
     setting = postData?.setting || {};
     deleted = false;
     commentsCount = postData?.commentsCount || 0;
-    ownerReactions = postData?.ownerReactions || {};
+    ownerReactions = postData?.ownerReactions || [];
     reactionsCount = postData?.reactionsCount || {};
   }
 

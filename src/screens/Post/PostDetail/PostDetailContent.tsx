@@ -474,7 +474,7 @@ const getSectionData = (listComment: IReaction[]) => {
   const result: any[] = [];
   listComment?.map?.((comment, index) => {
     const item: any = {};
-    const lastChildComment = get(comment, 'latest_children.comment', []);
+    const lastChildComment = comment?.child || [];
     const _data =
       lastChildComment.length > 0
         ? [lastChildComment[lastChildComment.length - 1]]

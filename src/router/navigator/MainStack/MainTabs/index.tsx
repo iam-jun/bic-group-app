@@ -90,22 +90,25 @@ const MainTabs = () => {
 
     dispatch(notificationsActions.getNotifications());
 
-    const socket = io(getEnv('BEIN_FEED'), {
+    const socket = io('https://noti.dev.bein.group', {
       transports: ['websocket'],
       path: '/ws',
-      auth: {token},
-      ...getMsgPackParser(getEnv('BEIN_FEED_WS_MSGPACK') !== 'disable'),
+      // auth: {token},
+      // ...getMsgPackParser(getEnv('BEIN_FEED_WS_MSGPACK') !== 'disable'),
     });
 
     socket.on('connect', () => {
       console.log(
         `\x1b[36m🐣️ Bein feed socket connected with id: ${socket.id}\x1b[0m`,
       );
+      socket.emit('auth_challenge', token);
     });
     socket.on('disconnect', () => {
       console.log(`\x1b[36m🐣️ Bein feed socket disconnected\x1b[0m`);
     });
-    socket.on('notification', handleSocketNoti);
+    console.warn('handleSocketReaction');
+
+    socket.on('notifications', handleSocketNoti);
     socket.on('reaction', handleSocketReaction);
     socket.on('un_reaction', handleSocketUnReaction);
     return () => {
@@ -118,6 +121,7 @@ const MainTabs = () => {
     console.log(`\x1b[32m🐣️ Maintab: received socket react\x1b[0m`);
     const data: ISocketReaction = parseSafe(msg);
     const payload = {userId, data};
+    console.warn('handleSocketReaction updateReactionBySocket', payload);
     dispatch(postActions.updateReactionBySocket(payload));
   };
 
@@ -135,6 +139,13 @@ const MainTabs = () => {
   const handleSocketNoti = (msg: string) => {
     console.log(`\x1b[32m🐣️ Maintab: received socket noti\x1b[0m`);
     const msgData = parseSafe(msg);
+    console.warn(
+      'handleSocketNoti updateReactionBySocket',
+      msgData,
+      '>>>>>>>>\n',
+      JSON.stringify(msgData),
+    );
+
     const {data} = msgData || {};
 
     // for now realtime noti include "deleted" and "new"

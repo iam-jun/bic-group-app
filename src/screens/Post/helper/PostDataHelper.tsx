@@ -2,6 +2,7 @@ import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import {
   IActivityData,
+  IParamDeleteReaction,
   IParamGetDraftPosts,
   IParamGetPostAudiences,
   IParamGetPostDetail,
@@ -55,13 +56,12 @@ export const postApiConfig = {
   putReactionToPost: (
     params: IParamPutReactionToPost,
   ): HttpApiRequestConfig => {
-    const {postId, ...restParams} = params;
     return {
-      url: `${provider.url}api/posts/${postId}/react`,
-      method: 'put',
+      url: `${provider.url}api/v1/reactions`,
+      method: 'post',
       provider,
       useRetry: true,
-      data: restParams,
+      data: params,
     };
   },
   putEditPost: (param: IParamPutEditPost): HttpApiRequestConfig => {
@@ -109,7 +109,7 @@ export const postApiConfig = {
   getCommentsByPostId: (
     data: IRequestGetPostComment,
   ): HttpApiRequestConfig => ({
-    url: `${provider.url}api/comments`,
+    url: `${provider.url}/v1/comments`,
     method: 'get',
     provider,
     useRetry: true,
@@ -214,11 +214,12 @@ export const postApiConfig = {
       userId: userId,
     },
   }),
-  deleteReaction: (id: string): HttpApiRequestConfig => ({
-    url: `${provider.url}api/reactions/${id}`,
+  deleteReaction: (data: IParamDeleteReaction): HttpApiRequestConfig => ({
+    url: `${provider.url}api/v1/reactions`,
     method: 'delete',
     provider,
     useRetry: true,
+    data: data,
   }),
   getReactionDetail: (
     reactionType: ReactionType,
@@ -458,10 +459,10 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  deleteReaction: async (id: string) => {
+  deleteReaction: async (param: IParamDeleteReaction) => {
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.deleteReaction(id),
+        postApiConfig.deleteReaction(param),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

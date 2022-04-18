@@ -101,11 +101,10 @@ export interface IPostActivity {
   ownerReactions?: IOwnReaction;
   createdAt?: string;
   createdBy?: number;
+  comments?: any;
 }
 
-export interface IOwnReaction {
-  [x: string]: {[reactionKind: string]: IReaction};
-}
+export type IOwnReaction = Array<IReaction>;
 
 export type IReactionCounts = {
   [x: string]: {[reactionKind: string]: number};
@@ -236,6 +235,7 @@ export interface IReaction {
   status?: 'pending' | 'success' | 'failed';
   localId?: string | number[]; // from uuid-v4
   parentCommentId?: string; // used when retry/cancel adding new comment
+  child?: any;
 }
 
 export interface IGetStreamAudienceUser {
@@ -337,8 +337,14 @@ export interface IPayloadReactToComment {
 }
 
 export interface IParamPutReactionToPost {
-  postId: string;
-  data: string[];
+  reactionName: string;
+  target: 'POST' | 'COMMENT';
+  targetId: string;
+}
+
+export interface IParamDeleteReaction {
+  target: 'POST' | 'COMMENT';
+  reactionId: string;
 }
 
 export interface IParamPutReactionToComment {
