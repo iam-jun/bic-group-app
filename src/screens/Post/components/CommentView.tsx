@@ -261,8 +261,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const getReactionStatistics = async (param: any) => {
     try {
       const response = await postDataHelper.getReactionDetail(param);
-      const data = await response?.results;
-      const users = data.map((item: any) => ({
+      const data = await response?.list;
+      const users = (data || []).map((item: any) => ({
         id: item?.actor?.id,
         avatar: item?.actor?.avatar,
         fullname: item?.actor?.fullname,
@@ -279,7 +279,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
       isOpen: true,
       reactionCounts: reactionsCount,
       initReaction: reactionType,
-      getDataParam: {postId, commentId: id},
+      getDataParam: {target: 'COMMENT', targetId: id},
       getDataPromise: getReactionStatistics,
     };
     dispatch(showReactionDetailBottomSheet(payload));

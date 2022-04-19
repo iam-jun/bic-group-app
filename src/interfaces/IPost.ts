@@ -331,11 +331,12 @@ export interface IMentionUser {
 }
 
 export interface IParamGetReactionDetail {
-  reactionType: ReactionType;
-  postId?: string;
-  commentId?: string;
+  reactionName: ReactionType;
+  targetId: number;
+  target: 'POST' | 'COMMENT';
   limit?: number;
-  idLessThan?: string;
+  order?: 'ASC' | 'DESC';
+  latestId?: number;
 }
 
 export interface IPostAudienceSheet {

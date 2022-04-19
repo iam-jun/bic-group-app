@@ -197,22 +197,19 @@ export const postApiConfig = {
     data: data,
   }),
   getReactionDetail: (
-    reactionType: ReactionType,
-    postId?: string,
-    commentId?: string,
-    idLessThan?: string,
-    limit?: number,
+    param: IParamGetReactionDetail,
   ): HttpApiRequestConfig => ({
-    url: `${provider.url}api/reactions/statistics`,
+    url: `${provider.url}api/v1/reactions`,
     method: 'get',
     provider: provider,
     useRetry: true,
     params: {
-      kind: reactionType,
-      reaction_id: commentId,
-      post_id: commentId ? undefined : postId,
-      id_lt: idLessThan,
-      limit: limit || 20,
+      reactionName: param.reactionName,
+      targetId: param.targetId,
+      target: param.target,
+      order: param?.order || 'DESC',
+      limit: param?.limit || 20,
+      latestId: param?.latestId || 0,
     },
   }),
   postPublishDraftPost: (draftPostId: string): HttpApiRequestConfig => ({
@@ -414,20 +411,14 @@ const postDataHelper = {
     }
   },
   getReactionDetail: async (param: IParamGetReactionDetail) => {
-    const {reactionType, postId, commentId, idLessThan, limit} = param;
-    if (reactionType && (postId || commentId)) {
+    const {reactionName, targetId, target} = param;
+    if (reactionName && targetId && target) {
       try {
         const response: any = await makeHttpRequest(
-          postApiConfig.getReactionDetail(
-            reactionType,
-            postId,
-            commentId,
-            idLessThan,
-            limit,
-          ),
+          postApiConfig.getReactionDetail(param),
         );
-        if (response && response?.data) {
-          return Promise.resolve(response?.data?.data);
+        if (response && response?.data?.data?.list) {
+          return Promise.resolve(response.data.data);
         } else {
           return Promise.reject(response);
         }
