@@ -5,6 +5,7 @@ import postActions from '~/screens/Post/redux/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import showError from '~/store/commonSaga/showError';
 import addChildCommentToCommentsOfPost from '~/screens/Post/redux/saga/addChildCommentToCommentsOfPost';
+import {getMentionsFromContent} from '~/screens/Post/helper/PostUtils';
 
 function* postCreateNewComment({
   payload,
@@ -74,6 +75,15 @@ function* postCreateNewComment({
     onSuccess?.(); // clear content in text input
 
     yield put(postActions.setPostDetailReplyingComment());
+
+    // get mentions from temp selected in mention input
+    const tempMentions = yield select(
+      state => state?.mentionInput?.tempSelected,
+    );
+    commentData.mentions = getMentionsFromContent(
+      commentData?.content,
+      tempMentions,
+    );
 
     let resComment;
     if (parentCommentId) {

@@ -16,3 +16,19 @@ export const sortComments = (comments: ICommentData[]) => {
   );
   return newComments;
 };
+
+export const getMentionsFromContent = (
+  content?: string,
+  tempMentions?: any,
+) => {
+  if (!content || !tempMentions) {
+    return {};
+  }
+  const mentions: any = {};
+  Object.keys(tempMentions || {}).map(username => {
+    if (content?.includes?.(`@${username}`)) {
+      mentions[username] = tempMentions[username]?.data;
+    }
+  });
+  return mentions;
+};

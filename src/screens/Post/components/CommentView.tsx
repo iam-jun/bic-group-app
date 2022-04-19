@@ -412,7 +412,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                   shortLength={200}
                   limitLength={200}
                   content={content || ''}
-                  selector={`${postKeySelector.allComments}.${id}.data.mentions.users`}
+                  selector={`${postKeySelector.allComments}.${id}.mentions`}
                   onPressAudience={onPressAudience}
                 />
               </View>
