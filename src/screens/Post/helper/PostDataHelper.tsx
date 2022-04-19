@@ -184,7 +184,7 @@ export const postApiConfig = {
     params: {
       group_ids: params.group_ids,
       user_ids: params.user_ids,
-      key: params.key,
+      key: !!params.key ? params.key : undefined,
       offset: params.skip,
       limit: params.take,
     },
