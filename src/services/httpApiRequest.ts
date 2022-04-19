@@ -476,6 +476,16 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
         ...tokenHeaders,
       };
       break;
+    case apiConfig.providers.beinNotification.name:
+      interceptorRequestSuccess = interceptorsRequestSuccess;
+      interceptorResponseSuccess = interceptorsResponseSuccess;
+      interceptorResponseError = interceptorsResponseError;
+      requestConfig.headers = {
+        ...commonHeaders,
+        ...requestConfig.headers,
+        ...tokenHeaders,
+      };
+      break;
     case apiConfig.providers.getStream.name:
       // TODO: refactor
       break;
