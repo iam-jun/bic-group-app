@@ -430,6 +430,7 @@ const getAuthTokens = async () => {
     // @ts-ignore
     const data = mapResponseSuccessBein(httpResponse);
 
+    // @ts-ignore
     if (data.code != 200 && data.code?.toUpperCase?.() !== 'OK') return false;
 
     const {access_token: feedAccessToken, subscribe_token: notiSubscribeToken} =
@@ -466,6 +467,16 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
       requestConfig.withCredentials = true;
       break;
     case apiConfig.providers.beinFeed.name:
+      interceptorRequestSuccess = interceptorsRequestSuccess;
+      interceptorResponseSuccess = interceptorsResponseSuccess;
+      interceptorResponseError = interceptorsResponseError;
+      requestConfig.headers = {
+        ...commonHeaders,
+        ...requestConfig.headers,
+        ...tokenHeaders,
+      };
+      break;
+    case apiConfig.providers.beinNotification.name:
       interceptorRequestSuccess = interceptorsRequestSuccess;
       interceptorResponseSuccess = interceptorsResponseSuccess;
       interceptorResponseError = interceptorsResponseError;

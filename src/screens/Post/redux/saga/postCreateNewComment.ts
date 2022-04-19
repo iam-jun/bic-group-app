@@ -94,6 +94,14 @@ function* postCreateNewComment({
     const newAllPosts = {...allPosts};
     const post = newAllPosts[postId] || {};
     post.commentsCount = (post.commentsCount || 0) + 1;
+    if (!parentCommentId) {
+      const postComments = post?.comments || {meta: {total: 0}};
+      postComments.meta = {
+        ...postComments?.meta,
+        total: (postComments?.meta?.total || 0) + 1,
+      };
+      post.comments = postComments;
+    }
     newAllPosts[postId] = post;
     yield put(postActions.setAllPosts(newAllPosts));
 

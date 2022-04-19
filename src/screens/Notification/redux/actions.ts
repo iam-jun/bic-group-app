@@ -40,7 +40,7 @@ const notificationsActions = {
       payload,
     };
   },
-  loadNewNotifications: function (payload: ILoadNewNotifications) {
+  loadNewNotifications: function (payload: any) {
     return {
       type: notificationsTypes.LOAD_NEW_NOTIFICATIONS,
       payload,
