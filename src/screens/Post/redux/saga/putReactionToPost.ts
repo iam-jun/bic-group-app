@@ -24,46 +24,30 @@ export default function* putReactionToPost({
         (item: IReaction) => item?.reactionName === reactionId,
       )?.id || '';
     if (!added) {
-      let isAdded1 = false;
+      let isAdded = false;
 
       const newOwnReaction1: IOwnReaction = [...cOwnReaction1];
-      if (newOwnReaction1?.length > 0) {
-        newOwnReaction1.forEach((ownReaction, index) => {
-          if (ownReaction?.reactionName === reactionId) {
-            ownReaction.loading = true;
-            newOwnReaction1[index] = {...ownReaction};
-            isAdded1 = true;
-          }
-        });
-      } else {
-        isAdded1 = true;
-        newOwnReaction1.push({reactionName: reactionId, loading: true});
-      }
-
-      if (!isAdded1) {
-        newOwnReaction1.push({reactionName: reactionId, loading: true});
-      }
+      newOwnReaction1.push({reactionName: reactionId, loading: true});
 
       const _cReactionCounts = {...cReactionCounts1};
-      let isAdded2 = false;
 
-      const testArray: any = Object.values(_cReactionCounts || {})?.map(
-        (reaction: any) => {
-          const key = Object.keys(reaction || {})?.[0];
-          if (key === reactionId) {
-            reaction[key] = reaction[key] + 1;
-            isAdded2 = true;
-          }
-          return reaction;
-        },
-      );
+      const _reactionsCountArray: any = Object.values(
+        _cReactionCounts || {},
+      )?.map((reaction: any) => {
+        const key = Object.keys(reaction || {})?.[0];
+        if (key === reactionId) {
+          reaction[key] = reaction[key] + 1;
+          isAdded = true;
+        }
+        return reaction;
+      });
 
-      if (!isAdded2) {
-        testArray.push({[reactionId]: 1});
+      if (!isAdded) {
+        _reactionsCountArray.push({[reactionId]: 1});
       }
 
       const newReactionCounts: any = {};
-      testArray.forEach((item: any, index: number) => {
+      _reactionsCountArray.forEach((item: any, index: number) => {
         newReactionCounts[index.toString()] = item;
       });
 

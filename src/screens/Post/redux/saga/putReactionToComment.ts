@@ -37,38 +37,22 @@ export default function* putReactionToComment({
       )?.id || '';
 
     if (!added) {
-      let isAdded1 = false,
-        isAdded2 = false;
+      let isAdded = false;
 
       const newOwnReaction1: IOwnReaction = [...cOwnReaction1];
-      if (newOwnReaction1?.length > 0) {
-        newOwnReaction1.forEach((ownReaction, index) => {
-          if (ownReaction?.reactionName === reactionId) {
-            ownReaction.loading = true;
-            newOwnReaction1[index] = {...ownReaction};
-            isAdded1 = true;
-          }
-        });
-      } else {
-        isAdded1 = true;
-        newOwnReaction1.push({reactionName: reactionId, loading: true});
-      }
-
-      if (!isAdded1) {
-        newOwnReaction1.push({reactionName: reactionId, loading: true});
-      }
+      newOwnReaction1.push({reactionName: reactionId, loading: true});
 
       const newReactionCounts1 = {...cReactionCount1};
       for (const [key, value] of Object.entries(newReactionCounts1 || {})) {
         const _reactionName = Object.keys((value as any) || {})?.[0];
         if (_reactionName === reactionId) {
-          isAdded2 = true;
+          isAdded = true;
           newReactionCounts1[key][reactionId] =
             (newReactionCounts1[key][reactionId] || 0) + 1;
         }
       }
 
-      if (!isAdded2) {
+      if (!isAdded) {
         const lastKey = !isEmpty(newReactionCounts1)
           ? Object.keys(newReactionCounts1).pop()
           : '0';
