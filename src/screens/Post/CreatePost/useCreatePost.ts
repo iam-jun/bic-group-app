@@ -22,6 +22,7 @@ import {useBaseHook} from '~/hooks';
 import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
 import {differenceWith, isEmpty, isEqual} from 'lodash';
 import {Keyboard} from 'react-native';
+import {getMentionsFromContent} from '~/screens/Post/helper/PostUtils';
 
 interface IUseCreatePost {
   screenParams: ICreatePostParams;
@@ -62,6 +63,8 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
   const initUsersRef = useRef<any>([]);
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
   const {images} = validateImages(selectingImages, t);
+
+  const tempMentions = useKeySelector('mentionInput.tempSelected') || {};
 
   let initPostData: IPostActivity = {};
   if (postId) {
@@ -298,6 +301,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
   };
 
   const prepareData = () => {
+    const _content = mentionInputRef?.current?.getContent?.() || content;
     const media = {images, videos: [], files: []};
     const setting: any = {};
     if (important?.active) {
@@ -305,12 +309,15 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
       setting.importantExpiredAt = important?.expires_time;
     }
 
+    const newMentions = getMentionsFromContent(_content, tempMentions);
+    const mentions = {...initPostData?.mentions, ...newMentions};
+
     const data: IPostCreatePost = {
       audience,
-      content: mentionInputRef?.current?.getContent?.() || content,
+      content: _content,
       media,
       setting,
-      mentions: [],
+      mentions,
       isDraft: false,
     };
 
