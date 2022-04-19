@@ -33,11 +33,18 @@ export default function* updateReactionBySocket({
     const ownReactions = p?.ownerReactions ? [...p.ownerReactions] : [];
     if (isCurrentUser && reaction?.reactionName) {
       if (ownReactions?.length > 0) {
+        let isAdded = false;
         ownReactions.forEach((ownReaction, index) => {
           if (ownReaction?.reactionName === reaction.reactionName) {
             ownReactions[index] = {...reaction};
+            isAdded = true;
           }
         });
+        if (!isAdded) {
+          ownReactions.push(reaction);
+        }
+      } else {
+        ownReactions.push(reaction);
       }
     }
 
@@ -55,11 +62,18 @@ export default function* updateReactionBySocket({
 
     if (isCurrentUser && reaction?.reactionName) {
       if (ownReactions?.length > 0) {
+        let isAdded = false;
         ownReactions.forEach((ownReaction, index) => {
           if (ownReaction?.reactionName === reaction.reactionName) {
             ownReactions[index] = {...reaction};
+            isAdded = true;
           }
         });
+        if (!isAdded) {
+          ownReactions.push(reaction);
+        }
+      } else {
+        ownReactions.push(reaction);
       }
     }
     yield onUpdateReactionOfCommentById(
