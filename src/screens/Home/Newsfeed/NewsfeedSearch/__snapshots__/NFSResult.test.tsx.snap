@@ -796,68 +796,53 @@ exports[`NFSResult component should render list search result 1`] = `
       Array [
         Object {
           "actor": Object {
-            "created_at": "2022-01-14T04:58:45.776555Z",
-            "data": Object {
-              "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
-              "fullname": "Trần Nam Anh",
-              "username": "trannamanh",
-            },
-            "id": "20",
-            "updated_at": "2022-02-08T08:23:26.447557Z",
+            "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg",
+            "fullname": "Nguyễn Thị Ngọc Linh",
+            "id": 33,
+            "username": "ngoclinh",
           },
           "audience": Object {
             "groups": Array [
               Object {
-                "collection": "groups",
-                "created_at": "2022-01-14T07:42:18.184353Z",
-                "data": Object {
-                  "icon": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/avatar/Avatar_Group.png",
-                  "name": "EVOL Community",
-                },
-                "foreign_id": "groups:6",
-                "id": "6",
-                "updated_at": "2022-01-14T07:42:18.184353Z",
+                "child": Array [
+                  139,
+                  2,
+                  10,
+                  152,
+                  66,
+                  67,
+                  103,
+                  2,
+                  2,
+                ],
+                "icon": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/avatar/Avatar_Group.png",
+                "id": 1,
+                "name": "EVOL Community",
               },
             ],
-            "users": Array [],
           },
-          "foreign_id": "84a2f2c0-ef0f-41eb-861e-42c61f8416ce",
-          "id": "846d2200-7ccc-11ec-8080-800048691d62",
-          "important": Object {
-            "active": 0,
-            "expires_time": "",
+          "commentsCount": 0,
+          "content": "Important post",
+          "createdAt": "2022-04-20T10:06:45.649Z",
+          "createdBy": 33,
+          "highlight": "==Important== post",
+          "id": 29,
+          "isDraft": false,
+          "media": Object {
+            "files": Array [],
+            "images": Array [],
+            "videos": Array [],
           },
-          "mentions": Object {
-            "groups": Array [],
-            "users": Array [],
+          "mentions": Array [],
+          "ownerReactions": Array [],
+          "reactionsCount": Object {},
+          "setting": Object {
+            "canComment": true,
+            "canReact": true,
+            "canShare": true,
+            "importantExpiredAt": "2022-04-20T11:07:08.129Z",
+            "isImportant": true,
           },
-          "object": Object {
-            "collection": "post",
-            "created_at": "2022-01-24T04:17:16.585495Z",
-            "data": Object {
-              "content": "hello",
-              "files": Array [],
-              "highlight": "==hello==",
-              "images": Array [],
-              "videos": Array [],
-            },
-            "foreign_id": "post:97b30674-5de3-4696-8867-55022f9f81db",
-            "id": "97b30674-5de3-4696-8867-55022f9f81db",
-            "updated_at": "2022-01-24T04:17:17.216444Z",
-          },
-          "origin": null,
-          "reaction_counts": Object {
-            "grinning_face_with_one_large_and_one_small_eye": 1,
-          },
-          "settings": Object {
-            "can_comment": true,
-            "can_react": true,
-            "can_share": true,
-          },
-          "target": "",
-          "time": "2022-01-24T04:17:17.856000",
-          "type": "post",
-          "verb": "post",
         },
       ]
     }
@@ -925,6 +910,156 @@ exports[`NFSResult component should render list search result 1`] = `
             }
           }
         >
+          <View
+            style={
+              Object {
+                "backgroundColor": "#7843DD",
+                "borderBottomLeftRadius": 8,
+                "borderBottomRightRadius": 8,
+                "left": 0,
+                "paddingBottom": 4,
+                "paddingHorizontal": 4,
+                "paddingTop": 8,
+                "position": "absolute",
+                "top": 0,
+                "zIndex": 1,
+              }
+            }
+            testID="post_view.important_status_lite"
+          >
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": true,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={false}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              nativeID="animatedComponent"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                    undefined,
+                    Object {
+                      "backgroundColor": undefined,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      Object {
+                        "backgroundColor": "#FFFFFF",
+                        "borderRadius": 6,
+                        "padding": 2,
+                      },
+                    ]
+                  }
+                >
+                  <View
+                    className="icon-wrapper"
+                  >
+                    <View
+                      onLayout={[Function]}
+                      style={
+                        Object {
+                          "backgroundColor": "transparent",
+                          "position": "relative",
+                        }
+                      }
+                    >
+                      <View
+                        collapsable={false}
+                        nativeID="animatedComponent"
+                        style={
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "opacity": 1,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
+                      >
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "backgroundColor": "#f9f9f9",
+                              "height": 12,
+                              "justifyContent": "center",
+                              "width": 12,
+                            }
+                          }
+                          testID="Image__placeholder"
+                        />
+                      </View>
+                      <View
+                        style={
+                          Array [
+                            Object {
+                              "overflow": "hidden",
+                            },
+                            Object {
+                              "height": 12,
+                              "width": 12,
+                            },
+                          ]
+                        }
+                      >
+                        <FastImageView
+                          onFastImageError={[Function]}
+                          onFastImageLoadEnd={[Function]}
+                          resizeMode="cover"
+                          size={12}
+                          source={null}
+                          style={
+                            Object {
+                              "bottom": 0,
+                              "left": 0,
+                              "position": "absolute",
+                              "right": 0,
+                              "top": 0,
+                            }
+                          }
+                        />
+                      </View>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
           <View
             style={
               Array [
@@ -1061,7 +1196,7 @@ exports[`NFSResult component should render list search result 1`] = `
                           resizeMode="cover"
                           source={
                             Object {
-                              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                              "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg",
                             }
                           }
                           style={
@@ -1121,7 +1256,7 @@ exports[`NFSResult component should render list search result 1`] = `
                     }
                     testID="post_view_header.actor"
                   >
-                    Trần Nam Anh
+                    Nguyễn Thị Ngọc Linh
                   </Text>
                 </View>
                 <View
@@ -1175,7 +1310,7 @@ exports[`NFSResult component should render list search result 1`] = `
                     }
                     testID="time_view"
                   >
-                    Jan 24 at 11:17 AM
+                    Today at 05:06 PM
                   </Text>
                 </View>
               </View>
@@ -1388,8 +1523,22 @@ exports[`NFSResult component should render list search result 1`] = `
                                       ]
                                     }
                                   >
-                                    hello
+                                    Important
                                   </Text>
+                                </Text>
+                                <Text
+                                  style={
+                                    Array [
+                                      Object {
+                                        "color": "#2F3945",
+                                        "fontFamily": "OpenSans-Regular",
+                                        "fontSize": 16,
+                                      },
+                                      Object {},
+                                    ]
+                                  }
+                                >
+                                   post
                                 </Text>
                               </Text>
                             </View>

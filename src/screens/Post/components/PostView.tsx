@@ -46,10 +46,10 @@ import PostViewFooterLite from '~/screens/Post/components/postView/PostViewFoote
 export interface PostViewProps {
   style?: any;
   testID?: string;
-  postId: string;
+  postId: number;
   isPostDetail?: boolean;
-  onPressComment?: (postId: string) => void;
-  onPressHeader?: (postId: string) => void;
+  onPressComment?: (postId: number) => void;
+  onPressHeader?: (postId: number) => void;
   onContentLayout?: () => void;
   onPress?: () => void;
   pressNavigateToDetail?: boolean;

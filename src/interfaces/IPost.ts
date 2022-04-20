@@ -52,6 +52,7 @@ export interface IActivityDataImage {
 
 export interface IActivityData {
   content?: string;
+  highlight?: string;
   images?: IActivityDataImage[];
   videos?: string[];
   files?: string[];
@@ -118,7 +119,7 @@ export interface IPostComments {
 }
 
 export interface IPostActivity {
-  id?: string;
+  id?: number;
   audience?: IPostAudience;
   content?: string;
   highlight?: string;
@@ -183,7 +184,7 @@ export interface IPayloadCreateComment {
 }
 
 export interface IPayloadPutEditPost {
-  id: string;
+  id: number;
   data: IPostCreatePost;
   replaceWithDetail?: boolean;
   onRetry?: () => void;
@@ -353,7 +354,7 @@ export interface IPayloadAddToAllPost {
 }
 
 export interface IPayloadReactToPost {
-  id: string;
+  id: number;
   reactionId: ReactionType;
   ownReaction: IOwnReaction;
   reactionCounts: IReactionCounts;
@@ -386,8 +387,8 @@ export interface IPayloadUpdateCommentsById {
 }
 
 export interface ICreatePostParams {
-  draftPostId?: string;
-  postId?: string;
+  draftPostId?: number;
+  postId?: number;
   replaceWithDetail?: boolean;
   initAudience?: any;
   createFromGroupId?: number;

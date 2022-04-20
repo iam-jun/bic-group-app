@@ -15,7 +15,7 @@ import Markdown from '~/beinComponents/Markdown';
 import postKeySelector from '../../redux/keySelector';
 
 export interface PostViewContentProps {
-  postId: string;
+  postId: number;
   content?: string;
   images?: IActivityDataImage[];
   isPostDetail: boolean;

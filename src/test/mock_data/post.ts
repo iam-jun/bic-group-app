@@ -1,5 +1,13 @@
 export const POST_DETAIL = {
-  ownerReactions: [],
+  ownerReactions: [
+    {
+      id: 23,
+      postId: 28,
+      reactionName: 'wink',
+      createdBy: 33,
+      createdAt: '2022-04-20T08:54:31.210Z',
+    },
+  ],
   id: 28,
   content: 'Hello world @thanvanvan ',
   media: {
@@ -42,7 +50,7 @@ export const POST_DETAIL = {
   commentsCount: 5,
   reactionsCount: {
     '0': {
-      grinning: 1,
+      wink: 1,
     },
     '1': {
       thinking_face: 1,
