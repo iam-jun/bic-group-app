@@ -78,4 +78,14 @@ describe('SettingItem conponent', () => {
     expect(rightComponent).toBeDefined();
     expect(rendered.toJSON()).toMatchSnapshot();
   });
+
+  it(`render without leftIcon`, () => {
+    //@ts-ignore
+    const rendered = render(<SettingItem {...baseProps} leftIcon={''} />);
+
+    const leftComponent = rendered.queryByTestId(
+      'edit_user_info.setting_item.left_component',
+    );
+    expect(leftComponent).toBeNull();
+  });
 });
