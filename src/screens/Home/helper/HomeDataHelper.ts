@@ -74,7 +74,7 @@ const homeDataHelper = {
         homeApiConfig.getNewsfeed(param),
       );
       if (response && response?.data) {
-        return Promise.resolve(response?.data?.data?.list);
+        return Promise.resolve(response?.data?.data);
       } else {
         return Promise.reject(response);
       }
