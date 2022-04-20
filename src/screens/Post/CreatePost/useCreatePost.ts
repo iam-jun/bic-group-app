@@ -176,6 +176,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
       const initImages: any = [];
       initPostData?.media?.images?.map(item => {
         initImages.push({
+          id: item?.id,
           fileName: item?.origin_name || item?.name,
           file: {
             name: item?.origin_name || item?.name,

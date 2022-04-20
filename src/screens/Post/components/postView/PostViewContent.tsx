@@ -82,7 +82,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
       return (
         <Markdown
           value={content}
-          selector={`${postKeySelector.allPosts}.${postId}.mentions.users`}
+          selector={`${postKeySelector.allPosts}.${postId}.mentions`}
           onPressAudience={onPressMentionAudience}
         />
       );

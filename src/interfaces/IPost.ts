@@ -42,8 +42,10 @@ export interface IAudience {
 }
 
 export interface IActivityDataImage {
+  id?: number;
   name: string;
   origin_name?: string;
+  url?: string;
   width?: number;
   height?: number;
 }
