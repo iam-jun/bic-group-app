@@ -42,6 +42,7 @@ export default function* deleteReactToPost({
       yield call(postDataHelper.deleteReaction, {
         reactionId: rId,
         target: 'POST',
+        targetId: id,
       });
     }
   } catch (e) {

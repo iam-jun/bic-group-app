@@ -378,6 +378,7 @@ export interface IParamPutReaction {
 export interface IParamDeleteReaction {
   target: 'POST' | 'COMMENT';
   reactionId: number;
+  targetId: number;
 }
 
 export interface IParamPutReactionToComment {

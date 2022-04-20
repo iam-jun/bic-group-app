@@ -49,6 +49,7 @@ export default function* deleteReactToComment({
       yield call(postDataHelper.deleteReaction, {
         reactionId: rId,
         target: 'COMMENT',
+        targetId: id,
       });
     }
   } catch (e) {
