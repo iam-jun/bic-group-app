@@ -2,14 +2,14 @@ import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import {
   IActivityData,
+  IParamDeleteReaction,
   ICommentData,
   IParamGetDraftPosts,
   IParamGetPostAudiences,
   IParamGetPostDetail,
   IParamGetReactionDetail,
   IParamPutEditPost,
-  IParamPutReactionToComment,
-  IParamPutReactionToPost,
+  IParamPutReaction,
   IParamSearchMentionAudiences,
   IPostCreatePost,
   IRequestGetPostComment,
@@ -53,16 +53,13 @@ export const postApiConfig = {
     useRetry: true,
     data,
   }),
-  putReactionToPost: (
-    params: IParamPutReactionToPost,
-  ): HttpApiRequestConfig => {
-    const {postId, ...restParams} = params;
+  putReaction: (params: IParamPutReaction): HttpApiRequestConfig => {
     return {
-      url: `${provider.url}api/posts/${postId}/react`,
-      method: 'put',
+      url: `${provider.url}api/v1/reactions`,
+      method: 'post',
       provider,
       useRetry: true,
-      data: restParams,
+      data: params,
     };
   },
   putEditPost: (param: IParamPutEditPost): HttpApiRequestConfig => {
@@ -151,18 +148,6 @@ export const postApiConfig = {
       },
     };
   },
-  putReactionToComment: (
-    params: IParamPutReactionToComment,
-  ): HttpApiRequestConfig => {
-    const {commentId, ...restParams} = params;
-    return {
-      url: `${provider.url}api/comments/${commentId}/react`,
-      method: 'put',
-      provider,
-      useRetry: true,
-      data: restParams,
-    };
-  },
   postMarkAsRead: (postId: string, userId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}reactions/mark-as-read`,
     method: 'post',
@@ -204,46 +189,27 @@ export const postApiConfig = {
       limit: params.take,
     },
   }),
-  postReaction: (
-    referenceId: string,
-    referenceType: 'post' | 'comment',
-    data: ReactionType[],
-    userId: number,
-  ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}reactions/reacts`,
-    method: 'post',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
-    data: {
-      referenceId: referenceId,
-      referenceType: referenceType,
-      data: data,
-      userId: userId,
-    },
-  }),
-  deleteReaction: (id: string): HttpApiRequestConfig => ({
-    url: `${provider.url}api/reactions/${id}`,
+  deleteReaction: (data: IParamDeleteReaction): HttpApiRequestConfig => ({
+    url: `${provider.url}api/v1/reactions`,
     method: 'delete',
     provider,
     useRetry: true,
+    data: data,
   }),
   getReactionDetail: (
-    reactionType: ReactionType,
-    postId?: string,
-    commentId?: string,
-    idLessThan?: string,
-    limit?: number,
+    param: IParamGetReactionDetail,
   ): HttpApiRequestConfig => ({
-    url: `${provider.url}api/reactions/statistics`,
+    url: `${provider.url}api/v1/reactions`,
     method: 'get',
     provider: provider,
     useRetry: true,
     params: {
-      kind: reactionType,
-      reaction_id: commentId,
-      post_id: commentId ? undefined : postId,
-      id_lt: idLessThan,
-      limit: limit || 20,
+      reactionName: param.reactionName,
+      targetId: param.targetId,
+      target: param.target,
+      order: param?.order || 'DESC',
+      limit: param?.limit || 20,
+      latestId: param?.latestId || 0,
     },
   }),
   postPublishDraftPost: (draftPostId: string): HttpApiRequestConfig => ({
@@ -269,10 +235,10 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  putReactionToPost: async (param: IParamPutReactionToPost) => {
+  putReaction: async (param: IParamPutReaction) => {
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.putReactionToPost(param),
+        postApiConfig.putReaction(param),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -384,20 +350,6 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  putReactionToComment: async (param: IParamPutReactionToComment) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.putReactionToComment(param),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
   postMarkAsRead: async (postId: string, userId: number) => {
     try {
       const response: any = await makeHttpRequest(
@@ -440,29 +392,10 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  postReaction: async (
-    referenceId: string,
-    referenceType: 'post' | 'comment',
-    data: ReactionType[],
-    userId: number,
-  ) => {
+  deleteReaction: async (param: IParamDeleteReaction) => {
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.postReaction(referenceId, referenceType, data, userId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  deleteReaction: async (id: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.deleteReaction(id),
+        postApiConfig.deleteReaction(param),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -474,20 +407,14 @@ const postDataHelper = {
     }
   },
   getReactionDetail: async (param: IParamGetReactionDetail) => {
-    const {reactionType, postId, commentId, idLessThan, limit} = param;
-    if (reactionType && (postId || commentId)) {
+    const {reactionName, targetId, target} = param;
+    if (reactionName && targetId && target) {
       try {
         const response: any = await makeHttpRequest(
-          postApiConfig.getReactionDetail(
-            reactionType,
-            postId,
-            commentId,
-            idLessThan,
-            limit,
-          ),
+          postApiConfig.getReactionDetail(param),
         );
-        if (response && response?.data) {
-          return Promise.resolve(response?.data?.data);
+        if (response && response?.data?.data?.list) {
+          return Promise.resolve(response.data.data);
         } else {
           return Promise.reject(response);
         }

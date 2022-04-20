@@ -126,7 +126,7 @@ const _PostView: FC<PostViewProps> = ({
     setting = postData?.setting || {};
     deleted = false;
     commentsCount = postData?.commentsCount || 0;
-    ownerReactions = postData?.ownerReactions || {};
+    ownerReactions = postData?.ownerReactions || [];
     reactionsCount = postData?.reactionsCount || {};
   }
 
@@ -190,11 +190,11 @@ const _PostView: FC<PostViewProps> = ({
   const getReactionStatistics = async (param: any) => {
     try {
       const response = await postDataHelper.getReactionDetail(param);
-      const data = await response?.results;
-      const users = data.map((item: any) => ({
-        id: item?.user?.id,
-        avatar: item?.user?.data?.avatar,
-        fullname: item?.user?.data?.fullname,
+      const data = await response?.list;
+      const users = (data || []).map((item: any) => ({
+        id: item?.actor?.id,
+        avatar: item?.actor?.avatar,
+        fullname: item?.actor?.fullname,
       }));
 
       return Promise.resolve(users || []);
@@ -209,7 +209,7 @@ const _PostView: FC<PostViewProps> = ({
       isOpen: true,
       reactionCounts: reactionsCount,
       initReaction: reactionType,
-      getDataParam: {postId, commentId: undefined},
+      getDataParam: {target: 'POST', targetId: postId},
       getDataPromise: getReactionStatistics,
     };
     dispatch(modalActions.showReactionDetailBottomSheet(payload));

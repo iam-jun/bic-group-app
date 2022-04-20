@@ -134,11 +134,19 @@ const MainTabs = () => {
   const handleSocketNoti = (msg: string) => {
     console.log(`\x1b[32m🐣️ Maintab: received socket noti\x1b[0m`, msg);
     const msgData = parseSafe(msg);
-    const {data} = msgData || {};
+
+    const {data, verb = ''} = msgData || {};
 
     // for now realtime noti include "deleted" and "new"
     // for delete actitivity event "new" is empty
     // and we haven't handle "delete" event yet
+
+    if (verb === 'REACT') {
+      dispatch(postActions.updateReactionBySocket({userId, data: msgData}));
+    }
+    if (verb === 'UNREACT') {
+      dispatch(postActions.updateUnReactionBySocket({userId, data: msgData}));
+    }
     // if (data?.verb === 'REACT') {
     //   const actorId = data?.actor?.id;
     // const notiGroupId = data.entityId;
