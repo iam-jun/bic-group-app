@@ -222,10 +222,6 @@ export const postApiConfig = {
 
 const postDataHelper = {
   postCreateNewPost: async (data: IPostCreatePost) => {
-    console.log(
-      `\x1b[34m🐣️ PostDataHelper postCreateNewPost`,
-      `${JSON.stringify(data, undefined, 2)}\x1b[0m`,
-    );
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.postCreateNewPost(data),
@@ -472,14 +468,11 @@ const postDataHelper = {
         postApiConfig.postPublishDraftPost(draftPostId),
       );
       if (response && response?.data) {
-        console.log(`\x1b[36m🐣️ PostDataHelper postPublishDraftPost 1\x1b[0m`);
         return Promise.resolve(response?.data);
       } else {
-        console.log(`\x1b[36m🐣️ PostDataHelper postPublishDraftPost 2\x1b[0m`);
         return Promise.reject(response);
       }
     } catch (e) {
-      console.log(`\x1b[36m🐣️ PostDataHelper postPublishDraftPost 3\x1b[0m`);
       return Promise.reject(e);
     }
   },
