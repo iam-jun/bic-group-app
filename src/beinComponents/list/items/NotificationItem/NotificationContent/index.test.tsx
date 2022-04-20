@@ -8,6 +8,7 @@ afterEach(cleanup);
 describe('NotificationContent component', () => {
   const baseProps = {
     activities: [SAMPLE_ACTIVITY_1] as any,
+    description: 'Description',
   };
 
   it(`renders correctly`, async () => {
@@ -25,6 +26,7 @@ describe('NotificationContent component', () => {
     const activities = [activity];
     const props = {
       activities: activities as any,
+      description: 'Description',
     };
     const wrapper = render(<NotificationContent {...props} />);
     const rendered = wrapper.toJSON();
@@ -40,6 +42,7 @@ describe('NotificationContent component', () => {
     const activities = [activity];
     const props = {
       activities: activities as any,
+      description: 'Description',
     };
     const wrapper = render(<NotificationContent {...props} />);
     const title = wrapper.getByTestId('notification_content.title');
@@ -62,6 +65,7 @@ describe('NotificationContent component', () => {
     const activities = [activity];
     const props = {
       activities: activities as any,
+      description: 'Description',
     };
     const wrapper = render(<NotificationContent {...props} />);
     const component = wrapper.getByTestId('notification_content.body');

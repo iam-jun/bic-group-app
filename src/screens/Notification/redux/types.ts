@@ -11,8 +11,9 @@ const notificationsTypes = {
   MARK_AS_SEEN_ALL: 'notifications/MARK_AS_SEEN_ALL',
   MARK_AS_READ: 'notifications/MARK_AS_READ',
   LOADMORE: 'notifications/LOADMORE',
-  LOAD_NEW_NOTIFICATIONS: 'notifications/LOAD_NEW_NOTIFICATIONS',
-  DELETE_NOTIFICATIONS: 'notifications/DELETE_NOTIFICATIONS',
+  ATTACH: 'notifications/ATTACH',
+  DETACH: 'notifications/DETACH',
+  UPDATE: 'notifications/UPDATE',
 
   // For Firebase
   REGISTER_PUSH_TOKEN: 'notifications/REGISTER_PUSH_TOKEN',

@@ -19,14 +19,15 @@ const NotificationContent = ({description, activities}: Props) => {
   // const data = getNotificationContent(activities);
 
   let content = '';
-  if (activities.length > 0) {
+  if (activities?.length > 0) {
     content = activities[0]?.content || '';
   }
 
   return (
     <View testID="notification_content" style={styles.container}>
-      {/* <NotificationTitle testID="notification_content.title" {...title} /> */}
-      <MarkdownView>{description}</MarkdownView>
+      <View style={styles.header}>
+        <MarkdownView>{description}</MarkdownView>
+      </View>
       {!!content && (
         <Text.BodyS
           testID="notification_content.body"
@@ -45,6 +46,9 @@ const createStyle = (theme: ITheme) => {
     container: {
       marginStart: spacing?.margin.base,
       flex: 1,
+    },
+    header: {
+      flexDirection: 'row',
     },
     subContent: {
       color: colors.textSecondary,

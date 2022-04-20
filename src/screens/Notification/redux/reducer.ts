@@ -1,4 +1,3 @@
-import {cloneDeep} from 'lodash';
 import notificationsTypes from '~/screens/Notification/redux/types';
 
 export const notiInitState = {
@@ -25,31 +24,29 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
         notificationList: payload.notifications || [],
         unseenNumber: payload.unseen,
       };
-    case notificationsTypes.ADD_NEW_NOTIFICATIONS: {
-      const newNotifications = payload.notifications || [];
-      let notificationList: any[] = cloneDeep(state.notificationList);
 
-      // if the notification group id is existing, remove old items
-      const newGroupIds = newNotifications.map((noti: any) => noti.entityId);
-      notificationList = notificationList.filter((noti: any) => {
-        return !newGroupIds.includes(noti.entityId);
-      });
-      // then add the grouped notification that is updated at top of list
-      notificationList.unshift(...newNotifications);
-
+    case notificationsTypes.ATTACH: {
       return {
         ...state,
-        notificationList: notificationList,
-        unseenNumber: payload.unseen || state.unseenNumber,
+        notificationList: [payload, ...state.notificationList],
+        unseenNumber: state.unseenNumber + 1,
       };
     }
-    case notificationsTypes.DELETE_NOTIFICATIONS: {
-      const newListAfterDelete = state.notificationList.filter((item: any) => {
-        return !payload.notiGroupIds.includes(item.entityId);
-      });
+    case notificationsTypes.DETACH: {
       return {
         ...state,
-        notificationList: newListAfterDelete,
+        notificationList: state.notificationList.filter(
+          (item: any) => item.id !== payload?.id,
+        ),
+        unseenNumber: state.unseenNumber - 1,
+      };
+    }
+    case notificationsTypes.UPDATE: {
+      return {
+        ...state,
+        notificationList: state.notificationList.map((item: any) =>
+          item.id === payload?.id ? payload : item,
+        ),
       };
     }
     case notificationsTypes.CONCAT_NOTICATIONS:

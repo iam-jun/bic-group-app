@@ -9,33 +9,17 @@ exports[`NotificationContent component renders correctly 1`] = `
     }
   }
   testID="notification_content"
->
-  <Text
-    style={
-      Object {
-        "alignItems": "baseline",
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-SemiBold",
-        "fontSize": 16,
-      }
-    }
-    testID="notification_content.title"
-  >
-    Trần Nam Anh 
-    <Text
-      style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 16,
-        }
-      }
-      testID="notification_title.verb_text"
-    >
-      commented on your post
-    </Text>
-  </Text>
-</View>
+/>
 `;
 
-exports[`NotificationContent component renders null 1`] = `null`;
+exports[`NotificationContent component renders null 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+      "marginStart": 12,
+    }
+  }
+  testID="notification_content"
+/>
+`;

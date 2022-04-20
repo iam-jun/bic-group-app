@@ -999,6 +999,7 @@ exports[`NFSResult component should render list search result 1`] = `
                   <View
                     style={
                       Object {
+                        "backgroundColor": "#B2BDCD",
                         "borderRadius": 24,
                         "height": 48,
                         "width": 48,
@@ -1016,6 +1017,8 @@ exports[`NFSResult component should render list search result 1`] = `
                       }
                     >
                       <View
+                        collapsable={false}
+                        nativeID="animatedComponent"
                         style={
                           Object {
                             "bottom": 0,
@@ -1059,11 +1062,7 @@ exports[`NFSResult component should render list search result 1`] = `
                           onFastImageError={[Function]}
                           onFastImageLoadEnd={[Function]}
                           resizeMode="cover"
-                          source={
-                            Object {
-                              "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
-                            }
-                          }
+                          source={null}
                           style={
                             Object {
                               "bottom": 0,
@@ -1120,9 +1119,7 @@ exports[`NFSResult component should render list search result 1`] = `
                       }
                     }
                     testID="post_view_header.actor"
-                  >
-                    Trần Nam Anh
-                  </Text>
+                  />
                 </View>
                 <View
                   style={
@@ -1154,7 +1151,7 @@ exports[`NFSResult component should render list search result 1`] = `
                     }
                     testID="post_view_header.audiences"
                   >
-                    EVOL Community
+                    
                   </Text>
                 </View>
                 <View
@@ -1175,7 +1172,7 @@ exports[`NFSResult component should render list search result 1`] = `
                     }
                     testID="time_view"
                   >
-                    Jan 24 at 11:17 AM
+                    
                   </Text>
                 </View>
               </View>
@@ -1287,114 +1284,6 @@ exports[`NFSResult component should render list search result 1`] = `
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
-                      </View>
-                    </View>
-                  </View>
-                </View>
-              </View>
-            </View>
-            <View
-              onLayout={[Function]}
-            >
-              <View
-                style={
-                  Object {
-                    "marginHorizontal": 16,
-                    "marginVertical": 8,
-                  }
-                }
-              >
-                <View
-                  style={
-                    Object {
-                      "flexDirection": "row",
-                    }
-                  }
-                  testID="post_view_content.lite_container"
-                >
-                  <View
-                    style={
-                      Object {
-                        "flex": 1,
-                      }
-                    }
-                  >
-                    <View
-                      accessibilityState={
-                        Object {
-                          "disabled": true,
-                        }
-                      }
-                      accessible={true}
-                      collapsable={false}
-                      focusable={true}
-                      nativeID="animatedComponent"
-                      onClick={[Function]}
-                      onResponderGrant={[Function]}
-                      onResponderMove={[Function]}
-                      onResponderRelease={[Function]}
-                      onResponderTerminate={[Function]}
-                      onResponderTerminationRequest={[Function]}
-                      onStartShouldSetResponder={[Function]}
-                      style={
-                        Object {
-                          "opacity": 1,
-                        }
-                      }
-                      testID="post_view_content"
-                    >
-                      <View>
-                        <View>
-                          <View
-                            style={Object {}}
-                          >
-                            <View
-                              style={
-                                Object {
-                                  "alignItems": "flex-start",
-                                  "flexDirection": "row",
-                                  "flexWrap": "wrap",
-                                  "justifyContent": "flex-start",
-                                  "marginBottom": 2,
-                                  "marginTop": 2,
-                                  "width": "100%",
-                                }
-                              }
-                            >
-                              <Text
-                                style={Object {}}
-                              >
-                                <Text
-                                  style={
-                                    Object {
-                                      "backgroundColor": "#F6EF79",
-                                      "borderRadius": 6,
-                                      "color": "#2F3945",
-                                      "fontFamily": "OpenSans-Regular",
-                                      "fontSize": 16,
-                                      "overflow": "hidden",
-                                    }
-                                  }
-                                >
-                                  <Text
-                                    style={
-                                      Array [
-                                        Object {
-                                          "color": "#2F3945",
-                                          "fontFamily": "OpenSans-Regular",
-                                          "fontSize": 16,
-                                        },
-                                        Object {},
-                                      ]
-                                    }
-                                  >
-                                    hello
-                                  </Text>
-                                </Text>
-                              </Text>
-                            </View>
-                          </View>
-                        </View>
                       </View>
                     </View>
                   </View>
