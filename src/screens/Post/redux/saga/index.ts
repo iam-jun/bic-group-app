@@ -276,6 +276,8 @@ function* postCreateNewComment({
       !!parentCommentId &&
       e?.meta?.message === 'The comment feature has been disabled.'
     ) {
+      yield put(postActions.setParentCommentDeleted(true));
+
       yield put(
         modalActions.showHideToastMessage({
           content: 'post:text_comment_deleted',

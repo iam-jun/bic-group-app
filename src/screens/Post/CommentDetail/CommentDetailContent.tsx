@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState, memo} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, RefreshControl, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -9,20 +9,27 @@ import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
 import {IAudienceGroup, IReaction} from '~/interfaces/IPost';
+import modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import CommentInputView from '../components/CommentInputView';
 import postActions from '../redux/actions';
 import postKeySelector from '../redux/keySelector';
+import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
+import {useRootNavigation} from '~/hooks/navigation';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
   const {t} = useBaseHook();
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
 
   const listRef = useRef<any>();
   const commentInputRef = useRef<any>();
@@ -45,6 +52,10 @@ const CommentDetailContent = (props: any) => {
 
   const scrollToCommentsPosition = useKeySelector(
     postKeySelector.scrollToCommentsPosition,
+  );
+
+  const setParentCommentDeleted = useKeySelector(
+    postKeySelector.parentCommentIsDeleted,
   );
 
   const headerTitle = t('post:title_comment_detail_of').replace(
@@ -113,6 +124,15 @@ const CommentDetailContent = (props: any) => {
     }
   }, [scrollToCommentsPosition]);
 
+  useEffect(() => {
+    if (setParentCommentDeleted) {
+      dispatch(postActions.getPostDetail({postId: id}));
+    }
+    return () => {
+      dispatch(postActions.setParentCommentDeleted(false));
+    };
+  }, [setParentCommentDeleted]);
+
   const scrollToEnd = () => {
     try {
       listRef.current?.scrollToIndex?.({
@@ -133,6 +153,43 @@ const CommentDetailContent = (props: any) => {
       () => listRef.current?.scrollToIndex?.({index: error?.index || 0}),
       100,
     );
+  };
+
+  const onRefresh = () => {
+    if (setParentCommentDeleted) {
+      setIsEmpty(true);
+      dispatch(
+        modalActions.showAlert({
+          // @ts-ignore
+          HeaderImageComponent: (
+            <View style={{alignItems: 'center'}}>
+              <SVGIcon
+                // @ts-ignore
+                source={CommentNotFoundImg}
+                width={120}
+                height={120}
+                tintColor="none"
+              />
+            </View>
+          ),
+          title: t('post:deleted_comment:title'),
+          titleProps: {style: {flex: 1, textAlign: 'center'}},
+          showCloseButton: false,
+          cancelBtn: false,
+          isDismissible: false,
+          onConfirm: () => {
+            rootNavigation.goBack();
+          },
+          confirmLabel: t('post:deleted_comment:button_text'),
+          content: t('post:deleted_comment:description'),
+          contentProps: {style: {textAlign: 'center'}},
+          ContentComponent: Text.BodyS,
+          buttonViewStyle: {justifyContent: 'center'},
+          headerStyle: {marginBottom: 0},
+        }),
+      );
+      setRefreshing(false);
+    }
   };
 
   const renderCommentItem = (data: any) => {
@@ -158,6 +215,9 @@ const CommentDetailContent = (props: any) => {
 
   const keyExtractor = (item: any) => `CommentDetailContent_${item?.id || ''}`;
 
+  if (isEmpty) {
+    return null;
+  }
   return (
     <View style={{flex: 1}}>
       <FlatList
@@ -177,6 +237,13 @@ const CommentDetailContent = (props: any) => {
         keyExtractor={keyExtractor}
         onScrollToIndexFailed={onScrollToIndexFailed}
         scrollEventThrottle={16}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={theme.colors.borderDisable}
+          />
+        }
       />
       <CommentInputView
         commentInputRef={commentInputRef}
@@ -185,7 +252,7 @@ const CommentDetailContent = (props: any) => {
         autoFocus={!!replyItem}
         isCommentLevel1Screen
         showHeader
-        defaultReplyTargetId={newCommentData?.id || ''}
+        defaultReplyTargetId={newCommentData?.id}
       />
     </View>
   );

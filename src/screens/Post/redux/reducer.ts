@@ -70,6 +70,7 @@ export const postInitState = {
     selectingUsers: {},
   },
   loadingGetPostDetail: false,
+  parentCommentIsDeleted: false,
 };
 
 function postReducer(state = postInitState, action: any = {}) {
@@ -332,6 +333,11 @@ function postReducer(state = postInitState, action: any = {}) {
       return {
         ...state,
         loadingGetPostDetail: payload,
+      };
+    case postTypes.SET_PARENT_COMMENT_IS_DELETED:
+      return {
+        ...state,
+        parentCommentIsDeleted: payload,
       };
     default:
       return state;

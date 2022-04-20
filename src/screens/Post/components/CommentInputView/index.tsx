@@ -27,7 +27,7 @@ export interface CommentInputViewProps {
   onCommentSuccess?: () => void;
   isCommentLevel1Screen?: boolean;
   showHeader?: boolean;
-  defaultReplyTargetId?: string;
+  defaultReplyTargetId?: number;
 }
 
 const CommentInputView: FC<CommentInputViewProps> = ({
