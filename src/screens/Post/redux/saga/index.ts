@@ -259,7 +259,7 @@ function* postCreateNewComment({
     onSuccess?.(); // call second time to make sure content is cleared on low performance device
   } catch (e) {
     console.log('err:', e);
-    if (preComment) {
+    if (preComment && !parentCommentId) {
       // retrying doesn't need to update status because status = 'failed' already
       yield put(
         postActions.updateCommentAPI({
@@ -272,7 +272,24 @@ function* postCreateNewComment({
       );
     }
     yield put(postActions.setCreateComment({loading: false}));
-    yield showError(e);
+    if (
+      !!parentCommentId &&
+      e?.meta?.message === 'The comment feature has been disabled.'
+    ) {
+      yield put(
+        modalActions.showHideToastMessage({
+          content: 'post:text_comment_deleted',
+          toastType: 'normal',
+          props: {
+            textProps: {useI18n: true},
+            type: 'informative',
+            leftIcon: 'AngleDown',
+          },
+        }),
+      );
+    } else {
+      yield showError(e);
+    }
   }
 }
 
