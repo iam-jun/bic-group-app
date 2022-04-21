@@ -74,6 +74,8 @@ import iconPermissionGuide1Ios from '../../assets/icons/icon_permission_guide_1_
 import iconPermissionGuide2Ios from '../../assets/icons/icon_permission_guide_2_ios.svg';
 import iconPermissionGuide3Ios from '../../assets/icons/icon_permission_guide_3_ios.svg';
 import iconPermissionGuide4Ios from '../../assets/icons/icon_permission_guide_4_ios.svg';
+import iconTabCommunities from '../../assets/icons/icon_communities.svg';
+import iconTabCommunitiesBein from '../../assets/icons/icon_communities_bein.svg';
 
 const icons = {
   iconTabHome,
@@ -236,6 +238,7 @@ const icons = {
   FileTimesAlt: 'FileTimesAlt',
   WifiSlash: 'WifiSlash',
   SignOutAlt: 'SignOutAlt',
+  Channel: 'Channel',
   addUsers,
   iconMapPin,
   iconChat,
@@ -248,6 +251,8 @@ const icons = {
   iconPermissionGuide2Ios,
   iconPermissionGuide3Ios,
   iconPermissionGuide4Ios,
+  iconTabCommunities,
+  iconTabCommunitiesBein,
 };
 
 export default icons;
