@@ -45,10 +45,10 @@ export interface HeaderProps {
   avatar?: any;
   avatarProps?: ImageProps;
   leftIcon?: IconType;
-  leftIconProps?: IconProps;
+  leftIconProps?: Omit<IconProps, 'icon'>;
   icon?: IconType;
   rightIcon?: IconType;
-  rightIconProps?: IconProps;
+  rightIconProps?: Omit<IconProps, 'icon'>;
   onPressIcon?: () => void;
   buttonVariant?: 'Primary' | 'Secondary' | 'Icon';
   buttonText?: string;

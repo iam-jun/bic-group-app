@@ -17,7 +17,7 @@ const homeApiConfig = {
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
     params: {
-      order: param?.order || 'ASC',
+      order: param?.order || 'DESC',
       limit: param?.limit,
       offset: param?.offset,
       idGTE: param?.idGTE,
@@ -74,7 +74,7 @@ const homeDataHelper = {
         homeApiConfig.getNewsfeed(param),
       );
       if (response && response?.data) {
-        return Promise.resolve(response?.data?.data?.list);
+        return Promise.resolve(response?.data?.data);
       } else {
         return Promise.reject(response);
       }

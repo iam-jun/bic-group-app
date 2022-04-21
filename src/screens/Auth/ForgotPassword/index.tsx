@@ -1,4 +1,3 @@
-import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
 import {StyleSheet, useWindowDimensions, View} from 'react-native';
@@ -15,6 +14,7 @@ import {forgotPasswordStages} from '~/constants/authConstants';
 
 import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
+import {useRootNavigation} from '~/hooks/navigation';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
 import icons from '~/resources/icons';
 import {rootNavigationRef} from '~/router/navigator/refs';
@@ -29,7 +29,8 @@ const ForgotPassword = () => {
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const {t} = useBaseHook();
-  const navigation = useNavigation();
+  const {rootNavigation} = useRootNavigation();
+
   const dimensions = useWindowDimensions();
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
   const styles = themeStyles(theme, isPhone);
@@ -54,7 +55,8 @@ const ForgotPassword = () => {
         // @ts-ignore
         icon={icons.iconBack}
         size={28}
-        onPress={() => navigation.goBack()}
+        onPress={() => rootNavigation.goBack()}
+        testID="forgot_button.back"
       />
     );
   };

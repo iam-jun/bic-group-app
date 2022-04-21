@@ -51,7 +51,7 @@ exports[`OptionMenu conponent renders correctly 1`] = `
               "opacity": 1,
             }
           }
-          testID="eidt_user_info.option_menu.item_MALE"
+          testID="edit_user_info.option_menu.item_MALE"
         >
           <View
             className=""
@@ -125,7 +125,7 @@ exports[`OptionMenu conponent renders correctly 1`] = `
               "opacity": 1,
             }
           }
-          testID="eidt_user_info.option_menu.item_FEMALE"
+          testID="edit_user_info.option_menu.item_FEMALE"
         >
           <View
             className=""
@@ -301,7 +301,7 @@ exports[`OptionMenu conponent renders correctly 1`] = `
               "opacity": 1,
             }
           }
-          testID="eidt_user_info.option_menu.item_OTHERS"
+          testID="edit_user_info.option_menu.item_OTHERS"
         >
           <View
             className=""

@@ -176,6 +176,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
       const initImages: any = [];
       initPostData?.media?.images?.map(item => {
         initImages.push({
+          id: item?.id,
           fileName: item?.origin_name || item?.name,
           file: {
             name: item?.origin_name || item?.name,
@@ -444,12 +445,9 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
       dispatch(postActions.putEditPost(payload));
       result = 'editPost';
     } else {
-      // case create new post
-      const payload: IPayloadCreatePost = {
-        data,
-        createFromGroupId,
-      };
-      dispatch(postActions.postCreateNewPost(payload));
+      console.log(
+        `\x1b[31m🐣️ useCreatePost handlePressPost must create post from draft \x1b[0m`,
+      );
       result = 'newPost';
     }
     Keyboard.dismiss();

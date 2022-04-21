@@ -16,21 +16,23 @@ import UserEditProfile from './UserEditProfile';
 import {USER_PROFILE, WORK_EXPERIENCE} from '~/test/mock_data/menu';
 import mainStack from '~/router/navigator/MainStack/stack';
 import menuTypes from '../redux/types';
+import i18next from 'i18next';
+import {uploadTypes} from '~/configs/resourceConfig';
 import menuActions from '../redux/actions';
 
 afterEach(cleanup);
 
-jest.mock('~/utils/permission', () => ({
-  checkPermission: jest.fn().mockImplementation(() => {
-    return true;
-  }),
-}));
-
 describe('UserEditProfile screen', () => {
   const mockStore = configureStore([]);
+  let storeData: any;
 
-  afterEach(() => {
+  beforeEach(() => {
     jest.clearAllMocks();
+    storeData = {...initialState};
+    storeData.menu.myProfile = {} as any;
+    storeData.auth.user = {} as any;
+    storeData.menu.loadingAvatar = false;
+    storeData.menu.loadingCover = false;
   });
 
   it(`should hide avatar, cover image, description, add work exp button and edit button in each item if is not current user`, async () => {
@@ -56,7 +58,6 @@ describe('UserEditProfile screen', () => {
       .spyOn(menuActions, 'getMyWorkExperience')
       .mockImplementation(mockActionGetUserWorkEXP as any);
 
-    const storeData = {...initialState};
     //@ts-ignore
     storeData.menu.myProfile = USER_PROFILE;
 
@@ -97,7 +98,6 @@ describe('UserEditProfile screen', () => {
         idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
       },
     };
-    const storeData = {...initialState};
 
     storeData.auth.user = user as any;
 
@@ -166,7 +166,6 @@ describe('UserEditProfile screen', () => {
         idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
       },
     };
-    const storeData = {...initialState};
 
     storeData.auth.user = user as any;
     //@ts-ignore
@@ -242,7 +241,6 @@ describe('UserEditProfile screen', () => {
         idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
       },
     };
-    const storeData = {...initialState};
 
     storeData.auth.user = user as any;
     //@ts-ignore
@@ -288,13 +286,16 @@ describe('UserEditProfile screen', () => {
       .spyOn(menuActions, 'getMyWorkExperience')
       .mockImplementation(mockActionGetMyWorkEXP as any);
 
-    const storeData = {...initialState};
-    //@ts-ignore
-    storeData.menu.myProfile = USER_PROFILE;
-
     const store = mockStore(storeData);
     const props = {route: {params: {userId: USER_PROFILE.id}}};
+    const user = {
+      signInUserSession: {
+        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+      },
+    };
 
+    storeData.menu.myProfile = USER_PROFILE as any;
+    storeData.auth.user = user as any;
     const wrapper = renderWithRedux(<UserEditProfile {...props} />, store);
 
     const buttonEdit = wrapper.getByTestId('user_edit_profile.contact.edit');
@@ -338,7 +339,6 @@ describe('UserEditProfile screen', () => {
         idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
       },
     };
-    const storeData = {...initialState};
 
     storeData.auth.user = user as any;
     //@ts-ignore
@@ -390,7 +390,6 @@ describe('UserEditProfile screen', () => {
         idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
       },
     };
-    const storeData = {...initialState};
 
     storeData.auth.user = user as any;
     //@ts-ignore
@@ -410,17 +409,144 @@ describe('UserEditProfile screen', () => {
     expect(navigate).toBeCalledWith(mainStack.addWork);
   });
 
-  it(`should checkPermission when click edit avatar`, async () => {
-    const user = {
-      signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
-      },
-    };
-    const storeData = {...initialState};
+  // it(`should checkPermission when click edit avatar`, async () => {
+  //   const spy = jest.spyOn(menuActions, 'uploadImage');
 
-    storeData.auth.user = user as any;
-    storeData.menu.myProfile = USER_PROFILE as any;
+  //   const mockActionGetMyProfile = () => {
+  //     return {
+  //       type: menuTypes.SET_USER_PROFILE,
+  //       payload: USER_PROFILE,
+  //     };
+  //   };
 
+  //   jest
+  //     .spyOn(menuActions, 'getUserProfile')
+  //     .mockImplementation(mockActionGetMyProfile as any);
+
+  //   const mockActionGetMyWorkEXP = () => {
+  //     return {
+  //       type: menuTypes.SET_MY_WORK_EXPERIENCE,
+  //       payload: [],
+  //     };
+  //   };
+
+  //   jest
+  //     .spyOn(menuActions, 'getMyWorkExperience')
+  //     .mockImplementation(mockActionGetMyWorkEXP as any);
+
+  //   const user = {
+  //     signInUserSession: {
+  //       idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+  //     },
+  //   };
+
+  //   storeData.auth.user = user as any;
+  //   storeData.menu.myProfile = USER_PROFILE as any;
+  //   const store = createTestStore(storeData);
+  //   const props = {route: {params: {userId: USER_PROFILE.id}}};
+
+  //   const wrapper = renderWithRedux(<UserEditProfile {...props} />, store);
+
+  //   const buttonEdit = wrapper.getByTestId('user_edit_profile.avatar.edit');
+  //   expect(buttonEdit).toBeDefined();
+  //   fireEvent.press(buttonEdit);
+
+  //   expect(spy).toBeCalled();
+  // });
+
+  // it(`should checkPermission when click edit cover photo`, async () => {
+  //   const user = {
+  //     signInUserSession: {
+  //       idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+  //     },
+  //   };
+
+  //   storeData.auth.user = user as any;
+  //   storeData.menu.myProfile = USER_PROFILE as any;
+
+  //   const mockActionGetMyProfile = () => {
+  //     return {
+  //       type: menuTypes.SET_USER_PROFILE,
+  //       payload: USER_PROFILE,
+  //     };
+  //   };
+
+  //   jest
+  //     .spyOn(menuActions, 'getUserProfile')
+  //     .mockImplementation(mockActionGetMyProfile as any);
+
+  //   const mockActionGetMyWorkEXP = () => {
+  //     return {
+  //       type: menuTypes.SET_MY_WORK_EXPERIENCE,
+  //       payload: [],
+  //     };
+  //   };
+
+  //   jest
+  //     .spyOn(menuActions, 'getMyWorkExperience')
+  //     .mockImplementation(mockActionGetMyWorkEXP as any);
+
+  //   const mockActionUploadImage = jest.fn(() => {
+  //     return {
+  //       type: menuTypes.UPLOAD_IMAGE,
+  //       payload: {},
+  //     };
+  //   });
+  //   jest
+  //     .spyOn(menuActions, 'uploadImage')
+  //     .mockImplementation(mockActionUploadImage as any);
+
+  //   const store = mockStore(storeData);
+  //   const props = {route: {params: {userId: USER_PROFILE.id}}};
+
+  //   const wrapper = renderWithRedux(<UserEditProfile {...props} />, store);
+
+  //   const coverImageView = wrapper.getByTestId('user_edit_profile.cover_image');
+
+  //   fireEvent(coverImageView, 'layout', {
+  //     nativeEvent: {layout: {width: 375}},
+  //   });
+
+  //   const buttonEdit = wrapper.getByTestId('user_edit_profile.cover.edit');
+  //   expect(buttonEdit).toBeDefined();
+  //   fireEvent.press(buttonEdit);
+
+  //   expect(mockActionUploadImage).toBeCalled();
+  // });
+
+  // it(`should not run onCoverLayout function when onLayout return width = 0`, () => {
+  //   const mockActionGetMyProfile = () => {
+  //     return {
+  //       type: menuTypes.SET_USER_PROFILE,
+  //       payload: USER_PROFILE,
+  //     };
+  //   };
+
+  //   jest
+  //     .spyOn(menuActions, 'getUserProfile')
+  //     .mockImplementation(mockActionGetMyProfile as any);
+  //   const user = {
+  //     signInUserSession: {
+  //       idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+  //     },
+  //   };
+  //   //@ts-ignore
+
+  //   storeData.auth.user = user as any;
+  //   storeData.menu.myProfile = USER_PROFILE as any;
+
+  //   const store = mockStore(storeData);
+  //   const props = {route: {params: {userId: USER_PROFILE.id}}};
+  //   const wrapper = renderWithRedux(<UserEditProfile {...props} />, store);
+
+  //   const coverImageView = wrapper.getByTestId('user_edit_profile.cover_image');
+
+  //   fireEvent(coverImageView, 'layout', {
+  //     nativeEvent: {layout: {width: 0}},
+  //   });
+  // });
+
+  it(`should render user with not set description and loading avatar, cover image`, () => {
     const mockActionGetMyProfile = () => {
       return {
         type: menuTypes.SET_USER_PROFILE,
@@ -431,70 +557,27 @@ describe('UserEditProfile screen', () => {
     jest
       .spyOn(menuActions, 'getUserProfile')
       .mockImplementation(mockActionGetMyProfile as any);
-
-    const mockActionGetMyWorkEXP = () => {
-      return {
-        type: menuTypes.SET_MY_WORK_EXPERIENCE,
-        payload: [],
-      };
-    };
-
-    jest
-      .spyOn(menuActions, 'getMyWorkExperience')
-      .mockImplementation(mockActionGetMyWorkEXP as any);
-
-    const store = mockStore(storeData);
-    const props = {route: {params: {userId: USER_PROFILE.id}}};
-
-    const wrapper = renderWithRedux(<UserEditProfile {...props} />, store);
-
-    const buttonEdit = wrapper.getByTestId('user_edit_profile.avatar.edit');
-    expect(buttonEdit).toBeDefined();
-    fireEvent.press(buttonEdit);
-  });
-
-  it(`should checkPermission when click edit cover photo`, async () => {
     const user = {
       signInUserSession: {
         idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
       },
     };
-    const storeData = {...initialState};
 
     storeData.auth.user = user as any;
     storeData.menu.myProfile = USER_PROFILE as any;
-
-    const mockActionGetMyProfile = () => {
-      return {
-        type: menuTypes.SET_USER_PROFILE,
-        payload: USER_PROFILE,
-      };
-    };
-
-    jest
-      .spyOn(menuActions, 'getUserProfile')
-      .mockImplementation(mockActionGetMyProfile as any);
-
-    const mockActionGetMyWorkEXP = () => {
-      return {
-        type: menuTypes.SET_MY_WORK_EXPERIENCE,
-        payload: [],
-      };
-    };
-
-    jest
-      .spyOn(menuActions, 'getMyWorkExperience')
-      .mockImplementation(mockActionGetMyWorkEXP as any);
+    storeData.menu.loadingAvatar = true;
+    storeData.menu.loadingCover = true;
+    storeData.menu.myProfile.description = '';
 
     const store = mockStore(storeData);
     const props = {route: {params: {userId: USER_PROFILE.id}}};
-
     const wrapper = renderWithRedux(<UserEditProfile {...props} />, store);
 
-    const buttonEdit = wrapper.getByTestId('user_edit_profile.cover.edit');
-    expect(buttonEdit).toBeDefined();
-    fireEvent.press(buttonEdit);
-
-    //
+    const descriptionText = wrapper.getByTestId(
+      'user_edit_profile.description.text',
+    );
+    expect(descriptionText.props?.children).toBe(
+      i18next.t('common:text_not_set'),
+    );
   });
 });

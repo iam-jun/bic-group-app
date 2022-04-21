@@ -176,7 +176,7 @@ const UserProfile = (props: any) => {
 
   const renderCoverImage = () => {
     return (
-      <View onLayout={onCoverLayout}>
+      <View testID="user_profile.cover_image" onLayout={onCoverLayout}>
         <Image
           style={styles.cover}
           source={bgImgState || images.img_cover_default}
