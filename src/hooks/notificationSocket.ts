@@ -1,9 +1,11 @@
 import {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 import {io} from 'socket.io-client';
-import notificationActionType from '~/constants/notificationActionType';
-import {ISocketReaction} from '~/interfaces/IPost';
-import notificationsActions from '~/screens/Notification/redux/actions';
+import {
+  notificationActions,
+  notificationVerbs,
+} from '~/constants/notifications';
+import actions from '~/screens/Notification/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
 import {parseSafe} from '~/utils/common';
 import {getEnv} from '~/utils/env';
@@ -15,20 +17,25 @@ const useNotificationSocket = () => {
   const token = useAuthToken();
   const userId = useUserIdAuth();
 
-  // callback when someone react to a post or comment, update its ownReact and reactionCounts on UI
-  const handleSocketReaction = (msg: string) => {
-    console.log(`\x1b[32m🐣️ Maintab: received socket react\x1b[0m`);
-    const data: ISocketReaction = parseSafe(msg);
-    const payload = {userId, data};
-    dispatch(postActions.updateReactionBySocket(payload));
+  const handleNotification = (data: any) => {
+    switch (data.action) {
+      case notificationActions.ATTACH:
+        return dispatch(actions.attachNotification(data));
+      case notificationActions.DETACH:
+        return dispatch(actions.detachNotification(data));
+      case notificationActions.UPDATE:
+        return dispatch(actions.updateNotification(data));
+    }
   };
 
-  // callback when someone un-react to a post or comment, update its ownReact and reactionCounts on UI
-  const handleSocketUnReaction = (msg: string) => {
-    console.log(`\x1b[32m🐣️ Maintab: received socket un-react\x1b[0m`);
-    const data: ISocketReaction = parseSafe(msg);
-    const payload = {userId, data};
-    dispatch(postActions.updateUnReactionBySocket(payload));
+  const handleReaction = (data: any) => {
+    if (data.verb === notificationVerbs.REACT) {
+      dispatch(postActions.updateReactionBySocket({userId, data: data}));
+    }
+
+    if (data.verb === notificationVerbs.UNREACT) {
+      dispatch(postActions.updateUnReactionBySocket({userId, data: data}));
+    }
   };
 
   // callback function when client receive realtime activity in notification feed
@@ -39,13 +46,9 @@ const useNotificationSocket = () => {
     const msgData = parseSafe(msg);
     const data = msgData || {};
 
-    if (data?.action === notificationActionType.ATTACH) {
-      dispatch(notificationsActions.attachNotification(data));
-    } else if (data?.action === notificationActionType.DETACH) {
-      dispatch(notificationsActions.detachNotification(data));
-    } else if (data?.action === notificationActionType.UPDATE) {
-      dispatch(notificationsActions.updateNotification(data));
-    }
+    handleReaction(data);
+
+    handleNotification(data);
   };
 
   useEffect(() => {
@@ -54,7 +57,7 @@ const useNotificationSocket = () => {
       return;
     }
 
-    dispatch(notificationsActions.getNotifications());
+    dispatch(actions.getNotifications());
 
     const socket = io(getEnv('BEIN_NOTIFICATION'), {
       transports: ['websocket'],
@@ -72,8 +75,6 @@ const useNotificationSocket = () => {
       console.log(`\x1b[36m🐣️ Bein notification socket disconnected\x1b[0m`);
     });
     socket.on('notifications', handleSocketNoti);
-    socket.on('reaction', handleSocketReaction);
-    socket.on('un_reaction', handleSocketUnReaction);
     return () => {
       socket?.disconnect?.();
     };
