@@ -457,6 +457,7 @@
     "post_menu_turn_off_noti": "Turn off notification for this post",
     "post_menu_history": "View Edit History",
     "post_menu_delete": "Delete post",
+    "post_menu_edit_settings": "Edit Post Settings",
     "post_menu_report": "Report to group Admin",
     "error_wait_uploading": "Please wait until upload finish",
     "error_upload_failed": "Please remove file upload failed or retry",
