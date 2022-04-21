@@ -279,6 +279,10 @@ const postActions = {
     type: postTypes.SET_PARENT_COMMENT_IS_DELETED,
     payload,
   }),
+  removeChildComment: (payload: any) => ({
+    type: postTypes.REMOVE_CHILD_COMMENT,
+    payload,
+  }),
 };
 
 export default postActions;

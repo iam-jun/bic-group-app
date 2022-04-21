@@ -64,6 +64,10 @@ const CommentDetailContent = (props: any) => {
   );
 
   useEffect(() => {
+    dispatch(postActions.setParentCommentDeleted(false));
+  }, []);
+
+  useEffect(() => {
     if (audience?.groups?.length > 0) {
       const ids: any = [];
       audience.groups.map((g: IAudienceGroup) => ids.push(g?.id));
@@ -72,7 +76,7 @@ const CommentDetailContent = (props: any) => {
   }, [audience?.groups]);
 
   useEffect(() => {
-    if (!postDetailLoadingState) {
+    if (!postDetailLoadingState && !setParentCommentDeleted) {
       dispatch(postActions.setScrollCommentsPosition(null));
       if (
         childrenComments?.length > 1 ||
@@ -114,7 +118,7 @@ const CommentDetailContent = (props: any) => {
         );
       }
     }
-  }, [postDetailLoadingState]);
+  }, [postDetailLoadingState, setParentCommentDeleted]);
 
   useEffect(() => {
     if (scrollToCommentsPosition?.position === 'top') {
@@ -125,13 +129,10 @@ const CommentDetailContent = (props: any) => {
   }, [scrollToCommentsPosition]);
 
   useEffect(() => {
-    if (setParentCommentDeleted) {
+    if (setParentCommentDeleted && isEmpty) {
       dispatch(postActions.getPostDetail({postId: id}));
     }
-    return () => {
-      dispatch(postActions.setParentCommentDeleted(false));
-    };
-  }, [setParentCommentDeleted]);
+  }, [setParentCommentDeleted, isEmpty]);
 
   const scrollToEnd = () => {
     try {

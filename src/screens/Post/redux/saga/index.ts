@@ -211,8 +211,6 @@ function* postCreateNewComment({
       yield put(postActions.setScrollCommentsPosition({position: 'bottom'}));
     }
 
-    onSuccess?.(); // clear content in text input
-
     yield put(postActions.setPostDetailReplyingComment());
 
     let resComment;
@@ -227,6 +225,7 @@ function* postCreateNewComment({
         data: commentData,
       });
     }
+    onSuccess?.(); // clear content in text input
 
     //update comment_count
     const allPosts = yield select(state => state?.post?.allPosts) || {};
@@ -277,6 +276,13 @@ function* postCreateNewComment({
       e?.meta?.message === 'The comment feature has been disabled.'
     ) {
       yield put(postActions.setParentCommentDeleted(true));
+      yield put(
+        postActions.removeChildComment({
+          localId: preComment?.localId,
+          postId,
+          parentCommentId,
+        }),
+      );
 
       yield put(
         modalActions.showHideToastMessage({

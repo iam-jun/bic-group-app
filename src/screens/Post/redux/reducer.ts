@@ -339,6 +339,38 @@ function postReducer(state = postInitState, action: any = {}) {
         ...state,
         parentCommentIsDeleted: payload,
       };
+    case postTypes.REMOVE_CHILD_COMMENT:
+      const {localId, postId, parentCommentId} = payload || {};
+      const allCommentsByPost: any = {...state.allCommentsByParentIds};
+      const postComments = [...allCommentsByPost[postId]];
+
+      if (parentCommentId) {
+        // find parent comment
+        const pIndex = postComments.findIndex(
+          (item: IReaction) => item.id === parentCommentId,
+        );
+
+        // find and update target reply comment
+        if (postComments?.[pIndex]?.latest_children?.comment) {
+          postComments[pIndex].latest_children.comment = postComments[
+            pIndex
+          ].latest_children.comment?.filter?.(
+            (cmt: IReaction) => cmt?.localId !== localId,
+          );
+        }
+        //update comment count
+        if (postComments?.[pIndex]?.children_counts?.comment) {
+          postComments[pIndex].children_counts.comment = Math.max(
+            (postComments?.[pIndex]?.children_counts?.comment || 0) - 1,
+            0,
+          );
+        }
+      }
+      allCommentsByPost[postId] = postComments;
+      return {
+        ...state,
+        allCommentsByParentIds: allCommentsByPost,
+      };
     default:
       return state;
   }
