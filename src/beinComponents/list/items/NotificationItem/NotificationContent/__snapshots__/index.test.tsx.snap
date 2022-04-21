@@ -9,17 +9,98 @@ exports[`NotificationContent component renders correctly 1`] = `
     }
   }
   testID="notification_content"
-/>
-`;
-
-exports[`NotificationContent component renders null 1`] = `
-<View
-  style={
-    Object {
-      "flex": 1,
-      "marginStart": 12,
-    }
-  }
-  testID="notification_content"
-/>
+>
+  <View
+    testID="notification_content.description"
+  >
+    <View
+      style={Object {}}
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "justifyContent": "flex-start",
+            "marginBottom": 2,
+            "marginTop": 2,
+            "width": "100%",
+          }
+        }
+      >
+        <Text
+          style={Object {}}
+        >
+          <Text
+            style={
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 16,
+                "fontWeight": "bold",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              Trần Nam Anh
+            </Text>
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-Regular",
+                  "fontSize": 16,
+                },
+                Object {},
+              ]
+            }
+          >
+             created a post in 
+          </Text>
+          <Text
+            style={
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 16,
+                "fontWeight": "bold",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              EVOL Community
+            </Text>
+          </Text>
+        </Text>
+      </View>
+    </View>
+  </View>
+</View>
 `;

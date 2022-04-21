@@ -16,7 +16,6 @@ interface Props {
 const NotificationContent = ({description, activities}: Props) => {
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
-  // const data = getNotificationContent(activities);
 
   let content = '';
   if (activities?.length > 0) {
@@ -25,12 +24,12 @@ const NotificationContent = ({description, activities}: Props) => {
 
   return (
     <View testID="notification_content" style={styles.container}>
-      <View style={styles.header}>
-        <MarkdownView>{description}</MarkdownView>
-      </View>
+      <MarkdownView testID="notification_content.description">
+        {description}
+      </MarkdownView>
       {!!content && (
         <Text.BodyS
-          testID="notification_content.body"
+          testID="notification_content.content"
           numberOfLines={1}
           style={styles.subContent}>
           {content}

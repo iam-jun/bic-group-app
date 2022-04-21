@@ -8,7 +8,7 @@ afterEach(cleanup);
 describe('NotificationContent component', () => {
   const baseProps = {
     activities: [SAMPLE_ACTIVITY_1] as any,
-    description: 'Description',
+    description: '**Trần Nam Anh** created a post in **EVOL Community**',
   };
 
   it(`renders correctly`, async () => {
@@ -18,59 +18,36 @@ describe('NotificationContent component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders null`, async () => {
+  it(`should show "NotificationContent" with description, no content`, async () => {
     const activity = {
       ...SAMPLE_ACTIVITY_1,
-      notification_type: 999,
+      content: null,
     };
     const activities = [activity];
     const props = {
+      ...baseProps,
       activities: activities as any,
       description: 'Description',
     };
     const wrapper = render(<NotificationContent {...props} />);
-    const rendered = wrapper.toJSON();
+    const description = wrapper.getByTestId('notification_content.description');
+    const content = wrapper.queryByTestId('notification_content.content');
 
-    expect(rendered).toMatchSnapshot();
+    expect(description).not.toBeNull();
+    expect(content).toBeNull();
   });
 
-  it(`should show "NotificationContent" with title, no body`, async () => {
-    const activity = {
-      ...SAMPLE_ACTIVITY_1,
-      notification_type: 19,
-    };
-    const activities = [activity];
+  it(`should show "NotificationContent" without content when there is no activity`, async () => {
+    const activities: any[] = [];
     const props = {
-      activities: activities as any,
-      description: 'Description',
+      ...baseProps,
+      activities: activities,
     };
     const wrapper = render(<NotificationContent {...props} />);
-    const title = wrapper.getByTestId('notification_content.title');
-    const body = wrapper.queryByTestId('notification_content.body');
+    const description = wrapper.getByTestId('notification_content.description');
+    const content = wrapper.queryByTestId('notification_content.content');
 
-    expect(title).not.toBeNull();
-    expect(body).toBeNull();
-  });
-
-  it(`should show "NotificationContent" without title`, async () => {
-    const activity = {
-      ...SAMPLE_ACTIVITY_1,
-      notification_type: 7,
-      reaction: {
-        data: {
-          content: 'test',
-        },
-      },
-    };
-    const activities = [activity];
-    const props = {
-      activities: activities as any,
-      description: 'Description',
-    };
-    const wrapper = render(<NotificationContent {...props} />);
-    const component = wrapper.getByTestId('notification_content.body');
-
-    expect(component).not.toBeNull();
-    expect(component.props.children).toBe('test');
+    expect(description).not.toBeNull();
+    expect(content).toBeNull();
   });
 });
