@@ -6,14 +6,23 @@ import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import {IconType} from '~/resources/icons';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 
 interface EmptyScreenProps {
   source: IconType;
   title: string;
   description: string;
+  onPress?: () => void;
+  buttonTitle?: string;
 }
 
-const EmptyScreen = ({source, title, description}: EmptyScreenProps) => {
+const EmptyScreen = ({
+  source,
+  title,
+  description,
+  onPress,
+  buttonTitle,
+}: EmptyScreenProps) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
@@ -29,6 +38,13 @@ const EmptyScreen = ({source, title, description}: EmptyScreenProps) => {
         useI18n>
         {description}
       </Text.Subtitle>
+      {!!onPress && !!buttonTitle && (
+        <ButtonWrapper onPress={onPress} style={styles.buttonWrapper}>
+          <Text.ButtonBase useI18n color={theme.colors.bgButtonPrimary}>
+            {buttonTitle}
+          </Text.ButtonBase>
+        </ButtonWrapper>
+      )}
     </View>
   );
 };
@@ -45,6 +61,9 @@ const themeStyles = (theme: ITheme) => {
     text: {
       textAlign: 'center',
       marginVertical: spacing.margin.tiny,
+    },
+    buttonWrapper: {
+      marginTop: spacing.margin.large,
     },
   });
 };

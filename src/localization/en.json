@@ -215,9 +215,9 @@
   },
   "tabs": {
     "home": "News feed",
-    "groups": "Groups",
+    "communities": "Communities",
     "notification": "Notifications",
-    "menus": "Menu"
+    "menus": "You"
   },
   "settings": {
     "title_app_language": "App language",
@@ -721,6 +721,13 @@
     "system_issue": {
       "title": "System Issue Occurred",
       "desc": "Please re-login to continue"
+    }
+  },
+  "communities":{
+    "empty_communities":{
+      "title": "No communities found",
+      "description": "Discover communities to join one.",
+      "button_text":"Go to Discover"
     }
   }
 }
