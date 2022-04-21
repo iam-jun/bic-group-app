@@ -38,7 +38,7 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
     startDate || getDefaultStartDate(),
   );
   const [selectedEndDate, setSelectedEndDate] = useState<any>(
-    endDate || new Date(),
+    endDate || getDefaultEndDate(),
   );
   const [startDateErr, setStartDateErr] = useState(false);
   const [endDateErr, setEndDateErr] = useState(false);
@@ -169,6 +169,12 @@ const getDefaultStartDate = () => {
   const defaultDate = now.setDate(now.getDate() - DEFAULT_DAYS_AGO);
   const startDefault = new Date(defaultDate).setHours(0, 0, 0, 0);
   return new Date(startDefault);
+};
+
+const getDefaultEndDate = () => {
+  const now = new Date();
+  const endDefault = new Date(now).setHours(23, 59, 59, 59);
+  return new Date(endDefault);
 };
 
 const createStyle = (theme: ITheme, insets: any) => {
