@@ -287,7 +287,7 @@ function* postCreateNewComment({
       yield put(
         modalActions.showHideToastMessage({
           content: 'post:text_comment_deleted',
-          toastType: 'normal',
+          toastType: 'banner',
           props: {
             textProps: {useI18n: true},
             type: 'informative',
