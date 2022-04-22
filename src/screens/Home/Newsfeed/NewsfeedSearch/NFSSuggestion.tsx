@@ -53,7 +53,7 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
         dispatch(
           homeActions.getRecentSearchKeywords({
             target: 'post',
-            sort: 'desc',
+            order: 'DESC',
             limit: 10,
             showLoading: true,
           }),
@@ -70,7 +70,7 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
       dispatch(
         homeActions.getRecentSearchKeywords({
           target: 'post',
-          sort: 'desc',
+          order: 'DESC',
           limit: 10,
           showLoading: false,
         }),

@@ -142,8 +142,8 @@ describe('Edit Post screen', () => {
     ...initialState,
     ...{
       post: {
-        allPosts: {[POST_DETAIL.id]: {...POST_DETAIL, is_draft: true}},
-        draftPosts: {posts: [{...POST_DETAIL, is_draft: true}]},
+        allPosts: {[POST_DETAIL.id]: {...POST_DETAIL, isDraft: true}},
+        draftPosts: {posts: [{...POST_DETAIL, isDraft: true}]},
       },
     },
   } as any;

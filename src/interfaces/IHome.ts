@@ -34,34 +34,43 @@ export interface IPayloadSetNewsfeedSearchRecentKeywords {
 }
 
 export interface IParamGetFeed {
-  offset?: number;
+  order?: 'ASC' | 'DESC';
   limit?: number;
-  recent_reactions_limit?: number;
-  enrich?: boolean;
-  own_reactions?: boolean;
-  with_own_reactions?: boolean;
-  with_own_children?: boolean;
-  with_recent_reactions?: boolean;
-  with_reaction_counts?: boolean;
-  ranking?: 'important_first' | string;
+  offset?: number;
+  idGTE?: number;
+  idLTE?: number;
+  idGT?: number;
+  idLT?: number;
 }
 
 export interface IParamGetSearchPost {
   content: string;
   actors?: string;
-  start_time?: string;
-  end_time?: string;
+  startTime?: string;
+  endTime?: string;
   offset?: number;
   limit?: number;
+  order?: IOrder;
+  important?: boolean;
+  idGTE?: number;
+  idLTE?: number;
+  idGT?: number;
+  idLT?: number;
 }
 
 export type IRecentSearchTarget = 'post' | 'user' | 'article' | 'all';
+export type IOrder = 'ASC' | 'DESC';
 
 export interface IParamGetRecentSearchKeywords {
-  sort?: 'desc' | 'asc';
   limit?: number;
   target?: IRecentSearchTarget;
   showLoading?: boolean;
+  order?: IOrder;
+  offset?: number;
+  idGTE?: number;
+  idLTE?: number;
+  idGT?: number;
+  idLT?: number;
 }
 
 export interface IParamPostNewRecentSearchKeyword {
