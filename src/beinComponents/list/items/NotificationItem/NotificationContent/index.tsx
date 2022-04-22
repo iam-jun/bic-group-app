@@ -16,20 +16,20 @@ interface Props {
 const NotificationContent = ({description, activities}: Props) => {
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
-  // const data = getNotificationContent(activities);
 
   let content = '';
-  if (activities.length > 0) {
+  if (activities?.length > 0) {
     content = activities[0]?.content || '';
   }
 
   return (
     <View testID="notification_content" style={styles.container}>
-      {/* <NotificationTitle testID="notification_content.title" {...title} /> */}
-      <MarkdownView>{description}</MarkdownView>
+      <MarkdownView testID="notification_content.description">
+        {description}
+      </MarkdownView>
       {!!content && (
         <Text.BodyS
-          testID="notification_content.body"
+          testID="notification_content.content"
           numberOfLines={1}
           style={styles.subContent}>
           {content}
@@ -45,6 +45,9 @@ const createStyle = (theme: ITheme) => {
     container: {
       marginStart: spacing?.margin.base,
       flex: 1,
+    },
+    header: {
+      flexDirection: 'row',
     },
     subContent: {
       color: colors.textSecondary,

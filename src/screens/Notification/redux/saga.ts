@@ -17,10 +17,6 @@ export default function* notificationsSaga() {
   yield takeLatest(notificationsTypes.MARK_AS_SEEN_ALL, markAsSeenAll);
   yield takeLatest(notificationsTypes.MARK_AS_READ, markAsRead);
   yield takeLatest(notificationsTypes.LOADMORE, loadmore);
-  yield takeEvery(
-    notificationsTypes.LOAD_NEW_NOTIFICATIONS,
-    loadNewNotifications,
-  );
   yield takeEvery(notificationsTypes.REGISTER_PUSH_TOKEN, registerPushToken);
 }
 
@@ -47,26 +43,6 @@ function* getNotifications({
   } catch (err) {
     yield put(notificationsActions.setLoadingNotifications(false));
     console.log(`\x1b[31m🐣️ saga getNotifications err: `, err, `\x1b[0m`);
-  }
-}
-
-// load new notifications when have realtime event
-function* loadNewNotifications({payload}: {payload: any; type: string}) {
-  try {
-    // const {notiGroupId, limit} = payload;
-    // const response: IObject<any> =
-    //   yield notificationsDataHelper.loadNewNotification(
-    //     notiGroupId,
-    //     limit, // only load a number of notifiations equal number of new notifications
-    //   );
-
-    yield put(
-      notificationsActions.addNewNotifications({
-        notifications: payload,
-      }),
-    );
-  } catch (err) {
-    console.log('\x1b[33m', 'loadNewNotifications error:', err, '\x1b[0m');
   }
 }
 
