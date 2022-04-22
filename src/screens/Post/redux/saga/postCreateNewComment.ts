@@ -71,7 +71,7 @@ function* postCreateNewComment({
     if (!isCommentLevel1Screen) {
       yield put(postActions.setScrollToLatestItem({parentCommentId}));
     } else {
-      // yield put(postActions.setScrollCommentsPosition({position: 'bottom'}));
+      yield put(postActions.setScrollCommentsPosition({position: 'bottom'}));
     }
 
     yield put(postActions.setPostDetailReplyingComment());

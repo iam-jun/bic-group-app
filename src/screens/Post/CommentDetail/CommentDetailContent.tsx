@@ -121,18 +121,21 @@ const CommentDetailContent = (props: any) => {
   }, [postDetailLoadingState, setParentCommentDeleted]);
 
   useEffect(() => {
-    if (scrollToCommentsPosition?.position === 'top') {
-      dispatch(postActions.setScrollCommentsPosition(null));
-    } else if (scrollToCommentsPosition?.position === 'bottom') {
-      scrollToEnd();
-    }
+    const timer = setTimeout(() => {
+      if (scrollToCommentsPosition?.position === 'top') {
+        dispatch(postActions.setScrollCommentsPosition(null));
+      } else if (scrollToCommentsPosition?.position === 'bottom') {
+        scrollToEnd();
+      }
+    }, 300);
+    return () => clearTimeout(timer);
   }, [scrollToCommentsPosition]);
 
   const scrollToEnd = () => {
     try {
       listRef.current?.scrollToIndex?.({
         animated: true,
-        index: childrenComments?.length - 1 || 0,
+        index: childrenComments?.length > 0 ? childrenComments?.length - 1 : 0,
       });
       dispatch(postActions.setScrollCommentsPosition(null));
     } catch (error) {
