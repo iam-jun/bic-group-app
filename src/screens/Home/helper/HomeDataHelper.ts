@@ -12,54 +12,40 @@ import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
 
 const homeApiConfig = {
   getNewsfeed: (param: IParamGetFeed): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/feeds/newsfeed`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/feeds/newsfeed`,
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
     params: {
-      offset: param?.offset || 0,
-      limit: param?.limit || 10,
-      recent_reactions_limit: param.recent_reactions_limit,
-      enrich: param?.enrich,
-      own_reactions: param?.own_reactions,
-      with_own_reactions: param?.with_own_reactions,
-      with_own_children: param?.with_own_children,
-      with_recent_reactions: param?.with_recent_reactions,
-      with_reaction_counts: param?.with_reaction_counts,
-      ranking: param?.ranking,
+      order: param?.order || 'DESC',
+      limit: param?.limit,
+      offset: param?.offset,
+      idGTE: param?.idGTE,
+      idLTE: param?.idLTE,
+      idGT: param?.idGT,
+      idLT: param?.idLT,
     },
   }),
   getSearchPost: (param: IParamGetSearchPost): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/posts`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/posts`,
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
-    params: {
-      content: param?.content,
-      actors: param?.actors,
-      start_time: param?.start_time,
-      end_time: param?.end_time,
-      offset: param?.offset,
-      limit: param?.limit,
-    },
+    params: {...param},
   }),
   getRecentSearchKeyword: (
     param: IParamGetRecentSearchKeywords,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/recent-searches`,
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
-    params: {
-      limit: param?.limit,
-      target: param?.target,
-      sort: param?.sort,
-    },
+    params: {...param},
   }),
   postNewRecentSearchKeyword: (
     data: IParamPostNewRecentSearchKeyword,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/recent-searches`,
     method: 'post',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
@@ -68,13 +54,13 @@ const homeApiConfig = {
   deleteClearRecentSearch: (
     target: IRecentSearchTarget,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches/${target}/clean`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/recent-searches/${target}/clean`,
     method: 'delete',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
   }),
   deleteRecentSearchById: (id: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/recent-searches/${id}/delete`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/recent-searches/${id}/delete`,
     method: 'delete',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
@@ -85,18 +71,10 @@ const homeDataHelper = {
   getNewsfeed: async (param: IParamGetFeed) => {
     try {
       const response: any = await makeHttpRequest(
-        homeApiConfig.getNewsfeed({
-          enrich: true,
-          own_reactions: true,
-          with_own_reactions: true,
-          with_own_children: true,
-          with_recent_reactions: true,
-          with_reaction_counts: true,
-          ...param,
-        }),
+        homeApiConfig.getNewsfeed(param),
       );
       if (response && response?.data) {
-        return Promise.resolve(response?.data?.data?.results);
+        return Promise.resolve(response?.data?.data);
       } else {
         return Promise.reject(response);
       }

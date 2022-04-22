@@ -221,7 +221,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
         .then((result: any) => {
           setUploading(false);
           const imageData: IActivityDataImage = {
-            name: result,
+            name: result?.url,
             origin_name: selectedImage.filename,
             width: selectedImage.width,
             height: selectedImage.height,

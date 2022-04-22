@@ -21,7 +21,7 @@ describe('Edit Post Saga', () => {
 
   it('call server edit post success then replace with detail', () => {
     const data: IPostCreatePost = {
-      data: {...POST_DETAIL.object.data, content: 'new content'},
+      content: 'new content',
     };
     const payload: IPayloadPutEditPost = {
       id: POST_DETAIL.id,
@@ -34,7 +34,7 @@ describe('Edit Post Saga', () => {
       .put(postActions.setLoadingCreatePost(true))
       .call(postDataHelper.putEditPost, {postId: POST_DETAIL.id, data})
       .put(postActions.setLoadingCreatePost(false))
-      .put(postActions.addToAllPosts({data: POST_DETAIL}))
+      .put(postActions.addToAllPosts({data: POST_DETAIL} as any))
       .put(
         modalActions.showHideToastMessage({
           content: 'post:text_edit_post_success',
@@ -50,7 +50,7 @@ describe('Edit Post Saga', () => {
 
   it('call server edit post success then go back', () => {
     const data: IPostCreatePost = {
-      data: {...POST_DETAIL.object.data, content: 'new content'},
+      content: 'new content',
     };
     const payload: IPayloadPutEditPost = {
       id: POST_DETAIL.id,
@@ -64,7 +64,7 @@ describe('Edit Post Saga', () => {
       .put(postActions.setLoadingCreatePost(true))
       .call(postDataHelper.putEditPost, {postId: POST_DETAIL.id, data})
       .put(postActions.setLoadingCreatePost(false))
-      .put(postActions.addToAllPosts({data: POST_DETAIL}))
+      .put(postActions.addToAllPosts({data: POST_DETAIL} as any))
       .put(
         modalActions.showHideToastMessage({
           content: 'post:text_edit_post_success',
@@ -81,9 +81,7 @@ describe('Edit Post Saga', () => {
   it('call server edit post failed', () => {
     const payload: IPayloadPutEditPost = {
       id: POST_DETAIL.id,
-      data: {
-        data: {...POST_DETAIL.object.data, content: 'new content'},
-      },
+      data: {...POST_DETAIL, content: 'new content'} as any,
     };
     return expectSaga(putEditPost, {type: 'test', payload})
       .provide([

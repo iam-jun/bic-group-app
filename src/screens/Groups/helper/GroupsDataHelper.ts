@@ -12,7 +12,7 @@ export const groupsApiConfig = {
     params,
   }),
   getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/feeds/timeline`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/feeds/timeline`,
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
@@ -248,17 +248,11 @@ const groupsDataHelper = {
         groupsApiConfig.getGroupPosts({
           offset: param?.offset || 0,
           limit: param?.limit || appConfig.recordsPerPage,
-          enrich: true,
-          own_reactions: true,
-          with_own_reactions: true,
-          with_own_children: true,
-          with_recent_reactions: true,
-          with_reaction_counts: true,
           ...param,
         }),
       );
-      if (response && response?.data?.data?.results) {
-        return Promise.resolve(response?.data?.data?.results);
+      if (response && response?.data?.data?.list) {
+        return Promise.resolve(response?.data?.data?.list);
       } else {
         return Promise.reject(response);
       }

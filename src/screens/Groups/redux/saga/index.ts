@@ -15,7 +15,7 @@ import * as modalActions from '~/store/modal/actions';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
 import {mapData, mapRequestMembers} from '../../helper/mapper';
 import appConfig from '~/configs/appConfig';
-import FileUploader from '~/services/fileUploader';
+import FileUploader, {IGetFile} from '~/services/fileUploader';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
@@ -168,14 +168,14 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
     const {file, id, fieldName, uploadType} = payload;
     yield updateLoadingImageState(fieldName, true);
 
-    const data: string = yield FileUploader.getInstance().upload({
+    const data: IGetFile = yield FileUploader.getInstance().upload({
       file,
       uploadType,
     });
 
     yield put(
       groupsActions.editGroupDetail({
-        data: {id, [fieldName]: data},
+        data: {id, [fieldName]: data.url},
         editFieldName:
           fieldName === 'icon'
             ? i18next.t('common:text_avatar')

@@ -2,10 +2,7 @@ import {cloneDeep, get} from 'lodash';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import {IObject, IToastMessage} from '~/interfaces/common';
 import errorCode from '~/constants/errorCode';
-import {
-  ILoadNewNotifications,
-  IParamGetNotifications,
-} from '~/interfaces/INotification';
+import {IParamGetNotifications} from '~/interfaces/INotification';
 import notificationsDataHelper from '~/screens/Notification/helper/NotificationDataHelper';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import notificationsTypes from '~/screens/Notification/redux/types';
@@ -20,10 +17,6 @@ export default function* notificationsSaga() {
   yield takeLatest(notificationsTypes.MARK_AS_SEEN_ALL, markAsSeenAll);
   yield takeLatest(notificationsTypes.MARK_AS_READ, markAsRead);
   yield takeLatest(notificationsTypes.LOADMORE, loadmore);
-  yield takeEvery(
-    notificationsTypes.LOAD_NEW_NOTIFICATIONS,
-    loadNewNotifications,
-  );
   yield takeEvery(notificationsTypes.REGISTER_PUSH_TOKEN, registerPushToken);
 }
 
@@ -36,13 +29,6 @@ function* getNotifications({
   try {
     yield put(notificationsActions.setLoadingNotifications(true));
     yield put(notificationsActions.setNoMoreNoti(false));
-
-    const notifications: IObject<any> =
-      (yield select(state => get(state, notificationSelector.notifications))) ||
-      [];
-
-    // load more from the last notification
-    const bottomNoti = notifications[notifications.length - 1];
 
     const response: IObject<any> =
       yield notificationsDataHelper.getNotificationList(payload || {});
@@ -57,32 +43,6 @@ function* getNotifications({
   } catch (err) {
     yield put(notificationsActions.setLoadingNotifications(false));
     console.log(`\x1b[31m🐣️ saga getNotifications err: `, err, `\x1b[0m`);
-  }
-}
-
-// load new notifications when have realtime event
-function* loadNewNotifications({
-  payload,
-}: {
-  payload: ILoadNewNotifications;
-  type: string;
-}) {
-  try {
-    const {notiGroupId, limit} = payload;
-    const response: IObject<any> =
-      yield notificationsDataHelper.loadNewNotification(
-        notiGroupId,
-        limit, // only load a number of notifiations equal number of new notifications
-      );
-
-    yield put(
-      notificationsActions.addNewNotifications({
-        notifications: response.results,
-        unseen: response.unseen,
-      }),
-    );
-  } catch (err) {
-    console.log('\x1b[33m', 'loadNewNotifications error:', err, '\x1b[0m');
   }
 }
 
@@ -191,11 +151,10 @@ function* loadmore() {
     const notifications: IObject<any> =
       (yield select(state => get(state, notificationSelector.notifications))) ||
       [];
-    const bottomNoti = notifications[notifications.length - 1];
 
     const response: IObject<any> =
       yield notificationsDataHelper.getNotificationList({
-        id_lt: bottomNoti?.id,
+        offset: notifications.length + 1,
       });
 
     // hide loading more spinner, set isLoadingMore = false

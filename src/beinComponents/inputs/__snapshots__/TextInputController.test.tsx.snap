@@ -65,17 +65,5 @@ exports[`TextInputController component renders correctly 1`] = `
     underlineColorAndroid="transparent"
     value=""
   />
-  <Text
-    style={
-      Object {
-        "color": "#DD2C3E",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 12,
-      }
-    }
-    testID="text_input.text_helper"
-  >
-    signingInError
-  </Text>
 </View>
 `;

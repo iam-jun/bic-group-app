@@ -20,6 +20,7 @@ export interface IGetStreamNotificationActivity {
   verb: string;
   audience: IGetStreamAudience;
   parent_reaction?: IReaction;
+  content?: string;
 }
 
 export interface IMarkAsReadAnActivity extends IGetStreamDispatch {
@@ -37,6 +38,7 @@ export interface IDeleteNotifications {
 
 export interface IParamGetNotifications {
   limit?: number;
+  offset?: number;
   id_lt?: string;
   id_gte?: string;
   enrich?: boolean;
