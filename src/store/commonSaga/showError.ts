@@ -1,9 +1,9 @@
-import errorCode from '~/constants/errorCode';
 import {put} from 'redux-saga/effects';
 import modalActions from '~/store/modal/actions';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
 
 function* showError(err: any) {
-  if (err.code === errorCode.systemIssue) return;
+  if (err.code === API_ERROR_CODE.COMMON.SYSTEM_ISSUE) return;
 
   yield put(
     modalActions.showHideToastMessage({
