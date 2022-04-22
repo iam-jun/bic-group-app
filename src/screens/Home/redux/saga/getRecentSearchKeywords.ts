@@ -17,7 +17,7 @@ export default function* getRecentSearchKeywords({
     const response = yield call(homeDataHelper.getRecentSearchKeywords, param);
     yield put(
       homeActions.setNewsfeedSearchRecentKeywords({
-        data: response?.recent_searches || [],
+        data: response?.recentSearches || [],
         loading: false,
       }),
     );

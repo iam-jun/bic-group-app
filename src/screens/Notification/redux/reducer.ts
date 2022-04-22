@@ -30,9 +30,9 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
       let notificationList: any[] = cloneDeep(state.notificationList);
 
       // if the notification group id is existing, remove old items
-      const newGroupIds = newNotifications.map((noti: any) => noti.group);
+      const newGroupIds = newNotifications.map((noti: any) => noti.entityId);
       notificationList = notificationList.filter((noti: any) => {
-        return !newGroupIds.includes(noti.group);
+        return !newGroupIds.includes(noti.entityId);
       });
       // then add the grouped notification that is updated at top of list
       notificationList.unshift(...newNotifications);
@@ -40,12 +40,12 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
       return {
         ...state,
         notificationList: notificationList,
-        unseenNumber: payload.unseen,
+        unseenNumber: payload.unseen || state.unseenNumber,
       };
     }
     case notificationsTypes.DELETE_NOTIFICATIONS: {
       const newListAfterDelete = state.notificationList.filter((item: any) => {
-        return !payload.notiGroupIds.includes(item.group);
+        return !payload.notiGroupIds.includes(item.entityId);
       });
       return {
         ...state,
