@@ -4,8 +4,8 @@ import {IFilePicked} from '~/interfaces/common';
 
 import {IUserImageUpload} from '~/interfaces/IEditUser';
 import FileUploader, {IGetFile} from '~/services/fileUploader';
-import {showError} from '.';
 import menuActions from '../actions';
+import showError from '~/store/commonSaga/showError';
 
 export default function* uploadImage({
   payload,
