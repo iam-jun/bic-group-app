@@ -23,10 +23,9 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
 import {fontFamilies} from '~/theme/fonts';
 import {
-  IActivityData,
   IActivityDataImage,
+  ICommentData,
   ICreatePostImage,
-  IReaction,
 } from '~/interfaces/IPost';
 
 import Header from '~/beinComponents/Header';
@@ -72,10 +71,10 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   const {colors} = theme;
   const styles = createStyle(theme);
 
-  const comment: IReaction =
+  const comment: ICommentData =
     useKeySelector(postKeySelector.commentById(commentId)) || {};
-  const oldContent = comment?.data?.content;
-  const oldImages = comment?.data?.images;
+  const oldContent = comment?.content;
+  const oldImages = comment?.media?.images;
 
   const loading = useKeySelector(postKeySelector.createComment.loading);
   const content = useKeySelector(postKeySelector.createComment.content);
@@ -130,7 +129,7 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
         };
         images.push(imageData);
       }
-      const newData: IActivityData = {content, images};
+      const newData: ICommentData = {content, media: {images}};
       console.log(`\x1b[35m🐣️ index onPressSave `, newData, `\x1b[0m`);
       dispatch(
         postActions.putEditComment({

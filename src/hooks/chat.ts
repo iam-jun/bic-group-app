@@ -26,17 +26,16 @@ export const useChatSocket = () => {
     connectionUrl: getEnv('BEIN_CHAT_SOCKET'),
   };
 
-  console.log(
-    `\x1b[32m🐣️ chat useChatSocket token ${token.slice(
-      -10,
-    )} will expire at: ${new Date(tokenExp * 1000).toISOString()}\x1b[0m`,
-  );
-
   // wait 1s to avoid spam init when network change
   const connectSocket = debounce(() => {
     if (userId && tokenRef.current && isConnectedRef?.current) {
       // reconnect when have network back
       chatSocketClient.initialize(tokenRef.current, websocketOpts);
+      console.log(
+        `\x1b[32m🐣️ Chat useChatSocket token ${token.slice(
+          -10,
+        )} will expire at: ${new Date(tokenExp * 1000).toISOString()}\x1b[0m`,
+      );
     }
   }, 1000);
 

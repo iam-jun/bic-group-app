@@ -4,7 +4,6 @@ import i18n from 'i18next';
 import {put, takeLatest} from 'redux-saga/effects';
 import {authStack} from '~/configs/navigator';
 import {authErrors} from '~/constants/authConstants';
-import errorCode from '~/constants/errorCode';
 import {IObject, IToastMessage} from '~/interfaces/common';
 import * as IAuth from '~/interfaces/IAuth';
 import {withNavigation} from '~/router/helper';
@@ -22,6 +21,7 @@ import forgotPasswordConfirm from './forgotPasswordConfirm';
 import forgotPasswordRequest from './forgotPasswordRequest';
 import signIn from './signIn';
 import signInSuccess from './signInSuccess';
+import showError from '~/store/commonSaga/showError';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -158,22 +158,6 @@ function* signOut({payload}: any) {
     }
     navigation.replace(rootSwitch.authStack);
   }
-}
-
-function* showError(err: any) {
-  if (err.code === errorCode.systemIssue) return;
-
-  const toastMessage: IToastMessage = {
-    content:
-      err?.meta?.errors?.[0]?.message ||
-      err?.meta?.message ||
-      'common:text_error_message',
-    props: {
-      textProps: {useI18n: true},
-      type: 'error',
-    },
-  };
-  yield put(actionsCommon.showHideToastMessage(toastMessage));
 }
 
 export function* showErrorWithDefinedMessage(mess: string) {

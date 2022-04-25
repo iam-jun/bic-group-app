@@ -22,7 +22,7 @@ import {ITheme} from '~/theme/interfaces';
 import Button from '~/beinComponents/Button';
 import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
 import Image from '~/beinComponents/Image';
-import FileUploader from '~/services/fileUploader';
+import FileUploader, {IGetFile} from '~/services/fileUploader';
 import {IActivityDataImage} from '~/interfaces/IPost';
 import {useBaseHook} from '~/hooks';
 import {useDispatch} from 'react-redux';
@@ -218,10 +218,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
         ? uploadFilePromise({...param, text})
         : FileUploader.getInstance().upload(param);
       promise
-        .then((result: any) => {
+        .then((result: IGetFile) => {
           setUploading(false);
           const imageData: IActivityDataImage = {
-            name: result,
+            id: result?.result?.id,
+            name: result?.url || '',
             origin_name: selectedImage.filename,
             width: selectedImage.width,
             height: selectedImage.height,

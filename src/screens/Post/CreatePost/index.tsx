@@ -124,8 +124,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const currentInputHeight = useRef<number>(contentMinHeight);
 
   const sPostId = sPostData?.id;
-  const isEdit = !!(sPostId && !sPostData?.is_draft);
-  const isDraftPost = !!(sPostId && sPostData?.is_draft);
+  const isEdit = !!(sPostId && !sPostData?.isDraft);
+  const isDraftPost = !!(sPostId && sPostData?.isDraft);
 
   const handleBackPress = () => {
     toolbarRef?.current?.goBack?.();

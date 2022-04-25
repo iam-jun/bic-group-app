@@ -3,9 +3,9 @@ import {IUploadType} from '~/configs/resourceConfig';
 import {IFilePicked} from '~/interfaces/common';
 
 import {IUserImageUpload} from '~/interfaces/IEditUser';
-import FileUploader from '~/services/fileUploader';
-import {showError} from '.';
+import FileUploader, {IGetFile} from '~/services/fileUploader';
 import menuActions from '../actions';
+import showError from '~/store/commonSaga/showError';
 
 export default function* uploadImage({
   payload,
@@ -18,9 +18,9 @@ export default function* uploadImage({
   try {
     const {file, id, fieldName, uploadType} = payload;
     yield updateLoadingImageState(fieldName, true);
-    const data: string = yield call(upload, file, uploadType);
+    const data: IGetFile = yield call(upload, file, uploadType);
 
-    yield put(menuActions.editMyProfile({id, [fieldName]: data}));
+    yield put(menuActions.editMyProfile({id, [fieldName]: data?.url}));
     if (callback) return callback();
   } catch (err) {
     console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
@@ -30,7 +30,7 @@ export default function* uploadImage({
 }
 
 function* upload(file: IFilePicked, uploadType: IUploadType) {
-  const data: string = yield FileUploader.getInstance().upload({
+  const data: IGetFile = yield FileUploader.getInstance().upload({
     file,
     uploadType,
   });
