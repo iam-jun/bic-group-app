@@ -2,6 +2,7 @@ import React from 'react';
 import {StyleSheet, Platform} from 'react-native';
 
 import {useKeySelector} from '~/hooks/selector';
+import BannerMessage from './BannerMessage';
 import NormalToastMessage from './NormalToastMessage';
 import SimpleToastMessage from './SimpleToastMessage';
 
@@ -15,9 +16,11 @@ const ToastMessage = () => {
   let ToastMessageComponent;
 
   if (toastMessage?.toastType) {
-    if (toastMessage.toastType === 'normal')
+    if (toastMessage.toastType === 'normal') {
       ToastMessageComponent = NormalToastMessage;
-    else ToastMessageComponent = SimpleToastMessage;
+    } else if (toastMessage.toastType === 'banner') {
+      ToastMessageComponent = BannerMessage;
+    } else ToastMessageComponent = SimpleToastMessage;
 
     return (
       <ToastMessageComponent style={[styles.toastStyle, style]} {...restProps}>

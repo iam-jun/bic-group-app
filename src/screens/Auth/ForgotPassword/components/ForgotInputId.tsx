@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {Controller} from 'react-hook-form';
+import {useController} from 'react-hook-form';
 import {useTheme} from 'react-native-paper';
-import debounce from 'lodash/debounce';
 import isEmpty from 'lodash/isEmpty';
 import {useDispatch} from 'react-redux';
 
@@ -40,6 +39,21 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
     trigger,
   } = useFormData;
 
+  const {
+    field: {onChange, value},
+  } = useController({
+    control,
+    name: 'email',
+    rules: {
+      required: t('auth:text_err_email_blank'),
+      pattern: {
+        value: validation.emailRegex,
+        message: t('auth:text_err_email_format'),
+      },
+    },
+    defaultValue: '',
+  });
+
   useEffect(() => {
     if (errRequest) {
       setError('email', {
@@ -53,7 +67,7 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
 
   const checkDisableRequest = () => {
     const email = getValues('email');
-    return forgotPasswordLoading || !email || !isEmpty(errors.email);
+    return forgotPasswordLoading || !email || !isEmpty(errors?.email);
   };
   const disableRequest = checkDisableRequest();
 
@@ -66,9 +80,9 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
     }
   };
 
-  const validateEmail = debounce(async () => {
+  const validateEmail = async () => {
     await trigger('email');
-  }, 50);
+  };
 
   return (
     <View style={styles.container}>
@@ -81,37 +95,23 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
       <Text.Body style={styles.desc}>
         {t('auth:text_forgot_password_input_desc')}
       </Text.Body>
-      <Controller
-        control={control}
-        render={({field: {onChange, value}}) => (
-          <TextInput
-            testID="inputEmail"
-            label={t('auth:input_label_email')}
-            placeholder={t('auth:input_label_email')}
-            keyboardType="email-address"
-            autoCapitalize="none"
-            value={value}
-            editable={!forgotPasswordLoading}
-            error={errors.email}
-            onChangeText={text => {
-              onChange(text);
-              validateEmail();
-            }}
-            helperType={errors.email?.message ? 'error' : undefined}
-            helperContent={errors?.email?.message}
-            style={{marginTop: 0, marginBottom: theme.spacing.margin.small}}
-            onSubmitEditing={() => onRequestForgotPassword()}
-          />
-        )}
-        rules={{
-          required: t('auth:text_err_email_blank'),
-          pattern: {
-            value: validation.emailRegex,
-            message: t('auth:text_err_email_format'),
-          },
+      <TextInput
+        testID="inputEmail"
+        label={t('auth:input_label_email')}
+        placeholder={t('auth:input_label_email')}
+        keyboardType="email-address"
+        autoCapitalize="none"
+        value={value}
+        editable={!forgotPasswordLoading}
+        error={errors?.email}
+        onChangeText={text => {
+          onChange(text);
+          validateEmail();
         }}
-        name="email"
-        defaultValue=""
+        helperType={errors?.email?.message ? 'error' : undefined}
+        helperContent={errors?.email?.message}
+        style={{marginTop: 0, marginBottom: theme.spacing.margin.small}}
+        onSubmitEditing={() => onRequestForgotPassword()}
       />
       <Button.Primary
         testID="btnSend"

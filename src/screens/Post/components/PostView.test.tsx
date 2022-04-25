@@ -14,7 +14,7 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import postActions from '~/screens/Post/redux/actions';
 import modalActions from '~/store/modal/actions';
 
-describe('', () => {
+describe('PostView Component', () => {
   const state = {...initialState};
   state.post.allPosts = {[POST_DETAIL.id]: POST_DETAIL} as any;
 
@@ -48,9 +48,9 @@ describe('', () => {
     stateData.post.allPosts = {
       [POST_DETAIL.id]: {
         ...POST_DETAIL,
-        important: {
-          active: true,
-          expires_time: '2059368665000',
+        setting: {
+          isImportant: true,
+          importantExpiredAt: '2030-04-20T11:07:08.129Z',
         },
       },
     } as any;
@@ -91,7 +91,7 @@ describe('', () => {
       store,
     );
     const view = wrapper.getByTestId('collapsible_text.level_1.content');
-    expect(view.children?.[0]).toBe(POST_DETAIL_2.object.data.content);
+    expect(view.children?.[0]).toBe(POST_DETAIL_2.content);
   });
 
   it('press container should call prop onPress', () => {

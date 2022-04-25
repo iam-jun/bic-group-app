@@ -44,7 +44,7 @@ const EditGroupDescription = (props: any) => {
       groupsActions.editGroupDetail({
         data: {
           id,
-          description: text.trim() ? text.trim() : null,
+          description: text?.trim() ? text?.trim() : null,
         },
         editFieldName: i18next.t('common:text_description'),
         callback: onNavigateBack,

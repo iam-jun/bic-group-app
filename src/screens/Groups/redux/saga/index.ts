@@ -6,7 +6,6 @@ import {
   IGroupGetJoinableMembers,
   IGroupGetMembers,
   IGroupImageUpload,
-  IGroupSetAdmin,
   IJoiningMember,
 } from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
@@ -16,11 +15,10 @@ import * as modalActions from '~/store/modal/actions';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
 import {mapData, mapRequestMembers} from '../../helper/mapper';
 import appConfig from '~/configs/appConfig';
-import FileUploader from '~/services/fileUploader';
+import FileUploader, {IGetFile} from '~/services/fileUploader';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import errorCode from '~/constants/errorCode';
 import memberRequestStatus from '~/constants/memberRequestStatus';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 
@@ -32,6 +30,8 @@ import getGroupPosts from './getGroupPosts';
 import mergeExtraGroupPosts from './mergeExtraGroupPosts';
 import removeMember from './removeMember';
 import removeGroupAdmin from './removeGroupAdmin';
+import setGroupAdmin from './setGroupAdmin';
+import showError from '~/store/commonSaga/showError';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -168,14 +168,14 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
     const {file, id, fieldName, uploadType} = payload;
     yield updateLoadingImageState(fieldName, true);
 
-    const data: string = yield FileUploader.getInstance().upload({
+    const data: IGetFile = yield FileUploader.getInstance().upload({
       file,
       uploadType,
     });
 
     yield put(
       groupsActions.editGroupDetail({
-        data: {id, [fieldName]: data},
+        data: {id, [fieldName]: data.url},
         editFieldName:
           fieldName === 'icon'
             ? i18next.t('common:text_avatar')
@@ -312,29 +312,6 @@ function* cancelJoinGroup({
       return;
     }
 
-    yield showError(err);
-  }
-}
-
-function* setGroupAdmin({payload}: {type: string; payload: IGroupSetAdmin}) {
-  try {
-    const {groupId, userIds} = payload;
-
-    yield groupsDataHelper.setGroupAdmin(groupId, userIds);
-
-    const toastMessage: IToastMessage = {
-      content: 'groups:modal_confirm_set_admin:success_message',
-      props: {
-        textProps: {useI18n: true},
-        type: 'success',
-      },
-    };
-    yield put(modalActions.showHideToastMessage(toastMessage));
-
-    // refresh group detail after adding new admins
-    yield refreshGroupMembers(groupId);
-  } catch (err) {
-    console.log('setGroupAdmin: ', err);
     yield showError(err);
   }
 }
@@ -495,22 +472,6 @@ function* declineAllMemberRequests({
 
     yield showError(err);
   }
-}
-
-export function* showError(err: any) {
-  if (err.code === errorCode.systemIssue) return;
-
-  const toastMessage: IToastMessage = {
-    content:
-      err?.meta?.errors?.[0]?.message ||
-      err?.meta?.message ||
-      'common:text_error_message',
-    props: {
-      textProps: {useI18n: true},
-      type: 'error',
-    },
-  };
-  yield put(modalActions.showHideToastMessage(toastMessage));
 }
 
 function* updateLoadingImageState(

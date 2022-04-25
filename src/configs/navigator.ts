@@ -61,14 +61,14 @@ export const navigationSetting = {
 
 export const bottomTabIcons = {
   home: 'iconTabHome',
-  groups: 'iconTabGroups',
+  communities: 'iconTabCommunities',
   notification: 'iconTabNotification',
   menus: 'iconTabMenu',
 };
 
 export const bottomTabIconsFocused = {
   home: 'iconTabHomeBein',
-  groups: 'iconTabGroupsBein',
+  communities: 'iconTabCommunitiesBein',
   notification: 'iconTabNotificationBein',
   menus: 'iconTabMenuBein',
 };
