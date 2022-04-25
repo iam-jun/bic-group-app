@@ -13,7 +13,7 @@ const providers = {
     name: 'BeinFeed',
   },
   beinNotification: {
-    url: `${getEnv('BEIN_NOTIFICATION')}/api/v1/`,
+    url: `${getEnv('BEIN_NOTIFICATION')}api/v1/`,
     name: 'BeinNotification',
   },
   getStream: {
