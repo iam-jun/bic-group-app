@@ -21,7 +21,9 @@ export interface IUsePostSettings {
   replaceWithDetail?: boolean;
 }
 
-export const usePostSettings = ({postId}: IUsePostSettings) => {
+export const usePostSettings = (params?: IUsePostSettings) => {
+  const {postId} = params || {};
+
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 

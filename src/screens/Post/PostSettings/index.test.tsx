@@ -227,7 +227,9 @@ describe('Post Setting Screen', () => {
     } as any;
 
     const currentDate = new Date();
-    const tomorrow = currentDate.setDate(currentDate.getDate() + 1);
+    const tomorrow = new Date(
+      currentDate.setDate(currentDate.getDate() + 1),
+    ).setSeconds(0, 0);
 
     const store = createTestStore(storeData);
     const wrapper = getHookReduxWrapper(store);
@@ -272,7 +274,7 @@ describe('Post Setting Screen', () => {
 
     // when change time, keep date of previous state then set only selected time like mixed date bellow
     const tomorrowDate = new Date(tomorrow);
-    const mixed = tomorrowDate.setHours(0, 0, 0);
+    const mixed = tomorrowDate.setHours(0, 0, 0, 0);
 
     const date = new Date(result.current.sImportant?.expires_time || '');
     expect(date.toISOString()).toEqual(new Date(mixed).toISOString());
