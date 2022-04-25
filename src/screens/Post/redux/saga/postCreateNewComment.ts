@@ -38,18 +38,6 @@ function* postCreateNewComment({
     return;
   }
 
-  yield put(
-    modalActions.showHideToastMessage({
-      content: 'post:text_comment_deleted',
-      toastType: 'banner',
-      props: {
-        textProps: {useI18n: true},
-        type: 'informative',
-        leftIcon: 'iconCannotComment',
-      },
-    }),
-  );
-  return;
   try {
     const creatingComment = yield select(
       state => state?.post?.createComment?.loading,
