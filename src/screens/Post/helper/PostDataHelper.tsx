@@ -129,7 +129,7 @@ export const postApiConfig = {
     provider,
     useRetry: true,
     data: {
-      postId: params?.postId,
+      postId: Number(params?.postId),
       content: params?.data?.content,
       media: params?.data?.media,
       mentions: params?.data?.mentions,
