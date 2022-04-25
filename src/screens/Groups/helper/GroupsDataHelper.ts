@@ -1,5 +1,9 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
-import {IGroupDetailEdit, IParamGetGroupPosts} from '~/interfaces/IGroup';
+import {
+  IGetCommunityGroup,
+  IGroupDetailEdit,
+  IParamGetGroupPosts,
+} from '~/interfaces/IGroup';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import appConfig from '~/configs/appConfig';
 
@@ -196,6 +200,23 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
+  }),
+  getCommunities: (previewMembers: boolean): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}me/communities`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {preview_members: previewMembers},
+  }),
+  getCommunityGroups: (
+    id: number,
+    otherParams: IGetCommunityGroup,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}me/communities/${id}/groups`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {...otherParams},
   }),
 };
 
@@ -509,6 +530,34 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getCommunities: async (previewMembers: boolean) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getCommunities(previewMembers),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response.data?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getCommunityGroups: async (id: number, params: IGetCommunityGroup) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getCommunityGroups(id, params),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response.data?.data);
       } else {
         return Promise.reject(response);
       }

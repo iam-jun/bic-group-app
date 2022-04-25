@@ -40,8 +40,9 @@ const GroupTopBar = () => {
   const route = useRoute<RouteProp<RootStackParamList, 'GroupDetail'>>();
 
   const onPressBack = () => {
-    if (!route.params?.initial) rootNavigation.replace(groupStack.groups);
-    else rootNavigation.goBack();
+    rootNavigation.goBack();
+    // if (!route.params?.initial) rootNavigation.replace(groupStack.groups);
+    // else rootNavigation.goBack();
   };
 
   const onPressMenu = (event?: any) => {

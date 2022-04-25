@@ -133,3 +133,9 @@ export interface IJoiningMember {
   created_at: string;
   user: IObject<any>;
 }
+
+export interface IGetCommunityGroup {
+  preview_members?: boolean;
+  key?: string;
+  list_by?: string;
+}
