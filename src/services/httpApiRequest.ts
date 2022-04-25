@@ -20,6 +20,7 @@ import {ActionTypes, createAction} from '~/utils';
 import {getEnv} from '~/utils/env';
 import {updateUserFromSharedPreferences} from './sharePreferences';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -275,8 +276,11 @@ const handleResponseError = async (
   }
 
   if (error.response) {
+    const responseTokenExpired =
+      error.response.status === 401 ||
+      error.response?.data?.code === API_ERROR_CODE.AUTH.TOKEN_EXPIRED;
     // @ts-ignore
-    if (error.response.status === 401 && error.config.useRetry) {
+    if (responseTokenExpired && error.config.useRetry) {
       return handleRetry(error);
     }
     // @ts-ignore

@@ -466,7 +466,13 @@
     "people_can_react": "Mọi người có thể tương tác trên bài viết",
     "auto_saved": "Bài viết đã lưu tự động",
     "saved_to_draft": "Bài viết đã lưu vào nháp.",
-    "text_review_markdown": "Xem trước nội dung"
+    "text_review_markdown": "Xem trước nội dung",
+    "text_comment_deleted":"Bình luận này đã bị xoá, không thể gửi bình luận trả lời của bạn",
+      "deleted_comment":{
+      "title": "Trang này không tồn tại.",
+      "description":"Bình luận này có thể bị xóa hoặc bạn không có quyền xem bình luận này",
+      "button_text": "Quay về Bài viết"
+    }
   },
   "comment": {
     "placeholder_comment": "Để lại bình luận ...",

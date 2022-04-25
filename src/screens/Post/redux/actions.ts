@@ -30,6 +30,7 @@ import {
   IPayloadUpdateReaction,
   IPayloadDeletePost,
   IPayloadDeleteComment,
+  ICommentData,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -160,11 +161,11 @@ const postActions = {
     type: postTypes.SET_SCROLL_TO_LATEST_ITEM,
     payload,
   }),
-  postRetryAddComment: (payload: IReaction) => ({
+  postRetryAddComment: (payload: ICommentData) => ({
     type: postTypes.POST_RETRY_ADD_COMMENT,
     payload,
   }),
-  postCancelFailedComment: (payload: IReaction) => ({
+  postCancelFailedComment: (payload: ICommentData) => ({
     type: postTypes.POST_CANCEL_FAILED_COMMENT,
     payload,
   }),
@@ -275,6 +276,14 @@ const postActions = {
   }),
   setLoadingGetPostDetail: (payload: boolean) => ({
     type: postTypes.LOADING_GET_POST_DETAIL,
+    payload,
+  }),
+  setParentCommentDeleted: (payload: boolean) => ({
+    type: postTypes.SET_PARENT_COMMENT_IS_DELETED,
+    payload,
+  }),
+  removeChildComment: (payload: any) => ({
+    type: postTypes.REMOVE_CHILD_COMMENT,
     payload,
   }),
 };

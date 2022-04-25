@@ -1,7 +1,6 @@
 import {cloneDeep, get} from 'lodash';
 import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
 import {IObject, IToastMessage} from '~/interfaces/common';
-import errorCode from '~/constants/errorCode';
 import {IParamGetNotifications} from '~/interfaces/INotification';
 import notificationsDataHelper from '~/screens/Notification/helper/NotificationDataHelper';
 import notificationsActions from '~/screens/Notification/redux/actions';
@@ -10,6 +9,7 @@ import {initPushTokenMessage} from '~/services/helper';
 import {makePushTokenRequest} from '~/services/httpApiRequest';
 import * as modalActions from '~/store/modal/actions';
 import notificationSelector from './selector';
+import showError from '~/store/commonSaga/showError';
 
 export default function* notificationsSaga() {
   yield takeLatest(notificationsTypes.GET_NOTIFICATIONS, getNotifications);
@@ -200,20 +200,4 @@ function* registerPushToken({payload}: any): any {
     yield put(notificationsActions.savePushToken(''));
     console.log('register push token failed', e);
   }
-}
-
-function* showError(err: any) {
-  if (err.code === errorCode.systemIssue) return;
-
-  const toastMessage: IToastMessage = {
-    content:
-      err?.meta?.errors?.[0]?.message ||
-      err?.meta?.message ||
-      'common:text_error_message',
-    props: {
-      textProps: {useI18n: true},
-      type: 'error',
-    },
-  };
-  yield put(modalActions.showHideToastMessage(toastMessage));
 }

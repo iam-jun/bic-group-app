@@ -70,6 +70,7 @@ export const postInitState = {
     selectingUsers: {},
   },
   loadingGetPostDetail: false,
+  parentCommentIsDeleted: false,
 };
 
 function postReducer(state = postInitState, action: any = {}) {
@@ -279,9 +280,9 @@ function postReducer(state = postInitState, action: any = {}) {
     }
     case postTypes.POST_CANCEL_FAILED_COMMENT: {
       // find and remove target reply comment
-      const {localId, parentCommentId, activity_id: postId} = payload;
+      const {localId, parentCommentId, postId} = payload;
       const allCommentsByPost: any = {...state.allCommentsByParentIds};
-      const postComments = [...allCommentsByPost[postId]];
+      const postComments = [...allCommentsByPost?.[postId]];
 
       if (parentCommentId) {
         // find parent comment
@@ -327,6 +328,44 @@ function postReducer(state = postInitState, action: any = {}) {
       return {
         ...state,
         loadingGetPostDetail: payload,
+      };
+    case postTypes.SET_PARENT_COMMENT_IS_DELETED:
+      return {
+        ...state,
+        parentCommentIsDeleted: payload,
+      };
+    case postTypes.REMOVE_CHILD_COMMENT:
+      const allCommentsByPost: any = {...state.allCommentsByParentIds};
+
+      // eslint-disable-next-line no-case-declarations
+      const {localId, postId, parentCommentId} = payload || {};
+      // eslint-disable-next-line no-case-declarations
+      const postComments = [...allCommentsByPost[postId]];
+
+      if (parentCommentId) {
+        // find parent comment
+        const pIndex = postComments.findIndex(
+          (item: ICommentData) => item.id === parentCommentId,
+        );
+
+        // find and update target reply comment
+        if (postComments?.[pIndex]?.child) {
+          postComments[pIndex].child = postComments[pIndex].child?.filter?.(
+            (cmt: ICommentData) => cmt?.localId !== localId,
+          );
+        }
+        if (postComments?.[pIndex]?.totalReply) {
+          postComments[pIndex].totalReply = Math.max(
+            (postComments[pIndex].totalReply || 0) - 1,
+            0,
+          );
+        }
+      }
+      allCommentsByPost[postId] = postComments;
+
+      return {
+        ...state,
+        allCommentsByParentIds: allCommentsByPost,
       };
     default:
       return state;
