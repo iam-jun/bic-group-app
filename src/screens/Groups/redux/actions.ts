@@ -267,6 +267,7 @@ const groupsActions = {
   storeUndoData: () => ({
     type: groupsTypes.STORE_UNDO_DATA,
   }),
+  getMyCommunities: () => ({type: groupsTypes.GET_COMMUNITIES}),
 };
 
 export default groupsActions;

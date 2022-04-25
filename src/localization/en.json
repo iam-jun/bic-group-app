@@ -734,6 +734,11 @@
       "title": "No communities found",
       "description": "Discover communities to join one.",
       "button_text":"Go to Discover"
+    },
+    "community_menu":{
+      "your_communities_text": "Your Communities",
+      "manage_text":"Manage",
+      "discover_text":"Discover"
     }
   }
 }

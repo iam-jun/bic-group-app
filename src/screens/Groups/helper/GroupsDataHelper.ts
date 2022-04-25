@@ -197,6 +197,13 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
+  getCommunities: (previewMembers: boolean): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}me/communities`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {preview_members: previewMembers},
+  }),
 };
 
 const groupsDataHelper = {
@@ -509,6 +516,20 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getCommunities: async (previewMembers: boolean) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getCommunities(previewMembers),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response.data?.data);
       } else {
         return Promise.reject(response);
       }

@@ -48,7 +48,7 @@ const PostAudiencesBottomSheet = () => {
         initial: false,
       });
     } else {
-      rootNavigation.navigate('groups', {
+      rootNavigation.navigate('communities', {
         screen: groupStack.groupDetail,
         params: {
           groupId,

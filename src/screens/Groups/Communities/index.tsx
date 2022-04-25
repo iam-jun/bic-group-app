@@ -1,7 +1,6 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {StyleSheet, View, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useIsFocused} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import groupsActions from '~/screens/Groups/redux/actions';
@@ -12,9 +11,9 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import {useBackPressListener, useTabPressListener} from '~/hooks/navigation';
 import {ITabTypes} from '~/interfaces/IRouter';
-import appActions from '~/store/app/actions';
 import {debounce} from 'lodash';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
+import CommunityMenu from './components/CommunityMenu';
 
 const Communities: React.FC = () => {
   const listRef = useRef<any>();
@@ -24,19 +23,7 @@ const Communities: React.FC = () => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
-  const isFocused = useIsFocused();
-
-  useEffect(() => {
-    if (Platform.OS === 'web') {
-      const initUrl = window.location.href;
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const parse = require('url-parse');
-      const url = parse(initUrl, true);
-      const path = url.pathname.substring(1);
-
-      dispatch(appActions.setRootScreenName(path));
-    }
-  }, [isFocused]);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   useEffect(() => {
     getData();
@@ -58,7 +45,7 @@ const Communities: React.FC = () => {
   useBackPressListener(handleBackPress);
 
   const getData = () => {
-    dispatch(groupsActions.getJoinedGroups());
+    dispatch(groupsActions.getMyCommunities());
   };
 
   const onShowSearch = (isShow: boolean) => {
@@ -80,6 +67,23 @@ const Communities: React.FC = () => {
     alert('goToDiscover');
   };
 
+  const onPress = (item: any, index: number) => {
+    setSelectedIndex(index);
+    const {type = ''} = item || {};
+    switch (type) {
+      case 'COMMUNITIES':
+        break;
+
+      case 'MANAGE':
+        break;
+
+      case 'DISCOVER':
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <View style={styles.containerScreen}>
       <Header
@@ -91,6 +95,7 @@ const Communities: React.FC = () => {
         onSearchText={onSearchText}
       />
       <View style={{flex: 1}}>
+        <CommunityMenu selectedIndex={selectedIndex} onPress={onPress} />
         <EmptyScreen
           source={'addUsers'}
           title="communities:empty_communities:title"

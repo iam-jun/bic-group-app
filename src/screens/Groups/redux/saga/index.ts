@@ -32,6 +32,7 @@ import removeMember from './removeMember';
 import removeGroupAdmin from './removeGroupAdmin';
 import setGroupAdmin from './setGroupAdmin';
 import showError from '~/store/commonSaga/showError';
+import getCommunities from './getCommunities';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -74,6 +75,7 @@ export default function* groupsSaga() {
     groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
     declineAllMemberRequests,
   );
+  yield takeLatest(groupsTypes.GET_COMMUNITIES, getCommunities);
 }
 
 function* getJoinedGroups({payload}: {type: string; payload?: any}) {

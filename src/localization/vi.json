@@ -606,5 +606,17 @@
       "title": "Đã có lỗi xảy ra",
       "desc": "Vui lòng đăng nhập lại"
     }
+  },
+    "communities":{
+    "empty_communities":{
+      "title": "Không tìm thấy cộng đồng nào",
+      "description": "Khám phá các cộng đồng để tham gia một cộng đồng.",
+      "button_text":"Đi tới Khám phá"
+    },
+    "community_menu":{
+      "your_communities_text": "Cộng đồng của bạn",
+      "manage_text":"Đang quản lý",
+      "discover_text":"Khám phá"
+    }
   }
 }
