@@ -73,8 +73,6 @@ const MainTabs = () => {
     };
   }, [userId]);
 
-  useNotificationSocket();
-
   const isWebLaptop = Platform.OS === 'web' && isLaptop;
   if (isWebLaptop) {
     return (
