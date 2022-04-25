@@ -11,6 +11,7 @@ import {
   IGroupSetAdmin,
   IGroupRemoveAdmin,
   IJoiningMember,
+  IGetCommunityGroup,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 import {IObject} from '~/interfaces/common';
@@ -268,6 +269,18 @@ const groupsActions = {
     type: groupsTypes.STORE_UNDO_DATA,
   }),
   getMyCommunities: () => ({type: groupsTypes.GET_COMMUNITIES}),
+  setMyCommunities: (payload: any[]) => ({
+    type: groupsTypes.SET_COMMUNITIES,
+    payload,
+  }),
+  getCommunityGroups: (payload: {id: number; params: IGetCommunityGroup}) => ({
+    type: groupsTypes.GET_COMMUNITY_GROUPS,
+    payload,
+  }),
+  setCommunityGroups: (payload: any[]) => ({
+    type: groupsTypes.SET_COMMUNITY_GROUPS,
+    payload,
+  }),
 };
 
 export default groupsActions;
