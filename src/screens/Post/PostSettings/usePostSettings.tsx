@@ -94,7 +94,7 @@ export const usePostSettings = ({postId}: IUsePostSettings) => {
         const time = sImportant.expires_time
           ? new Date(sImportant.expires_time)
           : new Date();
-        date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
+        date.setHours(time.getHours(), time.getMinutes(), 0, 0);
         expiresTime = date.toISOString();
         if (date.getTime() < getMinDate().getTime()) {
           expiresTime = getMinDate().toISOString();
@@ -114,7 +114,7 @@ export const usePostSettings = ({postId}: IUsePostSettings) => {
         ? new Date(sImportant.expires_time)
         : new Date();
 
-      date.setHours(time.getHours(), time.getMinutes(), time.getSeconds());
+      date.setHours(time.getHours(), time.getMinutes(), 0, 0);
       let expiresTime = date.toISOString();
 
       if (date.getTime() < getMinDate().getTime()) {
@@ -190,7 +190,12 @@ export const usePostSettings = ({postId}: IUsePostSettings) => {
 
   const getMinDate = () => {
     const currentDate = new Date();
-    const minDate = currentDate.setHours(currentDate.getHours() + 1);
+    const minDate = currentDate.setHours(
+      currentDate.getHours() + 1,
+      currentDate.getMinutes(),
+      0,
+      0,
+    );
     return new Date(minDate);
   };
 
