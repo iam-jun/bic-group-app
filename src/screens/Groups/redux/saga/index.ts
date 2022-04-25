@@ -19,7 +19,6 @@ import FileUploader, {IGetFile} from '~/services/fileUploader';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import errorCode from '~/constants/errorCode';
 import memberRequestStatus from '~/constants/memberRequestStatus';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 
@@ -32,6 +31,7 @@ import mergeExtraGroupPosts from './mergeExtraGroupPosts';
 import removeMember from './removeMember';
 import removeGroupAdmin from './removeGroupAdmin';
 import setGroupAdmin from './setGroupAdmin';
+import showError from '~/store/commonSaga/showError';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -472,22 +472,6 @@ function* declineAllMemberRequests({
 
     yield showError(err);
   }
-}
-
-export function* showError(err: any) {
-  if (err.code === errorCode.systemIssue) return;
-
-  const toastMessage: IToastMessage = {
-    content:
-      err?.meta?.errors?.[0]?.message ||
-      err?.meta?.message ||
-      'common:text_error_message',
-    props: {
-      textProps: {useI18n: true},
-      type: 'error',
-    },
-  };
-  yield put(modalActions.showHideToastMessage(toastMessage));
 }
 
 function* updateLoadingImageState(

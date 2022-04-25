@@ -13,12 +13,11 @@ export interface NotificationItemProps {
   description: string;
   activities: IGetStreamNotificationActivity[];
   verb: string;
-  is_read: boolean;
+  isRead: boolean;
   is_seen: boolean;
   activity_count: number;
   actor_count: number;
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
   isActive?: boolean;
 }
 
@@ -26,8 +25,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   actor,
   description,
   activities,
-  is_read,
-  updated_at,
+  isRead,
+  createdAt,
   isActive = false,
 }: NotificationItemProps) => {
   const theme = useTheme() as ITheme;
@@ -44,7 +43,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           style={styles.stateIndicatorActive}
         />
       );
-    } else if (!is_read) {
+    } else if (!isRead) {
       return (
         <View
           testID="notification_item.indicator"
@@ -66,7 +65,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         />
         <TimeView
           testID="notification_item.time_view"
-          time={updated_at}
+          time={createdAt}
           style={styles.timeCreated}
           type={'short'}
         />

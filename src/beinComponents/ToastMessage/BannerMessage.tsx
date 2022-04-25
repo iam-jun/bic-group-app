@@ -91,7 +91,7 @@ const createStyle = (
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
-      backgroundColor: 'rgba(255, 255, 255, 0.92)',
+      backgroundColor: colors.background,
       paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.base,
       alignSelf: 'baseline',
@@ -132,7 +132,7 @@ const createStyle = (
           ? colors.success
           : type === 'error'
           ? colors.error
-          : 'rgba(255, 255, 255, 0.92)',
+          : colors.background,
     },
     marginRightIcon: {marginRight: spacing.margin.tiny},
     button: {

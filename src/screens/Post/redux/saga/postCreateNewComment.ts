@@ -7,7 +7,7 @@ import showError from '~/store/commonSaga/showError';
 import addChildCommentToCommentsOfPost from '~/screens/Post/redux/saga/addChildCommentToCommentsOfPost';
 import {getMentionsFromContent} from '~/screens/Post/helper/PostUtils';
 import modalActions from '~/store/modal/actions';
-import errorCode from '~/constants/errorCode';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
 
 function* postCreateNewComment({
   payload,
@@ -37,6 +37,19 @@ function* postCreateNewComment({
     console.log(`\x1b[31m🐣️ saga postCreateNewComment: invalid param\x1b[0m`);
     return;
   }
+
+  yield put(
+    modalActions.showHideToastMessage({
+      content: 'post:text_comment_deleted',
+      toastType: 'banner',
+      props: {
+        textProps: {useI18n: true},
+        type: 'informative',
+        leftIcon: 'iconCannotComment',
+      },
+    }),
+  );
+  return;
   try {
     const creatingComment = yield select(
       state => state?.post?.createComment?.loading,
@@ -145,7 +158,7 @@ function* postCreateNewComment({
       );
     }
     yield put(postActions.setCreateComment({loading: false}));
-    if (!!parentCommentId && e?.code === errorCode.commentDeleted) {
+    if (!!parentCommentId && e?.code === API_ERROR_CODE.POST.commentDeleted) {
       yield put(postActions.setParentCommentDeleted(true));
       yield put(
         postActions.removeChildComment({

@@ -1,10 +1,4 @@
-import {IGetStreamDispatch} from '~/interfaces/common';
-import {
-  IDeleteNotifications,
-  ILoadNewNotifications,
-  IMarkAsReadAnActivity,
-  IParamGetNotifications,
-} from '~/interfaces/INotification';
+import {IParamGetNotifications} from '~/interfaces/INotification';
 import notificationsTypes from '~/screens/Notification/redux/types';
 
 const notificationsActions = {
@@ -17,12 +11,6 @@ const notificationsActions = {
   setNotifications: function (payload: any) {
     return {
       type: notificationsTypes.SET_NOTIFICATIONS,
-      payload,
-    };
-  },
-  addNewNotifications: function (payload: any) {
-    return {
-      type: notificationsTypes.ADD_NEW_NOTIFICATIONS,
       payload,
     };
   },
@@ -40,15 +28,21 @@ const notificationsActions = {
       payload,
     };
   },
-  loadNewNotifications: function (payload: any) {
+  attachNotification: function (payload: any) {
     return {
-      type: notificationsTypes.LOAD_NEW_NOTIFICATIONS,
+      type: notificationsTypes.ATTACH,
       payload,
     };
   },
-  deleteNotifications: function (payload: IDeleteNotifications) {
+  detachNotification: function (payload: any) {
     return {
-      type: notificationsTypes.DELETE_NOTIFICATIONS,
+      type: notificationsTypes.DETACH,
+      payload,
+    };
+  },
+  updateNotification: function (payload: any) {
+    return {
+      type: notificationsTypes.UPDATE,
       payload,
     };
   },

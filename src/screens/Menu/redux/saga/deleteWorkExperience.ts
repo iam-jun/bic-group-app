@@ -1,10 +1,10 @@
 import {put, call} from 'redux-saga/effects';
 
 import {IResponseData} from '~/interfaces/common';
-import {showError} from '.';
 import menuDataHelper from '../../helper/MenuDataHelper';
 import menuActions from '../actions';
 import {mapWorkExperience} from '../helper';
+import showError from '~/store/commonSaga/showError';
 
 export default function* deleteWorkExperience({
   id,

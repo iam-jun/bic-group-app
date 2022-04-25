@@ -280,9 +280,9 @@ function postReducer(state = postInitState, action: any = {}) {
     }
     case postTypes.POST_CANCEL_FAILED_COMMENT: {
       // find and remove target reply comment
-      const {localId, parentCommentId, activity_id: postId} = payload;
+      const {localId, parentCommentId, postId} = payload;
       const allCommentsByPost: any = {...state.allCommentsByParentIds};
-      const postComments = [...allCommentsByPost[postId]];
+      const postComments = [...allCommentsByPost?.[postId]];
 
       if (parentCommentId) {
         // find parent comment

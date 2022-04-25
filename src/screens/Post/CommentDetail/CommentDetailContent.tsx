@@ -54,7 +54,7 @@ const CommentDetailContent = (props: any) => {
     postKeySelector.scrollToCommentsPosition,
   );
 
-  const setParentCommentDeleted = useKeySelector(
+  const parentCommentIsDeleted = useKeySelector(
     postKeySelector.parentCommentIsDeleted,
   );
 
@@ -76,7 +76,7 @@ const CommentDetailContent = (props: any) => {
   }, [audience?.groups]);
 
   useEffect(() => {
-    if (!postDetailLoadingState && !setParentCommentDeleted) {
+    if (!postDetailLoadingState && !parentCommentIsDeleted) {
       dispatch(postActions.setScrollCommentsPosition(null));
       if (
         childrenComments?.length > 1 ||
@@ -118,7 +118,7 @@ const CommentDetailContent = (props: any) => {
         );
       }
     }
-  }, [postDetailLoadingState, setParentCommentDeleted]);
+  }, [postDetailLoadingState, parentCommentIsDeleted]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -154,7 +154,7 @@ const CommentDetailContent = (props: any) => {
   };
 
   const onRefresh = () => {
-    if (setParentCommentDeleted) {
+    if (parentCommentIsDeleted) {
       setIsEmpty(true);
       dispatch(
         modalActions.showAlert({
