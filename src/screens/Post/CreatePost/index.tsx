@@ -424,19 +424,17 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           <Divider />
         </View>
         {renderContent()}
-        {(!sPostId || isDraftPost) && (
-          <View style={styles.setting}>
-            <Button.Secondary
-              testID="create_post.btn_post_settings"
-              color={colors.bgHover}
-              leftIcon="SlidersVAlt"
-              style={styles.buttonSettings}
-              onPress={onPressSettings}
-              textProps={{color: colors.textPrimary, style: {fontSize: 14}}}>
-              {t('post:settings') + (count > 0 ? ` (${count})` : '')}
-            </Button.Secondary>
-          </View>
-        )}
+        <View style={styles.setting}>
+          <Button.Secondary
+            testID="create_post.btn_post_settings"
+            color={colors.bgHover}
+            leftIcon="SlidersVAlt"
+            style={styles.buttonSettings}
+            onPress={onPressSettings}
+            textProps={{color: colors.textPrimary, style: {fontSize: 14}}}>
+            {t('post:settings') + (count > 0 ? ` (${count})` : '')}
+          </Button.Secondary>
+        </View>
         <CreatePostFooter
           toolbarRef={toolbarRef}
           loading={loading}

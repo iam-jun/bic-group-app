@@ -421,6 +421,8 @@
     "btn_discard_comment": "Bỏ",
     "text_edit_post_success": "Đăng bài viết thành công",
     "text_edit_post_failed": "Đăng bài viết thất bại",
+    "text_update_post_setting_success": "Đã cập nhật Cài đặt bài viết",
+    "text_update_post_setting_failed": "Cập nhật Cài đặt bài viết thất bại",
     "text_comment_from": "Đây là bình luận từ ",
     "title_comment_detail_of": "bài đăng của %NAME%",
     "newsfeed": {

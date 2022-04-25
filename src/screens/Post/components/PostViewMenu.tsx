@@ -54,7 +54,7 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
 
   const onPressEditSettings = () => {
     dispatch(modalActions.hideModal());
-    alert('edit settings');
+    rootNavigation.navigate(homeStack.postSettings, {postId});
   };
 
   const onPressEdit = () => {

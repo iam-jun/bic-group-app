@@ -1,5 +1,12 @@
 import {useEffect, useState} from 'react';
-import {IActivityImportant} from '~/interfaces/IPost';
+import {
+  IActivityImportant,
+  IAudienceUser,
+  IPayloadPutEditPost,
+  IPostActivity,
+  IPostCreatePost,
+  IPostSetting,
+} from '~/interfaces/IPost';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {isEqual} from 'lodash';
@@ -9,9 +16,21 @@ import {useRootNavigation} from '~/hooks/navigation';
 
 const MAX_DAYS = 7;
 
-export const usePostSettings = () => {
+export interface IUsePostSettings {
+  postId?: number;
+  replaceWithDetail?: boolean;
+}
+
+export const usePostSettings = ({postId}: IUsePostSettings) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
+
+  const putUpdateSettings = !!postId;
+
+  let initPostData: IPostActivity;
+  if (postId) {
+    initPostData = useKeySelector(postKeySelector.postById(postId));
+  }
 
   const {important, currentSettings} = useKeySelector(
     postKeySelector.createPost.all,
@@ -25,6 +44,12 @@ export const usePostSettings = () => {
     expires_time: '',
     ...important,
   });
+
+  useEffect(() => {
+    if (!isEqual(important, sImportant)) {
+      setImportant(important);
+    }
+  }, [important]);
 
   useEffect(() => {
     checkDisableButtonSave();
@@ -100,7 +125,55 @@ export const usePostSettings = () => {
     }
   };
 
+  const handlePutUpdateSettings = () => {
+    const {id, content, media, setting, audience, mentions} =
+      initPostData || {};
+    if (!id) {
+      console.log(`\x1b[31m🐣️ usePostSettings update: id not found\x1b[0m`);
+      return;
+    }
+
+    const userIds: number[] = [];
+    const groupIds: number[] = [];
+    const audienceIds = {groupIds, userIds};
+    audience?.users?.map?.(
+      (u: IAudienceUser) => !!u?.id && userIds.push(u.id || 0),
+    );
+    audience?.groups?.map?.(
+      (u: IAudienceUser) => !!u?.id && groupIds.push(u.id || 0),
+    );
+
+    const newSettings: IPostSetting = {...setting};
+    newSettings.isImportant = sImportant?.active;
+    newSettings.importantExpiredAt = sImportant?.active
+      ? sImportant?.expires_time
+      : null;
+
+    const data: IPostCreatePost = {
+      content,
+      media,
+      setting: newSettings,
+      audience: audienceIds,
+      mentions,
+    };
+    const payload: IPayloadPutEditPost = {
+      id,
+      data,
+      disableNavigate: true,
+      msgSuccess: 'post:text_update_post_setting_success',
+      msgError: 'post:text_update_post_setting_failed',
+      onRetry: () => dispatch(postActions.putEditPost(payload)),
+    };
+    dispatch(postActions.putEditPost(payload));
+    rootNavigation.goBack();
+  };
+
   const handlePressSave = () => {
+    if (putUpdateSettings) {
+      handlePutUpdateSettings();
+      return;
+    }
+
     const dataDefault = [
       sImportant.active === currentSettings?.important?.active ||
         sImportant.expires_time === currentSettings?.important?.expires_time,

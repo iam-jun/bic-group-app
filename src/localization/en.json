@@ -476,6 +476,8 @@
     "btn_discard_comment": "Discard",
     "text_edit_post_success": "Post has been published successfully",
     "text_edit_post_failed": "Post was failed to publish",
+    "text_update_post_setting_success": "Post Settings updated",
+    "text_update_post_setting_failed": "Post Settings was failed to update",
     "text_comment_from": "This is comment from ",
     "title_comment_detail_of": "%NAME%'s post",
     "newsfeed": {
