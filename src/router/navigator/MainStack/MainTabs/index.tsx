@@ -20,6 +20,7 @@ import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens, screensWebLaptop} from './screens';
+import {useChatSocket} from '~/hooks/chat';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -29,11 +30,9 @@ const MainTabs = () => {
 
   const backBehavior = 'history';
 
-  // useChatSocket();
+  useChatSocket();
+  useNotificationSocket();
 
-  // const {activeColor, inactiveColor, tabBarBackground} = colors;
-
-  // const insets = useSafeAreaInsets();
   const dimensions = useWindowDimensions();
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
