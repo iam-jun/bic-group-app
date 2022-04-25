@@ -15,7 +15,7 @@ import {ITheme} from '~/theme/interfaces';
 import Button from '~/beinComponents/Button';
 
 export interface BannerMessageProps {
-  type?: 'error' | 'success';
+  type?: 'error' | 'success' | 'informative';
   children?: React.ReactNode;
   textProps?: TextProps;
   leftIcon?: IconType;
@@ -82,13 +82,16 @@ const BannerMessage: FC<BannerMessageProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme, type: 'success' | 'error') => {
+const createStyle = (
+  theme: ITheme,
+  type: 'success' | 'error' | 'informative',
+) => {
   const {spacing, colors} = theme;
 
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
-      backgroundColor: 'rgba(255, 255, 255, 0.92)',
+      backgroundColor: colors.background,
       paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.base,
       alignSelf: 'baseline',
@@ -124,7 +127,12 @@ const createStyle = (theme: ITheme, type: 'success' | 'error') => {
     leftIconStyle: {
       padding: spacing.padding.tiny,
       borderRadius: 4,
-      backgroundColor: type === 'success' ? colors.success : colors.error,
+      backgroundColor:
+        type === 'success'
+          ? colors.success
+          : type === 'error'
+          ? colors.error
+          : colors.background,
     },
     marginRightIcon: {marginRight: spacing.margin.tiny},
     button: {

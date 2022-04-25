@@ -6,7 +6,9 @@ const AUTH = {
   TOKEN_EXPIRED: 'app.auth_token.expired',
 };
 
-const POST = {};
+const POST = {
+  commentDeleted: 'app.comment.reply.existing.app_error',
+};
 
 const GROUP = {};
 

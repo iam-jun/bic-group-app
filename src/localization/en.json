@@ -522,7 +522,13 @@
     "people_can_react": "People can react on this post",
     "auto_saved": "Post auto-saved",
     "saved_to_draft": "Post Saved to Draft.",
-    "text_review_markdown": "Review Markdown"
+    "text_review_markdown": "Review Markdown",
+    "text_comment_deleted":"Comment doesn’t exist, can not send your reply",
+    "deleted_comment":{
+      "title": "This page is not existing.",
+      "description":"It might be deleted or you don't have permission to see it",
+      "button_text": "Back to Post"
+    }
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

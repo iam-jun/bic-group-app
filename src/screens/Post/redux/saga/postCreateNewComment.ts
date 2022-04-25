@@ -6,6 +6,8 @@ import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import showError from '~/store/commonSaga/showError';
 import addChildCommentToCommentsOfPost from '~/screens/Post/redux/saga/addChildCommentToCommentsOfPost';
 import {getMentionsFromContent} from '~/screens/Post/helper/PostUtils';
+import modalActions from '~/store/modal/actions';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
 
 function* postCreateNewComment({
   payload,
@@ -35,6 +37,19 @@ function* postCreateNewComment({
     console.log(`\x1b[31m🐣️ saga postCreateNewComment: invalid param\x1b[0m`);
     return;
   }
+
+  yield put(
+    modalActions.showHideToastMessage({
+      content: 'post:text_comment_deleted',
+      toastType: 'banner',
+      props: {
+        textProps: {useI18n: true},
+        type: 'informative',
+        leftIcon: 'iconCannotComment',
+      },
+    }),
+  );
+  return;
   try {
     const creatingComment = yield select(
       state => state?.post?.createComment?.loading,
@@ -72,8 +87,6 @@ function* postCreateNewComment({
       yield put(postActions.setScrollCommentsPosition({position: 'bottom'}));
     }
 
-    onSuccess?.(); // clear content in text input
-
     yield put(postActions.setPostDetailReplyingComment());
 
     // get mentions from temp selected in mention input
@@ -98,6 +111,7 @@ function* postCreateNewComment({
         data: commentData,
       });
     }
+    onSuccess?.(); // clear content in text input
 
     //update comment_count
     const allPosts = yield select(state => state?.post?.allPosts) || {};
@@ -131,7 +145,7 @@ function* postCreateNewComment({
     onSuccess?.(); // call second time to make sure content is cleared on low performance device
   } catch (e) {
     console.log('err:', e);
-    if (preComment) {
+    if (preComment && !parentCommentId) {
       // retrying doesn't need to update status because status = 'failed' already
       yield put(
         postActions.updateCommentAPI({
@@ -144,7 +158,30 @@ function* postCreateNewComment({
       );
     }
     yield put(postActions.setCreateComment({loading: false}));
-    yield showError(e);
+    if (!!parentCommentId && e?.code === API_ERROR_CODE.POST.commentDeleted) {
+      yield put(postActions.setParentCommentDeleted(true));
+      yield put(
+        postActions.removeChildComment({
+          localId: preComment?.localId,
+          postId,
+          parentCommentId,
+        }),
+      );
+
+      yield put(
+        modalActions.showHideToastMessage({
+          content: 'post:text_comment_deleted',
+          toastType: 'banner',
+          props: {
+            textProps: {useI18n: true},
+            type: 'informative',
+            leftIcon: 'iconCannotComment',
+          },
+        }),
+      );
+    } else {
+      yield showError(e);
+    }
   }
 }
 
