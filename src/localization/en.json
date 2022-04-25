@@ -457,6 +457,7 @@
     "post_menu_turn_off_noti": "Turn off notification for this post",
     "post_menu_history": "View Edit History",
     "post_menu_delete": "Delete post",
+    "post_menu_edit_settings": "Edit Post Settings",
     "post_menu_report": "Report to group Admin",
     "error_wait_uploading": "Please wait until upload finish",
     "error_upload_failed": "Please remove file upload failed or retry",
@@ -475,6 +476,8 @@
     "btn_discard_comment": "Discard",
     "text_edit_post_success": "Post has been published successfully",
     "text_edit_post_failed": "Post was failed to publish",
+    "text_update_post_setting_success": "Post Settings updated",
+    "text_update_post_setting_failed": "Post Settings was failed to update",
     "text_comment_from": "This is comment from ",
     "title_comment_detail_of": "%NAME%'s post",
     "newsfeed": {
@@ -734,6 +737,11 @@
       "title": "No communities found",
       "description": "Discover communities to join one.",
       "button_text":"Go to Discover"
+    },
+    "community_menu":{
+      "your_communities_text": "Your Communities",
+      "manage_text":"Manage",
+      "discover_text":"Discover"
     }
   }
 }

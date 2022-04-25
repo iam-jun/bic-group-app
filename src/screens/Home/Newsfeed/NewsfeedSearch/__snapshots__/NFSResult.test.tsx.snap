@@ -1310,7 +1310,7 @@ exports[`NFSResult component should render list search result 1`] = `
                     }
                     testID="time_view"
                   >
-                    Yesterday at 05:06 PM
+                    Apr 20 at 05:06 PM
                   </Text>
                 </View>
               </View>

@@ -130,13 +130,19 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     isImageHasChange ||
     isAudienceHasChange;
   const isEditDraftPost = !!initPostData?.id && draftPostId;
+  const isSettingsHasChange =
+    initPostData?.setting?.isImportant !== important?.active ||
+    initPostData?.setting?.importantExpiredAt !== important?.expires_time;
 
   // Disable button post if loading, empty content, empty audience or edit post but nothing changed
   const disableButtonPost =
     loading ||
     content?.trim?.()?.length === 0 ||
     chosenAudiences.length === 0 ||
-    (isEditPost && !isEditPostHasChange && !isEditDraftPost);
+    (isEditPost &&
+      !isEditPostHasChange &&
+      !isEditDraftPost &&
+      !isSettingsHasChange);
 
   const clearAutoSaveTimeout = () => {
     clearTimeout(refToastAutoSave?.current);

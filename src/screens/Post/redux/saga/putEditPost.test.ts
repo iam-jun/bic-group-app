@@ -94,7 +94,7 @@ describe('Edit Post Saga', () => {
       .put(postActions.setLoadingCreatePost(false))
       .put(
         modalActions.showHideToastMessage({
-          content: languages.post.text_edit_post_failed,
+          content: 'post:text_edit_post_failed',
           toastType: 'normal',
           props: {
             textProps: {useI18n: true},

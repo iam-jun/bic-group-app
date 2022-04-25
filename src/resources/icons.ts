@@ -255,6 +255,8 @@ const icons = {
   iconCannotComment,
   iconTabCommunities,
   iconTabCommunitiesBein,
+  Compass: 'Compass',
+  Dashboard: 'Dashboard',
 };
 
 export default icons;

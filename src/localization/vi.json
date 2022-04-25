@@ -402,6 +402,7 @@
     "post_menu_turn_off_noti": "Tắt thông báo cho bài viết này",
     "post_menu_history": "Xem lịch sử chỉnh sửa",
     "post_menu_delete": "Xoá bài viết",
+    "post_menu_edit_settings": "Edit Post Settings",
     "post_menu_report": "Báo cáo",
     "error_wait_uploading": "Vui lòng chờ tải lên hoàn tất",
     "error_upload_failed": "Vui lòng xoá file lỗi hoặc thử tải lại",
@@ -420,6 +421,8 @@
     "btn_discard_comment": "Bỏ",
     "text_edit_post_success": "Đăng bài viết thành công",
     "text_edit_post_failed": "Đăng bài viết thất bại",
+    "text_update_post_setting_success": "Đã cập nhật Cài đặt bài viết",
+    "text_update_post_setting_failed": "Cập nhật Cài đặt bài viết thất bại",
     "text_comment_from": "Đây là bình luận từ ",
     "title_comment_detail_of": "bài đăng của %NAME%",
     "newsfeed": {
@@ -605,6 +608,18 @@
     "system_issue": {
       "title": "Đã có lỗi xảy ra",
       "desc": "Vui lòng đăng nhập lại"
+    }
+  },
+    "communities":{
+    "empty_communities":{
+      "title": "Không tìm thấy cộng đồng nào",
+      "description": "Khám phá các cộng đồng để tham gia một cộng đồng.",
+      "button_text":"Đi tới Khám phá"
+    },
+    "community_menu":{
+      "your_communities_text": "Cộng đồng của bạn",
+      "manage_text":"Đang quản lý",
+      "discover_text":"Khám phá"
     }
   }
 }
