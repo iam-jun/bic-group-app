@@ -1,31 +1,40 @@
-import i18next from 'i18next';
 import {expectSaga} from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
-import {IGroupDetail} from '~/interfaces/IGroup';
 import getCommunities from './getCommunities';
 import {communities} from '~/test/mock_data/communities';
 
 describe('Get Communities saga', () => {
+  const storeData = {
+    groups: {
+      communities: {
+        data: [],
+      },
+    },
+  };
+
   it('should get communities successfully with response has list with element ', () => {
     const action = {
       type: 'test',
       payload: {},
     };
     const resp = communities as any;
-
     return (
       // @ts-ignorets
       expectSaga(getCommunities, action)
+        .withState(storeData)
         .put(groupsActions.setMyCommunities({data: [], loading: true}))
         .provide([[matchers.call.fn(groupsDataHelper.getCommunities), resp]])
         .put(
           groupsActions.setMyCommunities({data: communities, loading: false}),
         )
         .run()
+        .then(({allEffects}: any) => {
+          expect(allEffects?.length).toEqual(4);
+        })
     );
   });
 
@@ -39,10 +48,14 @@ describe('Get Communities saga', () => {
     return (
       // @ts-ignorets
       expectSaga(getCommunities, action)
+        .withState(storeData)
         .put(groupsActions.setMyCommunities({data: [], loading: true}))
         .provide([[matchers.call.fn(groupsDataHelper.getCommunities), resp]])
         .put(groupsActions.setMyCommunities({data: [], loading: false}))
         .run()
+        .then(({allEffects}: any) => {
+          expect(allEffects?.length).toEqual(4);
+        })
     );
   });
 
@@ -61,6 +74,7 @@ describe('Get Communities saga', () => {
 
     //@ts-ignore
     return expectSaga(getCommunities, action)
+      .withState(storeData)
       .put(groupsActions.setMyCommunities({data: [], loading: true}))
       .provide([
         [
@@ -78,6 +92,9 @@ describe('Get Communities saga', () => {
           },
         }),
       )
-      .run();
+      .run()
+      .then(({allEffects}: any) => {
+        expect(allEffects?.length).toEqual(5);
+      });
   });
 });

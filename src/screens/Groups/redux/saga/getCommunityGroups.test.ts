@@ -25,6 +25,9 @@ describe('Get Communities saga', () => {
         ])
         .put(groupsActions.setCommunityGroups(resp))
         .run()
+        .then(({allEffects}: any) => {
+          expect(allEffects?.length).toEqual(2);
+        })
     );
   });
 
@@ -43,6 +46,9 @@ describe('Get Communities saga', () => {
         ])
         .put(groupsActions.setCommunityGroups([]))
         .run()
+        .then(({allEffects}: any) => {
+          expect(allEffects?.length).toEqual(2);
+        })
     );
   });
 
@@ -77,6 +83,9 @@ describe('Get Communities saga', () => {
           },
         }),
       )
-      .run();
+      .run()
+      .then(({allEffects}: any) => {
+        expect(allEffects?.length).toEqual(3);
+      });
   });
 });
