@@ -48,7 +48,7 @@ export const groupsApiConfig = {
     useRetry: true,
     params: {
       ...params,
-      key: 'key' in params && !!params.key.trim() ? params.key : undefined,
+      key: !!params?.key?.trim?.() ? params.key : undefined,
     },
   }),
   getInfoGroups: (ids: string): HttpApiRequestConfig => ({
@@ -85,7 +85,7 @@ export const groupsApiConfig = {
     useRetry: true,
     params: {
       ...params,
-      key: 'key' in params && !!params.key.trim() ? params.key : undefined,
+      key: !!params?.key?.trim?.() ? params.key : undefined,
     },
   }),
   addUsers: (groupId: number, userIds: number[]): HttpApiRequestConfig => ({
@@ -156,7 +156,7 @@ export const groupsApiConfig = {
     useRetry: true,
     params: {
       ...params,
-      key: 'key' in params && !!params.key.trim() ? params.key : undefined,
+      key: !!params?.key?.trim?.() ? params.key : undefined,
     },
   }),
   approveSingleMemberRequest: (
@@ -227,11 +227,7 @@ export const groupsApiConfig = {
     useRetry: true,
     params: {
       ...otherParams,
-      key:
-        // @ts-ignore
-        otherParams && 'key' in otherParams && !!otherParams.key.trim()
-          ? otherParams.key
-          : undefined,
+      key: !!otherParams?.key?.trim?.() ? otherParams.key : undefined,
     },
   }),
 };
