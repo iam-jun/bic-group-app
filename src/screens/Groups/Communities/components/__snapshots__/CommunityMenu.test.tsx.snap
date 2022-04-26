@@ -49,6 +49,7 @@ exports[`CommunityMenu component renders correctly 1`] = `
               "opacity": 1,
             }
           }
+          testID="item_community_data_1"
         >
           <View
             style={
@@ -207,6 +208,7 @@ exports[`CommunityMenu component renders correctly 1`] = `
               "opacity": 1,
             }
           }
+          testID="item_community_data_2"
         >
           <View
             style={
@@ -365,6 +367,7 @@ exports[`CommunityMenu component renders correctly 1`] = `
               "opacity": 1,
             }
           }
+          testID="item_community_data_3"
         >
           <View
             style={

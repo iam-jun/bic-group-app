@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {StyleSheet, View, FlatList} from 'react-native';
+import {StyleSheet, View, FlatList, ActivityIndicator} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -40,6 +40,7 @@ const Communities: React.FC = () => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   const myCommunities = useKeySelector(groupsKeySelector.joinedCommunities);
+  const loading = useKeySelector(groupsKeySelector.loadingCommunities);
 
   useEffect(() => {
     getData();
@@ -167,15 +168,22 @@ const Communities: React.FC = () => {
       />
       <View style={{flex: 1}}>
         <CommunityMenu selectedIndex={selectedIndex} onPress={onPress} />
-        <FlatList
-          data={myCommunities}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => `community_${item}_${index}`}
-          ListEmptyComponent={renderEmptyComponent}
-          ItemSeparatorComponent={() => (
-            <Divider horizontal color={theme.colors.placeholder} />
-          )}
-        />
+        {loading ? (
+          <View
+            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <ActivityIndicator size={'large'} />
+          </View>
+        ) : (
+          <FlatList
+            data={myCommunities}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => `community_${item}_${index}`}
+            ListEmptyComponent={renderEmptyComponent}
+            ItemSeparatorComponent={() => (
+              <Divider horizontal color={theme.colors.placeholder} />
+            )}
+          />
+        )}
         <Divider horizontal color={theme.colors.placeholder} />
       </View>
     </View>

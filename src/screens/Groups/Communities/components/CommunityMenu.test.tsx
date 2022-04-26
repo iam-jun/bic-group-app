@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {cleanup, render} from '@testing-library/react-native';
+import {cleanup, fireEvent, render} from '@testing-library/react-native';
 
 import CommunityMenu from './CommunityMenu';
 import {renderWithRedux} from '~/test/testUtils';
@@ -15,15 +15,15 @@ describe('CommunityMenu component', () => {
     expect(rendered).toMatchSnapshot();
   });
 
-  //   it(`renders correctly color`, () => {
-  //     const {getByTestId} = render(<Divider color={'#B2BDCD'} />);
-  //     const dividerComponent = getByTestId('divider');
-  //     expect(dividerComponent.props.style[0].backgroundColor).toBe('#B2BDCD');
-  //   });
-
-  //   it(`renders correctly horizontal`, () => {
-  //     const {getByTestId} = render(<Divider horizontal={true} />);
-  //     const dividerComponent = getByTestId('divider');
-  //     expect(dividerComponent.props.style[0].height).toBe(undefined);
-  //   });
+  it(`should called onPress prop`, () => {
+    const onPress = jest.fn();
+    const selectedIndex = 0;
+    const rendered = renderWithRedux(
+      <CommunityMenu selectedIndex={selectedIndex} onPress={onPress} />,
+    );
+    const itemComponent = rendered.getByTestId('item_community_data_2');
+    expect(itemComponent).toBeDefined();
+    fireEvent.press(itemComponent);
+    expect(onPress).toHaveBeenCalled();
+  });
 });

@@ -47,6 +47,7 @@ const CommunityMenu = ({
             styles.itemContainer,
             isSelected ? styles.itemSelectedContainer : {},
           ]}
+          testID={`item_community_data_${item.id}`}
           onPress={() => {
             onPress(item, index);
           }}>

@@ -22,7 +22,8 @@ const groupsKeySelector = {
   pendingMemberRequests: 'groups.pendingMemberRequests',
   loadingAvatar: 'groups.loadingAvatar',
   loadingCover: 'groups.loadingCover',
-  joinedCommunities: 'groups.communities',
+  joinedCommunities: 'groups.communities.data',
+  loadingCommunities: 'groups.communities.loading',
 };
 
 export default groupsKeySelector;
