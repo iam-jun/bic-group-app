@@ -46,7 +46,10 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    params,
+    params: {
+      ...params,
+      key: 'key' in params && !!params.key.trim() ? params.key : undefined,
+    },
   }),
   getInfoGroups: (ids: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups`,
@@ -80,7 +83,10 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    params,
+    params: {
+      ...params,
+      key: 'key' in params && !!params.key.trim() ? params.key : undefined,
+    },
   }),
   addUsers: (groupId: number, userIds: number[]): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/users/add`,
@@ -148,7 +154,10 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    params,
+    params: {
+      ...params,
+      key: 'key' in params && !!params.key.trim() ? params.key : undefined,
+    },
   }),
   approveSingleMemberRequest: (
     groupId: number,
@@ -216,7 +225,14 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    params: {...otherParams},
+    params: {
+      ...otherParams,
+      key:
+        // @ts-ignore
+        otherParams && 'key' in otherParams && !!otherParams.key.trim()
+          ? otherParams.key
+          : undefined,
+    },
   }),
 };
 
