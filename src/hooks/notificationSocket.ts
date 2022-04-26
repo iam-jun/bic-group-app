@@ -42,7 +42,10 @@ const useNotificationSocket = () => {
   // load notifications again to get new unseen number (maybe increase maybe not if new activity is grouped)
   // with this, we also not to load notification again when access Notification screen
   const handleSocketNoti = (msg: string) => {
-    console.log(`\x1b[32m🐣️ Maintab: received socket noti\x1b[0m`);
+    console.log(
+      `\x1b[36m🐣️ notificationSocket receive socket noti: \x1b[0m`,
+      msg?.slice?.(0, 30),
+    );
     const msgData = parseSafe(msg);
     const data = msgData || {};
 
@@ -65,14 +68,21 @@ const useNotificationSocket = () => {
       ...getMsgPackParser(getEnv('BEIN_FEED_WS_MSGPACK') !== 'disable'),
     });
 
+    console.log(
+      `\x1b[37m🐣️ Bein notification socket will connect with token ${token.slice(
+        -10,
+      )}\x1b[0m`,
+    );
     socket.on('connect', () => {
       console.log(
-        `\x1b[36m🐣️ Bein notification socket connected with id: ${socket.id}\x1b[0m`,
+        `\x1b[32m🐣️ Bein notification socket connected with id: ${socket.id}\x1b[0m`,
       );
       socket.emit('auth_challenge', token);
     });
-    socket.on('disconnect', () => {
-      console.log(`\x1b[36m🐣️ Bein notification socket disconnected\x1b[0m`);
+    socket.on('disconnect', reason => {
+      console.log(
+        `\x1b[31m🐣️ Bein notification socket disconnected: ${reason}\x1b[0m`,
+      );
     });
     socket.on('notifications', handleSocketNoti);
     return () => {
