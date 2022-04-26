@@ -69,7 +69,7 @@ const ReactionView: FC<ReactionViewProps> = ({
     const rendered: React.ReactNode[] = [];
     for (const [key] of reactionMap) {
       const react = key as ReactionType;
-      if (!blacklistReactions?.[react]) {
+      if (!blacklistReactions?.[react] && reactionMap.get(key) > 0) {
         rendered.push(
           <Reaction
             testId={`reaction.button.${key}`}

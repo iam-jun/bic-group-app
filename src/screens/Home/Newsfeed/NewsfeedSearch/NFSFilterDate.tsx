@@ -75,6 +75,7 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
     } else if (selectedEndDate) {
       setSelectingEndDate(false);
       if (date) {
+        date.setHours(23, 59, 59);
         setSelectedEndDate(date);
         isValid = isValidDate(selectedStartDate, date);
         setEndDateErr(!isValid);

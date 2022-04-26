@@ -122,7 +122,7 @@ class WebSocketClient {
       }
 
       if (this.connectFailCount === 0) {
-        console.log('websocket connecting to ' + url); //eslint-disable-line no-console
+        console.log(`\x1b[37m🐣️ chatSocket connecting to: \x1b[0m`, url);
       }
 
       this.conn = new WebSocket(url, [], {
@@ -173,7 +173,7 @@ class WebSocketClient {
         this.responseSequence = 1;
 
         if (this.connectFailCount === 0) {
-          console.log('websocket closed'); //eslint-disable-line no-console
+          console.log(`\x1b[37m🐣️ chatSocket onclose\x1b[0m`);
         }
 
         this.connectFailCount++;
@@ -213,8 +213,7 @@ class WebSocketClient {
         this.stopPing();
 
         if (this.connectFailCount <= 1) {
-          console.log('websocket error'); //eslint-disable-line no-console
-          console.log(evt); //eslint-disable-line no-console
+          console.log(`\x1b[31m🐣️ chatSocket onerror: \x1b[0m`, evt);
         }
 
         if (this.errorCallback) {

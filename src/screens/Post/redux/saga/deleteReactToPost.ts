@@ -1,7 +1,12 @@
 import {get} from 'lodash';
 import {call, select} from 'redux-saga/effects';
 
-import {IOwnReaction, IPayloadReactToPost, IReaction} from '~/interfaces/IPost';
+import {
+  IOwnReaction,
+  IPayloadReactToPost,
+  IReaction,
+  IReactionCounts,
+} from '~/interfaces/IPost';
 import showError from '~/store/commonSaga/showError';
 import postDataHelper from '../../helper/PostDataHelper';
 import postKeySelector from '../keySelector';
@@ -16,7 +21,6 @@ export default function* deleteReactToPost({
   const {id, reactionId, reactionCounts, ownReaction} = payload;
   const post1 = yield select(s => get(s, postKeySelector.postById(id)));
   try {
-    const cReactionCounts1 = post1.reactionsCount || {};
     const cOwnReaction1 = post1.ownerReactions || [];
     const rId =
       cOwnReaction1?.find(
@@ -24,21 +28,7 @@ export default function* deleteReactToPost({
       )?.id || '';
 
     if (rId) {
-      const newOwnReaction1: IOwnReaction = [...cOwnReaction1];
-
-      if (newOwnReaction1?.length > 0) {
-        newOwnReaction1.forEach((ownReaction, index) => {
-          if (ownReaction?.reactionName === reactionId) {
-            ownReaction.loading = true;
-            newOwnReaction1[index] = {...ownReaction};
-          }
-        });
-      }
-
-      yield onUpdateReactionOfPostById(id, newOwnReaction1, {
-        ...cReactionCounts1,
-      });
-
+      yield removeReactionLocal(id, reactionId);
       yield call(postDataHelper.deleteReaction, {
         reactionId: rId,
         target: 'POST',
@@ -49,4 +39,49 @@ export default function* deleteReactToPost({
     yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
     yield showError(e);
   }
+}
+
+function* addReactionLoadingLocal(
+  id: number,
+  reactionId: string,
+  ownerReaction: IOwnReaction,
+  reactionCounts: IReactionCounts,
+): any {
+  const newOwnReaction1: IOwnReaction = [...ownerReaction];
+
+  if (newOwnReaction1?.length > 0) {
+    newOwnReaction1.forEach((ownReaction, index) => {
+      if (ownReaction?.reactionName === reactionId) {
+        ownReaction.loading = true;
+        newOwnReaction1[index] = {...ownReaction};
+      }
+    });
+  }
+
+  yield onUpdateReactionOfPostById(id, newOwnReaction1, {
+    ...reactionCounts,
+  });
+}
+
+function* removeReactionLocal(id: number, reactionId: string): any {
+  const post2 = yield select(s => get(s, postKeySelector.postById(id)));
+  const cOwnerReactions2 = post2.ownerReactions || [];
+  const cReactionCounts2 = post2.reactionsCount || {};
+  const newOwnerReactions2 = cOwnerReactions2?.filter?.(
+    (or: IReaction) => or?.reactionName !== reactionId,
+  );
+  const newReactionCounts2: any = {};
+  Object.keys(cReactionCounts2)?.map?.(k => {
+    const _reactionId = Object.keys(cReactionCounts2?.[k])?.[0];
+    const nextKey = `${Object.keys(newReactionCounts2).length}`;
+    const _reactionCount = cReactionCounts2?.[k]?.[_reactionId] || 0;
+    if (reactionId !== _reactionId) {
+      newReactionCounts2[nextKey] = {[_reactionId]: _reactionCount};
+    } else {
+      newReactionCounts2[nextKey] = {
+        [_reactionId]: Math.max(0, _reactionCount - 1),
+      };
+    }
+  });
+  yield onUpdateReactionOfPostById(id, newOwnerReactions2, newReactionCounts2);
 }
