@@ -8,16 +8,6 @@ import {View} from 'react-native';
 import Text from '~/beinComponents/Text';
 
 describe('NewsfeedList component', () => {
-  it('renders correctly with 1 item', async () => {
-    const wrapper = renderWithRedux(
-      <MockedNavigator
-        component={() => <NewsfeedList data={[POST_DETAIL_2]} />}
-      />,
-    );
-
-    expect(wrapper).toMatchSnapshot();
-  });
-
   it('renders correctly loading more', async () => {
     const wrapper = renderWithRedux(
       <MockedNavigator

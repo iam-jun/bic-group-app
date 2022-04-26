@@ -24,7 +24,6 @@ export default function* getHomePosts({
 
     if (isRefresh) {
       yield put(homeActions.setRefreshingHomePosts(true));
-      yield put(homeActions.setNoMoreHomePosts(false));
       homePosts = [];
       offset = 0;
     } else {
