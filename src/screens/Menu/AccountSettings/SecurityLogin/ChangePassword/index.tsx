@@ -50,7 +50,7 @@ const ChangePassword = () => {
       clearErrors('password');
     }
   }, [errCurrentPassword]);
-
+  const useFormData = useForm();
   const {
     control,
     formState: {errors},
@@ -58,7 +58,7 @@ const ChangePassword = () => {
     setError,
     clearErrors,
     getValues,
-  } = useForm();
+  } = useFormData;
 
   const validatePassword = async () => {
     await trigger('password');
@@ -141,7 +141,7 @@ const ChangePassword = () => {
       <View style={styles.container}>
         <PasswordInputController
           testID="change_password.current_password"
-          useFormData={useForm()}
+          useFormData={useFormData}
           name={'password'}
           rules={{
             required: t('auth:text_err_password_blank'),
@@ -157,7 +157,7 @@ const ChangePassword = () => {
         />
         <PasswordInputController
           testID="change_password.new_password"
-          useFormData={useForm()}
+          useFormData={useFormData}
           name={'newPassword'}
           rules={{
             required: t('auth:text_err_new_password_blank'),
@@ -175,7 +175,7 @@ const ChangePassword = () => {
         />
         <PasswordInputController
           testID="change_password.confirm_password"
-          useFormData={useForm()}
+          useFormData={useFormData}
           name="confirmNewPassword"
           rules={{
             required: t('auth:text_err_password_blank'),
