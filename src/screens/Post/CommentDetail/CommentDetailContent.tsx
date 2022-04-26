@@ -174,7 +174,7 @@ const CommentDetailContent = (props: any) => {
           titleProps: {style: {flex: 1, textAlign: 'center'}},
           showCloseButton: false,
           cancelBtn: false,
-          isDismissible: false,
+          isDismissible: true,
           onConfirm: () => {
             rootNavigation.goBack();
           },
@@ -184,6 +184,9 @@ const CommentDetailContent = (props: any) => {
           ContentComponent: Text.BodyS,
           buttonViewStyle: {justifyContent: 'center'},
           headerStyle: {marginBottom: 0},
+          onDismiss: () => {
+            rootNavigation.goBack();
+          },
         }),
       );
       setRefreshing(false);
