@@ -57,6 +57,7 @@ const Communities: React.FC = () => {
   };
 
   const onRefresh = () => {
+    setRefreshing(true);
     getData();
   };
 

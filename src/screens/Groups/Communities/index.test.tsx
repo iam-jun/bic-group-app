@@ -36,31 +36,15 @@ describe('Communities screen', () => {
     jest.clearAllMocks();
   });
 
-  it(`should render new list community when user refresh list`, async () => {
-    const callback = jest.fn();
-    const mockGetMyCommunities = () => {
-      return {
-        type: groupsTypes.GET_COMMUNITIES,
-        payload: {callback},
-      };
-    };
-
-    jest
-      .spyOn(groupsActions, 'getMyCommunities')
-      .mockImplementation(mockGetMyCommunities as any);
-    storeData.groups.communities.data = communities;
+  it(`should render empty list community when communities joined = 0`, async () => {
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(
       <MockedNavigator component={() => <Communities />} />,
       store,
     );
 
-    const flatlist = wrapper.getByTestId('flatlist');
-    expect(flatlist).toBeDefined();
-    const {refreshControl} = flatlist.props;
-    await act(async () => {
-      refreshControl.props.onRefresh();
-    });
+    const emptyComponent = wrapper.getByTestId('empty_screen');
+    expect(emptyComponent).toBeDefined();
   });
 
   it(`should navigate group list screen when click community`, async () => {
