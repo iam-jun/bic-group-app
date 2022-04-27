@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Platform, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {fontFamilies} from '~/theme/fonts';
@@ -21,6 +21,7 @@ import {formatDate} from '~/utils/formatData';
 import {usePostSettings} from '~/screens/Post/PostSettings/usePostSettings';
 import useCreatePost from '~/screens/Post/CreatePost/useCreatePost';
 import {IPostSettingsParams} from '~/interfaces/IPost';
+import postActions from '~/screens/Post/redux/actions';
 
 export interface PostSettingsProps {
   route?: {
@@ -42,6 +43,16 @@ const PostSettings = ({route}: PostSettingsProps) => {
   if (postId) {
     useCreatePost({screenParams});
   }
+
+  useEffect(() => {
+    return () => {
+      if (postId) {
+        dispatch(postActions.clearCreatPostData());
+        dispatch(postActions.setSearchResultAudienceGroups([]));
+        dispatch(postActions.setSearchResultAudienceUsers([]));
+      }
+    };
+  }, []);
 
   const {
     sImportant,
