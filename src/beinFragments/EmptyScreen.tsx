@@ -27,7 +27,7 @@ const EmptyScreen = ({
   const styles = themeStyles(theme);
 
   return (
-    <View style={styles.container}>
+    <View testID="empty_screen" style={styles.container}>
       <Icon icon={source} size={150} />
       <Text.ButtonBase style={styles.text} useI18n>
         {title}
@@ -39,7 +39,10 @@ const EmptyScreen = ({
         {description}
       </Text.Subtitle>
       {!!onPress && !!buttonTitle && (
-        <ButtonWrapper onPress={onPress} style={styles.buttonWrapper}>
+        <ButtonWrapper
+          testID="empty_screen.button"
+          onPress={onPress}
+          style={styles.buttonWrapper}>
           <Text.ButtonBase useI18n color={theme.colors.bgButtonPrimary}>
             {buttonTitle}
           </Text.ButtonBase>

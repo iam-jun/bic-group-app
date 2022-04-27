@@ -60,7 +60,10 @@ export const groupInitState = {
     data: [],
     items: {} as IObject<IJoiningMember>,
   },
-  communities: [],
+  communities: {
+    loading: false,
+    data: [],
+  },
 };
 
 function groupsReducer(state = groupInitState, action: any = {}) {
@@ -344,7 +347,10 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     case groupsTypes.SET_COMMUNITIES:
       return {
         ...state,
-        communities: payload?.length > 0 ? [...payload] : [],
+        communities: {
+          loading: payload?.loading || false,
+          data: payload?.data || [],
+        },
       };
 
     case groupsTypes.GET_COMMUNITY_GROUPS:

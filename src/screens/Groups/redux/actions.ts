@@ -268,12 +268,15 @@ const groupsActions = {
   storeUndoData: () => ({
     type: groupsTypes.STORE_UNDO_DATA,
   }),
-  getMyCommunities: () => ({type: groupsTypes.GET_COMMUNITIES}),
-  setMyCommunities: (payload: any[]) => ({
+  getMyCommunities: (payload: {callback?: () => void}) => ({
+    type: groupsTypes.GET_COMMUNITIES,
+    payload,
+  }),
+  setMyCommunities: (payload: any) => ({
     type: groupsTypes.SET_COMMUNITIES,
     payload,
   }),
-  getCommunityGroups: (payload: {id: number; params: IGetCommunityGroup}) => ({
+  getCommunityGroups: (payload: {id: number; params?: IGetCommunityGroup}) => ({
     type: groupsTypes.GET_COMMUNITY_GROUPS,
     payload,
   }),
