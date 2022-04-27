@@ -31,6 +31,9 @@ import appActions from '~/store/app/actions';
 import {deviceDimensions, sizes} from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
+import Image from '~/beinComponents/Image';
+import images from '~/resources/images';
+import {useKeySelector} from '~/hooks/selector';
 
 const BottomTabBar: FC<BottomTabBarProps> = ({
   state,
@@ -40,6 +43,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   let tabBarVisible = useRef(true).current;
   const dispatch = useDispatch();
   const showValue = useSharedValue(1);
+  const avatar = useKeySelector('menu.myProfile.avatar');
 
   const theme = useTheme() as ITheme;
   const insets = useSafeAreaInsets();
@@ -124,6 +128,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
 
   const renderItem = (route: any, index: any) => {
     const {key, name, params} = route || {};
+
     const {options} = descriptors[route.key];
 
     const isFocused = state.index === index;
@@ -176,7 +181,14 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
           borderTopWidth: isFocused ? 2 : 0,
           borderTopColor: colors.primary6,
         }}>
-        <Icon icon={iconName} size={20} tintColor="none" />
+        {!!name && t(`tabs:${name}`) !== t(`tabs:menus`) ? (
+          <Icon icon={iconName} size={20} tintColor="none" />
+        ) : (
+          <Image
+            style={styles.avatarStyle}
+            source={avatar || images.img_user_avatar_default}
+          />
+        )}
         {isPhone && (
           <Text variant="heading" style={styles.label}>
             {t(`tabs:${name}`)}
@@ -218,6 +230,11 @@ const tabBarIconStyles = (
       left: '54%',
     },
     textBadge: {fontFamily: fontFamilies.Segoe},
+    avatarStyle: {
+      width: 20,
+      height: 20,
+      borderRadius: 20 / 2,
+    },
   });
 };
 

@@ -12,6 +12,10 @@ const providers = {
     url: getEnv('BEIN_FEED'),
     name: 'BeinFeed',
   },
+  beinNotification: {
+    url: `${getEnv('BEIN_NOTIFICATION')}api/v1/`,
+    name: 'BeinNotification',
+  },
   getStream: {
     url: 'http://52.15.139.185:3000/',
     name: 'GetStream',
@@ -25,19 +29,26 @@ const Upload = {
     onUploadProgress?: (progressEvent: any) => void,
   ): HttpApiRequestConfig => {
     const uploadEndPoint: any = {
-      userAvatar: 'upload/user-avatar',
-      userCover: 'upload/user-cover',
-      groupAvatar: 'upload/group-avatar',
-      groupCover: 'upload/group-cover',
-      postImage: 'upload/post-image',
-      postVideo: 'upload/post-video',
-      postFile: 'upload/post-file',
-      commentImage: 'upload/comment-image',
-      commentVideo: 'upload/comment-video',
-      commentFile: 'upload/comment-file',
+      user_avatar: 'upload/user-avatar',
+      user_cover: 'upload/user-cover',
+      group_avatar: 'upload/group-avatar',
+      group_cover: 'upload/group-cover',
     };
 
-    const url = `${providers.bein.url}${uploadEndPoint[type]}`;
+    let url: string;
+    let provider: any;
+
+    if (uploadEndPoint[type]) {
+      // upload bein group
+      url = `${providers.bein.url}${uploadEndPoint[type]}`;
+      provider = providers.bein;
+    } else {
+      // upload bein feed
+      url = `${providers.beinFeed.url}api/v1/media`;
+      provider = providers.beinFeed;
+      data.append('uploadType', type);
+    }
+
     return {
       url,
       method: 'post',
@@ -45,7 +56,7 @@ const Upload = {
         'Content-Type': 'multipart/form-data',
       },
       useRetry: true,
-      provider: providers.bein,
+      provider,
       onUploadProgress: onUploadProgress,
       data,
     };
@@ -71,26 +82,23 @@ const App = {
   },
   pushToken: (deviceToken: string, deviceId: string): HttpApiRequestConfig => {
     return {
-      url: `${providers.bein.url}notification/token`,
+      url: `${providers.beinNotification.url}device-tokens`,
       method: 'post',
       provider: providers.bein,
       useRetry: true,
       data: {
         token: deviceToken,
-        device_id: deviceId,
+        deviceId,
       },
     };
   },
   removePushToken: (deviceId: string): HttpApiRequestConfig => {
     return {
-      url: `${providers.bein.url}notification/token`,
+      url: `${providers.beinNotification.url}device-tokens/${deviceId}`,
       method: 'delete',
       provider: providers.bein,
       useRetry: false,
       timeout: 5000,
-      data: {
-        device_id: deviceId,
-      },
     };
   },
   getLinkPreview: (link: string): HttpApiRequestConfig => {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {Platform, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {fontFamilies} from '~/theme/fonts';
@@ -19,8 +19,17 @@ import modalActions from '~/store/modal/actions';
 import {useBaseHook} from '~/hooks';
 import {formatDate} from '~/utils/formatData';
 import {usePostSettings} from '~/screens/Post/PostSettings/usePostSettings';
+import useCreatePost from '~/screens/Post/CreatePost/useCreatePost';
+import {IPostSettingsParams} from '~/interfaces/IPost';
+import postActions from '~/screens/Post/redux/actions';
 
-const PostSettings = () => {
+export interface PostSettingsProps {
+  route?: {
+    params?: IPostSettingsParams;
+  };
+}
+
+const PostSettings = ({route}: PostSettingsProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
@@ -28,6 +37,22 @@ const PostSettings = () => {
   const {colors, spacing} = theme;
 
   const styles = createStyle(theme);
+
+  const screenParams = route?.params || {};
+  const {postId} = screenParams;
+  if (postId) {
+    useCreatePost({screenParams});
+  }
+
+  useEffect(() => {
+    return () => {
+      if (postId) {
+        dispatch(postActions.clearCreatPostData());
+        dispatch(postActions.setSearchResultAudienceGroups([]));
+        dispatch(postActions.setSearchResultAudienceUsers([]));
+      }
+    };
+  }, []);
 
   const {
     sImportant,
@@ -42,7 +67,7 @@ const PostSettings = () => {
     handleChangeTimePicker,
     getMinDate,
     getMaxDate,
-  } = usePostSettings();
+  } = usePostSettings({postId});
 
   const onPressBack = () => {
     if (disableButtonSave) {

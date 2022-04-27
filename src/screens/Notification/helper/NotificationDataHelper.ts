@@ -8,9 +8,9 @@ export const notificationApiConfig = {
   getNotifications: (params: IParamGetNotifications): HttpApiRequestConfig => {
     const {limit, ...restParams} = params || {};
     return {
-      url: `${ApiConfig.providers.beinFeed.url}api/notifications`,
+      url: `${ApiConfig.providers.beinNotification.url}notifications`,
       method: 'get',
-      provider: ApiConfig.providers.beinFeed,
+      provider: ApiConfig.providers.beinNotification,
       useRetry: true,
       params: {
         limit: limit || LIMIT,
@@ -20,25 +20,25 @@ export const notificationApiConfig = {
   },
   putMarkAsReadById: (id: string): HttpApiRequestConfig => {
     return {
-      url: `${ApiConfig.providers.beinFeed.url}api/notifications/${id}/mark-as-read`,
-      method: 'put',
-      provider: ApiConfig.providers.beinFeed,
+      url: `${ApiConfig.providers.beinNotification.url}notifications/${id}/mark-read`,
+      method: 'post',
+      provider: ApiConfig.providers.beinNotification,
       useRetry: true,
     };
   },
   putMarkAllAsRead: (): HttpApiRequestConfig => {
     return {
-      url: `${ApiConfig.providers.beinFeed.url}api/notifications/all/mark-as-read`,
-      method: 'put',
-      provider: ApiConfig.providers.beinFeed,
+      url: `${ApiConfig.providers.beinNotification.url}notifications/mark-read`,
+      method: 'post',
+      provider: ApiConfig.providers.beinNotification,
       useRetry: true,
     };
   },
   putMarkAllAsSeen: (): HttpApiRequestConfig => {
     return {
-      url: `${ApiConfig.providers.beinFeed.url}api/notifications/mark-as-seen`,
-      method: 'put',
-      provider: ApiConfig.providers.beinFeed,
+      url: `${ApiConfig.providers.beinNotification.url}notifications/mark-seen`,
+      method: 'post',
+      provider: ApiConfig.providers.beinNotification,
       useRetry: true,
     };
   },
@@ -65,8 +65,8 @@ const notificationsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve({
-          results: response?.data?.data?.results || [],
-          unseen: response?.data?.data?.unseen,
+          results: response?.data?.data || [],
+          unseen: response?.data?.meta?.unSeen,
         });
       } else {
         return Promise.reject(response);
@@ -86,8 +86,8 @@ const notificationsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve({
-          results: response?.data?.data?.results || [],
-          unseen: response?.data?.data?.unseen,
+          results: response?.data?.data || [],
+          unseen: response?.data?.meta?.unSeen,
         });
       } else {
         return Promise.reject(response);

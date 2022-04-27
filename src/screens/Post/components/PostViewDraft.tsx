@@ -1,4 +1,4 @@
-import React, {FC, useContext, useEffect, useState} from 'react';
+import React, {FC, useContext, useState} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -35,7 +35,6 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   data,
   isPostDetail = false,
 }: PostViewDraftProps) => {
-  const [isImportant, setIsImportant] = useState(false);
   const [publishing, setPublishing] = useState(false);
 
   const dispatch = useDispatch();
@@ -47,30 +46,15 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   const userId = useUserIdAuth();
   const {streamClient} = useContext(AppContext);
 
-  const {id, actor, audience, object, important, own_reactions, is_draft} =
-    data || {};
+  const {id, actor, audience, media, content, setting, isDraft} = data || {};
 
-  const {content, images} = object?.data || {};
+  const {images} = media || {};
+  const {isImportant, importantExpiredAt} = setting || {};
 
   const disableButtonPost =
     publishing ||
     !content ||
     (audience?.groups?.length === 0 && audience?.users?.length === 0);
-
-  const checkImportant = () => {
-    const {active = false} = important || {};
-    let notMarkAsRead = true;
-    if (own_reactions?.mark_as_read?.length > 0) {
-      notMarkAsRead = false;
-    }
-    setIsImportant(!!active && notMarkAsRead);
-  };
-
-  useEffect(() => {
-    if (important && important.active) {
-      checkImportant();
-    }
-  }, [important]);
 
   const showError = (e: any) => {
     dispatch(
@@ -122,7 +106,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
     dispatch(modalActions.hideModal());
     if (id) {
       postDataHelper
-        .deletePost(id, is_draft)
+        .deletePost(id, isDraft)
         .then(response => {
           if (response?.data) {
             dispatch(
@@ -191,8 +175,8 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   return (
     <View>
       <PostViewImportant
-        isImportant={isImportant}
-        expireTime={important?.expires_time}
+        isImportant={!!isImportant}
+        expireTime={importantExpiredAt}
       />
       <View
         style={StyleSheet.flatten([

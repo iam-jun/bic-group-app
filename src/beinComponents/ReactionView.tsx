@@ -8,15 +8,14 @@ import Button from '~/beinComponents/Button';
 
 import {ITheme} from '~/theme/interfaces';
 import {blacklistReactions, ReactionType} from '~/constants/reactions';
-import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
+import {IOwnReaction, IReaction, IReactionCounts} from '~/interfaces/IPost';
 import commonActions, {IAction} from '~/constants/commonActions';
 import appConfig from '~/configs/appConfig';
 
 export interface ReactionViewProps {
   style?: StyleProp<ViewStyle>;
-  ownReactions: IOwnReaction;
-  reactionCounts: IReactionCounts;
-  reactionsOrder: string[];
+  ownerReactions: IOwnReaction;
+  reactionsCount: IReactionCounts;
   showSelectReactionWhenEmpty?: boolean;
   onAddReaction: (reaction: ReactionType) => void;
   onRemoveReaction: (reaction: ReactionType) => void;
@@ -26,9 +25,8 @@ export interface ReactionViewProps {
 
 const ReactionView: FC<ReactionViewProps> = ({
   style,
-  ownReactions,
-  reactionCounts,
-  reactionsOrder,
+  ownerReactions,
+  reactionsCount,
   onAddReaction,
   onRemoveReaction,
   onPressSelectReaction,
@@ -51,39 +49,38 @@ const ReactionView: FC<ReactionViewProps> = ({
   };
 
   const renderReactions = () => {
-    //When return reactionCounts, backend auto sort by alphabet
-    //so we need use reactionsOrder to sort
+    const _ownReactions: any = {};
     const reactionMap = new Map();
-    const _reactionCounts: IReactionCounts = reactionCounts;
-    if (reactionsOrder?.length > 0) {
-      reactionsOrder.map(rKey => {
-        if (reactionCounts?.[rKey]) {
-          reactionMap.set(rKey, reactionCounts?.[rKey]);
-        }
-      });
-      //add reaction in reaction counts but not in order, such as loading
-      Object.keys(reactionCounts)?.map?.(rKey => {
-        if (reactionCounts?.[rKey]) {
-          reactionMap.set(rKey, reactionCounts?.[rKey]);
+
+    if (ownerReactions?.length > 0) {
+      ownerReactions.forEach(ownReaction => {
+        if (ownReaction?.reactionName) {
+          _ownReactions[ownReaction.reactionName] = ownReaction;
         }
       });
     }
+    Object.values(reactionsCount || {})?.map((reaction: any) => {
+      const key = Object.keys(reaction || {})?.[0];
+      if (key) {
+        reactionMap.set(key, reaction?.[key]);
+      }
+    });
 
     const rendered: React.ReactNode[] = [];
     for (const [key] of reactionMap) {
       const react = key as ReactionType;
-      if (!blacklistReactions?.[react] && _reactionCounts?.[key]) {
+      if (!blacklistReactions?.[react] && reactionMap.get(key) > 0) {
         rendered.push(
           <Reaction
             testId={`reaction.button.${key}`}
             key={`${key}`}
             style={{margin: 2}}
-            value={_reactionCounts[key]}
+            value={reactionMap.get(key)}
             icon={key}
             disableUpdateState
             onLongPress={() => _onLongPressItem(react)}
-            loading={ownReactions?.[react]?.[0]?.loading}
-            selected={!!ownReactions?.[react]?.[0]?.id}
+            loading={_ownReactions?.[react]?.loading}
+            selected={!!_ownReactions?.[react]?.id}
             onActionPress={action => onActionReaction(react, action)}
           />,
         );
