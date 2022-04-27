@@ -11,10 +11,11 @@ import Text from '~/beinComponents/Text';
 import images from '~/resources/images';
 
 interface Props {
+  testID?: string;
   onEditCover: () => void;
 }
 
-const CoverImage = ({onEditCover}: Props) => {
+const CoverImage = ({testID, onEditCover}: Props) => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const theme = useTheme() as ITheme;
   const {colors} = theme;
@@ -32,7 +33,7 @@ const CoverImage = ({onEditCover}: Props) => {
   const textColor = !loadingCover ? colors.primary7 : colors.textDisabled;
 
   return (
-    <View>
+    <View testID={testID}>
       <View style={styles.coverHeader}>
         <Text.H5 color={colors.iconTint} useI18n>
           settings:title_cover

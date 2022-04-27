@@ -15,7 +15,7 @@ interface Props {
   onEditAvatar: () => void;
 }
 
-const AvatarImage = ({onEditAvatar}: Props) => {
+const AvatarImage = ({testID, onEditAvatar}: Props) => {
   const loadingAvatar = useKeySelector(groupsKeySelector.loadingAvatar);
   const {icon} = useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const theme = useTheme() as ITheme;
@@ -25,7 +25,7 @@ const AvatarImage = ({onEditAvatar}: Props) => {
   const textColor = !loadingAvatar ? colors.primary7 : colors.textDisabled;
 
   return (
-    <View>
+    <View testID={testID}>
       <View style={styles.avatarHeader}>
         <Text.H5 color={colors.iconTint} useI18n>
           settings:title_avatar

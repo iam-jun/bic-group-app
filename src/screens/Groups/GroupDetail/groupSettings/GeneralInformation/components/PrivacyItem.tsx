@@ -14,7 +14,7 @@ interface Props {
   onPressHelpMessage: () => void;
 }
 
-const BottomSheetItem = ({item, onPressHelpMessage}: Props) => {
+const PrivacyItem = ({item, onPressHelpMessage}: Props) => {
   const {privacy} = useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const theme = useTheme() as ITheme;
   const {colors} = theme;
@@ -53,4 +53,4 @@ const themeStyles = (theme: ITheme) => {
   });
 };
 
-export default BottomSheetItem;
+export default PrivacyItem;

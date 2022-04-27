@@ -19,12 +19,17 @@ exports[`NFSRecentSearchKeyword component should render empty recent search keyw
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "flex": 1,
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {},
+          Object {
+            "flex": 1,
+          },
+        ]
       }
     >
       Recent Search
@@ -32,13 +37,19 @@ exports[`NFSRecentSearchKeyword component should render empty recent search keyw
   </View>
   <Text
     style={
-      Object {
-        "color": "#627286",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 16,
-        "margin": 24,
-        "textAlign": "center",
-      }
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 16,
+        },
+        Object {},
+        Object {
+          "color": "#627286",
+          "margin": 24,
+          "textAlign": "center",
+        },
+      ]
     }
   >
     No recent search
@@ -65,12 +76,17 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "flex": 1,
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {},
+          Object {
+            "flex": 1,
+          },
+        ]
       }
     >
       Recent Search
@@ -108,12 +124,18 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
       >
         <Text
           style={
-            Object {
-              "color": "#7843DD",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 12,
-              "marginRight": 4,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 12,
+              },
+              Object {},
+              Object {
+                "color": "#7843DD",
+                "marginRight": 4,
+              },
+            ]
           }
         >
           CLEAR
@@ -165,11 +187,15 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
         <Text
           numberOfLines={2}
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-Regular",
+                "fontSize": 16,
+              },
+              Object {},
+              Object {},
+            ]
           }
         >
           hello
@@ -321,12 +347,17 @@ exports[`NFSRecentSearchKeyword component should render loading recent search ke
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "flex": 1,
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {},
+          Object {
+            "flex": 1,
+          },
+        ]
       }
     >
       Recent Search

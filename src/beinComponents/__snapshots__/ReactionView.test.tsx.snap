@@ -47,22 +47,35 @@ exports[`ReactionView component renders correctly 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
         testID="reaction.grinning"
       >
@@ -102,22 +115,35 @@ exports[`ReactionView component renders correctly 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
         testID="reaction.grinning_face_with_star_eyes"
       >
@@ -157,22 +183,35 @@ exports[`ReactionView component renders correctly 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
         testID="reaction.kissing_smiling_eyes"
       >
@@ -212,22 +251,35 @@ exports[`ReactionView component renders correctly 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#421187",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#421187",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
         testID="reaction.sweat_smile"
       >
@@ -454,22 +506,35 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
         testID="reaction.grinning"
       >
@@ -509,22 +574,35 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
         testID="reaction.grinning_face_with_star_eyes"
       >
@@ -564,22 +642,35 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
         testID="reaction.kissing_smiling_eyes"
       >
@@ -619,22 +710,35 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
   >
     <Text
       style={
-        Object {
-          "color": "#421187",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#421187",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
         testID="reaction.sweat_smile"
       >
@@ -1235,22 +1339,35 @@ exports[`ReactionView component renders correctly with props style 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
         testID="reaction.grinning"
       >
@@ -1290,22 +1407,35 @@ exports[`ReactionView component renders correctly with props style 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
         testID="reaction.grinning_face_with_star_eyes"
       >
@@ -1345,22 +1475,35 @@ exports[`ReactionView component renders correctly with props style 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
         testID="reaction.kissing_smiling_eyes"
       >
@@ -1400,22 +1543,35 @@ exports[`ReactionView component renders correctly with props style 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#421187",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#421187",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
         testID="reaction.sweat_smile"
       >

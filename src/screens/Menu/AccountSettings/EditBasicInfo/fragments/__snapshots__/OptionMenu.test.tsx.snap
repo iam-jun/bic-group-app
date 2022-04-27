@@ -8,12 +8,19 @@ exports[`OptionMenu conponent renders correctly 1`] = `
     >
       <Text
         style={
-          Object {
-            "color": "#627286",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 12,
-            "margin": 12,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 12,
+            },
+            Object {
+              "color": "#627286",
+            },
+            Object {
+              "margin": 12,
+            },
+          ]
         }
       >
         Choose your gender
@@ -93,11 +100,15 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                 <Text
                   numberOfLines={2}
                   style={
-                    Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 14,
-                    }
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-SemiBold",
+                        "fontSize": 14,
+                      },
+                      Object {},
+                      Object {},
+                    ]
                   }
                 >
                   Male
@@ -167,11 +178,15 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                 <Text
                   numberOfLines={2}
                   style={
-                    Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 14,
-                    }
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-SemiBold",
+                        "fontSize": 14,
+                      },
+                      Object {},
+                      Object {},
+                    ]
                   }
                 >
                   Female
@@ -343,11 +358,15 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                 <Text
                   numberOfLines={2}
                   style={
-                    Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 14,
-                    }
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-SemiBold",
+                        "fontSize": 14,
+                      },
+                      Object {},
+                      Object {},
+                    ]
                   }
                 >
                   Others

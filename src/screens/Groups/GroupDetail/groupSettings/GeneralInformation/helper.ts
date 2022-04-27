@@ -12,7 +12,7 @@ import {groupProfileImageCropRatio} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {checkPermission} from '~/utils/permission';
 
-const uploadFile = (
+export const uploadFile = (
   dispatch: any,
   id: number,
   file: IFilePicked,
@@ -30,13 +30,13 @@ const uploadFile = (
 };
 
 // 'icon' for avatar and 'background_img_url' for cover
-export const _openImagePicker = (
+export const _openImagePicker = async (
   dispatch: any,
   id: number,
   fieldName: 'icon' | 'background_img_url',
   uploadType: IUploadType,
 ) => {
-  checkPermission('photo', dispatch, canOpenPicker => {
+  await checkPermission('photo', dispatch, canOpenPicker => {
     if (canOpenPicker) {
       ImagePicker.openPickerSingle({
         ...groupProfileImageCropRatio[fieldName],
@@ -45,8 +45,12 @@ export const _openImagePicker = (
       }).then(file => {
         uploadFile(dispatch, id, file, fieldName, uploadType);
       });
+      return true;
     }
   });
+
+  //for testing
+  return false;
 };
 
 export const alertAction = (

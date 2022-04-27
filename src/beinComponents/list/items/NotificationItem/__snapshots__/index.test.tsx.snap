@@ -234,13 +234,21 @@ exports[`NotificationItem component renders correctly 1`] = `
     </View>
     <Text
       style={
-        Object {
-          "color": "#627286",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 14,
-          "marginLeft": 12,
-          "marginTop": 1,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#627286",
+          },
+          Object {
+            "color": "#627286",
+            "marginLeft": 12,
+            "marginTop": 1,
+          },
+        ]
       }
       testID="notification_item.time_view"
     >

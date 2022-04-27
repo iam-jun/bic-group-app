@@ -46,11 +46,17 @@ exports[`SimpleToastMessage component renders correctly 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#421187",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 14,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#421187",
+          },
+          undefined,
+        ]
       }
       testID="simple_toast_message.children"
     >

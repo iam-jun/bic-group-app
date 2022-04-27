@@ -308,12 +308,17 @@ exports[`Button Wrapper component renders correctly children with useI18n 1`] = 
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 16,
-          "textAlign": "center",
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 16,
+          },
+          Object {},
+          Object {
+            "textAlign": "center",
+          },
+        ]
       }
     />
   </View>

@@ -480,13 +480,18 @@ exports[`GeneralInformation component renders correctly 1`] = `
                               <Text
                                 numberOfLines={1}
                                 style={
-                                  Object {
-                                    "color": "#2F3945",
-                                    "fontFamily": "OpenSans-SemiBold",
-                                    "fontSize": 16,
-                                    "height": 24,
-                                    "lineHeight": 24,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#2F3945",
+                                      "fontFamily": "OpenSans-SemiBold",
+                                      "fontSize": 16,
+                                    },
+                                    Object {},
+                                    Object {
+                                      "height": 24,
+                                      "lineHeight": 24,
+                                    },
+                                  ]
                                 }
                                 testID="header.text"
                               >
@@ -510,7 +515,9 @@ exports[`GeneralInformation component renders correctly 1`] = `
                     </View>
                     <RCTScrollView>
                       <View>
-                        <View>
+                        <View
+                          testID="general_information.avatar"
+                        >
                           <View
                             style={
                               Object {
@@ -523,11 +530,17 @@ exports[`GeneralInformation component renders correctly 1`] = `
                           >
                             <Text
                               style={
-                                Object {
-                                  "color": "#2F3945",
-                                  "fontFamily": "OpenSans-SemiBold",
-                                  "fontSize": 16,
-                                }
+                                Array [
+                                  Object {
+                                    "color": "#2F3945",
+                                    "fontFamily": "OpenSans-SemiBold",
+                                    "fontSize": 16,
+                                  },
+                                  Object {
+                                    "color": "#2F3945",
+                                  },
+                                  undefined,
+                                ]
                               }
                             >
                               Avatar
@@ -554,6 +567,7 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                   "opacity": 1,
                                 }
                               }
+                              testID="avatar.button_edit"
                             >
                               <View
                                 style={
@@ -567,13 +581,19 @@ exports[`GeneralInformation component renders correctly 1`] = `
                               >
                                 <Text
                                   style={
-                                    Object {
-                                      "color": "#421187",
-                                      "fontFamily": "OpenSans-SemiBold",
-                                      "fontSize": 14,
-                                    }
+                                    Array [
+                                      Object {
+                                        "color": "#2F3945",
+                                        "fontFamily": "OpenSans-SemiBold",
+                                        "fontSize": 14,
+                                      },
+                                      Object {
+                                        "color": "#421187",
+                                      },
+                                      undefined,
+                                    ]
                                   }
-                                  testID="general_information.avatar.edit"
+                                  testID="avatar.text_edit"
                                 >
                                   Edit
                                 </Text>
@@ -660,12 +680,15 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                       "top": 0,
                                     }
                                   }
+                                  testID="avatar.image"
                                 />
                               </View>
                             </View>
                           </View>
                         </View>
-                        <View>
+                        <View
+                          testID="general_information.cover"
+                        >
                           <View
                             style={
                               Object {
@@ -678,11 +701,17 @@ exports[`GeneralInformation component renders correctly 1`] = `
                           >
                             <Text
                               style={
-                                Object {
-                                  "color": "#2F3945",
-                                  "fontFamily": "OpenSans-SemiBold",
-                                  "fontSize": 16,
-                                }
+                                Array [
+                                  Object {
+                                    "color": "#2F3945",
+                                    "fontFamily": "OpenSans-SemiBold",
+                                    "fontSize": 16,
+                                  },
+                                  Object {
+                                    "color": "#2F3945",
+                                  },
+                                  undefined,
+                                ]
                               }
                             >
                               Cover
@@ -709,6 +738,7 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                   "opacity": 1,
                                 }
                               }
+                              testID="cover.button_edit"
                             >
                               <View
                                 style={
@@ -722,13 +752,19 @@ exports[`GeneralInformation component renders correctly 1`] = `
                               >
                                 <Text
                                   style={
-                                    Object {
-                                      "color": "#421187",
-                                      "fontFamily": "OpenSans-SemiBold",
-                                      "fontSize": 14,
-                                    }
+                                    Array [
+                                      Object {
+                                        "color": "#2F3945",
+                                        "fontFamily": "OpenSans-SemiBold",
+                                        "fontSize": 14,
+                                      },
+                                      Object {
+                                        "color": "#421187",
+                                      },
+                                      undefined,
+                                    ]
                                   }
-                                  testID="general_information.cover.edit"
+                                  testID="cover.text_edit"
                                 >
                                   Edit
                                 </Text>
@@ -805,6 +841,7 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                       "top": 0,
                                     }
                                   }
+                                  testID="cover.image"
                                 />
                               </View>
                             </View>
@@ -834,6 +871,7 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                 "opacity": 1,
                               }
                             }
+                            testID="group_info_view.name"
                           >
                             <View
                               className=""
@@ -875,11 +913,15 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                   <Text
                                     numberOfLines={2}
                                     style={
-                                      Object {
-                                        "color": "#2F3945",
-                                        "fontFamily": "OpenSans-SemiBold",
-                                        "fontSize": 14,
-                                      }
+                                      Array [
+                                        Object {
+                                          "color": "#2F3945",
+                                          "fontFamily": "OpenSans-SemiBold",
+                                          "fontSize": 14,
+                                        },
+                                        Object {},
+                                        Object {},
+                                      ]
                                     }
                                   >
                                     Group Name
@@ -1009,6 +1051,7 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                 "opacity": 1,
                               }
                             }
+                            testID="group_info_view.description"
                           >
                             <View
                               className=""
@@ -1039,7 +1082,6 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                     "paddingHorizontal": 12,
                                   }
                                 }
-                                testID="general_information.description"
                               >
                                 <View
                                   style={
@@ -1051,11 +1093,15 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                   <Text
                                     numberOfLines={2}
                                     style={
-                                      Object {
-                                        "color": "#2F3945",
-                                        "fontFamily": "OpenSans-SemiBold",
-                                        "fontSize": 14,
-                                      }
+                                      Array [
+                                        Object {
+                                          "color": "#2F3945",
+                                          "fontFamily": "OpenSans-SemiBold",
+                                          "fontSize": 14,
+                                        },
+                                        Object {},
+                                        Object {},
+                                      ]
                                     }
                                   >
                                     Group Description
@@ -1185,6 +1231,7 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                 "opacity": 1,
                               }
                             }
+                            testID="group_info_view.privacy"
                           >
                             <View
                               className=""
@@ -1215,7 +1262,6 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                     "paddingHorizontal": 12,
                                   }
                                 }
-                                testID="general_information.privacy"
                               >
                                 <View
                                   style={
@@ -1227,11 +1273,15 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                   <Text
                                     numberOfLines={2}
                                     style={
-                                      Object {
-                                        "color": "#2F3945",
-                                        "fontFamily": "OpenSans-SemiBold",
-                                        "fontSize": 14,
-                                      }
+                                      Array [
+                                        Object {
+                                          "color": "#2F3945",
+                                          "fontFamily": "OpenSans-SemiBold",
+                                          "fontSize": 14,
+                                        },
+                                        Object {},
+                                        Object {},
+                                      ]
                                     }
                                   >
                                     Privacy
@@ -1356,13 +1406,21 @@ exports[`GeneralInformation component renders correctly 1`] = `
                           >
                             <Text
                               style={
-                                Object {
-                                  "color": "#2F3945",
-                                  "fontFamily": "OpenSans-SemiBold",
-                                  "fontSize": 18,
-                                  "marginBottom": 8,
-                                  "marginLeft": 12,
-                                }
+                                Array [
+                                  Object {
+                                    "color": "#2F3945",
+                                    "fontFamily": "OpenSans-SemiBold",
+                                    "fontSize": 16,
+                                  },
+                                  Object {
+                                    "color": "#2F3945",
+                                  },
+                                  Object {
+                                    "fontSize": 18,
+                                    "marginBottom": 8,
+                                    "marginLeft": 12,
+                                  },
+                                ]
                               }
                             >
                               Privacy Type
@@ -1441,7 +1499,7 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                           "opacity": 1,
                                         }
                                       }
-                                      testID="general_information.bottom_sheet.item"
+                                      testID="general_information.privacy_item.PUBLIC"
                                     >
                                       <View
                                         className=""
@@ -1588,11 +1646,15 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                             <Text
                                               numberOfLines={2}
                                               style={
-                                                Object {
-                                                  "color": "#2F3945",
-                                                  "fontFamily": "OpenSans-SemiBold",
-                                                  "fontSize": 14,
-                                                }
+                                                Array [
+                                                  Object {
+                                                    "color": "#2F3945",
+                                                    "fontFamily": "OpenSans-SemiBold",
+                                                    "fontSize": 14,
+                                                  },
+                                                  Object {},
+                                                  Object {},
+                                                ]
                                               }
                                             >
                                               Public
@@ -1600,31 +1662,45 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                             <Text
                                               numberOfLines={2}
                                               style={
-                                                Object {
-                                                  "color": "#2F3945",
-                                                  "fontFamily": "OpenSans-Regular",
-                                                  "fontSize": 16,
-                                                }
-                                              }
-                                            >
-                                              <Text
-                                                style={
+                                                Array [
                                                   Object {
                                                     "color": "#2F3945",
                                                     "fontFamily": "OpenSans-Regular",
                                                     "fontSize": 16,
-                                                  }
+                                                  },
+                                                  Object {},
+                                                  Object {},
+                                                ]
+                                              }
+                                            >
+                                              <Text
+                                                style={
+                                                  Array [
+                                                    Object {
+                                                      "color": "#2F3945",
+                                                      "fontFamily": "OpenSans-Regular",
+                                                      "fontSize": 16,
+                                                    },
+                                                    Object {},
+                                                    undefined,
+                                                  ]
                                                 }
                                               >
                                                 Group is visible to everyone and anyone can join. 
                                                 <Text
                                                   onPress={[Function]}
                                                   style={
-                                                    Object {
-                                                      "color": "#007AFF",
-                                                      "fontFamily": "OpenSans-Regular",
-                                                      "fontSize": 16,
-                                                    }
+                                                    Array [
+                                                      Object {
+                                                        "color": "#2F3945",
+                                                        "fontFamily": "OpenSans-Regular",
+                                                        "fontSize": 16,
+                                                      },
+                                                      Object {
+                                                        "color": "#007AFF",
+                                                      },
+                                                      undefined,
+                                                    ]
                                                   }
                                                 >
                                                   Learn more
@@ -1667,7 +1743,7 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                           "opacity": 1,
                                         }
                                       }
-                                      testID="general_information.bottom_sheet.item"
+                                      testID="general_information.privacy_item.PRIVATE"
                                     >
                                       <View
                                         className=""
@@ -1814,11 +1890,15 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                             <Text
                                               numberOfLines={2}
                                               style={
-                                                Object {
-                                                  "color": "#2F3945",
-                                                  "fontFamily": "OpenSans-SemiBold",
-                                                  "fontSize": 14,
-                                                }
+                                                Array [
+                                                  Object {
+                                                    "color": "#2F3945",
+                                                    "fontFamily": "OpenSans-SemiBold",
+                                                    "fontSize": 14,
+                                                  },
+                                                  Object {},
+                                                  Object {},
+                                                ]
                                               }
                                             >
                                               Private
@@ -1826,31 +1906,45 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                             <Text
                                               numberOfLines={2}
                                               style={
-                                                Object {
-                                                  "color": "#2F3945",
-                                                  "fontFamily": "OpenSans-Regular",
-                                                  "fontSize": 16,
-                                                }
-                                              }
-                                            >
-                                              <Text
-                                                style={
+                                                Array [
                                                   Object {
                                                     "color": "#2F3945",
                                                     "fontFamily": "OpenSans-Regular",
                                                     "fontSize": 16,
-                                                  }
+                                                  },
+                                                  Object {},
+                                                  Object {},
+                                                ]
+                                              }
+                                            >
+                                              <Text
+                                                style={
+                                                  Array [
+                                                    Object {
+                                                      "color": "#2F3945",
+                                                      "fontFamily": "OpenSans-Regular",
+                                                      "fontSize": 16,
+                                                    },
+                                                    Object {},
+                                                    undefined,
+                                                  ]
                                                 }
                                               >
                                                 Group is visible to everyone and anyone can request to join. 
                                                 <Text
                                                   onPress={[Function]}
                                                   style={
-                                                    Object {
-                                                      "color": "#007AFF",
-                                                      "fontFamily": "OpenSans-Regular",
-                                                      "fontSize": 16,
-                                                    }
+                                                    Array [
+                                                      Object {
+                                                        "color": "#2F3945",
+                                                        "fontFamily": "OpenSans-Regular",
+                                                        "fontSize": 16,
+                                                      },
+                                                      Object {
+                                                        "color": "#007AFF",
+                                                      },
+                                                      undefined,
+                                                    ]
                                                   }
                                                 >
                                                   Learn more
@@ -1893,7 +1987,7 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                           "opacity": 1,
                                         }
                                       }
-                                      testID="general_information.bottom_sheet.item"
+                                      testID="general_information.privacy_item.SECRET"
                                     >
                                       <View
                                         className=""
@@ -2040,11 +2134,15 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                             <Text
                                               numberOfLines={2}
                                               style={
-                                                Object {
-                                                  "color": "#2F3945",
-                                                  "fontFamily": "OpenSans-SemiBold",
-                                                  "fontSize": 14,
-                                                }
+                                                Array [
+                                                  Object {
+                                                    "color": "#2F3945",
+                                                    "fontFamily": "OpenSans-SemiBold",
+                                                    "fontSize": 14,
+                                                  },
+                                                  Object {},
+                                                  Object {},
+                                                ]
                                               }
                                             >
                                               Secret
@@ -2052,31 +2150,45 @@ exports[`GeneralInformation component renders correctly 1`] = `
                                             <Text
                                               numberOfLines={2}
                                               style={
-                                                Object {
-                                                  "color": "#2F3945",
-                                                  "fontFamily": "OpenSans-Regular",
-                                                  "fontSize": 16,
-                                                }
-                                              }
-                                            >
-                                              <Text
-                                                style={
+                                                Array [
                                                   Object {
                                                     "color": "#2F3945",
                                                     "fontFamily": "OpenSans-Regular",
                                                     "fontSize": 16,
-                                                  }
+                                                  },
+                                                  Object {},
+                                                  Object {},
+                                                ]
+                                              }
+                                            >
+                                              <Text
+                                                style={
+                                                  Array [
+                                                    Object {
+                                                      "color": "#2F3945",
+                                                      "fontFamily": "OpenSans-Regular",
+                                                      "fontSize": 16,
+                                                    },
+                                                    Object {},
+                                                    undefined,
+                                                  ]
                                                 }
                                               >
                                                 Group is invisible to everyone and members are invited. 
                                                 <Text
                                                   onPress={[Function]}
                                                   style={
-                                                    Object {
-                                                      "color": "#007AFF",
-                                                      "fontFamily": "OpenSans-Regular",
-                                                      "fontSize": 16,
-                                                    }
+                                                    Array [
+                                                      Object {
+                                                        "color": "#2F3945",
+                                                        "fontFamily": "OpenSans-Regular",
+                                                        "fontSize": 16,
+                                                      },
+                                                      Object {
+                                                        "color": "#007AFF",
+                                                      },
+                                                      undefined,
+                                                    ]
                                                   }
                                                 >
                                                   Learn more

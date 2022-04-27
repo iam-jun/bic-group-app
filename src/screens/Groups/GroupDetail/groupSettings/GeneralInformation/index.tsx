@@ -16,7 +16,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import AvatarImage from './components/AvatarImage';
-import BottomSheetItem from './components/BottomSheetItem';
+import PrivacyItem from './components/PrivacyItem';
 import CoverImage from './components/CoverImage';
 import GroupInfoView from './components/GroupInfoView';
 import {alertAction, _openImagePicker} from './helper';
@@ -124,12 +124,12 @@ const GeneralInformation = (props: any) => {
       uploadTypes.groupCover,
     );
 
-  const renderBottomSheetItem = ({item}: {item: any}) => {
+  const renderPrivacyItem = ({item}: {item: any}) => {
     return (
       <TouchableOpacity
-        testID={`general_information.bottom_sheet.item`}
+        testID={`general_information.privacy_item.${item.type}`}
         onPress={() => onPrivacyMenuPress(item)}>
-        <BottomSheetItem item={item} onPressHelpMessage={helpMessage} />
+        <PrivacyItem item={item} onPressHelpMessage={helpMessage} />
       </TouchableOpacity>
     );
   };
@@ -145,7 +145,10 @@ const GeneralInformation = (props: any) => {
           testID="general_information.avatar"
           onEditAvatar={onEditAvatar}
         />
-        <CoverImage onEditCover={onEditCover} />
+        <CoverImage
+          testID="general_information.cover"
+          onEditCover={onEditCover}
+        />
         <GroupInfoView id={id} onPressPrivacy={openGroupPrivacyModal} />
         <BottomSheet
           modalizeRef={baseSheetRef}
@@ -157,10 +160,7 @@ const GeneralInformation = (props: any) => {
                 useI18n>
                 settings:title_privacy_type
               </Text.H5>
-              <ListView
-                data={privacyTypes}
-                renderItem={renderBottomSheetItem}
-              />
+              <ListView data={privacyTypes} renderItem={renderPrivacyItem} />
             </View>
           }
         />

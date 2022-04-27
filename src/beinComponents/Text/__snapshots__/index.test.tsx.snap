@@ -3,11 +3,15 @@
 exports[`Text component renders correctly 1`] = `
 <Text
   style={
-    Object {
-      "color": "#2F3945",
-      "fontFamily": "OpenSans-Regular",
-      "fontSize": 16,
-    }
+    Array [
+      Object {
+        "color": "#2F3945",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 16,
+      },
+      Object {},
+      undefined,
+    ]
   }
 />
 `;
@@ -15,11 +19,15 @@ exports[`Text component renders correctly 1`] = `
 exports[`Text component renders correctly children 1`] = `
 <Text
   style={
-    Object {
-      "color": "#2F3945",
-      "fontFamily": "OpenSans-Regular",
-      "fontSize": 16,
-    }
+    Array [
+      Object {
+        "color": "#2F3945",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 16,
+      },
+      Object {},
+      undefined,
+    ]
   }
 >
   renders correctly children
@@ -29,11 +37,15 @@ exports[`Text component renders correctly children 1`] = `
 exports[`Text component renders correctly children with useI18n 1`] = `
 <Text
   style={
-    Object {
-      "color": "#2F3945",
-      "fontFamily": "OpenSans-Regular",
-      "fontSize": 16,
-    }
+    Array [
+      Object {
+        "color": "#2F3945",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 16,
+      },
+      Object {},
+      undefined,
+    ]
   }
 />
 `;

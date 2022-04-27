@@ -1397,12 +1397,19 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
       >
         <Text
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 8,
-              "marginTop": 2,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-Regular",
+                "fontSize": 16,
+              },
+              Object {},
+              Object {
+                "fontFamily": "OpenSans-Regular",
+                "fontSize": 8,
+                "marginTop": 2,
+              },
+            ]
           }
           testID="avatar_group.total_member"
         >
