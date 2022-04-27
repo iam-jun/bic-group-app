@@ -60,6 +60,10 @@ export const groupInitState = {
     data: [],
     items: {} as IObject<IJoiningMember>,
   },
+  communities: {
+    loading: false,
+    data: [],
+  },
 };
 
 function groupsReducer(state = groupInitState, action: any = {}) {
@@ -71,19 +75,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       return {
         ...state,
         isPrivacyModalOpen: action.payload,
-      };
-
-    case groupsTypes.GET_JOINED_GROUPS:
-      return {
-        ...state,
-        loadingJoinedGroups: true,
-        joinedGroups: groupInitState.joinedGroups,
-      };
-    case groupsTypes.SET_JOINED_GROUPS:
-      return {
-        ...state,
-        loadingJoinedGroups: false,
-        joinedGroups: action.payload || [],
       };
 
     case groupsTypes.GET_GROUP_DETAIL:
@@ -353,6 +344,27 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
 
+    case groupsTypes.SET_COMMUNITIES:
+      return {
+        ...state,
+        communities: {
+          loading: payload?.loading || false,
+          data: payload?.data || [],
+        },
+      };
+
+    case groupsTypes.GET_COMMUNITY_GROUPS:
+      return {
+        ...state,
+        loadingJoinedGroups: true,
+        joinedGroups: groupInitState.joinedGroups,
+      };
+    case groupsTypes.SET_COMMUNITY_GROUPS:
+      return {
+        ...state,
+        loadingJoinedGroups: false,
+        joinedGroups: payload || [],
+      };
     default:
       return state;
   }

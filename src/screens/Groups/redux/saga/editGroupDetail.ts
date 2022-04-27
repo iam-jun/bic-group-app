@@ -5,8 +5,8 @@ import {IToastMessage} from '~/interfaces/common';
 import * as modalActions from '~/store/modal/actions';
 import {IGroupDetailEdit} from '~/interfaces/IGroup';
 import groupsActions from '../actions';
-import {showError} from '.';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
+import showError from '~/store/commonSaga/showError';
 
 export default function* editGroupDetail({
   payload,

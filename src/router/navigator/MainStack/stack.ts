@@ -10,6 +10,7 @@ const mainStack = {
   componentCollection: 'component-collection',
   securityLogin: 'security-and-login',
   changePassword: 'change-password',
+  groupDetail: 'group-detail',
 };
 
 export default mainStack;

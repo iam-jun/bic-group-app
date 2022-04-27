@@ -21,21 +21,27 @@ import {USER_PROFILE} from '~/test/mock_data/menu';
 
 afterEach(cleanup);
 
-describe('EditDescription screen', () => {
+describe('Edit Contact screen', () => {
   let Keyboard: any;
+  let storeData: any;
 
   const mockStore = configureStore([]);
 
   beforeEach(() => {
     Keyboard = require('react-native').Keyboard;
+    jest.clearAllMocks();
+    storeData = {...initialState};
+    storeData.menu.myProfile = {} as any;
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  it(`should disable save button when not change description`, () => {
-    const store = mockStore(initialState);
+  it(`should disable save button when not change contact info`, () => {
+    storeData.menu.myProfile = USER_PROFILE;
+
+    const store = mockStore(storeData);
 
     const wrapper = renderWithRedux(<EditContact />, store);
 

@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {isEmpty} from 'lodash';
-import debounce from 'lodash/debounce';
-import {Controller, useForm} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -9,7 +8,6 @@ import {useDispatch} from 'react-redux';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import Header from '~/beinComponents/Header';
-import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import * as validation from '~/constants/commonRegex';
 import {useBaseHook} from '~/hooks';
@@ -18,6 +16,7 @@ import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {IChangePasswordError} from '~/interfaces/IAuth';
 import useAuth from '~/hooks/auth';
+import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 
 const ChangePassword = () => {
   const {t} = useBaseHook();
@@ -51,7 +50,7 @@ const ChangePassword = () => {
       clearErrors('password');
     }
   }, [errCurrentPassword]);
-
+  const useFormData = useForm();
   const {
     control,
     formState: {errors},
@@ -59,26 +58,26 @@ const ChangePassword = () => {
     setError,
     clearErrors,
     getValues,
-  } = useForm();
+  } = useFormData;
 
-  const validatePassword = debounce(async () => {
+  const validatePassword = async () => {
     await trigger('password');
     compareCurrentWithNewPassword();
     checkDisableSaveButton();
-  }, 3);
+  };
 
-  const validateNewPassword = debounce(async () => {
+  const validateNewPassword = async () => {
     await trigger('newPassword');
     compareNewPasswordWithConfirmation();
     compareCurrentWithNewPassword();
     checkDisableSaveButton();
-  }, 3);
+  };
 
-  const validateConfirmNewPassword = debounce(async () => {
+  const validateConfirmNewPassword = async () => {
     await trigger('confirmNewPassword');
     compareNewPasswordWithConfirmation();
     checkDisableSaveButton();
-  }, 3);
+  };
 
   const compareCurrentWithNewPassword = () => {
     if (getValues('password') === getValues('newPassword')) {
@@ -140,28 +139,10 @@ const ChangePassword = () => {
     <ScreenWrapper testID="SecurityLogin" isFullView>
       <Header title={t('settings:title_change_password')} />
       <View style={styles.container}>
-        <Controller
-          control={control}
-          render={({field: {onChange, value}}) => (
-            <PasswordInput
-              testID="change_password.current_password"
-              label={t('auth:input_label_current_password')}
-              placeholder={t('auth:input_label_current_password')}
-              autoComplete="off"
-              error={errors.password}
-              autoCapitalize="none"
-              editable={!changePasswordLoading}
-              value={value || ''}
-              onChangeText={text => {
-                onChange(text);
-                validatePassword();
-              }}
-              onSubmitEditing={handleOnSaveChangePassword}
-              helperType={errors.password?.message ? 'error' : undefined}
-              helperContent={errors?.password?.message}
-            />
-          )}
-          name="password"
+        <PasswordInputController
+          testID="change_password.current_password"
+          useFormData={useFormData}
+          name={'password'}
           rules={{
             required: t('auth:text_err_password_blank'),
             pattern: {
@@ -169,28 +150,15 @@ const ChangePassword = () => {
               message: t('auth:text_err_password_format'),
             },
           }}
+          label={t('auth:input_label_current_password')}
+          placeholder={t('auth:input_label_current_password')}
+          validateValue={validatePassword}
+          autoComplete="off"
         />
-        <Controller
-          control={control}
-          render={({field: {onChange, value}}) => (
-            <PasswordInput
-              testID="change_password.new_password"
-              label={t('auth:input_label_new_password')}
-              placeholder={t('auth:input_label_new_password')}
-              autoComplete="off"
-              error={errors.newPassword}
-              autoCapitalize="none"
-              editable={!changePasswordLoading}
-              value={value || ''}
-              onChangeText={text => {
-                onChange(text);
-                validateNewPassword();
-              }}
-              onSubmitEditing={handleOnSaveChangePassword}
-              helperType={errors.newPassword?.message ? 'error' : undefined}
-              helperContent={errors?.newPassword?.message}
-            />
-          )}
+        <PasswordInputController
+          testID="change_password.new_password"
+          useFormData={useFormData}
+          name={'newPassword'}
           rules={{
             required: t('auth:text_err_new_password_blank'),
             pattern: {
@@ -198,37 +166,26 @@ const ChangePassword = () => {
               message: t('auth:text_err_password_format'),
             },
           }}
-          name="newPassword"
-          defaultValue=""
+          loading={changePasswordLoading}
+          label={t('auth:input_label_new_password')}
+          placeholder={t('auth:input_label_new_password')}
+          validateValue={validateNewPassword}
+          autoComplete="off"
+          onSubmitEditing={handleOnSaveChangePassword}
         />
-        <Controller
-          control={control}
-          render={({field: {onChange, value}}) => (
-            <PasswordInput
-              testID="change_password.confirm_password"
-              label={t('auth:input_label_confirm_new_password')}
-              placeholder={t('auth:input_label_confirm_new_password')}
-              autoComplete="off"
-              error={errors.confirmNewPassword}
-              autoCapitalize="none"
-              editable={!changePasswordLoading}
-              value={value || ''}
-              onChangeText={text => {
-                onChange(text);
-                validateConfirmNewPassword();
-              }}
-              onSubmitEditing={handleOnSaveChangePassword}
-              helperType={
-                errors.confirmNewPassword?.message ? 'error' : undefined
-              }
-              helperContent={errors?.confirmNewPassword?.message}
-            />
-          )}
+        <PasswordInputController
+          testID="change_password.confirm_password"
+          useFormData={useFormData}
           name="confirmNewPassword"
           rules={{
             required: t('auth:text_err_password_blank'),
           }}
-          defaultValue=""
+          loading={changePasswordLoading}
+          label={t('auth:input_label_confirm_new_password')}
+          placeholder={t('auth:input_label_confirm_new_password')}
+          autoComplete="off"
+          validateValue={validateConfirmNewPassword}
+          onSubmitEditing={handleOnSaveChangePassword}
         />
         {/*<PrimaryItem*/}
         {/*  title={t('settings:title_logout_from_all_devices')}*/}

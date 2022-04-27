@@ -19,8 +19,16 @@ import modalActions from '~/store/modal/actions';
 import {useBaseHook} from '~/hooks';
 import {formatDate} from '~/utils/formatData';
 import {usePostSettings} from '~/screens/Post/PostSettings/usePostSettings';
+import useCreatePost from '~/screens/Post/CreatePost/useCreatePost';
+import {IPostSettingsParams} from '~/interfaces/IPost';
 
-const PostSettings = () => {
+export interface PostSettingsProps {
+  route?: {
+    params?: IPostSettingsParams;
+  };
+}
+
+const PostSettings = ({route}: PostSettingsProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
@@ -28,6 +36,12 @@ const PostSettings = () => {
   const {colors, spacing} = theme;
 
   const styles = createStyle(theme);
+
+  const screenParams = route?.params || {};
+  const {postId} = screenParams;
+  if (postId) {
+    useCreatePost({screenParams});
+  }
 
   const {
     sImportant,
@@ -42,7 +56,7 @@ const PostSettings = () => {
     handleChangeTimePicker,
     getMinDate,
     getMaxDate,
-  } = usePostSettings();
+  } = usePostSettings({postId});
 
   const onPressBack = () => {
     if (disableButtonSave) {

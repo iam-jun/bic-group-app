@@ -1,5 +1,5 @@
-import React, {useCallback, useEffect, useRef, useState, memo} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {FlatList, RefreshControl, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -8,21 +8,28 @@ import CommentViewPlaceholder from '~/beinComponents/placeholder/CommentViewPlac
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
-import {IAudienceGroup, IReaction} from '~/interfaces/IPost';
+import {IAudienceGroup, ICommentData} from '~/interfaces/IPost';
+import modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import CommentInputView from '../components/CommentInputView';
 import postActions from '../redux/actions';
 import postKeySelector from '../redux/keySelector';
+import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
+import {useRootNavigation} from '~/hooks/navigation';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
 
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
   const {t} = useBaseHook();
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
 
   const listRef = useRef<any>();
   const commentInputRef = useRef<any>();
@@ -47,10 +54,18 @@ const CommentDetailContent = (props: any) => {
     postKeySelector.scrollToCommentsPosition,
   );
 
+  const parentCommentIsDeleted = useKeySelector(
+    postKeySelector.parentCommentIsDeleted,
+  );
+
   const headerTitle = t('post:title_comment_detail_of').replace(
     '%NAME%',
-    actor?.data?.fullname || '',
+    actor?.fullname || '',
   );
+
+  useEffect(() => {
+    dispatch(postActions.setParentCommentDeleted(false));
+  }, []);
 
   useEffect(() => {
     if (audience?.groups?.length > 0) {
@@ -61,9 +76,12 @@ const CommentDetailContent = (props: any) => {
   }, [audience?.groups]);
 
   useEffect(() => {
-    if (!postDetailLoadingState) {
+    if (!postDetailLoadingState && !parentCommentIsDeleted) {
       dispatch(postActions.setScrollCommentsPosition(null));
-      if (childrenComments?.length > 1) {
+      if (
+        childrenComments?.length > 1 ||
+        !commentData?.latest_children?.comment?.[0]
+      ) {
         setLoading(false);
         if (!!replyItem) {
           setTimeout(() => {
@@ -76,13 +94,13 @@ const CommentDetailContent = (props: any) => {
           }, 50);
         }
       } else {
-        const lastItem = newCommentData?.latest_children?.comment?.[0];
+        const lastItem = newCommentData?.child?.[0];
         dispatch(
           postActions.getCommentsByPostId({
             postId: postId,
-            idLt: lastItem?.id || '',
-            commentId: newCommentData?.id || '',
-            recentReactionsLimit: 9,
+            idLT: lastItem?.id,
+            parentId: newCommentData?.id,
+            limit: 9,
             isMerge: true,
             position: 'bottom',
             callbackLoading: loading => {
@@ -100,21 +118,24 @@ const CommentDetailContent = (props: any) => {
         );
       }
     }
-  }, [postDetailLoadingState]);
+  }, [postDetailLoadingState, parentCommentIsDeleted]);
 
   useEffect(() => {
-    if (scrollToCommentsPosition?.position === 'top') {
-      dispatch(postActions.setScrollCommentsPosition(null));
-    } else if (scrollToCommentsPosition?.position === 'bottom') {
-      scrollToEnd();
-    }
+    const timer = setTimeout(() => {
+      if (scrollToCommentsPosition?.position === 'top') {
+        dispatch(postActions.setScrollCommentsPosition(null));
+      } else if (scrollToCommentsPosition?.position === 'bottom') {
+        scrollToEnd();
+      }
+    }, 300);
+    return () => clearTimeout(timer);
   }, [scrollToCommentsPosition]);
 
   const scrollToEnd = () => {
     try {
       listRef.current?.scrollToIndex?.({
         animated: true,
-        index: childrenComments?.length - 1 || 0,
+        index: childrenComments?.length > 0 ? childrenComments?.length - 1 : 0,
       });
       dispatch(postActions.setScrollCommentsPosition(null));
     } catch (error) {
@@ -130,6 +151,46 @@ const CommentDetailContent = (props: any) => {
       () => listRef.current?.scrollToIndex?.({index: error?.index || 0}),
       100,
     );
+  };
+
+  const onRefresh = () => {
+    if (parentCommentIsDeleted) {
+      setIsEmpty(true);
+      dispatch(
+        modalActions.showAlert({
+          // @ts-ignore
+          HeaderImageComponent: (
+            <View style={{alignItems: 'center'}}>
+              <SVGIcon
+                // @ts-ignore
+                source={CommentNotFoundImg}
+                width={120}
+                height={120}
+                tintColor="none"
+              />
+            </View>
+          ),
+          title: t('post:deleted_comment:title'),
+          titleProps: {style: {flex: 1, textAlign: 'center'}},
+          showCloseButton: false,
+          cancelBtn: false,
+          isDismissible: true,
+          onConfirm: () => {
+            rootNavigation.goBack();
+          },
+          confirmLabel: t('post:deleted_comment:button_text'),
+          content: t('post:deleted_comment:description'),
+          contentProps: {style: {textAlign: 'center'}},
+          ContentComponent: Text.BodyS,
+          buttonViewStyle: {justifyContent: 'center'},
+          headerStyle: {marginBottom: 0},
+          onDismiss: () => {
+            rootNavigation.goBack();
+          },
+        }),
+      );
+      setRefreshing(false);
+    }
   };
 
   const renderCommentItem = (data: any) => {
@@ -155,6 +216,9 @@ const CommentDetailContent = (props: any) => {
 
   const keyExtractor = (item: any) => `CommentDetailContent_${item?.id || ''}`;
 
+  if (isEmpty) {
+    return null;
+  }
   return (
     <View style={{flex: 1}}>
       <FlatList
@@ -174,6 +238,13 @@ const CommentDetailContent = (props: any) => {
         keyExtractor={keyExtractor}
         onScrollToIndexFailed={onScrollToIndexFailed}
         scrollEventThrottle={16}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={theme.colors.borderDisable}
+          />
+        }
       />
       <CommentInputView
         commentInputRef={commentInputRef}
@@ -182,7 +253,7 @@ const CommentDetailContent = (props: any) => {
         autoFocus={!!replyItem}
         isCommentLevel1Screen
         showHeader
-        defaultReplyTargetId={newCommentData?.id || ''}
+        defaultReplyTargetId={newCommentData?.id}
       />
     </View>
   );
@@ -215,21 +286,18 @@ const CommentLevel1 = ({id, headerTitle, commentData, groupIds}: any) => {
 };
 
 const getListChildComment = (
-  listData: IReaction[],
-  parentCommentId: string,
+  listData: ICommentData[],
+  parentCommentId: number,
 ) => {
   const parentCommentPosition = listData?.findIndex?.(
-    (item: IReaction) => item.id === parentCommentId,
+    (item: ICommentData) => item.id === parentCommentId,
   );
-
-  const latestChildren =
-    listData?.[parentCommentPosition]?.latest_children || {};
-  const childrenComments = latestChildren?.comment || [];
+  const childrenComments = listData?.[parentCommentPosition]?.child || [];
   return {childrenComments, newCommentData: listData?.[parentCommentPosition]};
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing, fonts, fontFamily} = theme;
+  const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing.padding.large,

@@ -10,7 +10,7 @@ import {groupPrivacy} from '~/constants/privacyTypes';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {showError} from '.';
+import showError from '~/store/commonSaga/showError';
 
 const navigation = withNavigation(rootNavigationRef);
 

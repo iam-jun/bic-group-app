@@ -170,9 +170,9 @@
   },
   "tabs": {
     "home": "Bản tin",
-    "groups": "Nhóm",
+    "communities": "Cộng đồng",
     "notification": "Thông báo",
-    "menus": "Menu"
+    "menus": "Bạn"
   },
   "settings": {
     "title_app_language": "Ngôn ngữ",
@@ -402,6 +402,7 @@
     "post_menu_turn_off_noti": "Tắt thông báo cho bài viết này",
     "post_menu_history": "Xem lịch sử chỉnh sửa",
     "post_menu_delete": "Xoá bài viết",
+    "post_menu_edit_settings": "Sửa cài đặt bài viết",
     "post_menu_report": "Báo cáo",
     "error_wait_uploading": "Vui lòng chờ tải lên hoàn tất",
     "error_upload_failed": "Vui lòng xoá file lỗi hoặc thử tải lại",
@@ -420,6 +421,8 @@
     "btn_discard_comment": "Bỏ",
     "text_edit_post_success": "Đăng bài viết thành công",
     "text_edit_post_failed": "Đăng bài viết thất bại",
+    "text_update_post_setting_success": "Đã cập nhật Cài đặt bài viết",
+    "text_update_post_setting_failed": "Cập nhật Cài đặt bài viết thất bại",
     "text_comment_from": "Đây là bình luận từ ",
     "title_comment_detail_of": "bài đăng của %NAME%",
     "newsfeed": {
@@ -466,7 +469,13 @@
     "people_can_react": "Mọi người có thể tương tác trên bài viết",
     "auto_saved": "Bài viết đã lưu tự động",
     "saved_to_draft": "Bài viết đã lưu vào nháp.",
-    "text_review_markdown": "Xem trước nội dung"
+    "text_review_markdown": "Xem trước nội dung",
+    "text_comment_deleted":"Bình luận này đã bị xoá, không thể gửi bình luận trả lời của bạn",
+      "deleted_comment":{
+      "title": "Trang này không tồn tại.",
+      "description":"Bình luận này có thể bị xóa hoặc bạn không có quyền xem bình luận này",
+      "button_text": "Quay về Bài viết"
+    }
   },
   "comment": {
     "placeholder_comment": "Để lại bình luận ...",
@@ -599,6 +608,18 @@
     "system_issue": {
       "title": "Đã có lỗi xảy ra",
       "desc": "Vui lòng đăng nhập lại"
+    }
+  },
+    "communities":{
+    "empty_communities":{
+      "title": "Không tìm thấy cộng đồng nào",
+      "description": "Khám phá các cộng đồng để tham gia một cộng đồng.",
+      "button_text":"Đi tới Khám phá"
+    },
+    "community_menu":{
+      "your_communities_text": "Cộng đồng của bạn",
+      "manage_text":"Đang quản lý",
+      "discover_text":"Khám phá"
     }
   }
 }

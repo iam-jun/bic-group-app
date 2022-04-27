@@ -38,7 +38,7 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   const getData = () => {
     if (getDataPromise && getDataParam) {
       setLoading(true);
-      const param = {...getDataParam, reactionType, limit};
+      const param = {...getDataParam, reactionName: reactionType, limit};
       getDataPromise?.(param)
         ?.then?.((data: any) => {
           setData(data || []);

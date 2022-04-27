@@ -20,15 +20,12 @@ import {ActionTypes, createAction} from '~/utils';
 import {getEnv} from '~/utils/env';
 import {updateUserFromSharedPreferences} from './sharePreferences';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
-};
-
-const beinFeedHeaders = {
-  'X-Version': getEnv('BEIN_FEED_VERSION'),
 };
 
 const _dispatchLogout = async () => {
@@ -58,12 +55,14 @@ const _dispatchRefreshTokenSuccess = (
   newToken: string,
   refreshToken: string,
   idToken: string,
+  idTokenExp: number,
 ) => {
   Store.store.dispatch(
     createAction(ActionTypes.RefreshTokenSuccessBein, {
       newToken,
       refreshToken,
       idToken,
+      idTokenExp,
     }),
   );
 };
@@ -239,7 +238,7 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
         isSuccess = false;
         return;
       } else {
-        _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken);
+        _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken, exp);
 
         //For sharing data between Group and Chat
         await updateUserFromSharedPreferences({token: idToken, exp});
@@ -260,6 +259,7 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
     unauthorizedGetStreamReqQueue = [];
     unauthorizedReqQueue.forEach(callback => callback(isSuccess));
     unauthorizedReqQueue = [];
+
     isRefreshingToken = false;
   }
 };
@@ -267,9 +267,20 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
 const handleResponseError = async (
   error: AxiosError,
 ): Promise<HttpApiResponseFormat | unknown> => {
+  // Sometime aws return old id token, using this old id token to refresh token will return 401
+  // should reset value isRefreshingToken for refresh later
+  const authConfig = apiConfig.App.tokens();
+  if (authConfig.url === error?.config?.url) {
+    isRefreshingToken = false;
+    await timeout(5000);
+  }
+
   if (error.response) {
+    const responseTokenExpired =
+      error.response.status === 401 ||
+      error.response?.data?.code === API_ERROR_CODE.AUTH.TOKEN_EXPIRED;
     // @ts-ignore
-    if (error.response.status === 401 && error.config.useRetry) {
+    if (responseTokenExpired && error.config.useRetry) {
       return handleRetry(error);
     }
     // @ts-ignore
@@ -423,9 +434,10 @@ const getAuthTokens = async () => {
     // @ts-ignore
     const data = mapResponseSuccessBein(httpResponse);
 
+    // @ts-ignore
     if (data.code != 200 && data.code?.toUpperCase?.() !== 'OK') return false;
 
-    const {accessToken: feedAccessToken, subscribeToken: notiSubscribeToken} =
+    const {access_token: feedAccessToken, subscribe_token: notiSubscribeToken} =
       data.data?.stream;
 
     return {
@@ -433,7 +445,6 @@ const getAuthTokens = async () => {
       notiSubscribeToken,
     };
   } catch (e) {
-    console.log('getAuthTokens failed', e);
     return false;
   }
 };
@@ -467,14 +478,22 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
         ...commonHeaders,
         ...requestConfig.headers,
         ...tokenHeaders,
-        ...beinFeedHeaders,
+      };
+      break;
+    case apiConfig.providers.beinNotification.name:
+      interceptorRequestSuccess = interceptorsRequestSuccess;
+      interceptorResponseSuccess = interceptorsResponseSuccess;
+      interceptorResponseError = interceptorsResponseError;
+      requestConfig.headers = {
+        ...commonHeaders,
+        ...requestConfig.headers,
+        ...tokenHeaders,
       };
       break;
     case apiConfig.providers.getStream.name:
       // TODO: refactor
       break;
     default:
-      console.log(`\x1b[31m🐣️ httpApiRequest unknown provider name\x1b[0m`);
       return Promise.resolve(false);
   }
 
@@ -528,6 +547,10 @@ const subscribeGetstreamFeed = (
   return subscription;
 };
 
+function timeout(ms: number) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 export {
   makeGetStreamRequest,
   makeHttpRequest,
@@ -536,5 +559,6 @@ export {
   mapResponseSuccessBein,
   handleResponseFailFeedActivity,
   refreshAuthTokens,
+  getTokenAndCallBackBein,
   subscribeGetstreamFeed,
 };

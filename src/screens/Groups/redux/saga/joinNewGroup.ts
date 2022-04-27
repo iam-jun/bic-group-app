@@ -6,7 +6,7 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {IToastMessage} from '~/interfaces/common';
 import groupJoinStatus from '~/constants/groupJoinStatus';
-import {showError} from '.';
+import showError from '~/store/commonSaga/showError';
 
 export default function* joinNewGroup({
   payload,

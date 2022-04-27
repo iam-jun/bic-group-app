@@ -61,17 +61,15 @@ export interface IGroupDetail {
 }
 
 export interface IParamGetGroupPosts {
-  group_id: string;
-  offset?: number;
+  groupId: string;
+  order?: 'ASC' | 'DESC';
   limit?: number;
-  recent_reactions_limit?: number;
-  enrich?: boolean;
-  own_reactions?: boolean;
-  with_own_reactions?: boolean;
-  with_own_children?: boolean;
-  with_recent_reactions?: boolean;
-  with_reaction_counts?: boolean;
-  ranking?: 'important_first' | string;
+  offset?: number;
+  idGTE?: number;
+  idLTE?: number;
+  idGT?: number;
+  idLT?: number;
+  ranking?: 'IMPORTANT' | string;
 }
 
 export interface IGroupImageUpload {
@@ -134,4 +132,10 @@ export interface IJoiningMember {
   group_id: number;
   created_at: string;
   user: IObject<any>;
+}
+
+export interface IGetCommunityGroup {
+  preview_members?: boolean;
+  key?: string;
+  list_by?: string;
 }
