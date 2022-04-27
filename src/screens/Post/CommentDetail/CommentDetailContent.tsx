@@ -78,10 +78,7 @@ const CommentDetailContent = (props: any) => {
   useEffect(() => {
     if (!postDetailLoadingState && !parentCommentIsDeleted) {
       dispatch(postActions.setScrollCommentsPosition(null));
-      if (
-        childrenComments?.length > 1 ||
-        !commentData?.latest_children?.comment?.[0]
-      ) {
+      if (childrenComments?.length > 1 || !commentData?.child?.[0]) {
         setLoading(false);
         if (!!replyItem) {
           setTimeout(() => {
