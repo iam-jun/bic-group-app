@@ -19,7 +19,7 @@ const formatParams = (params?: any) => {
   }
 };
 
-const getLink = (linkType: string, id?: string, params?: any): string => {
+const getLink = (linkType: string, id?: number, params?: any): string => {
   switch (linkType) {
     case LINK_POST:
       return getEnv('SELF_DOMAIN') + '/post/t/' + id + formatParams(params);

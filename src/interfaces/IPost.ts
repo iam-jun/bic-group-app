@@ -7,14 +7,14 @@ export interface IPostAudience {
 }
 
 export interface IAudienceUser {
-  id?: number | string;
+  id?: number;
   username?: string;
   fullname?: string;
   avatar?: string;
 }
 
 export interface IAudienceGroup {
-  id?: number | string;
+  id?: number;
   name?: string;
   icon?: string;
   child?: number[];
@@ -61,7 +61,7 @@ export interface IActivityData {
 
 export interface IActivityImportant {
   active?: boolean;
-  expires_time?: string;
+  expires_time?: string | null;
 }
 
 export interface ICommentData {
@@ -101,7 +101,7 @@ export interface IPostSetting {
   canShare?: boolean;
   canComment?: boolean;
   isImportant?: boolean;
-  importantExpiredAt?: string;
+  importantExpiredAt?: string | null;
 }
 
 export interface IPostMedia {
@@ -186,28 +186,31 @@ export interface IPayloadPutEditPost {
   data: IPostCreatePost;
   replaceWithDetail?: boolean;
   onRetry?: () => void;
+  msgSuccess?: string;
+  msgError?: string;
+  disableNavigate?: boolean;
 }
 
 export interface IPayloadPutEditComment {
-  id: string;
+  id: number;
   comment: ICommentData;
   data: ICommentData;
 }
 
 export interface IPayloadDeletePost {
-  id: string;
+  id: number;
   isDraftPost?: boolean;
 }
 
 export interface IParamGetPostDetail {
-  postId: string;
+  postId: number;
   commentOrder?: 'ASC' | 'DESC';
   commentLimit?: number;
   childCommentLimit?: number;
 }
 
 export interface IParamPutEditPost {
-  postId: string;
+  postId: number;
   data: IPostCreatePost;
 }
 
@@ -402,6 +405,10 @@ export interface ICreatePostParams {
   initAutoSaveDraft?: boolean;
 }
 
+export interface IPostSettingsParams extends ICreatePostParams {
+  postId?: number;
+}
+
 export interface IPayloadReplying {
   comment: ICommentData;
   parentComment?: ICommentData;
@@ -439,7 +446,7 @@ export interface IPayloadPublishDraftPost {
 }
 
 export interface IPayloadPutEditDraftPost {
-  id: string;
+  id: number;
   data: IPostCreatePost;
   replaceWithDetail?: boolean;
   publishNow: boolean;

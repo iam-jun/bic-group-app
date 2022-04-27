@@ -16,7 +16,15 @@ export default function* putEditPost({
   type: string;
   payload: IPayloadPutEditPost;
 }): any {
-  const {id, data, replaceWithDetail = true, onRetry} = payload;
+  const {
+    id,
+    data,
+    replaceWithDetail = true,
+    onRetry,
+    msgSuccess,
+    msgError,
+    disableNavigate,
+  } = payload;
   if (!id || !data) {
     console.log(`\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m`);
     return;
@@ -30,17 +38,19 @@ export default function* putEditPost({
       yield put(postActions.addToAllPosts({data: post}));
       yield put(
         modalActions.showHideToastMessage({
-          content: 'post:text_edit_post_success',
+          content: msgSuccess || 'post:text_edit_post_success',
           props: {textProps: {useI18n: true}, type: 'success'},
         }),
       );
-      yield call(navigate, replaceWithDetail, post?.id);
+      if (!disableNavigate) {
+        yield call(navigate, replaceWithDetail, post?.id);
+      }
     }
   } catch (e) {
     yield put(postActions.setLoadingCreatePost(false));
     yield put(
       modalActions.showHideToastMessage({
-        content: i18n.t('post:text_edit_post_failed'),
+        content: msgError || 'post:text_edit_post_failed',
         toastType: 'normal',
         props: {
           textProps: {useI18n: true},
