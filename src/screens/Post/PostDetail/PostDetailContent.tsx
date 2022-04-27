@@ -2,7 +2,6 @@ import {useIsFocused} from '@react-navigation/native';
 import React, {
   memo,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -22,7 +21,6 @@ import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
-import {AppContext} from '~/contexts/AppContext';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
@@ -33,7 +31,6 @@ import {
   ICommentData,
   IPayloadGetPostDetail,
 } from '~/interfaces/IPost';
-import i18n from '~/localization';
 import images from '~/resources/images';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {rootSwitch} from '~/router/stack';
@@ -75,9 +72,8 @@ const _PostDetailContent = (props: any) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const userId = useUserIdAuth();
-  const {streamClient} = useContext(AppContext);
 
-  const id = post_id;
+  const id = Number(post_id || 0);
   const actor = useKeySelector(postKeySelector.postActorById(id));
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
   const createdAt = useKeySelector(postKeySelector.postCreatedAtById(id));
@@ -114,12 +110,12 @@ const _PostDetailContent = (props: any) => {
     if (newCommentInput !== '' || newCommentSelectedImage) {
       dispatch(
         modalActions.showAlert({
-          title: i18n.t('post:title_discard_comment'),
-          content: i18n.t('post:text_discard_comment'),
+          title: t('post:title_discard_comment'),
+          content: t('post:text_discard_comment'),
           showCloseButton: true,
           cancelBtn: true,
-          cancelLabel: i18n.t('post:btn_continue_comment'),
-          confirmLabel: i18n.t('post:btn_discard_comment'),
+          cancelLabel: t('post:btn_continue_comment'),
+          confirmLabel: t('post:btn_discard_comment'),
           onConfirm: () => rootNavigation.goBack(),
           stretchOnWeb: true,
         }),
@@ -146,7 +142,7 @@ const _PostDetailContent = (props: any) => {
   }, [isInternetReachable]);
 
   useEffect(() => {
-    if (id && userId && streamClient && internetReachableRef.current) {
+    if (id && userId && internetReachableRef.current) {
       getPostDetail((loading, success) => {
         if (!loading && !success && internetReachableRef.current) {
           if (Platform.OS === 'web') {
@@ -192,7 +188,7 @@ const _PostDetailContent = (props: any) => {
   const getPostDetail = (
     callbackLoading?: (loading: boolean, success: boolean) => void,
   ) => {
-    if (userId && id && streamClient) {
+    if (userId && id) {
       const payload: IPayloadGetPostDetail = {
         postId: id,
         callbackLoading,
