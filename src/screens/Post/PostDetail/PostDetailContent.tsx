@@ -40,7 +40,7 @@ import PostView from '~/screens/Post/components/PostView';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import Store from '~/store';
-import * as modalActions from '~/store/modal/actions';
+import modalActions from '~/store/modal/actions';
 import {showHideToastMessage} from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
@@ -401,6 +401,7 @@ const _PostDetailContent = (props: any) => {
             onScrollToIndexFailed={onScrollToIndexFailed}
             refreshControl={
               <RefreshControl
+                testID={'post_detail_content.refresh_control'}
                 refreshing={refreshing}
                 onRefresh={onRefresh}
                 tintColor={colors.borderDisable}
