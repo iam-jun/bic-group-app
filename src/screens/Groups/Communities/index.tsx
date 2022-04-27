@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {StyleSheet, View, FlatList} from 'react-native';
+import {StyleSheet, View, FlatList, RefreshControl} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -9,12 +9,7 @@ import Header from '~/beinComponents/Header';
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
-import {
-  useBackPressListener,
-  useRootNavigation,
-  useTabPressListener,
-} from '~/hooks/navigation';
-import {ITabTypes} from '~/interfaces/IRouter';
+import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
 import {debounce} from 'lodash';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import CommunityMenu from './components/CommunityMenu';
@@ -28,7 +23,6 @@ import modalActions from '~/store/modal/actions';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
 const Communities: React.FC = () => {
-  const listRef = useRef<any>();
   const headerRef = useRef<any>();
 
   const dispatch = useDispatch();
@@ -38,21 +32,13 @@ const Communities: React.FC = () => {
   const {rootNavigation} = useRootNavigation();
 
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [refreshing, setRefreshing] = useState(false);
 
   const myCommunities = useKeySelector(groupsKeySelector.joinedCommunities);
 
   useEffect(() => {
     getData();
   }, []);
-
-  useTabPressListener(
-    (tabName: ITabTypes) => {
-      if (tabName === 'groups') {
-        listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
-      }
-    },
-    [listRef],
-  );
 
   const handleBackPress = () => {
     headerRef?.current?.goBack?.();
@@ -61,7 +47,18 @@ const Communities: React.FC = () => {
   useBackPressListener(handleBackPress);
 
   const getData = () => {
-    dispatch(groupsActions.getMyCommunities());
+    dispatch(
+      groupsActions.getMyCommunities({
+        callback: () => {
+          setRefreshing(false);
+        },
+      }),
+    );
+  };
+
+  const onRefresh = () => {
+    setRefreshing(true);
+    getData();
   };
 
   const onShowSearch = (isShow: boolean) => {
@@ -135,6 +132,7 @@ const Communities: React.FC = () => {
         subTitle={description}
         style={styles.item}
         title={name}
+        testID={`community_${item.id}`}
         onPress={() => onPressCommunities(item)}
         ContentComponent={
           <View style={styles.groupInfo}>
@@ -168,15 +166,27 @@ const Communities: React.FC = () => {
       <View style={{flex: 1}}>
         <CommunityMenu selectedIndex={selectedIndex} onPress={onPress} />
         <FlatList
+          testID="flatlist"
           data={myCommunities}
           renderItem={renderItem}
           keyExtractor={(item, index) => `community_${item}_${index}`}
           ListEmptyComponent={renderEmptyComponent}
           ItemSeparatorComponent={() => (
-            <Divider horizontal color={theme.colors.placeholder} />
+            <Divider
+              style={{
+                marginVertical: theme.spacing?.margin.tiny,
+                marginHorizontal: theme.spacing.margin.large,
+              }}
+            />
           )}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+              tintColor={theme.colors.borderDisable}
+            />
+          }
         />
-        <Divider horizontal color={theme.colors.placeholder} />
       </View>
     </View>
   );
@@ -207,6 +217,7 @@ const themeStyles = (theme: ITheme) => {
     },
     item: {
       height: '100%',
+      flex: 1,
       paddingVertical: spacing.padding.small,
     },
     iconSmall: {

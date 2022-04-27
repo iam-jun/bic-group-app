@@ -1,13 +1,5 @@
-import React, {FC} from 'react';
-import {
-  View,
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
-  Share,
-  Platform,
-  ScrollView,
-} from 'react-native';
+import React from 'react';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -55,6 +47,7 @@ const CommunityMenu = ({
             styles.itemContainer,
             isSelected ? styles.itemSelectedContainer : {},
           ]}
+          testID={`item_community_data_${item.id}`}
           onPress={() => {
             onPress(item, index);
           }}>
