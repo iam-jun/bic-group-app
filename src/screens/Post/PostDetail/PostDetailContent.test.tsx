@@ -51,7 +51,7 @@ describe('PostDetailContent component', () => {
     const postViewPlaceholder = wrapper.queryAllByTestId(
       'post_view_placeholder',
     );
-    expect(postViewPlaceholder?.length)
+    expect(postViewPlaceholder?.length);
   });
 
   it('renders content correctly', () => {
