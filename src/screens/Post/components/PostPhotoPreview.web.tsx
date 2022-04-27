@@ -168,8 +168,8 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
             uploadType={uploadType}
             width={'100%'}
             height={'100%'}
-            fileName={data[0].origin_name}
-            url={data[0]?.url || data[0].name}
+            fileName={data?.[0].origin_name}
+            url={data?.[0]?.url || data?.[0].name}
           />
         </View>
         {data?.length > 1 && (
@@ -179,16 +179,16 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
               style={{flex: 1, flexDirection: isVertical ? 'column' : 'row'}}>
               {renderSmallImage(
                 data?.[1]?.origin_name || data?.[1]?.name,
-                data[1]?.url || data?.[1]?.name,
+                data?.[1]?.url || data?.[1]?.name,
               )}
               {renderSmallImage(
                 data?.[2]?.origin_name || data?.[2]?.name,
-                data[2]?.url || data?.[2]?.name,
+                data?.[2]?.url || data?.[2]?.name,
                 true,
               )}
               {renderSmallImage(
                 data?.[3]?.origin_name || data?.[3]?.name,
-                data[3]?.url || data?.[3]?.name,
+                data?.[3]?.url || data?.[3]?.name,
                 true,
                 data?.length > 4,
               )}
