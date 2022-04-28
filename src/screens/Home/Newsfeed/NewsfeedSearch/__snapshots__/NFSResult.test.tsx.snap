@@ -909,6 +909,7 @@ exports[`NFSResult component should render list search result 1`] = `
               "opacity": 1,
             }
           }
+          testID="post_view"
         >
           <View
             style={

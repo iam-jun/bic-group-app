@@ -59,6 +59,9 @@ export function titleCase(str: string | undefined) {
 
 export function parseSafe(str?: string) {
   let result;
+  if (typeof str === 'object') {
+    return str;
+  }
   if (str) {
     try {
       result = JSON.parse(str);
