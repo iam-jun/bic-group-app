@@ -42,10 +42,7 @@ const useNotificationSocket = () => {
   // load notifications again to get new unseen number (maybe increase maybe not if new activity is grouped)
   // with this, we also not to load notification again when access Notification screen
   const handleSocketNoti = (msg: string) => {
-    console.log(
-      `\x1b[36m🐣️ notificationSocket receive socket noti: \x1b[0m`,
-      msg?.slice?.(0, 30),
-    );
+    console.log(`\x1b[36m🐣️ notificationSocket receive socket noti \x1b[0m`);
     const msgData = parseSafe(msg);
     const data = msgData || {};
 
