@@ -26,20 +26,28 @@ exports[`Collapsible Text component renders correctly 1`] = `
 >
   <Text
     style={
-      Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 16,
-      }
-    }
-  >
-    <Text
-      style={
+      Array [
         Object {
           "color": "#2F3945",
           "fontFamily": "OpenSans-Regular",
           "fontSize": 16,
-        }
+        },
+        Object {},
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 16,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="collapsible_text.content"
     >
@@ -48,11 +56,17 @@ exports[`Collapsible Text component renders correctly 1`] = `
     <Text
       onPress={[Function]}
       style={
-        Object {
-          "color": "#007AFF",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 16,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 16,
+          },
+          Object {
+            "color": "#007AFF",
+          },
+          undefined,
+        ]
       }
       testID="collapsible_text.show_text"
     >
@@ -89,20 +103,28 @@ exports[`Collapsible Text component renders correctly testID 1`] = `
 >
   <Text
     style={
-      Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 16,
-      }
-    }
-  >
-    <Text
-      style={
+      Array [
         Object {
           "color": "#2F3945",
           "fontFamily": "OpenSans-Regular",
           "fontSize": 16,
-        }
+        },
+        Object {},
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 16,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="collapsible_text.content"
     >
@@ -111,11 +133,17 @@ exports[`Collapsible Text component renders correctly testID 1`] = `
     <Text
       onPress={[Function]}
       style={
-        Object {
-          "color": "#007AFF",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 16,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 16,
+          },
+          Object {
+            "color": "#007AFF",
+          },
+          undefined,
+        ]
       }
       testID="collapsible_text.show_text"
     >
@@ -206,20 +234,28 @@ exports[`Collapsible Text component should render full text when click read more
 >
   <Text
     style={
-      Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 16,
-      }
-    }
-  >
-    <Text
-      style={
+      Array [
         Object {
           "color": "#2F3945",
           "fontFamily": "OpenSans-Regular",
           "fontSize": 16,
-        }
+        },
+        Object {},
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 16,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="collapsible_text.content"
     >
@@ -229,11 +265,17 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
     <Text
       onPress={[Function]}
       style={
-        Object {
-          "color": "#007AFF",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 16,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 16,
+          },
+          Object {
+            "color": "#007AFF",
+          },
+          undefined,
+        ]
       }
       testID="collapsible_text.show_text"
     >
@@ -269,20 +311,28 @@ exports[`Collapsible Text component should render short text with a short length
 >
   <Text
     style={
-      Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 16,
-      }
-    }
-  >
-    <Text
-      style={
+      Array [
         Object {
           "color": "#2F3945",
           "fontFamily": "OpenSans-Regular",
           "fontSize": 16,
-        }
+        },
+        Object {},
+        undefined,
+      ]
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 16,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="collapsible_text.content"
     >
@@ -291,11 +341,17 @@ exports[`Collapsible Text component should render short text with a short length
     <Text
       onPress={[Function]}
       style={
-        Object {
-          "color": "#007AFF",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 16,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 16,
+          },
+          Object {
+            "color": "#007AFF",
+          },
+          undefined,
+        ]
       }
       testID="collapsible_text.show_text"
     >

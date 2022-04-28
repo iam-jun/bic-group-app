@@ -13,12 +13,17 @@ exports[`GroupAboutContent component should render group privacy item correctly 
 >
   <Text
     style={
-      Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-SemiBold",
-        "fontSize": 16,
-        "paddingVertical": 8,
-      }
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 16,
+        },
+        Object {},
+        Object {
+          "paddingVertical": 8,
+        },
+      ]
     }
   >
     Description
@@ -48,20 +53,28 @@ exports[`GroupAboutContent component should render group privacy item correctly 
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 16,
-        }
-      }
-    >
-      <Text
-        style={
+        Array [
           Object {
             "color": "#2F3945",
             "fontFamily": "OpenSans-Regular",
             "fontSize": 16,
-          }
+          },
+          Object {},
+          undefined,
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 16,
+            },
+            Object {},
+            undefined,
+          ]
         }
         testID="collapsible_text.content"
         textProps={
@@ -232,11 +245,15 @@ exports[`GroupAboutContent component should render group privacy item correctly 
         >
           <Text
             style={
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 16,
+                },
+                Object {},
+                undefined,
+              ]
             }
             testID="menu_item.title"
           />
@@ -512,22 +529,30 @@ exports[`GroupAboutContent component should render group privacy item correctly 
         >
           <Text
             style={
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 16,
+                },
+                Object {},
+                undefined,
+              ]
             }
             testID="menu_item.title"
           />
           <Text
             numberOfLines={2}
             style={
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 12,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-Regular",
+                  "fontSize": 12,
+                },
+                Object {},
+                undefined,
+              ]
             }
             testID="menu_item.sub_title"
           />
@@ -558,12 +583,17 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
 >
   <Text
     style={
-      Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-SemiBold",
-        "fontSize": 16,
-        "paddingVertical": 8,
-      }
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 16,
+        },
+        Object {},
+        Object {
+          "paddingVertical": 8,
+        },
+      ]
     }
   >
     Description
@@ -593,20 +623,28 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 16,
-        }
-      }
-    >
-      <Text
-        style={
+        Array [
           Object {
             "color": "#2F3945",
             "fontFamily": "OpenSans-Regular",
             "fontSize": 16,
-          }
+          },
+          Object {},
+          undefined,
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 16,
+            },
+            Object {},
+            undefined,
+          ]
         }
         testID="collapsible_text.content"
         textProps={
@@ -777,11 +815,15 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
         >
           <Text
             style={
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 16,
+                },
+                Object {},
+                undefined,
+              ]
             }
             testID="menu_item.title"
           />
@@ -1057,22 +1099,30 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
         >
           <Text
             style={
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 16,
+                },
+                Object {},
+                undefined,
+              ]
             }
             testID="menu_item.title"
           />
           <Text
             numberOfLines={2}
             style={
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 12,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-Regular",
+                  "fontSize": 12,
+                },
+                Object {},
+                undefined,
+              ]
             }
             testID="menu_item.sub_title"
           />

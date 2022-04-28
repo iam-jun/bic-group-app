@@ -10,24 +10,34 @@ exports[`ForgotInputId component renders correctly 1`] = `
 >
   <Text
     style={
-      Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-SemiBold",
-        "fontSize": 14,
-      }
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 14,
+        },
+        Object {},
+        undefined,
+      ]
     }
   >
     Forgot password
   </Text>
   <Text
     style={
-      Object {
-        "color": "#627286",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 16,
-        "marginBottom": 16,
-        "marginTop": 4,
-      }
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 16,
+        },
+        Object {},
+        Object {
+          "color": "#627286",
+          "marginBottom": 16,
+          "marginTop": 4,
+        },
+      ]
     }
   >
     As to get back your password, input your email
@@ -110,11 +120,17 @@ exports[`ForgotInputId component renders correctly 1`] = `
     />
     <Text
       style={
-        Object {
-          "color": "#DD2C3E",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 12,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 12,
+          },
+          Object {
+            "color": "#DD2C3E",
+          },
+          undefined,
+        ]
       }
       testID="text_input.text_helper"
     >
@@ -160,12 +176,19 @@ exports[`ForgotInputId component renders correctly 1`] = `
     >
       <Text
         style={
-          Object {
-            "color": "#B2BDCD",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
-            "textAlign": "center",
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#B2BDCD",
+            },
+            Object {
+              "textAlign": "center",
+            },
+          ]
         }
       >
         Send recover code

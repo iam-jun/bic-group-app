@@ -1,13 +1,9 @@
 import React from 'react';
-import {
-  Text as TextRN,
-  TextProps as RNTextProps,
-  StyleSheet,
-} from 'react-native';
+import {Text as TextRN, TextProps as RNTextProps} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
-import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
+import {ITheme} from '~/theme/interfaces';
 
 export type TextVariant =
   | 'h1'
@@ -50,9 +46,7 @@ const TextComponent: React.FC<TextProps> = ({
   const textStyle = styles[variant || 'body'];
 
   return (
-    <TextRN
-      {...props}
-      style={StyleSheet.flatten([textStyle, color ? {color} : {}, style])}>
+    <TextRN {...props} style={[textStyle, color ? {color} : {}, style]}>
       {useI18n ? t(children) : children}
     </TextRN>
   );

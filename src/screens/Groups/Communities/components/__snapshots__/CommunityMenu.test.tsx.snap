@@ -170,11 +170,17 @@ exports[`CommunityMenu component renders correctly 1`] = `
             </View>
             <Text
               style={
-                Object {
-                  "color": "#5D2C9A",
-                  "fontFamily": "OpenSans-Regular",
-                  "fontSize": 16,
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-Regular",
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "color": "#5D2C9A",
+                  },
+                  undefined,
+                ]
               }
             >
               Your Communities
@@ -329,11 +335,17 @@ exports[`CommunityMenu component renders correctly 1`] = `
             </View>
             <Text
               style={
-                Object {
-                  "color": "#627286",
-                  "fontFamily": "OpenSans-Regular",
-                  "fontSize": 16,
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-Regular",
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "color": "#627286",
+                  },
+                  undefined,
+                ]
               }
             >
               Manage
@@ -488,11 +500,17 @@ exports[`CommunityMenu component renders correctly 1`] = `
             </View>
             <Text
               style={
-                Object {
-                  "color": "#627286",
-                  "fontFamily": "OpenSans-Regular",
-                  "fontSize": 16,
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-Regular",
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "color": "#627286",
+                  },
+                  undefined,
+                ]
               }
             >
               Discover

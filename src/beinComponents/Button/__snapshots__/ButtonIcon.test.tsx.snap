@@ -313,13 +313,18 @@ exports[`ButtonDanger conponent renders label correctly 1`] = `
   </View>
   <Text
     style={
-      Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-SemiBold",
-        "fontSize": 12,
-        "marginTop": 8,
-        "textAlign": "center",
-      }
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 12,
+        },
+        Object {},
+        Object {
+          "marginTop": 8,
+          "textAlign": "center",
+        },
+      ]
     }
     testID="button_icon.label"
   >
