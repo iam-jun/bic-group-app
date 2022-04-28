@@ -220,6 +220,7 @@ const CommentDetailContent = (props: any) => {
     <View style={{flex: 1}}>
       <FlatList
         ref={listRef}
+        testID="list"
         data={childrenComments || []}
         renderItem={renderCommentItem}
         ListHeaderComponent={

@@ -2,13 +2,14 @@
 
 import React from 'react';
 
-import {cleanup} from '@testing-library/react-native';
+import {act, cleanup, wait} from '@testing-library/react-native';
 import initialState from '~/store/initialState';
 import {
   configureStore,
   createTestStore,
   fireEvent,
   renderWithRedux,
+  rerenderWithRedux,
 } from '~/test/testUtils';
 
 import CommentDetailContent from './CommentDetailContent';
@@ -19,6 +20,7 @@ import {
   allCommentsByParentIds,
   allCommentsByParentIdsWith1ChildComment,
 } from '~/test/mock_data/post';
+import modalActions from '~/store/modal/actions';
 
 afterEach(cleanup);
 
@@ -123,27 +125,20 @@ describe('CommentDetail screen', () => {
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(<CommentDetailContent {...props} />, store);
 
-    // expect(spy).toBeCalledWith({
-    //   postId: 302,
-    //   idLT: 505,
-    //   parentId: baseCommentData.id,
-    //   limit: 9,
-    //   isMerge: true,
-    //   position: 'bottom',
-    //   callbackLoading: loading => {
-    //     //do something
-    //   },
-    // });
     expect(spy).toBeCalledTimes(1);
   });
 
   it(`should render comment list when the list has been saved to redux and replyItem !== undefine`, async () => {
+    // jest.useFakeTimers();
     const spy = jest.spyOn(postActions, 'setPostDetailReplyingComment');
 
     const props = {
       route: {
         params: {
-          commentData: baseCommentData,
+          commentData: {
+            ...baseCommentData,
+            child: allCommentsByParentIds[302][0].child,
+          },
           postId: 302,
           replyItem: replyComment,
           commentParent: undefined,
@@ -151,22 +146,46 @@ describe('CommentDetail screen', () => {
       },
     };
 
-    storeData.post.allCommentsByParentIds =
-      allCommentsByParentIdsWith1ChildComment;
+    storeData.post.allCommentsByParentIds = allCommentsByParentIds;
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(<CommentDetailContent {...props} />, store);
 
-    // expect(spy).toBeCalledWith({
-    //   postId: 302,
-    //   idLT: 505,
-    //   parentId: baseCommentData.id,
-    //   limit: 9,
-    //   isMerge: true,
-    //   position: 'bottom',
-    //   callbackLoading: loading => {
-    //     //do something
-    //   },
-    // });
-    expect(spy).toBeCalledTimes(1);
+    jest.advanceTimersByTime(100);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it(`should show popup notice this comment is not found`, async () => {
+    const spy = jest.spyOn(modalActions, 'showAlert');
+
+    const props = {
+      route: {
+        params: {
+          commentData: {
+            ...baseCommentData,
+            child: allCommentsByParentIds[302][0].child,
+          },
+          postId: 302,
+          replyItem: replyComment,
+          commentParent: undefined,
+        },
+      },
+    };
+
+    storeData.post.allCommentsByParentIds = allCommentsByParentIds;
+    const store = createTestStore(storeData);
+
+    const wrapper = renderWithRedux(<CommentDetailContent {...props} />, store);
+
+    storeData.post.parentCommentIsDeleted = true;
+    const newStore = createTestStore(storeData);
+    rerenderWithRedux(wrapper, <CommentDetailContent {...props} />, newStore);
+
+    const flatList = wrapper.getByTestId('list');
+    const {refreshControl} = flatList.props;
+    act(() => {
+      refreshControl.props.onRefresh();
+    });
+
+    expect(spy).toBeCalled();
   });
 });
