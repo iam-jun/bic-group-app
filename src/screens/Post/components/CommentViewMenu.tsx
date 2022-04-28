@@ -95,6 +95,10 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
     }
   };
 
+  const _onPressCopyLink = () => {
+    dispatch(modalActions.hideModal());
+  };
+
   const renderReactItem = (item: any, index: number) => {
     return (
       <Button
@@ -138,6 +142,14 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
         leftIconProps={{icon: 'Copy', size: 24}}
         title={t('post:comment_menu_copy_text')}
         onPress={_onPressCopy}
+      />
+      <PrimaryItem
+        testID={'comment_view_menu.copy_link'}
+        style={styles.item}
+        leftIcon={'Copy'}
+        leftIconProps={{icon: 'Copy', size: 24}}
+        title={t('post:comment_menu_copy_link')}
+        onPress={_onPressCopyLink}
       />
       {isActor && (
         <PrimaryItem
