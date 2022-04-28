@@ -740,3 +740,195 @@ export const allCommentsByParentIdsWith1ChildComment = {
     },
   ],
 };
+
+export const baseCommentData = {
+  actor: {
+    avatar:
+      'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/acb214d0-ce96-41bb-aba6-fb5fc89f1afa.jpg',
+    fullname: 'Trần Nam Anh',
+    id: 2,
+    username: 'trannamanh',
+  },
+  child: [
+    {
+      totalReply: 0,
+      ownerReactions: [],
+      id: 505,
+      actor: {
+        id: 58,
+        username: 'thuquyen',
+        fullname: 'Nguyen Thi Thu Quyền',
+        avatar:
+          'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/3849e4fc-941f-4b2a-bce9-9da2069a2e55.jpg',
+      },
+      parentId: 490,
+      postId: 302,
+      content: '9',
+      createdAt: '2022-04-27T03:54:38.962Z',
+      updatedAt: '2022-04-27T03:54:38.962Z',
+      media: [],
+      reactionsCount: null,
+      mentions: [],
+      child: [],
+    },
+  ],
+  content: '.',
+  createdAt: '2022-04-26T09:25:02.870Z',
+  id: 490,
+  media: [],
+  mentions: [],
+  ownerReactions: [],
+  parentId: 0,
+  postId: 302,
+  reactionsCount: null,
+  totalReply: 12,
+  updatedAt: '2022-04-27T03:54:38.969Z',
+};
+
+export const POST_DETAIL_3 = {
+  ownerReactions: [],
+  id: 302,
+  content: 'Important post',
+  media: {
+    videos: [],
+    images: [],
+    files: [],
+  },
+  setting: {
+    canReact: true,
+    canComment: true,
+    canShare: true,
+    isImportant: true,
+    importantExpiredAt: '2022-04-20T11:07:08.129Z',
+  },
+  isDraft: false,
+  actor: {
+    id: 33,
+    username: 'ngoclinh',
+    fullname: 'Nguyễn Thị Ngọc Linh',
+    avatar:
+      'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg',
+  },
+  mentions: [],
+  commentsCount: 0,
+  reactionsCount: {},
+  createdAt: '2022-04-20T10:06:45.649Z',
+  createdBy: 33,
+  comments: {
+    list: [
+      {
+        totalReply: 3,
+        ownerReactions: [],
+        id: 490,
+        actor: {
+          id: 2,
+          username: 'trannamanh',
+          fullname: 'Trần Nam Anh',
+          avatar:
+            'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/acb214d0-ce96-41bb-aba6-fb5fc89f1afa.jpg',
+        },
+        parentId: 0,
+        postId: 302,
+        content: '.',
+        createdAt: '2022-04-26T09:25:02.870Z',
+        updatedAt: '2022-04-27T03:38:29.471Z',
+        media: [],
+        reactionsCount: null,
+        mentions: [],
+        child: [
+          {
+            totalReply: 0,
+            ownerReactions: [],
+            id: 505,
+            actor: {
+              id: 58,
+              username: 'thuquyen',
+              fullname: 'Nguyen Thi Thu Quyền',
+              avatar:
+                'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/3849e4fc-941f-4b2a-bce9-9da2069a2e55.jpg',
+            },
+            parentId: 490,
+            postId: 302,
+            content: '9',
+            createdAt: '2022-04-27T03:54:38.962Z',
+            updatedAt: '2022-04-27T03:54:38.962Z',
+            media: [],
+            reactionsCount: null,
+            mentions: [],
+            child: [],
+          },
+          {
+            totalReply: 0,
+            ownerReactions: [],
+            id: 496,
+            actor: {
+              id: 58,
+              username: 'thuquyen',
+              fullname: 'Nguyen Thi Thu Quyền',
+              avatar:
+                'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/3849e4fc-941f-4b2a-bce9-9da2069a2e55.jpg',
+            },
+            parentId: 490,
+            postId: 302,
+            content: 'Hihi',
+            createdAt: '2022-04-27T03:38:29.463Z',
+            updatedAt: '2022-04-27T03:38:29.463Z',
+            media: [],
+            reactionsCount: null,
+            mentions: {},
+          },
+          {
+            totalReply: 0,
+            ownerReactions: [],
+            id: 495,
+            actor: {
+              id: 58,
+              username: 'thuquyen',
+              fullname: 'Nguyen Thi Thu Quyền',
+              avatar:
+                'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/3849e4fc-941f-4b2a-bce9-9da2069a2e55.jpg',
+            },
+            parentId: 490,
+            postId: 302,
+            content: 'Ola',
+            createdAt: '2022-04-27T03:38:25.693Z',
+            updatedAt: '2022-04-27T03:38:25.693Z',
+            media: [],
+            reactionsCount: null,
+            mentions: {},
+          },
+          {
+            totalReply: 0,
+            ownerReactions: [],
+            id: 494,
+            actor: {
+              id: 58,
+              username: 'thuquyen',
+              fullname: 'Nguyen Thi Thu Quyền',
+              avatar:
+                'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/3849e4fc-941f-4b2a-bce9-9da2069a2e55.jpg',
+            },
+            parentId: 490,
+            postId: 302,
+            content: '@trannamanh alo',
+            createdAt: '2022-04-27T03:38:21.809Z',
+            updatedAt: '2022-04-27T03:38:21.809Z',
+            media: [],
+            reactionsCount: null,
+            mentions: {},
+          },
+        ],
+      },
+    ],
+  },
+  audience: {
+    groups: [
+      {
+        id: 1,
+        name: 'EVOL Community',
+        icon: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/avatar/Avatar_Group.png',
+        child: [139, 2, 10, 152, 66, 67, 103, 2, 2],
+      },
+    ],
+  },
+};
