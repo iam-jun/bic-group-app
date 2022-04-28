@@ -150,6 +150,25 @@ describe('PostView Component', () => {
     expect(callback).toBeCalled();
   });
 
+  it('press comment should navigate to post detail', () => {
+    const navigate = jest.fn();
+    const rootNavigation = {navigate};
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
+      return {rootNavigation} as any;
+    });
+    const store = createTestStore(state);
+    const wrapper = renderWithRedux(
+      <PostView
+        postId={POST_DETAIL.id}
+        btnCommentTestID={'btnCommentTestID'}
+      />,
+      store,
+    );
+    const btn = wrapper.getByTestId('btnCommentTestID');
+    fireEvent.press(btn);
+    expect(navigate).toBeCalled();
+  });
+
   it('press header should call prop onPressHeader', () => {
     const callback = jest.fn();
     const store = createTestStore(state);
@@ -160,6 +179,22 @@ describe('PostView Component', () => {
     const btn = wrapper.getByTestId('post_view_header');
     fireEvent.press(btn);
     expect(callback).toBeCalled();
+  });
+
+  it('press header should call navigate to post detail', () => {
+    const navigate = jest.fn();
+    const rootNavigation = {navigate};
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
+      return {rootNavigation} as any;
+    });
+    const store = createTestStore(state);
+    const wrapper = renderWithRedux(
+      <PostView postId={POST_DETAIL.id} />,
+      store,
+    );
+    const btn = wrapper.getByTestId('post_view_header');
+    fireEvent.press(btn);
+    expect(navigate).toBeCalled();
   });
 
   it('press audience should dispatch show audiences', () => {

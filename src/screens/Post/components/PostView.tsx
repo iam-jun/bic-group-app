@@ -62,7 +62,7 @@ export interface PostViewProps {
 
 const _PostView: FC<PostViewProps> = ({
   style,
-  testID,
+  testID = 'post_view',
   postId,
   isPostDetail = false,
   onPressComment,
