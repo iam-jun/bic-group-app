@@ -396,11 +396,15 @@ exports[`CreatePostFooter component renders correctly 1`] = `
       >
         <Text
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 16,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 16,
+              },
+              Object {},
+              undefined,
+            ]
           }
         >
           Review Markdown
@@ -440,12 +444,19 @@ exports[`CreatePostFooter component renders correctly 1`] = `
           >
             <Text
               style={
-                Object {
-                  "color": "#7843DD",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 16,
-                  "textAlign": "center",
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "color": "#7843DD",
+                  },
+                  Object {
+                    "textAlign": "center",
+                  },
+                ]
               }
             >
               Done
@@ -569,11 +580,15 @@ exports[`CreatePostFooter component renders correctly 1`] = `
           <View>
             <Text
               style={
-                Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 14,
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 14,
+                  },
+                  Object {},
+                  undefined,
+                ]
               }
             />
             <View
@@ -585,23 +600,34 @@ exports[`CreatePostFooter component renders correctly 1`] = `
             >
               <Text
                 style={
-                  Object {
-                    "color": "#627286",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 14,
-                    "marginRight": 4,
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 14,
+                    },
+                    Object {
+                      "color": "#627286",
+                    },
+                    Object {
+                      "marginRight": 4,
+                    },
+                  ]
                 }
               >
                 to
               </Text>
               <Text
                 style={
-                  Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 14,
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 14,
+                    },
+                    Object {},
+                    undefined,
+                  ]
                 }
               >
                 

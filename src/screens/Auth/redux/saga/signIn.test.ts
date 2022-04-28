@@ -3,9 +3,9 @@ import {expectSaga} from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import signIn from './signIn';
 import actions from '../actions';
-import {throwError} from 'redux-saga-test-plan/providers';
 import {Auth} from 'aws-amplify';
 import notificationsActions from '~/screens/Notification/redux/actions';
+import {authErrors} from '~/constants/authConstants';
 
 describe('signIn Saga', () => {
   let Platform: any;
@@ -22,17 +22,24 @@ describe('signIn Saga', () => {
   });
 
   it('signIn should be called to server failure', () => {
+    jest.spyOn(Auth, 'signIn').mockImplementation(() => {
+      return Promise.reject({
+        code: authErrors.NOT_AUTHORIZED_EXCEPTION,
+      });
+    });
+
     return expectSaga(signIn, action)
+      .put(actions.setLoading(true))
+      .put(actions.setSigningInError(''))
+      .put(notificationsActions.savePushToken(''))
       .provide([
         [
           matchers.call.fn(Auth.signIn),
-          //@ts-ignore
-          throwError({code: 'NotAuthorizedException'}),
+          Promise.reject({code: authErrors.LIMIT_EXCEEDED_EXCEPTION}),
         ],
       ])
-      .put(actions.setLoading(true))
-      .put(actions.setSigningInError(''))
-      .put(actions.setSigningInError(`Authentication Error`))
+      .put(actions.setLoading(false))
+      .put(actions.setSigningInError(`Email and password doesn't match.`))
       .run();
   });
 
