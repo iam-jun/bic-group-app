@@ -134,6 +134,8 @@ jest.doMock('aws-amplify', () => {
     ...RealModule,
     // eslint-disable-next-line react/prop-types
     Auth: {
+      ...RealModule.Auth,
+      signIn: jest.fn(),
       forgotPassword: jest.fn(),
       forgotPasswordSubmit: jest.fn(),
     },
