@@ -32,7 +32,14 @@ describe('CreatePost helper', () => {
   });
 
   it('validateImages: validate picked 1 image upload success', () => {
-    0;
+    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
+      return {
+        getFile: jest.fn().mockImplementation(() => ({url: imageUrl})),
+      } as any;
+    });
+
+    const result = validateImages([imagePicked] as any, t);
+    expect(result).toEqual({images: [fileValidated], imageError: ''});
   });
 
   it('validateImages: validate picked 1 image uploading', () => {

@@ -25,7 +25,9 @@ describe('GeneralInformation component', () => {
 
   it('renders correctly', () => {
     const rendered = renderWithRedux(<MockedNavigator component={component} />);
-    expect(rendered).toMatchSnapshot();
+    const screenComponent = rendered.queryByTestId('general_information');
+
+    expect(screenComponent).not.toBeNull();
   });
 
   it('should call onEditAvatar when press edit avatar', () => {
