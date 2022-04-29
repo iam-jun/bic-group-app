@@ -4,7 +4,8 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import removeGroupAdmin from './removeGroupAdmin';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
-import {refreshGroupMembers, showError} from '.';
+import {refreshGroupMembers} from '.';
+import showError from '~/store/commonSaga/showError';
 
 describe('Remove group admin', () => {
   const action = {type: 'test', payload: {groupId: 1, userId: 1}};
