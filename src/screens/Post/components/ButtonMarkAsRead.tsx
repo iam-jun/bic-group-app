@@ -54,8 +54,11 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
   };
 
   return (
-    <View style={[styles.container, style]}>
+    <View
+      testID={'button_mark_as_read.container'}
+      style={[styles.container, style]}>
       <Button.Secondary
+        testID={'button_mark_as_read.button'}
         loading={loading}
         color={colors.bgSecondary}
         textColor={colors.textPrimary}
