@@ -4,6 +4,7 @@ import {cleanup} from '@testing-library/react-native';
 import {renderWithRedux, fireEvent} from '~/test/testUtils';
 import NormalToastMessage from './NormalToastMessage';
 import {colors} from '~/theme';
+import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);
 
@@ -53,7 +54,8 @@ describe('NormalToastMessage component', () => {
       </NormalToastMessage>,
     );
     const childrenComponent = getByTestId('normal_toast_message.children');
-    expect(childrenComponent.props.style.fontSize).toBe(20);
+    const flattenedStyle = StyleSheet.flatten(childrenComponent.props.style);
+    expect(flattenedStyle.fontSize).toBe(20);
   });
 
   it(`renders container style correctly`, () => {
@@ -153,7 +155,8 @@ describe('NormalToastMessage component', () => {
     );
 
     const textComponent = getByTestId('normal_toast_message.right_text');
-    expect(textComponent.props.style.color).toEqual('red');
+    const flattenedStyle = StyleSheet.flatten(textComponent.props.style);
+    expect(flattenedStyle.color).toEqual('red');
   });
 
   it(`renders rightTextStyle correctly`, () => {
@@ -166,7 +169,8 @@ describe('NormalToastMessage component', () => {
       </NormalToastMessage>,
     );
     const childrenComponent = getByTestId('normal_toast_message.right_text');
-    expect(childrenComponent.props.style.textDecorationColor).toBe('black');
+    const flattenedStyle = StyleSheet.flatten(childrenComponent.props.style);
+    expect(flattenedStyle.textDecorationColor).toBe('black');
   });
 
   it(`renders rightTextProps correctly`, () => {

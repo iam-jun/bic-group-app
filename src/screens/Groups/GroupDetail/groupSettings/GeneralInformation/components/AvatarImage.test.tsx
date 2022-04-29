@@ -40,8 +40,8 @@ describe('AvatarImage component', () => {
     const rendered = renderWithRedux(<AvatarImage {...baseProps} />, store);
 
     const imageComponent = rendered.getByTestId('avatar.image');
-    const loadingComponent = rendered.findByTestId('avatar.loading');
-    expect(loadingComponent).not.toBe({});
+    const loadingComponent = rendered.queryByTestId('avatar.loading');
+    expect(loadingComponent).toBeNull();
     expect(imageComponent).toBeDefined();
   });
 
