@@ -1,7 +1,7 @@
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import showError from '~/store/commonSaga/showError';
 import {IPayloadPutMarkAsRead} from '~/interfaces/IPost';
-import {put, select} from 'redux-saga/effects';
+import {call, put, select} from 'redux-saga/effects';
 import {get} from 'lodash';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
@@ -18,7 +18,7 @@ function* putMarkAsRead({
     return;
   }
   try {
-    const response = yield postDataHelper.putMarkAsRead(postId);
+    const response = yield call(postDataHelper.putMarkAsRead, postId);
     const isSuccess = !!response?.data;
     callback?.(isSuccess);
     if (isSuccess) {
