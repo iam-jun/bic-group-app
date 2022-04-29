@@ -98,7 +98,7 @@ const Communities: React.FC = () => {
   };
 
   const onPressCommunities = (item: any) => {
-    rootNavigation.navigate(groupStack.groups, {
+    rootNavigation.navigate(groupStack.communityDetail, {
       communityId: item?.id || 0,
     });
   };

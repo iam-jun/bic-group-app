@@ -1,10 +1,11 @@
-export type PRIVACY_TYPE = 'PUBLIC' | 'PRIVATE' | 'SECRET';
+export type PRIVACY_TYPE = 'PUBLIC' | 'PRIVATE' | 'SECRET' | 'OPEN';
 export type GROUP_TYPE = 'GENERIC' | 'COMMUNITY' | 'COMPANY';
 
 export const groupPrivacy = {
   public: 'PUBLIC',
   private: 'PRIVATE',
   secret: 'SECRET',
+  open: 'OPEN',
 };
 
 export default [
@@ -25,8 +26,15 @@ export default [
   {
     type: 'SECRET',
     title: 'settings:title_secret',
-    icon: 'EyeSlash',
+    icon: 'iconSecret',
     subtitle: 'settings:title_secret_subtitle',
     groupTitle: 'settings:group_title_secret',
+  },
+  {
+    type: 'OPEN',
+    title: 'settings:title_open',
+    icon: 'Eye',
+    subtitle: 'settings:title_open_subtitle',
+    groupTitle: 'settings:group_title_open',
   },
 ];

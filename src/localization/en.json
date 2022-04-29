@@ -280,6 +280,7 @@
     "text_learn_more": "Learn more",
     "title_secret": "Secret",
     "title_secret_subtitle": "Group is invisible to everyone and members are invited.",
+    "title_open": "Open",
     "title_edit_description": "Edit Description",
     "title_logout_from_all_devices": "Logout from all devices",
     "title_edit_basic_info": "Edit Basic Info",
@@ -336,7 +337,8 @@
     "title_help_and_support": "Help & Support",
     "group_title_public": "Public Group",
     "group_title_private": "Private Group",
-    "group_title_secret": "Secret Group"
+    "group_title_secret": "Secret Group",
+    "group_title_open": "Open Group"
   },
   "languages": {
     "title_en": "English",
@@ -525,10 +527,10 @@
     "auto_saved": "Post auto-saved",
     "saved_to_draft": "Post Saved to Draft.",
     "text_review_markdown": "Review Markdown",
-    "text_comment_deleted":"Comment doesn’t exist, can not send your reply",
-    "deleted_comment":{
+    "text_comment_deleted": "Comment doesn’t exist, can not send your reply",
+    "deleted_comment": {
       "title": "This page is not existing.",
-      "description":"It might be deleted or you don't have permission to see it",
+      "description": "It might be deleted or you don't have permission to see it",
       "button_text": "Back to Post"
     }
   },
@@ -732,16 +734,18 @@
       "desc": "Please re-login to continue"
     }
   },
-  "communities":{
-    "empty_communities":{
+  "communities": {
+    "empty_communities": {
       "title": "No communities found",
       "description": "Discover communities to join one.",
-      "button_text":"Go to Discover"
+      "button_text": "Go to Discover"
     },
-    "community_menu":{
+    "community_menu": {
       "your_communities_text": "Your Communities",
-      "manage_text":"Manage",
-      "discover_text":"Discover"
-    }
+      "manage_text": "Manage",
+      "discover_text": "Discover"
+    },
+    "text_join_community_button": "Join this community",
+    "text_join_community_description": "Join this community to view or participate on discussions"
   }
 }

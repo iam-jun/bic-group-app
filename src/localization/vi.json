@@ -225,6 +225,7 @@
     "title_private_subtitle": "Group's content show to only members.\nLearn more",
     "title_secret": "Secret",
     "title_secret_subtitle": "This group is secret. Learn more",
+    "title_open": "Mở",
     "title_edit_description": "Chỉnh sửa Mô tả",
     "title_logout_from_all_devices": "Đăng xuất khỏi tất cả thiết bị",
     "title_edit_basic_info": "Chỉnh sửa Thông tin cơ bản",
@@ -280,7 +281,8 @@
     "title_help_and_support": "Trợ giúp & hỗ trợ",
     "group_title_public": "Nhóm công khai",
     "group_title_private": "Nhóm kín",
-    "group_title_secret": "Nhóm kín"
+    "group_title_secret": "Nhóm kín",
+    "group_title_open": "Nhóm mở"
   },
   "languages": {
     "title_en": "English",
@@ -470,10 +472,10 @@
     "auto_saved": "Bài viết đã lưu tự động",
     "saved_to_draft": "Bài viết đã lưu vào nháp.",
     "text_review_markdown": "Xem trước nội dung",
-    "text_comment_deleted":"Bình luận này đã bị xoá, không thể gửi bình luận trả lời của bạn",
-      "deleted_comment":{
+    "text_comment_deleted": "Bình luận này đã bị xoá, không thể gửi bình luận trả lời của bạn",
+    "deleted_comment": {
       "title": "Trang này không tồn tại.",
-      "description":"Bình luận này có thể bị xóa hoặc bạn không có quyền xem bình luận này",
+      "description": "Bình luận này có thể bị xóa hoặc bạn không có quyền xem bình luận này",
       "button_text": "Quay về Bài viết"
     }
   },
@@ -610,16 +612,16 @@
       "desc": "Vui lòng đăng nhập lại"
     }
   },
-    "communities":{
-    "empty_communities":{
+  "communities": {
+    "empty_communities": {
       "title": "Không tìm thấy cộng đồng nào",
       "description": "Khám phá các cộng đồng để tham gia một cộng đồng.",
-      "button_text":"Đi tới Khám phá"
+      "button_text": "Đi tới Khám phá"
     },
-    "community_menu":{
+    "community_menu": {
       "your_communities_text": "Cộng đồng của bạn",
-      "manage_text":"Đang quản lý",
-      "discover_text":"Khám phá"
+      "manage_text": "Đang quản lý",
+      "discover_text": "Khám phá"
     }
   }
 }
