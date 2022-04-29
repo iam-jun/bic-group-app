@@ -38,7 +38,6 @@ function* getCommentsByPostId({
           newAllComments.push(c);
           newAllComments = newAllComments.concat(c?.child || []);
         });
-
         yield put(postActions.addToAllComments(newAllComments));
         yield put(
           postActions.updateAllCommentsByParentIdsWithComments(payload),
