@@ -40,8 +40,8 @@ describe('CoverImage component', () => {
     const rendered = renderWithRedux(<CoverImage {...baseProps} />, store);
 
     const imageComponent = rendered.getByTestId('cover.image');
-    const loadingComponent = rendered.findByTestId('cover.loading');
-    expect(loadingComponent).not.toBe({});
+    const loadingComponent = rendered.queryByTestId('cover.loading');
+    expect(loadingComponent).toBeNull();
     expect(imageComponent).toBeDefined();
   });
 

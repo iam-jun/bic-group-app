@@ -6,7 +6,7 @@ import {
   configureStore,
   createTestStore,
 } from '~/test/testUtils';
-import {Platform, View, TouchableOpacity} from 'react-native';
+import {Platform, View, TouchableOpacity, StyleSheet} from 'react-native';
 import Header from '~/beinComponents/Header';
 import initialState from '~/store/initialState';
 import images from '~/resources/images';
@@ -104,7 +104,8 @@ describe('Header component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
     const titleComponent = rendered.getByTestId('header.text');
     expect(titleComponent.props.children).toBe('Title');
-    expect(titleComponent.props.style).toMatchObject({color: '#421187'});
+    const flattenedStyle = StyleSheet.flatten(titleComponent.props.style);
+    expect(flattenedStyle).toMatchObject({color: '#421187'});
   });
 
   it(`renders correctly with props sub title`, () => {
@@ -121,7 +122,8 @@ describe('Header component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
     const subTitleComponent = rendered.getByTestId('header.subTitle');
     expect(subTitleComponent.props.children).toBe('Sub Title');
-    expect(subTitleComponent.props.style).toMatchObject({color: '#421187'});
+    const flattenedStyle = StyleSheet.flatten(subTitleComponent.props.style);
+    expect(flattenedStyle).toEqual(expect.objectContaining({color: '#421187'}));
   });
 
   it(`renders correctly with props avatar`, () => {
