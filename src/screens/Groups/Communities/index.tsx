@@ -145,7 +145,9 @@ const Communities: React.FC = () => {
             <Text.Subtitle useI18n>{privacyTitle}</Text.Subtitle>
             <Text.Subtitle> • </Text.Subtitle>
             <Text.BodySM>{user_count}</Text.BodySM>
-            <Text.Subtitle>{` ${t('groups:text_members')}`}</Text.Subtitle>
+            <Text.Subtitle>{` ${t('groups:text_members', {
+              count: user_count,
+            })}`}</Text.Subtitle>
           </View>
         }
         onPressMenu={onPressMenu}

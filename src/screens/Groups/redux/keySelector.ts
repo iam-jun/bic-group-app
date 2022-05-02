@@ -24,6 +24,7 @@ const groupsKeySelector = {
   loadingCover: 'groups.loadingCover',
   joinedCommunities: 'groups.communities.data',
   loadingCommunities: 'groups.communities.loading',
+  communityDetail: 'groups.communityDetail',
 };
 
 export default groupsKeySelector;

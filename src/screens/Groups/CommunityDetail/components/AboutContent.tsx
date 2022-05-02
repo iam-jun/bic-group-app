@@ -7,42 +7,46 @@ import Text from '~/beinComponents/Text';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import {ITheme} from '~/theme/interfaces';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '../../redux/keySelector';
+import privacyTypes from '~/constants/privacyTypes';
 
 const AboutContent = () => {
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
+  const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
+  const {description, user_count, privacy} = infoDetail;
+  const privacyData = privacyTypes.find(item => item?.type === privacy) || {};
+  const {icon: iconPrivacy, privacyTitle}: any = privacyData || {};
 
   return (
     <View style={styles.container}>
-      <View style={styles.descriptionSection}>
-        <Text.BodyM style={styles.titleDescription} useI18n>
-          common:text_description
-        </Text.BodyM>
-        <CollapsibleText
-          limitLength={200}
-          shortLength={200}
-          textProps={{variant: 'body'}}
-          content={`Tech People Working on Bein platform
-Đây là Text và hình ảnh. Erat sed có quá nhiều vấn đề sed fermentum ipsum vel quis quam. Nu Tech People Working on Bein platform
-Đây là Text và hình ảnh. Erat sed có quá nhiều vấn đề sed fermentum ipsum vel quis quam. Nu Tech People Working on Bein platform
-Đây là Text và hình ảnh. Erat sed có quá nhiều vấn đề sed fermentum ipsum vel quis quam. Nu Tech People Working on Bein platform
-Đây là Text và hình ảnh. Erat sed có quá nhiều vấn đề sed fermentum ipsum vel quis quam. Nu Tech People Working on Bein platform
-Đây là Text và hình ảnh. Erat sed có quá nhiều vấn đề sed fermentum ipsum vel quis quam. Nu Tech People Working on Bein platform
-Đây là Text và hình ảnh. Erat sed có quá nhiều vấn đề sed fermentum ipsum vel quis quam. Nu Tech People Working on Bein platform
-Đây là Text và hình ảnh. Erat sed có quá nhiều vấn đề sed fermentum ipsum vel quis quam. Nu Tech People Working on Bein platform
-`}
-        />
-      </View>
+      {!!description && (
+        <View style={styles.descriptionSection}>
+          <Text.BodyM style={styles.titleDescription} useI18n>
+            common:text_description
+          </Text.BodyM>
+          <CollapsibleText
+            limitLength={200}
+            shortLength={200}
+            textProps={{variant: 'body'}}
+            content={description}
+          />
+        </View>
+      )}
+
       <MenuItem
         testID="about_content.privacy"
-        icon={'LockAlt'}
-        title={i18next.t('Private')}
+        icon={iconPrivacy}
+        title={i18next.t(privacyTitle)}
         disabled
       />
       <MenuItem
         testID="about_content.privacy"
         icon={'UsersAlt'}
-        title={i18next.t('123.345 members')}
+        title={`${user_count} ${i18next.t('groups:text_members', {
+          count: user_count,
+        })}`}
         disabled
       />
     </View>

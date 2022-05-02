@@ -279,10 +279,10 @@
     "title_set_a_custom_status": "Tuỳ chỉnh trạng thái",
     "title_about_bein_app": "Giới thiệu",
     "title_help_and_support": "Trợ giúp & hỗ trợ",
-    "group_title_public": "Nhóm công khai",
-    "group_title_private": "Nhóm kín",
-    "group_title_secret": "Nhóm kín",
-    "group_title_open": "Nhóm mở"
+    "privacy_public": "Nhóm công khai",
+    "privacy_private": "Nhóm riêng tư",
+    "privacy_secret": "Nhóm kín",
+    "privacy_open": "Nhóm mở"
   },
   "languages": {
     "title_en": "English",
@@ -521,7 +521,8 @@
       "btn_members": "Thành viên",
       "btn_files": "Files"
     },
-    "text_members": "thành viên",
+    "text_members_one": "thành viên",
+    "text_members_other": "thành viên",
     "search_results": "Kết quả tìm kiếm",
     "all_groups": "Tất cả",
     "group_menu": {

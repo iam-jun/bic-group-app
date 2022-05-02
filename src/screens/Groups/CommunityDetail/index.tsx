@@ -1,7 +1,6 @@
 import React, {useEffect, Fragment} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
 
@@ -19,8 +18,10 @@ const CommunityDetail = (props: any) => {
   const styles = themeStyles(theme);
 
   const getCommunityDetail = () => {
-    dispatch(actions.getCommunityDetail(communityId, true));
+    dispatch(actions.getCommunityDetail(communityId));
   };
+
+  useEffect(() => getCommunityDetail(), [communityId]);
 
   const renderCommunityContent = () => {
     return <PrivateWelcome />;
@@ -50,8 +51,7 @@ const CommunityDetail = (props: any) => {
 export default CommunityDetail;
 
 const themeStyles = (theme: ITheme) => {
-  const insets = useSafeAreaInsets();
-  const {colors, dimension, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     screenContainer: {
       backgroundColor: colors.background,

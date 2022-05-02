@@ -335,10 +335,10 @@
     "title_set_a_custom_status": "Set a custom status",
     "title_about_bein_app": "About Bein App",
     "title_help_and_support": "Help & Support",
-    "group_title_public": "Public Group",
-    "group_title_private": "Private Group",
-    "group_title_secret": "Secret Group",
-    "group_title_open": "Open Group"
+    "privacy_public": "Public",
+    "privacy_private": "Private",
+    "privacy_secret": "Secret",
+    "privacy_open": "Open"
   },
   "languages": {
     "title_en": "English",
@@ -576,7 +576,8 @@
       "btn_members": "Members",
       "btn_files": "Files"
     },
-    "text_members": "members",
+    "text_members_one": "member",
+    "text_members_other": "members",
     "search_results": "Search results",
     "all_groups": "All groups",
     "text_invite_members": "Invite members",
