@@ -246,3 +246,242 @@ export const GROUP_AUDIENCE = {
   testID: 'post_select_audience.groups.item',
   isChecked: false,
 };
+
+export const CHILD_COMMENT = {
+  totalReply: 0,
+  ownerReactions: [],
+  id: 494,
+  actor: {
+    id: 58,
+    username: 'thuquyen',
+    fullname: 'Nguyen Thi Thu Quyền',
+    avatar:
+      'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/3849e4fc-941f-4b2a-bce9-9da2069a2e55.jpg',
+  },
+  parentId: 490,
+  postId: 302,
+  content: '@trannamanh alo',
+  createdAt: '2022-04-27T03:38:21.809Z',
+  updatedAt: '2022-04-27T03:38:21.809Z',
+  media: [],
+  reactionsCount: null,
+  mentions: [],
+  child: [],
+};
+
+export const LIST_CHILD_COMMENT = [
+  CHILD_COMMENT,
+  {
+    ...CHILD_COMMENT,
+    id: 495,
+    content: 'Ola',
+    createdAt: '2022-04-27T03:38:25.693Z',
+    updatedAt: '2022-04-27T03:38:25.693Z',
+  },
+];
+
+export const allCommentsByParentIds = {
+  302: [
+    {
+      ...CHILD_COMMENT,
+      totalReply: 3,
+      id: 490,
+      parentId: 0,
+      content: '.',
+      createdAt: '2022-04-26T09:25:02.870Z',
+      updatedAt: '2022-04-27T03:38:29.471Z',
+      child: [
+        {
+          ...CHILD_COMMENT,
+          id: 505,
+          content: '9',
+          createdAt: '2022-04-27T03:54:38.962Z',
+          updatedAt: '2022-04-27T03:54:38.962Z',
+        },
+        {
+          ...CHILD_COMMENT,
+          id: 496,
+          content: 'Hihi',
+        },
+        {
+          ...CHILD_COMMENT,
+          id: 495,
+          content: 'Ola',
+          createdAt: '2022-04-27T03:38:25.693Z',
+          updatedAt: '2022-04-27T03:38:25.693Z',
+        },
+        CHILD_COMMENT,
+      ],
+    },
+    {
+      ...CHILD_COMMENT,
+      id: 485,
+      parentId: 0,
+      content: '2',
+      createdAt: '2022-04-26T07:02:25.251Z',
+      updatedAt: '2022-04-26T07:02:25.251Z',
+    },
+    {
+      ...CHILD_COMMENT,
+      parentId: 0,
+      id: 484,
+      content: '1',
+      createdAt: '2022-04-26T07:02:20.368Z',
+      updatedAt: '2022-04-26T07:02:20.368Z',
+    },
+  ],
+};
+
+export const allCommentsByParentIdsWith1ChildComment = {
+  302: [
+    {
+      ...CHILD_COMMENT,
+      totalReply: 3,
+      id: 490,
+      parentId: 0,
+      content: '.',
+      createdAt: '2022-04-26T09:25:02.870Z',
+      updatedAt: '2022-04-27T03:38:29.471Z',
+      child: [
+        {
+          ...CHILD_COMMENT,
+          id: 505,
+          content: '9',
+          createdAt: '2022-04-27T03:54:38.962Z',
+          updatedAt: '2022-04-27T03:54:38.962Z',
+        },
+      ],
+    },
+    {
+      ...CHILD_COMMENT,
+      id: 485,
+      parentId: 0,
+      content: '2',
+      createdAt: '2022-04-26T07:02:25.251Z',
+      updatedAt: '2022-04-26T07:02:25.251Z',
+    },
+    {
+      ...CHILD_COMMENT,
+      id: 484,
+      parentId: 0,
+      content: '1',
+      createdAt: '2022-04-26T07:02:20.368Z',
+      updatedAt: '2022-04-26T07:02:20.368Z',
+    },
+  ],
+};
+
+export const allCommentsArray = [
+  {...allCommentsByParentIdsWith1ChildComment[302][0]},
+  {...allCommentsByParentIdsWith1ChildComment[302][0].child[0]},
+  {...allCommentsByParentIdsWith1ChildComment[302][0].child[1]},
+  {...allCommentsByParentIdsWith1ChildComment[302][0].child[2]},
+  {...allCommentsByParentIdsWith1ChildComment[302][1]},
+  {...allCommentsByParentIdsWith1ChildComment[302][2]},
+];
+
+export const baseCommentData = {
+  ...CHILD_COMMENT,
+  child: [
+    {
+      ...CHILD_COMMENT,
+      id: 505,
+      content: '9',
+      createdAt: '2022-04-27T03:54:38.962Z',
+      updatedAt: '2022-04-27T03:54:38.962Z',
+    },
+  ],
+  content: '.',
+  createdAt: '2022-04-26T09:25:02.870Z',
+  id: 490,
+  parentId: 0,
+  totalReply: 12,
+  updatedAt: '2022-04-27T03:54:38.969Z',
+};
+
+export const POST_DETAIL_3 = {
+  ownerReactions: [],
+  id: 302,
+  content: 'Important post',
+  media: {
+    videos: [],
+    images: [],
+    files: [],
+  },
+  setting: {
+    canReact: true,
+    canComment: true,
+    canShare: true,
+    isImportant: true,
+    importantExpiredAt: '2022-04-20T11:07:08.129Z',
+  },
+  isDraft: false,
+  actor: {
+    id: 33,
+    username: 'ngoclinh',
+    fullname: 'Nguyễn Thị Ngọc Linh',
+    avatar:
+      'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg',
+  },
+  mentions: [],
+  commentsCount: 0,
+  reactionsCount: {},
+  createdAt: '2022-04-20T10:06:45.649Z',
+  createdBy: 33,
+  comments: {
+    list: [
+      {
+        totalReply: 3,
+        ownerReactions: [],
+        id: 490,
+        actor: {
+          id: 2,
+          username: 'trannamanh',
+          fullname: 'Trần Nam Anh',
+          avatar:
+            'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/acb214d0-ce96-41bb-aba6-fb5fc89f1afa.jpg',
+        },
+        parentId: 0,
+        postId: 302,
+        content: '.',
+        createdAt: '2022-04-26T09:25:02.870Z',
+        updatedAt: '2022-04-27T03:38:29.471Z',
+        media: [],
+        reactionsCount: null,
+        mentions: [],
+        child: [
+          {
+            ...CHILD_COMMENT,
+            id: 505,
+            content: '9',
+            createdAt: '2022-04-27T03:54:38.962Z',
+            updatedAt: '2022-04-27T03:54:38.962Z',
+          },
+          {
+            ...CHILD_COMMENT,
+            id: 496,
+            content: 'Hihi',
+          },
+          {
+            ...CHILD_COMMENT,
+            id: 495,
+            content: 'Ola',
+            createdAt: '2022-04-27T03:38:25.693Z',
+            updatedAt: '2022-04-27T03:38:25.693Z',
+          },
+          CHILD_COMMENT,
+        ],
+      },
+    ],
+  },
+  audience: {
+    groups: [
+      {
+        id: 1,
+        name: 'EVOL Community',
+        icon: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/avatar/Avatar_Group.png',
+        child: [139, 2, 10, 152, 66, 67, 103, 2, 2],
+      },
+    ],
+  },
+};

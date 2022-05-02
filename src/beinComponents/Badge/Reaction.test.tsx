@@ -3,6 +3,7 @@ import React from 'react';
 import {cleanup, renderWithRedux, fireEvent} from '~/test/testUtils';
 import Reaction from './Reaction';
 import {colors} from '~/theme';
+import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);
 
@@ -63,17 +64,17 @@ describe('Reaction component', () => {
     );
 
     const childrenComponent = getByTestId('reaction.children');
-    expect(childrenComponent.props.style.color).toEqual(
-      colors.light.colors.textPrimary,
-    );
+    const childrenStyle = StyleSheet.flatten(childrenComponent.props.style);
+
+    expect(childrenStyle.color).toEqual(colors.light.colors.textPrimary);
 
     const reactionComponent = getByTestId('reaction');
-    expect(reactionComponent.props.style.backgroundColor).toEqual(
+    const reactionStyle = StyleSheet.flatten(reactionComponent.props.style);
+
+    expect(reactionStyle.backgroundColor).toEqual(
       colors.light.colors.placeholder,
     );
-    expect(reactionComponent.props.style.borderColor).toEqual(
-      colors.light.colors.placeholder,
-    );
+    expect(reactionStyle.borderColor).toEqual(colors.light.colors.placeholder);
   });
 
   it('renders selected = true correctly', () => {
@@ -87,9 +88,8 @@ describe('Reaction component', () => {
     );
 
     const childrenComponent = getByTestId('reaction.children');
-    expect(childrenComponent.props.style.color).toEqual(
-      colors.light.colors.primary7,
-    );
+    const flattenedStyle = StyleSheet.flatten(childrenComponent.props.style);
+    expect(flattenedStyle.color).toEqual(colors.light.colors.primary7);
 
     const reactionComponent = getByTestId('reaction');
     expect(reactionComponent.props.style.backgroundColor).toEqual(
