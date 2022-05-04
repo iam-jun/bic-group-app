@@ -317,6 +317,7 @@ const _PostView: FC<PostViewProps> = ({
             postId={postId}
             markedReadPost={markedReadPost}
             isImportant={isImportant}
+            expireTime={importantExpiredAt}
             isActor={actor?.id == userId}
           />
         )}
