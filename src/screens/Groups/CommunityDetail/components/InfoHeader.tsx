@@ -1,11 +1,10 @@
 import {View, StyleSheet} from 'react-native';
-import React, {Fragment} from 'react';
+import React from 'react';
 
 import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
-import Button from '~/beinComponents/Button';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import images from '~/resources/images';
@@ -47,7 +46,7 @@ const InfoHeader = () => {
             <Icon
               icon={iconPrivacy}
               size={16}
-              tintColor={theme.colors.textSecondary}
+              tintColor={theme.colors.iconTint}
             />
             <Text.BodyS
               color={theme.colors.textSecondary}
@@ -58,7 +57,7 @@ const InfoHeader = () => {
             <Icon
               icon={'UsersAlt'}
               size={16}
-              tintColor={theme.colors.textSecondary}
+              tintColor={theme.colors.iconTint}
             />
             <Text.BodyS
               color={theme.colors.textSecondary}
@@ -73,35 +72,10 @@ const InfoHeader = () => {
     );
   };
 
-  const renderJoinButton = () => {
-    return (
-      <Fragment>
-        <Button.Secondary
-          testID="info_header.join"
-          leftIcon={'Plus'}
-          leftIconProps={{icon: 'Plus', size: 20}}
-          style={styles.btnJoin}
-          // onPress={onPressJoin}
-          color={theme.colors.primary6}
-          textColor={theme.colors.background}
-          colorHover={theme.colors.primary6}
-          useI18n>
-          communities:text_join_community_button
-        </Button.Secondary>
-        <View style={styles.shortDesc}>
-          <Text.Subtitle color={theme.colors.textSecondary} useI18n>
-            communities:text_join_community_description
-          </Text.Subtitle>
-        </View>
-      </Fragment>
-    );
-  };
-
   return (
     <View>
       {renderCoverImage()}
       {renderInfoHeader()}
-      {renderJoinButton()}
     </View>
   );
 };
@@ -109,7 +83,7 @@ const InfoHeader = () => {
 export default InfoHeader;
 
 const themeStyles = (theme: ITheme) => {
-  const {dimension, spacing} = theme;
+  const {dimension, spacing, colors} = theme;
   return StyleSheet.create({
     cover: {
       width: dimension.deviceWidth,
@@ -120,6 +94,7 @@ const themeStyles = (theme: ITheme) => {
       marginRight: spacing.margin.base,
     },
     infoContainer: {
+      backgroundColor: colors.background,
       paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.small,
       flexDirection: 'row',
@@ -127,14 +102,6 @@ const themeStyles = (theme: ITheme) => {
     info: {
       flexDirection: 'row',
       alignItems: 'center',
-    },
-    btnJoin: {
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.padding.small,
-      padding: spacing.padding.base,
-    },
-    shortDesc: {
-      alignSelf: 'center',
     },
   });
 };

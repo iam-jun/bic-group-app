@@ -62,7 +62,7 @@ const createStyle = (theme: ITheme) => {
     container: {
       flex: 1,
       backgroundColor: colors.background,
-      marginVertical: spacing.margin.large,
+      paddingVertical: spacing.padding.large,
     },
     titleDescription: {
       marginBottom: spacing.margin.large,
