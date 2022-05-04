@@ -132,7 +132,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       initPostData || {};
     if (!id) {
       console.log(`\x1b[31m🐣️ usePostSettings update: id not found\x1b[0m`);
-      return;
+      return 'doNothing';
     }
 
     const userIds: number[] = [];
@@ -168,12 +168,13 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     };
     dispatch(postActions.putEditPost(payload));
     rootNavigation.goBack();
+    return 'dispatchPutEditPost';
   };
 
   const handlePressSave = () => {
     if (putUpdateSettings) {
       handlePutUpdateSettings();
-      return;
+      return 'putUpdateSettings';
     }
 
     const dataDefault = [
@@ -188,6 +189,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       }),
     );
     rootNavigation.goBack();
+    return 'setCreatePostSettings';
   };
 
   const getMinDate = () => {
@@ -216,6 +218,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     handleToggleImportant,
     handleChangeDatePicker,
     handleChangeTimePicker,
+    handlePutUpdateSettings,
     setSelectingDate,
     setSelectingTime,
     getMinDate,
