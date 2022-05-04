@@ -15,6 +15,7 @@ export interface ButtonMarkAsReadProps {
   style?: StyleProp<ViewStyle>;
   postId: number;
   isImportant?: boolean;
+  expireTime?: string | null;
   markedReadPost: boolean;
   isActor?: boolean;
 }
@@ -23,6 +24,7 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
   style,
   postId,
   isImportant,
+  expireTime = '',
   markedReadPost,
   isActor,
 }: ButtonMarkAsReadProps) => {
@@ -35,7 +37,16 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
   const {colors} = theme;
   const styles = createStyle(theme);
 
-  if (!isImportant || isActor || (markedReadPost && !markedSuccess)) {
+  const now = new Date();
+  const expired = now.getTime() >= new Date(expireTime || '').getTime();
+
+  if (
+    !isImportant ||
+    isActor ||
+    (markedReadPost && !markedSuccess) ||
+    !expireTime ||
+    expired
+  ) {
     return null;
   }
 
