@@ -31,6 +31,7 @@ import {
   IPayloadDeletePost,
   IPayloadDeleteComment,
   ICommentData,
+  IPayloadPutMarkAsRead,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -284,6 +285,10 @@ const postActions = {
   }),
   removeChildComment: (payload: any) => ({
     type: postTypes.REMOVE_CHILD_COMMENT,
+    payload,
+  }),
+  putMarkAsRead: (payload: IPayloadPutMarkAsRead) => ({
+    type: postTypes.PUT_MARK_AS_READ,
     payload,
   }),
 };

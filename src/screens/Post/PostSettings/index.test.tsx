@@ -15,6 +15,7 @@ import * as navigationHook from '~/hooks/navigation';
 import modalActions from '~/store/modal/actions';
 import postActions from '~/screens/Post/redux/actions';
 import {usePostSettings} from '~/screens/Post/PostSettings/usePostSettings';
+import {POST_DETAIL} from '~/test/mock_data/post';
 
 describe('Post Setting Screen', () => {
   let storeData: any;
@@ -294,5 +295,67 @@ describe('Post Setting Screen', () => {
 
     const date = new Date(result.current.sImportant?.expires_time || '');
     expect(date.toISOString()).not.toEqual(new Date(night).toISOString());
+  });
+
+  it('should putUpdateSettings when press save', () => {
+    const store = createTestStore(storeData);
+    const wrapper = getHookReduxWrapper(store);
+    const {result} = renderHook(
+      () => usePostSettings({postId: POST_DETAIL.id}),
+      {wrapper},
+    );
+    let action;
+    act(() => {
+      action = result.current.handlePressSave();
+    });
+    expect(action).toBe('putUpdateSettings');
+  });
+
+  it('should doNothing when handlePutUpdateSettings without post data', () => {
+    const storeData: any = {
+      ...initialState,
+      // post: {[POST_DETAIL.id]: POST_DETAIL},
+    };
+    const store = createTestStore(storeData);
+    const wrapper = getHookReduxWrapper(store);
+    const {result} = renderHook(
+      () => usePostSettings({postId: POST_DETAIL.id}),
+      {wrapper},
+    );
+    let actionResult;
+    act(() => {
+      actionResult = result.current.handlePutUpdateSettings();
+    });
+    expect(actionResult).toBe('doNothing');
+  });
+
+  it('should doNothing when handlePutUpdateSettings with post data', () => {
+    const storeData: any = {
+      ...initialState,
+      post: {
+        allPosts: {[POST_DETAIL.id]: POST_DETAIL},
+        createPost: {
+          currentSettings: {
+            active: false,
+            expires_time: '',
+          },
+          important: {
+            active: false,
+            expires_time: '',
+          },
+        },
+      },
+    };
+    const store = createTestStore(storeData);
+    const wrapper = getHookReduxWrapper(store);
+    const {result} = renderHook(
+      () => usePostSettings({postId: POST_DETAIL.id}),
+      {wrapper},
+    );
+    let actionResult;
+    act(() => {
+      actionResult = result.current.handlePutUpdateSettings();
+    });
+    expect(actionResult).toBe('dispatchPutEditPost');
   });
 });
