@@ -42,6 +42,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import PostViewMenu from '~/screens/Post/components/PostViewMenu';
 import {isEqual} from 'lodash';
 import PostViewFooterLite from '~/screens/Post/components/postView/PostViewFooterLite';
+import ButtonMarkAsRead from '~/screens/Post/components/ButtonMarkAsRead';
 
 export interface PostViewProps {
   style?: any;
@@ -85,6 +86,7 @@ const _PostView: FC<PostViewProps> = ({
   let actor: IAudienceUser | undefined,
     audience: IPostAudience | undefined,
     deleted: boolean,
+    markedReadPost: boolean,
     ownerReactions: IOwnReaction,
     reactionsCount: IReactionCounts,
     isDraft: boolean,
@@ -105,6 +107,7 @@ const _PostView: FC<PostViewProps> = ({
     highlight = useKeySelector(postKeySelector.postHighlightById(postId));
     setting = useKeySelector(postKeySelector.postSettingById(postId));
     deleted = useKeySelector(postKeySelector.postDeletedById(postId));
+    markedReadPost = useKeySelector(postKeySelector.postMarkedReadById(postId));
     commentsCount = useKeySelector(
       postKeySelector.postCommentsCountById(postId),
     );
@@ -124,6 +127,7 @@ const _PostView: FC<PostViewProps> = ({
     content = postData?.content || '';
     highlight = postData?.highlight || '';
     setting = postData?.setting || {};
+    markedReadPost = postData?.markedReadPost || false;
     deleted = false;
     commentsCount = postData?.commentsCount || 0;
     ownerReactions = postData?.ownerReactions || [];
@@ -267,6 +271,7 @@ const _PostView: FC<PostViewProps> = ({
         isLite={isLite}
         isImportant={!!isImportant}
         expireTime={importantExpiredAt}
+        markedReadPost={markedReadPost}
       />
       <View style={[styles.container]}>
         <PostViewHeader
@@ -305,6 +310,15 @@ const _PostView: FC<PostViewProps> = ({
             btnReactTestID={btnReactTestID}
             btnCommentTestID={btnCommentTestID}
             reactionCounts={reactionsCount}
+          />
+        )}
+        {!isLite && (
+          <ButtonMarkAsRead
+            postId={postId}
+            markedReadPost={markedReadPost}
+            isImportant={isImportant}
+            expireTime={importantExpiredAt}
+            isActor={actor?.id == userId}
           />
         )}
       </View>

@@ -115,7 +115,10 @@ const App = {
       method: 'get',
       useRetry: true,
       provider: providers.bein,
-      params,
+      params: {
+        ...params,
+        key: !!params?.key?.trim?.() ? params.key : undefined,
+      },
     };
   },
 };

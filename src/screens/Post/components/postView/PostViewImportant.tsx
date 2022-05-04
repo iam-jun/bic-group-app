@@ -8,12 +8,14 @@ import Icon from '~/beinComponents/Icon';
 export interface PostViewImportantProps {
   isImportant: boolean;
   expireTime: any;
+  markedReadPost: boolean;
   isLite?: boolean;
 }
 
 const PostViewImportant: FC<PostViewImportantProps> = ({
   isImportant,
   expireTime,
+  markedReadPost,
   isLite,
 }: PostViewImportantProps) => {
   const theme = useTheme() as ITheme;
@@ -25,7 +27,8 @@ const PostViewImportant: FC<PostViewImportantProps> = ({
   }
 
   const now = new Date();
-  const notExpired = now.getTime() < new Date(expireTime).getTime();
+  const notExpired =
+    now.getTime() < new Date(expireTime).getTime() && !markedReadPost;
 
   if (isLite) {
     return (

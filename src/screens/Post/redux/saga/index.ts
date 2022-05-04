@@ -2,7 +2,6 @@ import {put, call, takeLatest, select, takeEvery} from 'redux-saga/effects';
 import {isArray, get} from 'lodash';
 
 import {
-  IOwnReaction,
   IParamGetPostAudiences,
   IParamGetPostDetail,
   IPayloadCreateComment,
@@ -12,15 +11,10 @@ import {
   IPayloadGetPostDetail,
   IPayloadPublishDraftPost,
   IPayloadPutEditDraftPost,
-  IPayloadReactToComment,
-  IPayloadReactToPost,
   IPayloadUpdateCommentsById,
-  IPayloadUpdateReaction,
   IPostActivity,
   IPostAudience,
   IReaction,
-  IReactionCounts,
-  ISocketReaction,
 } from '~/interfaces/IPost';
 import postTypes from '~/screens/Post/redux/types';
 import postActions from '~/screens/Post/redux/actions';
@@ -28,7 +22,6 @@ import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {withNavigation} from '~/router/helper';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import {ReactionType} from '~/constants/reactions';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
@@ -50,6 +43,7 @@ import updateUnReactionBySocket from './updateUnReactionBySocket';
 import getCommentsByPostId from '~/screens/Post/redux/saga/getCommentsByPostId';
 import putEditComment from '~/screens/Post/redux/saga/putEditComment';
 import {timeOut} from '~/utils/common';
+import putMarkAsRead from '~/screens/Post/redux/saga/putMarkAsRead';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -85,6 +79,7 @@ export default function* postSaga() {
   yield takeEvery(postTypes.POST_PUBLISH_DRAFT_POST, postPublishDraftPost);
   yield takeLatest(postTypes.PUT_EDIT_DRAFT_POST, putEditDraftPost);
   yield takeLatest(postTypes.UPDATE_REACTION_BY_SOCKET, updateReactionBySocket);
+  yield takeLatest(postTypes.PUT_MARK_AS_READ, putMarkAsRead);
   yield takeLatest(
     postTypes.UPDATE_UN_REACTION_BY_SOCKET,
     updateUnReactionBySocket,
