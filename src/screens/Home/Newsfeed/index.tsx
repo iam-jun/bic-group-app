@@ -29,6 +29,7 @@ import appActions from '~/store/app/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {openLink} from '~/utils/common';
+import {getEnv} from '~/utils/env';
 
 const Newsfeed = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -183,7 +184,7 @@ const Newsfeed = () => {
   };
 
   const navigateToChat = () => {
-    openLink(chatSchemes.CHANNELS);
+    openLink(getEnv('BEIN_CHAT_DEEPLINK'));
   };
 
   const onEndReach = useCallback(() => getData(), []);

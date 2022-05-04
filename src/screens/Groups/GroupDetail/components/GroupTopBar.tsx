@@ -1,24 +1,20 @@
 import React from 'react';
-import {StyleSheet, View, useWindowDimensions} from 'react-native';
+import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {RouteProp, useRoute} from '@react-navigation/native';
-
-import {useRootNavigation} from '~/hooks/navigation';
-import {ITheme} from '~/theme/interfaces';
-import Icon from '~/beinComponents/Icon';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {deviceDimensions} from '~/theme/dimension';
-import {useKeySelector} from '~/hooks/selector';
-import groupsKeySelector from '../../redux/keySelector';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import groupJoinStatus from '~/constants/groupJoinStatus';
-import {RootStackParamList} from '~/interfaces/IRouter';
-import modalActions from '~/store/modal/actions';
 import {useDispatch} from 'react-redux';
-import GroupHeaderMenu from '~/screens/Groups/GroupDetail/components/GroupHeaderMenu';
-import {openLink} from '~/utils/common';
-import {chatSchemes} from '~/constants/chat';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import Icon from '~/beinComponents/Icon';
+import groupJoinStatus from '~/constants/groupJoinStatus';
+import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
+import GroupHeaderMenu from '~/screens/Groups/GroupDetail/components/GroupHeaderMenu';
+import modalActions from '~/store/modal/actions';
+import {deviceDimensions} from '~/theme/dimension';
+import {ITheme} from '~/theme/interfaces';
+import {openLink} from '~/utils/common';
+import {formatChannelLink} from '~/utils/link';
+import groupsKeySelector from '../../redux/keySelector';
 
 const GroupTopBar = () => {
   const dispatch = useDispatch();
@@ -36,8 +32,6 @@ const GroupTopBar = () => {
   const count = useKeySelector(
     `chat.unreadChannels.${chatId}.mention_count_root`,
   );
-
-  const route = useRoute<RouteProp<RootStackParamList, 'GroupDetail'>>();
 
   const onPressBack = () => {
     rootNavigation.goBack();
@@ -62,7 +56,9 @@ const GroupTopBar = () => {
   };
 
   const onPressChat = () => {
-    openLink(`${chatSchemes.CHANNELS}/${groupInfo.slug}`);
+    const link = formatChannelLink(groupInfo.team_name, groupInfo.slug);
+    console.log({groupInfo}, 'link', link);
+    openLink(link);
   };
 
   const onPressSearch = () => {
