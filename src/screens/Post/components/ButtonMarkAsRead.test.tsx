@@ -12,6 +12,7 @@ describe('ButtonMarkAsRead', () => {
         markedReadPost={false}
         isActor={false}
         isImportant={true}
+        expireTime={'2032-05-04T08:30:00.000Z'}
         style={{backgroundColor: 'tomato'}}
       />,
     );
@@ -27,6 +28,7 @@ describe('ButtonMarkAsRead', () => {
         markedReadPost={false}
         isActor={true}
         isImportant={true}
+        expireTime={'2032-05-04T08:30:00.000Z'}
       />,
     );
     const container = wrapper.queryByTestId('button_mark_as_read.container');
@@ -40,6 +42,7 @@ describe('ButtonMarkAsRead', () => {
         markedReadPost={true}
         isActor={false}
         isImportant={true}
+        expireTime={'2032-05-04T08:30:00.000Z'}
       />,
     );
     const container = wrapper.queryByTestId('button_mark_as_read.container');
@@ -53,6 +56,21 @@ describe('ButtonMarkAsRead', () => {
         markedReadPost={false}
         isActor={false}
         isImportant={false}
+        expireTime={'2032-05-04T08:30:00.000Z'}
+      />,
+    );
+    const container = wrapper.queryByTestId('button_mark_as_read.container');
+    expect(container).toBeNull();
+  });
+
+  it(`return null if not have expireTime`, async () => {
+    const wrapper = renderWithRedux(
+      <ButtonMarkAsRead
+        postId={1}
+        markedReadPost={false}
+        isActor={false}
+        isImportant={false}
+        expireTime={''}
       />,
     );
     const container = wrapper.queryByTestId('button_mark_as_read.container');
