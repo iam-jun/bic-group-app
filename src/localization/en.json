@@ -448,6 +448,7 @@
     "comment_menu_reply": "Reply this comment",
     "comment_menu_copy_text": "Copy text",
     "comment_menu_copy_link": "Copy link",
+    "comment_link_copied":"Comment link copied",
     "comment_menu_edit": "Edit Comment",
     "comment_menu_history": "View Edit History",
     "comment_menu_delete": "Delete Comment",

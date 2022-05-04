@@ -35,8 +35,9 @@ const CommentDetailContent = (props: any) => {
   const commentInputRef = useRef<any>();
 
   const params = props?.route?.params;
-  const {commentData, postId, replyItem, commentParent} = params || {};
-
+  const {commentData, postId, replyItem, commentParent, commentId, p} =
+    params || {};
+  // getCommentDetail;
   const id = postId;
   const actor = useKeySelector(postKeySelector.postActorById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
@@ -77,9 +78,14 @@ const CommentDetailContent = (props: any) => {
 
   useEffect(() => {
     if (!postDetailLoadingState && !parentCommentIsDeleted) {
+      console.log('111111', commentId);
+
       dispatch(postActions.setScrollCommentsPosition(null));
       if (childrenComments?.length > 1 || !commentData?.child?.[0]) {
         setLoading(false);
+        if (!!commentId) {
+          dispatch(postActions.getCommentDetail({commentId, parentId: p}));
+        }
         if (!!replyItem) {
           setTimeout(() => {
             dispatch(

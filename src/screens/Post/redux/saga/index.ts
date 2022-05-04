@@ -50,6 +50,7 @@ import updateUnReactionBySocket from './updateUnReactionBySocket';
 import getCommentsByPostId from '~/screens/Post/redux/saga/getCommentsByPostId';
 import putEditComment from '~/screens/Post/redux/saga/putEditComment';
 import {timeOut} from '~/utils/common';
+import getCommentDetail from './getCommentDetail';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -89,6 +90,7 @@ export default function* postSaga() {
     postTypes.UPDATE_UN_REACTION_BY_SOCKET,
     updateUnReactionBySocket,
   );
+  yield takeLatest(postTypes.GET_COMMENT_DETAIL, getCommentDetail);
   yield takeEvery(
     postTypes.GET_CREATE_POST_INIT_AUDIENCES,
     getCreatePostInitAudiences,

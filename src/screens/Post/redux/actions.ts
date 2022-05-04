@@ -286,6 +286,10 @@ const postActions = {
     type: postTypes.REMOVE_CHILD_COMMENT,
     payload,
   }),
+  getCommentDetail: (payload: any) => ({
+    type: postTypes.GET_COMMENT_DETAIL,
+    payload,
+  }),
 };
 
 export default postActions;

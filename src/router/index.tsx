@@ -255,6 +255,29 @@ const getLinkingCustomConfig = (config: any, navigation: any) => {
           } else {
             listener(url);
           }
+        } else if (url.includes('bein:///comment/t/')) {
+          const data = url?.replace('bein:///comment/t/', '');
+          const params = data
+            .split('?')
+            ?.map(item => item.split('='))
+            ?.reduce((p, c) => {
+              if (c.length > 1) {
+                //@ts-ignore
+                p[c[0]] = c[1];
+              } else {
+                //@ts-ignore
+                p.commentId = c[0];
+              }
+              return p;
+            }, {});
+
+          if (!!params && navigation) {
+            navigation?.navigate?.(homeStack.commentDetail, {
+              ...params,
+            });
+          } else {
+            listener(url);
+          }
         } else {
           listener(url);
         }

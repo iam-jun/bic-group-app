@@ -17,9 +17,11 @@ import {showHideToastMessage} from '~/store/modal/actions';
 import Text from '~/beinComponents/Text';
 import NodeEmoji from 'node-emoji';
 import {quickReactions} from '~/configs/reactionConfig';
+import {getLink, LINK_COMMENT} from '~/utils/link';
 
 export interface CommentViewMenuProps {
-  commentId: string;
+  commentId: number;
+  parentCommentId?: number;
   content: string;
   groupIds: string;
   isActor: boolean;
@@ -31,6 +33,7 @@ export interface CommentViewMenuProps {
 
 const CommentViewMenu: FC<CommentViewMenuProps> = ({
   commentId,
+  parentCommentId,
   content,
   groupIds,
   isActor,
@@ -97,6 +100,20 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
 
   const _onPressCopyLink = () => {
     dispatch(modalActions.hideModal());
+    Clipboard.setString(
+      getLink(LINK_COMMENT, commentId, {
+        p: parentCommentId,
+      }),
+    );
+    dispatch(
+      showHideToastMessage({
+        content: 'post:comment_link_copied',
+        props: {
+          textProps: {useI18n: true},
+          type: 'success',
+        },
+      }),
+    );
   };
 
   const renderReactItem = (item: any, index: number) => {
@@ -146,8 +163,8 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
       <PrimaryItem
         testID={'comment_view_menu.copy_link'}
         style={styles.item}
-        leftIcon={'Copy'}
-        leftIconProps={{icon: 'Copy', size: 24}}
+        leftIcon={'Link'}
+        leftIconProps={{icon: 'Link', size: 24}}
         title={t('post:comment_menu_copy_link')}
         onPress={_onPressCopyLink}
       />

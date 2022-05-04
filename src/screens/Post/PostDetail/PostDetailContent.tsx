@@ -78,7 +78,7 @@ const _PostDetailContent = (props: any) => {
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
   const createdAt = useKeySelector(postKeySelector.postCreatedAtById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
-  const commentCount = useKeySelector(
+  const commentLeft = useKeySelector(
     postKeySelector.postCommentOnlyCountById(id),
   );
   const commentList = useKeySelector(postKeySelector.postCommentListById(id));
@@ -87,8 +87,6 @@ const _PostDetailContent = (props: any) => {
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const listComment = comments || commentList || [];
   const sectionData = getSectionData(listComment) || [];
-
-  const commentLeft = commentCount - listComment.length;
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
   const isFocused = useIsFocused();
@@ -392,7 +390,7 @@ const _PostDetailContent = (props: any) => {
                 idLessThan={listComment?.[0]?.id}
               />
             }
-            ListFooterComponent={commentCount && renderFooter}
+            ListFooterComponent={commentLeft && renderFooter}
             stickySectionHeadersEnabled={false}
             ItemSeparatorComponent={() => <View />}
             keyboardShouldPersistTaps={'handled'}
@@ -452,7 +450,7 @@ const PostDetailContentHeader = ({
         btnCommentTestID="post_detail_content.btn_comment"
       />
       <Divider />
-      {commentLeft > 0 && (
+      {commentLeft && (
         <LoadMoreComment
           title={'post:text_load_more_comments'}
           postId={id}

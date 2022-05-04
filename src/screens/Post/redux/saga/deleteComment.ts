@@ -77,14 +77,14 @@ export default function* deleteComment({
     );
 
     //update number of comment lv 1
-    if (!parentCommentId) {
-      if (post.comments?.meta?.total) {
-        post.comments.meta.total = Math.max(
-          0,
-          (post.comments.meta.total || 0) - 1,
-        );
-      }
-    }
+    // if (!parentCommentId) {
+    //   if (post.comments?.meta?.total) {
+    //     post.comments.meta.total = Math.max(
+    //       0,
+    //       (post.comments.meta.total || 0) - 1,
+    //     );
+    //   }
+    // }
     newAllPosts[postId] = {...post};
     yield put(postActions.setAllPosts(newAllPosts));
 

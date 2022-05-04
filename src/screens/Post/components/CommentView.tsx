@@ -224,6 +224,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
         ContentComponent: (
           <CommentViewMenu
             commentId={id}
+            parentCommentId={parentCommentId}
             content={content}
             groupIds={groupIds}
             isActor={isActor}
