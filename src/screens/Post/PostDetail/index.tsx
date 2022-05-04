@@ -39,7 +39,7 @@ const PostDetail = (props: any) => {
             title={'post:title_post_detail'}
             avatar={Platform.OS === 'web' ? undefined : images.logo_bein}
           />
-          <PostViewPlaceholder />
+          <PostViewPlaceholder testID={'post_detail.post_view_placeholder'} />
         </View>
       )}
     </ScreenWrapper>

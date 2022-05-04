@@ -3,11 +3,17 @@
 exports[`TimeView component renders correctly 1`] = `
 <Text
   style={
-    Object {
-      "color": "#627286",
-      "fontFamily": "OpenSans-Regular",
-      "fontSize": 14,
-    }
+    Array [
+      Object {
+        "color": "#2F3945",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 14,
+      },
+      Object {
+        "color": "#627286",
+      },
+      undefined,
+    ]
   }
   testID="time_view"
 >
@@ -18,11 +24,19 @@ exports[`TimeView component renders correctly 1`] = `
 exports[`TimeView component renders correctly with props style 1`] = `
 <Text
   style={
-    Object {
-      "color": "#FF9800",
-      "fontFamily": "OpenSans-Regular",
-      "fontSize": 14,
-    }
+    Array [
+      Object {
+        "color": "#2F3945",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 14,
+      },
+      Object {
+        "color": "#627286",
+      },
+      Object {
+        "color": "#FF9800",
+      },
+    ]
   }
   testID="time_view"
 >
@@ -34,11 +48,17 @@ exports[`TimeView component renders correctly with props textProps 1`] = `
 <Text
   numberOfLines={2}
   style={
-    Object {
-      "color": "#627286",
-      "fontFamily": "OpenSans-Regular",
-      "fontSize": 14,
-    }
+    Array [
+      Object {
+        "color": "#2F3945",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 14,
+      },
+      Object {
+        "color": "#627286",
+      },
+      undefined,
+    ]
   }
   testID="time_view"
 >
@@ -49,11 +69,17 @@ exports[`TimeView component renders correctly with props textProps 1`] = `
 exports[`TimeView component renders correctly with time empty 1`] = `
 <Text
   style={
-    Object {
-      "color": "#627286",
-      "fontFamily": "OpenSans-Regular",
-      "fontSize": 14,
-    }
+    Array [
+      Object {
+        "color": "#2F3945",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 14,
+      },
+      Object {
+        "color": "#627286",
+      },
+      undefined,
+    ]
   }
   testID="time_view"
 >

@@ -480,13 +480,18 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                               <Text
                                 numberOfLines={1}
                                 style={
-                                  Object {
-                                    "color": "#2F3945",
-                                    "fontFamily": "OpenSans-SemiBold",
-                                    "fontSize": 16,
-                                    "height": 24,
-                                    "lineHeight": 24,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#2F3945",
+                                      "fontFamily": "OpenSans-SemiBold",
+                                      "fontSize": 16,
+                                    },
+                                    Object {},
+                                    Object {
+                                      "height": 24,
+                                      "lineHeight": 24,
+                                    },
+                                  ]
                                 }
                                 testID="header.text"
                               >
@@ -532,12 +537,19 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                             >
                               <Text
                                 style={
-                                  Object {
-                                    "color": "#B2BDCD",
-                                    "fontFamily": "OpenSans-SemiBold",
-                                    "fontSize": 16,
-                                    "textAlign": "center",
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#2F3945",
+                                      "fontFamily": "OpenSans-SemiBold",
+                                      "fontSize": 16,
+                                    },
+                                    Object {
+                                      "color": "#B2BDCD",
+                                    },
+                                    Object {
+                                      "textAlign": "center",
+                                    },
+                                  ]
                                 }
                                 testID="header.button.text"
                               >
@@ -614,23 +626,34 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                           >
                             <Text
                               style={
-                                Object {
-                                  "color": "#627286",
-                                  "fontFamily": "OpenSans-Regular",
-                                  "fontSize": 14,
-                                  "marginRight": 4,
-                                  "marginVertical": 8,
-                                }
+                                Array [
+                                  Object {
+                                    "color": "#2F3945",
+                                    "fontFamily": "OpenSans-Regular",
+                                    "fontSize": 14,
+                                  },
+                                  Object {
+                                    "color": "#627286",
+                                  },
+                                  Object {
+                                    "marginRight": 4,
+                                    "marginVertical": 8,
+                                  },
+                                ]
                               }
                             >
                               Send to 
                               <Text
                                 style={
-                                  Object {
-                                    "color": "#2F3945",
-                                    "fontFamily": "OpenSans-SemiBold",
-                                    "fontSize": 14,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#2F3945",
+                                      "fontFamily": "OpenSans-SemiBold",
+                                      "fontSize": 14,
+                                    },
+                                    Object {},
+                                    undefined,
+                                  ]
                                 }
                                 testID="create_post_chosen_audiences.names"
                               >
@@ -978,11 +1001,19 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                             </View>
                             <Text
                               style={
-                                Object {
-                                  "color": "#2F3945",
-                                  "fontFamily": "OpenSans-SemiBold",
-                                  "fontSize": 14,
-                                }
+                                Array [
+                                  Object {
+                                    "color": "#2F3945",
+                                    "fontFamily": "OpenSans-SemiBold",
+                                    "fontSize": 16,
+                                  },
+                                  Object {
+                                    "color": "#2F3945",
+                                  },
+                                  Object {
+                                    "fontSize": 14,
+                                  },
+                                ]
                               }
                             >
                               Post Settings
@@ -1377,11 +1408,15 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                             >
                               <Text
                                 style={
-                                  Object {
-                                    "color": "#2F3945",
-                                    "fontFamily": "OpenSans-SemiBold",
-                                    "fontSize": 16,
-                                  }
+                                  Array [
+                                    Object {
+                                      "color": "#2F3945",
+                                      "fontFamily": "OpenSans-SemiBold",
+                                      "fontSize": 16,
+                                    },
+                                    Object {},
+                                    undefined,
+                                  ]
                                 }
                               >
                                 Review Markdown
@@ -1421,12 +1456,19 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                                 >
                                   <Text
                                     style={
-                                      Object {
-                                        "color": "#7843DD",
-                                        "fontFamily": "OpenSans-SemiBold",
-                                        "fontSize": 16,
-                                        "textAlign": "center",
-                                      }
+                                      Array [
+                                        Object {
+                                          "color": "#2F3945",
+                                          "fontFamily": "OpenSans-SemiBold",
+                                          "fontSize": 16,
+                                        },
+                                        Object {
+                                          "color": "#7843DD",
+                                        },
+                                        Object {
+                                          "textAlign": "center",
+                                        },
+                                      ]
                                     }
                                   >
                                     Done
@@ -1548,11 +1590,15 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                                 <View>
                                   <Text
                                     style={
-                                      Object {
-                                        "color": "#2F3945",
-                                        "fontFamily": "OpenSans-SemiBold",
-                                        "fontSize": 14,
-                                      }
+                                      Array [
+                                        Object {
+                                          "color": "#2F3945",
+                                          "fontFamily": "OpenSans-SemiBold",
+                                          "fontSize": 14,
+                                        },
+                                        Object {},
+                                        undefined,
+                                      ]
                                     }
                                   />
                                   <View
@@ -1564,23 +1610,34 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                                   >
                                     <Text
                                       style={
-                                        Object {
-                                          "color": "#627286",
-                                          "fontFamily": "OpenSans-SemiBold",
-                                          "fontSize": 14,
-                                          "marginRight": 4,
-                                        }
+                                        Array [
+                                          Object {
+                                            "color": "#2F3945",
+                                            "fontFamily": "OpenSans-SemiBold",
+                                            "fontSize": 14,
+                                          },
+                                          Object {
+                                            "color": "#627286",
+                                          },
+                                          Object {
+                                            "marginRight": 4,
+                                          },
+                                        ]
                                       }
                                     >
                                       to
                                     </Text>
                                     <Text
                                       style={
-                                        Object {
-                                          "color": "#2F3945",
-                                          "fontFamily": "OpenSans-SemiBold",
-                                          "fontSize": 14,
-                                        }
+                                        Array [
+                                          Object {
+                                            "color": "#2F3945",
+                                            "fontFamily": "OpenSans-SemiBold",
+                                            "fontSize": 14,
+                                          },
+                                          Object {},
+                                          undefined,
+                                        ]
                                       }
                                     >
                                       EVOL Community

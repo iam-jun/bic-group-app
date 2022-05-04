@@ -106,13 +106,19 @@ Array [
         >
           <Text
             style={
-              Object {
-                "color": "#B2BDCD",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
-                "margin": 8,
-                "padding": 4,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 14,
+                },
+                Object {},
+                Object {
+                  "color": "#B2BDCD",
+                  "margin": 8,
+                  "padding": 4,
+                },
+              ]
             }
             testID="at_mention.empty_content"
           />
@@ -834,12 +840,19 @@ Array [
               >
                 <Text
                   style={
-                    Object {
-                      "color": "#FFFFFF",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 16,
-                      "textAlign": "center",
-                    }
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-SemiBold",
+                        "fontSize": 16,
+                      },
+                      Object {
+                        "color": "#FFFFFF",
+                      },
+                      Object {
+                        "textAlign": "center",
+                      },
+                    ]
                   }
                 >
                   Send
@@ -1976,13 +1989,19 @@ Array [
         >
           <Text
             style={
-              Object {
-                "color": "#B2BDCD",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
-                "margin": 8,
-                "padding": 4,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 14,
+                },
+                Object {},
+                Object {
+                  "color": "#B2BDCD",
+                  "margin": 8,
+                  "padding": 4,
+                },
+              ]
             }
             testID="at_mention.empty_content"
           />
@@ -2111,13 +2130,19 @@ Array [
         >
           <Text
             style={
-              Object {
-                "color": "#B2BDCD",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
-                "margin": 8,
-                "padding": 4,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 14,
+                },
+                Object {},
+                Object {
+                  "color": "#B2BDCD",
+                  "margin": 8,
+                  "padding": 4,
+                },
+              ]
             }
             testID="at_mention.empty_content"
           />

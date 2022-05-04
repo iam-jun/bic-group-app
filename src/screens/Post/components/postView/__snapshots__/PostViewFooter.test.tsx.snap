@@ -190,12 +190,19 @@ exports[`PostViewFooter component should render correctly 1`] = `
         </View>
         <Text
           style={
-            Object {
-              "color": "#627286",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
-              "textAlign": "center",
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 14,
+              },
+              Object {
+                "color": "#627286",
+              },
+              Object {
+                "textAlign": "center",
+              },
+            ]
           }
         >
           React
@@ -373,12 +380,19 @@ exports[`PostViewFooter component should render correctly 1`] = `
         </View>
         <Text
           style={
-            Object {
-              "color": "#627286",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
-              "textAlign": "center",
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 14,
+              },
+              Object {
+                "color": "#627286",
+              },
+              Object {
+                "textAlign": "center",
+              },
+            ]
           }
         />
       </View>

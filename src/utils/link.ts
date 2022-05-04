@@ -44,3 +44,11 @@ export const getChatDomain = () => {
     )
   );
 };
+
+export const formatChannelLink = (teamId: string, channel: string) => {
+  return `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/channels/${channel}`;
+};
+
+export const formatDMLink = (teamId: string, username: string) => {
+  return `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/messages/@${username}`;
+};

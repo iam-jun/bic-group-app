@@ -52,11 +52,13 @@ const PostViewContent: FC<PostViewContentProps> = ({
   const renderContent = () => {
     if (isLite) {
       const imageName = images?.[0]?.name;
-      const imageSource = imageName
-        ? imageName?.includes?.('http')
-          ? imageName
-          : getResourceUrl('postImage', imageName)
-        : '';
+      const imageSource =
+        images?.[0]?.url ||
+        (imageName
+          ? imageName?.includes?.('http')
+            ? imageName
+            : getResourceUrl('postImage', imageName)
+          : '');
       return (
         <View testID={'post_view_content.lite_container'} style={styles.row}>
           <View style={styles.flex1}>

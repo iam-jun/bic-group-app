@@ -169,12 +169,19 @@ exports[`NFSResult component should render empty search result 1`] = `
               </View>
               <Text
                 style={
-                  Object {
-                    "color": "#7843DD",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 16,
-                    "textAlign": "center",
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#7843DD",
+                    },
+                    Object {
+                      "textAlign": "center",
+                    },
+                  ]
                 }
               >
                 Filter
@@ -213,12 +220,19 @@ exports[`NFSResult component should render empty search result 1`] = `
             >
               <Text
                 style={
-                  Object {
-                    "color": "#7843DD",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 16,
-                    "textAlign": "center",
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#7843DD",
+                    },
+                    Object {
+                      "textAlign": "center",
+                    },
+                  ]
                 }
               >
                 Created by
@@ -257,12 +271,19 @@ exports[`NFSResult component should render empty search result 1`] = `
             >
               <Text
                 style={
-                  Object {
-                    "color": "#7843DD",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 16,
-                    "textAlign": "center",
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#7843DD",
+                    },
+                    Object {
+                      "textAlign": "center",
+                    },
+                  ]
                 }
               >
                 Date
@@ -443,12 +464,18 @@ exports[`NFSResult component should render empty search result 1`] = `
         </View>
         <Text
           style={
-            Object {
-              "color": "#627286",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
-              "textAlign": "center",
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-Regular",
+                "fontSize": 16,
+              },
+              Object {},
+              Object {
+                "color": "#627286",
+                "textAlign": "center",
+              },
+            ]
           }
         >
           Sorry, we couldn’t find anything related
@@ -640,12 +667,19 @@ exports[`NFSResult component should render list search result 1`] = `
               </View>
               <Text
                 style={
-                  Object {
-                    "color": "#7843DD",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 16,
-                    "textAlign": "center",
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#7843DD",
+                    },
+                    Object {
+                      "textAlign": "center",
+                    },
+                  ]
                 }
               >
                 Filter
@@ -684,12 +718,19 @@ exports[`NFSResult component should render list search result 1`] = `
             >
               <Text
                 style={
-                  Object {
-                    "color": "#7843DD",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 16,
-                    "textAlign": "center",
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#7843DD",
+                    },
+                    Object {
+                      "textAlign": "center",
+                    },
+                  ]
                 }
               >
                 Created by
@@ -728,12 +769,19 @@ exports[`NFSResult component should render list search result 1`] = `
             >
               <Text
                 style={
-                  Object {
-                    "color": "#7843DD",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 16,
-                    "textAlign": "center",
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#7843DD",
+                    },
+                    Object {
+                      "textAlign": "center",
+                    },
+                  ]
                 }
               >
                 Date
@@ -909,6 +957,7 @@ exports[`NFSResult component should render list search result 1`] = `
               "opacity": 1,
             }
           }
+          testID="post_view"
         >
           <View
             style={
@@ -1248,11 +1297,15 @@ exports[`NFSResult component should render list search result 1`] = `
                 >
                   <Text
                     style={
-                      Object {
-                        "color": "#2F3945",
-                        "fontFamily": "OpenSans-SemiBold",
-                        "fontSize": 14,
-                      }
+                      Array [
+                        Object {
+                          "color": "#2F3945",
+                          "fontFamily": "OpenSans-SemiBold",
+                          "fontSize": 14,
+                        },
+                        Object {},
+                        undefined,
+                      ]
                     }
                     testID="post_view_header.actor"
                   >
@@ -1268,12 +1321,19 @@ exports[`NFSResult component should render list search result 1`] = `
                 >
                   <Text
                     style={
-                      Object {
-                        "color": "#627286",
-                        "fontFamily": "OpenSans-SemiBold",
-                        "fontSize": 14,
-                        "marginRight": 4,
-                      }
+                      Array [
+                        Object {
+                          "color": "#2F3945",
+                          "fontFamily": "OpenSans-SemiBold",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#627286",
+                        },
+                        Object {
+                          "marginRight": 4,
+                        },
+                      ]
                     }
                   >
                     to
@@ -1281,11 +1341,15 @@ exports[`NFSResult component should render list search result 1`] = `
                   <Text
                     onPress={[Function]}
                     style={
-                      Object {
-                        "color": "#2F3945",
-                        "fontFamily": "OpenSans-SemiBold",
-                        "fontSize": 14,
-                      }
+                      Array [
+                        Object {
+                          "color": "#2F3945",
+                          "fontFamily": "OpenSans-SemiBold",
+                          "fontSize": 14,
+                        },
+                        Object {},
+                        undefined,
+                      ]
                     }
                     testID="post_view_header.audiences"
                   >
@@ -1302,11 +1366,19 @@ exports[`NFSResult component should render list search result 1`] = `
                 >
                   <Text
                     style={
-                      Object {
-                        "color": "#627286",
-                        "fontFamily": "OpenSans-SemiBold",
-                        "fontSize": 11,
-                      }
+                      Array [
+                        Object {
+                          "color": "#2F3945",
+                          "fontFamily": "OpenSans-SemiBold",
+                          "fontSize": 14,
+                        },
+                        Object {
+                          "color": "#627286",
+                        },
+                        Object {
+                          "fontSize": 11,
+                        },
+                      ]
                     }
                     testID="time_view"
                   >
@@ -1501,14 +1573,19 @@ exports[`NFSResult component should render list search result 1`] = `
                               >
                                 <Text
                                   style={
-                                    Object {
-                                      "backgroundColor": "#F6EF79",
-                                      "borderRadius": 6,
-                                      "color": "#2F3945",
-                                      "fontFamily": "OpenSans-Regular",
-                                      "fontSize": 16,
-                                      "overflow": "hidden",
-                                    }
+                                    Array [
+                                      Object {
+                                        "color": "#2F3945",
+                                        "fontFamily": "OpenSans-Regular",
+                                        "fontSize": 16,
+                                      },
+                                      Object {},
+                                      Object {
+                                        "backgroundColor": "#F6EF79",
+                                        "borderRadius": 6,
+                                        "overflow": "hidden",
+                                      },
+                                    ]
                                   }
                                 >
                                   <Text
@@ -1738,12 +1815,19 @@ exports[`NFSResult component should render loading search result 1`] = `
               </View>
               <Text
                 style={
-                  Object {
-                    "color": "#7843DD",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 16,
-                    "textAlign": "center",
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#7843DD",
+                    },
+                    Object {
+                      "textAlign": "center",
+                    },
+                  ]
                 }
               >
                 Filter
@@ -1782,12 +1866,19 @@ exports[`NFSResult component should render loading search result 1`] = `
             >
               <Text
                 style={
-                  Object {
-                    "color": "#7843DD",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 16,
-                    "textAlign": "center",
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#7843DD",
+                    },
+                    Object {
+                      "textAlign": "center",
+                    },
+                  ]
                 }
               >
                 Created by
@@ -1826,12 +1917,19 @@ exports[`NFSResult component should render loading search result 1`] = `
             >
               <Text
                 style={
-                  Object {
-                    "color": "#7843DD",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 16,
-                    "textAlign": "center",
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 16,
+                    },
+                    Object {
+                      "color": "#7843DD",
+                    },
+                    Object {
+                      "textAlign": "center",
+                    },
+                  ]
                 }
               >
                 Date

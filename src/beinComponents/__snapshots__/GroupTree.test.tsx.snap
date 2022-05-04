@@ -523,13 +523,18 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
               <Text
                 numberOfLines={2}
                 style={
-                  Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 14,
-                    "maxWidth": 200,
-                    "paddingTop": 2,
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 14,
+                    },
+                    Object {},
+                    Object {
+                      "maxWidth": 200,
+                      "paddingTop": 2,
+                    },
+                  ]
                 }
               >
                 EVOL Community
@@ -646,12 +651,19 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 </View>
                 <Text
                   style={
-                    Object {
-                      "color": "#627286",
-                      "fontFamily": "OpenSans-Regular",
-                      "fontSize": 14,
-                      "marginHorizontal": 4,
-                    }
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-Regular",
+                        "fontSize": 14,
+                      },
+                      Object {
+                        "color": "#627286",
+                      },
+                      Object {
+                        "marginHorizontal": 4,
+                      },
+                    ]
                   }
                 >
                   25
@@ -1148,13 +1160,18 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
               <Text
                 numberOfLines={2}
                 style={
-                  Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 14,
-                    "maxWidth": 200,
-                    "paddingTop": 2,
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 14,
+                    },
+                    Object {},
+                    Object {
+                      "maxWidth": 200,
+                      "paddingTop": 2,
+                    },
+                  ]
                 }
               >
                 Bein Community
@@ -1271,12 +1288,19 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 </View>
                 <Text
                   style={
-                    Object {
-                      "color": "#627286",
-                      "fontFamily": "OpenSans-Regular",
-                      "fontSize": 14,
-                      "marginHorizontal": 4,
-                    }
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-Regular",
+                        "fontSize": 14,
+                      },
+                      Object {
+                        "color": "#627286",
+                      },
+                      Object {
+                        "marginHorizontal": 4,
+                      },
+                    ]
                   }
                 >
                   19
@@ -1669,13 +1693,18 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
               <Text
                 numberOfLines={2}
                 style={
-                  Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 14,
-                    "maxWidth": 200,
-                    "paddingTop": 2,
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 14,
+                    },
+                    Object {},
+                    Object {
+                      "maxWidth": 200,
+                      "paddingTop": 2,
+                    },
+                  ]
                 }
               >
                 Bein Product Team
@@ -1792,12 +1821,19 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 </View>
                 <Text
                   style={
-                    Object {
-                      "color": "#627286",
-                      "fontFamily": "OpenSans-Regular",
-                      "fontSize": 14,
-                      "marginHorizontal": 4,
-                    }
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-Regular",
+                        "fontSize": 14,
+                      },
+                      Object {
+                        "color": "#627286",
+                      },
+                      Object {
+                        "marginHorizontal": 4,
+                      },
+                    ]
                   }
                 >
                   18
@@ -2287,13 +2323,18 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
               <Text
                 numberOfLines={2}
                 style={
-                  Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 14,
-                    "maxWidth": 200,
-                    "paddingTop": 2,
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 14,
+                    },
+                    Object {},
+                    Object {
+                      "maxWidth": 200,
+                      "paddingTop": 2,
+                    },
+                  ]
                 }
               >
                 EVOL Community
@@ -2408,12 +2449,19 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                 </View>
                 <Text
                   style={
-                    Object {
-                      "color": "#627286",
-                      "fontFamily": "OpenSans-Regular",
-                      "fontSize": 14,
-                      "marginHorizontal": 4,
-                    }
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-Regular",
+                        "fontSize": 14,
+                      },
+                      Object {
+                        "color": "#627286",
+                      },
+                      Object {
+                        "marginHorizontal": 4,
+                      },
+                    ]
                   }
                 >
                   25
@@ -2896,13 +2944,18 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
               <Text
                 numberOfLines={2}
                 style={
-                  Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 14,
-                    "maxWidth": 200,
-                    "paddingTop": 2,
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 14,
+                    },
+                    Object {},
+                    Object {
+                      "maxWidth": 200,
+                      "paddingTop": 2,
+                    },
+                  ]
                 }
               >
                 Bein Community
@@ -3017,12 +3070,19 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                 </View>
                 <Text
                   style={
-                    Object {
-                      "color": "#627286",
-                      "fontFamily": "OpenSans-Regular",
-                      "fontSize": 14,
-                      "marginHorizontal": 4,
-                    }
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-Regular",
+                        "fontSize": 14,
+                      },
+                      Object {
+                        "color": "#627286",
+                      },
+                      Object {
+                        "marginHorizontal": 4,
+                      },
+                    ]
                   }
                 >
                   19
@@ -3403,13 +3463,18 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
               <Text
                 numberOfLines={2}
                 style={
-                  Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 14,
-                    "maxWidth": 200,
-                    "paddingTop": 2,
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 14,
+                    },
+                    Object {},
+                    Object {
+                      "maxWidth": 200,
+                      "paddingTop": 2,
+                    },
+                  ]
                 }
               >
                 Bein Product Team
@@ -3524,12 +3589,19 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                 </View>
                 <Text
                   style={
-                    Object {
-                      "color": "#627286",
-                      "fontFamily": "OpenSans-Regular",
-                      "fontSize": 14,
-                      "marginHorizontal": 4,
-                    }
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-Regular",
+                        "fontSize": 14,
+                      },
+                      Object {
+                        "color": "#627286",
+                      },
+                      Object {
+                        "marginHorizontal": 4,
+                      },
+                    ]
                   }
                 >
                   18
@@ -3860,13 +3932,18 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
               <Text
                 numberOfLines={2}
                 style={
-                  Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 14,
-                    "maxWidth": 200,
-                    "paddingTop": 2,
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 14,
+                    },
+                    Object {},
+                    Object {
+                      "maxWidth": 200,
+                      "paddingTop": 2,
+                    },
+                  ]
                 }
               >
                 EVOL Community
@@ -3981,12 +4058,19 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                 </View>
                 <Text
                   style={
-                    Object {
-                      "color": "#627286",
-                      "fontFamily": "OpenSans-Regular",
-                      "fontSize": 14,
-                      "marginHorizontal": 4,
-                    }
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-Regular",
+                        "fontSize": 14,
+                      },
+                      Object {
+                        "color": "#627286",
+                      },
+                      Object {
+                        "marginHorizontal": 4,
+                      },
+                    ]
                   }
                 >
                   25

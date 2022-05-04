@@ -18,23 +18,32 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {},
+          undefined,
+        ]
       }
     >
       Confirm Code
     </Text>
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 16,
-          "marginBottom": 12,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 16,
+          },
+          Object {},
+          Object {
+            "marginBottom": 12,
+          },
+        ]
       }
     >
       Confirm the code & new password
@@ -116,23 +125,32 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {},
+          undefined,
+        ]
       }
     >
       New password
     </Text>
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 16,
-          "marginBottom": 12,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 16,
+          },
+          Object {},
+          Object {
+            "marginBottom": 12,
+          },
+        ]
       }
     >
       Create your new password
@@ -325,12 +343,19 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
     >
       <Text
         style={
-          Object {
-            "color": "#B2BDCD",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
-            "textAlign": "center",
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#B2BDCD",
+            },
+            Object {
+              "textAlign": "center",
+            },
+          ]
         }
       >
         Confirm new password

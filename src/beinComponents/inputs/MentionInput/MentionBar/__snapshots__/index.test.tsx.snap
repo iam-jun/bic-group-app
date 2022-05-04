@@ -181,13 +181,18 @@ exports[`MentionBar component renders correctly 1`] = `
           </View>
           <Text
             style={
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 14,
-                "marginLeft": 4,
-                "marginRight": 8,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-Regular",
+                  "fontSize": 14,
+                },
+                Object {},
+                Object {
+                  "marginLeft": 4,
+                  "marginRight": 8,
+                },
+              ]
             }
             testID="mention_bar_item.name"
           />

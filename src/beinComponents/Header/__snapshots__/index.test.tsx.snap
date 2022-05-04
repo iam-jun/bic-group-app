@@ -2008,12 +2008,19 @@ exports[`Header component renders correctly with props button props 1`] = `
         >
           <Text
             style={
-              Object {
-                "color": "#7843DD",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
-                "textAlign": "center",
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 16,
+                },
+                Object {
+                  "color": "#7843DD",
+                },
+                Object {
+                  "textAlign": "center",
+                },
+              ]
             }
             testID="header.button.text"
           >
@@ -2243,12 +2250,19 @@ exports[`Header component renders correctly with props button text 1`] = `
         >
           <Text
             style={
-              Object {
-                "color": "#7843DD",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
-                "textAlign": "center",
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 16,
+                },
+                Object {
+                  "color": "#7843DD",
+                },
+                Object {
+                  "textAlign": "center",
+                },
+              ]
             }
             testID="header.button.text"
           >
@@ -5196,12 +5210,19 @@ exports[`Header component renders correctly with props on press button 1`] = `
         >
           <Text
             style={
-              Object {
-                "color": "#7843DD",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
-                "textAlign": "center",
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 16,
+                },
+                Object {
+                  "color": "#7843DD",
+                },
+                Object {
+                  "textAlign": "center",
+                },
+              ]
             }
             testID="header.button.text"
           >
@@ -13099,13 +13120,18 @@ exports[`Header component renders correctly with props sub title 1`] = `
         >
           <Text
             style={
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 12,
-                "height": 16,
-                "lineHeight": 16,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-Regular",
+                  "fontSize": 12,
+                },
+                Object {},
+                Object {
+                  "height": 16,
+                  "lineHeight": 16,
+                },
+              ]
             }
             testID="header.subTitle"
           >
@@ -13324,13 +13350,20 @@ exports[`Header component renders correctly with props sub title props 1`] = `
         >
           <Text
             style={
-              Object {
-                "color": "#421187",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 12,
-                "height": 16,
-                "lineHeight": 16,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-Regular",
+                  "fontSize": 12,
+                },
+                Object {
+                  "color": "#421187",
+                },
+                Object {
+                  "height": 16,
+                  "lineHeight": 16,
+                },
+              ]
             }
             testID="header.subTitle"
           >
@@ -13550,13 +13583,18 @@ exports[`Header component renders correctly with props title 1`] = `
           <Text
             numberOfLines={1}
             style={
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
-                "height": 24,
-                "lineHeight": 24,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 16,
+                },
+                Object {},
+                Object {
+                  "height": 24,
+                  "lineHeight": 24,
+                },
+              ]
             }
             testID="header.text"
           >
@@ -13776,13 +13814,20 @@ exports[`Header component renders correctly with props title props 1`] = `
           <Text
             numberOfLines={1}
             style={
-              Object {
-                "color": "#421187",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
-                "height": 24,
-                "lineHeight": 24,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 16,
+                },
+                Object {
+                  "color": "#421187",
+                },
+                Object {
+                  "height": 24,
+                  "lineHeight": 24,
+                },
+              ]
             }
             testID="header.text"
           >
