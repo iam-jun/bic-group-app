@@ -3,6 +3,7 @@ import {cleanup} from '@testing-library/react-native';
 
 import {renderWithRedux, fireEvent} from '~/test/testUtils';
 import SimpleToastMessage from './SimpleToastMessage';
+import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);
 
@@ -32,7 +33,8 @@ describe('SimpleToastMessage component', () => {
       </SimpleToastMessage>,
     );
     const childrenComponent = getByTestId('simple_toast_message.children');
-    expect(childrenComponent.props.style.color).toBe('red');
+    const flattenedStyle = StyleSheet.flatten(childrenComponent.props.style);
+    expect(flattenedStyle.color).toBe('red');
   });
 
   it(`renders icon correctly`, () => {

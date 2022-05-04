@@ -132,6 +132,7 @@ export interface IPostActivity {
   comments?: IPostComments;
   reactionsCount?: IReactionCounts;
   ownerReactions?: IOwnReaction;
+  markedReadPost?: boolean;
   createdAt?: string;
   createdBy?: number;
 }
@@ -491,4 +492,9 @@ export interface IPayloadDeleteComment {
   commentId: number;
   parentCommentId?: number;
   postId: number;
+}
+
+export interface IPayloadPutMarkAsRead {
+  postId: number;
+  callback?: (isSuccess: boolean) => void;
 }

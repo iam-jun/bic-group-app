@@ -49,6 +49,8 @@ const postKeySelector = {
   postReactionsOrderById: (id: string | number) =>
     `post.allPosts.${id}.reactions_order`,
   postDeletedById: (id: string | number) => `post.allPosts.${id}.deleted`,
+  postMarkedReadById: (id: string | number) =>
+    `post.allPosts.${id}.markedReadPost`,
 
   //Comment data
   allCommentsByParentIds: 'post.allCommentsByParentIds',

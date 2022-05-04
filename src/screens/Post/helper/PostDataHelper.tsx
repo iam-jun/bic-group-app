@@ -148,15 +148,11 @@ export const postApiConfig = {
       },
     };
   },
-  postMarkAsRead: (postId: string, userId: number): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}reactions/mark-as-read`,
-    method: 'post',
-    provider: ApiConfig.providers.bein,
+  putMarkAsRead: (postId: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/posts/${postId}/mark-as-read`,
+    method: 'put',
+    provider: ApiConfig.providers.beinFeed,
     useRetry: true,
-    data: {
-      postId: postId,
-      userId: userId,
-    },
   }),
   getSearchAudiences: (key: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}post-audiences`,
@@ -368,10 +364,10 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  postMarkAsRead: async (postId: string, userId: number) => {
+  putMarkAsRead: async (postId: number) => {
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.postMarkAsRead(postId, userId),
+        postApiConfig.putMarkAsRead(postId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

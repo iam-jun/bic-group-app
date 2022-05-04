@@ -31,6 +31,7 @@ import {
   IPayloadDeletePost,
   IPayloadDeleteComment,
   ICommentData,
+  IPayloadPutMarkAsRead,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -288,6 +289,10 @@ const postActions = {
   }),
   getCommentDetail: (payload: any) => ({
     type: postTypes.GET_COMMENT_DETAIL,
+    payload,
+  }),
+  putMarkAsRead: (payload: IPayloadPutMarkAsRead) => ({
+    type: postTypes.PUT_MARK_AS_READ,
     payload,
   }),
 };
