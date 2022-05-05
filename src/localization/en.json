@@ -49,6 +49,7 @@
     "text_important_posts": "Important Posts",
     "text_loading": "Loading...",
     "text_save": "Save",
+    "text_select": "Select",
     "text_all": "All",
     "text_chosen": "Chosen",
     "text_description": "Description",
@@ -733,6 +734,14 @@
     }
   },
   "communities":{
+    "title_your_groups": "Your Groups",
+    "title_group_joined": "Groups you've joined",
+    "title_manage": "Manage",
+    "text_view_mode": "View Mode",
+    "group_types": {
+      "text_flat_list": "Flat List",
+      "text_tree_view": "Tree View"
+    },
     "empty_communities":{
       "title": "No communities found",
       "description": "Discover communities to join one.",

@@ -1,5 +1,6 @@
 const groupStack = {
   communities: 'communities',
+  yourGroups: 'your-groups',
   groups: 'group-list',
   groupDetail: 'group-detail',
   groupAbout: 'group-about',

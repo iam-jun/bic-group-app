@@ -18,9 +18,11 @@ import PendingMembers from '~/screens/Groups/GroupDetail/groupModerating/Pending
 import PostSettings from '~/screens/Post/PostSettings';
 import CommentDetail from '~/screens/Post/CommentDetail';
 import Communities from '~/screens/Groups/Communities';
+import YourGroups from '~/screens/Groups/YourGroups';
 
 export default {
   communities: Communities,
+  'your-groups': YourGroups,
   'group-list': Groups,
   'group-detail': GroupDetail,
   'group-about': GroupAbout,
