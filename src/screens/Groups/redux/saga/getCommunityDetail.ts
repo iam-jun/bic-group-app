@@ -19,7 +19,6 @@ export default function* getCommunityDetail({
     yield put(actions.setCommunityDetail(resp?.data));
   } catch (err) {
     console.log('getCommunityDetail:', err);
-    yield put(actions.setLoadingPage(false));
     yield put(actions.setCommunityDetail(null));
   }
 }

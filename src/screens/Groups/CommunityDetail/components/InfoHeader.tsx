@@ -24,7 +24,7 @@ const InfoHeader = () => {
 
   const renderCoverImage = () => {
     return (
-      <View testID="community_info_header.cover">
+      <View testID="info_header.cover">
         <Image
           style={styles.cover}
           source={background_img_url || images.img_cover_default}
@@ -41,7 +41,7 @@ const InfoHeader = () => {
           style={styles.avatar}
         />
         <View>
-          <Text.BodyM testID="community_info_header.name">{name}</Text.BodyM>
+          <Text.BodyM testID="info_header.name">{name}</Text.BodyM>
           <View style={styles.info}>
             <Icon
               icon={iconPrivacy}
@@ -50,7 +50,7 @@ const InfoHeader = () => {
             />
             <Text.BodyS
               color={theme.colors.textSecondary}
-              testID="community_info_header.privacy">
+              testID="info_header.privacy">
               {` ${i18next.t(privacyTitle)}`}
             </Text.BodyS>
             <Text.BodyS color={theme.colors.textSecondary}> • </Text.BodyS>
@@ -61,7 +61,7 @@ const InfoHeader = () => {
             />
             <Text.BodyS
               color={theme.colors.textSecondary}
-              testID="community_info_header.member_count">
+              testID="info_header.member_count">
               {` ${user_count} ${i18next.t('groups:text_members', {
                 count: user_count,
               })}`}
@@ -73,7 +73,7 @@ const InfoHeader = () => {
   };
 
   return (
-    <View>
+    <View testID="info_header">
       {renderCoverImage()}
       {renderInfoHeader()}
     </View>

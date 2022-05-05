@@ -20,7 +20,7 @@ const AboutContent = () => {
   const {icon: iconPrivacy, privacyTitle}: any = privacyData || {};
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} testID="about_content">
       {!!description && (
         <View style={styles.descriptionSection}>
           <Text.BodyM style={styles.titleDescription} useI18n>
@@ -42,7 +42,7 @@ const AboutContent = () => {
         disabled
       />
       <MenuItem
-        testID="about_content.privacy"
+        testID="about_content.members"
         icon={'UsersAlt'}
         title={`${user_count} ${i18next.t('groups:text_members', {
           count: user_count,

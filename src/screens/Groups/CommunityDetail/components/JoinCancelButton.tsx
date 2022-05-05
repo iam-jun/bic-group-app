@@ -25,9 +25,9 @@ const JoinCancelButton = () => {
 
   return (
     <Fragment>
-      <View style={styles.buttonView}>
+      <View style={styles.buttonView} testID="join_cancel_button">
         <Button.Secondary
-          testID="info_header.join"
+          testID="join_cancel_button.join"
           leftIcon={'Plus'}
           leftIconProps={{icon: 'Plus', size: 20}}
           style={styles.btnJoin}
@@ -40,7 +40,10 @@ const JoinCancelButton = () => {
         </Button.Secondary>
         {isPrivate && (
           <View style={styles.shortDesc}>
-            <Text.Subtitle color={theme.colors.textSecondary} useI18n>
+            <Text.Subtitle
+              color={theme.colors.textSecondary}
+              useI18n
+              testID="join_cancel_button.description">
               communities:text_join_community_description
             </Text.Subtitle>
           </View>

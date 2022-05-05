@@ -6,9 +6,7 @@ import JoinCancelButton from './JoinCancelButton';
 
 const CommunityPrivateWelcome = () => {
   return (
-    <ScrollView
-      testID="community_private_welcome"
-      showsVerticalScrollIndicator={false}>
+    <ScrollView testID="private_welcome" showsVerticalScrollIndicator={false}>
       <InfoHeader />
       <JoinCancelButton />
       <AboutContent />
