@@ -118,6 +118,7 @@ const Newsfeed = () => {
 
   const onShowSearch = (isShow: boolean, searchInputRef?: any) => {
     if (isShow) {
+      DeviceEventEmitter.emit('showHeader', true);
       dispatch(homeActions.setNewsfeedSearch({isShow: isShow, searchInputRef}));
     } else {
       dispatch(homeActions.clearAllNewsfeedSearch());
