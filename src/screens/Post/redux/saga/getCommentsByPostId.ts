@@ -3,7 +3,7 @@ import {
   IPayloadGetCommentsById,
   IReaction,
 } from '~/interfaces/IPost';
-import {call, put} from 'redux-saga/effects';
+import {call, put, select} from 'redux-saga/effects';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import addChildCommentToCommentsOfPost from '~/screens/Post/redux/saga/addChildCommentToCommentsOfPost';
 import postActions from '~/screens/Post/redux/actions';
@@ -38,10 +38,17 @@ function* getCommentsByPostId({
           newAllComments.push(c);
           newAllComments = newAllComments.concat(c?.child || []);
         });
+        const allPosts = yield select(state => state?.post?.allPosts) || {};
+        const newAllPosts = {...allPosts};
+        const post = newAllPosts[postId] || {};
+        post.comments.meta.hasNextPage = response?.meta?.hasNextPage;
+        newAllPosts[postId] = {...post};
+
         yield put(postActions.addToAllComments(newAllComments));
         yield put(
           postActions.updateAllCommentsByParentIdsWithComments(payload),
         );
+        yield put(postActions.setAllPosts(newAllPosts));
       }
     }
   } catch (e) {

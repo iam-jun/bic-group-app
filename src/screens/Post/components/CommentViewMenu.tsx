@@ -22,6 +22,7 @@ import {getLink, LINK_COMMENT} from '~/utils/link';
 export interface CommentViewMenuProps {
   commentId: number;
   parentCommentId?: number;
+  postId?: number;
   content: string;
   groupIds: string;
   isActor: boolean;
@@ -36,6 +37,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   parentCommentId,
   content,
   groupIds,
+  postId,
   isActor,
   onPressMoreReaction,
   onAddReaction,
@@ -101,8 +103,9 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   const _onPressCopyLink = () => {
     dispatch(modalActions.hideModal());
     Clipboard.setString(
-      getLink(LINK_COMMENT, commentId, {
-        p: parentCommentId,
+      getLink(LINK_COMMENT, postId, {
+        parentId: parentCommentId || 0,
+        commentId,
       }),
     );
     dispatch(

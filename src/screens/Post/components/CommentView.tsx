@@ -227,6 +227,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
             parentCommentId={parentCommentId}
             content={content}
             groupIds={groupIds}
+            postId={postId}
             isActor={isActor}
             onPressMoreReaction={onPressReact}
             onAddReaction={onAddReaction}

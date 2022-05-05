@@ -2,6 +2,7 @@ import {put, call, takeLatest, select, takeEvery} from 'redux-saga/effects';
 import {isArray, get} from 'lodash';
 
 import {
+  ICommentData,
   IParamGetPostAudiences,
   IParamGetPostDetail,
   IPayloadCreateComment,
@@ -321,12 +322,18 @@ function* updateAllCommentsByParentIdsWithComments({
   type: string;
   payload: IPayloadUpdateCommentsById;
 }): any {
-  const {id, comments, isMerge} = payload || {};
+  const {id, comments, isMerge, isReplace, commentId} = payload || {};
   const allComments = yield select(state =>
     get(state, postKeySelector.allCommentsByParentIds),
   ) || {};
   const commentsById = allComments[id] || [];
   let newComments: IReaction[];
+  if (isReplace) {
+    newComments = commentsById?.filter?.(
+      (item: ICommentData) => item.id != commentId,
+    );
+    newComments = [...new Set([...newComments, ...comments])];
+  }
   if (isMerge) {
     newComments = [...new Set([...commentsById, ...comments])];
   } else {

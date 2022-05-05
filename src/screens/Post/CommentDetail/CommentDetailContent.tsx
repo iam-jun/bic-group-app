@@ -35,10 +35,10 @@ const CommentDetailContent = (props: any) => {
   const commentInputRef = useRef<any>();
 
   const params = props?.route?.params;
-  const {commentData, postId, replyItem, commentParent, commentId, p} =
+  const {commentData, postId, replyItem, commentParent, commentId, parentId} =
     params || {};
-  // getCommentDetail;
   const id = postId;
+
   const actor = useKeySelector(postKeySelector.postActorById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
   const postDetailLoadingState = useKeySelector(
@@ -48,7 +48,7 @@ const CommentDetailContent = (props: any) => {
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const {childrenComments = [], newCommentData = {}} = getListChildComment(
     comments,
-    commentData?.id,
+    commentData?.id || !!parentId ? parentId : commentId,
   );
 
   const scrollToCommentsPosition = useKeySelector(
@@ -78,13 +78,17 @@ const CommentDetailContent = (props: any) => {
 
   useEffect(() => {
     if (!postDetailLoadingState && !parentCommentIsDeleted) {
-      console.log('111111', commentId);
-
       dispatch(postActions.setScrollCommentsPosition(null));
       if (childrenComments?.length > 1 || !commentData?.child?.[0]) {
         setLoading(false);
         if (!!commentId) {
-          dispatch(postActions.getCommentDetail({commentId, parentId: p}));
+          dispatch(
+            postActions.getCommentDetail({
+              commentId,
+              parentId: parentId || 0,
+              order: 'DESC',
+            }),
+          );
         }
         if (!!replyItem) {
           setTimeout(() => {
@@ -104,6 +108,7 @@ const CommentDetailContent = (props: any) => {
             idLT: lastItem?.id,
             parentId: newCommentData?.id,
             limit: 9,
+            order: 'DESC',
             isMerge: true,
             position: 'bottom',
             callbackLoading: loading => {
@@ -128,17 +133,28 @@ const CommentDetailContent = (props: any) => {
       if (scrollToCommentsPosition?.position === 'top') {
         dispatch(postActions.setScrollCommentsPosition(null));
       } else if (scrollToCommentsPosition?.position === 'bottom') {
-        scrollToEnd();
+        scrollToIndex();
+      } else if (!!parentId && childrenComments?.length > 0) {
+        const commentPosition = childrenComments?.findIndex?.(
+          (item: ICommentData) => item.id == commentId,
+        );
+        if (commentPosition > 0) {
+          scrollToIndex(commentPosition);
+        }
       }
     }, 300);
     return () => clearTimeout(timer);
-  }, [scrollToCommentsPosition]);
+  }, [scrollToCommentsPosition, childrenComments]);
 
-  const scrollToEnd = () => {
+  const scrollToIndex = (index?: number) => {
     try {
       listRef.current?.scrollToIndex?.({
         animated: true,
-        index: childrenComments?.length > 0 ? childrenComments?.length - 1 : 0,
+        index: !!index
+          ? index
+          : childrenComments?.length > 0
+          ? childrenComments?.length - 1
+          : 0,
       });
       dispatch(postActions.setScrollCommentsPosition(null));
     } catch (error) {
@@ -294,8 +310,10 @@ const getListChildComment = (
   parentCommentId: number,
 ) => {
   const parentCommentPosition = listData?.findIndex?.(
-    (item: ICommentData) => item.id === parentCommentId,
+    (item: ICommentData) => item.id == parentCommentId,
   );
+  console.log(parentCommentId, 'parentCommentPosition', parentCommentPosition);
+
   const childrenComments = listData?.[parentCommentPosition]?.child || [];
   return {childrenComments, newCommentData: listData?.[parentCommentPosition]};
 };

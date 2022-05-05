@@ -266,7 +266,7 @@ const getLinkingCustomConfig = (config: any, navigation: any) => {
                 p[c[0]] = c[1];
               } else {
                 //@ts-ignore
-                p.commentId = c[0];
+                p.postId = c[0];
               }
               return p;
             }, {});

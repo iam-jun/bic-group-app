@@ -396,6 +396,8 @@ export interface IPayloadUpdateCommentsById {
   id: number;
   comments: ICommentData[];
   isMerge: boolean;
+  isReplace?: boolean;
+  commentId?: number;
 }
 
 export interface ICreatePostParams {

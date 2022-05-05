@@ -82,6 +82,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
           dispatch(
             postActions.getCommentsByPostId({
               postId: postId,
+              order: 'DESC',
               idLT: idLessThan,
               parentId: commentId,
               limit: 10,

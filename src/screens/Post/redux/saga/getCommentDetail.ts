@@ -23,9 +23,17 @@ function* getCommentDetail({
       commentId,
       payload,
     );
-    console.log('response', response);
-
-    // const newList = response?.list;
+    const {actor, comment, childs} = response;
+    if (!!comment && childs?.list?.length > 0) {
+      const newComment = {...comment, child: childs.list, meta: childs.meta};
+      const payload = {
+        id: comment?.postId,
+        comments: [newComment],
+        isMerge: false,
+        isReplace: true,
+      };
+      yield put(postActions.updateAllCommentsByParentIdsWithComments(payload));
+    }
     // callbackLoading?.(false);
     // if (newList?.length > 0) {
     //   if (commentId) {
@@ -52,7 +60,6 @@ function* getCommentDetail({
     // }
   } catch (e) {
     console.log(`\x1b[31m🐣️ saga getCommentsByPostId error: `, e, `\x1b[0m`);
-    callbackLoading?.(false);
     yield showError(e);
   }
 }
