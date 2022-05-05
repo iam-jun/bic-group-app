@@ -1,5 +1,5 @@
-import React, {useEffect, Fragment} from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, {useEffect, useRef, Fragment} from 'react';
+import {View, StyleSheet, DeviceEventEmitter} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
@@ -18,12 +18,13 @@ const CommunityDetail = (props: any) => {
   const params = props.route.params;
   const communityId = params?.communityId;
   const dispatch = useDispatch();
+  const headerRef = useRef<any>();
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const {join_status, privacy} = infoDetail;
+  const {name, icon, join_status, privacy} = infoDetail;
   const isPrivate = privacy === groupPrivacy.private;
   const isMember = join_status === groupJoinStatus.member;
 
@@ -35,20 +36,28 @@ const CommunityDetail = (props: any) => {
 
   const renderCommunityContent = () => {
     if (!isMember && privacy === groupPrivacy.private) {
-      return <PrivateWelcome />;
+      return <PrivateWelcome onScroll={onScroll} />;
     }
 
-    return <PageContent />;
+    return <PageContent onScroll={onScroll} />;
   };
 
   const onPressChat = () => {
     // TODO: Add navigation to Chat
   };
 
+  const onScroll = (e: any) => {
+    headerRef?.current?.setScrollY?.(e?.nativeEvent?.contentOffset.y);
+  };
+
   const renderCommunityDetail = () => {
     return (
       <Fragment>
         <Header
+          headerRef={headerRef}
+          title={name}
+          avatar={icon}
+          useAnimationTitle
           rightIcon="EllipsisV"
           rightIconProps={{backgroundColor: theme.colors.background}}
           onPressChat={isMember || !isPrivate ? onPressChat : undefined}

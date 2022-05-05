@@ -73,6 +73,7 @@ export interface HeaderProps {
   onPressHeader?: () => void;
   onRightPress?: () => void;
   onPressChat?: () => void;
+  useAnimationTitle?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -112,6 +113,7 @@ const Header: React.FC<HeaderProps> = ({
   onPressHeader,
   onRightPress,
   onPressChat,
+  useAnimationTitle,
 }: HeaderProps) => {
   const [isShowSearch, setIsShowSearch] = useState(false);
   const inputRef = useRef<any>();
@@ -126,6 +128,7 @@ const Header: React.FC<HeaderProps> = ({
   const isLaptop = windowDimension.width >= deviceDimensions.laptop;
 
   const showValue = useSharedValue(1);
+  const scrollY = useSharedValue(0);
 
   const {rootNavigation} = useRootNavigation();
 
@@ -181,6 +184,7 @@ const Header: React.FC<HeaderProps> = ({
     showSearch,
     setSearchText,
     goBack,
+    setScrollY,
   }));
 
   const _onPressSearch = () => {
@@ -212,6 +216,22 @@ const Header: React.FC<HeaderProps> = ({
 
   const hide = (duration = 200) => {
     showValue.value = withTiming(0, {duration});
+  };
+
+  const titleAnimated = useAnimationTitle
+    ? useAnimatedStyle(() => ({
+        opacity: interpolate(scrollY.value, [0, 200, 225], [0, 0, 1]),
+      }))
+    : {};
+
+  const avatarAnimated = useAnimationTitle
+    ? useAnimatedStyle(() => ({
+        opacity: interpolate(scrollY.value, [0, 200, 225], [0, 0, 1]),
+      }))
+    : {};
+
+  const setScrollY = (offsetY: number) => {
+    scrollY.value = offsetY;
   };
 
   const renderContent = () => {
@@ -253,17 +273,19 @@ const Header: React.FC<HeaderProps> = ({
             />
           )}
           {!!avatar && (
-            <TouchableOpacity
-              onPress={onPressHeader}
-              disabled={!onPressHeader}
-              testID="header.avatar">
-              <Avatar.Group
-                source={avatar}
-                style={styles.avatar}
-                variant="small"
-                {...avatarProps}
-              />
-            </TouchableOpacity>
+            <Animated.View style={avatarAnimated}>
+              <TouchableOpacity
+                onPress={onPressHeader}
+                disabled={!onPressHeader}
+                testID="header.avatar">
+                <Avatar.Group
+                  source={avatar}
+                  style={styles.avatar}
+                  variant="small"
+                  {...avatarProps}
+                />
+              </TouchableOpacity>
+            </Animated.View>
           )}
           {!!leftIcon && (
             <Icon
@@ -275,7 +297,7 @@ const Header: React.FC<HeaderProps> = ({
               testID="header.leftIcon"
             />
           )}
-          <View style={styles.titleContainer}>
+          <Animated.View style={[styles.titleContainer, titleAnimated]}>
             {!!title && (
               <TouchableOpacity
                 onPress={onPressHeader}
@@ -301,7 +323,7 @@ const Header: React.FC<HeaderProps> = ({
                 </Text.Subtitle>
               </TouchableOpacity>
             )}
-          </View>
+          </Animated.View>
           {!!icon && onPressIcon && (
             <Icon
               icon={icon}

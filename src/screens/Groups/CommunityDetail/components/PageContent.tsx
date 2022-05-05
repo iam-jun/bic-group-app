@@ -9,7 +9,7 @@ import {ITheme} from '~/theme/interfaces';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import JoinCancelButton from './JoinCancelButton';
 
-const PageContent = () => {
+const PageContent = ({onScroll}: any) => {
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme || {};
   const styles = createStyles(theme);
@@ -30,6 +30,8 @@ const PageContent = () => {
           horizontal
           showsHorizontalScrollIndicator={false}
           alwaysBounceHorizontal={false}
+          scrollEventThrottle={16}
+          onScroll={onScroll}
           style={styles.scrollViewBtn}
           contentContainerStyle={styles.buttonContainer}>
           <Button.Secondary
