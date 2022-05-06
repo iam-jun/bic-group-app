@@ -4,7 +4,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
-import getCommunities from './getCommunities';
+import getJoinedCommunities from './getJoinedCommunities';
 import {communities} from '~/test/mock_data/communities';
 
 describe('Get Communities saga', () => {
@@ -24,10 +24,12 @@ describe('Get Communities saga', () => {
     const resp = communities as any;
     return (
       // @ts-ignorets
-      expectSaga(getCommunities, action)
+      expectSaga(getJoinedCommunities, action)
         .withState(storeData)
         .put(groupsActions.setMyCommunities({data: [], loading: true}))
-        .provide([[matchers.call.fn(groupsDataHelper.getCommunities), resp]])
+        .provide([
+          [matchers.call.fn(groupsDataHelper.getJoinedCommunities), resp],
+        ])
         .put(
           groupsActions.setMyCommunities({data: communities, loading: false}),
         )
@@ -47,10 +49,12 @@ describe('Get Communities saga', () => {
 
     return (
       // @ts-ignorets
-      expectSaga(getCommunities, action)
+      expectSaga(getJoinedCommunities, action)
         .withState(storeData)
         .put(groupsActions.setMyCommunities({data: [], loading: true}))
-        .provide([[matchers.call.fn(groupsDataHelper.getCommunities), resp]])
+        .provide([
+          [matchers.call.fn(groupsDataHelper.getJoinedCommunities), resp],
+        ])
         .put(groupsActions.setMyCommunities({data: [], loading: false}))
         .run()
         .then(({allEffects}: any) => {
@@ -73,12 +77,12 @@ describe('Get Communities saga', () => {
     };
 
     //@ts-ignore
-    return expectSaga(getCommunities, action)
+    return expectSaga(getJoinedCommunities, action)
       .withState(storeData)
       .put(groupsActions.setMyCommunities({data: [], loading: true}))
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.getCommunities),
+          matchers.call.fn(groupsDataHelper.getJoinedCommunities),
           Promise.reject(resp),
         ],
       ])

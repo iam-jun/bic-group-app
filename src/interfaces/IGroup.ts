@@ -72,6 +72,14 @@ export interface IParamGetGroupPosts {
   ranking?: 'IMPORTANT' | string;
 }
 
+export interface IParamGetCommunities {
+  key?: string;
+  offset?: number;
+  limit?: number;
+  sort?: string;
+  preview_members?: boolean;
+}
+
 export interface IGroupImageUpload {
   id: number;
   fieldName: 'icon' | 'background_img_url';
@@ -137,5 +145,5 @@ export interface IJoiningMember {
 export interface IGetCommunityGroup {
   preview_members?: boolean;
   key?: string;
-  list_by?: string;
+  list_by?: 'tree' | 'flat';
 }

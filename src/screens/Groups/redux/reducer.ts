@@ -1,3 +1,4 @@
+import {ICommunity} from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/screens/Groups/redux/types';
 import {IUser} from '~/interfaces/IAuth';
@@ -8,7 +9,14 @@ export const groupInitState = {
   isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
   joinedGroups: [],
-
+  yourGroupsTree: {
+    loading: false,
+    list: [],
+  },
+  yourGroupsList: {
+    loading: false,
+    list: [],
+  },
   loadingPage: false,
   loadingGroupDetail: false,
   groupDetail: {
@@ -60,10 +68,16 @@ export const groupInitState = {
     data: [],
     items: {} as IObject<IJoiningMember>,
   },
-  communities: {
+  joinedCommunities: {
     loading: false,
     data: [],
   },
+  discoverCommunities: {
+    loading: false,
+    canLoadMore: true,
+    list: [],
+  },
+  communityDetail: {} as ICommunity,
 };
 
 function groupsReducer(state = groupInitState, action: any = {}) {
@@ -343,13 +357,36 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           items: {...pendingMemberRequests.items},
         },
       };
-
-    case groupsTypes.SET_COMMUNITIES:
+    case groupsTypes.SET_YOUR_GROUPS_TREE:
       return {
         ...state,
-        communities: {
+        yourGroupsTree: {
+          ...state.yourGroupsTree,
+          ...payload,
+        },
+      };
+    case groupsTypes.SET_YOUR_GROUPS_LIST:
+      return {
+        ...state,
+        yourGroupsList: {
+          ...state.yourGroupsList,
+          ...payload,
+        },
+      };
+    case groupsTypes.SET_JOINED_COMMUNITIES:
+      return {
+        ...state,
+        joinedCommunities: {
           loading: payload?.loading || false,
           data: payload?.data || [],
+        },
+      };
+    case groupsTypes.SET_DISCOVER_COMMUNITIES:
+      return {
+        ...state,
+        discoverCommunities: {
+          ...state.discoverCommunities,
+          ...payload,
         },
       };
 
@@ -365,6 +402,12 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         loadingJoinedGroups: false,
         joinedGroups: payload || [],
       };
+    case groupsTypes.SET_COMMUNITY_DETAIL:
+      return {
+        ...state,
+        communityDetail: payload,
+      };
+
     default:
       return state;
   }

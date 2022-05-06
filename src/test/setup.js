@@ -76,7 +76,13 @@ jest.doMock('react-i18next', () => ({
 }));
 
 jest.doMock('i18next', () => ({
-  t: str => get(languages, str?.replaceAll?.(':', '.')),
+  t: (str, params) => {
+    let suffix = '';
+    if (params?.count) {
+      suffix = params.count === 1 ? '_one' : '_other';
+    }
+    return get(languages, `${str}${suffix}`.replaceAll?.(':', '.'));
+  },
 }));
 
 jest.doMock('react-native-paper', () => ({

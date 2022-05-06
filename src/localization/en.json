@@ -49,6 +49,7 @@
     "text_important_posts": "Important Posts",
     "text_loading": "Loading...",
     "text_save": "Save",
+    "text_select": "Select",
     "text_all": "All",
     "text_chosen": "Chosen",
     "text_description": "Description",
@@ -280,6 +281,7 @@
     "text_learn_more": "Learn more",
     "title_secret": "Secret",
     "title_secret_subtitle": "Group is invisible to everyone and members are invited.",
+    "title_open": "Open",
     "title_edit_description": "Edit Description",
     "title_logout_from_all_devices": "Logout from all devices",
     "title_edit_basic_info": "Edit Basic Info",
@@ -334,9 +336,10 @@
     "title_set_a_custom_status": "Set a custom status",
     "title_about_bein_app": "About Bein App",
     "title_help_and_support": "Help & Support",
-    "group_title_public": "Public Group",
-    "group_title_private": "Private Group",
-    "group_title_secret": "Secret Group"
+    "privacy_public": "Public",
+    "privacy_private": "Private",
+    "privacy_secret": "Secret",
+    "privacy_open": "Open"
   },
   "languages": {
     "title_en": "English",
@@ -525,10 +528,10 @@
     "auto_saved": "Post auto-saved",
     "saved_to_draft": "Post Saved to Draft.",
     "text_review_markdown": "Review Markdown",
-    "text_comment_deleted":"Comment doesn’t exist, can not send your reply",
-    "deleted_comment":{
+    "text_comment_deleted": "Comment doesn’t exist, can not send your reply",
+    "deleted_comment": {
       "title": "This page is not existing.",
-      "description":"It might be deleted or you don't have permission to see it",
+      "description": "It might be deleted or you don't have permission to see it",
       "button_text": "Back to Post"
     }
   },
@@ -572,9 +575,11 @@
       "btn_channel": "Channel",
       "btn_about": "About",
       "btn_members": "Members",
-      "btn_files": "Files"
+      "btn_files": "Files",
+      "btn_your_groups": "Your groups"
     },
-    "text_members": "members",
+    "text_members_one": "member",
+    "text_members_other": "members",
     "search_results": "Search results",
     "all_groups": "All groups",
     "text_invite_members": "Invite members",
@@ -732,16 +737,26 @@
       "desc": "Please re-login to continue"
     }
   },
-  "communities":{
-    "empty_communities":{
+  "communities": {
+    "title_your_groups": "Your Groups",
+    "title_group_joined": "Groups you've joined",
+    "title_manage": "Manage",
+    "text_view_mode": "View Mode",
+    "group_types": {
+      "text_flat_list": "Flat List",
+      "text_tree_view": "Tree View"
+    },
+    "empty_communities": {
       "title": "No communities found",
       "description": "Discover communities to join one.",
-      "button_text":"Go to Discover"
+      "button_text": "Go to Discover"
     },
-    "community_menu":{
+    "community_menu": {
       "your_communities_text": "Your Communities",
-      "manage_text":"Manage",
-      "discover_text":"Discover"
-    }
+      "manage_text": "Manage",
+      "discover_text": "Discover"
+    },
+    "text_join_community_button": "Join this community",
+    "text_join_community_description": "Join this community to view or participate on discussions"
   }
 }

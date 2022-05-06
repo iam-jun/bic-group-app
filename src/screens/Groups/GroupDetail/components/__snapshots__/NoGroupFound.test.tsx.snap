@@ -166,6 +166,12 @@ exports[`NoGroupFound component should render correctly 1`] = `
           </View>
         </View>
         <View
+          animatedStyle={
+            Object {
+              "value": Object {},
+            }
+          }
+          collapsable={false}
           style={
             Object {
               "flex": 1,
