@@ -137,5 +137,5 @@ export interface IJoiningMember {
 export interface IGetCommunityGroup {
   preview_members?: boolean;
   key?: string;
-  list_by?: string;
+  list_by?: 'tree' | 'flat';
 }

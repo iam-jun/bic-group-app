@@ -284,6 +284,22 @@ const groupsActions = {
     type: groupsTypes.SET_COMMUNITY_GROUPS,
     payload,
   }),
+  getYourGroupsTree: (payload: number) => ({
+    type: groupsTypes.GET_YOUR_GROUPS_TREE,
+    payload,
+  }),
+  setYourGroupsTree: (payload: any) => ({
+    type: groupsTypes.SET_YOUR_GROUPS_TREE,
+    payload,
+  }),
+  getYourGroupsList: (payload: number) => ({
+    type: groupsTypes.GET_YOUR_GROUPS_LIST,
+    payload,
+  }),
+  setYourGroupsList: (payload: any) => ({
+    type: groupsTypes.SET_YOUR_GROUPS_LIST,
+    payload,
+  }),
 };
 
 export default groupsActions;

@@ -8,7 +8,14 @@ export const groupInitState = {
   isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
   joinedGroups: [],
-
+  yourGroupsTree: {
+    loading: false,
+    list: [],
+  },
+  yourGroupsList: {
+    loading: false,
+    list: [],
+  },
   loadingPage: false,
   loadingGroupDetail: false,
   groupDetail: {
@@ -343,7 +350,22 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           items: {...pendingMemberRequests.items},
         },
       };
-
+    case groupsTypes.SET_YOUR_GROUPS_TREE:
+      return {
+        ...state,
+        yourGroupsTree: {
+          ...state.yourGroupsTree,
+          ...payload,
+        },
+      };
+    case groupsTypes.SET_YOUR_GROUPS_LIST:
+      return {
+        ...state,
+        yourGroupsList: {
+          ...state.yourGroupsList,
+          ...payload,
+        },
+      };
     case groupsTypes.SET_COMMUNITIES:
       return {
         ...state,

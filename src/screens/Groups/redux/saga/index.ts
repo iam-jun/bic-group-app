@@ -34,6 +34,8 @@ import setGroupAdmin from './setGroupAdmin';
 import showError from '~/store/commonSaga/showError';
 import getCommunities from './getCommunities';
 import getCommunityGroups from './getCommunityGroups';
+import getYourGroupsTree from '~/screens/Groups/redux/saga/getYourGroupsTree';
+import getYourGroupsList from '~/screens/Groups/redux/saga/getYourGroupsList';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -76,6 +78,8 @@ export default function* groupsSaga() {
     groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
     declineAllMemberRequests,
   );
+  yield takeLatest(groupsTypes.GET_YOUR_GROUPS_TREE, getYourGroupsTree);
+  yield takeLatest(groupsTypes.GET_YOUR_GROUPS_LIST, getYourGroupsList);
   yield takeLatest(groupsTypes.GET_COMMUNITIES, getCommunities);
   yield takeLatest(groupsTypes.GET_COMMUNITY_GROUPS, getCommunityGroups);
 }
