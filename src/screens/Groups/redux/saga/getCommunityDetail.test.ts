@@ -30,7 +30,7 @@ describe('get Community Detail saga', () => {
           Promise.reject(),
         ],
       ])
-      .put(actions.setCommunityDetail(null))
+      .put(actions.setCommunityDetail({} as ICommunity))
       .run();
   });
 });

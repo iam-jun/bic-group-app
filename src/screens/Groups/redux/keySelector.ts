@@ -28,6 +28,7 @@ const groupsKeySelector = {
   discoverCommunitiesData: 'groups.discoverCommunities',
   loadingCommunities: 'groups.communities.loading',
   communityDetail: 'groups.communityDetail',
+  isGettingInfoDetail: 'groups.isGettingInfoDetail',
 };
 
 export default groupsKeySelector;

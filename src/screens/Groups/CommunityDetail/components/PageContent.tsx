@@ -1,6 +1,7 @@
 import {View, ScrollView, StyleSheet} from 'react-native';
 import React from 'react';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
 import ListView from '~/beinComponents/list/ListView';
 import Button from '~/beinComponents/Button';
@@ -14,15 +15,19 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
+import PostItem from '~/beinComponents/list/items/PostItem';
+import actions from '~/screens/Groups/redux/actions';
 
 interface PageContentProps {
   communityId: number;
+  getPosts: () => void;
   onScroll: (e: any) => void;
   onButtonLayout: (e: any) => void;
 }
 
 const PageContent = ({
   communityId,
+  getPosts,
   onScroll,
   onButtonLayout,
 }: PageContentProps) => {
@@ -32,8 +37,13 @@ const PageContent = ({
   const styles = createStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const {join_status} = infoDetail;
+  const {join_status, group_id} = infoDetail;
   const isMember = join_status === groupJoinStatus.member;
+  const posts = useKeySelector(groupsKeySelector.posts);
+  const refreshingGroupPosts = useKeySelector(
+    groupsKeySelector.refreshingGroupPosts,
+  );
+  const dispatch = useDispatch();
 
   const onPressDiscover = () => {
     // TODO: add navigation to Discover page
@@ -47,8 +57,22 @@ const PageContent = ({
     // TODO: add navigation to Members page
   };
 
+  const loadMoreData = () => {
+    if (posts.extra.length !== 0) {
+      dispatch(actions.mergeExtraGroupPosts(group_id));
+    }
+  };
+
   const onPressYourGroups = () => {
     rootNavigation.navigate(groupStack.yourGroups, {communityId});
+  };
+
+  const renderItem = ({item}: any) => {
+    return <PostItem postData={item} testID="page_content.post.item" />;
+  };
+
+  const _onRefresh = () => {
+    getPosts();
   };
 
   const renderHeader = () => {
@@ -60,8 +84,6 @@ const PageContent = ({
             horizontal
             showsHorizontalScrollIndicator={false}
             alwaysBounceHorizontal={false}
-            scrollEventThrottle={16}
-            onScroll={onScroll}
             style={styles.scrollViewBtn}
             contentContainerStyle={styles.buttonContainer}>
             {isMember && (
@@ -113,8 +135,8 @@ const PageContent = ({
         {isMember && (
           <HeaderCreatePost
             style={styles.createPost}
-            // audience={groupData}
-            // createFromGroupId={groupId}
+            audience={{...infoDetail, id: group_id}}
+            createFromGroupId={group_id}
           />
         )}
       </>
@@ -125,7 +147,14 @@ const PageContent = ({
     <ListView
       isFullView
       style={styles.listContainer}
-      data={[]}
+      data={posts.data}
+      renderItem={renderItem}
+      onScroll={onScroll}
+      scrollEventThrottle={16}
+      refreshing={refreshingGroupPosts}
+      onRefresh={_onRefresh}
+      onEndReached={loadMoreData}
+      onEndReachedThreshold={0.5}
       ListHeaderComponent={renderHeader}
       ListHeaderComponentStyle={styles.listHeaderComponentStyle}
       ListFooterComponent={<ViewSpacing height={theme.spacing.padding.base} />}

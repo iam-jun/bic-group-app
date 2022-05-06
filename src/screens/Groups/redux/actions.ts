@@ -316,7 +316,7 @@ const groupsActions = {
     payload,
     loadingPage,
   }),
-  setCommunityDetail: (payload: ICommunity | null) => ({
+  setCommunityDetail: (payload: ICommunity) => ({
     type: groupsTypes.SET_COMMUNITY_DETAIL,
     payload,
   }),
