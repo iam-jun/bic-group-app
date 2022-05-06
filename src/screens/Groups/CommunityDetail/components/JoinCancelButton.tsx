@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
@@ -9,7 +9,7 @@ import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
 import groupsKeySelector from '../../redux/keySelector';
 
-const JoinCancelButton = () => {
+const JoinCancelButton = ({style}: {style?: ViewStyle}) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
@@ -25,7 +25,7 @@ const JoinCancelButton = () => {
 
   return (
     <Fragment>
-      <View style={styles.buttonView} testID="join_cancel_button">
+      <View style={[styles.buttonView, style]} testID="join_cancel_button">
         <Button.Secondary
           testID="join_cancel_button.join"
           leftIcon={'Plus'}

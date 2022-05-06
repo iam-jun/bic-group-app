@@ -1,9 +1,14 @@
 import React, {useEffect, useRef, Fragment} from 'react';
-import {View, StyleSheet, DeviceEventEmitter} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import Header from '~/beinComponents/Header';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  interpolate,
+} from 'react-native-reanimated';
 
+import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {ITheme} from '~/theme/interfaces';
 import PrivateWelcome from './components/PrivateWelcome';
@@ -13,6 +18,7 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import {groupPrivacy} from '~/constants/privacyTypes';
 import groupJoinStatus from '~/constants/groupJoinStatus';
+import JoinCancelButton from './components/JoinCancelButton';
 
 const CommunityDetail = (props: any) => {
   const params = props.route.params;
@@ -27,6 +33,8 @@ const CommunityDetail = (props: any) => {
   const {name, icon, join_status, privacy} = infoDetail;
   const isPrivate = privacy === groupPrivacy.private;
   const isMember = join_status === groupJoinStatus.member;
+
+  const buttonShow = useSharedValue(0);
 
   const getCommunityDetail = () => {
     dispatch(actions.getCommunityDetail(communityId));
@@ -47,8 +55,17 @@ const CommunityDetail = (props: any) => {
   };
 
   const onScroll = (e: any) => {
-    headerRef?.current?.setScrollY?.(e?.nativeEvent?.contentOffset.y);
+    const offsetY = e?.nativeEvent?.contentOffset?.y;
+    headerRef?.current?.setScrollY?.(offsetY);
+    buttonShow.value = offsetY;
   };
+
+  const buttonStyle = useAnimatedStyle(() => ({
+    position: 'absolute',
+    width: '100%',
+    bottom: 0,
+    opacity: interpolate(buttonShow.value, [0, 270, 280], [0, 0, 1]),
+  }));
 
   const renderCommunityDetail = () => {
     return (
@@ -65,6 +82,9 @@ const CommunityDetail = (props: any) => {
         <View testID="community_detail.content" style={styles.contentContainer}>
           {renderCommunityContent()}
         </View>
+        <Animated.View style={buttonStyle}>
+          <JoinCancelButton style={styles.joinBtn} />
+        </Animated.View>
       </Fragment>
     );
   };
@@ -79,13 +99,16 @@ const CommunityDetail = (props: any) => {
 export default CommunityDetail;
 
 const themeStyles = (theme: ITheme) => {
-  const {colors} = theme;
+  const {colors, spacing} = theme;
   return StyleSheet.create({
     screenContainer: {
       backgroundColor: colors.borderDivider,
     },
     contentContainer: {
       flex: 1,
+    },
+    joinBtn: {
+      paddingTop: spacing.padding.tiny,
     },
   });
 };

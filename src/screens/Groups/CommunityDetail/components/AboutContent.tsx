@@ -63,6 +63,7 @@ const createStyle = (theme: ITheme) => {
       flex: 1,
       backgroundColor: colors.background,
       paddingVertical: spacing.padding.large,
+      paddingBottom: 80, // to avoid Join button at the bottom
     },
     titleDescription: {
       marginBottom: spacing.margin.large,
