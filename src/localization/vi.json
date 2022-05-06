@@ -520,7 +520,8 @@
       "btn_channel": "Kênh",
       "btn_about": "Về nhóm",
       "btn_members": "Thành viên",
-      "btn_files": "Files"
+      "btn_files": "Files",
+      "btn_your_groups": "Nhóm của bạn"
     },
     "text_members_one": "thành viên",
     "text_members_other": "thành viên",

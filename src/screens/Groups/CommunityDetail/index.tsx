@@ -51,7 +51,13 @@ const CommunityDetail = (props: any) => {
       );
     }
 
-    return <PageContent onScroll={onScroll} onButtonLayout={onButtonLayout} />;
+    return (
+      <PageContent
+        communityId={communityId}
+        onScroll={onScroll}
+        onButtonLayout={onButtonLayout}
+      />
+    );
   };
 
   const onPressChat = () => {

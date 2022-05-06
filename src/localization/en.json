@@ -575,7 +575,8 @@
       "btn_channel": "Channel",
       "btn_about": "About",
       "btn_members": "Members",
-      "btn_files": "Files"
+      "btn_files": "Files",
+      "btn_your_groups": "Your groups"
     },
     "text_members_one": "member",
     "text_members_other": "members",
