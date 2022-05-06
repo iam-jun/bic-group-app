@@ -10,6 +10,10 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import JoinCancelButton from './JoinCancelButton';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '../../redux/keySelector';
+import groupJoinStatus from '~/constants/groupJoinStatus';
+import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 
 interface PageContentProps {
   communityId: number;
@@ -27,6 +31,14 @@ const PageContent = ({
   const {colors, spacing} = theme || {};
   const styles = createStyles(theme);
 
+  const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
+  const {join_status} = infoDetail;
+  const isMember = join_status === groupJoinStatus.member;
+
+  const onPressDiscover = () => {
+    // TODO: add navigation to Discover page
+  };
+
   const onPressAbout = () => {
     // TODO: add navigation to About page
   };
@@ -41,48 +53,71 @@ const PageContent = ({
 
   const renderHeader = () => {
     return (
-      <View onLayout={onButtonLayout}>
-        <InfoHeader />
-        <ScrollView
-          horizontal
-          showsHorizontalScrollIndicator={false}
-          alwaysBounceHorizontal={false}
-          scrollEventThrottle={16}
-          onScroll={onScroll}
-          style={styles.scrollViewBtn}
-          contentContainerStyle={styles.buttonContainer}>
-          <Button.Secondary
-            useI18n
-            color={colors.bgHover}
-            textColor={colors.textPrimary}
-            borderRadius={spacing.borderRadius.small}
-            testID="page_content.your_groups"
-            onPress={onPressYourGroups}>
-            groups:group_content:btn_your_groups
-          </Button.Secondary>
-          <ViewSpacing width={spacing.margin.small} />
-          <Button.Secondary
-            useI18n
-            color={colors.bgHover}
-            textColor={colors.textPrimary}
-            borderRadius={spacing.borderRadius.small}
-            testID="page_content.about_btn"
-            onPress={onPressAbout}>
-            groups:group_content:btn_about
-          </Button.Secondary>
-          <ViewSpacing width={spacing.margin.small} />
-          <Button.Secondary
-            useI18n
-            color={colors.bgHover}
-            textColor={colors.textPrimary}
-            borderRadius={spacing.borderRadius.small}
-            testID="page_content.members_btn"
-            onPress={onPressMembers}>
-            groups:group_content:btn_members
-          </Button.Secondary>
-        </ScrollView>
-        <JoinCancelButton />
-      </View>
+      <>
+        <View onLayout={onButtonLayout}>
+          <InfoHeader />
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            alwaysBounceHorizontal={false}
+            scrollEventThrottle={16}
+            onScroll={onScroll}
+            style={styles.scrollViewBtn}
+            contentContainerStyle={styles.buttonContainer}>
+            {isMember && (
+              <>
+                <Button.Secondary
+                  useI18n
+                  color={colors.bgHover}
+                  textColor={colors.textPrimary}
+                  borderRadius={spacing.borderRadius.small}
+                  testID="page_content.your_groups"
+                  onPress={onPressYourGroups}>
+                  groups:group_content:btn_your_groups
+                </Button.Secondary>
+                <ViewSpacing width={spacing.margin.small} />
+                <Button.Secondary
+                  useI18n
+                  color={colors.bgHover}
+                  textColor={colors.textPrimary}
+                  borderRadius={spacing.borderRadius.small}
+                  testID="page_content.discover_btn"
+                  onPress={onPressDiscover}>
+                  groups:group_content:btn_discover
+                </Button.Secondary>
+                <ViewSpacing width={spacing.margin.small} />
+              </>
+            )}
+            <Button.Secondary
+              useI18n
+              color={colors.bgHover}
+              textColor={colors.textPrimary}
+              borderRadius={spacing.borderRadius.small}
+              testID="page_content.about_btn"
+              onPress={onPressAbout}>
+              groups:group_content:btn_about
+            </Button.Secondary>
+            <ViewSpacing width={spacing.margin.small} />
+            <Button.Secondary
+              useI18n
+              color={colors.bgHover}
+              textColor={colors.textPrimary}
+              borderRadius={spacing.borderRadius.small}
+              testID="page_content.members_btn"
+              onPress={onPressMembers}>
+              groups:group_content:btn_members
+            </Button.Secondary>
+          </ScrollView>
+          <JoinCancelButton />
+        </View>
+        {isMember && (
+          <HeaderCreatePost
+            style={styles.createPost}
+            // audience={groupData}
+            // createFromGroupId={groupId}
+          />
+        )}
+      </>
     );
   };
 
@@ -122,6 +157,9 @@ const createStyles = (theme: ITheme) => {
     scrollViewBtn: {
       paddingBottom: spacing.padding.tiny,
       backgroundColor: colors.background,
+    },
+    createPost: {
+      marginTop: spacing.margin.base,
     },
   });
 };

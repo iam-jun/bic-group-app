@@ -571,12 +571,13 @@
   },
   "groups": {
     "group_content": {
+      "btn_your_groups": "Your Groups",
+      "btn_discover": "Discover",
       "btn_post": "Post",
       "btn_channel": "Channel",
       "btn_about": "About",
       "btn_members": "Members",
-      "btn_files": "Files",
-      "btn_your_groups": "Your groups"
+      "btn_files": "Files"
     },
     "text_members_one": "member",
     "text_members_other": "members",
