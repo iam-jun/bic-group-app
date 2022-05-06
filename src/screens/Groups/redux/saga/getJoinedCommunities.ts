@@ -4,9 +4,10 @@ import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
 
-export default function* getCommunities({
+export default function* getJoinedCommunities({
   payload,
 }: {
+  type: string;
   payload: {callback?: () => void};
 }) {
   try {
@@ -16,7 +17,7 @@ export default function* getCommunities({
     ) || [];
     yield put(groupsActions.setMyCommunities({data: list, loading: true}));
     // @ts-ignore
-    const communities = yield call(groupsDataHelper.getCommunities, true);
+    const communities = yield call(groupsDataHelper.getJoinedCommunities, true);
     if (communities?.length > 0) {
       yield put(
         groupsActions.setMyCommunities({data: communities, loading: false}),

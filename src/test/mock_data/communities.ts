@@ -36,3 +36,22 @@ export const communities = [
     joinStatus: 0,
   },
 ];
+
+export const communityDetailData = {
+  id: 1,
+  group_id: 1,
+  name: 'EVOL Community',
+  slug: 'evol',
+  privacy: 'PUBLIC',
+  description: 'Description',
+  icon: 'https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF',
+  background_img_url:
+    'https://evolgroup.vn/wp-content/uploads/sites/18/2020/04/Thumb-EVOL.jpg',
+  created_at: '2022-04-26T08:29:58.579Z',
+  updated_at: '2022-04-26T08:29:58.579Z',
+  user_count: 5,
+  can_setting: true,
+  can_manage_member: true,
+  can_leave: true,
+  join_status: 2,
+};

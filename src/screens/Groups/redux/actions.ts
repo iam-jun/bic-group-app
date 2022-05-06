@@ -15,6 +15,7 @@ import {
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 import {IObject} from '~/interfaces/common';
+import {ICommunity} from '~/interfaces/ICommunity';
 
 const groupsActions = {
   setPrivacyModalOpen: (payload: boolean) => {
@@ -268,12 +269,22 @@ const groupsActions = {
   storeUndoData: () => ({
     type: groupsTypes.STORE_UNDO_DATA,
   }),
+
+  // community
   getMyCommunities: (payload: {callback?: () => void}) => ({
-    type: groupsTypes.GET_COMMUNITIES,
+    type: groupsTypes.GET_JOINED_COMMUNITIES,
     payload,
   }),
   setMyCommunities: (payload: any) => ({
-    type: groupsTypes.SET_COMMUNITIES,
+    type: groupsTypes.SET_JOINED_COMMUNITIES,
+    payload,
+  }),
+  getDiscoverCommunities: (payload: any) => ({
+    type: groupsTypes.GET_DISCOVER_COMMUNITIES,
+    payload,
+  }),
+  setDiscoverCommunities: (payload: any) => ({
+    type: groupsTypes.SET_DISCOVER_COMMUNITIES,
     payload,
   }),
   getCommunityGroups: (payload: {id: number; params?: IGetCommunityGroup}) => ({
@@ -282,6 +293,15 @@ const groupsActions = {
   }),
   setCommunityGroups: (payload: any[]) => ({
     type: groupsTypes.SET_COMMUNITY_GROUPS,
+    payload,
+  }),
+  getCommunityDetail: (payload: number, loadingPage = false) => ({
+    type: groupsTypes.GET_COMMUNITY_DETAIL,
+    payload,
+    loadingPage,
+  }),
+  setCommunityDetail: (payload: ICommunity | null) => ({
+    type: groupsTypes.SET_COMMUNITY_DETAIL,
     payload,
   }),
 };

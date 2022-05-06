@@ -74,7 +74,9 @@ const GroupAboutContent = () => {
         icon={'UsersAlt'}
         onPress={isMember ? onPressMembers : undefined}
         disabled={!isMember}
-        title={`${user_count} ${i18next.t('common:text_member')}`}
+        title={`${user_count} ${i18next.t('groups:text_members', {
+          count: user_count,
+        })}`}
         rightSubIcon={isMember ? 'AngleRightB' : undefined}
       />
       <MenuItem

@@ -32,8 +32,10 @@ import removeMember from './removeMember';
 import removeGroupAdmin from './removeGroupAdmin';
 import setGroupAdmin from './setGroupAdmin';
 import showError from '~/store/commonSaga/showError';
-import getCommunities from './getCommunities';
+import getJoinedCommunities from './getJoinedCommunities';
 import getCommunityGroups from './getCommunityGroups';
+import getCommunityDetail from './getCommunityDetail';
+import getDiscoverCommunities from '~/screens/Groups/redux/saga/getDiscoverCommunities';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -76,8 +78,13 @@ export default function* groupsSaga() {
     groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
     declineAllMemberRequests,
   );
-  yield takeLatest(groupsTypes.GET_COMMUNITIES, getCommunities);
+  yield takeLatest(groupsTypes.GET_JOINED_COMMUNITIES, getJoinedCommunities);
+  yield takeLatest(
+    groupsTypes.GET_DISCOVER_COMMUNITIES,
+    getDiscoverCommunities,
+  );
   yield takeLatest(groupsTypes.GET_COMMUNITY_GROUPS, getCommunityGroups);
+  yield takeLatest(groupsTypes.GET_COMMUNITY_DETAIL, getCommunityDetail);
 }
 
 function* getJoinedGroups({payload}: {type: string; payload?: any}) {
