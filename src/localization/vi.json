@@ -65,6 +65,7 @@
     "btn_continue_editing": "Tiếp tục chỉnh sửa",
     "text_updated_successfully": "cập nhật thành công",
     "text_save": "Lưu",
+    "text_select": "Chọn",
     "text_add": "Thêm",
     "text_start_date": "Ngày bắt đầu",
     "text_end_date": "Ngày kết thúc",
@@ -519,7 +520,8 @@
       "btn_channel": "Kênh",
       "btn_about": "Về nhóm",
       "btn_members": "Thành viên",
-      "btn_files": "Files"
+      "btn_files": "Files",
+      "btn_your_groups": "Nhóm của bạn"
     },
     "text_members_one": "thành viên",
     "text_members_other": "thành viên",
@@ -614,6 +616,14 @@
     }
   },
   "communities": {
+    "title_your_groups": "Nhóm của bạn",
+    "title_group_joined": "Nhóm bạn đã tham gia",
+    "title_manage": "Quản lý",
+    "text_view_mode": "Chế độ xem",
+    "group_types": {
+      "text_flat_list": "Danh sách",
+      "text_tree_view": "Cấu trúc cây"
+    },
     "empty_communities": {
       "title": "Không tìm thấy cộng đồng nào",
       "description": "Khám phá các cộng đồng để tham gia một cộng đồng.",

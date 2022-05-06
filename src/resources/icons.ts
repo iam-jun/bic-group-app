@@ -258,6 +258,7 @@ const icons = {
   iconTabCommunitiesBein,
   Compass: 'Compass',
   Dashboard: 'Dashboard',
+  Sitemap: 'Sitemap',
   iconSecret,
 };
 

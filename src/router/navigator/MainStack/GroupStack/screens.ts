@@ -20,11 +20,13 @@ import CommentDetail from '~/screens/Post/CommentDetail';
 
 import Communities from '~/screens/Groups/Communities';
 import CommunityDetail from '~/screens/Groups/CommunityDetail';
+import YourGroups from '~/screens/Groups/YourGroups';
 
 export default {
   // community
   communities: Communities,
   'community-detail': CommunityDetail,
+  'your-groups': YourGroups,
 
   // group
   'group-list': Groups,

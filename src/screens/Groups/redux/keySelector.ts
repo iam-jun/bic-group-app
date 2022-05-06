@@ -6,6 +6,8 @@ const groupsKeySelector = {
     join_status: 'groups.groupDetail.join_status',
     total_pending_members: 'groups.groupDetail.total_pending_members',
   },
+  yourGroupsTreeData: 'groups.yourGroupsTree',
+  yourGroupsListData: 'groups.yourGroupsList',
   groupSearch: 'groups.groupSearch',
   refreshingGroupPosts: 'groups.refreshingGroupPosts',
   loadingGroupMember: 'groups.loadingGroupMember',

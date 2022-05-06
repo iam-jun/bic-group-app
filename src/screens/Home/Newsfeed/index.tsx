@@ -1,6 +1,7 @@
 import {useIsFocused} from '@react-navigation/core';
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
+  DeviceEventEmitter,
   InteractionManager,
   Platform,
   StyleSheet,
@@ -12,7 +13,6 @@ import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
 import NewsfeedList from '~/beinFragments/newsfeedList/NewsfeedList';
 import {appScreens} from '~/configs/navigator';
-import {chatSchemes} from '~/constants/chat';
 import {useBaseHook} from '~/hooks';
 import {useAuthToken, useUserIdAuth} from '~/hooks/auth';
 import {useBackPressListener, useTabPressListener} from '~/hooks/navigation';
@@ -61,8 +61,11 @@ const Newsfeed = () => {
 
   useEffect(() => {
     InteractionManager.runAfterInteractions(() => {
-      if (isFocused)
+      if (isFocused) {
         dispatch(appActions.setRootScreenName(appScreens.newsfeed));
+      } else {
+        DeviceEventEmitter.emit('showHeader', true);
+      }
     });
   }, [isFocused]);
 
@@ -115,6 +118,7 @@ const Newsfeed = () => {
 
   const onShowSearch = (isShow: boolean, searchInputRef?: any) => {
     if (isShow) {
+      DeviceEventEmitter.emit('showHeader', true);
       dispatch(homeActions.setNewsfeedSearch({isShow: isShow, searchInputRef}));
     } else {
       dispatch(homeActions.clearAllNewsfeedSearch());

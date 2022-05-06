@@ -195,7 +195,6 @@ const themeStyles = (theme: ITheme) => {
       alignItems: 'center',
     },
     pathContainer: {
-      marginTop: spacing.margin.tiny,
       flexDirection: 'row',
       alignItems: 'center',
     },

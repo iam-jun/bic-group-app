@@ -287,6 +287,22 @@ const groupsActions = {
     type: groupsTypes.SET_DISCOVER_COMMUNITIES,
     payload,
   }),
+  getYourGroupsTree: (payload: number) => ({
+    type: groupsTypes.GET_YOUR_GROUPS_TREE,
+    payload,
+  }),
+  setYourGroupsTree: (payload: any) => ({
+    type: groupsTypes.SET_YOUR_GROUPS_TREE,
+    payload,
+  }),
+  getYourGroupsList: (payload: number) => ({
+    type: groupsTypes.GET_YOUR_GROUPS_LIST,
+    payload,
+  }),
+  setYourGroupsList: (payload: any) => ({
+    type: groupsTypes.SET_YOUR_GROUPS_LIST,
+    payload,
+  }),
   getCommunityGroups: (payload: {id: number; params?: IGetCommunityGroup}) => ({
     type: groupsTypes.GET_COMMUNITY_GROUPS,
     payload,

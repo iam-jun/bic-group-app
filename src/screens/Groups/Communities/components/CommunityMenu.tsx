@@ -1,11 +1,12 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
+import {IconType} from '~/resources/icons';
 
 const communityMenuData = [
   {
@@ -28,13 +29,19 @@ const communityMenuData = [
   },
 ];
 
-const CommunityMenu = ({
-  selectedIndex,
-  onPress,
-}: {
+export interface CommunityMenuProps {
+  style?: StyleProp<ViewStyle>;
+  data?: {id: number; text: string; icon: string; type: string}[];
   selectedIndex?: number;
   onPress: (item: any, index: number) => void;
-}) => {
+}
+
+const CommunityMenu = ({
+  style,
+  data = communityMenuData,
+  selectedIndex,
+  onPress,
+}: CommunityMenuProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
@@ -71,13 +78,13 @@ const CommunityMenu = ({
     );
   };
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <ScrollView
         horizontal
         style={{backgroundColor: theme.colors.background}}
         showsHorizontalScrollIndicator={false}
         alwaysBounceHorizontal={false}>
-        {communityMenuData.map(renderReactItem)}
+        {data?.map?.(renderReactItem)}
       </ScrollView>
     </View>
   );

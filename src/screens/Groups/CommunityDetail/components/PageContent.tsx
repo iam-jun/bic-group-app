@@ -8,13 +8,21 @@ import InfoHeader from './InfoHeader';
 import {ITheme} from '~/theme/interfaces';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import JoinCancelButton from './JoinCancelButton';
+import {useRootNavigation} from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
 interface PageContentProps {
+  communityId: number;
   onScroll: (e: any) => void;
   onButtonLayout: (e: any) => void;
 }
 
-const PageContent = ({onScroll, onButtonLayout}: PageContentProps) => {
+const PageContent = ({
+  communityId,
+  onScroll,
+  onButtonLayout,
+}: PageContentProps) => {
+  const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme || {};
   const styles = createStyles(theme);
@@ -25,6 +33,10 @@ const PageContent = ({onScroll, onButtonLayout}: PageContentProps) => {
 
   const onPressMembers = () => {
     // TODO: add navigation to Members page
+  };
+
+  const onPressYourGroups = () => {
+    rootNavigation.navigate(groupStack.yourGroups, {communityId});
   };
 
   const renderHeader = () => {
@@ -39,6 +51,16 @@ const PageContent = ({onScroll, onButtonLayout}: PageContentProps) => {
           onScroll={onScroll}
           style={styles.scrollViewBtn}
           contentContainerStyle={styles.buttonContainer}>
+          <Button.Secondary
+            useI18n
+            color={colors.bgHover}
+            textColor={colors.textPrimary}
+            borderRadius={spacing.borderRadius.small}
+            testID="page_content.your_groups"
+            onPress={onPressYourGroups}>
+            groups:group_content:btn_your_groups
+          </Button.Secondary>
+          <ViewSpacing width={spacing.margin.small} />
           <Button.Secondary
             useI18n
             color={colors.bgHover}
