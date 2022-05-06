@@ -9,7 +9,11 @@ import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
 import groupsKeySelector from '../../redux/keySelector';
 
-const JoinCancelButton = ({style}: {style?: ViewStyle}) => {
+interface JoinCancelButtonProps {
+  style?: ViewStyle;
+}
+
+const JoinCancelButton = ({style}: JoinCancelButtonProps) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);

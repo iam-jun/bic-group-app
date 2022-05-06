@@ -220,13 +220,13 @@ const Header: React.FC<HeaderProps> = ({
 
   const titleAnimated = useAnimationTitle
     ? useAnimatedStyle(() => ({
-        opacity: interpolate(scrollY.value, [0, 200, 225], [0, 0, 1]),
+        opacity: interpolate(scrollY.value, [0, 210, 235], [0, 0, 1]),
       }))
     : {};
 
   const avatarAnimated = useAnimationTitle
     ? useAnimatedStyle(() => ({
-        opacity: interpolate(scrollY.value, [0, 200, 225], [0, 0, 1]),
+        opacity: interpolate(scrollY.value, [0, 210, 235], [0, 0, 1]),
       }))
     : {};
 

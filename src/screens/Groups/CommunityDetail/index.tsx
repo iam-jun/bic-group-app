@@ -24,7 +24,9 @@ const CommunityDetail = (props: any) => {
   const params = props.route.params;
   const communityId = params?.communityId;
   const dispatch = useDispatch();
+
   const headerRef = useRef<any>();
+  const buttonHeight = useRef(250);
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -44,14 +46,21 @@ const CommunityDetail = (props: any) => {
 
   const renderCommunityContent = () => {
     if (!isMember && privacy === groupPrivacy.private) {
-      return <PrivateWelcome onScroll={onScroll} />;
+      return (
+        <PrivateWelcome onScroll={onScroll} onButtonLayout={onButtonLayout} />
+      );
     }
 
-    return <PageContent onScroll={onScroll} />;
+    return <PageContent onScroll={onScroll} onButtonLayout={onButtonLayout} />;
   };
 
   const onPressChat = () => {
     // TODO: Add navigation to Chat
+  };
+
+  const onButtonLayout = (e: any) => {
+    // to get the height of the end of button
+    buttonHeight.current = e.nativeEvent.layout.height;
   };
 
   const onScroll = (e: any) => {
@@ -64,7 +73,11 @@ const CommunityDetail = (props: any) => {
     position: 'absolute',
     width: '100%',
     bottom: 0,
-    opacity: interpolate(buttonShow.value, [0, 270, 280], [0, 0, 1]),
+    opacity: interpolate(
+      buttonShow.value,
+      [0, buttonHeight.current - 20, buttonHeight.current],
+      [0, 0, 1],
+    ),
   }));
 
   const renderCommunityDetail = () => {
