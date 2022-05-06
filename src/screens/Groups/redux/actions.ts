@@ -272,11 +272,19 @@ const groupsActions = {
 
   // community
   getMyCommunities: (payload: {callback?: () => void}) => ({
-    type: groupsTypes.GET_COMMUNITIES,
+    type: groupsTypes.GET_JOINED_COMMUNITIES,
     payload,
   }),
   setMyCommunities: (payload: any) => ({
-    type: groupsTypes.SET_COMMUNITIES,
+    type: groupsTypes.SET_JOINED_COMMUNITIES,
+    payload,
+  }),
+  getDiscoverCommunities: (payload: any) => ({
+    type: groupsTypes.GET_DISCOVER_COMMUNITIES,
+    payload,
+  }),
+  setDiscoverCommunities: (payload: any) => ({
+    type: groupsTypes.SET_DISCOVER_COMMUNITIES,
     payload,
   }),
   getYourGroupsTree: (payload: number) => ({

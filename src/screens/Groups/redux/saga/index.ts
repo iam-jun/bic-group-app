@@ -32,11 +32,12 @@ import removeMember from './removeMember';
 import removeGroupAdmin from './removeGroupAdmin';
 import setGroupAdmin from './setGroupAdmin';
 import showError from '~/store/commonSaga/showError';
-import getCommunities from './getCommunities';
+import getJoinedCommunities from './getJoinedCommunities';
 import getCommunityGroups from './getCommunityGroups';
 import getYourGroupsTree from '~/screens/Groups/redux/saga/getYourGroupsTree';
 import getYourGroupsList from '~/screens/Groups/redux/saga/getYourGroupsList';
 import getCommunityDetail from './getCommunityDetail';
+import getDiscoverCommunities from '~/screens/Groups/redux/saga/getDiscoverCommunities';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -81,7 +82,11 @@ export default function* groupsSaga() {
   );
   yield takeLatest(groupsTypes.GET_YOUR_GROUPS_TREE, getYourGroupsTree);
   yield takeLatest(groupsTypes.GET_YOUR_GROUPS_LIST, getYourGroupsList);
-  yield takeLatest(groupsTypes.GET_COMMUNITIES, getCommunities);
+  yield takeLatest(groupsTypes.GET_JOINED_COMMUNITIES, getJoinedCommunities);
+  yield takeLatest(
+    groupsTypes.GET_DISCOVER_COMMUNITIES,
+    getDiscoverCommunities,
+  );
   yield takeLatest(groupsTypes.GET_COMMUNITY_GROUPS, getCommunityGroups);
   yield takeLatest(groupsTypes.GET_COMMUNITY_DETAIL, getCommunityDetail);
 }

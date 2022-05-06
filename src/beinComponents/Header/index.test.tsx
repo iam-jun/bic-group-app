@@ -86,6 +86,7 @@ describe('Header component', () => {
         setSearchText: expect.any(Function),
         showSearch: expect.any(Function),
         goBack: expect.any(Function),
+        setScrollY: expect.any(Function),
       },
     });
   });
