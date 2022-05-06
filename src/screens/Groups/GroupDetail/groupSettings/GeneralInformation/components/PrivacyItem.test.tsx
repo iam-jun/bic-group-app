@@ -9,7 +9,7 @@ describe('PrivacyItem component', () => {
       type: 'PUBLIC',
       title: 'Test Title',
       subtitle: 'Test Subtitle',
-      groupTitle: 'Test Group Title',
+      privacyTitle: 'Test Group Title',
       icon: 'Globe',
     },
     onPressHelpMessage: jest.fn(),

@@ -1,3 +1,4 @@
+import {ICommunity} from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/screens/Groups/redux/types';
 import {IUser} from '~/interfaces/IAuth';
@@ -71,6 +72,7 @@ export const groupInitState = {
     loading: false,
     data: [],
   },
+  communityDetail: {} as ICommunity,
 };
 
 function groupsReducer(state = groupInitState, action: any = {}) {
@@ -387,6 +389,12 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         loadingJoinedGroups: false,
         joinedGroups: payload || [],
       };
+    case groupsTypes.SET_COMMUNITY_DETAIL:
+      return {
+        ...state,
+        communityDetail: payload,
+      };
+
     default:
       return state;
   }

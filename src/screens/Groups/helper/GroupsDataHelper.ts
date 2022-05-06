@@ -230,6 +230,12 @@ export const groupsApiConfig = {
       key: !!otherParams?.key?.trim?.() ? otherParams.key : undefined,
     },
   }),
+  getCommunityDetail: (communityId: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
 };
 
 const groupsDataHelper = {
@@ -570,6 +576,20 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response.data?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getCommunityDetail: async (communityId: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getCommunityDetail(communityId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);
       }
