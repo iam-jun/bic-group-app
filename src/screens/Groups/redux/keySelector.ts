@@ -22,7 +22,7 @@ const groupsKeySelector = {
   pendingMemberRequests: 'groups.pendingMemberRequests',
   loadingAvatar: 'groups.loadingAvatar',
   loadingCover: 'groups.loadingCover',
-  joinedCommunities: 'groups.communities.data',
+  joinedCommunities: 'groups.joinedCommunities.data',
   loadingCommunities: 'groups.communities.loading',
   communityDetail: 'groups.communityDetail',
 };

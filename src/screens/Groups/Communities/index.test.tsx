@@ -57,7 +57,7 @@ describe('Communities screen', () => {
     const callback = jest.fn();
     const mockGetMyCommunities = () => {
       return {
-        type: groupsTypes.GET_COMMUNITIES,
+        type: groupsTypes.GET_JOINED_COMMUNITIES,
         payload: {callback},
       };
     };

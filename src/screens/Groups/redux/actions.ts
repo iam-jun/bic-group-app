@@ -272,11 +272,11 @@ const groupsActions = {
 
   // community
   getMyCommunities: (payload: {callback?: () => void}) => ({
-    type: groupsTypes.GET_COMMUNITIES,
+    type: groupsTypes.GET_JOINED_COMMUNITIES,
     payload,
   }),
   setMyCommunities: (payload: any) => ({
-    type: groupsTypes.SET_COMMUNITIES,
+    type: groupsTypes.SET_JOINED_COMMUNITIES,
     payload,
   }),
   getCommunityGroups: (payload: {id: number; params?: IGetCommunityGroup}) => ({
