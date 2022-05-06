@@ -739,9 +739,10 @@
   },
   "communities": {
     "title_your_groups": "Your Groups",
-    "title_group_joined": "Groups you've joined",
-    "title_manage": "Manage",
+    "title_group_joined": "You've joined",
+    "title_group_manage": "You manage",
     "text_view_mode": "View Mode",
+    "text_choose_view_mode": "Choose view mode",
     "group_types": {
       "text_flat_list": "Flat List",
       "text_tree_view": "Tree View"
@@ -752,8 +753,8 @@
       "button_text": "Go to Discover"
     },
     "community_menu": {
-      "your_communities_text": "Your Communities",
-      "manage_text": "Manage",
+      "your_communities_text": "You've joined",
+      "manage_text": "You manage",
       "discover_text": "Discover"
     },
     "text_join_community_button": "Join this community",

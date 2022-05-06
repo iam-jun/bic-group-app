@@ -1,14 +1,24 @@
 import React, {FC, useState} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  StyleProp,
+  ViewStyle,
+  TouchableOpacity,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 
 import Text from '~/beinComponents/Text';
-import DropDownMenu from '~/beinComponents/DropDownMenu';
 import {useDispatch} from 'react-redux';
 import GroupJoinedTree from '~/screens/Groups/YourGroups/GroupJoinedTree';
 import GroupJoinedList from '~/screens/Groups/YourGroups/GroupJoinedList';
+import Icon from '~/beinComponents/Icon';
+import modalActions from '~/store/modal/actions';
+import Divider from '~/beinComponents/Divider';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import {useBaseHook} from '~/hooks';
 
 export interface GroupJoinedProps {
   style?: StyleProp<ViewStyle>;
@@ -29,15 +39,74 @@ const menuType = [
 ];
 
 const GroupJoined: FC<GroupJoinedProps> = ({communityId}: GroupJoinedProps) => {
-  const [isModeTree, setIsModeTree] = useState(true);
+  const [selectingMode, setSelectingMode] = useState(menuType[0]);
 
+  const {t} = useBaseHook();
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
   const onChangeType = (item: any) => {
-    setIsModeTree(item?.type === 'tree');
+    setSelectingMode(item);
+    dispatch(modalActions.hideModal());
+  };
+
+  const renderItem = (item: any, index: number) => {
+    return (
+      <PrimaryItem
+        key={`view_mode_${index}`}
+        height={48}
+        leftIcon={item.icon as any}
+        leftIconProps={{
+          icon: item.icon as any,
+          size: 20,
+          style: {
+            marginLeft: spacing.margin.tiny,
+            marginRight: spacing.margin.large,
+          },
+        }}
+        titleProps={{variant: 'h5'}}
+        onPress={() => onChangeType(item)}
+        title={t(item.title)}
+      />
+    );
+  };
+
+  const onPressShowMenu = () => {
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        props: {
+          modalStyle: {
+            borderTopRightRadius: spacing.borderRadius.base,
+            borderTopLeftRadius: spacing.borderRadius.base,
+          },
+        },
+        ContentComponent: (
+          <TouchableOpacity activeOpacity={1} style={styles.container}>
+            <Text.H5 style={styles.textHeader}>
+              {t('communities:text_choose_view_mode')}
+            </Text.H5>
+            <Divider />
+            {menuType?.map?.(renderItem)}
+          </TouchableOpacity>
+        ),
+      }),
+    );
+  };
+
+  const renderMenuButton = () => {
+    const {icon, title} = selectingMode || {};
+    return (
+      <TouchableOpacity onPress={onPressShowMenu} style={styles.menuButton}>
+        {!!icon && (
+          <Icon icon={icon as any} style={{marginRight: spacing.margin.tiny}} />
+        )}
+        <Text useI18n>{title}</Text>
+        <Icon icon={'AngleDown'} style={{marginLeft: spacing.margin.tiny}} />
+      </TouchableOpacity>
+    );
   };
 
   return (
@@ -57,9 +126,9 @@ const GroupJoined: FC<GroupJoinedProps> = ({communityId}: GroupJoinedProps) => {
           style={{marginLeft: spacing.margin.small}}>
           communities:text_view_mode
         </Text.H5>
-        <DropDownMenu initIndex={0} data={menuType} onChange={onChangeType} />
+        {renderMenuButton()}
       </View>
-      {isModeTree ? (
+      {selectingMode?.type === 'tree' ? (
         <GroupJoinedTree communityId={communityId} />
       ) : (
         <GroupJoinedList communityId={communityId} />
@@ -69,7 +138,7 @@ const GroupJoined: FC<GroupJoinedProps> = ({communityId}: GroupJoinedProps) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -77,6 +146,19 @@ const createStyle = (theme: ITheme) => {
     dataList: {
       marginLeft: spacing.margin.base,
       marginRight: spacing.margin.large,
+    },
+    textHeader: {
+      marginBottom: spacing.margin.base,
+      marginLeft: spacing.margin.large,
+    },
+    menuButton: {
+      borderRadius: spacing.borderRadius.small,
+      borderColor: colors.borderDivider,
+      borderWidth: 1,
+      backgroundColor: colors.background,
+      flexDirection: 'row',
+      alignItems: 'center',
+      padding: spacing.padding.tiny,
     },
   });
 };

@@ -12,26 +12,23 @@ const communityMenuData = [
   {
     id: 1,
     text: 'communities:community_menu:your_communities_text',
-    icon: 'UsersAlt',
     type: 'COMMUNITIES',
   },
   {
     id: 2,
     text: 'communities:community_menu:manage_text',
-    icon: 'Dashboard',
     type: 'MANAGE',
   },
   {
     id: 3,
     text: 'communities:community_menu:discover_text',
-    icon: 'Compass',
     type: 'DISCOVER',
   },
 ];
 
 export interface CommunityMenuProps {
   style?: StyleProp<ViewStyle>;
-  data?: {id: number; text: string; icon: string; type: string}[];
+  data?: {id: number; text: string; icon?: string; type: string}[];
   selectedIndex?: number;
   onPress: (item: any, index: number) => void;
 }
@@ -58,19 +55,17 @@ const CommunityMenu = ({
           onPress={() => {
             onPress(item, index);
           }}>
-          <Icon
-            icon={item.icon}
-            size={24}
-            tintColor={
-              isSelected ? theme.colors.primary : theme.colors.iconTintLight
-            }
-            style={styles.icon}
-          />
-          <Text
-            useI18n
-            color={
-              isSelected ? theme.colors.primary : theme.colors.textSecondary
-            }>
+          {!!item?.icon && (
+            <Icon
+              icon={item.icon}
+              size={24}
+              tintColor={
+                isSelected ? theme.colors.primary : theme.colors.iconTintLight
+              }
+              style={styles.icon}
+            />
+          )}
+          <Text variant={isSelected ? 'bodyM' : 'body'} useI18n>
             {item.text}
           </Text>
         </ButtonWrapper>
@@ -106,13 +101,17 @@ const createStyle = (theme: ITheme) => {
       marginLeft: spacing.margin.small,
     },
     itemContainer: {
-      backgroundColor: colors.surface,
+      backgroundColor: colors.background,
       flexDirection: 'row',
-      padding: spacing.padding.small,
+      paddingVertical: spacing.padding.small,
+      paddingHorizontal: spacing.padding.large,
       borderRadius: 100,
+      borderWidth: 1,
+      borderColor: colors.borderDivider,
     },
     itemSelectedContainer: {
-      backgroundColor: colors.primary2,
+      borderColor: colors.borderFocus,
+      backgroundColor: colors.borderFocus,
     },
     iconLeftStyle: {marginRight: spacing.margin.base},
     icon: {

@@ -10,11 +10,11 @@ export const groupInitState = {
   loadingJoinedGroups: false,
   joinedGroups: [],
   yourGroupsTree: {
-    loading: false,
+    loading: true,
     list: [],
   },
   yourGroupsList: {
-    loading: false,
+    loading: true,
     list: [],
   },
   loadingPage: false,

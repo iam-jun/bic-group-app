@@ -24,13 +24,11 @@ const menuData = [
   {
     id: 1,
     text: 'communities:title_group_joined',
-    icon: 'UsersAlt',
     type: 'JOINED',
   },
   {
     id: 2,
-    text: 'communities:title_manage',
-    icon: 'Dashboard',
+    text: 'communities:title_group_manage',
     type: 'MANAGE',
   },
 ];

@@ -32,6 +32,9 @@ const GroupJoinedList: FC<GroupJoinedListProps> = ({
 
   useEffect(() => {
     getData();
+    return () => {
+      dispatch(groupsActions.setYourGroupsList({loading: true, list: []}));
+    };
   }, []);
 
   const renderEmpty = () => {

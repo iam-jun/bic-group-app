@@ -617,9 +617,10 @@
   },
   "communities": {
     "title_your_groups": "Nhóm của bạn",
-    "title_group_joined": "Nhóm bạn đã tham gia",
-    "title_manage": "Quản lý",
+    "title_group_joined": "Bạn đã tham gia",
+    "title_group_manage": "Bạn quản lý",
     "text_view_mode": "Chế độ xem",
+    "text_choose_view_mode": "Chọn chế độ xem",
     "group_types": {
       "text_flat_list": "Danh sách",
       "text_tree_view": "Cấu trúc cây"
@@ -630,8 +631,8 @@
       "button_text": "Đi tới Khám phá"
     },
     "community_menu": {
-      "your_communities_text": "Cộng đồng của bạn",
-      "manage_text": "Đang quản lý",
+      "your_communities_text": "Bạn đã tham gia",
+      "manage_text": "Bạn quản lý",
       "discover_text": "Khám phá"
     }
   }
