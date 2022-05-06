@@ -76,6 +76,8 @@ describe('Communities screen', () => {
     expect(item).toBeDefined();
     fireEvent.press(item);
 
-    expect(navigate).toBeCalledWith(groupStack.groups, {communityId: 0});
+    expect(navigate).toBeCalledWith(groupStack.communityDetail, {
+      communityId: 0,
+    });
   });
 });
