@@ -29,7 +29,7 @@ describe('Communities screen', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     storeData = {...initialState};
-    storeData.groups.communities.data = [] as any;
+    storeData.groups.joinedCommunities.data = [] as any;
   });
 
   afterEach(() => {
@@ -65,7 +65,7 @@ describe('Communities screen', () => {
     jest
       .spyOn(groupsActions, 'getMyCommunities')
       .mockImplementation(mockGetMyCommunities as any);
-    storeData.groups.communities.data = communities;
+    storeData.groups.joinedCommunities.data = communities;
     const store = mockStore(storeData);
     const wrapper = renderWithRedux(
       <MockedNavigator component={() => <Communities />} />,
@@ -76,6 +76,8 @@ describe('Communities screen', () => {
     expect(item).toBeDefined();
     fireEvent.press(item);
 
-    expect(navigate).toBeCalledWith(groupStack.groups, {communityId: 0});
+    expect(navigate).toBeCalledWith(groupStack.communityDetail, {
+      communityId: 0,
+    });
   });
 });
