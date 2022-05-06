@@ -65,6 +65,11 @@ export const groupInitState = {
     loading: false,
     data: [],
   },
+  discoverCommunities: {
+    loading: false,
+    canLoadMore: true,
+    list: [],
+  },
   communityDetail: {} as ICommunity,
 };
 
@@ -352,6 +357,14 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         joinedCommunities: {
           loading: payload?.loading || false,
           data: payload?.data || [],
+        },
+      };
+    case groupsTypes.SET_DISCOVER_COMMUNITIES:
+      return {
+        ...state,
+        discoverCommunities: {
+          ...state.discoverCommunities,
+          ...payload,
         },
       };
 

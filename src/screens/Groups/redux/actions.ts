@@ -279,6 +279,14 @@ const groupsActions = {
     type: groupsTypes.SET_JOINED_COMMUNITIES,
     payload,
   }),
+  getDiscoverCommunities: (payload: any) => ({
+    type: groupsTypes.GET_DISCOVER_COMMUNITIES,
+    payload,
+  }),
+  setDiscoverCommunities: (payload: any) => ({
+    type: groupsTypes.SET_DISCOVER_COMMUNITIES,
+    payload,
+  }),
   getCommunityGroups: (payload: {id: number; params?: IGetCommunityGroup}) => ({
     type: groupsTypes.GET_COMMUNITY_GROUPS,
     payload,

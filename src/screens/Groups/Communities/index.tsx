@@ -12,6 +12,7 @@ import {debounce} from 'lodash';
 import CommunityMenu from './components/CommunityMenu';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import JoinedCommunities from '~/screens/Groups/Communities/JoinedCommunities';
+import DiscoverCommunities from '~/screens/Groups/Communities/DiscoverCommunities';
 
 const Communities: React.FC = () => {
   const headerRef = useRef<any>();
@@ -46,19 +47,6 @@ const Communities: React.FC = () => {
 
   const onPress = (item: any, index: number) => {
     setSelectedIndex(index);
-    const {type = ''} = item || {};
-    switch (type) {
-      case 'COMMUNITIES':
-        break;
-
-      case 'MANAGE':
-        break;
-
-      case 'DISCOVER':
-        break;
-      default:
-        break;
-    }
   };
 
   const onPressDiscover = () => {
@@ -69,6 +57,22 @@ const Communities: React.FC = () => {
     rootNavigation.navigate(groupStack.communityDetail, {
       communityId: item?.id || 0,
     });
+  };
+
+  const renderContent = () => {
+    if (selectedIndex === 0) {
+      return (
+        <JoinedCommunities
+          onPressCommunities={onPressCommunities}
+          onPressDiscover={onPressDiscover}
+        />
+      );
+    } else if (selectedIndex === 1) {
+      return null;
+    } else if (selectedIndex === 2) {
+      return <DiscoverCommunities onPressCommunities={onPressCommunities} />;
+    }
+    return null;
   };
 
   return (
@@ -83,10 +87,7 @@ const Communities: React.FC = () => {
       />
       <View style={{flex: 1}}>
         <CommunityMenu selectedIndex={selectedIndex} onPress={onPress} />
-        <JoinedCommunities
-          onPressCommunities={onPressCommunities}
-          onPressDiscover={onPressDiscover}
-        />
+        {renderContent()}
       </View>
     </View>
   );

@@ -572,7 +572,7 @@ const groupsDataHelper = {
         groupsApiConfig.getCommunities(params || {}),
       );
       if (response && response?.data) {
-        return Promise.resolve(response.data?.data);
+        return Promise.resolve(response.data);
       } else {
         return Promise.reject(response);
       }
