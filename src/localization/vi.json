@@ -516,12 +516,13 @@
   },
   "groups": {
     "group_content": {
+      "btn_your_groups": "Nhóm của bạn",
+      "btn_discover": "Khám phá",
       "btn_post": "Bài đăng",
       "btn_channel": "Kênh",
       "btn_about": "Về nhóm",
       "btn_members": "Thành viên",
-      "btn_files": "Files",
-      "btn_your_groups": "Nhóm của bạn"
+      "btn_files": "Files"
     },
     "text_members_one": "thành viên",
     "text_members_other": "thành viên",

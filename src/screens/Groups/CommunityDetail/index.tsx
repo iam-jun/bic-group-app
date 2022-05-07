@@ -7,6 +7,7 @@ import Animated, {
   useSharedValue,
   interpolate,
 } from 'react-native-reanimated';
+import {isEmpty} from 'lodash';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -19,6 +20,10 @@ import groupsKeySelector from '../redux/keySelector';
 import {groupPrivacy} from '~/constants/privacyTypes';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import JoinCancelButton from './components/JoinCancelButton';
+import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
+import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
+import {ICommunity} from '~/interfaces/ICommunity';
 
 const CommunityDetail = (props: any) => {
   const params = props.route.params;
@@ -32,17 +37,62 @@ const CommunityDetail = (props: any) => {
   const styles = themeStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const {name, icon, join_status, privacy} = infoDetail;
+  const {name, icon, join_status, privacy, group_id} = infoDetail;
   const isPrivate = privacy === groupPrivacy.private;
   const isMember = join_status === groupJoinStatus.member;
+  const isGettingInfoDetail = useKeySelector(
+    groupsKeySelector.isGettingInfoDetail,
+  );
+  const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
 
   const buttonShow = useSharedValue(0);
 
   const getCommunityDetail = () => {
-    dispatch(actions.getCommunityDetail(communityId));
+    dispatch(actions.getCommunityDetail(communityId, true));
   };
 
-  useEffect(() => getCommunityDetail(), [communityId]);
+  const getPosts = () => {
+    /* Avoid getting group posts of the nonexisting group, 
+    which will lead to endless fetching group posts in 
+    httpApiRequest > makeGetStreamRequest */
+    const privilegeToFetchPost =
+      isMember ||
+      privacy === groupPrivacy.public ||
+      privacy === groupPrivacy.open;
+
+    if (isGettingInfoDetail || isEmpty(infoDetail) || !privilegeToFetchPost) {
+      console.log('[getPosts] stop fetching');
+      return;
+    }
+
+    dispatch(actions.clearGroupPosts());
+    dispatch(actions.getGroupPosts(group_id));
+  };
+
+  useEffect(() => {
+    getCommunityDetail();
+
+    return () => {
+      dispatch(actions.setCommunityDetail({} as ICommunity));
+    };
+  }, [communityId]);
+
+  useEffect(() => getPosts(), [infoDetail]);
+
+  const renderPlaceholder = () => {
+    return (
+      <View
+        style={styles.contentContainer}
+        testID="community_detail.placeholder">
+        <View>
+          <GroupProfilePlaceholder disableRandom />
+          <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
+          <PostViewPlaceholder disableRandom />
+          <PostViewPlaceholder disableRandom />
+        </View>
+      </View>
+    );
+  };
 
   const renderCommunityContent = () => {
     if (!isMember && privacy === groupPrivacy.private) {
@@ -54,6 +104,7 @@ const CommunityDetail = (props: any) => {
     return (
       <PageContent
         communityId={communityId}
+        getPosts={getPosts}
         onScroll={onScroll}
         onButtonLayout={onButtonLayout}
       />
@@ -110,7 +161,7 @@ const CommunityDetail = (props: any) => {
 
   return (
     <ScreenWrapper style={styles.screenContainer} isFullView>
-      {renderCommunityDetail()}
+      {loadingPage ? renderPlaceholder() : renderCommunityDetail()}
     </ScreenWrapper>
   );
 };
@@ -128,6 +179,10 @@ const themeStyles = (theme: ITheme) => {
     },
     joinBtn: {
       paddingTop: spacing.padding.tiny,
+    },
+    headerCreatePost: {
+      marginTop: spacing.margin.small,
+      marginBottom: spacing.margin.large,
     },
   });
 };
