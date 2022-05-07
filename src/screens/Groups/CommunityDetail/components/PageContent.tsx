@@ -93,7 +93,7 @@ const PageContent = ({
                   color={colors.bgHover}
                   textColor={colors.textPrimary}
                   borderRadius={spacing.borderRadius.small}
-                  testID="page_content.your_groups"
+                  testID="page_content.your_groups_btn"
                   onPress={onPressYourGroups}>
                   groups:group_content:btn_your_groups
                 </Button.Secondary>
