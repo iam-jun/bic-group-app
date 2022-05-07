@@ -16,6 +16,7 @@ export default function* getYourGroupsSearch({
     yield put(
       groupsActions.setYourGroupsSearch({loading: false, list: [], key: ''}),
     );
+    return;
   }
   try {
     yield put(groupsActions.setYourGroupsSearch({loading: true, key}));
@@ -30,7 +31,6 @@ export default function* getYourGroupsSearch({
     const list = !!currentKey?.trim?.() ? groups || [] : [];
     yield put(groupsActions.setYourGroupsSearch({loading: false, list}));
   } catch (err) {
-    yield put(groupsActions.setYourGroupsTree({loading: false}));
-    yield showError(err);
+    yield put(groupsActions.setYourGroupsSearch({loading: false}));
   }
 }
