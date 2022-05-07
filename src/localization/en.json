@@ -571,12 +571,13 @@
   },
   "groups": {
     "group_content": {
+      "btn_your_groups": "Your Groups",
+      "btn_discover": "Discover",
       "btn_post": "Post",
       "btn_channel": "Channel",
       "btn_about": "About",
       "btn_members": "Members",
-      "btn_files": "Files",
-      "btn_your_groups": "Your groups"
+      "btn_files": "Files"
     },
     "text_members_one": "member",
     "text_members_other": "members",
@@ -739,9 +740,12 @@
   },
   "communities": {
     "title_your_groups": "Your Groups",
-    "title_group_joined": "Groups you've joined",
-    "title_manage": "Manage",
+    "title_group_joined": "You've joined",
+    "title_group_manage": "You manage",
     "text_view_mode": "View Mode",
+    "text_choose_view_mode": "Choose view mode",
+    "text_your_groups_search_input": "Type search keyword to see the search results",
+    "text_your_groups_search_empty": "Sorry, we couldn't find any group related to your search.",
     "group_types": {
       "text_flat_list": "Flat List",
       "text_tree_view": "Tree View"
@@ -752,8 +756,8 @@
       "button_text": "Go to Discover"
     },
     "community_menu": {
-      "your_communities_text": "Your Communities",
-      "manage_text": "Manage",
+      "your_communities_text": "You've joined",
+      "manage_text": "You manage",
       "discover_text": "Discover"
     },
     "text_join_community_button": "Join this community",

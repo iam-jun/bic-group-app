@@ -10,11 +10,17 @@ export const groupInitState = {
   loadingJoinedGroups: false,
   joinedGroups: [],
   yourGroupsTree: {
-    loading: false,
+    loading: true,
     list: [],
   },
   yourGroupsList: {
+    loading: true,
+    list: [],
+  },
+  yourGroupsSearch: {
+    showSearch: false,
     loading: false,
+    key: '',
     list: [],
   },
   loadingPage: false,
@@ -78,6 +84,7 @@ export const groupInitState = {
     list: [],
   },
   communityDetail: {} as ICommunity,
+  isGettingInfoDetail: false,
 };
 
 function groupsReducer(state = groupInitState, action: any = {}) {
@@ -357,6 +364,14 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           items: {...pendingMemberRequests.items},
         },
       };
+    case groupsTypes.SET_YOUR_GROUPS_SEARCH:
+      return {
+        ...state,
+        yourGroupsSearch: {
+          ...state.yourGroupsSearch,
+          ...payload,
+        },
+      };
     case groupsTypes.SET_YOUR_GROUPS_TREE:
       return {
         ...state,
@@ -402,9 +417,15 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         loadingJoinedGroups: false,
         joinedGroups: payload || [],
       };
+    case groupsTypes.GET_COMMUNITY_DETAIL:
+      return {
+        ...state,
+        isGettingInfoDetail: true,
+      };
     case groupsTypes.SET_COMMUNITY_DETAIL:
       return {
         ...state,
+        isGettingInfoDetail: false,
         communityDetail: payload,
       };
 

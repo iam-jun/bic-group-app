@@ -516,12 +516,13 @@
   },
   "groups": {
     "group_content": {
+      "btn_your_groups": "Nhóm của bạn",
+      "btn_discover": "Khám phá",
       "btn_post": "Bài đăng",
       "btn_channel": "Kênh",
       "btn_about": "Về nhóm",
       "btn_members": "Thành viên",
-      "btn_files": "Files",
-      "btn_your_groups": "Nhóm của bạn"
+      "btn_files": "Files"
     },
     "text_members_one": "thành viên",
     "text_members_other": "thành viên",
@@ -617,9 +618,12 @@
   },
   "communities": {
     "title_your_groups": "Nhóm của bạn",
-    "title_group_joined": "Nhóm bạn đã tham gia",
-    "title_manage": "Quản lý",
+    "title_group_joined": "Bạn đã tham gia",
+    "title_group_manage": "Bạn quản lý",
     "text_view_mode": "Chế độ xem",
+    "text_choose_view_mode": "Chọn chế độ xem",
+    "text_your_groups_search_input": "Vui lòng nhập từ khoá tìm kiến để xem kết quả",
+    "text_your_groups_search_empty": "Xin lỗi, chúng tôi không tìm thấy bất kỳ nhóm nào liên quan đến từ khoá bạn tìm kiếm",
     "group_types": {
       "text_flat_list": "Danh sách",
       "text_tree_view": "Cấu trúc cây"
@@ -630,8 +634,8 @@
       "button_text": "Đi tới Khám phá"
     },
     "community_menu": {
-      "your_communities_text": "Cộng đồng của bạn",
-      "manage_text": "Đang quản lý",
+      "your_communities_text": "Bạn đã tham gia",
+      "manage_text": "Bạn quản lý",
       "discover_text": "Khám phá"
     }
   }

@@ -57,7 +57,6 @@ const GroupTopBar = () => {
 
   const onPressChat = () => {
     const link = formatChannelLink(groupInfo.team_name, groupInfo.slug);
-    console.log({groupInfo}, 'link', link);
     openLink(link);
   };
 
