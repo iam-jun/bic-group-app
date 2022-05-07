@@ -142,6 +142,23 @@ export interface IJoiningMember {
   user: IObject<any>;
 }
 
+export interface IGetYourGroupsSearch {
+  communityId: number;
+  key: string;
+}
+
+export interface IStateSearch {
+  loading?: boolean;
+  key?: string;
+  list?: any[];
+}
+
+export interface IStateList {
+  loading?: boolean;
+  list?: any[];
+  canLoadMore?: boolean;
+}
+
 export interface IGetCommunityGroup {
   preview_members?: boolean;
   key?: string;

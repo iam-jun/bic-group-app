@@ -17,6 +17,11 @@ export const groupInitState = {
     loading: true,
     list: [],
   },
+  yourGroupsSearch: {
+    loading: false,
+    key: '',
+    list: [],
+  },
   loadingPage: false,
   loadingGroupDetail: false,
   groupDetail: {
@@ -356,6 +361,14 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           total: state.groupDetail.total_pending_members,
           data: [...pendingMemberRequests.data],
           items: {...pendingMemberRequests.items},
+        },
+      };
+    case groupsTypes.SET_YOUR_GROUPS_SEARCH:
+      return {
+        ...state,
+        yourGroupsSearch: {
+          ...state.yourGroupsSearch,
+          ...payload,
         },
       };
     case groupsTypes.SET_YOUR_GROUPS_TREE:
