@@ -24,6 +24,9 @@ import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholde
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
 import {ICommunity} from '~/interfaces/ICommunity';
+import {formatChannelLink} from '~/utils/link';
+import {openLink} from '~/utils/common';
+import {chatSchemes} from '~/constants/chat';
 
 const CommunityDetail = (props: any) => {
   const params = props.route.params;
@@ -112,7 +115,11 @@ const CommunityDetail = (props: any) => {
   };
 
   const onPressChat = () => {
-    // TODO: Add navigation to Chat
+    const link = formatChannelLink(
+      infoDetail.slug,
+      chatSchemes.DEFAULT_CHANNEL,
+    );
+    openLink(link);
   };
 
   const onButtonLayout = (e: any) => {
