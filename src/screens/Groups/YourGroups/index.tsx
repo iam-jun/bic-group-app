@@ -11,6 +11,8 @@ import GroupJoined from '~/screens/Groups/YourGroups/GroupJoined';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useDispatch} from 'react-redux';
 import modalActions, {showHideToastMessage} from '~/store/modal/actions';
+import YourGroupsSearch from '~/screens/Groups/YourGroups/YourGroupsSearch';
+import groupsActions from '~/screens/Groups/redux/actions';
 
 export interface YourGroupsProps {
   route?: {
@@ -40,7 +42,7 @@ const YourGroups: FC<YourGroupsProps> = ({route}: YourGroupsProps) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
   const styles = createStyle(theme);
 
   const communityId = route?.params?.communityId as number;
@@ -63,11 +65,11 @@ const YourGroups: FC<YourGroupsProps> = ({route}: YourGroupsProps) => {
   };
 
   const onShowSearch = (isShow: boolean) => {
-    console.log(`\x1b[36m🐣️ index onShowSearch: ${isShow}\x1b[0m`);
+    dispatch(groupsActions.setYourGroupsSearch({showSearch: isShow, key: ''}));
   };
 
   const onSearchText = debounce((searchText: string) => {
-    console.log(`\x1b[36m🐣️ index onSearchText: ${searchText}\x1b[0m`);
+    dispatch(groupsActions.getYourGroupsSearch({communityId, key: searchText}));
   }, 300);
 
   const renderContent = () => {
@@ -91,6 +93,7 @@ const YourGroups: FC<YourGroupsProps> = ({route}: YourGroupsProps) => {
           onPress={onPress}
         />
         {renderContent()}
+        <YourGroupsSearch />
       </View>
     </View>
   );

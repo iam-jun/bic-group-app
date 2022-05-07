@@ -622,6 +622,8 @@
     "title_group_manage": "Bạn quản lý",
     "text_view_mode": "Chế độ xem",
     "text_choose_view_mode": "Chọn chế độ xem",
+    "text_your_groups_search_input": "Vui lòng nhập từ khoá tìm kiến để xem kết quả",
+    "text_your_groups_search_empty": "Xin lỗi, chúng tôi không tìm thấy bất kỳ nhóm nào liên quan đến từ khoá bạn tìm kiếm",
     "group_types": {
       "text_flat_list": "Danh sách",
       "text_tree_view": "Cấu trúc cây"

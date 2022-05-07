@@ -1,4 +1,4 @@
-import {put, call} from 'redux-saga/effects';
+import {put, call, select} from 'redux-saga/effects';
 
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
@@ -18,15 +18,17 @@ export default function* getYourGroupsSearch({
     );
   }
   try {
-    yield put(groupsActions.setYourGroupsTree({loading: true, key}));
+    yield put(groupsActions.setYourGroupsSearch({loading: true, key}));
     const groups = yield call(
       groupsDataHelper.getCommunityGroups,
       communityId,
       {key, list_by: 'flat'},
     );
-    yield put(
-      groupsActions.setYourGroupsSearch({loading: false, list: groups || []}),
+    const currentKey = yield select(
+      state => state?.groups?.yourGroupsSearch?.key,
     );
+    const list = !!currentKey?.trim?.() ? groups || [] : [];
+    yield put(groupsActions.setYourGroupsSearch({loading: false, list}));
   } catch (err) {
     yield put(groupsActions.setYourGroupsTree({loading: false}));
     yield showError(err);

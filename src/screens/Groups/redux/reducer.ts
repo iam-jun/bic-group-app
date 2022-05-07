@@ -18,6 +18,7 @@ export const groupInitState = {
     list: [],
   },
   yourGroupsSearch: {
+    showSearch: false,
     loading: false,
     key: '',
     list: [],

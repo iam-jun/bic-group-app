@@ -744,6 +744,8 @@
     "title_group_manage": "You manage",
     "text_view_mode": "View Mode",
     "text_choose_view_mode": "Choose view mode",
+    "text_your_groups_search_input": "Type search keyword to see the search results",
+    "text_your_groups_search_empty": "Sorry, we couldn't find any group related to your search.",
     "group_types": {
       "text_flat_list": "Flat List",
       "text_tree_view": "Tree View"

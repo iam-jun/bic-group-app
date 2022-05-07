@@ -148,6 +148,7 @@ export interface IGetYourGroupsSearch {
 }
 
 export interface IStateSearch {
+  showSearch?: boolean;
   loading?: boolean;
   key?: string;
   list?: any[];
