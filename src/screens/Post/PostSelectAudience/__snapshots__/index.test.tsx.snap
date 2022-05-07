@@ -581,7 +581,6 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "marginTop": 4,
               }
             }
           >
@@ -1816,7 +1815,6 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "marginTop": 4,
               }
             }
           >

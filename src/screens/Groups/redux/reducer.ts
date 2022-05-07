@@ -10,11 +10,17 @@ export const groupInitState = {
   loadingJoinedGroups: false,
   joinedGroups: [],
   yourGroupsTree: {
-    loading: false,
+    loading: true,
     list: [],
   },
   yourGroupsList: {
+    loading: true,
+    list: [],
+  },
+  yourGroupsSearch: {
+    showSearch: false,
     loading: false,
+    key: '',
     list: [],
   },
   loadingPage: false,
@@ -356,6 +362,14 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           total: state.groupDetail.total_pending_members,
           data: [...pendingMemberRequests.data],
           items: {...pendingMemberRequests.items},
+        },
+      };
+    case groupsTypes.SET_YOUR_GROUPS_SEARCH:
+      return {
+        ...state,
+        yourGroupsSearch: {
+          ...state.yourGroupsSearch,
+          ...payload,
         },
       };
     case groupsTypes.SET_YOUR_GROUPS_TREE:

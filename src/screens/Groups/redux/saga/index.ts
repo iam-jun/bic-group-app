@@ -38,6 +38,7 @@ import getYourGroupsTree from '~/screens/Groups/redux/saga/getYourGroupsTree';
 import getYourGroupsList from '~/screens/Groups/redux/saga/getYourGroupsList';
 import getCommunityDetail from './getCommunityDetail';
 import getDiscoverCommunities from '~/screens/Groups/redux/saga/getDiscoverCommunities';
+import getYourGroupsSearch from '~/screens/Groups/redux/saga/getYourGroupsSearch';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -80,6 +81,7 @@ export default function* groupsSaga() {
     groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
     declineAllMemberRequests,
   );
+  yield takeLatest(groupsTypes.GET_YOUR_GROUPS_SEARCH, getYourGroupsSearch);
   yield takeLatest(groupsTypes.GET_YOUR_GROUPS_TREE, getYourGroupsTree);
   yield takeLatest(groupsTypes.GET_YOUR_GROUPS_LIST, getYourGroupsList);
   yield takeLatest(groupsTypes.GET_JOINED_COMMUNITIES, getJoinedCommunities);

@@ -32,6 +32,9 @@ const GroupJoinedTree: FC<GroupJoinedTreeProps> = ({
 
   useEffect(() => {
     getData();
+    return () => {
+      dispatch(groupsActions.setYourGroupsTree({loading: true, list: []}));
+    };
   }, []);
 
   const renderEmpty = () => {

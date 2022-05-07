@@ -9,9 +9,9 @@ import {IconType} from '~/resources/icons';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 
 interface EmptyScreenProps {
-  source: IconType;
-  title: string;
-  description: string;
+  source?: IconType;
+  title?: string;
+  description?: string;
   onPress?: () => void;
   buttonTitle?: string;
 }
@@ -28,16 +28,20 @@ const EmptyScreen = ({
 
   return (
     <View testID="empty_screen" style={styles.container}>
-      <Icon icon={source} size={150} />
-      <Text.ButtonBase style={styles.text} useI18n>
-        {title}
-      </Text.ButtonBase>
-      <Text.Subtitle
-        color={theme.colors.textSecondary}
-        style={styles.text}
-        useI18n>
-        {description}
-      </Text.Subtitle>
+      {!!source && <Icon icon={source} size={150} />}
+      {!!title && (
+        <Text.ButtonBase style={styles.text} useI18n>
+          {title}
+        </Text.ButtonBase>
+      )}
+      {!!description && (
+        <Text.Subtitle
+          color={theme.colors.textSecondary}
+          style={styles.text}
+          useI18n>
+          {description}
+        </Text.Subtitle>
+      )}
       {!!onPress && !!buttonTitle && (
         <ButtonWrapper
           testID="empty_screen.button"

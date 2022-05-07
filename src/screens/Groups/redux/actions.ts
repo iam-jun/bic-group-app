@@ -12,6 +12,9 @@ import {
   IGroupRemoveAdmin,
   IJoiningMember,
   IGetCommunityGroup,
+  IGetYourGroupsSearch,
+  IStateSearch,
+  IStateList,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 import {IObject} from '~/interfaces/common';
@@ -287,11 +290,19 @@ const groupsActions = {
     type: groupsTypes.SET_DISCOVER_COMMUNITIES,
     payload,
   }),
+  getYourGroupsSearch: (payload: IGetYourGroupsSearch) => ({
+    type: groupsTypes.GET_YOUR_GROUPS_SEARCH,
+    payload,
+  }),
+  setYourGroupsSearch: (payload: IStateSearch) => ({
+    type: groupsTypes.SET_YOUR_GROUPS_SEARCH,
+    payload,
+  }),
   getYourGroupsTree: (payload: number) => ({
     type: groupsTypes.GET_YOUR_GROUPS_TREE,
     payload,
   }),
-  setYourGroupsTree: (payload: any) => ({
+  setYourGroupsTree: (payload: IStateList) => ({
     type: groupsTypes.SET_YOUR_GROUPS_TREE,
     payload,
   }),
@@ -299,7 +310,7 @@ const groupsActions = {
     type: groupsTypes.GET_YOUR_GROUPS_LIST,
     payload,
   }),
-  setYourGroupsList: (payload: any) => ({
+  setYourGroupsList: (payload: IStateList) => ({
     type: groupsTypes.SET_YOUR_GROUPS_LIST,
     payload,
   }),
