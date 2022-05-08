@@ -21,6 +21,7 @@ import {useBaseHook} from '~/hooks';
 import Divider from '~/beinComponents/Divider';
 import modalActions from '~/store/modal/actions';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 
 const Communities: React.FC = () => {
   const headerRef = useRef<any>();
@@ -113,8 +114,16 @@ const Communities: React.FC = () => {
         source={'addUsers'}
         title="communities:empty_communities:title"
         description="communities:empty_communities:description"
-        buttonTitle={'communities:empty_communities:button_text'}
-        onPress={goToDiscover}
+        ButtonComponent={
+          <ButtonWrapper
+            testID="empty_screen.button"
+            onPress={goToDiscover}
+            style={styles.buttonWrapper}>
+            <Text.ButtonBase useI18n color={theme.colors.bgButtonPrimary}>
+              communities:empty_communities:button_text
+            </Text.ButtonBase>
+          </ButtonWrapper>
+        }
       />
     );
   };
@@ -227,6 +236,9 @@ const themeStyles = (theme: ITheme) => {
     groupInfo: {
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    buttonWrapper: {
+      marginTop: spacing.margin.large,
     },
   });
 };

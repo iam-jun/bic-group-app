@@ -15,12 +15,19 @@ function* getCommentsByPostId({
   type: number;
   payload: IPayloadGetCommentsById;
 }): any {
-  const {postId, parentId: commentId, isMerge, callbackLoading} = payload || {};
+  const {
+    postId,
+    parentId: commentId,
+    isMerge,
+    callbackLoading,
+    idGT,
+  } = payload || {};
   try {
     callbackLoading?.(true);
     const response = yield call(postDataHelper.getCommentsByPostId, payload);
-    const newList = response?.list;
+    const {list: newList, meta} = response;
     callbackLoading?.(false);
+    yield put(postActions.setScrollCommentsPosition({position: 'top'}));
     if (newList?.length > 0) {
       if (commentId) {
         //get child comment of comment
@@ -28,6 +35,9 @@ function* getCommentsByPostId({
           postId: postId,
           commentId: commentId,
           childComments: newList,
+          meta: !!idGT
+            ? {hasPreviousPage: meta?.hasPreviousPage}
+            : {hasNextPage: meta?.hasNextPage},
         });
         yield put(postActions.addToAllComments(newList));
       } else {
@@ -36,7 +46,7 @@ function* getCommentsByPostId({
         let newAllComments: IReaction[] = [];
         newList.map((c: ICommentData) => {
           newAllComments.push(c);
-          newAllComments = newAllComments.concat(c?.child || []);
+          newAllComments = newAllComments.concat(c?.child?.list || []);
         });
         const allPosts = yield select(state => state?.post?.allPosts) || {};
         const newAllPosts = {...allPosts};

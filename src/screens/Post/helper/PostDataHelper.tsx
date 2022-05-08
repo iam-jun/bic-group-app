@@ -118,6 +118,7 @@ export const postApiConfig = {
       idGTE: params?.idGTE,
       idLTE: params?.idLTE,
       idLT: params?.idLT,
+      idGT: params?.idGT,
       postId: params?.postId,
       parentId: params?.parentId,
       childLimit: params?.childLimit || 1,
@@ -223,13 +224,8 @@ export const postApiConfig = {
     provider,
     useRetry: true,
     params: {
-      order: params?.order || 'ASC',
-      limit: params?.limit || 10,
+      limit: params?.limit || 1,
       offset: params?.offset || 0,
-      idGTE: params?.idGTE,
-      idLTE: params?.idLTE,
-      idLT: params?.idLT,
-      parentId: params?.parentId,
     },
   }),
 };

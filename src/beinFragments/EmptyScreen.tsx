@@ -12,23 +12,23 @@ interface EmptyScreenProps {
   source: IconType;
   title: string;
   description: string;
-  onPress?: () => void;
-  buttonTitle?: string;
+  size?: number;
+  ButtonComponent?: any;
 }
 
 const EmptyScreen = ({
   source,
   title,
   description,
-  onPress,
-  buttonTitle,
+  size = 150,
+  ButtonComponent,
 }: EmptyScreenProps) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
   return (
     <View testID="empty_screen" style={styles.container}>
-      <Icon icon={source} size={150} />
+      <Icon icon={source} size={size} />
       <Text.ButtonBase style={styles.text} useI18n>
         {title}
       </Text.ButtonBase>
@@ -38,16 +38,7 @@ const EmptyScreen = ({
         useI18n>
         {description}
       </Text.Subtitle>
-      {!!onPress && !!buttonTitle && (
-        <ButtonWrapper
-          testID="empty_screen.button"
-          onPress={onPress}
-          style={styles.buttonWrapper}>
-          <Text.ButtonBase useI18n color={theme.colors.bgButtonPrimary}>
-            {buttonTitle}
-          </Text.ButtonBase>
-        </ButtonWrapper>
-      )}
+      {ButtonComponent}
     </View>
   );
 };
@@ -64,9 +55,6 @@ const themeStyles = (theme: ITheme) => {
     text: {
       textAlign: 'center',
       marginVertical: spacing.margin.tiny,
-    },
-    buttonWrapper: {
-      marginTop: spacing.margin.large,
     },
   });
 };

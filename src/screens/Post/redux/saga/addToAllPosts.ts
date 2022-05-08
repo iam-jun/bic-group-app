@@ -35,13 +35,12 @@ function* addToAllPosts({
         newAllCommentByParentId[item.id] = postComments;
         postComments.map((c: ICommentData) => {
           newComments.push(c);
-          newComments = newComments.concat(c?.child || []);
+          newComments = newComments.concat(c?.child?.list || []);
         });
       }
       newAllPosts[item.id] = item;
     }
   });
-
   if (handleComment) {
     yield put(postActions.addToAllComments(newComments));
     yield put(

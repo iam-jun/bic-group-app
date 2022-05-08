@@ -77,6 +77,7 @@ import iconPermissionGuide4Ios from '../../assets/icons/icon_permission_guide_4_
 import iconCannotComment from '../../assets/icons/icon_cannot_comment.svg';
 import iconTabCommunities from '../../assets/icons/icon_communities.svg';
 import iconTabCommunitiesBein from '../../assets/icons/icon_communities_bein.svg';
+import iconLock from '../../assets/icons/icon_lock.svg';
 
 const icons = {
   iconTabHome,
@@ -257,6 +258,7 @@ const icons = {
   iconTabCommunitiesBein,
   Compass: 'Compass',
   Dashboard: 'Dashboard',
+  iconLock,
 };
 
 export default icons;

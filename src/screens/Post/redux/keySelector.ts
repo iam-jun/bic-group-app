@@ -62,7 +62,7 @@ const postKeySelector = {
   postSelectAudienceState: 'post.postSelectAudienceState',
   scrollToCommentsPosition: 'post.scrollToCommentsPosition',
   loadingGetPostDetail: 'post.loadingGetPostDetail',
-  parentCommentIsDeleted: 'post.parentCommentIsDeleted',
+  commentErrorCode: 'post.commentErrorCode',
 };
 
 export default postKeySelector;

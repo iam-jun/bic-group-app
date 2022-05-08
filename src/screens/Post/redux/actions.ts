@@ -279,8 +279,8 @@ const postActions = {
     type: postTypes.LOADING_GET_POST_DETAIL,
     payload,
   }),
-  setParentCommentDeleted: (payload: boolean) => ({
-    type: postTypes.SET_PARENT_COMMENT_IS_DELETED,
+  setCommentErrorCode: (payload: boolean | string) => ({
+    type: postTypes.SET_COMMENT_ERROR_CODE,
     payload,
   }),
   removeChildComment: (payload: any) => ({

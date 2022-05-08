@@ -388,12 +388,17 @@
     "people_search": "Người dùng",
     "show_all": "Xem tất cả",
     "text_load_more_comments": "Xem bình luận trước đó",
-    "text_load_more_replies": "Xem các trả lời trước đó",
+    "text_load_previous_replies": "Xem các trả lời trước đó",
+    "text_load_more_replies": "Xem thêm các bình luận khác",
     "text_add_to_post": "Thêm vào bài viết",
+    "text_comment_was_deleted": "Bình luận này đã bị xoá",
+    "text_restricted_permission": "Hạn chế quyền xem",
+    "text_restricted_permission_description": "Bạn không có quyền xem bình luận này",
+    "text_back_to_news_feed": "Trở về Bản tin",
     "comment_menu_reply": "Trả lời bình luận này",
     "comment_menu_copy_text": "Sao chép nội dung",
     "comment_menu_copy_link": "Sao chép đường dẫn",
-    "comment_link_copied":"Đã sao chép liên kết của bình luận",
+    "comment_link_copied": "Đã sao chép liên kết của bình luận",
     "comment_menu_edit": "Sửa bình luận",
     "comment_menu_history": "Lịch sử chỉnh sửa",
     "comment_menu_delete": "Xoá bình luận",
@@ -472,10 +477,10 @@
     "auto_saved": "Bài viết đã lưu tự động",
     "saved_to_draft": "Bài viết đã lưu vào nháp.",
     "text_review_markdown": "Xem trước nội dung",
-    "text_comment_deleted":"Bình luận này đã bị xoá, không thể gửi bình luận trả lời của bạn",
-      "deleted_comment":{
+    "text_comment_deleted": "Bình luận này đã bị xoá, không thể gửi bình luận trả lời của bạn",
+    "deleted_comment": {
       "title": "Trang này không tồn tại.",
-      "description":"Bình luận này có thể bị xóa hoặc bạn không có quyền xem bình luận này",
+      "description": "Bình luận này có thể bị xóa hoặc bạn không có quyền xem bình luận này",
       "button_text": "Quay về Bài viết"
     }
   },
@@ -612,16 +617,16 @@
       "desc": "Vui lòng đăng nhập lại"
     }
   },
-    "communities":{
-    "empty_communities":{
+  "communities": {
+    "empty_communities": {
       "title": "Không tìm thấy cộng đồng nào",
       "description": "Khám phá các cộng đồng để tham gia một cộng đồng.",
-      "button_text":"Đi tới Khám phá"
+      "button_text": "Đi tới Khám phá"
     },
-    "community_menu":{
+    "community_menu": {
       "your_communities_text": "Cộng đồng của bạn",
-      "manage_text":"Đang quản lý",
-      "discover_text":"Khám phá"
+      "manage_text": "Đang quản lý",
+      "discover_text": "Khám phá"
     }
   }
 }

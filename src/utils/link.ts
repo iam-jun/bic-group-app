@@ -20,12 +20,28 @@ const formatParams = (params?: any) => {
   }
 };
 
+const formatParamsVer2 = (params?: any) => {
+  if (typeof params !== 'object') {
+    return '';
+  }
+  const keys = Object.keys(params);
+  let result = '';
+  if (keys.length > 0) {
+    keys.forEach((item: string) => {
+      if (!!params[item]) result += '?' + item + '=' + params[item];
+    });
+    return result;
+  }
+};
+
 const getLink = (linkType: string, id?: number, params?: any): string => {
   switch (linkType) {
     case LINK_POST:
       return getEnv('SELF_DOMAIN') + '/post/t/' + id + formatParams(params);
     case LINK_COMMENT:
-      return getEnv('SELF_DOMAIN') + '/comment/t/' + id + formatParams(params);
+      return (
+        getEnv('SELF_DOMAIN') + '/comment/t/' + id + formatParamsVer2(params)
+      );
     case LINK_GROUP:
       return getEnv('SELF_DOMAIN') + '/groups/' + id + formatParams(params);
     default:

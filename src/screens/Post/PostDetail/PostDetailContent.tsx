@@ -266,10 +266,9 @@ const _PostDetailContent = (props: any) => {
     commentParent?: any,
   ) => {
     rootNavigation.navigate(homeStack.commentDetail, {
-      commentData,
+      commentId: commentData?.id || 0,
       postId: id,
       replyItem,
-      focus_comment,
       commentParent,
     });
   };
@@ -465,7 +464,7 @@ const getSectionData = (listComment: ICommentData[]) => {
   const result: any[] = [];
   listComment?.map?.((comment, index) => {
     const item: any = {};
-    const lastChildComment = comment?.child || [];
+    const lastChildComment = comment?.child?.list || [];
     const _data =
       lastChildComment.length > 0
         ? [lastChildComment[lastChildComment.length - 1]]

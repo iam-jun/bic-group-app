@@ -4,7 +4,7 @@ export const sortComments = (comments: ICommentData[]) => {
   let newComments: any = comments || [];
   comments?.map?.((cmt: ICommentData) => {
     if (cmt?.child) {
-      cmt.child = cmt.child?.sort?.((c1: IReaction, c2: IReaction) =>
+      cmt.child.list = cmt.child?.list?.sort?.((c1: IReaction, c2: IReaction) =>
         c1?.createdAt && c2?.createdAt && c1?.createdAt > c2?.createdAt
           ? 1
           : -1,

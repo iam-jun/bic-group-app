@@ -77,8 +77,7 @@ export interface ICommentData {
   updatedAt?: string;
   ownerReactions?: any;
   reactionsCount?: any;
-  child?: ICommentData[];
-
+  child: IPostComments;
   loading?: boolean;
   status?: 'pending' | 'success' | 'failed';
   localId?: string | number[]; // from uuid-v4
@@ -115,6 +114,8 @@ export interface IPostComments {
   meta?: {
     total?: number;
     limit?: number;
+    hasPreviousPage?: boolean;
+    hasNextPage?: boolean;
   };
 }
 
@@ -180,6 +181,7 @@ export interface IPayloadCreateComment {
   preComment?: ICommentData;
   onSuccess?: () => void;
   isCommentLevel1Screen?: boolean;
+  viewMore?: boolean;
 }
 
 export interface IPayloadPutEditPost {
@@ -250,6 +252,7 @@ export interface IRequestGetPostComment {
   idGTE?: number;
   idLTE?: number;
   idLT?: number;
+  idGT?: number;
   postId: number;
   parentId?: number;
   childLimit?: number;

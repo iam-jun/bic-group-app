@@ -327,15 +327,15 @@ function* updateAllCommentsByParentIdsWithComments({
     get(state, postKeySelector.allCommentsByParentIds),
   ) || {};
   const commentsById = allComments[id] || [];
-  let newComments: IReaction[];
-  if (isReplace) {
+  let newComments: ICommentData[];
+
+  if (isMerge) {
+    newComments = [...new Set([...commentsById, ...comments])];
+  } else if (isReplace) {
     newComments = commentsById?.filter?.(
       (item: ICommentData) => item.id != commentId,
     );
     newComments = [...new Set([...newComments, ...comments])];
-  }
-  if (isMerge) {
-    newComments = [...new Set([...commentsById, ...comments])];
   } else {
     newComments = comments;
   }
