@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, {useState, useEffect} from 'react';
 import {InteractionManager, View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -7,7 +7,6 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {ITheme} from '~/theme/interfaces';
 import Header from '~/beinComponents/Header';
 import CommentDetailContent from './CommentDetailContent';
-import CommentDetailContent2 from './CommentDetailContent2';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import Button from '~/beinComponents/Button';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -22,7 +21,7 @@ const CommentDetail = (props: any) => {
   const {colors} = theme;
   const styles = themeStyles(theme);
 
-  const [showPrivacyPost, setShowPricvacyPost] = useState(false);
+  const [showPrivacyPost, setShowPrivacyPost] = useState(false);
 
   const backToNewsFeed = () => {
     rootNavigation.replace(homeStack.newsfeed);
@@ -37,7 +36,6 @@ const CommentDetail = (props: any) => {
   return (
     <ScreenWrapper isFullView backgroundColor={colors.background}>
       <Header titleTextProps={{useI18n: true}} title={'post:label_comment'} />
-      {/* <CommentDetailContent {...props} /> */}
 
       {showPrivacyPost ? (
         <EmptyScreen
@@ -56,10 +54,10 @@ const CommentDetail = (props: any) => {
           }
         />
       ) : (
-        <CommentDetailContent2
+        <CommentDetailContent
           {...props}
           showPrivacy={(value: boolean) => {
-            setShowPricvacyPost(value);
+            setShowPrivacyPost(value);
           }}
         />
       )}

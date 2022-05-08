@@ -27,7 +27,6 @@ function* getCommentsByPostId({
     const response = yield call(postDataHelper.getCommentsByPostId, payload);
     const {list: newList, meta} = response;
     callbackLoading?.(false);
-    yield put(postActions.setScrollCommentsPosition({position: 'top'}));
     if (newList?.length > 0) {
       if (commentId) {
         //get child comment of comment

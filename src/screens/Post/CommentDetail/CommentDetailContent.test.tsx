@@ -21,13 +21,15 @@ import {
   POST_DETAIL_3,
 } from '~/test/mock_data/post';
 import modalActions from '~/store/modal/actions';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
+import * as navigationHook from '~/hooks/navigation';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 afterEach(cleanup);
 
 describe('CommentDetail screen', () => {
   const mockStore = configureStore([]);
   let storeData: any;
-  jest.useFakeTimers();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -37,9 +39,9 @@ describe('CommentDetail screen', () => {
     storeData.auth.user = {} as any;
     storeData.post.allPosts = {} as any;
     storeData.post.loadingGetPostDetail = false;
-    storeData.post.parentCommentIsDeleted = false;
     storeData.post.allCommentsByParentIds = {};
     storeData.post.allPosts = {[POST_DETAIL_3.id]: POST_DETAIL_3};
+    storeData.post.commentErrorCode = '';
   });
 
   const replyComment = {
@@ -64,14 +66,14 @@ describe('CommentDetail screen', () => {
     child: [],
   };
 
-  it(`should call backend to get list child comment with `, async () => {
-    const spy = jest.spyOn(postActions, 'getCommentsByPostId');
+  it(`should call backend to get comment detail with `, async () => {
+    const spy = jest.spyOn(postActions, 'getCommentDetail');
 
     const props = {
       route: {
         params: {
-          commentData: baseCommentData,
-          postId: 302,
+          commentId: baseCommentData.id,
+          postId: baseCommentData.postId,
           replyItem: undefined,
           commentParent: undefined,
         },
@@ -86,64 +88,120 @@ describe('CommentDetail screen', () => {
     expect(spy).toBeCalledTimes(1);
   });
 
-  it(`should render comment list when the list has been saved to redux and replyItem !== undefine`, async () => {
-    // jest.useFakeTimers();
-    const spy = jest.spyOn(postActions, 'setPostDetailReplyingComment');
-
+  it(`should call showPrivacy prop when commentErrorCode = api.forbidden`, async () => {
+    const showPrivacy = jest.fn();
     const props = {
       route: {
         params: {
-          commentData: {
-            ...baseCommentData,
-            child: allCommentsByParentIds[302][0].child,
-          },
-          postId: 302,
-          replyItem: replyComment,
+          commentId: baseCommentData.id,
+          postId: baseCommentData.postId,
+          replyItem: undefined,
           commentParent: undefined,
         },
       },
     };
 
-    storeData.post.allCommentsByParentIds = allCommentsByParentIds;
+    storeData.post.commentErrorCode = API_ERROR_CODE.POST.postPrivacy;
     const store = createTestStore(storeData);
-    const wrapper = renderWithRedux(<CommentDetailContent {...props} />, store);
+    const wrapper = renderWithRedux(
+      <CommentDetailContent showPrivacy={showPrivacy} {...props} />,
+      store,
+    );
 
-    jest.advanceTimersByTime(100);
-    expect(spy).toHaveBeenCalled();
+    expect(showPrivacy).toBeCalledWith(true);
   });
 
-  it(`should show popup notice this comment is not found`, async () => {
-    const spy = jest.spyOn(modalActions, 'showAlert');
-
-    const props = {
-      route: {
-        params: {
-          commentData: {
-            ...baseCommentData,
-            child: allCommentsByParentIds[302][0].child,
-          },
-          postId: 302,
-          replyItem: replyComment,
-          commentParent: undefined,
-        },
-      },
-    };
-
-    storeData.post.allCommentsByParentIds = allCommentsByParentIds;
-    const store = createTestStore(storeData);
-
-    const wrapper = renderWithRedux(<CommentDetailContent {...props} />, store);
-
-    storeData.post.parentCommentIsDeleted = true;
-    const newStore = createTestStore(storeData);
-    rerenderWithRedux(wrapper, <CommentDetailContent {...props} />, newStore);
-
-    const flatList = wrapper.getByTestId('list');
-    const {refreshControl} = flatList.props;
-    act(() => {
-      refreshControl.props.onRefresh();
+  it(`should replace screen post detail when this comment is deleted `, async () => {
+    const replace = jest.fn();
+    const rootNavigation = {replace};
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
+      return {rootNavigation} as any;
     });
 
-    expect(spy).toBeCalled();
+    const props = {
+      route: {
+        params: {
+          commentId: baseCommentData.id,
+          postId: baseCommentData.postId,
+          replyItem: undefined,
+          commentParent: undefined,
+        },
+      },
+    };
+
+    storeData.post.commentErrorCode =
+      API_ERROR_CODE.POST.copiedCommentIsDeleted;
+    const store = createTestStore(storeData);
+    const wrapper = renderWithRedux(<CommentDetailContent {...props} />, store);
+
+    expect(replace).toBeCalledWith(homeStack.postDetail, {
+      post_id: baseCommentData.postId,
+    });
   });
+
+  /**
+   * Can not run this test case bc can not test saga have callback function in screen, please try this late
+   */
+  // it(`should show popup notice this comment is not found`, async () => {
+  //   const spy = jest.spyOn(modalActions, 'showAlert');
+
+  //   const props = {
+  //     route: {
+  //       params: {
+  //         commentId: baseCommentData.id,
+  //         postId: baseCommentData.postId,
+  //         replyItem: {...replyComment, id: 504},
+  //         commentParent: undefined,
+  //       },
+  //     },
+  //   };
+
+  //   storeData.post.allCommentsByParentIds = allCommentsByParentIds;
+  //   const store = createTestStore(storeData);
+
+  //   const wrapper = renderWithRedux(<CommentDetailContent {...props} />, store);
+  // expect(wrapper.toJSON()).toMatchSnapshot();
+  // storeData.post.commentErrorCode = API_ERROR_CODE.POST.commentDeleted;
+  // const newStore = createTestStore(storeData);
+  // rerenderWithRedux(wrapper, <CommentDetailContent {...props} />, newStore);
+
+  // const flatList = wrapper.getByTestId('list');
+  // const {refreshControl} = flatList.props;
+  // act(() => {
+  //   refreshControl.props.onRefresh();
+  // });
+
+  // expect(spy).toBeCalled();
+  // });
+
+  //  it(`should call api get comment detail when the user pull refresh`, async () => {
+  //      const spy = jest.spyOn(postActions, 'getCommentDetail');
+
+  //    const props = {
+  //      route: {
+  //        params: {
+  //          commentId: baseCommentData.id,
+  //          postId: baseCommentData.postId,
+  //          replyItem: {...replyComment, id: 504},
+  //          commentParent: undefined,
+  //        },
+  //      },
+  //    };
+
+  //    storeData.post.allCommentsByParentIds = allCommentsByParentIds;
+  //    const store = createTestStore(storeData);
+
+  //    const wrapper = renderWithRedux(
+  //      <CommentDetailContent {...props} />,
+  //      store,
+  //    );
+  //    const flatList = wrapper.getByTestId('list');
+
+  //    const {refreshControl} = flatList.props;
+  //    act(() => {
+  //      refreshControl.props.onRefresh();
+  //    });
+
+  //    expect(spy).toBeCalled();
+  //  });
 });

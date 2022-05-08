@@ -15,6 +15,7 @@ function* getCommentDetail({
   try {
     callbackLoading?.(true);
     const response = yield call(
+      //@ts-ignore
       postDataHelper.getCommentDetail,
       commentId,
       payload,
@@ -33,14 +34,14 @@ function* getCommentDetail({
       yield put(postActions.updateAllCommentsByParentIdsWithComments(payload));
     }
     callbackLoading?.(false);
-  } catch (e) {
+  } catch (e: any) {
     callbackLoading?.(false);
     console.log(`\x1b[31m🐣️ saga getCommentDetail error: `, e, `\x1b[0m`);
     if (
       e?.code === API_ERROR_CODE.POST.postPrivacy ||
       e?.code === API_ERROR_CODE.POST.copiedCommentIsDeleted
     ) {
-      yield put(postActions.setCommentErrorCode(e?.code));
+      yield put(postActions.setCommentErrorCode(e.code));
     } else {
       yield showError(e);
     }

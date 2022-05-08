@@ -5,6 +5,7 @@ import * as modalActions from '~/store/modal/actions';
 import {
   LIST_CHILD_COMMENT,
   allCommentsByParentIds,
+  allPosts,
 } from '~/test/mock_data/post';
 import postDataHelper from '../../helper/PostDataHelper';
 import postActions from '../actions';
@@ -16,6 +17,7 @@ describe('Get comments by postId saga', () => {
   const storeData = {
     post: {
       allCommentsByParentIds: allCommentsByParentIds,
+      allPosts: allPosts,
     },
   };
 
@@ -24,7 +26,10 @@ describe('Get comments by postId saga', () => {
       type: 'test',
       payload: {postId, parentId, isMerge: true},
     };
-    const response = {list: LIST_CHILD_COMMENT};
+    const response = {
+      list: LIST_CHILD_COMMENT,
+      meta: {hasPreviousPage: true, hasNextPage: false},
+    };
 
     return (
       // @ts-ignorets
@@ -54,26 +59,34 @@ describe('Get comments by postId saga', () => {
       type: 'test',
       payload: {postId, isMerge: true, callbackLoading},
     };
-    const response = {list: LIST_CHILD_COMMENT};
-
+    const response = {
+      list: LIST_CHILD_COMMENT,
+      meta: {hasPreviousPage: true, hasNextPage: false},
+    };
+    const newAllPosts = storeData.post.allPosts;
+    const post = newAllPosts[postId] || {};
+    //
+    post.comments.meta.hasNextPage = response.meta.hasNextPage;
+    newAllPosts[postId] = {...post};
     return (
       // @ts-ignorets
       expectSaga(getCommentsByPostId, action)
         .provide([
           [matchers.call.fn(postDataHelper.getCommentsByPostId), response],
         ])
+        .withState(storeData)
         .put(postActions.addToAllComments(response.list))
         .put(
           postActions.updateAllCommentsByParentIdsWithComments({
             id: postId,
-            //@ts-ignore
-            comments: response.list,
+            comments: response.list as any,
             isMerge: true,
           }),
         )
+        .put(postActions.setAllPosts(newAllPosts))
         .run()
         .then(({allEffects}: any) => {
-          expect(allEffects?.length).toEqual(3);
+          expect(allEffects?.length).toEqual(5);
         })
     );
   });
@@ -84,7 +97,10 @@ describe('Get comments by postId saga', () => {
       type: 'test',
       payload: {postId, parentId, isMerge: true, callbackLoading},
     };
-    const response = {list: LIST_CHILD_COMMENT};
+    const response = {
+      list: LIST_CHILD_COMMENT,
+      meta: {hasPreviousPage: true, hasNextPage: false},
+    };
 
     return (
       // @ts-ignorets
