@@ -87,6 +87,7 @@ const YourGroups: FC<YourGroupsProps> = ({route}: YourGroupsProps) => {
       />
       <View style={styles.container}>
         <CommunityMenu
+          testID={'your_groups.menu'}
           style={{paddingVertical: spacing.padding.small}}
           data={menuData}
           selectedIndex={selectedIndex}

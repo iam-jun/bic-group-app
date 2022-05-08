@@ -27,6 +27,7 @@ const communityMenuData = [
 ];
 
 export interface CommunityMenuProps {
+  testID?: string;
   style?: StyleProp<ViewStyle>;
   data?: {id: number; text: string; icon?: string; type: string}[];
   selectedIndex?: number;
@@ -34,6 +35,7 @@ export interface CommunityMenuProps {
 }
 
 const CommunityMenu = ({
+  testID,
   style,
   data = communityMenuData,
   selectedIndex,
@@ -73,7 +75,7 @@ const CommunityMenu = ({
     );
   };
   return (
-    <View style={[styles.container, style]}>
+    <View testID={testID || 'community_menu'} style={[styles.container, style]}>
       <ScrollView
         horizontal
         style={{backgroundColor: theme.colors.background}}

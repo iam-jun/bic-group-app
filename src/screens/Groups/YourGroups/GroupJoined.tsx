@@ -23,6 +23,7 @@ import {useBaseHook} from '~/hooks';
 export interface GroupJoinedProps {
   style?: StyleProp<ViewStyle>;
   communityId: number;
+  initModeIndex?: number;
 }
 
 const menuType = [
@@ -38,8 +39,11 @@ const menuType = [
   },
 ];
 
-const GroupJoined: FC<GroupJoinedProps> = ({communityId}: GroupJoinedProps) => {
-  const [selectingMode, setSelectingMode] = useState(menuType[0]);
+const GroupJoined: FC<GroupJoinedProps> = ({
+  communityId,
+  initModeIndex = 0,
+}: GroupJoinedProps) => {
+  const [selectingMode, setSelectingMode] = useState(menuType[initModeIndex]);
 
   const {t} = useBaseHook();
   const dispatch = useDispatch();
@@ -99,7 +103,10 @@ const GroupJoined: FC<GroupJoinedProps> = ({communityId}: GroupJoinedProps) => {
   const renderMenuButton = () => {
     const {icon, title} = selectingMode || {};
     return (
-      <TouchableOpacity onPress={onPressShowMenu} style={styles.menuButton}>
+      <TouchableOpacity
+        testID={'group_joined.btn_mode_view'}
+        onPress={onPressShowMenu}
+        style={styles.menuButton}>
         {!!icon && (
           <Icon icon={icon as any} style={{marginRight: spacing.margin.tiny}} />
         )}
@@ -110,7 +117,7 @@ const GroupJoined: FC<GroupJoinedProps> = ({communityId}: GroupJoinedProps) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View testID={'group_joined'} style={styles.container}>
       <View
         style={{
           zIndex: 10,
