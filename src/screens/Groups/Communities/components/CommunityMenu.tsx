@@ -1,40 +1,46 @@
 import React from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import {View, StyleSheet, ScrollView, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
+import {IconType} from '~/resources/icons';
 
 const communityMenuData = [
   {
     id: 1,
     text: 'communities:community_menu:your_communities_text',
-    icon: 'UsersAlt',
     type: 'COMMUNITIES',
   },
   {
     id: 2,
     text: 'communities:community_menu:manage_text',
-    icon: 'Dashboard',
     type: 'MANAGE',
   },
   {
     id: 3,
     text: 'communities:community_menu:discover_text',
-    icon: 'Compass',
     type: 'DISCOVER',
   },
 ];
 
-const CommunityMenu = ({
-  selectedIndex,
-  onPress,
-}: {
+export interface CommunityMenuProps {
+  testID?: string;
+  style?: StyleProp<ViewStyle>;
+  data?: {id: number; text: string; icon?: string; type: string}[];
   selectedIndex?: number;
   onPress: (item: any, index: number) => void;
-}) => {
+}
+
+const CommunityMenu = ({
+  testID,
+  style,
+  data = communityMenuData,
+  selectedIndex,
+  onPress,
+}: CommunityMenuProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
@@ -51,19 +57,17 @@ const CommunityMenu = ({
           onPress={() => {
             onPress(item, index);
           }}>
-          <Icon
-            icon={item.icon}
-            size={24}
-            tintColor={
-              isSelected ? theme.colors.primary : theme.colors.iconTintLight
-            }
-            style={styles.icon}
-          />
-          <Text
-            useI18n
-            color={
-              isSelected ? theme.colors.primary : theme.colors.textSecondary
-            }>
+          {!!item?.icon && (
+            <Icon
+              icon={item.icon}
+              size={24}
+              tintColor={
+                isSelected ? theme.colors.primary : theme.colors.iconTintLight
+              }
+              style={styles.icon}
+            />
+          )}
+          <Text variant={isSelected ? 'bodyM' : 'body'} useI18n>
             {item.text}
           </Text>
         </ButtonWrapper>
@@ -71,13 +75,13 @@ const CommunityMenu = ({
     );
   };
   return (
-    <View style={styles.container}>
+    <View testID={testID || 'community_menu'} style={[styles.container, style]}>
       <ScrollView
         horizontal
         style={{backgroundColor: theme.colors.background}}
         showsHorizontalScrollIndicator={false}
         alwaysBounceHorizontal={false}>
-        {communityMenuData.map(renderReactItem)}
+        {data?.map?.(renderReactItem)}
       </ScrollView>
     </View>
   );
@@ -99,13 +103,17 @@ const createStyle = (theme: ITheme) => {
       marginLeft: spacing.margin.small,
     },
     itemContainer: {
-      backgroundColor: colors.surface,
+      backgroundColor: colors.background,
       flexDirection: 'row',
-      padding: spacing.padding.small,
+      paddingVertical: spacing.padding.small,
+      paddingHorizontal: spacing.padding.large,
       borderRadius: 100,
+      borderWidth: 1,
+      borderColor: colors.borderDivider,
     },
     itemSelectedContainer: {
-      backgroundColor: colors.primary2,
+      borderColor: colors.borderFocus,
+      backgroundColor: colors.borderFocus,
     },
     iconLeftStyle: {marginRight: spacing.margin.base},
     icon: {

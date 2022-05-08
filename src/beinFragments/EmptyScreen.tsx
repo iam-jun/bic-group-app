@@ -6,12 +6,11 @@ import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import {IconType} from '~/resources/icons';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 
 interface EmptyScreenProps {
-  source: IconType;
-  title: string;
-  description: string;
+  source?: IconType;
+  title?: string;
+  description?: string;
   size?: number;
   ButtonComponent?: any;
 }
@@ -28,16 +27,20 @@ const EmptyScreen = ({
 
   return (
     <View testID="empty_screen" style={styles.container}>
-      <Icon icon={source} size={size} />
-      <Text.ButtonBase style={styles.text} useI18n>
-        {title}
-      </Text.ButtonBase>
-      <Text.Subtitle
-        color={theme.colors.textSecondary}
-        style={styles.text}
-        useI18n>
-        {description}
-      </Text.Subtitle>
+      {!!source && <Icon icon={source} size={size} />}
+      {!!title && (
+        <Text.ButtonBase style={styles.text} useI18n>
+          {title}
+        </Text.ButtonBase>
+      )}
+      {!!description && (
+        <Text.Subtitle
+          color={theme.colors.textSecondary}
+          style={styles.text}
+          useI18n>
+          {description}
+        </Text.Subtitle>
+      )}
       {ButtonComponent}
     </View>
   );

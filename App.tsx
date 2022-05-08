@@ -1,3 +1,4 @@
+import 'intl-pluralrules';
 import messaging from '@react-native-firebase/messaging';
 import Amplify from 'aws-amplify';
 import React, {useEffect} from 'react';

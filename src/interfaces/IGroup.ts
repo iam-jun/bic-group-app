@@ -72,6 +72,14 @@ export interface IParamGetGroupPosts {
   ranking?: 'IMPORTANT' | string;
 }
 
+export interface IParamGetCommunities {
+  key?: string;
+  offset?: number;
+  limit?: number;
+  sort?: string;
+  preview_members?: boolean;
+}
+
 export interface IGroupImageUpload {
   id: number;
   fieldName: 'icon' | 'background_img_url';
@@ -134,8 +142,26 @@ export interface IJoiningMember {
   user: IObject<any>;
 }
 
+export interface IGetYourGroupsSearch {
+  communityId: number;
+  key: string;
+}
+
+export interface IStateSearch {
+  showSearch?: boolean;
+  loading?: boolean;
+  key?: string;
+  list?: any[];
+}
+
+export interface IStateList {
+  loading?: boolean;
+  list?: any[];
+  canLoadMore?: boolean;
+}
+
 export interface IGetCommunityGroup {
   preview_members?: boolean;
   key?: string;
-  list_by?: string;
+  list_by?: 'tree' | 'flat';
 }

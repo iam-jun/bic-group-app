@@ -78,6 +78,7 @@ import iconCannotComment from '../../assets/icons/icon_cannot_comment.svg';
 import iconTabCommunities from '../../assets/icons/icon_communities.svg';
 import iconTabCommunitiesBein from '../../assets/icons/icon_communities_bein.svg';
 import iconLock from '../../assets/icons/icon_lock.svg';
+import iconSecret from '../../assets/icons/icon_secret_group.svg';
 
 const icons = {
   iconTabHome,
@@ -259,6 +260,8 @@ const icons = {
   Compass: 'Compass',
   Dashboard: 'Dashboard',
   iconLock,
+  Sitemap: 'Sitemap',
+  iconSecret,
 };
 
 export default icons;

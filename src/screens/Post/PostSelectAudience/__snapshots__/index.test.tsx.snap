@@ -166,6 +166,12 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
           </View>
         </View>
         <View
+          animatedStyle={
+            Object {
+              "value": Object {},
+            }
+          }
+          collapsable={false}
           style={
             Object {
               "flex": 1,
@@ -575,7 +581,6 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "marginTop": 4,
               }
             }
           >
@@ -1395,6 +1400,12 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
           </View>
         </View>
         <View
+          animatedStyle={
+            Object {
+              "value": Object {},
+            }
+          }
+          collapsable={false}
           style={
             Object {
               "flex": 1,
@@ -1804,7 +1815,6 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "marginTop": 4,
               }
             }
           >
@@ -2624,6 +2634,12 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
           </View>
         </View>
         <View
+          animatedStyle={
+            Object {
+              "value": Object {},
+            }
+          }
+          collapsable={false}
           style={
             Object {
               "flex": 1,
