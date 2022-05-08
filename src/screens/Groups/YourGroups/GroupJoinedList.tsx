@@ -54,7 +54,7 @@ const GroupJoinedList: FC<GroupJoinedListProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View testID={'group_joined_list'} style={styles.container}>
       <ListView
         containerStyle={styles.dataList}
         data={list || []}
