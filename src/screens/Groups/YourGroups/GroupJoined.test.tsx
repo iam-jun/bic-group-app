@@ -5,22 +5,55 @@ import initialState from '~/store/initialState';
 import GroupJoined from '~/screens/Groups/YourGroups/GroupJoined';
 import {communityDetailData} from '~/test/mock_data/communities';
 import modalActions from '~/store/modal/actions';
+import {groupDetailData} from '~/test/mock_data/group';
 
 describe('GroupJoined component', () => {
   it(`should render tree as default`, async () => {
+    const storeData: any = {
+      groups: {yourGroupsTree: {loading: false, list: [groupDetailData]}},
+    };
     const wrapper = renderWithRedux(
       <GroupJoined communityId={communityDetailData.id} />,
+      createTestStore(storeData),
     );
     const listTree = wrapper.queryByTestId('group_joined_tree');
     expect(listTree).not.toBeNull();
   });
 
+  it(`should render tree empty screen`, async () => {
+    const storeData: any = {
+      groups: {yourGroupsTree: {loading: false, list: []}},
+    };
+    const wrapper = renderWithRedux(
+      <GroupJoined communityId={communityDetailData.id} />,
+      createTestStore(storeData),
+    );
+    const emptyScreen = wrapper.queryByTestId('empty_screen');
+    expect(emptyScreen).not.toBeNull();
+  });
+
   it('should render list flat with initModeIndex = 1', () => {
+    const storeData: any = {
+      groups: {yourGroupsTree: {loading: false, list: [groupDetailData]}},
+    };
     const wrapper = renderWithRedux(
       <GroupJoined communityId={communityDetailData.id} initModeIndex={1} />,
+      createTestStore(storeData),
     );
     const listFlat = wrapper.queryByTestId('group_joined_list');
     expect(listFlat).not.toBeNull();
+  });
+
+  it(`should render flat list empty screen`, async () => {
+    const storeData: any = {
+      groups: {yourGroupsList: {loading: false, list: []}},
+    };
+    const wrapper = renderWithRedux(
+      <GroupJoined communityId={communityDetailData.id} initModeIndex={1} />,
+      createTestStore(storeData),
+    );
+    const emptyScreen = wrapper.queryByTestId('empty_screen');
+    expect(emptyScreen).not.toBeNull();
   });
 
   it('should show modal mode view menu', () => {
