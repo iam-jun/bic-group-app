@@ -50,7 +50,7 @@ const PageContent = ({
   };
 
   const onPressAbout = () => {
-    // TODO: add navigation to About page
+    rootNavigation.navigate(groupStack.communityAbout);
   };
 
   const onPressMembers = () => {

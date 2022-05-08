@@ -17,3 +17,10 @@ export interface ICommunity {
   can_leave: boolean;
   join_status: number;
 }
+
+export interface IParamGetCommunityMembers {
+  key?: string;
+  offset?: number;
+  limit?: number;
+  sort?: string;
+}

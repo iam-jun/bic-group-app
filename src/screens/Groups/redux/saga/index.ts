@@ -39,6 +39,7 @@ import getYourGroupsList from '~/screens/Groups/redux/saga/getYourGroupsList';
 import getCommunityDetail from './getCommunityDetail';
 import getDiscoverCommunities from '~/screens/Groups/redux/saga/getDiscoverCommunities';
 import getYourGroupsSearch from '~/screens/Groups/redux/saga/getYourGroupsSearch';
+import getCommunityMembers from './getCommunityMembers';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -91,6 +92,7 @@ export default function* groupsSaga() {
   );
   yield takeLatest(groupsTypes.GET_COMMUNITY_GROUPS, getCommunityGroups);
   yield takeLatest(groupsTypes.GET_COMMUNITY_DETAIL, getCommunityDetail);
+  yield takeLatest(groupsTypes.GET_COMMUNITY_MEMBERS, getCommunityMembers);
 }
 
 function* getJoinedGroups({payload}: {type: string; payload?: any}) {

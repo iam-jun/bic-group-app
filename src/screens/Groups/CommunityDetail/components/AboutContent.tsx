@@ -9,7 +9,8 @@ import MenuItem from '~/beinComponents/list/items/MenuItem';
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
-import privacyTypes from '~/constants/privacyTypes';
+import privacyTypes, {groupPrivacy} from '~/constants/privacyTypes';
+import PreviewMembers from '../../components/PreviewMembers';
 
 const AboutContent = () => {
   const theme = useTheme() as ITheme;
@@ -48,7 +49,11 @@ const AboutContent = () => {
           count: user_count,
         })}`}
         disabled
+        rightSubIcon={
+          privacy !== groupPrivacy.private ? 'AngleRightB' : undefined
+        }
       />
+      {privacy !== groupPrivacy.private && <PreviewMembers />}
     </View>
   );
 };

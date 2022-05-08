@@ -85,6 +85,8 @@ export const groupInitState = {
   },
   communityDetail: {} as ICommunity,
   isGettingInfoDetail: false,
+  communityMembers: [],
+  previewMembers: [],
 };
 
 function groupsReducer(state = groupInitState, action: any = {}) {
@@ -427,6 +429,16 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         ...state,
         isGettingInfoDetail: false,
         communityDetail: payload,
+      };
+    case groupsTypes.SET_COMMUNITY_MEMBERS:
+      return {
+        ...state,
+        communityMembers: payload || [],
+      };
+    case groupsTypes.SET_PREVIEW_MEMBERS:
+      return {
+        ...state,
+        previewMembers: payload || [],
       };
 
     default:
