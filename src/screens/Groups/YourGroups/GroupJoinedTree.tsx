@@ -54,7 +54,7 @@ const GroupJoinedTree: FC<GroupJoinedTreeProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View testID={'group_joined_tree'} style={styles.container}>
       <ListView
         containerStyle={styles.dataList}
         data={list || []}

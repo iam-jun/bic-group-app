@@ -14,6 +14,7 @@ exports[`CommunityMenu component renders correctly 1`] = `
       undefined,
     ]
   }
+  testID="community_menu"
 >
   <RCTScrollView
     alwaysBounceHorizontal={false}
