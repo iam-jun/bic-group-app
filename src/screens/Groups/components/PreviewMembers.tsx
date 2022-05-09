@@ -11,7 +11,7 @@ import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import ListView from '~/beinComponents/list/ListView';
 import {ITheme} from '~/theme/interfaces';
-import appConfig from '~/configs/appConfig';
+import {ICommunityMembers} from '~/interfaces/ICommunity';
 
 const PreviewMembers = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,7 @@ const PreviewMembers = () => {
     );
   }, [communityId]);
 
-  const renderItem = ({item}: any) => {
+  const renderItem = ({item}: {item: ICommunityMembers}) => {
     return <Avatar.Small isRounded source={item.avatar} />;
   };
 

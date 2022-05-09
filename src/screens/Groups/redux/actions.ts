@@ -18,7 +18,11 @@ import {
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 import {IObject} from '~/interfaces/common';
-import {ICommunity, IParamGetCommunityMembers} from '~/interfaces/ICommunity';
+import {
+  ICommunity,
+  ICommunityMembers,
+  IParamGetCommunityMembers,
+} from '~/interfaces/ICommunity';
 
 const groupsActions = {
   setPrivacyModalOpen: (payload: boolean) => {
@@ -339,11 +343,11 @@ const groupsActions = {
     type: groupsTypes.GET_COMMUNITY_MEMBERS,
     payload,
   }),
-  setCommunityMembers: (payload: any) => ({
+  setCommunityMembers: (payload: ICommunityMembers[]) => ({
     type: groupsTypes.SET_COMMUNITY_MEMBERS,
     payload,
   }),
-  setPreviewMembers: (payload: any) => ({
+  setPreviewMembers: (payload: ICommunityMembers[]) => ({
     type: groupsTypes.SET_PREVIEW_MEMBERS,
     payload,
   }),

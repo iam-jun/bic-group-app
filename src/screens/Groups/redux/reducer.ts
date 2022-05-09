@@ -1,4 +1,4 @@
-import {ICommunity} from '~/interfaces/ICommunity';
+import {ICommunity, ICommunityMembers} from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/screens/Groups/redux/types';
 import {IUser} from '~/interfaces/IAuth';
@@ -85,8 +85,8 @@ export const groupInitState = {
   },
   communityDetail: {} as ICommunity,
   isGettingInfoDetail: false,
-  communityMembers: [],
-  previewMembers: [],
+  communityMembers: [] as ICommunityMembers[],
+  previewMembers: [] as ICommunityMembers[],
 };
 
 function groupsReducer(state = groupInitState, action: any = {}) {

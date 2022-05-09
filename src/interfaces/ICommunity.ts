@@ -24,3 +24,14 @@ export interface IParamGetCommunityMembers {
   limit?: number;
   sort?: string;
 }
+
+export type COMMUNITY_ROLE = 'COMMUNITY_ADMIN' | 'MEMBER';
+
+export interface ICommunityMembers {
+  id: number;
+  username: string;
+  fullname: string;
+  avatar: string;
+  roles: COMMUNITY_ROLE[];
+  chat_user_id: string;
+}
