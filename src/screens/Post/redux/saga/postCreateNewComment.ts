@@ -133,8 +133,9 @@ function* postCreateNewComment({
         0,
         newParentComment.totalReply + 1,
       );
-      newParentComment.child.list =
-        newParentComment.child?.list?.concat([resComment]) || [];
+      newParentComment.child = {
+        list: newParentComment.child?.list?.concat([resComment]) || [],
+      };
 
       yield put(postActions.addToAllComments([resComment, newParentComment]));
     } else {
