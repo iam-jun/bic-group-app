@@ -3,6 +3,7 @@ import {put, call} from 'redux-saga/effects';
 import actions from '~/screens/Groups/redux/actions';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import {IParamGetCommunityMembers} from '~/interfaces/ICommunity';
+import appConfig from '~/configs/appConfig';
 
 export default function* getCommunityMembers({
   payload,
@@ -17,11 +18,11 @@ export default function* getCommunityMembers({
   try {
     const {communityId, preview_members = false, params} = payload;
     // @ts-ignore
-    const resp = yield call(
-      groupsDataHelper.getCommunityMembers,
-      communityId,
-      params,
-    );
+    const resp = yield call(groupsDataHelper.getCommunityMembers, communityId, {
+      limit: preview_members ? 10 : appConfig.recordsPerPage,
+      sort: preview_members ? 'created_at:asc' : undefined,
+      ...params,
+    });
 
     if (preview_members) yield put(actions.setPreviewMembers(resp?.data));
     else yield put(actions.setCommunityMembers(resp?.data));
