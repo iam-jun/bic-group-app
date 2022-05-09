@@ -51,6 +51,8 @@ const postKeySelector = {
   postDeletedById: (id: string | number) => `post.allPosts.${id}.deleted`,
   postMarkedReadById: (id: string | number) =>
     `post.allPosts.${id}.markedReadPost`,
+  postMarkedReadSuccessById: (id: string | number) =>
+    `post.allPosts.${id}.markedReadSuccess`,
 
   //Comment data
   allCommentsByParentIds: 'post.allCommentsByParentIds',
