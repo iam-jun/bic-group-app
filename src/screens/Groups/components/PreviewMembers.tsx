@@ -12,6 +12,7 @@ import Text from '~/beinComponents/Text';
 import ListView from '~/beinComponents/list/ListView';
 import {ITheme} from '~/theme/interfaces';
 import {ICommunityMembers} from '~/interfaces/ICommunity';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 const PreviewMembers = () => {
   const dispatch = useDispatch();
@@ -66,6 +67,7 @@ const PreviewMembers = () => {
         renderItem={renderItem}
         listStyle={styles.listStyle}
         scrollEnabled={false}
+        renderItemSeparator={() => <ViewSpacing width={2} />}
       />
       {renderMembersDescription()}
     </>

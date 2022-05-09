@@ -4,6 +4,7 @@ import actions from '~/screens/Groups/redux/actions';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import {IParamGetCommunityMembers} from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
+import showError from '~/store/commonSaga/showError';
 
 export default function* getCommunityMembers({
   payload,
@@ -28,5 +29,6 @@ export default function* getCommunityMembers({
     else yield put(actions.setCommunityMembers(resp?.data));
   } catch (err: any) {
     console.log('getCommunityMembers error:', err);
+    yield call(showError, err);
   }
 }
