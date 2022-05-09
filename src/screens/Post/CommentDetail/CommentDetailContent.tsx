@@ -21,6 +21,7 @@ import API_ERROR_CODE from '~/constants/apiErrorCode';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import LoadMoreComment from '../components/LoadMoreComment';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -167,6 +168,12 @@ const CommentDetailContent = (props: any) => {
     );
   };
 
+  const goToPostDetail = () => {
+    rootNavigation.replace(homeStack.postDetail, {
+      post_id: postId,
+    });
+  };
+
   const onRefresh = () => {
     if (copyCommentError === API_ERROR_CODE.POST.commentDeleted) {
       setIsEmpty(true);
@@ -268,6 +275,7 @@ const CommentDetailContent = (props: any) => {
             commentData={newCommentData}
             groupIds={groupIds}
             id={id}
+            onPress={goToPostDetail}
           />
         }
         ListFooterComponent={renderFooter}
@@ -297,7 +305,13 @@ const CommentDetailContent = (props: any) => {
   );
 };
 
-const CommentLevel1 = ({id, headerTitle, commentData, groupIds}: any) => {
+const CommentLevel1 = ({
+  id,
+  headerTitle,
+  commentData,
+  groupIds,
+  onPress,
+}: any) => {
   if (!id) {
     return null;
   }
@@ -307,12 +321,12 @@ const CommentLevel1 = ({id, headerTitle, commentData, groupIds}: any) => {
 
   return (
     <View>
-      <View style={styles.container}>
+      <ButtonWrapper style={styles.container} onPress={onPress}>
         <Text.BodySM>
           {t('post:text_comment_from')}
           <Text.BodyM style={styles.highlightText}>{headerTitle}</Text.BodyM>
         </Text.BodySM>
-      </View>
+      </ButtonWrapper>
       <CommentItem
         postId={id}
         commentData={commentData}

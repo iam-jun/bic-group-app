@@ -33,9 +33,23 @@ const CommentDetail = (props: any) => {
     };
   }, []);
 
+  const onBack = () => {
+    if (rootNavigation.canGoBack) {
+      rootNavigation.goBack();
+    } else {
+      rootNavigation.replace(homeStack.postDetail, {
+        post_id: props?.route?.params?.postId || 0,
+      });
+    }
+  };
+
   return (
     <ScreenWrapper isFullView backgroundColor={colors.background}>
-      <Header titleTextProps={{useI18n: true}} title={'post:label_comment'} />
+      <Header
+        titleTextProps={{useI18n: true}}
+        title={'post:label_comment'}
+        onPressBack={onBack}
+      />
 
       {showPrivacyPost ? (
         <EmptyScreen
