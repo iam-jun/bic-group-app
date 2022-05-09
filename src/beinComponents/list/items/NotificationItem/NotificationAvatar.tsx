@@ -48,7 +48,7 @@ const NotificationAvatar = ({actor}: Props) => {
       {
         <Avatar.Large
           testI="notification_avatar.single"
-          source={actor.avatar}
+          source={actor?.avatar}
         />
       }
     </View>

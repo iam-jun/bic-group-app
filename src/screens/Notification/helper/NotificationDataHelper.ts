@@ -65,7 +65,7 @@ const notificationsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve({
-          results: response?.data?.data || [],
+          results: response?.data?.data?.list || [],
           unseen: response?.data?.meta?.unSeen,
         });
       } else {
