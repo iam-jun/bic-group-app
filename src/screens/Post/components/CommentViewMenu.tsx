@@ -104,8 +104,8 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
     dispatch(modalActions.hideModal());
     Clipboard.setString(
       getLink(LINK_COMMENT, postId, {
-        parentId: parentCommentId || '',
         commentId,
+        parentId: parentCommentId || '',
       }),
     );
     dispatch(

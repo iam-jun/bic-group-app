@@ -255,8 +255,8 @@ const getLinkingCustomConfig = (config: any, navigation: any) => {
           } else {
             listener(url);
           }
-        } else if (url.includes('bein:///comment/t/')) {
-          const data = url?.replace('bein:///comment/t/', '');
+        } else if (url.includes('bein:///post/')) {
+          const data = url?.replace('bein:///post/', '');
           const params = data
             .split('?')
             ?.map(item => item.split('='))

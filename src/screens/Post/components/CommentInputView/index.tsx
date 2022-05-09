@@ -111,8 +111,6 @@ const CommentInputView: FC<CommentInputViewProps> = ({
 
   const onPressSend = (sendData?: ICommentInputSendParam) => {
     if (postId && !loading) {
-      console.log('>>>>>>VIEWMORE', viewMore);
-
       const images: IActivityDataImage[] = [];
       if (sendData?.image) {
         images.push(sendData?.image);
