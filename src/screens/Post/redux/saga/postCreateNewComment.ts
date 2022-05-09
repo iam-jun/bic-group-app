@@ -102,8 +102,6 @@ function* postCreateNewComment({
     }
     onSuccess?.(); // clear content in text input
     if (!!viewMore && !!parentCommentId) {
-      console.log('>>>>>>>>HIHIHIHIHI');
-
       yield put(postActions.getCommentDetail({commentId: parentCommentId}));
       yield put(postActions.setCreateComment({loading: false, content: ''}));
       onSuccess?.(); // call second time to make sure content is cleared on low performance device
@@ -126,7 +124,23 @@ function* postCreateNewComment({
     yield put(postActions.setAllPosts(newAllPosts));
 
     // update comments or child comments again when receiving from API
-    yield put(postActions.addToAllComments(resComment));
+
+    if (!!parentCommentId) {
+      const allComments = yield select(state => state?.post?.allComments) || {};
+      const newAllComments = {...allComments};
+      const newParentComment = {...newAllComments[parentCommentId]};
+      newParentComment.totalReply = Math.max(
+        0,
+        newParentComment.totalReply + 1,
+      );
+      newParentComment.child.list =
+        newParentComment.child?.list?.concat([resComment]) || [];
+
+      yield put(postActions.addToAllComments([resComment, newParentComment]));
+    } else {
+      yield put(postActions.addToAllComments(resComment));
+    }
+
     yield put(
       postActions.updateCommentAPI({
         status: 'success',

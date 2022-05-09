@@ -219,13 +219,13 @@ function* addToAllComments({
   payload,
 }: {
   type: string;
-  payload: IReaction[] | IReaction;
+  payload: ICommentData[] | ICommentData;
 }): any {
   try {
     const allComments = yield select(state => state?.post?.allComments) || {};
     const newAllComments = {...allComments};
     if (isArray(payload) && payload.length > 0) {
-      payload.map((item: IReaction) => {
+      payload.map((item: ICommentData) => {
         if (item?.id) {
           newAllComments[item.id] = item;
         }
