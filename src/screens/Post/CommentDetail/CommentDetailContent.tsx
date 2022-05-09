@@ -54,6 +54,7 @@ const CommentDetailContent = (props: any) => {
     childrenComments = [],
     newCommentData,
     viewMore = false,
+    notFoundComment,
   } = getListChildComment(comments, !!parentId ? parentId : commentId);
 
   const scrollToCommentsPosition = useKeySelector(
@@ -104,6 +105,22 @@ const CommentDetailContent = (props: any) => {
       );
     }
   }, [postDetailLoadingState, copyCommentError]);
+
+  useEffect(() => {
+    if (!loading && notFoundComment < 0) {
+      dispatch(
+        modalActions.showHideToastMessage({
+          content: 'error:not_found_desc',
+          props: {
+            type: 'error',
+            textProps: {useI18n: true},
+          },
+          toastType: 'normal',
+        }),
+      );
+      rootNavigation.replace(homeStack.newsfeed);
+    }
+  }, [notFoundComment, loading]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -193,8 +210,8 @@ const CommentDetailContent = (props: any) => {
     dispatch(
       postActions.getCommentDetail({
         commentId: !!parentId ? parentId : commentId,
-        callbackLoading: (loading: boolean) => {
-          setRefreshing(loading);
+        callbackLoading: (_loading: boolean) => {
+          setRefreshing(_loading);
         },
       }),
     );
@@ -321,6 +338,7 @@ const getListChildComment = (
     newCommentData: listData?.[parentCommentPosition],
     viewMore:
       listData?.[parentCommentPosition]?.child?.meta?.hasPreviousPage || false,
+    notFoundComment: parentCommentPosition,
   };
 };
 
