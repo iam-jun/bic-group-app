@@ -1,5 +1,5 @@
 import {get, isEmpty} from 'lodash';
-import {select} from 'redux-saga/effects';
+import {call, select} from 'redux-saga/effects';
 
 import {
   IOwnReaction,
@@ -65,7 +65,6 @@ export default function* putReactionToComment({
           }
         }
       }
-
       yield onUpdateReactionOfCommentById(
         id,
         newOwnReaction1,
@@ -73,7 +72,7 @@ export default function* putReactionToComment({
         comment,
       );
 
-      yield postDataHelper.putReaction({
+      yield call(postDataHelper.putReaction, {
         reactionName: reactionId,
         target: 'COMMENT',
         targetId: id,
