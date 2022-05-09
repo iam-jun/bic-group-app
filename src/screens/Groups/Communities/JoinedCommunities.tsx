@@ -22,6 +22,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useDispatch} from 'react-redux';
 import {useBaseHook} from '~/hooks';
+import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 
 export interface JoinedCommunitiesProps {
   style?: StyleProp<ViewStyle>;
@@ -66,8 +67,16 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
         source={'addUsers'}
         title="communities:empty_communities:title"
         description="communities:empty_communities:description"
-        buttonTitle={'communities:empty_communities:button_text'}
-        onPress={onPressDiscover}
+        ButtonComponent={
+          <ButtonWrapper
+            testID="empty_screen.button"
+            onPress={onPressDiscover}
+            style={styles.buttonWrapper}>
+            <Text.ButtonBase useI18n color={theme.colors.bgButtonPrimary}>
+              communities:empty_communities:button_text
+            </Text.ButtonBase>
+          </ButtonWrapper>
+        }
       />
     );
   };
@@ -150,6 +159,9 @@ const createStyle = (theme: ITheme) => {
     groupInfo: {
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    buttonWrapper: {
+      marginTop: spacing.margin.large,
     },
   });
 };

@@ -290,28 +290,31 @@ export const allCommentsByParentIds = {
       content: '.',
       createdAt: '2022-04-26T09:25:02.870Z',
       updatedAt: '2022-04-27T03:38:29.471Z',
-      child: [
-        {
-          ...CHILD_COMMENT,
-          id: 505,
-          content: '9',
-          createdAt: '2022-04-27T03:54:38.962Z',
-          updatedAt: '2022-04-27T03:54:38.962Z',
-        },
-        {
-          ...CHILD_COMMENT,
-          id: 496,
-          content: 'Hihi',
-        },
-        {
-          ...CHILD_COMMENT,
-          id: 495,
-          content: 'Ola',
-          createdAt: '2022-04-27T03:38:25.693Z',
-          updatedAt: '2022-04-27T03:38:25.693Z',
-        },
-        CHILD_COMMENT,
-      ],
+      child: {
+        list: [
+          {
+            ...CHILD_COMMENT,
+            id: 505,
+            content: '9',
+            createdAt: '2022-04-27T03:54:38.962Z',
+            updatedAt: '2022-04-27T03:54:38.962Z',
+          },
+          {
+            ...CHILD_COMMENT,
+            id: 496,
+            content: 'Hihi',
+          },
+          {
+            ...CHILD_COMMENT,
+            id: 495,
+            content: 'Ola',
+            createdAt: '2022-04-27T03:38:25.693Z',
+            updatedAt: '2022-04-27T03:38:25.693Z',
+          },
+          CHILD_COMMENT,
+        ],
+        meta: {hasPreviousPage: true, hasNextPage: false},
+      },
     },
     {
       ...CHILD_COMMENT,
@@ -382,15 +385,18 @@ export const allCommentsArray = [
 
 export const baseCommentData = {
   ...CHILD_COMMENT,
-  child: [
-    {
-      ...CHILD_COMMENT,
-      id: 505,
-      content: '9',
-      createdAt: '2022-04-27T03:54:38.962Z',
-      updatedAt: '2022-04-27T03:54:38.962Z',
-    },
-  ],
+  child: {
+    list: [
+      {
+        ...CHILD_COMMENT,
+        id: 505,
+        content: '9',
+        createdAt: '2022-04-27T03:54:38.962Z',
+        updatedAt: '2022-04-27T03:54:38.962Z',
+      },
+    ],
+    meta: {hasPreviousPage: false, hasNextPage: false},
+  },
   content: '.',
   createdAt: '2022-04-26T09:25:02.870Z',
   id: 490,
@@ -473,6 +479,10 @@ export const POST_DETAIL_3 = {
         ],
       },
     ],
+    meta: {
+      hasPreviousPage: false,
+      hasNextPage: false,
+    },
   },
   audience: {
     groups: [
@@ -484,4 +494,8 @@ export const POST_DETAIL_3 = {
       },
     ],
   },
+};
+
+export const allPosts = {
+  302: POST_DETAIL_3,
 };

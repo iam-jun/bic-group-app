@@ -78,7 +78,7 @@ const _PostDetailContent = (props: any) => {
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
   const createdAt = useKeySelector(postKeySelector.postCreatedAtById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
-  const commentCount = useKeySelector(
+  const commentLeft = useKeySelector(
     postKeySelector.postCommentOnlyCountById(id),
   );
   const commentList = useKeySelector(postKeySelector.postCommentListById(id));
@@ -87,8 +87,6 @@ const _PostDetailContent = (props: any) => {
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const listComment = comments || commentList || [];
   const sectionData = getSectionData(listComment) || [];
-
-  const commentLeft = commentCount - listComment.length;
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
   const isFocused = useIsFocused();
@@ -268,10 +266,9 @@ const _PostDetailContent = (props: any) => {
     commentParent?: any,
   ) => {
     rootNavigation.navigate(homeStack.commentDetail, {
-      commentData,
+      commentId: commentData?.id || 0,
       postId: id,
       replyItem,
-      focus_comment,
       commentParent,
     });
   };
@@ -392,7 +389,7 @@ const _PostDetailContent = (props: any) => {
                 idLessThan={listComment?.[0]?.id}
               />
             }
-            ListFooterComponent={commentCount && renderFooter}
+            ListFooterComponent={commentLeft && renderFooter}
             stickySectionHeadersEnabled={false}
             ItemSeparatorComponent={() => <View />}
             keyboardShouldPersistTaps={'handled'}
@@ -452,7 +449,7 @@ const PostDetailContentHeader = ({
         btnCommentTestID="post_detail_content.btn_comment"
       />
       <Divider />
-      {commentLeft > 0 && (
+      {commentLeft && (
         <LoadMoreComment
           title={'post:text_load_more_comments'}
           postId={id}
@@ -467,7 +464,7 @@ const getSectionData = (listComment: ICommentData[]) => {
   const result: any[] = [];
   listComment?.map?.((comment, index) => {
     const item: any = {};
-    const lastChildComment = comment?.child || [];
+    const lastChildComment = comment?.child?.list || [];
     const _data =
       lastChildComment.length > 0
         ? [lastChildComment[lastChildComment.length - 1]]
