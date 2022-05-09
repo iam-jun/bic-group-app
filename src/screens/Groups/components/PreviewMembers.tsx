@@ -52,6 +52,7 @@ const PreviewMembers = () => {
 
     return (
       <Text.BodyS
+        testID="preview_members.description"
         color={theme.colors.textSecondary}
         style={styles.memberDescriptionText}>
         {memberText}

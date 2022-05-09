@@ -40,6 +40,26 @@ describe('PageContent', () => {
     expect(aboutBtn).toBeDefined();
   });
 
+  it('should navigate to About page correctly', () => {
+    const navigate = jest.fn();
+    const rootNavigation = {navigate};
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
+      return {rootNavigation} as any;
+    });
+
+    const wrapper = renderWithRedux(
+      <PageContent
+        communityId={communityId}
+        getPosts={getPosts}
+        onScroll={onScroll}
+        onButtonLayout={onButtonLayout}
+      />,
+    );
+    const aboutBtn = wrapper.getByTestId('page_content.about_btn');
+    fireEvent.press(aboutBtn);
+    expect(navigate).toBeCalledWith(groupStack.communityAbout);
+  });
+
   it('should render Members button correctly', () => {
     const wrapper = renderWithRedux(
       <PageContent
