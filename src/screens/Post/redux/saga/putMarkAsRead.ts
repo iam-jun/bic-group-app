@@ -26,6 +26,7 @@ function* putMarkAsRead({
         get(state, postKeySelector.postById(postId)),
       );
       post.markedReadPost = true;
+      post.markedReadSuccess = true;
       yield put(postActions.addToAllPosts({...post}));
     }
   } catch (e) {

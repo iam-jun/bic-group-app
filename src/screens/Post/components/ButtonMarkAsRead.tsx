@@ -10,6 +10,8 @@ import {useDispatch} from 'react-redux';
 import postActions from '~/screens/Post/redux/actions';
 import icons from '~/resources/icons';
 import {useBaseHook} from '~/hooks';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 
 export interface ButtonMarkAsReadProps {
   style?: StyleProp<ViewStyle>;
@@ -29,7 +31,10 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
   isActor,
 }: ButtonMarkAsReadProps) => {
   const [loading, setLoading] = useState(false);
-  const [markedSuccess, setMarkedSuccess] = useState(false);
+
+  const markReadSuccess = useKeySelector(
+    postKeySelector.postMarkedReadSuccessById(postId),
+  );
 
   const {t} = useBaseHook();
   const dispatch = useDispatch();
@@ -43,7 +48,7 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
   if (
     !isImportant ||
     isActor ||
-    (markedReadPost && !markedSuccess) ||
+    (markedReadPost && !markReadSuccess) ||
     !expireTime ||
     expired
   ) {
@@ -51,13 +56,12 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
   }
 
   const onPressMarkAsRead = () => {
-    if (!loading) {
+    if (!loading && !markedReadPost) {
       setLoading(true);
       const payload: IPayloadPutMarkAsRead = {
         postId,
-        callback: isSuccess => {
+        callback: () => {
           setLoading(false);
-          setMarkedSuccess(isSuccess);
         },
       };
       dispatch(postActions.putMarkAsRead(payload));
