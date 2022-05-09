@@ -8,6 +8,8 @@ const AUTH = {
 
 const POST = {
   commentDeleted: 'app.comment.reply.existing.app_error',
+  copiedCommentIsDeleted: 'app.comment.not_found.app_error',
+  postPrivacy: 'api.forbidden',
 };
 
 const GROUP = {};

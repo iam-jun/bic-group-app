@@ -29,6 +29,7 @@ export interface LoadMoreCommentProps {
   postId: number;
   commentId?: number;
   idLessThan?: number;
+  idGreaterThan?: number;
   onPress?: () => void;
 }
 
@@ -38,6 +39,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   postId,
   commentId,
   idLessThan,
+  idGreaterThan,
   onPress,
 }: LoadMoreCommentProps) => {
   const [loadingMore, setLoadingMore] = useState(false);
@@ -71,18 +73,20 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   }, [loadingMore]);
 
   const onPressLoadMore = useCallback(() => {
-    if (idLessThan) {
+    if (!!onPress) {
+      onPress();
+      return;
+    }
+    if (idLessThan || idGreaterThan) {
       if (Platform.OS !== 'web') {
-        if (!!onPress) {
-          onPress();
-          return;
-        }
         setLoadingMore(true);
         setTimeout(() => {
           dispatch(
             postActions.getCommentsByPostId({
               postId: postId,
+              order: 'DESC',
               idLT: idLessThan,
+              idGT: idGreaterThan,
               parentId: commentId,
               limit: 10,
               isMerge: true,
@@ -103,7 +107,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
         );
       }
     }
-  }, [commentId, idLessThan]);
+  }, [commentId, idLessThan, idGreaterThan]);
 
   return (
     <View>

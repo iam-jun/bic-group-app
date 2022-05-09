@@ -58,12 +58,16 @@ const CommentItem: React.FC<CommentItemProps> = ({
   }, [commentData]);
 
   const childCommentCount = commentData?.totalReply || 0;
-  const loadedChildComment = commentData?.child?.length || 0;
+  const loadedChildComment = commentData?.child?.list?.length || 0;
   const childCommentLeft =
     !!onPressLoadMore && Platform.OS !== 'web'
       ? childCommentCount - 1
       : childCommentCount - loadedChildComment;
-  const idLessThan = commentData?.child?.[0]?.id;
+  const idLessThan = commentData?.child?.list?.[0]?.id;
+  const showLoadPrevious =
+    !!onPressLoadMore && Platform.OS !== 'web'
+      ? childCommentCount - 1 > 0
+      : commentData?.child?.meta?.hasNextPage || false;
 
   return (
     <View style={commentParent ? styles.containerChild : styles.container}>
@@ -75,10 +79,10 @@ const CommentItem: React.FC<CommentItemProps> = ({
         onPressReply={_onPressReply}
         contentBackgroundColor={contentBackgroundColor}
       />
-      {childCommentLeft > 0 ? (
+      {!!showLoadPrevious ? (
         <LoadMoreComment
           style={styles.childLoadMore}
-          title={t('post:text_load_more_replies')}
+          title={t('post:text_load_previous_replies')}
           postId={postId}
           commentId={commentData?.id}
           idLessThan={idLessThan}
