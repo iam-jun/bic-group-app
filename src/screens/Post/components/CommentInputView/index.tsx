@@ -30,6 +30,7 @@ export interface CommentInputViewProps {
   isCommentLevel1Screen?: boolean;
   showHeader?: boolean;
   defaultReplyTargetId?: number;
+  viewMore?: boolean;
 }
 
 const CommentInputView: FC<CommentInputViewProps> = ({
@@ -41,6 +42,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   showHeader,
   defaultReplyTargetId,
   onCommentSuccess,
+  viewMore,
 }: CommentInputViewProps) => {
   const _commentInputRef = commentInputRef || useRef<any>();
   const mentionInputRef = useRef<any>();
@@ -130,7 +132,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         postId: postId,
         reactionsCount: {},
         ownerReactions: {},
-        child: [],
+        child: {},
         createdAt: new Date().toISOString(),
         parentCommentId: replyTargetId || defaultReplyTargetId,
       };
@@ -141,6 +143,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         userId: Number(userId),
         onSuccess: _onCommentSuccess,
         isCommentLevel1Screen: isCommentLevel1Screen,
+        viewMore,
         preComment,
       };
       dispatch(postActions.postCreateNewComment(payload));

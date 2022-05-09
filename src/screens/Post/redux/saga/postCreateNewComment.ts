@@ -24,6 +24,7 @@ function* postCreateNewComment({
     preComment,
     onSuccess,
     isCommentLevel1Screen,
+    viewMore,
   } = payload || {};
   if (
     !postId ||
@@ -100,7 +101,12 @@ function* postCreateNewComment({
       });
     }
     onSuccess?.(); // clear content in text input
-
+    if (!!viewMore && !!parentCommentId) {
+      yield put(postActions.getCommentDetail({commentId: parentCommentId}));
+      yield put(postActions.setCreateComment({loading: false, content: ''}));
+      onSuccess?.(); // call second time to make sure content is cleared on low performance device
+      return;
+    }
     //update comment_count
     const allPosts = yield select(state => state?.post?.allPosts) || {};
     const newAllPosts = {...allPosts};
@@ -118,7 +124,24 @@ function* postCreateNewComment({
     yield put(postActions.setAllPosts(newAllPosts));
 
     // update comments or child comments again when receiving from API
-    yield put(postActions.addToAllComments(resComment));
+
+    if (!!parentCommentId) {
+      const allComments = yield select(state => state?.post?.allComments) || {};
+      const newAllComments = {...allComments};
+      const newParentComment = {...newAllComments[parentCommentId]};
+      newParentComment.totalReply = Math.max(
+        0,
+        newParentComment.totalReply + 1,
+      );
+      newParentComment.child = {
+        list: newParentComment.child?.list?.concat([resComment]) || [],
+      };
+
+      yield put(postActions.addToAllComments([resComment, newParentComment]));
+    } else {
+      yield put(postActions.addToAllComments(resComment));
+    }
+
     yield put(
       postActions.updateCommentAPI({
         status: 'success',
@@ -147,7 +170,9 @@ function* postCreateNewComment({
     }
     yield put(postActions.setCreateComment({loading: false}));
     if (!!parentCommentId && e?.code === API_ERROR_CODE.POST.commentDeleted) {
-      yield put(postActions.setParentCommentDeleted(true));
+      yield put(
+        postActions.setCommentErrorCode(API_ERROR_CODE.POST.commentDeleted),
+      );
       yield put(
         postActions.removeChildComment({
           localId: preComment?.localId,

@@ -2,6 +2,7 @@ import {put, call, takeLatest, select, takeEvery} from 'redux-saga/effects';
 import {isArray, get} from 'lodash';
 
 import {
+  ICommentData,
   IParamGetPostAudiences,
   IParamGetPostDetail,
   IPayloadCreateComment,
@@ -43,6 +44,7 @@ import updateUnReactionBySocket from './updateUnReactionBySocket';
 import getCommentsByPostId from '~/screens/Post/redux/saga/getCommentsByPostId';
 import putEditComment from '~/screens/Post/redux/saga/putEditComment';
 import {timeOut} from '~/utils/common';
+import getCommentDetail from './getCommentDetail';
 import putMarkAsRead from '~/screens/Post/redux/saga/putMarkAsRead';
 
 const navigation = withNavigation(rootNavigationRef);
@@ -84,6 +86,7 @@ export default function* postSaga() {
     postTypes.UPDATE_UN_REACTION_BY_SOCKET,
     updateUnReactionBySocket,
   );
+  yield takeLatest(postTypes.GET_COMMENT_DETAIL, getCommentDetail);
   yield takeEvery(
     postTypes.GET_CREATE_POST_INIT_AUDIENCES,
     getCreatePostInitAudiences,
@@ -216,13 +219,13 @@ function* addToAllComments({
   payload,
 }: {
   type: string;
-  payload: IReaction[] | IReaction;
+  payload: ICommentData[] | ICommentData;
 }): any {
   try {
     const allComments = yield select(state => state?.post?.allComments) || {};
     const newAllComments = {...allComments};
     if (isArray(payload) && payload.length > 0) {
-      payload.map((item: IReaction) => {
+      payload.map((item: ICommentData) => {
         if (item?.id) {
           newAllComments[item.id] = item;
         }
@@ -319,14 +322,20 @@ function* updateAllCommentsByParentIdsWithComments({
   type: string;
   payload: IPayloadUpdateCommentsById;
 }): any {
-  const {id, comments, isMerge} = payload || {};
+  const {id, comments, isMerge, isReplace, commentId} = payload || {};
   const allComments = yield select(state =>
     get(state, postKeySelector.allCommentsByParentIds),
   ) || {};
   const commentsById = allComments[id] || [];
-  let newComments: IReaction[];
+  let newComments: ICommentData[];
+
   if (isMerge) {
     newComments = [...new Set([...commentsById, ...comments])];
+  } else if (isReplace) {
+    newComments = commentsById?.filter?.(
+      (item: ICommentData) => item.id != commentId,
+    );
+    newComments = [...new Set([...newComments, ...comments])];
   } else {
     newComments = comments;
   }

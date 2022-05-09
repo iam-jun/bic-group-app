@@ -118,6 +118,7 @@ export const postApiConfig = {
       idGTE: params?.idGTE,
       idLTE: params?.idLTE,
       idLT: params?.idLT,
+      idGT: params?.idGT,
       postId: params?.postId,
       parentId: params?.parentId,
       childLimit: params?.childLimit || 1,
@@ -213,6 +214,19 @@ export const postApiConfig = {
     method: 'put',
     provider: provider,
     useRetry: true,
+  }),
+  getCommentDetail: (
+    commentId: number,
+    params: IRequestGetPostComment,
+  ): HttpApiRequestConfig => ({
+    url: `${provider.url}api/v1/comments/${commentId}`,
+    method: 'get',
+    provider,
+    useRetry: true,
+    params: {
+      limit: params?.limit || 1,
+      offset: params?.offset || 0,
+    },
   }),
 };
 
@@ -479,6 +493,23 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getCommentDetail: async (
+    commentId: number,
+    params: IRequestGetPostComment,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.getCommentDetail(commentId, params),
+      );
+      if (response && response?.data && response.data?.data) {
+        return Promise.resolve(response.data.data);
       } else {
         return Promise.reject(response);
       }
