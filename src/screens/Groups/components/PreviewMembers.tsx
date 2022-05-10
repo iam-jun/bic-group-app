@@ -9,7 +9,7 @@ import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import ListView from '~/beinComponents/list/ListView';
 import {ITheme} from '~/theme/interfaces';
-import {ICommunityMembers} from '~/interfaces/ICommunity';
+import {IPreviewMember} from '~/interfaces/ICommunity';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 const PreviewMembers = () => {
@@ -19,7 +19,7 @@ const PreviewMembers = () => {
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {user_count, members} = infoDetail;
 
-  const renderItem = ({item}: {item: ICommunityMembers}) => {
+  const renderItem = ({item}: {item: IPreviewMember}) => {
     return <Avatar.Small isRounded source={item.avatar} />;
   };
 

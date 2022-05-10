@@ -31,7 +31,6 @@ const groupsKeySelector = {
   communityDetail: 'groups.communityDetail',
   isGettingInfoDetail: 'groups.isGettingInfoDetail',
   communityMembers: 'groups.communityMembers',
-  previewMembers: 'groups.previewMembers',
 };
 
 export default groupsKeySelector;

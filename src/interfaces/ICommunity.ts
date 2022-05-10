@@ -16,10 +16,10 @@ export interface ICommunity {
   can_manage_member: boolean;
   can_leave: boolean;
   join_status: number;
-  members?: PreviewMembers[];
+  members?: IPreviewMember[];
 }
 
-export interface PreviewMembers {
+export interface IPreviewMember {
   id: number;
   username: string;
   fullname: string;
