@@ -34,15 +34,15 @@ function* getCommentDetail({
         isReplace: true,
       };
 
+      yield put(postActions.updateAllCommentsByParentIdsWithComments(payload));
       const post = yield select(state =>
         get(state, postKeySelector.postById(comment?.postId)),
       );
       if (isEmpty(post)) {
         post.id = comment?.id;
         post.actor = actor;
+        yield put(postActions.addToAllPosts({data: post}));
       }
-      yield put(postActions.updateAllCommentsByParentIdsWithComments(payload));
-      yield put(postActions.addToAllPosts({data: post}));
     }
     callbackLoading?.(false);
   } catch (e: any) {
