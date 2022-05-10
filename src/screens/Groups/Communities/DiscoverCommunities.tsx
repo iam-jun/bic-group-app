@@ -22,6 +22,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useDispatch} from 'react-redux';
 import {useBaseHook} from '~/hooks';
+import ButtonDiscoverItemAction from '~/screens/Groups/Communities/components/ButtonDiscoverItemAction';
 
 export interface DiscoverCommunitiesProps {
   style?: StyleProp<ViewStyle>;
@@ -31,7 +32,6 @@ export interface DiscoverCommunitiesProps {
 
 const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   onPressCommunities,
-  onPressDiscover,
 }: DiscoverCommunitiesProps) => {
   const [refreshing, setRefreshing] = useState(false);
   const data = useKeySelector(groupsKeySelector.discoverCommunitiesData);
@@ -61,8 +61,6 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
         source={'addUsers'}
         title="communities:empty_communities:title"
         description="communities:empty_communities:description"
-        buttonTitle={'communities:empty_communities:button_text'}
-        onPress={onPressDiscover}
       />
     );
   };
@@ -98,7 +96,7 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
             })}`}</Text.Subtitle>
           </View>
         }
-        // onPressMenu={onPressMenu}
+        RightComponent={<ButtonDiscoverItemAction community={item} />}
       />
     );
   };
