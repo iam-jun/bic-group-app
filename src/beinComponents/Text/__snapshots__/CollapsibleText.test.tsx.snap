@@ -59,18 +59,18 @@ exports[`Collapsible Text component renders correctly 1`] = `
         Array [
           Object {
             "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
+            "fontFamily": "OpenSans-SemiBold",
             "fontSize": 16,
           },
           Object {
-            "color": "#007AFF",
+            "color": "#627286",
           },
           undefined,
         ]
       }
       testID="collapsible_text.show_text"
     >
-      Read more
+      See more
     </Text>
   </Text>
 </View>
@@ -136,18 +136,18 @@ exports[`Collapsible Text component renders correctly testID 1`] = `
         Array [
           Object {
             "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
+            "fontFamily": "OpenSans-SemiBold",
             "fontSize": 16,
           },
           Object {
-            "color": "#007AFF",
+            "color": "#627286",
           },
           undefined,
         ]
       }
       testID="collapsible_text.show_text"
     >
-      Read more
+      See more
     </Text>
   </Text>
 </View>
@@ -268,18 +268,18 @@ Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
         Array [
           Object {
             "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
+            "fontFamily": "OpenSans-SemiBold",
             "fontSize": 16,
           },
           Object {
-            "color": "#007AFF",
+            "color": "#627286",
           },
           undefined,
         ]
       }
       testID="collapsible_text.show_text"
     >
-      Show less
+      See less
     </Text>
   </Text>
 </View>
@@ -344,18 +344,18 @@ exports[`Collapsible Text component should render short text with a short length
         Array [
           Object {
             "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
+            "fontFamily": "OpenSans-SemiBold",
             "fontSize": 16,
           },
           Object {
-            "color": "#007AFF",
+            "color": "#627286",
           },
           undefined,
         ]
       }
       testID="collapsible_text.show_text"
     >
-      Read more
+      See more
     </Text>
   </Text>
 </View>
