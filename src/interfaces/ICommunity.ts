@@ -38,3 +38,11 @@ export interface ICommunityMembers extends IPreviewMember {
   roles: COMMUNITY_ROLE[];
   chat_user_id: string;
 }
+
+export interface IParamGetDiscoverGroups {
+  key?: string;
+  offset?: number;
+  limit?: number;
+  sort?: string;
+  preview_members?: boolean;
+}

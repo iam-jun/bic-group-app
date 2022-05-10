@@ -5,7 +5,10 @@ import {
   IParamGetCommunities,
   IParamGetGroupPosts,
 } from '~/interfaces/IGroup';
-import {IParamGetCommunityMembers} from '~/interfaces/ICommunity';
+import {
+  IParamGetCommunityMembers,
+  IParamGetDiscoverGroups,
+} from '~/interfaces/ICommunity';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import appConfig from '~/configs/appConfig';
 
@@ -254,6 +257,16 @@ export const groupsApiConfig = {
     params?: IParamGetCommunityMembers,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/members`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params,
+  }),
+  getDiscoverGroups: (
+    communityId: number,
+    params: IParamGetDiscoverGroups,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/groups`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,

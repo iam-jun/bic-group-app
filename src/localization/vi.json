@@ -654,6 +654,7 @@
     "text_join_community_description": "Tham gia ngay để xem và thảo luận",
     "text_other_member_one": "{{count}} người khác là thành viên",
     "text_other_member_other": "{{count}} người khác là thành viên",
-    "text_is_member": "là thành viên"
+    "text_is_member": "là thành viên",
+    "title_discover_groups": "Khám phá các nhóm"
   }
 }
