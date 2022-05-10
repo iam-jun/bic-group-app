@@ -35,6 +35,7 @@
     "btn_next": "Tiếp tục",
     "btn_confirm": "Xác nhận",
     "btn_join": "Tham gia",
+    "btn_view": "Xem",
     "text_search_emoji": "Tìm Emoji",
     "text_important": "Quan trọng",
     "text_clear": "Xoá",
@@ -639,6 +640,10 @@
       "title": "Không tìm thấy cộng đồng nào",
       "description": "Khám phá các cộng đồng để tham gia một cộng đồng.",
       "button_text": "Đi tới Khám phá"
+    },
+    "empty_groups": {
+      "title": "Không tìm thấy nhóm nào",
+      "description": "Khám phá các nhóm để tham gia ngay."
     },
     "community_menu": {
       "your_communities_text": "Bạn đã tham gia",
