@@ -3,6 +3,7 @@ const groupStack = {
   communities: 'communities',
   communityDetail: 'community-detail',
   yourGroups: 'your-groups',
+  communityAbout: 'community-about',
 
   // group
   groups: 'group-list',

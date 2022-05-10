@@ -7,7 +7,11 @@ import {communityDetailData} from '~/test/mock_data/communities';
 
 describe('InfoHeader component', () => {
   it('renders correctly', () => {
-    const rendered = renderWithRedux(<InfoHeader />);
+    const state = {...initialState};
+    // @ts-ignore
+    state.groups.communityDetail = {...communityDetailData};
+    const store = createTestStore(state);
+    const rendered = renderWithRedux(<InfoHeader />, store);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
