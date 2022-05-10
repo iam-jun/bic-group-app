@@ -1717,10 +1717,10 @@ exports[`Header component renders correctly with props avatar props 1`] = `
                 "borderColor": "#FF9800",
                 "borderRadius": 6,
                 "borderWidth": 1,
-                "height": 32,
+                "height": 24,
                 "justifyContent": "center",
                 "padding": 1,
-                "width": 32,
+                "width": 24,
               }
             }
             testID="avatar_group"
