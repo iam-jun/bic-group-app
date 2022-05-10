@@ -48,7 +48,7 @@ const GroupJoinedList: FC<GroupJoinedListProps> = ({
   };
 
   const renderItem = ({item}: any) => {
-    return <GroupItem {...item} />;
+    return <GroupItem showPrivacy showPrivacyName={false} {...item} />;
   };
 
   return (

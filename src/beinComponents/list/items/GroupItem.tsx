@@ -26,6 +26,7 @@ export interface GroupItemProps extends IParsedGroup {
   onCheckedItem?: (item: GroupItemProps, isChecked: boolean) => void;
   disableOnPressItem?: boolean;
   showPrivacy?: boolean;
+  showPrivacyName?: boolean;
 }
 
 const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
@@ -48,6 +49,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     disableOnPressItem,
     privacy,
     showPrivacy = false,
+    showPrivacyName = true,
   } = props;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
@@ -163,9 +165,13 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                     style={styles.iconSmall}
                     icon={privacyIcon}
                     size={16}
-                    tintColor={theme.colors.iconTint}
+                    tintColor={theme.colors.textSecondary}
                   />
-                  <Text.Subtitle useI18n>{privacyTitle}</Text.Subtitle>
+                  {showPrivacyName && (
+                    <Text.Subtitle style={styles.privacyTitle} useI18n>
+                      {privacyTitle}
+                    </Text.Subtitle>
+                  )}
                   <Text.Subtitle> ⬩ </Text.Subtitle>
                 </>
               )}
@@ -229,8 +235,10 @@ const themeStyles = (theme: IObject<any>) => {
     },
     checkbox: {position: 'absolute', bottom: -3, right: -6},
     iconSmall: {
-      marginRight: spacing.margin.tiny,
       height: 16,
+    },
+    privacyTitle: {
+      marginLeft: spacing.margin.tiny,
     },
   });
 };
