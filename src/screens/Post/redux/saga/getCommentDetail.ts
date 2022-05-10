@@ -31,7 +31,9 @@ function* getCommentDetail({
         isReplace: true,
       };
 
+      const post = {id: comment?.postId, actor: actor};
       yield put(postActions.updateAllCommentsByParentIdsWithComments(payload));
+      yield put(postActions.addToAllPosts({data: post}));
     }
     callbackLoading?.(false);
   } catch (e: any) {
