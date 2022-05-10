@@ -22,7 +22,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useDispatch} from 'react-redux';
 import {useBaseHook} from '~/hooks';
-import ButtonDiscoverItemAction from '~/screens/Groups/Communities/components/ButtonDiscoverItemAction';
+import ButtonDiscoverItemAction from '~/screens/Groups/components/ButtonDiscoverItemAction';
 
 export interface DiscoverCommunitiesProps {
   style?: StyleProp<ViewStyle>;
@@ -53,6 +53,14 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   const onRefresh = () => {
     setRefreshing(true);
     getData();
+  };
+
+  const onPressJoin = (data: any) => {
+    alert('Request Join ' + data?.name);
+  };
+
+  const onPressCancel = (data: any) => {
+    alert('Cancel Join ' + data?.name);
   };
 
   const renderEmptyComponent = () => {
@@ -96,7 +104,15 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
             })}`}</Text.Subtitle>
           </View>
         }
-        RightComponent={<ButtonDiscoverItemAction community={item} />}
+        RightComponent={
+          <ButtonDiscoverItemAction
+            data={item}
+            joinStatus={item?.join_status}
+            onView={onPressCommunities}
+            onJoin={onPressJoin}
+            onCancel={onPressCancel}
+          />
+        }
       />
     );
   };

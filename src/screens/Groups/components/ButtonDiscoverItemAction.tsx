@@ -4,33 +4,34 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 
 import Button from '~/beinComponents/Button';
-import {ICommunity} from '~/interfaces/ICommunity';
 import icons from '~/resources/icons';
 import groupJoinStatus from '~/constants/groupJoinStatus';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {useRootNavigation} from '~/hooks/navigation';
 
 export interface ButtonDiscoverItemActionProps {
-  community: ICommunity;
+  data: any;
+  joinStatus: typeof groupJoinStatus[keyof typeof groupJoinStatus];
+  onJoin?: (data: any) => void;
+  onView?: (data: any) => void;
+  onCancel?: (data: any) => void;
 }
 
 const ButtonDiscoverItemAction: FC<ButtonDiscoverItemActionProps> = ({
-  community,
+  data,
+  onView,
+  onCancel,
+  onJoin,
+  joinStatus,
 }: ButtonDiscoverItemActionProps) => {
-  const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
   const {colors} = theme;
 
-  const {join_status} = community || {};
-
-  console.log(
-    `\x1b[34m🐣️ ButtonDiscoverItemAction ButtonDiscoverItemAction`,
-    `${JSON.stringify(community, undefined, 2)}\x1b[0m`,
-  );
-
   let icon, text;
 
-  switch (join_status) {
+  console.log(
+    `\x1b[36m🐣️ ButtonDiscoverItemAction ButtonDiscoverItemAction ${joinStatus}\x1b[0m`,
+  );
+
+  switch (joinStatus) {
     case groupJoinStatus.unableToJoin:
       break;
     case groupJoinStatus.requested:
@@ -45,24 +46,14 @@ const ButtonDiscoverItemAction: FC<ButtonDiscoverItemActionProps> = ({
       break;
   }
 
-  const onPressView = () => {
-    if (community?.id !== undefined) {
-      rootNavigation.navigate(groupStack.communityDetail, {
-        communityId: community.id,
-      });
-    }
-  };
+  const onPressView = () => onView?.(data);
 
-  const onPressJoin = () => {
-    alert('Request join ' + community?.name);
-  };
+  const onPressJoin = () => onJoin?.(data);
 
-  const onPressCancel = () => {
-    alert('Cancel join ' + community?.name);
-  };
+  const onPressCancel = () => onCancel?.(data);
 
   const onPress = () => {
-    switch (join_status) {
+    switch (joinStatus) {
       case groupJoinStatus.requested:
         onPressCancel();
         break;
