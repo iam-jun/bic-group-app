@@ -21,7 +21,6 @@ import API_ERROR_CODE from '~/constants/apiErrorCode';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import LoadMoreComment from '../components/LoadMoreComment';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -321,12 +320,17 @@ const CommentLevel1 = ({
 
   return (
     <View>
-      <ButtonWrapper style={styles.container} onPress={onPress}>
+      <View style={styles.container}>
         <Text.BodySM>
           {t('post:text_comment_from')}
-          <Text.BodyM style={styles.highlightText}>{headerTitle}</Text.BodyM>
+          <Text.BodyM
+            onPress={onPress}
+            suppressHighlighting
+            style={styles.highlightText}>
+            {headerTitle}
+          </Text.BodyM>
         </Text.BodySM>
-      </ButtonWrapper>
+      </View>
       <CommentItem
         postId={id}
         commentData={commentData}
@@ -360,7 +364,7 @@ const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
-      paddingHorizontal: spacing.padding.large,
+      paddingLeft: spacing.padding.large,
       paddingVertical: spacing.padding.small,
       flexDirection: 'row',
     },
