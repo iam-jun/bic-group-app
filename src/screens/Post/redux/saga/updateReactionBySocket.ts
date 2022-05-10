@@ -1,7 +1,11 @@
-import {get} from 'lodash';
+import {get, isEmpty} from 'lodash';
 import {select} from 'redux-saga/effects';
 
-import {IPayloadUpdateReaction, ISocketReaction} from '~/interfaces/IPost';
+import {
+  IPayloadUpdateReaction,
+  IReactionCounts,
+  ISocketReaction,
+} from '~/interfaces/IPost';
 import postKeySelector from '../keySelector';
 import onUpdateReactionOfCommentById from './onUpdateReactionOfCommentById';
 import onUpdateReactionOfPostById from './onUpdateReactionOfPostById';
@@ -13,23 +17,15 @@ export default function* updateReactionBySocket({
   payload: IPayloadUpdateReaction;
 }): any {
   const {userId, data} = payload || {};
-  const {
-    actor,
-    type = '',
-    result = {},
-    entityId = -1,
-  } = data as ISocketReaction;
+  const {reactionsCount, reaction = {}, comment, id} = data as ISocketReaction;
 
-  const isCurrentUser = userId == actor?.id;
-
-  if (type === 'react.post_creator') {
-    // @ts-ignore
-    const {reactionsCount, reaction = {}} = result || {};
+  const isCurrentUser =
+    userId == reaction?.actor?.id || userId == comment?.actor?.id;
+  if (!isEmpty(reactionsCount) && !isEmpty(reaction)) {
     // handle reaction to post
     // merge own reaction if reaction's actor is current user
     const p =
-      (yield select(state => get(state, postKeySelector.postById(entityId)))) ||
-      {};
+      (yield select(state => get(state, postKeySelector.postById(id)))) || {};
     const ownReactions = p?.ownerReactions ? [...p.ownerReactions] : [];
     if (isCurrentUser && reaction?.reactionName) {
       if (ownReactions?.length > 0) {
@@ -48,18 +44,21 @@ export default function* updateReactionBySocket({
       }
     }
 
-    yield onUpdateReactionOfPostById(entityId, ownReactions, reactionsCount);
+    yield onUpdateReactionOfPostById(
+      id,
+      ownReactions,
+      reactionsCount as IReactionCounts,
+    );
   }
 
-  if (type === 'react.comment_creator') {
-    // @ts-ignore
-    const {reactionsCount, reaction = {}} = result || {};
+  if (!isEmpty(comment)) {
     // handle reaction to comment
     // merge own children if reaction's actor is current user
     const c =
-      (yield select(s => get(s, postKeySelector.commentById(entityId)))) || {};
+      (yield select(s =>
+        get(s, postKeySelector.commentById(comment?.id || 0)),
+      )) || {};
     const ownReactions = c?.ownerReactions ? [...c.ownerReactions] : [];
-
     if (isCurrentUser && reaction?.reactionName) {
       if (ownReactions?.length > 0) {
         let isAdded = false;
@@ -77,9 +76,9 @@ export default function* updateReactionBySocket({
       }
     }
     yield onUpdateReactionOfCommentById(
-      entityId,
+      comment?.id as number,
       ownReactions,
-      reactionsCount,
+      reactionsCount as IReactionCounts,
       undefined,
     );
   }

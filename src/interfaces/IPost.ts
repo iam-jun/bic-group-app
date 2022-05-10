@@ -277,6 +277,7 @@ export interface IReaction {
   localId?: string | number[]; // from uuid-v4
   parentCommentId?: string | number; // used when retry/cancel adding new comment
   child?: any;
+  actor?: IAudienceUser;
 }
 
 export interface IGetStreamAudienceUser {
@@ -472,21 +473,17 @@ export interface IParamGetPostAudiences {
 }
 
 export interface IPayloadUpdateReaction {
-  userId: string;
+  userId: number;
   data: ISocketReaction;
 }
 
 export interface ISocketReaction {
   actor: any;
-  entityId: number;
-  verb: 'REACT' | 'UNREACT';
-  type: 'react.post_creator' | 'react.comment_creator';
-
-  result: {
-    reaction: IReaction;
-    verbId: number;
-    reactionsCount: IReactionCounts;
-  };
+  id: number;
+  reaction?: IReaction;
+  reactionsCount?: IReactionCounts;
+  event?: string;
+  comment?: ICommentData;
 }
 
 export interface ICreatePostCurrentSettings {
