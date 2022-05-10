@@ -46,7 +46,7 @@ const PageContent = ({
   const dispatch = useDispatch();
 
   const onPressDiscover = () => {
-    rootNavigation.navigate(groupStack.discoverGroups);
+    rootNavigation.navigate(groupStack.discoverGroups, {communityId});
   };
 
   const onPressAbout = () => {

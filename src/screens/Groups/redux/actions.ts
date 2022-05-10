@@ -22,6 +22,7 @@ import {
   ICommunity,
   ICommunityMembers,
   IParamGetCommunityMembers,
+  IParamGetDiscoverGroups,
 } from '~/interfaces/ICommunity';
 
 const groupsActions = {
@@ -345,6 +346,20 @@ const groupsActions = {
   setCommunityMembers: (payload: ICommunityMembers[]) => ({
     type: groupsTypes.SET_COMMUNITY_MEMBERS,
     payload,
+  }),
+  getDiscoverGroups: (payload: {
+    communityId: number;
+    params?: IParamGetDiscoverGroups;
+  }) => ({
+    type: groupsTypes.GET_DISCOVER_GROUPS,
+    payload,
+  }),
+  setDiscoverGroups: (payload: {ids: number[]; items: any}) => ({
+    type: groupsTypes.SET_DISCOVER_GROUPS,
+    payload,
+  }),
+  resetDiscoverGroups: () => ({
+    type: groupsTypes.RESET_DISCOVER_GROUPS,
   }),
 };
 

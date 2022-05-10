@@ -9,14 +9,30 @@ import privacyTypes from '~/constants/privacyTypes';
 import Icon from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '../redux/keySelector';
 
-const DiscoverItem = (props: any) => {
+interface DiscoverItemProps {
+  id: number;
+  onPressJoin: () => void;
+  onPressCancel: () => void;
+  onPressGroup: () => void;
+}
+
+const DiscoverItem = ({
+  id,
+  onPressGroup,
+  onPressJoin,
+  onPressCancel,
+}: DiscoverItemProps) => {
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
 
-  const {id, name, icon, user_count, description, privacy, join_status} =
-    props || {};
+  const {items} = useKeySelector(groupsKeySelector.discoverGroups);
+  const currentItem = items[id];
+  const {name, icon, user_count, description, privacy, join_status} =
+    currentItem || {};
   const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
   const {icon: privacyIcon, title: privacyTitle}: any = privacyData || {};
 
@@ -28,7 +44,7 @@ const DiscoverItem = (props: any) => {
       subTitle={description}
       style={styles.item}
       title={name}
-      testID={`community_${id}`}
+      testID={`discover_item_${id}`}
       // onPress={() => onPressCommunities?.(item)}
       ContentComponent={
         <View style={styles.groupInfo}>
@@ -40,6 +56,12 @@ const DiscoverItem = (props: any) => {
           />
           <Text.Subtitle useI18n>{privacyTitle}</Text.Subtitle>
           <Text.Subtitle> • </Text.Subtitle>
+          <Icon
+            style={styles.iconSmall}
+            icon={'UsersAlt'}
+            size={16}
+            tintColor={theme.colors.iconTint}
+          />
           <Text.BodySM>{user_count}</Text.BodySM>
           <Text.Subtitle>{` ${t('groups:text_members', {
             count: user_count,
@@ -48,11 +70,11 @@ const DiscoverItem = (props: any) => {
       }
       RightComponent={
         <ButtonDiscoverItemAction
-          data={props}
+          data={currentItem}
           joinStatus={join_status}
-          // onView={onPressCommunities}
-          // onJoin={onPressJoin}
-          // onCancel={onPressCancel}
+          onView={onPressGroup}
+          onJoin={onPressJoin}
+          onCancel={onPressCancel}
         />
       }
     />
@@ -62,6 +84,20 @@ const DiscoverItem = (props: any) => {
 export default DiscoverItem;
 
 const createStyles = (theme: ITheme) => {
-  const {colors} = theme;
-  return StyleSheet.create({});
+  const {colors, spacing} = theme;
+  return StyleSheet.create({
+    item: {
+      height: '100%',
+      flex: 1,
+      paddingVertical: spacing.padding.small,
+    },
+    iconSmall: {
+      marginRight: spacing.margin.tiny,
+      height: 16,
+    },
+    groupInfo: {
+      flexDirection: 'row',
+      alignItems: 'center',
+    },
+  });
 };

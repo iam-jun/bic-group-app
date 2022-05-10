@@ -13,7 +13,7 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import groupsTypes from '~/screens/Groups/redux/types';
 import * as modalActions from '~/store/modal/actions';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
-import {mapData, mapRequestMembers} from '../../helper/mapper';
+import {mapData, mapItems} from '../../helper/mapper';
 import appConfig from '~/configs/appConfig';
 import FileUploader, {IGetFile} from '~/services/fileUploader';
 import {withNavigation} from '~/router/helper';
@@ -40,6 +40,7 @@ import getCommunityDetail from './getCommunityDetail';
 import getDiscoverCommunities from '~/screens/Groups/redux/saga/getDiscoverCommunities';
 import getYourGroupsSearch from '~/screens/Groups/redux/saga/getYourGroupsSearch';
 import getCommunityMembers from './getCommunityMembers';
+import getDiscoverGroups from './getDiscoverGroups';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -93,6 +94,7 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_COMMUNITY_GROUPS, getCommunityGroups);
   yield takeLatest(groupsTypes.GET_COMMUNITY_DETAIL, getCommunityDetail);
   yield takeLatest(groupsTypes.GET_COMMUNITY_MEMBERS, getCommunityMembers);
+  yield takeLatest(groupsTypes.GET_DISCOVER_GROUPS, getDiscoverGroups);
 }
 
 function* getJoinedGroups({payload}: {type: string; payload?: any}) {
@@ -358,7 +360,7 @@ function* getMemberRequests({
     });
 
     const requestIds = response?.data.map((item: IJoiningMember) => item.id);
-    const requestItems = mapRequestMembers(response?.data);
+    const requestItems = mapItems(response?.data);
 
     yield put(groupsActions.setMemberRequests({requestIds, requestItems}));
   } catch (err) {

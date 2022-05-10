@@ -264,7 +264,7 @@ export const groupsApiConfig = {
   }),
   getDiscoverGroups: (
     communityId: number,
-    params: IParamGetDiscoverGroups,
+    params?: IParamGetDiscoverGroups,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/groups`,
     method: 'get',
@@ -654,6 +654,23 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getCommunityMembers(communityId, params),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getDiscoverGroups: async (
+    communityId: number,
+    params?: IParamGetDiscoverGroups,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getDiscoverGroups(communityId, params),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
