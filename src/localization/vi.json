@@ -641,6 +641,10 @@
       "description": "Khám phá các cộng đồng để tham gia một cộng đồng.",
       "button_text": "Đi tới Khám phá"
     },
+    "empty_groups": {
+      "title": "Không tìm thấy nhóm nào",
+      "description": "Khám phá các nhóm để tham gia ngay."
+    },
     "community_menu": {
       "your_communities_text": "Bạn đã tham gia",
       "manage_text": "Bạn quản lý",

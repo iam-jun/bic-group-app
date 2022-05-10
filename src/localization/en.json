@@ -753,15 +753,19 @@
     "text_view_mode": "View Mode",
     "text_choose_view_mode": "Choose view mode",
     "text_your_groups_search_input": "Type search keyword to see the search results",
-    "text_your_groups_search_empty": "Sorry, we couldn't find any group related to your search.",
+    "text_your_groups_search_empty": "Sorry, we couldn’t find anything related to your search.",
     "group_types": {
-      "text_flat_list": "Flat List",
-      "text_tree_view": "Tree View"
+      "text_flat_list": "Flat view",
+      "text_tree_view": "Tree view"
     },
     "empty_communities": {
       "title": "No communities found",
       "description": "Discover communities to join one.",
       "button_text": "Go to Discover"
+    },
+    "empty_groups": {
+      "title": "No groups found",
+      "description": "Discover groups to join one."
     },
     "community_menu": {
       "your_communities_text": "You've joined",
