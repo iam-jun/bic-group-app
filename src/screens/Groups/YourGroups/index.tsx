@@ -13,7 +13,7 @@ import {useDispatch} from 'react-redux';
 import modalActions, {showHideToastMessage} from '~/store/modal/actions';
 import YourGroupsSearch from '~/screens/Groups/YourGroups/YourGroupsSearch';
 import groupsActions from '~/screens/Groups/redux/actions';
-import {useBaseHook} from "~/hooks";
+import {useBaseHook} from '~/hooks';
 
 export interface YourGroupsProps {
   route?: {
