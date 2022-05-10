@@ -16,4 +16,25 @@ export interface ICommunity {
   can_manage_member: boolean;
   can_leave: boolean;
   join_status: number;
+  members?: IPreviewMember[];
+}
+
+export interface IPreviewMember {
+  id: number;
+  username: string;
+  fullname: string;
+  avatar: string;
+}
+
+export interface IParamGetCommunityMembers {
+  key?: string;
+  offset?: number;
+  limit?: number;
+}
+
+export type COMMUNITY_ROLE = 'COMMUNITY_ADMIN' | 'MEMBER';
+
+export interface ICommunityMembers extends IPreviewMember {
+  roles: COMMUNITY_ROLE[];
+  chat_user_id: string;
 }

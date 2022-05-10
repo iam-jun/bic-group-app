@@ -50,7 +50,7 @@ const Communities: React.FC = () => {
   };
 
   const onPressDiscover = () => {
-    alert('goToDiscover');
+    setSelectedIndex(2);
   };
 
   const onPressCommunities = (item: any) => {
