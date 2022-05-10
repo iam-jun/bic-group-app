@@ -56,32 +56,34 @@ export const communityDetailData = {
   join_status: 2,
 };
 
-export const memberDetail = {
+export const previewMemberDetail = {
   id: 1,
   username: 'test',
   fullname: 'Test Name',
   avatar:
     'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e41d70bc-0bfd-4c56-a461-c2dfb10434c1.jpg',
+};
+
+export const memberDetail = {
+  ...previewMemberDetail,
   roles: ['COMMUNITY_ADMIN'],
   chat_user_id: 'tg6kmc6cmybgwpcif9znngyyebe',
 };
 
 export const previewMemberData = [
-  memberDetail,
-  memberDetail,
-  memberDetail,
-  memberDetail,
-  memberDetail,
-  memberDetail,
-  memberDetail,
-  memberDetail,
-  memberDetail,
-  memberDetail,
+  previewMemberDetail,
+  previewMemberDetail,
+  previewMemberDetail,
+  previewMemberDetail,
+  previewMemberDetail,
+  previewMemberDetail,
+  previewMemberDetail,
+  previewMemberDetail,
+  previewMemberDetail,
+  previewMemberDetail,
 ];
 
 export const memberData = [
-  ...previewMemberData,
-  ...previewMemberData,
   memberDetail,
   memberDetail,
   memberDetail,

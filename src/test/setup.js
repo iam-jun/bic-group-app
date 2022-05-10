@@ -81,7 +81,7 @@ jest.doMock('i18next', () => ({
     if (params?.count) {
       suffix = params.count === 1 ? '_one' : '_other';
     }
-    return get(languages, `${str}${suffix}`.replaceAll?.(':', '.')).replace(
+    return get(languages, `${str}${suffix}`.replaceAll?.(':', '.'))?.replace(
       '{{count}}',
       params?.count,
     );

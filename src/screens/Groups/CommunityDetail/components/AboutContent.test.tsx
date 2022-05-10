@@ -3,17 +3,34 @@ import React from 'react';
 import {createTestStore, renderWithRedux} from '~/test/testUtils';
 import AboutContent from './AboutContent';
 import initialState from '~/store/initialState';
-import {communityDetailData} from '~/test/mock_data/communities';
+import {
+  communityDetailData,
+  previewMemberDetail,
+} from '~/test/mock_data/communities';
 
 describe('AboutContent component', () => {
   it('should render member item correctly', () => {
-    const wrapper = renderWithRedux(<AboutContent />);
+    const state = {...initialState};
+    // @ts-ignore
+    state.groups.communityDetail = {
+      ...communityDetailData,
+      members: [previewMemberDetail, previewMemberDetail],
+    };
+    const store = createTestStore(state);
+    const wrapper = renderWithRedux(<AboutContent />, store);
     const member = wrapper.getByTestId('about_content.members');
     expect(member).toBeDefined();
   });
 
   it('should render privacy item correctly', () => {
-    const wrapper = renderWithRedux(<AboutContent />);
+    const state = {...initialState};
+    // @ts-ignore
+    state.groups.communityDetail = {
+      ...communityDetailData,
+      members: [previewMemberDetail, previewMemberDetail],
+    };
+    const store = createTestStore(state);
+    const wrapper = renderWithRedux(<AboutContent />, store);
     const member = wrapper.getByTestId('about_content.privacy');
     expect(member).toBeDefined();
   });
@@ -21,7 +38,10 @@ describe('AboutContent component', () => {
   it('should render description text correctly', () => {
     const state = {...initialState};
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData};
+    state.groups.communityDetail = {
+      ...communityDetailData,
+      members: [previewMemberDetail, previewMemberDetail],
+    };
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(<AboutContent />, store);
@@ -32,7 +52,11 @@ describe('AboutContent component', () => {
   it('should render PreviewMembers when user is a member', () => {
     const state = {...initialState};
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData, privacy: 'PRIVATE'};
+    state.groups.communityDetail = {
+      ...communityDetailData,
+      privacy: 'PRIVATE',
+      members: [previewMemberDetail, previewMemberDetail],
+    };
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(<AboutContent />, store);
@@ -51,6 +75,7 @@ describe('AboutContent component', () => {
       ...communityDetailData,
       join_status: 1,
       privacy: 'OPEN',
+      members: [previewMemberDetail],
     };
     const store = createTestStore(state);
 
@@ -85,7 +110,11 @@ describe('AboutContent component', () => {
   it('should render right icon when user is a member', () => {
     const state = {...initialState};
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData, privacy: 'PRIVATE'};
+    state.groups.communityDetail = {
+      ...communityDetailData,
+      privacy: 'PRIVATE',
+      members: [previewMemberDetail],
+    };
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(<AboutContent />, store);
@@ -100,6 +129,7 @@ describe('AboutContent component', () => {
       ...communityDetailData,
       privacy: 'OPEN',
       join_status: 1,
+      members: [previewMemberDetail],
     };
     const store = createTestStore(state);
 

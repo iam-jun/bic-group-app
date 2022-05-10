@@ -7,15 +7,17 @@ import {
   communityDetailData,
   previewMemberData,
   memberDetail,
+  previewMemberDetail,
 } from '~/test/mock_data/communities';
 
 describe('PreviewMembers component', () => {
   it('should render avatar list correctly', () => {
     const state = {...initialState};
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData};
-    // @ts-ignore
-    state.groups.previewMembers = previewMemberData;
+    state.groups.communityDetail = {
+      ...communityDetailData,
+      members: previewMemberData,
+    };
     const store = createTestStore(state);
     const wrapper = renderWithRedux(<PreviewMembers />, store);
     const listView = wrapper.getByTestId('list_view.flat_list');
@@ -25,9 +27,10 @@ describe('PreviewMembers component', () => {
   it('should render member description text correctly when there is only 1 member', () => {
     const state = {...initialState};
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData};
-    // @ts-ignore
-    state.groups.previewMembers = [memberDetail];
+    state.groups.communityDetail = {
+      ...communityDetailData,
+      members: [previewMemberDetail],
+    };
     const store = createTestStore(state);
     const wrapper = renderWithRedux(<PreviewMembers />, store);
     const memberText = wrapper.getByTestId('preview_members.description');
@@ -39,9 +42,11 @@ describe('PreviewMembers component', () => {
   it('should render member description text correctly when there are only 2 members', () => {
     const state = {...initialState};
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData, user_count: 2};
-    // @ts-ignore
-    state.groups.previewMembers = [memberDetail, memberDetail];
+    state.groups.communityDetail = {
+      ...communityDetailData,
+      user_count: 2,
+      members: [previewMemberDetail, previewMemberDetail],
+    };
     const store = createTestStore(state);
     const wrapper = renderWithRedux(<PreviewMembers />, store);
     const memberText = wrapper.getByTestId('preview_members.description');
@@ -50,12 +55,13 @@ describe('PreviewMembers component', () => {
     );
   });
 
-  it('should render member description text correctly when there are many members', () => {
+  it('should render member description text correctly when there are >2 members', () => {
     const state = {...initialState};
     // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData};
-    // @ts-ignore
-    state.groups.previewMembers = [memberDetail, memberDetail];
+    state.groups.communityDetail = {
+      ...communityDetailData,
+      members: [previewMemberDetail, previewMemberDetail],
+    };
     const store = createTestStore(state);
     const wrapper = renderWithRedux(<PreviewMembers />, store);
     const memberText = wrapper.getByTestId('preview_members.description');

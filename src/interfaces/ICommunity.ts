@@ -34,11 +34,7 @@ export interface IParamGetCommunityMembers {
 
 export type COMMUNITY_ROLE = 'COMMUNITY_ADMIN' | 'MEMBER';
 
-export interface ICommunityMembers {
-  id: number;
-  username: string;
-  fullname: string;
-  avatar: string;
+export interface ICommunityMembers extends IPreviewMember {
   roles: COMMUNITY_ROLE[];
   chat_user_id: string;
 }
