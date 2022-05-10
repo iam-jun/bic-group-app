@@ -10,23 +10,17 @@ export default function* getCommunityMembers({
   payload,
 }: {
   type: string;
-  payload: {
-    communityId: number;
-    preview_members?: boolean;
-    params?: IParamGetCommunityMembers;
-  };
+  payload: {communityId: number; params?: IParamGetCommunityMembers};
 }) {
   try {
-    const {communityId, preview_members = false, params} = payload;
+    const {communityId, params} = payload;
     // @ts-ignore
     const resp = yield call(groupsDataHelper.getCommunityMembers, communityId, {
-      limit: preview_members ? 10 : appConfig.recordsPerPage,
-      sort: preview_members ? 'created_at:asc' : undefined,
+      limit: appConfig.recordsPerPage,
       ...params,
     });
 
-    if (preview_members) yield put(actions.setPreviewMembers(resp?.data));
-    else yield put(actions.setCommunityMembers(resp?.data));
+    yield put(actions.setCommunityMembers(resp?.data));
   } catch (err: any) {
     console.log('getCommunityMembers error:', err);
     yield call(showError, err);

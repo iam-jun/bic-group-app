@@ -247,6 +247,7 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
+    params: {preview_members: true},
   }),
   getCommunityMembers: (
     communityId: number,

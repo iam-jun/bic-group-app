@@ -1,5 +1,4 @@
 import React from 'react';
-import i18next from 'i18next';
 
 import {createTestStore, renderWithRedux} from '~/test/testUtils';
 import PreviewMembers from './PreviewMembers';

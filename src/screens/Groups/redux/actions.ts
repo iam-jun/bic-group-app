@@ -337,7 +337,6 @@ const groupsActions = {
   }),
   getCommunityMembers: (payload: {
     communityId: number;
-    preview_members?: boolean;
     params?: IParamGetCommunityMembers;
   }) => ({
     type: groupsTypes.GET_COMMUNITY_MEMBERS,
@@ -345,10 +344,6 @@ const groupsActions = {
   }),
   setCommunityMembers: (payload: ICommunityMembers[]) => ({
     type: groupsTypes.SET_COMMUNITY_MEMBERS,
-    payload,
-  }),
-  setPreviewMembers: (payload: ICommunityMembers[]) => ({
-    type: groupsTypes.SET_PREVIEW_MEMBERS,
     payload,
   }),
 };
