@@ -6,6 +6,7 @@ import {
   ViewStyle,
   RefreshControl,
   FlatList,
+  Dimensions,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -23,6 +24,11 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import {useDispatch} from 'react-redux';
 import {useBaseHook} from '~/hooks';
 import ButtonDiscoverItemAction from '~/screens/Groups/components/ButtonDiscoverItemAction';
+import Image from '~/beinComponents/Image';
+import images from '~/resources/images';
+import {scaleSize} from '~/theme/dimension';
+
+const screenWidth = Dimensions.get('window').width;
 
 export interface DiscoverCommunitiesProps {
   style?: StyleProp<ViewStyle>;
@@ -124,6 +130,7 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
       renderItem={renderItem}
       keyExtractor={(item, index) => `community_${item}_${index}`}
       ListEmptyComponent={renderEmptyComponent}
+      ListHeaderComponent={<DiscoverHeader list={list} />}
       ItemSeparatorComponent={() => (
         <Divider
           style={{
@@ -141,6 +148,20 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
       }
     />
   );
+};
+
+const DiscoverHeader = ({list}: any) => {
+  const width = screenWidth;
+  const height = scaleSize(144);
+  if (list?.length > 0) {
+    return (
+      <Image
+        source={images.img_banner_discover_communities}
+        style={{width, height}}
+      />
+    );
+  }
+  return null;
 };
 
 const createStyle = (theme: ITheme) => {
