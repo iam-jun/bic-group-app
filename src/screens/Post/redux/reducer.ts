@@ -70,7 +70,7 @@ export const postInitState = {
     selectingUsers: {},
   },
   loadingGetPostDetail: false,
-  parentCommentIsDeleted: false,
+  commentErrorCode: '',
 };
 
 function postReducer(state = postInitState, action: any = {}) {
@@ -254,7 +254,7 @@ function postReducer(state = postInitState, action: any = {}) {
           (item: ICommentData) => item.id === parentCommentId,
         );
         // find and update target reply comment
-        const child = postComments[parentCommentPosition].child || [];
+        const child = postComments[parentCommentPosition].child.list || [];
         const targetPosition = child.findIndex(
           (item: ICommentData) => item?.localId === localId,
         );
@@ -329,10 +329,10 @@ function postReducer(state = postInitState, action: any = {}) {
         ...state,
         loadingGetPostDetail: payload,
       };
-    case postTypes.SET_PARENT_COMMENT_IS_DELETED:
+    case postTypes.SET_COMMENT_ERROR_CODE:
       return {
         ...state,
-        parentCommentIsDeleted: payload,
+        commentErrorCode: payload,
       };
     case postTypes.REMOVE_CHILD_COMMENT:
       const allCommentsByPost: any = {...state.allCommentsByParentIds};

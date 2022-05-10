@@ -40,10 +40,10 @@ export default function* deleteComment({
         (cmt: IReaction) => cmt?.id === parentCommentId,
       );
       //remove reply
-      if (commentsOfPost?.[pIndex]?.child) {
-        commentsOfPost[pIndex].child = commentsOfPost[pIndex].child?.filter?.(
-          (cmt: IReaction) => cmt?.id !== commentId,
-        );
+      if (commentsOfPost?.[pIndex]?.child?.list) {
+        commentsOfPost[pIndex].child.list = commentsOfPost[
+          pIndex
+        ].child?.list?.filter?.((cmt: IReaction) => cmt?.id !== commentId);
       }
       //update comment count
       if (commentsOfPost?.[pIndex]?.totalReply) {
@@ -52,6 +52,18 @@ export default function* deleteComment({
           0,
         );
       }
+      //update allComments
+      const newAllComments = {...allComments};
+      const newParentComment = {...newAllComments[parentCommentId]};
+      newParentComment.totalReply = Math.max(
+        0,
+        newParentComment.totalReply - 1,
+      );
+      newParentComment.child.list = newParentComment.child?.list?.filter?.(
+        (cmt: IReaction) => cmt?.id !== commentId,
+      );
+
+      yield put(postActions.addToAllComments(newParentComment));
     } else {
       //remove comment
       commentsOfPost = commentsOfPost?.filter?.(
@@ -77,14 +89,14 @@ export default function* deleteComment({
     );
 
     //update number of comment lv 1
-    if (!parentCommentId) {
-      if (post.comments?.meta?.total) {
-        post.comments.meta.total = Math.max(
-          0,
-          (post.comments.meta.total || 0) - 1,
-        );
-      }
-    }
+    // if (!parentCommentId) {
+    //   if (post.comments?.meta?.total) {
+    //     post.comments.meta.total = Math.max(
+    //       0,
+    //       (post.comments.meta.total || 0) - 1,
+    //     );
+    //   }
+    // }
     newAllPosts[postId] = {...post};
     yield put(postActions.setAllPosts(newAllPosts));
 

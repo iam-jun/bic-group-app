@@ -42,7 +42,7 @@ const postKeySelector = {
   postCommentsCountById: (id: string | number) =>
     `post.allPosts.${id}.commentsCount`,
   postCommentOnlyCountById: (id: number) =>
-    `post.allPosts.${id}.comments.meta.total`,
+    `post.allPosts.${id}.comments.meta.hasNextPage`,
   postCommentListById: (id: string | number) =>
     `post.allPosts.${id}.comments.list`,
   postIsDraftById: (id: string | number) => `post.allPosts.${id}.isDraft`,
@@ -51,6 +51,8 @@ const postKeySelector = {
   postDeletedById: (id: string | number) => `post.allPosts.${id}.deleted`,
   postMarkedReadById: (id: string | number) =>
     `post.allPosts.${id}.markedReadPost`,
+  postMarkedReadSuccessById: (id: string | number) =>
+    `post.allPosts.${id}.markedReadSuccess`,
 
   //Comment data
   allCommentsByParentIds: 'post.allCommentsByParentIds',
@@ -62,7 +64,7 @@ const postKeySelector = {
   postSelectAudienceState: 'post.postSelectAudienceState',
   scrollToCommentsPosition: 'post.scrollToCommentsPosition',
   loadingGetPostDetail: 'post.loadingGetPostDetail',
-  parentCommentIsDeleted: 'post.parentCommentIsDeleted',
+  commentErrorCode: 'post.commentErrorCode',
 };
 
 export default postKeySelector;

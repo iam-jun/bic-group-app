@@ -17,12 +17,17 @@ import postKeySelector from '../redux/keySelector';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
 import {useRootNavigation} from '~/hooks/navigation';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import LoadMoreComment from '../components/LoadMoreComment';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
+  const [isScrollFirst, setIsScrollFirst] = useState(false);
 
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -35,9 +40,9 @@ const CommentDetailContent = (props: any) => {
   const commentInputRef = useRef<any>();
 
   const params = props?.route?.params;
-  const {commentData, postId, replyItem, commentParent} = params || {};
-
+  const {postId, replyItem, commentParent, commentId, parentId} = params || {};
   const id = postId;
+
   const actor = useKeySelector(postKeySelector.postActorById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
   const postDetailLoadingState = useKeySelector(
@@ -45,27 +50,23 @@ const CommentDetailContent = (props: any) => {
   );
 
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
-  const {childrenComments = [], newCommentData = {}} = getListChildComment(
-    comments,
-    commentData?.id,
-  );
+  const {
+    childrenComments = [],
+    newCommentData,
+    viewMore = false,
+    notFoundComment,
+  } = getListChildComment(comments, !!parentId ? parentId : commentId);
 
   const scrollToCommentsPosition = useKeySelector(
     postKeySelector.scrollToCommentsPosition,
   );
 
-  const parentCommentIsDeleted = useKeySelector(
-    postKeySelector.parentCommentIsDeleted,
-  );
+  const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
 
   const headerTitle = t('post:title_comment_detail_of').replace(
     '%NAME%',
     actor?.fullname || '',
   );
-
-  useEffect(() => {
-    dispatch(postActions.setParentCommentDeleted(false));
-  }, []);
 
   useEffect(() => {
     if (audience?.groups?.length > 0) {
@@ -76,63 +77,79 @@ const CommentDetailContent = (props: any) => {
   }, [audience?.groups]);
 
   useEffect(() => {
-    if (!postDetailLoadingState && !parentCommentIsDeleted) {
-      dispatch(postActions.setScrollCommentsPosition(null));
-      if (childrenComments?.length > 1 || !commentData?.child?.[0]) {
-        setLoading(false);
-        if (!!replyItem) {
-          setTimeout(() => {
-            dispatch(
-              postActions.setPostDetailReplyingComment({
-                comment: replyItem,
-                parentComment: commentParent,
-              }),
-            );
-          }, 50);
-        }
-      } else {
-        const lastItem = newCommentData?.child?.[0];
-        dispatch(
-          postActions.getCommentsByPostId({
-            postId: postId,
-            idLT: lastItem?.id,
-            parentId: newCommentData?.id,
-            limit: 9,
-            isMerge: true,
-            position: 'bottom',
-            callbackLoading: loading => {
-              setLoading(loading);
-              if (!loading && !!replyItem) {
-                dispatch(
-                  postActions.setPostDetailReplyingComment({
-                    comment: replyItem,
-                    parentComment: commentParent,
-                  }),
-                );
-              }
-            },
-          }),
-        );
-      }
+    if (copyCommentError === API_ERROR_CODE.POST.postPrivacy) {
+      props?.showPrivacy?.(true);
+    } else if (
+      copyCommentError === API_ERROR_CODE.POST.copiedCommentIsDeleted
+    ) {
+      setIsEmpty(true);
+      rootNavigation.replace(homeStack.postDetail, {post_id: postId});
     }
-  }, [postDetailLoadingState, parentCommentIsDeleted]);
+    if (!postDetailLoadingState && !copyCommentError) {
+      dispatch(postActions.setScrollCommentsPosition(null));
+      dispatch(
+        postActions.getCommentDetail({
+          commentId,
+          callbackLoading: (loading: boolean) => {
+            setLoading(loading);
+            if (!loading && !!replyItem) {
+              dispatch(
+                postActions.setPostDetailReplyingComment({
+                  comment: replyItem,
+                  parentComment: commentParent,
+                }),
+              );
+            }
+          },
+        }),
+      );
+    }
+  }, [postDetailLoadingState, copyCommentError]);
+
+  useEffect(() => {
+    if (!loading && notFoundComment < 0) {
+      dispatch(
+        modalActions.showHideToastMessage({
+          content: 'error:not_found_desc',
+          props: {
+            type: 'error',
+            textProps: {useI18n: true},
+          },
+          toastType: 'normal',
+        }),
+      );
+      rootNavigation.replace(homeStack.newsfeed);
+    }
+  }, [notFoundComment, loading]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       if (scrollToCommentsPosition?.position === 'top') {
         dispatch(postActions.setScrollCommentsPosition(null));
       } else if (scrollToCommentsPosition?.position === 'bottom') {
-        scrollToEnd();
+        scrollToIndex();
+      } else if (!!parentId && childrenComments?.length > 0 && !isScrollFirst) {
+        const commentPosition = childrenComments?.findIndex?.(
+          (item: ICommentData) => item.id == commentId,
+        );
+        if (commentPosition > 0) {
+          setIsScrollFirst(true);
+          scrollToIndex(commentPosition);
+        }
       }
     }, 300);
     return () => clearTimeout(timer);
-  }, [scrollToCommentsPosition]);
+  }, [scrollToCommentsPosition, childrenComments]);
 
-  const scrollToEnd = () => {
+  const scrollToIndex = (index?: number) => {
     try {
       listRef.current?.scrollToIndex?.({
         animated: true,
-        index: childrenComments?.length > 0 ? childrenComments?.length - 1 : 0,
+        index: !!index
+          ? index
+          : childrenComments?.length > 0
+          ? childrenComments?.length - 1
+          : 0,
       });
       dispatch(postActions.setScrollCommentsPosition(null));
     } catch (error) {
@@ -151,8 +168,9 @@ const CommentDetailContent = (props: any) => {
   };
 
   const onRefresh = () => {
-    if (parentCommentIsDeleted) {
+    if (copyCommentError === API_ERROR_CODE.POST.commentDeleted) {
       setIsEmpty(true);
+      setRefreshing(true);
       dispatch(
         modalActions.showAlert({
           // @ts-ignore
@@ -187,7 +205,16 @@ const CommentDetailContent = (props: any) => {
         }),
       );
       setRefreshing(false);
+      return;
     }
+    dispatch(
+      postActions.getCommentDetail({
+        commentId: !!parentId ? parentId : commentId,
+        callbackLoading: (_loading: boolean) => {
+          setRefreshing(_loading);
+        },
+      }),
+    );
   };
 
   const renderCommentItem = (data: any) => {
@@ -204,7 +231,19 @@ const CommentDetailContent = (props: any) => {
   };
 
   const renderFooter = () => {
-    return <View style={styles.footer} />;
+    if (viewMore) {
+      const commentLength = newCommentData?.child?.list?.length || 0;
+      const lastItem = newCommentData?.child?.list?.[commentLength - 1];
+      const _parentId = !!parentId ? parentId : commentId;
+      return (
+        <LoadMoreComment
+          title={'post:text_load_more_replies'}
+          postId={id}
+          idGreaterThan={lastItem?.id}
+          commentId={parseInt(_parentId || '0')}
+        />
+      );
+    } else return <ViewSpacing height={12} />;
   };
 
   if (loading || postDetailLoadingState) {
@@ -251,6 +290,7 @@ const CommentDetailContent = (props: any) => {
         autoFocus={!!replyItem}
         isCommentLevel1Screen
         showHeader
+        viewMore={viewMore}
         defaultReplyTargetId={newCommentData?.id}
       />
     </View>
@@ -288,10 +328,18 @@ const getListChildComment = (
   parentCommentId: number,
 ) => {
   const parentCommentPosition = listData?.findIndex?.(
-    (item: ICommentData) => item.id === parentCommentId,
+    (item: ICommentData) => item.id == parentCommentId,
   );
-  const childrenComments = listData?.[parentCommentPosition]?.child || [];
-  return {childrenComments, newCommentData: listData?.[parentCommentPosition]};
+
+  const childrenComments = listData?.[parentCommentPosition]?.child?.list || [];
+
+  return {
+    childrenComments,
+    newCommentData: listData?.[parentCommentPosition],
+    viewMore:
+      listData?.[parentCommentPosition]?.child?.meta?.hasPreviousPage || false,
+    notFoundComment: parentCommentPosition,
+  };
 };
 
 const createStyle = (theme: ITheme) => {
@@ -308,7 +356,14 @@ const createStyle = (theme: ITheme) => {
     headerText: {
       fontSize: 14,
     },
-    footer: {height: spacing.margin.base, backgroundColor: colors.background},
+    footer: {
+      backgroundColor: colors.background,
+      paddingHorizontal: spacing.padding.large,
+      paddingBottom: spacing.padding.extraLarge,
+      paddingTop: spacing.padding.large,
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+    },
   });
 };
 
