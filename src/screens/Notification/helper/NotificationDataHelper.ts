@@ -21,7 +21,7 @@ export const notificationApiConfig = {
   putMarkAsReadById: (id: string): HttpApiRequestConfig => {
     return {
       url: `${ApiConfig.providers.beinNotification.url}notifications/${id}/mark-read`,
-      method: 'post',
+      method: 'put',
       provider: ApiConfig.providers.beinNotification,
       useRetry: true,
     };
@@ -29,7 +29,7 @@ export const notificationApiConfig = {
   putMarkAllAsRead: (): HttpApiRequestConfig => {
     return {
       url: `${ApiConfig.providers.beinNotification.url}notifications/mark-read`,
-      method: 'post',
+      method: 'put',
       provider: ApiConfig.providers.beinNotification,
       useRetry: true,
     };
@@ -37,7 +37,7 @@ export const notificationApiConfig = {
   putMarkAllAsSeen: (): HttpApiRequestConfig => {
     return {
       url: `${ApiConfig.providers.beinNotification.url}notifications/mark-seen`,
-      method: 'post',
+      method: 'put',
       provider: ApiConfig.providers.beinNotification,
       useRetry: true,
     };
@@ -65,7 +65,7 @@ const notificationsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve({
-          results: response?.data?.data || [],
+          results: response?.data?.data?.list || [],
           unseen: response?.data?.meta?.unSeen,
         });
       } else {
