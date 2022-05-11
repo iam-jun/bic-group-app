@@ -33,8 +33,7 @@ const DiscoverItem = ({
 
   const {items} = useKeySelector(groupsKeySelector.discoverGroups);
   const currentItem = items[id] || {};
-  const {name, icon, user_count, description, privacy, join_status} =
-    currentItem;
+  const {name, icon, user_count, privacy, join_status} = currentItem;
   const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
   const {icon: privacyIcon, title: privacyTitle}: any = privacyData || {};
 
@@ -55,7 +54,6 @@ const DiscoverItem = ({
       showAvatar
       avatar={icon}
       avatarProps={{variant: 'largeAlt'}}
-      subTitle={description}
       style={styles.item}
       title={name}
       testID={testID}
@@ -69,7 +67,7 @@ const DiscoverItem = ({
             tintColor={theme.colors.iconTint}
           />
           <Text.Subtitle useI18n>{privacyTitle}</Text.Subtitle>
-          <Text.Subtitle> • </Text.Subtitle>
+          <Text.Subtitle>{`  •  `}</Text.Subtitle>
           <Icon
             style={styles.iconSmall}
             icon={'UsersAlt'}
