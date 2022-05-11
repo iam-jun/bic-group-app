@@ -13,13 +13,6 @@ import {makeHttpRequest} from '~/services/httpApiRequest';
 import appConfig from '~/configs/appConfig';
 
 export const groupsApiConfig = {
-  getMyGroups: (params?: any): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}users/my-groups`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
-    params,
-  }),
   getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.beinFeed.url}api/v1/feeds/timeline`,
     method: 'get',
@@ -275,20 +268,6 @@ export const groupsApiConfig = {
 };
 
 const groupsDataHelper = {
-  getMyGroups: async (params?: any) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getMyGroups(params),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
   getSearchGroups: async (params?: any) => {
     try {
       const response: any = await makeHttpRequest(
