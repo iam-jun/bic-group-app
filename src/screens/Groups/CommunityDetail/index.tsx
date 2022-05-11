@@ -157,7 +157,7 @@ const CommunityDetail = (props: any) => {
           useAnimationTitle
           rightIcon="EllipsisV"
           rightIconProps={{backgroundColor: theme.colors.background}}
-          onPressChat={isMember || !isPrivate ? onPressChat : undefined}
+          onPressChat={isMember ? onPressChat : undefined}
         />
         <View testID="community_detail.content" style={styles.contentContainer}>
           {renderCommunityContent()}
