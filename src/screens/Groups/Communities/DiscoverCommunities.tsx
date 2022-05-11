@@ -39,26 +39,34 @@ export interface DiscoverCommunitiesProps {
 const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   onPressCommunities,
 }: DiscoverCommunitiesProps) => {
-  const [refreshing, setRefreshing] = useState(false);
   const data = useKeySelector(groupsKeySelector.discoverCommunitiesData);
-  const {list, loading, canLoadMore} = data || {};
+  const {list, loading} = data || {};
 
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
+  const {colors} = theme || {};
   const styles = createStyle(theme);
 
   useEffect(() => {
     getData();
+    return () => {
+      dispatch(
+        groupsActions.setDiscoverCommunities({
+          loading: true,
+          canLoadMore: true,
+          list: [],
+        }),
+      );
+    };
   }, []);
 
-  const getData = () => {
-    dispatch(groupsActions.getDiscoverCommunities({}));
+  const getData = (isRefresh = false) => {
+    dispatch(groupsActions.getDiscoverCommunities({isRefresh}));
   };
 
   const onRefresh = () => {
-    setRefreshing(true);
-    getData();
+    getData(true);
   };
 
   const onPressJoin = (data: any) => {
@@ -70,6 +78,9 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   };
 
   const renderEmptyComponent = () => {
+    if (loading) {
+      return null;
+    }
     return (
       <EmptyScreen
         source={'addUsers'}
@@ -89,9 +100,9 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
         showAvatar
         avatar={icon}
         avatarProps={{variant: 'largeAlt'}}
-        subTitle={description}
         style={styles.item}
         title={name}
+        titleProps={{variant: 'h5'}}
         testID={`community_${item.id}`}
         onPress={() => onPressCommunities?.(item)}
         ContentComponent={
@@ -100,11 +111,11 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
               style={styles.iconSmall}
               icon={privacyIcon}
               size={16}
-              tintColor={theme.colors.iconTint}
+              tintColor={colors.textSecondary}
             />
             <Text.Subtitle useI18n>{privacyTitle}</Text.Subtitle>
             <Text.Subtitle> • </Text.Subtitle>
-            <Text.BodySM>{user_count}</Text.BodySM>
+            <Text.BodySM color={colors.textSecondary}>{user_count}</Text.BodySM>
             <Text.Subtitle>{` ${t('groups:text_members', {
               count: user_count,
             })}`}</Text.Subtitle>
@@ -131,6 +142,7 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
       keyExtractor={(item, index) => `community_${item}_${index}`}
       ListEmptyComponent={renderEmptyComponent}
       ListHeaderComponent={<DiscoverHeader list={list} />}
+      onEndReached={() => getData()}
       ItemSeparatorComponent={() => (
         <Divider
           style={{
@@ -141,7 +153,7 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
       )}
       refreshControl={
         <RefreshControl
-          refreshing={refreshing}
+          refreshing={loading}
           onRefresh={onRefresh}
           tintColor={theme.colors.borderDisable}
         />
@@ -156,6 +168,7 @@ const DiscoverHeader = ({list}: any) => {
   if (list?.length > 0) {
     return (
       <Image
+        testID={'discover_communities.header'}
         source={images.img_banner_discover_communities}
         style={{width, height}}
       />
@@ -180,6 +193,7 @@ const createStyle = (theme: ITheme) => {
     groupInfo: {
       flexDirection: 'row',
       alignItems: 'center',
+      marginTop: 2,
     },
   });
 };
