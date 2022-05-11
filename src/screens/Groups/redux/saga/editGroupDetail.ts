@@ -48,8 +48,6 @@ export default function* editGroupDetail({
 
     yield put(groupsActions.setGroupDetail(resp?.data));
     if (callback) callback();
-
-    yield put(groupsActions.getJoinedGroups());
   } catch (err) {
     console.log('\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m');
     yield showError(err);

@@ -57,7 +57,7 @@ describe('Join New Group Saga', () => {
           },
         }),
       )
-      .put(groupsActions.getGroupDetail(groupId, true))
+      .put(groupsActions.getGroupDetail(groupId))
       .run();
   });
 

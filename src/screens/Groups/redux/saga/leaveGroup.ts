@@ -25,7 +25,6 @@ export default function* leaveGroup({
     const privacy = groups?.groupDetail?.group?.privacy;
 
     yield call(groupsDataHelper.leaveGroup, payload);
-    yield put(groupsActions.getJoinedGroups());
 
     // update button Join/Cancel/View status on Discover groups
     yield put(
@@ -46,7 +45,7 @@ export default function* leaveGroup({
       yield call(navigateToGroup, payload);
     }
 
-    yield put(groupsActions.getGroupDetail(payload, true));
+    yield put(groupsActions.getGroupDetail(payload));
 
     const toastMessage: IToastMessage = {
       content: i18next.t('groups:modal_confirm_leave_group:success_message'),

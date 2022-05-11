@@ -336,7 +336,6 @@ function* cancelJoinGroup({
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
       yield put(groupsActions.getGroupDetail(payload.groupId, true));
-      yield put(groupsActions.getJoinedGroups());
 
       return;
     }
@@ -518,7 +517,6 @@ export function* refreshGroupMembers(groupId: number) {
   yield put(groupsActions.clearGroupMembers());
   yield put(groupsActions.getGroupMembers({groupId}));
   yield put(groupsActions.getGroupDetail(groupId));
-  yield put(groupsActions.getJoinedGroups());
 }
 
 function* approvalError(groupId: number, code: number, fullName?: string) {
