@@ -180,7 +180,13 @@ exports[`InfoHeader component renders correctly 1`] = `
         </View>
       </View>
     </View>
-    <View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
       <Text
         style={
           Array [

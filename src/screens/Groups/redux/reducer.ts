@@ -79,7 +79,7 @@ export const groupInitState = {
     data: [],
   },
   discoverCommunities: {
-    loading: false,
+    loading: true,
     canLoadMore: true,
     list: [],
   },

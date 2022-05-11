@@ -56,8 +56,8 @@
     "text_description": "Description",
     "text_search": "Search",
     "text_search_results": "Search results",
-    "text_read_more": "Read more",
-    "text_show_less": "Show less",
+    "text_see_more": "See more",
+    "text_see_less": "See less",
     "text_add": "Add",
     "text_retry": "Retry",
     "text_done": "Done",
@@ -572,7 +572,8 @@
   },
   "input": {
     "search": "Search for someone to chat...",
-    "search_group": "Search for groups or people...",
+    "search_group_people": "Search for groups or people...",
+    "search_group": "Search groups",
     "search_post": "Search for posts...",
     "search_country": "Search Country",
     "search_location": "Search for City/Province/Country"
@@ -759,12 +760,12 @@
       "text_tree_view": "Tree view"
     },
     "empty_communities": {
-      "title": "No communities found",
+      "title": "No community found",
       "description": "Discover communities to join one.",
       "button_text": "Go to Discover"
     },
     "empty_groups": {
-      "title": "No groups found",
+      "title": "No group found",
       "description": "Discover groups to join one."
     },
     "community_menu": {

@@ -10,6 +10,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import ListView from '~/beinComponents/list/ListView';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import GroupItem from '~/beinComponents/list/items/GroupItem';
+import Text from '~/beinComponents/Text';
 
 const YourGroupsSearch = () => {
   const theme = useTheme() as ITheme;
@@ -33,7 +34,18 @@ const YourGroupsSearch = () => {
   };
 
   const renderItem = ({item}: any) => {
-    return <GroupItem {...item} />;
+    return <GroupItem showPrivacy {...item} />;
+  };
+
+  const renderHeader = () => {
+    if (list?.length > 0) {
+      return (
+        <Text.H5 style={styles.headerText} useI18n>
+          groups:search_results
+        </Text.H5>
+      );
+    }
+    return null;
   };
 
   return (
@@ -43,6 +55,7 @@ const YourGroupsSearch = () => {
         data={list || []}
         refreshing={loading}
         isFullView
+        ListHeaderComponent={renderHeader}
         ListEmptyComponent={renderEmpty}
         renderItem={renderItem}
         showItemSeparator={false}
@@ -69,6 +82,10 @@ const createStyle = (theme: ITheme) => {
       flex: 1,
       marginLeft: spacing.margin.large,
       marginRight: spacing.margin.large,
+    },
+    headerText: {
+      marginTop: spacing.margin.base,
+      marginBottom: spacing.margin.base,
     },
   });
 };

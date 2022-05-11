@@ -91,9 +91,9 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
         showAvatar
         avatar={icon}
         avatarProps={{variant: 'largeAlt'}}
-        subTitle={description}
         style={styles.item}
         title={name}
+        titleProps={{variant: 'h5'}}
         testID={`community_${item.id}`}
         onPress={() => onPressCommunities?.(item)}
         ContentComponent={
@@ -102,7 +102,7 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
               style={styles.iconSmall}
               icon={privacyIcon}
               size={16}
-              tintColor={theme.colors.iconTint}
+              tintColor={theme.colors.textSecondary}
             />
             <Text.Subtitle useI18n>{privacyTitle}</Text.Subtitle>
             <Text.Subtitle> • </Text.Subtitle>
@@ -159,6 +159,7 @@ const createStyle = (theme: ITheme) => {
     groupInfo: {
       flexDirection: 'row',
       alignItems: 'center',
+      marginTop: 2,
     },
     buttonWrapper: {
       marginTop: spacing.margin.large,

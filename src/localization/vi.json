@@ -51,8 +51,8 @@
     "text_important_posts": "Bài viết quan trọng",
     "text_files": "Files",
     "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
-    "text_read_more": "Xem thêm",
-    "text_show_less": "Thu gọn",
+    "text_see_more": "Xem thêm",
+    "text_see_less": "Thu gọn",
     "text_send": "Gửi",
     "error": {
       "file": {
@@ -517,7 +517,8 @@
   },
   "input": {
     "search": "Tìm kiếm người để trò chuyện...",
-    "search_group": "Tìm kiếm nhóm hoặc người...",
+    "search_group_people": "Tìm kiếm nhóm hoặc người...",
+    "search_group": "Tìm kiếm nhóm",
     "search_post": "Tìm kiếm bài viết...",
     "search_country": "Tìm kiếm Đất nước",
     "search_location": "Tìm kiếm Tỉnh/Thành phố"

@@ -107,7 +107,7 @@ const CommentDetailContent = (props: any) => {
   }, [postDetailLoadingState, copyCommentError]);
 
   useEffect(() => {
-    if (!loading && notFoundComment < 0) {
+    if (!loading && (!notFoundComment || notFoundComment < 0)) {
       dispatch(
         modalActions.showHideToastMessage({
           content: 'error:not_found_desc',
