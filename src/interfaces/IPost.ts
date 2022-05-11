@@ -82,6 +82,8 @@ export interface ICommentData {
   status?: 'pending' | 'success' | 'failed';
   localId?: string | number[]; // from uuid-v4
   parentCommentId?: string | number; // used when retry/cancel adding new comment
+  reactionsOfActor?: IOwnReaction;
+  reaction?: IReaction;
 }
 
 export interface ICreatePostImage {
@@ -277,6 +279,7 @@ export interface IReaction {
   localId?: string | number[]; // from uuid-v4
   parentCommentId?: string | number; // used when retry/cancel adding new comment
   child?: any;
+  actor?: IAudienceUser;
 }
 
 export interface IGetStreamAudienceUser {
@@ -388,6 +391,7 @@ export interface IParamDeleteReaction {
   target: 'POST' | 'COMMENT';
   reactionId: number;
   targetId: number;
+  reactionName: string;
 }
 
 export interface IParamPutReactionToComment {
@@ -472,21 +476,18 @@ export interface IParamGetPostAudiences {
 }
 
 export interface IPayloadUpdateReaction {
-  userId: string;
+  userId: number;
   data: ISocketReaction;
 }
 
 export interface ISocketReaction {
   actor: any;
-  entityId: number;
-  verb: 'REACT' | 'UNREACT';
-  type: 'react.post_creator' | 'react.comment_creator';
-
-  result: {
-    reaction: IReaction;
-    verbId: number;
-    reactionsCount: IReactionCounts;
-  };
+  id: number;
+  reactionsOfActor?: IOwnReaction;
+  reaction?: IReaction;
+  reactionsCount?: IReactionCounts;
+  event?: string;
+  comment?: ICommentData;
 }
 
 export interface ICreatePostCurrentSettings {

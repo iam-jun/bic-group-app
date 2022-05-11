@@ -48,3 +48,11 @@ export interface IParamGetNotifications {
   with_recent_reactions?: boolean;
   with_reaction_counts?: boolean;
 }
+
+export interface INotiExtraData {
+  type?: string;
+  actor: IGetStreamUser;
+  content?: string;
+  description?: string;
+  media?: any;
+}
