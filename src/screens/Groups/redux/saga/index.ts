@@ -303,6 +303,14 @@ function* cancelJoinGroup({
 
     yield groupsDataHelper.cancelJoinGroup(groupId);
 
+    // update button Join/Cancel/View status on Discover groups
+    yield put(
+      groupsActions.editDiscoverGroupItem({
+        id: groupId,
+        data: {join_status: 1},
+      }),
+    );
+
     yield put(groupsActions.getGroupDetail(groupId));
 
     const toastMessage: IToastMessage = {

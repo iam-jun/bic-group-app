@@ -361,6 +361,10 @@ const groupsActions = {
   resetDiscoverGroups: () => ({
     type: groupsTypes.RESET_DISCOVER_GROUPS,
   }),
+  editDiscoverGroupItem: (payload: {id: number; data: any}) => ({
+    type: groupsTypes.EDIT_DISCOVER_GROUP_ITEM,
+    payload,
+  }),
 };
 
 export default groupsActions;

@@ -467,6 +467,21 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         ...state,
         discoverGroups: groupInitState.discoverGroups,
       };
+    case groupsTypes.EDIT_DISCOVER_GROUP_ITEM:
+      return {
+        ...state,
+        discoverGroups: {
+          ...discoverGroups,
+          items: {
+            ...discoverGroups.items,
+            [payload.id]: {
+              // @ts-ignore
+              ...discoverGroups.items[payload.id],
+              ...payload.data,
+            },
+          },
+        },
+      };
 
     default:
       return state;

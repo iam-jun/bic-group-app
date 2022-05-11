@@ -13,12 +13,15 @@ import actions from '../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import ListView from '~/beinComponents/list/ListView';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import {useRootNavigation} from '~/hooks/navigation';
 
 const DiscoverGroups = ({route}: any) => {
   const {communityId} = route.params;
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
 
   const {data, loading, canLoadMore} = useKeySelector(
     groupsKeySelector.discoverGroups,
@@ -39,22 +42,23 @@ const DiscoverGroups = ({route}: any) => {
     getDiscoverGroups();
   };
 
-  const onPressGroup = () => {
-    alert('Go to group');
+  const onPressGroup = (groupId: number) => {
+    rootNavigation.navigate(groupStack.groupDetail, {groupId});
   };
 
-  const onPressJoin = () => {
-    alert('Request Join');
+  const onPressJoin = (groupId: number, groupName: string) => {
+    dispatch(actions.joinNewGroup({groupId, groupName}));
   };
 
-  const onPressCancel = () => {
-    alert('Cancel Join');
+  const onPressCancel = (groupId: number, groupName: string) => {
+    dispatch(actions.cancelJoinGroup({groupId, groupName}));
   };
 
-  const renderItem = ({item}: {item: number}) => {
+  const renderItem = ({item, index}: {item: number; index: number}) => {
     return (
       <DiscoverItem
         id={item}
+        testID={`discover_groups_item_${index}`}
         onPressGroup={onPressGroup}
         onPressJoin={onPressJoin}
         onPressCancel={onPressCancel}

@@ -14,13 +14,15 @@ import groupsKeySelector from '../redux/keySelector';
 
 interface DiscoverItemProps {
   id: number;
-  onPressJoin: () => void;
-  onPressCancel: () => void;
-  onPressGroup: () => void;
+  testID?: string;
+  onPressJoin: (id: number, name: string) => void;
+  onPressCancel: (id: number, name: string) => void;
+  onPressGroup: (id: number) => void;
 }
 
 const DiscoverItem = ({
   id,
+  testID,
   onPressGroup,
   onPressJoin,
   onPressCancel,
@@ -30,11 +32,23 @@ const DiscoverItem = ({
   const styles = createStyles(theme);
 
   const {items} = useKeySelector(groupsKeySelector.discoverGroups);
-  const currentItem = items[id];
+  const currentItem = items[id] || {};
   const {name, icon, user_count, description, privacy, join_status} =
-    currentItem || {};
+    currentItem;
   const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
   const {icon: privacyIcon, title: privacyTitle}: any = privacyData || {};
+
+  const onView = () => {
+    onPressGroup?.(id);
+  };
+
+  const onJoin = () => {
+    onPressJoin(id, name);
+  };
+
+  const onCancel = () => {
+    onPressCancel(id, name);
+  };
 
   return (
     <PrimaryItem
@@ -44,8 +58,8 @@ const DiscoverItem = ({
       subTitle={description}
       style={styles.item}
       title={name}
-      testID={`discover_item_${id}`}
-      // onPress={() => onPressCommunities?.(item)}
+      testID={testID}
+      onPress={onView}
       ContentComponent={
         <View style={styles.groupInfo}>
           <Icon
@@ -72,9 +86,9 @@ const DiscoverItem = ({
         <ButtonDiscoverItemAction
           data={currentItem}
           joinStatus={join_status}
-          onView={onPressGroup}
-          onJoin={onPressJoin}
-          onCancel={onPressCancel}
+          onView={onView}
+          onJoin={onJoin}
+          onCancel={onCancel}
         />
       }
     />
