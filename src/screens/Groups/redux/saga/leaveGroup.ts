@@ -27,6 +27,14 @@ export default function* leaveGroup({
     yield call(groupsDataHelper.leaveGroup, payload);
     yield put(groupsActions.getJoinedGroups());
 
+    // update button Join/Cancel/View status on Discover groups
+    yield put(
+      groupsActions.editDiscoverGroupItem({
+        id: payload,
+        data: {join_status: 1},
+      }),
+    );
+
     if (privacy === groupPrivacy.secret) {
       if (Platform.OS !== 'web') {
         yield call(navigationReplace);

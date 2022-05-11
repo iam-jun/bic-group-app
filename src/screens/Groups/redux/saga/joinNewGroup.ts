@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import {put, call} from 'redux-saga/effects';
+import {put, call, select} from 'redux-saga/effects';
 
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
@@ -21,6 +21,11 @@ export default function* joinNewGroup({
     const response = yield call(groupsDataHelper.joinGroup, groupId);
     const join_status = response?.data?.join_status;
     const hasRequested = join_status === groupJoinStatus.requested;
+
+    // update button Join/Cancel/View status on Discover groups
+    yield put(
+      groupsActions.editDiscoverGroupItem({id: groupId, data: {join_status}}),
+    );
 
     if (hasRequested) {
       yield put(groupsActions.getGroupDetail(groupId));
