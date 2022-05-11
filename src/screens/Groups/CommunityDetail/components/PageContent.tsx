@@ -46,7 +46,7 @@ const PageContent = ({
   const dispatch = useDispatch();
 
   const onPressDiscover = () => {
-    // TODO: add navigation to Discover page
+    rootNavigation.navigate(groupStack.discoverGroups, {communityId});
   };
 
   const onPressAbout = () => {

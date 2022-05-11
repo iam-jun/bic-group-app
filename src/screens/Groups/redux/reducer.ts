@@ -86,11 +86,17 @@ export const groupInitState = {
   communityDetail: {} as ICommunity,
   isGettingInfoDetail: false,
   communityMembers: [] as ICommunityMembers[],
+  discoverGroups: {
+    loading: false,
+    data: [],
+    items: {},
+    canLoadMore: true,
+  },
 };
 
 function groupsReducer(state = groupInitState, action: any = {}) {
   const {type, payload} = action;
-  const {selectedUsers, pendingMemberRequests} = state;
+  const {selectedUsers, pendingMemberRequests, discoverGroups} = state;
 
   switch (type) {
     case groupsTypes.SET_PRIVACY_MODAL_OPEN:
@@ -433,6 +439,48 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       return {
         ...state,
         communityMembers: payload || [],
+      };
+    case groupsTypes.GET_DISCOVER_GROUPS:
+      return {
+        ...state,
+        discoverGroups: {
+          ...discoverGroups,
+          loading: discoverGroups.data.length === 0,
+        },
+      };
+    case groupsTypes.SET_DISCOVER_GROUPS:
+      return {
+        ...state,
+        discoverGroups: {
+          ...discoverGroups,
+          loading: false,
+          data: [...discoverGroups.data, ...payload.ids],
+          items: {
+            ...discoverGroups.items,
+            ...payload.items,
+          },
+          canLoadMore: payload.ids.length === appConfig.recordsPerPage,
+        },
+      };
+    case groupsTypes.RESET_DISCOVER_GROUPS:
+      return {
+        ...state,
+        discoverGroups: groupInitState.discoverGroups,
+      };
+    case groupsTypes.EDIT_DISCOVER_GROUP_ITEM:
+      return {
+        ...state,
+        discoverGroups: {
+          ...discoverGroups,
+          items: {
+            ...discoverGroups.items,
+            [payload.id]: {
+              // @ts-ignore
+              ...discoverGroups.items[payload.id],
+              ...payload.data,
+            },
+          },
+        },
       };
 
     default:
