@@ -54,6 +54,10 @@ const DiscoverGroups = ({route}: any) => {
     dispatch(actions.cancelJoinGroup({groupId, groupName}));
   };
 
+  const onSearchText = (searchText: string) => {
+    // TODO: Add search
+  };
+
   const renderItem = ({item, index}: {item: number; index: number}) => {
     return (
       <DiscoverItem
@@ -93,6 +97,7 @@ const DiscoverGroups = ({route}: any) => {
       <Header
         titleTextProps={{useI18n: true}}
         title={'communities:title_discover_groups'}
+        onSearchText={onSearchText}
       />
       <ListView
         data={data}
@@ -121,7 +126,6 @@ const createStyles = (theme: ITheme) => {
     },
     divider: {
       marginVertical: spacing.margin.tiny,
-      marginHorizontal: spacing.margin.large,
     },
   });
 };

@@ -76,7 +76,7 @@ const DiscoverItem = ({
             size={16}
             tintColor={theme.colors.iconTint}
           />
-          <Text.BodySM>{user_count}</Text.BodySM>
+          <Text.BodyS>{user_count}</Text.BodyS>
           <Text.Subtitle>{` ${t('groups:text_members', {
             count: user_count,
           })}`}</Text.Subtitle>
