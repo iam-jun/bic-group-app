@@ -27,10 +27,6 @@ const ButtonDiscoverItemAction: FC<ButtonDiscoverItemActionProps> = ({
 
   let icon, text;
 
-  console.log(
-    `\x1b[36m🐣️ ButtonDiscoverItemAction ButtonDiscoverItemAction ${joinStatus}\x1b[0m`,
-  );
-
   switch (joinStatus) {
     case groupJoinStatus.unableToJoin:
       break;
