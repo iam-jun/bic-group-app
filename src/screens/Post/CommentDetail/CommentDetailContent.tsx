@@ -107,7 +107,7 @@ const CommentDetailContent = (props: any) => {
   }, [postDetailLoadingState, copyCommentError]);
 
   useEffect(() => {
-    if (!loading && notFoundComment < 0) {
+    if (!loading && (!notFoundComment || notFoundComment < 0)) {
       dispatch(
         modalActions.showHideToastMessage({
           content: 'error:not_found_desc',
@@ -165,6 +165,12 @@ const CommentDetailContent = (props: any) => {
       () => listRef.current?.scrollToIndex?.({index: error?.index || 0}),
       100,
     );
+  };
+
+  const goToPostDetail = () => {
+    rootNavigation.replace(homeStack.postDetail, {
+      post_id: postId,
+    });
   };
 
   const onRefresh = () => {
@@ -268,6 +274,7 @@ const CommentDetailContent = (props: any) => {
             commentData={newCommentData}
             groupIds={groupIds}
             id={id}
+            onPress={goToPostDetail}
           />
         }
         ListFooterComponent={renderFooter}
@@ -297,7 +304,13 @@ const CommentDetailContent = (props: any) => {
   );
 };
 
-const CommentLevel1 = ({id, headerTitle, commentData, groupIds}: any) => {
+const CommentLevel1 = ({
+  id,
+  headerTitle,
+  commentData,
+  groupIds,
+  onPress,
+}: any) => {
   if (!id) {
     return null;
   }
@@ -310,7 +323,12 @@ const CommentLevel1 = ({id, headerTitle, commentData, groupIds}: any) => {
       <View style={styles.container}>
         <Text.BodySM>
           {t('post:text_comment_from')}
-          <Text.BodyM style={styles.highlightText}>{headerTitle}</Text.BodyM>
+          <Text.BodyM
+            onPress={onPress}
+            suppressHighlighting
+            style={styles.highlightText}>
+            {headerTitle}
+          </Text.BodyM>
         </Text.BodySM>
       </View>
       <CommentItem
@@ -346,7 +364,7 @@ const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
-      paddingHorizontal: spacing.padding.large,
+      paddingLeft: spacing.padding.large,
       paddingVertical: spacing.padding.small,
       flexDirection: 'row',
     },

@@ -5,6 +5,7 @@ import {
   IParamGetCommunities,
   IParamGetGroupPosts,
 } from '~/interfaces/IGroup';
+import {IParamGetCommunityMembers} from '~/interfaces/ICommunity';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import appConfig from '~/configs/appConfig';
 
@@ -246,6 +247,17 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
+    params: {preview_members: true},
+  }),
+  getCommunityMembers: (
+    communityId: number,
+    params?: IParamGetCommunityMembers,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/members`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params,
   }),
 };
 
@@ -612,6 +624,23 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getCommunityDetail(communityId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getCommunityMembers: async (
+    communityId: number,
+    params?: IParamGetCommunityMembers,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getCommunityMembers(communityId, params),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

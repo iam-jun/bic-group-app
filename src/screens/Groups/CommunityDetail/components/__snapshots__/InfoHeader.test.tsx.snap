@@ -17,8 +17,6 @@ exports[`InfoHeader component renders correctly 1`] = `
       }
     >
       <View
-        collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
             "bottom": 0,
@@ -62,7 +60,7 @@ exports[`InfoHeader component renders correctly 1`] = `
           resizeMode="cover"
           source={
             Object {
-              "testUri": "../../../assets/images/cover_default.png",
+              "uri": "https://evolgroup.vn/wp-content/uploads/sites/18/2020/04/Thumb-EVOL.jpg",
             }
           }
           style={
@@ -119,8 +117,6 @@ exports[`InfoHeader component renders correctly 1`] = `
           }
         >
           <View
-            collapsable={false}
-            nativeID="animatedComponent"
             style={
               Object {
                 "bottom": 0,
@@ -166,7 +162,7 @@ exports[`InfoHeader component renders correctly 1`] = `
               resizeMode="cover"
               source={
                 Object {
-                  "testUri": "../../../assets/images/user_avatar_default.png",
+                  "uri": "https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF",
                 }
               }
               style={
@@ -184,7 +180,13 @@ exports[`InfoHeader component renders correctly 1`] = `
         </View>
       </View>
     </View>
-    <View>
+    <View
+      style={
+        Object {
+          "flex": 1,
+        }
+      }
+    >
       <Text
         style={
           Array [
@@ -198,7 +200,9 @@ exports[`InfoHeader component renders correctly 1`] = `
           ]
         }
         testID="info_header.name"
-      />
+      >
+        EVOL Community
+      </Text>
       <View
         style={
           Object {
@@ -264,73 +268,47 @@ exports[`InfoHeader component renders correctly 1`] = `
               <View
                 className="icon-wrapper"
               >
-                <View
-                  onLayout={[Function]}
+                <RNSVGSvgView
+                  align="xMidYMid"
+                  bbHeight={16}
+                  bbWidth={16}
+                  fill="#2F3945"
+                  focusable={false}
+                  height={16}
+                  meetOrSlice={0}
+                  minX={0}
+                  minY={0}
                   style={
-                    Object {
-                      "backgroundColor": "transparent",
-                      "position": "relative",
-                    }
-                  }
-                >
-                  <View
-                    collapsable={false}
-                    nativeID="animatedComponent"
-                    style={
+                    Array [
                       Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "opacity": 1,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  >
-                    <View
-                      style={
-                        Object {
-                          "alignItems": "center",
-                          "backgroundColor": "#f9f9f9",
-                          "height": 16,
-                          "justifyContent": "center",
-                          "width": 16,
-                        }
-                      }
-                      testID="Image__placeholder"
-                    />
-                  </View>
-                  <View
-                    style={
+                        "backgroundColor": "transparent",
+                        "borderWidth": 0,
+                      },
+                      Object {},
+                      Object {
+                        "flex": 0,
+                        "height": 16,
+                        "width": 16,
+                      },
+                    ]
+                  }
+                  vbHeight={24}
+                  vbWidth={24}
+                  width={16}
+                >
+                  <RNSVGGroup
+                    fill={4281284933}
+                    propList={
                       Array [
-                        Object {
-                          "overflow": "hidden",
-                        },
-                        Object {
-                          "height": 16,
-                          "width": 16,
-                        },
+                        "fill",
                       ]
                     }
                   >
-                    <FastImageView
-                      onFastImageError={[Function]}
-                      onFastImageLoadEnd={[Function]}
-                      resizeMode="cover"
-                      size={16}
-                      source={null}
-                      style={
-                        Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
-                        }
-                      }
+                    <RNSVGPath
+                      d="M21.41,8.64s0,0,0-.05a10,10,0,0,0-18.78,0s0,0,0,.05a9.86,9.86,0,0,0,0,6.72s0,0,0,.05a10,10,0,0,0,18.78,0s0,0,0-.05a9.86,9.86,0,0,0,0-6.72ZM4.26,14a7.82,7.82,0,0,1,0-4H6.12a16.73,16.73,0,0,0,0,4Zm.82,2h1.4a12.15,12.15,0,0,0,1,2.57A8,8,0,0,1,5.08,16Zm1.4-8H5.08A8,8,0,0,1,7.45,5.43,12.15,12.15,0,0,0,6.48,8ZM11,19.7A6.34,6.34,0,0,1,8.57,16H11ZM11,14H8.14a14.36,14.36,0,0,1,0-4H11Zm0-6H8.57A6.34,6.34,0,0,1,11,4.3Zm7.92,0h-1.4a12.15,12.15,0,0,0-1-2.57A8,8,0,0,1,18.92,8ZM13,4.3A6.34,6.34,0,0,1,15.43,8H13Zm0,15.4V16h2.43A6.34,6.34,0,0,1,13,19.7ZM15.86,14H13V10h2.86a14.36,14.36,0,0,1,0,4Zm.69,4.57a12.15,12.15,0,0,0,1-2.57h1.4A8,8,0,0,1,16.55,18.57ZM19.74,14H17.88A16.16,16.16,0,0,0,18,12a16.28,16.28,0,0,0-.12-2h1.86a7.82,7.82,0,0,1,0,4Z"
                     />
-                  </View>
-                </View>
+                  </RNSVGGroup>
+                </RNSVGSvgView>
               </View>
             </View>
           </View>
@@ -351,7 +329,7 @@ exports[`InfoHeader component renders correctly 1`] = `
           }
           testID="info_header.privacy"
         >
-           undefined
+           Public
         </Text>
         <Text
           style={
@@ -488,7 +466,7 @@ exports[`InfoHeader component renders correctly 1`] = `
           }
           testID="info_header.member_count"
         >
-           undefined undefined
+           5 members
         </Text>
       </View>
     </View>

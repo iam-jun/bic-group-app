@@ -30,6 +30,7 @@ const groupsKeySelector = {
   loadingCommunities: 'groups.communities.loading',
   communityDetail: 'groups.communityDetail',
   isGettingInfoDetail: 'groups.isGettingInfoDetail',
+  communityMembers: 'groups.communityMembers',
 };
 
 export default groupsKeySelector;

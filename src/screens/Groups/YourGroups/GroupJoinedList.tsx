@@ -39,18 +39,16 @@ const GroupJoinedList: FC<GroupJoinedListProps> = ({
 
   const renderEmpty = () => {
     return (
-      !loading && (
-        <EmptyScreen
-          source={'addUsers'}
-          title="groups:text_this_place_looks_lonely"
-          description="groups:text_join_community_get_updated"
-        />
-      )
+      <EmptyScreen
+        source={'addUsers'}
+        title="communities:empty_groups:title"
+        description="communities:empty_groups:description"
+      />
     );
   };
 
   const renderItem = ({item}: any) => {
-    return <GroupItem {...item} />;
+    return <GroupItem showPrivacy showPrivacyName={false} {...item} />;
   };
 
   return (
