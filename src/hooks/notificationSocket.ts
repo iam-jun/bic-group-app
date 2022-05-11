@@ -38,7 +38,7 @@ const useNotificationSocket = () => {
     handleNotification(data);
   };
 
-  const handleReaction = (msg: string) => {
+  const handleInternalEvent = (msg: string) => {
     const msgData = parseSafe(msg);
     const data = msgData || {};
     if (
@@ -80,7 +80,7 @@ const useNotificationSocket = () => {
       );
     });
     socket.on('notifications', handleSocketNoti);
-    socket.on('internal_event', handleReaction);
+    socket.on('internal_event', handleInternalEvent);
     return () => {
       socket?.disconnect?.();
     };
