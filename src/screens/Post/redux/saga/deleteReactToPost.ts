@@ -33,6 +33,7 @@ export default function* deleteReactToPost({
         reactionId: rId,
         target: 'POST',
         targetId: id,
+        reactionName: reactionId,
       });
     }
   } catch (e) {

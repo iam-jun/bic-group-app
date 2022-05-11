@@ -82,6 +82,8 @@ export interface ICommentData {
   status?: 'pending' | 'success' | 'failed';
   localId?: string | number[]; // from uuid-v4
   parentCommentId?: string | number; // used when retry/cancel adding new comment
+  reactionsOfActor?: IOwnReaction;
+  reaction?: IReaction;
 }
 
 export interface ICreatePostImage {
@@ -389,6 +391,7 @@ export interface IParamDeleteReaction {
   target: 'POST' | 'COMMENT';
   reactionId: number;
   targetId: number;
+  reactionName: string;
 }
 
 export interface IParamPutReactionToComment {
@@ -480,6 +483,7 @@ export interface IPayloadUpdateReaction {
 export interface ISocketReaction {
   actor: any;
   id: number;
+  reactionsOfActor?: IOwnReaction;
   reaction?: IReaction;
   reactionsCount?: IReactionCounts;
   event?: string;

@@ -17,68 +17,66 @@ export default function* updateReactionBySocket({
   payload: IPayloadUpdateReaction;
 }): any {
   const {userId, data} = payload || {};
-  const {reactionsCount, reaction = {}, comment, id} = data as ISocketReaction;
+  const {
+    reactionsCount,
+    reaction = {},
+    reactionsOfActor,
+    comment,
+    id,
+  } = data as ISocketReaction;
 
-  const isCurrentUser =
-    userId == reaction?.actor?.id || userId == comment?.actor?.id;
-  if (!isEmpty(reactionsCount) && !isEmpty(reaction)) {
+  if (!isEmpty(reaction)) {
     // handle reaction to post
     // merge own reaction if reaction's actor is current user
     const p =
       (yield select(state => get(state, postKeySelector.postById(id)))) || {};
     const ownReactions = p?.ownerReactions ? [...p.ownerReactions] : [];
-    if (isCurrentUser && reaction?.reactionName) {
-      if (ownReactions?.length > 0) {
-        let isAdded = false;
-        ownReactions.forEach((ownReaction, index) => {
-          if (ownReaction?.reactionName === reaction.reactionName) {
-            ownReactions[index] = {...reaction};
-            isAdded = true;
-          }
-        });
-        if (!isAdded) {
-          ownReactions.push(reaction);
-        }
-      } else {
-        ownReactions.push(reaction);
-      }
-    }
-
+    const isCurrentUser = userId == reaction?.actor?.id;
     yield onUpdateReactionOfPostById(
       id,
-      ownReactions,
+      //@ts-ignore
+      isCurrentUser && !!reaction?.reactionName
+        ? reactionsOfActor
+        : ownReactions,
       reactionsCount as IReactionCounts,
     );
   }
 
   if (!isEmpty(comment)) {
     // handle reaction to comment
+    //@ts-ignore
+    const {
+      id: _cId,
+      reactionsOfActor: _cOwnerReactions,
+      reaction: _cReaction,
+      reactionsCount: _cReactionsCount,
+      child,
+    } = comment as any;
+
+    let finalId = _cId,
+      finalReaction = _cReaction,
+      finalOwnerReactions = _cOwnerReactions,
+      finalReactionsCount = _cReactionsCount,
+      isCurrentUser = userId == _cReaction?.actor?.id;
+    if (!isEmpty(child)) {
+      finalId = child?.id;
+      finalReaction = child?.reaction;
+      finalOwnerReactions = child?.reactionsOfActor;
+      finalReactionsCount = child?.reactionsCount;
+      isCurrentUser = userId == child?.actor?.id;
+    }
     // merge own children if reaction's actor is current user
     const c =
-      (yield select(s =>
-        get(s, postKeySelector.commentById(comment?.id || 0)),
-      )) || {};
+      (yield select(s => get(s, postKeySelector.commentById(finalId || 0)))) ||
+      {};
     const ownReactions = c?.ownerReactions ? [...c.ownerReactions] : [];
-    if (isCurrentUser && reaction?.reactionName) {
-      if (ownReactions?.length > 0) {
-        let isAdded = false;
-        ownReactions.forEach((ownReaction, index) => {
-          if (ownReaction?.reactionName === reaction.reactionName) {
-            ownReactions[index] = {...reaction};
-            isAdded = true;
-          }
-        });
-        if (!isAdded) {
-          ownReactions.push(reaction);
-        }
-      } else {
-        ownReactions.push(reaction);
-      }
-    }
+
     yield onUpdateReactionOfCommentById(
-      comment?.id as number,
-      ownReactions,
-      reactionsCount as IReactionCounts,
+      finalId as number,
+      isCurrentUser && finalReaction?.reactionName
+        ? finalOwnerReactions
+        : ownReactions,
+      finalReactionsCount as IReactionCounts,
       undefined,
     );
   }

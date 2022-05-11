@@ -41,14 +41,11 @@ const useNotificationSocket = () => {
   const handleReaction = (msg: string) => {
     const msgData = parseSafe(msg);
     const data = msgData || {};
-    console.warn('internal_event', data);
-
-    if (data?.event === notificationEvent.REACT) {
+    if (
+      data?.event === notificationEvent.REACT ||
+      data?.event === notificationEvent.UNREACT
+    ) {
       dispatch(postActions.updateReactionBySocket({userId, data: data}));
-    }
-
-    if (data?.event === notificationEvent.UNREACT) {
-      dispatch(postActions.updateUnReactionBySocket({userId, data: data}));
     }
   };
 
