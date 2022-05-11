@@ -28,7 +28,7 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
     case notificationsTypes.ATTACH: {
       return {
         ...state,
-        notificationList: [payload, ...state.notificationList],
+        notificationList: [...(payload?.list || []), ...state.notificationList],
         unseenNumber: state.unseenNumber + 1,
       };
     }

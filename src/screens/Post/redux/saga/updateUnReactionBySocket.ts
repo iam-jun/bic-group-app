@@ -1,9 +1,10 @@
-import {get} from 'lodash';
+import {get, isEmpty} from 'lodash';
 import {select} from 'redux-saga/effects';
 
 import {
   IPayloadUpdateReaction,
   IReaction,
+  IReactionCounts,
   ISocketReaction,
 } from '~/interfaces/IPost';
 import postKeySelector from '../keySelector';
@@ -17,22 +18,15 @@ export default function* updateUnReactionBySocket({
   payload: IPayloadUpdateReaction;
 }): any {
   const {userId, data} = payload || {};
-  const {
-    actor,
-    type = '',
-    result = {},
-    entityId = -1,
-  } = data as ISocketReaction;
+  const {reactionsCount, reaction = {}, comment, id} = data as ISocketReaction;
 
-  const isCurrentUser = userId == actor?.id;
+  const isCurrentUser =
+    userId == reaction?.actor?.id || userId == comment?.actor?.id;
 
-  if (type === 'react.post_creator') {
-    // @ts-ignore
-    const {reactionsCount, reaction = {}} = result || {};
+  if (!isEmpty(reactionsCount) && !isEmpty(reaction)) {
     // handle un-react post
     const p =
-      (yield select(state => get(state, postKeySelector.postById(entityId)))) ||
-      {};
+      (yield select(state => get(state, postKeySelector.postById(id)))) || {};
     const ownReactions = p?.ownerReactions ? [...p.ownerReactions] : [];
     const newOwnReaction2 = [] as any;
 
@@ -45,16 +39,18 @@ export default function* updateUnReactionBySocket({
         });
       }
     }
-    yield onUpdateReactionOfPostById(entityId, newOwnReaction2, reactionsCount);
+    yield onUpdateReactionOfPostById(
+      id,
+      newOwnReaction2,
+      reactionsCount as IReactionCounts,
+    );
   }
 
-  if (type === 'react.comment_creator') {
-    // @ts-ignore
-    const {reactionsCount, reaction = {}} = result || {};
+  if (!isEmpty(comment)) {
     // handle reaction to comment
     // merge own children if reaction's actor is current user
     const c =
-      (yield select(s => get(s, postKeySelector.commentById(entityId)))) || {};
+      (yield select(s => get(s, postKeySelector.commentById(id)))) || {};
     const ownReactions = c?.ownerReactions ? [...c.ownerReactions] : [];
     const newOwnReaction2 = [] as any;
 
@@ -68,9 +64,9 @@ export default function* updateUnReactionBySocket({
       }
     }
     yield onUpdateReactionOfCommentById(
-      entityId,
+      id,
       newOwnReaction2,
-      reactionsCount,
+      reactionsCount as IReactionCounts,
       undefined,
     );
   }

@@ -13,7 +13,7 @@ export default function* putReactionToPost({
   type: string;
   payload: IPayloadReactToPost;
 }): any {
-  const {id, reactionId} = payload;
+  const {id, reactionId, ownReaction, reactionCounts} = payload;
   try {
     const post1 = yield select(s => get(s, postKeySelector.postById(id)));
     const cReactionCounts1 = post1.reactionsCount || {};
@@ -53,33 +53,42 @@ export default function* putReactionToPost({
 
       yield onUpdateReactionOfPostById(id, newOwnReaction1, newReactionCounts);
 
-      yield call(postDataHelper.putReaction, {
+      const response = yield call(postDataHelper.putReaction, {
         reactionName: reactionId,
         target: 'POST',
         targetId: id,
       });
 
       // Disable update data base on response because of calculate wrong value when receive socket msg
-      // if (response?.data?.[0]) {
-      //   const post2 = yield select(s => get(s, postKeySelector.postById(id)));
-      //   const cReactionCounts2 = post2.reaction_counts || {};
-      //   const cOwnReaction2 = post2.own_reactions || {};
-      //   const newOwnReaction2: IOwnReaction = {...cOwnReaction2};
-      //
-      //   const reactionArr2: IReaction[] = [];
-      //   reactionArr2.push({id: response?.data?.[0]?.id});
-      //   newOwnReaction2[reactionId] = reactionArr2;
-      //
-      //   yield onUpdateReactionOfPostById(
-      //     id,
-      //     {...newOwnReaction2},
-      //     {...cReactionCounts2},
-      //   );
-      // }
+      if (response?.data) {
+        const post2 = yield select(s => get(s, postKeySelector.postById(id)));
+        const cReactionCounts2 = post2.reactionsCount || {};
+        const cOwnReaction2 = post2.ownerReactions || [];
+        const newOwnReaction2: IOwnReaction = [...cOwnReaction2];
+
+        if (newOwnReaction2?.length > 0) {
+          let isAdded = false;
+          newOwnReaction2.forEach((ownReaction: IReaction, index: number) => {
+            if (ownReaction?.reactionName === response.data?.reactionName) {
+              newOwnReaction2[index] = {...response.data};
+              isAdded = true;
+            }
+          });
+          if (!isAdded) {
+            newOwnReaction2.push(response.data);
+          }
+        } else {
+          newOwnReaction2.push(response.data);
+        }
+
+        yield onUpdateReactionOfPostById(id, [...newOwnReaction2], {
+          ...cReactionCounts2,
+        });
+      }
     }
   } catch (e) {
     // disable rollback in case error limit 21 reaction
-    // yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts);
+    yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts);
     yield showError(e);
   }
 }
