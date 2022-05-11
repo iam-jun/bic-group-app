@@ -3,14 +3,15 @@ import {Platform, StyleSheet, View, ViewProps} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Div from '~/beinComponents/Div';
 import TimeView from '~/beinComponents/TimeView';
-import {IGetStreamNotificationActivity} from '~/interfaces/INotification';
+import {
+  IGetStreamNotificationActivity,
+  INotiExtraData,
+} from '~/interfaces/INotification';
 import {ITheme} from '~/theme/interfaces';
 import NotificationAvatar from './NotificationAvatar';
 import NotificationContent from './NotificationContent';
 
 export interface NotificationItemProps {
-  actor: any;
-  description: string;
   activities: IGetStreamNotificationActivity[];
   verb: string;
   isRead: boolean;
@@ -19,15 +20,15 @@ export interface NotificationItemProps {
   actor_count: number;
   createdAt: string;
   isActive?: boolean;
+  extra: INotiExtraData;
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
-  actor,
-  description,
   activities,
   isRead,
   createdAt,
   isActive = false,
+  extra,
 }: NotificationItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
@@ -58,9 +59,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     <Div className={className}>
       <View style={styles.container}>
         {renderIndicator()}
-        <NotificationAvatar actor={actor} />
+        <NotificationAvatar actor={extra.actor} />
         <NotificationContent
-          description={description}
+          description={extra?.description || ''}
           activities={activities}
         />
         <TimeView

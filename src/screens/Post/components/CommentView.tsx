@@ -307,7 +307,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
       </RNAnimated.View>
     );
   };
-
   const renderReactionsReplyView = () => {
     return (
       isActive && (

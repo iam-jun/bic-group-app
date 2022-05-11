@@ -72,11 +72,13 @@ const DiscoverGroups = ({route}: any) => {
 
   const renderEmptyComponent = () => {
     return (
-      <EmptyScreen
-        source={'addUsers'}
-        title="communities:empty_groups:title"
-        description="communities:empty_groups:description"
-      />
+      !loading && (
+        <EmptyScreen
+          source={'addUsers'}
+          title="communities:empty_groups:title"
+          description="communities:empty_groups:description"
+        />
+      )
     );
   };
 
