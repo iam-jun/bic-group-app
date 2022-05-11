@@ -30,8 +30,6 @@ const AboutContent = () => {
             common:text_description
           </Text.BodyM>
           <CollapsibleText
-            limitLength={200}
-            shortLength={200}
             textProps={{variant: 'body'}}
             content={description}
           />

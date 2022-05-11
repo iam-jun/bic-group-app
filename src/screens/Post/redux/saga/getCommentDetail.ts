@@ -1,9 +1,12 @@
+import {call, put, select} from 'redux-saga/effects';
+import {get, isEmpty} from 'lodash';
+
 import {IPayloadGetCommentsById} from '~/interfaces/IPost';
-import {call, put} from 'redux-saga/effects';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import showError from '~/store/commonSaga/showError';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
+import postKeySelector from '../keySelector';
 
 function* getCommentDetail({
   payload,
@@ -31,9 +34,15 @@ function* getCommentDetail({
         isReplace: true,
       };
 
-      const post = {id: comment?.postId, actor: actor};
       yield put(postActions.updateAllCommentsByParentIdsWithComments(payload));
-      yield put(postActions.addToAllPosts({data: post}));
+      const post = yield select(state =>
+        get(state, postKeySelector.postById(comment?.postId)),
+      );
+      if (isEmpty(post)) {
+        post.id = comment?.id;
+        post.actor = actor;
+        yield put(postActions.addToAllPosts({data: post}));
+      }
     }
     callbackLoading?.(false);
   } catch (e: any) {

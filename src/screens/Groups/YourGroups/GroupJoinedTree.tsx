@@ -48,7 +48,7 @@ const GroupJoinedTree: FC<GroupJoinedTreeProps> = ({
   };
 
   const renderItem = ({item}: any) => {
-    return <FlatGroupItem {...item} />;
+    return <FlatGroupItem showPrivacy showPrivacyName={false} {...item} />;
   };
 
   return (
