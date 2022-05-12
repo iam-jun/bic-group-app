@@ -36,7 +36,7 @@ function* getNotifications({
     yield put(notificationsActions.setLoadingNotifications(false));
     yield put(
       notificationsActions.setNotifications({
-        notifications: response?.results?.list || [],
+        notifications: response?.results || [],
         unseen: response.unseen,
       }),
     );

@@ -206,7 +206,7 @@ export const postApiConfig = {
       target: param.target,
       order: param?.order || 'DESC',
       limit: param?.limit || 20,
-      latestId: param?.latestId || 0,
+      latestId: param?.latestId,
     },
   }),
   postPublishDraftPost: (draftPostId: string): HttpApiRequestConfig => ({
