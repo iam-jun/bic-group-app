@@ -295,6 +295,10 @@ const postActions = {
     type: postTypes.PUT_MARK_AS_READ,
     payload,
   }),
+  removeCommentLevel1Deleted: (payload: any) => ({
+    type: postTypes.REMOVE_COMMENT_DELETED,
+    payload,
+  }),
 };
 
 export default postActions;

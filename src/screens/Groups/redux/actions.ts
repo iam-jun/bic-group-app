@@ -33,12 +33,6 @@ const groupsActions = {
     };
   },
 
-  getJoinedGroups: function (payload?: any) {
-    return {
-      type: groupsTypes.GET_JOINED_GROUPS,
-      payload,
-    };
-  },
   setJoinedGroups: function (payload: IGroup[]) {
     return {
       type: groupsTypes.SET_JOINED_GROUPS,

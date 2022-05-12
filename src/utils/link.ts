@@ -27,19 +27,21 @@ const formatParamsVer2 = (params?: any) => {
   const keys = Object.keys(params);
   let result = '';
   if (keys.length > 0) {
-    keys.forEach((item: string) => {
-      if (!!params[item]) result += '?' + item + '=' + params[item];
+    keys.forEach((item: string, index: number) => {
+      if (!!params[item]) {
+        result += (index ? '&' : '') + item + '=' + params[item];
+      }
     });
-    return result;
+    return '?' + result;
   }
 };
 
 const getLink = (linkType: string, id?: number, params?: any): string => {
   switch (linkType) {
     case LINK_POST:
-      return getEnv('SELF_DOMAIN') + '/post/t/' + id + formatParams(params);
+      return getEnv('SELF_DOMAIN') + '/posts/' + id + formatParams(params);
     case LINK_COMMENT:
-      return getEnv('SELF_DOMAIN') + '/post/' + id + formatParamsVer2(params);
+      return getEnv('SELF_DOMAIN') + '/posts/' + id + formatParamsVer2(params);
     case LINK_GROUP:
       return getEnv('SELF_DOMAIN') + '/groups/' + id + formatParams(params);
     default:
