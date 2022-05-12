@@ -27,10 +27,12 @@ const formatParamsVer2 = (params?: any) => {
   const keys = Object.keys(params);
   let result = '';
   if (keys.length > 0) {
-    keys.forEach((item: string) => {
-      if (!!params[item]) result += '?' + item + '=' + params[item];
+    keys.forEach((item: string, index: number) => {
+      if (!!params[item]) {
+        result += (index ? '&' : '') + item + '=' + params[item];
+      }
     });
-    return result;
+    return '?' + result;
   }
 };
 
