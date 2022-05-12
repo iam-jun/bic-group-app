@@ -37,9 +37,9 @@ const formatParamsVer2 = (params?: any) => {
 const getLink = (linkType: string, id?: number, params?: any): string => {
   switch (linkType) {
     case LINK_POST:
-      return getEnv('SELF_DOMAIN') + '/post/t/' + id + formatParams(params);
+      return getEnv('SELF_DOMAIN') + '/posts/' + id + formatParams(params);
     case LINK_COMMENT:
-      return getEnv('SELF_DOMAIN') + '/post/' + id + formatParamsVer2(params);
+      return getEnv('SELF_DOMAIN') + '/posts/' + id + formatParamsVer2(params);
     case LINK_GROUP:
       return getEnv('SELF_DOMAIN') + '/groups/' + id + formatParams(params);
     default:
