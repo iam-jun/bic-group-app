@@ -83,6 +83,16 @@ const CommentDetailContent = (props: any) => {
       copyCommentError === API_ERROR_CODE.POST.copiedCommentIsDeleted
     ) {
       setIsEmpty(true);
+      dispatch(
+        modalActions.showHideToastMessage({
+          content: 'post:text_comment_was_deleted',
+          props: {
+            type: 'error',
+            textProps: {useI18n: true},
+          },
+          toastType: 'normal',
+        }),
+      );
       rootNavigation.replace(homeStack.postDetail, {post_id: postId});
     }
     if (!postDetailLoadingState && !copyCommentError) {
@@ -107,7 +117,12 @@ const CommentDetailContent = (props: any) => {
   }, [postDetailLoadingState, copyCommentError]);
 
   useEffect(() => {
-    if (!loading && (!notFoundComment || notFoundComment < 0)) {
+    if (
+      !loading &&
+      (notFoundComment === undefined || notFoundComment < 0) &&
+      !isEmpty &&
+      !copyCommentError
+    ) {
       dispatch(
         modalActions.showHideToastMessage({
           content: 'error:not_found_desc',
@@ -120,7 +135,7 @@ const CommentDetailContent = (props: any) => {
       );
       rootNavigation.replace(homeStack.newsfeed);
     }
-  }, [notFoundComment, loading]);
+  }, [notFoundComment, loading, isEmpty, copyCommentError]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
