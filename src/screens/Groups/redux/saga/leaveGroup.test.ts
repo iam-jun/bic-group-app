@@ -32,38 +32,14 @@ describe('Leave Group Saga', () => {
     return expectSaga(leaveGroup, action)
       .withState(state)
       .provide([[matchers.call.fn(groupsDataHelper.leaveGroup), {}]])
-      .put(groupsActions.getJoinedGroups())
-      .call(navigationReplace)
-      .put(groupsActions.getGroupDetail(action.payload, true))
       .put(
-        modalActions.showHideToastMessage({
-          content: i18next.t(
-            'groups:modal_confirm_leave_group:success_message',
-          ),
-          props: {
-            type: 'success',
-          },
+        groupsActions.editDiscoverGroupItem({
+          id: action.payload,
+          data: {join_status: 1},
         }),
       )
-      .run();
-  });
-
-  it('leaves secret group on web platform successfully', () => {
-    Platform.OS = 'web';
-    const state = {
-      groups: {
-        groupDetail: {group: {privacy: groupPrivacy.secret}},
-        joinedGroups: [{id: 2}],
-      },
-    };
-
-    // @ts-ignore
-    return expectSaga(leaveGroup, action)
-      .withState(state)
-      .provide([[matchers.call.fn(groupsDataHelper.leaveGroup), {}]])
-      .put(groupsActions.getJoinedGroups())
-      .call(navigateToGroup, state.groups.joinedGroups[0].id)
-      .put(groupsActions.getGroupDetail(action.payload, true))
+      .call(navigationReplace)
+      .put(groupsActions.getGroupDetail(action.payload))
       .put(
         modalActions.showHideToastMessage({
           content: i18next.t(
@@ -86,9 +62,14 @@ describe('Leave Group Saga', () => {
     return expectSaga(leaveGroup, action)
       .withState(state)
       .provide([[matchers.call.fn(groupsDataHelper.leaveGroup), {}]])
-      .put(groupsActions.getJoinedGroups())
+      .put(
+        groupsActions.editDiscoverGroupItem({
+          id: action.payload,
+          data: {join_status: 1},
+        }),
+      )
       .call(navigateToGroup, action.payload)
-      .put(groupsActions.getGroupDetail(action.payload, true))
+      .put(groupsActions.getGroupDetail(action.payload))
       .put(
         modalActions.showHideToastMessage({
           content: i18next.t(

@@ -39,8 +39,6 @@ export default function* joinNewGroup({
       return;
     }
 
-    yield put(groupsActions.getJoinedGroups());
-
     const toastMessage: IToastMessage = {
       content: `${i18next.t(
         'groups:text_successfully_join_group',
@@ -51,7 +49,7 @@ export default function* joinNewGroup({
     };
 
     yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.getGroupDetail(groupId, true));
+    yield put(groupsActions.getGroupDetail(groupId));
   } catch (err) {
     console.error('joinNewGroup catch', err);
     yield showError(err);

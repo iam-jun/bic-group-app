@@ -45,7 +45,6 @@ import getDiscoverGroups from './getDiscoverGroups';
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* groupsSaga() {
-  yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
   yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
   yield takeLatest(groupsTypes.GET_GROUP_MEMBER, getGroupMember);
   yield takeLatest(groupsTypes.GET_GROUP_POSTS, getGroupPosts);
@@ -95,20 +94,6 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_COMMUNITY_DETAIL, getCommunityDetail);
   yield takeLatest(groupsTypes.GET_COMMUNITY_MEMBERS, getCommunityMembers);
   yield takeLatest(groupsTypes.GET_DISCOVER_GROUPS, getDiscoverGroups);
-}
-
-function* getJoinedGroups({payload}: {type: string; payload?: any}) {
-  try {
-    // @ts-ignore
-    const response = yield groupsDataHelper.getMyGroups(payload?.params);
-    yield put(groupsActions.setJoinedGroups(response.data));
-  } catch (e) {
-    yield put(groupsActions.setJoinedGroups([]));
-    console.log(
-      `\x1b[31m🐣️ saga getJoinedGroups`,
-      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
-    );
-  }
 }
 
 function* getGroupSearch({payload}: {type: string; payload: string}) {
@@ -336,7 +321,6 @@ function* cancelJoinGroup({
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
       yield put(groupsActions.getGroupDetail(payload.groupId, true));
-      yield put(groupsActions.getJoinedGroups());
 
       return;
     }
@@ -518,7 +502,6 @@ export function* refreshGroupMembers(groupId: number) {
   yield put(groupsActions.clearGroupMembers());
   yield put(groupsActions.getGroupMembers({groupId}));
   yield put(groupsActions.getGroupDetail(groupId));
-  yield put(groupsActions.getJoinedGroups());
 }
 
 function* approvalError(groupId: number, code: number, fullName?: string) {

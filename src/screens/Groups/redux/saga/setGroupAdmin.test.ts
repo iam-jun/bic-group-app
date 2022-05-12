@@ -24,7 +24,7 @@ describe('Set group admin', () => {
       .call(refreshGroupMembers, action.payload.groupId)
       .run()
       .then(({allEffects}: any) => {
-        expect(allEffects?.length).toEqual(8);
+        expect(allEffects?.length).toEqual(7);
       });
   });
 

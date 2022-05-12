@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, ActivityIndicator} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -39,6 +39,11 @@ const DiscoverGroups = ({route}: any) => {
   }, [communityId]);
 
   const onLoadMore = () => {
+    getDiscoverGroups();
+  };
+
+  const onRefresh = () => {
+    dispatch(actions.resetDiscoverGroups());
     getDiscoverGroups();
   };
 
@@ -103,10 +108,11 @@ const DiscoverGroups = ({route}: any) => {
       />
       <ListView
         data={data}
-        loading={loading}
         isFullView
         renderItem={renderItem}
         onEndReached={onLoadMore}
+        refreshing={loading}
+        onRefresh={onRefresh}
         ListEmptyComponent={renderEmptyComponent}
         ListFooterComponent={renderListFooter}
         renderItemSeparator={() => <Divider style={styles.divider} />}
