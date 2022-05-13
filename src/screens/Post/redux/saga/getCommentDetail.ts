@@ -36,10 +36,10 @@ function* getCommentDetail({
 
       yield put(postActions.updateAllCommentsByParentIdsWithComments(payload));
       const post = yield select(state =>
-        get(state, postKeySelector.postById(comment?.postId)),
+        get(state, `post.allPosts.${comment?.postId}`, {}),
       );
-      if (isEmpty(post)) {
-        post.id = comment?.id;
+      if (isEmpty(post) && comment?.postId) {
+        post.id = comment.postId;
         post.actor = actor;
         yield put(postActions.addToAllPosts({data: post}));
       }
