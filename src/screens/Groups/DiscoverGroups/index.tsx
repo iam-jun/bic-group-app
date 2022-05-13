@@ -1,5 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import React, {useEffect} from 'react';
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -12,7 +18,6 @@ import {ITheme} from '~/theme/interfaces';
 import actions from '../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
-import ListView from '~/beinComponents/list/ListView';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 
@@ -76,14 +81,13 @@ const DiscoverGroups = ({route}: any) => {
   };
 
   const renderEmptyComponent = () => {
+    if (loading) return null;
     return (
-      !loading && (
-        <EmptyScreen
-          source={'addUsers'}
-          title="communities:empty_groups:title"
-          description="communities:empty_groups:description"
-        />
-      )
+      <EmptyScreen
+        source={'addUsers'}
+        title="communities:empty_groups:title"
+        description="communities:empty_groups:description"
+      />
     );
   };
 
@@ -106,16 +110,23 @@ const DiscoverGroups = ({route}: any) => {
         title={'communities:title_discover_groups'}
         onSearchText={onSearchText}
       />
-      <ListView
+      <FlatList
+        testID="flatlist"
         data={data}
-        isFullView
         renderItem={renderItem}
+        keyExtractor={(item, index) => `groups_${item}_${index}`}
         onEndReached={onLoadMore}
-        refreshing={loading}
-        onRefresh={onRefresh}
+        onEndReachedThreshold={0.1}
         ListEmptyComponent={renderEmptyComponent}
         ListFooterComponent={renderListFooter}
-        renderItemSeparator={() => <Divider style={styles.divider} />}
+        ItemSeparatorComponent={() => <Divider style={styles.divider} />}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={onRefresh}
+            tintColor={theme.colors.borderDisable}
+          />
+        }
       />
     </ScreenWrapper>
   );
