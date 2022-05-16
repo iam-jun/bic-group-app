@@ -119,6 +119,7 @@ export interface IPostComments {
     hasPreviousPage?: boolean;
     hasNextPage?: boolean;
   };
+  content?: string;
 }
 
 export interface IPostActivity {
