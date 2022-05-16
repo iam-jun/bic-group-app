@@ -341,6 +341,9 @@ const groupsActions = {
     type: groupsTypes.SET_COMMUNITY_MEMBERS,
     payload,
   }),
+  resetCommunityMembers: () => ({
+    type: groupsTypes.RESET_COMMUNITY_MEMBERS,
+  }),
   getDiscoverGroups: (payload: {
     communityId: number;
     params?: IParamGetDiscoverGroups;

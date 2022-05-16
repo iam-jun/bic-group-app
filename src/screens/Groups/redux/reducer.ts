@@ -1,4 +1,4 @@
-import {ICommunity, ICommunityMembers} from '~/interfaces/ICommunity';
+import {ICommunity} from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/screens/Groups/redux/types';
 import {IUser} from '~/interfaces/IAuth';
@@ -85,7 +85,13 @@ export const groupInitState = {
   },
   communityDetail: {} as ICommunity,
   isGettingInfoDetail: false,
-  communityMembers: [] as ICommunityMembers[],
+  communityMembers: {
+    loading: false,
+    canLoadMore: true,
+    communityAdmins: {data: [], total: 0},
+    members: {data: [], total: 0},
+  },
+
   discoverGroups: {
     loading: false,
     data: [],
@@ -96,7 +102,12 @@ export const groupInitState = {
 
 function groupsReducer(state = groupInitState, action: any = {}) {
   const {type, payload} = action;
-  const {selectedUsers, pendingMemberRequests, discoverGroups} = state;
+  const {
+    selectedUsers,
+    pendingMemberRequests,
+    discoverGroups,
+    communityMembers,
+  } = state;
 
   switch (type) {
     case groupsTypes.SET_PRIVACY_MODAL_OPEN:
@@ -435,11 +446,47 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         isGettingInfoDetail: false,
         communityDetail: payload,
       };
-    case groupsTypes.SET_COMMUNITY_MEMBERS:
+
+    case groupsTypes.GET_COMMUNITY_MEMBERS:
       return {
         ...state,
-        communityMembers: payload || [],
+        communityMembers: {
+          ...communityMembers,
+          loading:
+            communityMembers.communityAdmins.data.length +
+              communityMembers.members.data.length ===
+            0,
+        },
       };
+    case groupsTypes.SET_COMMUNITY_MEMBERS: {
+      return {
+        ...state,
+        communityMembers: {
+          ...communityMembers,
+          loading: false,
+          canLoadMore:
+            payload.community_admin.data.length + payload.member.data.length ===
+            appConfig.recordsPerPage,
+          communityAdmins: {
+            data: [
+              ...communityMembers.communityAdmins.data,
+              ...payload.community_admin.data,
+            ],
+            total: payload.community_admin.user_count,
+          },
+          members: {
+            data: [...communityMembers.members.data, ...payload.member.data],
+            total: payload.member.user_count,
+          },
+        },
+      };
+    }
+    case groupsTypes.RESET_COMMUNITY_MEMBERS:
+      return {
+        ...state,
+        communityMembers: groupInitState.communityMembers,
+      };
+
     case groupsTypes.GET_DISCOVER_GROUPS:
       return {
         ...state,
