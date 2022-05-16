@@ -59,7 +59,7 @@ function* markAsReadAll(): any {
 
     // then set theirs is_read field by true to un-highlight them directly on device store
     notifications.forEach((item: any) => {
-      item.is_read = true;
+      item.isRead = true;
     });
 
     // finally, set notification back to store,
@@ -125,7 +125,7 @@ function* markAsRead({payload}: {payload: string; type: string}): any {
     // then set mapped notificaton's is_read field by true to un-highlight it directly on device store
     notifications.forEach((notificationGroup: any) => {
       if (notificationGroup.id === payload) {
-        notificationGroup.is_read = true;
+        notificationGroup.isRead = true;
       }
     });
 
