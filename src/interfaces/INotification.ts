@@ -1,6 +1,7 @@
 import {IGetStreamDispatch} from './common';
 
 import {
+  ICommentData,
   IGetStreamAudience,
   IGetStreamPost,
   IGetStreamUser,
@@ -8,19 +9,17 @@ import {
 } from './IPost';
 
 export interface IGetStreamNotificationActivity {
+  id: number;
   actor: IGetStreamUser;
-  foreign_id: string;
-  id: string;
-  notification_type: number;
-  object: IGetStreamPost | any;
-  origin?: string;
-  reaction?: IReaction;
-  target: string;
-  time: string;
-  verb: string;
-  audience: IGetStreamAudience;
-  parent_reaction?: IReaction;
   content?: string;
+  media: any;
+  mentions?: any;
+  reactionsCount?: any;
+  audience: IGetStreamAudience;
+  comment?: ICommentData;
+  reaction?: IReaction;
+  createdAt?: string;
+  updatedAt: string;
 }
 
 export interface IMarkAsReadAnActivity extends IGetStreamDispatch {
