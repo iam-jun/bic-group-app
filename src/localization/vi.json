@@ -605,7 +605,11 @@
     "no_notification_found_desc": "We’ll notify you when something arrives",
     "you_joined_group": "You joined {group_name}",
     "number_people": "{number} people",
-    "number_times": "{number} times"
+    "number_times": "{number} times",
+    "text_all": "Tất cả",
+    "text_unread": "Chưa đọc",
+    "text_mention": "Được nhắc đến",
+    "text_important": "Quan trọng"
   },
   "new_feature": {
     "title": "New feature",

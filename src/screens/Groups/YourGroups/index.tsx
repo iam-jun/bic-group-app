@@ -6,7 +6,7 @@ import {ITheme} from '~/theme/interfaces';
 
 import Header from '~/beinComponents/Header';
 import {debounce} from 'lodash';
-import CommunityMenu from '~/screens/Groups/Communities/components/CommunityMenu';
+import Filter from '~/beinComponents/Filter';
 import GroupJoined from '~/screens/Groups/YourGroups/GroupJoined';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useDispatch} from 'react-redux';
@@ -89,8 +89,9 @@ const YourGroups: FC<YourGroupsProps> = ({route}: YourGroupsProps) => {
         searchPlaceholder={t('input:search_group')}
       />
       <View style={styles.container}>
-        <CommunityMenu
+        <Filter
           testID={'your_groups.menu'}
+          itemTestID={'your_groups.menu.item'}
           style={{paddingVertical: spacing.padding.small}}
           data={menuData}
           selectedIndex={selectedIndex}

@@ -727,7 +727,11 @@
     "no_notification_found": "Your notification box is empty",
     "no_notification_found_desc": "We’ll notify you when something arrives",
     "number_people": "{number} people",
-    "number_times": "{number} times"
+    "number_times": "{number} times",
+    "text_all": "All",
+    "text_unread": "Unread",
+    "text_mention": "Mention",
+    "text_important": "Important"
   },
   "new_feature": {
     "title": "New feature",
