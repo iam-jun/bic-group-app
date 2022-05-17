@@ -13,11 +13,13 @@ import {getResourceUrl} from '~/configs/resourceConfig';
 import {ITheme} from '~/theme/interfaces';
 import Markdown from '~/beinComponents/Markdown';
 import postKeySelector from '../../redux/keySelector';
+import VideoPlayer from '~/beinComponents/VideoPlayer';
 
 export interface PostViewContentProps {
   postId: number;
   content?: string;
   images?: IActivityDataImage[];
+  videos?: any[];
   isPostDetail: boolean;
   onContentLayout?: () => void;
   isLite?: boolean;
@@ -27,6 +29,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
   postId,
   content = '',
   images = [],
+  videos = [],
   isPostDetail,
   onContentLayout,
   isLite,
@@ -107,11 +110,14 @@ const PostViewContent: FC<PostViewContentProps> = ({
     <View onLayout={onLayout}>
       <View style={styles.contentContainer}>{renderContent()}</View>
       {!isLite && (
-        <PostPhotoPreview
-          data={images || []}
-          uploadType={'postImage'}
-          enableGalleryModal
-        />
+        <>
+          <PostPhotoPreview
+            data={images || []}
+            uploadType={'postImage'}
+            enableGalleryModal
+          />
+          <VideoPlayer data={videos?.[0]} />
+        </>
       )}
     </View>
   );

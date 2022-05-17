@@ -260,6 +260,7 @@ const icons = {
   Compass: 'Compass',
   Dashboard: 'Dashboard',
   iconLock,
+  PlayCircle: 'PlayCircle',
   Sitemap: 'Sitemap',
   iconSecret,
 };
