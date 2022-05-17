@@ -136,7 +136,8 @@
     },
     "text_not_now": "Not now",
     "text_go_to_settings": "Go to Settings",
-    "text_help": "Help"
+    "text_help": "Help",
+    "text_type_search_keyword": "Type search keyword to see the search results"
   },
   "auth": {
     "text_kickout_title": "Notice",

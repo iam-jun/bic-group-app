@@ -91,6 +91,12 @@ export const groupInitState = {
     communityAdmins: {data: [], total: 0},
     members: {data: [], total: 0},
   },
+  searchMembers: {
+    loading: false,
+    canLoadMore: true,
+    communityAdmins: {data: [], total: 0},
+    members: {data: [], total: 0},
+  },
 
   discoverGroups: {
     loading: false,
@@ -107,6 +113,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     pendingMemberRequests,
     discoverGroups,
     communityMembers,
+    searchMembers,
   } = state;
 
   switch (type) {
@@ -459,6 +466,9 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
     case groupsTypes.SET_COMMUNITY_MEMBERS: {
+      console.log(
+        [...communityMembers.members.data, ...payload.member.data].length,
+      );
       return {
         ...state,
         communityMembers: {
@@ -486,6 +496,52 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         ...state,
         communityMembers: groupInitState.communityMembers,
       };
+
+    case groupsTypes.RESET_SEARCH_MEMBERS:
+      return {
+        ...state,
+        searchMembers: groupInitState.searchMembers,
+      };
+    case groupsTypes.GET_SEARCH_MEMBERS:
+      return {
+        ...state,
+        communityMembers: {
+          ...searchMembers,
+          loading:
+            searchMembers.communityAdmins.data.length +
+              searchMembers.members.data.length ===
+            0,
+        },
+      };
+    case groupsTypes.SET_SEARCH_MEMBERS: {
+      const newState = {
+        ...state,
+        searchMembers: {
+          ...searchMembers,
+          loading: false,
+          canLoadMore:
+            payload.community_admin.data.length + payload.member.data.length ===
+            appConfig.recordsPerPage,
+          communityAdmins: {
+            data: [
+              ...searchMembers.communityAdmins.data,
+              ...payload.community_admin.data,
+            ],
+            total: payload.community_admin.user_count,
+          },
+          members: {
+            data: [...searchMembers.members.data, ...payload.member.data],
+            total: payload.member.user_count,
+          },
+        },
+      };
+      console.log(
+        'memberData: ',
+        newState?.communityMembers?.members?.data?.length,
+      );
+
+      return newState;
+    }
 
     case groupsTypes.GET_DISCOVER_GROUPS:
       return {

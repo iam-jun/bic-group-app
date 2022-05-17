@@ -92,7 +92,8 @@
     },
     "text_not_now": "Không phải bây giờ",
     "text_go_to_settings": "Đi tới Cài đặt",
-    "text_help": "Trợ giúp"
+    "text_help": "Trợ giúp",
+    "text_type_search_keyword": "Gõ từ khóa để tìm kiếm"
   },
   "auth": {
     "text_kickout_title": "Notice",
