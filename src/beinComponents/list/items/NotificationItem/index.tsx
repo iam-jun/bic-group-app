@@ -15,20 +15,24 @@ export interface NotificationItemProps {
   activities: IGetStreamNotificationActivity[];
   verb: string;
   isRead: boolean;
-  is_seen: boolean;
-  activity_count: number;
-  actor_count: number;
+  isSeen: boolean;
   createdAt: string;
+  updatedAt: string;
   isActive?: boolean;
   extra: INotiExtraData;
+  group: string;
+  activityCount: number;
+  actorCount: number;
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
   activities,
   isRead,
-  createdAt,
+  updatedAt,
   isActive = false,
   extra,
+  verb,
+  actorCount,
 }: NotificationItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
@@ -62,11 +66,14 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         <NotificationAvatar actor={extra.actor} />
         <NotificationContent
           description={extra?.description || ''}
+          defaultContent={extra?.content || ''}
           activities={activities}
+          verb={verb}
+          actorCount={actorCount}
         />
         <TimeView
           testID="notification_item.time_view"
-          time={createdAt}
+          time={updatedAt}
           style={styles.timeCreated}
           type={'short'}
         />
