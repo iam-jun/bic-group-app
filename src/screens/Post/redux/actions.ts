@@ -89,6 +89,10 @@ const postActions = {
     type: postTypes.SET_CREATE_POST_IMAGES_DRAFT,
     payload,
   }),
+  setCreatePostVideo: (payload: any) => ({
+    type: postTypes.SET_CREATE_POST_VIDEO,
+    payload,
+  }),
   setCreatePostInitAudiences: (payload?: IPostAudience) => ({
     type: postTypes.SET_CREATE_POST_INIT_AUDIENCES,
     payload,

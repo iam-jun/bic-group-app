@@ -657,5 +657,13 @@
     "text_other_member_other": "{{count}} người khác là thành viên",
     "text_is_member": "là thành viên",
     "title_discover_groups": "Khám phá các nhóm"
+  },
+  "upload": {
+    "text_create_video_id_request_failed": "Có lỗi khi yêu cầu tạo id",
+    "text_create_video_id_response_failed": "Có lỗi khi tạo id",
+    "text_upload_video_request_failed": "Có lỗi khi yêu cầu tải video",
+    "text_upload_video_response_failed": "Có lỗi khi tải video",
+    "text_create_media_request_failed": "Có lỗi khi yêu cầu tạo media",
+    "text_create_media_response_failed": "Có lỗi khi tạo media"
   }
 }

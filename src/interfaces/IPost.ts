@@ -1,5 +1,6 @@
 import {IFilePicked} from '~/interfaces/common';
 import {ReactionType} from '~/constants/reactions';
+import {IUploadType} from '~/configs/resourceConfig';
 
 export interface IPostAudience {
   users?: IAudienceUser[];
@@ -504,4 +505,14 @@ export interface IPayloadDeleteComment {
 export interface IPayloadPutMarkAsRead {
   postId: number;
   callback?: (isSuccess: boolean) => void;
+}
+
+export interface IPostCreateMediaVideo {
+  uploadId: string;
+  uploadType: IUploadType;
+  url?: string;
+  name?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
 }

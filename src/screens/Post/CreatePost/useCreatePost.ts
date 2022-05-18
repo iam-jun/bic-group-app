@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
-import {validateImages} from '~/screens/Post/CreatePost/helper';
+import {validateImages, validateVideo} from '~/screens/Post/CreatePost/helper';
 import modalActions from '~/store/modal/actions';
 import {
   IAudience,
@@ -62,7 +62,9 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
   const initGroupsRef = useRef<any>([]);
   const initUsersRef = useRef<any>([]);
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
+  const selectingVideo = useKeySelector(postKeySelector.createPost.video);
   const {images} = validateImages(selectingImages, t);
+  const {video} = validateVideo(selectingVideo, t);
 
   const tempMentions = useKeySelector('mentionInput.tempSelected') || {};
 
@@ -474,6 +476,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     sPostData,
     createPostData,
     images,
+    video,
     disableButtonPost,
     isEditPost,
     isEditDraftPost,

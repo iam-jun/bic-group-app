@@ -38,6 +38,8 @@ import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
 import {padding} from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
+import UploadingFile from '~/beinComponents/UploadingFile';
+import {IFilePicked} from '~/interfaces/common';
 
 export interface CreatePostProps {
   route?: {
@@ -86,6 +88,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     sPostData,
     createPostData,
     images,
+    video,
     disableButtonPost,
     isEditPost,
     isEditDraftPost,
@@ -363,6 +366,11 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                   onPress={() =>
                     rootNavigation.navigate(homeStack.postSelectImage)
                   }
+                />
+                <UploadingFile
+                  uploadType={uploadTypes.postVideo}
+                  file={video as IFilePicked}
+                  fileName={video?.name}
                 />
               </View>
             </Animated.View>

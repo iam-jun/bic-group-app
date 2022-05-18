@@ -38,3 +38,12 @@ export const validateImages = (
   });
   return {imageError, images};
 };
+
+export const validateVideo = (
+  selectingVideo: IFilePicked | IActivityDataImage,
+  t: any,
+) => {
+  const videoError = '';
+  const video = selectingVideo;
+  return {video, videoError};
+};
