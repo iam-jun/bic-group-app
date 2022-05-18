@@ -18,7 +18,6 @@ import images from '~/resources/images';
 import Icon from '~/beinComponents/Icon';
 
 interface ContentDataProps {
-  keyId?: string;
   style?: StyleProp<ViewStyle>;
   sectionList: any[];
   loading: boolean;
@@ -29,7 +28,6 @@ interface ContentDataProps {
 }
 
 const ContentData = ({
-  keyId,
   style,
   sectionList,
   loading,
@@ -42,11 +40,11 @@ const ContentData = ({
   const styles = createStyles(theme);
   const {colors} = theme;
 
-  const renderSectionHeader = ({section: {title, total}}: any) => {
+  const renderSectionHeader = ({section: {title, user_count}}: any) => {
     return (
       <View style={styles.sectionHeader}>
         <Text.BodyM
-          color={colors.textPrimary}>{`${title} • ${total}`}</Text.BodyM>
+          color={colors.textPrimary}>{`${title} • ${user_count}`}</Text.BodyM>
       </View>
     );
   };
@@ -98,11 +96,8 @@ const ContentData = ({
     );
   };
 
-  console.log('keyId', keyId);
-
   return (
     <SectionList
-      key={keyId}
       style={[styles.content, style]}
       sections={sectionList}
       renderItem={renderItem}

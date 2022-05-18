@@ -30,6 +30,7 @@ const SearchBaseModal = ({
   const onPressBack = () => {
     setSearchText('');
     onClose?.();
+    onChangeText?.('');
   };
 
   const _onChangeText = (text: string) => {

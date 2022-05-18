@@ -34,7 +34,7 @@ const SearchMemberModal = ({
   const [sectionList, setSectionList] = useState([]);
   const styles = createStyles(theme);
 
-  const {loading, canLoadMore, communityAdmins, members} = useKeySelector(
+  const {loading, canLoadMore, community_admin, member} = useKeySelector(
     groupsKeySelector.searchMembers,
   );
 
@@ -42,18 +42,18 @@ const SearchMemberModal = ({
     const newSectionList: any = [
       {
         title: 'Admins',
-        data: communityAdmins.data,
-        total: communityAdmins.total,
+        data: community_admin.data,
+        user_count: community_admin.user_count,
       },
       {
         title: 'Members',
-        data: members.data,
-        total: members.total,
+        data: member.data,
+        user_count: member.user_count,
       },
     ];
 
     setSectionList(newSectionList);
-  }, [communityAdmins.data, members.data]);
+  }, [community_admin.data, member.data]);
 
   const getSearchMembers = (searchText: string) => {
     dispatch(
@@ -88,7 +88,6 @@ const SearchMemberModal = ({
       onChangeText={onSearchMember}>
       {!!searchText ? (
         <ContentData
-          keyId={'searchmembers'}
           sectionList={sectionList}
           loading={loading}
           canLoadMore={canLoadMore}

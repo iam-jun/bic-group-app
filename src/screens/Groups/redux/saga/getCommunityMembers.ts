@@ -15,15 +15,14 @@ export default function* getCommunityMembers({
   try {
     const {groups} = yield select();
     const {communityId, params} = payload;
-    const {canLoadMore, communityAdmins, members} = groups.communityMembers;
+    const {canLoadMore, community_admin, member} = groups.communityMembers;
 
     if (!canLoadMore) return;
-    console.log('getCommunityMembers');
 
     // @ts-ignore
     const resp = yield call(groupsDataHelper.getCommunityMembers, communityId, {
       limit: appConfig.recordsPerPage,
-      offset: communityAdmins.data.length + members.data.length,
+      offset: community_admin.data.length + member.data.length,
       ...params,
     });
 
@@ -43,14 +42,14 @@ export function* getSearchMembers({
   try {
     const {groups} = yield select();
     const {communityId, params} = payload;
-    const {canLoadMore, communityAdmins, members} = groups.searchMembers;
+    const {canLoadMore, community_admin, member} = groups.searchMembers;
 
     if (!canLoadMore) return;
 
     // @ts-ignore
     const resp = yield call(groupsDataHelper.getCommunityMembers, communityId, {
       limit: appConfig.recordsPerPage,
-      offset: communityAdmins.data.length + members.data.length,
+      offset: community_admin.data.length + member.data.length,
       ...params,
     });
 

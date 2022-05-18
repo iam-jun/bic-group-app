@@ -24,7 +24,7 @@ const CommunityMembers = ({route}: any) => {
   const [sectionList, setSectionList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
 
-  const {loading, canLoadMore, communityAdmins, members} = useKeySelector(
+  const {loading, canLoadMore, community_admin, member} = useKeySelector(
     groupsKeySelector.communityMembers,
   );
 
@@ -37,7 +37,6 @@ const CommunityMembers = ({route}: any) => {
   };
 
   useEffect(() => {
-    console.log('effect');
     getCommunityMembers();
 
     return () => {
@@ -46,33 +45,29 @@ const CommunityMembers = ({route}: any) => {
   }, [communityId]);
 
   useEffect(() => {
-    console.log('member data:', members?.data?.length);
-
     const newSectionList: any = [
       {
         title: 'Admins',
-        data: communityAdmins.data,
-        total: communityAdmins.total,
+        data: community_admin.data,
+        user_count: community_admin.user_count,
       },
       {
         title: 'Members',
-        data: members.data,
-        total: members.total,
+        data: member.data,
+        user_count: member.user_count,
       },
     ];
 
     setSectionList(newSectionList);
-  }, [communityAdmins.data, members.data]);
+  }, [community_admin.data, member.data]);
 
   const onLoadMore = () => {
-    console.log('onLoadMore');
-    //getCommunityMembers();
+    getCommunityMembers();
   };
 
   const onRefresh = () => {
-    console.log('onRefresh');
     resetCommunityMembers();
-    //getCommunityMembers();
+    getCommunityMembers();
   };
 
   const onPressSearch = () => {
@@ -102,7 +97,6 @@ const CommunityMembers = ({route}: any) => {
       </View>
 
       <ContentData
-        keyId={'communitymembers'}
         sectionList={sectionList}
         loading={loading}
         canLoadMore={canLoadMore}

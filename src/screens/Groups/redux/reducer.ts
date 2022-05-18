@@ -88,14 +88,14 @@ export const groupInitState = {
   communityMembers: {
     loading: false,
     canLoadMore: true,
-    communityAdmins: {data: [], total: 0},
-    members: {data: [], total: 0},
+    community_admin: {data: [], user_count: 0},
+    member: {data: [], user_count: 0},
   },
   searchMembers: {
     loading: false,
     canLoadMore: true,
-    communityAdmins: {data: [], total: 0},
-    members: {data: [], total: 0},
+    community_admin: {data: [], user_count: 0},
+    member: {data: [], user_count: 0},
   },
 
   discoverGroups: {
@@ -460,15 +460,12 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         communityMembers: {
           ...communityMembers,
           loading:
-            communityMembers.communityAdmins.data.length +
-              communityMembers.members.data.length ===
+            communityMembers.community_admin.data.length +
+              communityMembers.member.data.length ===
             0,
         },
       };
     case groupsTypes.SET_COMMUNITY_MEMBERS: {
-      console.log(
-        [...communityMembers.members.data, ...payload.member.data].length,
-      );
       return {
         ...state,
         communityMembers: {
@@ -477,16 +474,16 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           canLoadMore:
             payload.community_admin.data.length + payload.member.data.length ===
             appConfig.recordsPerPage,
-          communityAdmins: {
+          community_admin: {
             data: [
-              ...communityMembers.communityAdmins.data,
+              ...communityMembers.community_admin.data,
               ...payload.community_admin.data,
             ],
-            total: payload.community_admin.user_count,
+            user_count: payload.community_admin.user_count,
           },
-          members: {
-            data: [...communityMembers.members.data, ...payload.member.data],
-            total: payload.member.user_count,
+          member: {
+            data: [...communityMembers.member.data, ...payload.member.data],
+            user_count: payload.member.user_count,
           },
         },
       };
@@ -505,16 +502,16 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     case groupsTypes.GET_SEARCH_MEMBERS:
       return {
         ...state,
-        communityMembers: {
+        searchMembers: {
           ...searchMembers,
           loading:
-            searchMembers.communityAdmins.data.length +
-              searchMembers.members.data.length ===
+            searchMembers.community_admin.data.length +
+              searchMembers.member.data.length ===
             0,
         },
       };
     case groupsTypes.SET_SEARCH_MEMBERS: {
-      const newState = {
+      return {
         ...state,
         searchMembers: {
           ...searchMembers,
@@ -522,25 +519,19 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           canLoadMore:
             payload.community_admin.data.length + payload.member.data.length ===
             appConfig.recordsPerPage,
-          communityAdmins: {
+          community_admin: {
             data: [
-              ...searchMembers.communityAdmins.data,
+              ...searchMembers.community_admin.data,
               ...payload.community_admin.data,
             ],
-            total: payload.community_admin.user_count,
+            user_count: payload.community_admin.user_count,
           },
-          members: {
-            data: [...searchMembers.members.data, ...payload.member.data],
-            total: payload.member.user_count,
+          member: {
+            data: [...searchMembers.member.data, ...payload.member.data],
+            user_count: payload.member.user_count,
           },
         },
       };
-      console.log(
-        'memberData: ',
-        newState?.communityMembers?.members?.data?.length,
-      );
-
-      return newState;
     }
 
     case groupsTypes.GET_DISCOVER_GROUPS:
