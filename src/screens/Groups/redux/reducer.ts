@@ -454,37 +454,12 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         communityDetail: payload,
       };
 
-    case groupsTypes.GET_COMMUNITY_MEMBERS:
-      return {
-        ...state,
-        communityMembers: {
-          ...communityMembers,
-          loading:
-            communityMembers.community_admin.data.length +
-              communityMembers.member.data.length ===
-            0,
-        },
-      };
     case groupsTypes.SET_COMMUNITY_MEMBERS: {
       return {
         ...state,
         communityMembers: {
           ...communityMembers,
-          loading: false,
-          canLoadMore:
-            payload.community_admin.data.length + payload.member.data.length ===
-            appConfig.recordsPerPage,
-          community_admin: {
-            data: [
-              ...communityMembers.community_admin.data,
-              ...payload.community_admin.data,
-            ],
-            user_count: payload.community_admin.user_count,
-          },
-          member: {
-            data: [...communityMembers.member.data, ...payload.member.data],
-            user_count: payload.member.user_count,
-          },
+          ...payload,
         },
       };
     }
@@ -499,37 +474,12 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         ...state,
         searchMembers: groupInitState.searchMembers,
       };
-    case groupsTypes.GET_SEARCH_MEMBERS:
-      return {
-        ...state,
-        searchMembers: {
-          ...searchMembers,
-          loading:
-            searchMembers.community_admin.data.length +
-              searchMembers.member.data.length ===
-            0,
-        },
-      };
     case groupsTypes.SET_SEARCH_MEMBERS: {
       return {
         ...state,
         searchMembers: {
           ...searchMembers,
-          loading: false,
-          canLoadMore:
-            payload.community_admin.data.length + payload.member.data.length ===
-            appConfig.recordsPerPage,
-          community_admin: {
-            data: [
-              ...searchMembers.community_admin.data,
-              ...payload.community_admin.data,
-            ],
-            user_count: payload.community_admin.user_count,
-          },
-          member: {
-            data: [...searchMembers.member.data, ...payload.member.data],
-            user_count: payload.member.user_count,
-          },
+          ...payload,
         },
       };
     }

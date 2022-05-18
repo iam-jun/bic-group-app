@@ -46,3 +46,10 @@ export interface IParamGetDiscoverGroups {
   sort?: string;
   preview_members?: boolean;
 }
+
+export interface ISetMembers {
+  loading?: boolean;
+  canLoadMore?: boolean;
+  community_admin?: {data: ICommunityMembers[]; user_count: number};
+  member?: {data: ICommunityMembers[]; user_count: number};
+}
