@@ -54,7 +54,7 @@ const PageContent = ({
   };
 
   const onPressMembers = () => {
-    // TODO: add navigation to Members page
+    rootNavigation.navigate(groupStack.communityMembers, {communityId});
   };
 
   const loadMoreData = () => {
