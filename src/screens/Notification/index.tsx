@@ -74,7 +74,6 @@ const Notification = () => {
   };
 
   const onPressFilterItem = (item: any, index: number) => {
-    console.log('item>>>>>>>>>>>>>>', item);
     setSelectedIndex(index);
   };
 
@@ -83,91 +82,73 @@ const Notification = () => {
   };
 
   const _onItemPress = (item?: any) => {
-    // note: item is a notification group
-    // get first activity in notification group
-    // for now make the navigation to be simple by redirect to post detail screen
-    // for feature, check notification type to implement more complex requirements
-    const act = item.activities[0];
-    if (Platform.OS === 'web') {
-      setCurrentPath(item.id);
-    }
-
+    const type = item?.extra?.type || undefined;
+    const act = item?.activities?.[0];
     try {
-      if (act.notification_type !== undefined) {
-        switch (act.notification_type) {
-          case NOTIFICATION_TYPE.MENTION: {
-            const postAct = act.object;
+      if (type !== undefined) {
+        switch (type) {
+          case NOTIFICATION_TYPE.POST.CREATED_IN_ONE_GROUP:
+          case NOTIFICATION_TYPE.POST.CREATED_IN_MULTIPLE_GROUPS:
+          case NOTIFICATION_TYPE.POST.IMPORTANT.CREATED_IN_ONE_GROUP:
+          case NOTIFICATION_TYPE.POST.IMPORTANT.CREATED_IN_MULTIPLE_GROUPS:
+          case NOTIFICATION_TYPE.POST.MENTION_IN_ONE_GROUP:
+          case NOTIFICATION_TYPE.POST.MENTION_IN_MULTIPLE_GROUPS:
+          case NOTIFICATION_TYPE.POST.VIDEO.PROCESSING:
+          case NOTIFICATION_TYPE.POST.VIDEO.PUBLISHED:
+          case NOTIFICATION_TYPE.REACT.POST_CREATOR:
+          case NOTIFICATION_TYPE.REACT.POST_CREATOR_AGGREGATED: {
             rootNavigation.navigate(homeStack.postDetail, {
-              post_id: postAct?.id,
+              post_id: act?.id,
               noti_id: item.id,
             });
             break;
           }
-          // notification type 18, 8, 22, 17
-          // TODO, this need to be updated for forcusing comment
-          // for now can not focus comment if the comment hasn't loaded in list yet
-          case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED:
-          case NOTIFICATION_TYPE.NEW_REPLY_TO_YOUR_COMMENT:
-          case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_ARE_MENTIONED_IN_ITS_REPLY:
-          case NOTIFICATION_TYPE.NEW_REPLY_TO_COMMENT_YOU_REPLIED: {
-            const postAct = act.object;
+          case NOTIFICATION_TYPE.POST.VIDEO.FAILED: {
+            rootNavigation.navigate(homeStack.draftPost);
+            break;
+          }
+          case NOTIFICATION_TYPE.COMMENT.POST_CREATOR:
+          case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_POST:
+          case NOTIFICATION_TYPE.COMMENT.USER_COMMENTED_ON_POST: {
             rootNavigation.navigate(homeStack.postDetail, {
-              post_id: postAct?.id,
+              post_id: act?.id,
+              noti_id: item.id,
               focus_comment: true,
-              noti_id: item.id,
             });
             break;
           }
-          // notification type 7, 19, 20, 21
-          // TODO, this need to be updated for forcusing comment
-          // for now can not focus comment if the comment hasn't loaded in list yet
-          case NOTIFICATION_TYPE.NEW_COMMENT_TO_YOUR_POST:
-          case NOTIFICATION_TYPE.NEW_COMMENT_TO_A_POST:
-          case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED_IN_COMMENT:
-          case NOTIFICATION_TYPE.NEW_COMMENT_TO_POST_YOU_ARE_MENTIONED: {
-            const postAct = act.object;
-            rootNavigation.navigate(homeStack.postDetail, {
-              post_id: postAct?.id,
-              focus_comment: true,
-              noti_id: item.id,
+
+          case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_PREV_COMMENT:
+          case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_COMMENT:
+          case NOTIFICATION_TYPE.REACT.COMMENT_CREATOR:
+          case NOTIFICATION_TYPE.REACT.COMMENT_CREATOR_AGGREGATED: {
+            rootNavigation.navigate(homeStack.commentDetail, {
+              postId: act?.id,
+              commentId: act?.comment?.id,
             });
             break;
           }
-          // notification type 9, this is ok
-          case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_POST: {
-            const postAct = act.object;
-            rootNavigation.navigate(homeStack.postDetail, {
-              post_id: postAct?.id,
-              noti_id: item.id,
-            });
-            break;
-          }
-          // notification type 10
-          // TODO, this need to be updated for forcusing comment
-          // for now can not focus comment if the comment hasn't loaded in list yet
-          case NOTIFICATION_TYPE.NEW_REACTION_TO_YOUR_COMMENT: {
-            const postAct = act.object;
-            rootNavigation.navigate(homeStack.postDetail, {
-              post_id: postAct?.id,
-              focus_comment: true,
-              noti_id: item.id,
-            });
-            break;
-          }
-          // noti type 16
-          case NOTIFICATION_TYPE.MENTION_YOU_IN_COMMENT: {
-            const postAct = act.object;
-            rootNavigation.navigate(homeStack.postDetail, {
-              post_id: postAct?.id,
-              focus_comment: true,
-              noti_id: item.id,
+          case NOTIFICATION_TYPE.COMMENT.CREATOR_OF_THE_PARENT_COMMENT:
+          case NOTIFICATION_TYPE.COMMENT
+            .CREATOR_OF_THE_PARENT_COMMENT_AGGREGATED:
+          case NOTIFICATION_TYPE.COMMENT
+            .USER_REPLIED_TO_THE_SAME_PARENT_COMMENT:
+          case NOTIFICATION_TYPE.COMMENT
+            .USER_REPLIED_TO_THE_SAME_PARENT_COMMENT_AGGREGATED:
+          case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_REPLIED_COMMENT:
+          case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_PREV_REPLIED_COMMENT:
+          case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_PARENT_COMMENT:
+          case NOTIFICATION_TYPE.COMMENT
+            .USER_MENTIONED_IN_PARENT_COMMENT_AGGREGATED: {
+            rootNavigation.navigate(homeStack.commentDetail, {
+              postId: act?.id,
+              commentId: act?.comment?.child?.id,
+              parentId: act?.comment?.id,
             });
             break;
           }
           default:
-            console.log(
-              `Notification type ${act.notification_type} have not implemented yet`,
-            );
+            console.log(`Notification type ${type} have not implemented yet`);
             break;
         }
       } else {
@@ -181,7 +162,7 @@ const Notification = () => {
       console.log(
         '\x1b[33m',
         'Navigation for this activity has error',
-        act,
+        type,
         '\x1b[0m',
       );
     }

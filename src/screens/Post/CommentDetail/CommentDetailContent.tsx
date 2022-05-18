@@ -367,8 +367,6 @@ const getListChildComment = (
   );
 
   const childrenComments = listData?.[parentCommentPosition]?.child?.list || [];
-  console.log('listData', listData, '>>>>>>>>>>', parentCommentId);
-
   return {
     childrenComments,
     newCommentData: listData?.[parentCommentPosition],
