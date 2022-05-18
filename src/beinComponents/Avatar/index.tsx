@@ -10,6 +10,9 @@ const Tiny: React.FC<AvatarProps> = (props: AvatarProps) => (
 const Small: React.FC<AvatarProps> = (props: AvatarProps) => (
   <AvatarComponent variant={'small'} {...props} />
 );
+const SmallAlt: React.FC<AvatarProps> = (props: AvatarProps) => (
+  <AvatarComponent variant={'smallAlt'} {...props} />
+);
 const Medium: React.FC<AvatarProps> = (props: AvatarProps) => (
   <AvatarComponent variant={'medium'} {...props} />
 );
@@ -26,6 +29,7 @@ const UltraSuperLarge: React.FC<AvatarProps> = (props: AvatarProps) => (
 const Avatar = Object.assign(AvatarComponent, {
   Tiny,
   Small,
+  SmallAlt,
   Medium,
   Large,
   LargeAlt,

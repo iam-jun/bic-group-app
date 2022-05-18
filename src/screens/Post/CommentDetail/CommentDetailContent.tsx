@@ -21,6 +21,7 @@ import API_ERROR_CODE from '~/constants/apiErrorCode';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import LoadMoreComment from '../components/LoadMoreComment';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {parseInt} from 'lodash';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -48,14 +49,15 @@ const CommentDetailContent = (props: any) => {
   const postDetailLoadingState = useKeySelector(
     postKeySelector.loadingGetPostDetail,
   );
-
+  const newParentId =
+    typeof parentId === 'string' ? parseInt(parentId) : parentId;
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const {
     childrenComments = [],
     newCommentData,
     viewMore = false,
     notFoundComment,
-  } = getListChildComment(comments, !!parentId ? parentId : commentId);
+  } = getListChildComment(comments, !!newParentId ? newParentId : commentId);
 
   const scrollToCommentsPosition = useKeySelector(
     postKeySelector.scrollToCommentsPosition,
@@ -365,7 +367,6 @@ const getListChildComment = (
   );
 
   const childrenComments = listData?.[parentCommentPosition]?.child?.list || [];
-
   return {
     childrenComments,
     newCommentData: listData?.[parentCommentPosition],

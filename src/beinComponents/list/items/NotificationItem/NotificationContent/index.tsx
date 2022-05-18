@@ -76,7 +76,6 @@ const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
-      marginStart: spacing?.margin.base,
       flex: 1,
     },
     header: {

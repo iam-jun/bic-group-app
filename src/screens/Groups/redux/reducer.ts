@@ -1,4 +1,4 @@
-import {ICommunity, ICommunityMembers} from '~/interfaces/ICommunity';
+import {ICommunity} from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/screens/Groups/redux/types';
 import {IUser} from '~/interfaces/IAuth';
@@ -85,7 +85,19 @@ export const groupInitState = {
   },
   communityDetail: {} as ICommunity,
   isGettingInfoDetail: false,
-  communityMembers: [] as ICommunityMembers[],
+  communityMembers: {
+    loading: false,
+    canLoadMore: true,
+    community_admin: {data: [], user_count: 0},
+    member: {data: [], user_count: 0},
+  },
+  searchMembers: {
+    loading: false,
+    canLoadMore: true,
+    community_admin: {data: [], user_count: 0},
+    member: {data: [], user_count: 0},
+  },
+
   discoverGroups: {
     loading: false,
     data: [],
@@ -96,7 +108,13 @@ export const groupInitState = {
 
 function groupsReducer(state = groupInitState, action: any = {}) {
   const {type, payload} = action;
-  const {selectedUsers, pendingMemberRequests, discoverGroups} = state;
+  const {
+    selectedUsers,
+    pendingMemberRequests,
+    discoverGroups,
+    communityMembers,
+    searchMembers,
+  } = state;
 
   switch (type) {
     case groupsTypes.SET_PRIVACY_MODAL_OPEN:
@@ -435,11 +453,37 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         isGettingInfoDetail: false,
         communityDetail: payload,
       };
-    case groupsTypes.SET_COMMUNITY_MEMBERS:
+
+    case groupsTypes.SET_COMMUNITY_MEMBERS: {
       return {
         ...state,
-        communityMembers: payload || [],
+        communityMembers: {
+          ...communityMembers,
+          ...payload,
+        },
       };
+    }
+    case groupsTypes.RESET_COMMUNITY_MEMBERS:
+      return {
+        ...state,
+        communityMembers: groupInitState.communityMembers,
+      };
+
+    case groupsTypes.RESET_SEARCH_MEMBERS:
+      return {
+        ...state,
+        searchMembers: groupInitState.searchMembers,
+      };
+    case groupsTypes.SET_SEARCH_MEMBERS: {
+      return {
+        ...state,
+        searchMembers: {
+          ...searchMembers,
+          ...payload,
+        },
+      };
+    }
+
     case groupsTypes.GET_DISCOVER_GROUPS:
       return {
         ...state,

@@ -120,7 +120,6 @@ export interface IPostComments {
     hasPreviousPage?: boolean;
     hasNextPage?: boolean;
   };
-  content?: string;
 }
 
 export interface IPostActivity {
@@ -236,6 +235,7 @@ export interface IGetStreamUser {
     fullname?: string;
     username?: string;
   };
+  avatar?: string;
 }
 
 export interface IRequestPostComment {
@@ -515,4 +515,15 @@ export interface IPostCreateMediaVideo {
   extension?: string;
   mimeType?: string;
   size?: number;
+}
+
+export interface IGetStreamCommentData {
+  id: number;
+  actor: IGetStreamUser;
+  mentions?: any;
+  content?: string;
+  media?: any;
+  reaction?: IReaction;
+  reactionsCount?: IReactionCounts;
+  child?: IGetStreamCommentData;
 }

@@ -35,7 +35,7 @@ export interface IParamGetCommunityMembers {
 export type COMMUNITY_ROLE = 'COMMUNITY_ADMIN' | 'MEMBER';
 
 export interface ICommunityMembers extends IPreviewMember {
-  roles: COMMUNITY_ROLE[];
+  roles: {name: COMMUNITY_ROLE};
   chat_user_id: string;
 }
 
@@ -45,4 +45,11 @@ export interface IParamGetDiscoverGroups {
   limit?: number;
   sort?: string;
   preview_members?: boolean;
+}
+
+export interface ISetMembers {
+  loading?: boolean;
+  canLoadMore?: boolean;
+  community_admin?: {data: ICommunityMembers[]; user_count: number};
+  member?: {data: ICommunityMembers[]; user_count: number};
 }
