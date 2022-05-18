@@ -92,7 +92,8 @@
     },
     "text_not_now": "Không phải bây giờ",
     "text_go_to_settings": "Đi tới Cài đặt",
-    "text_help": "Trợ giúp"
+    "text_help": "Trợ giúp",
+    "text_type_search_keyword": "Gõ từ khóa để tìm kiếm"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -537,6 +538,7 @@
     "text_members_other": "thành viên",
     "search_results": "Kết quả tìm kiếm",
     "all_groups": "Tất cả",
+    "text_search_member": "Tìm kiềm thành viên",
     "group_menu": {
       "label_copy_group_link": "Sao chép đường dẫn nhóm",
       "label_leave_group": "Rời nhóm",
@@ -605,7 +607,11 @@
     "no_notification_found_desc": "We’ll notify you when something arrives",
     "you_joined_group": "You joined {group_name}",
     "number_people": "{number} people",
-    "number_times": "{number} times"
+    "number_times": "{number} times",
+    "text_all": "Tất cả",
+    "text_unread": "Chưa đọc",
+    "text_mention": "Được nhắc đến",
+    "text_important": "Quan trọng"
   },
   "new_feature": {
     "title": "New feature",

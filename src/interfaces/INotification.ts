@@ -1,8 +1,8 @@
 import {IGetStreamDispatch} from './common';
 
 import {
-  ICommentData,
   IGetStreamAudience,
+  IGetStreamCommentData,
   IGetStreamPost,
   IGetStreamUser,
   IReaction,
@@ -16,7 +16,7 @@ export interface IGetStreamNotificationActivity {
   mentions?: any;
   reactionsCount?: any;
   audience: IGetStreamAudience;
-  comment?: ICommentData;
+  comment?: IGetStreamCommentData;
   reaction?: IReaction;
   createdAt?: string;
   updatedAt: string;

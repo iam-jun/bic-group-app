@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CommunityMenu component renders correctly 1`] = `
+exports[`Filter component renders correctly 1`] = `
 <View
   style={
     Array [
@@ -14,7 +14,7 @@ exports[`CommunityMenu component renders correctly 1`] = `
       undefined,
     ]
   }
-  testID="community_menu"
+  testID="filter"
 >
   <RCTScrollView
     alwaysBounceHorizontal={false}
@@ -53,7 +53,7 @@ exports[`CommunityMenu component renders correctly 1`] = `
               "opacity": 1,
             }
           }
-          testID="item_community_data_1"
+          testID="item_filter_1"
         >
           <View
             style={
@@ -115,7 +115,7 @@ exports[`CommunityMenu component renders correctly 1`] = `
               "opacity": 1,
             }
           }
-          testID="item_community_data_2"
+          testID="item_filter_2"
         >
           <View
             style={
@@ -177,7 +177,7 @@ exports[`CommunityMenu component renders correctly 1`] = `
               "opacity": 1,
             }
           }
-          testID="item_community_data_3"
+          testID="item_filter_3"
         >
           <View
             style={
