@@ -175,7 +175,7 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
     data: {
-      totalJoiningRequests: total,
+      total_joining_requests: total,
     },
   }),
   declineSingleMemberRequest: (
@@ -196,7 +196,7 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
     data: {
-      totalJoiningRequests: total,
+      total_joining_requests: total,
     },
   }),
   getInnerGroupsLastAdmin: (

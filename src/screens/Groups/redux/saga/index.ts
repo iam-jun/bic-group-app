@@ -504,7 +504,7 @@ export function* refreshGroupMembers(groupId: number) {
   yield put(groupsActions.getGroupDetail(groupId));
 }
 
-function* approvalError(groupId: number, code: number, fullName?: string) {
+function* approvalError(groupId: number, code: string, fullName?: string) {
   let errorMsg: string;
   if (code === approveDeclineCode.CANNOT_APPROVE) {
     errorMsg = i18next
