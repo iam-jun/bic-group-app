@@ -112,7 +112,7 @@ const notificationsDataHelper = {
           // if this is user own create post event and it is not seen
           // we must minute unseen count by 1
           // to make unseen number correct after we hide the noti
-          if (!notiGroup.is_seen) {
+          if (!notiGroup.isSeen) {
             userHisOwnNotiCount++;
           }
           return false;

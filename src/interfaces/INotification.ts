@@ -38,14 +38,12 @@ export interface IDeleteNotifications {
 export interface IParamGetNotifications {
   limit?: number;
   offset?: number;
-  id_lt?: string;
-  id_gte?: string;
-  enrich?: boolean;
-  own_reactions?: boolean;
-  with_own_reactions?: boolean;
-  with_own_children?: boolean;
-  with_recent_reactions?: boolean;
-  with_reaction_counts?: boolean;
+  order?: 'ASC' | 'DESC';
+  idLTE?: string;
+  idGTE?: string;
+  idGT?: string;
+  idLT?: string;
+  flag?: 'ALL' | 'UNREAD' | 'MENTION' | 'IMPORTANT';
 }
 
 export interface INotiExtraData {

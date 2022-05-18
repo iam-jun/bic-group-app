@@ -55,10 +55,10 @@ const Notification = () => {
   useEffect(() => {
     if (!isFocused) setCurrentPath('');
 
-    if (isFocused) {
+    if (isFocused || loadingNotifications) {
       dispatch(notificationsActions.markAsSeenAll());
     }
-  }, [isFocused]);
+  }, [isFocused, loadingNotifications]);
 
   useTabPressListener(
     (tabName: ITabTypes) => {

@@ -96,7 +96,7 @@ function* markAsSeenAll() {
 
     // then set theirs is_seen field by true
     notifications.forEach((notificationGroup: any) => {
-      notificationGroup.is_seen = true;
+      notificationGroup.isSeen = true;
     });
 
     // finally, set notification back to store, and set unseen number to 0 without using Getstream response
