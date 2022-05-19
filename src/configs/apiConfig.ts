@@ -16,10 +16,6 @@ const providers = {
     url: `${getEnv('BEIN_NOTIFICATION')}api/v1/`,
     name: 'BeinNotification',
   },
-  getStream: {
-    url: 'http://52.15.139.185:3000/',
-    name: 'GetStream',
-  },
 };
 
 const Upload = {

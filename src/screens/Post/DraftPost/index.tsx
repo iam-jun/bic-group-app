@@ -34,7 +34,6 @@ const DraftPost = () => {
   const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
-  const {streamClient} = useContext(AppContext);
 
   const isFocused = useIsFocused();
 
@@ -65,7 +64,7 @@ const DraftPost = () => {
   } = draftPostsData;
 
   const getData = (isRefreshing?: boolean) => {
-    if (userId && streamClient) {
+    if (userId) {
       const payload: IPayloadGetDraftPosts = {
         isRefresh: isRefreshing,
       };

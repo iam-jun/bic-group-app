@@ -10,7 +10,6 @@ require('dotenv').config({path: './.env'});
 
 const compileNodeModules = [
   // '@unimodules/react-native-adapter',
-  // 'getstream',
   '@react-native-async-storage/async-storage',
   '@aws-amplify',
   '@aws-crypto',
