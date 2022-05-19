@@ -20,10 +20,6 @@ const providers = {
     url: `${getEnv('BEIN_UPLOAD')}`,
     name: 'BeinNotification',
   },
-  getStream: {
-    url: 'http://52.15.139.185:3000/',
-    name: 'GetStream',
-  },
 };
 
 const Upload = {

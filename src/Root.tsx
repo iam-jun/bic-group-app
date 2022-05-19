@@ -4,7 +4,7 @@ import messaging, {
 import moment from 'moment';
 import 'moment/locale/vi';
 
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {useTranslation} from 'react-i18next';
 import {
   LogBox,
@@ -26,11 +26,10 @@ import {
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 /* State Redux */
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {fontConfig} from '~/configs/fonts';
 import notificationsActions from '~/constants/notificationActions';
 import {PreferencesContext} from '~/contexts/PreferencesContext';
-import {useGetStream} from '~/hooks/getStream';
 import RootNavigator from '~/router';
 import localStorage from '~/services/localStorage';
 import {fetchSetting} from '~/store/modal/actions';
@@ -63,17 +62,6 @@ export default (): React.ReactElement => {
   const colorScheme = useColorScheme();
   const [theme, switchTheme] = React.useState<'light' | 'dark'>(
     colorScheme === 'dark' ? 'dark' : 'light',
-  );
-
-  // Init Get Stream
-  const token = useSelector((state: any) => state.auth?.feed?.accessToken);
-  const notiSubscribeToken = useSelector(
-    (state: any) => state.auth?.feed?.notiSubscribeToken,
-  );
-
-  const [streamClient, streamNotiSubClient] = useGetStream(
-    token,
-    notiSubscribeToken,
   );
 
   const {rootNavigation} = useRootNavigation();
@@ -250,10 +238,8 @@ export default (): React.ReactElement => {
     return {
       language: i18n.language,
       changeLanguage,
-      streamClient,
-      streamNotiSubClient,
     };
-  }, [i18n.language, streamClient]);
+  }, [i18n.language]);
 
   return (
     <SafeAreaProvider>

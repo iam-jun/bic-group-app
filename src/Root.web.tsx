@@ -17,11 +17,10 @@ import {
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 /* State Redux */
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {AppConfig, languages} from '~/configs';
 import {fontConfig} from '~/configs/fonts';
 import {PreferencesContext} from '~/contexts/PreferencesContext';
-import {useGetStream} from '~/hooks/getStream';
 import RootNavigator from '~/router';
 import localStorage from '~/services/localStorage';
 import {fetchSetting} from '~/store/modal/actions';
@@ -48,17 +47,6 @@ export default (): React.ReactElement => {
   const colorScheme = useColorScheme();
   const [theme, switchTheme] = React.useState<'light' | 'dark'>(
     colorScheme === 'dark' ? 'dark' : 'light',
-  );
-
-  // Init Get Stream
-  const token = useSelector((state: any) => state.auth?.feed?.accessToken);
-  const notiSubscribeToken = useSelector(
-    (state: any) => state.auth?.feed?.notiSubscribeToken,
-  );
-
-  const [streamClient, streamNotiSubClient] = useGetStream(
-    token,
-    notiSubscribeToken,
   );
 
   useEffect(() => {
@@ -162,10 +150,8 @@ export default (): React.ReactElement => {
     return {
       language: i18n.language,
       changeLanguage,
-      streamClient,
-      streamNotiSubClient,
     };
-  }, [i18n.language, streamClient]);
+  }, [i18n.language]);
 
   return (
     <SafeAreaProvider>
