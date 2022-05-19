@@ -81,7 +81,7 @@ const notificationsDataHelper = {
       const response: any = await makeHttpRequest(
         notificationApiConfig.getNotifications({
           limit,
-          id_gte: fromNotiGroupId,
+          idGTE: fromNotiGroupId,
         }),
       );
       if (response && response?.data?.data) {

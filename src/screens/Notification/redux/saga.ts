@@ -16,7 +16,7 @@ export default function* notificationsSaga() {
   yield takeLatest(notificationsTypes.MARK_AS_READ_ALL, markAsReadAll);
   yield takeLatest(notificationsTypes.MARK_AS_SEEN_ALL, markAsSeenAll);
   yield takeLatest(notificationsTypes.MARK_AS_READ, markAsRead);
-  yield takeLatest(notificationsTypes.LOADMORE, loadmore);
+  yield takeLatest(notificationsTypes.LOAD_MORE, loadMore);
   yield takeEvery(notificationsTypes.REGISTER_PUSH_TOKEN, registerPushToken);
 }
 
@@ -142,7 +142,7 @@ function* markAsRead({payload}: {payload: string; type: string}): any {
 }
 
 // load more old notifications
-function* loadmore() {
+function* loadMore({payload}: {payload: IParamGetNotifications; type: string}) {
   try {
     // show loading more spinner, set isLoadingMore = true
     yield put(notificationsActions.setIsLoadingMore(true));
@@ -155,6 +155,7 @@ function* loadmore() {
     const response: IObject<any> =
       yield notificationsDataHelper.getNotificationList({
         offset: notifications.length + 1,
+        ...payload,
       });
 
     // hide loading more spinner, set isLoadingMore = false

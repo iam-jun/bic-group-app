@@ -56,7 +56,7 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
         unseenNumber: newUnSeenNumber,
       };
     }
-    case notificationsTypes.CONCAT_NOTICATIONS:
+    case notificationsTypes.CONCAT_NOTIFICATIONS:
       return {
         ...state,
         notificationList: state.notificationList.concat(
