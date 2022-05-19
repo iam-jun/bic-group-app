@@ -193,7 +193,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const _onPressReply = () => {
     const actor: any = commentData?.actor || {};
-    const username = actor?.data?.fullname || actor?.fullname || '';
+    const username = actor?.data?.username || actor?.username || '';
     dispatch(
       actions.addTempSelected({
         [username]: {id: actor?.id, ...actor},
