@@ -43,16 +43,15 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
     }
     case notificationsTypes.UPDATE: {
       let newUnSeenNumber = state.unseenNumber;
-      state.notificationList.map((item: any) => {
+      const newListNotification = state.notificationList.filter((item: any) => {
         if (item.id === payload?.id && item?.isSeen) {
           newUnSeenNumber = newUnSeenNumber + 1;
         }
+        return item.id !== payload?.id;
       });
       return {
         ...state,
-        notificationList: state.notificationList.map((item: any) =>
-          item.id === payload?.id ? payload : item,
-        ),
+        notificationList: [payload, ...newListNotification],
         unseenNumber: newUnSeenNumber,
       };
     }
