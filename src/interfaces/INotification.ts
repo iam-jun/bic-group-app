@@ -1,9 +1,6 @@
-import {IGetStreamDispatch} from './common';
-
 import {
   IGetStreamAudience,
   IGetStreamCommentData,
-  IGetStreamPost,
   IGetStreamUser,
   IReaction,
 } from './IPost';
@@ -20,10 +17,6 @@ export interface IGetStreamNotificationActivity {
   reaction?: IReaction;
   createdAt?: string;
   updatedAt: string;
-}
-
-export interface IMarkAsReadAnActivity extends IGetStreamDispatch {
-  activityId: string;
 }
 
 export interface ILoadNewNotifications {
