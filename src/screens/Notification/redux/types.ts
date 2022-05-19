@@ -10,6 +10,7 @@ const notificationsTypes = {
   MARK_AS_READ_ALL: 'notifications/MARK_AS_READ_ALL',
   MARK_AS_SEEN_ALL: 'notifications/MARK_AS_SEEN_ALL',
   MARK_AS_READ: 'notifications/MARK_AS_READ',
+  MARK_AS_UNREAD: 'notifications/MARK_AS_UNREAD',
   LOAD_MORE: 'notifications/LOAD_MORE',
   ATTACH: 'notifications/ATTACH',
   DETACH: 'notifications/DETACH',

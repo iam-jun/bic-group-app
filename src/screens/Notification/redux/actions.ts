@@ -62,6 +62,12 @@ const notificationsActions = {
       payload,
     };
   },
+  markAsUnRead: function (payload: string) {
+    return {
+      type: notificationsTypes.MARK_AS_UNREAD,
+      payload,
+    };
+  },
   loadMore: function (payload: IParamGetNotifications) {
     return {
       type: notificationsTypes.LOAD_MORE,
