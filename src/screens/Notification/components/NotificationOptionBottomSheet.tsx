@@ -41,6 +41,7 @@ const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
     return (
       <View style={styles.container}>
         <PrimaryItem
+          testID="notification.mark_notification_read_or_unread"
           style={styles.item}
           leftIcon={'CommentAltCheck'}
           leftIconProps={{icon: 'CommentAltCheck', size: 24}}
@@ -52,6 +53,7 @@ const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
           onPress={handleMarkNotification}
         />
         <PrimaryItem
+          testID="notification.off_notification_from_group"
           style={styles.item}
           leftIcon={'VolumeMute'}
           leftIconProps={{icon: 'VolumeMute', size: 24}}

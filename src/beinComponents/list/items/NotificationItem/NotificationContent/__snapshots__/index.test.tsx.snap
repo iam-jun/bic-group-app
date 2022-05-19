@@ -5,7 +5,6 @@ exports[`NotificationContent component renders correctly 1`] = `
   style={
     Object {
       "flex": 1,
-      "marginStart": 12,
     }
   }
   testID="notification_content"
@@ -55,7 +54,7 @@ exports[`NotificationContent component renders correctly 1`] = `
                 ]
               }
             >
-              Trần Nam Anh
+              Thân Thế Văn
             </Text>
           </Text>
           <Text
@@ -70,37 +69,30 @@ exports[`NotificationContent component renders correctly 1`] = `
               ]
             }
           >
-             created a post in 
-          </Text>
-          <Text
-            style={
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
-                "fontWeight": "bold",
-              }
-            }
-          >
-            <Text
-              style={
-                Array [
-                  Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 16,
-                    "fontWeight": "bold",
-                  },
-                  Object {},
-                ]
-              }
-            >
-              EVOL Community
-            </Text>
+             commented on your post
           </Text>
         </Text>
       </View>
     </View>
   </View>
+  <Text
+    numberOfLines={1}
+    style={
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 14,
+        },
+        Object {},
+        Object {
+          "color": "#627286",
+        },
+      ]
+    }
+    testID="notification_content.content"
+  >
+    okie
+  </Text>
 </View>
 `;

@@ -1,3 +1,22 @@
+export const CHILD_COMMENT = {
+  id: 1335,
+  actor: {
+    id: 5,
+    avatar:
+      'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/05bcb2c1-2b5c-4f6e-b493-9183946c9318',
+    fullname: 'Thân Thế Văn',
+    username: 'thanthevan',
+  },
+  media: {
+    files: [],
+    images: [],
+    videos: [],
+  },
+  content: 'hi',
+  mentions: [],
+  createdAt: '2022-05-19T10:41:48.839Z',
+  updatedAt: '2022-05-19T10:41:48.839Z',
+};
 export const LOAD_MORE_RESPONSE = [
   {
     id: 'b701e4fb-77d4-4f50-8204-154bd557d428',
