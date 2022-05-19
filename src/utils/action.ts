@@ -14,9 +14,6 @@ const ActionTypes = {
   UnauthorizedLogout: 'UnauthorizedLogout',
   RefreshTokenSuccessBein: 'RefreshTokenSuccessBein',
   SaveAuthTokens: 'SaveAuthTokens',
-
-  // getStream
-  GetStreamSample: 'GetStreamSample',
 };
 
 export {ReduxAction, ActionTypes, createAction};
