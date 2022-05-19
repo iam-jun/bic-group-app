@@ -3,57 +3,42 @@ import {View, StyleSheet, ScrollView, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
-import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Icon from '~/beinComponents/Icon';
-import Text from '~/beinComponents/Text';
-import {IconType} from '~/resources/icons';
+import ButtonWrapper from './Button/ButtonWrapper';
+import Icon from './Icon';
+import Text from './Text';
 
-const communityMenuData = [
-  {
-    id: 1,
-    text: 'communities:community_menu:your_communities_text',
-    type: 'COMMUNITIES',
-  },
-  {
-    id: 2,
-    text: 'communities:community_menu:manage_text',
-    type: 'MANAGE',
-  },
-  {
-    id: 3,
-    text: 'communities:community_menu:discover_text',
-    type: 'DISCOVER',
-  },
-];
-
-export interface CommunityMenuProps {
+export interface FilterProps {
   testID?: string;
+  itemTestID?: string;
   style?: StyleProp<ViewStyle>;
   data?: {id: number; text: string; icon?: string; type: string}[];
   selectedIndex?: number;
   onPress: (item: any, index: number) => void;
 }
 
-const CommunityMenu = ({
+const Filter = ({
   testID,
   style,
-  data = communityMenuData,
+  data = [],
   selectedIndex,
+  itemTestID,
   onPress,
-}: CommunityMenuProps) => {
+}: FilterProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
   const renderReactItem = (item: any, index: number) => {
     const isSelected = index === selectedIndex;
     return (
-      <View style={styles.itemView} key={`item_community_data_${item?.text}`}>
+      <View
+        style={styles.itemView}
+        key={`${itemTestID || 'item_filter'}_${item?.text}`}>
         <ButtonWrapper
           contentStyle={[
             styles.itemContainer,
             isSelected ? styles.itemSelectedContainer : {},
           ]}
-          testID={`item_community_data_${item.id}`}
+          testID={`${itemTestID || 'item_filter'}_${item.id}`}
           onPress={() => {
             onPress(item, index);
           }}>
@@ -75,7 +60,7 @@ const CommunityMenu = ({
     );
   };
   return (
-    <View testID={testID || 'community_menu'} style={[styles.container, style]}>
+    <View testID={testID || 'filter'} style={[styles.container, style]}>
       <ScrollView
         horizontal
         style={{backgroundColor: theme.colors.background}}
@@ -122,4 +107,4 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
-export default CommunityMenu;
+export default Filter;
