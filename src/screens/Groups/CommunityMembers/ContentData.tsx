@@ -55,7 +55,7 @@ const ContentData = ({
     return (
       <PrimaryItem
         showAvatar
-        menuIconTestID={'community_members.item'}
+        testID="content_data.item"
         style={styles.itemContainer}
         avatar={avatar || images.img_user_avatar_default}
         avatarProps={{isRounded: true, variant: 'medium'}}
@@ -72,7 +72,7 @@ const ContentData = ({
             backgroundColor={colors.bgSecondary}
             style={styles.iconChat}
             onPress={onPressChat}
-            buttonTestID="community_members.icon_chat.button"
+            buttonTestID="content_data.icon_chat.button"
           />
         }
       />
@@ -90,7 +90,9 @@ const ContentData = ({
       return null;
 
     return (
-      <View style={styles.listFooter}>
+      <View
+        testID="content_data.loading_more_indicator"
+        style={styles.listFooter}>
         <ActivityIndicator />
       </View>
     );
@@ -98,6 +100,7 @@ const ContentData = ({
 
   return (
     <SectionList
+      testID="content_data.list"
       style={[styles.content, style]}
       sections={sectionList}
       renderItem={renderItem}

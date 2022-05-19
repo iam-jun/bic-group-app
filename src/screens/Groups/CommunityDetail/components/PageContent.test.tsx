@@ -73,6 +73,26 @@ describe('PageContent', () => {
     expect(memberBtn).toBeDefined();
   });
 
+  it('should navigate to Members page correctly', () => {
+    const navigate = jest.fn();
+    const rootNavigation = {navigate};
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
+      return {rootNavigation} as any;
+    });
+
+    const wrapper = renderWithRedux(
+      <PageContent
+        communityId={communityId}
+        getPosts={getPosts}
+        onScroll={onScroll}
+        onButtonLayout={onButtonLayout}
+      />,
+    );
+    const memberBtn = wrapper.getByTestId('page_content.members_btn');
+    fireEvent.press(memberBtn);
+    expect(navigate).toBeCalledWith(groupStack.communityMembers, {communityId});
+  });
+
   it('should render Your Groups button and can navigate to that screen correctly when user is a member and press that button', () => {
     const state = {...initialState};
     // @ts-ignore

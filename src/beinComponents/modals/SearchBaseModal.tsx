@@ -57,7 +57,7 @@ const SearchBaseModal = ({
             autoFocus
             autoComplete={'off'}
             placeholder={placeholder}
-            placeholderTextColor={theme.colors.textSecondary}
+            placeholderTextColor={theme.colors.textDisabled}
             selectionColor={theme.colors.textSecondary}
             onChangeText={_onChangeText}
           />
