@@ -11,6 +11,7 @@ interface SearchBaseModalProps {
   isOpen: boolean;
   children?: React.ReactNode;
   placeholder?: string;
+  initSearch?: string;
   onClose?: () => void;
   onChangeText?: (text: string) => void;
 }
@@ -19,13 +20,14 @@ const SearchBaseModal = ({
   isOpen,
   children,
   placeholder,
+  initSearch,
   onClose,
   onChangeText,
 }: SearchBaseModalProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
 
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState(initSearch || '');
 
   const onPressBack = () => {
     setSearchText('');
@@ -68,6 +70,7 @@ const SearchBaseModal = ({
               size={20}
               tintColor={theme.colors.iconTint}
               onPress={() => _onChangeText('')}
+              buttonTestID="search_modal.reset_button"
             />
           )}
         </View>
