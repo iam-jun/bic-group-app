@@ -8,6 +8,7 @@ import markAsReadAll from './markAsReadAll';
 import markAsSeenAll from './markAsSeenAll';
 import markAsRead from './markAsRead';
 import loadMore from './loadMore';
+import markAsUnRead from './markAsUnRead';
 
 export default function* notificationsSaga() {
   yield takeLatest(notificationsTypes.GET_NOTIFICATIONS, getNotifications);
@@ -16,6 +17,7 @@ export default function* notificationsSaga() {
   yield takeLatest(notificationsTypes.MARK_AS_READ, markAsRead);
   yield takeLatest(notificationsTypes.LOAD_MORE, loadMore);
   yield takeEvery(notificationsTypes.REGISTER_PUSH_TOKEN, registerPushToken);
+  yield takeEvery(notificationsTypes.MARK_AS_UNREAD, markAsUnRead);
 }
 
 // register push token

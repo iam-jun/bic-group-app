@@ -731,7 +731,10 @@
     "text_all": "All",
     "text_unread": "Unread",
     "text_mention": "Mention",
-    "text_important": "Important"
+    "text_important": "Important",
+    "mark_as_read": "Mark as read",
+    "mark_as_unread": "Mark as unread",
+    "off_notification_from_group": "Turn off notifications from this group"
   },
   "new_feature": {
     "title": "New feature",
