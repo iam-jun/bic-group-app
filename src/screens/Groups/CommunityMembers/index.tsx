@@ -86,12 +86,12 @@ const CommunityMembers = ({route}: any) => {
     <ScreenWrapper isFullView backgroundColor={colors.background}>
       <Header titleTextProps={{useI18n: true}} title={'groups:title_members'} />
       <View style={styles.searchBar}>
-        <Pressable onPress={onPressSearch} style={styles.searchAndInvite}>
+        <Pressable
+          testID="community_members.search"
+          onPress={onPressSearch}
+          style={styles.searchAndInvite}>
           <View pointerEvents="none">
-            <SearchInput
-              testID="community_members.search"
-              placeholder={i18next.t('groups:text_search_member')}
-            />
+            <SearchInput placeholder={i18next.t('groups:text_search_member')} />
           </View>
         </Pressable>
       </View>
