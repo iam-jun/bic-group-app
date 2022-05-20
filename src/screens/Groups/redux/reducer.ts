@@ -86,7 +86,7 @@ export const groupInitState = {
   managedCommunities: {
     loading: false,
     canLoadMore: true,
-    data: [],
+    data: [] as number[],
     items: {},
   },
   communityDetail: {} as ICommunity,

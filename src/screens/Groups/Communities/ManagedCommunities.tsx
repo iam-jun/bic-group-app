@@ -80,15 +80,14 @@ const ManagedCommunities = ({
   };
 
   const renderListFooter = () => {
-    return (
-      !loading &&
-      canLoadMore &&
-      data.length > 0 && (
+    if (!loading && canLoadMore && data.length > 0)
+      return (
         <View style={styles.listFooter}>
-          <ActivityIndicator />
+          <ActivityIndicator testID="managed_communites.loading_more" />
         </View>
-      )
-    );
+      );
+
+    return null;
   };
 
   return (

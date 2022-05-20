@@ -5,9 +5,9 @@ import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
-import {useBaseHook} from '~/hooks';
 import privacyTypes from '~/constants/privacyTypes';
 import {ICommunity} from '~/interfaces/ICommunity';
+import i18next from 'i18next';
 
 interface CommunityItemProps {
   item: ICommunity;
@@ -23,9 +23,8 @@ const CommunityItem = ({
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyles(theme);
-  const {t} = useBaseHook();
 
-  const {id, name, icon, user_count, privacy} = item || {};
+  const {name, icon, user_count, privacy} = item || {};
   const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
   const {icon: privacyIcon, title: privacyTitle}: any = privacyData || {};
 
@@ -42,7 +41,7 @@ const CommunityItem = ({
           {privacyTitle}
         </Text.BodyS>
         <Text.BodyS color={colors.textSecondary}>{`  •  `}</Text.BodyS>
-        <Text.BodyS color={colors.textSecondary}>{`${user_count} ${t(
+        <Text.BodyS color={colors.textSecondary}>{`${user_count} ${i18next.t(
           'groups:text_members',
           {
             count: user_count,
@@ -60,7 +59,7 @@ const CommunityItem = ({
       style={styles.item}
       title={name}
       titleProps={{variant: 'h5'}}
-      testID={`community_item_${id}`}
+      testID="community_item"
       onPress={() => onPressCommunities?.(item)}
       ContentComponent={renderContentComponent()}
       onPressMenu={onPressMenu}

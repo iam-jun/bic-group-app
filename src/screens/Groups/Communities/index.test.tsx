@@ -47,7 +47,7 @@ describe('Communities screen', () => {
     expect(emptyComponent).toBeDefined();
   });
 
-  it(`should navigate group list screen when click community`, async () => {
+  it(`should navigate to community detail when click community`, async () => {
     const navigate = jest.fn();
     const rootNavigation = {navigate};
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
@@ -72,7 +72,7 @@ describe('Communities screen', () => {
       store,
     );
 
-    const item = wrapper.getByTestId('community_0');
+    const item = wrapper.getByTestId('community_item_0');
     expect(item).toBeDefined();
     fireEvent.press(item);
 
