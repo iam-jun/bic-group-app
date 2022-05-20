@@ -127,10 +127,14 @@ export default (): React.ReactElement => {
     if (!user) return;
 
     const data = handleMessageData(remoteMessage);
+
     if (data)
-      rootNavigation.navigate(rootSwitch.mainStack, {
-        screen: 'main',
-        params: {...data, initial: false},
+      rootNavigation.navigate(data.screen || rootSwitch.mainStack, {
+        screen: data?.params?.screen || 'main',
+        params: {
+          ...(data?.params?.params || {}),
+          initial: false,
+        },
       });
   };
 
