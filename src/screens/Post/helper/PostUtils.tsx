@@ -27,7 +27,8 @@ export const getMentionsFromContent = (
   const mentions: any = {};
   Object.keys(tempMentions || {}).map(username => {
     if (content?.includes?.(`@${username}`)) {
-      mentions[username] = tempMentions[username]?.data;
+      mentions[username] =
+        tempMentions[username]?.data || tempMentions[username];
     }
   });
   return mentions;

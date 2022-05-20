@@ -263,6 +263,7 @@ const icons = {
   PlayCircle: 'PlayCircle',
   Sitemap: 'Sitemap',
   iconSecret,
+  VolumeMute: 'VolumeMute',
 };
 
 export default icons;

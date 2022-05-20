@@ -42,6 +42,14 @@ export const notificationApiConfig = {
       useRetry: true,
     };
   },
+  putMarkAsUnReadById: (id: string): HttpApiRequestConfig => {
+    return {
+      url: `${ApiConfig.providers.beinNotification.url}notifications/${id}/mark-unread`,
+      method: 'put',
+      provider: ApiConfig.providers.beinNotification,
+      useRetry: true,
+    };
+  },
 };
 
 const notificationsDataHelper = {
@@ -81,7 +89,7 @@ const notificationsDataHelper = {
       const response: any = await makeHttpRequest(
         notificationApiConfig.getNotifications({
           limit,
-          id_gte: fromNotiGroupId,
+          idGTE: fromNotiGroupId,
         }),
       );
       if (response && response?.data?.data) {
@@ -112,7 +120,7 @@ const notificationsDataHelper = {
           // if this is user own create post event and it is not seen
           // we must minute unseen count by 1
           // to make unseen number correct after we hide the noti
-          if (!notiGroup.is_seen) {
+          if (!notiGroup.isSeen) {
             userHisOwnNotiCount++;
           }
           return false;
@@ -157,6 +165,20 @@ const notificationsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         notificationApiConfig.putMarkAsReadById(activityId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  markAsUnRead: async (activityId: string) => {
+    try {
+      const response: any = await makeHttpRequest(
+        notificationApiConfig.putMarkAsUnReadById(activityId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

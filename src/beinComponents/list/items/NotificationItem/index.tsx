@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, ViewProps} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import TimeView from '~/beinComponents/TimeView';
 import Icon from '~/beinComponents/Icon';
@@ -11,7 +11,7 @@ import {
 import {ITheme} from '~/theme/interfaces';
 import NotificationAvatar from './NotificationAvatar';
 import NotificationContent from './NotificationContent';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {useKeySelector} from '~/hooks/selector';
 
 export interface NotificationItemProps {
   activities: IGetStreamNotificationActivity[];
@@ -20,31 +20,32 @@ export interface NotificationItemProps {
   isSeen: boolean;
   createdAt: string;
   updatedAt: string;
-  isActive?: boolean;
   extra: INotiExtraData;
   group: string;
   activityCount: number;
   actorCount: number;
+  onPress: (...params: any) => void;
+  onPressOption: (...params: any) => void;
+  testID?: string;
+  id?: string;
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
   activities,
   isRead,
   updatedAt,
-  isActive = false,
   extra,
   verb,
   actorCount,
+  onPress,
+  onPressOption,
+  testID,
 }: NotificationItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const {colors} = theme;
-  let className = 'notification-item';
-  if (isActive) className = 'notification-item--active';
 
-  const onPressOption = () => {
-    alert('onPressOption');
-  };
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const renderIndicator = () => {
     if (!isRead) {
@@ -59,7 +60,10 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
   // render notification item
   return (
-    <View
+    <TouchableOpacity
+      testID={testID}
+      disabled={!isInternetReachable || !onPress}
+      onPress={onPress}
       style={[
         styles.container,
         {
@@ -102,7 +106,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           testID="notificationItem.menuIcon.button"
           style={styles.icon}
           activeOpacity={0.2}
-          onPress={onPressOption}
+          onPress={(e: any) => onPressOption && onPressOption(e)}
           hitSlop={{
             bottom: 20,
             left: 20,
@@ -117,7 +121,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           />
         </TouchableOpacity>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
