@@ -232,7 +232,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
         />
         {!!counter ? (
           <View style={[avatarStyle, styles.textStyle]}>
-            <Text.BodyS>+{counter}</Text.BodyS>
+            <Text.BodyS color={theme.colors.background}>+{counter}</Text.BodyS>
           </View>
         ) : null}
         {renderStatus()}
@@ -288,7 +288,7 @@ const creatStyle = (theme: ITheme) => {
       borderColor: colors.background,
     },
     textStyle: {
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.transparent1,
       position: 'absolute',
       justifyContent: 'center',
       alignItems: 'center',

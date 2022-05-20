@@ -262,6 +262,7 @@ const icons = {
   iconLock,
   Sitemap: 'Sitemap',
   iconSecret,
+  VolumeMute: 'VolumeMute',
 };
 
 export default icons;

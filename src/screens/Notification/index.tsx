@@ -1,23 +1,16 @@
 import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {
-  ActivityIndicator,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import Divider from '~/beinComponents/Divider';
 import Filter from '~/beinComponents/Filter';
 import Header from '~/beinComponents/Header';
+import NotificationItem from '~/beinComponents/list/items/NotificationItem';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {notificationMenuData} from '~/constants/notificationMenuData';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 import {useRootNavigation, useTabPressListener} from '~/hooks/navigation';
@@ -28,17 +21,18 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
 import {ITheme} from '~/theme/interfaces';
 import NotificationBottomSheet from './components/NotificationBottomSheet';
+import NotificationOptionBottomSheet from './components/NotificationOptionBottomSheet';
 import notificationsActions from './redux/actions';
 import notificationSelector from './redux/selector';
 
 const Notification = () => {
   const listRef = useRef<any>();
   const menuSheetRef = useRef<any>();
+  const notificationOptionRef = useRef<any>();
 
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const isFocused = useIsFocused();
-  const dimensions = useWindowDimensions();
 
   const isLoadingMore = useKeySelector(notificationSelector.isLoadingMore);
   const loadingNotifications = useKeySelector(notificationSelector.isLoading);
@@ -51,6 +45,7 @@ const Notification = () => {
 
   const [currentPath, setCurrentPath] = useState('');
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [selectedNotification, setSelectedNotification] = useState({});
 
   useEffect(() => {
     if (!isFocused) setCurrentPath('');
@@ -70,18 +65,28 @@ const Notification = () => {
   );
 
   const refreshListNotification = () => {
-    dispatch(notificationsActions.getNotifications());
+    const type = notificationMenuData[selectedIndex]?.type || 'ALL';
+    //@ts-ignore
+    dispatch(notificationsActions.getNotifications({flag: type}));
   };
 
   const onPressFilterItem = (item: any, index: number) => {
     setSelectedIndex(index);
+    if (!!item?.type) {
+      dispatch(notificationsActions.getNotifications({flag: item.type}));
+    }
+  };
+
+  const onPressItemOption = ({item, e}: {item: any; e: any}) => {
+    setSelectedNotification(item);
+    notificationOptionRef.current?.open?.(e?.pageX, e?.pageY);
   };
 
   const onPressMenu = (e: any) => {
     menuSheetRef.current?.open?.(e?.pageX, e?.pageY);
   };
 
-  const _onItemPress = (item?: any) => {
+  const onItemPress = (item?: any) => {
     const type = item?.extra?.type || undefined;
     const act = item?.activities?.[0];
     try {
@@ -174,7 +179,9 @@ const Notification = () => {
   // load more notification handler
   const loadMoreNotifications = () => {
     if (!noMoreNotification && !isLoadingMore) {
-      dispatch(notificationsActions.loadmore());
+      const type = notificationMenuData[selectedIndex]?.type || 'ALL';
+      //@ts-ignore
+      dispatch(notificationsActions.loadMore({flag: type}));
     }
   };
 
@@ -186,7 +193,10 @@ const Notification = () => {
       <Filter
         testID={'notification.filter'}
         itemTestID={'notification.filter.item'}
-        // style={{paddingVertical: spacing.padding.small}}
+        style={{
+          paddingVertical: theme.spacing.padding.small,
+          borderBottomWidth: 0,
+        }}
         data={notificationMenuData}
         selectedIndex={selectedIndex}
         onPress={onPressFilterItem}
@@ -209,6 +219,21 @@ const Notification = () => {
     );
   };
 
+  const renderItem = ({item, index}: {item: any; index: number}) => {
+    return (
+      <NotificationItem
+        {...item}
+        testID={`list_view.item_wrapper.${index}`}
+        onPress={() => {
+          onItemPress(item);
+        }}
+        onPressOption={(e: any) => {
+          onPressItemOption({item, e});
+        }}
+      />
+    );
+  };
+
   return (
     <ScreenWrapper testID="NotfiticationScreen" isFullView>
       <Header
@@ -218,30 +243,31 @@ const Notification = () => {
         hideBack
         onPressMenu={onPressMenu}
       />
+      {renderListHeader()}
       {showNoNotification && <NoNotificationFound />}
       {!showNoNotification && (
-        <>
-          {renderListHeader()}
-          <ListView
-            listRef={listRef}
-            style={styles.list}
-            containerStyle={styles.listContainer}
-            type="notification"
-            isFullView
-            renderItemSeparator={() => (
-              <Divider size={1} color={theme.colors.borderDivider} />
-            )}
-            data={notificationList}
-            onItemPress={_onItemPress}
-            onRefresh={refreshListNotification}
-            refreshing={loadingNotifications}
-            onLoadMore={() => loadMoreNotifications()}
-            ListFooterComponent={renderListFooter}
-            currentPath={currentPath}
-          />
-        </>
+        <ListView
+          listRef={listRef}
+          style={styles.list}
+          containerStyle={styles.listContainer}
+          isFullView
+          renderItem={renderItem}
+          renderItemSeparator={() => (
+            <Divider size={1} color={theme.colors.borderDivider} />
+          )}
+          data={notificationList}
+          onRefresh={refreshListNotification}
+          refreshing={loadingNotifications}
+          onLoadMore={() => loadMoreNotifications()}
+          ListFooterComponent={renderListFooter}
+          currentPath={currentPath}
+        />
       )}
       <NotificationBottomSheet modalizeRef={menuSheetRef} />
+      <NotificationOptionBottomSheet
+        modalizeRef={notificationOptionRef}
+        data={selectedNotification}
+      />
     </ScreenWrapper>
   );
 };

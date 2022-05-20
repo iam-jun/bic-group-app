@@ -9,20 +9,26 @@ import notificationsActions from '../redux/actions';
 import i18n from 'i18next';
 import * as modalActions from '~/store/modal/actions';
 
-export interface NotificationBottomSheetProps {
+export interface NotificationOptionBottomSheetProps {
   modalizeRef: any;
+  data: any;
 }
 
-const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
+const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
   modalizeRef,
-}: NotificationBottomSheetProps) => {
+  data,
+}: NotificationOptionBottomSheetProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
   const dispatch = useDispatch();
 
-  const markReadAllNotifications = () => {
-    dispatch(notificationsActions.markAsReadAll());
+  const handleMarkNotification = () => {
+    if (!data?.isRead) {
+      dispatch(notificationsActions.markAsRead(data?.id || ''));
+    } else {
+      dispatch(notificationsActions.markAsUnRead(data?.id || ''));
+    }
     modalizeRef.current?.close();
   };
 
@@ -35,19 +41,23 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
     return (
       <View style={styles.container}>
         <PrimaryItem
-          testID="notifications.mark_all_as_read"
+          testID="notification.mark_notification_read_or_unread"
           style={styles.item}
           leftIcon={'CommentAltCheck'}
           leftIconProps={{icon: 'CommentAltCheck', size: 24}}
-          title={i18n.t('notification:mark_all_as_read')}
-          onPress={markReadAllNotifications}
+          title={i18n.t(
+            !data?.isRead
+              ? 'notification:mark_as_read'
+              : 'notification:mark_as_unread',
+          )}
+          onPress={handleMarkNotification}
         />
         <PrimaryItem
-          testID="notifications.notification_settings"
+          testID="notification.off_notification_from_group"
           style={styles.item}
-          leftIcon={'Cog'}
-          leftIconProps={{icon: 'Cog', size: 24}}
-          title={i18n.t('notification:notification_settings')}
+          leftIcon={'VolumeMute'}
+          leftIconProps={{icon: 'VolumeMute', size: 24}}
+          title={i18n.t('notification:off_notification_from_group')}
           onPress={showUpcommingFeature}
         />
       </View>
@@ -72,4 +82,4 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
-export default NotificationBottomSheet;
+export default NotificationOptionBottomSheet;

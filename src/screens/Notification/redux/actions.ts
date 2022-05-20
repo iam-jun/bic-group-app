@@ -16,7 +16,7 @@ const notificationsActions = {
   },
   concatNotifications: function (payload: any) {
     return {
-      type: notificationsTypes.CONCAT_NOTICATIONS,
+      type: notificationsTypes.CONCAT_NOTIFICATIONS,
       payload,
     };
   },
@@ -62,9 +62,16 @@ const notificationsActions = {
       payload,
     };
   },
-  loadmore: function () {
+  markAsUnRead: function (payload: string) {
     return {
-      type: notificationsTypes.LOADMORE,
+      type: notificationsTypes.MARK_AS_UNREAD,
+      payload,
+    };
+  },
+  loadMore: function (payload: IParamGetNotifications) {
+    return {
+      type: notificationsTypes.LOAD_MORE,
+      payload,
     };
   },
   setIsLoadingMore: function (payload: boolean) {
