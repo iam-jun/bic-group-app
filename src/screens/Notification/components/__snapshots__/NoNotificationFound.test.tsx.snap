@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NoNotificationFound component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "center",
+      "flex": 1,
+      "paddingTop": 72,
+    }
+  }
+>
+  <SvgMock
+    fill="none"
+    height={150}
+    width={145}
+  />
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 14,
+        },
+        Object {},
+        undefined,
+      ]
+    }
+  >
+    You have no pending notification
+  </Text>
+</View>
+`;

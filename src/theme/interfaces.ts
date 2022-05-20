@@ -11,6 +11,7 @@ export interface ITheme extends ReactNativePaper.Theme {
 
 export interface IThemeColors extends ReactNativePaper.ThemeColors {
   transparent?: string;
+  transparent1?: string;
   primary: string;
   primary1?: string;
   primary2?: string;
