@@ -218,12 +218,15 @@ export const groupsApiConfig = {
       key: !!params?.key?.trim?.() ? params.key : undefined,
     },
   }),
-  getJoinedCommunities: (previewMembers: boolean): HttpApiRequestConfig => ({
+  getJoinedCommunities: (params: {
+    preview_members?: boolean;
+    managed?: boolean;
+  }): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}me/communities`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    params: {preview_members: previewMembers},
+    params,
   }),
   getCommunityGroups: (
     id: number,
@@ -587,10 +590,13 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getJoinedCommunities: async (previewMembers: boolean) => {
+  getJoinedCommunities: async (params: {
+    preview_members?: boolean;
+    managed?: boolean;
+  }) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.getJoinedCommunities(previewMembers),
+        groupsApiConfig.getJoinedCommunities(params),
       );
       if (response && response?.data) {
         return Promise.resolve(response.data?.data);
