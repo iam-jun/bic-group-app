@@ -17,6 +17,7 @@ interface SearchMemberModalProps {
   communityId: number;
   isOpen: boolean;
   placeholder?: string;
+  initSearch?: string;
   onPressChat?: () => void;
   onClose?: () => void;
 }
@@ -27,10 +28,11 @@ const SearchMemberModal = ({
   placeholder,
   onPressChat,
   onClose,
+  initSearch,
 }: SearchMemberModalProps) => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
-  const [searchText, setSearchText] = useState('');
+  const [searchText, setSearchText] = useState(initSearch || '');
   const [sectionList, setSectionList] = useState([]);
   const styles = createStyles(theme);
 
@@ -96,7 +98,10 @@ const SearchMemberModal = ({
         />
       ) : (
         <View style={styles.text}>
-          <Text.BodyS color={theme.colors.textSecondary} useI18n>
+          <Text.BodyS
+            color={theme.colors.textSecondary}
+            testID="search_member_modal.type_search"
+            useI18n>
             common:text_type_search_keyword
           </Text.BodyS>
         </View>
