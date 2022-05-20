@@ -765,9 +765,10 @@
       "text_tree_view": "Tree view"
     },
     "empty_communities": {
-      "title": "No community found",
+      "title": "No communities found",
       "description": "Discover communities to join one.",
-      "button_text": "Go to Discover"
+      "button_text": "Go to Discover",
+      "manage_description": "You’re not managing any communities yet"
     },
     "empty_groups": {
       "title": "No group found",
