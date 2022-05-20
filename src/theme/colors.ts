@@ -2,6 +2,7 @@ export default {
   dark: {
     colors: {
       transparent: 'rgba(255,255,255,0)',
+      transparent1: 'rgba(17, 21, 26, 0.6)',
       primary: '#5D2C9A', //primary is brand color
       primary1: '#F8F5FF',
       primary2: '#EADFFE',
@@ -75,6 +76,7 @@ export default {
   light: {
     colors: {
       transparent: 'rgba(255,255,255,0)',
+      transparent1: 'rgba(17, 21, 26, 0.6)',
       primary: '#5D2C9A', //primary is brand color
       primary1: '#F8F5FF',
       primary2: '#EADFFE',
