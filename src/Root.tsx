@@ -42,7 +42,7 @@ import {useRootNavigation} from './hooks/navigation';
 import {rootSwitch} from './router/stack';
 import Store from '~/store';
 import {IUserResponse} from './interfaces/IAuth';
-import {isNavigationRefReady} from '~/router/helper';
+import {isNavigationRefReady, getScreenAndParams} from '~/router/helper';
 
 moment.updateLocale('en', moments.en);
 moment.updateLocale('vi', moments.vi);
@@ -129,8 +129,8 @@ export default (): React.ReactElement => {
     const data = handleMessageData(remoteMessage);
     if (data)
       rootNavigation.navigate(rootSwitch.mainStack, {
-        screen: 'main',
-        params: {...data, initial: false},
+        screen: data?.screen || 'main',
+        params: {...(data?.params || {}), initial: false},
       });
   };
 
@@ -140,18 +140,9 @@ export default (): React.ReactElement => {
     if (!remoteMessage) return;
 
     try {
+      const screenData = getScreenAndParams(remoteMessage?.data?.extraData);
       //@ts-ignore
-      let screen = notificationsActions[remoteMessage?.data?.type];
-      const payload = remoteMessage?.data?.payload
-        ? JSON.parse(remoteMessage?.data?.payload)
-        : undefined;
-      if (screen?.params)
-        screen = {
-          ...screen,
-          params: {...screen.params, params: {...payload, initial: false}},
-        };
-      else screen = {...screen, params: {...payload, initial: false}};
-      return screen;
+      return screenData;
     } catch (err) {
       return;
     }
