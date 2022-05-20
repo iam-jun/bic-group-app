@@ -282,6 +282,20 @@ const groupsActions = {
     type: groupsTypes.SET_JOINED_COMMUNITIES,
     payload,
   }),
+  getManagedCommunities: (payload?: {
+    managed: boolean;
+    preview_members: boolean;
+  }) => ({
+    type: groupsTypes.GET_MANAGED_COMMUNITIES,
+    payload,
+  }),
+  setManagedCommunities: (payload: any) => ({
+    type: groupsTypes.SET_MANAGED_COMMUNITIES,
+    payload,
+  }),
+  resetManagedCommunities: () => ({
+    type: groupsTypes.RESET_MANAGED_COMMUNITIES,
+  }),
   getDiscoverCommunities: (payload: any) => ({
     type: groupsTypes.GET_DISCOVER_COMMUNITIES,
     payload,

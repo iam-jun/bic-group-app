@@ -1,6 +1,13 @@
-import {FlatList} from 'react-native';
-import React from 'react';
+import {
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+  StyleSheet,
+  View,
+} from 'react-native';
+import React, {useEffect} from 'react';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
 import Divider from '~/beinComponents/Divider';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
@@ -9,6 +16,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import CommunityItem from '../components/CommunityItem';
 import {ITheme} from '~/theme/interfaces';
 import {ICommunity} from '~/interfaces/ICommunity';
+import actions from '~/screens/Groups/redux/actions';
 
 interface ManagedCommunitiesProps {
   onPressCommunities?: (community: ICommunity) => void;
@@ -21,13 +29,35 @@ const ManagedCommunities = ({
 }: ManagedCommunitiesProps) => {
   const theme = useTheme() as ITheme;
   const {spacing} = theme;
+  const styles = createStyles(theme);
+  const dispatch = useDispatch();
 
-  const managedCommunities = useKeySelector(
-    // TODO: Chagned to managed communities when API is ready
-    groupsKeySelector.joinedCommunities,
+  const {loading, data, items, canLoadMore} = useKeySelector(
+    groupsKeySelector.managedCommunities,
   );
 
+  const getManagedCommunities = () => {
+    dispatch(actions.getManagedCommunities());
+  };
+
+  useEffect(() => {
+    getManagedCommunities();
+    return () => {
+      dispatch(actions.resetManagedCommunities());
+    };
+  }, []);
+
+  const onLoadMore = () => {
+    getManagedCommunities();
+  };
+
+  const onRefresh = () => {
+    dispatch(actions.resetManagedCommunities());
+    getManagedCommunities();
+  };
+
   const renderEmptyComponent = () => {
+    if (loading) return null;
     return (
       <EmptyScreen
         source={'addUsers'}
@@ -37,23 +67,47 @@ const ManagedCommunities = ({
     );
   };
 
-  const renderItem = ({item}: {item: ICommunity}) => {
+  const renderItem = ({item}: {item: number}) => {
+    const currentItem = items[item];
+
     return (
       <CommunityItem
-        item={item}
+        item={currentItem}
         onPressMenu={onPressMenu}
         onPressCommunities={onPressCommunities}
       />
     );
   };
 
+  const renderListFooter = () => {
+    return (
+      !loading &&
+      canLoadMore &&
+      data.length > 0 && (
+        <View style={styles.listFooter}>
+          <ActivityIndicator />
+        </View>
+      )
+    );
+  };
+
   return (
     <FlatList
       testID="flatlist"
-      data={managedCommunities}
+      data={data}
       renderItem={renderItem}
       keyExtractor={(item, index) => `community_item_${item}_${index}`}
       ListEmptyComponent={renderEmptyComponent}
+      ListFooterComponent={renderListFooter}
+      onEndReached={onLoadMore}
+      onEndReachedThreshold={0.1}
+      refreshControl={
+        <RefreshControl
+          refreshing={loading}
+          onRefresh={onRefresh}
+          tintColor={theme.colors.borderDisable}
+        />
+      }
       ItemSeparatorComponent={() => (
         <Divider
           style={{
@@ -62,15 +116,18 @@ const ManagedCommunities = ({
           }}
         />
       )}
-      // refreshControl={
-      //   <RefreshControl
-      //     refreshing={refreshing}
-      //     onRefresh={onRefresh}
-      //     tintColor={theme.colors.borderDisable}
-      //   />
-      // }
     />
   );
+};
+
+const createStyles = (theme: ITheme) => {
+  return StyleSheet.create({
+    listFooter: {
+      height: 100,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  });
 };
 
 export default ManagedCommunities;
