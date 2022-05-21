@@ -72,7 +72,7 @@ describe('Communities screen', () => {
       store,
     );
 
-    const item = wrapper.getByTestId('community_item_0');
+    const item = wrapper.getByTestId('community_item');
     expect(item).toBeDefined();
     fireEvent.press(item);
 
