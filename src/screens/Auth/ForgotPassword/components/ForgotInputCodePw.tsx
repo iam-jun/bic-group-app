@@ -202,6 +202,8 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
           testID={'inputNewPassword'}
           placeholder={t('auth:input_label_new_password')}
           validateValue={validateNewPassword}
+          secureTextEntry={false}
+          textContentType="oneTimeCode"
         />
 
         <PasswordInputController
@@ -215,6 +217,8 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
           testID={'inputConfirmPassword'}
           placeholder={t('auth:input_label_confirm_new_password')}
           validateValue={validateConfirmPassword}
+          secureTextEntry={false}
+          textContentType="oneTimeCode"
         />
       </View>
       <Button.Primary
