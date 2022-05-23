@@ -10,12 +10,10 @@ import {
 import React from 'react';
 
 import {ICommunityMembers} from '~/interfaces/ICommunity';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
-import images from '~/resources/images';
-import Icon from '~/beinComponents/Icon';
+import MemberItem from '../components/MemberItem';
 
 interface ContentDataProps {
   style?: StyleProp<ViewStyle>;
@@ -50,33 +48,7 @@ const ContentData = ({
   };
 
   const renderItem = ({item}: {item: ICommunityMembers}) => {
-    const {fullname, avatar, username} = item || {};
-
-    return (
-      <PrimaryItem
-        showAvatar
-        testID="content_data.item"
-        style={styles.itemContainer}
-        avatar={avatar || images.img_user_avatar_default}
-        avatarProps={{isRounded: true, variant: 'medium'}}
-        ContentComponent={
-          <Text.Body numberOfLines={1}>
-            {fullname}
-            <Text.BodyS
-              color={colors.textSecondary}>{` @${username}`}</Text.BodyS>
-          </Text.Body>
-        }
-        RightComponent={
-          <Icon
-            icon={'CommentAltDots'}
-            backgroundColor={colors.bgSecondary}
-            style={styles.iconChat}
-            onPress={onPressChat}
-            buttonTestID="content_data.icon_chat.button"
-          />
-        }
-      />
-    );
+    return <MemberItem item={item} onPressChat={onPressChat} />;
   };
 
   const renderListFooter = () => {
