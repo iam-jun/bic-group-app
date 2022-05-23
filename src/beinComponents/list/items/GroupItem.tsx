@@ -15,6 +15,7 @@ import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
 import commonActions, {IAction} from '~/constants/commonActions';
 import {generateUniqueId} from '~/utils/generator';
 import {useKeySelector} from '~/hooks/selector';
+import privacyTypes from '~/constants/privacyTypes';
 
 export interface GroupItemProps extends IParsedGroup {
   testID?: string;
@@ -24,6 +25,8 @@ export interface GroupItemProps extends IParsedGroup {
   onToggleItem?: (item: GroupItemProps) => void;
   onCheckedItem?: (item: GroupItemProps, isChecked: boolean) => void;
   disableOnPressItem?: boolean;
+  showPrivacy?: boolean;
+  showPrivacyName?: boolean;
 }
 
 const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
@@ -44,6 +47,9 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     onToggleItem,
     onCheckedItem,
     disableOnPressItem,
+    privacy,
+    showPrivacy = false,
+    showPrivacyName = true,
   } = props;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
@@ -56,6 +62,9 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   if (hide) {
     return null;
   }
+
+  const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
+  const {icon: privacyIcon, title: privacyTitle}: any = privacyData || {};
 
   const _onPressItem = () => {
     if (onPressItem) {
@@ -150,6 +159,22 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
               {name}
             </Text.H6>
             <View style={styles.row}>
+              {showPrivacy && (
+                <>
+                  <Icon
+                    style={styles.iconSmall}
+                    icon={privacyIcon}
+                    size={16}
+                    tintColor={theme.colors.textSecondary}
+                  />
+                  {showPrivacyName && (
+                    <Text.Subtitle style={styles.privacyTitle} useI18n>
+                      {privacyTitle}
+                    </Text.Subtitle>
+                  )}
+                  <Text.Subtitle> ⬩ </Text.Subtitle>
+                </>
+              )}
               <Icon icon="users" size={16} tintColor={colors.textSecondary} />
               <Text.BodyS color={colors.textSecondary} style={styles.textInfo}>
                 {user_count}
@@ -209,6 +234,12 @@ const themeStyles = (theme: IObject<any>) => {
       height: dimension?.avatarSizes.medium,
     },
     checkbox: {position: 'absolute', bottom: -3, right: -6},
+    iconSmall: {
+      height: 16,
+    },
+    privacyTitle: {
+      marginLeft: spacing.margin.tiny,
+    },
   });
 };
 

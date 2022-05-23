@@ -35,9 +35,9 @@ import ImagePicker from '~/beinComponents/ImagePicker';
 import {IFilePicked} from '~/interfaces/common';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {openLink} from '~/utils/common';
-import {chatSchemes} from '~/constants/chat';
 import homeActions from '~/screens/Home/redux/actions';
 import {checkPermission} from '~/utils/permission';
+import {formatDMLink} from '~/utils/link';
 
 const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
@@ -162,6 +162,15 @@ const UserProfile = (props: any) => {
     });
   };
 
+  const onPressChat = () => {
+    const link = formatDMLink(
+      userProfileData.team_name,
+      userProfileData.username,
+    );
+
+    openLink(link);
+  };
+
   const renderEditButton = (style: any, onPress: any, testID: string) => {
     return userId == currentUserId || userId == currentUsername ? (
       <ButtonWrapper
@@ -176,7 +185,7 @@ const UserProfile = (props: any) => {
 
   const renderCoverImage = () => {
     return (
-      <View onLayout={onCoverLayout}>
+      <View testID="user_profile.cover_image" onLayout={onCoverLayout}>
         <Image
           style={styles.cover}
           source={bgImgState || images.img_cover_default}
@@ -250,11 +259,7 @@ const UserProfile = (props: any) => {
         colorHover={theme.colors.primary5}
         rightIcon={'Message'}
         borderRadius={theme.spacing.borderRadius.small}
-        onPress={() => {
-          openLink(
-            `${chatSchemes.DIRECT_MESSAGE}/@${userProfileData.username}`,
-          );
-        }}>
+        onPress={onPressChat}>
         {i18next.t('profile:title_direct_message')}
       </Button.Secondary>
     );

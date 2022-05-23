@@ -7,8 +7,8 @@ import {
   IAudience,
   ICreatePostParams,
   IParamGetPostAudiences,
-  IPayloadCreateAutoSave,
-  IPayloadPutEditAutoSave,
+  IParamPutEditPost,
+  IPayloadCreatePost,
   IPayloadPutEditDraftPost,
   IPayloadPutEditPost,
   IPostActivity,
@@ -22,6 +22,7 @@ import {useBaseHook} from '~/hooks';
 import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
 import {differenceWith, isEmpty, isEqual} from 'lodash';
 import {Keyboard} from 'react-native';
+import {getMentionsFromContent} from '~/screens/Post/helper/PostUtils';
 
 interface IUseCreatePost {
   screenParams: ICreatePostParams;
@@ -63,6 +64,8 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
   const {images} = validateImages(selectingImages, t);
 
+  const tempMentions = useKeySelector('mentionInput.tempSelected') || {};
+
   let initPostData: IPostActivity = {};
   if (postId) {
     initPostData = useKeySelector(postKeySelector.postById(postId));
@@ -86,7 +89,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
 
   const users: number[] = [];
   const groups: number[] = [];
-  const audience = {group_ids: groups, user_ids: users};
+  const audience = {groupIds: groups, userIds: users};
   chosenAudiences.map((selected: IAudience) => {
     if (selected.type === 'user') {
       users.push(Number(selected.id));
@@ -108,9 +111,9 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
   });
 
   const sPostId = sPostData?.id;
-  const isEdit = !!(sPostId && !sPostData?.is_draft);
-  const isDraftPost = !!(sPostId && sPostData?.is_draft);
-  const isNewsfeed = !(initPostData?.id && initPostData?.is_draft);
+  const isEdit = !!(sPostId && !sPostData?.isDraft);
+  const isDraftPost = !!(sPostId && sPostData?.isDraft);
+  const isNewsfeed = !(initPostData?.id && initPostData?.isDraft);
 
   const isAutoSave = isDraftPost || !isEdit;
 
@@ -123,17 +126,23 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
 
   const isEditPost = !!initPostData?.id;
   const isEditPostHasChange =
-    content !== initPostData?.object?.data?.content ||
+    content !== initPostData?.content ||
     isImageHasChange ||
     isAudienceHasChange;
   const isEditDraftPost = !!initPostData?.id && draftPostId;
+  const isSettingsHasChange =
+    initPostData?.setting?.isImportant !== important?.active ||
+    initPostData?.setting?.importantExpiredAt !== important?.expires_time;
 
   // Disable button post if loading, empty content, empty audience or edit post but nothing changed
   const disableButtonPost =
     loading ||
     content?.trim?.()?.length === 0 ||
     chosenAudiences.length === 0 ||
-    (isEditPost && !isEditPostHasChange && !isEditDraftPost);
+    (isEditPost &&
+      !isEditPostHasChange &&
+      !isEditDraftPost &&
+      !isSettingsHasChange);
 
   const clearAutoSaveTimeout = () => {
     clearTimeout(refToastAutoSave?.current);
@@ -171,8 +180,9 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
 
       //handle selected, uploaded post's image
       const initImages: any = [];
-      initPostData?.object?.data?.images?.map(item => {
+      initPostData?.media?.images?.map(item => {
         initImages.push({
+          id: item?.id,
           fileName: item?.origin_name || item?.name,
           file: {
             name: item?.origin_name || item?.name,
@@ -194,7 +204,12 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
 
   useEffect(() => {
     if (initPostData?.id) {
-      const initData = initPostData?.object?.data || {};
+      const initData = {
+        content: initPostData?.content || '',
+        images: initPostData?.media?.images,
+        files: initPostData?.media?.files,
+        videos: initPostData?.media?.videos,
+      };
       dispatch(postActions.setCreatePostData(initData));
 
       const initChosenAudience: any = [];
@@ -202,20 +217,24 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         initChosenAudience.push({
           id: group?.id,
           type: 'group',
-          name: group?.data?.name,
-          avatar: group?.data?.avatar,
+          name: group?.name,
+          avatar: group?.icon,
         });
       });
       initPostData?.audience?.users?.map?.(user => {
         initChosenAudience.push({
           id: user?.id,
           type: 'user',
-          name: user?.data?.fullname,
-          avatar: user?.data?.avatar,
+          name: user?.fullname,
+          avatar: user?.avatar,
         });
       });
       dispatch(postActions.setCreatePostChosenAudiences(initChosenAudience));
-      const initImportant = initPostData?.important || {};
+
+      const initImportant = {
+        active: !!initPostData?.setting?.isImportant,
+        expires_time: initPostData?.setting?.importantExpiredAt,
+      };
       dispatch(postActions.setCreatePostImportant(initImportant));
       dispatch(
         postActions.setCreatePostCurrentSettings({important: initImportant}),
@@ -288,6 +307,30 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     }
   };
 
+  const prepareData = () => {
+    const _content = mentionInputRef?.current?.getContent?.() || content;
+    const media = {images, videos: [], files: []};
+    const setting: any = {};
+    if (important?.active) {
+      setting.isImportant = important?.active;
+      setting.importantExpiredAt = important?.expires_time;
+    }
+
+    const newMentions = getMentionsFromContent(_content, tempMentions);
+    const mentions = {...initPostData?.mentions, ...newMentions};
+
+    const data: IPostCreatePost = {
+      audience,
+      content: _content,
+      media,
+      setting,
+      mentions,
+      isDraft: false,
+    };
+
+    return data;
+  };
+
   const autoSaveDraftPost = async () => {
     setPause(true);
 
@@ -319,44 +362,26 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         return;
       }
 
-      const payload: IPayloadCreateAutoSave = {
-        data: {
-          content: newContent,
-          images,
-          videos: [],
-          files: [],
-        },
-        audience,
-        createFromGroupId,
-      };
-
-      if (important?.active) {
-        payload.important = {
-          active: important?.active,
-          expires_time: important?.expires_time,
-        };
-      }
+      const data = prepareData();
 
       if (!isEdit) {
         dispatch(postActions.setSavingDraftPost(true));
       }
 
       if (isDraftPost && sPostId) {
-        const newPayload: IPayloadPutEditAutoSave = {
-          id: sPostId,
-          data: payload,
+        data.isDraft = true;
+        const newPayload: IParamPutEditPost = {
+          postId: sPostId,
+          data,
         };
-        await postDataHelper.putEditPost({
-          postId: newPayload?.id,
-          data: newPayload?.data,
-        });
+        await postDataHelper.putEditPost(newPayload);
         refIsRefresh.current = true;
       } else if (isEdit && sPostId) {
-        if (__DEV__) console.log('payload: ', payload);
+        console.log(`\x1b[36m🐣️ useCreatePost skip autosave edit post\x1b[0m`);
       } else {
         setLoading(true);
-        payload.is_draft = true;
-        const resp = await postDataHelper.postCreateNewPost(payload);
+        data.isDraft = true;
+        const resp = await postDataHelper.postCreateNewPost(data);
         refIsRefresh.current = true;
         if (resp?.data) {
           const newData = resp?.data || {};
@@ -402,62 +427,33 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     }
 
     let result: handlePressPostResultType;
-    // case edit draft post or create new post in auto save mode
+    const data = prepareData();
+
     if (isDraftPost && sPostId) {
-      const postData = {content, images, videos: [], files: []};
-      const draftData: IPostCreatePost = {
-        data: postData,
-        audience,
-      };
-      if (important?.active) {
-        draftData.important = {
-          active: important?.active,
-          expires_time: important?.expires_time,
-        };
-      }
+      // case edit draft post or create new post in auto save mode
       const payload: IPayloadPutEditDraftPost = {
         id: sPostId,
+        data,
         replaceWithDetail: true,
-        data: draftData,
         publishNow: true,
+        createFromGroupId,
       };
       dispatch(postActions.putEditDraftPost(payload));
       result = 'editDraft';
     } else if (isEditPost && initPostData?.id) {
-      const editPostData = {content, images, videos: [], files: []};
-      const newEditData: IPostCreatePost = {
-        data: editPostData,
-        audience,
-      };
-      newEditData.important = {
-        active: !!important?.active,
-        ...(important?.expires_time
-          ? {expires_time: important?.expires_time}
-          : {}),
-      };
+      //case edit post
       const payload: IPayloadPutEditPost = {
         id: initPostData?.id,
+        data,
         replaceWithDetail: replaceWithDetail,
-        data: newEditData,
         onRetry: () => handlePressPost(),
       };
       dispatch(postActions.putEditPost(payload));
       result = 'editPost';
     } else {
-      const postData = {content, images, videos: [], files: []};
-      const payload: IPostCreatePost = {
-        data: postData,
-        audience,
-        is_draft: false,
-        createFromGroupId,
-      };
-      if (important?.active) {
-        payload.important = {
-          active: important?.active,
-          expires_time: important?.expires_time,
-        };
-      }
-      dispatch(postActions.postCreateNewPost(payload));
+      console.log(
+        `\x1b[31m🐣️ useCreatePost handlePressPost must create post from draft \x1b[0m`,
+      );
       result = 'newPost';
     }
     Keyboard.dismiss();

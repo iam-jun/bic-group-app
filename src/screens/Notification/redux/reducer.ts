@@ -1,4 +1,3 @@
-import {cloneDeep} from 'lodash';
 import notificationsTypes from '~/screens/Notification/redux/types';
 
 export const notiInitState = {
@@ -25,34 +24,38 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
         notificationList: payload.notifications || [],
         unseenNumber: payload.unseen,
       };
-    case notificationsTypes.ADD_NEW_NOTIFICATIONS: {
-      const newNotifications = payload.notifications || [];
-      let notificationList: any[] = cloneDeep(state.notificationList);
 
-      // if the notification group id is existing, remove old items
-      const newGroupIds = newNotifications.map((noti: any) => noti.group);
-      notificationList = notificationList.filter((noti: any) => {
-        return !newGroupIds.includes(noti.group);
-      });
-      // then add the grouped notification that is updated at top of list
-      notificationList.unshift(...newNotifications);
-
+    case notificationsTypes.ATTACH: {
       return {
         ...state,
-        notificationList: notificationList,
-        unseenNumber: payload.unseen,
+        notificationList: [payload, ...state.notificationList],
+        unseenNumber: state.unseenNumber + 1,
       };
     }
-    case notificationsTypes.DELETE_NOTIFICATIONS: {
-      const newListAfterDelete = state.notificationList.filter((item: any) => {
-        return !payload.notiGroupIds.includes(item.group);
+    case notificationsTypes.DETACH: {
+      return {
+        ...state,
+        notificationList: state.notificationList.filter(
+          (item: any) => item.id !== payload?.id,
+        ),
+        unseenNumber: state.unseenNumber - 1,
+      };
+    }
+    case notificationsTypes.UPDATE: {
+      let newUnSeenNumber = state.unseenNumber;
+      const newListNotification = state.notificationList.filter((item: any) => {
+        if (item.id === payload?.id && item?.isSeen) {
+          newUnSeenNumber = newUnSeenNumber + 1;
+        }
+        return item.id !== payload?.id;
       });
       return {
         ...state,
-        notificationList: newListAfterDelete,
+        notificationList: [payload, ...newListNotification],
+        unseenNumber: newUnSeenNumber,
       };
     }
-    case notificationsTypes.CONCAT_NOTICATIONS:
+    case notificationsTypes.CONCAT_NOTIFICATIONS:
       return {
         ...state,
         notificationList: state.notificationList.concat(

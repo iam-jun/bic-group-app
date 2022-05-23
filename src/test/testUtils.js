@@ -33,6 +33,14 @@ export function renderWithRedux(component, store = createTestStore()) {
   return render(<Provider store={store}>{component}</Provider>);
 }
 
+export function rerenderWithRedux(
+  wrapper,
+  component,
+  store = createTestStore(),
+) {
+  return wrapper?.rerender?.(<Provider store={store}>{component}</Provider>);
+}
+
 const waitForUpdateRedux = (timeout = 500) => {
   return new Promise(r => setTimeout(r, timeout));
 };

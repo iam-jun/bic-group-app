@@ -10,7 +10,7 @@ import {groupPrivacy} from '~/constants/privacyTypes';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {showError} from '.';
+import showError from '~/store/commonSaga/showError';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -25,7 +25,14 @@ export default function* leaveGroup({
     const privacy = groups?.groupDetail?.group?.privacy;
 
     yield call(groupsDataHelper.leaveGroup, payload);
-    yield put(groupsActions.getJoinedGroups());
+
+    // update button Join/Cancel/View status on Discover groups
+    yield put(
+      groupsActions.editDiscoverGroupItem({
+        id: payload,
+        data: {join_status: 1},
+      }),
+    );
 
     if (privacy === groupPrivacy.secret) {
       if (Platform.OS !== 'web') {
@@ -38,7 +45,7 @@ export default function* leaveGroup({
       yield call(navigateToGroup, payload);
     }
 
-    yield put(groupsActions.getGroupDetail(payload, true));
+    yield put(groupsActions.getGroupDetail(payload));
 
     const toastMessage: IToastMessage = {
       content: i18next.t('groups:modal_confirm_leave_group:success_message'),

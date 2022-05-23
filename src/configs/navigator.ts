@@ -25,6 +25,16 @@ export const hideBottomTabRoutes = [
   'pending-members',
 ];
 
+export const customBackHandlerRoutes = [
+  'home',
+  'groups',
+  'post-detail',
+  'create-post',
+  'MainStack',
+];
+
+export const NAVIGATION_BACK_PRESSED = 'navigation-back-pressed';
+
 export const navigationSetting = {
   defaultNavigationOption: {
     headerStyle: {
@@ -51,14 +61,14 @@ export const navigationSetting = {
 
 export const bottomTabIcons = {
   home: 'iconTabHome',
-  groups: 'iconTabGroups',
+  communities: 'iconTabCommunities',
   notification: 'iconTabNotification',
   menus: 'iconTabMenu',
 };
 
 export const bottomTabIconsFocused = {
   home: 'iconTabHomeBein',
-  groups: 'iconTabGroupsBein',
+  communities: 'iconTabCommunitiesBein',
   notification: 'iconTabNotificationBein',
   menus: 'iconTabMenuBein',
 };

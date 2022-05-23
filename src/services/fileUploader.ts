@@ -8,13 +8,16 @@ import {IUploadType} from '~/configs/resourceConfig';
 export interface IGetFile {
   fileName: string;
   url?: string;
+  size?: any;
   uploading?: boolean;
+  uploadType?: IUploadType;
+  result?: any;
 }
 
 export interface IUploadParam {
   uploadType: IUploadType | string;
   file: IFilePicked;
-  onSuccess?: (url: string) => void;
+  onSuccess?: (data: IGetFile) => void;
   onProgress?: (percent: number) => void;
   onError?: (e: any) => void;
 }
@@ -22,7 +25,7 @@ export interface IUploadParam {
 export default class FileUploader {
   static INSTANCE: FileUploader | null = null;
 
-  fileUploaded: any = {};
+  fileUploaded: {[x: string]: IGetFile} = {};
   fileUploading: any = {};
 
   callbackProgress: any = {};
@@ -38,7 +41,7 @@ export default class FileUploader {
 
   getFile(
     fileName: string,
-    onSuccess?: (url: string) => void,
+    onSuccess?: (data: IGetFile) => void,
     onProgress?: (percent: number) => void,
     onError?: (e: any) => void,
   ): IGetFile {
@@ -51,12 +54,12 @@ export default class FileUploader {
     if (onError) {
       this.callbackError[fileName] = onProgress;
     }
-    const result: IGetFile = {
+    return {
       fileName: fileName,
       uploading: this.fileUploading[fileName],
       url: this.fileUploaded[fileName]?.url,
+      result: this.fileUploaded[fileName]?.result,
     };
-    return result;
   }
 
   async upload(params: IUploadParam) {
@@ -73,8 +76,8 @@ export default class FileUploader {
         uploaded?.uploadType === uploadType &&
         uploaded?.size === file?.size
       ) {
-        onSuccess?.(uploaded.url);
-        return Promise.resolve(uploaded.url);
+        onSuccess?.(uploaded);
+        return Promise.resolve(uploaded);
       }
     }
     if (file.size > AppConfig.maxFileSize) {
@@ -108,16 +111,25 @@ export default class FileUploader {
       const response: any = await makeHttpRequest(
         ApiConfig.Upload.uploadFile(uploadType, formData, _onUploadProgress),
       );
+      const uploadedUrl =
+        response?.data?.data?.url || response?.data?.data?.src;
       console.log(
-        `\x1b[32m🐣️ fileUploader response url: ${response?.data?.data?.src} \x1b[0m`,
+        `\x1b[32m🐣️ fileUploader response url: ${uploadedUrl} \x1b[0m`,
       );
       this.fileUploading[file.name] = false;
-      if (response?.data?.data?.src) {
-        const url = response?.data?.data?.src;
-        this.fileUploaded[file.name] = {url, uploadType, size: file?.size};
-        onSuccess?.(url);
-        this.callbackSuccess?.[file.name]?.(url);
-        return Promise.resolve(url);
+      if (uploadedUrl) {
+        const fileRes = response?.data?.data;
+        this.fileUploaded[file.name] = {
+          url: uploadedUrl,
+          uploadType,
+          uploading: false,
+          fileName: file.name,
+          size: file?.size,
+          result: fileRes,
+        };
+        onSuccess?.(this.fileUploaded[file.name]);
+        this.callbackSuccess?.[file.name]?.(this.fileUploaded[file.name]);
+        return Promise.resolve(this.fileUploaded[file.name]);
       } else {
         onError?.(response?.data);
         this.callbackError?.[file.name]?.(response?.data);

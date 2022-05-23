@@ -8,27 +8,40 @@ import Icon from '~/beinComponents/Icon';
 import {IconType} from '~/resources/icons';
 
 interface EmptyScreenProps {
-  source: IconType;
-  title: string;
-  description: string;
+  source?: IconType;
+  title?: string;
+  description?: string;
+  size?: number;
+  ButtonComponent?: any;
 }
 
-const EmptyScreen = ({source, title, description}: EmptyScreenProps) => {
+const EmptyScreen = ({
+  source,
+  title,
+  description,
+  size = 150,
+  ButtonComponent,
+}: EmptyScreenProps) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
   return (
-    <View style={styles.container}>
-      <Icon icon={source} size={150} />
-      <Text.ButtonBase style={styles.text} useI18n>
-        {title}
-      </Text.ButtonBase>
-      <Text.Subtitle
-        color={theme.colors.textSecondary}
-        style={styles.text}
-        useI18n>
-        {description}
-      </Text.Subtitle>
+    <View testID="empty_screen" style={styles.container}>
+      {!!source && <Icon icon={source} size={size} />}
+      {!!title && (
+        <Text.ButtonBase style={styles.text} useI18n>
+          {title}
+        </Text.ButtonBase>
+      )}
+      {!!description && (
+        <Text.Subtitle
+          color={theme.colors.textSecondary}
+          style={styles.text}
+          useI18n>
+          {description}
+        </Text.Subtitle>
+      )}
+      {ButtonComponent}
     </View>
   );
 };

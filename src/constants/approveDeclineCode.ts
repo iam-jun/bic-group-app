@@ -1,6 +1,7 @@
 export default {
-  CANNOT_APPROVE: 20001,
-  CANNOT_DECLINE: 20002,
-  CANNOT_APPROVE_ALL: 20003,
-  CANNOT_DECLINE_ALL: 20004,
+  CANNOT_APPROVE: 'joining_request.approve_failed',
+  CANNOT_DECLINE: 'joining_request.decline_failed',
+  CANNOT_APPROVE_ALL: 'joining_request.approve_all_failed',
+  CANNOT_DECLINE_ALL: 'joining_request.decline_all_failed',
+  NOT_FOUND: 'joining_request.not_found',
 };

@@ -116,11 +116,15 @@ exports[`EditName conponent renders correctly 1`] = `
     </View>
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 16,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 16,
+          },
+          Object {},
+          undefined,
+        ]
       }
     >
       Name
@@ -310,11 +314,15 @@ exports[`EditName conponent should show helperContent when error=true 1`] = `
     </View>
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 16,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 16,
+          },
+          Object {},
+          undefined,
+        ]
       }
     >
       Name
@@ -386,11 +394,17 @@ exports[`EditName conponent should show helperContent when error=true 1`] = `
     />
     <Text
       style={
-        Object {
-          "color": "#DD2C3E",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 12,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 12,
+          },
+          Object {
+            "color": "#DD2C3E",
+          },
+          undefined,
+        ]
       }
       testID="text_input.text_helper"
     >

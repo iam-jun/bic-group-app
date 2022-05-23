@@ -18,17 +18,19 @@ import Divider from '~/beinComponents/Divider';
 export interface PostViewPlaceholderProps {
   style?: StyleProp<ViewStyle>;
   disableRandom?: boolean;
+  testID?: string;
 }
 
 const PostViewPlaceholder: FC<PostViewPlaceholderProps> = ({
   style,
   disableRandom,
+  testID = 'post_view_placeholder',
 }: PostViewPlaceholderProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
   return (
-    <View style={StyleSheet.flatten([styles.container, style])}>
+    <View testID={testID} style={StyleSheet.flatten([styles.container, style])}>
       <View style={styles.importantContainer}>
         <Image style={styles.iconStar} source={images.ic_star_white} />
         <Placeholder Animation={ShineOverlay} style={styles.flex1}>

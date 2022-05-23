@@ -205,11 +205,15 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
         >
           <Text
             style={
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 20,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 20,
+                },
+                Object {},
+                Object {},
+              ]
             }
             testID="group_info_header.name"
           />
@@ -354,45 +358,61 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
             </View>
             <Text
               style={
-                Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-Regular",
-                  "fontSize": 12,
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-Regular",
+                    "fontSize": 12,
+                  },
+                  Object {},
+                  undefined,
+                ]
               }
               testID="group_info_header.privacy"
             />
             <Text
               style={
-                Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-Regular",
-                  "fontSize": 12,
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-Regular",
+                    "fontSize": 12,
+                  },
+                  Object {},
+                  undefined,
+                ]
               }
             >
                • 
             </Text>
             <Text
               style={
-                Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 14,
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 14,
+                  },
+                  Object {},
+                  undefined,
+                ]
               }
               testID="group_info_header.member_count"
             />
             <Text
               style={
-                Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-Regular",
-                  "fontSize": 12,
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-Regular",
+                    "fontSize": 12,
+                  },
+                  Object {},
+                  undefined,
+                ]
               }
             >
-               members
+               undefined
             </Text>
           </View>
         </View>
@@ -431,12 +451,19 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
         >
           <Text
             style={
-              Object {
-                "color": "#FFFFFF",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
-                "textAlign": "center",
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 16,
+                },
+                Object {
+                  "color": "#FFFFFF",
+                },
+                Object {
+                  "textAlign": "center",
+                },
+              ]
             }
           >
             Join

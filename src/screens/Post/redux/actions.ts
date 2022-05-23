@@ -30,6 +30,8 @@ import {
   IPayloadUpdateReaction,
   IPayloadDeletePost,
   IPayloadDeleteComment,
+  ICommentData,
+  IPayloadPutMarkAsRead,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -145,24 +147,26 @@ const postActions = {
     payload,
   }),
   updateCommentAPI: (payload: {
-    localId: string | number[];
+    localId?: string | number[];
     status: 'pending' | 'success' | 'failed';
-    postId: string;
+    postId: number;
     resultComment: IReaction;
-    parentCommentId?: string;
+    parentCommentId?: number;
   }) => ({
     type: postTypes.UPDATE_COMMENT_API,
     payload,
   }),
-  setScrollToLatestItem: (payload: null | {parentCommentId?: string}) => ({
+  setScrollToLatestItem: (
+    payload: null | {parentCommentId?: string | number},
+  ) => ({
     type: postTypes.SET_SCROLL_TO_LATEST_ITEM,
     payload,
   }),
-  postRetryAddComment: (payload: IReaction) => ({
+  postRetryAddComment: (payload: ICommentData) => ({
     type: postTypes.POST_RETRY_ADD_COMMENT,
     payload,
   }),
-  postCancelFailedComment: (payload: IReaction) => ({
+  postCancelFailedComment: (payload: ICommentData) => ({
     type: postTypes.POST_CANCEL_FAILED_COMMENT,
     payload,
   }),
@@ -208,7 +212,7 @@ const postActions = {
     payload,
   }),
   showPostAudiencesBottomSheet: (payload: {
-    postId: string;
+    postId: number;
     fromStack: string;
   }) => ({
     type: postTypes.SHOW_POST_AUDIENCES_BOTTOM_SHEET,
@@ -269,6 +273,30 @@ const postActions = {
   }),
   setScrollCommentsPosition: (payload: null | {position?: string}) => ({
     type: postTypes.SET_SCROLL_TO_COMMENTS_POSITION,
+    payload,
+  }),
+  setLoadingGetPostDetail: (payload: boolean) => ({
+    type: postTypes.LOADING_GET_POST_DETAIL,
+    payload,
+  }),
+  setCommentErrorCode: (payload: boolean | string) => ({
+    type: postTypes.SET_COMMENT_ERROR_CODE,
+    payload,
+  }),
+  removeChildComment: (payload: any) => ({
+    type: postTypes.REMOVE_CHILD_COMMENT,
+    payload,
+  }),
+  getCommentDetail: (payload: any) => ({
+    type: postTypes.GET_COMMENT_DETAIL,
+    payload,
+  }),
+  putMarkAsRead: (payload: IPayloadPutMarkAsRead) => ({
+    type: postTypes.PUT_MARK_AS_READ,
+    payload,
+  }),
+  removeCommentLevel1Deleted: (payload: any) => ({
+    type: postTypes.REMOVE_COMMENT_DELETED,
     payload,
   }),
 };

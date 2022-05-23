@@ -26,7 +26,7 @@ platform :android do
     )
     mattermost(
         url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-        text: "@all\n🟣 [DEV] 🤖 -Android- New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+        text: "@all\n🟣🤖 **Bein Dev Android** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
             \n > **Git Branch**: #{git_branch}
             \n **Git Author**: #{commit[:author]}
             \n **Git Commit**: #{git_mess}",
@@ -55,7 +55,7 @@ platform :android do
     )
     mattermost(
         url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-        text: "@all\n🟡 [STG] 🤖 -Android- New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+        text: "@all\n🟡🤖 **Bein Staging Android** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
             \n > **Git Branch**: #{git_branch}
             \n **Git Author**: #{commit[:author]}
             \n **Git Commit**: #{git_mess}",
@@ -83,7 +83,7 @@ platform :android do
         )
         mattermost(
             url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-            text: "@all\n🟢 [PROD] 🤖 -Android- New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+            text: "@all\n🟢🤖 **Bein Production Android** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
                 \n > **Git Branch**: #{git_branch}
                 \n **Git Author**: #{commit[:author]}
                 \n **Git Commit**: #{git_mess}",

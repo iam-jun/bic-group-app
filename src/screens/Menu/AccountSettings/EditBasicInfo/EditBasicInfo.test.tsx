@@ -16,16 +16,24 @@ import * as navigationHook from '~/hooks/navigation';
 
 import EditBasicInfo from './EditBasicInfo';
 import {USER_PROFILE} from '~/test/mock_data/menu';
+import i18next from 'i18next';
 
 afterEach(cleanup);
 
 describe('EditDescription screen', () => {
   let Keyboard: any;
+  let storeData: any;
 
   const mockStore = configureStore([]);
 
   beforeEach(() => {
     Keyboard = require('react-native').Keyboard;
+    jest.clearAllMocks();
+    storeData = {...initialState};
+    storeData.menu.myProfile = {} as any;
+    storeData.auth.user = {} as any;
+    storeData.menu.showUserNotFound = false;
+    storeData.menu.loadingUserProfile = false;
   });
 
   afterEach(() => {
@@ -55,9 +63,14 @@ describe('EditDescription screen', () => {
 
   it(`should render gender bottom sheet when click gender item`, async () => {
     Keyboard.dismiss = jest.fn();
-    const store = mockStore(initialState);
+
+    storeData.menu.myProfile = USER_PROFILE;
+    const store = mockStore(storeData);
 
     const wrapper = renderWithRedux(<EditBasicInfo />, store);
+
+    const buttonSave = wrapper.getByTestId('edit_basic_info.save');
+    expect(buttonSave?.props?.accessibilityState?.disabled).toBeTruthy();
 
     const component = wrapper.getByTestId('edit_basic_info.gender');
     expect(component).toBeDefined();
@@ -66,6 +79,14 @@ describe('EditDescription screen', () => {
     expect(Keyboard.dismiss).toBeCalled();
     const bottomSheet = wrapper.getByTestId('edit_basic_info.gender_list');
     expect(bottomSheet).toBeDefined();
+
+    const item0Component = wrapper.getByTestId(
+      'edit_user_info.option_menu.item_MALE',
+    );
+    expect(item0Component).toBeDefined();
+    fireEvent.press(item0Component);
+
+    expect(buttonSave?.props?.accessibilityState?.disabled).toBeFalsy();
   });
 
   it(`should render show date picker when click birthday item`, async () => {
@@ -137,6 +158,9 @@ describe('EditDescription screen', () => {
 
     const wrapper = renderWithRedux(<EditBasicInfo />, store);
 
+    const buttonSave = wrapper.getByTestId('edit_basic_info.save');
+    expect(buttonSave?.props?.accessibilityState?.disabled).toBeTruthy();
+
     const component = wrapper.getByTestId('edit_basic_info.relationship');
     expect(component).toBeDefined();
 
@@ -148,6 +172,14 @@ describe('EditDescription screen', () => {
     );
 
     expect(bottomSheet).toBeDefined();
+
+    const item0Component = wrapper.getByTestId(
+      'edit_user_info.option_menu.item_MARRIED',
+    );
+    expect(item0Component).toBeDefined();
+    fireEvent.press(item0Component);
+
+    expect(buttonSave?.props?.accessibilityState?.disabled).toBeFalsy();
   });
 
   it(`should back to previous screen successfully `, () => {
@@ -185,5 +217,43 @@ describe('EditDescription screen', () => {
     const buttonBack = wrapper.getByTestId('header.back');
     fireEvent.press(buttonBack);
     expect(Keyboard.dismiss).toBeCalled();
+  });
+
+  it(`should dismiss keyboard when click button save `, () => {
+    Keyboard.dismiss = jest.fn();
+
+    const store = mockStore(initialState);
+
+    const wrapper = renderWithRedux(<EditBasicInfo />, store);
+
+    const inputComponent = wrapper.getByTestId('edit_name.text_input');
+
+    fireEvent.changeText(inputComponent, 'Test name');
+
+    const buttonSave = wrapper.getByTestId('edit_basic_info.save');
+    expect(buttonSave.props.accessibilityState.disabled).toBeFalsy();
+
+    fireEvent.press(buttonSave);
+
+    expect(Keyboard.dismiss).toBeCalled();
+  });
+
+  it(`should show error text when deleting all character of name`, () => {
+    Keyboard.dismiss = jest.fn();
+
+    storeData.menu.myProfile = USER_PROFILE;
+    const store = mockStore(storeData);
+
+    const wrapper = renderWithRedux(<EditBasicInfo />, store);
+
+    const inputComponent = wrapper.getByTestId('edit_name.text_input');
+
+    fireEvent.changeText(inputComponent, '');
+
+    const helperComponent = wrapper.getByTestId('text_input.text_helper');
+    expect(helperComponent).toBeDefined();
+    expect(helperComponent.props?.children?.[0]).toBe(
+      i18next.t('profile:text_name_must_not_be_empty'),
+    );
   });
 });

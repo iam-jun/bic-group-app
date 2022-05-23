@@ -31,8 +31,144 @@ exports[`ReactionView component renders correctly 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#EADFFE",
-        "borderColor": "#7843DD",
+        "backgroundColor": "#EAEDF2",
+        "borderColor": "#EAEDF2",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.grinning"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
+        }
+        testID="reaction.grinning"
+      >
+        😀
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EAEDF2",
+        "borderColor": "#EAEDF2",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.grinning_face_with_star_eyes"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
+        }
+        testID="reaction.grinning_face_with_star_eyes"
+      >
+        🤩
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EAEDF2",
+        "borderColor": "#EAEDF2",
         "borderRadius": 6,
         "borderWidth": 1,
         "flexDirection": "row",
@@ -47,22 +183,35 @@ exports[`ReactionView component renders correctly 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#421187",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
         testID="reaction.kissing_smiling_eyes"
       >
@@ -98,142 +247,45 @@ exports[`ReactionView component renders correctly 1`] = `
         "paddingHorizontal": 6,
       }
     }
-    testID="reaction.button.wink"
+    testID="reaction.button.sweat_smile"
   >
     <Text
       style={
-        Object {
-          "color": "#421187",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#421187",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
-        testID="reaction.wink"
+        testID="reaction.sweat_smile"
       >
-        😉
+        😅
       </Text>
-       1
-    </Text>
-  </View>
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    nativeID="animatedComponent"
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#EADFFE",
-        "borderColor": "#7843DD",
-        "borderRadius": 6,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "margin": 2,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
-    }
-    testID="reaction.button.grinning_face_with_star_eyes"
-  >
-    <Text
-      style={
-        Object {
-          "color": "#421187",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
-      }
-      testID="reaction.children"
-    >
-      <Text
-        style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
-        }
-        testID="reaction.grinning_face_with_star_eyes"
-      >
-        🤩
-      </Text>
-       1
-    </Text>
-  </View>
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    nativeID="animatedComponent"
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#EADFFE",
-        "borderColor": "#7843DD",
-        "borderRadius": 6,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "margin": 2,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
-    }
-    testID="reaction.button.grinning"
-  >
-    <Text
-      style={
-        Object {
-          "color": "#421187",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
-      }
-      testID="reaction.children"
-    >
-      <Text
-        style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
-        }
-        testID="reaction.grinning"
-      >
-        😀
-      </Text>
-       1
+       2
     </Text>
   </View>
   <View
@@ -438,8 +490,144 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#EADFFE",
-        "borderColor": "#7843DD",
+        "backgroundColor": "#EAEDF2",
+        "borderColor": "#EAEDF2",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.grinning"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
+        }
+        testID="reaction.grinning"
+      >
+        😀
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EAEDF2",
+        "borderColor": "#EAEDF2",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.grinning_face_with_star_eyes"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
+        }
+        testID="reaction.grinning_face_with_star_eyes"
+      >
+        🤩
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EAEDF2",
+        "borderColor": "#EAEDF2",
         "borderRadius": 6,
         "borderWidth": 1,
         "flexDirection": "row",
@@ -454,22 +642,35 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
   >
     <Text
       style={
-        Object {
-          "color": "#421187",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
         testID="reaction.kissing_smiling_eyes"
       >
@@ -505,142 +706,45 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
         "paddingHorizontal": 6,
       }
     }
-    testID="reaction.button.wink"
+    testID="reaction.button.sweat_smile"
   >
     <Text
       style={
-        Object {
-          "color": "#421187",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#421187",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
-        testID="reaction.wink"
+        testID="reaction.sweat_smile"
       >
-        😉
+        😅
       </Text>
-       1
-    </Text>
-  </View>
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    nativeID="animatedComponent"
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#EADFFE",
-        "borderColor": "#7843DD",
-        "borderRadius": 6,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "margin": 2,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
-    }
-    testID="reaction.button.grinning_face_with_star_eyes"
-  >
-    <Text
-      style={
-        Object {
-          "color": "#421187",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
-      }
-      testID="reaction.children"
-    >
-      <Text
-        style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
-        }
-        testID="reaction.grinning_face_with_star_eyes"
-      >
-        🤩
-      </Text>
-       1
-    </Text>
-  </View>
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    nativeID="animatedComponent"
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#EADFFE",
-        "borderColor": "#7843DD",
-        "borderRadius": 6,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "margin": 2,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
-    }
-    testID="reaction.button.grinning"
-  >
-    <Text
-      style={
-        Object {
-          "color": "#421187",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
-      }
-      testID="reaction.children"
-    >
-      <Text
-        style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
-        }
-        testID="reaction.grinning"
-      >
-        😀
-      </Text>
-       1
+       2
     </Text>
   </View>
   <View
@@ -1219,8 +1323,144 @@ exports[`ReactionView component renders correctly with props style 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": "#EADFFE",
-        "borderColor": "#7843DD",
+        "backgroundColor": "#EAEDF2",
+        "borderColor": "#EAEDF2",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.grinning"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
+        }
+        testID="reaction.grinning"
+      >
+        😀
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EAEDF2",
+        "borderColor": "#EAEDF2",
+        "borderRadius": 6,
+        "borderWidth": 1,
+        "flexDirection": "row",
+        "height": 28,
+        "justifyContent": "center",
+        "margin": 2,
+        "opacity": 1,
+        "paddingHorizontal": 6,
+      }
+    }
+    testID="reaction.button.grinning_face_with_star_eyes"
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
+      }
+      testID="reaction.children"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
+        }
+        testID="reaction.grinning_face_with_star_eyes"
+      >
+        🤩
+      </Text>
+       1
+    </Text>
+  </View>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    nativeID="animatedComponent"
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#EAEDF2",
+        "borderColor": "#EAEDF2",
         "borderRadius": 6,
         "borderWidth": 1,
         "flexDirection": "row",
@@ -1235,22 +1475,35 @@ exports[`ReactionView component renders correctly with props style 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#421187",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#2F3945",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
         testID="reaction.kissing_smiling_eyes"
       >
@@ -1286,142 +1539,45 @@ exports[`ReactionView component renders correctly with props style 1`] = `
         "paddingHorizontal": 6,
       }
     }
-    testID="reaction.button.wink"
+    testID="reaction.button.sweat_smile"
   >
     <Text
       style={
-        Object {
-          "color": "#421187",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#421187",
+          },
+          Object {
+            "marginBottom": 2,
+          },
+        ]
       }
       testID="reaction.children"
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "fontSize": 13,
+            },
+          ]
         }
-        testID="reaction.wink"
+        testID="reaction.sweat_smile"
       >
-        😉
+        😅
       </Text>
-       1
-    </Text>
-  </View>
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    nativeID="animatedComponent"
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#EADFFE",
-        "borderColor": "#7843DD",
-        "borderRadius": 6,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "margin": 2,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
-    }
-    testID="reaction.button.grinning_face_with_star_eyes"
-  >
-    <Text
-      style={
-        Object {
-          "color": "#421187",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
-      }
-      testID="reaction.children"
-    >
-      <Text
-        style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
-        }
-        testID="reaction.grinning_face_with_star_eyes"
-      >
-        🤩
-      </Text>
-       1
-    </Text>
-  </View>
-  <View
-    accessible={true}
-    collapsable={false}
-    focusable={true}
-    nativeID="animatedComponent"
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "alignItems": "center",
-        "backgroundColor": "#EADFFE",
-        "borderColor": "#7843DD",
-        "borderRadius": 6,
-        "borderWidth": 1,
-        "flexDirection": "row",
-        "height": 28,
-        "justifyContent": "center",
-        "margin": 2,
-        "opacity": 1,
-        "paddingHorizontal": 6,
-      }
-    }
-    testID="reaction.button.grinning"
-  >
-    <Text
-      style={
-        Object {
-          "color": "#421187",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-          "marginBottom": 2,
-        }
-      }
-      testID="reaction.children"
-    >
-      <Text
-        style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 13,
-          }
-        }
-        testID="reaction.grinning"
-      >
-        😀
-      </Text>
-       1
+       2
     </Text>
   </View>
   <View

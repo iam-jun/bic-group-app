@@ -35,6 +35,7 @@
     "btn_next": "Tiếp tục",
     "btn_confirm": "Xác nhận",
     "btn_join": "Tham gia",
+    "btn_view": "Xem",
     "text_search_emoji": "Tìm Emoji",
     "text_important": "Quan trọng",
     "text_clear": "Xoá",
@@ -50,8 +51,8 @@
     "text_important_posts": "Bài viết quan trọng",
     "text_files": "Files",
     "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
-    "text_read_more": "Xem thêm",
-    "text_show_less": "Thu gọn",
+    "text_see_more": "Xem thêm",
+    "text_see_less": "Thu gọn",
     "text_send": "Gửi",
     "error": {
       "file": {
@@ -65,6 +66,7 @@
     "btn_continue_editing": "Tiếp tục chỉnh sửa",
     "text_updated_successfully": "cập nhật thành công",
     "text_save": "Lưu",
+    "text_select": "Chọn",
     "text_add": "Thêm",
     "text_start_date": "Ngày bắt đầu",
     "text_end_date": "Ngày kết thúc",
@@ -90,7 +92,8 @@
     },
     "text_not_now": "Không phải bây giờ",
     "text_go_to_settings": "Đi tới Cài đặt",
-    "text_help": "Trợ giúp"
+    "text_help": "Trợ giúp",
+    "text_type_search_keyword": "Gõ từ khóa để tìm kiếm"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -170,9 +173,9 @@
   },
   "tabs": {
     "home": "Bản tin",
-    "groups": "Nhóm",
+    "communities": "Cộng đồng",
     "notification": "Thông báo",
-    "menus": "Menu"
+    "menus": "Bạn"
   },
   "settings": {
     "title_app_language": "Ngôn ngữ",
@@ -225,6 +228,7 @@
     "title_private_subtitle": "Group's content show to only members.\nLearn more",
     "title_secret": "Secret",
     "title_secret_subtitle": "This group is secret. Learn more",
+    "title_open": "Mở",
     "title_edit_description": "Chỉnh sửa Mô tả",
     "title_logout_from_all_devices": "Đăng xuất khỏi tất cả thiết bị",
     "title_edit_basic_info": "Chỉnh sửa Thông tin cơ bản",
@@ -278,9 +282,10 @@
     "title_set_a_custom_status": "Tuỳ chỉnh trạng thái",
     "title_about_bein_app": "Giới thiệu",
     "title_help_and_support": "Trợ giúp & hỗ trợ",
-    "group_title_public": "Nhóm công khai",
-    "group_title_private": "Nhóm kín",
-    "group_title_secret": "Nhóm kín"
+    "privacy_public": "Nhóm công khai",
+    "privacy_private": "Nhóm riêng tư",
+    "privacy_secret": "Nhóm kín",
+    "privacy_open": "Nhóm mở"
   },
   "languages": {
     "title_en": "English",
@@ -388,10 +393,17 @@
     "people_search": "Người dùng",
     "show_all": "Xem tất cả",
     "text_load_more_comments": "Xem bình luận trước đó",
-    "text_load_more_replies": "Xem các trả lời trước đó",
+    "text_load_previous_replies": "Xem các trả lời trước đó",
+    "text_load_more_replies": "Xem thêm các bình luận khác",
     "text_add_to_post": "Thêm vào bài viết",
+    "text_comment_was_deleted": "Bình luận này đã bị xoá",
+    "text_restricted_permission": "Hạn chế quyền xem",
+    "text_restricted_permission_description": "Bạn không có quyền xem bình luận này",
+    "text_back_to_news_feed": "Trở về Bản tin",
     "comment_menu_reply": "Trả lời bình luận này",
     "comment_menu_copy_text": "Sao chép nội dung",
+    "comment_menu_copy_link": "Sao chép đường dẫn",
+    "comment_link_copied": "Đã sao chép liên kết của bình luận",
     "comment_menu_edit": "Sửa bình luận",
     "comment_menu_history": "Lịch sử chỉnh sửa",
     "comment_menu_delete": "Xoá bình luận",
@@ -402,6 +414,7 @@
     "post_menu_turn_off_noti": "Tắt thông báo cho bài viết này",
     "post_menu_history": "Xem lịch sử chỉnh sửa",
     "post_menu_delete": "Xoá bài viết",
+    "post_menu_edit_settings": "Sửa cài đặt bài viết",
     "post_menu_report": "Báo cáo",
     "error_wait_uploading": "Vui lòng chờ tải lên hoàn tất",
     "error_upload_failed": "Vui lòng xoá file lỗi hoặc thử tải lại",
@@ -420,6 +433,8 @@
     "btn_discard_comment": "Bỏ",
     "text_edit_post_success": "Đăng bài viết thành công",
     "text_edit_post_failed": "Đăng bài viết thất bại",
+    "text_update_post_setting_success": "Đã cập nhật Cài đặt bài viết",
+    "text_update_post_setting_failed": "Cập nhật Cài đặt bài viết thất bại",
     "text_comment_from": "Đây là bình luận từ ",
     "title_comment_detail_of": "bài đăng của %NAME%",
     "newsfeed": {
@@ -466,7 +481,13 @@
     "people_can_react": "Mọi người có thể tương tác trên bài viết",
     "auto_saved": "Bài viết đã lưu tự động",
     "saved_to_draft": "Bài viết đã lưu vào nháp.",
-    "text_review_markdown": "Xem trước nội dung"
+    "text_review_markdown": "Xem trước nội dung",
+    "text_comment_deleted": "Bình luận này đã bị xoá, không thể gửi bình luận trả lời của bạn",
+    "deleted_comment": {
+      "title": "Trang này không tồn tại.",
+      "description": "Bình luận này có thể bị xóa hoặc bạn không có quyền xem bình luận này",
+      "button_text": "Quay về Bài viết"
+    }
   },
   "comment": {
     "placeholder_comment": "Để lại bình luận ...",
@@ -497,22 +518,27 @@
   },
   "input": {
     "search": "Tìm kiếm người để trò chuyện...",
-    "search_group": "Tìm kiếm nhóm hoặc người...",
+    "search_group_people": "Tìm kiếm nhóm hoặc người...",
+    "search_group": "Tìm kiếm nhóm",
     "search_post": "Tìm kiếm bài viết...",
     "search_country": "Tìm kiếm Đất nước",
     "search_location": "Tìm kiếm Tỉnh/Thành phố"
   },
   "groups": {
     "group_content": {
+      "btn_your_groups": "Nhóm của bạn",
+      "btn_discover": "Khám phá",
       "btn_post": "Bài đăng",
       "btn_channel": "Kênh",
       "btn_about": "Về nhóm",
       "btn_members": "Thành viên",
       "btn_files": "Files"
     },
-    "text_members": "thành viên",
+    "text_members_one": "thành viên",
+    "text_members_other": "thành viên",
     "search_results": "Kết quả tìm kiếm",
     "all_groups": "Tất cả",
+    "text_search_member": "Tìm kiềm thành viên",
     "group_menu": {
       "label_copy_group_link": "Sao chép đường dẫn nhóm",
       "label_leave_group": "Rời nhóm",
@@ -560,9 +586,9 @@
     "title_not_found": "Page not found / Bein"
   },
   "notification": {
-    "mark_all_as_read": "Mark all as read",
-    "mark_all_as_read_success": "All notifications marked as read",
-    "notification_settings": "Notification Settings",
+    "mark_all_as_read": "Đánh dấu đã đọc tất cả",
+    "mark_all_as_read_success": "Tất cả các thông báo đã được đánh dấu là đã đọc",
+    "notification_settings": "Cài đặt thông báo",
     "created_a_post": "created a post",
     "mentioned_you_in_a_post": "mentioned you in a post",
     "mentioned_you_in_a_comment": "mentioned you in a comment",
@@ -576,12 +602,18 @@
     "replied_to_your_comment": "replied to your comment",
     "replied_to_a_comment_you_are_mentioned": "replied to a comment you're mentioned",
     "replied_to_comment_you_replied": "replied to a comment you replied",
-    "no_more_notification": "No more notification",
-    "no_notification_found": "Your notification box is empty",
-    "no_notification_found_desc": "We’ll notify you when something arrives",
+    "no_more_notification": "Đã hiện hết thông báo",
+    "no_notification_found": "Bạn không có thông báo nào đang chờ",
     "you_joined_group": "You joined {group_name}",
     "number_people": "{number} people",
-    "number_times": "{number} times"
+    "number_times": "{number} times",
+    "text_all": "Tất cả",
+    "text_unread": "Chưa đọc",
+    "text_mention": "Được nhắc đến",
+    "text_important": "Quan trọng",
+    "mark_as_read": "Đánh dấu là đã đọc",
+    "mark_as_unread": "Đánh dấu là chưa đọc",
+    "off_notification_from_group": "Tắt nhận thông báo cho nhóm này"
   },
   "new_feature": {
     "title": "New feature",
@@ -600,5 +632,38 @@
       "title": "Đã có lỗi xảy ra",
       "desc": "Vui lòng đăng nhập lại"
     }
+  },
+  "communities": {
+    "title_your_groups": "Nhóm của bạn",
+    "title_group_joined": "Bạn đã tham gia",
+    "title_group_manage": "Bạn quản lý",
+    "text_view_mode": "Chế độ xem",
+    "text_choose_view_mode": "Chọn chế độ xem",
+    "text_your_groups_search_input": "Vui lòng nhập từ khoá tìm kiến để xem kết quả",
+    "text_your_groups_search_empty": "Xin lỗi, chúng tôi không tìm thấy bất kỳ nhóm nào liên quan đến từ khoá bạn tìm kiếm",
+    "group_types": {
+      "text_flat_list": "Danh sách",
+      "text_tree_view": "Cấu trúc cây"
+    },
+    "empty_communities": {
+      "title": "Không tìm thấy cộng đồng nào",
+      "description": "Khám phá các cộng đồng để tham gia một cộng đồng.",
+      "button_text": "Đi tới Khám phá"
+    },
+    "empty_groups": {
+      "title": "Không tìm thấy nhóm nào",
+      "description": "Khám phá các nhóm để tham gia ngay."
+    },
+    "community_menu": {
+      "your_communities_text": "Bạn đã tham gia",
+      "manage_text": "Bạn quản lý",
+      "discover_text": "Khám phá"
+    },
+    "text_join_community_button": "Tham gia ngay",
+    "text_join_community_description": "Tham gia ngay để xem và thảo luận",
+    "text_other_member_one": "{{count}} người khác là thành viên",
+    "text_other_member_other": "{{count}} người khác là thành viên",
+    "text_is_member": "là thành viên",
+    "title_discover_groups": "Khám phá các nhóm"
   }
 }

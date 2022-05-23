@@ -5,37 +5,94 @@ exports[`NotificationContent component renders correctly 1`] = `
   style={
     Object {
       "flex": 1,
-      "marginStart": 12,
     }
   }
   testID="notification_content"
 >
-  <Text
-    style={
-      Object {
-        "alignItems": "baseline",
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-SemiBold",
-        "fontSize": 16,
-      }
-    }
-    testID="notification_content.title"
+  <View
+    testID="notification_content.description"
   >
-    Trần Nam Anh 
-    <Text
-      style={
+    <View
+      style={Object {}}
+    >
+      <View
+        style={
+          Object {
+            "alignItems": "flex-start",
+            "flexDirection": "row",
+            "flexWrap": "wrap",
+            "justifyContent": "flex-start",
+            "marginBottom": 2,
+            "marginTop": 2,
+            "width": "100%",
+          }
+        }
+      >
+        <Text
+          style={Object {}}
+        >
+          <Text
+            style={
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 16,
+                "fontWeight": "bold",
+              }
+            }
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                  },
+                  Object {},
+                ]
+              }
+            >
+              Thân Thế Văn
+            </Text>
+          </Text>
+          <Text
+            style={
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-Regular",
+                  "fontSize": 16,
+                },
+                Object {},
+              ]
+            }
+          >
+             commented on your post
+          </Text>
+        </Text>
+      </View>
+    </View>
+  </View>
+  <Text
+    numberOfLines={1}
+    style={
+      Array [
         Object {
           "color": "#2F3945",
           "fontFamily": "OpenSans-Regular",
-          "fontSize": 16,
-        }
-      }
-      testID="notification_title.verb_text"
-    >
-      commented on your post
-    </Text>
+          "fontSize": 14,
+        },
+        Object {},
+        Object {
+          "color": "#627286",
+        },
+      ]
+    }
+    testID="notification_content.content"
+  >
+    okie
   </Text>
 </View>
 `;
-
-exports[`NotificationContent component renders null 1`] = `null`;

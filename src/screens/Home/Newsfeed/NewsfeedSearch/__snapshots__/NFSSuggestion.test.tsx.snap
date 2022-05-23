@@ -30,12 +30,17 @@ exports[`NFSSuggestion component should render NFSResult 1`] = `
         >
           <Text
             style={
-              Object {
-                "color": "#2F3945",
-                "flex": 1,
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 14,
+                },
+                Object {},
+                Object {
+                  "flex": 1,
+                },
+              ]
             }
           >
             Recent Search
@@ -206,13 +211,19 @@ exports[`NFSSuggestion component should render button search keyword 1`] = `
         </View>
         <Text
           style={
-            Object {
-              "color": "#7843DD",
-              "flex": 1,
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
-              "marginLeft": 16,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-Regular",
+                "fontSize": 16,
+              },
+              Object {},
+              Object {
+                "color": "#7843DD",
+                "flex": 1,
+                "marginLeft": 16,
+              },
+            ]
           }
         >
           See result for "hello"

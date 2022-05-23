@@ -619,12 +619,19 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
       >
         <Text
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 16,
-              "textAlign": "center",
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 16,
+              },
+              Object {
+                "color": "#FFFFFF",
+              },
+              Object {
+                "textAlign": "center",
+              },
+            ]
           }
         >
           Send
@@ -1407,12 +1414,19 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
       >
         <Text
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 16,
-              "textAlign": "center",
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 16,
+              },
+              Object {
+                "color": "#FFFFFF",
+              },
+              Object {
+                "textAlign": "center",
+              },
+            ]
           }
         >
           Send
@@ -1761,13 +1775,18 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
               </View>
               <Text
                 style={
-                  Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-Regular",
-                    "fontSize": 14,
-                    "marginLeft": 4,
-                    "marginRight": 8,
-                  }
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-Regular",
+                      "fontSize": 14,
+                    },
+                    Object {},
+                    Object {
+                      "marginLeft": 4,
+                      "marginRight": 8,
+                    },
+                  ]
                 }
                 testID="mention_bar_item.name"
               >

@@ -3,8 +3,7 @@ import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
 import {put, takeLatest} from 'redux-saga/effects';
 import {authStack} from '~/configs/navigator';
-import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
-import errorCode from '~/constants/errorCode';
+import {authErrors} from '~/constants/authConstants';
 import {IObject, IToastMessage} from '~/interfaces/common';
 import * as IAuth from '~/interfaces/IAuth';
 import {withNavigation} from '~/router/helper';
@@ -18,8 +17,11 @@ import * as actionsCommon from '~/store/modal/actions';
 import {ActionTypes} from '~/utils';
 import actions from '../actions';
 import types from '../types';
+import forgotPasswordConfirm from './forgotPasswordConfirm';
+import forgotPasswordRequest from './forgotPasswordRequest';
 import signIn from './signIn';
 import signInSuccess from './signInSuccess';
+import showError from '~/store/commonSaga/showError';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -130,88 +132,6 @@ function* signUp({payload}: {type: string; payload: IAuth.ISignUp}) {
   }
 }
 
-function* forgotPasswordRequest({payload}: {type: string; payload: string}) {
-  try {
-    yield put(
-      actions.setForgotPasswordError({
-        errBox: '',
-        errConfirm: '',
-        errRequest: '',
-      }),
-    );
-    yield put(actions.setForgotPasswordLoading(true));
-
-    yield Auth.forgotPassword(payload);
-
-    yield put(actions.setForgotPasswordLoading(false));
-    yield put(
-      actions.setForgotPasswordStage(forgotPasswordStages.INPUT_CODE_PW),
-    );
-  } catch (error: any) {
-    let errBox: string;
-    const errRequest = '';
-    switch (error.code) {
-      case authErrors.LIMIT_EXCEEDED_EXCEPTION:
-        errBox = i18n.t('auth:text_err_limit_exceeded');
-        break;
-      default:
-        errBox = error.message;
-    }
-
-    yield showErrorWithDefinedMessage(errBox);
-    yield put(
-      actions.setForgotPasswordError({errBox, errRequest, errConfirm: ''}),
-    );
-    yield put(actions.setForgotPasswordLoading(false));
-  }
-}
-
-function* forgotPasswordConfirm({
-  payload,
-}: {
-  type: string;
-  payload: IAuth.IForgotPasswordConfirm;
-}) {
-  const {code, email, password} = payload;
-  try {
-    yield put(
-      actions.setForgotPasswordError({
-        errBox: '',
-        errConfirm: '',
-        errRequest: '',
-      }),
-    );
-    yield put(actions.setForgotPasswordLoading(true));
-
-    yield Auth.forgotPasswordSubmit(email, code, password);
-
-    yield put(actions.setForgotPasswordLoading(false));
-    yield put(actions.setForgotPasswordStage(forgotPasswordStages.COMPLETE));
-  } catch (error: any) {
-    let errBox = '',
-      errConfirm = '';
-    switch (error.code) {
-      case authErrors.CODE_MISMATCH_EXCEPTION:
-        errConfirm = i18n.t('auth:text_err_wrong_code');
-        break;
-      case authErrors.LIMIT_EXCEEDED_EXCEPTION:
-        errBox = i18n.t('auth:text_err_limit_exceeded');
-        yield put(
-          actions.setForgotPasswordStage(forgotPasswordStages.INPUT_ID),
-        );
-        break;
-      default:
-        errBox = error?.message || '';
-    }
-
-    yield put(
-      actions.setForgotPasswordError({errBox, errConfirm, errRequest: ''}),
-    );
-    if (errBox) yield showErrorWithDefinedMessage(errBox);
-    yield put(actions.setForgotPasswordLoading(false));
-  }
-}
-
 function* signOut({payload}: any) {
   try {
     if (payload) {
@@ -240,23 +160,7 @@ function* signOut({payload}: any) {
   }
 }
 
-function* showError(err: any) {
-  if (err.code === errorCode.systemIssue) return;
-
-  const toastMessage: IToastMessage = {
-    content:
-      err?.meta?.errors?.[0]?.message ||
-      err?.meta?.message ||
-      'common:text_error_message',
-    props: {
-      textProps: {useI18n: true},
-      type: 'error',
-    },
-  };
-  yield put(actionsCommon.showHideToastMessage(toastMessage));
-}
-
-function* showErrorWithDefinedMessage(mess: string) {
+export function* showErrorWithDefinedMessage(mess: string) {
   if (!mess) return;
   const toastMessage: IToastMessage = {
     content: mess,

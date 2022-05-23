@@ -1,6 +1,6 @@
 import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
-import {Controller, useForm} from 'react-hook-form';
+import {useForm} from 'react-hook-form';
 import {
   AppState,
   Image,
@@ -17,8 +17,6 @@ import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import Button from '~/beinComponents/Button';
-import PasswordInput from '~/beinComponents/inputs/PasswordInput';
-import Input from '~/beinComponents/inputs/TextInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
@@ -39,6 +37,8 @@ import {
   isAppInstalled,
 } from '~/services/sharePreferences';
 import {getUserEmailFromChatCookie} from '~/utils/cookie';
+import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
+import TextInputController from '~/beinComponents/inputs/TextInputController';
 
 const SignIn = () => {
   useAuthAmplifyHub();
@@ -55,7 +55,7 @@ const SignIn = () => {
   const styles = themeStyles(theme);
 
   const isWeb = Platform.OS === 'web';
-
+  const useFormData = useForm();
   const {
     control,
     formState: {errors},
@@ -64,7 +64,7 @@ const SignIn = () => {
     clearErrors,
     getValues,
     setValue,
-  } = useForm();
+  } = useFormData;
 
   useEffect(() => {
     checkAuthSessions();
@@ -214,37 +214,10 @@ const SignIn = () => {
             <Text.H6 testID="sign_in.title" style={styles.title} useI18n>
               auth:text_sign_in_desc
             </Text.H6>
-            <Controller
-              control={control}
-              render={({field: {onChange, value}}) => (
-                <Input
-                  testID="sign_in.input_email"
-                  label={
-                    !isWeb && !loading ? t('auth:input_label_email') : undefined
-                  }
-                  placeholder={
-                    !isWeb ? 'sample@email.com' : t('auth:input_label_email')
-                  }
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  disabled={loading || authSessions?.email}
-                  value={value}
-                  error={errors.email}
-                  onChangeText={text => {
-                    onChange(text?.trim?.());
-                    clearFieldError('email');
-                    checkDisableSignIn();
-                  }}
-                  onSubmitEditing={onSubmitEmail}
-                  helperType={errors.email?.message ? 'error' : undefined}
-                  helperContent={
-                    errors?.email?.message === signingInError
-                      ? ''
-                      : errors?.email?.message
-                  }
-                  style={styles.inputEmail}
-                />
-              )}
+            <TextInputController
+              testID="sign_in.input_email"
+              useFormData={useFormData}
+              name="email"
               rules={{
                 required: t('auth:text_err_email_blank'),
                 pattern: {
@@ -252,36 +225,27 @@ const SignIn = () => {
                   message: t('auth:text_err_email_format'),
                 },
               }}
-              name="email"
+              validateValue={() => {
+                clearFieldError('email');
+                checkDisableSignIn();
+              }}
+              label={
+                !isWeb && !loading ? t('auth:input_label_email') : undefined
+              }
+              placeholder={
+                !isWeb ? 'sample@email.com' : t('auth:input_label_email')
+              }
+              keyboardType="email-address"
+              autoCapitalize="none"
+              style={styles.inputEmail}
+              onSubmitEditing={onSubmitEmail}
+              helperContent={signingInError}
             />
-            <Controller
-              control={control}
-              render={({field: {onChange, value}}) => (
-                <PasswordInput
-                  testID="sign_in.input_password"
-                  ref={inputPasswordRef}
-                  label={
-                    !isWeb && !loading
-                      ? t('auth:input_label_password')
-                      : undefined
-                  }
-                  placeholder={t('auth:input_label_password')}
-                  error={errors.password}
-                  autoCapitalize="none"
-                  disabled={loading}
-                  value={value}
-                  onChangeText={text => {
-                    onChange(text);
-                    clearFieldError('password');
-                    checkDisableSignIn();
-                  }}
-                  onSubmitEditing={() => onSignIn()}
-                  helperType={errors.password?.message ? 'error' : undefined}
-                  helperContent={errors?.password?.message}
-                  style={styles.inputPassword}
-                />
-              )}
-              name="password"
+            <PasswordInputController
+              ref={inputPasswordRef}
+              useFormData={useFormData}
+              testID="sign_in.input_password"
+              name={'password'}
               rules={{
                 required: t('auth:text_err_password_blank'),
                 // min: 8,
@@ -290,6 +254,15 @@ const SignIn = () => {
                   value: validation.passwordRegex,
                   message: t('auth:text_err_password_format'),
                 },
+              }}
+              disableInput={loading}
+              label={
+                !isWeb && !loading ? t('auth:input_label_password') : undefined
+              }
+              placeholder={t('auth:input_label_password')}
+              validateValue={() => {
+                clearFieldError('password');
+                checkDisableSignIn();
               }}
             />
             <View style={styles.forgotButton}>

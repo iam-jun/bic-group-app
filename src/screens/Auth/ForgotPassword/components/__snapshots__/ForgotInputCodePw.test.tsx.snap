@@ -1,0 +1,366 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ForgotInputCodePw component renders correctly 1`] = `
+<View
+  style={
+    Object {
+      "flex": 1,
+      "paddingTop": 32,
+    }
+  }
+>
+  <View
+    style={
+      Object {
+        "marginBottom": 32,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+    >
+      Confirm Code
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 16,
+          },
+          Object {},
+          Object {
+            "marginBottom": 12,
+          },
+        ]
+      }
+    >
+      Confirm the code & new password
+    </Text>
+    <View
+      style={
+        Array [
+          Object {
+            "marginVertical": 4,
+          },
+          undefined,
+        ]
+      }
+      testID="text_input"
+    >
+      <RCTSinglelineTextInputView
+        accessible={true}
+        allowFontScaling={true}
+        blurOnSubmit={true}
+        dense={true}
+        editable={true}
+        focusable={true}
+        forwardedRef={null}
+        helperContentTriggerAction="Wrong Code Input? "
+        keyboardType="numeric"
+        label="Code"
+        mode="outlined"
+        mostRecentEventCount={0}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onChangeText={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onScroll={[Function]}
+        onSelectionChange={[Function]}
+        onSelectionChangeShouldSetResponder={[Function]}
+        onStartShouldSetResponder={[Function]}
+        outlineColor="#2F3945"
+        placeholder="Code"
+        placeholderTextColor="#627286"
+        rejectResponderTermination={true}
+        selection={null}
+        selectionColor="#627286"
+        style={Object {}}
+        testID="inputCode"
+        text=""
+        theme={
+          Object {
+            "colors": Object {
+              "background": "#FFFFFF",
+              "placeholder": "#627286",
+              "primary": "#B2BDCD",
+              "text": "#2F3945",
+            },
+            "fonts": Object {
+              "regular": Object {
+                "fontFamily": "OpenSans-Regular",
+              },
+            },
+            "roundness": 6,
+          }
+        }
+        underlineColorAndroid="transparent"
+        value=""
+      />
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "marginBottom": 32,
+      }
+    }
+  >
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+    >
+      New password
+    </Text>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 16,
+          },
+          Object {},
+          Object {
+            "marginBottom": 12,
+          },
+        ]
+      }
+    >
+      Create your new password
+    </Text>
+    <View
+      style={
+        Array [
+          Object {
+            "marginVertical": 4,
+          },
+          undefined,
+        ]
+      }
+      testID="text_input"
+    >
+      <RCTSinglelineTextInputView
+        accessible={true}
+        allowFontScaling={true}
+        autoCapitalize="none"
+        blurOnSubmit={true}
+        dense={true}
+        disabled={true}
+        editable={true}
+        focusable={true}
+        forwardedRef={null}
+        label="New password"
+        mode="outlined"
+        mostRecentEventCount={0}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onChangeText={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onScroll={[Function]}
+        onSelectionChange={[Function]}
+        onSelectionChangeShouldSetResponder={[Function]}
+        onStartShouldSetResponder={[Function]}
+        outlineColor="#2F3945"
+        placeholder="New password"
+        placeholderTextColor="#627286"
+        rejectResponderTermination={true}
+        right={
+          <View
+            name={[Function]}
+            testID="password_input.eye_icon"
+          />
+        }
+        secureTextEntry={true}
+        selection={null}
+        selectionColor="#627286"
+        style={Object {}}
+        testID="inputNewPassword"
+        text=""
+        theme={
+          Object {
+            "colors": Object {
+              "background": "#D5DCE5",
+              "placeholder": "#627286",
+              "primary": "#B2BDCD",
+              "text": "#2F3945",
+            },
+            "fonts": Object {
+              "regular": Object {
+                "fontFamily": "OpenSans-Regular",
+              },
+            },
+            "roundness": 6,
+          }
+        }
+        underlineColorAndroid="transparent"
+        value=""
+      />
+    </View>
+    <View
+      style={
+        Array [
+          Object {
+            "marginVertical": 4,
+          },
+          undefined,
+        ]
+      }
+      testID="text_input"
+    >
+      <RCTSinglelineTextInputView
+        accessible={true}
+        allowFontScaling={true}
+        autoCapitalize="none"
+        blurOnSubmit={true}
+        dense={true}
+        disabled={true}
+        editable={true}
+        focusable={true}
+        forwardedRef={null}
+        label="Confirm new password"
+        mode="outlined"
+        mostRecentEventCount={0}
+        onBlur={[Function]}
+        onChange={[Function]}
+        onChangeText={[Function]}
+        onClick={[Function]}
+        onFocus={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onScroll={[Function]}
+        onSelectionChange={[Function]}
+        onSelectionChangeShouldSetResponder={[Function]}
+        onStartShouldSetResponder={[Function]}
+        outlineColor="#2F3945"
+        placeholder="Confirm new password"
+        placeholderTextColor="#627286"
+        rejectResponderTermination={true}
+        right={
+          <View
+            name={[Function]}
+            testID="password_input.eye_icon"
+          />
+        }
+        secureTextEntry={true}
+        selection={null}
+        selectionColor="#627286"
+        style={Object {}}
+        testID="inputConfirmPassword"
+        text=""
+        theme={
+          Object {
+            "colors": Object {
+              "background": "#D5DCE5",
+              "placeholder": "#627286",
+              "primary": "#B2BDCD",
+              "text": "#2F3945",
+            },
+            "fonts": Object {
+              "regular": Object {
+                "fontFamily": "OpenSans-Regular",
+              },
+            },
+            "roundness": 6,
+          }
+        }
+        underlineColorAndroid="transparent"
+        value=""
+      />
+    </View>
+  </View>
+  <View
+    accessibilityState={
+      Object {
+        "disabled": true,
+      }
+    }
+    accessible={true}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#D5DCE5",
+        "borderRadius": 6,
+        "marginTop": 24,
+        "paddingHorizontal": 12,
+        "paddingVertical": 8,
+      }
+    }
+    testID="btnChangePassword"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+          "justifyContent": "center",
+        }
+      }
+      testID="button_wrapper.content"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 16,
+            },
+            Object {
+              "color": "#B2BDCD",
+            },
+            Object {
+              "textAlign": "center",
+            },
+          ]
+        }
+      >
+        Confirm new password
+      </Text>
+    </View>
+  </View>
+</View>
+`;

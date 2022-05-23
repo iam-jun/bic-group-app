@@ -1,37 +1,37 @@
 import {getEnv} from '~/utils/env';
 
 export const uploadTypes = {
-  userAvatar: 'userAvatar',
-  userCover: 'userCover',
+  userAvatar: 'user_avatar',
+  userCover: 'user_cover',
 
-  groupAvatar: 'groupAvatar',
-  groupCover: 'groupCover',
+  groupAvatar: 'group_avatar',
+  groupCover: 'group_cover',
 
-  postImage: 'postImage',
-  postVideo: 'postVideo',
-  postFile: 'postFile',
+  postImage: 'post_image',
+  postVideo: 'post_video',
+  postFile: 'post_file',
 
-  commentImage: 'commentImage',
-  commentVideo: 'commentVideo',
-  commentFile: 'commentFile',
+  commentImage: 'comment_image',
+  commentVideo: 'comment_video',
+  commentFile: 'comment_file',
 };
 
 export type IUploadType = typeof uploadTypes[keyof typeof uploadTypes];
 
 export const uploadEndpoints: any = {
-  userAvatar: 'user/avatar/images/',
-  userCover: 'user/cover/images/',
+  user_avatar: 'user/avatar/images/',
+  user_cover: 'user/cover/images/',
 
-  groupAvatar: 'group/avatar/images/',
-  groupCover: 'group/cover/images/',
+  group_avatar: 'group/avatar/images/',
+  group_cover: 'group/cover/images/',
 
-  postImage: 'post/images/',
-  postVideo: 'post/videos/',
-  postFile: 'post/files/',
+  post_image: 'post/images/',
+  post_video: 'post/videos/',
+  post_file: 'post/files/',
 
-  commentImage: 'comment/images/',
-  commentVideo: 'comment/videos/',
-  commentFile: 'comment/files/',
+  comment_image: 'comment/images/',
+  comment_video: 'comment/videos/',
+  comment_file: 'comment/files/',
 };
 
 export const resourceVariants = {

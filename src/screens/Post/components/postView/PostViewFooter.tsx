@@ -26,9 +26,9 @@ export interface PostViewFooterProps {
 
 const validateReactionCount = (reactionCounts: any) => {
   let count = 0;
-  Object.keys(reactionCounts || {})?.map?.(key => {
-    const react = key as ReactionType;
-    if (!blacklistReactions?.[react] && reactionCounts?.[key]) {
+  Object.values(reactionCounts || {})?.map((reaction: any) => {
+    const key = Object.keys(reaction || {})?.[0];
+    if (!!key && !!reaction?.[key] && !blacklistReactions?.[key]) {
       count++;
     }
   });

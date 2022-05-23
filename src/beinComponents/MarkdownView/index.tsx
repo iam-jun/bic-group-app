@@ -27,6 +27,7 @@ import {sizes} from '~/theme/dimension';
 import {IMarkdownAudience} from '~/interfaces/IPost';
 
 export interface MarkdownViewProps {
+  testID?: string;
   style?: StyleProp<ViewStyle>;
   children?: React.ReactNode;
   debugPrintTree?: boolean;
@@ -37,13 +38,12 @@ export interface MarkdownViewProps {
 }
 
 const _MarkdownView: FC<MarkdownViewProps> = ({
+  testID,
   style,
   children,
   debugPrintTree,
   limitMarkdownTypes,
-
   onLinkPress,
-  onPressAudience,
 }: MarkdownViewProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -101,7 +101,7 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
   };
 
   return (
-    <View style={style}>
+    <View testID={testID} style={style}>
       <Markdown
         mergeStyle
         style={styles}

@@ -1,29 +1,22 @@
-import {IGetStreamDispatch} from './common';
-
 import {
   IGetStreamAudience,
-  IGetStreamPost,
+  IGetStreamCommentData,
   IGetStreamUser,
   IReaction,
 } from './IPost';
 
 export interface IGetStreamNotificationActivity {
+  id: number;
   actor: IGetStreamUser;
-  foreign_id: string;
-  id: string;
-  notification_type: number;
-  object: IGetStreamPost | any;
-  origin?: string;
-  reaction?: IReaction;
-  target: string;
-  time: string;
-  verb: string;
+  content?: string;
+  media: any;
+  mentions?: any;
+  reactionsCount?: any;
   audience: IGetStreamAudience;
-  parent_reaction?: IReaction;
-}
-
-export interface IMarkAsReadAnActivity extends IGetStreamDispatch {
-  activityId: string;
+  comment?: IGetStreamCommentData;
+  reaction?: IReaction;
+  createdAt?: string;
+  updatedAt: string;
 }
 
 export interface ILoadNewNotifications {
@@ -37,12 +30,19 @@ export interface IDeleteNotifications {
 
 export interface IParamGetNotifications {
   limit?: number;
-  id_lt?: string;
-  id_gte?: string;
-  enrich?: boolean;
-  own_reactions?: boolean;
-  with_own_reactions?: boolean;
-  with_own_children?: boolean;
-  with_recent_reactions?: boolean;
-  with_reaction_counts?: boolean;
+  offset?: number;
+  order?: 'ASC' | 'DESC';
+  idLTE?: string;
+  idGTE?: string;
+  idGT?: string;
+  idLT?: string;
+  flag?: 'ALL' | 'UNREAD' | 'MENTION' | 'IMPORTANT';
+}
+
+export interface INotiExtraData {
+  type?: string;
+  actor: IGetStreamUser;
+  content?: string;
+  description?: string;
+  media?: any;
 }

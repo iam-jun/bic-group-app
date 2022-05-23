@@ -7,6 +7,7 @@ import {
   ActivityIndicator,
   RefreshControl,
   DeviceEventEmitter,
+  FlatList,
 } from 'react-native';
 import {debounce, throttle} from 'lodash';
 import {useTheme} from 'react-native-paper';
@@ -119,7 +120,10 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   useEffect(() => {
     if (!canLoadMore && !refreshing) {
-      setInitializing(false);
+      // In case newsfeed has only 1 page, canLoadMore false at the first time,
+      // set initializing false show footer when item not rendered yet
+      // so need delay to wait render, list empty still show
+      setTimeout(() => setInitializing(false), 5000);
     }
   }, [canLoadMore, refreshing]);
 
@@ -230,22 +234,27 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   const renderEmpty = () => {
     if (data?.length === 0 && !canLoadMore) {
-      //todo waiting for design
       return (
-        <View testID={'newsfeed_list.empty_view'} style={styles.emptyContainer}>
-          {!!HeaderComponent && HeaderComponent}
-          <View style={styles.listFooter}>
-            <Image
-              resizeMode={'contain'}
-              style={styles.imgEmpty}
-              source={images.img_empty_no_post}
+        <FlatList
+          testID={'newsfeed_list.empty_list'}
+          data={[]}
+          renderItem={null}
+          refreshControl={
+            <RefreshControl
+              testID={'newsfeed_list.refresh_control'}
+              progressViewOffset={refreshControlOffset}
+              refreshing={!!refreshing}
+              onRefresh={() => onRefresh?.()}
             />
-            <Text.H6 useI18n>post:newsfeed:title_empty_no_post</Text.H6>
-            <Text.Subtitle useI18n color={theme.colors.textSecondary}>
-              post:newsfeed:text_empty_no_post
-            </Text.Subtitle>
-          </View>
-        </View>
+          }
+          ListEmptyComponent={
+            <NewsfeedListEmpty
+              styles={styles}
+              HeaderComponent={HeaderComponent}
+              theme={theme}
+            />
+          }
+        />
       );
     }
     return null;
@@ -317,6 +326,25 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
       {renderEmpty()}
       {renderPlaceholder()}
       <FloatingCreatePost />
+    </View>
+  );
+};
+
+const NewsfeedListEmpty = ({styles, HeaderComponent, theme}: any) => {
+  return (
+    <View testID={'newsfeed_list.empty_view'} style={styles.emptyContainer}>
+      {!!HeaderComponent && HeaderComponent}
+      <View style={styles.listFooter}>
+        <Image
+          resizeMode={'contain'}
+          style={styles.imgEmpty}
+          source={images.img_empty_no_post}
+        />
+        <Text.H6 useI18n>post:newsfeed:title_empty_no_post</Text.H6>
+        <Text.Subtitle useI18n color={theme.colors.textSecondary}>
+          post:newsfeed:text_empty_no_post
+        </Text.Subtitle>
+      </View>
     </View>
   );
 };

@@ -1,4 +1,4 @@
-import React, {FC, useContext} from 'react';
+import React, {FC} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -9,9 +9,6 @@ import Avatar from '~/beinComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
 import {IPostAudience} from '~/interfaces/IPost';
 import {useBaseHook} from '~/hooks';
-import moment from 'moment';
-import {formatDate} from '~/utils/formatData';
-import {AppContext} from '~/contexts/AppContext';
 import {useDispatch} from 'react-redux';
 import modalActions from '~/store/modal/actions';
 import TimeView from '~/beinComponents/TimeView';
@@ -42,12 +39,10 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const {language} = useContext(AppContext);
-
   const textAudiences = getAudiencesText(audience, t);
 
-  const avatar = actor?.data?.avatar;
-  const actorName = actor?.data?.fullname;
+  const avatar = actor?.avatar;
+  const actorName = actor?.fullname;
 
   const onPressActor = (e: any) => {
     if (!actor.id) return;
@@ -57,19 +52,6 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
       position: {x: e?.pageX, y: e?.pageY},
     };
     dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
-  };
-
-  const renderPostTime = () => {
-    if (!time) {
-      return null;
-    }
-    let postTime = '';
-    if (time) {
-      const dateUtc = moment.utc(time);
-      const localDate = dateUtc.local();
-      postTime = formatDate(localDate, undefined, language, 2, false) || '';
-    }
-    return <Text.BodyS color={colors.textSecondary}>{postTime}</Text.BodyS>;
   };
 
   return (
@@ -129,7 +111,7 @@ const getAudiencesText = (aud?: IPostAudience, t?: any) => {
   let result = '';
   const {groups = [], users = []} = aud || {};
   const total = groups.length + users.length;
-  result = groups?.[0]?.data?.name || users?.[0]?.data?.fullname || '';
+  result = groups?.[0]?.name || users?.[0]?.fullname || '';
   const left = total - 1;
   if (result?.length > limitLength) {
     result = `${result.substr(0, limitLength)}...`;

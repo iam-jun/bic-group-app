@@ -154,11 +154,15 @@ exports[`GroupHeaderMenu component renders correctly 1`] = `
         <Text
           numberOfLines={2}
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 14,
+              },
+              Object {},
+              Object {},
+            ]
           }
         >
           Copy Link
@@ -311,11 +315,15 @@ exports[`GroupHeaderMenu component renders correctly 1`] = `
         <Text
           numberOfLines={2}
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 14,
+              },
+              Object {},
+              Object {},
+            ]
           }
         >
           Share to Chat
@@ -494,11 +502,15 @@ exports[`GroupHeaderMenu component renders correctly 1`] = `
         <Text
           numberOfLines={2}
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 14,
+              },
+              Object {},
+              Object {},
+            ]
           }
         >
           Following
@@ -677,11 +689,15 @@ exports[`GroupHeaderMenu component renders correctly 1`] = `
         <Text
           numberOfLines={2}
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 14,
+              },
+              Object {},
+              Object {},
+            ]
           }
         >
           Pin this group
@@ -834,11 +850,15 @@ exports[`GroupHeaderMenu component renders correctly 1`] = `
         <Text
           numberOfLines={2}
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 14,
+              },
+              Object {},
+              Object {},
+            ]
           }
         >
           Notifications

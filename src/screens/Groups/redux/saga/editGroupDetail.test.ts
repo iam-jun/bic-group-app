@@ -34,7 +34,6 @@ describe('Edit group detail saga', () => {
         }),
       )
       .put(groupsActions.setGroupDetail(resp?.data))
-      .put(groupsActions.getJoinedGroups())
       .run();
   });
 
@@ -59,7 +58,32 @@ describe('Edit group detail saga', () => {
         }),
       )
       .put(groupsActions.setGroupDetail(resp?.data))
-      .put(groupsActions.getJoinedGroups())
+      .run();
+  });
+
+  it('should edit group detail without callback fn successfully', () => {
+    const action = {
+      type: 'test',
+      payload: {data: {id: 3}, editFieldName: 'Description'},
+    };
+    const resp = {
+      data: {group: {id: 10}} as IGroupDetail,
+    };
+
+    return expectSaga(editGroupDetail, action)
+      .provide([[matchers.call.fn(groupsDataHelper.editGroupDetail), resp]])
+      .put(
+        modalActions.showHideToastMessage({
+          content: `${action.payload.editFieldName} ${i18next.t(
+            'common:text_updated_successfully',
+          )}`,
+          props: {
+            textProps: {useI18n: true},
+            type: 'success',
+          },
+        }),
+      )
+      .put(groupsActions.setGroupDetail(resp?.data))
       .run();
   });
 

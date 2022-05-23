@@ -3,6 +3,7 @@ import {render, cleanup} from '@testing-library/react-native';
 
 import NotificationsBadgeComponent from './NotificationsBadgeComponent';
 import {colors} from '~/theme';
+import {ReactTestInstance} from 'react-test-renderer';
 
 afterEach(cleanup);
 
@@ -26,11 +27,12 @@ describe('NotificationsBadgeComponent', () => {
       />,
     );
     const viewComponent = getByTestId('notifications_badge_component');
-    expect(viewComponent.props.style.backgroundColor).toBe(
+    expect(viewComponent.props.style[0].backgroundColor).toBe(
       colors.light.colors.error,
     );
-    //@ts-ignore
-    expect(viewComponent.children[0].props.style.color).toBe(
+
+    const targetTextComponent = viewComponent.props.children;
+    expect(targetTextComponent.props.style[0].color).toBe(
       colors.light.colors.textReversed,
     );
   });
@@ -45,8 +47,7 @@ describe('NotificationsBadgeComponent', () => {
       />,
     );
     const viewComponent = getByTestId('notifications_badge_component');
-    //@ts-ignore
-    expect(viewComponent.props.style.margin).toBe(12);
+    expect(viewComponent.props.style[1].margin).toBe(12);
   });
 
   it(`renders number value that is smaller than maxNumber correctly`, () => {
@@ -58,8 +59,9 @@ describe('NotificationsBadgeComponent', () => {
       />,
     );
     const viewComponent = getByTestId('notifications_badge_component');
-    //@ts-ignore
-    expect(viewComponent.children[0].props.children).toBe(number.toString());
+
+    const targetTextComponent = viewComponent.props.children;
+    expect(targetTextComponent.props.children).toBe(number.toString());
   });
 
   it(`renders maxNumber correctly`, () => {
@@ -74,8 +76,9 @@ describe('NotificationsBadgeComponent', () => {
       />,
     );
     const viewComponent = getByTestId('notifications_badge_component');
-    //@ts-ignore
-    expect(viewComponent.children[0].props.children).toBe(`${maxNumber}+`);
+
+    const targetTextComponent = viewComponent.props.children;
+    expect(targetTextComponent.props.children).toBe(`${maxNumber}+`);
   });
 
   it(`renders textStyle correctly`, () => {
@@ -88,7 +91,7 @@ describe('NotificationsBadgeComponent', () => {
       />,
     );
     const viewComponent = getByTestId('notifications_badge_component');
-    //@ts-ignore
-    expect(viewComponent.children[0].props.style.fontSize).toBe(20);
+    const targetTextComponent = viewComponent.props.children;
+    expect(targetTextComponent.props.style[1].fontSize).toBe(20);
   });
 });

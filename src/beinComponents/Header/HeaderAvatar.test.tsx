@@ -3,6 +3,7 @@ import {cleanup} from '@testing-library/react-native';
 import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
 import HeaderAvatar from '~/beinComponents/Header/HeaderAvatar';
 import initialState from '~/store/initialState';
+import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);
 
@@ -60,7 +61,8 @@ describe('Header Avatar component', () => {
       'header_avatar.first_label',
     );
     expect(firstLabelComponent).toBeDefined();
-    expect(firstLabelComponent.props.style).toMatchObject({
+    const flattenedStyle = StyleSheet.flatten(firstLabelComponent.props.style);
+    expect(flattenedStyle).toMatchObject({
       color: '#FF9800',
       textDecorationLine: 'underline',
     });
@@ -163,8 +165,9 @@ describe('Header Avatar component', () => {
     const secondLabelComponent = rendered.getByTestId(
       'header_avatar.second_label',
     );
+    const flattenedStyle = StyleSheet.flatten(secondLabelComponent.props.style);
     expect(secondLabelComponent).toBeDefined();
-    expect(secondLabelComponent.props.style).toMatchObject({
+    expect(flattenedStyle).toMatchObject({
       color: '#FF9800',
       textDecorationLine: 'underline',
     });

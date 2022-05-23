@@ -1,7 +1,12 @@
 import * as React from 'react';
 import {render, cleanup, act} from '@testing-library/react-native';
-import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
-import {Platform, View, TouchableOpacity} from 'react-native';
+import {
+  fireEvent,
+  renderWithRedux,
+  configureStore,
+  createTestStore,
+} from '~/test/testUtils';
+import {Platform, View, TouchableOpacity, StyleSheet} from 'react-native';
 import Header from '~/beinComponents/Header';
 import initialState from '~/store/initialState';
 import images from '~/resources/images';
@@ -38,6 +43,16 @@ jest.mock('~/hooks/windowSize', () => {
   }));
 });
 
+let storeData: any;
+beforeEach(() => {
+  storeData = {...initialState};
+
+  // Need this to handle checking icon chat rendering
+  storeData.chat = {
+    unreadChannels: {},
+  };
+});
+
 afterEach(cleanup);
 
 describe('Header component', () => {
@@ -66,11 +81,12 @@ describe('Header component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
     fireEvent.press(rendered.getByTestId('header.ref'));
     expect(headerRef).toBeCalledWith({
-      // current: expect.anything(),
       current: {
         hideSearch: expect.any(Function),
         setSearchText: expect.any(Function),
         showSearch: expect.any(Function),
+        goBack: expect.any(Function),
+        setScrollY: expect.any(Function),
       },
     });
   });
@@ -89,7 +105,8 @@ describe('Header component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
     const titleComponent = rendered.getByTestId('header.text');
     expect(titleComponent.props.children).toBe('Title');
-    expect(titleComponent.props.style).toMatchObject({color: '#421187'});
+    const flattenedStyle = StyleSheet.flatten(titleComponent.props.style);
+    expect(flattenedStyle).toMatchObject({color: '#421187'});
   });
 
   it(`renders correctly with props sub title`, () => {
@@ -106,7 +123,8 @@ describe('Header component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
     const subTitleComponent = rendered.getByTestId('header.subTitle');
     expect(subTitleComponent.props.children).toBe('Sub Title');
-    expect(subTitleComponent.props.style).toMatchObject({color: '#421187'});
+    const flattenedStyle = StyleSheet.flatten(subTitleComponent.props.style);
+    expect(flattenedStyle).toEqual(expect.objectContaining({color: '#421187'}));
   });
 
   it(`renders correctly with props avatar`, () => {
@@ -527,7 +545,7 @@ describe('Header component', () => {
   it(`renders correctly with props on right press`, () => {
     const onRightPress = jest.fn();
     const rendered = render(
-      <Header rightIcon="UilBug" onRightPress={onRightPress} />,
+      <Header rightIcon="iconDot" onRightPress={onRightPress} />,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.rightIcon');
@@ -538,7 +556,11 @@ describe('Header component', () => {
 
   it(`renders correctly with props on press chat`, () => {
     const onPressChat = jest.fn();
-    const rendered = render(<Header onPressChat={onPressChat} />);
+    const store = createTestStore(storeData);
+    const rendered = renderWithRedux(
+      <Header onPressChat={onPressChat} />,
+      store,
+    );
     expect(rendered.toJSON()).toMatchSnapshot();
     const chatIconCopmponent = rendered.getByTestId('header.iconChat');
     expect(chatIconCopmponent).toBeDefined();

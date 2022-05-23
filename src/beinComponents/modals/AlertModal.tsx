@@ -55,6 +55,10 @@ const AlertModal: React.FC<AlertModalProps> = ({
     style: alertModalStyle,
     stretchOnWeb,
     children = null as React.ReactNode,
+    titleProps,
+    buttonViewStyle,
+    headerStyle,
+    HeaderImageComponent,
   } = alert;
   const _cancelLabel = cancelLabel
     ? cancelLabel
@@ -92,8 +96,11 @@ const AlertModal: React.FC<AlertModalProps> = ({
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
         <View style={styles.modalContainer}>
-          <View style={styles.header}>
-            <Text.ButtonBase>{title}</Text.ButtonBase>
+          {!!HeaderImageComponent ? HeaderImageComponent : null}
+          <View style={[styles.header, !!headerStyle ? headerStyle : {}]}>
+            {!!title && (
+              <Text.ButtonBase {...titleProps}>{title}</Text.ButtonBase>
+            )}
             {!!iconName && (
               <Icon
                 icon={iconName}
@@ -125,7 +132,11 @@ const AlertModal: React.FC<AlertModalProps> = ({
               {...inputProps}
             />
           )}
-          <View style={styles.displayBtn}>
+          <View
+            style={[
+              styles.displayBtn,
+              !!buttonViewStyle ? buttonViewStyle : {},
+            ]}>
             {!!cancelBtn && (
               <_CancelBtnComponent
                 testID="alert_modal.cancel"

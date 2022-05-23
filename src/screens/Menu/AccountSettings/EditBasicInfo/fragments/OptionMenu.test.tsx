@@ -38,7 +38,7 @@ describe('OptionMenu conponent', () => {
     );
 
     const btnOpenBottomSheetCom = rendered.getByTestId(
-      'eidt_user_info.option_menu.item_MALE',
+      'edit_user_info.option_menu.item_MALE',
     );
     expect(btnOpenBottomSheetCom).toBeDefined();
     fireEvent.press(btnOpenBottomSheetCom);

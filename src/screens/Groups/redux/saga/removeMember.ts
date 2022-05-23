@@ -4,7 +4,8 @@ import {put, call} from 'redux-saga/effects';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
 import {IToastMessage} from '~/interfaces/common';
-import {showError, refreshGroupMembers} from '.';
+import {refreshGroupMembers} from '.';
+import showError from '~/store/commonSaga/showError';
 
 export default function* removeMember({
   payload,

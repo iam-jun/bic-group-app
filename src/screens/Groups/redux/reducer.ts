@@ -1,3 +1,4 @@
+import {ICommunity} from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/screens/Groups/redux/types';
 import {IUser} from '~/interfaces/IAuth';
@@ -8,7 +9,20 @@ export const groupInitState = {
   isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
   joinedGroups: [],
-
+  yourGroupsTree: {
+    loading: true,
+    list: [],
+  },
+  yourGroupsList: {
+    loading: true,
+    list: [],
+  },
+  yourGroupsSearch: {
+    showSearch: false,
+    loading: false,
+    key: '',
+    list: [],
+  },
   loadingPage: false,
   loadingGroupDetail: false,
   groupDetail: {
@@ -60,30 +74,53 @@ export const groupInitState = {
     data: [],
     items: {} as IObject<IJoiningMember>,
   },
+  joinedCommunities: {
+    loading: false,
+    data: [],
+  },
+  discoverCommunities: {
+    loading: true,
+    canLoadMore: true,
+    list: [],
+  },
+  communityDetail: {} as ICommunity,
+  isGettingInfoDetail: false,
+  communityMembers: {
+    loading: false,
+    canLoadMore: true,
+    community_admin: {data: [], user_count: 0},
+    member: {data: [], user_count: 0},
+  },
+  searchMembers: {
+    loading: false,
+    canLoadMore: true,
+    community_admin: {data: [], user_count: 0},
+    member: {data: [], user_count: 0},
+  },
+
+  discoverGroups: {
+    loading: false,
+    data: [],
+    items: {},
+    canLoadMore: true,
+  },
 };
 
 function groupsReducer(state = groupInitState, action: any = {}) {
   const {type, payload} = action;
-  const {selectedUsers, pendingMemberRequests} = state;
+  const {
+    selectedUsers,
+    pendingMemberRequests,
+    discoverGroups,
+    communityMembers,
+    searchMembers,
+  } = state;
 
   switch (type) {
     case groupsTypes.SET_PRIVACY_MODAL_OPEN:
       return {
         ...state,
         isPrivacyModalOpen: action.payload,
-      };
-
-    case groupsTypes.GET_JOINED_GROUPS:
-      return {
-        ...state,
-        loadingJoinedGroups: true,
-        joinedGroups: groupInitState.joinedGroups,
-      };
-    case groupsTypes.SET_JOINED_GROUPS:
-      return {
-        ...state,
-        loadingJoinedGroups: false,
-        joinedGroups: action.payload || [],
       };
 
     case groupsTypes.GET_GROUP_DETAIL:
@@ -350,6 +387,143 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           total: state.groupDetail.total_pending_members,
           data: [...pendingMemberRequests.data],
           items: {...pendingMemberRequests.items},
+        },
+      };
+    case groupsTypes.SET_YOUR_GROUPS_SEARCH:
+      return {
+        ...state,
+        yourGroupsSearch: {
+          ...state.yourGroupsSearch,
+          ...payload,
+        },
+      };
+    case groupsTypes.SET_YOUR_GROUPS_TREE:
+      return {
+        ...state,
+        yourGroupsTree: {
+          ...state.yourGroupsTree,
+          ...payload,
+        },
+      };
+    case groupsTypes.SET_YOUR_GROUPS_LIST:
+      return {
+        ...state,
+        yourGroupsList: {
+          ...state.yourGroupsList,
+          ...payload,
+        },
+      };
+    case groupsTypes.SET_JOINED_COMMUNITIES:
+      return {
+        ...state,
+        joinedCommunities: {
+          loading: payload?.loading || false,
+          data: payload?.data || [],
+        },
+      };
+    case groupsTypes.SET_DISCOVER_COMMUNITIES:
+      return {
+        ...state,
+        discoverCommunities: {
+          ...state.discoverCommunities,
+          ...payload,
+        },
+      };
+
+    case groupsTypes.GET_COMMUNITY_GROUPS:
+      return {
+        ...state,
+        loadingJoinedGroups: true,
+        joinedGroups: groupInitState.joinedGroups,
+      };
+    case groupsTypes.SET_COMMUNITY_GROUPS:
+      return {
+        ...state,
+        loadingJoinedGroups: false,
+        joinedGroups: payload || [],
+      };
+    case groupsTypes.GET_COMMUNITY_DETAIL:
+      return {
+        ...state,
+        isGettingInfoDetail: true,
+      };
+    case groupsTypes.SET_COMMUNITY_DETAIL:
+      return {
+        ...state,
+        isGettingInfoDetail: false,
+        communityDetail: payload,
+      };
+
+    case groupsTypes.SET_COMMUNITY_MEMBERS: {
+      return {
+        ...state,
+        communityMembers: {
+          ...communityMembers,
+          ...payload,
+        },
+      };
+    }
+    case groupsTypes.RESET_COMMUNITY_MEMBERS:
+      return {
+        ...state,
+        communityMembers: groupInitState.communityMembers,
+      };
+
+    case groupsTypes.RESET_SEARCH_MEMBERS:
+      return {
+        ...state,
+        searchMembers: groupInitState.searchMembers,
+      };
+    case groupsTypes.SET_SEARCH_MEMBERS: {
+      return {
+        ...state,
+        searchMembers: {
+          ...searchMembers,
+          ...payload,
+        },
+      };
+    }
+
+    case groupsTypes.GET_DISCOVER_GROUPS:
+      return {
+        ...state,
+        discoverGroups: {
+          ...discoverGroups,
+          loading: discoverGroups.data.length === 0,
+        },
+      };
+    case groupsTypes.SET_DISCOVER_GROUPS:
+      return {
+        ...state,
+        discoverGroups: {
+          ...discoverGroups,
+          loading: false,
+          data: [...discoverGroups.data, ...payload.ids],
+          items: {
+            ...discoverGroups.items,
+            ...payload.items,
+          },
+          canLoadMore: payload.ids.length === appConfig.recordsPerPage,
+        },
+      };
+    case groupsTypes.RESET_DISCOVER_GROUPS:
+      return {
+        ...state,
+        discoverGroups: groupInitState.discoverGroups,
+      };
+    case groupsTypes.EDIT_DISCOVER_GROUP_ITEM:
+      return {
+        ...state,
+        discoverGroups: {
+          ...discoverGroups,
+          items: {
+            ...discoverGroups.items,
+            [payload.id]: {
+              // @ts-ignore
+              ...discoverGroups.items[payload.id],
+              ...payload.data,
+            },
+          },
         },
       };
 

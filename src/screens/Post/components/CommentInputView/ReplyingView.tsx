@@ -25,10 +25,10 @@ const ReplyingView = () => {
   const styles = createStyle(theme);
 
   const replyTargetUser =
-    replying?.comment?.user || replying?.parentComment?.user;
+    replying?.comment?.actor || replying?.parentComment?.actor;
   const replyTargetUserId = replyTargetUser?.id;
-  let replyTargetName = replyTargetUser?.data?.fullname;
-  if (replyTargetUserId === userId) {
+  let replyTargetName = replyTargetUser?.fullname;
+  if (replyTargetUserId === Number(userId)) {
     replyTargetName = i18next.t('post:label_yourself');
   }
 

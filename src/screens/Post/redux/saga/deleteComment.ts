@@ -1,4 +1,8 @@
-import {IPayloadDeleteComment, IReaction} from '~/interfaces/IPost';
+import {
+  ICommentData,
+  IPayloadDeleteComment,
+  IReaction,
+} from '~/interfaces/IPost';
 import {put, select} from 'redux-saga/effects';
 import * as modalActions from '~/store/modal/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
@@ -21,7 +25,7 @@ export default function* deleteComment({
   const allComments = yield select(state =>
     get(state, postKeySelector.allComments),
   ) || {};
-  const comment: IReaction = allComments?.[commentId] || {};
+  const comment: ICommentData = allComments?.[commentId] || {};
   try {
     yield postDataHelper.deleteComment(commentId);
 
@@ -36,20 +40,30 @@ export default function* deleteComment({
         (cmt: IReaction) => cmt?.id === parentCommentId,
       );
       //remove reply
-      if (commentsOfPost?.[pIndex]?.latest_children?.comment) {
-        commentsOfPost[pIndex].latest_children.comment = commentsOfPost[
+      if (commentsOfPost?.[pIndex]?.child?.list) {
+        commentsOfPost[pIndex].child.list = commentsOfPost[
           pIndex
-        ].latest_children.comment?.filter?.(
-          (cmt: IReaction) => cmt?.id !== commentId,
-        );
+        ].child?.list?.filter?.((cmt: IReaction) => cmt?.id !== commentId);
       }
       //update comment count
-      if (commentsOfPost?.[pIndex]?.children_counts?.comment) {
-        commentsOfPost[pIndex].children_counts.comment = Math.max(
-          (commentsOfPost?.[pIndex]?.children_counts?.comment || 0) - 1,
+      if (commentsOfPost?.[pIndex]?.totalReply) {
+        commentsOfPost[pIndex].totalReply = Math.max(
+          (commentsOfPost[pIndex].totalReply || 0) - 1,
           0,
         );
       }
+      //update allComments
+      const newAllComments = {...allComments};
+      const newParentComment = {...newAllComments[parentCommentId]};
+      newParentComment.totalReply = Math.max(
+        0,
+        newParentComment.totalReply - 1,
+      );
+      newParentComment.child.list = newParentComment.child?.list?.filter?.(
+        (cmt: IReaction) => cmt?.id !== commentId,
+      );
+
+      yield put(postActions.addToAllComments(newParentComment));
     } else {
       //remove comment
       commentsOfPost = commentsOfPost?.filter?.(
@@ -65,23 +79,25 @@ export default function* deleteComment({
     );
 
     //update reaction counts, should minus comment and all reply counts
-    const childrenCommentCount = comment?.children_counts?.comment || 0;
+    const childrenCommentCount = comment?.totalReply || 0;
     const allPosts = yield select(state => state?.post?.allPosts) || {};
     const newAllPosts = {...allPosts};
     const post = newAllPosts[postId] || {};
-    const newReactionCount = post.reaction_counts || {};
-    newReactionCount.comment_count = Math.max(
-      (newReactionCount.comment_count || 0) - 1 - childrenCommentCount,
+    post.commentsCount = Math.max(
       0,
+      (post.commentsCount || 0) - 1 - childrenCommentCount,
     );
-    if (!parentCommentId) {
-      newReactionCount.comment = Math.max(
-        (newReactionCount.comment || 0) - 1,
-        0,
-      );
-    }
-    post.reaction_counts = {...newReactionCount};
-    newAllPosts[postId] = post;
+
+    //update number of comment lv 1
+    // if (!parentCommentId) {
+    //   if (post.comments?.meta?.total) {
+    //     post.comments.meta.total = Math.max(
+    //       0,
+    //       (post.comments.meta.total || 0) - 1,
+    //     );
+    //   }
+    // }
+    newAllPosts[postId] = {...post};
     yield put(postActions.setAllPosts(newAllPosts));
 
     //show toast success

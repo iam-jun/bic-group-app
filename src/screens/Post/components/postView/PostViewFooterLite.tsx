@@ -10,29 +10,27 @@ import {useBaseHook} from '~/hooks';
 
 export interface PostViewFooterLiteProps {
   style?: StyleProp<ViewStyle>;
-  reactionCounts: IReactionCounts;
+  commentsCount: number;
 }
 
 const PostViewFooterLite: FC<PostViewFooterLiteProps> = ({
   style,
-  reactionCounts,
+  commentsCount,
 }: PostViewFooterLiteProps) => {
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
-  const commentCount = reactionCounts?.comment_count || 0;
-
-  if (commentCount <= 0) {
+  if (commentsCount <= 0) {
     return null;
   }
 
   return (
-    <View style={styles.container}>
+    <View testID={'post_view_footer_lite'} style={styles.container}>
       <Text.Subtitle color={colors.textSecondary}>
-        {`${commentCount} ${t(
-          commentCount > 1 ? 'post:label_comments' : 'post:label_comment',
+        {`${commentsCount} ${t(
+          commentsCount > 1 ? 'post:label_comments' : 'post:label_comment',
         )}`}
       </Text.Subtitle>
     </View>

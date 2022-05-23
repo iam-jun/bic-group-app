@@ -1,6 +1,5 @@
-import {get} from 'lodash';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {FlatList, RefreshControl, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -9,46 +8,66 @@ import CommentViewPlaceholder from '~/beinComponents/placeholder/CommentViewPlac
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
-import {IAudienceGroup, IReaction} from '~/interfaces/IPost';
+import {IAudienceGroup, ICommentData} from '~/interfaces/IPost';
+import modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import CommentInputView from '../components/CommentInputView';
 import postActions from '../redux/actions';
 import postKeySelector from '../redux/keySelector';
+import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
+import {useRootNavigation} from '~/hooks/navigation';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import LoadMoreComment from '../components/LoadMoreComment';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {parseInt} from 'lodash';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [loading, setLoading] = useState<boolean>(true);
+  const [refreshing, setRefreshing] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
+  const [isScrollFirst, setIsScrollFirst] = useState(false);
 
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
   const {t} = useBaseHook();
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
 
   const listRef = useRef<any>();
   const commentInputRef = useRef<any>();
-  let countRetryScrollToBottom = useRef(0).current;
 
   const params = props?.route?.params;
-  const {commentData, postId, replyItem, commentParent} = params || {};
-
+  const {postId, replyItem, commentParent, commentId, parentId} = params || {};
   const id = postId;
+
   const actor = useKeySelector(postKeySelector.postActorById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
-  const comment = useKeySelector(postKeySelector.commentsByParentId(id));
-  const commentCount = useKeySelector(
-    postKeySelector.postCommentCountsById(id),
+  const postDetailLoadingState = useKeySelector(
+    postKeySelector.loadingGetPostDetail,
   );
-  const latest_reactions = useKeySelector(
-    postKeySelector.postLatestReactionsComments(id),
-  );
+  const newParentId =
+    typeof parentId === 'string' ? parseInt(parentId) : parentId;
+  const comments = useKeySelector(postKeySelector.commentsByParentId(id));
+  const {
+    childrenComments = [],
+    newCommentData,
+    viewMore = false,
+    notFoundComment,
+  } = getListChildComment(comments, !!newParentId ? newParentId : commentId);
+
   const scrollToCommentsPosition = useKeySelector(
     postKeySelector.scrollToCommentsPosition,
   );
 
+  const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
+
   const headerTitle = t('post:title_comment_detail_of').replace(
     '%NAME%',
-    actor?.data?.fullname || '',
+    actor?.fullname || '',
   );
 
   useEffect(() => {
@@ -60,31 +79,30 @@ const CommentDetailContent = (props: any) => {
   }, [audience?.groups]);
 
   useEffect(() => {
-    dispatch(postActions.setScrollCommentsPosition(null));
-    const _commentData = get(commentData, 'latest_children.comment', []);
-    if (_commentData.length > 1 || !_commentData?.[0]) {
-      setLoading(false);
-      dispatch(postActions.setScrollCommentsPosition({position: 'bottom'}));
-      if (!!replyItem) {
-        setTimeout(() => {
-          dispatch(
-            postActions.setPostDetailReplyingComment({
-              comment: replyItem,
-              parentComment: commentParent,
-            }),
-          );
-        }, 50);
-      }
-    } else {
+    if (copyCommentError === API_ERROR_CODE.POST.postPrivacy) {
+      props?.showPrivacy?.(true);
+    } else if (
+      copyCommentError === API_ERROR_CODE.POST.copiedCommentIsDeleted
+    ) {
+      setIsEmpty(true);
       dispatch(
-        postActions.getCommentsByPostId({
-          postId: postId,
-          idLt: _commentData?.[0]?.id || '',
-          commentId: commentData?.id || '',
-          recentReactionsLimit: 9,
-          isMerge: true,
-          position: 'bottom',
-          callbackLoading: loading => {
+        modalActions.showHideToastMessage({
+          content: 'post:text_comment_was_deleted',
+          props: {
+            type: 'error',
+            textProps: {useI18n: true},
+          },
+          toastType: 'normal',
+        }),
+      );
+      rootNavigation.replace(homeStack.postDetail, {post_id: postId});
+    }
+    if (!postDetailLoadingState && !copyCommentError) {
+      dispatch(postActions.setScrollCommentsPosition(null));
+      dispatch(
+        postActions.getCommentDetail({
+          commentId,
+          callbackLoading: (loading: boolean) => {
             setLoading(loading);
             if (!loading && !!replyItem) {
               dispatch(
@@ -98,31 +116,129 @@ const CommentDetailContent = (props: any) => {
         }),
       );
     }
-  }, []);
+  }, [postDetailLoadingState, copyCommentError]);
 
-  const scrollToEnd = () => {
-    listRef.current?.scrollToEnd?.({animated: true});
-  };
-
-  const onScrollToIndexFailed = () => {
-    countRetryScrollToBottom = countRetryScrollToBottom + 1;
-    if (countRetryScrollToBottom < 20) {
-      setTimeout(() => {
-        scrollToEnd();
-      }, 100);
+  useEffect(() => {
+    if (
+      !loading &&
+      (notFoundComment === undefined || notFoundComment < 0) &&
+      !isEmpty &&
+      !copyCommentError
+    ) {
+      dispatch(
+        modalActions.showHideToastMessage({
+          content: 'error:not_found_desc',
+          props: {
+            type: 'error',
+            textProps: {useI18n: true},
+          },
+          toastType: 'normal',
+        }),
+      );
+      rootNavigation.replace(homeStack.newsfeed);
     }
-  };
+  }, [notFoundComment, loading, isEmpty, copyCommentError]);
 
-  const onLayout = useCallback(() => {
-    setTimeout(() => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
       if (scrollToCommentsPosition?.position === 'top') {
         dispatch(postActions.setScrollCommentsPosition(null));
       } else if (scrollToCommentsPosition?.position === 'bottom') {
-        listRef.current?.scrollToEnd?.({animated: true});
-        dispatch(postActions.setScrollCommentsPosition(null));
+        scrollToIndex();
+      } else if (!!parentId && childrenComments?.length > 0 && !isScrollFirst) {
+        const commentPosition = childrenComments?.findIndex?.(
+          (item: ICommentData) => item.id == commentId,
+        );
+        if (commentPosition > 0) {
+          setIsScrollFirst(true);
+          scrollToIndex(commentPosition);
+        }
       }
-    }, 100);
-  }, [commentData?.latest_children?.comment?.length, scrollToCommentsPosition]);
+    }, 300);
+    return () => clearTimeout(timer);
+  }, [scrollToCommentsPosition, childrenComments]);
+
+  const scrollToIndex = (index?: number) => {
+    try {
+      listRef.current?.scrollToIndex?.({
+        animated: true,
+        index: !!index
+          ? index
+          : childrenComments?.length > 0
+          ? childrenComments?.length - 1
+          : 0,
+      });
+      dispatch(postActions.setScrollCommentsPosition(null));
+    } catch (error) {
+      // scroll to the first comment to avoid scroll error
+      listRef.current?.scrollToOffset?.({animated: true, offset: 0});
+    }
+  };
+
+  const onScrollToIndexFailed = (error: any) => {
+    const offset = error?.averageItemLength * error?.index || 0;
+    listRef.current?.scrollToOffset?.({offset});
+    setTimeout(
+      () => listRef.current?.scrollToIndex?.({index: error?.index || 0}),
+      100,
+    );
+  };
+
+  const goToPostDetail = () => {
+    rootNavigation.replace(homeStack.postDetail, {
+      post_id: postId,
+    });
+  };
+
+  const onRefresh = () => {
+    if (copyCommentError === API_ERROR_CODE.POST.commentDeleted) {
+      setIsEmpty(true);
+      setRefreshing(true);
+      dispatch(
+        modalActions.showAlert({
+          // @ts-ignore
+          HeaderImageComponent: (
+            <View style={{alignItems: 'center'}}>
+              <SVGIcon
+                // @ts-ignore
+                source={CommentNotFoundImg}
+                width={120}
+                height={120}
+                tintColor="none"
+              />
+            </View>
+          ),
+          title: t('post:deleted_comment:title'),
+          titleProps: {style: {flex: 1, textAlign: 'center'}},
+          showCloseButton: false,
+          cancelBtn: false,
+          isDismissible: true,
+          onConfirm: () => {
+            rootNavigation.goBack();
+          },
+          confirmLabel: t('post:deleted_comment:button_text'),
+          content: t('post:deleted_comment:description'),
+          contentProps: {style: {textAlign: 'center'}},
+          ContentComponent: Text.BodyS,
+          buttonViewStyle: {justifyContent: 'center'},
+          headerStyle: {marginBottom: 0},
+          onDismiss: () => {
+            rootNavigation.goBack();
+          },
+        }),
+      );
+      setRefreshing(false);
+      return;
+    }
+    dispatch(
+      postActions.getCommentDetail({
+        commentId: !!parentId ? parentId : commentId,
+        callbackLoading: (_loading: boolean) => {
+          setRefreshing(_loading);
+        },
+      }),
+    );
+  };
 
   const renderCommentItem = (data: any) => {
     const {item, index} = data || {};
@@ -130,7 +246,7 @@ const CommentDetailContent = (props: any) => {
       <CommentItem
         postId={id}
         commentData={item}
-        commentParent={commentData}
+        commentParent={newCommentData}
         groupIds={groupIds}
         index={index}
       />
@@ -138,36 +254,58 @@ const CommentDetailContent = (props: any) => {
   };
 
   const renderFooter = () => {
-    return <View style={styles.footer} />;
+    if (viewMore) {
+      const commentLength = newCommentData?.child?.list?.length || 0;
+      const lastItem = newCommentData?.child?.list?.[commentLength - 1];
+      const _parentId = !!parentId ? parentId : commentId;
+      return (
+        <LoadMoreComment
+          title={'post:text_load_more_replies'}
+          postId={id}
+          idGreaterThan={lastItem?.id}
+          commentId={parseInt(_parentId || '0')}
+        />
+      );
+    } else return <ViewSpacing height={12} />;
   };
 
-  if (loading) {
+  if (loading || postDetailLoadingState) {
     return <CommentViewPlaceholder />;
   }
 
+  const keyExtractor = (item: any) => `CommentDetailContent_${item?.id || ''}`;
+
+  if (isEmpty) {
+    return null;
+  }
   return (
     <View style={{flex: 1}}>
       <FlatList
         ref={listRef}
-        data={commentData?.latest_children?.comment || []}
-        extraData={commentData?.latest_children?.comment}
+        testID="list"
+        data={childrenComments || []}
         renderItem={renderCommentItem}
         ListHeaderComponent={
           <CommentLevel1
             headerTitle={headerTitle}
-            commentData={commentData}
+            commentData={newCommentData}
             groupIds={groupIds}
             id={id}
+            onPress={goToPostDetail}
           />
         }
-        ListFooterComponent={commentCount && renderFooter}
+        ListFooterComponent={renderFooter}
         keyboardShouldPersistTaps={'handled'}
-        keyExtractor={(item, index) =>
-          `CommentDetailContent_${index}_${item?.id || ''}`
-        }
-        onContentSizeChange={onLayout}
+        keyExtractor={keyExtractor}
         onScrollToIndexFailed={onScrollToIndexFailed}
         scrollEventThrottle={16}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor={theme.colors.borderDisable}
+          />
+        }
       />
       <CommentInputView
         commentInputRef={commentInputRef}
@@ -176,13 +314,20 @@ const CommentDetailContent = (props: any) => {
         autoFocus={!!replyItem}
         isCommentLevel1Screen
         showHeader
-        defaultReplyTargetId={commentData?.id || ''}
+        viewMore={viewMore}
+        defaultReplyTargetId={newCommentData?.id}
       />
     </View>
   );
 };
 
-const CommentLevel1 = ({id, headerTitle, commentData, groupIds}: any) => {
+const CommentLevel1 = ({
+  id,
+  headerTitle,
+  commentData,
+  groupIds,
+  onPress,
+}: any) => {
   if (!id) {
     return null;
   }
@@ -195,7 +340,12 @@ const CommentLevel1 = ({id, headerTitle, commentData, groupIds}: any) => {
       <View style={styles.container}>
         <Text.BodySM>
           {t('post:text_comment_from')}
-          <Text.BodyM style={styles.highlightText}>{headerTitle}</Text.BodyM>
+          <Text.BodyM
+            onPress={onPress}
+            suppressHighlighting
+            style={styles.highlightText}>
+            {headerTitle}
+          </Text.BodyM>
         </Text.BodySM>
       </View>
       <CommentItem
@@ -208,11 +358,29 @@ const CommentLevel1 = ({id, headerTitle, commentData, groupIds}: any) => {
   );
 };
 
+const getListChildComment = (
+  listData: ICommentData[],
+  parentCommentId: number,
+) => {
+  const parentCommentPosition = listData?.findIndex?.(
+    (item: ICommentData) => item.id == parentCommentId,
+  );
+
+  const childrenComments = listData?.[parentCommentPosition]?.child?.list || [];
+  return {
+    childrenComments,
+    newCommentData: listData?.[parentCommentPosition],
+    viewMore:
+      listData?.[parentCommentPosition]?.child?.meta?.hasPreviousPage || false,
+    notFoundComment: parentCommentPosition,
+  };
+};
+
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing, fonts, fontFamily} = theme;
+  const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
-      paddingHorizontal: spacing.padding.large,
+      paddingLeft: spacing.padding.large,
       paddingVertical: spacing.padding.small,
       flexDirection: 'row',
     },
@@ -222,7 +390,14 @@ const createStyle = (theme: ITheme) => {
     headerText: {
       fontSize: 14,
     },
-    footer: {height: spacing.margin.base, backgroundColor: colors.background},
+    footer: {
+      backgroundColor: colors.background,
+      paddingHorizontal: spacing.padding.large,
+      paddingBottom: spacing.padding.extraLarge,
+      paddingTop: spacing.padding.large,
+      alignItems: 'center',
+      justifyContent: 'flex-start',
+    },
   });
 };
 

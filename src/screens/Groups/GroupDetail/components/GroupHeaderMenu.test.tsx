@@ -14,12 +14,21 @@ describe('GroupHeaderMenu component', () => {
   });
 
   it('renders correctly', () => {
-    const rendered = renderWithRedux(<GroupHeaderMenu groupId={groupId} />);
+    const state = {...initialState};
+    // @ts-ignore
+    state.auth.user = {username: 'testname1'};
+    const store = createTestStore(state);
+    const rendered = renderWithRedux(
+      <GroupHeaderMenu groupId={groupId} />,
+      store,
+    );
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
   it('should render Admin tool correctly when user is an admin', () => {
     const state = {...initialState};
+    // @ts-ignore
+    state.auth.user = {username: 'testname1'};
     state.groups.groupDetail.join_status = groupJoinStatus.member;
     state.groups.groupDetail.can_setting = true;
     const store = createTestStore(state);
@@ -35,6 +44,8 @@ describe('GroupHeaderMenu component', () => {
 
   it('should not render Admin tool correctly when user is not an admin', () => {
     const state = {...initialState};
+    // @ts-ignore
+    state.auth.user = {username: 'testname1'};
     state.groups.groupDetail.join_status = groupJoinStatus.member;
     state.groups.groupDetail.can_setting = false;
     const store = createTestStore(state);

@@ -20,7 +20,7 @@ export interface CollapsibleTextProps extends TextProps {
   useMarkdownIt?: boolean;
   onPressAudience?: (audience: any, e?: any) => any;
   limitMarkdownTypes?: boolean;
-  parentCommentId?: string;
+  parentCommentId?: number;
   testID?: string;
   [x: string]: any;
 }
@@ -99,14 +99,14 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
         )}
 
         {!!shortContent && (
-          <Text
+          <Text.BodyM
             testID="collapsible_text.markdown.short_content"
             onPress={onToggleShowLess}
-            color={colors.textInfo}>
+            color={colors.textSecondary}>
             {contentShowAll
-              ? t('common:text_show_less')
-              : t('common:text_read_more')}
-          </Text>
+              ? t('common:text_see_less')
+              : t('common:text_see_more')}
+          </Text.BodyM>
         )}
       </View>
     );
@@ -119,14 +119,14 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
           {!shortContent ? content : contentShowAll ? content : shortContent}
         </Text>
         {!!shortContent && (
-          <Text
+          <Text.BodyM
             testID="collapsible_text.show_text"
             onPress={onToggleShowLess}
-            color={colors.textInfo}>
+            color={colors.textSecondary}>
             {contentShowAll
-              ? t('common:text_show_less')
-              : t('common:text_read_more')}
-          </Text>
+              ? t('common:text_see_less')
+              : t('common:text_see_more')}
+          </Text.BodyM>
         )}
       </Text>
     );

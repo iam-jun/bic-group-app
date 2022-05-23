@@ -4,19 +4,19 @@ import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 
-import {IActivityData} from '~/interfaces/IPost';
+import {IPostMedia} from '~/interfaces/IPost';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import {uploadTypes} from '~/configs/resourceConfig';
 
 export interface CommentMediaViewProps {
   style?: StyleProp<ViewStyle>;
-  data: IActivityData;
+  media: IPostMedia;
   onLongPress?: (e: any) => void;
 }
 
 const CommentMediaView: FC<CommentMediaViewProps> = ({
   style,
-  data,
+  media,
   onLongPress,
 }: CommentMediaViewProps) => {
   const [width, setWidth] = useState();
@@ -24,7 +24,7 @@ const CommentMediaView: FC<CommentMediaViewProps> = ({
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
-  const {images} = data || {};
+  const {images} = media || {};
 
   const onLayout = (e: any) => {
     const width = e?.nativeEvent?.layout?.width;

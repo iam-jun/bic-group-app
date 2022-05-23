@@ -7,11 +7,11 @@ import {
   Platform,
   TouchableOpacity,
   DeviceEventEmitter,
+  BackHandler,
   //   useWindowDimensions,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useBackHandler} from '@react-native-community/hooks';
 
 import Animated, {
   useAnimatedStyle,
@@ -20,7 +20,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import {useBaseHook} from '~/hooks';
 import {ITheme} from '~/theme/interfaces';
 import {deviceDimensions} from '~/theme/dimension';
 import {IconType} from '~/resources/icons';
@@ -34,6 +33,7 @@ import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
 import useWindowDimensions from '~/hooks/windowSize';
 import IconChat from '../IconChat';
+import {useRootNavigation} from '~/hooks/navigation';
 
 export interface HeaderProps {
   headerRef?: any;
@@ -45,10 +45,10 @@ export interface HeaderProps {
   avatar?: any;
   avatarProps?: ImageProps;
   leftIcon?: IconType;
-  leftIconProps?: IconProps;
+  leftIconProps?: Omit<IconProps, 'icon'>;
   icon?: IconType;
   rightIcon?: IconType;
-  rightIconProps?: IconProps;
+  rightIconProps?: Omit<IconProps, 'icon'>;
   onPressIcon?: () => void;
   buttonVariant?: 'Primary' | 'Secondary' | 'Icon';
   buttonText?: string;
@@ -73,6 +73,7 @@ export interface HeaderProps {
   onPressHeader?: () => void;
   onRightPress?: () => void;
   onPressChat?: () => void;
+  useAnimationTitle?: boolean;
 }
 
 const Header: React.FC<HeaderProps> = ({
@@ -112,6 +113,7 @@ const Header: React.FC<HeaderProps> = ({
   onPressHeader,
   onRightPress,
   onPressChat,
+  useAnimationTitle,
 }: HeaderProps) => {
   const [isShowSearch, setIsShowSearch] = useState(false);
   const inputRef = useRef<any>();
@@ -126,8 +128,9 @@ const Header: React.FC<HeaderProps> = ({
   const isLaptop = windowDimension.width >= deviceDimensions.laptop;
 
   const showValue = useSharedValue(1);
+  const scrollY = useSharedValue(0);
 
-  const {navigation} = useBaseHook();
+  const {rootNavigation} = useRootNavigation();
 
   useEffect(() => {
     const listener = DeviceEventEmitter.addListener('showHeader', isShow => {
@@ -137,6 +140,7 @@ const Header: React.FC<HeaderProps> = ({
         hide();
       }
     });
+
     return () => {
       listener?.remove?.();
     };
@@ -146,8 +150,19 @@ const Header: React.FC<HeaderProps> = ({
     if (onPressBack) {
       onPressBack();
     } else {
-      navigation.goBack();
+      // avoid back pressed on root screen
+      if (rootNavigation.canGoBack) rootNavigation.goBack();
+      else BackHandler.exitApp();
     }
+  };
+
+  const goBack = () => {
+    if (isShowSearch) {
+      hideSearch();
+    } else {
+      _onPressBack();
+    }
+    return true;
   };
 
   const showSearch = () => {
@@ -168,16 +183,9 @@ const Header: React.FC<HeaderProps> = ({
     hideSearch,
     showSearch,
     setSearchText,
+    goBack,
+    setScrollY,
   }));
-
-  useBackHandler(() => {
-    if (isShowSearch) {
-      hideSearch();
-    } else {
-      _onPressBack();
-    }
-    return true;
-  });
 
   const _onPressSearch = () => {
     if (isShowSearch) {
@@ -208,6 +216,22 @@ const Header: React.FC<HeaderProps> = ({
 
   const hide = (duration = 200) => {
     showValue.value = withTiming(0, {duration});
+  };
+
+  const titleAnimated = useAnimationTitle
+    ? useAnimatedStyle(() => ({
+        opacity: interpolate(scrollY.value, [0, 210, 235], [0, 0, 1]),
+      }))
+    : {};
+
+  const avatarAnimated = useAnimationTitle
+    ? useAnimatedStyle(() => ({
+        opacity: interpolate(scrollY.value, [0, 210, 235], [0, 0, 1]),
+      }))
+    : {};
+
+  const setScrollY = (offsetY: number) => {
+    scrollY.value = offsetY;
   };
 
   const renderContent = () => {
@@ -249,17 +273,19 @@ const Header: React.FC<HeaderProps> = ({
             />
           )}
           {!!avatar && (
-            <TouchableOpacity
-              onPress={onPressHeader}
-              disabled={!onPressHeader}
-              testID="header.avatar">
-              <Avatar.Group
-                source={avatar}
-                style={styles.avatar}
-                variant="small"
-                {...avatarProps}
-              />
-            </TouchableOpacity>
+            <Animated.View style={avatarAnimated}>
+              <TouchableOpacity
+                onPress={onPressHeader}
+                disabled={!onPressHeader}
+                testID="header.avatar">
+                <Avatar.Group
+                  source={avatar}
+                  style={styles.avatar}
+                  variant="small"
+                  {...avatarProps}
+                />
+              </TouchableOpacity>
+            </Animated.View>
           )}
           {!!leftIcon && (
             <Icon
@@ -271,7 +297,7 @@ const Header: React.FC<HeaderProps> = ({
               testID="header.leftIcon"
             />
           )}
-          <View style={styles.titleContainer}>
+          <Animated.View style={[styles.titleContainer, titleAnimated]}>
             {!!title && (
               <TouchableOpacity
                 onPress={onPressHeader}
@@ -297,7 +323,7 @@ const Header: React.FC<HeaderProps> = ({
                 </Text.Subtitle>
               </TouchableOpacity>
             )}
-          </View>
+          </Animated.View>
           {!!icon && onPressIcon && (
             <Icon
               icon={icon}
@@ -327,7 +353,6 @@ const Header: React.FC<HeaderProps> = ({
               size={24}
               style={styles.icon}
               onPress={onPressMenu}
-              backgroundColor={colors.bgSecondary}
               testID="header.menuIcon"
               buttonTestID="header.menuIcon.button"
             />

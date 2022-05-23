@@ -12,7 +12,7 @@ import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from './redux/keySelector';
 import {deviceDimensions} from '~/theme/dimension';
-import {useTabPressListener} from '~/hooks/navigation';
+import {useBackPressListener, useTabPressListener} from '~/hooks/navigation';
 import {ITabTypes} from '~/interfaces/IRouter';
 import GroupSearch from '~/screens/Groups/components/GroupSearch';
 import appActions from '~/store/app/actions';
@@ -20,8 +20,11 @@ import {debounce} from 'lodash';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import images from '~/resources/images';
 
-const Groups: React.FC = () => {
+const Groups: React.FC = (props: any) => {
+  const {communityId} = props?.route?.params || {};
+
   const listRef = useRef<any>();
+  const headerRef = useRef<any>();
 
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
@@ -34,22 +37,6 @@ const Groups: React.FC = () => {
 
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
-
-  const isFocused = useIsFocused();
-
-  const isWeb = Platform.OS === 'web';
-
-  useEffect(() => {
-    if (Platform.OS === 'web') {
-      const initUrl = window.location.href;
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const parse = require('url-parse');
-      const url = parse(initUrl, true);
-      const path = url.pathname.substring(1);
-
-      dispatch(appActions.setRootScreenName(path));
-    }
-  }, [isFocused]);
 
   useEffect(() => {
     getData();
@@ -64,8 +51,15 @@ const Groups: React.FC = () => {
     [listRef],
   );
 
+  const handleBackPress = () => {
+    headerRef?.current?.goBack?.();
+  };
+
+  useBackPressListener(handleBackPress);
+
   const getData = () => {
-    dispatch(groupsActions.getJoinedGroups());
+    !!communityId &&
+      dispatch(groupsActions.getCommunityGroups({id: communityId}));
   };
 
   const onShowSearch = (isShow: boolean) => {
@@ -113,7 +107,7 @@ const Groups: React.FC = () => {
   return (
     <View style={styles.containerScreen}>
       <Header
-        hideBack
+        headerRef={headerRef}
         title="tabs:groups"
         titleTextProps={{useI18n: true}}
         searchInputTestID="groups.search_input"
@@ -121,7 +115,7 @@ const Groups: React.FC = () => {
         removeBorderAndShadow={isLaptop}
         onShowSearch={onShowSearch}
         onSearchText={onSearchText}
-        avatar={isWeb ? undefined : images.logo_bein}
+        avatar={images.logo_bein}
       />
       <View style={{flex: 1}}>
         {renderDataList()}

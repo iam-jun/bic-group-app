@@ -154,8 +154,6 @@ const UserEditProfile = (props: any) => {
     uploadType: IUploadType,
   ) => {
     checkPermission('photo', dispatch, canOpenPicker => {
-      console.log('checkPermission', canOpenPicker);
-
       if (canOpenPicker) {
         ImagePicker.openPickerSingle({
           ...userProfileImageCropRatio[fieldName],
@@ -244,7 +242,8 @@ const UserEditProfile = (props: any) => {
         </View>
         <View
           style={{paddingHorizontal: theme.spacing.padding.large}}
-          onLayout={onCoverLayout}>
+          onLayout={onCoverLayout}
+          testID="user_edit_profile.cover_image">
           {!loadingCover ? (
             <Image
               style={styles.cover}
@@ -280,7 +279,9 @@ const UserEditProfile = (props: any) => {
             </Text.H6>
           </ButtonWrapper>
         </View>
-        <Text.BodyS style={styles.descriptionText}>
+        <Text.BodyS
+          testID="user_edit_profile.description.text"
+          style={styles.descriptionText}>
           {description || i18next.t('common:text_not_set')}
         </Text.BodyS>
         <Divider style={styles.divider} />

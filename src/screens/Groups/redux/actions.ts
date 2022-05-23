@@ -11,9 +11,20 @@ import {
   IGroupSetAdmin,
   IGroupRemoveAdmin,
   IJoiningMember,
+  IGetCommunityGroup,
+  IGetYourGroupsSearch,
+  IStateSearch,
+  IStateList,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 import {IObject} from '~/interfaces/common';
+import {
+  ICommunity,
+  ICommunityMembers,
+  IParamGetCommunityMembers,
+  IParamGetDiscoverGroups,
+  ISetMembers,
+} from '~/interfaces/ICommunity';
 
 const groupsActions = {
   setPrivacyModalOpen: (payload: boolean) => {
@@ -23,12 +34,6 @@ const groupsActions = {
     };
   },
 
-  getJoinedGroups: function (payload?: any) {
-    return {
-      type: groupsTypes.GET_JOINED_GROUPS,
-      payload,
-    };
-  },
   setJoinedGroups: function (payload: IGroup[]) {
     return {
       type: groupsTypes.SET_JOINED_GROUPS,
@@ -266,6 +271,111 @@ const groupsActions = {
   }),
   storeUndoData: () => ({
     type: groupsTypes.STORE_UNDO_DATA,
+  }),
+
+  // community
+  getMyCommunities: (payload: {callback?: () => void}) => ({
+    type: groupsTypes.GET_JOINED_COMMUNITIES,
+    payload,
+  }),
+  setMyCommunities: (payload: any) => ({
+    type: groupsTypes.SET_JOINED_COMMUNITIES,
+    payload,
+  }),
+  getDiscoverCommunities: (payload: any) => ({
+    type: groupsTypes.GET_DISCOVER_COMMUNITIES,
+    payload,
+  }),
+  setDiscoverCommunities: (payload: any) => ({
+    type: groupsTypes.SET_DISCOVER_COMMUNITIES,
+    payload,
+  }),
+  getYourGroupsSearch: (payload: IGetYourGroupsSearch) => ({
+    type: groupsTypes.GET_YOUR_GROUPS_SEARCH,
+    payload,
+  }),
+  setYourGroupsSearch: (payload: IStateSearch) => ({
+    type: groupsTypes.SET_YOUR_GROUPS_SEARCH,
+    payload,
+  }),
+  getYourGroupsTree: (payload: number) => ({
+    type: groupsTypes.GET_YOUR_GROUPS_TREE,
+    payload,
+  }),
+  setYourGroupsTree: (payload: IStateList) => ({
+    type: groupsTypes.SET_YOUR_GROUPS_TREE,
+    payload,
+  }),
+  getYourGroupsList: (payload: number) => ({
+    type: groupsTypes.GET_YOUR_GROUPS_LIST,
+    payload,
+  }),
+  setYourGroupsList: (payload: IStateList) => ({
+    type: groupsTypes.SET_YOUR_GROUPS_LIST,
+    payload,
+  }),
+  getCommunityGroups: (payload: {id: number; params?: IGetCommunityGroup}) => ({
+    type: groupsTypes.GET_COMMUNITY_GROUPS,
+    payload,
+  }),
+  setCommunityGroups: (payload: any[]) => ({
+    type: groupsTypes.SET_COMMUNITY_GROUPS,
+    payload,
+  }),
+  getCommunityDetail: (payload: number, loadingPage = false) => ({
+    type: groupsTypes.GET_COMMUNITY_DETAIL,
+    payload,
+    loadingPage,
+  }),
+  setCommunityDetail: (payload: ICommunity) => ({
+    type: groupsTypes.SET_COMMUNITY_DETAIL,
+    payload,
+  }),
+  getCommunityMembers: (payload: {
+    communityId: number;
+    params?: IParamGetCommunityMembers;
+  }) => ({
+    type: groupsTypes.GET_COMMUNITY_MEMBERS,
+    payload,
+  }),
+  setCommunityMembers: (payload: ISetMembers) => ({
+    type: groupsTypes.SET_COMMUNITY_MEMBERS,
+    payload,
+  }),
+  resetCommunityMembers: () => ({
+    type: groupsTypes.RESET_COMMUNITY_MEMBERS,
+  }),
+  getSearchMembers: (payload: {
+    communityId: number;
+    params: IParamGetCommunityMembers;
+  }) => ({
+    type: groupsTypes.GET_SEARCH_MEMBERS,
+    payload,
+  }),
+  setSearchMembers: (payload: ISetMembers) => ({
+    type: groupsTypes.SET_SEARCH_MEMBERS,
+    payload,
+  }),
+  resetSearchMembers: () => ({
+    type: groupsTypes.RESET_SEARCH_MEMBERS,
+  }),
+  getDiscoverGroups: (payload: {
+    communityId: number;
+    params?: IParamGetDiscoverGroups;
+  }) => ({
+    type: groupsTypes.GET_DISCOVER_GROUPS,
+    payload,
+  }),
+  setDiscoverGroups: (payload: {ids: number[]; items: any}) => ({
+    type: groupsTypes.SET_DISCOVER_GROUPS,
+    payload,
+  }),
+  resetDiscoverGroups: () => ({
+    type: groupsTypes.RESET_DISCOVER_GROUPS,
+  }),
+  editDiscoverGroupItem: (payload: {id: number; data: any}) => ({
+    type: groupsTypes.EDIT_DISCOVER_GROUP_ITEM,
+    payload,
   }),
 };
 

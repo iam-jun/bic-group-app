@@ -128,7 +128,7 @@ const menuActions = {
     type: menuTypes.SET_PHONE_NUMBER_EDIT_ERROR,
     payload,
   }),
-  uploadImage: function (payload: IUserImageUpload, callback?: () => void) {
+  uploadImage: (payload: IUserImageUpload, callback?: () => void) => {
     return {
       type: menuTypes.UPLOAD_IMAGE,
       payload,

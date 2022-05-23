@@ -18,6 +18,7 @@ import EditDescription from '.';
 import menuTypes from '../../redux/types';
 import {USER_PROFILE} from '~/test/mock_data/menu';
 import menuActions from '../../redux/actions';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 afterEach(cleanup);
 
@@ -81,12 +82,15 @@ describe('EditDescription screen', () => {
   it(`should update userProfile successfully when click save button `, async () => {
     Keyboard.dismiss = jest.fn();
 
-    const mockActionEditMyProfile = () => {
+    const mockActionEditMyProfile = jest.fn().mockImplementation(() => {
       return {
-        type: menuTypes.SET_MY_PROFILE,
-        payload: USER_PROFILE,
+        type: menuTypes.EDIT_MY_PROFILE,
+        payload: {
+          id: USER_PROFILE.id,
+          description: 'descriptionText',
+        },
       };
-    };
+    });
 
     jest
       .spyOn(menuActions, 'editMyProfile')
@@ -99,10 +103,33 @@ describe('EditDescription screen', () => {
     const textInputComponent = wrapper.getByTestId('edit_description');
 
     fireEvent.changeText(textInputComponent, 'abc');
-    expect(buttonComponent.props.accessibilityState.disabled).toBeFalsy();
+    expect(buttonComponent?.props?.accessibilityState?.disabled).toBeFalsy();
 
     fireEvent.press(buttonComponent);
 
-    //this test case can't be done bc can mock dispatch
+    expect(mockActionEditMyProfile).toBeCalled();
+  });
+
+  it(`should back to userEdit screen successfully if rootNavigation.canGoBack = false `, () => {
+    Keyboard.dismiss = jest.fn();
+    const replace = jest.fn();
+
+    const rootNavigation = {canGoBack: false, replace};
+
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
+      return {rootNavigation} as any;
+    });
+
+    const store = mockStore(initialState);
+
+    const wrapper = renderWithRedux(<EditDescription />, store);
+
+    const component = wrapper.getByTestId('edit_description.save');
+    expect(component.props.accessibilityState.disabled).toBeTruthy();
+
+    const buttonBack = wrapper.getByTestId('header.back');
+    fireEvent.press(buttonBack);
+    expect(Keyboard.dismiss).toBeCalled();
+    expect(replace).toBeCalledWith(mainStack.userEdit);
   });
 });

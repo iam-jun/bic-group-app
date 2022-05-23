@@ -14,7 +14,7 @@ import {ITheme} from '~/theme/interfaces';
 import {getLink, LINK_POST} from '~/utils/link';
 
 export interface PostViewMenuProps {
-  postId: string;
+  postId: number;
   isPostDetail: boolean;
   isActor: boolean;
   isDraftPost?: boolean;
@@ -52,6 +52,11 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
     );
   };
 
+  const onPressEditSettings = () => {
+    dispatch(modalActions.hideModal());
+    rootNavigation.navigate(homeStack.postSettings, {postId});
+  };
+
   const onPressEdit = () => {
     dispatch(modalActions.hideModal());
     rootNavigation.navigate(homeStack.createPost, {
@@ -84,6 +89,16 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
           leftIconProps={{icon: 'Edit', size: 24}}
           title={t('post:post_menu_edit')}
           onPress={onPressEdit}
+        />
+      )}
+      {isActor && (
+        <PrimaryItem
+          testID={'post_view_menu.edit_settings'}
+          style={styles.item}
+          leftIcon={'SlidersAlt'}
+          leftIconProps={{icon: 'SlidersAlt', size: 24}}
+          title={t('post:post_menu_edit_settings')}
+          onPress={onPressEditSettings}
         />
       )}
       <PrimaryItem

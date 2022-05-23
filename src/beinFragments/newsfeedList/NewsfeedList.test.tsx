@@ -3,34 +3,11 @@ import React from 'react';
 import {renderWithRedux} from '~/test/testUtils';
 import NewsfeedList from './NewsfeedList';
 import MockedNavigator from '~/test/MockedNavigator';
-import {POST_DETAIL} from '~/test/mock_data/post';
+import {POST_DETAIL, POST_DETAIL_2} from '~/test/mock_data/post';
 import {View} from 'react-native';
 import Text from '~/beinComponents/Text';
 
-// const homePosts = [
-//   POST_DETAIL,
-//   POST_DETAIL,
-//   POST_DETAIL,
-//   POST_DETAIL,
-//   POST_DETAIL,
-//   POST_DETAIL,
-//   POST_DETAIL,
-//   POST_DETAIL,
-//   POST_DETAIL,
-//   POST_DETAIL,
-// ];
-
 describe('NewsfeedList component', () => {
-  it('renders correctly with 1 item', async () => {
-    const wrapper = renderWithRedux(
-      <MockedNavigator
-        component={() => <NewsfeedList data={[POST_DETAIL]} />}
-      />,
-    );
-
-    expect(wrapper).toMatchSnapshot();
-  });
-
   it('renders correctly loading more', async () => {
     const wrapper = renderWithRedux(
       <MockedNavigator

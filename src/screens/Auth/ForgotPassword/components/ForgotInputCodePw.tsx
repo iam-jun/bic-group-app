@@ -1,15 +1,11 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {Controller} from 'react-hook-form';
 import {useDispatch} from 'react-redux';
-import debounce from 'lodash/debounce';
 import isEmpty from 'lodash/isEmpty';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import TextInput from '~/beinComponents/inputs/TextInput';
-import PasswordInput from '~/beinComponents/inputs/PasswordInput';
 import actions from '~/screens/Auth/redux/actions';
 import * as validation from '~/constants/commonRegex';
 import {useBaseHook} from '~/hooks';
@@ -17,6 +13,8 @@ import useAuth from '~/hooks/auth';
 import {IObject} from '~/interfaces/common';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
 import {ITheme} from '~/theme/interfaces';
+import TextInputController from '~/beinComponents/inputs/TextInputController';
+import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 
 interface Props {
   useFormData: IObject<any>;
@@ -43,7 +41,6 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
   }, [errConfirm]);
 
   const {
-    control,
     getValues,
     setError,
     clearErrors,
@@ -110,15 +107,15 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
     }
   };
 
-  const validateCode = debounce(async () => {
+  const validateCode = async () => {
     await trigger('code');
-  }, 50);
+  };
 
-  const validateNewPassword = debounce(async () => {
+  const validateNewPassword = async () => {
     await trigger('newPassword');
-  }, 50);
+  };
 
-  const validateConfirmPassword = debounce(async () => {
+  const validateConfirmPassword = async () => {
     await trigger('confirmPassword');
     if (getValues('newPassword') !== getValues('confirmPassword')) {
       setError('confirmPassword', {
@@ -126,7 +123,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
         message: t('auth:text_err_confirm_password_not_matched'),
       });
     }
-  }, 50);
+  };
 
   return (
     <View style={styles.container}>
@@ -135,37 +132,24 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
         <Text.Body style={styles.desc}>
           {t('auth:text_forgot_password_input_code_desc')}
         </Text.Body>
-        <Controller
-          control={control}
-          render={({field: {onChange, value}}) => (
-            <TextInput
-              testID="inputCode"
-              label={t('auth:input_label_code')}
-              placeholder={t('auth:input_label_code')}
-              error={errors.code}
-              value={value}
-              keyboardType={'numeric'}
-              editable={!forgotPasswordLoading}
-              onChangeText={text => {
-                onChange(text.trim());
-                validateCode();
-              }}
-              helperType="error"
-              helperContent={errors?.code?.message}
-              helperAction={t('auth:text_request_new_code')}
-              // helperContentTriggerAction={t('auth:text_err_wrong_code')}
-              helperActionOnPress={onRequestForgotPassword}
-            />
-          )}
+        <TextInputController
+          testID="inputCode"
+          useFormData={useFormData}
           name="code"
           rules={{
-            required: t('auth:text_err_code') + ' ',
+            required: t('auth:text_err_code'),
             pattern: {
               value: validation.codeRegex,
-              message: t('auth:text_err_code') + ' ',
+              message: t('auth:text_err_code'),
             },
           }}
-          defaultValue=""
+          validateValue={validateCode}
+          label={t('auth:input_label_code')}
+          placeholder={t('auth:input_label_code')}
+          helperAction={t('auth:text_request_new_code')}
+          helperContentTriggerAction={t('auth:text_err_wrong_code')}
+          helperActionOnPress={onRequestForgotPassword}
+          keyboardType={'numeric'}
         />
       </View>
       <View style={styles.inputSectionContainer}>
@@ -173,26 +157,9 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
         <Text.Body style={styles.desc}>
           {t('auth:text_forgot_password_input_pw_desc')}
         </Text.Body>
-        <Controller
-          control={control}
-          render={({field: {onChange, value}}) => (
-            <PasswordInput
-              testID="inputNewPassword"
-              label={t('auth:input_label_new_password')}
-              placeholder={t('auth:input_label_new_password')}
-              error={errors.newPassword}
-              autoCapitalize="none"
-              editable={!forgotPasswordLoading}
-              value={value}
-              onChangeText={text => {
-                onChange(text);
-                validateNewPassword();
-              }}
-              helperType={errors.newPassword?.message ? 'error' : undefined}
-              helperContent={errors?.newPassword?.message}
-              disabled={disableInputPassword}
-            />
-          )}
+        <PasswordInputController
+          useFormData={useFormData}
+          name={'newPassword'}
           rules={{
             required: t('auth:text_err_password_blank'),
             // min: 8,
@@ -202,30 +169,17 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
               message: t('auth:text_err_password_format'),
             },
           }}
-          name="newPassword"
-          defaultValue=""
+          loading={forgotPasswordLoading}
+          disableInput={disableInputPassword}
+          testID={'inputNewPassword'}
+          label={t('auth:input_label_new_password')}
+          placeholder={t('auth:input_label_new_password')}
+          validateValue={validateNewPassword}
         />
-        <Controller
-          control={control}
-          render={({field: {onChange, value}}) => (
-            <PasswordInput
-              testID="inputConfirmPassword"
-              label={t('auth:input_label_confirm_new_password')}
-              placeholder={t('auth:input_label_confirm_new_password')}
-              error={errors.confirmPassword}
-              autoCapitalize="none"
-              editable={!forgotPasswordLoading}
-              value={value}
-              onChangeText={text => {
-                onChange(text);
-                validateConfirmPassword();
-              }}
-              helperType={errors.confirmPassword?.message ? 'error' : undefined}
-              helperContent={errors?.confirmPassword?.message}
-              disabled={disableInputPassword}
-            />
-          )}
-          name="confirmPassword"
+
+        <PasswordInputController
+          useFormData={useFormData}
+          name={'confirmPassword'}
           rules={{
             required: t('auth:text_err_password_blank'),
             // min: 8,
@@ -235,7 +189,12 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
             //   message: t('auth:text_err_password_format'),
             // },
           }}
-          defaultValue=""
+          loading={forgotPasswordLoading}
+          disableInput={disableInputPassword}
+          testID={'inputConfirmPassword'}
+          label={t('auth:input_label_confirm_new_password')}
+          placeholder={t('auth:input_label_confirm_new_password')}
+          validateValue={validateConfirmPassword}
         />
       </View>
       <Button.Primary

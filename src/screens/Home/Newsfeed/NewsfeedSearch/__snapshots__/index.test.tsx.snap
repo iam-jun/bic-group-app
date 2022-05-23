@@ -44,12 +44,17 @@ exports[`NewsfeedSearch component should render search 1`] = `
           >
             <Text
               style={
-                Object {
-                  "color": "#2F3945",
-                  "flex": 1,
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 14,
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 14,
+                  },
+                  Object {},
+                  Object {
+                    "flex": 1,
+                  },
+                ]
               }
             >
               Recent Search
@@ -125,12 +130,17 @@ exports[`NewsfeedSearch component should render suggestion 1`] = `
           >
             <Text
               style={
-                Object {
-                  "color": "#2F3945",
-                  "flex": 1,
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 14,
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 14,
+                  },
+                  Object {},
+                  Object {
+                    "flex": 1,
+                  },
+                ]
               }
             >
               Recent Search

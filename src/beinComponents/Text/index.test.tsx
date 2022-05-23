@@ -5,6 +5,7 @@ import {useTheme} from 'react-native-paper';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
+import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);
 
@@ -35,7 +36,8 @@ describe('Text component', () => {
       </Text>,
     );
     const renderedComponent = getByTestId('text');
-    expect(renderedComponent.props.style.color).toBe('green');
+    const flattenedStyle = StyleSheet.flatten(renderedComponent.props.style);
+    expect(flattenedStyle.color).toBe('green');
   });
 
   it(`renders correctly variant`, () => {
@@ -45,7 +47,8 @@ describe('Text component', () => {
       </Text>,
     );
     const renderedComponent = rendered.getByTestId('text.h5');
-    expect(renderedComponent.props.style.fontSize).toBe(styles.h5.fontSize);
+    const flattenedStyle = StyleSheet.flatten(renderedComponent.props.style);
+    expect(flattenedStyle.fontSize).toBe(styles.h5.fontSize);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
@@ -54,7 +57,8 @@ describe('Text component', () => {
       <Text.H1 testID="text.h1">renders correctly children</Text.H1>,
     );
     const renderedComponent = rendered.getByTestId('text.h1');
-    expect(renderedComponent.props.style.fontSize).toBe(styles.h1.fontSize);
+    const flattenedStyle = StyleSheet.flatten(renderedComponent.props.style);
+    expect(flattenedStyle.fontSize).toBe(styles.h1.fontSize);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
@@ -63,7 +67,8 @@ describe('Text component', () => {
       <Text.H2 testID="text.h2">renders correctly children</Text.H2>,
     );
     const renderedComponent = rendered.getByTestId('text.h2');
-    expect(renderedComponent.props.style.fontSize).toBe(styles.h2.fontSize);
+    const flattenedStyle = StyleSheet.flatten(renderedComponent.props.style);
+    expect(flattenedStyle.fontSize).toBe(styles.h2.fontSize);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
@@ -72,7 +77,8 @@ describe('Text component', () => {
       <Text.H3 testID="text.h3">renders correctly children</Text.H3>,
     );
     const renderedComponent = rendered.getByTestId('text.h3');
-    expect(renderedComponent.props.style.fontSize).toBe(styles.h3.fontSize);
+    const flattenedStyle = StyleSheet.flatten(renderedComponent.props.style);
+    expect(flattenedStyle.fontSize).toBe(styles.h3.fontSize);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
@@ -81,7 +87,8 @@ describe('Text component', () => {
       <Text.H4 testID="text.h4">renders correctly children</Text.H4>,
     );
     const renderedComponent = rendered.getByTestId('text.h4');
-    expect(renderedComponent.props.style.fontSize).toBe(styles.h4.fontSize);
+    const flattenedStyle = StyleSheet.flatten(renderedComponent.props.style);
+    expect(flattenedStyle.fontSize).toBe(styles.h4.fontSize);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
@@ -90,7 +97,8 @@ describe('Text component', () => {
       <Text.H5 testID="text.h5">renders correctly children</Text.H5>,
     );
     const renderedComponent = rendered.getByTestId('text.h5');
-    expect(renderedComponent.props.style.fontSize).toBe(styles.h5.fontSize);
+    const flattenedStyle = StyleSheet.flatten(renderedComponent.props.style);
+    expect(flattenedStyle.fontSize).toBe(styles.h5.fontSize);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
@@ -99,7 +107,8 @@ describe('Text component', () => {
       <Text.H6 testID="text.h6">renders correctly children</Text.H6>,
     );
     const renderedComponent = rendered.getByTestId('text.h6');
-    expect(renderedComponent.props.style.fontSize).toBe(styles.h6.fontSize);
+    const flattenedStyle = StyleSheet.flatten(renderedComponent.props.style);
+    expect(flattenedStyle.fontSize).toBe(styles.h6.fontSize);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
@@ -108,7 +117,8 @@ describe('Text component', () => {
       <Text.H6S testID="text.h6s">renders correctly children</Text.H6S>,
     );
     const renderedComponent = rendered.getByTestId('text.h6s');
-    expect(renderedComponent.props.style.fontSize).toBe(styles.h6s.fontSize);
+    const flattenedStyle = StyleSheet.flatten(renderedComponent.props.style);
+    expect(flattenedStyle.fontSize).toBe(styles.h6s.fontSize);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 });

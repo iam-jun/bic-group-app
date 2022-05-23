@@ -9,6 +9,7 @@ import AccoutSettings from '~/screens/Menu/AccountSettings';
 import ComponentCollection from '~/screens/Menu/ComponentCollection';
 import SecurityLogin from '~/screens/Menu/AccountSettings/SecurityLogin';
 import ChangePassword from '~/screens/Menu/AccountSettings/SecurityLogin/ChangePassword';
+import GroupDetail from '~/screens/Groups/GroupDetail';
 
 export default {
   main: MainTabs,
@@ -22,4 +23,5 @@ export default {
   'component-collection': ComponentCollection,
   'security-and-login': SecurityLogin,
   'change-password': ChangePassword,
+  'group-detail': GroupDetail,
 };

@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import {StyleSheet, Platform} from 'react-native';
 import {useKeySelector} from '~/hooks/selector';
 
-import BannerMessage from './BannerMessage';
+import BannerMessage from '~/beinComponents/ToastMessage/BannerMessage';
 
 const InternetConnectionStatus = () => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');

@@ -9,14 +9,24 @@ describe('NotificationItem component', () => {
   const now = new Date();
   const threeWeekAgo = new Date(now.setDate(now.getDate() - 20)).toISOString();
   const baseProps = {
+    id: 1,
     activities: [SAMPLE_ACTIVITY_1] as any,
-    is_read: false,
+    action: 'attach',
+    description: '**Trần Nam Anh** created a post in **EVOL Community**',
+    actor: {
+      id: 2,
+      username: 'trannamanh',
+      fullname: 'Trần Nam Anh',
+      avatar:
+        'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
+    },
+    isRead: false,
     is_seen: false,
     isActive: false,
     verb: 'verb',
     actor_count: 1,
     activity_count: 1,
-    created_at: threeWeekAgo,
+    createdAt: threeWeekAgo,
     updated_at: threeWeekAgo,
   };
 
@@ -38,7 +48,7 @@ describe('NotificationItem component', () => {
 
     const props = {
       ...baseProps,
-      is_read: true,
+      isRead: true,
     };
     const wrapper = render(<NotificationItem {...props} />);
     const component = wrapper.queryByTestId('notification_item.indicator');

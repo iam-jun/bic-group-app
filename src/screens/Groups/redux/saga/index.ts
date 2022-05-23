@@ -6,7 +6,6 @@ import {
   IGroupGetJoinableMembers,
   IGroupGetMembers,
   IGroupImageUpload,
-  IGroupSetAdmin,
   IJoiningMember,
 } from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
@@ -14,13 +13,12 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import groupsTypes from '~/screens/Groups/redux/types';
 import * as modalActions from '~/store/modal/actions';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
-import {mapData, mapRequestMembers} from '../../helper/mapper';
+import {mapData, mapItems} from '../../helper/mapper';
 import appConfig from '~/configs/appConfig';
-import FileUploader from '~/services/fileUploader';
+import FileUploader, {IGetFile} from '~/services/fileUploader';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import errorCode from '~/constants/errorCode';
 import memberRequestStatus from '~/constants/memberRequestStatus';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 
@@ -32,11 +30,21 @@ import getGroupPosts from './getGroupPosts';
 import mergeExtraGroupPosts from './mergeExtraGroupPosts';
 import removeMember from './removeMember';
 import removeGroupAdmin from './removeGroupAdmin';
+import setGroupAdmin from './setGroupAdmin';
+import showError from '~/store/commonSaga/showError';
+import getJoinedCommunities from './getJoinedCommunities';
+import getCommunityGroups from './getCommunityGroups';
+import getYourGroupsTree from '~/screens/Groups/redux/saga/getYourGroupsTree';
+import getYourGroupsList from '~/screens/Groups/redux/saga/getYourGroupsList';
+import getCommunityDetail from './getCommunityDetail';
+import getDiscoverCommunities from '~/screens/Groups/redux/saga/getDiscoverCommunities';
+import getYourGroupsSearch from '~/screens/Groups/redux/saga/getYourGroupsSearch';
+import getCommunityMembers, {getSearchMembers} from './getCommunityMembers';
+import getDiscoverGroups from './getDiscoverGroups';
 
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* groupsSaga() {
-  yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
   yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
   yield takeLatest(groupsTypes.GET_GROUP_MEMBER, getGroupMember);
   yield takeLatest(groupsTypes.GET_GROUP_POSTS, getGroupPosts);
@@ -74,20 +82,19 @@ export default function* groupsSaga() {
     groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
     declineAllMemberRequests,
   );
-}
-
-function* getJoinedGroups({payload}: {type: string; payload?: any}) {
-  try {
-    // @ts-ignore
-    const response = yield groupsDataHelper.getMyGroups(payload?.params);
-    yield put(groupsActions.setJoinedGroups(response.data));
-  } catch (e) {
-    yield put(groupsActions.setJoinedGroups([]));
-    console.log(
-      `\x1b[31m🐣️ saga getJoinedGroups`,
-      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
-    );
-  }
+  yield takeLatest(groupsTypes.GET_YOUR_GROUPS_SEARCH, getYourGroupsSearch);
+  yield takeLatest(groupsTypes.GET_YOUR_GROUPS_TREE, getYourGroupsTree);
+  yield takeLatest(groupsTypes.GET_YOUR_GROUPS_LIST, getYourGroupsList);
+  yield takeLatest(groupsTypes.GET_JOINED_COMMUNITIES, getJoinedCommunities);
+  yield takeLatest(
+    groupsTypes.GET_DISCOVER_COMMUNITIES,
+    getDiscoverCommunities,
+  );
+  yield takeLatest(groupsTypes.GET_COMMUNITY_GROUPS, getCommunityGroups);
+  yield takeLatest(groupsTypes.GET_COMMUNITY_DETAIL, getCommunityDetail);
+  yield takeLatest(groupsTypes.GET_COMMUNITY_MEMBERS, getCommunityMembers);
+  yield takeLatest(groupsTypes.GET_SEARCH_MEMBERS, getSearchMembers);
+  yield takeLatest(groupsTypes.GET_DISCOVER_GROUPS, getDiscoverGroups);
 }
 
 function* getGroupSearch({payload}: {type: string; payload: string}) {
@@ -103,7 +110,7 @@ function* getGroupSearch({payload}: {type: string; payload: string}) {
         loading: false,
       }),
     );
-    if (response.code !== 200) {
+    if (response.code != 200 && response.code?.toUpperCase?.() !== 'OK') {
       console.log(`\x1b[31m🐣️ saga getGroupSearch error: ${response}\x1b[0m`);
     }
   } catch (err) {
@@ -168,14 +175,14 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
     const {file, id, fieldName, uploadType} = payload;
     yield updateLoadingImageState(fieldName, true);
 
-    const data: string = yield FileUploader.getInstance().upload({
+    const data: IGetFile = yield FileUploader.getInstance().upload({
       file,
       uploadType,
     });
 
     yield put(
       groupsActions.editGroupDetail({
-        data: {id, [fieldName]: data},
+        data: {id, [fieldName]: data.url},
         editFieldName:
           fieldName === 'icon'
             ? i18next.t('common:text_avatar')
@@ -282,6 +289,14 @@ function* cancelJoinGroup({
 
     yield groupsDataHelper.cancelJoinGroup(groupId);
 
+    // update button Join/Cancel/View status on Discover groups
+    yield put(
+      groupsActions.editDiscoverGroupItem({
+        id: groupId,
+        data: {join_status: 1},
+      }),
+    );
+
     yield put(groupsActions.getGroupDetail(groupId));
 
     const toastMessage: IToastMessage = {
@@ -307,34 +322,10 @@ function* cancelJoinGroup({
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
       yield put(groupsActions.getGroupDetail(payload.groupId, true));
-      yield put(groupsActions.getJoinedGroups());
 
       return;
     }
 
-    yield showError(err);
-  }
-}
-
-function* setGroupAdmin({payload}: {type: string; payload: IGroupSetAdmin}) {
-  try {
-    const {groupId, userIds} = payload;
-
-    yield groupsDataHelper.setGroupAdmin(groupId, userIds);
-
-    const toastMessage: IToastMessage = {
-      content: 'groups:modal_confirm_set_admin:success_message',
-      props: {
-        textProps: {useI18n: true},
-        type: 'success',
-      },
-    };
-    yield put(modalActions.showHideToastMessage(toastMessage));
-
-    // refresh group detail after adding new admins
-    yield refreshGroupMembers(groupId);
-  } catch (err) {
-    console.log('setGroupAdmin: ', err);
     yield showError(err);
   }
 }
@@ -362,7 +353,7 @@ function* getMemberRequests({
     });
 
     const requestIds = response?.data.map((item: IJoiningMember) => item.id);
-    const requestItems = mapRequestMembers(response?.data);
+    const requestItems = mapItems(response?.data);
 
     yield put(groupsActions.setMemberRequests({requestIds, requestItems}));
   } catch (err) {
@@ -497,22 +488,6 @@ function* declineAllMemberRequests({
   }
 }
 
-export function* showError(err: any) {
-  if (err.code === errorCode.systemIssue) return;
-
-  const toastMessage: IToastMessage = {
-    content:
-      err?.meta?.errors?.[0]?.message ||
-      err?.meta?.message ||
-      'common:text_error_message',
-    props: {
-      textProps: {useI18n: true},
-      type: 'error',
-    },
-  };
-  yield put(modalActions.showHideToastMessage(toastMessage));
-}
-
 function* updateLoadingImageState(
   fieldName: 'icon' | 'background_img_url',
   value: boolean,
@@ -528,10 +503,9 @@ export function* refreshGroupMembers(groupId: number) {
   yield put(groupsActions.clearGroupMembers());
   yield put(groupsActions.getGroupMembers({groupId}));
   yield put(groupsActions.getGroupDetail(groupId));
-  yield put(groupsActions.getJoinedGroups());
 }
 
-function* approvalError(groupId: number, code: number, fullName?: string) {
+function* approvalError(groupId: number, code: string, fullName?: string) {
   let errorMsg: string;
   if (code === approveDeclineCode.CANNOT_APPROVE) {
     errorMsg = i18next

@@ -2,13 +2,14 @@ import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import {
   IActivityData,
+  IParamDeleteReaction,
+  ICommentData,
   IParamGetDraftPosts,
   IParamGetPostAudiences,
   IParamGetPostDetail,
   IParamGetReactionDetail,
   IParamPutEditPost,
-  IParamPutReactionToComment,
-  IParamPutReactionToPost,
+  IParamPutReaction,
   IParamSearchMentionAudiences,
   IPostCreatePost,
   IRequestGetPostComment,
@@ -20,11 +21,13 @@ import {Platform} from 'react-native';
 
 const provider = ApiConfig.providers.beinFeed;
 
+const DEFAULT_LIMIT = 10;
+
 export const postApiConfig = {
   getPostDetail: (params: IParamGetPostDetail): HttpApiRequestConfig => {
     const {postId, ...restParams} = params;
     return {
-      url: `${provider.url}api/posts/${postId}`,
+      url: `${provider.url}api/v1/posts/${postId}`,
       method: 'get',
       provider,
       useRetry: true,
@@ -33,7 +36,7 @@ export const postApiConfig = {
   },
   getDraftPosts: (params: IParamGetDraftPosts): HttpApiRequestConfig => {
     return {
-      url: `${provider.url}api/feeds/draft`,
+      url: `${provider.url}api/v1/posts/draft`,
       method: 'get',
       provider,
       useRetry: true,
@@ -44,50 +47,47 @@ export const postApiConfig = {
     };
   },
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
-    url: `${provider.url}api/posts`,
+    url: `${provider.url}api/v1/posts`,
     method: 'post',
     provider,
     useRetry: true,
     data,
   }),
-  putReactionToPost: (
-    params: IParamPutReactionToPost,
-  ): HttpApiRequestConfig => {
-    const {postId, ...restParams} = params;
+  putReaction: (params: IParamPutReaction): HttpApiRequestConfig => {
     return {
-      url: `${provider.url}api/posts/${postId}/react`,
-      method: 'put',
+      url: `${provider.url}api/v1/reactions`,
+      method: 'post',
       provider,
       useRetry: true,
-      data: restParams,
+      data: params,
     };
   },
   putEditPost: (param: IParamPutEditPost): HttpApiRequestConfig => {
     const {postId, data} = param || {};
     return {
-      url: `${provider.url}api/posts/${postId}`,
+      url: `${provider.url}api/v1/posts/${postId}`,
       method: 'put',
       provider,
       useRetry: true,
       data,
     };
   },
-  putEditComment: (id: string, data: IActivityData): HttpApiRequestConfig => ({
-    url: `${provider.url}api/comments/${id}`,
+  putEditComment: (id: string, data: ICommentData): HttpApiRequestConfig => ({
+    url: `${provider.url}api/v1/comments/${id}`,
     method: 'put',
     provider,
     useRetry: true,
-    data: {data},
+    data,
   }),
   deletePost: (id: string, isDraftPost?: boolean): HttpApiRequestConfig => ({
-    url: `${provider.url}api/posts/${id}`,
+    url: `${provider.url}api/v1/posts/${id}`,
     method: 'delete',
     provider,
     useRetry: true,
     ...(isDraftPost ? {params: {is_draft: true}} : {}),
   }),
-  deleteComment: (id: string): HttpApiRequestConfig => ({
-    url: `${provider.url}api/comments/${id}`,
+  deleteComment: (id: number): HttpApiRequestConfig => ({
+    url: `${provider.url}api/v1/comments/${id}`,
     method: 'delete',
     provider,
     useRetry: true,
@@ -105,64 +105,55 @@ export const postApiConfig = {
     useRetry: true,
   }),
   getCommentsByPostId: (
-    data: IRequestGetPostComment,
+    params: IRequestGetPostComment,
   ): HttpApiRequestConfig => ({
-    url: `${provider.url}api/comments`,
+    url: `${provider.url}api/v1/comments`,
     method: 'get',
     provider,
     useRetry: true,
     params: {
-      post_id: data?.commentId ? undefined : data?.postId, //accept only one of post_id, reaction_id or user_id
-      reaction_id: data?.commentId,
-      kind: data?.kind || 'comment',
-      id_lt: data?.idLt,
-      recent_reactions_limit: data?.recentReactionsLimit || 10,
-      recent_child_reactions_limit: data?.recentChildReactionsLimit || 1,
+      order: params?.order || 'ASC',
+      limit: params?.limit || 10,
+      offset: params?.offset || 0,
+      idGTE: params?.idGTE,
+      idLTE: params?.idLTE,
+      idLT: params?.idLT,
+      idGT: params?.idGT,
+      postId: params?.postId,
+      parentId: params?.parentId,
+      childLimit: params?.childLimit || 1,
     },
   }),
   postNewComment: (params: IRequestPostComment): HttpApiRequestConfig => ({
-    url: `${provider.url}api/comments`,
+    url: `${provider.url}api/v1/comments`,
     method: 'post',
     provider,
     useRetry: true,
     data: {
-      post_id: params.postId,
-      data: params.data,
+      postId: params?.postId,
+      content: params?.data?.content,
+      media: params?.data?.media,
+      mentions: params?.data?.mentions,
     },
   }),
   postReplyComment: (params: IRequestReplyComment): HttpApiRequestConfig => {
-    const {parentCommentId, data} = params;
+    const {postId, parentCommentId, data} = params;
     return {
-      url: `${provider.url}api/comments/${parentCommentId}/reply`,
+      url: `${provider.url}api/v1/comments/${parentCommentId}/reply`,
       method: 'post',
       provider,
       useRetry: true,
       data: {
-        data,
+        postId,
+        ...data,
       },
     };
   },
-  putReactionToComment: (
-    params: IParamPutReactionToComment,
-  ): HttpApiRequestConfig => {
-    const {commentId, ...restParams} = params;
-    return {
-      url: `${provider.url}api/comments/${commentId}/react`,
-      method: 'put',
-      provider,
-      useRetry: true,
-      data: restParams,
-    };
-  },
-  postMarkAsRead: (postId: string, userId: number): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}reactions/mark-as-read`,
-    method: 'post',
-    provider: ApiConfig.providers.bein,
+  putMarkAsRead: (postId: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/posts/${postId}/mark-as-read`,
+    method: 'put',
+    provider: ApiConfig.providers.beinFeed,
     useRetry: true,
-    data: {
-      postId: postId,
-      userId: userId,
-    },
   }),
   getSearchAudiences: (key: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}post-audiences`,
@@ -190,58 +181,52 @@ export const postApiConfig = {
     params: {
       group_ids: params.group_ids,
       user_ids: params.user_ids,
-      key: params.key,
+      key: !!params.key ? params.key : undefined,
       offset: params.skip,
       limit: params.take,
     },
   }),
-  postReaction: (
-    referenceId: string,
-    referenceType: 'post' | 'comment',
-    data: ReactionType[],
-    userId: number,
-  ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}reactions/reacts`,
-    method: 'post',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
-    data: {
-      referenceId: referenceId,
-      referenceType: referenceType,
-      data: data,
-      userId: userId,
-    },
-  }),
-  deleteReaction: (id: string): HttpApiRequestConfig => ({
-    url: `${provider.url}api/reactions/${id}`,
+  deleteReaction: (data: IParamDeleteReaction): HttpApiRequestConfig => ({
+    url: `${provider.url}api/v1/reactions`,
     method: 'delete',
     provider,
     useRetry: true,
+    data: data,
   }),
   getReactionDetail: (
-    reactionType: ReactionType,
-    postId?: string,
-    commentId?: string,
-    idLessThan?: string,
-    limit?: number,
+    param: IParamGetReactionDetail,
   ): HttpApiRequestConfig => ({
-    url: `${provider.url}api/reactions/statistics`,
+    url: `${provider.url}api/v1/reactions`,
     method: 'get',
     provider: provider,
     useRetry: true,
     params: {
-      kind: reactionType,
-      reaction_id: commentId,
-      post_id: commentId ? undefined : postId,
-      id_lt: idLessThan,
-      limit: limit || 20,
+      reactionName: param.reactionName,
+      targetId: param.targetId,
+      target: param.target,
+      order: param?.order || 'DESC',
+      limit: param?.limit || 20,
+      latestId: param?.latestId,
     },
   }),
   postPublishDraftPost: (draftPostId: string): HttpApiRequestConfig => ({
-    url: `${provider.url}api/posts/${draftPostId}/publish`,
+    url: `${provider.url}api/v1/posts/${draftPostId}/publish`,
     method: 'put',
     provider: provider,
     useRetry: true,
+  }),
+  getCommentDetail: (
+    commentId: number,
+    params: IRequestGetPostComment,
+  ): HttpApiRequestConfig => ({
+    url: `${provider.url}api/v1/comments/${commentId}`,
+    method: 'get',
+    provider,
+    useRetry: true,
+    params: {
+      limit: params?.limit || 1,
+      offset: params?.offset || 0,
+    },
   }),
 };
 
@@ -260,10 +245,10 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  putReactionToPost: async (param: IParamPutReactionToPost) => {
+  putReaction: async (param: IParamPutReaction) => {
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.putReactionToPost(param),
+        postApiConfig.putReaction(param),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -316,7 +301,7 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  deleteComment: async (id: string) => {
+  deleteComment: async (id: number) => {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.deleteComment(id),
@@ -330,18 +315,16 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  getCommentsByPostId: async (data: IRequestGetPostComment) => {
-    if (!data?.postId) {
+  getCommentsByPostId: async (params: IRequestGetPostComment) => {
+    if (!params?.postId) {
       return Promise.reject('Post Id not found');
     }
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.getCommentsByPostId(data),
+        postApiConfig.getCommentsByPostId(params),
       );
-      if (response?.data?.data?.comment) {
-        return Promise.resolve({
-          results: response?.data?.data?.comment,
-        });
+      if (response?.data?.data?.list) {
+        return Promise.resolve(response?.data?.data);
       } else {
         return Promise.reject(response);
       }
@@ -377,24 +360,10 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  putReactionToComment: async (param: IParamPutReactionToComment) => {
+  putMarkAsRead: async (postId: number) => {
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.putReactionToComment(param),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  postMarkAsRead: async (postId: string, userId: number) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.postMarkAsRead(postId, userId),
+        postApiConfig.putMarkAsRead(postId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -433,29 +402,10 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  postReaction: async (
-    referenceId: string,
-    referenceType: 'post' | 'comment',
-    data: ReactionType[],
-    userId: number,
-  ) => {
+  deleteReaction: async (param: IParamDeleteReaction) => {
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.postReaction(referenceId, referenceType, data, userId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  deleteReaction: async (id: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.deleteReaction(id),
+        postApiConfig.deleteReaction(param),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -467,20 +417,14 @@ const postDataHelper = {
     }
   },
   getReactionDetail: async (param: IParamGetReactionDetail) => {
-    const {reactionType, postId, commentId, idLessThan, limit} = param;
-    if (reactionType && (postId || commentId)) {
+    const {reactionName, targetId, target} = param;
+    if (reactionName && targetId && target) {
       try {
         const response: any = await makeHttpRequest(
-          postApiConfig.getReactionDetail(
-            reactionType,
-            postId,
-            commentId,
-            idLessThan,
-            limit,
-          ),
+          postApiConfig.getReactionDetail(param),
         );
-        if (response && response?.data) {
-          return Promise.resolve(response?.data?.data);
+        if (response && response?.data?.data?.list) {
+          return Promise.resolve(response.data.data);
         } else {
           return Promise.reject(response);
         }
@@ -496,13 +440,7 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.getPostDetail({
-          enrich: true,
-          own_reactions: true,
-          with_own_reactions: true,
-          with_own_children: true,
-          with_recent_reactions: true,
-          with_reaction_counts: true,
-          recent_reactions_limit: Platform.OS === 'web' ? 5 : 10,
+          commentLimit: Platform.OS === 'web' ? 5 : 10,
           ...params,
         }),
       );
@@ -522,8 +460,10 @@ const postDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve({
-          data: response?.data?.data?.results || [],
-          canLoadMore: !!response?.data?.data?.next,
+          data: response?.data?.data?.list || [],
+          canLoadMore:
+            (param?.offset || 0) + (param?.limit || DEFAULT_LIMIT) <=
+            response?.data?.data?.meta?.total,
         });
       } else {
         return Promise.reject(response);
@@ -553,6 +493,23 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getCommentDetail: async (
+    commentId: number,
+    params: IRequestGetPostComment,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.getCommentDetail(commentId, params),
+      );
+      if (response && response?.data && response.data?.data) {
+        return Promise.resolve(response.data.data);
       } else {
         return Promise.reject(response);
       }

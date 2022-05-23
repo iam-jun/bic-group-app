@@ -312,13 +312,18 @@ exports[`Group Item component renders correctly 1`] = `
         <Text
           numberOfLines={2}
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
-              "maxWidth": 200,
-              "paddingTop": 2,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 14,
+              },
+              Object {},
+              Object {
+                "maxWidth": 200,
+                "paddingTop": 2,
+              },
+            ]
           }
         >
           EVOL Community
@@ -435,12 +440,19 @@ exports[`Group Item component renders correctly 1`] = `
           </View>
           <Text
             style={
-              Object {
-                "color": "#627286",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 14,
-                "marginHorizontal": 4,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-Regular",
+                  "fontSize": 14,
+                },
+                Object {
+                  "color": "#627286",
+                },
+                Object {
+                  "marginHorizontal": 4,
+                },
+              ]
             }
           >
             24
@@ -775,13 +787,18 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
         <Text
           numberOfLines={2}
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
-              "maxWidth": 200,
-              "paddingTop": 2,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 14,
+              },
+              Object {},
+              Object {
+                "maxWidth": 200,
+                "paddingTop": 2,
+              },
+            ]
           }
         >
           EVOL Community
@@ -898,12 +915,19 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
           </View>
           <Text
             style={
-              Object {
-                "color": "#627286",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 14,
-                "marginHorizontal": 4,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-Regular",
+                  "fontSize": 14,
+                },
+                Object {
+                  "color": "#627286",
+                },
+                Object {
+                  "marginHorizontal": 4,
+                },
+              ]
             }
           >
             24
@@ -1064,13 +1088,18 @@ exports[`Group Item component should render default prop 1`] = `
         <Text
           numberOfLines={2}
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
-              "maxWidth": 200,
-              "paddingTop": 2,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 14,
+              },
+              Object {},
+              Object {
+                "maxWidth": 200,
+                "paddingTop": 2,
+              },
+            ]
           }
         >
           EVOL Community
@@ -1187,12 +1216,19 @@ exports[`Group Item component should render default prop 1`] = `
           </View>
           <Text
             style={
-              Object {
-                "color": "#627286",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 14,
-                "marginHorizontal": 4,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-Regular",
+                  "fontSize": 14,
+                },
+                Object {
+                  "color": "#627286",
+                },
+                Object {
+                  "marginHorizontal": 4,
+                },
+              ]
             }
           >
             24
@@ -1516,13 +1552,18 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
         <Text
           numberOfLines={2}
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
-              "maxWidth": 200,
-              "paddingTop": 2,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 14,
+              },
+              Object {},
+              Object {
+                "maxWidth": 200,
+                "paddingTop": 2,
+              },
+            ]
           }
         >
           EVOL Community
@@ -1639,12 +1680,19 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
           </View>
           <Text
             style={
-              Object {
-                "color": "#627286",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 14,
-                "marginHorizontal": 4,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-Regular",
+                  "fontSize": 14,
+                },
+                Object {
+                  "color": "#627286",
+                },
+                Object {
+                  "marginHorizontal": 4,
+                },
+              ]
             }
           >
             24

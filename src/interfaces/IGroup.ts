@@ -61,17 +61,23 @@ export interface IGroupDetail {
 }
 
 export interface IParamGetGroupPosts {
-  group_id: string;
+  groupId: string;
+  order?: 'ASC' | 'DESC';
+  limit?: number;
+  offset?: number;
+  idGTE?: number;
+  idLTE?: number;
+  idGT?: number;
+  idLT?: number;
+  ranking?: 'IMPORTANT' | string;
+}
+
+export interface IParamGetCommunities {
+  key?: string;
   offset?: number;
   limit?: number;
-  recent_reactions_limit?: number;
-  enrich?: boolean;
-  own_reactions?: boolean;
-  with_own_reactions?: boolean;
-  with_own_children?: boolean;
-  with_recent_reactions?: boolean;
-  with_reaction_counts?: boolean;
-  ranking?: 'important_first' | string;
+  sort?: string;
+  preview_members?: boolean;
 }
 
 export interface IGroupImageUpload {
@@ -134,4 +140,28 @@ export interface IJoiningMember {
   group_id: number;
   created_at: string;
   user: IObject<any>;
+}
+
+export interface IGetYourGroupsSearch {
+  communityId: number;
+  key: string;
+}
+
+export interface IStateSearch {
+  showSearch?: boolean;
+  loading?: boolean;
+  key?: string;
+  list?: any[];
+}
+
+export interface IStateList {
+  loading?: boolean;
+  list?: any[];
+  canLoadMore?: boolean;
+}
+
+export interface IGetCommunityGroup {
+  preview_members?: boolean;
+  key?: string;
+  list_by?: 'tree' | 'flat';
 }

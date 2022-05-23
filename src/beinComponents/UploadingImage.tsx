@@ -60,10 +60,10 @@ const UploadingImage: FC<UploadingImageProps> = ({
       const param: IUploadParam = {
         uploadType,
         file,
-        onSuccess: uploadedUrl => {
+        onSuccess: (data: IGetFile) => {
           setError('');
-          _setImageUrl(uploadedUrl);
-          onUploadSuccess?.(uploadedUrl, fileName || '');
+          _setImageUrl(data.url || '');
+          onUploadSuccess?.(data.url || '', fileName || '');
         },
         onError: e => {
           setError(
@@ -79,9 +79,9 @@ const UploadingImage: FC<UploadingImageProps> = ({
     } else if (fileName) {
       const result: IGetFile = FileUploader.getInstance().getFile(
         fileName,
-        uploadedUrl => {
-          _setImageUrl(uploadedUrl);
-          onUploadSuccess?.(uploadedUrl, fileName || '');
+        (data: IGetFile) => {
+          _setImageUrl(data.url || '');
+          onUploadSuccess?.(data.url || '', fileName || '');
         },
         undefined,
         e => {

@@ -4,1339 +4,1697 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
 <View
   style={
     Object {
-      "backgroundColor": "#FFFFFF",
       "flex": 1,
     }
   }
-  testID="CreatePostScreen"
 >
   <View
-    testID="header"
-  >
-    <View
-      animatedStyle={
-        Object {
-          "value": Object {
-            "height": 60,
-          },
-        }
-      }
-      collapsable={false}
-      style={
-        Object {
-          "alignItems": "flex-end",
-          "backgroundColor": "#FFFFFF",
-          "borderBottomWidth": 0.5,
-          "borderColor": "#EAEDF2",
-          "elevation": 2,
-          "flexDirection": "row",
-          "height": 60,
-          "overflow": "hidden",
-          "paddingTop": 0,
-          "shadowColor": "#000",
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
-          },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
-        }
-      }
-      testID="header.content"
-    >
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#FFFFFF",
-            "flex": 1,
-            "flexDirection": "row",
-            "height": 60,
-            "overflow": "hidden",
-            "paddingLeft": 8,
-            "paddingRight": 8,
-          }
-        }
-      >
-        <View
-          accessibilityState={
-            Object {
-              "disabled": false,
-            }
-          }
-          accessible={true}
-          focusable={true}
-          hitSlop={
-            Object {
-              "bottom": 20,
-              "left": 20,
-              "right": 20,
-              "top": 20,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-          testID="header.back.button"
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                Object {
-                  "alignItems": "center",
-                  "height": 48,
-                  "justifyContent": "center",
-                  "padding": 12,
-                  "width": 48,
-                },
-                Object {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-          >
-            <View
-              style={
-                Array [
-                  undefined,
-                  undefined,
-                  undefined,
-                ]
-              }
-            >
-              <View
-                className="icon-wrapper"
-                testID="header.back"
-              >
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={24}
-                  bbWidth={24}
-                  fill="#2F3945"
-                  focusable={false}
-                  height={24}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {},
-                      Object {
-                        "flex": 0,
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={24}
-                >
-                  <RNSVGGroup
-                    fill={4281284933}
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  >
-                    <RNSVGPath
-                      d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View
-          style={
-            Object {
-              "flex": 1,
-              "height": "100%",
-              "justifyContent": "center",
-              "marginLeft": 16,
-              "paddingTop": 1.5,
-            }
-          }
-        >
-          <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
-            }
-            accessible={true}
-            focusable={false}
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-          >
-            <Text
-              numberOfLines={1}
-              style={
-                Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 16,
-                  "height": 24,
-                  "lineHeight": 24,
-                }
-              }
-              testID="header.text"
-            >
-              Create Post
-            </Text>
-          </View>
-        </View>
-        <View
-          accessibilityState={
-            Object {
-              "disabled": true,
-            }
-          }
-          accessible={true}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#D5DCE5",
-              "borderRadius": 6,
-              "borderWidth": 0,
-              "padding": 8,
-            }
-          }
-          testID="create_post.btn_post"
-        >
-          <View
-            style={
-              Object {
-                "alignItems": "center",
-                "flexDirection": "row",
-                "justifyContent": "center",
-              }
-            }
-            testID="button_wrapper.content"
-          >
-            <Text
-              style={
-                Object {
-                  "color": "#B2BDCD",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 16,
-                  "textAlign": "center",
-                }
-              }
-              testID="header.button.text"
-            >
-              Post
-            </Text>
-          </View>
-        </View>
-      </View>
-      <View
-        style={
-          Object {
-            "backgroundColor": "#FFFFFF",
-            "height": 0,
-            "position": "absolute",
-            "top": 0,
-            "width": "100%",
-          }
-        }
-      />
-    </View>
-  </View>
-  <View
-    accessible={true}
-    focusable={true}
-    onClick={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onStartShouldSetResponder={[Function]}
+    pointerEvents="box-none"
     style={
       Object {
-        "flex": 1,
-        "opacity": 1,
+        "zIndex": 1,
       }
     }
   >
-    <View>
+    <View
+      accessibilityElementsHidden={false}
+      importantForAccessibility="auto"
+      onLayout={[Function]}
+      pointerEvents="box-none"
+      style={null}
+    >
       <View
-        accessibilityState={
-          Object {
-            "disabled": false,
-          }
-        }
-        accessible={true}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
+        pointerEvents="box-none"
         style={
           Object {
-            "alignItems": "center",
-            "flexDirection": "row",
+            "bottom": 0,
+            "left": 0,
             "opacity": 1,
-            "paddingHorizontal": 24,
-            "paddingVertical": 8,
+            "position": "absolute",
+            "right": 0,
+            "top": 0,
+            "zIndex": 0,
           }
         }
-        testID="create_post_chosen_audiences"
       >
         <View
           style={
             Object {
-              "alignItems": "center",
+              "backgroundColor": "rgb(255, 255, 255)",
+              "borderBottomColor": "rgb(216, 216, 216)",
               "flex": 1,
-              "flexDirection": "row",
-            }
-          }
-        >
-          <Text
-            style={
-              Object {
-                "color": "#627286",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 14,
-                "marginRight": 4,
-                "marginVertical": 8,
-              }
-            }
-          >
-            Send to 
-            <Text
-              style={
-                Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 14,
-                }
-              }
-              testID="create_post_chosen_audiences.names"
-            >
-              EVOL Community
-            </Text>
-          </Text>
-        </View>
-        <View
-          accessibilityState={
-            Object {
-              "disabled": true,
-            }
-          }
-          accessible={true}
-          focusable={false}
-          hitSlop={
-            Object {
-              "bottom": 10,
-              "left": 10,
-              "right": 10,
-              "top": 10,
-            }
-          }
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "opacity": 1,
-            }
-          }
-        >
-          <View
-            style={
-              Array [
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                },
-                undefined,
-                Object {
-                  "backgroundColor": undefined,
-                },
-              ]
-            }
-          >
-            <View
-              style={
-                Array [
-                  undefined,
-                  undefined,
-                  undefined,
-                ]
-              }
-            >
-              <View
-                className="icon-wrapper"
-              >
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={20}
-                  bbWidth={20}
-                  fill="#2F3945"
-                  focusable={false}
-                  height={20}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {},
-                      Object {
-                        "flex": 0,
-                        "height": 20,
-                        "width": 20,
-                      },
-                    ]
-                  }
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={20}
-                >
-                  <RNSVGGroup
-                    fill={4281284933}
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  >
-                    <RNSVGPath
-                      d="M15.54,11.29,9.88,5.64a1,1,0,0,0-1.42,0,1,1,0,0,0,0,1.41l4.95,5L8.46,17a1,1,0,0,0,0,1.41,1,1,0,0,0,.71.3,1,1,0,0,0,.71-.3l5.66-5.65A1,1,0,0,0,15.54,11.29Z"
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
-            </View>
-          </View>
-        </View>
-      </View>
-      <View
-        style={
-          Array [
-            Object {
-              "alignSelf": "stretch",
-              "backgroundColor": "#EAEDF2",
-              "height": 1,
-              "marginHorizontal": 0,
-              "width": undefined,
-            },
-            Object {},
-          ]
-        }
-        testID="divider"
-      />
-    </View>
-    <RCTScrollView
-      keyboardShouldPersistTaps="always"
-    >
-      <View>
-        <View
-          style={
-            Object {
-              "flex": 1,
-            }
-          }
-        >
-          <View
-            style={
-              Object {
-                "flex": 1,
-              }
-            }
-          >
-            <View
-              onLayout={[Function]}
-              style={
-                Array [
-                  Object {
-                    "zIndex": 1,
-                  },
-                  Object {
-                    "flex": 1,
-                  },
-                ]
-              }
-              testID="_mention_input"
-            >
-              <TextInput
-                editable={true}
-                keyboardType="default"
-                multiline={true}
-                onChangeText={[Function]}
-                onContentSizeChange={[Function]}
-                onKeyPress={[Function]}
-                onSelectionChange={[Function]}
-                onSubmitEditing={[Function]}
-                placeholder="Write your post here..."
-                placeholderTextColor="#627286"
-                selectionColor="#627286"
-                style={
-                  Object {
-                    "color": "#2F3945",
-                    "flex": 1,
-                    "fontFamily": "OpenSans-Regular",
-                    "fontSize": 16,
-                    "margin": 12,
-                    "padding": 0,
-                  }
-                }
-                testID="_mention_input.input"
-                textAlignVertical="top"
-                textInputRef={
-                  Object {
-                    "current": undefined,
-                  }
-                }
-                value=""
-              />
-            </View>
-            <View
-              style={Object {}}
-            />
-            <View
-              onLayout={[Function]}
-            />
-          </View>
-        </View>
-      </View>
-    </RCTScrollView>
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "flexDirection": "row",
-          "flexWrap": "wrap",
-          "justifyContent": "flex-end",
-          "padding": 16,
-        }
-      }
-    >
-      <View
-        accessible={true}
-        focusable={true}
-        onClick={[Function]}
-        onResponderGrant={[Function]}
-        onResponderMove={[Function]}
-        onResponderRelease={[Function]}
-        onResponderTerminate={[Function]}
-        onResponderTerminationRequest={[Function]}
-        onStartShouldSetResponder={[Function]}
-        style={
-          Object {
-            "alignItems": "center",
-            "backgroundColor": "#EAEDF2",
-            "borderRadius": 6,
-            "padding": 8,
-          }
-        }
-        testID="create_post.btn_post_settings"
-      >
-        <View
-          style={
-            Object {
-              "alignItems": "center",
-              "flexDirection": "row",
-              "justifyContent": "center",
-            }
-          }
-          testID="button_wrapper.content"
-        >
-          <View
-            accessibilityState={
-              Object {
-                "disabled": true,
-              }
-            }
-            accessible={true}
-            focusable={false}
-            hitSlop={
-              Object {
-                "bottom": 10,
-                "left": 10,
-                "right": 10,
-                "top": 10,
-              }
-            }
-            onClick={[Function]}
-            onResponderGrant={[Function]}
-            onResponderMove={[Function]}
-            onResponderRelease={[Function]}
-            onResponderTerminate={[Function]}
-            onResponderTerminationRequest={[Function]}
-            onStartShouldSetResponder={[Function]}
-            style={
-              Object {
-                "opacity": 1,
-              }
-            }
-          >
-            <View
-              style={
-                Array [
-                  Object {
-                    "alignItems": "center",
-                    "flexDirection": "row",
-                  },
-                  Object {
-                    "marginHorizontal": 8,
-                  },
-                  Object {
-                    "backgroundColor": undefined,
-                  },
-                ]
-              }
-            >
-              <View
-                style={
-                  Array [
-                    undefined,
-                    undefined,
-                    undefined,
-                  ]
-                }
-              >
-                <View
-                  className="icon-wrapper"
-                  testID="button_wrapper.icon"
-                >
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={20}
-                    bbWidth={20}
-                    fill="#2F3945"
-                    focusable={false}
-                    height={20}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 20,
-                          "width": 20,
-                        },
-                      ]
-                    }
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={20}
-                  >
-                    <RNSVGGroup
-                      fill={4281284933}
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    >
-                      <RNSVGPath
-                        d="M20,8.18V3a1,1,0,0,0-2,0V8.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V13.82a3,3,0,0,0,0-5.64ZM19,12a1,1,0,1,1,1-1A1,1,0,0,1,19,12Zm-6,2.18V3a1,1,0,0,0-2,0V14.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V19.82a3,3,0,0,0,0-5.64ZM12,18a1,1,0,1,1,1-1A1,1,0,0,1,12,18ZM6,6.18V3A1,1,0,0,0,4,3V6.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V11.82A3,3,0,0,0,6,6.18ZM5,10A1,1,0,1,1,6,9,1,1,0,0,1,5,10Z"
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
-                </View>
-              </View>
-            </View>
-          </View>
-          <Text
-            style={
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
-              }
-            }
-          >
-            Post Settings
-          </Text>
-        </View>
-      </View>
-    </View>
-    <View
-      className="post-toolbar-container"
-    >
-      <View
-        collapsable={false}
-        forwardedRef={[Function]}
-        onGestureHandlerEvent={[Function]}
-        onGestureHandlerStateChange={[Function]}
-        style={Object {}}
-      >
-        <View
-          accessibilityState={
-            Object {
-              "disabled": false,
-            }
-          }
-          accessible={true}
-          focusable={true}
-          onClick={[Function]}
-          onResponderGrant={[Function]}
-          onResponderMove={[Function]}
-          onResponderRelease={[Function]}
-          onResponderTerminate={[Function]}
-          onResponderTerminationRequest={[Function]}
-          onStartShouldSetResponder={[Function]}
-          style={
-            Object {
-              "alignItems": "center",
-              "backgroundColor": "#FFFFFF",
-              "borderColor": "#EAEDF2",
-              "borderTopWidth": 1,
-              "flexDirection": "row",
-              "height": 52,
-              "opacity": 1,
-              "paddingHorizontal": 24,
-            }
-          }
-          testID="post_toolbar"
-        >
-          <Text
-            style={
-              Object {
-                "color": "#2F3945",
-                "flex": 1,
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 12,
-              }
-            }
-          >
-            Add to your post
-          </Text>
-          <View
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#F8F5FF",
-                "borderRadius": 6,
-                "height": 36,
-                "justifyContent": "center",
-                "marginLeft": 8,
-                "width": 36,
-              }
-            }
-          >
-            <View
-              accessibilityState={
-                Object {
-                  "disabled": true,
-                }
-              }
-              accessible={true}
-              focusable={false}
-              hitSlop={
-                Object {
-                  "bottom": 10,
-                  "left": 10,
-                  "right": 10,
-                  "top": 10,
-                }
-              }
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "opacity": 1,
-                }
-              }
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                    },
-                    undefined,
-                    Object {
-                      "backgroundColor": undefined,
-                    },
-                  ]
-                }
-              >
-                <View
-                  style={
-                    Array [
-                      undefined,
-                      undefined,
-                      undefined,
-                    ]
-                  }
-                >
-                  <View
-                    className="icon-wrapper"
-                  >
-                    <RNSVGSvgView
-                      align="xMidYMid"
-                      bbHeight={16}
-                      bbWidth={16}
-                      fill="#421187"
-                      focusable={false}
-                      height={16}
-                      meetOrSlice={0}
-                      minX={0}
-                      minY={0}
-                      style={
-                        Array [
-                          Object {
-                            "backgroundColor": "transparent",
-                            "borderWidth": 0,
-                          },
-                          Object {},
-                          Object {
-                            "flex": 0,
-                            "height": 16,
-                            "width": 16,
-                          },
-                        ]
-                      }
-                      vbHeight={24}
-                      vbWidth={24}
-                      width={16}
-                    >
-                      <RNSVGGroup
-                        fill={4282519943}
-                        propList={
-                          Array [
-                            "fill",
-                          ]
-                        }
-                      >
-                        <RNSVGPath
-                          d="M19,10a1,1,0,0,0-1,1v3.38L16.52,12.9a2.79,2.79,0,0,0-3.93,0l-.7.71L9.41,11.12a2.79,2.79,0,0,0-3.93,0L4,12.61V7A1,1,0,0,1,5,6h8a1,1,0,0,0,0-2H5A3,3,0,0,0,2,7V19.22A2.79,2.79,0,0,0,4.78,22H17.22a2.88,2.88,0,0,0,.8-.12h0a2.74,2.74,0,0,0,2-2.65V11A1,1,0,0,0,19,10ZM5,20a1,1,0,0,1-1-1V15.43l2.89-2.89a.78.78,0,0,1,1.1,0L15.46,20Zm13-1a1,1,0,0,1-.18.54L13.3,15l.71-.7a.77.77,0,0,1,1.1,0L18,17.21ZM21,4H20V3a1,1,0,0,0-2,0V4H17a1,1,0,0,0,0,2h1V7a1,1,0,0,0,2,0V6h1a1,1,0,0,0,0-2Z"
-                        />
-                      </RNSVGGroup>
-                    </RNSVGSvgView>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-          <View
-            style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#F8F5FF",
-                "borderRadius": 6,
-                "height": 36,
-                "justifyContent": "center",
-                "marginLeft": 8,
-                "width": 36,
-              }
-            }
-          >
-            <View
-              accessibilityState={
-                Object {
-                  "disabled": true,
-                }
-              }
-              accessible={true}
-              focusable={false}
-              hitSlop={
-                Object {
-                  "bottom": 10,
-                  "left": 10,
-                  "right": 10,
-                  "top": 10,
-                }
-              }
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
-              style={
-                Object {
-                  "opacity": 1,
-                }
-              }
-            >
-              <View
-                style={
-                  Array [
-                    Object {
-                      "alignItems": "center",
-                      "flexDirection": "row",
-                    },
-                    undefined,
-                    Object {
-                      "backgroundColor": undefined,
-                    },
-                  ]
-                }
-              >
-                <View
-                  style={
-                    Array [
-                      undefined,
-                      undefined,
-                      undefined,
-                    ]
-                  }
-                >
-                  <View
-                    className="icon-wrapper"
-                  >
-                    <RNSVGSvgView
-                      align="xMidYMid"
-                      bbHeight={16}
-                      bbWidth={16}
-                      fill="#421187"
-                      focusable={false}
-                      height={16}
-                      meetOrSlice={0}
-                      minX={0}
-                      minY={0}
-                      style={
-                        Array [
-                          Object {
-                            "backgroundColor": "transparent",
-                            "borderWidth": 0,
-                          },
-                          Object {},
-                          Object {
-                            "flex": 0,
-                            "height": 16,
-                            "width": 16,
-                          },
-                        ]
-                      }
-                      vbHeight={24}
-                      vbWidth={24}
-                      width={16}
-                    >
-                      <RNSVGGroup
-                        fill={4282519943}
-                        propList={
-                          Array [
-                            "fill",
-                          ]
-                        }
-                      >
-                        <RNSVGPath
-                          d="M10,17.55,8.23,19.27a2.47,2.47,0,0,1-3.5-3.5l4.54-4.55a2.46,2.46,0,0,1,3.39-.09l.12.1a1,1,0,0,0,1.4-1.43A2.75,2.75,0,0,0,14,9.59a4.46,4.46,0,0,0-6.09.22L3.31,14.36a4.48,4.48,0,0,0,6.33,6.33L11.37,19A1,1,0,0,0,10,17.55ZM20.69,3.31a4.49,4.49,0,0,0-6.33,0L12.63,5A1,1,0,0,0,14,6.45l1.73-1.72a2.47,2.47,0,0,1,3.5,3.5l-4.54,4.55a2.46,2.46,0,0,1-3.39.09l-.12-.1a1,1,0,0,0-1.4,1.43,2.75,2.75,0,0,0,.23.21,4.47,4.47,0,0,0,6.09-.22l4.55-4.55A4.49,4.49,0,0,0,20.69,3.31Z"
-                        />
-                      </RNSVGGroup>
-                    </RNSVGSvgView>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-        </View>
-        <View
-          style={
-            Object {
-              "height": 0,
-              "width": "100%",
+              "shadowColor": "rgb(216, 216, 216)",
+              "shadowOffset": Object {
+                "height": 0.5,
+                "width": 0,
+              },
+              "shadowOpacity": 0.85,
+              "shadowRadius": 0,
             }
           }
         />
       </View>
-      <View>
+      <View
+        pointerEvents="box-none"
+        style={
+          Object {
+            "height": 44,
+            "maxHeight": undefined,
+            "minHeight": undefined,
+            "opacity": undefined,
+            "transform": undefined,
+          }
+        }
+      >
         <View
+          pointerEvents="none"
           style={
             Object {
-              "paddingBottom": 12,
-              "paddingHorizontal": 12,
+              "height": 0,
+            }
+          }
+        />
+        <View
+          pointerEvents="box-none"
+          style={
+            Object {
+              "alignItems": "center",
+              "flex": 1,
+              "flexDirection": "row",
+              "justifyContent": "center",
             }
           }
         >
           <View
-            className="button"
-          >
-            <View
-              accessibilityState={
-                Object {
-                  "disabled": false,
-                }
+            pointerEvents="box-none"
+            style={
+              Object {
+                "marginHorizontal": 16,
+                "opacity": 1,
               }
-              accessible={true}
-              focusable={true}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
+            }
+          >
+            <Text
+              accessibilityRole="header"
+              aria-level="1"
+              collapsable={false}
+              nativeID="animatedComponent"
+              numberOfLines={1}
+              onLayout={[Function]}
               style={
                 Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "height": 48,
-                  "opacity": 1,
-                  "paddingHorizontal": 12,
+                  "color": "rgb(28, 28, 30)",
+                  "fontSize": 17,
+                  "fontWeight": "600",
                 }
               }
-              testID="post_toolbar.add_photo"
             >
-              <View
-                accessibilityState={
-                  Object {
-                    "disabled": true,
-                  }
-                }
-                accessible={true}
-                focusable={false}
-                hitSlop={
-                  Object {
-                    "bottom": 10,
-                    "left": 10,
-                    "right": 10,
-                    "top": 10,
-                  }
-                }
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
-                style={
-                  Object {
-                    "opacity": 1,
-                  }
-                }
-              >
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                      },
-                      Object {
-                        "marginRight": 12,
-                      },
-                      Object {
-                        "backgroundColor": undefined,
-                      },
-                    ]
-                  }
-                >
-                  <View
-                    style={
-                      Array [
-                        undefined,
-                        undefined,
-                        undefined,
-                      ]
-                    }
-                  >
-                    <View
-                      className="icon-wrapper"
-                    >
-                      <RNSVGSvgView
-                        align="xMidYMid"
-                        bbHeight={20}
-                        bbWidth={20}
-                        fill="#421187"
-                        focusable={false}
-                        height={20}
-                        meetOrSlice={0}
-                        minX={0}
-                        minY={0}
-                        style={
-                          Array [
-                            Object {
-                              "backgroundColor": "transparent",
-                              "borderWidth": 0,
-                            },
-                            Object {},
-                            Object {
-                              "flex": 0,
-                              "height": 20,
-                              "width": 20,
-                            },
-                          ]
-                        }
-                        vbHeight={24}
-                        vbWidth={24}
-                        width={20}
-                      >
-                        <RNSVGGroup
-                          fill={4282519943}
-                          propList={
-                            Array [
-                              "fill",
-                            ]
-                          }
-                        >
-                          <RNSVGPath
-                            d="M19,10a1,1,0,0,0-1,1v3.38L16.52,12.9a2.79,2.79,0,0,0-3.93,0l-.7.71L9.41,11.12a2.79,2.79,0,0,0-3.93,0L4,12.61V7A1,1,0,0,1,5,6h8a1,1,0,0,0,0-2H5A3,3,0,0,0,2,7V19.22A2.79,2.79,0,0,0,4.78,22H17.22a2.88,2.88,0,0,0,.8-.12h0a2.74,2.74,0,0,0,2-2.65V11A1,1,0,0,0,19,10ZM5,20a1,1,0,0,1-1-1V15.43l2.89-2.89a.78.78,0,0,1,1.1,0L15.46,20Zm13-1a1,1,0,0,1-.18.54L13.3,15l.71-.7a.77.77,0,0,1,1.1,0L18,17.21ZM21,4H20V3a1,1,0,0,0-2,0V4H17a1,1,0,0,0,0,2h1V7a1,1,0,0,0,2,0V6h1a1,1,0,0,0,0-2Z"
-                          />
-                        </RNSVGGroup>
-                      </RNSVGSvgView>
-                    </View>
-                  </View>
-                </View>
-              </View>
-              <View
-                style={
-                  Object {
-                    "flex": 1,
-                  }
-                }
-              >
-                <Text
-                  numberOfLines={2}
-                  style={
-                    Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 14,
-                    }
-                  }
-                >
-                  Add Photo
-                </Text>
-              </View>
-            </View>
+              MockedScreen
+            </Text>
           </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <RNSScreenContainer
+    onLayout={[Function]}
+    style={
+      Object {
+        "flex": 1,
+      }
+    }
+  >
+    <RNSScreen
+      activityState={2}
+      forwardedRef={[Function]}
+      pointerEvents="box-none"
+      style={
+        Object {
+          "bottom": 0,
+          "left": 0,
+          "position": "absolute",
+          "right": 0,
+          "top": 0,
+        }
+      }
+    >
+      <View
+        collapsable={false}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+      />
+      <View
+        accessibilityElementsHidden={false}
+        closing={false}
+        gestureVelocityImpact={0.3}
+        importantForAccessibility="auto"
+        onClose={[Function]}
+        onGestureBegin={[Function]}
+        onGestureCanceled={[Function]}
+        onGestureEnd={[Function]}
+        onOpen={[Function]}
+        onTransition={[Function]}
+        pointerEvents="box-none"
+        style={
+          Array [
+            Object {
+              "overflow": undefined,
+            },
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "position": "absolute",
+              "right": 0,
+              "top": 0,
+            },
+          ]
+        }
+        transitionSpec={
+          Object {
+            "close": Object {
+              "animation": "spring",
+              "config": Object {
+                "damping": 500,
+                "mass": 3,
+                "overshootClamping": true,
+                "restDisplacementThreshold": 10,
+                "restSpeedThreshold": 10,
+                "stiffness": 1000,
+              },
+            },
+            "open": Object {
+              "animation": "spring",
+              "config": Object {
+                "damping": 500,
+                "mass": 3,
+                "overshootClamping": true,
+                "restDisplacementThreshold": 10,
+                "restSpeedThreshold": 10,
+                "stiffness": 1000,
+              },
+            },
+          }
+        }
+      >
+        <View
+          collapsable={false}
+          nativeID="animatedComponent"
+          needsOffscreenAlphaCompositing={false}
+          pointerEvents="box-none"
+          style={
+            Object {
+              "flex": 1,
+            }
+          }
+        >
           <View
-            className=""
+            collapsable={false}
+            forwardedRef={[Function]}
+            onGestureHandlerEvent={[Function]}
+            onGestureHandlerStateChange={[Function]}
+            style={
+              Object {
+                "flex": 1,
+                "transform": Array [
+                  Object {
+                    "translateX": 0,
+                  },
+                  Object {
+                    "translateX": 0,
+                  },
+                ],
+              }
+            }
           >
             <View
-              accessibilityState={
-                Object {
-                  "disabled": true,
-                }
-              }
-              accessible={true}
-              focusable={false}
-              onClick={[Function]}
-              onResponderGrant={[Function]}
-              onResponderMove={[Function]}
-              onResponderRelease={[Function]}
-              onResponderTerminate={[Function]}
-              onResponderTerminationRequest={[Function]}
-              onStartShouldSetResponder={[Function]}
+              pointerEvents="none"
               style={
                 Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "height": 48,
-                  "opacity": 1,
-                  "paddingHorizontal": 12,
+                  "backgroundColor": "rgb(242, 242, 242)",
+                  "bottom": 0,
+                  "left": 0,
+                  "position": "absolute",
+                  "shadowColor": "#000",
+                  "shadowOffset": Object {
+                    "height": 1,
+                    "width": -1,
+                  },
+                  "shadowOpacity": 0.3,
+                  "shadowRadius": 5,
+                  "top": 0,
+                  "width": 3,
                 }
               }
-              testID="post_toolbar.add_file"
+            />
+            <View
+              style={
+                Array [
+                  Object {
+                    "flex": 1,
+                    "overflow": "hidden",
+                  },
+                  Array [
+                    Object {
+                      "backgroundColor": "rgb(242, 242, 242)",
+                    },
+                    undefined,
+                  ],
+                ]
+              }
             >
               <View
-                accessibilityState={
-                  Object {
-                    "disabled": true,
-                  }
-                }
-                accessible={true}
-                focusable={false}
-                hitSlop={
-                  Object {
-                    "bottom": 10,
-                    "left": 10,
-                    "right": 10,
-                    "top": 10,
-                  }
-                }
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "opacity": 1,
+                    "flex": 1,
+                    "flexDirection": "column-reverse",
                   }
                 }
               >
                 <View
                   style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                      },
-                      Object {
-                        "marginRight": 12,
-                      },
-                      Object {
-                        "backgroundColor": undefined,
-                      },
-                    ]
+                    Object {
+                      "flex": 1,
+                    }
                   }
                 >
                   <View
                     style={
-                      Array [
-                        undefined,
-                        undefined,
-                        undefined,
-                      ]
+                      Object {
+                        "backgroundColor": "#FFFFFF",
+                        "flex": 1,
+                      }
                     }
+                    testID="CreatePostScreen"
                   >
                     <View
-                      className="icon-wrapper"
+                      testID="header"
                     >
-                      <RNSVGSvgView
-                        align="xMidYMid"
-                        bbHeight={20}
-                        bbWidth={20}
-                        fill="#421187"
-                        focusable={false}
-                        height={20}
-                        meetOrSlice={0}
-                        minX={0}
-                        minY={0}
-                        style={
-                          Array [
-                            Object {
-                              "backgroundColor": "transparent",
-                              "borderWidth": 0,
+                      <View
+                        animatedStyle={
+                          Object {
+                            "value": Object {
+                              "height": 60,
                             },
-                            Object {},
-                            Object {
-                              "flex": 0,
-                              "height": 20,
-                              "width": 20,
-                            },
-                          ]
+                          }
                         }
-                        vbHeight={24}
-                        vbWidth={24}
-                        width={20}
+                        collapsable={false}
+                        style={
+                          Object {
+                            "alignItems": "flex-end",
+                            "backgroundColor": "#FFFFFF",
+                            "borderBottomWidth": 0.5,
+                            "borderColor": "#EAEDF2",
+                            "elevation": 2,
+                            "flexDirection": "row",
+                            "height": 60,
+                            "overflow": "hidden",
+                            "paddingTop": 0,
+                            "shadowColor": "#000",
+                            "shadowOffset": Object {
+                              "height": 1,
+                              "width": 0,
+                            },
+                            "shadowOpacity": 0.1,
+                            "shadowRadius": 1,
+                          }
+                        }
+                        testID="header.content"
                       >
-                        <RNSVGGroup
-                          fill={4282519943}
-                          propList={
-                            Array [
-                              "fill",
-                            ]
+                        <View
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "backgroundColor": "#FFFFFF",
+                              "flex": 1,
+                              "flexDirection": "row",
+                              "height": 60,
+                              "overflow": "hidden",
+                              "paddingLeft": 8,
+                              "paddingRight": 8,
+                            }
                           }
                         >
-                          <RNSVGPath
-                            d="M10,17.55,8.23,19.27a2.47,2.47,0,0,1-3.5-3.5l4.54-4.55a2.46,2.46,0,0,1,3.39-.09l.12.1a1,1,0,0,0,1.4-1.43A2.75,2.75,0,0,0,14,9.59a4.46,4.46,0,0,0-6.09.22L3.31,14.36a4.48,4.48,0,0,0,6.33,6.33L11.37,19A1,1,0,0,0,10,17.55ZM20.69,3.31a4.49,4.49,0,0,0-6.33,0L12.63,5A1,1,0,0,0,14,6.45l1.73-1.72a2.47,2.47,0,0,1,3.5,3.5l-4.54,4.55a2.46,2.46,0,0,1-3.39.09l-.12-.1a1,1,0,0,0-1.4,1.43,2.75,2.75,0,0,0,.23.21,4.47,4.47,0,0,0,6.09-.22l4.55-4.55A4.49,4.49,0,0,0,20.69,3.31Z"
+                          <View
+                            accessibilityState={
+                              Object {
+                                "disabled": false,
+                              }
+                            }
+                            accessible={true}
+                            focusable={true}
+                            hitSlop={
+                              Object {
+                                "bottom": 20,
+                                "left": 20,
+                                "right": 20,
+                                "top": 20,
+                              }
+                            }
+                            onClick={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
+                            style={
+                              Object {
+                                "opacity": 1,
+                              }
+                            }
+                            testID="header.back.button"
+                          >
+                            <View
+                              style={
+                                Array [
+                                  Object {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                  },
+                                  Object {
+                                    "alignItems": "center",
+                                    "height": 48,
+                                    "justifyContent": "center",
+                                    "padding": 12,
+                                    "width": 48,
+                                  },
+                                  Object {
+                                    "backgroundColor": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              <View
+                                style={
+                                  Array [
+                                    undefined,
+                                    undefined,
+                                    undefined,
+                                  ]
+                                }
+                              >
+                                <View
+                                  className="icon-wrapper"
+                                  testID="header.back"
+                                >
+                                  <RNSVGSvgView
+                                    align="xMidYMid"
+                                    bbHeight={24}
+                                    bbWidth={24}
+                                    fill="#2F3945"
+                                    focusable={false}
+                                    height={24}
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
+                                    style={
+                                      Array [
+                                        Object {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        Object {},
+                                        Object {
+                                          "flex": 0,
+                                          "height": 24,
+                                          "width": 24,
+                                        },
+                                      ]
+                                    }
+                                    vbHeight={24}
+                                    vbWidth={24}
+                                    width={24}
+                                  >
+                                    <RNSVGGroup
+                                      fill={4281284933}
+                                      propList={
+                                        Array [
+                                          "fill",
+                                        ]
+                                      }
+                                    >
+                                      <RNSVGPath
+                                        d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                                      />
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                          <View
+                            animatedStyle={
+                              Object {
+                                "value": Object {},
+                              }
+                            }
+                            collapsable={false}
+                            style={
+                              Object {
+                                "flex": 1,
+                                "height": "100%",
+                                "justifyContent": "center",
+                                "marginLeft": 16,
+                                "paddingTop": 1.5,
+                              }
+                            }
+                          >
+                            <View
+                              accessibilityState={
+                                Object {
+                                  "disabled": true,
+                                }
+                              }
+                              accessible={true}
+                              focusable={false}
+                              onClick={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
+                              style={
+                                Object {
+                                  "opacity": 1,
+                                }
+                              }
+                            >
+                              <Text
+                                numberOfLines={1}
+                                style={
+                                  Array [
+                                    Object {
+                                      "color": "#2F3945",
+                                      "fontFamily": "OpenSans-SemiBold",
+                                      "fontSize": 16,
+                                    },
+                                    Object {},
+                                    Object {
+                                      "height": 24,
+                                      "lineHeight": 24,
+                                    },
+                                  ]
+                                }
+                                testID="header.text"
+                              >
+                                Create Post
+                              </Text>
+                            </View>
+                          </View>
+                          <View
+                            accessibilityState={
+                              Object {
+                                "disabled": true,
+                              }
+                            }
+                            accessible={true}
+                            focusable={true}
+                            onClick={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
+                            style={
+                              Object {
+                                "alignItems": "center",
+                                "backgroundColor": "#D5DCE5",
+                                "borderRadius": 6,
+                                "borderWidth": 0,
+                                "padding": 8,
+                              }
+                            }
+                            testID="create_post.btn_post"
+                          >
+                            <View
+                              style={
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "center",
+                                }
+                              }
+                              testID="button_wrapper.content"
+                            >
+                              <Text
+                                style={
+                                  Array [
+                                    Object {
+                                      "color": "#2F3945",
+                                      "fontFamily": "OpenSans-SemiBold",
+                                      "fontSize": 16,
+                                    },
+                                    Object {
+                                      "color": "#B2BDCD",
+                                    },
+                                    Object {
+                                      "textAlign": "center",
+                                    },
+                                  ]
+                                }
+                                testID="header.button.text"
+                              >
+                                Post
+                              </Text>
+                            </View>
+                          </View>
+                        </View>
+                        <View
+                          style={
+                            Object {
+                              "backgroundColor": "#FFFFFF",
+                              "height": 0,
+                              "position": "absolute",
+                              "top": 0,
+                              "width": "100%",
+                            }
+                          }
+                        />
+                      </View>
+                    </View>
+                    <View
+                      accessible={true}
+                      focusable={true}
+                      onClick={[Function]}
+                      onResponderGrant={[Function]}
+                      onResponderMove={[Function]}
+                      onResponderRelease={[Function]}
+                      onResponderTerminate={[Function]}
+                      onResponderTerminationRequest={[Function]}
+                      onStartShouldSetResponder={[Function]}
+                      style={
+                        Object {
+                          "flex": 1,
+                          "opacity": 1,
+                        }
+                      }
+                    >
+                      <View>
+                        <View
+                          accessibilityState={
+                            Object {
+                              "disabled": false,
+                            }
+                          }
+                          accessible={true}
+                          focusable={true}
+                          onClick={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "flexDirection": "row",
+                              "opacity": 1,
+                              "paddingHorizontal": 24,
+                              "paddingVertical": 8,
+                            }
+                          }
+                          testID="create_post_chosen_audiences"
+                        >
+                          <View
+                            style={
+                              Object {
+                                "alignItems": "center",
+                                "flex": 1,
+                                "flexDirection": "row",
+                              }
+                            }
+                          >
+                            <Text
+                              style={
+                                Array [
+                                  Object {
+                                    "color": "#2F3945",
+                                    "fontFamily": "OpenSans-Regular",
+                                    "fontSize": 14,
+                                  },
+                                  Object {
+                                    "color": "#627286",
+                                  },
+                                  Object {
+                                    "marginRight": 4,
+                                    "marginVertical": 8,
+                                  },
+                                ]
+                              }
+                            >
+                              Send to 
+                              <Text
+                                style={
+                                  Array [
+                                    Object {
+                                      "color": "#2F3945",
+                                      "fontFamily": "OpenSans-SemiBold",
+                                      "fontSize": 14,
+                                    },
+                                    Object {},
+                                    undefined,
+                                  ]
+                                }
+                                testID="create_post_chosen_audiences.names"
+                              >
+                                EVOL Community
+                              </Text>
+                            </Text>
+                          </View>
+                          <View
+                            accessibilityState={
+                              Object {
+                                "disabled": true,
+                              }
+                            }
+                            accessible={true}
+                            focusable={false}
+                            hitSlop={
+                              Object {
+                                "bottom": 10,
+                                "left": 10,
+                                "right": 10,
+                                "top": 10,
+                              }
+                            }
+                            onClick={[Function]}
+                            onResponderGrant={[Function]}
+                            onResponderMove={[Function]}
+                            onResponderRelease={[Function]}
+                            onResponderTerminate={[Function]}
+                            onResponderTerminationRequest={[Function]}
+                            onStartShouldSetResponder={[Function]}
+                            style={
+                              Object {
+                                "opacity": 1,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                Array [
+                                  Object {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                  },
+                                  undefined,
+                                  Object {
+                                    "backgroundColor": undefined,
+                                  },
+                                ]
+                              }
+                            >
+                              <View
+                                style={
+                                  Array [
+                                    undefined,
+                                    undefined,
+                                    undefined,
+                                  ]
+                                }
+                              >
+                                <View
+                                  className="icon-wrapper"
+                                >
+                                  <RNSVGSvgView
+                                    align="xMidYMid"
+                                    bbHeight={20}
+                                    bbWidth={20}
+                                    fill="#2F3945"
+                                    focusable={false}
+                                    height={20}
+                                    meetOrSlice={0}
+                                    minX={0}
+                                    minY={0}
+                                    style={
+                                      Array [
+                                        Object {
+                                          "backgroundColor": "transparent",
+                                          "borderWidth": 0,
+                                        },
+                                        Object {},
+                                        Object {
+                                          "flex": 0,
+                                          "height": 20,
+                                          "width": 20,
+                                        },
+                                      ]
+                                    }
+                                    vbHeight={24}
+                                    vbWidth={24}
+                                    width={20}
+                                  >
+                                    <RNSVGGroup
+                                      fill={4281284933}
+                                      propList={
+                                        Array [
+                                          "fill",
+                                        ]
+                                      }
+                                    >
+                                      <RNSVGPath
+                                        d="M15.54,11.29,9.88,5.64a1,1,0,0,0-1.42,0,1,1,0,0,0,0,1.41l4.95,5L8.46,17a1,1,0,0,0,0,1.41,1,1,0,0,0,.71.3,1,1,0,0,0,.71-.3l5.66-5.65A1,1,0,0,0,15.54,11.29Z"
+                                      />
+                                    </RNSVGGroup>
+                                  </RNSVGSvgView>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                        </View>
+                        <View
+                          style={
+                            Array [
+                              Object {
+                                "alignSelf": "stretch",
+                                "backgroundColor": "#EAEDF2",
+                                "height": 1,
+                                "marginHorizontal": 0,
+                                "width": undefined,
+                              },
+                              Object {},
+                            ]
+                          }
+                          testID="divider"
+                        />
+                      </View>
+                      <RCTScrollView
+                        bounces={false}
+                        keyboardShouldPersistTaps="always"
+                      >
+                        <View>
+                          <View
+                            style={
+                              Object {
+                                "flex": 1,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                Object {
+                                  "flex": 1,
+                                }
+                              }
+                            >
+                              <View
+                                onLayout={[Function]}
+                                style={
+                                  Array [
+                                    Object {
+                                      "zIndex": 1,
+                                    },
+                                    Object {
+                                      "flex": 1,
+                                    },
+                                  ]
+                                }
+                                testID="_mention_input"
+                              >
+                                <TextInput
+                                  editable={true}
+                                  keyboardType="default"
+                                  multiline={true}
+                                  onChangeText={[Function]}
+                                  onContentSizeChange={[Function]}
+                                  onKeyPress={[Function]}
+                                  onSelectionChange={[Function]}
+                                  onSubmitEditing={[Function]}
+                                  placeholder="Write your post here..."
+                                  placeholderTextColor="#627286"
+                                  scrollEnabled={false}
+                                  selectionColor="#627286"
+                                  style={
+                                    Object {
+                                      "color": "#2F3945",
+                                      "flex": 1,
+                                      "fontFamily": "OpenSans-Regular",
+                                      "fontSize": 16,
+                                      "margin": 12,
+                                      "padding": 0,
+                                    }
+                                  }
+                                  testID="_mention_input.input"
+                                  textAlignVertical="top"
+                                  textInputRef={
+                                    Object {
+                                      "current": undefined,
+                                    }
+                                  }
+                                >
+                                  
+                                </TextInput>
+                              </View>
+                              <View
+                                style={Object {}}
+                              />
+                              <View
+                                onLayout={[Function]}
+                              />
+                            </View>
+                          </View>
+                        </View>
+                      </RCTScrollView>
+                      <View
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "flexDirection": "row",
+                            "flexWrap": "wrap",
+                            "justifyContent": "flex-end",
+                            "padding": 16,
+                          }
+                        }
+                      >
+                        <View
+                          accessible={true}
+                          focusable={true}
+                          onClick={[Function]}
+                          onResponderGrant={[Function]}
+                          onResponderMove={[Function]}
+                          onResponderRelease={[Function]}
+                          onResponderTerminate={[Function]}
+                          onResponderTerminationRequest={[Function]}
+                          onStartShouldSetResponder={[Function]}
+                          style={
+                            Object {
+                              "alignItems": "center",
+                              "backgroundColor": "#EAEDF2",
+                              "borderRadius": 6,
+                              "padding": 8,
+                            }
+                          }
+                          testID="create_post.btn_post_settings"
+                        >
+                          <View
+                            style={
+                              Object {
+                                "alignItems": "center",
+                                "flexDirection": "row",
+                                "justifyContent": "center",
+                              }
+                            }
+                            testID="button_wrapper.content"
+                          >
+                            <View
+                              accessibilityState={
+                                Object {
+                                  "disabled": true,
+                                }
+                              }
+                              accessible={true}
+                              focusable={false}
+                              hitSlop={
+                                Object {
+                                  "bottom": 10,
+                                  "left": 10,
+                                  "right": 10,
+                                  "top": 10,
+                                }
+                              }
+                              onClick={[Function]}
+                              onResponderGrant={[Function]}
+                              onResponderMove={[Function]}
+                              onResponderRelease={[Function]}
+                              onResponderTerminate={[Function]}
+                              onResponderTerminationRequest={[Function]}
+                              onStartShouldSetResponder={[Function]}
+                              style={
+                                Object {
+                                  "opacity": 1,
+                                }
+                              }
+                            >
+                              <View
+                                style={
+                                  Array [
+                                    Object {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                    },
+                                    Object {
+                                      "marginHorizontal": 8,
+                                    },
+                                    Object {
+                                      "backgroundColor": undefined,
+                                    },
+                                  ]
+                                }
+                              >
+                                <View
+                                  style={
+                                    Array [
+                                      undefined,
+                                      undefined,
+                                      undefined,
+                                    ]
+                                  }
+                                >
+                                  <View
+                                    className="icon-wrapper"
+                                    testID="button_wrapper.icon"
+                                  >
+                                    <RNSVGSvgView
+                                      align="xMidYMid"
+                                      bbHeight={20}
+                                      bbWidth={20}
+                                      fill="#2F3945"
+                                      focusable={false}
+                                      height={20}
+                                      meetOrSlice={0}
+                                      minX={0}
+                                      minY={0}
+                                      style={
+                                        Array [
+                                          Object {
+                                            "backgroundColor": "transparent",
+                                            "borderWidth": 0,
+                                          },
+                                          Object {},
+                                          Object {
+                                            "flex": 0,
+                                            "height": 20,
+                                            "width": 20,
+                                          },
+                                        ]
+                                      }
+                                      vbHeight={24}
+                                      vbWidth={24}
+                                      width={20}
+                                    >
+                                      <RNSVGGroup
+                                        fill={4281284933}
+                                        propList={
+                                          Array [
+                                            "fill",
+                                          ]
+                                        }
+                                      >
+                                        <RNSVGPath
+                                          d="M20,8.18V3a1,1,0,0,0-2,0V8.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V13.82a3,3,0,0,0,0-5.64ZM19,12a1,1,0,1,1,1-1A1,1,0,0,1,19,12Zm-6,2.18V3a1,1,0,0,0-2,0V14.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V19.82a3,3,0,0,0,0-5.64ZM12,18a1,1,0,1,1,1-1A1,1,0,0,1,12,18ZM6,6.18V3A1,1,0,0,0,4,3V6.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V11.82A3,3,0,0,0,6,6.18ZM5,10A1,1,0,1,1,6,9,1,1,0,0,1,5,10Z"
+                                        />
+                                      </RNSVGGroup>
+                                    </RNSVGSvgView>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                            <Text
+                              style={
+                                Array [
+                                  Object {
+                                    "color": "#2F3945",
+                                    "fontFamily": "OpenSans-SemiBold",
+                                    "fontSize": 16,
+                                  },
+                                  Object {
+                                    "color": "#2F3945",
+                                  },
+                                  Object {
+                                    "fontSize": 14,
+                                  },
+                                ]
+                              }
+                            >
+                              Post Settings
+                            </Text>
+                          </View>
+                        </View>
+                      </View>
+                      <View
+                        className="post-toolbar-container"
+                      >
+                        <View
+                          collapsable={false}
+                          forwardedRef={[Function]}
+                          onGestureHandlerEvent={[Function]}
+                          onGestureHandlerStateChange={[Function]}
+                          style={Object {}}
+                        >
+                          <View
+                            style={
+                              Object {
+                                "alignItems": "center",
+                                "backgroundColor": "#FFFFFF",
+                                "borderColor": "#EAEDF2",
+                                "borderWidth": 1,
+                                "flexDirection": "row",
+                                "height": 52,
+                                "paddingHorizontal": 16,
+                              }
+                            }
+                            testID="post_toolbar"
+                          >
+                            <View
+                              style={
+                                Object {
+                                  "height": 36,
+                                  "justifyContent": "center",
+                                  "width": 36,
+                                }
+                              }
+                            >
+                              <View
+                                accessibilityState={
+                                  Object {
+                                    "disabled": true,
+                                  }
+                                }
+                                accessible={true}
+                                focusable={true}
+                                hitSlop={
+                                  Object {
+                                    "bottom": 10,
+                                    "left": 10,
+                                    "right": 10,
+                                    "top": 10,
+                                  }
+                                }
+                                onClick={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                                style={
+                                  Object {
+                                    "opacity": 1,
+                                  }
+                                }
+                                testID="post_toolbar.markdown_preview"
+                              >
+                                <View
+                                  style={
+                                    Array [
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                      },
+                                      undefined,
+                                      Object {
+                                        "backgroundColor": undefined,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <View
+                                    style={
+                                      Array [
+                                        undefined,
+                                        undefined,
+                                        undefined,
+                                      ]
+                                    }
+                                  >
+                                    <View
+                                      className="icon-wrapper"
+                                    >
+                                      <RNSVGSvgView
+                                        align="xMidYMid"
+                                        bbHeight={20}
+                                        bbWidth={20}
+                                        fill="#B2BDCD"
+                                        focusable={false}
+                                        height={20}
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          Array [
+                                            Object {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            Object {},
+                                            Object {
+                                              "flex": 0,
+                                              "height": 20,
+                                              "width": 20,
+                                            },
+                                          ]
+                                        }
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={20}
+                                      >
+                                        <RNSVGGroup
+                                          fill={4289904077}
+                                          propList={
+                                            Array [
+                                              "fill",
+                                            ]
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            d="M20,17.57a4.3,4.3,0,1,0-3.67,2.06A4.37,4.37,0,0,0,18.57,19l1.72,1.73a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42ZM18,17a2.37,2.37,0,0,1-3.27,0,2.32,2.32,0,0,1,0-3.27,2.31,2.31,0,0,1,3.27,0A2.32,2.32,0,0,1,18,17ZM19,3H5A3,3,0,0,0,2,6v9a3,3,0,0,0,3,3H9a1,1,0,0,0,0-2H5a1,1,0,0,1-1-1V9H20v1a1,1,0,0,0,2,0V6A3,3,0,0,0,19,3Zm1,4H4V6A1,1,0,0,1,5,5H19a1,1,0,0,1,1,1ZM10,11H7a1,1,0,0,0,0,2h3a1,1,0,0,0,0-2Z"
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                Object {
+                                  "height": 36,
+                                  "justifyContent": "center",
+                                  "width": 36,
+                                }
+                              }
+                            >
+                              <View
+                                accessibilityState={
+                                  Object {
+                                    "disabled": false,
+                                  }
+                                }
+                                accessible={true}
+                                focusable={true}
+                                hitSlop={
+                                  Object {
+                                    "bottom": 10,
+                                    "left": 10,
+                                    "right": 10,
+                                    "top": 10,
+                                  }
+                                }
+                                onClick={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                                style={
+                                  Object {
+                                    "opacity": 1,
+                                  }
+                                }
+                                testID="post_toolbar.add_photo"
+                              >
+                                <View
+                                  style={
+                                    Array [
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                      },
+                                      undefined,
+                                      Object {
+                                        "backgroundColor": undefined,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <View
+                                    style={
+                                      Array [
+                                        undefined,
+                                        undefined,
+                                        undefined,
+                                      ]
+                                    }
+                                  >
+                                    <View
+                                      className="icon-wrapper"
+                                    >
+                                      <RNSVGSvgView
+                                        align="xMidYMid"
+                                        bbHeight={20}
+                                        bbWidth={20}
+                                        fill="#2F3945"
+                                        focusable={false}
+                                        height={20}
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          Array [
+                                            Object {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            Object {},
+                                            Object {
+                                              "flex": 0,
+                                              "height": 20,
+                                              "width": 20,
+                                            },
+                                          ]
+                                        }
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={20}
+                                      >
+                                        <RNSVGGroup
+                                          fill={4281284933}
+                                          propList={
+                                            Array [
+                                              "fill",
+                                            ]
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            d="M19,10a1,1,0,0,0-1,1v3.38L16.52,12.9a2.79,2.79,0,0,0-3.93,0l-.7.71L9.41,11.12a2.79,2.79,0,0,0-3.93,0L4,12.61V7A1,1,0,0,1,5,6h8a1,1,0,0,0,0-2H5A3,3,0,0,0,2,7V19.22A2.79,2.79,0,0,0,4.78,22H17.22a2.88,2.88,0,0,0,.8-.12h0a2.74,2.74,0,0,0,2-2.65V11A1,1,0,0,0,19,10ZM5,20a1,1,0,0,1-1-1V15.43l2.89-2.89a.78.78,0,0,1,1.1,0L15.46,20Zm13-1a1,1,0,0,1-.18.54L13.3,15l.71-.7a.77.77,0,0,1,1.1,0L18,17.21ZM21,4H20V3a1,1,0,0,0-2,0V4H17a1,1,0,0,0,0,2h1V7a1,1,0,0,0,2,0V6h1a1,1,0,0,0,0-2Z"
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                Object {
+                                  "height": 36,
+                                  "justifyContent": "center",
+                                  "width": 36,
+                                }
+                              }
+                            >
+                              <View
+                                accessibilityState={
+                                  Object {
+                                    "disabled": false,
+                                  }
+                                }
+                                accessible={true}
+                                focusable={true}
+                                hitSlop={
+                                  Object {
+                                    "bottom": 10,
+                                    "left": 10,
+                                    "right": 10,
+                                    "top": 10,
+                                  }
+                                }
+                                onClick={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                                style={
+                                  Object {
+                                    "opacity": 1,
+                                  }
+                                }
+                                testID="post_toolbar.add_file"
+                              >
+                                <View
+                                  style={
+                                    Array [
+                                      Object {
+                                        "alignItems": "center",
+                                        "flexDirection": "row",
+                                      },
+                                      undefined,
+                                      Object {
+                                        "backgroundColor": undefined,
+                                      },
+                                    ]
+                                  }
+                                >
+                                  <View
+                                    style={
+                                      Array [
+                                        undefined,
+                                        undefined,
+                                        undefined,
+                                      ]
+                                    }
+                                  >
+                                    <View
+                                      className="icon-wrapper"
+                                    >
+                                      <RNSVGSvgView
+                                        align="xMidYMid"
+                                        bbHeight={20}
+                                        bbWidth={20}
+                                        fill="#2F3945"
+                                        focusable={false}
+                                        height={20}
+                                        meetOrSlice={0}
+                                        minX={0}
+                                        minY={0}
+                                        style={
+                                          Array [
+                                            Object {
+                                              "backgroundColor": "transparent",
+                                              "borderWidth": 0,
+                                            },
+                                            Object {},
+                                            Object {
+                                              "flex": 0,
+                                              "height": 20,
+                                              "width": 20,
+                                            },
+                                          ]
+                                        }
+                                        vbHeight={24}
+                                        vbWidth={24}
+                                        width={20}
+                                      >
+                                        <RNSVGGroup
+                                          fill={4281284933}
+                                          propList={
+                                            Array [
+                                              "fill",
+                                            ]
+                                          }
+                                        >
+                                          <RNSVGPath
+                                            d="M10,17.55,8.23,19.27a2.47,2.47,0,0,1-3.5-3.5l4.54-4.55a2.46,2.46,0,0,1,3.39-.09l.12.1a1,1,0,0,0,1.4-1.43A2.75,2.75,0,0,0,14,9.59a4.46,4.46,0,0,0-6.09.22L3.31,14.36a4.48,4.48,0,0,0,6.33,6.33L11.37,19A1,1,0,0,0,10,17.55ZM20.69,3.31a4.49,4.49,0,0,0-6.33,0L12.63,5A1,1,0,0,0,14,6.45l1.73-1.72a2.47,2.47,0,0,1,3.5,3.5l-4.54,4.55a2.46,2.46,0,0,1-3.39.09l-.12-.1a1,1,0,0,0-1.4,1.43,2.75,2.75,0,0,0,.23.21,4.47,4.47,0,0,0,6.09-.22l4.55-4.55A4.49,4.49,0,0,0,20.69,3.31Z"
+                                          />
+                                        </RNSVGGroup>
+                                      </RNSVGSvgView>
+                                    </View>
+                                  </View>
+                                </View>
+                              </View>
+                            </View>
+                          </View>
+                          <View
+                            style={
+                              Object {
+                                "height": 0,
+                                "width": "100%",
+                              }
+                            }
                           />
-                        </RNSVGGroup>
-                      </RNSVGSvgView>
+                        </View>
+                        <View>
+                          <View
+                            style={
+                              Object {
+                                "height": 1067.2,
+                              }
+                            }
+                          >
+                            <View
+                              style={
+                                Object {
+                                  "alignItems": "center",
+                                  "flexDirection": "row",
+                                  "justifyContent": "space-between",
+                                  "marginHorizontal": 16,
+                                }
+                              }
+                            >
+                              <Text
+                                style={
+                                  Array [
+                                    Object {
+                                      "color": "#2F3945",
+                                      "fontFamily": "OpenSans-SemiBold",
+                                      "fontSize": 16,
+                                    },
+                                    Object {},
+                                    undefined,
+                                  ]
+                                }
+                              >
+                                Review Markdown
+                              </Text>
+                              <View
+                                accessible={true}
+                                focusable={true}
+                                onClick={[Function]}
+                                onResponderGrant={[Function]}
+                                onResponderMove={[Function]}
+                                onResponderRelease={[Function]}
+                                onResponderTerminate={[Function]}
+                                onResponderTerminationRequest={[Function]}
+                                onStartShouldSetResponder={[Function]}
+                                style={
+                                  Object {
+                                    "alignItems": "center",
+                                    "backgroundColor": "#FFFFFF",
+                                    "borderColor": "#7843DD",
+                                    "borderRadius": 6,
+                                    "borderWidth": 1,
+                                    "marginRight": 4,
+                                    "padding": 8,
+                                  }
+                                }
+                                testID="header.button"
+                              >
+                                <View
+                                  style={
+                                    Object {
+                                      "alignItems": "center",
+                                      "flexDirection": "row",
+                                      "justifyContent": "center",
+                                    }
+                                  }
+                                  testID="button_wrapper.content"
+                                >
+                                  <Text
+                                    style={
+                                      Array [
+                                        Object {
+                                          "color": "#2F3945",
+                                          "fontFamily": "OpenSans-SemiBold",
+                                          "fontSize": 16,
+                                        },
+                                        Object {
+                                          "color": "#7843DD",
+                                        },
+                                        Object {
+                                          "textAlign": "center",
+                                        },
+                                      ]
+                                    }
+                                  >
+                                    Done
+                                  </Text>
+                                </View>
+                              </View>
+                            </View>
+                            <View
+                              style={
+                                Object {
+                                  "backgroundColor": "#F9FAFB",
+                                  "flex": 1,
+                                  "marginHorizontal": 12,
+                                  "marginTop": 16,
+                                  "paddingHorizontal": 8,
+                                  "paddingVertical": 12,
+                                }
+                              }
+                            >
+                              <View
+                                style={
+                                  Object {
+                                    "alignItems": "center",
+                                    "flexDirection": "row",
+                                  }
+                                }
+                              >
+                                <View
+                                  style={
+                                    Object {
+                                      "borderRadius": 6,
+                                      "height": 48,
+                                      "marginRight": 8,
+                                      "width": 48,
+                                    }
+                                  }
+                                  testID="avatar"
+                                >
+                                  <View
+                                    style={
+                                      Object {
+                                        "backgroundColor": "#B2BDCD",
+                                        "borderRadius": 24,
+                                        "height": 48,
+                                        "width": 48,
+                                      }
+                                    }
+                                    testID="avatar_container"
+                                  >
+                                    <View
+                                      onLayout={[Function]}
+                                      style={
+                                        Object {
+                                          "backgroundColor": "transparent",
+                                          "position": "relative",
+                                        }
+                                      }
+                                    >
+                                      <View
+                                        style={
+                                          Object {
+                                            "bottom": 0,
+                                            "left": 0,
+                                            "opacity": 1,
+                                            "position": "absolute",
+                                            "right": 0,
+                                            "top": 0,
+                                          }
+                                        }
+                                      >
+                                        <View
+                                          style={
+                                            Object {
+                                              "alignItems": "center",
+                                              "backgroundColor": "#f9f9f9",
+                                              "borderRadius": 24,
+                                              "height": 48,
+                                              "justifyContent": "center",
+                                              "width": 48,
+                                            }
+                                          }
+                                          testID="Image__placeholder"
+                                        />
+                                      </View>
+                                      <View
+                                        style={
+                                          Array [
+                                            Object {
+                                              "overflow": "hidden",
+                                            },
+                                            Object {
+                                              "borderRadius": 24,
+                                              "height": 48,
+                                              "width": 48,
+                                            },
+                                          ]
+                                        }
+                                      >
+                                        <FastImageView
+                                          onFastImageError={[Function]}
+                                          onFastImageLoadEnd={[Function]}
+                                          resizeMode="cover"
+                                          source={null}
+                                          style={
+                                            Object {
+                                              "bottom": 0,
+                                              "left": 0,
+                                              "position": "absolute",
+                                              "right": 0,
+                                              "top": 0,
+                                            }
+                                          }
+                                          testID="avatar.image"
+                                        />
+                                      </View>
+                                    </View>
+                                  </View>
+                                </View>
+                                <View>
+                                  <Text
+                                    style={
+                                      Array [
+                                        Object {
+                                          "color": "#2F3945",
+                                          "fontFamily": "OpenSans-SemiBold",
+                                          "fontSize": 14,
+                                        },
+                                        Object {},
+                                        undefined,
+                                      ]
+                                    }
+                                  />
+                                  <View
+                                    style={
+                                      Object {
+                                        "flexDirection": "row",
+                                      }
+                                    }
+                                  >
+                                    <Text
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#2F3945",
+                                            "fontFamily": "OpenSans-SemiBold",
+                                            "fontSize": 14,
+                                          },
+                                          Object {
+                                            "color": "#627286",
+                                          },
+                                          Object {
+                                            "marginRight": 4,
+                                          },
+                                        ]
+                                      }
+                                    >
+                                      to
+                                    </Text>
+                                    <Text
+                                      style={
+                                        Array [
+                                          Object {
+                                            "color": "#2F3945",
+                                            "fontFamily": "OpenSans-SemiBold",
+                                            "fontSize": 14,
+                                          },
+                                          Object {},
+                                          undefined,
+                                        ]
+                                      }
+                                    >
+                                      EVOL Community
+                                    </Text>
+                                  </View>
+                                </View>
+                              </View>
+                              <RCTScrollView
+                                style={
+                                  Object {
+                                    "marginTop": 24,
+                                  }
+                                }
+                              >
+                                <View />
+                              </RCTScrollView>
+                            </View>
+                          </View>
+                        </View>
+                        <View
+                          animatedStyle={
+                            Object {
+                              "value": Object {
+                                "left": 0,
+                                "opacity": 0,
+                                "position": "absolute",
+                                "right": 0,
+                              },
+                            }
+                          }
+                          collapsable={false}
+                          style={
+                            Object {
+                              "left": 0,
+                              "opacity": 0,
+                              "position": "absolute",
+                              "right": 0,
+                            }
+                          }
+                          testID="create_post_footer.mention_bar_container"
+                        />
+                      </View>
                     </View>
                   </View>
                 </View>
-              </View>
-              <View
-                style={
-                  Object {
-                    "flex": 1,
-                  }
-                }
-              >
-                <Text
-                  numberOfLines={2}
-                  style={
-                    Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-SemiBold",
-                      "fontSize": 14,
-                    }
-                  }
-                >
-                  Add Files
-                </Text>
               </View>
             </View>
           </View>
         </View>
       </View>
-      <View
-        animatedStyle={
-          Object {
-            "value": Object {
-              "left": 0,
-              "opacity": 0,
-              "position": "absolute",
-              "right": 0,
-            },
-          }
-        }
-        collapsable={false}
-        style={
-          Object {
-            "left": 0,
-            "opacity": 0,
-            "position": "absolute",
-            "right": 0,
-          }
-        }
-        testID="create_post_footer.mention_bar_container"
-      />
-    </View>
-  </View>
+    </RNSScreen>
+  </RNSScreenContainer>
 </View>
 `;

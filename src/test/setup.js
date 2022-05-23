@@ -37,6 +37,7 @@ jest.mock('~/services/sharePreferences', () => ({
   getUserFromSharedPreferences: jest.fn(),
   saveUserToSharedPreferences: jest.fn(),
   updateUserFromSharedPreferences: jest.fn(),
+  isAppInstalled: jest.fn(),
 }));
 
 jest.mock('react-native-image-crop-picker', () => ({
@@ -52,18 +53,10 @@ jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
 
 jest.mock('~/screens/Menu/helper/MenuDataHelper');
 
-// jest.mock('~/services/fileUploader', () => {
-//   const imgURL =
-//     'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/4a8c0ce3-0813-4387-9547-eadcd7fee38b.jpg';
-
-//   return {
-//     getInstance: jest.fn().mockReturnThis(() => {
-//       return {
-//         upload: jest.fn().mockResolvedValue(imgURL),
-//       };
-//     }),
-//   };
-// });
+import mock from 'react-native-permissions/mock';
+jest.mock('react-native-permissions', () => {
+  return mock;
+});
 
 // @ts-ignore
 global.FormData = require('react-native/Libraries/Network/FormData');
@@ -83,7 +76,16 @@ jest.doMock('react-i18next', () => ({
 }));
 
 jest.doMock('i18next', () => ({
-  t: str => get(languages, str?.replaceAll?.(':', '.')),
+  t: (str, params) => {
+    let suffix = '';
+    if (params?.count) {
+      suffix = params.count === 1 ? '_one' : '_other';
+    }
+    return get(languages, `${str}${suffix}`.replaceAll?.(':', '.'))?.replace(
+      '{{count}}',
+      params?.count,
+    );
+  },
 }));
 
 jest.doMock('react-native-paper', () => ({
@@ -98,6 +100,13 @@ jest.doMock('react-native-paper', () => ({
     ...ReactNative.TextInput,
     Icon: ReactNative.View,
   },
+}));
+
+jest.doMock('react-native-autogrow-textinput', () => ({
+  // eslint-disable-next-line react/prop-types
+  AutoGrowingTextInput: ({children, ...props}) => (
+    <ReactNative.TextInput {...props}>{children}</ReactNative.TextInput>
+  ),
 }));
 
 jest.doMock('@react-navigation/native', () => ({
@@ -126,6 +135,22 @@ jest.mock('@react-native-async-storage/async-storage', () => mockAsyncStorage);
 jest.mock('react-native-device-info', () => mockRNDeviceInfo);
 
 jest.mock('@react-native-community/netinfo', () => mockRNCNetInfo);
+
+jest.doMock('aws-amplify', () => {
+  const RealModule = jest.requireActual('aws-amplify');
+  // noinspection UnnecessaryLocalVariableJS
+  const MockedModule = {
+    ...RealModule,
+    // eslint-disable-next-line react/prop-types
+    Auth: {
+      ...RealModule.Auth,
+      signIn: jest.fn(),
+      forgotPassword: jest.fn(),
+      forgotPasswordSubmit: jest.fn(),
+    },
+  };
+  return MockedModule;
+});
 
 jest.doMock('react-native', () => {
   const {
@@ -239,3 +264,17 @@ jest.doMock('react-native', () => {
 //     useState: jest.fn().mockImplementation(init => [init, setState]),
 //   };
 // });
+
+jest.mock('react-hook-form', () => ({
+  ...jest.requireActual('react-hook-form'),
+  useController: () => ({
+    field: {
+      onChange: jest.fn(),
+      value: '',
+    },
+  }),
+  Controller: ({children}) => [children],
+  useSubscribe: () => ({
+    r: {current: {subject: {subscribe: () => jest.fn()}}},
+  }),
+}));

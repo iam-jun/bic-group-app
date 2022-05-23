@@ -36,6 +36,7 @@
     "btn_confirm": "Confirm",
     "btn_create": "Create",
     "btn_join": "Join",
+    "btn_view": "View",
     "btn_cancel_request": "Cancel Request",
     "text_search_emoji": "Search Emoji",
     "text_important": "Important",
@@ -49,13 +50,14 @@
     "text_important_posts": "Important Posts",
     "text_loading": "Loading...",
     "text_save": "Save",
+    "text_select": "Select",
     "text_all": "All",
     "text_chosen": "Chosen",
     "text_description": "Description",
     "text_search": "Search",
     "text_search_results": "Search results",
-    "text_read_more": "Read more",
-    "text_show_less": "Show less",
+    "text_see_more": "See more",
+    "text_see_less": "See less",
     "text_add": "Add",
     "text_retry": "Retry",
     "text_done": "Done",
@@ -134,7 +136,8 @@
     },
     "text_not_now": "Not now",
     "text_go_to_settings": "Go to Settings",
-    "text_help": "Help"
+    "text_help": "Help",
+    "text_type_search_keyword": "Type search keyword to see the search results"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -215,9 +218,9 @@
   },
   "tabs": {
     "home": "News feed",
-    "groups": "Groups",
+    "communities": "Communities",
     "notification": "Notifications",
-    "menus": "Menu"
+    "menus": "You"
   },
   "settings": {
     "title_app_language": "App language",
@@ -280,6 +283,7 @@
     "text_learn_more": "Learn more",
     "title_secret": "Secret",
     "title_secret_subtitle": "Group is invisible to everyone and members are invited.",
+    "title_open": "Open",
     "title_edit_description": "Edit Description",
     "title_logout_from_all_devices": "Logout from all devices",
     "title_edit_basic_info": "Edit Basic Info",
@@ -334,9 +338,10 @@
     "title_set_a_custom_status": "Set a custom status",
     "title_about_bein_app": "About Bein App",
     "title_help_and_support": "Help & Support",
-    "group_title_public": "Public Group",
-    "group_title_private": "Private Group",
-    "group_title_secret": "Secret Group"
+    "privacy_public": "Public",
+    "privacy_private": "Private",
+    "privacy_secret": "Secret",
+    "privacy_open": "Open"
   },
   "languages": {
     "title_en": "English",
@@ -443,10 +448,17 @@
     "people_search": "People",
     "show_all": "Show all",
     "text_load_more_comments": "View previous comments...",
-    "text_load_more_replies": "View previous replies...",
+    "text_load_previous_replies": "View previous replies...",
+    "text_load_more_replies": "View more replies...",
     "text_add_to_post": "Add to your post",
+    "text_comment_was_deleted": "Comment was deleted",
+    "text_restricted_permission": "Restricted Permission",
+    "text_restricted_permission_description": "You don’t have permission to see this",
+    "text_back_to_news_feed": "Back to news feed",
     "comment_menu_reply": "Reply this comment",
     "comment_menu_copy_text": "Copy text",
+    "comment_menu_copy_link": "Copy link",
+    "comment_link_copied": "Comment link copied",
     "comment_menu_edit": "Edit Comment",
     "comment_menu_history": "View Edit History",
     "comment_menu_delete": "Delete Comment",
@@ -457,6 +469,7 @@
     "post_menu_turn_off_noti": "Turn off notification for this post",
     "post_menu_history": "View Edit History",
     "post_menu_delete": "Delete post",
+    "post_menu_edit_settings": "Edit Post Settings",
     "post_menu_report": "Report to group Admin",
     "error_wait_uploading": "Please wait until upload finish",
     "error_upload_failed": "Please remove file upload failed or retry",
@@ -475,6 +488,8 @@
     "btn_discard_comment": "Discard",
     "text_edit_post_success": "Post has been published successfully",
     "text_edit_post_failed": "Post was failed to publish",
+    "text_update_post_setting_success": "Post Settings updated",
+    "text_update_post_setting_failed": "Post Settings was failed to update",
     "text_comment_from": "This is comment from ",
     "title_comment_detail_of": "%NAME%'s post",
     "newsfeed": {
@@ -521,7 +536,13 @@
     "people_can_react": "People can react on this post",
     "auto_saved": "Post auto-saved",
     "saved_to_draft": "Post Saved to Draft.",
-    "text_review_markdown": "Review Markdown"
+    "text_review_markdown": "Review Markdown",
+    "text_comment_deleted": "Comment doesn’t exist, can not send your reply",
+    "deleted_comment": {
+      "title": "This page is not existing.",
+      "description": "It might be deleted or you don't have permission to see it",
+      "button_text": "Back to Post"
+    }
   },
   "comment": {
     "placeholder_comment": "Write a comment...",
@@ -552,24 +573,28 @@
   },
   "input": {
     "search": "Search for someone to chat...",
-    "search_group": "Search for groups or people...",
+    "search_group_people": "Search for groups or people...",
+    "search_group": "Search groups",
     "search_post": "Search for posts...",
     "search_country": "Search Country",
     "search_location": "Search for City/Province/Country"
   },
   "groups": {
     "group_content": {
+      "btn_your_groups": "Your Groups",
+      "btn_discover": "Discover",
       "btn_post": "Post",
       "btn_channel": "Channel",
       "btn_about": "About",
       "btn_members": "Members",
       "btn_files": "Files"
     },
-    "text_members": "members",
+    "text_members_one": "member",
+    "text_members_other": "members",
     "search_results": "Search results",
     "all_groups": "All groups",
     "text_invite_members": "Invite members",
-    "text_search_member": "Search group member",
+    "text_search_member": "Search member",
     "text_search": "Search people",
     "group_menu": {
       "label_admin_tools": "Admin Tools",
@@ -700,10 +725,16 @@
     "replied_to_a_comment_you_are_mentioned": "replied to a comment you're mentioned",
     "replied_to_comment_you_replied": "replied to a comment you replied",
     "no_more_notification": "No more notification",
-    "no_notification_found": "Your notification box is empty",
-    "no_notification_found_desc": "We’ll notify you when something arrives",
+    "no_notification_found": "You have no pending notification",
     "number_people": "{number} people",
-    "number_times": "{number} times"
+    "number_times": "{number} times",
+    "text_all": "All",
+    "text_unread": "Unread",
+    "text_mention": "Mention",
+    "text_important": "Important",
+    "mark_as_read": "Mark as read",
+    "mark_as_unread": "Mark as unread",
+    "off_notification_from_group": "Turn off notifications from this group"
   },
   "new_feature": {
     "title": "New feature",
@@ -722,5 +753,38 @@
       "title": "System Issue Occurred",
       "desc": "Please re-login to continue"
     }
+  },
+  "communities": {
+    "title_your_groups": "Your Groups",
+    "title_group_joined": "You've joined",
+    "title_group_manage": "You manage",
+    "text_view_mode": "View Mode",
+    "text_choose_view_mode": "Choose view mode",
+    "text_your_groups_search_input": "Type search keyword to see the search results",
+    "text_your_groups_search_empty": "Sorry, we couldn’t find anything related to your search.",
+    "group_types": {
+      "text_flat_list": "Flat view",
+      "text_tree_view": "Tree view"
+    },
+    "empty_communities": {
+      "title": "No community found",
+      "description": "Discover communities to join one.",
+      "button_text": "Go to Discover"
+    },
+    "empty_groups": {
+      "title": "No group found",
+      "description": "Discover groups to join one."
+    },
+    "community_menu": {
+      "your_communities_text": "You've joined",
+      "manage_text": "You manage",
+      "discover_text": "Discover"
+    },
+    "text_join_community_button": "Join this community",
+    "text_join_community_description": "Join this community to view or participate on discussions",
+    "text_other_member_one": "{{count}} other are members",
+    "text_other_member_other": "{{count}} others are members",
+    "text_is_member": "is a member",
+    "title_discover_groups": "Discover Groups"
   }
 }

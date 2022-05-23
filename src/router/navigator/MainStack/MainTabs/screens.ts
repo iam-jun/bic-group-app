@@ -34,7 +34,7 @@ import CommentDetail from '~/screens/Post/CommentDetail';
 
 export const screens = {
   home: HomeStack,
-  groups: GroupStack,
+  communities: GroupStack,
   notification: NotiStack,
   menus: MenuStack,
 };

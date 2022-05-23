@@ -6,6 +6,7 @@ import {fireEvent, renderWithRedux} from '~/test/testUtils';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
 import {TouchableHighlight} from 'react-native-gesture-handler';
+import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);
 
@@ -106,13 +107,14 @@ describe('Button Wrapper component', () => {
     const {getByTestId} = rendered;
     const textComponent = getByTestId('button_wrapper.text');
     expect(textComponent).toBeDefined();
-    expect(textComponent.props?.style?.color).toBe('red');
+    const flattenedStyle = StyleSheet.flatten(textComponent.props.style);
+    expect(flattenedStyle?.color).toBe('red');
   });
 
   it(`renders correctly children with useI18n`, () => {
     const rendered = renderWithRedux(
       <ButtonWrapper useI18n>
-        {i18next.t('common:text_show_less')}
+        {i18next.t('common:text_see_less')}
       </ButtonWrapper>,
     );
     expect(rendered).toBeDefined();

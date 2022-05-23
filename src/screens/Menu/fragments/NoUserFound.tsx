@@ -22,7 +22,10 @@ const NoUserFound = () => {
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   return (
-    <ScreenWrapper style={styles.root} isFullView>
+    <ScreenWrapper
+      testID="user_profile.not_found"
+      style={styles.root}
+      isFullView>
       <Header
         title={i18next.t('error:no_profile_found_title')}
         hideBackOnLaptop

@@ -80,9 +80,7 @@ describe('MentionInput component', () => {
       },
     };
     const wrapper = renderWithRedux(<MentionInput {...props} />, store);
-
-    const rendered = wrapper.toJSON();
-    expect(rendered).toMatchSnapshot();
+    expect(wrapper).toMatchSnapshot();
   });
 
   it(`should show "MentionInput" with disabled input`, async () => {

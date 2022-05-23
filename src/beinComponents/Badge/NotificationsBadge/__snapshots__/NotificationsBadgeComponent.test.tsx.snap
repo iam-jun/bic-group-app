@@ -3,27 +3,39 @@
 exports[`NotificationsBadgeComponent renders correctly 1`] = `
 <View
   style={
-    Object {
-      "alignItems": "center",
-      "backgroundColor": "#D5DCE5",
-      "borderRadius": 24,
-      "height": 20,
-      "justifyContent": "center",
-      "minWidth": 20,
-      "paddingBottom": 2,
-      "paddingHorizontal": 5,
-    }
+    Array [
+      Object {
+        "alignItems": "center",
+        "backgroundColor": "#D5DCE5",
+        "borderRadius": 24,
+        "height": 20,
+        "justifyContent": "center",
+        "minWidth": 20,
+        "paddingBottom": 2,
+        "paddingHorizontal": 5,
+      },
+      undefined,
+    ]
   }
 >
   <Text
     style={
-      Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 12,
-        "lineHeight": 16,
-        "textAlign": "center",
-      }
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 12,
+        },
+        Object {},
+        Array [
+          Object {
+            "color": "#2F3945",
+            "lineHeight": 16,
+            "textAlign": "center",
+          },
+          Object {},
+        ],
+      ]
     }
   >
     5

@@ -1,9 +1,7 @@
-import {useBackHandler} from '@react-native-community/hooks';
 import {useIsFocused} from '@react-navigation/native';
 import React, {
   memo,
   useCallback,
-  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -19,25 +17,21 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
-
-import {AppContext} from '~/contexts/AppContext';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
-import {useRootNavigation} from '~/hooks/navigation';
+import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import {IUserResponse} from '~/interfaces/IAuth';
-
 import {
   IAudienceGroup,
+  ICommentData,
   IPayloadGetPostDetail,
-  IReaction,
 } from '~/interfaces/IPost';
-import i18n from '~/localization';
+import images from '~/resources/images';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {rootSwitch} from '~/router/stack';
 import CommentInputView from '~/screens/Post/components/CommentInputView';
@@ -46,13 +40,10 @@ import PostView from '~/screens/Post/components/PostView';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import Store from '~/store';
-import * as modalActions from '~/store/modal/actions';
+import modalActions from '~/store/modal/actions';
 import {showHideToastMessage} from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
-import {sortComments} from '../helper/PostUtils';
-import images from '~/resources/images';
-import {get} from 'lodash';
 
 const defaultList = [{title: '', type: 'empty', data: []}];
 
@@ -81,32 +72,27 @@ const _PostDetailContent = (props: any) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const userId = useUserIdAuth();
-  const {streamClient} = useContext(AppContext);
 
-  const id = post_id;
+  const id = Number(post_id || 0);
   const actor = useKeySelector(postKeySelector.postActorById(id));
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
-  const postTime = useKeySelector(postKeySelector.postTimeById(id));
+  const createdAt = useKeySelector(postKeySelector.postCreatedAtById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
-  const latest_reactions = useKeySelector(
-    postKeySelector.postLatestReactionsComments(id),
+  const commentLeft = useKeySelector(
+    postKeySelector.postCommentOnlyCountById(id),
   );
-  const commentCount = useKeySelector(
-    postKeySelector.postCommentCountsById(id),
-  );
+  const commentList = useKeySelector(postKeySelector.postCommentListById(id));
   const scrollToLatestItem = useKeySelector(postKeySelector.scrollToLatestItem);
 
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
-  const listComment = comments || sortComments(latest_reactions) || [];
+  const listComment = comments || commentList || [];
   const sectionData = getSectionData(listComment) || [];
-
-  const commentLeft = commentCount - listComment.length;
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
   const isFocused = useIsFocused();
 
-  const headerTitle = actor?.data?.fullname
-    ? t('post:title_post_detail_of').replace('%NAME%', actor?.data?.fullname)
+  const headerTitle = actor?.fullname
+    ? t('post:title_post_detail_of').replace('%NAME%', actor?.fullname)
     : t('post:title_post_detail');
 
   useEffect(() => {
@@ -114,6 +100,34 @@ const _PostDetailContent = (props: any) => {
       dispatch(postActions.setCreatePostInitAudiences());
     };
   }, []);
+
+  const onPressBack = () => {
+    const newCommentInput = commentInputRef?.current?.getText?.() || '';
+    const newCommentSelectedImage =
+      commentInputRef?.current?.getSelectedImage?.();
+    if (newCommentInput !== '' || newCommentSelectedImage) {
+      dispatch(
+        modalActions.showAlert({
+          title: t('post:title_discard_comment'),
+          content: t('post:text_discard_comment'),
+          showCloseButton: true,
+          cancelBtn: true,
+          cancelLabel: t('post:btn_continue_comment'),
+          confirmLabel: t('post:btn_discard_comment'),
+          onConfirm: () => rootNavigation.goBack(),
+          stretchOnWeb: true,
+        }),
+      );
+      return;
+    }
+    if (!rootNavigation.canGoBack) {
+      rootNavigation.navigate(homeStack.newsfeed);
+      return;
+    }
+    rootNavigation.goBack();
+  };
+
+  useBackPressListener(onPressBack);
 
   useEffect(() => {
     if (!user && Platform.OS === 'web') {
@@ -126,7 +140,7 @@ const _PostDetailContent = (props: any) => {
   }, [isInternetReachable]);
 
   useEffect(() => {
-    if (id && userId && streamClient && internetReachableRef.current) {
+    if (id && userId && internetReachableRef.current) {
       getPostDetail((loading, success) => {
         if (!loading && !success && internetReachableRef.current) {
           if (Platform.OS === 'web') {
@@ -172,7 +186,7 @@ const _PostDetailContent = (props: any) => {
   const getPostDetail = (
     callbackLoading?: (loading: boolean, success: boolean) => void,
   ) => {
-    if (userId && id && streamClient) {
+    if (userId && id) {
       const payload: IPayloadGetPostDetail = {
         postId: id,
         callbackLoading,
@@ -182,37 +196,6 @@ const _PostDetailContent = (props: any) => {
   };
 
   const onRefresh = () => getPostDetail(loading => setRefreshing(loading));
-
-  const onPressBack = () => {
-    const newCommentInput = commentInputRef?.current?.getText?.() || '';
-    const newCommentSelectedImage =
-      commentInputRef?.current?.getSelectedImage?.();
-    if (newCommentInput !== '' || newCommentSelectedImage) {
-      dispatch(
-        modalActions.showAlert({
-          title: i18n.t('post:title_discard_comment'),
-          content: i18n.t('post:text_discard_comment'),
-          showCloseButton: true,
-          cancelBtn: true,
-          cancelLabel: i18n.t('post:btn_continue_comment'),
-          confirmLabel: i18n.t('post:btn_discard_comment'),
-          onConfirm: () => rootNavigation.goBack(),
-          stretchOnWeb: true,
-        }),
-      );
-      return;
-    }
-    if (!rootNavigation.canGoBack) {
-      rootNavigation.navigate(homeStack.newsfeed);
-      return;
-    }
-    rootNavigation.goBack();
-  };
-
-  useBackHandler(() => {
-    onPressBack();
-    return true;
-  });
 
   const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
     if (sectionData.length > 0) {
@@ -259,13 +242,7 @@ const _PostDetailContent = (props: any) => {
   }, [commentInputRef, sectionData.length]);
 
   const onCommentSuccess = useCallback(
-    ({
-      newCommentId,
-      parentCommentId,
-    }: {
-      newCommentId: string;
-      parentCommentId?: string;
-    }) => {
+    ({parentCommentId}: {newCommentId: string; parentCommentId?: string}) => {
       let sectionIndex;
       let itemIndex = 0;
       if (parentCommentId) {
@@ -289,10 +266,9 @@ const _PostDetailContent = (props: any) => {
     commentParent?: any,
   ) => {
     rootNavigation.navigate(homeStack.commentDetail, {
-      commentData,
+      commentId: commentData?.id || 0,
       postId: id,
       replyItem,
-      focus_comment,
       commentParent,
     });
   };
@@ -393,8 +369,8 @@ const _PostDetailContent = (props: any) => {
     }
   }, [layoutSet, sectionData.length, focus_comment, listComment?.length]);
 
-  const renderComments = () => {
-    if (!postTime) return <PostViewPlaceholder />;
+  const renderContent = () => {
+    if (!createdAt) return <PostViewPlaceholder />;
 
     return (
       <View style={styles.container}>
@@ -413,7 +389,7 @@ const _PostDetailContent = (props: any) => {
                 idLessThan={listComment?.[0]?.id}
               />
             }
-            ListFooterComponent={commentCount && renderFooter}
+            ListFooterComponent={commentLeft && renderFooter}
             stickySectionHeadersEnabled={false}
             ItemSeparatorComponent={() => <View />}
             keyboardShouldPersistTaps={'handled'}
@@ -422,6 +398,7 @@ const _PostDetailContent = (props: any) => {
             onScrollToIndexFailed={onScrollToIndexFailed}
             refreshControl={
               <RefreshControl
+                testID={'post_detail_content.refresh_control'}
                 refreshing={refreshing}
                 onRefresh={onRefresh}
                 tintColor={colors.borderDisable}
@@ -446,7 +423,7 @@ const _PostDetailContent = (props: any) => {
         onPressBack={onPressBack}
         avatar={Platform.OS === 'web' ? undefined : images.logo_bein}
       />
-      {renderComments()}
+      {renderContent()}
     </View>
   );
 };
@@ -472,7 +449,7 @@ const PostDetailContentHeader = ({
         btnCommentTestID="post_detail_content.btn_comment"
       />
       <Divider />
-      {commentLeft > 0 && (
+      {commentLeft && (
         <LoadMoreComment
           title={'post:text_load_more_comments'}
           postId={id}
@@ -483,11 +460,11 @@ const PostDetailContentHeader = ({
   );
 };
 
-const getSectionData = (listComment: IReaction[]) => {
+const getSectionData = (listComment: ICommentData[]) => {
   const result: any[] = [];
   listComment?.map?.((comment, index) => {
     const item: any = {};
-    const lastChildComment = get(comment, 'latest_children.comment', []);
+    const lastChildComment = comment?.child?.list || [];
     const _data =
       lastChildComment.length > 0
         ? [lastChildComment[lastChildComment.length - 1]]

@@ -18,7 +18,23 @@ import PendingMembers from '~/screens/Groups/GroupDetail/groupModerating/Pending
 import PostSettings from '~/screens/Post/PostSettings';
 import CommentDetail from '~/screens/Post/CommentDetail';
 
+import Communities from '~/screens/Groups/Communities';
+import CommunityDetail from '~/screens/Groups/CommunityDetail';
+import YourGroups from '~/screens/Groups/YourGroups';
+import CommunityAbout from '~/screens/Groups/CommunityAbout';
+import DiscoverGroups from '~/screens/Groups/DiscoverGroups';
+import CommunityMembers from '~/screens/Groups/CommunityMembers';
+
 export default {
+  // community
+  communities: Communities,
+  'community-detail': CommunityDetail,
+  'your-groups': YourGroups,
+  'community-about': CommunityAbout,
+  'discover-groups': DiscoverGroups,
+  'community-members': CommunityMembers,
+
+  // group
   'group-list': Groups,
   'group-detail': GroupDetail,
   'group-about': GroupAbout,

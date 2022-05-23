@@ -24,6 +24,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import {
+  ICommentData,
   IMarkdownAudience,
   IPayloadDeleteComment,
   IPayloadReactToComment,
@@ -39,12 +40,13 @@ import * as modalActions from '~/store/modal/actions';
 import {showReactionDetailBottomSheet} from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
+import actions from '~/beinComponents/inputs/MentionInput/redux/actions';
 
 export interface CommentViewProps {
-  postId: string;
+  postId: number;
   groupIds: string;
-  parentCommentId?: string;
-  commentData: IReaction;
+  parentCommentId?: number;
+  commentData: ICommentData;
   onPressReply: (data: IReaction) => void;
   contentBackgroundColor?: string;
 }
@@ -71,18 +73,19 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const comment = useKeySelector(postKeySelector.commentById(commentData?.id));
   const {
     id,
-    user_id,
-    data,
-    created_at,
-    updated_at,
-    user,
-    children_counts,
-    own_children,
-    reactions_order,
+    actor,
+    content,
+    media,
+    ownerReactions,
+    reactionsCount,
+    createdAt,
+    updatedAt,
+    edited,
   } = comment || commentData || {};
-  const {content, edited, images} = data || {};
-  const avatar = user?.data?.avatar || '';
-  const name = user?.data?.fullname || '';
+
+  const {fullname, avatar} = actor || {};
+
+  const isActor = Number(currentUserId) === actor?.id;
 
   const [commentStatus, setCommentStatus] = useState(
     commentData?.status || null,
@@ -116,7 +119,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   };
 
   const onPressUser = (e?: any) => {
-    const id = user?.id;
+    const id = actor?.id;
     if (!id) return;
 
     const payload = {
@@ -139,8 +142,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
         postId,
         parentCommentId,
         reactionId: reactionId,
-        ownReaction: own_children,
-        reactionCounts: children_counts,
+        ownerReactions: ownerReactions,
+        reactionsCount: reactionsCount,
       };
       dispatch(postActions.postReactToComment(payload));
     }
@@ -154,8 +157,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
         postId,
         parentCommentId,
         reactionId: reactionId,
-        ownReaction: own_children,
-        reactionCounts: children_counts,
+        ownerReactions: ownerReactions,
+        reactionsCount: reactionsCount,
       };
       dispatch(postActions.deleteReactToComment(payload));
     }
@@ -189,6 +192,13 @@ const _CommentView: React.FC<CommentViewProps> = ({
   };
 
   const _onPressReply = () => {
+    const actor: any = commentData?.actor || {};
+    const username = actor?.data?.username || actor?.username || '';
+    dispatch(
+      actions.addTempSelected({
+        [username]: {id: actor?.id, ...actor},
+      }),
+    );
     onPressReply?.(commentData);
   };
 
@@ -222,9 +232,11 @@ const _CommentView: React.FC<CommentViewProps> = ({
         ContentComponent: (
           <CommentViewMenu
             commentId={id}
+            parentCommentId={parentCommentId}
             content={content}
             groupIds={groupIds}
-            isActor={currentUserId === user_id}
+            postId={postId}
+            isActor={isActor}
             onPressMoreReaction={onPressReact}
             onAddReaction={onAddReaction}
             onPressReply={_onPressReply}
@@ -259,11 +271,11 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const getReactionStatistics = async (param: any) => {
     try {
       const response = await postDataHelper.getReactionDetail(param);
-      const data = await response?.results;
-      const users = data.map((item: any) => ({
-        id: item?.user?.id,
-        avatar: item?.user?.data?.avatar,
-        fullname: item?.user?.data?.fullname,
+      const data = await response?.list;
+      const users = (data || []).map((item: any) => ({
+        id: item?.actor?.id,
+        avatar: item?.actor?.avatar,
+        fullname: item?.actor?.fullname,
       }));
 
       return Promise.resolve(users || []);
@@ -275,9 +287,9 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const onLongPressReaction = (reactionType: ReactionType) => {
     const payload: IPayloadReactionDetailBottomSheet = {
       isOpen: true,
-      reactionCounts: children_counts,
+      reactionCounts: reactionsCount,
       initReaction: reactionType,
-      getDataParam: {postId, commentId: id},
+      getDataParam: {target: 'COMMENT', targetId: id},
       getDataPromise: getReactionStatistics,
     };
     dispatch(showReactionDetailBottomSheet(payload));
@@ -303,15 +315,13 @@ const _CommentView: React.FC<CommentViewProps> = ({
       </RNAnimated.View>
     );
   };
-
   const renderReactionsReplyView = () => {
     return (
       isActive && (
         <View style={styles.buttonContainer}>
           <ReactionView
-            ownReactions={own_children}
-            reactionCounts={children_counts}
-            reactionsOrder={reactions_order}
+            ownerReactions={ownerReactions}
+            reactionsCount={reactionsCount}
             onAddReaction={onAddReaction}
             onRemoveReaction={onRemoveReaction}
             onPressSelectReaction={onPressReact}
@@ -386,7 +396,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                           parentCommentId
                             ? 'comment_view.level_2.user_name'
                             : 'comment_view.level_1.user_name'
-                        }>{`${name}`}</Text.H6>
+                        }>{`${fullname}`}</Text.H6>
                     </ButtonWrapper>
                   </View>
                   <View style={{flexDirection: 'row'}}>
@@ -396,7 +406,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                       </Text.H6>
                     )}
                     <TimeView
-                      time={edited ? updated_at : created_at}
+                      time={edited ? updatedAt : createdAt}
                       style={styles.textTime}
                       type="short"
                       textProps={{variant: 'h6'}}
@@ -411,11 +421,11 @@ const _CommentView: React.FC<CommentViewProps> = ({
                   shortLength={200}
                   limitLength={200}
                   content={content || ''}
-                  selector={`${postKeySelector.allComments}.${id}.data.mentions.users`}
+                  selector={`${postKeySelector.allComments}.${id}.mentions`}
                   onPressAudience={onPressAudience}
                 />
               </View>
-              <CommentMediaView data={data} onLongPress={onLongPress} />
+              <CommentMediaView media={media} onLongPress={onLongPress} />
             </View>
           </Button>
           {renderReactionsReplyView()}

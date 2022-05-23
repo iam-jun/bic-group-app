@@ -13,7 +13,7 @@ export default function* deleteRecentSearchById({
     yield put(
       homeActions.getRecentSearchKeywords({
         target: 'post',
-        sort: 'desc',
+        order: 'DESC',
         limit: 10,
         showLoading: false,
       }),

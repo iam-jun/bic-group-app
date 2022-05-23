@@ -1,72 +1,194 @@
 import {cleanup, render} from '@testing-library/react-native';
 import React from 'react';
+import {
+  CHILD_COMMENT,
+  LOAD_MORE_RESPONSE,
+} from '~/test/mock_data/notifications';
+import {renderWithRedux} from '~/test/testUtils';
 import NotificationContent from '.';
-import {SAMPLE_ACTIVITY_1} from '../constants';
 
 afterEach(cleanup);
 
 describe('NotificationContent component', () => {
-  const baseProps = {
-    activities: [SAMPLE_ACTIVITY_1] as any,
-  };
-
   it(`renders correctly`, async () => {
-    const wrapper = render(<NotificationContent {...baseProps} />);
+    const extra = LOAD_MORE_RESPONSE[0].extra;
+    const verb = LOAD_MORE_RESPONSE[0].verb;
+    const actorCount = LOAD_MORE_RESPONSE[0].actorCount;
+    const activities = LOAD_MORE_RESPONSE[0].activities;
+    const wrapper = renderWithRedux(
+      <NotificationContent
+        description={extra?.description || ''}
+        defaultContent={extra?.content || ''}
+        activities={activities}
+        verb={verb}
+        actorCount={actorCount}
+      />,
+    );
     const rendered = wrapper.toJSON();
 
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders null`, async () => {
-    const activity = {
-      ...SAMPLE_ACTIVITY_1,
-      notification_type: 999,
-    };
-    const activities = [activity];
-    const props = {
-      activities: activities as any,
-    };
-    const wrapper = render(<NotificationContent {...props} />);
-    const rendered = wrapper.toJSON();
+  it(`should show "NotificationContent" without description and content is comment lv1 content`, async () => {
+    const verb = LOAD_MORE_RESPONSE[0].verb;
+    const actorCount = LOAD_MORE_RESPONSE[0].actorCount;
+    const activities = LOAD_MORE_RESPONSE[0].activities;
 
-    expect(rendered).toMatchSnapshot();
+    const wrapper = render(
+      <NotificationContent
+        description={''}
+        defaultContent={''}
+        activities={activities}
+        verb={verb}
+        actorCount={actorCount}
+      />,
+    );
+    const description = wrapper.getByTestId('notification_content.description');
+    const content = wrapper.queryByTestId('notification_content.content');
+
+    expect(description).not.toBeNull();
+    expect(content).not.toBeNull();
   });
 
-  it(`should show "NotificationContent" with title, no body`, async () => {
-    const activity = {
-      ...SAMPLE_ACTIVITY_1,
-      notification_type: 19,
-    };
-    const activities = [activity];
-    const props = {
-      activities: activities as any,
-    };
-    const wrapper = render(<NotificationContent {...props} />);
-    const title = wrapper.getByTestId('notification_content.title');
-    const body = wrapper.queryByTestId('notification_content.body');
-
-    expect(title).not.toBeNull();
-    expect(body).toBeNull();
-  });
-
-  it(`should show "NotificationContent" without title`, async () => {
-    const activity = {
-      ...SAMPLE_ACTIVITY_1,
-      notification_type: 7,
-      reaction: {
-        data: {
-          content: 'test',
-        },
+  it(`should show "NotificationContent" with description and content is comment lv2 content`, async () => {
+    const commentHasChild = {
+      ...LOAD_MORE_RESPONSE[0].activities[0],
+      comment: {
+        ...LOAD_MORE_RESPONSE[0].activities[0].comment,
+        child: CHILD_COMMENT,
       },
     };
-    const activities = [activity];
-    const props = {
-      activities: activities as any,
+    const NOTIFICATION_COMMENT_LV2 = {
+      ...LOAD_MORE_RESPONSE[0],
+      activities: [commentHasChild],
     };
-    const wrapper = render(<NotificationContent {...props} />);
-    const component = wrapper.getByTestId('notification_content.body');
+    const extra = LOAD_MORE_RESPONSE[0].extra;
+    const verb = NOTIFICATION_COMMENT_LV2.verb;
+    const actorCount = NOTIFICATION_COMMENT_LV2.actorCount;
+    const activities = NOTIFICATION_COMMENT_LV2.activities;
 
-    expect(component).not.toBeNull();
-    expect(component.props.children).toBe('test');
+    const wrapper = render(
+      <NotificationContent
+        description={extra.description}
+        defaultContent={extra.content}
+        activities={activities}
+        verb={verb}
+        actorCount={actorCount}
+      />,
+    );
+    const description = wrapper.getByTestId('notification_content.description');
+    const content = wrapper.queryByTestId('notification_content.content');
+
+    expect(description).not.toBeNull();
+    expect(content).toBeDefined();
+
+    //@ts-ignore
+    expect(content.props?.children).toBe(CHILD_COMMENT.content);
+  });
+
+  it(`should show "NotificationContent" with description and content is comment lv1 content in verb REACT`, async () => {
+    const extra = LOAD_MORE_RESPONSE[0].extra;
+    const actorCount = LOAD_MORE_RESPONSE[0].actorCount;
+    const activities = LOAD_MORE_RESPONSE[0].activities;
+
+    const wrapper = render(
+      <NotificationContent
+        description={extra.description}
+        defaultContent={extra.content}
+        activities={activities}
+        verb={'REACT'}
+        actorCount={actorCount}
+      />,
+    );
+    const description = wrapper.getByTestId('notification_content.description');
+    const content = wrapper.queryByTestId('notification_content.content');
+
+    expect(description).not.toBeNull();
+    expect(content).toBeDefined();
+
+    //@ts-ignore
+    expect(content.props?.children).toBe(activities[0].comment.content);
+  });
+
+  it(`should show "NotificationContent" with not description and content is comment lv2 content  in verb REACT`, async () => {
+    const commentHasChild = {
+      ...LOAD_MORE_RESPONSE[0].activities[0],
+      comment: {
+        ...LOAD_MORE_RESPONSE[0].activities[0].comment,
+        child: CHILD_COMMENT,
+      },
+    };
+    const NOTIFICATION_COMMENT_LV2 = {
+      ...LOAD_MORE_RESPONSE[0],
+      activities: [commentHasChild],
+    };
+    const extra = LOAD_MORE_RESPONSE[0].extra;
+    const actorCount = NOTIFICATION_COMMENT_LV2.actorCount;
+    const activities = NOTIFICATION_COMMENT_LV2.activities;
+
+    const wrapper = render(
+      <NotificationContent
+        description={extra.description}
+        defaultContent={extra.content}
+        activities={activities}
+        verb={'REACT'}
+        actorCount={actorCount}
+      />,
+    );
+    const description = wrapper.getByTestId('notification_content.description');
+    const content = wrapper.queryByTestId('notification_content.content');
+
+    expect(description).not.toBeNull();
+    expect(content).toBeDefined();
+
+    //@ts-ignore
+    expect(content.props?.children).toBe(CHILD_COMMENT.content);
+  });
+
+  it(`should show "NotificationContent" with description and content is extra content in verb POST`, async () => {
+    const extra = LOAD_MORE_RESPONSE[0].extra;
+    const actorCount = LOAD_MORE_RESPONSE[0].actorCount;
+    const activities = LOAD_MORE_RESPONSE[0].activities;
+
+    const wrapper = render(
+      <NotificationContent
+        description={extra.description}
+        defaultContent={extra.content}
+        activities={activities}
+        verb={'POST'}
+        actorCount={actorCount}
+      />,
+    );
+    const description = wrapper.getByTestId('notification_content.description');
+    const content = wrapper.queryByTestId('notification_content.content');
+
+    expect(description).not.toBeNull();
+    expect(content).toBeDefined();
+
+    //@ts-ignore
+    expect(content.props?.children).toBe(extra.content);
+  });
+
+  it(`should show "NotificationContent" with description and content is extra content in verb REACT and actorCount > 1`, async () => {
+    const extra = LOAD_MORE_RESPONSE[0].extra;
+    const activities = LOAD_MORE_RESPONSE[0].activities;
+
+    const wrapper = render(
+      <NotificationContent
+        description={extra.description}
+        defaultContent={extra.content}
+        activities={activities}
+        verb={'POST'}
+        actorCount={2}
+      />,
+    );
+    const description = wrapper.getByTestId('notification_content.description');
+    const content = wrapper.queryByTestId('notification_content.content');
+
+    expect(description).not.toBeNull();
+    expect(content).toBeDefined();
+
+    //@ts-ignore
+    expect(content.props?.children).toBe(extra.content);
   });
 });

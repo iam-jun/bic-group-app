@@ -81,7 +81,7 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
     )
     mattermost(
         url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-        text: "@all\n🟣 [DEV] 🍎 -iOS- New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+        text: "@all\n🟣🍎 **Bein Dev iOS** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
             \n > **Git Branch**: #{git_branch}
             \n **Git Author**: #{commit[:author]}
             \n **Git Commit**: #{git_mess}",
@@ -116,7 +116,7 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
     )
     mattermost(
         url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-        text: "@all\n🟡 [STG] 🍎 -iOS- New build #{appVersionText} available on TestFlight.}
+        text: "@all\n🟡🍎 **Bein Staging iOS** New build #{appVersionText} available on TestFlight.}
             \n > **Git Branch**: #{git_branch}
             \n **Git Author**: #{commit[:author]}
             \n **Git Commit**: #{git_mess}",
@@ -149,7 +149,7 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
         )
         mattermost(
             url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-            text: "@all\n🟢 [PROD] 🍎 -iOS- New build #{appVersionText} available on TestFlight.}
+            text: "@all\n🟢🍎 **Bein Production iOS** New build #{appVersionText} available on TestFlight.}
                 \n > **Git Branch**: #{git_branch}
                 \n **Git Author**: #{commit[:author]}
                 \n **Git Commit**: #{git_mess}",
@@ -199,7 +199,7 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
           )
           mattermost(
               url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-              text: "@all\n🟡 [STG] 🍎 -iOS- New build #{appVersionText} available on TestFlight.}
+              text: "@all\n🟡🍎 **Bein Staging iOS** New build #{appVersionText} available on TestFlight.}
                   \n > **Git Branch**: #{git_branch}
                   \n **Git Author**: #{commit[:author]}
                   \n **Git Commit**: #{git_mess}",
@@ -250,7 +250,7 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
               )
               mattermost(
                   url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-                  text: "@all\n🟢 [PROD] 🍎 -iOS- New build #{appVersionText} available on TestFlight.}
+                  text: "@all\n🟢🍎 **Bein Production iOS** New build #{appVersionText} available on TestFlight.}
                       \n > **Git Branch**: #{git_branch}
                       \n **Git Author**: #{commit[:author]}
                       \n **Git Commit**: #{git_mess}",

@@ -136,11 +136,15 @@ exports[`Header Avatar component renders correctly 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 16,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 16,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="header_avatar.first_label"
     >
@@ -149,11 +153,15 @@ exports[`Header Avatar component renders correctly 1`] = `
     </Text>
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 11,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="header_avatar.second_label"
     >
@@ -302,11 +310,15 @@ exports[`Header Avatar component renders correctly with props Avatar Props 1`] =
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 16,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 16,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="header_avatar.first_label"
     >
@@ -315,11 +327,15 @@ exports[`Header Avatar component renders correctly with props Avatar Props 1`] =
     </Text>
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 11,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="header_avatar.second_label"
     >
@@ -467,11 +483,15 @@ exports[`Header Avatar component renders correctly with props Container Style 1`
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 16,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 16,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="header_avatar.first_label"
     >
@@ -480,11 +500,15 @@ exports[`Header Avatar component renders correctly with props Container Style 1`
     </Text>
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 11,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="header_avatar.second_label"
     >
@@ -630,12 +654,18 @@ exports[`Header Avatar component renders correctly with props First Label Props 
   >
     <Text
       style={
-        Object {
-          "color": "#FF9800",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 16,
-          "textDecorationLine": "underline",
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 16,
+          },
+          Object {},
+          Object {
+            "color": "#FF9800",
+            "textDecorationLine": "underline",
+          },
+        ]
       }
       testID="header_avatar.first_label"
     >
@@ -644,11 +674,15 @@ exports[`Header Avatar component renders correctly with props First Label Props 
     </Text>
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 11,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="header_avatar.second_label"
     >
@@ -794,11 +828,15 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 16,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 16,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="header_avatar.first_label"
     >
@@ -952,11 +990,15 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
     </Text>
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 11,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="header_avatar.second_label"
     >
@@ -1102,11 +1144,15 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 16,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 16,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="header_avatar.first_label"
     >
@@ -1219,11 +1265,15 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
     </Text>
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 11,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="header_avatar.second_label"
     >
@@ -1369,11 +1419,15 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 16,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 16,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="header_avatar.first_label"
     >
@@ -1486,11 +1540,15 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
     </Text>
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 11,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 11,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="header_avatar.second_label"
     >
@@ -1636,11 +1694,15 @@ exports[`Header Avatar component renders correctly with props Second Label Props
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 16,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 16,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="header_avatar.first_label"
     >
@@ -1649,12 +1711,18 @@ exports[`Header Avatar component renders correctly with props Second Label Props
     </Text>
     <Text
       style={
-        Object {
-          "color": "#FF9800",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 11,
-          "textDecorationLine": "underline",
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 11,
+          },
+          Object {},
+          Object {
+            "color": "#FF9800",
+            "textDecorationLine": "underline",
+          },
+        ]
       }
       testID="header_avatar.second_label"
     >

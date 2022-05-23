@@ -12,6 +12,7 @@ export const validateImages = (
   selectingImages?.map?.((item: any) => {
     if (item?.url) {
       images.push({
+        id: item?.id,
         name: item?.url || '',
         origin_name: item?.fileName,
         width: item?.file?.width,
@@ -19,7 +20,7 @@ export const validateImages = (
       });
     } else {
       const {file, fileName} = item || {};
-      const {url, uploading} =
+      const {url, uploading, result} =
         FileUploader.getInstance().getFile(fileName) || {};
       if (uploading) {
         imageError = t('post:error_wait_uploading');
@@ -27,6 +28,7 @@ export const validateImages = (
         imageError = t('post:error_upload_failed');
       }
       images.push({
+        id: result?.id,
         name: url || '',
         origin_name: fileName,
         width: file?.width,

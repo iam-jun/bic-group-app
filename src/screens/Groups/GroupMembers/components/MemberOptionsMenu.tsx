@@ -18,13 +18,10 @@ import modalActions from '~/store/modal/actions';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupsActions from '../../redux/actions';
-import {
-  alertLeaveGroup,
-  checkLastAdmin,
-  handleLeaveInnerGroups,
-} from '../../helper';
+import {checkLastAdmin, handleLeaveInnerGroups} from '../../helper';
 import useRemoveMember from './useRemoveMember';
 import useRemoveAdmin from './useRemoveAdmin';
+import useLeaveGroup from './useLeaveGroup';
 
 interface MemberOptionsMenuProps {
   groupId: number;
@@ -55,6 +52,7 @@ const MemberOptionsMenu = ({
     selectedMember,
   });
   const alertRemovingAdmin = useRemoveAdmin({groupId, selectedMember});
+  const alertLeaveGroup = useLeaveGroup({groupId, username: user.username});
 
   const onPressMenuOption = (
     type:
@@ -68,16 +66,16 @@ const MemberOptionsMenu = ({
     modalizeRef.current?.close();
     switch (type) {
       case 'view-profile':
-        goToUserProfile(selectedMember);
+        goToUserProfile();
         break;
       case 'set-admin':
-        alertSettingAdmin(selectedMember);
+        alertSettingAdmin();
         break;
       case 'remove-admin':
         onPressRemoveAdmin();
         break;
       case 'remove-member':
-        onPressRemoveMember(selectedMember);
+        onPressRemoveMember();
         break;
       case 'leave-group':
         onPressLeave();
@@ -88,7 +86,7 @@ const MemberOptionsMenu = ({
     }
   };
 
-  const goToUserProfile = (selectedMember?: IGroupMembers) => {
+  const goToUserProfile = () => {
     if (selectedMember?.id) {
       rootNavigation.navigate(mainStack.userProfile, {
         userId: selectedMember.id,
@@ -96,35 +94,31 @@ const MemberOptionsMenu = ({
     }
   };
 
-  const alertSettingAdmin = (selectedMember?: IGroupMembers) => {
-    if (selectedMember) {
-      const alertPayload = {
-        iconName: 'Star',
-        title: i18next.t('groups:modal_confirm_set_admin:title'),
-        content: i18next.t('groups:modal_confirm_set_admin:description'),
-        ContentComponent: Text.BodyS,
-        cancelBtn: true,
-        cancelBtnProps: {
-          textColor: theme.colors.primary7,
-        },
-        onConfirm: () => doSetAdmin(selectedMember),
-        confirmLabel: i18next.t(
-          'groups:modal_confirm_set_admin:button_confirm',
-        ),
-        ConfirmBtnComponent: Button.Secondary,
-        confirmBtnProps: {
-          highEmphasis: true,
-        },
-      };
-      alertPayload.content = alertPayload.content.replace(
-        '{0}',
-        `"${selectedMember?.fullname}"`,
-      );
-      dispatch(modalActions.showAlert(alertPayload));
-    }
+  const alertSettingAdmin = () => {
+    const alertPayload = {
+      iconName: 'Star',
+      title: i18next.t('groups:modal_confirm_set_admin:title'),
+      content: i18next.t('groups:modal_confirm_set_admin:description'),
+      ContentComponent: Text.BodyS,
+      cancelBtn: true,
+      cancelBtnProps: {
+        textColor: theme.colors.primary7,
+      },
+      onConfirm: doSetAdmin,
+      confirmLabel: i18next.t('groups:modal_confirm_set_admin:button_confirm'),
+      ConfirmBtnComponent: Button.Secondary,
+      confirmBtnProps: {
+        highEmphasis: true,
+      },
+    };
+    alertPayload.content = alertPayload.content.replace(
+      '{0}',
+      `"${selectedMember?.fullname}"`,
+    );
+    dispatch(modalActions.showAlert(alertPayload));
   };
 
-  const doSetAdmin = (selectedMember: IGroupMembers) => {
+  const doSetAdmin = () => {
     selectedMember?.id &&
       dispatch(
         groupsActions.setGroupAdmin({groupId, userIds: [selectedMember.id]}),
@@ -158,7 +152,7 @@ const MemberOptionsMenu = ({
     dispatch(modalActions.clearToastMessage());
   };
 
-  const onPressRemoveMember = (selectedMember: IGroupMembers) => {
+  const onPressRemoveMember = () => {
     if (selectedMember?.id)
       return checkLastAdmin(
         groupId,
@@ -207,9 +201,6 @@ const MemberOptionsMenu = ({
     );
   };
 
-  const onAlertLeaveGroup = () =>
-    alertLeaveGroup(groupId, dispatch, user.username, theme, doLeaveGroup);
-
   const onPressLeave = () => {
     // check if the current user is the last admin before leaving group
     if (selectedMember?.id) {
@@ -217,14 +208,10 @@ const MemberOptionsMenu = ({
         groupId,
         selectedMember.id,
         dispatch,
-        onAlertLeaveGroup,
+        alertLeaveGroup,
         onPressMemberButton,
       );
     }
-  };
-
-  const doLeaveGroup = () => {
-    dispatch(groupsActions.leaveGroup(groupId));
   };
 
   const isGroupAdmin = () => {

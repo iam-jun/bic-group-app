@@ -166,6 +166,12 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
           </View>
         </View>
         <View
+          animatedStyle={
+            Object {
+              "value": Object {},
+            }
+          }
+          collapsable={false}
           style={
             Object {
               "flex": 1,
@@ -200,13 +206,18 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
             <Text
               numberOfLines={1}
               style={
-                Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 16,
-                  "height": 24,
-                  "lineHeight": 24,
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                  },
+                  Object {},
+                  Object {
+                    "height": 24,
+                    "lineHeight": 24,
+                  },
+                ]
               }
               testID="header.text"
             >
@@ -255,12 +266,19 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
           >
             <Text
               style={
-                Object {
-                  "color": "#B2BDCD",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 16,
-                  "textAlign": "center",
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "color": "#B2BDCD",
+                  },
+                  Object {
+                    "textAlign": "center",
+                  },
+                ]
               }
               testID="header.button.text"
             >
@@ -505,12 +523,17 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
       >
         <Text
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
-              "marginVertical": 8,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 14,
+              },
+              Object {},
+              Object {
+                "marginVertical": 8,
+              },
+            ]
           }
         >
           Search Results
@@ -529,12 +552,17 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
         >
           <Text
             style={
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
-                "marginVertical": 8,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 14,
+                },
+                Object {},
+                Object {
+                  "marginVertical": 8,
+                },
+              ]
             }
           >
             Groups
@@ -553,7 +581,6 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "marginTop": 4,
               }
             }
           >
@@ -704,23 +731,34 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                 </View>
                 <Text
                   style={
-                    Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-Regular",
-                      "fontSize": 16,
-                      "paddingRight": 20,
-                    }
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-Regular",
+                        "fontSize": 16,
+                      },
+                      Object {},
+                      Object {
+                        "paddingRight": 20,
+                      },
+                    ]
                   }
                 >
                   EVOL Community
                    
                   <Text
                     style={
-                      Object {
-                        "color": "#421187",
-                        "fontFamily": "OpenSans-Regular",
-                        "fontSize": 16,
-                      }
+                      Array [
+                        Object {
+                          "color": "#2F3945",
+                          "fontFamily": "OpenSans-Regular",
+                          "fontSize": 16,
+                        },
+                        Object {
+                          "color": "#421187",
+                        },
+                        undefined,
+                      ]
                     }
                   >
                     
@@ -1032,13 +1070,18 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                   <Text
                     numberOfLines={2}
                     style={
-                      Object {
-                        "color": "#2F3945",
-                        "fontFamily": "OpenSans-SemiBold",
-                        "fontSize": 14,
-                        "maxWidth": 200,
-                        "paddingTop": 2,
-                      }
+                      Array [
+                        Object {
+                          "color": "#2F3945",
+                          "fontFamily": "OpenSans-SemiBold",
+                          "fontSize": 14,
+                        },
+                        Object {},
+                        Object {
+                          "maxWidth": 200,
+                          "paddingTop": 2,
+                        },
+                      ]
                     }
                   >
                     EVOL Community
@@ -1153,12 +1196,19 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                     </View>
                     <Text
                       style={
-                        Object {
-                          "color": "#627286",
-                          "fontFamily": "OpenSans-Regular",
-                          "fontSize": 14,
-                          "marginHorizontal": 4,
-                        }
+                        Array [
+                          Object {
+                            "color": "#2F3945",
+                            "fontFamily": "OpenSans-Regular",
+                            "fontSize": 14,
+                          },
+                          Object {
+                            "color": "#627286",
+                          },
+                          Object {
+                            "marginHorizontal": 4,
+                          },
+                        ]
                       }
                     >
                       25
@@ -1350,6 +1400,12 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
           </View>
         </View>
         <View
+          animatedStyle={
+            Object {
+              "value": Object {},
+            }
+          }
+          collapsable={false}
           style={
             Object {
               "flex": 1,
@@ -1384,13 +1440,18 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
             <Text
               numberOfLines={1}
               style={
-                Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 16,
-                  "height": 24,
-                  "lineHeight": 24,
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                  },
+                  Object {},
+                  Object {
+                    "height": 24,
+                    "lineHeight": 24,
+                  },
+                ]
               }
               testID="header.text"
             >
@@ -1439,12 +1500,19 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
           >
             <Text
               style={
-                Object {
-                  "color": "#B2BDCD",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 16,
-                  "textAlign": "center",
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "color": "#B2BDCD",
+                  },
+                  Object {
+                    "textAlign": "center",
+                  },
+                ]
               }
               testID="header.button.text"
             >
@@ -1689,12 +1757,17 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
       >
         <Text
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
-              "marginVertical": 8,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 14,
+              },
+              Object {},
+              Object {
+                "marginVertical": 8,
+              },
+            ]
           }
         >
           Search Results
@@ -1713,12 +1786,17 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
         >
           <Text
             style={
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
-                "marginVertical": 8,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 14,
+                },
+                Object {},
+                Object {
+                  "marginVertical": 8,
+                },
+              ]
             }
           >
             Groups
@@ -1737,7 +1815,6 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
               Object {
                 "alignItems": "center",
                 "flexDirection": "row",
-                "marginTop": 4,
               }
             }
           >
@@ -1888,23 +1965,34 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                 </View>
                 <Text
                   style={
-                    Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-Regular",
-                      "fontSize": 16,
-                      "paddingRight": 20,
-                    }
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-Regular",
+                        "fontSize": 16,
+                      },
+                      Object {},
+                      Object {
+                        "paddingRight": 20,
+                      },
+                    ]
                   }
                 >
                   EVOL Community
                    
                   <Text
                     style={
-                      Object {
-                        "color": "#421187",
-                        "fontFamily": "OpenSans-Regular",
-                        "fontSize": 16,
-                      }
+                      Array [
+                        Object {
+                          "color": "#2F3945",
+                          "fontFamily": "OpenSans-Regular",
+                          "fontSize": 16,
+                        },
+                        Object {
+                          "color": "#421187",
+                        },
+                        undefined,
+                      ]
                     }
                   >
                     
@@ -2216,13 +2304,18 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                   <Text
                     numberOfLines={2}
                     style={
-                      Object {
-                        "color": "#2F3945",
-                        "fontFamily": "OpenSans-SemiBold",
-                        "fontSize": 14,
-                        "maxWidth": 200,
-                        "paddingTop": 2,
-                      }
+                      Array [
+                        Object {
+                          "color": "#2F3945",
+                          "fontFamily": "OpenSans-SemiBold",
+                          "fontSize": 14,
+                        },
+                        Object {},
+                        Object {
+                          "maxWidth": 200,
+                          "paddingTop": 2,
+                        },
+                      ]
                     }
                   >
                     EVOL Community
@@ -2337,12 +2430,19 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                     </View>
                     <Text
                       style={
-                        Object {
-                          "color": "#627286",
-                          "fontFamily": "OpenSans-Regular",
-                          "fontSize": 14,
-                          "marginHorizontal": 4,
-                        }
+                        Array [
+                          Object {
+                            "color": "#2F3945",
+                            "fontFamily": "OpenSans-Regular",
+                            "fontSize": 14,
+                          },
+                          Object {
+                            "color": "#627286",
+                          },
+                          Object {
+                            "marginHorizontal": 4,
+                          },
+                        ]
                       }
                     >
                       25
@@ -2534,6 +2634,12 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
           </View>
         </View>
         <View
+          animatedStyle={
+            Object {
+              "value": Object {},
+            }
+          }
+          collapsable={false}
           style={
             Object {
               "flex": 1,
@@ -2568,13 +2674,18 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
             <Text
               numberOfLines={1}
               style={
-                Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 16,
-                  "height": 24,
-                  "lineHeight": 24,
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                  },
+                  Object {},
+                  Object {
+                    "height": 24,
+                    "lineHeight": 24,
+                  },
+                ]
               }
               testID="header.text"
             >
@@ -2623,12 +2734,19 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
           >
             <Text
               style={
-                Object {
-                  "color": "#B2BDCD",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 16,
-                  "textAlign": "center",
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                  },
+                  Object {
+                    "color": "#B2BDCD",
+                  },
+                  Object {
+                    "textAlign": "center",
+                  },
+                ]
               }
               testID="header.button.text"
             >

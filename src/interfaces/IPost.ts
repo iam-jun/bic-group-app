@@ -1,6 +1,5 @@
-import {IFilePicked, IObject} from '~/interfaces/common';
+import {IFilePicked} from '~/interfaces/common';
 import {ReactionType} from '~/constants/reactions';
-import {StreamClient} from 'getstream';
 
 export interface IPostAudience {
   users?: IAudienceUser[];
@@ -8,19 +7,17 @@ export interface IPostAudience {
 }
 
 export interface IAudienceUser {
-  id?: number | string;
-  data?: {
-    avatar?: string;
-    fullname?: string;
-  };
+  id?: number;
+  username?: string;
+  fullname?: string;
+  avatar?: string;
 }
 
 export interface IAudienceGroup {
-  id?: number | string;
-  data?: {
-    avatar?: string;
-    name?: string;
-  };
+  id?: number;
+  name?: string;
+  icon?: string;
+  child?: number[];
 }
 
 export interface IMarkdownAudience {
@@ -45,14 +42,17 @@ export interface IAudience {
 }
 
 export interface IActivityDataImage {
+  id?: number;
   name: string;
   origin_name?: string;
+  url?: string;
   width?: number;
   height?: number;
 }
 
 export interface IActivityData {
   content?: string;
+  highlight?: string;
   images?: IActivityDataImage[];
   videos?: string[];
   files?: string[];
@@ -61,7 +61,29 @@ export interface IActivityData {
 
 export interface IActivityImportant {
   active?: boolean;
-  expires_time?: string;
+  expires_time?: string | null;
+}
+
+export interface ICommentData {
+  id?: number;
+  postId?: number;
+  totalReply?: number;
+  actor?: IAudienceUser;
+  parentId?: number;
+  content?: string;
+  media?: IPostMedia;
+  mentions?: any;
+  createdAt?: string;
+  updatedAt?: string;
+  ownerReactions?: any;
+  reactionsCount?: any;
+  child: IPostComments;
+  loading?: boolean;
+  status?: 'pending' | 'success' | 'failed';
+  localId?: string | number[]; // from uuid-v4
+  parentCommentId?: string | number; // used when retry/cancel adding new comment
+  reactionsOfActor?: IOwnReaction;
+  reaction?: IReaction;
 }
 
 export interface ICreatePostImage {
@@ -75,43 +97,54 @@ export interface ICreatePostSettings {
   count: number;
 }
 
-/**
-  actor: userId
-  - Getstream saved as string
-  - Backend saved as int
-    =>  When post data to Backend, actor should be NUMBER
-        Otherwhile, when get data from Backend or Getstrea, actor should be STRING
- */
-export interface IPostActivity {
-  id?: string;
-  foreign_id?: string;
-  getstream_id?: string;
-  actor?: IAudienceUser;
-  verb?: string;
-  type?: string;
-  object?: {
-    data?: IActivityData;
-    created_at?: string;
-    updated_at?: string;
+export interface IPostSetting {
+  canReact?: boolean;
+  canShare?: boolean;
+  canComment?: boolean;
+  isImportant?: boolean;
+  importantExpiredAt?: string | null;
+}
+
+export interface IPostMedia {
+  images?: any[];
+  videos?: any[];
+  files?: any[];
+}
+
+export interface IPostComments {
+  list?: ICommentData[];
+  meta?: {
+    total?: number;
+    limit?: number;
+    hasPreviousPage?: boolean;
+    hasNextPage?: boolean;
   };
-  followers?: number[];
+}
+
+export interface IPostActivity {
+  id?: number;
   audience?: IPostAudience;
-  tags?: string[];
-  time?: string;
-  important?: IActivityImportant;
-  latest_reactions?: any;
-  own_reactions?: any;
-  reaction_counts?: IObject<number>;
-  reactions_order?: string[];
-  deleted?: boolean;
-  is_draft?: boolean;
+  content?: string;
+  highlight?: string;
+  media?: IPostMedia;
+  setting?: IPostSetting;
+  isDraft?: boolean;
+  actor?: IAudienceUser;
+  mentions?: any;
+  commentsCount?: number;
+  comments?: IPostComments;
+  reactionsCount?: IReactionCounts;
+  ownerReactions?: IOwnReaction;
+  markedReadPost?: boolean;
+  createdAt?: string;
+  createdBy?: number;
 }
 
-export interface IOwnReaction {
-  [reactionKind: string]: IReaction[];
-}
+export type IOwnReaction = Array<IReaction>;
 
-export type IReactionCounts = {[reactionKind: string]: number};
+export type IReactionCounts = {
+  [x: string]: {[reactionKind: string]: number};
+};
 
 export interface IAllPosts {
   [id: string]: IPostActivity;
@@ -122,65 +155,67 @@ export interface IAllComments {
 }
 
 export interface IPostCreatePost {
-  data?: IActivityData;
   audience?: {
-    user_ids: number[];
-    group_ids: number[];
+    userIds: number[];
+    groupIds: number[];
   };
-  tag_ids?: number[];
-  important?: IActivityImportant;
-  is_draft?: boolean;
+  content?: string;
+  media?: any;
+  setting?: any;
+  mentions?: any;
+  isDraft?: boolean;
 
   createFromGroupId?: string | number;
 }
 
+export interface IPayloadCreatePost {
+  data?: IPostCreatePost;
+  createFromGroupId?: string | number;
+  callback?: any;
+}
+
 export interface IPayloadCreateComment {
-  postId: string;
-  parentCommentId?: string;
-  commentData: IActivityData;
+  postId: number;
+  parentCommentId?: number;
+  commentData: ICommentData;
   userId: string | number;
   localId?: string | number[]; // used when retry adding new comment
-  preComment?: IReaction & {
-    localId: string | number[]; // used when creating new comment
-    parentCommentId?: string;
-  };
+  preComment?: ICommentData;
   onSuccess?: () => void;
   isCommentLevel1Screen?: boolean;
+  viewMore?: boolean;
 }
 
 export interface IPayloadPutEditPost {
-  id: string;
+  id: number;
   data: IPostCreatePost;
   replaceWithDetail?: boolean;
   onRetry?: () => void;
+  msgSuccess?: string;
+  msgError?: string;
+  disableNavigate?: boolean;
 }
 
 export interface IPayloadPutEditComment {
-  id: string;
-  comment: IReaction;
-  data: IActivityData;
+  id: number;
+  comment: ICommentData;
+  data: ICommentData;
 }
 
 export interface IPayloadDeletePost {
-  id: string;
+  id: number;
   isDraftPost?: boolean;
 }
 
 export interface IParamGetPostDetail {
-  postId: string;
-
-  is_draft?: boolean;
-  enrich?: boolean;
-  own_reactions?: boolean;
-  with_own_reactions?: boolean;
-  with_own_children?: boolean;
-  with_recent_reactions?: boolean;
-  with_reaction_counts?: boolean;
-  recent_reactions_limit?: number;
+  postId: number;
+  commentOrder?: 'ASC' | 'DESC';
+  commentLimit?: number;
+  childCommentLimit?: number;
 }
 
 export interface IParamPutEditPost {
-  postId: string;
+  postId: number;
   data: IPostCreatePost;
 }
 
@@ -199,51 +234,53 @@ export interface IGetStreamUser {
     fullname?: string;
     username?: string;
   };
+  avatar?: string;
 }
 
 export interface IRequestPostComment {
-  postId: string;
-  data: IActivityData;
+  postId: number;
+  data: ICommentData;
 }
 
 export interface IRequestReplyComment {
-  parentCommentId: string;
-  data: IActivityData;
+  parentCommentId: number;
+  postId: number;
+  data: ICommentData;
 }
 
 export interface IRequestGetPostComment {
-  postId: string;
-  commentId?: string;
-  idLt?: string; //get comment before this id
-  kind?: string;
-  recentReactionsLimit?: number;
-  recentChildReactionsLimit?: number;
+  order?: 'ASC' | 'DESC';
+  limit?: number;
+  offset?: number;
+  idGTE?: number;
+  idLTE?: number;
+  idLT?: number;
+  idGT?: number;
+  postId: number;
+  parentId?: number;
+  childLimit?: number;
 }
 
 export interface IPayloadGetCommentsById extends IRequestGetPostComment {
   isMerge: boolean;
   callbackLoading?: (loading: boolean, canLoadMore?: boolean) => void;
   position?: string;
+  commentId?: number;
 }
 
 export interface IReaction {
-  created_at?: string;
-  updated_at?: string;
-  id?: string;
-  user_id?: string | number;
-  user?: IGetStreamUser;
-  kind?: IReactionKind;
-  activity_id?: string;
-  data?: IActivityData;
-  parent?: string;
-  latest_children?: any;
-  children_counts?: any;
-  reactions_order?: string[];
-  own_children?: any;
+  id?: number;
+  postId?: number;
+  reactionName?: string;
+  createdBy?: number;
+  createdAt?: string;
+
   loading?: boolean;
   status?: 'pending' | 'success' | 'failed';
   localId?: string | number[]; // from uuid-v4
-  parentCommentId?: string; // used when retry/cancel adding new comment
+  parentCommentId?: string | number; // used when retry/cancel adding new comment
+  child?: any;
+  actor?: IAudienceUser;
 }
 
 export interface IGetStreamAudienceUser {
@@ -309,11 +346,12 @@ export interface IMentionUser {
 }
 
 export interface IParamGetReactionDetail {
-  reactionType: ReactionType;
-  postId?: string;
-  commentId?: string;
+  reactionName: ReactionType;
+  targetId: number;
+  target: 'POST' | 'COMMENT';
   limit?: number;
-  idLessThan?: string;
+  order?: 'ASC' | 'DESC';
+  latestId?: number;
 }
 
 export interface IPostAudienceSheet {
@@ -328,25 +366,33 @@ export interface IPayloadAddToAllPost {
 }
 
 export interface IPayloadReactToPost {
-  id: string;
+  id: number;
   reactionId: ReactionType;
   ownReaction: IOwnReaction;
   reactionCounts: IReactionCounts;
 }
 
 export interface IPayloadReactToComment {
-  id: string;
+  id: number;
   comment: IReaction;
-  postId?: string;
-  parentCommentId?: string;
+  postId?: number;
+  parentCommentId?: number;
   reactionId: ReactionType;
-  ownReaction: IOwnReaction;
-  reactionCounts: IReactionCounts;
+  ownerReactions: IOwnReaction;
+  reactionsCount: IReactionCounts;
 }
 
-export interface IParamPutReactionToPost {
-  postId: string;
-  data: string[];
+export interface IParamPutReaction {
+  reactionName: string;
+  target: 'POST' | 'COMMENT';
+  targetId: number;
+}
+
+export interface IParamDeleteReaction {
+  target: 'POST' | 'COMMENT';
+  reactionId: number;
+  targetId: number;
+  reactionName: string;
 }
 
 export interface IParamPutReactionToComment {
@@ -354,30 +400,30 @@ export interface IParamPutReactionToComment {
   data: string[];
 }
 
-export interface IPayloadUpdateReactionOfPostById {
-  postId: string;
-  ownReaction: IOwnReaction;
-  reactionCounts: IReactionCounts;
-}
-
 export interface IPayloadUpdateCommentsById {
-  id: string;
-  comments: IReaction[];
+  id: number;
+  comments: ICommentData[];
   isMerge: boolean;
+  isReplace?: boolean;
+  commentId?: number;
 }
 
 export interface ICreatePostParams {
-  draftPostId?: string;
-  postId?: string;
+  draftPostId?: number;
+  postId?: number;
   replaceWithDetail?: boolean;
   initAudience?: any;
   createFromGroupId?: number;
   initAutoSaveDraft?: boolean;
 }
 
+export interface IPostSettingsParams extends ICreatePostParams {
+  postId?: number;
+}
+
 export interface IPayloadReplying {
-  comment: IReaction;
-  parentComment?: IReaction;
+  comment: ICommentData;
+  parentComment?: ICommentData;
 }
 
 export interface IPayloadSetDraftPosts {
@@ -388,8 +434,13 @@ export interface IPayloadSetDraftPosts {
 }
 
 export interface IParamGetDraftPosts {
+  order?: 'ASC';
   offset?: number;
   limit?: number;
+  idGTE?: number;
+  idLTE?: number;
+  idGT?: number;
+  idLT?: number;
 }
 
 export interface IPayloadGetDraftPosts {
@@ -403,30 +454,21 @@ export interface IPayloadPublishDraftPost {
   onSuccess?: () => void;
   onError?: () => void;
   refreshDraftPosts?: boolean;
+  createFromGroupId?: number;
 }
 
 export interface IPayloadPutEditDraftPost {
-  id: string;
+  id: number;
   data: IPostCreatePost;
   replaceWithDetail?: boolean;
   publishNow: boolean;
-}
-
-export interface IPayloadCreateAutoSave {
-  data?: IActivityData;
-  audience?: {
-    user_ids: number[];
-    group_ids: number[];
-  };
-  tag_ids?: number[];
-  important?: IActivityImportant;
-  is_draft?: boolean;
-  createFromGroupId?: string | number;
+  callback?: any;
+  createFromGroupId?: number;
 }
 
 export interface IPayloadPutEditAutoSave {
   id: string;
-  data: IPayloadCreateAutoSave;
+  data: IPostCreatePost;
 }
 
 export interface IParamGetPostAudiences {
@@ -435,23 +477,18 @@ export interface IParamGetPostAudiences {
 }
 
 export interface IPayloadUpdateReaction {
-  userId: string;
+  userId: number;
   data: ISocketReaction;
 }
 
 export interface ISocketReaction {
   actor: any;
-  reaction: any;
-  post: {
-    post_id?: string;
-    reaction_counts?: IReactionCounts;
-    reactions_order?: string[];
-  };
-  comment: {
-    comment_id?: string;
-    reaction_counts?: IReactionCounts;
-    reactions_order?: string[];
-  };
+  id: number;
+  reactionsOfActor?: IOwnReaction;
+  reaction?: IReaction;
+  reactionsCount?: IReactionCounts;
+  event?: string;
+  comment?: ICommentData;
 }
 
 export interface ICreatePostCurrentSettings {
@@ -459,7 +496,23 @@ export interface ICreatePostCurrentSettings {
 }
 
 export interface IPayloadDeleteComment {
-  commentId: string;
-  parentCommentId?: string;
-  postId: string;
+  commentId: number;
+  parentCommentId?: number;
+  postId: number;
+}
+
+export interface IPayloadPutMarkAsRead {
+  postId: number;
+  callback?: (isSuccess: boolean) => void;
+}
+
+export interface IGetStreamCommentData {
+  id: number;
+  actor: IGetStreamUser;
+  mentions?: any;
+  content?: string;
+  media?: any;
+  reaction?: IReaction;
+  reactionsCount?: IReactionCounts;
+  child?: IGetStreamCommentData;
 }

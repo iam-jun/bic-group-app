@@ -11,8 +11,10 @@ import {useUserIdAuth} from '~/hooks/auth';
 import {useKeySelector} from '~/hooks/selector';
 import {
   IActivityDataImage,
+  ICommentData,
   IPayloadCreateComment,
   IPayloadReplying,
+  IPostMedia,
 } from '~/interfaces/IPost';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
@@ -20,14 +22,15 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import ReplyingView from './ReplyingView';
 
 export interface CommentInputViewProps {
-  postId: string;
+  postId: number;
   groupIds: string;
   autoFocus?: boolean;
   commentInputRef?: any;
   onCommentSuccess?: () => void;
   isCommentLevel1Screen?: boolean;
   showHeader?: boolean;
-  defaultReplyTargetId?: string;
+  defaultReplyTargetId?: number;
+  viewMore?: boolean;
 }
 
 const CommentInputView: FC<CommentInputViewProps> = ({
@@ -39,6 +42,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   showHeader,
   defaultReplyTargetId,
   onCommentSuccess,
+  viewMore,
 }: CommentInputViewProps) => {
   const _commentInputRef = commentInputRef || useRef<any>();
   const mentionInputRef = useRef<any>();
@@ -55,10 +59,10 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   );
   const replyTargetId = replying?.parentComment?.id || replying?.comment?.id;
   const replyTargetUser =
-    replying?.comment?.user || replying?.parentComment?.user;
+    replying?.comment?.actor || replying?.parentComment?.actor;
   const replyTargetUserId = replyTargetUser?.id;
-  let replyTargetName = replyTargetUser?.data?.fullname;
-  if (replyTargetUserId === userId) {
+  let replyTargetName = replyTargetUser?.fullname;
+  if (replyTargetUserId === Number(userId)) {
     replyTargetName = t('post:label_yourself');
   }
 
@@ -80,9 +84,9 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   }, [postId]);
 
   useEffect(() => {
-    if (replyTargetUserId && replyTargetUser?.data?.username) {
-      let content = `@${replyTargetUser?.data?.username} `;
-      if (replyTargetUserId === userId) {
+    if (replyTargetUserId && replyTargetUser?.username) {
+      let content = `@${replyTargetUser?.username} `;
+      if (replyTargetUserId === Number(userId)) {
         content = '';
       }
       // difference ref because of android use mention input children, web use prop value
@@ -111,32 +115,36 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       if (sendData?.image) {
         images.push(sendData?.image);
       }
+      const media: IPostMedia = {
+        images,
+      };
+      const preComment: ICommentData = {
+        status: 'pending',
+        localId: uuid.v4(), // localId is used for finding and updating comment data from API later
+        actor: {
+          id: Number(userId),
+          username,
+          fullname,
+          avatar,
+        },
+        content: content?.trim(),
+        media: {images},
+        postId: postId,
+        reactionsCount: {},
+        ownerReactions: {},
+        child: {},
+        createdAt: new Date().toISOString(),
+        parentCommentId: replyTargetId || defaultReplyTargetId,
+      };
       const payload: IPayloadCreateComment = {
         postId,
         parentCommentId: replyTargetId || defaultReplyTargetId,
-        commentData: {content: content?.trim(), images},
-        userId: userId,
+        commentData: {content: content?.trim(), media},
+        userId: Number(userId),
         onSuccess: _onCommentSuccess,
         isCommentLevel1Screen: isCommentLevel1Screen,
-        preComment: {
-          status: 'pending',
-          // localId is used for finding and updating comment data from API later
-          localId: uuid.v4(),
-          user_id: userId,
-          user: {
-            data: {avatar, fullname, username},
-          },
-          data: {
-            content: content?.trim(),
-            images,
-          },
-          activity_id: postId,
-          children_counts: {},
-          own_children: {},
-          latest_children: {},
-          created_at: new Date().toISOString(),
-          parentCommentId: replyTargetId || defaultReplyTargetId,
-        },
+        viewMore,
+        preComment,
       };
       dispatch(postActions.postCreateNewComment(payload));
     }

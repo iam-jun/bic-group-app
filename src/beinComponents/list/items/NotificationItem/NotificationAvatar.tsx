@@ -1,49 +1,158 @@
+import _, {parseInt} from 'lodash';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
+import {useUserIdAuth} from '~/hooks/auth';
 import {IGetStreamNotificationActivity} from '~/interfaces/INotification';
 import {ITheme} from '~/theme/interfaces';
 
 interface Props {
   activities: IGetStreamNotificationActivity[];
+  actor: any;
+  actorCount: number;
+  verb: string;
+  isRead: boolean;
 }
 
-// render avatar group or single avatar
-const NotificationAvatar = ({activities}: Props) => {
-  const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
+const AVATAR_WIDTH = 32;
+const MAX_AVATAR = 7;
 
-  const actorIds: any[] = [];
-  const actorAvatars: any[] = [];
-  activities.forEach(act => {
-    if (!actorIds.includes(act.actor.id)) {
-      actorIds.push(act.actor.id);
-      actorAvatars.push(act.actor.data?.avatar);
+// render avatar group or single avatar
+const NotificationAvatar = ({
+  actor,
+  activities,
+  verb,
+  isRead,
+  actorCount,
+}: Props) => {
+  const userId = useUserIdAuth();
+  const theme = useTheme() as ITheme;
+  const {dimension} = theme;
+  const styles = createStyles(theme);
+  const handleActorNotification = () => {
+    switch (verb) {
+      case 'REACT':
+        // Reply to your child comment
+        if (activities[0]?.comment?.child?.reaction) {
+          return _.uniqBy(
+            activities.map(item => ({
+              ...item.comment?.child?.reaction?.actor,
+            })),
+            'username',
+          );
+        }
+        // Reaction to your comment
+        if (activities[0]?.comment?.reaction) {
+          return _.uniqBy(
+            activities.map(item => ({
+              ...item.comment?.reaction?.actor,
+            })),
+            'username',
+          );
+        }
+        // Reaction to your Post
+        return _.uniqBy(
+          activities.map(item => ({
+            ...item.reaction?.actor,
+          })),
+          'username',
+        );
+      case 'COMMENT':
+        // Mention to your comments
+        if (
+          activities[0]?.comment?.mentions &&
+          activities[0]?.comment?.mentions?.length > 0
+        ) {
+          return _.uniqBy(
+            activities[0]?.comment?.mentions.map((item: any) => ({
+              ...item?.actor,
+            })),
+            'username',
+          );
+        }
+        // Mention to your reply comments
+        if (
+          activities[0]?.comment?.child?.mentions &&
+          activities[0]?.comment?.child.mentions?.length > 0
+        ) {
+          return _.uniqBy(
+            activities[0]?.comment?.child?.mentions.map((item: any) => ({
+              ...item.actor,
+            })),
+            'username',
+          );
+        }
+        // Reply to your comments
+        if (activities[0]?.comment?.child) {
+          return _.uniqBy(
+            activities.map(item => ({
+              ...item.comment?.child?.actor,
+            })),
+            'username',
+          );
+        }
+        // Comments to your post
+        return _.uniqBy(
+          activities.map(item => ({
+            ...item.comment?.actor,
+          })),
+          'username',
+        );
+
+      case 'POST':
+        // Mention to your post
+        if (activities[0]?.mentions && activities[0].mentions?.length > 0) {
+          return _.uniqBy(
+            activities[0].mentions.map((item: any) => ({
+              ...item.actor,
+            })),
+            'username',
+          );
+        }
+        return [actor];
+      default:
+        return [actor];
     }
+  };
+
+  const listAvatarWidth =
+    dimension.deviceWidth - 16 * 2 - 40 - (isRead ? 0 : 16);
+
+  const listActor = handleActorNotification();
+  let _listAvatarWidth = 0;
+  const listAvatar = listActor?.map?.((item: any, index: number) => {
+    if (
+      index < MAX_AVATAR &&
+      _listAvatarWidth <= listAvatarWidth &&
+      item?.id !== parseInt(userId)
+    ) {
+      _listAvatarWidth = (index + 1) * (AVATAR_WIDTH + 8);
+      if (index < MAX_AVATAR - 1) {
+        return (
+          <View key={item?.id} style={styles.item}>
+            <Avatar.SmallAlt
+              testI="notification_avatar.single"
+              source={item?.avatar}
+              isRounded
+            />
+          </View>
+        );
+      }
+      return (
+        <View key={item?.id} style={styles.item}>
+          <Avatar.SmallAlt
+            testI="notification_avatar.single"
+            source={item?.avatar}
+            isRounded
+            counter={actorCount - index - 1}
+          />
+        </View>
+      );
+    } else return null;
   });
 
-  let avatar = null;
-
-  if (actorAvatars.length > 1) {
-    avatar = (
-      <Avatar.Group
-        testI="notification_avatar.group"
-        variant={'large'}
-        source={actorAvatars}
-        totalMember={actorIds.length - 3} // used when numers of avatars >= 5
-      />
-    );
-  } else {
-    avatar = (
-      <Avatar.Large
-        testI="notification_avatar.single"
-        source={actorAvatars[0]}
-      />
-    );
-  }
-
-  return <View style={styles.container}>{avatar}</View>;
+  return <View style={styles.container}>{listAvatar}</View>;
 };
 
 const createStyles = (theme: ITheme) => {
@@ -51,7 +160,10 @@ const createStyles = (theme: ITheme) => {
 
   return StyleSheet.create({
     container: {
-      marginTop: spacing.margin.small,
+      flexDirection: 'row',
+    },
+    item: {
+      marginRight: spacing.margin.small,
     },
   });
 };

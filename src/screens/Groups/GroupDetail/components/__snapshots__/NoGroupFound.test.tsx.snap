@@ -166,6 +166,12 @@ exports[`NoGroupFound component should render correctly 1`] = `
           </View>
         </View>
         <View
+          animatedStyle={
+            Object {
+              "value": Object {},
+            }
+          }
+          collapsable={false}
           style={
             Object {
               "flex": 1,
@@ -200,13 +206,18 @@ exports[`NoGroupFound component should render correctly 1`] = `
             <Text
               numberOfLines={1}
               style={
-                Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-SemiBold",
-                  "fontSize": 16,
-                  "height": 24,
-                  "lineHeight": 24,
-                }
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                  },
+                  Object {},
+                  Object {
+                    "height": 24,
+                    "lineHeight": 24,
+                  },
+                ]
               }
               testID="header.text"
             >
@@ -253,22 +264,30 @@ exports[`NoGroupFound component should render correctly 1`] = `
     >
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 14,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            undefined,
+          ]
         }
       >
         Ooops, Group not found
       </Text>
       <Text
         style={
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
-            "fontSize": 16,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 16,
+            },
+            Object {},
+            undefined,
+          ]
         }
       >
         We couldn't find that group page.
@@ -307,12 +326,19 @@ exports[`NoGroupFound component should render correctly 1`] = `
       >
         <Text
           style={
-            Object {
-              "color": "#FFFFFF",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 16,
-              "textAlign": "center",
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 16,
+              },
+              Object {
+                "color": "#FFFFFF",
+              },
+              Object {
+                "textAlign": "center",
+              },
+            ]
           }
         >
           Back to Safety

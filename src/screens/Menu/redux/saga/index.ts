@@ -1,8 +1,5 @@
-import {put, takeLatest} from 'redux-saga/effects';
+import {takeLatest} from 'redux-saga/effects';
 import menuTypes from '../types';
-import * as modalActions from '~/store/modal/actions';
-import {IToastMessage} from '~/interfaces/common';
-import errorCode from '~/constants/errorCode';
 import deleteWorkExperience from './deleteWorkExperience';
 import getMyWorkExperience from './getMyWorkExperience';
 import addWorkExperience from './addWorkExperience';
@@ -23,20 +20,4 @@ export default function* menuSaga() {
   yield takeLatest(menuTypes.EDIT_WORK_EXPERIENCE, editWorkExperience);
   yield takeLatest(menuTypes.DELETE_WORK_EXPERIENCE, deleteWorkExperience);
   yield takeLatest(menuTypes.GET_USER_WORK_EXPERIENCE, getWorkExperience);
-}
-
-export function* showError(err: any) {
-  if (err.code === errorCode.systemIssue) return;
-
-  const toastMessage: IToastMessage = {
-    content:
-      err?.meta?.errors?.[0]?.message ||
-      err?.meta?.message ||
-      'common:text_error_message',
-    props: {
-      textProps: {useI18n: true},
-      type: 'error',
-    },
-  };
-  yield put(modalActions.showHideToastMessage(toastMessage));
 }

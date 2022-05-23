@@ -41,7 +41,7 @@ const GroupInfoHeader = () => {
   } = groupDetail;
 
   const privacyData = privacyTypes.find(item => item?.type === privacy) || {};
-  const {icon: iconPrivacy, groupTitle}: any = privacyData || {};
+  const {icon: iconPrivacy, privacyTitle}: any = privacyData || {};
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -75,13 +75,15 @@ const GroupInfoHeader = () => {
             tintColor={theme.colors.iconTint}
           />
           <Text.Subtitle testID="group_info_header.privacy" useI18n>
-            {groupTitle}
+            {privacyTitle}
           </Text.Subtitle>
           <Text.Subtitle> • </Text.Subtitle>
           <Text.BodySM testID="group_info_header.member_count">
             {user_count}
           </Text.BodySM>
-          <Text.Subtitle>{` ${t('groups:text_members')}`}</Text.Subtitle>
+          <Text.Subtitle>{` ${t('groups:text_members', {
+            count: user_count,
+          })}`}</Text.Subtitle>
         </View>
       </View>
     );

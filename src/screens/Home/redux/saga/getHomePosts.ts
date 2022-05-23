@@ -24,7 +24,6 @@ export default function* getHomePosts({
 
     if (isRefresh) {
       yield put(homeActions.setRefreshingHomePosts(true));
-      yield put(homeActions.setNoMoreHomePosts(false));
       homePosts = [];
       offset = 0;
     } else {
@@ -35,16 +34,16 @@ export default function* getHomePosts({
       offset = homePosts?.length || 0;
     }
 
-    const result = yield homeDataHelper.getNewsfeed({offset});
+    const response = yield homeDataHelper.getNewsfeed({offset});
+    const result = response?.list || [];
+    const hasNextPage = response?.meta?.hasNextPage;
 
-    yield put(postActions.addToAllPosts({data: result || []}));
+    yield put(postActions.addToAllPosts({data: result}));
 
     const newHomePosts = homePosts.concat?.(result) || result;
     yield put(homeActions.setHomePosts(newHomePosts));
 
-    if (newHomePosts?.length === homePosts?.length) {
-      yield put(homeActions.setNoMoreHomePosts(true));
-    }
+    yield put(homeActions.setNoMoreHomePosts(!hasNextPage));
 
     if (isRefresh) {
       yield put(homeActions.setRefreshingHomePosts(false));

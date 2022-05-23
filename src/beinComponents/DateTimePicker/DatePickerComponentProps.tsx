@@ -9,6 +9,7 @@ interface DatePickerComponentProps {
   mode: 'date' | 'time';
   minDate?: Date;
   maxDate?: Date;
+  testID?: string;
 }
 
 export default DatePickerComponentProps;

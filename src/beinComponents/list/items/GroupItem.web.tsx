@@ -58,7 +58,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
 
-  const rootScreenName = useKeySelector('app.rootScreenName');
+  const rootScreenName = useKeySelector('app.rootScreenName') || '';
   const [currentAccessingGroup, setCurrentShowingGroup] = useState<any>();
   const [isActive, setIsActive] = useState<boolean>(false);
 

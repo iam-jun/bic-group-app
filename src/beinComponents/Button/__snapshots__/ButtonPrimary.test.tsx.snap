@@ -34,12 +34,19 @@ exports[`ButtonPrimary conponent renders correctly 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#FFFFFF",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 16,
-          "textAlign": "center",
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 16,
+          },
+          Object {
+            "color": "#FFFFFF",
+          },
+          Object {
+            "textAlign": "center",
+          },
+        ]
       }
     >
       Button Primary

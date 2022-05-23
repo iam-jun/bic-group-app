@@ -6,8 +6,8 @@ import {IUserEdit} from '~/interfaces/IAuth';
 import modalActions from '~/store/modal/actions';
 import menuActions from '../actions';
 import {mapProfile} from '../helper';
-import {showError} from '.';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
+import showError from '~/store/commonSaga/showError';
 
 export default function* editMyProfile({
   payload,

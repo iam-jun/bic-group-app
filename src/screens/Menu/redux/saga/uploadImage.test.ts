@@ -36,7 +36,7 @@ describe('Update User Profile Image Saga', () => {
     };
 
     jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
-      return {upload: jest.fn().mockResolvedValue(avatar)} as any;
+      return {upload: jest.fn().mockResolvedValue({url: avatar})} as any;
     });
 
     const fileUploader = FileUploader.getInstance();
@@ -75,7 +75,9 @@ describe('Update User Profile Image Saga', () => {
     };
 
     jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
-      return {upload: jest.fn().mockResolvedValue(background_img_url)} as any;
+      return {
+        upload: jest.fn().mockResolvedValue({url: background_img_url}),
+      } as any;
     });
 
     const fileUploader = FileUploader.getInstance();

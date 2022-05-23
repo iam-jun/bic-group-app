@@ -1,0 +1,219 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Filter component renders correctly 1`] = `
+<View
+  style={
+    Array [
+      Object {
+        "backgroundColor": "#FFFFFF",
+        "borderBottomWidth": 1,
+        "borderColor": "#EAEDF2",
+        "borderTopWidth": 1,
+        "paddingVertical": 12,
+      },
+      undefined,
+    ]
+  }
+  testID="filter"
+>
+  <RCTScrollView
+    alwaysBounceHorizontal={false}
+    horizontal={true}
+    showsHorizontalScrollIndicator={false}
+    style={
+      Object {
+        "backgroundColor": "#FFFFFF",
+      }
+    }
+  >
+    <View>
+      <View
+        style={
+          Object {
+            "margin": 0,
+            "marginLeft": 8,
+            "padding": 0,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="item_filter_1"
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#B2BDCD",
+                "borderColor": "#B2BDCD",
+                "borderRadius": 100,
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "paddingHorizontal": 16,
+                "paddingVertical": 8,
+              }
+            }
+            testID="button_wrapper.content"
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                  },
+                  Object {},
+                  undefined,
+                ]
+              }
+            >
+              You've joined
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "margin": 0,
+            "marginLeft": 8,
+            "padding": 0,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="item_filter_2"
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#FFFFFF",
+                "borderColor": "#EAEDF2",
+                "borderRadius": 100,
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "paddingHorizontal": 16,
+                "paddingVertical": 8,
+              }
+            }
+            testID="button_wrapper.content"
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-Regular",
+                    "fontSize": 16,
+                  },
+                  Object {},
+                  undefined,
+                ]
+              }
+            >
+              You manage
+            </Text>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Object {
+            "margin": 0,
+            "marginLeft": 8,
+            "padding": 0,
+          }
+        }
+      >
+        <View
+          accessible={true}
+          collapsable={false}
+          focusable={true}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "opacity": 1,
+            }
+          }
+          testID="item_filter_3"
+        >
+          <View
+            style={
+              Object {
+                "alignItems": "center",
+                "backgroundColor": "#FFFFFF",
+                "borderColor": "#EAEDF2",
+                "borderRadius": 100,
+                "borderWidth": 1,
+                "flexDirection": "row",
+                "justifyContent": "center",
+                "paddingHorizontal": 16,
+                "paddingVertical": 8,
+              }
+            }
+            testID="button_wrapper.content"
+          >
+            <Text
+              style={
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-Regular",
+                    "fontSize": 16,
+                  },
+                  Object {},
+                  undefined,
+                ]
+              }
+            >
+              Discover
+            </Text>
+          </View>
+        </View>
+      </View>
+    </View>
+  </RCTScrollView>
+</View>
+`;

@@ -32,13 +32,19 @@ exports[`AtMention component renders correctly 1`] = `
     >
       <Text
         style={
-          Object {
-            "color": "#B2BDCD",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 14,
-            "margin": 8,
-            "padding": 4,
-          }
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "color": "#B2BDCD",
+              "margin": 8,
+              "padding": 4,
+            },
+          ]
         }
         testID="at_mention.empty_content"
       >

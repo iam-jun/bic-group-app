@@ -4,7 +4,7 @@ import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
-import {IReaction} from '~/interfaces/IPost';
+import {ICommentData, IReaction} from '~/interfaces/IPost';
 import postActions from '~/screens/Post/redux/actions';
 import CommentView from '~/screens/Post/components/CommentView';
 import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
@@ -12,10 +12,10 @@ import {useBaseHook} from '~/hooks';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 export interface CommentItemProps {
-  postId: string;
+  postId: number;
   groupIds: string;
-  commentData: IReaction;
-  commentParent?: IReaction;
+  commentData: ICommentData;
+  commentParent?: ICommentData;
   contentBackgroundColor?: string;
   section?: any;
   index?: number;
@@ -57,13 +57,17 @@ const CommentItem: React.FC<CommentItemProps> = ({
     onPressLoadMore && onPressLoadMore(commentData);
   }, [commentData]);
 
-  const childCommentCount = commentData?.children_counts?.comment || 0;
-  const loadedChildComment = commentData?.latest_children?.comment?.length || 0;
+  const childCommentCount = commentData?.totalReply || 0;
+  const loadedChildComment = commentData?.child?.list?.length || 0;
   const childCommentLeft =
     !!onPressLoadMore && Platform.OS !== 'web'
       ? childCommentCount - 1
       : childCommentCount - loadedChildComment;
-  const idLessThan = commentData?.latest_children?.comment?.[0]?.id;
+  const idLessThan = commentData?.child?.list?.[0]?.id;
+  const showLoadPrevious =
+    !!onPressLoadMore && Platform.OS !== 'web'
+      ? childCommentCount - 1 > 0
+      : commentData?.child?.meta?.hasNextPage || false;
 
   return (
     <View style={commentParent ? styles.containerChild : styles.container}>
@@ -75,10 +79,10 @@ const CommentItem: React.FC<CommentItemProps> = ({
         onPressReply={_onPressReply}
         contentBackgroundColor={contentBackgroundColor}
       />
-      {childCommentLeft > 0 ? (
+      {!!showLoadPrevious ? (
         <LoadMoreComment
           style={styles.childLoadMore}
-          title={t('post:text_load_more_replies')}
+          title={t('post:text_load_previous_replies')}
           postId={postId}
           commentId={commentData?.id}
           idLessThan={idLessThan}

@@ -136,11 +136,15 @@ exports[`Header Avatar View component renders correctly 1`] = `
   >
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-SemiBold",
-          "fontSize": 14,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="header_avatar_view.first_label"
     >
@@ -148,11 +152,15 @@ exports[`Header Avatar View component renders correctly 1`] = `
     </Text>
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 12,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 12,
+          },
+          Object {},
+          undefined,
+        ]
       }
       testID="header_avatar_view.second_label"
     >

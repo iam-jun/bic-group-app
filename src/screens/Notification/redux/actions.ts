@@ -1,10 +1,4 @@
-import {IGetStreamDispatch} from '~/interfaces/common';
-import {
-  IDeleteNotifications,
-  ILoadNewNotifications,
-  IMarkAsReadAnActivity,
-  IParamGetNotifications,
-} from '~/interfaces/INotification';
+import {IParamGetNotifications} from '~/interfaces/INotification';
 import notificationsTypes from '~/screens/Notification/redux/types';
 
 const notificationsActions = {
@@ -20,15 +14,9 @@ const notificationsActions = {
       payload,
     };
   },
-  addNewNotifications: function (payload: any) {
-    return {
-      type: notificationsTypes.ADD_NEW_NOTIFICATIONS,
-      payload,
-    };
-  },
   concatNotifications: function (payload: any) {
     return {
-      type: notificationsTypes.CONCAT_NOTICATIONS,
+      type: notificationsTypes.CONCAT_NOTIFICATIONS,
       payload,
     };
   },
@@ -40,15 +28,21 @@ const notificationsActions = {
       payload,
     };
   },
-  loadNewNotifications: function (payload: ILoadNewNotifications) {
+  attachNotification: function (payload: any) {
     return {
-      type: notificationsTypes.LOAD_NEW_NOTIFICATIONS,
+      type: notificationsTypes.ATTACH,
       payload,
     };
   },
-  deleteNotifications: function (payload: IDeleteNotifications) {
+  detachNotification: function (payload: any) {
     return {
-      type: notificationsTypes.DELETE_NOTIFICATIONS,
+      type: notificationsTypes.DETACH,
+      payload,
+    };
+  },
+  updateNotification: function (payload: any) {
+    return {
+      type: notificationsTypes.UPDATE,
       payload,
     };
   },
@@ -68,9 +62,16 @@ const notificationsActions = {
       payload,
     };
   },
-  loadmore: function () {
+  markAsUnRead: function (payload: string) {
     return {
-      type: notificationsTypes.LOADMORE,
+      type: notificationsTypes.MARK_AS_UNREAD,
+      payload,
+    };
+  },
+  loadMore: function (payload: IParamGetNotifications) {
+    return {
+      type: notificationsTypes.LOAD_MORE,
+      payload,
     };
   },
   setIsLoadingMore: function (payload: boolean) {

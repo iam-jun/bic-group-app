@@ -48,12 +48,8 @@ const PostAudiencesBottomSheet = () => {
         initial: false,
       });
     } else {
-      rootNavigation.navigate('groups', {
-        screen: groupStack.groupDetail,
-        params: {
-          groupId,
-          initial: false,
-        },
+      rootNavigation.navigate(mainStack.groupDetail, {
+        groupId,
       });
     }
   };

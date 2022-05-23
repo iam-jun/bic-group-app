@@ -110,7 +110,7 @@ exports[`NotificationItem component renders correctly 1`] = `
                 resizeMode="cover"
                 source={
                   Object {
-                    "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                    "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg",
                   }
                 }
                 style={
@@ -139,41 +139,116 @@ exports[`NotificationItem component renders correctly 1`] = `
       }
       testID="notification_content"
     >
-      <Text
-        style={
-          Object {
-            "alignItems": "baseline",
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
-          }
-        }
-        testID="notification_content.title"
+      <View
+        testID="notification_content.description"
       >
-        Trần Nam Anh 
-        <Text
-          style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
-            }
-          }
-          testID="notification_title.verb_text"
+        <View
+          style={Object {}}
         >
-          commented on your post
-        </Text>
-      </Text>
+          <View
+            style={
+              Object {
+                "alignItems": "flex-start",
+                "flexDirection": "row",
+                "flexWrap": "wrap",
+                "justifyContent": "flex-start",
+                "marginBottom": 2,
+                "marginTop": 2,
+                "width": "100%",
+              }
+            }
+          >
+            <Text
+              style={Object {}}
+            >
+              <Text
+                style={
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-SemiBold",
+                        "fontSize": 16,
+                        "fontWeight": "bold",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  Trần Nam Anh
+                </Text>
+              </Text>
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-Regular",
+                      "fontSize": 16,
+                    },
+                    Object {},
+                  ]
+                }
+              >
+                 created a post in 
+              </Text>
+              <Text
+                style={
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 16,
+                    "fontWeight": "bold",
+                  }
+                }
+              >
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-SemiBold",
+                        "fontSize": 16,
+                        "fontWeight": "bold",
+                      },
+                      Object {},
+                    ]
+                  }
+                >
+                  EVOL Community
+                </Text>
+              </Text>
+            </Text>
+          </View>
+        </View>
+      </View>
     </View>
     <Text
       style={
-        Object {
-          "color": "#627286",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 14,
-          "marginLeft": 12,
-          "marginTop": 1,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#627286",
+          },
+          Object {
+            "color": "#627286",
+            "marginLeft": 12,
+            "marginTop": 1,
+          },
+        ]
       }
       testID="notification_item.time_view"
     >

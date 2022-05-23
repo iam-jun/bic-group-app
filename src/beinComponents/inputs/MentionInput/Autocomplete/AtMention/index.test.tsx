@@ -5,6 +5,7 @@ import {configureStore, renderWithRedux} from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import AtMention from '.';
 import {colors} from '~/theme';
+import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);
 
@@ -35,7 +36,8 @@ describe('AtMention component', () => {
 
     expect(component).not.toBeNull();
 
-    expect(component.props.style.color).toBe(colors.light.colors.textDisabled);
+    const flattenedStyle = StyleSheet.flatten(component.props.style);
+    expect(flattenedStyle.color).toBe(colors.light.colors.textDisabled);
   });
 
   it(`should show "AtMention" with loading`, async () => {

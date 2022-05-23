@@ -20,7 +20,7 @@ export default function* signInSuccess({
 }: {
   type: string;
   payload: IUserResponse;
-}) {
+}): any {
   yield put(modalActions.showLoading());
 
   const name =

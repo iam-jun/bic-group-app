@@ -1,46 +1,54 @@
 import React from 'react';
-import {Platform, StyleSheet, View, ViewProps} from 'react-native';
+import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import Div from '~/beinComponents/Div';
 import TimeView from '~/beinComponents/TimeView';
-import {IGetStreamNotificationActivity} from '~/interfaces/INotification';
+import Icon from '~/beinComponents/Icon';
+
+import {
+  IGetStreamNotificationActivity,
+  INotiExtraData,
+} from '~/interfaces/INotification';
 import {ITheme} from '~/theme/interfaces';
 import NotificationAvatar from './NotificationAvatar';
 import NotificationContent from './NotificationContent';
+import {useKeySelector} from '~/hooks/selector';
 
 export interface NotificationItemProps {
   activities: IGetStreamNotificationActivity[];
   verb: string;
-  is_read: boolean;
-  is_seen: boolean;
-  activity_count: number;
-  actor_count: number;
-  created_at: string;
-  updated_at: string;
-  isActive?: boolean;
+  isRead: boolean;
+  isSeen: boolean;
+  createdAt: string;
+  updatedAt: string;
+  extra: INotiExtraData;
+  group: string;
+  activityCount: number;
+  actorCount: number;
+  onPress: (...params: any) => void;
+  onPressOption: (...params: any) => void;
+  testID?: string;
+  id?: string;
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
   activities,
-  is_read,
-  updated_at,
-  isActive = false,
+  isRead,
+  updatedAt,
+  extra,
+  verb,
+  actorCount,
+  onPress,
+  onPressOption,
+  testID,
 }: NotificationItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
+  const {colors} = theme;
 
-  let className = 'notification-item';
-  if (isActive) className = 'notification-item--active';
+  const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const renderIndicator = () => {
-    if (Platform.OS === 'web' && isActive) {
-      return (
-        <View
-          testID="notification_item.indicator.web"
-          style={styles.stateIndicatorActive}
-        />
-      );
-    } else if (!is_read) {
+    if (!isRead) {
       return (
         <View
           testID="notification_item.indicator"
@@ -52,58 +60,102 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
   // render notification item
   return (
-    <Div className={className}>
-      <View style={styles.container}>
-        {renderIndicator()}
-        <NotificationAvatar activities={activities} />
-        <NotificationContent activities={activities} />
+    <TouchableOpacity
+      testID={testID}
+      disabled={!isInternetReachable || !onPress}
+      onPress={onPress}
+      style={[
+        styles.container,
+        {
+          backgroundColor: isRead
+            ? theme.colors.background
+            : theme.colors.bgSecondary,
+        },
+      ]}>
+      <View
+        style={{
+          flex: 1,
+        }}>
+        <View style={[styles.row, {flex: 1, justifyContent: 'flex-start'}]}>
+          {renderIndicator()}
+          <NotificationAvatar
+            actor={extra.actor}
+            activities={activities}
+            actorCount={actorCount}
+            verb={verb}
+            isRead={isRead}
+          />
+        </View>
+        <NotificationContent
+          description={extra?.description || ''}
+          defaultContent={extra?.content || ''}
+          activities={activities}
+          verb={verb}
+          actorCount={actorCount}
+        />
+      </View>
+
+      <View style={{justifyContent: 'flex-end', alignItems: 'center'}}>
         <TimeView
           testID="notification_item.time_view"
-          time={updated_at}
+          time={updatedAt}
           style={styles.timeCreated}
           type={'short'}
         />
+        <TouchableOpacity
+          testID="notificationItem.menuIcon.button"
+          style={styles.icon}
+          activeOpacity={0.2}
+          onPress={(e: any) => onPressOption && onPressOption(e)}
+          hitSlop={{
+            bottom: 20,
+            left: 20,
+            right: 20,
+            top: 20,
+          }}>
+          <Icon
+            icon={'menu'}
+            size={15}
+            tintColor={colors.textSecondary}
+            testID="notificationItem.menuIcon"
+          />
+        </TouchableOpacity>
       </View>
-    </Div>
+    </TouchableOpacity>
   );
 };
 
 const createStyles = (theme: ITheme) => {
   const {colors, spacing} = theme;
 
-  const stateIndicator = {
-    position: 'absolute',
-    left: 0,
-    backgroundColor: colors.primary5,
-  } as ViewProps;
-
   return StyleSheet.create({
     container: {
+      flex: 1,
       flexDirection: 'row',
       alignItems: 'flex-start',
-      paddingVertical: spacing?.padding.base,
-      paddingHorizontal: spacing?.padding.large,
+      padding: theme.spacing.padding.large,
     },
-    stateIndicatorActive: {
-      ...stateIndicator,
-      top: 20,
-      width: 4,
-      height: 48,
-      borderTopRightRadius: 6,
-      borderBottomRightRadius: 6,
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
     },
     stateIndicatorUnread: {
-      ...stateIndicator,
-      top: 40,
-      left: 4,
       width: 6,
       height: 6,
       borderRadius: 6,
+      backgroundColor: colors.primary5,
+      marginRight: spacing.margin.small,
     },
     timeCreated: {
-      marginTop: 1,
-      marginLeft: spacing.margin.base,
       color: colors.textSecondary,
+      fontSize: 13,
+      marginBottom: spacing.margin.base,
+    },
+    icon: {
+      width: 28,
+      height: 28,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   });
 };

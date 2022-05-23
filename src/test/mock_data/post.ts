@@ -1,488 +1,226 @@
 export const POST_DETAIL = {
+  ownerReactions: [
+    {
+      id: 23,
+      postId: 28,
+      reactionName: 'wink',
+      createdBy: 33,
+      createdAt: '2022-04-20T08:54:31.210Z',
+    },
+  ],
+  id: 28,
+  content: 'Hello world @thanvanvan ',
+  media: {
+    files: [],
+    videos: [],
+    images: [
+      {
+        id: 9,
+        name: '79357605-a0f0-4b12-b0d5-91409ff5b085.jpeg',
+        url: 'https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/79357605-a0f0-4b12-b0d5-91409ff5b085.jpeg',
+        width: 640,
+        height: 432,
+      },
+    ],
+  },
+  setting: {
+    canReact: true,
+    canComment: true,
+    canShare: true,
+    isImportant: false,
+    importantExpiredAt: null,
+  },
+  isDraft: false,
   actor: {
-    created_at: '2022-01-10T03:45:06.563478Z',
-    updated_at: '2022-02-28T07:49:26.224174Z',
-    id: '2',
-    data: {
+    id: 33,
+    username: 'ngoclinh',
+    fullname: 'Nguyễn Thị Ngọc Linh',
+    avatar:
+      'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg',
+  },
+  mentions: {
+    thanvanvan: {
+      id: 83,
+      username: 'thanvanvan',
+      fullname: 'Than Van Van',
       avatar:
-        'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-      fullname: 'Trần Nam Anh',
+        'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png',
     },
   },
+  commentsCount: 5,
+  reactionsCount: {
+    '0': {
+      wink: 1,
+    },
+    '1': {
+      thinking_face: 1,
+    },
+  },
+  createdAt: '2022-04-20T09:55:55.599Z',
+  createdBy: 33,
   audience: {
     groups: [
       {
-        id: '1',
-        collection: 'groups',
-        foreign_id: 'groups:1',
-        data: {
-          icon: '',
-          name: 'EVOL Community',
-        },
-        created_at: '2022-01-10T10:04:48.724936Z',
-        updated_at: '2022-01-10T10:04:48.724936Z',
+        id: 1,
+        name: 'EVOL Community',
+        icon: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/avatar/Avatar_Group.png',
+        child: [139, 2, 10, 152, 66, 67, 103, 2, 2],
       },
     ],
-    users: [],
   },
-  foreign_id: '6f90a52d-90a3-415e-95e5-72f251633fad',
-  id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-  important: {
-    active: false,
-    expires_time: '',
-  },
-  is_draft: false,
-  latest_reactions: {
-    comment: [
+  comments: {
+    list: [
       {
-        created_at: '2022-03-15T14:39:03.983619Z',
-        updated_at: '2022-03-15T14:39:03.983619Z',
-        id: '2a244fd0-2d02-43c1-9faa-fc949dd65061',
-        user_id: '2',
-        user: {
-          created_at: '2022-01-10T03:45:06.563478Z',
-          updated_at: '2022-02-28T07:49:26.224174Z',
-          id: '2',
-          data: {
-            avatar:
-              'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-            fullname: 'Trần Nam Anh',
-          },
+        totalReply: 2,
+        ownerReactions: [],
+        id: 10,
+        actor: {
+          id: 33,
+          username: 'ngoclinh',
+          fullname: 'Nguyễn Thị Ngọc Linh',
+          avatar:
+            'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg',
         },
-        kind: 'comment',
-        activity_id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-        data: {
-          content: 'Cmt1',
-          edited: false,
-          images: [],
-          mentions: {
-            groups: [],
-            users: [],
-          },
-        },
-        parent: '',
-        latest_children: {
-          comment: [
-            {
-              created_at: '2022-03-15T14:39:18.634768Z',
-              updated_at: '2022-03-15T14:39:18.634768Z',
-              id: '8fbc3bf1-b911-4939-9ae6-6a60e39cc2c2',
-              user_id: '2',
-              user: {
-                created_at: '2022-01-10T03:45:06.563478Z',
-                updated_at: '2022-02-28T07:49:26.224174Z',
-                id: '2',
-                data: {
-                  avatar:
-                    'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-                  fullname: 'Trần Nam Anh',
-                },
-              },
-              kind: 'comment',
-              activity_id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-              data: {
-                content: 'Reply1',
-                edited: false,
-                images: [],
-                mentions: {
-                  groups: [],
-                  users: [],
-                },
-              },
-              parent: '2a244fd0-2d02-43c1-9faa-fc949dd65061',
-              latest_children: {},
-              children_counts: {
-                comment_count: 0,
-              },
-              own_children: {},
+        parentId: 0,
+        postId: 28,
+        content: 'Cmt1',
+        createdAt: '2022-04-20T10:06:08.579Z',
+        updatedAt: '2022-04-20T10:06:30.617Z',
+        media: [],
+        reactionsCount: null,
+        mentions: [],
+        child: [
+          {
+            totalReply: 0,
+            ownerReactions: [],
+            id: 13,
+            actor: {
+              id: 33,
+              username: 'ngoclinh',
+              fullname: 'Nguyễn Thị Ngọc Linh',
+              avatar:
+                'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg',
             },
-          ],
+            parentId: 10,
+            postId: 28,
+            content: 'Reply1',
+            createdAt: '2022-04-20T10:06:24.367Z',
+            updatedAt: '2022-04-20T10:06:24.367Z',
+            media: [],
+            reactionsCount: null,
+            mentions: {},
+          },
+          {
+            totalReply: 0,
+            ownerReactions: [],
+            id: 14,
+            actor: {
+              id: 33,
+              username: 'ngoclinh',
+              fullname: 'Nguyễn Thị Ngọc Linh',
+              avatar:
+                'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg',
+            },
+            parentId: 10,
+            postId: 28,
+            content: 'Reply2',
+            createdAt: '2022-04-20T10:06:30.608Z',
+            updatedAt: '2022-04-20T10:06:30.608Z',
+            media: [],
+            reactionsCount: null,
+            mentions: {},
+          },
+        ],
+      },
+      {
+        totalReply: 0,
+        ownerReactions: [],
+        id: 11,
+        actor: {
+          id: 33,
+          username: 'ngoclinh',
+          fullname: 'Nguyễn Thị Ngọc Linh',
+          avatar:
+            'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg',
         },
-        own_children: {},
-        children_counts: {
-          comment: 1,
-          comment_count: 0,
+        parentId: 0,
+        postId: 28,
+        content: 'Cmt2',
+        createdAt: '2022-04-20T10:06:12.459Z',
+        updatedAt: '2022-04-20T10:06:12.459Z',
+        media: [],
+        reactionsCount: null,
+        mentions: [],
+        child: [],
+      },
+      {
+        totalReply: 0,
+        ownerReactions: [],
+        id: 12,
+        actor: {
+          id: 33,
+          username: 'ngoclinh',
+          fullname: 'Nguyễn Thị Ngọc Linh',
+          avatar:
+            'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg',
         },
+        parentId: 0,
+        postId: 28,
+        content: 'Cmt3',
+        createdAt: '2022-04-20T10:06:16.411Z',
+        updatedAt: '2022-04-20T10:06:16.411Z',
+        media: [],
+        reactionsCount: null,
+        mentions: [],
+        child: [],
       },
     ],
-    comment_count: [
-      {
-        created_at: '2022-03-15T14:39:18.671202Z',
-        updated_at: '2022-03-15T14:39:18.671202Z',
-        id: '448dd6f2-2d5f-47b9-9309-d679ee4ceab3',
-        user_id: '2',
-        user: {
-          created_at: '2022-01-10T03:45:06.563478Z',
-          updated_at: '2022-02-28T07:49:26.224174Z',
-          id: '2',
-          data: {
-            avatar:
-              'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-            fullname: 'Trần Nam Anh',
-          },
-        },
-        kind: 'comment_count',
-        activity_id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-        data: {},
-        parent: '',
-        latest_children: {},
-        children_counts: {},
-      },
-      {
-        created_at: '2022-03-15T14:39:18.623520Z',
-        updated_at: '2022-03-15T14:39:18.623520Z',
-        id: 'ae01ec12-03ae-4375-8c61-4b1243c2b6d4',
-        user_id: '2',
-        user: {
-          created_at: '2022-01-10T03:45:06.563478Z',
-          updated_at: '2022-02-28T07:49:26.224174Z',
-          id: '2',
-          data: {
-            avatar:
-              'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-            fullname: 'Trần Nam Anh',
-          },
-        },
-        kind: 'comment_count',
-        activity_id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-        data: {},
-        parent: '',
-        latest_children: {},
-        children_counts: {},
-      },
-      {
-        created_at: '2022-03-15T14:39:04.042006Z',
-        updated_at: '2022-03-15T14:39:04.042006Z',
-        id: '6072fc79-0bc6-42da-9b36-5dadb8853bba',
-        user_id: '2',
-        user: {
-          created_at: '2022-01-10T03:45:06.563478Z',
-          updated_at: '2022-02-28T07:49:26.224174Z',
-          id: '2',
-          data: {
-            avatar:
-              'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-            fullname: 'Trần Nam Anh',
-          },
-        },
-        kind: 'comment_count',
-        activity_id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-        data: {},
-        parent: '',
-        latest_children: {},
-        children_counts: {},
-      },
-      {
-        created_at: '2022-03-15T14:39:04.036970Z',
-        updated_at: '2022-03-15T14:39:04.036970Z',
-        id: 'd684c697-d007-4769-953e-9fb755efd93f',
-        user_id: '2',
-        user: {
-          created_at: '2022-01-10T03:45:06.563478Z',
-          updated_at: '2022-02-28T07:49:26.224174Z',
-          id: '2',
-          data: {
-            avatar:
-              'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-            fullname: 'Trần Nam Anh',
-          },
-        },
-        kind: 'comment_count',
-        activity_id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-        data: {},
-        parent: '',
-        latest_children: {},
-        children_counts: {},
-      },
-    ],
-    satisfied: [
-      {
-        id: 'f307b2c3-2338-4d5e-9d7b-5b742f581e99',
-        user_id: '2',
-        user: {
-          id: '2',
-          data: {
-            fullname: 'Trần Nam Anh',
-            avatar:
-              'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-          },
-          created_at: '2022-01-10T03:45:06.563478Z',
-          updated_at: '2022-02-28T07:49:26.224174Z',
-        },
-        kind: 'satisfied',
-        parent: '',
-        activity_id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-        created_at: '2022-03-15T14:39:11.438528Z',
-        updated_at: '2022-03-15T14:39:11.438528Z',
-      },
-    ],
-    wink: [
-      {
-        id: 'caa23e39-b6af-497a-851e-e87b95bf5085',
-        user_id: '2',
-        user: {
-          id: '2',
-          data: {
-            fullname: 'Trần Nam Anh',
-            avatar:
-              'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-          },
-          created_at: '2022-01-10T03:45:06.563478Z',
-          updated_at: '2022-02-28T07:49:26.224174Z',
-        },
-        kind: 'wink',
-        parent: '',
-        activity_id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-        created_at: '2022-03-15T14:39:07.946045Z',
-        updated_at: '2022-03-15T14:39:07.946045Z',
-      },
-    ],
-  },
-  latest_reactions_extra: {
-    comment_count: {
-      next: '',
+    meta: {
+      total: 3,
+      limit: '10',
     },
   },
-  mentions: {
-    users: {},
-    groups: {},
+};
+
+export const POST_DETAIL_2 = {
+  ownerReactions: [],
+  id: 29,
+  content: 'Important post',
+  media: {
+    videos: [],
+    images: [],
+    files: [],
   },
-  object: {
-    id: '36b7779e-a7fb-49d5-8d6d-de143743aa65',
-    collection: 'post',
-    foreign_id: 'post:36b7779e-a7fb-49d5-8d6d-de143743aa65',
-    data: {
-      images: [],
-      videos: [],
-      files: [],
-      content: 'Hello world',
-    },
-    created_at: '2022-03-15T14:38:02.977355Z',
-    updated_at: '2022-03-15T14:38:14.496623Z',
+  setting: {
+    canReact: true,
+    canComment: true,
+    canShare: true,
+    isImportant: true,
+    importantExpiredAt: '2022-04-20T11:07:08.129Z',
   },
-  origin: 'timeline:g-1',
-  own_reactions: {
-    comment: [
+  isDraft: false,
+  actor: {
+    id: 33,
+    username: 'ngoclinh',
+    fullname: 'Nguyễn Thị Ngọc Linh',
+    avatar:
+      'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg',
+  },
+  mentions: [],
+  commentsCount: 0,
+  reactionsCount: {},
+  createdAt: '2022-04-20T10:06:45.649Z',
+  createdBy: 33,
+  audience: {
+    groups: [
       {
-        created_at: '2022-03-15T14:39:03.983619Z',
-        updated_at: '2022-03-15T14:39:03.983619Z',
-        id: '2a244fd0-2d02-43c1-9faa-fc949dd65061',
-        user_id: '2',
-        user: {
-          created_at: '2022-01-10T03:45:06.563478Z',
-          updated_at: '2022-02-28T07:49:26.224174Z',
-          id: '2',
-          data: {
-            avatar:
-              'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-            fullname: 'Trần Nam Anh',
-          },
-        },
-        kind: 'comment',
-        activity_id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-        data: {
-          content: 'Cmt1',
-          edited: false,
-          images: [],
-          mentions: {
-            groups: [],
-            users: [],
-          },
-        },
-        parent: '',
-        latest_children: {
-          comment: [
-            {
-              created_at: '2022-03-15T14:39:18.634768Z',
-              updated_at: '2022-03-15T14:39:18.634768Z',
-              id: '8fbc3bf1-b911-4939-9ae6-6a60e39cc2c2',
-              user_id: '2',
-              user: {
-                created_at: '2022-01-10T03:45:06.563478Z',
-                updated_at: '2022-02-28T07:49:26.224174Z',
-                id: '2',
-                data: {
-                  avatar:
-                    'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-                  fullname: 'Trần Nam Anh',
-                },
-              },
-              kind: 'comment',
-              activity_id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-              data: {
-                content: 'Reply1',
-                edited: false,
-                images: [],
-                mentions: {
-                  groups: [],
-                  users: [],
-                },
-              },
-              parent: '2a244fd0-2d02-43c1-9faa-fc949dd65061',
-              latest_children: {},
-              children_counts: {
-                comment_count: 0,
-              },
-              own_children: {},
-            },
-          ],
-        },
-        own_children: {},
-        children_counts: {
-          comment: 1,
-          comment_count: 0,
-        },
-      },
-    ],
-    comment_count: [
-      {
-        created_at: '2022-03-15T14:39:18.671202Z',
-        updated_at: '2022-03-15T14:39:18.671202Z',
-        id: '448dd6f2-2d5f-47b9-9309-d679ee4ceab3',
-        user_id: '2',
-        user: {
-          created_at: '2022-01-10T03:45:06.563478Z',
-          updated_at: '2022-02-28T07:49:26.224174Z',
-          id: '2',
-          data: {
-            avatar:
-              'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-            fullname: 'Trần Nam Anh',
-          },
-        },
-        kind: 'comment_count',
-        activity_id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-        data: {},
-        parent: '',
-        latest_children: {},
-        children_counts: {},
-      },
-      {
-        created_at: '2022-03-15T14:39:18.623520Z',
-        updated_at: '2022-03-15T14:39:18.623520Z',
-        id: 'ae01ec12-03ae-4375-8c61-4b1243c2b6d4',
-        user_id: '2',
-        user: {
-          created_at: '2022-01-10T03:45:06.563478Z',
-          updated_at: '2022-02-28T07:49:26.224174Z',
-          id: '2',
-          data: {
-            avatar:
-              'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-            fullname: 'Trần Nam Anh',
-          },
-        },
-        kind: 'comment_count',
-        activity_id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-        data: {},
-        parent: '',
-        latest_children: {},
-        children_counts: {},
-      },
-      {
-        created_at: '2022-03-15T14:39:04.042006Z',
-        updated_at: '2022-03-15T14:39:04.042006Z',
-        id: '6072fc79-0bc6-42da-9b36-5dadb8853bba',
-        user_id: '2',
-        user: {
-          created_at: '2022-01-10T03:45:06.563478Z',
-          updated_at: '2022-02-28T07:49:26.224174Z',
-          id: '2',
-          data: {
-            avatar:
-              'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-            fullname: 'Trần Nam Anh',
-          },
-        },
-        kind: 'comment_count',
-        activity_id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-        data: {},
-        parent: '',
-        latest_children: {},
-        children_counts: {},
-      },
-      {
-        created_at: '2022-03-15T14:39:04.036970Z',
-        updated_at: '2022-03-15T14:39:04.036970Z',
-        id: 'd684c697-d007-4769-953e-9fb755efd93f',
-        user_id: '2',
-        user: {
-          created_at: '2022-01-10T03:45:06.563478Z',
-          updated_at: '2022-02-28T07:49:26.224174Z',
-          id: '2',
-          data: {
-            avatar:
-              'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-            fullname: 'Trần Nam Anh',
-          },
-        },
-        kind: 'comment_count',
-        activity_id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-        data: {},
-        parent: '',
-        latest_children: {},
-        children_counts: {},
-      },
-    ],
-    satisfied: [
-      {
-        id: 'f307b2c3-2338-4d5e-9d7b-5b742f581e99',
-        user_id: '2',
-        user: {
-          id: '2',
-          data: {
-            fullname: 'Trần Nam Anh',
-            avatar:
-              'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-          },
-          created_at: '2022-01-10T03:45:06.563478Z',
-          updated_at: '2022-02-28T07:49:26.224174Z',
-        },
-        kind: 'satisfied',
-        parent: '',
-        activity_id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-        created_at: '2022-03-15T14:39:11.438528Z',
-        updated_at: '2022-03-15T14:39:11.438528Z',
-      },
-    ],
-    wink: [
-      {
-        id: 'caa23e39-b6af-497a-851e-e87b95bf5085',
-        user_id: '2',
-        user: {
-          id: '2',
-          data: {
-            fullname: 'Trần Nam Anh',
-            avatar:
-              'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/9c0eafb0-678f-4f35-8969-3a0737ce85be.jpg',
-          },
-          created_at: '2022-01-10T03:45:06.563478Z',
-          updated_at: '2022-02-28T07:49:26.224174Z',
-        },
-        kind: 'wink',
-        parent: '',
-        activity_id: '8c58c0a0-a46d-11ec-8080-80004c7b096a',
-        created_at: '2022-03-15T14:39:07.946045Z',
-        updated_at: '2022-03-15T14:39:07.946045Z',
+        id: 1,
+        name: 'EVOL Community',
+        icon: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/avatar/Avatar_Group.png',
+        child: [139, 2, 10, 152, 66, 67, 103, 2, 2],
       },
     ],
   },
-  reaction_counts: {
-    comment: 1,
-    comment_count: 2,
-    satisfied: 1,
-    wink: 1,
-  },
-  settings: {
-    can_comment: true,
-    can_react: true,
-    can_share: true,
-  },
-  target: '',
-  time: '2022-03-15T14:38:15.466000',
-  type: 'post',
-  verb: 'post',
-  reactions_order: ['wink', 'satisfied'],
 };
 
 export const GROUP_AUDIENCE = {
@@ -507,4 +245,257 @@ export const GROUP_AUDIENCE = {
   unique: '7bcef9a5-3474-45b9-a167-a68e7ebcfe9a',
   testID: 'post_select_audience.groups.item',
   isChecked: false,
+};
+
+export const CHILD_COMMENT = {
+  totalReply: 0,
+  ownerReactions: [],
+  id: 494,
+  actor: {
+    id: 58,
+    username: 'thuquyen',
+    fullname: 'Nguyen Thi Thu Quyền',
+    avatar:
+      'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/3849e4fc-941f-4b2a-bce9-9da2069a2e55.jpg',
+  },
+  parentId: 490,
+  postId: 302,
+  content: '@trannamanh alo',
+  createdAt: '2022-04-27T03:38:21.809Z',
+  updatedAt: '2022-04-27T03:38:21.809Z',
+  media: [],
+  reactionsCount: null,
+  mentions: [],
+  child: [],
+};
+
+export const LIST_CHILD_COMMENT = [
+  CHILD_COMMENT,
+  {
+    ...CHILD_COMMENT,
+    id: 495,
+    content: 'Ola',
+    createdAt: '2022-04-27T03:38:25.693Z',
+    updatedAt: '2022-04-27T03:38:25.693Z',
+  },
+];
+
+export const allCommentsByParentIds = {
+  302: [
+    {
+      ...CHILD_COMMENT,
+      totalReply: 3,
+      id: 490,
+      parentId: 0,
+      content: '.',
+      createdAt: '2022-04-26T09:25:02.870Z',
+      updatedAt: '2022-04-27T03:38:29.471Z',
+      child: {
+        list: [
+          {
+            ...CHILD_COMMENT,
+            id: 505,
+            content: '9',
+            createdAt: '2022-04-27T03:54:38.962Z',
+            updatedAt: '2022-04-27T03:54:38.962Z',
+          },
+          {
+            ...CHILD_COMMENT,
+            id: 496,
+            content: 'Hihi',
+          },
+          {
+            ...CHILD_COMMENT,
+            id: 495,
+            content: 'Ola',
+            createdAt: '2022-04-27T03:38:25.693Z',
+            updatedAt: '2022-04-27T03:38:25.693Z',
+          },
+          CHILD_COMMENT,
+        ],
+        meta: {hasPreviousPage: true, hasNextPage: false},
+      },
+    },
+    {
+      ...CHILD_COMMENT,
+      id: 485,
+      parentId: 0,
+      content: '2',
+      createdAt: '2022-04-26T07:02:25.251Z',
+      updatedAt: '2022-04-26T07:02:25.251Z',
+    },
+    {
+      ...CHILD_COMMENT,
+      parentId: 0,
+      id: 484,
+      content: '1',
+      createdAt: '2022-04-26T07:02:20.368Z',
+      updatedAt: '2022-04-26T07:02:20.368Z',
+    },
+  ],
+};
+
+export const allCommentsByParentIdsWith1ChildComment = {
+  302: [
+    {
+      ...CHILD_COMMENT,
+      totalReply: 3,
+      id: 490,
+      parentId: 0,
+      content: '.',
+      createdAt: '2022-04-26T09:25:02.870Z',
+      updatedAt: '2022-04-27T03:38:29.471Z',
+      child: [
+        {
+          ...CHILD_COMMENT,
+          id: 505,
+          content: '9',
+          createdAt: '2022-04-27T03:54:38.962Z',
+          updatedAt: '2022-04-27T03:54:38.962Z',
+        },
+      ],
+    },
+    {
+      ...CHILD_COMMENT,
+      id: 485,
+      parentId: 0,
+      content: '2',
+      createdAt: '2022-04-26T07:02:25.251Z',
+      updatedAt: '2022-04-26T07:02:25.251Z',
+    },
+    {
+      ...CHILD_COMMENT,
+      id: 484,
+      parentId: 0,
+      content: '1',
+      createdAt: '2022-04-26T07:02:20.368Z',
+      updatedAt: '2022-04-26T07:02:20.368Z',
+    },
+  ],
+};
+
+export const allCommentsArray = [
+  {...allCommentsByParentIdsWith1ChildComment[302][0]},
+  {...allCommentsByParentIdsWith1ChildComment[302][0].child[0]},
+  {...allCommentsByParentIdsWith1ChildComment[302][0].child[1]},
+  {...allCommentsByParentIdsWith1ChildComment[302][0].child[2]},
+  {...allCommentsByParentIdsWith1ChildComment[302][1]},
+  {...allCommentsByParentIdsWith1ChildComment[302][2]},
+];
+
+export const baseCommentData = {
+  ...CHILD_COMMENT,
+  child: {
+    list: [
+      {
+        ...CHILD_COMMENT,
+        id: 505,
+        content: '9',
+        createdAt: '2022-04-27T03:54:38.962Z',
+        updatedAt: '2022-04-27T03:54:38.962Z',
+      },
+    ],
+    meta: {hasPreviousPage: false, hasNextPage: false},
+  },
+  content: '.',
+  createdAt: '2022-04-26T09:25:02.870Z',
+  id: 490,
+  parentId: 0,
+  totalReply: 12,
+  updatedAt: '2022-04-27T03:54:38.969Z',
+};
+
+export const POST_DETAIL_3 = {
+  ownerReactions: [],
+  id: 302,
+  content: 'Important post',
+  media: {
+    videos: [],
+    images: [],
+    files: [],
+  },
+  setting: {
+    canReact: true,
+    canComment: true,
+    canShare: true,
+    isImportant: true,
+    importantExpiredAt: '2022-04-20T11:07:08.129Z',
+  },
+  isDraft: false,
+  actor: {
+    id: 33,
+    username: 'ngoclinh',
+    fullname: 'Nguyễn Thị Ngọc Linh',
+    avatar:
+      'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/a0f2b4bb-abf7-423d-9fed-0b706751b323.jpg',
+  },
+  mentions: [],
+  commentsCount: 0,
+  reactionsCount: {},
+  createdAt: '2022-04-20T10:06:45.649Z',
+  createdBy: 33,
+  comments: {
+    list: [
+      {
+        totalReply: 3,
+        ownerReactions: [],
+        id: 490,
+        actor: {
+          id: 2,
+          username: 'trannamanh',
+          fullname: 'Trần Nam Anh',
+          avatar:
+            'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/acb214d0-ce96-41bb-aba6-fb5fc89f1afa.jpg',
+        },
+        parentId: 0,
+        postId: 302,
+        content: '.',
+        createdAt: '2022-04-26T09:25:02.870Z',
+        updatedAt: '2022-04-27T03:38:29.471Z',
+        media: [],
+        reactionsCount: null,
+        mentions: [],
+        child: [
+          {
+            ...CHILD_COMMENT,
+            id: 505,
+            content: '9',
+            createdAt: '2022-04-27T03:54:38.962Z',
+            updatedAt: '2022-04-27T03:54:38.962Z',
+          },
+          {
+            ...CHILD_COMMENT,
+            id: 496,
+            content: 'Hihi',
+          },
+          {
+            ...CHILD_COMMENT,
+            id: 495,
+            content: 'Ola',
+            createdAt: '2022-04-27T03:38:25.693Z',
+            updatedAt: '2022-04-27T03:38:25.693Z',
+          },
+          CHILD_COMMENT,
+        ],
+      },
+    ],
+    meta: {
+      hasPreviousPage: false,
+      hasNextPage: false,
+    },
+  },
+  audience: {
+    groups: [
+      {
+        id: 1,
+        name: 'EVOL Community',
+        icon: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/avatar/Avatar_Group.png',
+        child: [139, 2, 10, 152, 66, 67, 103, 2, 2],
+      },
+    ],
+  },
+};
+
+export const allPosts = {
+  302: POST_DETAIL_3,
 };

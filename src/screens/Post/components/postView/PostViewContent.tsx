@@ -15,7 +15,7 @@ import Markdown from '~/beinComponents/Markdown';
 import postKeySelector from '../../redux/keySelector';
 
 export interface PostViewContentProps {
-  postId: string;
+  postId: number;
   content?: string;
   images?: IActivityDataImage[];
   isPostDetail: boolean;
@@ -52,13 +52,15 @@ const PostViewContent: FC<PostViewContentProps> = ({
   const renderContent = () => {
     if (isLite) {
       const imageName = images?.[0]?.name;
-      const imageSource = imageName
-        ? imageName?.includes?.('http')
-          ? imageName
-          : getResourceUrl('postImage', imageName)
-        : '';
+      const imageSource =
+        images?.[0]?.url ||
+        (imageName
+          ? imageName?.includes?.('http')
+            ? imageName
+            : getResourceUrl('postImage', imageName)
+          : '');
       return (
-        <View style={styles.row}>
+        <View testID={'post_view_content.lite_container'} style={styles.row}>
           <View style={styles.flex1}>
             <CollapsibleText
               testID={'post_view_content'}
@@ -82,7 +84,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
       return (
         <Markdown
           value={content}
-          selector={`${postKeySelector.allPosts}.${postId}.mentions.users`}
+          selector={`${postKeySelector.allPosts}.${postId}.mentions`}
           onPressAudience={onPressMentionAudience}
         />
       );
@@ -95,7 +97,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
         shortLength={400}
         useMarkdown
         toggleOnPress
-        selector={`${postKeySelector.allPosts}.${postId}.mentions.users`}
+        selector={`${postKeySelector.allPosts}.${postId}.mentions`}
         onPressAudience={onPressMentionAudience}
       />
     );

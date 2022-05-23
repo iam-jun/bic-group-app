@@ -132,11 +132,15 @@ exports[`AtMentionItem component renders correctly 1`] = `
     </View>
     <Text
       style={
-        Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 16,
-        }
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 16,
+          },
+          Object {},
+          undefined,
+        ]
       }
     >
       test

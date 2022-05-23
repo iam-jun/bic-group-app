@@ -74,6 +74,11 @@ import iconPermissionGuide1Ios from '../../assets/icons/icon_permission_guide_1_
 import iconPermissionGuide2Ios from '../../assets/icons/icon_permission_guide_2_ios.svg';
 import iconPermissionGuide3Ios from '../../assets/icons/icon_permission_guide_3_ios.svg';
 import iconPermissionGuide4Ios from '../../assets/icons/icon_permission_guide_4_ios.svg';
+import iconCannotComment from '../../assets/icons/icon_cannot_comment.svg';
+import iconTabCommunities from '../../assets/icons/icon_communities.svg';
+import iconTabCommunitiesBein from '../../assets/icons/icon_communities_bein.svg';
+import iconLock from '../../assets/icons/icon_lock.svg';
+import iconSecret from '../../assets/icons/icon_secret_group.svg';
 
 const icons = {
   iconTabHome,
@@ -236,6 +241,7 @@ const icons = {
   FileTimesAlt: 'FileTimesAlt',
   WifiSlash: 'WifiSlash',
   SignOutAlt: 'SignOutAlt',
+  Channel: 'Channel',
   addUsers,
   iconMapPin,
   iconChat,
@@ -248,6 +254,15 @@ const icons = {
   iconPermissionGuide2Ios,
   iconPermissionGuide3Ios,
   iconPermissionGuide4Ios,
+  iconCannotComment,
+  iconTabCommunities,
+  iconTabCommunitiesBein,
+  Compass: 'Compass',
+  Dashboard: 'Dashboard',
+  iconLock,
+  Sitemap: 'Sitemap',
+  iconSecret,
+  VolumeMute: 'VolumeMute',
 };
 
 export default icons;

@@ -1,12 +1,12 @@
 import i18next from 'i18next';
-import {put, call} from 'redux-saga/effects';
+import {put, call, select} from 'redux-saga/effects';
 
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {IToastMessage} from '~/interfaces/common';
 import groupJoinStatus from '~/constants/groupJoinStatus';
-import {showError} from '.';
+import showError from '~/store/commonSaga/showError';
 
 export default function* joinNewGroup({
   payload,
@@ -22,6 +22,11 @@ export default function* joinNewGroup({
     const join_status = response?.data?.join_status;
     const hasRequested = join_status === groupJoinStatus.requested;
 
+    // update button Join/Cancel/View status on Discover groups
+    yield put(
+      groupsActions.editDiscoverGroupItem({id: groupId, data: {join_status}}),
+    );
+
     if (hasRequested) {
       yield put(groupsActions.getGroupDetail(groupId));
       const toastMessage: IToastMessage = {
@@ -34,8 +39,6 @@ export default function* joinNewGroup({
       return;
     }
 
-    yield put(groupsActions.getJoinedGroups());
-
     const toastMessage: IToastMessage = {
       content: `${i18next.t(
         'groups:text_successfully_join_group',
@@ -46,7 +49,7 @@ export default function* joinNewGroup({
     };
 
     yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.getGroupDetail(groupId, true));
+    yield put(groupsActions.getGroupDetail(groupId));
   } catch (err) {
     console.error('joinNewGroup catch', err);
     yield showError(err);

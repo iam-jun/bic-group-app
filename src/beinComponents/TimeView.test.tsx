@@ -7,6 +7,7 @@ import TimeView, {
 } from '~/beinComponents/TimeView';
 import moment from 'moment';
 import {languages} from '~/test/testUtils';
+import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);
 
@@ -35,7 +36,8 @@ describe('TimeView component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
     const timeComponent = rendered.getByTestId('time_view');
     expect(timeComponent).toBeDefined();
-    expect(timeComponent.props.style).toMatchObject({color: '#FF9800'});
+    const flattenedStyle = StyleSheet.flatten(timeComponent.props.style);
+    expect(flattenedStyle).toMatchObject({color: '#FF9800'});
   });
 
   it(`renders correctly with props textProps`, () => {

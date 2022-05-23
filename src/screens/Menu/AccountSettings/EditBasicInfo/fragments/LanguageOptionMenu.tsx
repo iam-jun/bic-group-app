@@ -152,7 +152,7 @@ const LanguageOptionMenu = ({
             <ScrollView
               keyboardShouldPersistTaps="always"
               showsVerticalScrollIndicator={false}>
-              {(languages || []).map((item: ILanguageItem, index: number) => (
+              {languages.map((item: ILanguageItem, index: number) => (
                 <View key={item?.code + item?.fullName}>
                   {renderItem({item, index})}
                 </View>

@@ -67,7 +67,7 @@ describe('GroupInfoHeader component', () => {
     const store = createTestStore(state);
     const wrapper = renderWithRedux(<GroupInfoHeader />, store);
     const privacy = wrapper.getByTestId('group_info_header.privacy');
-    expect(privacy.props.children).toBe('Public Group');
+    expect(privacy.props.children).toBe('Public');
   });
 
   it('should render group member count correctly', () => {

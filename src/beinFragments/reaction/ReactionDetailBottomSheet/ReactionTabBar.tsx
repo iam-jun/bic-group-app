@@ -60,19 +60,24 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
 
   useEffect(() => {
     if (reactionCounts) {
+      const reaactionCountMap = new Map();
       const newData: any = [];
-      Object.keys(reactionCounts)?.map?.(key => {
-        const reactionType = key as ReactionType;
-        if (
-          !blacklistReactions?.[reactionType] &&
-          reactionCounts?.[reactionType] > 0
-        ) {
-          newData.push({
-            reactionType,
-            count: reactionCounts[reactionType],
-          });
+      Object.values(reactionCounts || {})?.map((reaction: any) => {
+        const key = Object.keys(reaction || {})?.[0];
+        if (key) {
+          reaactionCountMap.set(key, reaction?.[key]);
         }
       });
+
+      for (const [key, value] of reaactionCountMap) {
+        const reactionType = key as ReactionType;
+        if (!blacklistReactions?.[reactionType] && value > 0) {
+          newData.push({
+            reactionType,
+            count: value,
+          });
+        }
+      }
       setData(newData);
     } else {
       //reset

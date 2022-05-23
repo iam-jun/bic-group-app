@@ -1,18 +1,20 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
-import {IGroupDetailEdit, IParamGetGroupPosts} from '~/interfaces/IGroup';
+import {
+  IGetCommunityGroup,
+  IGroupDetailEdit,
+  IParamGetCommunities,
+  IParamGetGroupPosts,
+} from '~/interfaces/IGroup';
+import {
+  IParamGetCommunityMembers,
+  IParamGetDiscoverGroups,
+} from '~/interfaces/ICommunity';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import appConfig from '~/configs/appConfig';
 
 export const groupsApiConfig = {
-  getMyGroups: (params?: any): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}users/my-groups`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
-    params,
-  }),
   getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/feeds/timeline`,
+    url: `${ApiConfig.providers.beinFeed.url}api/v1/feeds/timeline`,
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
@@ -42,7 +44,10 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    params,
+    params: {
+      ...params,
+      key: !!params?.key?.trim?.() ? params.key : undefined,
+    },
   }),
   getInfoGroups: (ids: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups`,
@@ -76,7 +81,10 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    params,
+    params: {
+      ...params,
+      key: !!params?.key?.trim?.() ? params.key : undefined,
+    },
   }),
   addUsers: (groupId: number, userIds: number[]): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/users/add`,
@@ -144,7 +152,10 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    params,
+    params: {
+      ...params,
+      key: !!params?.key?.trim?.() ? params.key : undefined,
+    },
   }),
   approveSingleMemberRequest: (
     groupId: number,
@@ -164,7 +175,7 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
     data: {
-      totalJoiningRequests: total,
+      total_joining_requests: total,
     },
   }),
   declineSingleMemberRequest: (
@@ -185,7 +196,7 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
     data: {
-      totalJoiningRequests: total,
+      total_joining_requests: total,
     },
   }),
   getInnerGroupsLastAdmin: (
@@ -197,23 +208,69 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
+  getCommunities: (params: IParamGetCommunities): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      ...params,
+      key: !!params?.key?.trim?.() ? params.key : undefined,
+    },
+  }),
+  getJoinedCommunities: (previewMembers: boolean): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}me/communities`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {preview_members: previewMembers},
+  }),
+  getCommunityGroups: (
+    id: number,
+    otherParams: IGetCommunityGroup,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}me/communities/${id}/groups`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      ...otherParams,
+      key: !!otherParams?.key?.trim?.() ? otherParams.key : undefined,
+    },
+  }),
+  getCommunityDetail: (communityId: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {preview_members: true},
+  }),
+  getCommunityMembers: (
+    communityId: number,
+    params?: IParamGetCommunityMembers,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/members`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      ...params,
+      key: !!params?.key?.trim?.() ? params.key : undefined,
+    },
+  }),
+  getDiscoverGroups: (
+    communityId: number,
+    params?: IParamGetDiscoverGroups,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/groups`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params,
+  }),
 };
 
 const groupsDataHelper = {
-  getMyGroups: async (params?: any) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getMyGroups(params),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
   getSearchGroups: async (params?: any) => {
     try {
       const response: any = await makeHttpRequest(
@@ -248,17 +305,11 @@ const groupsDataHelper = {
         groupsApiConfig.getGroupPosts({
           offset: param?.offset || 0,
           limit: param?.limit || appConfig.recordsPerPage,
-          enrich: true,
-          own_reactions: true,
-          with_own_reactions: true,
-          with_own_children: true,
-          with_recent_reactions: true,
-          with_reaction_counts: true,
           ...param,
         }),
       );
-      if (response && response?.data?.data?.results) {
-        return Promise.resolve(response?.data?.data?.results);
+      if (response && response?.data?.data?.list) {
+        return Promise.resolve(response?.data?.data?.list);
       } else {
         return Promise.reject(response);
       }
@@ -515,6 +566,96 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getCommunities: async (params?: IParamGetCommunities) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getCommunities(params || {}),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getJoinedCommunities: async (previewMembers: boolean) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getJoinedCommunities(previewMembers),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response.data?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getCommunityGroups: async (id: number, params: IGetCommunityGroup) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getCommunityGroups(id, params),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response.data?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getCommunityDetail: async (communityId: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getCommunityDetail(communityId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getCommunityMembers: async (
+    communityId: number,
+    params?: IParamGetCommunityMembers,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getCommunityMembers(communityId, params),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getDiscoverGroups: async (
+    communityId: number,
+    params?: IParamGetDiscoverGroups,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getDiscoverGroups(communityId, params),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);
       }

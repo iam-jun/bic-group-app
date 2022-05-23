@@ -165,11 +165,15 @@ exports[`SettingItem conponent renders correctly 1`] = `
         <Text
           numberOfLines={2}
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 14,
+              },
+              Object {},
+              Object {},
+            ]
           }
         >
           Name
@@ -177,11 +181,15 @@ exports[`SettingItem conponent renders correctly 1`] = `
         <Text
           numberOfLines={2}
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 12,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-Regular",
+                "fontSize": 12,
+              },
+              Object {},
+              Object {},
+            ]
           }
         >
           Not set
@@ -358,11 +366,15 @@ exports[`SettingItem conponent renders correctly testID 1`] = `
         <Text
           numberOfLines={2}
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 14,
+              },
+              Object {},
+              Object {},
+            ]
           }
         >
           Name
@@ -370,11 +382,15 @@ exports[`SettingItem conponent renders correctly testID 1`] = `
         <Text
           numberOfLines={2}
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 12,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-Regular",
+                "fontSize": 12,
+              },
+              Object {},
+              Object {},
+            ]
           }
         >
           Not set
@@ -550,11 +566,15 @@ exports[`SettingItem conponent should render left, right component 1`] = `
         <Text
           numberOfLines={2}
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 14,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 14,
+              },
+              Object {},
+              Object {},
+            ]
           }
         >
           Name
@@ -562,11 +582,15 @@ exports[`SettingItem conponent should render left, right component 1`] = `
         <Text
           numberOfLines={2}
           style={
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 12,
-            }
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-Regular",
+                "fontSize": 12,
+              },
+              Object {},
+              Object {},
+            ]
           }
         >
           Not set
@@ -575,7 +599,7 @@ exports[`SettingItem conponent should render left, right component 1`] = `
       <View
         accessible={true}
         collapsable={false}
-        focusable={true}
+        focusable={false}
         nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}

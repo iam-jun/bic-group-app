@@ -43,7 +43,7 @@ const Reaction: React.FC<ReactionProps> = ({
   const [isSelected, setIsSelected] = useState<boolean>(selected);
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
-  const styles = createStyles(theme, isSelected);
+  const styles = createStyles(theme, isSelected, loading);
 
   useEffect(() => {
     setIsSelected(selected);
@@ -97,14 +97,16 @@ const Reaction: React.FC<ReactionProps> = ({
   );
 };
 
-const createStyles = (theme: ITheme, isSelected: boolean) => {
+const createStyles = (theme: ITheme, isSelected: boolean, loading: boolean) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
     container: {
-      backgroundColor: isSelected ? colors.primary2 : colors.placeholder,
+      backgroundColor:
+        isSelected && !loading ? colors.primary2 : colors.placeholder,
       borderWidth: 1,
-      borderColor: isSelected ? colors.primary6 : colors.placeholder,
+      borderColor:
+        isSelected && !loading ? colors.primary6 : colors.placeholder,
       borderRadius: 6,
       paddingHorizontal: 6,
       justifyContent: 'center',

@@ -5,8 +5,8 @@ import {IToastMessage} from '~/interfaces/common';
 import * as modalActions from '~/store/modal/actions';
 import {IGroupDetailEdit} from '~/interfaces/IGroup';
 import groupsActions from '../actions';
-import {showError} from '.';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
+import showError from '~/store/commonSaga/showError';
 
 export default function* editGroupDetail({
   payload,
@@ -48,8 +48,6 @@ export default function* editGroupDetail({
 
     yield put(groupsActions.setGroupDetail(resp?.data));
     if (callback) callback();
-
-    yield put(groupsActions.getJoinedGroups());
   } catch (err) {
     console.log('\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m');
     yield showError(err);

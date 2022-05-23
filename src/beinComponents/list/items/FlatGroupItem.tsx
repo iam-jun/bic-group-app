@@ -45,6 +45,8 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   onPressItem,
   hidePath = false,
   initShowTree = true,
+  showPrivacy,
+  showPrivacyName,
   ...props
 }: FlatGroupItemProps) => {
   const [showTree, setShowTree] = useState(initShowTree);
@@ -167,6 +169,8 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           onChangeCheckedGroups={onChangeCheckedGroups}
           toggleOnPress={toggleOnPress}
           onPressGroup={onPressGroup}
+          showPrivacy={showPrivacy}
+          showPrivacyName={showPrivacyName}
         />
       ) : (
         <GroupItem
@@ -175,6 +179,8 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           isChecked={!!selectingData?.[group.id]}
           onPressItem={_onPressGroup}
           onCheckedItem={onChangeCheckedGroups ? onCheckedGroup : undefined}
+          showPrivacy={showPrivacy}
+          showPrivacyName={showPrivacyName}
         />
       )}
     </View>
@@ -195,7 +201,6 @@ const themeStyles = (theme: ITheme) => {
       alignItems: 'center',
     },
     pathContainer: {
-      marginTop: spacing.margin.tiny,
       flexDirection: 'row',
       alignItems: 'center',
     },

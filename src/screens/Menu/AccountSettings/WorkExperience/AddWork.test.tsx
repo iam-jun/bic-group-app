@@ -17,6 +17,9 @@ import AddWork from './AddWork';
 import menuDataHelper from '../../helper/MenuDataHelper';
 import i18next from 'i18next';
 import {formatDate} from '~/utils/formatData';
+import mainStack from '~/router/navigator/MainStack/stack';
+import menuActions from '../../redux/actions';
+import menuTypes from '../../redux/types';
 
 afterEach(cleanup);
 
@@ -67,7 +70,9 @@ describe('AddWork screen', () => {
 
     const component = wrapper.getByTestId('add_work.save');
     const titleComponent = wrapper.getByTestId('header.text');
-    const toggleComponent = wrapper.getByTestId('toggle.out_side_view');
+    const toggleComponent = wrapper.getByTestId(
+      'add_work.currently_work_here.out_side_view',
+    );
     const endDateComponent = wrapper.queryByTestId('add_work.end_date_view');
     const startDateTitle = wrapper.getByTestId('add_work.start_date.title');
     const startDateValueComponent = wrapper.getByTestId('add_work.start_date');
@@ -126,7 +131,9 @@ describe('AddWork screen', () => {
 
     const buttonSaveComponent = wrapper.getByTestId('add_work.save');
     const titleComponent = wrapper.getByTestId('header.text');
-    const toggleComponent = wrapper.getByTestId('toggle.out_side_view');
+    const toggleComponent = wrapper.getByTestId(
+      'add_work.currently_work_here.out_side_view',
+    );
     const endDateComponent = wrapper.queryByTestId('add_work.end_date_view');
     const startDateTitle = wrapper.getByTestId('add_work.start_date.title');
     const startDateValueComponent = wrapper.getByTestId('add_work.start_date');
@@ -181,7 +188,9 @@ describe('AddWork screen', () => {
 
     const buttonSaveComponent = wrapper.getByTestId('add_work.save');
     const titleComponent = wrapper.getByTestId('header.text');
-    const toggleComponent = wrapper.getByTestId('toggle.out_side_view');
+    const toggleComponent = wrapper.getByTestId(
+      'add_work.currently_work_here.out_side_view',
+    );
     const endDateComponent = wrapper.queryByTestId('add_work.end_date_view');
     const startDateTitle = wrapper.getByTestId('add_work.start_date.title');
     const startDateValueComponent = wrapper.getByTestId('add_work.start_date');
@@ -197,7 +206,7 @@ describe('AddWork screen', () => {
       colors.light.colors.borderCard,
     );
     expect(endDateComponent).toBeDefined();
-    expect(endDateValueComponent.props.children).toBe(
+    expect(endDateValueComponent?.props?.children).toBe(
       formatDate(endDate, 'MMMM DD, YYYY'),
     );
 
@@ -232,7 +241,9 @@ describe('AddWork screen', () => {
 
     const component = wrapper.getByTestId('add_work.save');
     const titleComponent = wrapper.getByTestId('header.text');
-    const toggleComponent = wrapper.getByTestId('toggle.out_side_view');
+    const toggleComponent = wrapper.getByTestId(
+      'add_work.currently_work_here.out_side_view',
+    );
     const endDateComponent = wrapper.queryByTestId('add_work.end_date_view');
     const startDateTitle = wrapper.getByTestId('add_work.start_date.title');
     const startDateValueComponent = wrapper.getByTestId('add_work.start_date');
@@ -260,7 +271,7 @@ describe('AddWork screen', () => {
     ).toBeDefined();
 
     fireEvent.press(toggleComponent);
-    const buttonEndDate = wrapper.queryByTestId('add_work.end_date.button');
+    const buttonEndDate = wrapper.getByTestId('add_work.end_date.button');
     expect(toggleComponent.props.style.backgroundColor).toBe(
       colors.light.colors.borderCard,
     );
@@ -275,6 +286,18 @@ describe('AddWork screen', () => {
       ...jest.requireActual('react'),
       useState: jest.fn(),
     }));
+
+    const mockActionAddWorkExp = jest.fn(() => {
+      return {
+        type: menuTypes.ADD_WORK_EXPERIENCE,
+        payload: {},
+      };
+    });
+
+    jest
+      .spyOn(menuActions, 'addWorkExperience')
+      .mockImplementation(mockActionAddWorkExp as any);
+
     const state = {...initialState};
     //@ts-ignore
     state.menu.selectedWorkItem = null;
@@ -284,7 +307,9 @@ describe('AddWork screen', () => {
 
     const btnSaveComponent = wrapper.getByTestId('add_work.save');
     const titleComponent = wrapper.getByTestId('header.text');
-    const toggleComponent = wrapper.getByTestId('toggle.out_side_view');
+    const toggleComponent = wrapper.getByTestId(
+      'add_work.currently_work_here.out_side_view',
+    );
     const endDateComponent = wrapper.queryByTestId('add_work.end_date_view');
     const startDateTitle = wrapper.getByTestId('add_work.start_date.title');
     const startDateValueComponent = wrapper.getByTestId('add_work.start_date');
@@ -316,6 +341,7 @@ describe('AddWork screen', () => {
     // expect(setState).toHaveBeenCalledWith(positionText);
 
     fireEvent.press(btnSaveComponent);
+    expect(mockActionAddWorkExp).toBeCalled();
   });
 
   it(`should delete work item successfully`, async () => {
@@ -325,6 +351,17 @@ describe('AddWork screen', () => {
     jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
       return {rootNavigation} as any;
     });
+
+    const mockActionDeleteExp = jest.fn(() => {
+      return {
+        type: menuTypes.UPLOAD_IMAGE,
+        payload: {},
+      };
+    });
+
+    jest
+      .spyOn(menuActions, 'deleteWorkExperience')
+      .mockImplementation(mockActionDeleteExp as any);
 
     const deleteFunc = jest.fn(() => {
       return Promise.resolve({
@@ -348,11 +385,7 @@ describe('AddWork screen', () => {
 
     fireEvent.press(btnDeleteComponent);
 
-    //can't call dispach, stuck here
-    // await waitForUpdateRedux();
-
-    // expect(Keyboard.dismiss).toBeCalled();
-    // expect(goBack).toBeCalled();
+    expect(mockActionDeleteExp).toBeCalled();
   });
 
   it(`should go back to previous screen successfully`, async () => {
@@ -423,5 +456,25 @@ describe('AddWork screen', () => {
     // expect(textInputDescriptionView.props.style[0].borderColor).toBe(
     //   colors.light.colors.primary6,
     // );
+  });
+
+  it(`should back to userEdit screen successfully if rootNavigation.canGoBack = false `, () => {
+    Keyboard.dismiss = jest.fn();
+    const replace = jest.fn();
+
+    const rootNavigation = {canGoBack: false, replace};
+
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
+      return {rootNavigation} as any;
+    });
+
+    const store = mockStore(initialState);
+
+    const wrapper = renderWithRedux(<AddWork />, store);
+
+    const buttonBack = wrapper.getByTestId('header.back');
+    fireEvent.press(buttonBack);
+    expect(Keyboard.dismiss).toBeCalled();
+    expect(replace).toBeCalledWith(mainStack.userEdit);
   });
 });

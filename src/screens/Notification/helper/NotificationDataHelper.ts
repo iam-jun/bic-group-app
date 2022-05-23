@@ -8,9 +8,9 @@ export const notificationApiConfig = {
   getNotifications: (params: IParamGetNotifications): HttpApiRequestConfig => {
     const {limit, ...restParams} = params || {};
     return {
-      url: `${ApiConfig.providers.beinFeed.url}api/notifications`,
+      url: `${ApiConfig.providers.beinNotification.url}notifications`,
       method: 'get',
-      provider: ApiConfig.providers.beinFeed,
+      provider: ApiConfig.providers.beinNotification,
       useRetry: true,
       params: {
         limit: limit || LIMIT,
@@ -20,25 +20,33 @@ export const notificationApiConfig = {
   },
   putMarkAsReadById: (id: string): HttpApiRequestConfig => {
     return {
-      url: `${ApiConfig.providers.beinFeed.url}api/notifications/${id}/mark-as-read`,
+      url: `${ApiConfig.providers.beinNotification.url}notifications/${id}/mark-read`,
       method: 'put',
-      provider: ApiConfig.providers.beinFeed,
+      provider: ApiConfig.providers.beinNotification,
       useRetry: true,
     };
   },
   putMarkAllAsRead: (): HttpApiRequestConfig => {
     return {
-      url: `${ApiConfig.providers.beinFeed.url}api/notifications/all/mark-as-read`,
+      url: `${ApiConfig.providers.beinNotification.url}notifications/mark-read`,
       method: 'put',
-      provider: ApiConfig.providers.beinFeed,
+      provider: ApiConfig.providers.beinNotification,
       useRetry: true,
     };
   },
   putMarkAllAsSeen: (): HttpApiRequestConfig => {
     return {
-      url: `${ApiConfig.providers.beinFeed.url}api/notifications/mark-as-seen`,
+      url: `${ApiConfig.providers.beinNotification.url}notifications/mark-seen`,
       method: 'put',
-      provider: ApiConfig.providers.beinFeed,
+      provider: ApiConfig.providers.beinNotification,
+      useRetry: true,
+    };
+  },
+  putMarkAsUnReadById: (id: string): HttpApiRequestConfig => {
+    return {
+      url: `${ApiConfig.providers.beinNotification.url}notifications/${id}/mark-unread`,
+      method: 'put',
+      provider: ApiConfig.providers.beinNotification,
       useRetry: true,
     };
   },
@@ -65,8 +73,8 @@ const notificationsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve({
-          results: response?.data?.data?.results || [],
-          unseen: response?.data?.data?.unseen,
+          results: response?.data?.data?.list || [],
+          unseen: response?.data?.meta?.unSeen,
         });
       } else {
         return Promise.reject(response);
@@ -81,13 +89,13 @@ const notificationsDataHelper = {
       const response: any = await makeHttpRequest(
         notificationApiConfig.getNotifications({
           limit,
-          id_gte: fromNotiGroupId,
+          idGTE: fromNotiGroupId,
         }),
       );
       if (response && response?.data?.data) {
         return Promise.resolve({
-          results: response?.data?.data?.results || [],
-          unseen: response?.data?.data?.unseen,
+          results: response?.data?.data || [],
+          unseen: response?.data?.meta?.unSeen,
         });
       } else {
         return Promise.reject(response);
@@ -112,7 +120,7 @@ const notificationsDataHelper = {
           // if this is user own create post event and it is not seen
           // we must minute unseen count by 1
           // to make unseen number correct after we hide the noti
-          if (!notiGroup.is_seen) {
+          if (!notiGroup.isSeen) {
             userHisOwnNotiCount++;
           }
           return false;
@@ -157,6 +165,20 @@ const notificationsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         notificationApiConfig.putMarkAsReadById(activityId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  markAsUnRead: async (activityId: string) => {
+    try {
+      const response: any = await makeHttpRequest(
+        notificationApiConfig.putMarkAsUnReadById(activityId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

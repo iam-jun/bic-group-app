@@ -12,10 +12,12 @@ import Icon from '~/beinComponents/Icon';
 import Image, {ImageProps} from '~/beinComponents/Image';
 import {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
+import Text from '../Text';
 
 export type AvatarType =
   | 'tiny'
   | 'small'
+  | 'smallAlt'
   | 'medium'
   | 'large'
   | 'largeAlt'
@@ -37,6 +39,7 @@ export interface AvatarProps extends ImageProps {
   badgeCheck?: boolean;
   badgeCheckSize?: number;
   iconCheckSize?: number;
+  counter?: counter;
 }
 
 const AvatarComponent: React.FC<AvatarProps> = ({
@@ -53,6 +56,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   badgeCheck,
   badgeCheckSize = 16,
   iconCheckSize = 12,
+  counter,
   ...props
 }: AvatarProps) => {
   const theme: ITheme = useTheme() as ITheme;
@@ -226,6 +230,11 @@ const AvatarComponent: React.FC<AvatarProps> = ({
           source={source}
           {...props}
         />
+        {!!counter ? (
+          <View style={[avatarStyle, styles.textStyle]}>
+            <Text.BodyS color={theme.colors.background}>+{counter}</Text.BodyS>
+          </View>
+        ) : null}
         {renderStatus()}
         {renderAction()}
         {renderBadge()}
@@ -248,6 +257,11 @@ const creatStyle = (theme: ITheme) => {
       width: dimension?.avatarSizes?.small,
       height: dimension?.avatarSizes?.small,
       borderRadius: spacing?.borderRadius.small,
+    },
+    smallAlt: {
+      width: dimension?.avatarSizes?.smallAlt,
+      height: dimension?.avatarSizes?.smallAlt,
+      borderRadius: spacing?.borderRadius.big,
     },
     medium: {
       width: dimension?.avatarSizes?.medium,
@@ -273,6 +287,12 @@ const creatStyle = (theme: ITheme) => {
       borderWidth: 4,
       borderColor: colors.background,
     },
+    textStyle: {
+      backgroundColor: colors.transparent1,
+      position: 'absolute',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   });
 };
 
@@ -286,6 +306,11 @@ const creatBorderStyle = (theme: ITheme) => {
       borderRadius: (dimension?.avatarSizes?.tiny + webBorderWitdth || 16) / 2,
     },
     small: {
+      width: dimension?.avatarSizes?.small + webBorderWitdth,
+      height: dimension?.avatarSizes?.small + webBorderWitdth,
+      borderRadius: (dimension?.avatarSizes?.small + webBorderWitdth) / 2,
+    },
+    smallAlt: {
       width: dimension?.avatarSizes?.small + webBorderWitdth,
       height: dimension?.avatarSizes?.small + webBorderWitdth,
       borderRadius: (dimension?.avatarSizes?.small + webBorderWitdth) / 2,

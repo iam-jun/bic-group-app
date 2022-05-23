@@ -1,7 +1,17 @@
-import {NavigationContainer} from '@react-navigation/native';
+import {useBackHandler} from '@react-native-community/hooks';
+import {
+  NavigationContainer,
+  useNavigationState,
+} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
-import {Platform, StyleSheet, useWindowDimensions, View} from 'react-native';
+import {
+  DeviceEventEmitter,
+  Platform,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import CommonModal from '~/beinFragments/CommonModal';
@@ -9,8 +19,13 @@ import UserProfilePreviewBottomSheet from '~/beinFragments/Preview/UserProfilePr
 import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
 import ReactionDetailBottomSheet from '~/beinFragments/reaction/ReactionDetailBottomSheet';
 import {AppConfig} from '~/configs';
+import {
+  customBackHandlerRoutes,
+  NAVIGATION_BACK_PRESSED,
+} from '~/configs/navigator';
 import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import MenuSidebarDrawer from '~/router/components/MenuSidebarDrawer';
+import {getActiveRouteState} from '~/router/helper';
 import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 import RightCol from '~/screens/RightCol';
 import {deviceDimensions} from '~/theme/dimension';
@@ -19,15 +34,37 @@ import {leftNavigationRef, rightNavigationRef} from '../refs';
 import LeftTabs from './LeftTabs';
 import screens from './screens';
 import stack from './stack';
+import appActions from '~/store/app/actions';
+import {useDispatch} from 'react-redux';
+import {useKeySelector} from '~/hooks/selector';
 
 const Stack = createStackNavigator();
 
 const MainStack = (): React.ReactElement => {
   const dimensions = useWindowDimensions();
+  const dispatch = useDispatch();
+
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const showLeftCol = dimensions.width >= deviceDimensions.laptop;
   const showRightCol = dimensions.width >= deviceDimensions.desktop;
+
+  const navState = useNavigationState((state: any) => state);
+  const drawerVisible = useKeySelector('app.drawerVisible');
+
+  useBackHandler(() => {
+    const activeRoute = getActiveRouteState(navState);
+
+    if (drawerVisible) {
+      dispatch(appActions.setDrawerVisible(false));
+      return true;
+    }
+    if (activeRoute && customBackHandlerRoutes.includes(activeRoute)) {
+      DeviceEventEmitter.emit(NAVIGATION_BACK_PRESSED);
+      return true;
+    }
+    return false;
+  });
 
   const renderLeftCol = () => (
     <View style={styles.leftCol}>

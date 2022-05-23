@@ -101,9 +101,10 @@ const PostInput: React.FC<PostInputProps> = ({
       returnKeyType={returnKeyType}
       onSubmitEditing={onSubmitEditing}
       onSelectionChange={onSelectionChange}
-      value={value}
-      {...props}
-    />
+      value={Platform.OS === 'web' ? value : undefined}
+      {...props}>
+      {Platform.OS !== 'web' && value}
+    </AutoGrowingTextInput>
   );
 };
 

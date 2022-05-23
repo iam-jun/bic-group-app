@@ -6,6 +6,9 @@ const groupsKeySelector = {
     join_status: 'groups.groupDetail.join_status',
     total_pending_members: 'groups.groupDetail.total_pending_members',
   },
+  yourGroupsSearchData: 'groups.yourGroupsSearch',
+  yourGroupsTreeData: 'groups.yourGroupsTree',
+  yourGroupsListData: 'groups.yourGroupsList',
   groupSearch: 'groups.groupSearch',
   refreshingGroupPosts: 'groups.refreshingGroupPosts',
   loadingGroupMember: 'groups.loadingGroupMember',
@@ -22,6 +25,14 @@ const groupsKeySelector = {
   pendingMemberRequests: 'groups.pendingMemberRequests',
   loadingAvatar: 'groups.loadingAvatar',
   loadingCover: 'groups.loadingCover',
+  joinedCommunities: 'groups.joinedCommunities.data',
+  discoverCommunitiesData: 'groups.discoverCommunities',
+  loadingCommunities: 'groups.communities.loading',
+  communityDetail: 'groups.communityDetail',
+  isGettingInfoDetail: 'groups.isGettingInfoDetail',
+  communityMembers: 'groups.communityMembers',
+  searchMembers: 'groups.searchMembers',
+  discoverGroups: 'groups.discoverGroups',
 };
 
 export default groupsKeySelector;
