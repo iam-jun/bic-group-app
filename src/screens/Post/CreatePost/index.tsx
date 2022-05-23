@@ -132,6 +132,17 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const isEdit = !!(sPostId && !sPostData?.isDraft);
   const isDraftPost = !!(sPostId && sPostData?.isDraft);
 
+  let imageDisabled, fileDisabled, videoDisabled;
+
+  if (video) {
+    videoDisabled = true;
+    imageDisabled = true;
+    fileDisabled = true;
+  } else if (images?.length > 0) {
+    videoDisabled = true;
+    fileDisabled = true;
+  }
+
   const handleBackPress = () => {
     toolbarRef?.current?.goBack?.();
   };
@@ -455,6 +466,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           toolbarRef={toolbarRef}
           loading={loading}
           onPressBack={onPressBack}
+          imageDisabled={imageDisabled}
+          videoDisabled={videoDisabled}
+          fileDisabled={fileDisabled}
         />
       </TouchableOpacity>
     </ScreenWrapper>

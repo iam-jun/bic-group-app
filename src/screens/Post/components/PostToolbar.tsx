@@ -42,6 +42,9 @@ export interface PostToolbarProps {
   containerStyle?: StyleProp<ViewStyle>;
   onPressBack?: () => void;
   disabled?: boolean;
+  imageDisabled?: boolean;
+  videoDisabled?: boolean;
+  fileDisabled?: boolean;
 }
 
 const PostToolbar = ({
@@ -49,6 +52,9 @@ const PostToolbar = ({
   style,
   containerStyle,
   onPressBack,
+  imageDisabled,
+  videoDisabled,
+  fileDisabled,
   ...props
 }: PostToolbarProps) => {
   const animated = useRef(new Animated.Value(0)).current;
@@ -204,17 +210,17 @@ const PostToolbar = ({
             {renderToolbarButton(
               'ImagePlus',
               'post_toolbar.add_photo',
-              _onPressSelectImage,
+              !imageDisabled ? _onPressSelectImage : undefined,
             )}
             {renderToolbarButton(
               'PlayCircle',
               'post_toolbar.add_video',
-              _onPressSelectVideo,
+              !videoDisabled ? _onPressSelectVideo : undefined,
             )}
             {renderToolbarButton(
               'Link',
               'post_toolbar.add_file',
-              onPressAddFile,
+              !fileDisabled ? onPressAddFile : undefined,
             )}
           </View>
           {!!content && renderMarkdownHelp()}
