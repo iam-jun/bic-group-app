@@ -649,7 +649,8 @@
     "empty_communities": {
       "title": "Không tìm thấy cộng đồng nào",
       "description": "Khám phá các cộng đồng để tham gia một cộng đồng.",
-      "button_text": "Đi tới Khám phá"
+      "button_text": "Đi tới Khám phá",
+      "manage_description": "Hiện bạn không có quản lý cộng đồng nào"
     },
     "empty_groups": {
       "title": "Không tìm thấy nhóm nào",

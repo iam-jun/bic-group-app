@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import TimeView from '~/beinComponents/TimeView';
@@ -46,6 +46,14 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   const {colors} = theme;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
+  const [timerWidth, setTimerWidth] = useState(0);
+
+  const onLayout = (e: any) => {
+    const width = e?.nativeEvent?.layout?.width;
+    if (width) {
+      setTimerWidth(width);
+    }
+  };
 
   const renderIndicator = () => {
     if (!isRead) {
@@ -84,6 +92,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
             actorCount={actorCount}
             verb={verb}
             isRead={isRead}
+            timerWidth={timerWidth}
           />
         </View>
         <NotificationContent
@@ -95,7 +104,12 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         />
       </View>
 
-      <View style={{justifyContent: 'flex-end', alignItems: 'center'}}>
+      <View
+        onLayout={onLayout}
+        style={{
+          justifyContent: 'flex-end',
+          alignItems: 'center',
+        }}>
         <TimeView
           testID="notification_item.time_view"
           time={updatedAt}

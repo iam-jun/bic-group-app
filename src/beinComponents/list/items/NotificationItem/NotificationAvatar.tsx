@@ -1,5 +1,5 @@
 import _, {parseInt} from 'lodash';
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
@@ -13,6 +13,7 @@ interface Props {
   actorCount: number;
   verb: string;
   isRead: boolean;
+  timerWidth: number;
 }
 
 const AVATAR_WIDTH = 32;
@@ -25,6 +26,7 @@ const NotificationAvatar = ({
   verb,
   isRead,
   actorCount,
+  timerWidth,
 }: Props) => {
   const userId = useUserIdAuth();
   const theme = useTheme() as ITheme;
@@ -128,7 +130,7 @@ const NotificationAvatar = ({
   };
 
   const listAvatarWidth =
-    dimension.deviceWidth - 16 * 2 - 40 - (isRead ? 0 : 16);
+    dimension.deviceWidth - 16 * 2 - timerWidth - (isRead ? 0 : 16);
 
   const listActor = handleActorNotification();
 
@@ -136,7 +138,10 @@ const NotificationAvatar = ({
   const listAvatar = listActor?.map?.((item: any, index: number) => {
     if (index < MAX_AVATAR && _listAvatarWidth <= listAvatarWidth) {
       _listAvatarWidth = (index + 1) * (AVATAR_WIDTH + 8);
-      if (index < MAX_AVATAR - 1) {
+      if (
+        index < MAX_AVATAR - 1 &&
+        listAvatarWidth - _listAvatarWidth >= AVATAR_WIDTH + 8
+      ) {
         return (
           <View key={item?.id} style={styles.item}>
             <Avatar.SmallAlt
