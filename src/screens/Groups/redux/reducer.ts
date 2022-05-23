@@ -83,6 +83,12 @@ export const groupInitState = {
     canLoadMore: true,
     list: [],
   },
+  managedCommunities: {
+    loading: false,
+    canLoadMore: true,
+    data: [] as number[],
+    items: {},
+  },
   communityDetail: {} as ICommunity,
   isGettingInfoDetail: false,
   communityMembers: {
@@ -114,6 +120,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     discoverGroups,
     communityMembers,
     searchMembers,
+    managedCommunities,
   } = state;
 
   switch (type) {
@@ -525,6 +532,20 @@ function groupsReducer(state = groupInitState, action: any = {}) {
             },
           },
         },
+      };
+
+    case groupsTypes.SET_MANAGED_COMMUNITIES:
+      return {
+        ...state,
+        managedCommunities: {
+          ...managedCommunities,
+          ...payload,
+        },
+      };
+    case groupsTypes.RESET_MANAGED_COMMUNITIES:
+      return {
+        ...state,
+        managedCommunities: groupInitState.managedCommunities,
       };
 
     default:
