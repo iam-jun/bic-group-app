@@ -44,7 +44,7 @@ const MemberItem = ({item, onPressChat}: MemberItemProps) => {
             backgroundColor={colors.bgSecondary}
             style={styles.iconChat}
             onPress={onPressChat}
-            buttonTestID="content_data.icon_chat.button"
+            buttonTestID="member_item.icon_chat.button"
           />
         )
       }

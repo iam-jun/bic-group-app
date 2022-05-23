@@ -20,10 +20,10 @@ import {IUser} from '~/interfaces/IAuth';
 import {IObject} from '~/interfaces/common';
 import {
   ICommunity,
-  ICommunityMembers,
   IParamGetCommunityMembers,
   IParamGetDiscoverGroups,
   ISetMembers,
+  ISetSearchMembers,
 } from '~/interfaces/ICommunity';
 
 const groupsActions = {
@@ -366,7 +366,7 @@ const groupsActions = {
     type: groupsTypes.GET_SEARCH_MEMBERS,
     payload,
   }),
-  setSearchMembers: (payload: ISetMembers) => ({
+  setSearchMembers: (payload: ISetSearchMembers) => ({
     type: groupsTypes.SET_SEARCH_MEMBERS,
     payload,
   }),

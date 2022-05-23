@@ -6,14 +6,15 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
+import {useTheme} from 'react-native-paper';
 
 import {ICommunityMembers} from '~/interfaces/ICommunity';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
-import {Divider, useTheme} from 'react-native-paper';
 import MemberItem from '../components/MemberItem';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 interface SearchResultContentProps {
   onLoadMore?: () => void;
@@ -41,7 +42,10 @@ const SearchResultContent = ({
     if (loading) return null;
     return (
       <View style={styles.textNoResults}>
-        <Text.Body color={theme.colors.textSecondary} useI18n>
+        <Text.Body
+          color={theme.colors.textSecondary}
+          useI18n
+          testID="search_result_content.no_results">
           common:text_no_results_found
         </Text.Body>
       </View>
@@ -87,7 +91,7 @@ const SearchResultContent = ({
           />
         ) : undefined
       }
-      ItemSeparatorComponent={() => <Divider style={styles.divider} />}
+      ItemSeparatorComponent={() => <ViewSpacing height={4} />}
     />
   );
 };
@@ -100,10 +104,6 @@ const createStyles = (theme: ITheme) => {
       height: 100,
       justifyContent: 'center',
       alignItems: 'center',
-    },
-    divider: {
-      marginVertical: spacing.margin.tiny,
-      marginHorizontal: spacing.margin.large,
     },
     textSearchResults: {
       marginHorizontal: spacing.margin.large,
