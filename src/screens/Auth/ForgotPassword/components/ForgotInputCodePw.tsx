@@ -112,11 +112,11 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
   };
 
   const validateNewPassword = async () => {
-    await trigger('newPassword');
+    // await trigger('newPassword');
   };
 
   const validateConfirmPassword = async () => {
-    await trigger('confirmPassword');
+    // await trigger('confirmPassword');
     if (getValues('newPassword') !== getValues('confirmPassword')) {
       setError('confirmPassword', {
         type: 'manual',
@@ -125,13 +125,20 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
     }
   };
 
+  const _email = getValues('email');
+
   return (
     <View style={styles.container}>
       <View style={styles.inputSectionContainer}>
-        <Text.H6>{t('auth:text_forgot_password_input_code_title')}</Text.H6>
-        <Text.Body style={styles.desc}>
-          {t('auth:text_forgot_password_input_code_desc')}
-        </Text.Body>
+        <Text.BodyM>
+          {t('auth:text_forgot_password_input_code_title')}
+        </Text.BodyM>
+        <Text.BodyS style={styles.desc}>
+          {t('auth:text_forgot_password_input_code_desc')?.replace?.(
+            '(email)',
+            _email,
+          )}
+        </Text.BodyS>
         <TextInputController
           testID="inputCode"
           useFormData={useFormData}
@@ -144,19 +151,23 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
             },
           }}
           validateValue={validateCode}
-          label={t('auth:input_label_code')}
           placeholder={t('auth:input_label_code')}
-          helperAction={t('auth:text_request_new_code')}
-          helperContentTriggerAction={t('auth:text_err_wrong_code')}
-          helperActionOnPress={onRequestForgotPassword}
           keyboardType={'numeric'}
         />
+        <Text.BodyS>
+          {t('auth:text_request_new_code')}{' '}
+          <Text.BodySM
+            onPress={onRequestForgotPassword}
+            suppressHighlighting
+            style={styles.highlightText}>
+            {t('auth:btn_resend_code')}
+          </Text.BodySM>
+        </Text.BodyS>
       </View>
       <View style={styles.inputSectionContainer}>
-        <Text.H6>{t('auth:text_forgot_password_input_pw_title')}</Text.H6>
-        <Text.Body style={styles.desc}>
-          {t('auth:text_forgot_password_input_pw_desc')}
-        </Text.Body>
+        <Text.BodyM style={styles.newPasswordTitle}>
+          {t('auth:text_forgot_password_input_pw_title')}
+        </Text.BodyM>
         <PasswordInputController
           useFormData={useFormData}
           name={'newPassword'}
@@ -172,7 +183,6 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
           loading={forgotPasswordLoading}
           disableInput={disableInputPassword}
           testID={'inputNewPassword'}
-          label={t('auth:input_label_new_password')}
           placeholder={t('auth:input_label_new_password')}
           validateValue={validateNewPassword}
         />
@@ -192,7 +202,6 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
           loading={forgotPasswordLoading}
           disableInput={disableInputPassword}
           testID={'inputConfirmPassword'}
-          label={t('auth:input_label_confirm_new_password')}
           placeholder={t('auth:input_label_confirm_new_password')}
           validateValue={validateConfirmPassword}
         />
@@ -210,7 +219,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -221,9 +230,16 @@ const themeStyles = (theme: ITheme) => {
     },
     desc: {
       marginBottom: spacing.margin.base,
+      marginTop: spacing.margin.tiny,
     },
     btnConfirmNewPassword: {
       marginTop: spacing.margin.extraLarge,
+    },
+    newPasswordTitle: {
+      marginBottom: spacing.margin.small,
+    },
+    highlightText: {
+      color: colors.textTertiary,
     },
   });
 };

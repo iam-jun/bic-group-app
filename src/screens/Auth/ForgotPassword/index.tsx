@@ -1,6 +1,13 @@
 import React, {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
-import {StyleSheet, useWindowDimensions, View} from 'react-native';
+import {
+  StyleSheet,
+  useWindowDimensions,
+  View,
+  ScrollView,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
@@ -85,22 +92,33 @@ const ForgotPassword = () => {
 
   return (
     <ScreenWrapper testID="ForgotPasswordScreen" isFullView style={styles.root}>
-      <View style={styles.container}>
-        {forgotPasswordStage !== forgotPasswordStages.COMPLETE && (
-          <View style={styles.headerContainer}>{renderBtnBack()}</View>
-        )}
-        <View style={styles.contentContainer}>
-          {forgotPasswordStage === forgotPasswordStages.INPUT_ID && (
-            <ForgotInputId useFormData={useFormData} />
+      <KeyboardAvoidingView
+        testID="edit_location.keyboard_avoiding_view"
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        enabled={true}
+        style={styles.container}
+        keyboardVerticalOffset={
+          Platform.OS === 'ios' ? 30 : Platform.OS === 'android' ? 60 : 0
+        }>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="always">
+          {forgotPasswordStage !== forgotPasswordStages.COMPLETE && (
+            <View style={styles.headerContainer}>{renderBtnBack()}</View>
           )}
-          {!errBox &&
-            forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && (
-              <ForgotInputCodePw useFormData={useFormData} />
+          <View style={styles.contentContainer}>
+            {forgotPasswordStage === forgotPasswordStages.INPUT_ID && (
+              <ForgotInputId useFormData={useFormData} />
             )}
-          {forgotPasswordStage === forgotPasswordStages.COMPLETE &&
-            renderComplete()}
-        </View>
-      </View>
+            {!errBox &&
+              forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && (
+                <ForgotInputCodePw useFormData={useFormData} />
+              )}
+            {forgotPasswordStage === forgotPasswordStages.COMPLETE &&
+              renderComplete()}
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </ScreenWrapper>
   );
 };

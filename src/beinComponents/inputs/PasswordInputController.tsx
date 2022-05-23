@@ -12,7 +12,7 @@ interface Props extends TextInputProps {
   loading?: boolean;
   disableInput?: boolean;
   testID: string;
-  label: string;
+  label?: string;
   placeholder: string;
   validateValue: () => void;
   ref?: any;
