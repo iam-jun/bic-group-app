@@ -103,13 +103,13 @@ const ForgotPassword = () => {
             <View style={styles.headerContainer}>{renderBtnBack()}</View>
           )}
           <View style={styles.contentContainer}>
-            {/* {forgotPasswordStage === forgotPasswordStages.INPUT_ID && (
+            {forgotPasswordStage === forgotPasswordStages.INPUT_ID && (
               <ForgotInputId useFormData={useFormData} />
             )}
             {!errBox &&
-              forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && ( */}
-            <ForgotInputCodePw useFormData={useFormData} />
-            {/* )} */}
+              forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && (
+                <ForgotInputCodePw useFormData={useFormData} />
+              )}
             {forgotPasswordStage === forgotPasswordStages.COMPLETE &&
               renderComplete()}
           </View>
