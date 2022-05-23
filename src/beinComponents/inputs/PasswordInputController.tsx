@@ -14,7 +14,7 @@ interface Props extends TextInputProps {
   testID: string;
   label?: string;
   placeholder: string;
-  validateValue: () => void;
+  validateValue?: () => void;
   ref?: any;
 }
 
@@ -57,7 +57,7 @@ const PasswordInputController: React.FC<Props> = ({
       value={value}
       onChangeText={text => {
         onChange(text);
-        validateValue();
+        validateValue?.();
       }}
       helperType={errors?.[name]?.message ? 'error' : undefined}
       helperContent={errors?.[name]?.message}

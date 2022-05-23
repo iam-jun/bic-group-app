@@ -112,11 +112,11 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
   };
 
   const validateNewPassword = async () => {
-    // await trigger('newPassword');
+    await trigger('newPassword');
   };
 
   const validateConfirmPassword = async () => {
-    // await trigger('confirmPassword');
+    await trigger('confirmPassword');
     if (getValues('newPassword') !== getValues('confirmPassword')) {
       setError('confirmPassword', {
         type: 'manual',
@@ -173,11 +173,28 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
           name={'newPassword'}
           rules={{
             required: t('auth:text_err_password_blank'),
-            // min: 8,
-            // max: 20,
-            pattern: {
-              value: validation.passwordRegex,
-              message: t('auth:text_err_password_format'),
+            maxLength: {
+              value: 20,
+              message: t('auth:text_err_password_characters'),
+            },
+            minLength: {
+              value: 8,
+              message: t('auth:text_err_password_characters'),
+            },
+            validate: () => {
+              const value = getValues('newPassword');
+              if (!/(?=.*?[A-Z])/.test(value)) {
+                return t('auth:text_err_password_required_upper_case');
+              }
+              if (!/(?=.*?[a-z])/.test(value)) {
+                return t('auth:text_err_password_required_lower_case');
+              }
+              if (!/(?=.*?[0-9])/.test(value)) {
+                return t('auth:text_err_password_required_number');
+              }
+              if (!/(?=.*?[^\w\s])/.test(value)) {
+                return t('auth:text_err_password_required_symbols');
+              }
             },
           }}
           loading={forgotPasswordLoading}
@@ -192,12 +209,6 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
           name={'confirmPassword'}
           rules={{
             required: t('auth:text_err_password_blank'),
-            // min: 8,
-            // max: 20,
-            // pattern: {
-            //   value: validation.passwordRegex,
-            //   message: t('auth:text_err_password_format'),
-            // },
           }}
           loading={forgotPasswordLoading}
           disableInput={disableInputPassword}

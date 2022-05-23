@@ -13,7 +13,6 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
-import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 import Text from '~/beinComponents/Text';
@@ -30,7 +29,6 @@ import ForgotInputId from '~/screens/Auth/ForgotPassword/components/ForgotInputI
 import actions from '~/screens/Auth/redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
-import LockImg from '../../../../assets/images/auth_forgot_password_complete.svg';
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -71,20 +69,18 @@ const ForgotPassword = () => {
   const renderComplete = () => {
     return (
       <View style={styles.completeContainer}>
-        <SVGIcon
-          // @ts-ignore
-          source={LockImg}
-          width={imgSize}
-          height={imgSize}
-        />
         <View style={styles.textContainer}>
-          <Text.H6>{t('auth:text_forgot_password_complete_title')}</Text.H6>
-          <Text.Body>{t('auth:text_forgot_password_complete_desc')}</Text.Body>
+          <Text.BodySM>
+            {t('auth:text_forgot_password_complete_title')}
+          </Text.BodySM>
+          <Text.Body style={styles.completeDescription}>
+            {t('auth:text_forgot_password_complete_desc')}
+          </Text.Body>
         </View>
         <Button.Primary
           testID="btnComplete"
           onPress={() => rootNavigationRef?.current?.goBack()}>
-          {t('auth:btn_sign_in')}
+          {t('auth:btn_sign_in_now')}
         </Button.Primary>
       </View>
     );
@@ -107,13 +103,13 @@ const ForgotPassword = () => {
             <View style={styles.headerContainer}>{renderBtnBack()}</View>
           )}
           <View style={styles.contentContainer}>
-            {forgotPasswordStage === forgotPasswordStages.INPUT_ID && (
+            {/* {forgotPasswordStage === forgotPasswordStages.INPUT_ID && (
               <ForgotInputId useFormData={useFormData} />
             )}
             {!errBox &&
-              forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && (
-                <ForgotInputCodePw useFormData={useFormData} />
-              )}
+              forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && ( */}
+            <ForgotInputCodePw useFormData={useFormData} />
+            {/* )} */}
             {forgotPasswordStage === forgotPasswordStages.COMPLETE &&
               renderComplete()}
           </View>
@@ -152,15 +148,12 @@ const themeStyles = (theme: ITheme, isPhone: boolean) => {
       flex: 1,
       justifyContent: !isPhone ? 'center' : undefined,
     },
-    // flashMessage: {
-    //   marginTop: theme.spacing.margin.big,
-    // },
     completeContainer: {
       // @ts-ignore
       paddingTop: spacing.padding.big + spacing.padding.large,
     },
-    svg: {
-      alignSelf: 'center',
+    completeDescription: {
+      marginTop: spacing.margin.extraLarge,
     },
     textContainer: {
       marginTop: spacing.margin.large,
