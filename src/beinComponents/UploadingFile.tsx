@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -13,6 +13,9 @@ import Button from '~/beinComponents/Button';
 import {formatBytes} from '~/utils/formatData';
 import {isEmpty} from 'lodash';
 import {IGetFile} from '~/services/fileUploader';
+import {useBaseHook} from '~/hooks';
+import modalActions from '~/store/modal/actions';
+import {useDispatch} from 'react-redux';
 
 export interface UploadingFileProps {
   style?: StyleProp<ViewStyle>;
@@ -31,6 +34,10 @@ const UploadingFile: FC<UploadingFileProps> = ({
   onSuccess,
   onError,
 }: UploadingFileProps) => {
+  const [uploading, setUploading] = useState(false);
+
+  const dispatch = useDispatch();
+  const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
@@ -43,10 +50,12 @@ const UploadingFile: FC<UploadingFileProps> = ({
   };
 
   const _onSuccess = (data: IGetFile) => {
+    setUploading(false);
     onSuccess?.(data);
   };
 
   const _onError = (e: any) => {
+    setUploading(false);
     onError?.(e);
   };
 
@@ -57,6 +66,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
     ) {
       //ensure video not uploaded
       if (file && !isEmpty(file) && !file?.id && !file?.url) {
+        setUploading(true);
         await VideoUploader.getInstance().upload({
           file,
           uploadType,
@@ -64,6 +74,8 @@ const UploadingFile: FC<UploadingFileProps> = ({
           onSuccess: _onSuccess,
           onError: _onError,
         });
+      } else {
+        setUploading(false);
       }
     } else {
       //todo upload file
@@ -72,7 +84,6 @@ const UploadingFile: FC<UploadingFileProps> = ({
 
   useEffect(() => {
     uploadFile();
-    //todo cancel uploading file
   }, [file]);
 
   if (!file || isEmpty(file)) {
@@ -80,7 +91,22 @@ const UploadingFile: FC<UploadingFileProps> = ({
   }
 
   const onPressClose = () => {
-    onClose?.(file);
+    if (uploading) {
+      onClose?.(file);
+      VideoUploader.getInstance().cancel({file, uploadType});
+    } else {
+      dispatch(
+        modalActions.showAlert({
+          title: t('upload:title_delete_video'),
+          content: t('upload:title_delete_video'),
+          cancelBtn: true,
+          cancelLabel: t('common:btn_cancel'),
+          confirmLabel: t('common:btn_delete'),
+          onConfirm: () => onClose?.(file),
+          stretchOnWeb: true,
+        }),
+      );
+    }
   };
 
   return (
@@ -97,7 +123,9 @@ const UploadingFile: FC<UploadingFileProps> = ({
             numberOfLines={1}
             ellipsizeMode={'middle'}>
             {fileName?.split('.')?.pop?.()?.toUpperCase?.()} ∙{' '}
-            {formatBytes(file?.size || 0)}
+            {uploading
+              ? t('common:text_uploading')
+              : formatBytes(file?.size || 0)}
           </Text.Subtitle>
         </View>
       </View>

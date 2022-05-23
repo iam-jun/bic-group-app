@@ -1,4 +1,4 @@
-import {AxiosRequestConfig} from 'axios';
+import {AxiosRequestConfig, CancelToken} from 'axios';
 
 import {getEnv} from '~/utils/env';
 import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
@@ -36,6 +36,7 @@ const Upload = {
     type: any,
     data: FormData,
     onUploadProgress?: (progressEvent: any) => void,
+    cancelToken?: CancelToken,
   ): HttpApiRequestConfig => {
     return {
       url: `${providers.beinUpload.url}videos/${id}`,
@@ -47,6 +48,7 @@ const Upload = {
       provider: providers.beinUpload,
       onUploadProgress: onUploadProgress,
       data,
+      cancelToken,
     };
   },
   uploadFile: (

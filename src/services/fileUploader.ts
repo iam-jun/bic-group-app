@@ -4,6 +4,7 @@ import {makeHttpRequest} from '~/services/httpApiRequest';
 import {AppConfig} from '~/configs';
 import i18next from 'i18next';
 import {IUploadType} from '~/configs/resourceConfig';
+import {CancelTokenSource} from 'axios';
 
 export interface IGetFile {
   id?: number | string;
@@ -23,11 +24,17 @@ export interface IUploadParam {
   onError?: (e: any) => void;
 }
 
+export interface ICancelUploadParam {
+  uploadType: IUploadType | string;
+  file: IFilePicked;
+}
+
 export default class FileUploader {
   static INSTANCE: FileUploader | null = null;
 
   fileUploaded: {[x: string]: IGetFile} = {};
   fileUploading: any = {};
+  fileCancelTokenSource: {[x: string]: CancelTokenSource} = {};
 
   callbackProgress: any = {};
   callbackSuccess: any = {};

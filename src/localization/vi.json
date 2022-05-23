@@ -47,6 +47,7 @@
     "text_loading": "Đang tải ...",
     "text_retry": "Thử lại",
     "text_done": "Xong",
+    "text_uploading": "Đang tải...",
     "text_error_message": "Có gì đó sai sai",
     "text_important_posts": "Bài viết quan trọng",
     "text_files": "Files",
@@ -674,6 +675,8 @@
     "text_upload_video_request_failed": "Có lỗi khi yêu cầu tải video",
     "text_upload_video_response_failed": "Có lỗi khi tải video",
     "text_create_media_request_failed": "Có lỗi khi yêu cầu tạo media",
-    "text_create_media_response_failed": "Có lỗi khi tạo media"
+    "text_create_media_response_failed": "Có lỗi khi tạo media",
+    "title_delete_video": "Xoá Video?",
+    "text_delete_video": "Bạn có chắc muốn xoá video?"
   }
 }

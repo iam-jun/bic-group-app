@@ -61,6 +61,7 @@
     "text_add": "Add",
     "text_retry": "Retry",
     "text_done": "Done",
+    "text_uploading": "Uploading...",
     "text_download": "Download",
     "text_send": "Send",
     "label_confirm_send_file": "Send this file?",
@@ -795,6 +796,8 @@
     "text_upload_video_request_failed": "Cannot request upload video",
     "text_upload_video_response_failed": "Cannot upload video",
     "text_create_media_request_failed": "Cannot request create media",
-    "text_create_media_response_failed": "Cannot create media"
+    "text_create_media_response_failed": "Cannot create media",
+    "title_delete_video": "Delete Video?",
+    "text_delete_video": "Are you sure you want to delete video?"
   }
 }

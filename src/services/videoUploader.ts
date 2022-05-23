@@ -2,10 +2,15 @@ import ApiConfig from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import {AppConfig} from '~/configs';
 import i18next from 'i18next';
-import FileUploader, {IGetFile, IUploadParam} from '~/services/fileUploader';
+import FileUploader, {
+  ICancelUploadParam,
+  IGetFile,
+  IUploadParam,
+} from '~/services/fileUploader';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {IPostCreateMediaVideo} from '~/interfaces/IPost';
 import {isEmpty} from 'lodash';
+import axios from 'axios';
 
 export default class VideoUploader extends FileUploader {
   static INSTANCE: VideoUploader | null = null;
@@ -71,12 +76,15 @@ export default class VideoUploader extends FileUploader {
     };
 
     try {
+      const cancelTokenSource = axios.CancelToken.source();
+      this.fileCancelTokenSource[file.name] = cancelTokenSource;
       const response: any = await makeHttpRequest(
         ApiConfig.Upload.uploadVideo(
           videoId,
           uploadType,
           formData,
           _onUploadProgress,
+          cancelTokenSource.token,
         ),
       );
       if (response?.data?.data) {
@@ -209,5 +217,12 @@ export default class VideoUploader extends FileUploader {
       return Promise.reject({meta: {message: error}});
     }
     return this.startUpload(file, uploadType, onSuccess, onProgress, onError);
+  }
+
+  cancel(params: ICancelUploadParam) {
+    console.log(`\x1b[36m🐣️ videoUploader cancel\x1b[0m`);
+    const {file} = params || {};
+    const filename = file?.name || file?.filename || file?.fileName;
+    this.fileCancelTokenSource?.[filename]?.cancel?.();
   }
 }
