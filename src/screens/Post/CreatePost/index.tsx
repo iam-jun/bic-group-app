@@ -96,6 +96,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     handlePressPost,
     handleChangeContent,
     isNewsfeed,
+    handleUploadVideoSuccess,
+    handleUploadVideoError,
   } = useCreatePost({
     screenParams,
     mentionInputRef,
@@ -316,6 +318,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     refTextInput.current?.setFocus();
   };
 
+  const onCloseFile = (file: any) => {
+    dispatch(postActions.setCreatePostVideo());
+  };
+
   const renderContent = () => {
     return (
       <>
@@ -370,7 +376,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                 <UploadingFile
                   uploadType={uploadTypes.postVideo}
                   file={video as IFilePicked}
-                  fileName={video?.name}
+                  onClose={onCloseFile}
+                  onSuccess={handleUploadVideoSuccess}
+                  onError={handleUploadVideoError}
                 />
               </View>
             </Animated.View>

@@ -19,7 +19,7 @@ export const postInitState = {
       expires_time: '',
     },
     images: [],
-    video: {},
+    video: undefined,
     imagesDraft: [],
     count: 0,
     currentSettings: {
@@ -197,7 +197,7 @@ function postReducer(state = postInitState, action: any = {}) {
         ...state,
         createPost: {
           ...state.createPost,
-          video: payload || {},
+          video: payload,
         },
       };
     case postTypes.SET_SEARCH_RESULT_AUDIENCE_GROUPS:

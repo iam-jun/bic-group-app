@@ -89,7 +89,7 @@ const postActions = {
     type: postTypes.SET_CREATE_POST_IMAGES_DRAFT,
     payload,
   }),
-  setCreatePostVideo: (payload: any) => ({
+  setCreatePostVideo: (payload?: any) => ({
     type: postTypes.SET_CREATE_POST_VIDEO,
     payload,
   }),

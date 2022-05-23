@@ -466,7 +466,8 @@
       "text_no_draft_posts": "Bạn không còn bài nháp nào",
       "text_draft_published": "Bài viết của bạn đã được đăng",
       "text_draft_saved": "Bản nháp của bạn đã được lưu",
-      "text_draft_deleted": "Bản nháp của bạn đã được xoá"
+      "text_draft_deleted": "Bản nháp của bạn đã được xoá",
+      "text_processing_publish": "Bài viết của bạn đang được biên tập"
     },
     "comment": {
       "title_delete_comment": "Xoá bình luận",

@@ -521,7 +521,8 @@
       "text_no_draft_posts": "You have no draft post left",
       "text_draft_published": "Your post has been published",
       "text_draft_saved": "Your draft has been saved",
-      "text_draft_deleted": "Your draft has been deleted"
+      "text_draft_deleted": "Your draft has been deleted",
+      "text_processing_publish": "Your video post will be ready soon"
     },
     "comment": {
       "title_delete_comment": "Delete this comment",

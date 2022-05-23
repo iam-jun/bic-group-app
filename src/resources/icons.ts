@@ -79,6 +79,7 @@ import iconTabCommunities from '../../assets/icons/icon_communities.svg';
 import iconTabCommunitiesBein from '../../assets/icons/icon_communities_bein.svg';
 import iconLock from '../../assets/icons/icon_lock.svg';
 import iconSecret from '../../assets/icons/icon_secret_group.svg';
+import iconFileVideo from '../../assets/icons/icon_file_video.svg';
 
 const icons = {
   iconTabHome,
@@ -263,6 +264,7 @@ const icons = {
   PlayCircle: 'PlayCircle',
   Sitemap: 'Sitemap',
   iconSecret,
+  iconFileVideo,
   VolumeMute: 'VolumeMute',
 };
 

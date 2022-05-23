@@ -5,6 +5,7 @@ import i18next from 'i18next';
 import FileUploader, {IGetFile, IUploadParam} from '~/services/fileUploader';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import {IPostCreateMediaVideo} from '~/interfaces/IPost';
+import {isEmpty} from 'lodash';
 
 export default class VideoUploader extends FileUploader {
   static INSTANCE: VideoUploader | null = null;
@@ -22,6 +23,7 @@ export default class VideoUploader extends FileUploader {
   }
 
   handleError(file: any, data: any, onError: any) {
+    this.fileUploading[file.name] = false;
     onError?.(data);
     this.callbackError?.[file?.name]?.(data);
   }
@@ -103,6 +105,7 @@ export default class VideoUploader extends FileUploader {
     onError?: (e: any) => void,
   ) {
     let videoId, videoUploaded, mediaCreated;
+    this.fileUploading[file.name] = true;
 
     //create video id
     try {
@@ -120,7 +123,6 @@ export default class VideoUploader extends FileUploader {
 
     //upload video with created id
     try {
-      this.fileUploading[file.name] = true;
       const uploadResponse = await this.requestUploadFile(
         file,
         videoId,
@@ -128,7 +130,6 @@ export default class VideoUploader extends FileUploader {
         onSuccess,
         onProgress,
       );
-      this.fileUploading[file.name] = false;
       if (uploadResponse?.video) {
         videoUploaded = uploadResponse.video;
       } else {
@@ -166,8 +167,11 @@ export default class VideoUploader extends FileUploader {
       return Promise.reject({meta: {message: msg}});
     }
 
+    this.fileUploading[file.name] = false;
+
     //upload file success
     this.fileUploaded[file.name] = {
+      id: mediaCreated?.id,
       url: mediaCreated?.url,
       uploadType,
       uploading: false,
@@ -182,7 +186,7 @@ export default class VideoUploader extends FileUploader {
 
   async upload(params: IUploadParam) {
     const {file, uploadType, onSuccess, onProgress, onError} = params || {};
-    if (!file) {
+    if (!file || isEmpty(file)) {
       console.log(`\x1b[31m🐣️ VideoUploader upload: file not found!\x1b[0m`);
       onError?.('Input file not found');
       return Promise.reject({meta: {message: 'Input file not found'}});
@@ -190,7 +194,7 @@ export default class VideoUploader extends FileUploader {
     if (this.fileUploaded[file.name]) {
       const uploaded = this.fileUploaded[file.name];
       if (
-        uploaded.url &&
+        (uploaded?.id || uploaded?.url) &&
         uploaded?.uploadType === uploadType &&
         uploaded?.size === file?.size
       ) {
