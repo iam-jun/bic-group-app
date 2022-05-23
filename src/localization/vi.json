@@ -613,7 +613,8 @@
     "text_important": "Quan trọng",
     "mark_as_read": "Đánh dấu là đã đọc",
     "mark_as_unread": "Đánh dấu là chưa đọc",
-    "off_notification_from_group": "Tắt nhận thông báo cho nhóm này"
+    "off_notification_from_group": "Tắt nhận thông báo cho nhóm này",
+    "seen_all_notifications": "Bạn đã đọc hết thông báo"
   },
   "new_feature": {
     "title": "New feature",

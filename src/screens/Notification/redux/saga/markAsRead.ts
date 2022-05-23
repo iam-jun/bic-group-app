@@ -6,9 +6,10 @@ import notificationsDataHelper from '../../helper/NotificationDataHelper';
 import notificationsActions from '../actions';
 import notificationSelector from '../selector';
 
-function* markAsRead({payload}: {payload: string; type: string}): any {
+function* markAsRead({payload}: {payload: any; type: string}): any {
   try {
-    yield call(notificationsDataHelper.markAsRead, payload);
+    const {id, flag} = payload || {};
+    yield call(notificationsDataHelper.markAsRead, id);
 
     // get all notifications from store
     const notifications: IObject<any> =
@@ -16,17 +17,22 @@ function* markAsRead({payload}: {payload: string; type: string}): any {
         yield select(state => get(state, notificationSelector.notifications)),
       ) || [];
 
-    // then set mapped notificaton's is_read field by true to un-highlight it directly on device store
-    notifications.forEach((notificationGroup: any) => {
-      if (notificationGroup.id === payload) {
-        notificationGroup.isRead = true;
-      }
-    });
+    let newNotifications = [];
+    if (flag === 'UNREAD') {
+      newNotifications = notifications.filter((item: any) => item?.id !== id);
+    } else {
+      // then set mapped notificaton's is_read field by true to un-highlight it directly on device store
+      notifications.forEach((notificationGroup: any) => {
+        if (notificationGroup.id === id) {
+          notificationGroup.isRead = true;
+        }
+      });
+    }
 
     // finally, set notification back to store,
     yield put(
       notificationsActions.setNotifications({
-        notifications: notifications,
+        notifications: flag === 'UNREAD' ? newNotifications : notifications,
         unseen: 0, // hardcode because we re-use setNotifications function
       }),
     );

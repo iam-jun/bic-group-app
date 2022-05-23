@@ -11,10 +11,12 @@ import * as modalActions from '~/store/modal/actions';
 
 export interface NotificationBottomSheetProps {
   modalizeRef: any;
+  flag: string;
 }
 
 const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
   modalizeRef,
+  flag,
 }: NotificationBottomSheetProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -22,7 +24,7 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
   const dispatch = useDispatch();
 
   const markReadAllNotifications = () => {
-    dispatch(notificationsActions.markAsReadAll());
+    dispatch(notificationsActions.markAsReadAll(flag));
     modalizeRef.current?.close();
   };
 
