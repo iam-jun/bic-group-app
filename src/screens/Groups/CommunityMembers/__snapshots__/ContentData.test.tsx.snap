@@ -70,12 +70,6 @@ exports[`Community members - ContentData component should render data correctly 
   onScroll={[Function]}
   onScrollBeginDrag={[Function]}
   onScrollEndDrag={[Function]}
-  refreshControl={
-    <RefreshControlMock
-      refreshing={false}
-      tintColor="#B2BDCD"
-    />
-  }
   renderItem={[Function]}
   scrollEventThrottle={50}
   stickyHeaderIndices={Array []}
@@ -89,7 +83,6 @@ exports[`Community members - ContentData component should render data correctly 
   }
   testID="content_data.list"
 >
-  <RCTRefreshControl />
   <View>
     <View
       onLayout={[Function]}
