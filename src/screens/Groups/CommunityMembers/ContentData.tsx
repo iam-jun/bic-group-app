@@ -111,11 +111,13 @@ const ContentData = ({
       onEndReachedThreshold={0.1}
       ListFooterComponent={renderListFooter}
       refreshControl={
-        <RefreshControl
-          refreshing={loading}
-          onRefresh={onRefresh}
-          tintColor={colors.borderDisable}
-        />
+        onRefresh ? (
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={onRefresh}
+            tintColor={colors.borderDisable}
+          />
+        ) : undefined
       }
     />
   );

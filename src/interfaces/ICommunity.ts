@@ -9,13 +9,14 @@ export interface ICommunity {
   description: string;
   icon: string;
   background_img_url: string;
+  team_id?: string;
   created_at: string;
   updated_at: string;
   user_count: number;
-  can_setting: boolean;
-  can_manage_member: boolean;
-  can_leave: boolean;
-  join_status: number;
+  can_setting?: boolean;
+  can_manage_member?: boolean;
+  can_leave?: boolean;
+  join_status?: number;
   members?: IPreviewMember[];
 }
 
