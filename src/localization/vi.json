@@ -682,6 +682,7 @@
     "text_delete_video": "Bạn có chắc muốn xoá video?",
     "text_upload_video_error": "Không thể tải lên video này",
     "title_leave_uploading_video": "Đóng màn hình này?",
-    "text_leave_uploading_video": "Bạn có chắc muốn đóng màn hình này? Video bạn đang tải lên sẽ bị huỷ."
+    "text_leave_uploading_video": "Bạn có chắc muốn đóng màn hình này? Video bạn đang tải lên sẽ bị huỷ.",
+    "text_video_over_size": "Video của bạn phải nhỏ hơn 300MB"
   }
 }

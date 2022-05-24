@@ -377,10 +377,10 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         !important?.active &&
         !sPostId;
       if (invalidData || !isAutoSave || imageError || videoError) {
-        if (imageError || videoError) {
+        if (imageError) {
           dispatch(
             modalActions.showHideToastMessage({
-              content: imageError || videoError,
+              content: imageError,
               props: {textProps: {useI18n: true}, type: 'error'},
             }),
           );
@@ -435,17 +435,6 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     dispatch(postActions.setCreatePostVideo(file));
   };
 
-  const handleUploadVideoError = (e: any) => {
-    console.log(`\x1b[31m🐣️ handleUploadVideoError ${e}\x1b[0m`);
-    dispatch(postActions.setCreatePostVideo());
-    dispatch(
-      modalActions.showHideToastMessage({
-        content: 'upload:text_upload_video_error',
-        props: {textProps: {useI18n: true}, type: 'error'},
-      }),
-    );
-  };
-
   const handlePressPost = () => {
     if (loading) {
       return 'loading';
@@ -458,10 +447,10 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     const {imageError} = validateImages(selectingImages, t);
     const {videoError} = validateVideo(selectingVideo, t);
 
-    if (imageError || videoError) {
+    if (imageError) {
       dispatch(
         modalActions.showHideToastMessage({
-          content: imageError || videoError,
+          content: imageError,
           props: {textProps: {useI18n: true}, type: 'error'},
         }),
       );
@@ -525,7 +514,6 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     handlePressPost,
     handleChangeContent,
     handleUploadVideoSuccess,
-    handleUploadVideoError,
     isNewsfeed,
     content,
   };

@@ -99,7 +99,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     handleChangeContent,
     isNewsfeed,
     handleUploadVideoSuccess,
-    handleUploadVideoError,
   } = useCreatePost({
     screenParams,
     mentionInputRef,
@@ -349,6 +348,15 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     dispatch(postActions.setCreatePostVideo());
   };
 
+  const onUploadVideoError = (e: any) => {
+    dispatch(
+      modalActions.showHideToastMessage({
+        content: 'upload:text_upload_video_error',
+        props: {textProps: {useI18n: true}, type: 'error'},
+      }),
+    );
+  };
+
   const renderContent = () => {
     return (
       <>
@@ -405,7 +413,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                   file={video as IFilePicked}
                   onClose={onCloseFile}
                   onSuccess={handleUploadVideoSuccess}
-                  onError={handleUploadVideoError}
+                  onError={onUploadVideoError}
                 />
               </View>
             </Animated.View>

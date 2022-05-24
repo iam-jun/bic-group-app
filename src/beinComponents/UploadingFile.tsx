@@ -38,6 +38,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
   disableClose,
 }: UploadingFileProps) => {
   const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState('');
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -59,6 +60,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
 
   const _onError = (e: any) => {
     setUploading(false);
+    setError(e);
     onError?.(e);
   };
 
@@ -72,6 +74,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
     ) {
       //ensure video not uploaded
       if (file && !isEmpty(file) && !file?.id && !file?.url) {
+        setError('');
         setUploading(true);
         await VideoUploader.getInstance().upload({
           file,
@@ -115,12 +118,24 @@ const UploadingFile: FC<UploadingFileProps> = ({
     }
   };
 
+  const onPressRetry = () => {
+    uploadFile();
+  };
+
   return (
     <View style={[styles.container, style]}>
       <Icon size={40} icon={'iconFileVideo'} />
       <View style={styles.contentContainer}>
-        <Text.BodyS numberOfLines={1}>{fileName}</Text.BodyS>
-        <View style={{flexDirection: 'row'}}>
+        <Text.BodyS
+          color={error ? colors.error : colors.textPrimary}
+          numberOfLines={1}>
+          {fileName}
+        </Text.BodyS>
+        {!!error ? (
+          <Text.Subtitle useI18n color={colors.error}>
+            {error}
+          </Text.Subtitle>
+        ) : (
           <Text.Subtitle
             style={{justifyContent: 'center'}}
             color={colors.textSecondary}
@@ -130,8 +145,16 @@ const UploadingFile: FC<UploadingFileProps> = ({
               ? t('common:text_uploading')
               : formatBytes(file?.size || 0)}
           </Text.Subtitle>
-        </View>
+        )}
       </View>
+      {!!error && (
+        <Button
+          style={{marginRight: spacing.margin.large}}
+          hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}
+          onPress={onPressRetry}>
+          <Icon icon={'Redo'} />
+        </Button>
+      )}
       {!disableClose && (
         <Button
           hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}

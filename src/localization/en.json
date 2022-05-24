@@ -803,6 +803,7 @@
     "text_delete_video": "Are you sure you want to delete video?",
     "text_upload_video_error": "Can’t upload this video",
     "title_leave_uploading_video": "Leave this page?",
-    "text_leave_uploading_video": "Are you sure you want to leave this page? Your video process will be lost."
+    "text_leave_uploading_video": "Are you sure you want to leave this page? Your video process will be lost.",
+    "text_video_over_size": "Your video must be less than 300MB"
   }
 }

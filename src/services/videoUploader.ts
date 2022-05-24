@@ -211,7 +211,7 @@ export default class VideoUploader extends FileUploader {
       }
     }
     if (file.size > AppConfig.maxVideoSize) {
-      const error = i18next.t('common:error:file:over_file_size');
+      const error = i18next.t('upload:text_video_over_size');
       console.log(`\x1b[31m🐣️ VideoUploader upload error: ${error}\x1b[0m`);
       onError?.(error);
       return Promise.reject({meta: {message: error}});
