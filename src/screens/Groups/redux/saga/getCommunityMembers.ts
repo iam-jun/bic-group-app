@@ -37,7 +37,8 @@ export default function* getCommunityMembers({
       const newData = {
         loading: false,
         canLoadMore:
-          respData.community_admin.data.length + respData.member.data.length ===
+          respData.community_admin.data.length +
+            respData.community_member.data.length ===
           appConfig.recordsPerPage,
         community_admin: {
           // append data when loading more
@@ -46,8 +47,8 @@ export default function* getCommunityMembers({
         },
         member: {
           // append data when loading more
-          data: [...member.data, ...respData.member.data],
-          user_count: respData.member.user_count,
+          data: [...member.data, ...respData.community_member.data],
+          user_count: respData.community_member.user_count,
         },
       };
 
