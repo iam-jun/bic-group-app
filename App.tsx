@@ -1,13 +1,13 @@
-import 'intl-pluralrules';
+import {GiphySDK} from '@giphy/react-native-sdk';
 import messaging from '@react-native-firebase/messaging';
 import Amplify from 'aws-amplify';
+import 'intl-pluralrules';
 import React, {useEffect} from 'react';
 import {Linking, LogBox} from 'react-native';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import i18Next from '~/localization';
-
 import Root from '~/Root';
 import rootSaga from '~/store/sagas';
 import awsconfig from './aws-exports';
@@ -68,6 +68,13 @@ export default () => {
 
   useEffect(() => {
     setupFirebasePermission();
+  }, []);
+
+  useEffect(() => {
+    // Configure API keys
+    GiphySDK.configure({
+      apiKey: 'Gkmr8eyIb5xJCaTI7EhGny9hDk3qHRRf',
+    });
   }, []);
 
   Store.sagaMiddleware.run(rootSaga);

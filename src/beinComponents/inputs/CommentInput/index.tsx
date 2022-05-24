@@ -1,4 +1,5 @@
-import React, {useEffect, useRef, useState, useImperativeHandle} from 'react';
+import {GiphyDialog, GiphyThemePreset} from '@giphy/react-native-sdk';
+import React, {useEffect, useImperativeHandle, useRef, useState} from 'react';
 import {
   Animated,
   Keyboard,
@@ -12,27 +13,25 @@ import {
   ViewStyle,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
-
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useDispatch} from 'react-redux';
+import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
+import Image from '~/beinComponents/Image';
 import ImagePicker from '~/beinComponents/ImagePicker';
+import CommentInputFooter from '~/beinComponents/inputs/CommentInput/CommentInputFooter';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import StickerView from '~/beinComponents/StickerView';
+import Text from '~/beinComponents/Text';
+import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
+import {useBaseHook} from '~/hooks';
 import {IFilePicked} from '~/interfaces/common';
+import {IActivityDataImage} from '~/interfaces/IPost';
+import FileUploader, {IGetFile} from '~/services/fileUploader';
+import modalActions from '~/store/modal/actions';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
-import Button from '~/beinComponents/Button';
-import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
-import Image from '~/beinComponents/Image';
-import FileUploader, {IGetFile} from '~/services/fileUploader';
-import {IActivityDataImage} from '~/interfaces/IPost';
-import {useBaseHook} from '~/hooks';
-import {useDispatch} from 'react-redux';
-import Text from '~/beinComponents/Text';
-import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import EmojiBoardAnimated from '~/beinComponents/emoji/EmojiBoardAnimated';
-import modalActions from '~/store/modal/actions';
-import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import CommentInputFooter from '~/beinComponents/inputs/CommentInput/CommentInputFooter';
 import {checkPermission} from '~/utils/permission';
 
 export interface ICommentInputSendParam {
@@ -141,6 +140,10 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const isWeb = Platform.OS === 'web';
 
   useEffect(() => {
+    GiphyDialog.configure({theme: GiphyThemePreset.Light});
+  });
+
+  useEffect(() => {
     /**
      * Clone text in order to handling empty newline
      * as the <Text> does not adding the height of
@@ -183,27 +186,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const onPressEmoji = (event: any) => {
-    if (!isWeb) {
-      emojiBoardRef?.current?.show?.();
-    } else {
-      dispatch(
-        modalActions.showModal({
-          isOpen: true,
-          ContentComponent: (
-            <EmojiBoard
-              width={320}
-              height={280}
-              onEmojiSelected={onEmojiSelected}
-            />
-          ),
-          props: {
-            webModalStyle: {minHeight: undefined},
-            isContextMenu: true,
-            position: {x: event?.pageX, y: event?.pageY},
-          },
-        }),
-      );
-    }
+    emojiBoardRef?.current?.show?.();
+    // GiphyDialog.show();
   };
 
   const handleUpload = () => {
@@ -298,7 +282,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
     }
   };
 
-  const onEmojiSelected = (emoji: string) => {
+  const onEmojiSelected = (emoji: string, key: string) => {
     if (isWeb) {
       dispatch(modalActions.hideModal());
     }
@@ -368,7 +352,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
     onChangeText?.('');
   };
 
-  const focus = () => _textInputRef.current?.focus?.();
+  const focus = () => {
+    _textInputRef.current?.focus?.();
+  };
 
   const isFocused = () => _textInputRef.current?.isFocused?.();
 
@@ -497,15 +483,13 @@ const CommentInput: React.FC<CommentInputProps> = ({
           disabledBtnSend={_loading || (!text.trim() && !selectedImage)}
         />
       </View>
-      {!isWeb && (
-        <EmojiBoardAnimated
-          emojiBoardRef={emojiBoardRef}
-          onEmojiSelected={onEmojiSelected}
-          onPressKeyboard={focus}
-          onPressSpace={() => addTextToCursor(' ')}
-          onPressBackSpace={backSpaceFromCursor}
-        />
-      )}
+      <StickerView
+        stickerViewRef={emojiBoardRef}
+        onEmojiSelected={onEmojiSelected}
+        onPressKeyboard={focus}
+        onPressSpace={() => addTextToCursor(' ')}
+        onPressBackSpace={backSpaceFromCursor}
+      />
       {disableKeyboardSpacer !== false && <KeyboardSpacer iosOnly />}
     </View>
   );
