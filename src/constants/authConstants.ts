@@ -13,6 +13,7 @@ export const authErrors = {
   EXPIRED_CODE_EXCEPTION: 'ExpiredCodeException',
   TOO_MANY_FAILED_ATTEMPTS_EXCEPTION: 'TooManyFailedAttemptsException',
   TOO_MANY_REQUESTS_EXCEPTION: 'TooManyRequestsException',
+  USER_NOT_FOUND_EXCEPTION: 'UserNotFoundException',
 };
 
 export const forgotPasswordStages = {
