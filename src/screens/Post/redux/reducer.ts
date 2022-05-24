@@ -16,7 +16,7 @@ export const postInitState = {
     searchResultAudienceUsers: [],
     important: {
       active: false,
-      expires_time: '',
+      expires_time: null,
     },
     images: [],
     video: undefined,
@@ -25,7 +25,7 @@ export const postInitState = {
     currentSettings: {
       important: {
         active: false,
-        expires_time: '',
+        expires_time: null,
       },
     },
     initAudiences: null,

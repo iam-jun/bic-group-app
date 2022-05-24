@@ -202,8 +202,6 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
       dispatch(postActions.setCreatePostImagesDraft(initImages));
       dispatch(postActions.setCreatePostImages(initImages));
       initSelectingImagesRef.current = initImages;
-
-      //todo handle init video
     }
   }, [initPostData]);
 
@@ -245,12 +243,14 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         postActions.setCreatePostCurrentSettings({important: initImportant}),
       );
 
-      //todo handle init video
+      const initVideo = initPostData?.media?.videos?.[0];
+      dispatch(postActions.setCreatePostVideo(initVideo));
 
       prevData.current = {
         ...prevData.current,
         chosenAudiences: initChosenAudience,
         important: initImportant,
+        selectingVideo: initVideo,
       };
     }
   }, [initPostData?.id]);
@@ -271,8 +271,8 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
           isEqual,
         ),
       ),
-      !isEqual(important, prevData?.current?.important),
-      !isEqual(selectingVideo, prevData?.current?.video),
+      isEqual(important, prevData?.current?.important),
+      isEqual(selectingVideo, prevData?.current?.selectingVideo),
     ];
     const newDataChange = dataChangeList.filter(i => !i);
     if (isAutoSave && newDataChange.length > 0 && sPostId) {
