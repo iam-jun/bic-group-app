@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useController} from 'react-hook-form';
 import {useTheme} from 'react-native-paper';
@@ -28,6 +28,7 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
 
   const {forgotPasswordError, forgotPasswordLoading} = useAuth();
   const {errRequest}: IForgotPasswordError = forgotPasswordError || {};
+  const refTextInput = useRef<any>();
 
   const {
     control,
@@ -53,6 +54,10 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
     },
     defaultValue: '',
   });
+
+  useEffect(() => {
+    refTextInput.current?.focus();
+  }, []);
 
   useEffect(() => {
     if (errRequest) {
@@ -96,6 +101,7 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
         {t('auth:text_forgot_password_input_desc')}
       </Text.BodyS>
       <TextInput
+        ref={refTextInput}
         testID="inputEmail"
         placeholder={t('auth:input_label_email')}
         keyboardType="email-address"
