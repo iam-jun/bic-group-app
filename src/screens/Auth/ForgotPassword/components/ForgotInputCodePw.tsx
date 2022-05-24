@@ -225,7 +225,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
         loading={forgotPasswordLoading}
         onPress={onConfirmForgotPassword}
         style={styles.btnConfirmNewPassword}>
-        {t('auth:input_label_confirm_new_password')}
+        {t('auth:btn_submit')}
       </Button.Primary>
     </View>
   );
