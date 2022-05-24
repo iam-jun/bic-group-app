@@ -8,12 +8,13 @@ import {IActivityDataImage, IMarkdownAudience} from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import Image from '~/beinComponents/Image';
-import {getResourceUrl} from '~/configs/resourceConfig';
+import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
 
 import {ITheme} from '~/theme/interfaces';
 import Markdown from '~/beinComponents/Markdown';
 import postKeySelector from '../../redux/keySelector';
 import VideoPlayer from '~/beinComponents/VideoPlayer';
+import UploadingFile from '~/beinComponents/UploadingFile';
 
 export interface PostViewContentProps {
   postId: number;
@@ -23,6 +24,7 @@ export interface PostViewContentProps {
   isPostDetail: boolean;
   onContentLayout?: () => void;
   isLite?: boolean;
+  isDraft?: boolean;
 }
 
 const PostViewContent: FC<PostViewContentProps> = ({
@@ -33,6 +35,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
   isPostDetail,
   onContentLayout,
   isLite,
+  isDraft,
 }: PostViewContentProps) => {
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
@@ -116,7 +119,15 @@ const PostViewContent: FC<PostViewContentProps> = ({
             uploadType={'postImage'}
             enableGalleryModal
           />
-          <VideoPlayer data={videos?.[0]} />
+          {isDraft ? (
+            <UploadingFile
+              uploadType={uploadTypes.postVideo}
+              file={videos?.[0]}
+              disableClose
+            />
+          ) : (
+            <VideoPlayer data={videos?.[0]} />
+          )}
         </>
       )}
     </View>

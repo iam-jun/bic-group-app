@@ -25,7 +25,7 @@ export interface IUploadParam {
 }
 
 export interface ICancelUploadParam {
-  uploadType: IUploadType | string;
+  uploadType?: IUploadType | string;
   file: IFilePicked;
 }
 

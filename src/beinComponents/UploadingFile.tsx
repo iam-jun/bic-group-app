@@ -19,20 +19,23 @@ import {useDispatch} from 'react-redux';
 
 export interface UploadingFileProps {
   style?: StyleProp<ViewStyle>;
-  uploadType: IUploadType | string;
+  uploadType?: IUploadType | string;
   file?: IFilePicked;
   url?: string;
   onClose?: (file: IFilePicked) => void;
   onSuccess?: (file: IGetFile) => void;
   onError?: (e?: any) => void;
+  disableClose?: boolean;
 }
 
 const UploadingFile: FC<UploadingFileProps> = ({
+  style,
   uploadType,
   file,
   onClose,
   onSuccess,
   onError,
+  disableClose,
 }: UploadingFileProps) => {
   const [uploading, setUploading] = useState(false);
 
@@ -60,6 +63,9 @@ const UploadingFile: FC<UploadingFileProps> = ({
   };
 
   const uploadFile = async () => {
+    if (!uploadTypes) {
+      return;
+    }
     if (
       uploadType === uploadTypes.postVideo ||
       uploadType === uploadTypes.commentVideo
@@ -110,18 +116,15 @@ const UploadingFile: FC<UploadingFileProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <Icon size={40} icon={'iconFileVideo'} />
       <View style={styles.contentContainer}>
-        <Text.BodyS numberOfLines={1} ellipsizeMode={'middle'}>
-          {fileName}
-        </Text.BodyS>
+        <Text.BodyS numberOfLines={1}>{fileName}</Text.BodyS>
         <View style={{flexDirection: 'row'}}>
           <Text.Subtitle
             style={{justifyContent: 'center'}}
             color={colors.textSecondary}
-            numberOfLines={1}
-            ellipsizeMode={'middle'}>
+            numberOfLines={1}>
             {fileName?.split('.')?.pop?.()?.toUpperCase?.()} ∙{' '}
             {uploading
               ? t('common:text_uploading')
@@ -129,11 +132,13 @@ const UploadingFile: FC<UploadingFileProps> = ({
           </Text.Subtitle>
         </View>
       </View>
-      <Button
-        hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}
-        onPress={onPressClose}>
-        <Icon icon={'iconCloseSmall'} />
-      </Button>
+      {!disableClose && (
+        <Button
+          hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}
+          onPress={onPressClose}>
+          <Icon icon={'iconCloseSmall'} />
+        </Button>
+      )}
     </View>
   );
 };

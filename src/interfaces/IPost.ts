@@ -130,6 +130,7 @@ export interface IPostActivity {
   media?: IPostMedia;
   setting?: IPostSetting;
   isDraft?: boolean;
+  isProcessing?: boolean;
   actor?: IAudienceUser;
   mentions?: any;
   commentsCount?: number;
