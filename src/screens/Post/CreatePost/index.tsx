@@ -38,6 +38,9 @@ import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
 import {padding} from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
+import UploadingFile from '~/beinComponents/UploadingFile';
+import {IFilePicked} from '~/interfaces/common';
+import VideoUploader from '~/services/videoUploader';
 
 export interface CreatePostProps {
   route?: {
@@ -86,6 +89,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     sPostData,
     createPostData,
     images,
+    video,
+    videoUploading,
     disableButtonPost,
     isEditPost,
     isEditDraftPost,
@@ -93,6 +98,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     handlePressPost,
     handleChangeContent,
     isNewsfeed,
+    handleUploadVideoSuccess,
   } = useCreatePost({
     screenParams,
     mentionInputRef,
@@ -126,6 +132,17 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const sPostId = sPostData?.id;
   const isEdit = !!(sPostId && !sPostData?.isDraft);
   const isDraftPost = !!(sPostId && sPostData?.isDraft);
+
+  let imageDisabled, fileDisabled, videoDisabled;
+
+  if (video) {
+    videoDisabled = true;
+    imageDisabled = true;
+    fileDisabled = true;
+  } else if (images?.length > 0) {
+    videoDisabled = true;
+    fileDisabled = true;
+  }
 
   const handleBackPress = () => {
     toolbarRef?.current?.goBack?.();
@@ -193,6 +210,20 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         return;
       }
     } else if (sPostId && refIsRefresh.current) {
+      if (videoUploading) {
+        VideoUploader.getInstance().cancel({file: video} as any);
+        dispatch(
+          modalActions.showAlert({
+            title: t('upload:title_leave_uploading_video'),
+            content: t('upload:text_leave_uploading_video'),
+            cancelBtn: true,
+            cancelLabel: t('common:btn_leave'),
+            confirmLabel: t('common:btn_stay_on_this_page'),
+            onDismiss: () => rootNavigation.goBack(),
+          }),
+        );
+        return;
+      }
       dispatch(postActions.getDraftPosts({isRefresh: true}));
       dispatch(
         modalActions.showHideToastMessage({
@@ -313,6 +344,19 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     refTextInput.current?.setFocus();
   };
 
+  const onCloseFile = (file: any) => {
+    dispatch(postActions.setCreatePostVideo());
+  };
+
+  const onUploadVideoError = (e: any) => {
+    dispatch(
+      modalActions.showHideToastMessage({
+        content: 'upload:text_upload_video_error',
+        props: {textProps: {useI18n: true}, type: 'error'},
+      }),
+    );
+  };
+
   const renderContent = () => {
     return (
       <>
@@ -363,6 +407,13 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
                   onPress={() =>
                     rootNavigation.navigate(homeStack.postSelectImage)
                   }
+                />
+                <UploadingFile
+                  uploadType={uploadTypes.postVideo}
+                  file={video as IFilePicked}
+                  onClose={onCloseFile}
+                  onSuccess={handleUploadVideoSuccess}
+                  onError={onUploadVideoError}
                 />
               </View>
             </Animated.View>
@@ -439,6 +490,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           toolbarRef={toolbarRef}
           loading={loading}
           onPressBack={onPressBack}
+          imageDisabled={imageDisabled}
+          videoDisabled={videoDisabled}
+          fileDisabled={fileDisabled}
         />
       </TouchableOpacity>
     </ScreenWrapper>

@@ -134,7 +134,7 @@ const _PostView: FC<PostViewProps> = ({
     reactionsCount = postData?.reactionsCount || {};
   }
 
-  const {images} = media || {};
+  const {images, videos} = media || {};
   const {isImportant, importantExpiredAt} = setting || {};
 
   const userId = useUserIdAuth();
@@ -287,6 +287,7 @@ const _PostView: FC<PostViewProps> = ({
           isLite={isLite}
           content={isLite && highlight ? highlight : content}
           images={images}
+          videos={videos}
           isPostDetail={isPostDetail}
           onContentLayout={onContentLayout}
         />

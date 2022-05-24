@@ -37,6 +37,8 @@
     "btn_create": "Create",
     "btn_join": "Join",
     "btn_view": "View",
+    "btn_leave": "Leave",
+    "btn_stay_on_this_page": "Stay on this page",
     "btn_cancel_request": "Cancel Request",
     "text_search_emoji": "Search Emoji",
     "text_important": "Important",
@@ -61,6 +63,7 @@
     "text_add": "Add",
     "text_retry": "Retry",
     "text_done": "Done",
+    "text_uploading": "Uploading...",
     "text_download": "Download",
     "text_send": "Send",
     "label_confirm_send_file": "Send this file?",
@@ -532,7 +535,8 @@
       "text_no_draft_posts": "You have no draft post left",
       "text_draft_published": "Your post has been published",
       "text_draft_saved": "Your draft has been saved",
-      "text_draft_deleted": "Your draft has been deleted"
+      "text_draft_deleted": "Your draft has been deleted",
+      "text_processing_publish": "Your video post will be ready soon"
     },
     "comment": {
       "title_delete_comment": "Delete this comment",
@@ -799,5 +803,19 @@
     "text_other_member_other": "{{count}} others are members",
     "text_is_member": "is a member",
     "title_discover_groups": "Discover Groups"
+  },
+  "upload": {
+    "text_create_video_id_request_failed": "Cannot request id",
+    "text_create_video_id_response_failed": "Cannot create id",
+    "text_upload_video_request_failed": "Cannot request upload video",
+    "text_upload_video_response_failed": "Cannot upload video",
+    "text_create_media_request_failed": "Cannot request create media",
+    "text_create_media_response_failed": "Cannot create media",
+    "title_delete_video": "Delete Video?",
+    "text_delete_video": "Are you sure you want to delete video?",
+    "text_upload_video_error": "Can’t upload this video",
+    "title_leave_uploading_video": "Leave this page?",
+    "text_leave_uploading_video": "Are you sure you want to leave this page? Your video process will be lost.",
+    "text_video_over_size": "Your video must be less than 300MB"
   }
 }
