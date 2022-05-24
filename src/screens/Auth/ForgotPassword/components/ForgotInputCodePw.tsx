@@ -15,6 +15,7 @@ import {IForgotPasswordError} from '~/interfaces/IAuth';
 import {ITheme} from '~/theme/interfaces';
 import TextInputController from '~/beinComponents/inputs/TextInputController';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
+import {getEnv} from '~/utils/env';
 
 interface Props {
   useFormData: IObject<any>;
@@ -178,22 +179,27 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
               message: t('auth:text_err_password_characters'),
             },
             minLength: {
-              value: 8,
+              value: 6,
               message: t('auth:text_err_password_characters'),
             },
             validate: () => {
-              const value = getValues('newPassword');
-              if (!/(?=.*?[A-Z])/.test(value)) {
-                return t('auth:text_err_password_required_upper_case');
-              }
-              if (!/(?=.*?[a-z])/.test(value)) {
-                return t('auth:text_err_password_required_lower_case');
-              }
-              if (!/(?=.*?[0-9])/.test(value)) {
-                return t('auth:text_err_password_required_number');
-              }
-              if (!/(?=.*?[^\w\s])/.test(value)) {
-                return t('auth:text_err_password_required_symbols');
+              if (
+                !getEnv('SELF_DOMAIN')?.includes('sbx') &&
+                !getEnv('SELF_DOMAIN')?.includes('stg')
+              ) {
+                const value = getValues('newPassword');
+                if (!/(?=.*?[A-Z])/.test(value)) {
+                  return t('auth:text_err_password_required_upper_case');
+                }
+                if (!/(?=.*?[a-z])/.test(value)) {
+                  return t('auth:text_err_password_required_lower_case');
+                }
+                if (!/(?=.*?[0-9])/.test(value)) {
+                  return t('auth:text_err_password_required_number');
+                }
+                if (!/(?=.*?[^\w\s])/.test(value)) {
+                  return t('auth:text_err_password_required_symbols');
+                }
               }
             },
           }}
