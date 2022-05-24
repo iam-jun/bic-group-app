@@ -40,7 +40,7 @@ const InfoHeader = () => {
           source={icon || images.img_user_avatar_default}
           style={styles.avatar}
         />
-        <View>
+        <View style={{flex: 1}}>
           <Text.BodyM testID="info_header.name">{name}</Text.BodyM>
           <View style={styles.info}>
             <Icon

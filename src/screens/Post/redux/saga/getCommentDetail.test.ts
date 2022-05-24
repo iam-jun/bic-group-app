@@ -49,7 +49,7 @@ describe('Get comments detail saga', () => {
         )
         .run()
         .then(({allEffects}: any) => {
-          expect(allEffects?.length).toEqual(2);
+          expect(allEffects?.length).toEqual(4);
         })
     );
   });
@@ -82,7 +82,7 @@ describe('Get comments detail saga', () => {
         )
         .run()
         .then(({allEffects}: any) => {
-          expect(allEffects?.length).toEqual(2);
+          expect(allEffects?.length).toEqual(4);
         })
     );
   });

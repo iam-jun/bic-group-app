@@ -13,7 +13,7 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import groupsTypes from '~/screens/Groups/redux/types';
 import * as modalActions from '~/store/modal/actions';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
-import {mapData, mapRequestMembers} from '../../helper/mapper';
+import {mapData, mapItems} from '../../helper/mapper';
 import appConfig from '~/configs/appConfig';
 import FileUploader, {IGetFile} from '~/services/fileUploader';
 import {withNavigation} from '~/router/helper';
@@ -39,11 +39,13 @@ import getYourGroupsList from '~/screens/Groups/redux/saga/getYourGroupsList';
 import getCommunityDetail from './getCommunityDetail';
 import getDiscoverCommunities from '~/screens/Groups/redux/saga/getDiscoverCommunities';
 import getYourGroupsSearch from '~/screens/Groups/redux/saga/getYourGroupsSearch';
+import getCommunityMembers, {getSearchMembers} from './getCommunityMembers';
+import getDiscoverGroups from './getDiscoverGroups';
+import getManagedCommunities from './getManagedCommunities';
 
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* groupsSaga() {
-  yield takeLatest(groupsTypes.GET_JOINED_GROUPS, getJoinedGroups);
   yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
   yield takeLatest(groupsTypes.GET_GROUP_MEMBER, getGroupMember);
   yield takeLatest(groupsTypes.GET_GROUP_POSTS, getGroupPosts);
@@ -85,26 +87,16 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_YOUR_GROUPS_TREE, getYourGroupsTree);
   yield takeLatest(groupsTypes.GET_YOUR_GROUPS_LIST, getYourGroupsList);
   yield takeLatest(groupsTypes.GET_JOINED_COMMUNITIES, getJoinedCommunities);
+  yield takeLatest(groupsTypes.GET_MANAGED_COMMUNITIES, getManagedCommunities);
   yield takeLatest(
     groupsTypes.GET_DISCOVER_COMMUNITIES,
     getDiscoverCommunities,
   );
   yield takeLatest(groupsTypes.GET_COMMUNITY_GROUPS, getCommunityGroups);
   yield takeLatest(groupsTypes.GET_COMMUNITY_DETAIL, getCommunityDetail);
-}
-
-function* getJoinedGroups({payload}: {type: string; payload?: any}) {
-  try {
-    // @ts-ignore
-    const response = yield groupsDataHelper.getMyGroups(payload?.params);
-    yield put(groupsActions.setJoinedGroups(response.data));
-  } catch (e) {
-    yield put(groupsActions.setJoinedGroups([]));
-    console.log(
-      `\x1b[31m🐣️ saga getJoinedGroups`,
-      `${JSON.stringify(e, undefined, 2)}\x1b[0m`,
-    );
-  }
+  yield takeLatest(groupsTypes.GET_COMMUNITY_MEMBERS, getCommunityMembers);
+  yield takeLatest(groupsTypes.GET_SEARCH_MEMBERS, getSearchMembers);
+  yield takeLatest(groupsTypes.GET_DISCOVER_GROUPS, getDiscoverGroups);
 }
 
 function* getGroupSearch({payload}: {type: string; payload: string}) {
@@ -299,6 +291,14 @@ function* cancelJoinGroup({
 
     yield groupsDataHelper.cancelJoinGroup(groupId);
 
+    // update button Join/Cancel/View status on Discover groups
+    yield put(
+      groupsActions.editDiscoverGroupItem({
+        id: groupId,
+        data: {join_status: 1},
+      }),
+    );
+
     yield put(groupsActions.getGroupDetail(groupId));
 
     const toastMessage: IToastMessage = {
@@ -324,7 +324,6 @@ function* cancelJoinGroup({
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
       yield put(groupsActions.getGroupDetail(payload.groupId, true));
-      yield put(groupsActions.getJoinedGroups());
 
       return;
     }
@@ -356,7 +355,7 @@ function* getMemberRequests({
     });
 
     const requestIds = response?.data.map((item: IJoiningMember) => item.id);
-    const requestItems = mapRequestMembers(response?.data);
+    const requestItems = mapItems(response?.data);
 
     yield put(groupsActions.setMemberRequests({requestIds, requestItems}));
   } catch (err) {
@@ -506,10 +505,9 @@ export function* refreshGroupMembers(groupId: number) {
   yield put(groupsActions.clearGroupMembers());
   yield put(groupsActions.getGroupMembers({groupId}));
   yield put(groupsActions.getGroupDetail(groupId));
-  yield put(groupsActions.getJoinedGroups());
 }
 
-function* approvalError(groupId: number, code: number, fullName?: string) {
+function* approvalError(groupId: number, code: string, fullName?: string) {
   let errorMsg: string;
   if (code === approveDeclineCode.CANNOT_APPROVE) {
     errorMsg = i18next

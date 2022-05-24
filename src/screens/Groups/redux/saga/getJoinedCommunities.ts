@@ -17,7 +17,9 @@ export default function* getJoinedCommunities({
     ) || [];
     yield put(groupsActions.setMyCommunities({data: list, loading: true}));
     // @ts-ignore
-    const communities = yield call(groupsDataHelper.getJoinedCommunities, true);
+    const communities = yield call(groupsDataHelper.getJoinedCommunities, {
+      preview_members: true,
+    });
     if (communities?.length > 0) {
       yield put(
         groupsActions.setMyCommunities({data: communities, loading: false}),

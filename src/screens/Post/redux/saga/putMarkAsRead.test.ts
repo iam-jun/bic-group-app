@@ -23,7 +23,11 @@ describe('Put Mark as read Saga', () => {
     const payload: IPayloadPutMarkAsRead = {
       postId: POST_DETAIL.id,
     };
-    const newPost: any = {...POST_DETAIL, markedReadPost: true};
+    const newPost: any = {
+      ...POST_DETAIL,
+      markedReadPost: true,
+      markedReadSuccess: true,
+    };
     return expectSaga(putMarkAsRead, {type: 'test', payload})
       .withState(storeData)
       .provide([[matchers.call.fn(postDataHelper.putMarkAsRead), {data: true}]])

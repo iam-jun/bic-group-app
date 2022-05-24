@@ -131,7 +131,7 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
             onFocus={onFocus}
             style={styles.searchInput}
             onChangeText={_onChangeText}
-            placeholder={placeholder || i18next.t('input:search_group')}
+            placeholder={placeholder || i18next.t('input:search_group_people')}
             onSubmitEditing={onSubmitSearch}
           />
         </Animated.View>

@@ -79,17 +79,49 @@ export const groupInitState = {
     data: [],
   },
   discoverCommunities: {
-    loading: false,
+    loading: true,
     canLoadMore: true,
     list: [],
   },
+  managedCommunities: {
+    loading: false,
+    canLoadMore: true,
+    data: [] as number[],
+    items: {},
+  },
   communityDetail: {} as ICommunity,
   isGettingInfoDetail: false,
+  communityMembers: {
+    loading: false,
+    canLoadMore: true,
+    community_admin: {data: [], user_count: 0},
+    member: {data: [], user_count: 0},
+  },
+  searchMembers: {
+    loading: false,
+    canLoadMore: true,
+    community_admin: {data: [], user_count: 0},
+    member: {data: [], user_count: 0},
+  },
+
+  discoverGroups: {
+    loading: false,
+    data: [],
+    items: {},
+    canLoadMore: true,
+  },
 };
 
 function groupsReducer(state = groupInitState, action: any = {}) {
   const {type, payload} = action;
-  const {selectedUsers, pendingMemberRequests} = state;
+  const {
+    selectedUsers,
+    pendingMemberRequests,
+    discoverGroups,
+    communityMembers,
+    searchMembers,
+    managedCommunities,
+  } = state;
 
   switch (type) {
     case groupsTypes.SET_PRIVACY_MODAL_OPEN:
@@ -427,6 +459,93 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         ...state,
         isGettingInfoDetail: false,
         communityDetail: payload,
+      };
+
+    case groupsTypes.SET_COMMUNITY_MEMBERS: {
+      return {
+        ...state,
+        communityMembers: {
+          ...communityMembers,
+          ...payload,
+        },
+      };
+    }
+    case groupsTypes.RESET_COMMUNITY_MEMBERS:
+      return {
+        ...state,
+        communityMembers: groupInitState.communityMembers,
+      };
+
+    case groupsTypes.RESET_SEARCH_MEMBERS:
+      return {
+        ...state,
+        searchMembers: groupInitState.searchMembers,
+      };
+    case groupsTypes.SET_SEARCH_MEMBERS: {
+      return {
+        ...state,
+        searchMembers: {
+          ...searchMembers,
+          ...payload,
+        },
+      };
+    }
+
+    case groupsTypes.GET_DISCOVER_GROUPS:
+      return {
+        ...state,
+        discoverGroups: {
+          ...discoverGroups,
+          loading: discoverGroups.data.length === 0,
+        },
+      };
+    case groupsTypes.SET_DISCOVER_GROUPS:
+      return {
+        ...state,
+        discoverGroups: {
+          ...discoverGroups,
+          loading: false,
+          data: [...discoverGroups.data, ...payload.ids],
+          items: {
+            ...discoverGroups.items,
+            ...payload.items,
+          },
+          canLoadMore: payload.ids.length === appConfig.recordsPerPage,
+        },
+      };
+    case groupsTypes.RESET_DISCOVER_GROUPS:
+      return {
+        ...state,
+        discoverGroups: groupInitState.discoverGroups,
+      };
+    case groupsTypes.EDIT_DISCOVER_GROUP_ITEM:
+      return {
+        ...state,
+        discoverGroups: {
+          ...discoverGroups,
+          items: {
+            ...discoverGroups.items,
+            [payload.id]: {
+              // @ts-ignore
+              ...discoverGroups.items[payload.id],
+              ...payload.data,
+            },
+          },
+        },
+      };
+
+    case groupsTypes.SET_MANAGED_COMMUNITIES:
+      return {
+        ...state,
+        managedCommunities: {
+          ...managedCommunities,
+          ...payload,
+        },
+      };
+    case groupsTypes.RESET_MANAGED_COMMUNITIES:
+      return {
+        ...state,
+        managedCommunities: groupInitState.managedCommunities,
       };
 
     default:

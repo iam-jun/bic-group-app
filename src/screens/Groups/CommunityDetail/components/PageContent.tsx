@@ -46,15 +46,15 @@ const PageContent = ({
   const dispatch = useDispatch();
 
   const onPressDiscover = () => {
-    // TODO: add navigation to Discover page
+    rootNavigation.navigate(groupStack.discoverGroups, {communityId});
   };
 
   const onPressAbout = () => {
-    // TODO: add navigation to About page
+    rootNavigation.navigate(groupStack.communityAbout);
   };
 
   const onPressMembers = () => {
-    // TODO: add navigation to Members page
+    rootNavigation.navigate(groupStack.communityMembers, {communityId});
   };
 
   const loadMoreData = () => {

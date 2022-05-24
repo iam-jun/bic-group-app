@@ -21,6 +21,7 @@ import API_ERROR_CODE from '~/constants/apiErrorCode';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import LoadMoreComment from '../components/LoadMoreComment';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {parseInt} from 'lodash';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -48,14 +49,15 @@ const CommentDetailContent = (props: any) => {
   const postDetailLoadingState = useKeySelector(
     postKeySelector.loadingGetPostDetail,
   );
-
+  const newParentId =
+    typeof parentId === 'string' ? parseInt(parentId) : parentId;
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const {
     childrenComments = [],
     newCommentData,
     viewMore = false,
     notFoundComment,
-  } = getListChildComment(comments, !!parentId ? parentId : commentId);
+  } = getListChildComment(comments, !!newParentId ? newParentId : commentId);
 
   const scrollToCommentsPosition = useKeySelector(
     postKeySelector.scrollToCommentsPosition,
@@ -83,6 +85,16 @@ const CommentDetailContent = (props: any) => {
       copyCommentError === API_ERROR_CODE.POST.copiedCommentIsDeleted
     ) {
       setIsEmpty(true);
+      dispatch(
+        modalActions.showHideToastMessage({
+          content: 'post:text_comment_was_deleted',
+          props: {
+            type: 'error',
+            textProps: {useI18n: true},
+          },
+          toastType: 'normal',
+        }),
+      );
       rootNavigation.replace(homeStack.postDetail, {post_id: postId});
     }
     if (!postDetailLoadingState && !copyCommentError) {
@@ -107,7 +119,12 @@ const CommentDetailContent = (props: any) => {
   }, [postDetailLoadingState, copyCommentError]);
 
   useEffect(() => {
-    if (!loading && notFoundComment < 0) {
+    if (
+      !loading &&
+      (notFoundComment === undefined || notFoundComment < 0) &&
+      !isEmpty &&
+      !copyCommentError
+    ) {
       dispatch(
         modalActions.showHideToastMessage({
           content: 'error:not_found_desc',
@@ -120,7 +137,7 @@ const CommentDetailContent = (props: any) => {
       );
       rootNavigation.replace(homeStack.newsfeed);
     }
-  }, [notFoundComment, loading]);
+  }, [notFoundComment, loading, isEmpty, copyCommentError]);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -165,6 +182,12 @@ const CommentDetailContent = (props: any) => {
       () => listRef.current?.scrollToIndex?.({index: error?.index || 0}),
       100,
     );
+  };
+
+  const goToPostDetail = () => {
+    rootNavigation.replace(homeStack.postDetail, {
+      post_id: postId,
+    });
   };
 
   const onRefresh = () => {
@@ -268,6 +291,7 @@ const CommentDetailContent = (props: any) => {
             commentData={newCommentData}
             groupIds={groupIds}
             id={id}
+            onPress={goToPostDetail}
           />
         }
         ListFooterComponent={renderFooter}
@@ -297,7 +321,13 @@ const CommentDetailContent = (props: any) => {
   );
 };
 
-const CommentLevel1 = ({id, headerTitle, commentData, groupIds}: any) => {
+const CommentLevel1 = ({
+  id,
+  headerTitle,
+  commentData,
+  groupIds,
+  onPress,
+}: any) => {
   if (!id) {
     return null;
   }
@@ -310,7 +340,12 @@ const CommentLevel1 = ({id, headerTitle, commentData, groupIds}: any) => {
       <View style={styles.container}>
         <Text.BodySM>
           {t('post:text_comment_from')}
-          <Text.BodyM style={styles.highlightText}>{headerTitle}</Text.BodyM>
+          <Text.BodyM
+            onPress={onPress}
+            suppressHighlighting
+            style={styles.highlightText}>
+            {headerTitle}
+          </Text.BodyM>
         </Text.BodySM>
       </View>
       <CommentItem
@@ -332,7 +367,6 @@ const getListChildComment = (
   );
 
   const childrenComments = listData?.[parentCommentPosition]?.child?.list || [];
-
   return {
     childrenComments,
     newCommentData: listData?.[parentCommentPosition],
@@ -346,7 +380,7 @@ const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
-      paddingHorizontal: spacing.padding.large,
+      paddingLeft: spacing.padding.large,
       paddingVertical: spacing.padding.small,
       flexDirection: 'row',
     },

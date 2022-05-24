@@ -35,6 +35,7 @@
     "btn_next": "Tiếp tục",
     "btn_confirm": "Xác nhận",
     "btn_join": "Tham gia",
+    "btn_view": "Xem",
     "text_search_emoji": "Tìm Emoji",
     "text_important": "Quan trọng",
     "text_clear": "Xoá",
@@ -50,8 +51,8 @@
     "text_important_posts": "Bài viết quan trọng",
     "text_files": "Files",
     "text_search_no_results": "Sorry, we couldn’t find anything related to your search.",
-    "text_read_more": "Xem thêm",
-    "text_show_less": "Thu gọn",
+    "text_see_more": "Xem thêm",
+    "text_see_less": "Thu gọn",
     "text_send": "Gửi",
     "error": {
       "file": {
@@ -91,7 +92,8 @@
     },
     "text_not_now": "Không phải bây giờ",
     "text_go_to_settings": "Đi tới Cài đặt",
-    "text_help": "Trợ giúp"
+    "text_help": "Trợ giúp",
+    "text_type_search_keyword": "Gõ từ khóa để tìm kiếm"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -516,7 +518,8 @@
   },
   "input": {
     "search": "Tìm kiếm người để trò chuyện...",
-    "search_group": "Tìm kiếm nhóm hoặc người...",
+    "search_group_people": "Tìm kiếm nhóm hoặc người...",
+    "search_group": "Tìm kiếm nhóm",
     "search_post": "Tìm kiếm bài viết...",
     "search_country": "Tìm kiếm Đất nước",
     "search_location": "Tìm kiếm Tỉnh/Thành phố"
@@ -535,6 +538,7 @@
     "text_members_other": "thành viên",
     "search_results": "Kết quả tìm kiếm",
     "all_groups": "Tất cả",
+    "text_search_member": "Tìm kiềm thành viên",
     "group_menu": {
       "label_copy_group_link": "Sao chép đường dẫn nhóm",
       "label_leave_group": "Rời nhóm",
@@ -582,9 +586,9 @@
     "title_not_found": "Page not found / Bein"
   },
   "notification": {
-    "mark_all_as_read": "Mark all as read",
-    "mark_all_as_read_success": "All notifications marked as read",
-    "notification_settings": "Notification Settings",
+    "mark_all_as_read": "Đánh dấu đã đọc tất cả",
+    "mark_all_as_read_success": "Tất cả các thông báo đã được đánh dấu là đã đọc",
+    "notification_settings": "Cài đặt thông báo",
     "created_a_post": "created a post",
     "mentioned_you_in_a_post": "mentioned you in a post",
     "mentioned_you_in_a_comment": "mentioned you in a comment",
@@ -598,12 +602,18 @@
     "replied_to_your_comment": "replied to your comment",
     "replied_to_a_comment_you_are_mentioned": "replied to a comment you're mentioned",
     "replied_to_comment_you_replied": "replied to a comment you replied",
-    "no_more_notification": "No more notification",
-    "no_notification_found": "Your notification box is empty",
-    "no_notification_found_desc": "We’ll notify you when something arrives",
+    "no_more_notification": "Đã hiện hết thông báo",
+    "no_notification_found": "Bạn không có thông báo nào đang chờ",
     "you_joined_group": "You joined {group_name}",
     "number_people": "{number} people",
-    "number_times": "{number} times"
+    "number_times": "{number} times",
+    "text_all": "Tất cả",
+    "text_unread": "Chưa đọc",
+    "text_mention": "Được nhắc đến",
+    "text_important": "Quan trọng",
+    "mark_as_read": "Đánh dấu là đã đọc",
+    "mark_as_unread": "Đánh dấu là chưa đọc",
+    "off_notification_from_group": "Tắt nhận thông báo cho nhóm này"
   },
   "new_feature": {
     "title": "New feature",
@@ -638,12 +648,23 @@
     "empty_communities": {
       "title": "Không tìm thấy cộng đồng nào",
       "description": "Khám phá các cộng đồng để tham gia một cộng đồng.",
-      "button_text": "Đi tới Khám phá"
+      "button_text": "Đi tới Khám phá",
+      "manage_description": "Hiện bạn không có quản lý cộng đồng nào"
+    },
+    "empty_groups": {
+      "title": "Không tìm thấy nhóm nào",
+      "description": "Khám phá các nhóm để tham gia ngay."
     },
     "community_menu": {
       "your_communities_text": "Bạn đã tham gia",
       "manage_text": "Bạn quản lý",
       "discover_text": "Khám phá"
-    }
+    },
+    "text_join_community_button": "Tham gia ngay",
+    "text_join_community_description": "Tham gia ngay để xem và thảo luận",
+    "text_other_member_one": "{{count}} người khác là thành viên",
+    "text_other_member_other": "{{count}} người khác là thành viên",
+    "text_is_member": "là thành viên",
+    "title_discover_groups": "Khám phá các nhóm"
   }
 }

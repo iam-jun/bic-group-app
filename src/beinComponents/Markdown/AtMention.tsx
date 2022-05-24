@@ -26,8 +26,7 @@ const AtMention = ({mentionName, selector, style, onPress}: Props) => {
   if (!audience) {
     audience = tempSelectedUser || {};
   }
-
-  const name = audience?.data?.fullname;
+  const name = audience?.fullname || audience?.data?.fullname;
   const withAudience = !isEmpty(audience);
 
   const _onPress = (e: any) => {

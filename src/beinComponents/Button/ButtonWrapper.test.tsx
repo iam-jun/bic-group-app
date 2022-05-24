@@ -114,7 +114,7 @@ describe('Button Wrapper component', () => {
   it(`renders correctly children with useI18n`, () => {
     const rendered = renderWithRedux(
       <ButtonWrapper useI18n>
-        {i18next.t('common:text_show_less')}
+        {i18next.t('common:text_see_less')}
       </ButtonWrapper>,
     );
     expect(rendered).toBeDefined();

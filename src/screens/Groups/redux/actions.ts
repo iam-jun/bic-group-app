@@ -18,7 +18,13 @@ import {
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 import {IObject} from '~/interfaces/common';
-import {ICommunity} from '~/interfaces/ICommunity';
+import {
+  ICommunity,
+  ICommunityMembers,
+  IParamGetCommunityMembers,
+  IParamGetDiscoverGroups,
+  ISetMembers,
+} from '~/interfaces/ICommunity';
 
 const groupsActions = {
   setPrivacyModalOpen: (payload: boolean) => {
@@ -28,12 +34,6 @@ const groupsActions = {
     };
   },
 
-  getJoinedGroups: function (payload?: any) {
-    return {
-      type: groupsTypes.GET_JOINED_GROUPS,
-      payload,
-    };
-  },
   setJoinedGroups: function (payload: IGroup[]) {
     return {
       type: groupsTypes.SET_JOINED_GROUPS,
@@ -282,6 +282,20 @@ const groupsActions = {
     type: groupsTypes.SET_JOINED_COMMUNITIES,
     payload,
   }),
+  getManagedCommunities: (payload?: {
+    managed: boolean;
+    preview_members: boolean;
+  }) => ({
+    type: groupsTypes.GET_MANAGED_COMMUNITIES,
+    payload,
+  }),
+  setManagedCommunities: (payload: any) => ({
+    type: groupsTypes.SET_MANAGED_COMMUNITIES,
+    payload,
+  }),
+  resetManagedCommunities: () => ({
+    type: groupsTypes.RESET_MANAGED_COMMUNITIES,
+  }),
   getDiscoverCommunities: (payload: any) => ({
     type: groupsTypes.GET_DISCOVER_COMMUNITIES,
     payload,
@@ -329,6 +343,52 @@ const groupsActions = {
   }),
   setCommunityDetail: (payload: ICommunity) => ({
     type: groupsTypes.SET_COMMUNITY_DETAIL,
+    payload,
+  }),
+  getCommunityMembers: (payload: {
+    communityId: number;
+    params?: IParamGetCommunityMembers;
+  }) => ({
+    type: groupsTypes.GET_COMMUNITY_MEMBERS,
+    payload,
+  }),
+  setCommunityMembers: (payload: ISetMembers) => ({
+    type: groupsTypes.SET_COMMUNITY_MEMBERS,
+    payload,
+  }),
+  resetCommunityMembers: () => ({
+    type: groupsTypes.RESET_COMMUNITY_MEMBERS,
+  }),
+  getSearchMembers: (payload: {
+    communityId: number;
+    params: IParamGetCommunityMembers;
+  }) => ({
+    type: groupsTypes.GET_SEARCH_MEMBERS,
+    payload,
+  }),
+  setSearchMembers: (payload: ISetMembers) => ({
+    type: groupsTypes.SET_SEARCH_MEMBERS,
+    payload,
+  }),
+  resetSearchMembers: () => ({
+    type: groupsTypes.RESET_SEARCH_MEMBERS,
+  }),
+  getDiscoverGroups: (payload: {
+    communityId: number;
+    params?: IParamGetDiscoverGroups;
+  }) => ({
+    type: groupsTypes.GET_DISCOVER_GROUPS,
+    payload,
+  }),
+  setDiscoverGroups: (payload: {ids: number[]; items: any}) => ({
+    type: groupsTypes.SET_DISCOVER_GROUPS,
+    payload,
+  }),
+  resetDiscoverGroups: () => ({
+    type: groupsTypes.RESET_DISCOVER_GROUPS,
+  }),
+  editDiscoverGroupItem: (payload: {id: number; data: any}) => ({
+    type: groupsTypes.EDIT_DISCOVER_GROUP_ITEM,
     payload,
   }),
 };

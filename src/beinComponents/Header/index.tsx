@@ -353,7 +353,6 @@ const Header: React.FC<HeaderProps> = ({
               size={24}
               style={styles.icon}
               onPress={onPressMenu}
-              backgroundColor={colors.bgSecondary}
               testID="header.menuIcon"
               buttonTestID="header.menuIcon.button"
             />

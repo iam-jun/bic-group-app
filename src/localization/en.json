@@ -36,6 +36,7 @@
     "btn_confirm": "Confirm",
     "btn_create": "Create",
     "btn_join": "Join",
+    "btn_view": "View",
     "btn_cancel_request": "Cancel Request",
     "text_search_emoji": "Search Emoji",
     "text_important": "Important",
@@ -55,8 +56,8 @@
     "text_description": "Description",
     "text_search": "Search",
     "text_search_results": "Search results",
-    "text_read_more": "Read more",
-    "text_show_less": "Show less",
+    "text_see_more": "See more",
+    "text_see_less": "See less",
     "text_add": "Add",
     "text_retry": "Retry",
     "text_done": "Done",
@@ -135,7 +136,8 @@
     },
     "text_not_now": "Not now",
     "text_go_to_settings": "Go to Settings",
-    "text_help": "Help"
+    "text_help": "Help",
+    "text_type_search_keyword": "Type search keyword to see the search results"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -571,7 +573,8 @@
   },
   "input": {
     "search": "Search for someone to chat...",
-    "search_group": "Search for groups or people...",
+    "search_group_people": "Search for groups or people...",
+    "search_group": "Search groups",
     "search_post": "Search for posts...",
     "search_country": "Search Country",
     "search_location": "Search for City/Province/Country"
@@ -591,7 +594,7 @@
     "search_results": "Search results",
     "all_groups": "All groups",
     "text_invite_members": "Invite members",
-    "text_search_member": "Search group member",
+    "text_search_member": "Search member",
     "text_search": "Search people",
     "group_menu": {
       "label_admin_tools": "Admin Tools",
@@ -722,10 +725,16 @@
     "replied_to_a_comment_you_are_mentioned": "replied to a comment you're mentioned",
     "replied_to_comment_you_replied": "replied to a comment you replied",
     "no_more_notification": "No more notification",
-    "no_notification_found": "Your notification box is empty",
-    "no_notification_found_desc": "We’ll notify you when something arrives",
+    "no_notification_found": "You have no pending notification",
     "number_people": "{number} people",
-    "number_times": "{number} times"
+    "number_times": "{number} times",
+    "text_all": "All",
+    "text_unread": "Unread",
+    "text_mention": "Mention",
+    "text_important": "Important",
+    "mark_as_read": "Mark as read",
+    "mark_as_unread": "Mark as unread",
+    "off_notification_from_group": "Turn off notifications from this group"
   },
   "new_feature": {
     "title": "New feature",
@@ -752,15 +761,20 @@
     "text_view_mode": "View Mode",
     "text_choose_view_mode": "Choose view mode",
     "text_your_groups_search_input": "Type search keyword to see the search results",
-    "text_your_groups_search_empty": "Sorry, we couldn't find any group related to your search.",
+    "text_your_groups_search_empty": "Sorry, we couldn’t find anything related to your search.",
     "group_types": {
-      "text_flat_list": "Flat List",
-      "text_tree_view": "Tree View"
+      "text_flat_list": "Flat view",
+      "text_tree_view": "Tree view"
     },
     "empty_communities": {
       "title": "No communities found",
       "description": "Discover communities to join one.",
-      "button_text": "Go to Discover"
+      "button_text": "Go to Discover",
+      "manage_description": "You’re not managing any communities yet"
+    },
+    "empty_groups": {
+      "title": "No group found",
+      "description": "Discover groups to join one."
     },
     "community_menu": {
       "your_communities_text": "You've joined",
@@ -768,6 +782,10 @@
       "discover_text": "Discover"
     },
     "text_join_community_button": "Join this community",
-    "text_join_community_description": "Join this community to view or participate on discussions"
+    "text_join_community_description": "Join this community to view or participate on discussions",
+    "text_other_member_one": "{{count}} other are members",
+    "text_other_member_other": "{{count}} others are members",
+    "text_is_member": "is a member",
+    "title_discover_groups": "Discover Groups"
   }
 }

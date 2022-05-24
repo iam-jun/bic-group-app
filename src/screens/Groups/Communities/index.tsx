@@ -9,10 +9,13 @@ import Header from '~/beinComponents/Header';
 import {ITheme} from '~/theme/interfaces';
 import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
 import {debounce} from 'lodash';
-import CommunityMenu from './components/CommunityMenu';
+import Filter from '../../../beinComponents/Filter';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import JoinedCommunities from '~/screens/Groups/Communities/JoinedCommunities';
 import DiscoverCommunities from '~/screens/Groups/Communities/DiscoverCommunities';
+import {communityMenuData} from '~/constants/communityMenuData';
+import ManagedCommunities from './ManagedCommunities';
+import {ICommunity} from '~/interfaces/ICommunity';
 
 const Communities: React.FC = () => {
   const headerRef = useRef<any>();
@@ -50,10 +53,10 @@ const Communities: React.FC = () => {
   };
 
   const onPressDiscover = () => {
-    alert('goToDiscover');
+    setSelectedIndex(2);
   };
 
-  const onPressCommunities = (item: any) => {
+  const onPressCommunities = (item: ICommunity) => {
     rootNavigation.navigate(groupStack.communityDetail, {
       communityId: item?.id || 0,
     });
@@ -68,7 +71,7 @@ const Communities: React.FC = () => {
         />
       );
     } else if (selectedIndex === 1) {
-      return null;
+      return <ManagedCommunities onPressCommunities={onPressCommunities} />;
     } else if (selectedIndex === 2) {
       return <DiscoverCommunities onPressCommunities={onPressCommunities} />;
     }
@@ -86,7 +89,13 @@ const Communities: React.FC = () => {
         onSearchText={onSearchText}
       />
       <View style={{flex: 1}}>
-        <CommunityMenu selectedIndex={selectedIndex} onPress={onPress} />
+        <Filter
+          data={communityMenuData}
+          selectedIndex={selectedIndex}
+          onPress={onPress}
+          testID="community_menu"
+          itemTestID="item_community_data"
+        />
         {renderContent()}
       </View>
     </View>

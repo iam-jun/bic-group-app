@@ -77,26 +77,9 @@ describe('CommunityDetail', () => {
     // should render PageContent component
     const listView = wrapper.getByTestId('list_view');
     expect(listView).toBeDefined();
-    // should show chat icon
-    const chatIcon = wrapper.getByTestId('header.iconChat');
-    expect(chatIcon).toBeDefined();
   });
 
-  it('should render chat icon correctly when for OPEN/PUBLIC privacy type when user is a guest', () => {
-    const state = {...initialState};
-    // @ts-ignore
-    state.groups.communityDetail = {...communityDetailData, join_status: 1};
-    const store = createTestStore(state);
-
-    const wrapper = renderWithRedux(
-      <MockedNavigator component={component} />,
-      store,
-    );
-    const chatIcon = wrapper.getByTestId('header.iconChat');
-    expect(chatIcon).toBeDefined();
-  });
-
-  it('should not render chat icon correctly when for PRIVATE privacy type when user is a guest', () => {
+  it('should not render chat icon correctly for PRIVATE privacy type when user is a guest', () => {
     const state = {...initialState};
     // @ts-ignore
     state.groups.communityDetail = {

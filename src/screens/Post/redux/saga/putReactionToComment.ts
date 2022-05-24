@@ -17,7 +17,8 @@ export default function* putReactionToComment({
   type: string;
   payload: IPayloadReactToComment;
 }): any {
-  const {id, comment, postId, reactionId} = payload;
+  const {id, comment, postId, reactionId, ownerReactions, reactionsCount} =
+    payload;
 
   if (!postId) {
     console.log(
@@ -72,13 +73,53 @@ export default function* putReactionToComment({
         comment,
       );
 
-      yield call(postDataHelper.putReaction, {
+      const response = yield call(postDataHelper.putReaction, {
         reactionName: reactionId,
         target: 'COMMENT',
         targetId: id,
       });
+
+      if (response?.data) {
+        const cComment2 =
+          (yield select(s => get(s, postKeySelector.commentById(id)))) ||
+          comment;
+        const cReactionsCount2 = cComment2.reactionsCount || {};
+        const cOwnReactions2 = cComment2.ownerReactions || [];
+        const newOwnReaction2: IOwnReaction = [...cOwnReactions2];
+
+        if (newOwnReaction2?.length > 0) {
+          let isAdded = false;
+          newOwnReaction2.forEach((ownReaction: IReaction, index: number) => {
+            if (ownReaction?.reactionName === response.data?.reactionName) {
+              newOwnReaction2[index] = {...response.data};
+              isAdded = true;
+            }
+          });
+          if (!isAdded) {
+            newOwnReaction2.push(response.data);
+          }
+        } else {
+          newOwnReaction2.push(response.data);
+        }
+
+        yield onUpdateReactionOfCommentById(
+          id,
+          [...newOwnReaction2],
+          {
+            ...cReactionsCount2,
+          },
+          comment,
+        );
+      }
     }
   } catch (e) {
+    // disable rollback in case error limit 21 reaction
+    yield onUpdateReactionOfCommentById(
+      id,
+      ownerReactions,
+      reactionsCount,
+      comment,
+    );
     yield showError(e);
   }
 }

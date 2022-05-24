@@ -44,7 +44,6 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
-  const {streamClient} = useContext(AppContext);
 
   const {id, actor, audience, media, content, setting, isDraft} = data || {};
 
@@ -69,7 +68,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   };
 
   const refreshDraftPosts = () => {
-    if (userId && streamClient) {
+    if (userId) {
       const payload: IPayloadGetDraftPosts = {isRefresh: true};
       dispatch(postActions.getDraftPosts(payload));
     }

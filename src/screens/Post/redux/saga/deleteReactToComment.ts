@@ -31,6 +31,7 @@ export default function* deleteReactToComment({
         reactionId: rId,
         target: 'COMMENT',
         targetId: id,
+        reactionName: reactionId,
       });
 
       yield removeReactionLocal(id, reactionId, comment);

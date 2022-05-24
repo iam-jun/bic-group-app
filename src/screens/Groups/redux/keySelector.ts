@@ -26,10 +26,14 @@ const groupsKeySelector = {
   loadingAvatar: 'groups.loadingAvatar',
   loadingCover: 'groups.loadingCover',
   joinedCommunities: 'groups.joinedCommunities.data',
+  managedCommunities: 'groups.managedCommunities',
   discoverCommunitiesData: 'groups.discoverCommunities',
   loadingCommunities: 'groups.communities.loading',
   communityDetail: 'groups.communityDetail',
   isGettingInfoDetail: 'groups.isGettingInfoDetail',
+  communityMembers: 'groups.communityMembers',
+  searchMembers: 'groups.searchMembers',
+  discoverGroups: 'groups.discoverGroups',
 };
 
 export default groupsKeySelector;

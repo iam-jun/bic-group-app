@@ -3,6 +3,9 @@ const groupStack = {
   communities: 'communities',
   communityDetail: 'community-detail',
   yourGroups: 'your-groups',
+  communityAbout: 'community-about',
+  discoverGroups: 'discover-groups',
+  communityMembers: 'community-members',
 
   // group
   groups: 'group-list',

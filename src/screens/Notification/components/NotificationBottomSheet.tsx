@@ -35,6 +35,7 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
     return (
       <View style={styles.container}>
         <PrimaryItem
+          testID="notifications.mark_all_as_read"
           style={styles.item}
           leftIcon={'CommentAltCheck'}
           leftIconProps={{icon: 'CommentAltCheck', size: 24}}
@@ -42,6 +43,7 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
           onPress={markReadAllNotifications}
         />
         <PrimaryItem
+          testID="notifications.notification_settings"
           style={styles.item}
           leftIcon={'Cog'}
           leftIconProps={{icon: 'Cog', size: 24}}

@@ -13,6 +13,8 @@ export interface GroupTreeProps {
   onChangeCheckedGroups?: (data: OnChangeCheckedGroupsData) => void;
   toggleOnPress?: boolean;
   onPressGroup?: (group: IGroup) => void;
+  showPrivacy?: boolean;
+  showPrivacyName?: boolean;
 }
 
 type TreeData = {[x: string]: IParsedGroup};
@@ -25,6 +27,8 @@ const GroupTree: React.FC<GroupTreeProps> = ({
   onChangeCheckedGroups,
   onPressGroup,
   toggleOnPress,
+  showPrivacy,
+  showPrivacyName,
 }: GroupTreeProps) => {
   const [treeData, setTreeData] = useState<TreeData>({});
   const [renderedTree, setRenderedTree] = useState<React.ReactNode[]>([]);
@@ -181,6 +185,8 @@ const GroupTree: React.FC<GroupTreeProps> = ({
         <GroupItem
           key={`tree_item_${index}_${group?.id}`}
           {...group}
+          showPrivacy={showPrivacy}
+          showPrivacyName={showPrivacyName}
           onPressItem={_onPressGroup}
           onToggleItem={onToggleGroup}
           onCheckedItem={onChangeCheckedGroups ? onCheckedGroup : undefined}

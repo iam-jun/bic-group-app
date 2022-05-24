@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, Fragment} from 'react';
+import React, {useState, useEffect, useRef, Fragment} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -34,7 +34,7 @@ const CommunityDetail = (props: any) => {
   const dispatch = useDispatch();
 
   const headerRef = useRef<any>();
-  const buttonHeight = useRef(250);
+  const [buttonHeight, setButtonHeight] = useState(250);
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -123,8 +123,8 @@ const CommunityDetail = (props: any) => {
   };
 
   const onButtonLayout = (e: any) => {
-    // to get the height of the end of button
-    buttonHeight.current = e.nativeEvent.layout.height;
+    // to get the height from the start of the cover image to the end of button
+    setButtonHeight(e.nativeEvent.layout.height);
   };
 
   const onScroll = (e: any) => {
@@ -133,16 +133,19 @@ const CommunityDetail = (props: any) => {
     buttonShow.value = offsetY;
   };
 
-  const buttonStyle = useAnimatedStyle(() => ({
-    position: 'absolute',
-    width: '100%',
-    bottom: 0,
-    opacity: interpolate(
-      buttonShow.value,
-      [0, buttonHeight.current - 20, buttonHeight.current],
-      [0, 0, 1],
-    ),
-  }));
+  const buttonStyle = useAnimatedStyle(
+    () => ({
+      position: 'absolute',
+      width: '100%',
+      bottom: 0,
+      opacity: interpolate(
+        buttonShow.value,
+        [0, buttonHeight - 20, buttonHeight],
+        [0, 0, 1],
+      ),
+    }),
+    [buttonHeight],
+  );
 
   const renderCommunityDetail = () => {
     return (
@@ -154,7 +157,7 @@ const CommunityDetail = (props: any) => {
           useAnimationTitle
           rightIcon="EllipsisV"
           rightIconProps={{backgroundColor: theme.colors.background}}
-          onPressChat={isMember || !isPrivate ? onPressChat : undefined}
+          onPressChat={isMember ? onPressChat : undefined}
         />
         <View testID="community_detail.content" style={styles.contentContainer}>
           {renderCommunityContent()}

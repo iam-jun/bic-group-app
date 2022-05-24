@@ -1,4 +1,4 @@
-export const CURRENT_SERVER = 'https://team.bein.group';
+export const CURRENT_SERVER = 'https://chat.beincomm.com';
 
 export const ExperimentalNormalizeMarkdownLinks = false;
 

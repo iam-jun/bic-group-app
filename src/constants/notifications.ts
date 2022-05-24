@@ -4,7 +4,7 @@ export const notificationActions = {
   UPDATE: 'update',
 };
 
-export const notificationVerbs = {
-  REACT: 'REACT',
-  UNREACT: 'UNREACT',
+export const notificationEvent = {
+  REACT: 'reaction.has.been.created',
+  UNREACT: 'reaction.has.been.removed',
 };

@@ -349,10 +349,12 @@ function postReducer(state = postInitState, action: any = {}) {
         );
 
         // find and update target reply comment
-        if (postComments?.[pIndex]?.child) {
-          postComments[pIndex].child = postComments[pIndex].child?.filter?.(
-            (cmt: ICommentData) => cmt?.localId !== localId,
-          );
+        if (postComments?.[pIndex]?.child?.list) {
+          postComments[pIndex].child = {
+            list: postComments[pIndex].child.list?.filter?.(
+              (cmt: ICommentData) => cmt?.localId !== localId,
+            ),
+          };
         }
         if (postComments?.[pIndex]?.totalReply) {
           postComments[pIndex].totalReply = Math.max(
@@ -367,6 +369,39 @@ function postReducer(state = postInitState, action: any = {}) {
         ...state,
         allCommentsByParentIds: allCommentsByPost,
       };
+    case postTypes.REMOVE_COMMENT_DELETED: {
+      const allCommentsByPost: any = {...state.allCommentsByParentIds};
+      const newAllPosts: any = {...state.allPosts};
+      const {postId, commentId} = payload || {};
+
+      const deleteCommentPost = {...newAllPosts[postId]};
+      const postComments = [...allCommentsByPost[postId]];
+      if (commentId && postComments) {
+        // find parent comment
+        const pIndexCommentNeedDelete = postComments.findIndex(
+          (item: ICommentData) => item.id === commentId,
+        );
+
+        deleteCommentPost.commentsCount = Math.max(
+          0,
+          (deleteCommentPost.commentsCount || 0) -
+            1 -
+            postComments[pIndexCommentNeedDelete].totalReply,
+        );
+
+        const newPostComments = postComments?.filter?.(
+          (cmt: ICommentData) => cmt.id !== commentId,
+        );
+        newAllPosts[postId] = {...deleteCommentPost};
+        allCommentsByPost[postId] = newPostComments;
+      }
+      return {
+        ...state,
+        allCommentsByParentIds: allCommentsByPost,
+        allPosts: newAllPosts,
+      };
+    }
+
     default:
       return state;
   }

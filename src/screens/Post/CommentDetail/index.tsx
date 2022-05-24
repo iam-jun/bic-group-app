@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {InteractionManager, View, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -12,6 +12,9 @@ import Button from '~/beinComponents/Button';
 import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import postActions from '../redux/actions';
+import {useKeySelector} from '~/hooks/selector';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
+import postKeySelector from '../redux/keySelector';
 
 const CommentDetail = (props: any) => {
   const {rootNavigation} = useRootNavigation();
@@ -21,6 +24,7 @@ const CommentDetail = (props: any) => {
   const {colors} = theme;
   const styles = themeStyles(theme);
 
+  const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
   const [showPrivacyPost, setShowPrivacyPost] = useState(false);
 
   const backToNewsFeed = () => {
@@ -33,9 +37,33 @@ const CommentDetail = (props: any) => {
     };
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (copyCommentError === API_ERROR_CODE.POST.commentDeleted) {
+        const params = props?.route?.params;
+        const {postId, commentId} = params || {};
+        dispatch(postActions.removeCommentLevel1Deleted({postId, commentId}));
+      }
+    };
+  }, [copyCommentError]);
+
+  const onBack = () => {
+    if (rootNavigation.canGoBack) {
+      rootNavigation.goBack();
+    } else {
+      rootNavigation.replace(homeStack.postDetail, {
+        post_id: props?.route?.params?.postId || 0,
+      });
+    }
+  };
+
   return (
     <ScreenWrapper isFullView backgroundColor={colors.background}>
-      <Header titleTextProps={{useI18n: true}} title={'post:label_comment'} />
+      <Header
+        titleTextProps={{useI18n: true}}
+        title={'post:label_comment'}
+        onPressBack={onBack}
+      />
 
       {showPrivacyPost ? (
         <EmptyScreen

@@ -6,13 +6,14 @@ import {ITheme} from '~/theme/interfaces';
 
 import Header from '~/beinComponents/Header';
 import {debounce} from 'lodash';
-import CommunityMenu from '~/screens/Groups/Communities/components/CommunityMenu';
+import Filter from '~/beinComponents/Filter';
 import GroupJoined from '~/screens/Groups/YourGroups/GroupJoined';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useDispatch} from 'react-redux';
 import modalActions, {showHideToastMessage} from '~/store/modal/actions';
 import YourGroupsSearch from '~/screens/Groups/YourGroups/YourGroupsSearch';
 import groupsActions from '~/screens/Groups/redux/actions';
+import {useBaseHook} from '~/hooks';
 
 export interface YourGroupsProps {
   route?: {
@@ -39,6 +40,7 @@ const YourGroups: FC<YourGroupsProps> = ({route}: YourGroupsProps) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const headerRef = useRef<any>();
 
+  const {t} = useBaseHook();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
@@ -84,10 +86,12 @@ const YourGroups: FC<YourGroupsProps> = ({route}: YourGroupsProps) => {
         titleTextProps={{useI18n: true}}
         onShowSearch={onShowSearch}
         onSearchText={onSearchText}
+        searchPlaceholder={t('input:search_group')}
       />
       <View style={styles.container}>
-        <CommunityMenu
+        <Filter
           testID={'your_groups.menu'}
+          itemTestID={'your_groups.menu.item'}
           style={{paddingVertical: spacing.padding.small}}
           data={menuData}
           selectedIndex={selectedIndex}

@@ -34,7 +34,6 @@ describe('Edit group detail saga', () => {
         }),
       )
       .put(groupsActions.setGroupDetail(resp?.data))
-      .put(groupsActions.getJoinedGroups())
       .run();
   });
 
@@ -59,7 +58,6 @@ describe('Edit group detail saga', () => {
         }),
       )
       .put(groupsActions.setGroupDetail(resp?.data))
-      .put(groupsActions.getJoinedGroups())
       .run();
   });
 
@@ -86,7 +84,6 @@ describe('Edit group detail saga', () => {
         }),
       )
       .put(groupsActions.setGroupDetail(resp?.data))
-      .put(groupsActions.getJoinedGroups())
       .run();
   });
 

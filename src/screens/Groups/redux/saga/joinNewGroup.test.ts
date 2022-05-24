@@ -46,7 +46,12 @@ describe('Join New Group Saga', () => {
           {data: {join_status: groupJoinStatus.member}},
         ],
       ])
-      .put(groupsActions.getJoinedGroups())
+      .put(
+        groupsActions.editDiscoverGroupItem({
+          id: groupId,
+          data: {join_status: groupJoinStatus.member},
+        }),
+      )
       .put(
         modalActions.showHideToastMessage({
           content: `${i18next.t(
@@ -57,7 +62,7 @@ describe('Join New Group Saga', () => {
           },
         }),
       )
-      .put(groupsActions.getGroupDetail(groupId, true))
+      .put(groupsActions.getGroupDetail(groupId))
       .run();
   });
 

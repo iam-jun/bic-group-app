@@ -9,15 +9,18 @@ import MenuItem from '~/beinComponents/list/items/MenuItem';
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
-import privacyTypes from '~/constants/privacyTypes';
+import privacyTypes, {groupPrivacy} from '~/constants/privacyTypes';
+import PreviewMembers from '../../components/PreviewMembers';
+import groupJoinStatus from '~/constants/groupJoinStatus';
 
 const AboutContent = () => {
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const {description, user_count, privacy} = infoDetail;
+  const {description, user_count, privacy, join_status} = infoDetail;
   const privacyData = privacyTypes.find(item => item?.type === privacy) || {};
   const {icon: iconPrivacy, privacyTitle}: any = privacyData || {};
+  const isMember = join_status === groupJoinStatus.member;
 
   return (
     <View style={styles.container} testID="about_content">
@@ -27,8 +30,6 @@ const AboutContent = () => {
             common:text_description
           </Text.BodyM>
           <CollapsibleText
-            limitLength={200}
-            shortLength={200}
             textProps={{variant: 'body'}}
             content={description}
           />
@@ -48,7 +49,13 @@ const AboutContent = () => {
           count: user_count,
         })}`}
         disabled
+        rightSubIcon={
+          isMember || privacy !== groupPrivacy.private
+            ? 'AngleRightB'
+            : undefined
+        }
       />
+      {(isMember || privacy !== groupPrivacy.private) && <PreviewMembers />}
     </View>
   );
 };

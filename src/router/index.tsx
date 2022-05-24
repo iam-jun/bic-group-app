@@ -248,32 +248,27 @@ const getLinkingCustomConfig = (config: any, navigation: any) => {
     ...config,
     subscribe(listener: any) {
       const onReceiveURL = ({url}: {url: string}) => {
-        if (url.includes('bein:///post/t/')) {
-          const postId = url?.replace('bein:///post/t/', '');
-          if (postId && navigation) {
-            navigation?.navigate?.(homeStack.postDetail, {post_id: postId});
-          } else {
-            listener(url);
-          }
-        } else if (url.includes('bein:///post/')) {
-          const data = url?.replace('bein:///post/', '');
-          const params = data
-            .split('?')
-            ?.map(item => item.split('='))
-            ?.reduce((p, c) => {
-              if (c.length > 1) {
-                //@ts-ignore
-                p[c[0]] = c[1];
-              } else {
-                //@ts-ignore
-                p.postId = c[0];
-              }
-              return p;
-            }, {});
+        if (url.includes('bein:///posts/')) {
+          const data = url?.replace('bein:///posts/', '');
+          const params = data.split('?');
 
-          if (!!params && navigation) {
+          if (params?.length === 1) {
+            navigation?.navigate?.(homeStack.postDetail, {post_id: data});
+          } else if (params?.length > 1 && navigation) {
+            const newParams = params[1]
+              .split('&')
+              ?.map(item => item.split('='))
+              ?.reduce((p, c) => {
+                if (c.length > 1) {
+                  //@ts-ignore
+                  p[c[0]] = c[1];
+                }
+                return p;
+              }, {});
+
             navigation?.navigate?.(homeStack.commentDetail, {
-              ...params,
+              ...newParams,
+              postId: params[0],
             });
           } else {
             listener(url);

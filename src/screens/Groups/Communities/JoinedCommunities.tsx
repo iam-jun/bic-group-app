@@ -1,6 +1,5 @@
 import React, {FC, useEffect, useState} from 'react';
 import {
-  View,
   StyleSheet,
   StyleProp,
   ViewStyle,
@@ -13,20 +12,18 @@ import {ITheme} from '~/theme/interfaces';
 
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
-import privacyTypes from '~/constants/privacyTypes';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import Icon from '~/beinComponents/Icon';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useDispatch} from 'react-redux';
-import {useBaseHook} from '~/hooks';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import CommunityItem from '../components/CommunityItem';
+import {ICommunity} from '~/interfaces/ICommunity';
 
 export interface JoinedCommunitiesProps {
   style?: StyleProp<ViewStyle>;
-  onPressCommunities?: (community: any) => void;
+  onPressCommunities?: (community: ICommunity) => void;
   onPressDiscover?: () => void;
 }
 
@@ -37,7 +34,6 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
   const [refreshing, setRefreshing] = useState(false);
   const myCommunities = useKeySelector(groupsKeySelector.joinedCommunities);
 
-  const {t} = useBaseHook();
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -81,39 +77,9 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
     );
   };
 
-  const renderItem = ({item}: any) => {
-    const {name, icon, user_count, description, privacy} = item || {};
-    const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
-    const {icon: privacyIcon, title: privacyTitle}: any = privacyData || {};
-
+  const renderItem = ({item}: {item: ICommunity}) => {
     return (
-      <PrimaryItem
-        showAvatar
-        avatar={icon}
-        avatarProps={{variant: 'largeAlt'}}
-        subTitle={description}
-        style={styles.item}
-        title={name}
-        testID={`community_${item.id}`}
-        onPress={() => onPressCommunities?.(item)}
-        ContentComponent={
-          <View style={styles.groupInfo}>
-            <Icon
-              style={styles.iconSmall}
-              icon={privacyIcon}
-              size={16}
-              tintColor={theme.colors.iconTint}
-            />
-            <Text.Subtitle useI18n>{privacyTitle}</Text.Subtitle>
-            <Text.Subtitle> • </Text.Subtitle>
-            <Text.BodySM>{user_count}</Text.BodySM>
-            <Text.Subtitle>{` ${t('groups:text_members', {
-              count: user_count,
-            })}`}</Text.Subtitle>
-          </View>
-        }
-        // onPressMenu={onPressMenu}
-      />
+      <CommunityItem item={item} onPressCommunities={onPressCommunities} />
     );
   };
 
@@ -144,22 +110,8 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
   return StyleSheet.create({
-    container: {},
-    item: {
-      height: '100%',
-      flex: 1,
-      paddingVertical: spacing.padding.small,
-    },
-    iconSmall: {
-      marginRight: spacing.margin.tiny,
-      height: 16,
-    },
-    groupInfo: {
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
     buttonWrapper: {
       marginTop: spacing.margin.large,
     },

@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import {io} from 'socket.io-client';
 import {
   notificationActions,
-  notificationVerbs,
+  notificationEvent,
 } from '~/constants/notifications';
 import actions from '~/screens/Notification/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
@@ -28,16 +28,6 @@ const useNotificationSocket = () => {
     }
   };
 
-  const handleReaction = (data: any) => {
-    if (data.verb === notificationVerbs.REACT) {
-      dispatch(postActions.updateReactionBySocket({userId, data: data}));
-    }
-
-    if (data.verb === notificationVerbs.UNREACT) {
-      dispatch(postActions.updateUnReactionBySocket({userId, data: data}));
-    }
-  };
-
   // callback function when client receive realtime activity in notification feed
   // load notifications again to get new unseen number (maybe increase maybe not if new activity is grouped)
   // with this, we also not to load notification again when access Notification screen
@@ -45,10 +35,18 @@ const useNotificationSocket = () => {
     console.log(`\x1b[36m🐣️ notificationSocket receive socket noti \x1b[0m`);
     const msgData = parseSafe(msg);
     const data = msgData || {};
-
-    handleReaction(data);
-
     handleNotification(data);
+  };
+
+  const handleInternalEvent = (msg: string) => {
+    const msgData = parseSafe(msg);
+    const data = msgData || {};
+    if (
+      data?.event === notificationEvent.REACT ||
+      data?.event === notificationEvent.UNREACT
+    ) {
+      dispatch(postActions.updateReactionBySocket({userId, data: data}));
+    }
   };
 
   useEffect(() => {
@@ -82,6 +80,7 @@ const useNotificationSocket = () => {
       );
     });
     socket.on('notifications', handleSocketNoti);
+    socket.on('internal_event', handleInternalEvent);
     return () => {
       socket?.disconnect?.();
     };

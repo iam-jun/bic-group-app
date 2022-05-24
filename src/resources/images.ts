@@ -15,6 +15,7 @@ const images = {
   img_empty_no_post: require('../../assets/images/img_empty_no_post.png'),
   img_empty_search_post: require('../../assets/images/img_empty_search_post.png'),
   img_empty_cant_load_more: require('../../assets/images/img_empty_cant_load_more.png'),
+  img_banner_discover_communities: require('../../assets/images/img_banner_discover_communities.jpg'),
 };
 
 export default images;
