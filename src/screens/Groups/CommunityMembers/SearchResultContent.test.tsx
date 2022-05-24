@@ -8,7 +8,7 @@ import {adminDetail, memberDetail} from '~/test/mock_data/communities';
 describe('SearchResultContent component', () => {
   it('should NOT render empty screen correctly when loading', () => {
     const state = {...initialState};
-    state.groups.searchMembers.loading = true;
+    state.groups.communitySearchMembers.loading = true;
     const store = createTestStore(state);
     const wrapper = renderWithRedux(<SearchResultContent />, store);
     const emptyText = wrapper.queryByTestId('search_result_content.no_results');
@@ -17,7 +17,7 @@ describe('SearchResultContent component', () => {
 
   it('should NOT render empty screen correctly when having data and NOT loading', () => {
     const state = {...initialState};
-    state.groups.searchMembers = {
+    state.groups.communitySearchMembers = {
       loading: false,
       canLoadMore: true,
       data: [adminDetail, memberDetail],
@@ -37,7 +37,7 @@ describe('SearchResultContent component', () => {
     const state = {...initialState};
     // @ts-ignore
     state.auth.user = {username: 'testname1'};
-    state.groups.searchMembers = {
+    state.groups.communitySearchMembers = {
       loading: false,
       data: [],
       canLoadMore: true,
@@ -53,7 +53,7 @@ describe('SearchResultContent component', () => {
     const state = {...initialState};
     // @ts-ignore
     state.auth.user = {username: 'testname1'};
-    state.groups.searchMembers = {
+    state.groups.communitySearchMembers = {
       loading: false,
       data: [adminDetail, memberDetail],
       canLoadMore: true,
@@ -70,7 +70,7 @@ describe('SearchResultContent component', () => {
     const state = {...initialState};
     // @ts-ignore
     state.auth.user = {username: 'testname1'};
-    state.groups.searchMembers = {
+    state.groups.communitySearchMembers = {
       loading: true,
       data: [],
       canLoadMore: true,
@@ -87,7 +87,7 @@ describe('SearchResultContent component', () => {
     const state = {...initialState};
     // @ts-ignore
     state.auth.user = {username: 'testname1'};
-    state.groups.searchMembers = {
+    state.groups.communitySearchMembers = {
       loading: false,
       data: [adminDetail, memberDetail],
       canLoadMore: false,

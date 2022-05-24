@@ -8,34 +8,54 @@ import {
 import React from 'react';
 import {useTheme} from 'react-native-paper';
 
-import {ICommunityMembers} from '~/interfaces/ICommunity';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
-import MemberItem from '../components/MemberItem';
 import {useKeySelector} from '~/hooks/selector';
-import groupsKeySelector from '../redux/keySelector';
+import groupsKeySelector from '../../redux/keySelector';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import {IGroupMembers} from '~/interfaces/IGroup';
+import images from '~/resources/images';
 
 interface SearchResultContentProps {
   onLoadMore?: () => void;
   onRefresh?: () => void;
-  onPressChat?: () => void;
+  onPressMenu: (e: any, item: IGroupMembers) => void;
 }
 
 const SearchResultContent = ({
   onLoadMore,
   onRefresh,
-  onPressChat,
+  onPressMenu,
 }: SearchResultContentProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
 
   const {loading, canLoadMore, data} = useKeySelector(
-    groupsKeySelector.communitySearchMembers,
+    groupsKeySelector.groupSearchMembers,
   );
 
-  const renderItem = ({item}: {item: ICommunityMembers}) => {
-    return <MemberItem item={item} onPressChat={onPressChat} />;
+  const renderItem = ({item}: {item: IGroupMembers}) => {
+    const {fullname, avatar, username} = item || {};
+
+    return (
+      <PrimaryItem
+        showAvatar
+        menuIconTestID={'search_result_content.item'}
+        style={styles.itemContainer}
+        avatar={avatar || images.img_user_avatar_default}
+        ContentComponent={
+          <Text.H6 numberOfLines={2}>
+            {fullname}
+            <Text.Subtitle
+              color={
+                theme.colors.textSecondary
+              }>{` @${username}`}</Text.Subtitle>
+          </Text.H6>
+        }
+        onPressMenu={(e: any) => onPressMenu(e, item)}
+      />
+    );
   };
 
   const renderEmptyComponent = () => {
@@ -76,7 +96,7 @@ const SearchResultContent = ({
       testID="flatlist"
       data={data}
       renderItem={renderItem}
-      keyExtractor={(item, index) => `result_item_${item}_${index}`}
+      keyExtractor={(item, index) => `search_item_${item}_${index}`}
       ListHeaderComponent={renderHeaderComponent}
       ListFooterComponent={renderListFooter}
       ListEmptyComponent={renderEmptyComponent}
@@ -100,11 +120,6 @@ const createStyles = (theme: ITheme) => {
   const {spacing} = theme;
 
   return StyleSheet.create({
-    listFooter: {
-      height: 100,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
     textSearchResults: {
       marginHorizontal: spacing.margin.large,
       marginVertical: spacing.margin.base,
@@ -112,6 +127,16 @@ const createStyles = (theme: ITheme) => {
     textNoResults: {
       alignItems: 'center',
       marginVertical: 100,
+    },
+    listFooter: {
+      height: 100,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    itemContainer: {
+      height: undefined,
+      paddingHorizontal: spacing.padding.large,
+      paddingVertical: spacing.padding.tiny,
     },
   });
 };
