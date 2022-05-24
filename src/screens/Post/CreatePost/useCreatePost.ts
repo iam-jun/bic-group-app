@@ -275,7 +275,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
       !isEqual(selectingVideo, prevData?.current?.video),
     ];
     const newDataChange = dataChangeList.filter(i => !i);
-    if (isAutoSave && newDataChange.length > 0) {
+    if (isAutoSave && newDataChange.length > 0 && sPostId) {
       prevData.current = {
         ...prevData.current,
         selectingImages,

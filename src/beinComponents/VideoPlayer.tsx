@@ -2,6 +2,8 @@ import React, {FC} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Video from 'react-native-video';
+// @ts-ignore
+import {default as RNVideoControls} from 'react-native-video-controls';
 
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
@@ -26,13 +28,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
 
   return (
     <View style={styles.container}>
-      <Video
-        style={styles.player}
-        source={{uri: url}}
-        controls={true}
-        paused
-        resizeMode={'contain'}
-      />
+      <RNVideoControls paused source={{uri: url}} />
     </View>
   );
 };
