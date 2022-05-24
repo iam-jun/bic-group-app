@@ -36,6 +36,8 @@
     "btn_confirm": "Xác nhận",
     "btn_join": "Tham gia",
     "btn_view": "Xem",
+    "btn_leave": "Đóng",
+    "btn_stay_on_this_page": "Ở lại màn hình này",
     "text_search_emoji": "Tìm Emoji",
     "text_important": "Quan trọng",
     "text_clear": "Xoá",
@@ -677,6 +679,9 @@
     "text_create_media_request_failed": "Có lỗi khi yêu cầu tạo media",
     "text_create_media_response_failed": "Có lỗi khi tạo media",
     "title_delete_video": "Xoá Video?",
-    "text_delete_video": "Bạn có chắc muốn xoá video?"
+    "text_delete_video": "Bạn có chắc muốn xoá video?",
+    "text_upload_video_error": "Không thể tải lên video này",
+    "title_leave_uploading_video": "Đóng màn hình này?",
+    "text_leave_uploading_video": "Bạn có chắc muốn đóng màn hình này? Video bạn đang tải lên sẽ bị huỷ."
   }
 }

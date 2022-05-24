@@ -40,6 +40,7 @@ import {padding} from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
 import UploadingFile from '~/beinComponents/UploadingFile';
 import {IFilePicked} from '~/interfaces/common';
+import VideoUploader from '~/services/videoUploader';
 
 export interface CreatePostProps {
   route?: {
@@ -89,6 +90,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     createPostData,
     images,
     video,
+    videoUploading,
     disableButtonPost,
     isEditPost,
     isEditDraftPost,
@@ -209,6 +211,20 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         return;
       }
     } else if (sPostId && refIsRefresh.current) {
+      if (videoUploading) {
+        VideoUploader.getInstance().cancel({file: video} as any);
+        dispatch(
+          modalActions.showAlert({
+            title: t('upload:title_leave_uploading_video'),
+            content: t('upload:text_leave_uploading_video'),
+            cancelBtn: true,
+            cancelLabel: t('common:btn_leave'),
+            confirmLabel: t('common:btn_stay_on_this_page'),
+            onDismiss: () => rootNavigation.goBack(),
+          }),
+        );
+        return;
+      }
       dispatch(postActions.getDraftPosts({isRefresh: true}));
       dispatch(
         modalActions.showHideToastMessage({
