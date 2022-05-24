@@ -14,6 +14,13 @@ function* getNotifications({
   type: string;
 }) {
   try {
+    const {flag = 'ALL', clearCurrentNotifications} = payload || {};
+    if (clearCurrentNotifications) {
+      notificationsActions.setNotifications({
+        notifications: [],
+        unseen: 0,
+      });
+    }
     yield put(notificationsActions.setLoadingNotifications(true));
     yield put(notificationsActions.setNoMoreNoti(false));
 
@@ -21,7 +28,6 @@ function* getNotifications({
       notificationsDataHelper.getNotificationList,
       payload || {},
     );
-    const {flag = 'ALL'} = payload || {};
     if (flag === 'UNREAD' && response?.results?.length < 1) {
       yield put(groupsActions.getMyCommunities({}));
       yield timeOut(500);
@@ -29,7 +35,13 @@ function* getNotifications({
         (state: any) => state.groups.joinedCommunities.data,
       );
       if (joinedCommunities?.length > 0) {
-        yield put(notificationsActions.setNoMoreNoti(true));
+        const _response: IObject<any> = yield call(
+          notificationsDataHelper.getNotificationList,
+          {flag: 'ALL'},
+        );
+        if (_response?.results?.length > 1) {
+          yield put(notificationsActions.setNoMoreNoti(true));
+        }
       }
     }
 

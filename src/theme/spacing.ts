@@ -4,6 +4,7 @@ export const borderRadius = {
   small: 6,
   large: 24,
   big: 32,
+  tiny: 4,
 };
 
 // Line height

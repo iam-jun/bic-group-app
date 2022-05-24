@@ -59,7 +59,7 @@ const ForgotPassword = () => {
       <Icon
         // @ts-ignore
         icon={icons.iconBack}
-        size={28}
+        size={20}
         onPress={() => rootNavigation.goBack()}
         testID="forgot_button.back"
       />
@@ -140,7 +140,9 @@ const themeStyles = (theme: ITheme, isPhone: boolean) => {
     headerContainer: {
       alignSelf: 'flex-start',
       marginTop: spacing.margin.small,
-      paddingVertical: spacing.padding.small,
+      padding: spacing.padding.small,
+      backgroundColor: colors.primary1,
+      borderRadius: spacing.borderRadius.tiny,
     },
     contentContainer: {
       flex: 1,
