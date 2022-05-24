@@ -15,8 +15,8 @@ import {
   IRequestGetPostComment,
   IRequestPostComment,
   IRequestReplyComment,
+  IPostCreateMediaVideo,
 } from '~/interfaces/IPost';
-import {ReactionType} from '~/constants/reactions';
 import {Platform} from 'react-native';
 
 const provider = ApiConfig.providers.beinFeed;
@@ -48,6 +48,15 @@ export const postApiConfig = {
   },
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
     url: `${provider.url}api/v1/posts`,
+    method: 'post',
+    provider,
+    useRetry: true,
+    data,
+  }),
+  postCreateMediaVideo: (
+    data: IPostCreateMediaVideo,
+  ): HttpApiRequestConfig => ({
+    url: `${provider.url}api/v1/media/create`,
     method: 'post',
     provider,
     useRetry: true,
@@ -238,6 +247,20 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  postCreateMediaVideo: async (data: IPostCreateMediaVideo) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.postCreateMediaVideo(data),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response);
       } else {
         return Promise.reject(response);
       }

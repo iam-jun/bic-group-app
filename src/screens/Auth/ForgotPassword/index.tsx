@@ -1,12 +1,18 @@
 import React, {useEffect} from 'react';
 import {useForm} from 'react-hook-form';
-import {StyleSheet, useWindowDimensions, View} from 'react-native';
+import {
+  StyleSheet,
+  useWindowDimensions,
+  View,
+  ScrollView,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
-import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 import Text from '~/beinComponents/Text';
@@ -23,7 +29,6 @@ import ForgotInputId from '~/screens/Auth/ForgotPassword/components/ForgotInputI
 import actions from '~/screens/Auth/redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
-import LockImg from '../../../../assets/images/auth_forgot_password_complete.svg';
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -54,7 +59,7 @@ const ForgotPassword = () => {
       <Icon
         // @ts-ignore
         icon={icons.iconBack}
-        size={28}
+        size={20}
         onPress={() => rootNavigation.goBack()}
         testID="forgot_button.back"
       />
@@ -64,20 +69,18 @@ const ForgotPassword = () => {
   const renderComplete = () => {
     return (
       <View style={styles.completeContainer}>
-        <SVGIcon
-          // @ts-ignore
-          source={LockImg}
-          width={imgSize}
-          height={imgSize}
-        />
         <View style={styles.textContainer}>
-          <Text.H6>{t('auth:text_forgot_password_complete_title')}</Text.H6>
-          <Text.Body>{t('auth:text_forgot_password_complete_desc')}</Text.Body>
+          <Text.BodySM>
+            {t('auth:text_forgot_password_complete_title')}
+          </Text.BodySM>
+          <Text.Body style={styles.completeDescription}>
+            {t('auth:text_forgot_password_complete_desc')}
+          </Text.Body>
         </View>
         <Button.Primary
           testID="btnComplete"
           onPress={() => rootNavigationRef?.current?.goBack()}>
-          {t('auth:btn_sign_in')}
+          {t('auth:btn_sign_in_now')}
         </Button.Primary>
       </View>
     );
@@ -85,22 +88,31 @@ const ForgotPassword = () => {
 
   return (
     <ScreenWrapper testID="ForgotPasswordScreen" isFullView style={styles.root}>
-      <View style={styles.container}>
-        {forgotPasswordStage !== forgotPasswordStages.COMPLETE && (
-          <View style={styles.headerContainer}>{renderBtnBack()}</View>
-        )}
-        <View style={styles.contentContainer}>
-          {forgotPasswordStage === forgotPasswordStages.INPUT_ID && (
-            <ForgotInputId useFormData={useFormData} />
+      <KeyboardAvoidingView
+        testID="edit_location.keyboard_avoiding_view"
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        enabled={true}
+        style={styles.container}
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 30 : 0}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="always">
+          {forgotPasswordStage !== forgotPasswordStages.COMPLETE && (
+            <View style={styles.headerContainer}>{renderBtnBack()}</View>
           )}
-          {!errBox &&
-            forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && (
-              <ForgotInputCodePw useFormData={useFormData} />
+          <View style={styles.contentContainer}>
+            {forgotPasswordStage === forgotPasswordStages.INPUT_ID && (
+              <ForgotInputId useFormData={useFormData} />
             )}
-          {forgotPasswordStage === forgotPasswordStages.COMPLETE &&
-            renderComplete()}
-        </View>
-      </View>
+            {!errBox &&
+              forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW && (
+                <ForgotInputCodePw useFormData={useFormData} />
+              )}
+            {forgotPasswordStage === forgotPasswordStages.COMPLETE &&
+              renderComplete()}
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
     </ScreenWrapper>
   );
 };
@@ -128,21 +140,20 @@ const themeStyles = (theme: ITheme, isPhone: boolean) => {
     headerContainer: {
       alignSelf: 'flex-start',
       marginTop: spacing.margin.small,
-      paddingVertical: spacing.padding.small,
+      padding: spacing.padding.small,
+      backgroundColor: colors.primary1,
+      borderRadius: spacing.borderRadius.tiny,
     },
     contentContainer: {
       flex: 1,
       justifyContent: !isPhone ? 'center' : undefined,
     },
-    // flashMessage: {
-    //   marginTop: theme.spacing.margin.big,
-    // },
     completeContainer: {
       // @ts-ignore
       paddingTop: spacing.padding.big + spacing.padding.large,
     },
-    svg: {
-      alignSelf: 'center',
+    completeDescription: {
+      marginTop: spacing.margin.extraLarge,
     },
     textContainer: {
       marginTop: spacing.margin.large,

@@ -4069,7 +4069,7 @@ exports[`Header component renders correctly with props menu icon 1`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F9FAFB",
+                "backgroundColor": undefined,
               },
             ]
           }
@@ -6572,7 +6572,7 @@ exports[`Header component renders correctly with props on press menu 1`] = `
                 "width": 40,
               },
               Object {
-                "backgroundColor": "#F9FAFB",
+                "backgroundColor": undefined,
               },
             ]
           }

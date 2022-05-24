@@ -1,3 +1,4 @@
+import {COMMUNITY_ROLE} from '~/interfaces/ICommunity';
 export const communities = [
   {
     id: 0,
@@ -47,6 +48,7 @@ export const communityDetailData = {
   icon: 'https://img.flaticon.com/icons/png/512/86/86494.png?size=1200x630f&pad=10,10,10,10&ext=png&bg=FFFFFFFF',
   background_img_url:
     'https://evolgroup.vn/wp-content/uploads/sites/18/2020/04/Thumb-EVOL.jpg',
+  teamId: 'string',
   created_at: '2022-04-26T08:29:58.579Z',
   updated_at: '2022-04-26T08:29:58.579Z',
   user_count: 5,
@@ -64,9 +66,15 @@ export const previewMemberDetail = {
     'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/e41d70bc-0bfd-4c56-a461-c2dfb10434c1.jpg',
 };
 
+export const adminDetail = {
+  ...previewMemberDetail,
+  roles: {name: 'COMMUNITY_ADMIN' as COMMUNITY_ROLE},
+  chat_user_id: 'tg6kmc6cmybgwpcif9znngyyebe',
+};
+
 export const memberDetail = {
   ...previewMemberDetail,
-  roles: ['COMMUNITY_ADMIN'],
+  roles: {name: 'MEMBER' as COMMUNITY_ROLE},
   chat_user_id: 'tg6kmc6cmybgwpcif9znngyyebe',
 };
 
@@ -83,10 +91,22 @@ export const previewMemberData = [
   previewMemberDetail,
 ];
 
-export const memberData = [
-  memberDetail,
-  memberDetail,
-  memberDetail,
-  memberDetail,
-  memberDetail,
-];
+export const memberData = {
+  community_admin: {
+    data: [adminDetail, adminDetail, adminDetail, adminDetail, adminDetail],
+    user_count: 5,
+    name: 'COMMUNITY_ADMIN',
+  },
+  member: {
+    data: [
+      memberDetail,
+      memberDetail,
+      memberDetail,
+      memberDetail,
+      memberDetail,
+      memberDetail,
+    ],
+    user_count: 6,
+    name: 'MEMBER',
+  },
+};

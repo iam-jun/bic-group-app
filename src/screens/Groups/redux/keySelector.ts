@@ -13,6 +13,7 @@ const groupsKeySelector = {
   refreshingGroupPosts: 'groups.refreshingGroupPosts',
   loadingGroupMember: 'groups.loadingGroupMember',
   groupMember: 'groups.groupMember',
+  groupSearchMembers: 'groups.groupSearchMembers',
   selectedUsers: 'groups.selectedUsers',
   users: 'groups.users',
   posts: 'groups.posts',
@@ -26,11 +27,13 @@ const groupsKeySelector = {
   loadingAvatar: 'groups.loadingAvatar',
   loadingCover: 'groups.loadingCover',
   joinedCommunities: 'groups.joinedCommunities.data',
+  managedCommunities: 'groups.managedCommunities',
   discoverCommunitiesData: 'groups.discoverCommunities',
   loadingCommunities: 'groups.communities.loading',
   communityDetail: 'groups.communityDetail',
   isGettingInfoDetail: 'groups.isGettingInfoDetail',
   communityMembers: 'groups.communityMembers',
+  communitySearchMembers: 'groups.communitySearchMembers',
   discoverGroups: 'groups.discoverGroups',
 };
 

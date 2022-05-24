@@ -1,6 +1,5 @@
 import {languages} from '~/configs';
 import {IconType} from '~/resources/icons';
-import {StreamClient} from 'getstream';
 import {ToastMessageProps} from '~/beinComponents/ToastMessage/NormalToastMessage';
 import {BaseBottomSheetProps} from '~/beinComponents/BottomSheet/BaseBottomSheet';
 
@@ -18,11 +17,6 @@ export interface ISetting {
   type: string;
   title: string;
   icon: IconType;
-}
-
-export interface IGetStreamDispatch {
-  streamClient: StreamClient;
-  userId: string;
 }
 
 export interface IRightMenu {

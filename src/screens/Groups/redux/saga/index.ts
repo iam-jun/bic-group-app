@@ -41,12 +41,16 @@ import getDiscoverCommunities from '~/screens/Groups/redux/saga/getDiscoverCommu
 import getYourGroupsSearch from '~/screens/Groups/redux/saga/getYourGroupsSearch';
 import getCommunityMembers from './getCommunityMembers';
 import getDiscoverGroups from './getDiscoverGroups';
+import getManagedCommunities from './getManagedCommunities';
+import getCommunitySearchMembers from './getCommunitySearchMembers';
+import getGroupSearchMembers from './getGroupSearchMembers';
 
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
   yield takeLatest(groupsTypes.GET_GROUP_MEMBER, getGroupMember);
+  yield takeLatest(groupsTypes.GET_GROUP_SEARCH_MEMBERS, getGroupSearchMembers);
   yield takeLatest(groupsTypes.GET_GROUP_POSTS, getGroupPosts);
   yield takeLatest(groupsTypes.MERGE_EXTRA_GROUP_POSTS, mergeExtraGroupPosts);
   yield takeLatest(groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail);
@@ -86,6 +90,7 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_YOUR_GROUPS_TREE, getYourGroupsTree);
   yield takeLatest(groupsTypes.GET_YOUR_GROUPS_LIST, getYourGroupsList);
   yield takeLatest(groupsTypes.GET_JOINED_COMMUNITIES, getJoinedCommunities);
+  yield takeLatest(groupsTypes.GET_MANAGED_COMMUNITIES, getManagedCommunities);
   yield takeLatest(
     groupsTypes.GET_DISCOVER_COMMUNITIES,
     getDiscoverCommunities,
@@ -93,6 +98,10 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_COMMUNITY_GROUPS, getCommunityGroups);
   yield takeLatest(groupsTypes.GET_COMMUNITY_DETAIL, getCommunityDetail);
   yield takeLatest(groupsTypes.GET_COMMUNITY_MEMBERS, getCommunityMembers);
+  yield takeLatest(
+    groupsTypes.GET_COMMUNITY_SEARCH_MEMBERS,
+    getCommunitySearchMembers,
+  );
   yield takeLatest(groupsTypes.GET_DISCOVER_GROUPS, getDiscoverGroups);
 }
 
@@ -504,7 +513,7 @@ export function* refreshGroupMembers(groupId: number) {
   yield put(groupsActions.getGroupDetail(groupId));
 }
 
-function* approvalError(groupId: number, code: number, fullName?: string) {
+function* approvalError(groupId: number, code: string, fullName?: string) {
   let errorMsg: string;
   if (code === approveDeclineCode.CANNOT_APPROVE) {
     errorMsg = i18next

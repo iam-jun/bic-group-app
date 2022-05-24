@@ -2,7 +2,7 @@ import {ICommunity, ICommunityMembers} from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/screens/Groups/redux/types';
 import {IUser} from '~/interfaces/IAuth';
-import {IGroupDetail, IJoiningMember} from '~/interfaces/IGroup';
+import {IGroupDetail, IGroupMembers, IJoiningMember} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
 
 export const groupInitState = {
@@ -41,6 +41,12 @@ export const groupInitState = {
     canLoadMore: true,
     //type admin, member...
   },
+  groupSearchMembers: {
+    loading: false,
+    canLoadMore: true,
+    data: [] as IGroupMembers[],
+  },
+
   refreshingGroupPosts: false,
   posts: {
     loading: false,
@@ -83,9 +89,26 @@ export const groupInitState = {
     canLoadMore: true,
     list: [],
   },
+  managedCommunities: {
+    loading: false,
+    canLoadMore: true,
+    data: [] as number[],
+    items: {},
+  },
   communityDetail: {} as ICommunity,
   isGettingInfoDetail: false,
-  communityMembers: [] as ICommunityMembers[],
+  communityMembers: {
+    loading: false,
+    canLoadMore: true,
+    community_admin: {data: [], user_count: 0},
+    member: {data: [], user_count: 0},
+  },
+  communitySearchMembers: {
+    loading: false,
+    canLoadMore: true,
+    data: [] as ICommunityMembers[],
+  },
+
   discoverGroups: {
     loading: false,
     data: [],
@@ -96,7 +119,15 @@ export const groupInitState = {
 
 function groupsReducer(state = groupInitState, action: any = {}) {
   const {type, payload} = action;
-  const {selectedUsers, pendingMemberRequests, discoverGroups} = state;
+  const {
+    selectedUsers,
+    pendingMemberRequests,
+    discoverGroups,
+    communityMembers,
+    communitySearchMembers,
+    managedCommunities,
+    groupSearchMembers,
+  } = state;
 
   switch (type) {
     case groupsTypes.SET_PRIVACY_MODAL_OPEN:
@@ -148,6 +179,20 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           params: payload.params,
         },
       };
+    case groupsTypes.CLEAR_GROUP_SEARCH_MEMBERS:
+      return {
+        ...state,
+        groupSearchMembers: groupInitState.groupSearchMembers,
+      };
+    case groupsTypes.SET_GROUP_SEARCH_MEMBERS:
+      return {
+        ...state,
+        groupSearchMembers: {
+          ...groupSearchMembers,
+          ...payload,
+        },
+      };
+
     case groupsTypes.SET_GROUP_POSTS:
       return {
         ...state,
@@ -435,11 +480,37 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         isGettingInfoDetail: false,
         communityDetail: payload,
       };
-    case groupsTypes.SET_COMMUNITY_MEMBERS:
+
+    case groupsTypes.SET_COMMUNITY_MEMBERS: {
       return {
         ...state,
-        communityMembers: payload || [],
+        communityMembers: {
+          ...communityMembers,
+          ...payload,
+        },
       };
+    }
+    case groupsTypes.RESET_COMMUNITY_MEMBERS:
+      return {
+        ...state,
+        communityMembers: groupInitState.communityMembers,
+      };
+
+    case groupsTypes.RESET_COMMUNITY_SEARCH_MEMBERS:
+      return {
+        ...state,
+        communitySearchMembers: groupInitState.communitySearchMembers,
+      };
+    case groupsTypes.SET_COMMUNITY_SEARCH_MEMBERS: {
+      return {
+        ...state,
+        communitySearchMembers: {
+          ...communitySearchMembers,
+          ...payload,
+        },
+      };
+    }
+
     case groupsTypes.GET_DISCOVER_GROUPS:
       return {
         ...state,
@@ -481,6 +552,20 @@ function groupsReducer(state = groupInitState, action: any = {}) {
             },
           },
         },
+      };
+
+    case groupsTypes.SET_MANAGED_COMMUNITIES:
+      return {
+        ...state,
+        managedCommunities: {
+          ...managedCommunities,
+          ...payload,
+        },
+      };
+    case groupsTypes.RESET_MANAGED_COMMUNITIES:
+      return {
+        ...state,
+        managedCommunities: groupInitState.managedCommunities,
       };
 
     default:

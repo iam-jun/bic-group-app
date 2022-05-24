@@ -40,6 +40,7 @@ import * as modalActions from '~/store/modal/actions';
 import {showReactionDetailBottomSheet} from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
+import actions from '~/beinComponents/inputs/MentionInput/redux/actions';
 
 export interface CommentViewProps {
   postId: number;
@@ -191,6 +192,13 @@ const _CommentView: React.FC<CommentViewProps> = ({
   };
 
   const _onPressReply = () => {
+    const actor: any = commentData?.actor || {};
+    const username = actor?.data?.username || actor?.username || '';
+    dispatch(
+      actions.addTempSelected({
+        [username]: {id: actor?.id, ...actor},
+      }),
+    );
     onPressReply?.(commentData);
   };
 

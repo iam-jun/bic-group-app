@@ -11,10 +11,12 @@ import * as modalActions from '~/store/modal/actions';
 
 export interface NotificationBottomSheetProps {
   modalizeRef: any;
+  flag: string;
 }
 
 const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
   modalizeRef,
+  flag,
 }: NotificationBottomSheetProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -22,7 +24,7 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
   const dispatch = useDispatch();
 
   const markReadAllNotifications = () => {
-    dispatch(notificationsActions.markAsReadAll());
+    dispatch(notificationsActions.markAsReadAll(flag));
     modalizeRef.current?.close();
   };
 
@@ -35,6 +37,7 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
     return (
       <View style={styles.container}>
         <PrimaryItem
+          testID="notifications.mark_all_as_read"
           style={styles.item}
           leftIcon={'CommentAltCheck'}
           leftIconProps={{icon: 'CommentAltCheck', size: 24}}
@@ -42,6 +45,7 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
           onPress={markReadAllNotifications}
         />
         <PrimaryItem
+          testID="notifications.notification_settings"
           style={styles.item}
           leftIcon={'Cog'}
           leftIconProps={{icon: 'Cog', size: 24}}

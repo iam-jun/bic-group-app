@@ -1,5 +1,6 @@
 import {IFilePicked} from '~/interfaces/common';
 import {ReactionType} from '~/constants/reactions';
+import {IUploadType} from '~/configs/resourceConfig';
 
 export interface IPostAudience {
   users?: IAudienceUser[];
@@ -119,7 +120,6 @@ export interface IPostComments {
     hasPreviousPage?: boolean;
     hasNextPage?: boolean;
   };
-  content?: string;
 }
 
 export interface IPostActivity {
@@ -130,6 +130,7 @@ export interface IPostActivity {
   media?: IPostMedia;
   setting?: IPostSetting;
   isDraft?: boolean;
+  isProcessing?: boolean;
   actor?: IAudienceUser;
   mentions?: any;
   commentsCount?: number;
@@ -235,6 +236,7 @@ export interface IGetStreamUser {
     fullname?: string;
     username?: string;
   };
+  avatar?: string;
 }
 
 export interface IRequestPostComment {
@@ -504,4 +506,25 @@ export interface IPayloadDeleteComment {
 export interface IPayloadPutMarkAsRead {
   postId: number;
   callback?: (isSuccess: boolean) => void;
+}
+
+export interface IPostCreateMediaVideo {
+  uploadId: string;
+  uploadType: IUploadType;
+  url?: string;
+  name?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+}
+
+export interface IGetStreamCommentData {
+  id: number;
+  actor: IGetStreamUser;
+  mentions?: any;
+  content?: string;
+  media?: any;
+  reaction?: IReaction;
+  reactionsCount?: IReactionCounts;
+  child?: IGetStreamCommentData;
 }
