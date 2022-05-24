@@ -55,7 +55,7 @@
     "text_chosen": "Chosen",
     "text_description": "Description",
     "text_search": "Search",
-    "text_search_results": "Search results",
+    "text_search_results": "Search Results",
     "text_see_more": "See more",
     "text_see_less": "See less",
     "text_add": "Add",
@@ -137,7 +137,8 @@
     "text_not_now": "Not now",
     "text_go_to_settings": "Go to Settings",
     "text_help": "Help",
-    "text_type_search_keyword": "Type search keyword to see the search results"
+    "text_type_search_keyword": "Type search keyword to see the search results",
+    "text_no_results_found": "No results found"
   },
   "auth": {
     "text_kickout_title": "Notice",

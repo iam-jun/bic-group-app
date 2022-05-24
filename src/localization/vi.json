@@ -93,7 +93,9 @@
     "text_not_now": "Không phải bây giờ",
     "text_go_to_settings": "Đi tới Cài đặt",
     "text_help": "Trợ giúp",
-    "text_type_search_keyword": "Gõ từ khóa để tìm kiếm"
+    "text_type_search_keyword": "Gõ từ khóa để tìm kiếm",
+    "text_no_results_found": "Không tìm thấy kết quả",
+    "text_search_results": "Kết quả tìm kiếm"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -548,7 +550,7 @@
     "text_members_other": "thành viên",
     "search_results": "Kết quả tìm kiếm",
     "all_groups": "Tất cả",
-    "text_search_member": "Tìm kiềm thành viên",
+    "text_search_member": "Tìm kiếm thành viên",
     "group_menu": {
       "label_copy_group_link": "Sao chép đường dẫn nhóm",
       "label_leave_group": "Rời nhóm",

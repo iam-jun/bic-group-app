@@ -36,7 +36,7 @@ describe('SearchMemberModal component', () => {
     );
     expect(textComponent).toBeNull();
 
-    const dataList = wrapper.queryByTestId('content_data.list');
+    const dataList = wrapper.getByTestId('flatlist');
     expect(dataList).toBeDefined();
   });
 });

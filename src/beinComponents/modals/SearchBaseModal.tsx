@@ -1,5 +1,5 @@
 import {StyleSheet, View, Modal, TextInput, Platform} from 'react-native';
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
@@ -28,6 +28,7 @@ const SearchBaseModal = ({
   const styles = createStyles(theme);
 
   const [searchText, setSearchText] = useState(initSearch || '');
+  const inputRef = useRef<any>();
 
   const onPressBack = () => {
     setSearchText('');
@@ -38,6 +39,10 @@ const SearchBaseModal = ({
   const _onChangeText = (text: string) => {
     setSearchText(text);
     onChangeText?.(text);
+  };
+
+  const onShowModal = () => {
+    inputRef.current?.focus();
   };
 
   const renderHeader = () => {
@@ -53,10 +58,10 @@ const SearchBaseModal = ({
             buttonTestID="search_modal.back_button"
           />
           <TextInput
+            ref={inputRef}
             testID={'search_modal.text_input'}
             style={styles.textInput}
             value={searchText}
-            autoFocus
             autoComplete={'off'}
             placeholder={placeholder}
             placeholderTextColor={theme.colors.textDisabled}
@@ -79,7 +84,11 @@ const SearchBaseModal = ({
   };
 
   return (
-    <Modal visible={isOpen} animationType="fade" presentationStyle="fullScreen">
+    <Modal
+      visible={isOpen}
+      animationType="fade"
+      presentationStyle="fullScreen"
+      onShow={onShowModal}>
       {renderHeader()}
       {children}
     </Modal>

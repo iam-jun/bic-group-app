@@ -39,9 +39,10 @@ import getYourGroupsList from '~/screens/Groups/redux/saga/getYourGroupsList';
 import getCommunityDetail from './getCommunityDetail';
 import getDiscoverCommunities from '~/screens/Groups/redux/saga/getDiscoverCommunities';
 import getYourGroupsSearch from '~/screens/Groups/redux/saga/getYourGroupsSearch';
-import getCommunityMembers, {getSearchMembers} from './getCommunityMembers';
+import getCommunityMembers from './getCommunityMembers';
 import getDiscoverGroups from './getDiscoverGroups';
 import getManagedCommunities from './getManagedCommunities';
+import getSearchMembers from './getSearchMembers';
 
 const navigation = withNavigation(rootNavigationRef);
 
