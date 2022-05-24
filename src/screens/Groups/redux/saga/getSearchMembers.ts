@@ -34,12 +34,13 @@ export default function* getSearchMembers({
       const newData = {
         loading: false,
         canLoadMore:
-          respData.community_admin.data.length + respData.member.data.length ===
+          respData.community_admin.data.length +
+            respData.community_member.data.length ===
           appConfig.recordsPerPage,
         data: [
           ...data,
           ...respData.community_admin.data,
-          ...respData.member.data,
+          ...respData.community_member.data,
         ],
       };
 
