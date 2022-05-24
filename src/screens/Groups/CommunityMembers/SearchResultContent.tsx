@@ -31,7 +31,7 @@ const SearchResultContent = ({
   const styles = createStyles(theme);
 
   const {loading, canLoadMore, data} = useKeySelector(
-    groupsKeySelector.searchMembers,
+    groupsKeySelector.communitySearchMembers,
   );
 
   const renderItem = ({item}: {item: ICommunityMembers}) => {

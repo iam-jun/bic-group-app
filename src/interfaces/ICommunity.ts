@@ -55,7 +55,7 @@ export interface ISetMembers {
   member?: {data: ICommunityMembers[]; user_count: number};
 }
 
-export interface ISetSearchMembers {
+export interface ISetCommunitySearchMembers {
   loading?: boolean;
   canLoadMore?: boolean;
   data?: ICommunityMembers[];

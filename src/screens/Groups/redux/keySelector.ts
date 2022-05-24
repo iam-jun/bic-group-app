@@ -32,7 +32,7 @@ const groupsKeySelector = {
   communityDetail: 'groups.communityDetail',
   isGettingInfoDetail: 'groups.isGettingInfoDetail',
   communityMembers: 'groups.communityMembers',
-  searchMembers: 'groups.searchMembers',
+  communitySearchMembers: 'groups.communitySearchMembers',
   discoverGroups: 'groups.discoverGroups',
 };
 

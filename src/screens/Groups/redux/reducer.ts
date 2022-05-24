@@ -97,7 +97,7 @@ export const groupInitState = {
     community_admin: {data: [], user_count: 0},
     member: {data: [], user_count: 0},
   },
-  searchMembers: {
+  communitySearchMembers: {
     loading: false,
     canLoadMore: true,
     data: [] as ICommunityMembers[],
@@ -118,7 +118,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     pendingMemberRequests,
     discoverGroups,
     communityMembers,
-    searchMembers,
+    communitySearchMembers,
     managedCommunities,
   } = state;
 
@@ -475,16 +475,16 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         communityMembers: groupInitState.communityMembers,
       };
 
-    case groupsTypes.RESET_SEARCH_MEMBERS:
+    case groupsTypes.RESET_COMMUNITY_SEARCH_MEMBERS:
       return {
         ...state,
-        searchMembers: groupInitState.searchMembers,
+        communitySearchMembers: groupInitState.communitySearchMembers,
       };
-    case groupsTypes.SET_SEARCH_MEMBERS: {
+    case groupsTypes.SET_COMMUNITY_SEARCH_MEMBERS: {
       return {
         ...state,
-        searchMembers: {
-          ...searchMembers,
+        communitySearchMembers: {
+          ...communitySearchMembers,
           ...payload,
         },
       };

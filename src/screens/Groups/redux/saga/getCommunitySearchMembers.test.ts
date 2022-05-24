@@ -6,7 +6,7 @@ import {
 import {expectSaga} from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
-import getSearchMembers from './getSearchMembers';
+import getCommunitySearchMembers from './getCommunitySearchMembers';
 import actions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
@@ -22,7 +22,7 @@ describe('get Search members', () => {
 
     const state = {
       groups: {
-        searchMembers: {
+        communitySearchMembers: {
           loading: false,
           canLoadMore: true,
           data: [],
@@ -30,12 +30,12 @@ describe('get Search members', () => {
       },
     };
 
-    return expectSaga(getSearchMembers, action)
+    return expectSaga(getCommunitySearchMembers, action)
       .withState(state)
-      .put(actions.setSearchMembers({loading: true}))
+      .put(actions.setCommunitySearchMembers({loading: true}))
       .provide([[matchers.call.fn(groupsDataHelper.getCommunityMembers), resp]])
       .put(
-        actions.setSearchMembers({
+        actions.setCommunitySearchMembers({
           loading: false,
           canLoadMore: false,
           data: [
@@ -62,16 +62,16 @@ describe('get Search members', () => {
   it('should NOT call API when canLoadMore = false', () => {
     const state = {
       groups: {
-        searchMembers: {
+        communitySearchMembers: {
           loading: false,
           canLoadMore: false,
           data: [],
         },
       },
     };
-    return expectSaga(getSearchMembers, action)
+    return expectSaga(getCommunitySearchMembers, action)
       .withState(state)
-      .put(actions.setSearchMembers({loading: true}))
+      .put(actions.setCommunitySearchMembers({loading: true}))
       .run()
       .then(({allEffects}: any) => {
         expect(allEffects?.length).toEqual(2);
@@ -82,7 +82,7 @@ describe('get Search members', () => {
     const error = {code: 1};
     const state = {
       groups: {
-        searchMembers: {
+        communitySearchMembers: {
           loading: false,
           canLoadMore: true,
           data: [],
@@ -90,9 +90,9 @@ describe('get Search members', () => {
       },
     };
 
-    return expectSaga(getSearchMembers, action)
+    return expectSaga(getCommunitySearchMembers, action)
       .withState(state)
-      .put(actions.setSearchMembers({loading: true}))
+      .put(actions.setCommunitySearchMembers({loading: true}))
       .provide([
         [
           matchers.call.fn(groupsDataHelper.getCommunityMembers),
@@ -111,7 +111,7 @@ describe('get Search members', () => {
 
     const state = {
       groups: {
-        searchMembers: {
+        communitySearchMembers: {
           loading: false,
           canLoadMore: true,
           data: [],
@@ -119,9 +119,9 @@ describe('get Search members', () => {
       },
     };
 
-    return expectSaga(getSearchMembers, action)
+    return expectSaga(getCommunitySearchMembers, action)
       .withState(state)
-      .put(actions.setSearchMembers({loading: true}))
+      .put(actions.setCommunitySearchMembers({loading: true}))
       .provide([[matchers.call.fn(groupsDataHelper.getCommunityMembers), resp]])
       .run()
       .then(({allEffects}: any) => {

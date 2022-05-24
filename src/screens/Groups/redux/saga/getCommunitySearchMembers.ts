@@ -6,7 +6,7 @@ import {IParamGetCommunityMembers} from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
 import showError from '~/store/commonSaga/showError';
 
-export default function* getSearchMembers({
+export default function* getCommunitySearchMembers({
   payload,
 }: {
   type: string;
@@ -14,8 +14,8 @@ export default function* getSearchMembers({
 }) {
   try {
     const {groups} = yield select();
-    const {canLoadMore, data} = groups.searchMembers;
-    yield put(actions.setSearchMembers({loading: data.length === 0}));
+    const {canLoadMore, data} = groups.communitySearchMembers;
+    yield put(actions.setCommunitySearchMembers({loading: data.length === 0}));
 
     const {communityId, params} = payload;
 
@@ -43,10 +43,10 @@ export default function* getSearchMembers({
         ],
       };
 
-      yield put(actions.setSearchMembers(newData));
+      yield put(actions.setCommunitySearchMembers(newData));
     }
   } catch (err: any) {
-    console.log('getSearchMembers error:', err);
+    console.log('getCommunitySearchMembers error:', err);
     yield call(showError, err);
   }
 }

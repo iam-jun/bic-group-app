@@ -33,20 +33,23 @@ const SearchMemberModal = ({
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles(theme);
 
-  const getSearchMembers = (searchText: string) => {
+  const getCommunitySearchMembers = (searchText: string) => {
     dispatch(
-      actions.getSearchMembers({communityId, params: {key: searchText}}),
+      actions.getCommunitySearchMembers({
+        communityId,
+        params: {key: searchText},
+      }),
     );
   };
 
   const onLoadMore = () => {
-    getSearchMembers(searchText);
+    getCommunitySearchMembers(searchText);
   };
 
   const searchMember = (searchQuery: string) => {
-    dispatch(actions.resetSearchMembers());
+    dispatch(actions.resetCommunitySearchMembers());
     setSearchText(searchQuery);
-    getSearchMembers(searchQuery);
+    getCommunitySearchMembers(searchQuery);
   };
 
   const searchHandler = useCallback(
