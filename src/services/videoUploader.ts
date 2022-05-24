@@ -76,15 +76,15 @@ export default class VideoUploader extends FileUploader {
     };
 
     try {
-      const cancelTokenSource = axios.CancelToken.source();
-      this.fileCancelTokenSource[file.name] = cancelTokenSource;
+      const controller = new AbortController();
+      this.fileAbortController[file.name] = controller;
       const response: any = await makeHttpRequest(
         ApiConfig.Upload.uploadVideo(
           videoId,
           uploadType,
           formData,
           _onUploadProgress,
-          cancelTokenSource.token,
+          controller.signal,
         ),
       );
       if (response?.data?.data) {
@@ -223,6 +223,6 @@ export default class VideoUploader extends FileUploader {
     console.log(`\x1b[36m🐣️ videoUploader cancel\x1b[0m`);
     const {file} = params || {};
     const filename = file?.name || file?.filename || file?.fileName;
-    this.fileCancelTokenSource?.[filename]?.cancel?.();
+    this.fileAbortController?.[filename]?.abort?.();
   }
 }

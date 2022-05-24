@@ -36,7 +36,7 @@ const Upload = {
     type: any,
     data: FormData,
     onUploadProgress?: (progressEvent: any) => void,
-    cancelToken?: CancelToken,
+    abortSignal?: AbortSignal,
   ): HttpApiRequestConfig => {
     return {
       url: `${providers.beinUpload.url}videos/${id}`,
@@ -48,7 +48,7 @@ const Upload = {
       provider: providers.beinUpload,
       onUploadProgress: onUploadProgress,
       data,
-      cancelToken,
+      signal: abortSignal,
     };
   },
   uploadFile: (
