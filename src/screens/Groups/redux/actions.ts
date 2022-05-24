@@ -15,6 +15,7 @@ import {
   IGetYourGroupsSearch,
   IStateSearch,
   IStateList,
+  IGroupMembers,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 import {IObject} from '~/interfaces/common';
@@ -62,6 +63,23 @@ const groupsActions = {
       payload,
     };
   },
+
+  getGroupSearchMembers: (payload: IGroupGetMembers) => ({
+    type: groupsTypes.GET_GROUP_SEARCH_MEMBERS,
+    payload,
+  }),
+  setGroupSearchMembers: (payload: {
+    loading?: boolean;
+    canLoadMore?: boolean;
+    data?: IGroupMembers[];
+  }) => ({
+    type: groupsTypes.SET_GROUP_SEARCH_MEMBERS,
+    payload,
+  }),
+  clearGroupSearchMembers: () => ({
+    type: groupsTypes.CLEAR_GROUP_SEARCH_MEMBERS,
+  }),
+
   setGroupDetail: function (payload: IGroupDetail | null) {
     return {
       type: groupsTypes.SET_GROUP_DETAIL,

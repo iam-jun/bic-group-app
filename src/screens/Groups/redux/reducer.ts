@@ -2,7 +2,7 @@ import {ICommunity, ICommunityMembers} from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/screens/Groups/redux/types';
 import {IUser} from '~/interfaces/IAuth';
-import {IGroupDetail, IJoiningMember} from '~/interfaces/IGroup';
+import {IGroupDetail, IGroupMembers, IJoiningMember} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
 
 export const groupInitState = {
@@ -41,6 +41,12 @@ export const groupInitState = {
     canLoadMore: true,
     //type admin, member...
   },
+  groupSearchMembers: {
+    loading: false,
+    canLoadMore: true,
+    data: [] as IGroupMembers[],
+  },
+
   refreshingGroupPosts: false,
   posts: {
     loading: false,
@@ -120,6 +126,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     communityMembers,
     communitySearchMembers,
     managedCommunities,
+    groupSearchMembers,
   } = state;
 
   switch (type) {
@@ -172,6 +179,20 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           params: payload.params,
         },
       };
+    case groupsTypes.CLEAR_GROUP_SEARCH_MEMBERS:
+      return {
+        ...state,
+        groupSearchMembers: groupInitState.groupSearchMembers,
+      };
+    case groupsTypes.SET_GROUP_SEARCH_MEMBERS:
+      return {
+        ...state,
+        groupSearchMembers: {
+          ...groupSearchMembers,
+          ...payload,
+        },
+      };
+
     case groupsTypes.SET_GROUP_POSTS:
       return {
         ...state,

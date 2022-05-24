@@ -13,6 +13,7 @@ const groupsKeySelector = {
   refreshingGroupPosts: 'groups.refreshingGroupPosts',
   loadingGroupMember: 'groups.loadingGroupMember',
   groupMember: 'groups.groupMember',
+  groupSearchMembers: 'groups.groupSearchMembers',
   selectedUsers: 'groups.selectedUsers',
   users: 'groups.users',
   posts: 'groups.posts',
