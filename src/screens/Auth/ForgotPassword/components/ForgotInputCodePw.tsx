@@ -125,13 +125,20 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
     }
   };
 
+  const _email = getValues('email');
+
   return (
     <View style={styles.container}>
       <View style={styles.inputSectionContainer}>
-        <Text.H6>{t('auth:text_forgot_password_input_code_title')}</Text.H6>
-        <Text.Body style={styles.desc}>
-          {t('auth:text_forgot_password_input_code_desc')}
-        </Text.Body>
+        <Text.BodyM>
+          {t('auth:text_forgot_password_input_code_title')}
+        </Text.BodyM>
+        <Text.BodyS style={styles.desc}>
+          {t('auth:text_forgot_password_input_code_desc')?.replace?.(
+            '(email)',
+            _email,
+          )}
+        </Text.BodyS>
         <TextInputController
           testID="inputCode"
           useFormData={useFormData}
@@ -144,37 +151,58 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
             },
           }}
           validateValue={validateCode}
-          label={t('auth:input_label_code')}
           placeholder={t('auth:input_label_code')}
-          helperAction={t('auth:text_request_new_code')}
-          helperContentTriggerAction={t('auth:text_err_wrong_code')}
-          helperActionOnPress={onRequestForgotPassword}
           keyboardType={'numeric'}
         />
+        <Text.BodyS>
+          {t('auth:text_request_new_code')}{' '}
+          <Text.BodySM
+            onPress={onRequestForgotPassword}
+            suppressHighlighting
+            style={styles.highlightText}>
+            {t('auth:btn_resend_code')}
+          </Text.BodySM>
+        </Text.BodyS>
       </View>
       <View style={styles.inputSectionContainer}>
-        <Text.H6>{t('auth:text_forgot_password_input_pw_title')}</Text.H6>
-        <Text.Body style={styles.desc}>
-          {t('auth:text_forgot_password_input_pw_desc')}
-        </Text.Body>
+        <Text.BodyM style={styles.newPasswordTitle}>
+          {t('auth:text_forgot_password_input_pw_title')}
+        </Text.BodyM>
         <PasswordInputController
           useFormData={useFormData}
           name={'newPassword'}
           rules={{
             required: t('auth:text_err_password_blank'),
-            // min: 8,
-            // max: 20,
-            pattern: {
-              value: validation.passwordRegex,
-              message: t('auth:text_err_password_format'),
+            maxLength: {
+              value: 20,
+              message: t('auth:text_err_password_characters'),
+            },
+            minLength: {
+              value: 8,
+              message: t('auth:text_err_password_characters'),
+            },
+            validate: () => {
+              const value = getValues('newPassword');
+              if (!/(?=.*?[A-Z])/.test(value)) {
+                return t('auth:text_err_password_required_upper_case');
+              }
+              if (!/(?=.*?[a-z])/.test(value)) {
+                return t('auth:text_err_password_required_lower_case');
+              }
+              if (!/(?=.*?[0-9])/.test(value)) {
+                return t('auth:text_err_password_required_number');
+              }
+              if (!/(?=.*?[^\w\s])/.test(value)) {
+                return t('auth:text_err_password_required_symbols');
+              }
             },
           }}
           loading={forgotPasswordLoading}
           disableInput={disableInputPassword}
           testID={'inputNewPassword'}
-          label={t('auth:input_label_new_password')}
           placeholder={t('auth:input_label_new_password')}
           validateValue={validateNewPassword}
+          textContentType="oneTimeCode"
         />
 
         <PasswordInputController
@@ -182,19 +210,13 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
           name={'confirmPassword'}
           rules={{
             required: t('auth:text_err_password_blank'),
-            // min: 8,
-            // max: 20,
-            // pattern: {
-            //   value: validation.passwordRegex,
-            //   message: t('auth:text_err_password_format'),
-            // },
           }}
           loading={forgotPasswordLoading}
           disableInput={disableInputPassword}
           testID={'inputConfirmPassword'}
-          label={t('auth:input_label_confirm_new_password')}
           placeholder={t('auth:input_label_confirm_new_password')}
           validateValue={validateConfirmPassword}
+          textContentType="oneTimeCode"
         />
       </View>
       <Button.Primary
@@ -203,14 +225,14 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
         loading={forgotPasswordLoading}
         onPress={onConfirmForgotPassword}
         style={styles.btnConfirmNewPassword}>
-        {t('auth:input_label_confirm_new_password')}
+        {t('auth:btn_submit')}
       </Button.Primary>
     </View>
   );
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -221,9 +243,16 @@ const themeStyles = (theme: ITheme) => {
     },
     desc: {
       marginBottom: spacing.margin.base,
+      marginTop: spacing.margin.tiny,
     },
     btnConfirmNewPassword: {
       marginTop: spacing.margin.extraLarge,
+    },
+    newPasswordTitle: {
+      marginBottom: spacing.margin.small,
+    },
+    highlightText: {
+      color: colors.textTertiary,
     },
   });
 };

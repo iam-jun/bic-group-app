@@ -54,3 +54,9 @@ export interface ISetMembers {
   community_admin?: {data: ICommunityMembers[]; user_count: number};
   member?: {data: ICommunityMembers[]; user_count: number};
 }
+
+export interface ISetSearchMembers {
+  loading?: boolean;
+  canLoadMore?: boolean;
+  data?: ICommunityMembers[];
+}

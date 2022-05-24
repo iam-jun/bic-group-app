@@ -150,7 +150,7 @@ exports[`Community members - ContentData component should render data correctly 
               "paddingVertical": 4,
             }
           }
-          testID="content_data.item"
+          testID="member_item"
         >
           <View
             style={
@@ -317,7 +317,7 @@ exports[`Community members - ContentData component should render data correctly 
                 "opacity": 1,
               }
             }
-            testID="content_data.icon_chat.button"
+            testID="member_item.icon_chat.button"
           >
             <View
               style={
@@ -470,7 +470,7 @@ exports[`Community members - ContentData component should render data correctly 
               "paddingVertical": 4,
             }
           }
-          testID="content_data.item"
+          testID="member_item"
         >
           <View
             style={
@@ -637,7 +637,7 @@ exports[`Community members - ContentData component should render data correctly 
                 "opacity": 1,
               }
             }
-            testID="content_data.icon_chat.button"
+            testID="member_item.icon_chat.button"
           >
             <View
               style={
@@ -754,7 +754,7 @@ exports[`Community members - ContentData component should render data correctly 
               "paddingVertical": 4,
             }
           }
-          testID="content_data.item"
+          testID="member_item"
         >
           <View
             style={
@@ -921,7 +921,7 @@ exports[`Community members - ContentData component should render data correctly 
                 "opacity": 1,
               }
             }
-            testID="content_data.icon_chat.button"
+            testID="member_item.icon_chat.button"
           >
             <View
               style={
@@ -1038,7 +1038,7 @@ exports[`Community members - ContentData component should render data correctly 
               "paddingVertical": 4,
             }
           }
-          testID="content_data.item"
+          testID="member_item"
         >
           <View
             style={
@@ -1205,7 +1205,7 @@ exports[`Community members - ContentData component should render data correctly 
                 "opacity": 1,
               }
             }
-            testID="content_data.icon_chat.button"
+            testID="member_item.icon_chat.button"
           >
             <View
               style={

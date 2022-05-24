@@ -1,4 +1,4 @@
-import {ICommunity} from '~/interfaces/ICommunity';
+import {ICommunity, ICommunityMembers} from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/screens/Groups/redux/types';
 import {IUser} from '~/interfaces/IAuth';
@@ -100,8 +100,7 @@ export const groupInitState = {
   searchMembers: {
     loading: false,
     canLoadMore: true,
-    community_admin: {data: [], user_count: 0},
-    member: {data: [], user_count: 0},
+    data: [] as ICommunityMembers[],
   },
 
   discoverGroups: {

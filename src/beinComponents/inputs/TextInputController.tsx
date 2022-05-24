@@ -12,7 +12,7 @@ interface Props extends TextInputProps {
   rules: any;
   defaultValue?: any;
   testID: string;
-  label: string;
+  label?: string;
   placeholder: string;
   helperActionOnPress?: () => void;
   helperAction?: string;
