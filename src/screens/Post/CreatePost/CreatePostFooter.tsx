@@ -17,12 +17,18 @@ export interface CreatePostFooterProps {
   toolbarRef?: any;
   loading?: boolean;
   onPressBack?: () => void;
+  imageDisabled?: boolean;
+  videoDisabled?: boolean;
+  fileDisabled?: boolean;
 }
 
 const CreatePostFooter: FC<CreatePostFooterProps> = ({
   toolbarRef,
   loading,
   onPressBack,
+  imageDisabled,
+  videoDisabled,
+  fileDisabled,
 }: CreatePostFooterProps) => {
   const showMentionValue = useSharedValue(0);
 
@@ -50,6 +56,9 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
         toolbarRef={toolbarRef}
         disabled={loading}
         onPressBack={onPressBack}
+        imageDisabled={imageDisabled}
+        videoDisabled={videoDisabled}
+        fileDisabled={fileDisabled}
       />
       {Platform.OS !== 'web' && (
         <Animated.View

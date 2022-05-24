@@ -78,7 +78,12 @@ const Notification = () => {
   const onPressFilterItem = (item: any, index: number) => {
     setSelectedIndex(index);
     if (!!item?.type) {
-      dispatch(notificationsActions.getNotifications({flag: item.type}));
+      dispatch(
+        notificationsActions.getNotifications({
+          flag: item.type,
+          clearCurrentNotifications: true,
+        }),
+      );
     }
   };
 
@@ -260,12 +265,17 @@ const Notification = () => {
         onPressMenu={onPressMenu}
       />
       {renderListHeader()}
-      {showNoNotification && noMoreNotification && selectedIndex === 1 ? (
+      {!loadingNotifications &&
+      showNoNotification &&
+      noMoreNotification &&
+      selectedIndex === 1 ? (
         renderUnReadNotificationsEmpty()
-      ) : showNoNotification ? (
+      ) : showNoNotification && !loadingNotifications ? (
         <NoNotificationFound />
+      ) : loadingNotifications ? (
+        <ActivityIndicator color={theme.colors.bgFocus} />
       ) : null}
-      {!showNoNotification && (
+      {!showNoNotification && !loadingNotifications && (
         <ListView
           listRef={listRef}
           style={styles.list}

@@ -364,7 +364,15 @@ function* postPublishDraftPost({
       onSuccess?.();
       const postData: IPostActivity = res.data;
       yield put(postActions.addToAllPosts({data: postData}));
-      if (replaceWithDetail) {
+      if (res.data?.isProcessing) {
+        yield put(
+          modalActions.showHideToastMessage({
+            content: 'post:draft:text_processing_publish',
+            props: {textProps: {useI18n: true}, type: 'success'},
+          }),
+        );
+        navigation.goBack();
+      } else if (replaceWithDetail) {
         navigation.replace(homeStack.postDetail, {post_id: postData?.id});
       }
       if (createFromGroupId) {

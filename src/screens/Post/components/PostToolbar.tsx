@@ -42,6 +42,9 @@ export interface PostToolbarProps {
   containerStyle?: StyleProp<ViewStyle>;
   onPressBack?: () => void;
   disabled?: boolean;
+  imageDisabled?: boolean;
+  videoDisabled?: boolean;
+  fileDisabled?: boolean;
 }
 
 const PostToolbar = ({
@@ -49,6 +52,9 @@ const PostToolbar = ({
   style,
   containerStyle,
   onPressBack,
+  imageDisabled,
+  videoDisabled,
+  fileDisabled,
   ...props
 }: PostToolbarProps) => {
   const animated = useRef(new Animated.Value(0)).current;
@@ -113,29 +119,53 @@ const PostToolbar = ({
     });
   };
 
-  const openGallery = () => {
-    ImagePicker.openPickerMultiple().then(images => {
-      const newImages: ICreatePostImage[] = [];
-      images.map(item => {
-        newImages.push({fileName: item.filename, file: item});
-      });
-      let newImageDraft = [...selectedImage, ...newImages];
-      if (newImageDraft.length > appConfig.postPhotoLimit) {
-        newImageDraft = newImageDraft.slice(0, appConfig.postPhotoLimit);
-        const errorContent = t('post:error_reach_upload_photo_limit').replace(
-          '%LIMIT%',
-          appConfig.postPhotoLimit,
-        );
-        dispatch(
-          showHideToastMessage({
-            content: errorContent,
-            props: {textProps: {useI18n: true}, type: 'error'},
-          }),
-        );
+  const _onPressSelectVideo = () => {
+    modalizeRef?.current?.close?.();
+    checkPermission('photo', dispatch, canOpenPicker => {
+      if (canOpenPicker) {
+        openSingleVideoPicker();
       }
-      dispatch(postActions.setCreatePostImagesDraft(newImageDraft));
-      rootNavigation.navigate(homeStack.postSelectImage);
     });
+  };
+
+  const openSingleVideoPicker = () => {
+    ImagePicker.openPickerSingle({mediaType: 'video'})
+      .then(selected => {
+        const data = selected;
+        dispatch(postActions.setCreatePostVideo(data));
+      })
+      .catch(e => {
+        console.log(`\x1b[36m🐣️ openSingleVideoPicker error: \x1b[0m`, e);
+      });
+  };
+
+  const openGallery = () => {
+    ImagePicker.openPickerMultiple()
+      .then(images => {
+        const newImages: ICreatePostImage[] = [];
+        images.map(item => {
+          newImages.push({fileName: item.filename, file: item});
+        });
+        let newImageDraft = [...selectedImage, ...newImages];
+        if (newImageDraft.length > appConfig.postPhotoLimit) {
+          newImageDraft = newImageDraft.slice(0, appConfig.postPhotoLimit);
+          const errorContent = t('post:error_reach_upload_photo_limit').replace(
+            '%LIMIT%',
+            appConfig.postPhotoLimit,
+          );
+          dispatch(
+            showHideToastMessage({
+              content: errorContent,
+              props: {textProps: {useI18n: true}, type: 'error'},
+            }),
+          );
+        }
+        dispatch(postActions.setCreatePostImagesDraft(newImageDraft));
+        rootNavigation.navigate(homeStack.postSelectImage);
+      })
+      .catch(e => {
+        console.log(`\x1b[36m🐣️ openPickerMultiple error: \x1b[0m`, e);
+      });
   };
 
   const onPressAddFile = () => {
@@ -180,12 +210,17 @@ const PostToolbar = ({
             {renderToolbarButton(
               'ImagePlus',
               'post_toolbar.add_photo',
-              _onPressSelectImage,
+              !imageDisabled ? _onPressSelectImage : undefined,
+            )}
+            {renderToolbarButton(
+              'PlayCircle',
+              'post_toolbar.add_video',
+              !videoDisabled ? _onPressSelectVideo : undefined,
             )}
             {renderToolbarButton(
               'Link',
               'post_toolbar.add_file',
-              onPressAddFile,
+              !fileDisabled ? onPressAddFile : undefined,
             )}
           </View>
           {!!content && renderMarkdownHelp()}

@@ -1,4 +1,4 @@
-import React, {FC, useContext, useState} from 'react';
+import React, {FC, useState} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle, Platform} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -8,7 +8,6 @@ import {useBaseHook} from '~/hooks';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import {useUserIdAuth} from '~/hooks/auth';
-import {AppContext} from '~/contexts/AppContext';
 import {useRootNavigation} from '~/hooks/navigation';
 
 import {
@@ -23,6 +22,7 @@ import Button from '~/beinComponents/Button';
 import modalActions, {showHideToastMessage} from '~/store/modal/actions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import Text from '~/beinComponents/Text';
 
 export interface PostViewDraftProps {
   style?: StyleProp<ViewStyle>;
@@ -41,13 +41,24 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
 
-  const {id, actor, audience, media, content, setting, isDraft} = data || {};
+  const {
+    id,
+    actor,
+    audience,
+    media,
+    content,
+    setting,
+    isDraft,
+    isProcessing,
+    createdAt,
+  } = data || {};
 
-  const {images} = media || {};
+  const {images, videos} = media || {};
   const {isImportant, importantExpiredAt} = setting || {};
 
   const disableButtonPost =
@@ -171,11 +182,36 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
     );
   };
 
+  const renderFooter = () => {
+    if (isProcessing) {
+      return (
+        <Text.BodyS color={colors.textSecondary} style={styles.draftText}>
+          {t('post:draft:text_processing_publish')}
+        </Text.BodyS>
+      );
+    }
+    return (
+      <View style={styles.footerButtonContainer}>
+        <Button.Secondary
+          loading={publishing}
+          disabled={disableButtonPost}
+          style={styles.footerButton}
+          onPress={onPressPost}>
+          {t('post:draft:btn_post_now')}
+        </Button.Secondary>
+        <Button.Secondary style={styles.footerButton} onPress={onPressEdit}>
+          {t('post:draft:btn_edit')}
+        </Button.Secondary>
+      </View>
+    );
+  };
+
   return (
     <View>
       <PostViewImportant
         isImportant={!!isImportant}
         expireTime={importantExpiredAt}
+        markedReadPost={false}
       />
       <View
         style={StyleSheet.flatten([
@@ -186,6 +222,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
         <PostViewHeader
           audience={audience}
           actor={actor}
+          time={createdAt}
           onPressMenu={onPressMenu}
           // onPressHeader={() => onPressHeader?.(postId)}
           // onPressShowAudiences={onPressShowAudiences}
@@ -194,20 +231,11 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
           postId={id || ''}
           content={content}
           images={images}
+          videos={videos}
           isPostDetail={isPostDetail}
+          isDraft
         />
-        <View style={styles.footerButtonContainer}>
-          <Button.Secondary
-            loading={publishing}
-            disabled={disableButtonPost}
-            style={styles.footerButton}
-            onPress={onPressPost}>
-            {t('post:draft:btn_post_now')}
-          </Button.Secondary>
-          <Button.Secondary style={styles.footerButton} onPress={onPressEdit}>
-            {t('post:draft:btn_edit')}
-          </Button.Secondary>
-        </View>
+        {renderFooter()}
       </View>
     </View>
   );
@@ -238,6 +266,10 @@ const createStyle = (theme: ITheme) => {
       flex: 1,
       marginVertical: spacing.margin.small,
       marginHorizontal: spacing.margin.tiny,
+    },
+    draftText: {
+      marginVertical: spacing.margin.small,
+      marginHorizontal: spacing.margin.large,
     },
   });
 };

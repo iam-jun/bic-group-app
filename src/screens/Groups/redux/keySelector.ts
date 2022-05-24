@@ -13,6 +13,7 @@ const groupsKeySelector = {
   refreshingGroupPosts: 'groups.refreshingGroupPosts',
   loadingGroupMember: 'groups.loadingGroupMember',
   groupMember: 'groups.groupMember',
+  groupSearchMembers: 'groups.groupSearchMembers',
   selectedUsers: 'groups.selectedUsers',
   users: 'groups.users',
   posts: 'groups.posts',
@@ -32,7 +33,7 @@ const groupsKeySelector = {
   communityDetail: 'groups.communityDetail',
   isGettingInfoDetail: 'groups.isGettingInfoDetail',
   communityMembers: 'groups.communityMembers',
-  searchMembers: 'groups.searchMembers',
+  communitySearchMembers: 'groups.communitySearchMembers',
   discoverGroups: 'groups.discoverGroups',
 };
 

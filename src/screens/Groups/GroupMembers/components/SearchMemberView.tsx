@@ -3,90 +3,86 @@ import React, {useCallback, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
 import {ITheme} from '~/theme/interfaces';
-import SearchBaseModal from '~/beinComponents/modals/SearchBaseModal';
 import actions from '~/screens/Groups/redux/actions';
 import {debounce} from 'lodash';
 import appConfig from '~/configs/appConfig';
 import Text from '~/beinComponents/Text';
 import {useTheme} from 'react-native-paper';
 import SearchResultContent from './SearchResultContent';
+import {IGroupMembers} from '~/interfaces/IGroup';
+import SearchBaseView from '~/beinComponents/SearchBaseView';
 
-interface SearchMemberModalProps {
-  communityId: number;
+interface SearchMemberViewProps {
+  groupId: number;
   isOpen: boolean;
   placeholder?: string;
   initSearch?: string;
-  onPressChat?: () => void;
   onClose?: () => void;
+  onPressMenu: (e: any, item: IGroupMembers) => void;
 }
 
-const SearchMemberModal = ({
-  communityId,
+const SearchMemberView = ({
   isOpen,
+  groupId,
   placeholder,
-  onPressChat,
-  onClose,
   initSearch,
-}: SearchMemberModalProps) => {
+  onClose,
+  onPressMenu,
+}: SearchMemberViewProps) => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles(theme);
 
-  const getCommunitySearchMembers = (searchText: string) => {
+  const getGroupSearchMembers = (searchText: string) => {
     dispatch(
-      actions.getCommunitySearchMembers({
-        communityId,
-        params: {key: searchText},
-      }),
+      actions.getGroupSearchMembers({groupId, params: {key: searchText}}),
     );
   };
 
   const onLoadMore = () => {
-    getCommunitySearchMembers(searchText);
+    getGroupSearchMembers(searchText);
   };
 
-  const searchMember = (searchQuery: string) => {
-    dispatch(actions.resetCommunitySearchMembers());
+  const searchMembers = (searchQuery: string) => {
+    dispatch(actions.clearGroupSearchMembers());
     setSearchText(searchQuery);
-    getCommunitySearchMembers(searchQuery);
+    getGroupSearchMembers(searchQuery);
   };
 
   const searchHandler = useCallback(
-    debounce(searchMember, appConfig.searchTriggerTime),
+    debounce(searchMembers, appConfig.searchTriggerTime),
     [],
   );
 
-  const onSearchMember = (text: string) => {
+  const onSearchMembers = (text: string) => {
     searchHandler(text);
   };
 
   return (
-    <SearchBaseModal
+    <SearchBaseView
       isOpen={isOpen}
       placeholder={placeholder}
       onClose={onClose}
-      onChangeText={onSearchMember}>
+      onChangeText={onSearchMembers}>
       {!!searchText ? (
         <SearchResultContent
           onLoadMore={onLoadMore}
-          onPressChat={onPressChat}
+          onPressMenu={onPressMenu}
         />
       ) : (
         <View style={styles.text}>
           <Text.BodyS
             color={theme.colors.textSecondary}
-            testID="search_member_modal.type_search"
+            testID="search_member_view.type_search"
             useI18n>
             common:text_type_search_keyword
           </Text.BodyS>
         </View>
       )}
-    </SearchBaseModal>
+    </SearchBaseView>
   );
 };
-
-export default SearchMemberModal;
 
 const createStyles = (theme: ITheme) => {
   return StyleSheet.create({
@@ -96,3 +92,5 @@ const createStyles = (theme: ITheme) => {
     },
   });
 };
+
+export default SearchMemberView;

@@ -146,7 +146,7 @@ const themeStyles = (theme: ITheme) => {
     desc: {
       marginTop: spacing.margin.extraLarge,
       marginBottom: spacing.margin.large,
-      color: colors.textPrimary,
+      color: colors.text,
     },
     btnSendRecoverCode: {
       marginTop: spacing.margin.large,

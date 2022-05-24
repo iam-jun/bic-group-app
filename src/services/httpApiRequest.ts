@@ -155,6 +155,9 @@ const handleRetry = async (error: AxiosError) => {
   // @ts-ignore
   switch (error.config?.provider?.name) {
     case apiConfig.providers.bein.name:
+    case apiConfig.providers.beinFeed.name:
+    case apiConfig.providers.beinNotification.name:
+    case apiConfig.providers.beinUpload.name:
       if (!error.config.headers?.Authorization) {
         return Promise.reject(error);
       }
@@ -274,13 +277,7 @@ const handleResponseError = async (
     if (responseTokenExpired && error.config.useRetry) {
       return handleRetry(error);
     }
-    // @ts-ignore
-    switch (error.config?.provider?.name) {
-      case apiConfig.providers.bein.name:
-        return mapResponseSuccessBein(error.response);
-      default:
-        return mapResponseSuccessBein(error.response);
-    }
+    return mapResponseSuccessBein(error.response);
   } else if (error.request) {
     console.error(error.request);
     handleSystemIssue();
@@ -383,16 +380,8 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
       requestConfig.withCredentials = true;
       break;
     case apiConfig.providers.beinFeed.name:
-      interceptorRequestSuccess = interceptorsRequestSuccess;
-      interceptorResponseSuccess = interceptorsResponseSuccess;
-      interceptorResponseError = interceptorsResponseError;
-      requestConfig.headers = {
-        ...commonHeaders,
-        ...requestConfig.headers,
-        ...tokenHeaders,
-      };
-      break;
     case apiConfig.providers.beinNotification.name:
+    case apiConfig.providers.beinUpload.name:
       interceptorRequestSuccess = interceptorsRequestSuccess;
       interceptorResponseSuccess = interceptorsResponseSuccess;
       interceptorResponseError = interceptorsResponseError;

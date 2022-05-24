@@ -1,14 +1,13 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
-import {validateImages} from '~/screens/Post/CreatePost/helper';
+import {validateImages, validateVideo} from '~/screens/Post/CreatePost/helper';
 import modalActions from '~/store/modal/actions';
 import {
   IAudience,
   ICreatePostParams,
   IParamGetPostAudiences,
   IParamPutEditPost,
-  IPayloadCreatePost,
   IPayloadPutEditDraftPost,
   IPayloadPutEditPost,
   IPostActivity,
@@ -23,6 +22,7 @@ import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
 import {differenceWith, isEmpty, isEqual} from 'lodash';
 import {Keyboard} from 'react-native';
 import {getMentionsFromContent} from '~/screens/Post/helper/PostUtils';
+import {IGetFile} from '~/services/fileUploader';
 
 interface IUseCreatePost {
   screenParams: ICreatePostParams;
@@ -62,7 +62,9 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
   const initGroupsRef = useRef<any>([]);
   const initUsersRef = useRef<any>([]);
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
-  const {images} = validateImages(selectingImages, t);
+  const selectingVideo = useKeySelector(postKeySelector.createPost.video);
+  const {images, imageUploading} = validateImages(selectingImages, t);
+  const {video, videoUploading} = validateVideo(selectingVideo, t);
 
   const tempMentions = useKeySelector('mentionInput.tempSelected') || {};
 
@@ -136,6 +138,8 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
 
   // Disable button post if loading, empty content, empty audience or edit post but nothing changed
   const disableButtonPost =
+    imageUploading ||
+    videoUploading ||
     loading ||
     content?.trim?.()?.length === 0 ||
     chosenAudiences.length === 0 ||
@@ -198,7 +202,6 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
       dispatch(postActions.setCreatePostImagesDraft(initImages));
       dispatch(postActions.setCreatePostImages(initImages));
       initSelectingImagesRef.current = initImages;
-      prevData.current = {...prevData.current, selectingImages: initImages};
     }
   }, [initPostData]);
 
@@ -239,10 +242,15 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
       dispatch(
         postActions.setCreatePostCurrentSettings({important: initImportant}),
       );
+
+      const initVideo = initPostData?.media?.videos?.[0];
+      dispatch(postActions.setCreatePostVideo(initVideo));
+
       prevData.current = {
         ...prevData.current,
         chosenAudiences: initChosenAudience,
         important: initImportant,
+        selectingVideo: initVideo,
       };
     }
   }, [initPostData?.id]);
@@ -264,20 +272,24 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         ),
       ),
       isEqual(important, prevData?.current?.important),
+      isEqual(selectingVideo, prevData?.current?.selectingVideo),
     ];
     const newDataChange = dataChangeList.filter(i => !i);
-    if (isAutoSave && newDataChange.length > 0) {
+    if (isAutoSave && newDataChange.length > 0 && sPostId) {
       prevData.current = {
         ...prevData.current,
         selectingImages,
         chosenAudiences,
         important,
+        selectingVideo,
       };
       autoSaveDraftPost();
     }
   }, [
     JSON.stringify(selectingImages),
     JSON.stringify(chosenAudiences),
+    selectingVideo?.id,
+    selectingVideo?.name,
     important,
   ]);
 
@@ -309,7 +321,11 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
 
   const prepareData = () => {
     const _content = mentionInputRef?.current?.getContent?.() || content;
-    const media = {images, videos: [], files: []};
+    const media = {
+      images,
+      videos: video?.id ? [{id: video?.id}] : [],
+      files: [],
+    };
     const setting: any = {};
     if (important?.active) {
       setting.isImportant = important?.active;
@@ -338,19 +354,29 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
       if ((sIsLoading && !sPostId) || loading) {
         return;
       }
-      const {imageError, images} = validateImages(selectingImages, t);
+      const {imageError, images, imageUploading} = validateImages(
+        selectingImages,
+        t,
+      );
+      const {videoError, video, videoUploading} = validateVideo(
+        selectingVideo,
+        t,
+      );
 
       const newContent = mentionInputRef?.current?.getContent?.() || content;
 
-      if (
-        (!newContent &&
-          images.length === 0 &&
-          chosenAudiences.length < 1 &&
-          !important?.active &&
-          !sPostId) ||
-        !isAutoSave ||
-        imageError
-      ) {
+      if (imageUploading || videoUploading) {
+        console.log(`\x1b[36m🐣️ autoSaveDraftPost uploading media\x1b[0m`);
+        return;
+      }
+      const invalidData =
+        !newContent &&
+        images.length === 0 &&
+        !video &&
+        chosenAudiences.length < 1 &&
+        !important?.active &&
+        !sPostId;
+      if (invalidData || !isAutoSave || imageError || videoError) {
         if (imageError) {
           dispatch(
             modalActions.showHideToastMessage({
@@ -405,6 +431,10 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     }
   };
 
+  const handleUploadVideoSuccess = (file: IGetFile) => {
+    dispatch(postActions.setCreatePostVideo(file));
+  };
+
   const handlePressPost = () => {
     if (loading) {
       return 'loading';
@@ -414,7 +444,8 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
       clearAutoSaveTimeout();
     }
 
-    const {imageError, images} = validateImages(selectingImages, t);
+    const {imageError} = validateImages(selectingImages, t);
+    const {videoError} = validateVideo(selectingVideo, t);
 
     if (imageError) {
       dispatch(
@@ -474,12 +505,15 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     sPostData,
     createPostData,
     images,
+    video: selectingVideo,
+    videoUploading,
     disableButtonPost,
     isEditPost,
     isEditDraftPost,
     isEditPostHasChange,
     handlePressPost,
     handleChangeContent,
+    handleUploadVideoSuccess,
     isNewsfeed,
     content,
   };
