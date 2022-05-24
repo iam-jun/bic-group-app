@@ -39,10 +39,21 @@ export default function* forgotPasswordRequest({
         errBox = error.message;
     }
 
-    yield showErrorWithDefinedMessage(errBox);
-    yield put(
-      actions.setForgotPasswordError({errBox, errRequest, errConfirm: ''}),
-    );
+    if (error?.['code'] === authErrors.USER_NOT_FOUND_EXCEPTION) {
+      yield put(
+        actions.setForgotPasswordError({
+          errBox: '',
+          errRequest: i18n.t('auth:text_forgot_password_email_not_found'),
+          errConfirm: '',
+        }),
+      );
+    } else {
+      yield showErrorWithDefinedMessage(errBox);
+      yield put(
+        actions.setForgotPasswordError({errBox, errRequest, errConfirm: ''}),
+      );
+    }
+
     yield put(actions.setForgotPasswordLoading(false));
   }
 }
