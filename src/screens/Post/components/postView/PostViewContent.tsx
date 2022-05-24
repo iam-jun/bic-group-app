@@ -51,7 +51,11 @@ const PostViewContent: FC<PostViewContentProps> = ({
     onContentLayout?.();
   };
 
-  if (!content && (!images || images?.length === 0)) {
+  if (
+    !content &&
+    (!images || images?.length === 0) &&
+    (!videos || videos?.length === 0)
+  ) {
     return null;
   }
 
