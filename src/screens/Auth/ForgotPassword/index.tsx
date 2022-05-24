@@ -90,12 +90,10 @@ const ForgotPassword = () => {
     <ScreenWrapper testID="ForgotPasswordScreen" isFullView style={styles.root}>
       <KeyboardAvoidingView
         testID="edit_location.keyboard_avoiding_view"
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
         enabled={true}
         style={styles.container}
-        keyboardVerticalOffset={
-          Platform.OS === 'ios' ? 30 : Platform.OS === 'android' ? 60 : 0
-        }>
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 30 : 0}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="always">

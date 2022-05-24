@@ -17,6 +17,7 @@ import {ITheme} from '~/theme/interfaces';
 import {IChangePasswordError} from '~/interfaces/IAuth';
 import useAuth from '~/hooks/auth';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
+import {getEnv} from '~/utils/env';
 
 const ChangePassword = () => {
   const {t} = useBaseHook();
@@ -145,9 +146,33 @@ const ChangePassword = () => {
           name={'password'}
           rules={{
             required: t('auth:text_err_password_blank'),
-            pattern: {
-              value: validation.passwordRegex,
-              message: t('auth:text_err_password_format'),
+            maxLength: {
+              value: 20,
+              message: t('auth:text_err_password_characters'),
+            },
+            minLength: {
+              value: 6,
+              message: t('auth:text_err_password_characters'),
+            },
+            validate: () => {
+              if (
+                !getEnv('SELF_DOMAIN')?.includes('sbx') &&
+                !getEnv('SELF_DOMAIN')?.includes('stg')
+              ) {
+                const value = getValues('newPassword');
+                if (!/(?=.*?[A-Z])/.test(value)) {
+                  return t('auth:text_err_password_required_upper_case');
+                }
+                if (!/(?=.*?[a-z])/.test(value)) {
+                  return t('auth:text_err_password_required_lower_case');
+                }
+                if (!/(?=.*?[0-9])/.test(value)) {
+                  return t('auth:text_err_password_required_number');
+                }
+                if (!/(?=.*?[^\w\s])/.test(value)) {
+                  return t('auth:text_err_password_required_symbols');
+                }
+              }
             },
           }}
           label={t('auth:input_label_current_password')}
@@ -160,11 +185,7 @@ const ChangePassword = () => {
           useFormData={useFormData}
           name={'newPassword'}
           rules={{
-            required: t('auth:text_err_new_password_blank'),
-            pattern: {
-              value: validation.passwordRegex,
-              message: t('auth:text_err_password_format'),
-            },
+            required: t('auth:text_err_password_blank'),
           }}
           loading={changePasswordLoading}
           label={t('auth:input_label_new_password')}
