@@ -1,12 +1,13 @@
 import React from 'react';
 
-import {renderWithRedux} from '~/test/testUtils';
+import {createTestStore, renderWithRedux} from '~/test/testUtils';
 import ContentData from './ContentData';
 import {
   memberData,
   memberDetail,
   adminDetail,
 } from '~/test/mock_data/communities';
+import initialState from '~/store/initialState';
 
 describe('Community members - ContentData component', () => {
   it('should render data correctly', () => {
@@ -24,14 +25,19 @@ describe('Community members - ContentData component', () => {
         user_count: 3,
       },
     ];
+    const state = {...initialState};
+    // @ts-ignore
+    state.auth.user = {username: 'testname'};
+    const store = createTestStore(state);
     const wrapper = renderWithRedux(
       <ContentData
         sectionList={sectionList}
         loading={loading}
         canLoadMore={canLoadMore}
       />,
+      store,
     );
-    const dataItem = wrapper.getAllByTestId('content_data.item');
+    const dataItem = wrapper.getAllByTestId('member_item');
     expect(wrapper).toMatchSnapshot();
     expect(dataItem.length).toBe(4);
   });
@@ -51,6 +57,10 @@ describe('Community members - ContentData component', () => {
     ];
     const loading = false;
     const canLoadMore = true;
+    const state = {...initialState};
+    // @ts-ignore
+    state.auth.user = {username: 'testname'};
+    const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
       <ContentData
@@ -58,6 +68,7 @@ describe('Community members - ContentData component', () => {
         loading={loading}
         canLoadMore={canLoadMore}
       />,
+      store,
     );
     const loadingIndicator = wrapper.getByTestId(
       'content_data.loading_more_indicator',
@@ -80,6 +91,10 @@ describe('Community members - ContentData component', () => {
     ];
     const loading = false;
     const canLoadMore = false;
+    const state = {...initialState};
+    // @ts-ignore
+    state.auth.user = {username: 'testname'};
+    const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
       <ContentData
@@ -87,6 +102,7 @@ describe('Community members - ContentData component', () => {
         loading={loading}
         canLoadMore={canLoadMore}
       />,
+      store,
     );
     const loadingIndicator = wrapper.queryByTestId(
       'content_data.loading_more_indicator',

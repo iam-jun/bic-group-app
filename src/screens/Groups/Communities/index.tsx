@@ -14,6 +14,8 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import JoinedCommunities from '~/screens/Groups/Communities/JoinedCommunities';
 import DiscoverCommunities from '~/screens/Groups/Communities/DiscoverCommunities';
 import {communityMenuData} from '~/constants/communityMenuData';
+import ManagedCommunities from './ManagedCommunities';
+import {ICommunity} from '~/interfaces/ICommunity';
 
 const Communities: React.FC = () => {
   const headerRef = useRef<any>();
@@ -54,7 +56,7 @@ const Communities: React.FC = () => {
     setSelectedIndex(2);
   };
 
-  const onPressCommunities = (item: any) => {
+  const onPressCommunities = (item: ICommunity) => {
     rootNavigation.navigate(groupStack.communityDetail, {
       communityId: item?.id || 0,
     });
@@ -69,7 +71,7 @@ const Communities: React.FC = () => {
         />
       );
     } else if (selectedIndex === 1) {
-      return null;
+      return <ManagedCommunities onPressCommunities={onPressCommunities} />;
     } else if (selectedIndex === 2) {
       return <DiscoverCommunities onPressCommunities={onPressCommunities} />;
     }

@@ -80,6 +80,13 @@ export interface IParamGetCommunities {
   preview_members?: boolean;
 }
 
+export interface IParamGetGroupMembers {
+  key?: string;
+  offset?: number;
+  limit?: number;
+  sort?: string;
+}
+
 export interface IGroupImageUpload {
   id: number;
   fieldName: 'icon' | 'background_img_url';
@@ -94,7 +101,7 @@ export interface IGroupGetJoinableMembers {
 
 export interface IGroupGetMembers {
   groupId: number;
-  params?: any;
+  params?: IParamGetGroupMembers;
 }
 
 export interface IGroupAddMembers {

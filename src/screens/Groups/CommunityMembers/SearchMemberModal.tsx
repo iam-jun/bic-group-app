@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React, {useEffect, useCallback, useState} from 'react';
+import React, {useCallback, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
 import {ITheme} from '~/theme/interfaces';
@@ -7,11 +7,9 @@ import SearchBaseModal from '~/beinComponents/modals/SearchBaseModal';
 import actions from '~/screens/Groups/redux/actions';
 import {debounce} from 'lodash';
 import appConfig from '~/configs/appConfig';
-import ContentData from './ContentData';
-import groupsKeySelector from '../redux/keySelector';
-import {useKeySelector} from '~/hooks/selector';
 import Text from '~/beinComponents/Text';
 import {useTheme} from 'react-native-paper';
+import SearchResultContent from './SearchResultContent';
 
 interface SearchMemberModalProps {
   communityId: number;
@@ -33,44 +31,25 @@ const SearchMemberModal = ({
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const [searchText, setSearchText] = useState(initSearch || '');
-  const [sectionList, setSectionList] = useState([]);
   const styles = createStyles(theme);
 
-  const {loading, canLoadMore, community_admin, member} = useKeySelector(
-    groupsKeySelector.searchMembers,
-  );
-
-  useEffect(() => {
-    const newSectionList: any = [
-      {
-        title: 'Admins',
-        data: community_admin.data,
-        user_count: community_admin.user_count,
-      },
-      {
-        title: 'Members',
-        data: member.data,
-        user_count: member.user_count,
-      },
-    ];
-
-    setSectionList(newSectionList);
-  }, [community_admin.data, member.data]);
-
-  const getSearchMembers = (searchText: string) => {
+  const getCommunitySearchMembers = (searchText: string) => {
     dispatch(
-      actions.getSearchMembers({communityId, params: {key: searchText}}),
+      actions.getCommunitySearchMembers({
+        communityId,
+        params: {key: searchText},
+      }),
     );
   };
 
   const onLoadMore = () => {
-    getSearchMembers(searchText);
+    getCommunitySearchMembers(searchText);
   };
 
   const searchMember = (searchQuery: string) => {
-    dispatch(actions.resetSearchMembers());
+    dispatch(actions.resetCommunitySearchMembers());
     setSearchText(searchQuery);
-    getSearchMembers(searchQuery);
+    getCommunitySearchMembers(searchQuery);
   };
 
   const searchHandler = useCallback(
@@ -89,10 +68,7 @@ const SearchMemberModal = ({
       onClose={onClose}
       onChangeText={onSearchMember}>
       {!!searchText ? (
-        <ContentData
-          sectionList={sectionList}
-          loading={loading}
-          canLoadMore={canLoadMore}
+        <SearchResultContent
           onLoadMore={onLoadMore}
           onPressChat={onPressChat}
         />

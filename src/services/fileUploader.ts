@@ -6,6 +6,7 @@ import i18next from 'i18next';
 import {IUploadType} from '~/configs/resourceConfig';
 
 export interface IGetFile {
+  id?: number | string;
   fileName: string;
   url?: string;
   size?: any;
@@ -22,11 +23,17 @@ export interface IUploadParam {
   onError?: (e: any) => void;
 }
 
+export interface ICancelUploadParam {
+  uploadType?: IUploadType | string;
+  file: IFilePicked;
+}
+
 export default class FileUploader {
   static INSTANCE: FileUploader | null = null;
 
   fileUploaded: {[x: string]: IGetFile} = {};
   fileUploading: any = {};
+  fileAbortController: {[x: string]: AbortController} = {};
 
   callbackProgress: any = {};
   callbackSuccess: any = {};

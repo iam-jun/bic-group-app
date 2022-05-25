@@ -46,9 +46,10 @@ const notificationsActions = {
       payload,
     };
   },
-  markAsReadAll: function () {
+  markAsReadAll: function (payload: string) {
     return {
       type: notificationsTypes.MARK_AS_READ_ALL,
+      payload,
     };
   },
   markAsSeenAll: function () {
@@ -56,7 +57,7 @@ const notificationsActions = {
       type: notificationsTypes.MARK_AS_SEEN_ALL,
     };
   },
-  markAsRead: function (payload: string) {
+  markAsRead: function (payload: any) {
     return {
       type: notificationsTypes.MARK_AS_READ,
       payload,

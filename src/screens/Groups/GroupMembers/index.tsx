@@ -1,15 +1,15 @@
-import React, {useState, useEffect, useCallback, useRef} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {
   View,
   StyleSheet,
   SectionList,
   ActivityIndicator,
   Platform,
+  Pressable,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
-import {debounce} from 'lodash';
 
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
@@ -17,7 +17,6 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import appConfig from '~/configs/appConfig';
 import {IGroupMembers} from '~/interfaces/IGroup';
 import images from '~/resources/images';
 
@@ -30,6 +29,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import MemberOptionsMenu from './components/MemberOptionsMenu';
+import SearchMemberView from './components/SearchMemberView';
 
 const _GroupMembers = (props: any) => {
   const params = props.route.params;
@@ -38,6 +38,7 @@ const _GroupMembers = (props: any) => {
   const [sectionList, setSectionList] = useState([]);
   const [searchText, setSearchText] = useState<string>('');
   const [selectedMember, setSelectedMember] = useState<IGroupMembers>();
+  const [isOpen, setIsOpen] = useState(false);
 
   const [needReloadWhenReconnected, setNeedReloadWhenReconnected] =
     useState(false);
@@ -85,7 +86,7 @@ const _GroupMembers = (props: any) => {
       return;
     }
 
-    const isDataEmpty = !groupMember?.group_admin || !groupMember?.member;
+    const isDataEmpty = !groupMember?.group_admin || !groupMember?.group_member;
     if (needReloadWhenReconnected && isDataEmpty) {
       getMembers();
       getGroupProfile();
@@ -135,6 +136,14 @@ const _GroupMembers = (props: any) => {
 
   const onLoadMore = () => {
     getMembers();
+  };
+
+  const onPressSearch = () => {
+    setIsOpen(true);
+  };
+
+  const onCloseModal = () => {
+    setIsOpen(false);
   };
 
   const renderItem = ({item}: {item: IGroupMembers}) => {
@@ -199,23 +208,6 @@ const _GroupMembers = (props: any) => {
     rootNavigation.navigate(groupStack.inviteMembers, {groupId});
   };
 
-  const searchUsers = (searchQuery: string) => {
-    dispatch(groupsActions.clearGroupMembers());
-    setSearchText(searchQuery);
-    dispatch(
-      groupsActions.getGroupMembers({groupId, params: {key: searchQuery}}),
-    );
-  };
-
-  const searchHandler = useCallback(
-    debounce(searchUsers, appConfig.searchTriggerTime),
-    [],
-  );
-
-  const onSearchUser = (text: string) => {
-    searchHandler(text);
-  };
-
   const _renderLoading = () => {
     if (loadingGroupMember) {
       return (
@@ -243,14 +235,15 @@ const _GroupMembers = (props: any) => {
         title={'groups:title_members'}
         hideBackOnLaptop={rootNavigation?.canGoBack ? false : true}
       />
-      <View style={styles.searchAndInvite}>
-        <SearchInput
+      <View style={styles.searchBar}>
+        <Pressable
           testID="group_members.search"
-          value={searchText}
-          style={styles.inputSearch}
-          placeholder={i18next.t('groups:text_search_member')}
-          onChangeText={onSearchUser}
-        />
+          onPress={onPressSearch}
+          style={styles.searchBtn}>
+          <View pointerEvents="none">
+            <SearchInput placeholder={i18next.t('groups:text_search_member')} />
+          </View>
+        </Pressable>
         {renderInviteMemberButton()}
       </View>
 
@@ -277,6 +270,14 @@ const _GroupMembers = (props: any) => {
         selectedMember={selectedMember || {}}
         onOptionsClosed={clearSelectedMember}
       />
+
+      <SearchMemberView
+        groupId={groupId}
+        isOpen={isOpen}
+        onClose={onCloseModal}
+        onPressMenu={onPressMenu}
+        placeholder={i18next.t('groups:text_search_member')}
+      />
     </ScreenWrapper>
   );
 };
@@ -290,7 +291,6 @@ const createStyle = (theme: ITheme) => {
       paddingVertical: spacing.padding.tiny,
     },
     sectionHeader: {
-      marginTop: spacing.margin.small,
       paddingHorizontal: spacing.padding.large,
       paddingTop: spacing.padding.large,
       paddingBottom: spacing.padding.base,
@@ -298,13 +298,16 @@ const createStyle = (theme: ITheme) => {
     content: {
       backgroundColor: colors.background,
     },
-    searchAndInvite: {
-      flexDirection: 'row',
+    searchBtn: {
+      flex: 1,
       backgroundColor: colors.background,
       justifyContent: 'space-between',
-      alignItems: 'center',
       marginHorizontal: spacing.margin.base,
-      marginTop: spacing.margin.base,
+      marginVertical: spacing.margin.base,
+    },
+    searchBar: {
+      flexDirection: 'row',
+      alignItems: 'center',
     },
     inputSearch: {
       flex: 1,
@@ -313,7 +316,7 @@ const createStyle = (theme: ITheme) => {
       backgroundColor: colors.bgButtonSecondary,
       padding: spacing.padding.small,
       borderRadius: 6,
-      marginLeft: spacing.margin.small,
+      marginRight: spacing.margin.small,
     },
     iconSmall: {
       marginRight: spacing.margin.small,
