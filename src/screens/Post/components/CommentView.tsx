@@ -71,6 +71,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const currentUserId = useUserIdAuth();
 
   const comment = useKeySelector(postKeySelector.commentById(commentData?.id));
+  const _commentData = comment || commentData || {};
   const {
     id,
     actor,
@@ -81,7 +82,15 @@ const _CommentView: React.FC<CommentViewProps> = ({
     createdAt,
     updatedAt,
     edited,
-  } = comment || commentData || {};
+  } = _commentData;
+  const giphy =
+    _commentData.giphy ||
+    (_commentData.giphyId
+      ? {
+          id: _commentData.giphyId,
+          url: _commentData.giphyUrl,
+        }
+      : null);
 
   const {fullname, avatar} = actor || {};
 
@@ -425,7 +434,11 @@ const _CommentView: React.FC<CommentViewProps> = ({
                   onPressAudience={onPressAudience}
                 />
               </View>
-              <CommentMediaView media={media} onLongPress={onLongPress} />
+              <CommentMediaView
+                giphy={giphy}
+                media={media}
+                onLongPress={onLongPress}
+              />
             </View>
           </Button>
           {renderReactionsReplyView()}

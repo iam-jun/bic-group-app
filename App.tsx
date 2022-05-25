@@ -1,4 +1,3 @@
-import {GiphySDK} from '@giphy/react-native-sdk';
 import messaging from '@react-native-firebase/messaging';
 import Amplify from 'aws-amplify';
 import 'intl-pluralrules';
@@ -68,13 +67,6 @@ export default () => {
 
   useEffect(() => {
     setupFirebasePermission();
-  }, []);
-
-  useEffect(() => {
-    // Configure API keys
-    GiphySDK.configure({
-      apiKey: 'Gkmr8eyIb5xJCaTI7EhGny9hDk3qHRRf',
-    });
   }, []);
 
   Store.sagaMiddleware.run(rootSaga);

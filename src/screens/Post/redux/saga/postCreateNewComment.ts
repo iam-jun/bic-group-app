@@ -31,6 +31,7 @@ function* postCreateNewComment({
     !commentData ||
     !userId ||
     (!commentData?.content &&
+      isEmpty(commentData?.giphy) &&
       isEmpty(commentData?.media?.images) &&
       isEmpty(commentData?.media?.files) &&
       isEmpty(commentData?.media?.videos))
@@ -86,6 +87,8 @@ function* postCreateNewComment({
       commentData?.content,
       tempMentions,
     );
+
+    console.log('commentData:', JSON.stringify(commentData));
 
     let resComment;
     if (parentCommentId) {
@@ -155,7 +158,7 @@ function* postCreateNewComment({
     yield put(postActions.setCreateComment({loading: false, content: ''}));
     onSuccess?.(); // call second time to make sure content is cleared on low performance device
   } catch (e) {
-    console.log('err:', e);
+    console.log('err:', JSON.stringify(e));
     if (preComment && !parentCommentId) {
       // retrying doesn't need to update status because status = 'failed' already
       yield put(
