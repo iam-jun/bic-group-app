@@ -131,8 +131,10 @@ export interface IGroupMembers {
   username?: string;
   fullname?: string;
   avatar?: string;
-  roles_ids?: number[];
-  roles?: IGroupMemberRole[];
+  chat_user_id?: string;
+  is_admin?: boolean;
+  custom_role_ids?: any[];
+  roles?: any[];
 }
 
 export interface IGroupMemberRole {
