@@ -173,7 +173,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
               message: t('auth:text_err_password_characters'),
             },
             minLength: {
-              value: 6,
+              value: 8,
               message: t('auth:text_err_password_characters'),
             },
             validate: () => {
@@ -221,8 +221,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
         testID="btnChangePassword"
         disabled={disableConfirm}
         loading={forgotPasswordLoading}
-        onPress={onConfirmForgotPassword}
-        style={styles.btnConfirmNewPassword}>
+        onPress={onConfirmForgotPassword}>
         {t('auth:btn_submit')}
       </Button.Primary>
     </View>
@@ -237,14 +236,11 @@ const themeStyles = (theme: ITheme) => {
       paddingTop: spacing.padding.big,
     },
     inputSectionContainer: {
-      marginBottom: spacing.margin.big,
+      marginBottom: spacing.margin.base,
     },
     desc: {
       marginBottom: spacing.margin.base,
       marginTop: spacing.margin.tiny,
-    },
-    btnConfirmNewPassword: {
-      marginTop: spacing.margin.extraLarge,
     },
     newPasswordTitle: {
       marginBottom: spacing.margin.small,

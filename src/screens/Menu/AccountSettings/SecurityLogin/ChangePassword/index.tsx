@@ -151,7 +151,7 @@ const ChangePassword = () => {
               message: t('auth:text_err_password_characters'),
             },
             minLength: {
-              value: 6,
+              value: 8,
               message: t('auth:text_err_password_characters'),
             },
             validate: () => {

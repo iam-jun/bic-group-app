@@ -86,7 +86,7 @@ const _GroupMembers = (props: any) => {
       return;
     }
 
-    const isDataEmpty = !groupMember?.group_admin || !groupMember?.member;
+    const isDataEmpty = !groupMember?.group_admin || !groupMember?.group_member;
     if (needReloadWhenReconnected && isDataEmpty) {
       getMembers();
       getGroupProfile();
