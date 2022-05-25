@@ -54,13 +54,21 @@ const ForgotPassword = () => {
   let imgSize = dimensions.width - 2 * imgPadding;
   if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
 
+  const goBack = () => {
+    if (forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW) {
+      dispatch(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_ID));
+    } else {
+      rootNavigation.goBack();
+    }
+  };
+
   const renderBtnBack = () => {
     return (
       <Icon
         // @ts-ignore
         icon={icons.iconBack}
         size={20}
-        onPress={() => rootNavigation.goBack()}
+        onPress={goBack}
         testID="forgot_button.back"
       />
     );
