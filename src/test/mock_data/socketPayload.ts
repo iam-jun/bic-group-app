@@ -143,7 +143,7 @@ export const UPDATE_REACTION_TO_COMMENT_DATA_2 = {
 
 //Users react to their child comments
 export const UPDATE_REACTION_TO_CHILD_COMMENT_DATA_1 = {
-  id: 490,
+  id: 505,
   actor: actorIsCreator,
   content: 'Important post',
   mentions: [],
@@ -167,7 +167,7 @@ export const UPDATE_REACTION_TO_CHILD_COMMENT_DATA_1 = {
     createdAt: '2022-05-25T08:17:59.366Z',
     updatedAt: '2022-05-25T08:17:59.366Z',
     child: {
-      id: 1450,
+      id: 505,
       actor: actorIsCreator,
       content: 'A',
       reaction: {

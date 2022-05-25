@@ -499,3 +499,24 @@ export const POST_DETAIL_3 = {
 export const allPosts = {
   302: POST_DETAIL_3,
 };
+
+export const COMMENT_HAS_REACTION = {
+  ...CHILD_COMMENT,
+  ownerReactions: [
+    {
+      id: 23,
+      commentId: 28,
+      reactionName: 'wink',
+      createdBy: 33,
+      createdAt: '2022-04-20T08:54:31.210Z',
+    },
+  ],
+  reactionsCount: {
+    '0': {
+      wink: 1,
+    },
+    '1': {
+      thinking_face: 1,
+    },
+  },
+};
