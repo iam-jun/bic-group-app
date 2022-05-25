@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useController} from 'react-hook-form';
 import {useTheme} from 'react-native-paper';
@@ -28,6 +28,7 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
 
   const {forgotPasswordError, forgotPasswordLoading} = useAuth();
   const {errRequest}: IForgotPasswordError = forgotPasswordError || {};
+  const refTextInput = useRef<any>();
 
   const {
     control,
@@ -44,15 +45,13 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
   } = useController({
     control,
     name: 'email',
-    rules: {
-      required: t('auth:text_err_email_blank'),
-      pattern: {
-        value: validation.emailRegex,
-        message: t('auth:text_err_email_format'),
-      },
-    },
+    rules: {},
     defaultValue: '',
   });
+
+  useEffect(() => {
+    refTextInput.current?.focus();
+  }, []);
 
   useEffect(() => {
     if (errRequest) {
@@ -67,7 +66,12 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
 
   const checkDisableRequest = () => {
     const email = getValues('email');
-    return forgotPasswordLoading || !email || !isEmpty(errors?.email);
+    return (
+      forgotPasswordLoading ||
+      !email ||
+      !isEmpty(errors?.email) ||
+      !validation.emailRegex.test(email)
+    );
   };
   const disableRequest = checkDisableRequest();
 
@@ -92,15 +96,16 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
       {/*  source={images.logo_bein}*/}
       {/*/>*/}
       <Text.H6>{t('auth:text_forgot_password')}</Text.H6>
-      <Text.Body style={styles.desc}>
+      <Text.BodyS style={styles.desc}>
         {t('auth:text_forgot_password_input_desc')}
-      </Text.Body>
+      </Text.BodyS>
       <TextInput
+        ref={refTextInput}
         testID="inputEmail"
-        label={t('auth:input_label_email')}
         placeholder={t('auth:input_label_email')}
         keyboardType="email-address"
         autoCapitalize="none"
+        autoFocus={true}
         value={value}
         editable={!forgotPasswordLoading}
         error={errors?.email}
@@ -138,9 +143,9 @@ const themeStyles = (theme: ITheme) => {
       marginVertical: spacing.margin.big,
     },
     desc: {
-      marginTop: spacing.margin.tiny,
+      marginTop: spacing.margin.extraLarge,
       marginBottom: spacing.margin.large,
-      color: colors.textSecondary,
+      color: colors.text,
     },
     btnSendRecoverCode: {
       marginTop: spacing.margin.large,

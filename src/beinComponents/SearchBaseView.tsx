@@ -1,13 +1,13 @@
-import {StyleSheet, View, Modal, TextInput, Platform} from 'react-native';
-import React, {useState, useRef} from 'react';
+import {StyleSheet, View, Platform, TextInput} from 'react-native';
+import React, {useState} from 'react';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import Icon from '../Icon';
 import {ITheme} from '~/theme/interfaces';
+import Icon from './Icon';
 import {fontFamilies} from '~/theme/fonts';
 
-interface SearchBaseModalProps {
+interface SearchBaseViewProps {
   isOpen: boolean;
   children?: React.ReactNode;
   placeholder?: string;
@@ -16,19 +16,18 @@ interface SearchBaseModalProps {
   onChangeText?: (text: string) => void;
 }
 
-const SearchBaseModal = ({
+const SearchBaseView = ({
   isOpen,
   children,
   placeholder,
   initSearch,
   onClose,
   onChangeText,
-}: SearchBaseModalProps) => {
+}: SearchBaseViewProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
 
   const [searchText, setSearchText] = useState(initSearch || '');
-  const inputRef = useRef<any>();
 
   const onPressBack = () => {
     setSearchText('');
@@ -41,10 +40,6 @@ const SearchBaseModal = ({
     onChangeText?.(text);
   };
 
-  const onShowModal = () => {
-    inputRef.current?.focus();
-  };
-
   const renderHeader = () => {
     return (
       <View style={[styles.headerContainer, styles.bottomBorderAndShadow]}>
@@ -55,11 +50,11 @@ const SearchBaseModal = ({
             size={24}
             hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
             style={styles.iconBack}
-            buttonTestID="search_modal.back_button"
+            buttonTestID="search_base_view.back_button"
           />
           <TextInput
-            ref={inputRef}
-            testID={'search_modal.text_input'}
+            autoFocus
+            testID={'search_base_view.text_input'}
             style={styles.textInput}
             value={searchText}
             autoComplete={'off'}
@@ -75,7 +70,7 @@ const SearchBaseModal = ({
               size={20}
               tintColor={theme.colors.iconTint}
               onPress={() => _onChangeText('')}
-              buttonTestID="search_modal.reset_button"
+              buttonTestID="search_base_view.reset_button"
             />
           )}
         </View>
@@ -83,27 +78,27 @@ const SearchBaseModal = ({
     );
   };
 
-  return (
-    <Modal
-      visible={isOpen}
-      animationType="fade"
-      presentationStyle="fullScreen"
-      onShow={onShowModal}>
+  return isOpen ? (
+    <View style={styles.container}>
       {renderHeader()}
       {children}
-    </Modal>
-  );
+    </View>
+  ) : null;
 };
-
-export default SearchBaseModal;
 
 const createStyles = (theme: ITheme) => {
   const {spacing, colors, dimension} = theme;
   const insets = useSafeAreaInsets();
 
   return StyleSheet.create({
+    container: {
+      position: 'absolute',
+      width: '100%',
+      height: '100%',
+      backgroundColor: colors.background,
+    },
     headerContainer: {
-      paddingTop: Platform.OS === 'android' ? 0 : insets.top,
+      paddingTop: insets.top,
       overflow: 'hidden',
       alignItems: 'flex-end',
       flexDirection: 'row',
@@ -148,3 +143,5 @@ const createStyles = (theme: ITheme) => {
     },
   });
 };
+
+export default SearchBaseView;

@@ -7,6 +7,7 @@ import {useDispatch} from 'react-redux';
 import Divider from '~/beinComponents/Divider';
 import Filter from '~/beinComponents/Filter';
 import Header from '~/beinComponents/Header';
+import Icon from '~/beinComponents/Icon';
 import NotificationItem from '~/beinComponents/list/items/NotificationItem';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -64,6 +65,10 @@ const Notification = () => {
     [listRef],
   );
 
+  useEffect(() => {
+    listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
+  }, [selectedIndex]);
+
   const refreshListNotification = () => {
     const type = notificationMenuData[selectedIndex]?.type || 'ALL';
     //@ts-ignore
@@ -73,7 +78,12 @@ const Notification = () => {
   const onPressFilterItem = (item: any, index: number) => {
     setSelectedIndex(index);
     if (!!item?.type) {
-      dispatch(notificationsActions.getNotifications({flag: item.type}));
+      dispatch(
+        notificationsActions.getNotifications({
+          flag: item.type,
+          clearCurrentNotifications: true,
+        }),
+      );
     }
   };
 
@@ -234,6 +244,17 @@ const Notification = () => {
     );
   };
 
+  const renderUnReadNotificationsEmpty = () => {
+    return (
+      <View style={styles.unReadNotifications}>
+        <Icon icon="CheckCircle" size={40} tintColor={theme.colors.success} />
+        <Text.Subtitle useI18n style={{marginTop: theme.spacing.margin.base}}>
+          notification:seen_all_notifications
+        </Text.Subtitle>
+      </View>
+    );
+  };
+
   return (
     <ScreenWrapper testID="NotfiticationScreen" isFullView>
       <Header
@@ -244,8 +265,17 @@ const Notification = () => {
         onPressMenu={onPressMenu}
       />
       {renderListHeader()}
-      {showNoNotification && <NoNotificationFound />}
-      {!showNoNotification && (
+      {!loadingNotifications &&
+      showNoNotification &&
+      noMoreNotification &&
+      selectedIndex === 1 ? (
+        renderUnReadNotificationsEmpty()
+      ) : showNoNotification && !loadingNotifications ? (
+        <NoNotificationFound />
+      ) : loadingNotifications ? (
+        <ActivityIndicator color={theme.colors.bgFocus} />
+      ) : null}
+      {!showNoNotification && !loadingNotifications && (
         <ListView
           listRef={listRef}
           style={styles.list}
@@ -263,10 +293,14 @@ const Notification = () => {
           currentPath={currentPath}
         />
       )}
-      <NotificationBottomSheet modalizeRef={menuSheetRef} />
+      <NotificationBottomSheet
+        modalizeRef={menuSheetRef}
+        flag={notificationMenuData[selectedIndex]?.type || 'ALL'}
+      />
       <NotificationOptionBottomSheet
         modalizeRef={notificationOptionRef}
         data={selectedNotification}
+        flag={notificationMenuData[selectedIndex]?.type || 'ALL'}
       />
     </ScreenWrapper>
   );
@@ -289,6 +323,10 @@ const themeStyles = (theme: ITheme) => {
       height: 150,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    unReadNotifications: {
+      alignItems: 'center',
+      marginTop: (spacing.margin.extraLarge || 24) * 2,
     },
   });
 };

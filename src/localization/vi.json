@@ -36,6 +36,8 @@
     "btn_confirm": "Xác nhận",
     "btn_join": "Tham gia",
     "btn_view": "Xem",
+    "btn_leave": "Đóng",
+    "btn_stay_on_this_page": "Ở lại màn hình này",
     "text_search_emoji": "Tìm Emoji",
     "text_important": "Quan trọng",
     "text_clear": "Xoá",
@@ -47,6 +49,7 @@
     "text_loading": "Đang tải ...",
     "text_retry": "Thử lại",
     "text_done": "Xong",
+    "text_uploading": "Đang tải...",
     "text_error_message": "Có gì đó sai sai",
     "text_important_posts": "Bài viết quan trọng",
     "text_files": "Files",
@@ -93,7 +96,9 @@
     "text_not_now": "Không phải bây giờ",
     "text_go_to_settings": "Đi tới Cài đặt",
     "text_help": "Trợ giúp",
-    "text_type_search_keyword": "Gõ từ khóa để tìm kiếm"
+    "text_type_search_keyword": "Gõ từ khóa để tìm kiếm",
+    "text_no_results_found": "Không tìm thấy kết quả",
+    "text_search_results": "Kết quả tìm kiếm"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -111,13 +116,14 @@
     "input_label_username": "Tên tài khoản",
     "input_label_email": "Email",
     "input_label_password": "Mật khẩu",
-    "input_label_code": "Mã xác thực",
+    "input_label_code": "Mã xác thực 6 chữ số",
     "input_label_new_password": "Mật khẩu mới",
     "input_label_confirm_new_password": "Xác nhận mật khẩu",
     "btn_sign_in": "Đăng nhập",
     "btn_sign_in_fb": "Đăng nhập với Facebook",
     "btn_sign_in_gg": "Đăng nhập với Google",
     "btn_sign_in_apple": "Đăng nhập với Apple",
+    "btn_sign_in_now": "Đăng nhập ngay",
     "btn_sign_up": "Đăng ký",
     "btn_send": "Gửi",
     "btn_send_recover_code": "Gửi mã xác thực",
@@ -147,7 +153,7 @@
     "text_err_wrong_code": "Điền sai mã xác thực? ",
     "text_err_missing_token": "Có gì đó không đúng đã xảy ra.",
     "text_err_wrong_current_password": "Mật khẩu hiện tại không đúng",
-    "text_request_new_code": "Gửi lại mã mới.",
+    "text_request_new_code": "Chưa nhận được mã,",
     "text_title_success": "Thành công",
     "text_sign_up_desc": "Chưa có tài khoản?",
     "text_sign_up_success": "Vui lòng kiểm tra email xác thực tài khoản",
@@ -161,15 +167,24 @@
     "text_landing_desc_group": "You are now a part of {0} on Bein. Let’s start with creating your new account.",
     "text_or": "Hoặc",
     "text_forgot_password": "Quên mật khẩu",
-    "text_forgot_password_input_desc": "Để cấp lại mật khẩu, vui lòng điền email của bạn",
-    "text_forgot_password_input_code_title": "Mã xác thực",
-    "text_forgot_password_input_code_desc": "Điền mã xác thực & mật khẩu mới",
+    "text_forgot_password_input_desc": "Vui lòng nhập địa chỉ email hoặc số điện thoại di động của bạn để tìm kiếm lại tài khoản của bạn",
+    "text_forgot_password_input_code_title": "Chúng tôi đã gửi một mã xác thực đến email của bạn",
+    "text_forgot_password_input_code_desc": "Nhập mã xác minh gồm 6 chữ số được gửi đến (email). Nếu bạn không thấy email trong hộp thư đến của mình, vui lòng kiểm tra thư mục spam của bạn",
     "text_forgot_password_input_pw_title": "Mật khẩu mới",
     "text_forgot_password_input_pw_desc": "Tạo mật khẩu mới của bạn",
-    "text_forgot_password_complete_title": "Tài khoản của bạn đã được thay đổi mật khẩu mới",
-    "text_forgot_password_complete_desc": "Đăng nhập ngay với mật khẩu mới của bạn",
+    "text_forgot_password_complete_title": "Mật khẩu đã được thay đổi",
+    "text_forgot_password_complete_desc": "Nếu bạn cho rằng ai đó có thể đã biết mật khẩu cũ của mình, bạn nên đăng xuất khỏi bất kỳ điện thoại hoặc máy tính nào khác và kiểm tra các thay đổi gần đây đối với tài khoản của mình.",
     "text_change_password_complete_title": "Tài khoản của bạn đã được thay đổi mật khẩu mới",
-    "text_change_password_complete_desc": "For us, your privacy and security is our most priority"
+    "text_change_password_complete_desc": "For us, your privacy and security is our most priority",
+    "text_forgot_password_email_not_found": "Email này không được liên kết với bất kỳ tài khoản nào.",
+    "btn_resend_code": "Gửi lại mã xác thực",
+    "btn_submit": " Gửi",
+    "text_err_password_characters": "Mật khẩu phải dài ít nhất 8-20 ký tự.",
+    "text_err_password_required": "Password required!",
+    "text_err_password_required_lower_case": "Vui lòng sử dụng ít nhất một ký tự viết thường (a-z)!",
+    "text_err_password_required_upper_case": "Vui lòng sử dụng ít nhất một ký tự viết hoa (A-Z)!",
+    "text_err_password_required_number": "Vui lòng sử dụng ít nhất một ký tự là số!",
+    "text_err_password_required_symbols": "Vui lòng sử dụng ít nhất một ký tự đặc biệt bao gồm dấu câu và ký hiệu thông thường!"
   },
   "tabs": {
     "home": "Bản tin",
@@ -466,7 +481,8 @@
       "text_no_draft_posts": "Bạn không còn bài nháp nào",
       "text_draft_published": "Bài viết của bạn đã được đăng",
       "text_draft_saved": "Bản nháp của bạn đã được lưu",
-      "text_draft_deleted": "Bản nháp của bạn đã được xoá"
+      "text_draft_deleted": "Bản nháp của bạn đã được xoá",
+      "text_processing_publish": "Bài viết của bạn đang được biên tập"
     },
     "comment": {
       "title_delete_comment": "Xoá bình luận",
@@ -538,7 +554,7 @@
     "text_members_other": "thành viên",
     "search_results": "Kết quả tìm kiếm",
     "all_groups": "Tất cả",
-    "text_search_member": "Tìm kiềm thành viên",
+    "text_search_member": "Tìm kiếm thành viên",
     "group_menu": {
       "label_copy_group_link": "Sao chép đường dẫn nhóm",
       "label_leave_group": "Rời nhóm",
@@ -613,7 +629,8 @@
     "text_important": "Quan trọng",
     "mark_as_read": "Đánh dấu là đã đọc",
     "mark_as_unread": "Đánh dấu là chưa đọc",
-    "off_notification_from_group": "Tắt nhận thông báo cho nhóm này"
+    "off_notification_from_group": "Tắt nhận thông báo cho nhóm này",
+    "seen_all_notifications": "Bạn đã đọc hết thông báo"
   },
   "new_feature": {
     "title": "New feature",
@@ -666,5 +683,19 @@
     "text_other_member_other": "{{count}} người khác là thành viên",
     "text_is_member": "là thành viên",
     "title_discover_groups": "Khám phá các nhóm"
+  },
+  "upload": {
+    "text_create_video_id_request_failed": "Có lỗi khi yêu cầu tạo id",
+    "text_create_video_id_response_failed": "Có lỗi khi tạo id",
+    "text_upload_video_request_failed": "Có lỗi khi yêu cầu tải video",
+    "text_upload_video_response_failed": "Có lỗi khi tải video",
+    "text_create_media_request_failed": "Có lỗi khi yêu cầu tạo media",
+    "text_create_media_response_failed": "Có lỗi khi tạo media",
+    "title_delete_video": "Xoá Video?",
+    "text_delete_video": "Bạn có chắc muốn xoá video?",
+    "text_upload_video_error": "Không thể tải lên video này",
+    "title_leave_uploading_video": "Đóng màn hình này?",
+    "text_leave_uploading_video": "Bạn có chắc muốn đóng màn hình này? Video bạn đang tải lên sẽ bị huỷ.",
+    "text_video_over_size": "Video của bạn phải nhỏ hơn 300MB"
   }
 }

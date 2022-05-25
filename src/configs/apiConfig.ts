@@ -1,4 +1,4 @@
-import {AxiosRequestConfig} from 'axios';
+import {AxiosRequestConfig, CancelToken} from 'axios';
 
 import {getEnv} from '~/utils/env';
 import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
@@ -16,28 +16,67 @@ const providers = {
     url: `${getEnv('BEIN_NOTIFICATION')}api/v1/`,
     name: 'BeinNotification',
   },
+  beinUpload: {
+    url: `${getEnv('BEIN_UPLOAD')}`,
+    name: 'BeinNotification',
+  },
 };
 
 const Upload = {
+  createVideoId: (): HttpApiRequestConfig => {
+    return {
+      url: `${providers.beinUpload.url}videos`,
+      method: 'post',
+      provider: providers.beinUpload,
+      useRetry: true,
+    };
+  },
+  uploadVideo: (
+    id: string,
+    type: any,
+    data: FormData,
+    onUploadProgress?: (progressEvent: any) => void,
+    abortSignal?: AbortSignal,
+  ): HttpApiRequestConfig => {
+    return {
+      url: `${providers.beinUpload.url}videos/${id}`,
+      method: 'post',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      useRetry: true,
+      provider: providers.beinUpload,
+      onUploadProgress: onUploadProgress,
+      data,
+      signal: abortSignal,
+    };
+  },
   uploadFile: (
     type: any,
     data: FormData,
     onUploadProgress?: (progressEvent: any) => void,
   ): HttpApiRequestConfig => {
-    const uploadEndPoint: any = {
+    const groupUploadEndPoint: any = {
       user_avatar: 'upload/user-avatar',
       user_cover: 'upload/user-cover',
       group_avatar: 'upload/group-avatar',
       group_cover: 'upload/group-cover',
     };
 
+    const uploadEndPoint: any = {
+      post_video: 'videos/',
+    };
+
     let url: string;
     let provider: any;
 
-    if (uploadEndPoint[type]) {
+    if (groupUploadEndPoint[type]) {
       // upload bein group
-      url = `${providers.bein.url}${uploadEndPoint[type]}`;
+      url = `${providers.bein.url}${groupUploadEndPoint[type]}`;
       provider = providers.bein;
+    } else if (uploadEndPoint[type]) {
+      url = `${providers.beinUpload.url}${uploadEndPoint[type]}`;
+      provider = providers.beinUpload;
     } else {
       // upload bein feed
       url = `${providers.beinFeed.url}api/v1/media`;

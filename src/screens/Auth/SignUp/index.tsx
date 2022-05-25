@@ -18,6 +18,7 @@ import {rootNavigationRef} from '~/router/navigator/refs';
 import actions from '~/screens/Auth/redux/actions';
 import {spacing} from '~/theme';
 import {ITheme} from '~/theme/interfaces';
+import {getEnv} from '~/utils/env';
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -117,12 +118,34 @@ const SignUp = () => {
           name={'password'}
           rules={{
             required: t('auth:text_err_password_blank'),
-            min: 8,
-            max: 20,
-            // pattern: {
-            //   value: validation.passwordRegex,
-            //   message: t('auth:text_err_password_format'),
-            // },
+            maxLength: {
+              value: 20,
+              message: t('auth:text_err_password_characters'),
+            },
+            minLength: {
+              value: 8,
+              message: t('auth:text_err_password_characters'),
+            },
+            validate: () => {
+              if (
+                !getEnv('SELF_DOMAIN')?.includes('sbx') &&
+                !getEnv('SELF_DOMAIN')?.includes('stg')
+              ) {
+                const value = getValues('newPassword');
+                if (!/(?=.*?[A-Z])/.test(value)) {
+                  return t('auth:text_err_password_required_upper_case');
+                }
+                if (!/(?=.*?[a-z])/.test(value)) {
+                  return t('auth:text_err_password_required_lower_case');
+                }
+                if (!/(?=.*?[0-9])/.test(value)) {
+                  return t('auth:text_err_password_required_number');
+                }
+                if (!/(?=.*?[^\w\s])/.test(value)) {
+                  return t('auth:text_err_password_required_symbols');
+                }
+              }
+            },
           }}
           loading={loading}
           testID={'inputPassword'}
