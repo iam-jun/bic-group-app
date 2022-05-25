@@ -1,15 +1,16 @@
-import {validateImages} from '~/screens/Post/CreatePost/helper';
+import {validateImages, validateVideo} from '~/screens/Post/CreatePost/helper';
 import {get} from 'lodash';
 import {languages} from '~/test/testUtils';
 import FileUploader from '~/services/fileUploader';
-import {imagePicked} from '~/test/mock_data/file';
+import {imagePicked, videoSelected, videoUploaded} from '~/test/mock_data/file';
+import VideoUploader from '~/services/videoUploader';
 
 describe('CreatePost helper', () => {
   // @ts-ignore
   const t = (path: string) => get(languages, path?.replaceAll?.(':', '.'));
   const imageUrl =
     'https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/d47669b1-fd3c-4e15-9eb0-24162b4342bc.jpg';
-  const fileParseFromEditPost = {
+  const imageParseFromEditPost = {
     fileName: '20220107_223640.jpg',
     file: {
       name: '20220107_223640.jpg',
@@ -19,7 +20,7 @@ describe('CreatePost helper', () => {
     },
     url: 'https://bein-user-sharing-assets-sandbox.s3.ap-southeast-1.amazonaws.com/post/images/original/d47669b1-fd3c-4e15-9eb0-24162b4342bc.jpg',
   };
-  const fileValidated = {
+  const imageValidated = {
     name: imageUrl,
     origin_name: '20220107_223640.jpg',
     width: 4032,
@@ -40,7 +41,7 @@ describe('CreatePost helper', () => {
 
     const result = validateImages([imagePicked] as any, t);
     expect(result).toEqual({
-      images: [fileValidated],
+      images: [imageValidated],
       imageError: '',
       imageUploading: false,
     });
@@ -57,7 +58,7 @@ describe('CreatePost helper', () => {
 
     const result = validateImages([imagePicked] as any, t);
     expect(result).toEqual({
-      images: [fileValidated],
+      images: [imageValidated],
       imageError: languages.post.error_wait_uploading,
       imageUploading: true,
     });
@@ -72,18 +73,95 @@ describe('CreatePost helper', () => {
 
     const result = validateImages([imagePicked] as any, t);
     expect(result).toEqual({
-      images: [{...fileValidated, name: ''}],
+      images: [{...imageValidated, name: ''}],
       imageError: languages.post.error_upload_failed,
       imageUploading: false,
     });
   });
 
   it('validateImages: validate file from edit post', () => {
-    const result = validateImages([fileParseFromEditPost] as any, t);
+    const result = validateImages([imageParseFromEditPost] as any, t);
     expect(result).toEqual({
-      images: [fileValidated],
+      images: [imageValidated],
       imageError: '',
       imageUploading: false,
+    });
+  });
+
+  it('validateVideo: return empty data if invalid input video', () => {
+    const result = validateVideo(undefined, t);
+    expect(result).toEqual({
+      video: undefined,
+      videoError: '',
+    });
+  });
+
+  it('validateVideo: return empty data if invalid input video', () => {
+    const result = validateVideo(undefined, t);
+    expect(result).toEqual({
+      video: undefined,
+      videoError: '',
+    });
+  });
+
+  it('validateVideo: return selected file if it has been uploaded (has id)', () => {
+    const result = validateVideo(videoUploaded, t);
+    expect(result).toEqual({
+      video: videoUploaded,
+      videoError: '',
+      videoUploading: false,
+    });
+  });
+
+  it('validateVideo: return error uploading file', () => {
+    jest.spyOn(VideoUploader, 'getInstance').mockImplementation(() => {
+      return {
+        getFile: jest
+          .fn()
+          .mockImplementation(() => ({uploading: true, result: videoUploaded})),
+      } as any;
+    });
+
+    const result = validateVideo(videoSelected, t);
+    expect(result).toEqual({
+      video: undefined,
+      videoError: languages.post.error_wait_uploading,
+      videoUploading: true,
+    });
+  });
+
+  it('validateVideo: return error upload failed', () => {
+    jest.spyOn(VideoUploader, 'getInstance').mockImplementation(() => {
+      return {
+        getFile: jest
+          .fn()
+          .mockImplementation(() => ({uploading: false, result: {}})),
+      } as any;
+    });
+
+    const result = validateVideo(videoSelected, t);
+    expect(result).toEqual({
+      video: undefined,
+      videoError: languages.post.error_upload_failed,
+      videoUploading: false,
+    });
+  });
+
+  it('validateVideo: return file uploaded', () => {
+    jest.spyOn(VideoUploader, 'getInstance').mockImplementation(() => {
+      return {
+        getFile: jest.fn().mockImplementation(() => ({
+          uploading: false,
+          result: videoUploaded,
+        })),
+      } as any;
+    });
+
+    const result = validateVideo(videoSelected, t);
+    expect(result).toEqual({
+      video: videoUploaded,
+      videoError: '',
+      videoUploading: false,
     });
   });
 });
