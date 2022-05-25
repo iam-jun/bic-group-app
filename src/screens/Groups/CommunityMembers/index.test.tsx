@@ -1,4 +1,3 @@
-import i18next from 'i18next';
 import React from 'react';
 import {renderWithRedux} from '~/test/testUtils';
 import CommunityMembers from '.';

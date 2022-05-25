@@ -51,8 +51,8 @@ describe('Community members - ContentData component', () => {
       },
       {
         title: 'Members',
-        data: memberData.member.data,
-        user_count: memberData.member.user_count,
+        data: memberData.community_member.data,
+        user_count: memberData.community_member.user_count,
       },
     ];
     const loading = false;
@@ -85,8 +85,8 @@ describe('Community members - ContentData component', () => {
       },
       {
         title: 'Members',
-        data: memberData.member.data,
-        user_count: memberData.member.user_count,
+        data: memberData.community_member.data,
+        user_count: memberData.community_member.user_count,
       },
     ];
     const loading = false;

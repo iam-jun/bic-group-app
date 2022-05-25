@@ -175,7 +175,7 @@ describe('MemberOptionsMenu component', () => {
 
     const selectedMember = {
       id: 1,
-      roles: [{type: 'GROUP_ADMIN'}],
+      is_admin: true,
     } as IGroupMembers;
 
     const {getByTestId} = renderWithRedux(
@@ -203,7 +203,7 @@ describe('MemberOptionsMenu component', () => {
 
     const selectedMember = {
       id: 1,
-      roles: [{type: 'GROUP_ADMIN'}],
+      is_admin: true,
     } as IGroupMembers;
 
     const {getByTestId} = renderWithRedux(
@@ -232,7 +232,7 @@ describe('MemberOptionsMenu component', () => {
 
     const selectedMember = {
       id: 1,
-      roles: [{type: 'GROUP_ADMIN'}],
+      is_admin: true,
     } as IGroupMembers;
 
     const {getByTestId} = renderWithRedux(
@@ -262,7 +262,7 @@ describe('MemberOptionsMenu component', () => {
 
     const selectedMember = {
       id: 1,
-      roles: [{type: 'MEMBER'}],
+      is_admin: false,
     } as IGroupMembers;
 
     const {getByTestId} = renderWithRedux(
@@ -289,7 +289,7 @@ describe('MemberOptionsMenu component', () => {
   it('should navigate to user profile correctly when pressing View profile option', () => {
     const selectedMember = {
       id: 1,
-      roles: [{type: 'MEMBER'}],
+      is_admin: false,
     } as IGroupMembers;
 
     const navigate = jest.fn();

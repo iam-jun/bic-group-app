@@ -4,7 +4,6 @@ import {put, select, takeLatest} from 'redux-saga/effects';
 import {
   IGroupAddMembers,
   IGroupGetJoinableMembers,
-  IGroupGetMembers,
   IGroupImageUpload,
   IJoiningMember,
 } from '~/interfaces/IGroup';
@@ -44,6 +43,7 @@ import getDiscoverGroups from './getDiscoverGroups';
 import getManagedCommunities from './getManagedCommunities';
 import getCommunitySearchMembers from './getCommunitySearchMembers';
 import getGroupSearchMembers from './getGroupSearchMembers';
+import getGroupMember from './getGroupMember';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -125,56 +125,6 @@ function* getGroupSearch({payload}: {type: string; payload: string}) {
     console.log(`\x1b[31m🐣️ saga getGroupSearch error: ${err}\x1b[0m`);
     yield put(groupsActions.setGroupSearch({loading: false, result: []}));
     // yield showError(err);
-  }
-}
-
-function* getGroupMember({payload}: {type: string; payload: IGroupGetMembers}) {
-  try {
-    yield put(groupsActions.setLoadingGroupMembers(true));
-    const {groupId, params} = payload;
-
-    const {groups} = yield select();
-    const {groupMember} = groups;
-    const newGroupMembers = Object.assign({}, groupMember || {});
-    const {skip = 0, canLoadMore = true} = newGroupMembers;
-    if (canLoadMore) {
-      const response: IResponseData = yield groupsDataHelper.getGroupMembers(
-        groupId,
-        {
-          offset: skip,
-          limit: appConfig.recordsPerPage,
-          ...params,
-        },
-      );
-
-      let newSkip = skip;
-      let newCanLoadMore = canLoadMore;
-      if (response) {
-        Object.keys(response)?.map?.((role: any) => {
-          // @ts-ignore
-          newSkip = newSkip + response?.[role]?.data?.length || 0;
-          if (newGroupMembers?.[role]) {
-            const roleData = {...newGroupMembers[role]};
-            newGroupMembers[role].data = roleData.data?.concat(
-              // @ts-ignore
-              response?.[role]?.data || [],
-            );
-          } else {
-            // @ts-ignore
-            newGroupMembers[role] = response?.[role];
-          }
-          newGroupMembers.skip = newSkip;
-        });
-        if (newSkip === skip) {
-          newCanLoadMore = false;
-        }
-        newGroupMembers.canLoadMore = newCanLoadMore;
-        yield put(groupsActions.setGroupMembers(newGroupMembers));
-      }
-    }
-    yield put(groupsActions.setLoadingGroupMembers(false));
-  } catch (e) {
-    console.log(`\x1b[31m🐣️ getGroupMember | getGroupMember : ${e} \x1b[0m`);
   }
 }
 

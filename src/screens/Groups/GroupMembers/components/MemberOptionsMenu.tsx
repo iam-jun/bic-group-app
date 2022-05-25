@@ -214,12 +214,6 @@ const MemberOptionsMenu = ({
     }
   };
 
-  const isGroupAdmin = () => {
-    return !!selectedMember?.roles?.find(
-      (role: IGroupMemberRole) => role.type === 'GROUP_ADMIN',
-    );
-  };
-
   return (
     <BottomSheet
       modalizeRef={modalizeRef}
@@ -245,7 +239,7 @@ const MemberOptionsMenu = ({
             />
           )}
           {can_setting &&
-            (isGroupAdmin() ? (
+            (selectedMember?.is_admin ? (
               <PrimaryItem
                 testID="member_options_menu.remove_admin"
                 style={styles.menuOption}
