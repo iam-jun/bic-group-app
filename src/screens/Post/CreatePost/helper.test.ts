@@ -28,7 +28,7 @@ describe('CreatePost helper', () => {
 
   it('validateImages: validate empty array', () => {
     const result = validateImages([], t);
-    expect(result).toEqual({images: [], imageError: ''});
+    expect(result).toEqual({images: [], imageError: '', imageUploading: false});
   });
 
   it('validateImages: validate picked 1 image upload success', () => {
@@ -39,7 +39,11 @@ describe('CreatePost helper', () => {
     });
 
     const result = validateImages([imagePicked] as any, t);
-    expect(result).toEqual({images: [fileValidated], imageError: ''});
+    expect(result).toEqual({
+      images: [fileValidated],
+      imageError: '',
+      imageUploading: false,
+    });
   });
 
   it('validateImages: validate picked 1 image uploading', () => {
@@ -55,6 +59,7 @@ describe('CreatePost helper', () => {
     expect(result).toEqual({
       images: [fileValidated],
       imageError: languages.post.error_wait_uploading,
+      imageUploading: true,
     });
   });
 
@@ -69,6 +74,7 @@ describe('CreatePost helper', () => {
     expect(result).toEqual({
       images: [{...fileValidated, name: ''}],
       imageError: languages.post.error_upload_failed,
+      imageUploading: false,
     });
   });
 
@@ -77,6 +83,7 @@ describe('CreatePost helper', () => {
     expect(result).toEqual({
       images: [fileValidated],
       imageError: '',
+      imageUploading: false,
     });
   });
 });
