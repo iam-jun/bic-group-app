@@ -3,7 +3,7 @@ import React, {useCallback, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
 import {ITheme} from '~/theme/interfaces';
-import SearchBaseModal from '~/beinComponents/modals/SearchBaseModal';
+import SearchBaseView from '~/beinComponents/SearchBaseView';
 import actions from '~/screens/Groups/redux/actions';
 import {debounce} from 'lodash';
 import appConfig from '~/configs/appConfig';
@@ -11,7 +11,7 @@ import Text from '~/beinComponents/Text';
 import {useTheme} from 'react-native-paper';
 import SearchResultContent from './SearchResultContent';
 
-interface SearchMemberModalProps {
+interface SearchMemberViewProps {
   communityId: number;
   isOpen: boolean;
   placeholder?: string;
@@ -20,14 +20,14 @@ interface SearchMemberModalProps {
   onClose?: () => void;
 }
 
-const SearchMemberModal = ({
+const SearchMemberView = ({
   communityId,
   isOpen,
   placeholder,
   onPressChat,
   onClose,
   initSearch,
-}: SearchMemberModalProps) => {
+}: SearchMemberViewProps) => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const [searchText, setSearchText] = useState(initSearch || '');
@@ -62,7 +62,7 @@ const SearchMemberModal = ({
   };
 
   return (
-    <SearchBaseModal
+    <SearchBaseView
       isOpen={isOpen}
       placeholder={placeholder}
       onClose={onClose}
@@ -82,11 +82,11 @@ const SearchMemberModal = ({
           </Text.BodyS>
         </View>
       )}
-    </SearchBaseModal>
+    </SearchBaseView>
   );
 };
 
-export default SearchMemberModal;
+export default SearchMemberView;
 
 const createStyles = (theme: ITheme) => {
   return StyleSheet.create({
