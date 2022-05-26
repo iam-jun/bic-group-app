@@ -11,7 +11,7 @@ import {ITheme} from '~/theme/interfaces';
 import actions from '~/screens/Groups/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
-import SearchMemberModal from './SearchMemberModal';
+import SearchMemberView from './SearchMemberView';
 import ContentData from './ContentData';
 
 const CommunityMembers = ({route}: any) => {
@@ -105,7 +105,7 @@ const CommunityMembers = ({route}: any) => {
         onPressChat={onPressChat}
       />
 
-      <SearchMemberModal
+      <SearchMemberView
         isOpen={isOpen}
         communityId={communityId}
         onClose={onCloseModal}
