@@ -185,7 +185,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
           isExpanded && {
             ...styles.expanded,
             height: contentHeight,
-            bottom: keyboardHeight,
+            bottom: Platform.OS === 'android' ? 0 : keyboardHeight,
           },
         ]}>
         <Animated.View
@@ -213,7 +213,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
             />
           </View>
         </Animated.View>
-        {Platform.OS === 'android' && <KeyboardSpacer />}
+        {Platform.OS === 'android' && visible && <KeyboardSpacer />}
       </View>
     </FlingGestureHandler>
   );
