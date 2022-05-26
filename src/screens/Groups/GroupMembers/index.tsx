@@ -1,12 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {
-  View,
-  StyleSheet,
-  SectionList,
-  ActivityIndicator,
-  Platform,
-  Pressable,
-} from 'react-native';
+import {View, StyleSheet, Platform, Pressable} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -18,25 +11,21 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {IGroupMembers} from '~/interfaces/IGroup';
-import images from '~/resources/images';
 
 import Text from '~/beinComponents/Text';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import NoSearchResult from '~/beinFragments/NoSearchResult';
 import MemberOptionsMenu from './components/MemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
+import MemberList from './components/MemberList';
 
 const _GroupMembers = (props: any) => {
   const params = props.route.params;
   const {groupId} = params || {};
 
-  const [sectionList, setSectionList] = useState([]);
-  const [searchText, setSearchText] = useState<string>('');
   const [selectedMember, setSelectedMember] = useState<IGroupMembers>();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -51,15 +40,11 @@ const _GroupMembers = (props: any) => {
   const {rootNavigation} = useRootNavigation();
   const baseSheetRef: any = useRef();
 
-  const groupMember = useKeySelector(groupsKeySelector.groupMember);
-  const {user_count: userCount} = useKeySelector(
-    groupsKeySelector.groupDetail.group,
+  const {group_admin, group_member} = useKeySelector(
+    groupsKeySelector.groupMembers,
   );
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
-  );
-  const loadingGroupMember = useKeySelector(
-    groupsKeySelector.loadingGroupMember,
   );
 
   const getGroupProfile = () => {
@@ -71,12 +56,7 @@ const _GroupMembers = (props: any) => {
 
   const getMembers = () => {
     if (groupId) {
-      dispatch(
-        groupsActions.getGroupMembers({
-          groupId,
-          params: {key: searchText.trim()},
-        }),
-      );
+      dispatch(groupsActions.getGroupMembers({groupId}));
     }
   };
 
@@ -86,34 +66,13 @@ const _GroupMembers = (props: any) => {
       return;
     }
 
-    const isDataEmpty = !groupMember?.group_admin || !groupMember?.group_member;
+    const isDataEmpty = !group_admin || !group_member;
     if (needReloadWhenReconnected && isDataEmpty) {
       getMembers();
       getGroupProfile();
       setNeedReloadWhenReconnected(false);
     }
   }, [isInternetReachable]);
-
-  useEffect(() => {
-    setSearchText('');
-  }, [userCount]);
-
-  useEffect(() => {
-    if (groupMember) {
-      const newSectionList: any = [];
-
-      Object.values(groupMember)?.map((roleData: any) => {
-        const section: any = {};
-        const {name, data} = roleData || {};
-        if (name && data) {
-          section.title = `${roleData.name}s (${roleData.user_count})`;
-          section.data = roleData.data;
-          newSectionList.push(section);
-        }
-      });
-      setSectionList(newSectionList);
-    }
-  }, [groupMember]);
 
   useEffect(() => {
     dispatch(groupsActions.clearGroupMembers());
@@ -138,47 +97,17 @@ const _GroupMembers = (props: any) => {
     getMembers();
   };
 
+  const onRefresh = () => {
+    dispatch(groupsActions.clearGroupMembers());
+    getMembers();
+  };
+
   const onPressSearch = () => {
     setIsOpen(true);
   };
 
   const onCloseModal = () => {
     setIsOpen(false);
-  };
-
-  const renderItem = ({item}: {item: IGroupMembers}) => {
-    const {fullname, avatar, username} = item || {};
-
-    return (
-      <PrimaryItem
-        showAvatar
-        menuIconTestID={'group_members.item'}
-        style={styles.itemContainer}
-        avatar={avatar || images.img_user_avatar_default}
-        ContentComponent={
-          <Text.H6 numberOfLines={2}>
-            {fullname}
-            <Text.Subtitle
-              color={
-                theme.colors.textSecondary
-              }>{` @${username}`}</Text.Subtitle>
-          </Text.H6>
-        }
-        onPressMenu={(e: any) => onPressMenu(e, item)}
-      />
-    );
-  };
-
-  const renderListHeader = () => {
-    return null;
-  };
-
-  const renderSectionHeader = ({section: {title}}: any) => {
-    return (
-      <View style={styles.sectionHeader}>
-        <Text.H5 color={colors.textSecondary}>{title}</Text.H5>
-      </View>
-    );
   };
 
   const renderInviteMemberButton = () => {
@@ -208,26 +137,6 @@ const _GroupMembers = (props: any) => {
     rootNavigation.navigate(groupStack.inviteMembers, {groupId});
   };
 
-  const _renderLoading = () => {
-    if (loadingGroupMember) {
-      return (
-        <View style={styles.loadingMember}>
-          <ActivityIndicator color={colors.borderDisable} />
-        </View>
-      );
-    }
-  };
-
-  const checkingEmptyData = (): any[] => {
-    return sectionList.filter((item: any) => item?.data.length > 0).length === 0
-      ? []
-      : sectionList;
-  };
-
-  const renderEmpty = () => {
-    return !loadingGroupMember ? <NoSearchResult /> : null;
-  };
-
   return (
     <ScreenWrapper isFullView backgroundColor={colors.background}>
       <Header
@@ -247,21 +156,10 @@ const _GroupMembers = (props: any) => {
         {renderInviteMemberButton()}
       </View>
 
-      {_renderLoading()}
-
-      <SectionList
-        style={styles.content}
-        sections={checkingEmptyData()}
-        keyExtractor={(item, index) => `section_list_${item}_${index}`}
-        onEndReached={onLoadMore}
-        onEndReachedThreshold={0.1}
-        ListHeaderComponent={renderListHeader}
-        ListEmptyComponent={renderEmpty}
-        renderSectionHeader={renderSectionHeader}
-        renderItem={renderItem}
-        ItemSeparatorComponent={() => <View style={{}} />}
-        stickySectionHeadersEnabled={false}
-        showsVerticalScrollIndicator={false}
+      <MemberList
+        onLoadMore={onLoadMore}
+        onPressMenu={onPressMenu}
+        onRefresh={onRefresh}
       />
 
       <MemberOptionsMenu
@@ -285,19 +183,6 @@ const _GroupMembers = (props: any) => {
 const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
-    itemContainer: {
-      height: undefined,
-      paddingHorizontal: spacing.padding.large,
-      paddingVertical: spacing.padding.tiny,
-    },
-    sectionHeader: {
-      paddingHorizontal: spacing.padding.large,
-      paddingTop: spacing.padding.large,
-      paddingBottom: spacing.padding.base,
-    },
-    content: {
-      backgroundColor: colors.background,
-    },
     searchBtn: {
       flex: 1,
       backgroundColor: colors.background,
@@ -320,9 +205,6 @@ const createStyle = (theme: ITheme) => {
     },
     iconSmall: {
       marginRight: spacing.margin.small,
-    },
-    loadingMember: {
-      marginTop: spacing.margin.large,
     },
   });
 };

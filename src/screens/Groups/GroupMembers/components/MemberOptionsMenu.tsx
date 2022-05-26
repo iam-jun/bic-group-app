@@ -46,7 +46,7 @@ const MemberOptionsMenu = ({
     groupsKeySelector.groupDetail.can_manage_member,
   );
   const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
-  const groupMember = useKeySelector(groupsKeySelector.groupMember);
+  const groupMembers = useKeySelector(groupsKeySelector.groupMembers);
   const {getInnerGroupsNames} = useRemoveMember({
     groupId,
     selectedMember,
@@ -127,7 +127,7 @@ const MemberOptionsMenu = ({
 
   const onPressRemoveAdmin = () => {
     if (selectedMember?.id) {
-      const adminCount = groupMember?.group_admin?.user_count;
+      const adminCount = groupMembers?.group_admin?.user_count;
       if (adminCount > 1) {
         alertRemovingAdmin();
       } else {

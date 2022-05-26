@@ -35,11 +35,11 @@ export const groupInitState = {
     result: [],
   },
   loadingGroupMember: false,
-  groupMember: {
-    skip: 0,
-    take: 20,
+  groupMembers: {
+    loading: false,
     canLoadMore: true,
-    //type admin, member...
+    group_admin: {data: [] as IGroupMembers[], user_count: 0},
+    group_member: {data: [] as IGroupMembers[], user_count: 0},
   },
   groupSearchMembers: {
     loading: false,
@@ -126,6 +126,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     communityMembers,
     communitySearchMembers,
     managedCommunities,
+    groupMembers,
     groupSearchMembers,
   } = state;
 
@@ -153,20 +154,18 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
 
-    case groupsTypes.SET_LOADING_GROUP_MEMBER:
-      return {
-        ...state,
-        loadingGroupMember: payload,
-      };
     case groupsTypes.CLEAR_GROUP_MEMBER:
       return {
         ...state,
-        groupMember: groupInitState.groupMember,
+        groupMembers: groupInitState.groupMembers,
       };
     case groupsTypes.SET_GROUP_MEMBER:
       return {
         ...state,
-        groupMember: action.payload,
+        groupMembers: {
+          ...groupMembers,
+          ...payload,
+        },
       };
 
     case groupsTypes.GET_GROUP_POSTS:
