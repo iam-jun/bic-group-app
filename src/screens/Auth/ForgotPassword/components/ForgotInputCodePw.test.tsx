@@ -93,12 +93,10 @@ describe('ForgotInputCodePw component', () => {
     //disable input new password
     const newPassword = wrapper.getByTestId('inputNewPassword');
     expect(newPassword).toBeDefined();
-    expect(newPassword?.props?.disabled).toBeTruthy();
 
     //disable input confirm password
     const confirmPassword = wrapper.getByTestId('inputConfirmPassword');
     expect(confirmPassword).toBeDefined();
-    expect(confirmPassword?.props?.disabled).toBeTruthy();
 
     //disable button change password
     const btnChangePassword = wrapper.getByTestId('btnChangePassword');
@@ -131,9 +129,7 @@ describe('ForgotInputCodePw component', () => {
       store,
     );
 
-    //disable input new password, input confirm password and button change password
-    expect(newPassword?.props?.disabled).toBeTruthy();
-    expect(confirmPassword?.props?.disabled).toBeTruthy();
+    //disable button change password
     expect(btnChangePassword.props?.accessibilityState?.disabled).toBe(true);
 
     const helperText = wrapper.queryByTestId('text_input.text_helper');
@@ -163,9 +159,7 @@ describe('ForgotInputCodePw component', () => {
     );
     expect(helperText?.props?.children?.[0]).toBe('Error 2');
 
-    //disable input new password, input confirm password and button change password
-    expect(newPassword?.props?.disabled).toBeTruthy();
-    expect(confirmPassword?.props?.disabled).toBeTruthy();
+    //disable button change password
     expect(btnChangePassword.props?.accessibilityState?.disabled).toBe(true);
   });
 
@@ -186,17 +180,15 @@ describe('ForgotInputCodePw component', () => {
       store,
     );
 
-    //disable input new password
+    //input new password
     const newPassword = wrapper.getByTestId('inputNewPassword');
     expect(newPassword).toBeDefined();
-    expect(newPassword?.props?.disabled).toBeTruthy();
 
-    //disable input confirm password
+    //input confirm password
     const confirmPassword = wrapper.getByTestId('inputConfirmPassword');
     expect(confirmPassword).toBeDefined();
-    expect(confirmPassword?.props?.disabled).toBeTruthy();
 
-    //disable button change password
+    //button change password
     const btnChangePassword = wrapper.getByTestId('btnChangePassword');
     expect(btnChangePassword).toBeDefined();
     expect(btnChangePassword.props?.accessibilityState?.disabled).toBe(true);
@@ -237,9 +229,7 @@ describe('ForgotInputCodePw component', () => {
       store,
     );
 
-    //enable input new password, input confirm password and disable button change password
-    expect(newPassword?.props?.disabled).toBeFalsy();
-    expect(confirmPassword?.props?.disabled).toBeFalsy();
+    //disable button change password
     expect(btnChangePassword.props?.accessibilityState?.disabled).toBe(true);
 
     //typing new password with invalid password
@@ -301,15 +291,13 @@ describe('ForgotInputCodePw component', () => {
       store,
     );
 
-    //disable input new password
+    //input new password
     const newPassword = wrapper.getByTestId('inputNewPassword');
     expect(newPassword).toBeDefined();
-    expect(newPassword?.props?.disabled).toBeTruthy();
 
-    //disable input confirm password
+    //input confirm password
     const confirmPassword = wrapper.getByTestId('inputConfirmPassword');
     expect(confirmPassword).toBeDefined();
-    expect(confirmPassword?.props?.disabled).toBeTruthy();
 
     //disable button change password
     const btnChangePassword = wrapper.getByTestId('btnChangePassword');
@@ -352,9 +340,7 @@ describe('ForgotInputCodePw component', () => {
       store,
     );
 
-    //enable input new password, input confirm password and disable button change password
-    expect(newPassword?.props?.disabled).toBeFalsy();
-    expect(confirmPassword?.props?.disabled).toBeFalsy();
+    //still disable button change password
     expect(btnChangePassword.props?.accessibilityState?.disabled).toBe(true);
 
     //typing new password with invalid password
@@ -420,15 +406,13 @@ describe('ForgotInputCodePw component', () => {
       store,
     );
 
-    //disable input new password
+    //input new password
     const newPassword = wrapper.getByTestId('inputNewPassword');
     expect(newPassword).toBeDefined();
-    expect(newPassword?.props?.disabled).toBeTruthy();
 
-    //disable input confirm password
+    //input confirm password
     const confirmPassword = wrapper.getByTestId('inputConfirmPassword');
     expect(confirmPassword).toBeDefined();
-    expect(confirmPassword?.props?.disabled).toBeTruthy();
 
     //disable button change password
     const btnChangePassword = wrapper.getByTestId('btnChangePassword');
@@ -464,9 +448,7 @@ describe('ForgotInputCodePw component', () => {
       store,
     );
 
-    //enable input new password, input confirm password and disable button change password
-    expect(newPassword?.props?.disabled).toBeFalsy();
-    expect(confirmPassword?.props?.disabled).toBeFalsy();
+    //still disable button change password
     expect(btnChangePassword.props?.accessibilityState?.disabled).toBe(true);
 
     //typing new password with invalid password
