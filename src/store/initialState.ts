@@ -9,6 +9,7 @@ import {menuInitState} from '~/screens/Menu/redux/reducer';
 import {noInternetInitState} from '~/screens/NoInternet/redux/reducer';
 import {mentionInputInitState} from '~/beinComponents/inputs/MentionInput/redux/reducer';
 import {initialChatState} from '~/store/chat/reducer';
+import {giphyInitState} from './giphy/reducer';
 
 const initialState = {
   app: appInitState,
@@ -22,6 +23,7 @@ const initialState = {
   noInternet: noInternetInitState,
   mentionInput: mentionInputInitState,
   chat: initialChatState,
+  giphy: giphyInitState,
 };
 
 export default initialState;
