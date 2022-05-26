@@ -88,8 +88,6 @@ function* postCreateNewComment({
       tempMentions,
     );
 
-    console.log('commentData:', JSON.stringify(commentData));
-
     let resComment;
     if (parentCommentId) {
       resComment = yield postDataHelper.postReplyComment({
@@ -157,7 +155,7 @@ function* postCreateNewComment({
 
     yield put(postActions.setCreateComment({loading: false, content: ''}));
     onSuccess?.(); // call second time to make sure content is cleared on low performance device
-  } catch (e) {
+  } catch (e: any) {
     console.log('err:', JSON.stringify(e));
     if (preComment && !parentCommentId) {
       // retrying doesn't need to update status because status = 'failed' already
