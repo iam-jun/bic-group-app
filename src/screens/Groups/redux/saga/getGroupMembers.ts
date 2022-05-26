@@ -3,6 +3,7 @@ import appConfig from '~/configs/appConfig';
 import {IGroupGetMembers} from '~/interfaces/IGroup';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import actions from '../actions';
+import showError from '~/store/commonSaga/showError';
 
 export default function* getGroupMembers({
   payload,
@@ -48,7 +49,8 @@ export default function* getGroupMembers({
     };
 
     yield put(actions.setGroupMembers(newData));
-  } catch (e) {
-    console.log(`\x1b[31m🐣️ getGroupMember | getGroupMember : ${e} \x1b[0m`);
+  } catch (err) {
+    console.log(`\x1b[31m🐣️ getGroupMember | getGroupMember : ${err} \x1b[0m`);
+    yield call(showError, err);
   }
 }

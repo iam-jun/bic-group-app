@@ -54,10 +54,6 @@ const MemberList = ({onLoadMore, onPressMenu, onRefresh}: MemberListProps) => {
     return !loading ? <NoSearchResult /> : null;
   };
 
-  const renderListHeader = () => {
-    return null;
-  };
-
   const renderSectionHeader = ({section: {title, user_count}}: any) => {
     return (
       <View style={styles.sectionHeader}>
@@ -65,12 +61,6 @@ const MemberList = ({onLoadMore, onPressMenu, onRefresh}: MemberListProps) => {
           color={colors.textPrimary}>{`${title} • ${user_count}`}</Text.BodyM>
       </View>
     );
-  };
-
-  const checkingEmptyData = (): any[] => {
-    return sectionList.filter((item: any) => item?.data.length > 0).length === 0
-      ? []
-      : sectionList;
   };
 
   const renderListFooter = () => {
@@ -98,7 +88,7 @@ const MemberList = ({onLoadMore, onPressMenu, onRefresh}: MemberListProps) => {
     return (
       <PrimaryItem
         showAvatar
-        menuIconTestID={'group_members.item'}
+        menuIconTestID={'member_list.item'}
         style={styles.itemContainer}
         avatar={avatar || images.img_user_avatar_default}
         ContentComponent={
@@ -119,11 +109,10 @@ const MemberList = ({onLoadMore, onPressMenu, onRefresh}: MemberListProps) => {
     <SectionList
       testID="member_list"
       style={styles.content}
-      sections={checkingEmptyData()}
+      sections={sectionList}
       keyExtractor={(item, index) => `section_list_${item}_${index}`}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.1}
-      ListHeaderComponent={renderListHeader}
       ListEmptyComponent={renderEmpty}
       ListFooterComponent={renderListFooter}
       renderSectionHeader={renderSectionHeader}

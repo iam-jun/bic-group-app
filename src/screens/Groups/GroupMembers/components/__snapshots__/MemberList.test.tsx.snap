@@ -1,0 +1,1375 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Group MemberList component should render data correctly 1`] = `
+<RCTScrollView
+  ListEmptyComponent={[Function]}
+  ListFooterComponent={[Function]}
+  data={
+    Array [
+      Object {
+        "data": Array [
+          Object {
+            "avatar": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+            "chat_user_id": "mdp9rococ3d83qk9nbrybxay3e",
+            "custom_role_ids": Array [],
+            "fullname": "Test Name Admin",
+            "id": 1,
+            "is_admin": true,
+            "roles": Array [
+              Object {
+                "changed": Object {},
+                "data_values": Object {
+                  "id": "23a07c64-27d7-4438-a17d-9aae7bbbd4df",
+                  "name": "Admin",
+                  "permissions": Array [
+                    "view_group_profile",
+                    "view_group_members",
+                    "view_message",
+                    "view_message_history",
+                    "send_message",
+                    "send_files",
+                    "send_images",
+                    "react",
+                    "send_tickers",
+                    "mention_all_here",
+                    "pin_message",
+                    "view_post",
+                    "view_post_statistic",
+                    "create_post",
+                    "view_related_post",
+                    "report_member",
+                    "manage_member",
+                    "setting",
+                    "approve_post",
+                    "report_post",
+                    "mark_important_post",
+                    "delete_post",
+                    "edit_group_profile",
+                    "change_parent_group",
+                    "delete_message",
+                  ],
+                  "type": "GROUP_ADMIN",
+                },
+                "is_new_record": false,
+                "options": Object {
+                  "attributes": Array [
+                    "id",
+                    "name",
+                    "type",
+                    "permissions",
+                  ],
+                  "include_validated": true,
+                  "is_new_record": false,
+                  "raw": true,
+                  "schema": "bein",
+                  "schema_delimiter": "",
+                },
+                "previous_data_values": Object {
+                  "id": "23a07c64-27d7-4438-a17d-9aae7bbbd4df",
+                  "name": "Admin",
+                  "permissions": Array [
+                    "view_group_profile",
+                    "view_group_members",
+                    "view_message",
+                    "view_message_history",
+                    "send_message",
+                    "send_files",
+                    "send_images",
+                    "react",
+                    "send_tickers",
+                    "mention_all_here",
+                    "pin_message",
+                    "view_post",
+                    "view_post_statistic",
+                    "create_post",
+                    "view_related_post",
+                    "report_member",
+                    "manage_member",
+                    "setting",
+                    "approve_post",
+                    "report_post",
+                    "mark_important_post",
+                    "delete_post",
+                    "edit_group_profile",
+                    "change_parent_group",
+                    "delete_message",
+                  ],
+                  "type": "GROUP_ADMIN",
+                },
+              },
+            ],
+            "username": "testmember",
+          },
+        ],
+        "title": "Admins",
+        "user_count": 1,
+      },
+      Object {
+        "data": Array [
+          Object {
+            "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
+            "chat_user_id": "4bkzernmdtgb7eiy9yspw3n4ra",
+            "custom_role_ids": Array [],
+            "fullname": "Test Name Member",
+            "id": 2,
+            "is_admin": false,
+            "roles": Array [],
+            "username": "testmember",
+          },
+          Object {
+            "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
+            "chat_user_id": "4bkzernmdtgb7eiy9yspw3n4ra",
+            "custom_role_ids": Array [],
+            "fullname": "Test Name Member",
+            "id": 2,
+            "is_admin": false,
+            "roles": Array [],
+            "username": "testmember",
+          },
+          Object {
+            "avatar": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
+            "chat_user_id": "4bkzernmdtgb7eiy9yspw3n4ra",
+            "custom_role_ids": Array [],
+            "fullname": "Test Name Member",
+            "id": 2,
+            "is_admin": false,
+            "roles": Array [],
+            "username": "testmember",
+          },
+        ],
+        "title": "Members",
+        "user_count": 3,
+      },
+    ]
+  }
+  getItem={[Function]}
+  getItemCount={[Function]}
+  keyExtractor={[Function]}
+  onContentSizeChange={[Function]}
+  onEndReached={[MockFunction]}
+  onEndReachedThreshold={0.1}
+  onLayout={[Function]}
+  onMomentumScrollBegin={[Function]}
+  onMomentumScrollEnd={[Function]}
+  onScroll={[Function]}
+  onScrollBeginDrag={[Function]}
+  onScrollEndDrag={[Function]}
+  renderItem={[Function]}
+  scrollEventThrottle={50}
+  showsVerticalScrollIndicator={false}
+  stickyHeaderIndices={Array []}
+  style={
+    Object {
+      "backgroundColor": "#FFFFFF",
+    }
+  }
+  testID="member_list"
+>
+  <View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          Object {
+            "paddingBottom": 12,
+            "paddingHorizontal": 16,
+            "paddingTop": 16,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 16,
+              },
+              Object {
+                "color": "#2F3945",
+              },
+              undefined,
+            ]
+          }
+        >
+          Admins • 1
+        </Text>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        className=""
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "height": undefined,
+              "opacity": 1,
+              "paddingHorizontal": 16,
+              "paddingVertical": 4,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "borderRadius": 6,
+                "height": 40,
+                "marginRight": 12,
+                "width": 40,
+              }
+            }
+            testID="avatar"
+          >
+            <View
+              style={
+                Object {
+                  "borderRadius": 6,
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+              testID="avatar_container"
+            >
+              <View
+                onLayout={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                    "position": "relative",
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "opacity": 1,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#f9f9f9",
+                        "borderRadius": 6,
+                        "height": 40,
+                        "justifyContent": "center",
+                        "width": 40,
+                      }
+                    }
+                    testID="Image__placeholder"
+                  />
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "overflow": "hidden",
+                      },
+                      Object {
+                        "borderRadius": 6,
+                        "height": 40,
+                        "width": 40,
+                      },
+                    ]
+                  }
+                >
+                  <FastImageView
+                    onFastImageError={[Function]}
+                    onFastImageLoadEnd={[Function]}
+                    resizeMode="cover"
+                    source={
+                      Object {
+                        "uri": "https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png",
+                      }
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                    testID="avatar.image"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flex": 1,
+              }
+            }
+          >
+            <Text
+              numberOfLines={2}
+              style={
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 14,
+                  },
+                  Object {},
+                  undefined,
+                ]
+              }
+            >
+              Test Name Admin
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-Regular",
+                      "fontSize": 12,
+                    },
+                    Object {
+                      "color": "#627286",
+                    },
+                    undefined,
+                  ]
+                }
+              >
+                 @testmember
+              </Text>
+            </Text>
+          </View>
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            nativeID="animatedComponent"
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  Object {
+                    "marginLeft": 24,
+                  },
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View
+                  className="icon-wrapper"
+                  testID="member_list.item"
+                >
+                  <RNSVGSvgView
+                    align="xMidYMid"
+                    bbHeight={20}
+                    bbWidth={20}
+                    fill="#2F3945"
+                    focusable={false}
+                    height={20}
+                    meetOrSlice={0}
+                    minX={0}
+                    minY={0}
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "transparent",
+                          "borderWidth": 0,
+                        },
+                        Object {},
+                        Object {
+                          "flex": 0,
+                          "height": 20,
+                          "width": 20,
+                        },
+                      ]
+                    }
+                    vbHeight={24}
+                    vbWidth={24}
+                    width={20}
+                  >
+                    <RNSVGGroup
+                      fill={4281284933}
+                      propList={
+                        Array [
+                          "fill",
+                        ]
+                      }
+                    >
+                      <RNSVGPath
+                        d="M12,7a2,2,0,1,0-2-2A2,2,0,0,0,12,7Zm0,10a2,2,0,1,0,2,2A2,2,0,0,0,12,17Zm0-7a2,2,0,1,0,2,2A2,2,0,0,0,12,10Z"
+                      />
+                    </RNSVGGroup>
+                  </RNSVGSvgView>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    />
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        style={
+          Object {
+            "paddingBottom": 12,
+            "paddingHorizontal": 16,
+            "paddingTop": 16,
+          }
+        }
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 16,
+              },
+              Object {
+                "color": "#2F3945",
+              },
+              undefined,
+            ]
+          }
+        >
+          Members • 3
+        </Text>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <View>
+        <View
+          className=""
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            nativeID="animatedComponent"
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "height": undefined,
+                "opacity": 1,
+                "paddingHorizontal": 16,
+                "paddingVertical": 4,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "borderRadius": 6,
+                  "height": 40,
+                  "marginRight": 12,
+                  "width": 40,
+                }
+              }
+              testID="avatar"
+            >
+              <View
+                style={
+                  Object {
+                    "borderRadius": 6,
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+                testID="avatar_container"
+              >
+                <View
+                  onLayout={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "position": "relative",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "center",
+                          "backgroundColor": "#f9f9f9",
+                          "borderRadius": 6,
+                          "height": 40,
+                          "justifyContent": "center",
+                          "width": 40,
+                        }
+                      }
+                      testID="Image__placeholder"
+                    />
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "borderRadius": 6,
+                          "height": 40,
+                          "width": 40,
+                        },
+                      ]
+                    }
+                  >
+                    <FastImageView
+                      onFastImageError={[Function]}
+                      onFastImageLoadEnd={[Function]}
+                      resizeMode="cover"
+                      source={
+                        Object {
+                          "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
+                        }
+                      }
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                      testID="avatar.image"
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                }
+              }
+            >
+              <Text
+                numberOfLines={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 14,
+                    },
+                    Object {},
+                    undefined,
+                  ]
+                }
+              >
+                Test Name Member
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-Regular",
+                        "fontSize": 12,
+                      },
+                      Object {
+                        "color": "#627286",
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                   @testmember
+                </Text>
+              </Text>
+            </View>
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": false,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              nativeID="animatedComponent"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                    Object {
+                      "marginLeft": 24,
+                    },
+                    Object {
+                      "backgroundColor": undefined,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                >
+                  <View
+                    className="icon-wrapper"
+                    testID="member_list.item"
+                  >
+                    <RNSVGSvgView
+                      align="xMidYMid"
+                      bbHeight={20}
+                      bbWidth={20}
+                      fill="#2F3945"
+                      focusable={false}
+                      height={20}
+                      meetOrSlice={0}
+                      minX={0}
+                      minY={0}
+                      style={
+                        Array [
+                          Object {
+                            "backgroundColor": "transparent",
+                            "borderWidth": 0,
+                          },
+                          Object {},
+                          Object {
+                            "flex": 0,
+                            "height": 20,
+                            "width": 20,
+                          },
+                        ]
+                      }
+                      vbHeight={24}
+                      vbWidth={24}
+                      width={20}
+                    >
+                      <RNSVGGroup
+                        fill={4281284933}
+                        propList={
+                          Array [
+                            "fill",
+                          ]
+                        }
+                      >
+                        <RNSVGPath
+                          d="M12,7a2,2,0,1,0-2-2A2,2,0,0,0,12,7Zm0,10a2,2,0,1,0,2,2A2,2,0,0,0,12,17Zm0-7a2,2,0,1,0,2,2A2,2,0,0,0,12,10Z"
+                        />
+                      </RNSVGGroup>
+                    </RNSVGSvgView>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={Object {}}
+        />
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <View>
+        <View
+          className=""
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            nativeID="animatedComponent"
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+                "height": undefined,
+                "opacity": 1,
+                "paddingHorizontal": 16,
+                "paddingVertical": 4,
+              }
+            }
+          >
+            <View
+              style={
+                Object {
+                  "borderRadius": 6,
+                  "height": 40,
+                  "marginRight": 12,
+                  "width": 40,
+                }
+              }
+              testID="avatar"
+            >
+              <View
+                style={
+                  Object {
+                    "borderRadius": 6,
+                    "height": 40,
+                    "width": 40,
+                  }
+                }
+                testID="avatar_container"
+              >
+                <View
+                  onLayout={[Function]}
+                  style={
+                    Object {
+                      "backgroundColor": "transparent",
+                      "position": "relative",
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "opacity": 1,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                  >
+                    <View
+                      style={
+                        Object {
+                          "alignItems": "center",
+                          "backgroundColor": "#f9f9f9",
+                          "borderRadius": 6,
+                          "height": 40,
+                          "justifyContent": "center",
+                          "width": 40,
+                        }
+                      }
+                      testID="Image__placeholder"
+                    />
+                  </View>
+                  <View
+                    style={
+                      Array [
+                        Object {
+                          "overflow": "hidden",
+                        },
+                        Object {
+                          "borderRadius": 6,
+                          "height": 40,
+                          "width": 40,
+                        },
+                      ]
+                    }
+                  >
+                    <FastImageView
+                      onFastImageError={[Function]}
+                      onFastImageLoadEnd={[Function]}
+                      resizeMode="cover"
+                      source={
+                        Object {
+                          "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
+                        }
+                      }
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                      testID="avatar.image"
+                    />
+                  </View>
+                </View>
+              </View>
+            </View>
+            <View
+              style={
+                Object {
+                  "flex": 1,
+                }
+              }
+            >
+              <Text
+                numberOfLines={2}
+                style={
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-SemiBold",
+                      "fontSize": 14,
+                    },
+                    Object {},
+                    undefined,
+                  ]
+                }
+              >
+                Test Name Member
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-Regular",
+                        "fontSize": 12,
+                      },
+                      Object {
+                        "color": "#627286",
+                      },
+                      undefined,
+                    ]
+                  }
+                >
+                   @testmember
+                </Text>
+              </Text>
+            </View>
+            <View
+              accessibilityState={
+                Object {
+                  "disabled": false,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              hitSlop={
+                Object {
+                  "bottom": 10,
+                  "left": 10,
+                  "right": 10,
+                  "top": 10,
+                }
+              }
+              nativeID="animatedComponent"
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                Object {
+                  "opacity": 1,
+                }
+              }
+            >
+              <View
+                style={
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "flexDirection": "row",
+                    },
+                    Object {
+                      "marginLeft": 24,
+                    },
+                    Object {
+                      "backgroundColor": undefined,
+                    },
+                  ]
+                }
+              >
+                <View
+                  style={
+                    Array [
+                      undefined,
+                      undefined,
+                      undefined,
+                    ]
+                  }
+                >
+                  <View
+                    className="icon-wrapper"
+                    testID="member_list.item"
+                  >
+                    <RNSVGSvgView
+                      align="xMidYMid"
+                      bbHeight={20}
+                      bbWidth={20}
+                      fill="#2F3945"
+                      focusable={false}
+                      height={20}
+                      meetOrSlice={0}
+                      minX={0}
+                      minY={0}
+                      style={
+                        Array [
+                          Object {
+                            "backgroundColor": "transparent",
+                            "borderWidth": 0,
+                          },
+                          Object {},
+                          Object {
+                            "flex": 0,
+                            "height": 20,
+                            "width": 20,
+                          },
+                        ]
+                      }
+                      vbHeight={24}
+                      vbWidth={24}
+                      width={20}
+                    >
+                      <RNSVGGroup
+                        fill={4281284933}
+                        propList={
+                          Array [
+                            "fill",
+                          ]
+                        }
+                      >
+                        <RNSVGPath
+                          d="M12,7a2,2,0,1,0-2-2A2,2,0,0,0,12,7Zm0,10a2,2,0,1,0,2,2A2,2,0,0,0,12,17Zm0-7a2,2,0,1,0,2,2A2,2,0,0,0,12,10Z"
+                        />
+                      </RNSVGGroup>
+                    </RNSVGSvgView>
+                  </View>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+        <View
+          style={Object {}}
+        />
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    >
+      <View
+        className=""
+      >
+        <View
+          accessibilityState={
+            Object {
+              "disabled": true,
+            }
+          }
+          accessible={true}
+          collapsable={false}
+          focusable={false}
+          nativeID="animatedComponent"
+          onClick={[Function]}
+          onResponderGrant={[Function]}
+          onResponderMove={[Function]}
+          onResponderRelease={[Function]}
+          onResponderTerminate={[Function]}
+          onResponderTerminationRequest={[Function]}
+          onStartShouldSetResponder={[Function]}
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "height": undefined,
+              "opacity": 1,
+              "paddingHorizontal": 16,
+              "paddingVertical": 4,
+            }
+          }
+        >
+          <View
+            style={
+              Object {
+                "borderRadius": 6,
+                "height": 40,
+                "marginRight": 12,
+                "width": 40,
+              }
+            }
+            testID="avatar"
+          >
+            <View
+              style={
+                Object {
+                  "borderRadius": 6,
+                  "height": 40,
+                  "width": 40,
+                }
+              }
+              testID="avatar_container"
+            >
+              <View
+                onLayout={[Function]}
+                style={
+                  Object {
+                    "backgroundColor": "transparent",
+                    "position": "relative",
+                  }
+                }
+              >
+                <View
+                  style={
+                    Object {
+                      "bottom": 0,
+                      "left": 0,
+                      "opacity": 1,
+                      "position": "absolute",
+                      "right": 0,
+                      "top": 0,
+                    }
+                  }
+                >
+                  <View
+                    style={
+                      Object {
+                        "alignItems": "center",
+                        "backgroundColor": "#f9f9f9",
+                        "borderRadius": 6,
+                        "height": 40,
+                        "justifyContent": "center",
+                        "width": 40,
+                      }
+                    }
+                    testID="Image__placeholder"
+                  />
+                </View>
+                <View
+                  style={
+                    Array [
+                      Object {
+                        "overflow": "hidden",
+                      },
+                      Object {
+                        "borderRadius": 6,
+                        "height": 40,
+                        "width": 40,
+                      },
+                    ]
+                  }
+                >
+                  <FastImageView
+                    onFastImageError={[Function]}
+                    onFastImageLoadEnd={[Function]}
+                    resizeMode="cover"
+                    source={
+                      Object {
+                        "uri": "https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg",
+                      }
+                    }
+                    style={
+                      Object {
+                        "bottom": 0,
+                        "left": 0,
+                        "position": "absolute",
+                        "right": 0,
+                        "top": 0,
+                      }
+                    }
+                    testID="avatar.image"
+                  />
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              Object {
+                "flex": 1,
+              }
+            }
+          >
+            <Text
+              numberOfLines={2}
+              style={
+                Array [
+                  Object {
+                    "color": "#2F3945",
+                    "fontFamily": "OpenSans-SemiBold",
+                    "fontSize": 14,
+                  },
+                  Object {},
+                  undefined,
+                ]
+              }
+            >
+              Test Name Member
+              <Text
+                style={
+                  Array [
+                    Object {
+                      "color": "#2F3945",
+                      "fontFamily": "OpenSans-Regular",
+                      "fontSize": 12,
+                    },
+                    Object {
+                      "color": "#627286",
+                    },
+                    undefined,
+                  ]
+                }
+              >
+                 @testmember
+              </Text>
+            </Text>
+          </View>
+          <View
+            accessibilityState={
+              Object {
+                "disabled": false,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={true}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            nativeID="animatedComponent"
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  Object {
+                    "marginLeft": 24,
+                  },
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View
+                  className="icon-wrapper"
+                  testID="member_list.item"
+                >
+                  <RNSVGSvgView
+                    align="xMidYMid"
+                    bbHeight={20}
+                    bbWidth={20}
+                    fill="#2F3945"
+                    focusable={false}
+                    height={20}
+                    meetOrSlice={0}
+                    minX={0}
+                    minY={0}
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "transparent",
+                          "borderWidth": 0,
+                        },
+                        Object {},
+                        Object {
+                          "flex": 0,
+                          "height": 20,
+                          "width": 20,
+                        },
+                      ]
+                    }
+                    vbHeight={24}
+                    vbWidth={24}
+                    width={20}
+                  >
+                    <RNSVGGroup
+                      fill={4281284933}
+                      propList={
+                        Array [
+                          "fill",
+                        ]
+                      }
+                    >
+                      <RNSVGPath
+                        d="M12,7a2,2,0,1,0-2-2A2,2,0,0,0,12,7Zm0,10a2,2,0,1,0,2,2A2,2,0,0,0,12,17Zm0-7a2,2,0,1,0,2,2A2,2,0,0,0,12,10Z"
+                      />
+                    </RNSVGGroup>
+                  </RNSVGSvgView>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+    <View
+      onLayout={[Function]}
+      style={null}
+    />
+    <View
+      style={
+        Object {
+          "height": 0,
+        }
+      }
+    />
+    <View
+      onLayout={[Function]}
+    />
+  </View>
+</RCTScrollView>
+`;
