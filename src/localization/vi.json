@@ -36,6 +36,8 @@
     "btn_confirm": "Xác nhận",
     "btn_join": "Tham gia",
     "btn_view": "Xem",
+    "btn_leave": "Đóng",
+    "btn_stay_on_this_page": "Ở lại màn hình này",
     "text_search_emoji": "Tìm Emoji",
     "text_important": "Quan trọng",
     "text_clear": "Xoá",
@@ -47,6 +49,7 @@
     "text_loading": "Đang tải ...",
     "text_retry": "Thử lại",
     "text_done": "Xong",
+    "text_uploading": "Đang tải...",
     "text_error_message": "Có gì đó sai sai",
     "text_important_posts": "Bài viết quan trọng",
     "text_files": "Files",
@@ -137,8 +140,8 @@
     "text_err_id_password_not_matched": "Email hoặc mật khẩu không chính xác",
     "text_err_password_blank": "Yêu cầu điền mật khẩu!",
     "text_err_new_password_blank": "Yêu cầu điền mật khẩu mới!",
-    "text_err_password_format_todo_revert": "Mật khẩu từ 6 ký tự, ít nhất 1 ký tự viết hoa, 1 ký tự viết thường, 1 số và 1 ký tự đặc biệt!",
-    "text_err_password_format": "Mật khẩu từ 6 ký tự, ít nhất 1 số!",
+    "text_err_password_format_todo_revert": "Mật khẩu từ 8 ký tự, ít nhất 1 ký tự viết hoa, 1 ký tự viết thường, 1 số và 1 ký tự đặc biệt!",
+    "text_err_password_format": "Mật khẩu từ 8 ký tự, ít nhất 1 số!",
     "text_err_email_blank": "Yêu cầu điền email ",
     "text_err_email_format": "Email sai định dạng",
     "text_err_username_blank": "Yêu cầu điền tên",
@@ -150,7 +153,7 @@
     "text_err_wrong_code": "Điền sai mã xác thực? ",
     "text_err_missing_token": "Có gì đó không đúng đã xảy ra.",
     "text_err_wrong_current_password": "Mật khẩu hiện tại không đúng",
-    "text_request_new_code": "Gửi lại mã mới.",
+    "text_request_new_code": "Chưa nhận được mã,",
     "text_title_success": "Thành công",
     "text_sign_up_desc": "Chưa có tài khoản?",
     "text_sign_up_success": "Vui lòng kiểm tra email xác thực tài khoản",
@@ -176,7 +179,7 @@
     "text_forgot_password_email_not_found": "Email này không được liên kết với bất kỳ tài khoản nào.",
     "btn_resend_code": "Gửi lại mã xác thực",
     "btn_submit": " Gửi",
-    "text_err_password_characters": "Mật khẩu phải dài ít nhất 6-20 ký tự.",
+    "text_err_password_characters": "Mật khẩu phải dài ít nhất 8-20 ký tự.",
     "text_err_password_required": "Password required!",
     "text_err_password_required_lower_case": "Vui lòng sử dụng ít nhất một ký tự viết thường (a-z)!",
     "text_err_password_required_upper_case": "Vui lòng sử dụng ít nhất một ký tự viết hoa (A-Z)!",
@@ -478,14 +481,16 @@
       "text_no_draft_posts": "Bạn không còn bài nháp nào",
       "text_draft_published": "Bài viết của bạn đã được đăng",
       "text_draft_saved": "Bản nháp của bạn đã được lưu",
-      "text_draft_deleted": "Bản nháp của bạn đã được xoá"
+      "text_draft_deleted": "Bản nháp của bạn đã được xoá",
+      "text_processing_publish": "Bài viết của bạn đang được biên tập"
     },
     "comment": {
       "title_delete_comment": "Xoá bình luận",
       "text_delete_comment": "Nếu xoá, toàn bộ trả lời của bình luận này cũng sẽ bị xoá. Bạn có muốn tiếp tục?",
       "text_delete_comment_error": "Xoá bình luận thất bại!",
       "text_delete_comment_success": "Bình luận đã được xoá",
-      "text_edited": "Đã sửa"
+      "text_edited": "Đã sửa",
+      "search_giphy": "Tìm kiếm GIPHY"
     },
     "settings": "Thiết lập bài viết",
     "people_can_comment": "Mọi người có thể bình luận trên bài viết",
@@ -679,5 +684,19 @@
     "text_other_member_other": "{{count}} người khác là thành viên",
     "text_is_member": "là thành viên",
     "title_discover_groups": "Khám phá các nhóm"
+  },
+  "upload": {
+    "text_create_video_id_request_failed": "Có lỗi khi yêu cầu tạo id",
+    "text_create_video_id_response_failed": "Có lỗi khi tạo id",
+    "text_upload_video_request_failed": "Có lỗi khi yêu cầu tải video",
+    "text_upload_video_response_failed": "Có lỗi khi tải video",
+    "text_create_media_request_failed": "Có lỗi khi yêu cầu tạo media",
+    "text_create_media_response_failed": "Có lỗi khi tạo media",
+    "title_delete_video": "Xoá Video?",
+    "text_delete_video": "Bạn có chắc muốn xoá video?",
+    "text_upload_video_error": "Không thể tải lên video này",
+    "title_leave_uploading_video": "Đóng màn hình này?",
+    "text_leave_uploading_video": "Bạn có chắc muốn đóng màn hình này? Video bạn đang tải lên sẽ bị huỷ.",
+    "text_video_over_size": "Video của bạn phải nhỏ hơn 300MB"
   }
 }

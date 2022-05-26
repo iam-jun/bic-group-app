@@ -45,13 +45,7 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
   } = useController({
     control,
     name: 'email',
-    rules: {
-      required: t('auth:text_err_email_blank'),
-      pattern: {
-        value: validation.emailRegex,
-        message: t('auth:text_err_email_format'),
-      },
-    },
+    rules: {},
     defaultValue: '',
   });
 
@@ -72,7 +66,12 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
 
   const checkDisableRequest = () => {
     const email = getValues('email');
-    return forgotPasswordLoading || !email || !isEmpty(errors?.email);
+    return (
+      forgotPasswordLoading ||
+      !email ||
+      !isEmpty(errors?.email) ||
+      !validation.emailRegex.test(email)
+    );
   };
   const disableRequest = checkDisableRequest();
 
@@ -146,7 +145,7 @@ const themeStyles = (theme: ITheme) => {
     desc: {
       marginTop: spacing.margin.extraLarge,
       marginBottom: spacing.margin.large,
-      color: colors.textPrimary,
+      color: colors.text,
     },
     btnSendRecoverCode: {
       marginTop: spacing.margin.large,

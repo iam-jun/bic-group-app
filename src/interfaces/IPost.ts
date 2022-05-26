@@ -1,5 +1,6 @@
-import {IFilePicked} from '~/interfaces/common';
+import {IFilePicked, IGiphy} from '~/interfaces/common';
 import {ReactionType} from '~/constants/reactions';
+import {IUploadType} from '~/configs/resourceConfig';
 
 export interface IPostAudience {
   users?: IAudienceUser[];
@@ -84,6 +85,7 @@ export interface ICommentData {
   parentCommentId?: string | number; // used when retry/cancel adding new comment
   reactionsOfActor?: IOwnReaction;
   reaction?: IReaction;
+  giphy?: IGiphy;
 }
 
 export interface ICreatePostImage {
@@ -129,6 +131,7 @@ export interface IPostActivity {
   media?: IPostMedia;
   setting?: IPostSetting;
   isDraft?: boolean;
+  isProcessing?: boolean;
   actor?: IAudienceUser;
   mentions?: any;
   commentsCount?: number;
@@ -504,6 +507,16 @@ export interface IPayloadDeleteComment {
 export interface IPayloadPutMarkAsRead {
   postId: number;
   callback?: (isSuccess: boolean) => void;
+}
+
+export interface IPostCreateMediaVideo {
+  uploadId: string;
+  uploadType: IUploadType;
+  url?: string;
+  name?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
 }
 
 export interface IGetStreamCommentData {

@@ -8,6 +8,7 @@ import React, {
   useState,
 } from 'react';
 import {
+  DeviceEventEmitter,
   Platform,
   RefreshControl,
   SectionList,
@@ -50,6 +51,7 @@ const defaultList = [{title: '', type: 'empty', data: []}];
 const _PostDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
+  const [stickerBoardVisible, setStickerBoardVisible] = useState(false);
   let countRetryScrollToBottom = useRef(0).current;
   const commentInputRef = useRef<any>();
   const internetReachableRef = useRef(true);
@@ -96,15 +98,30 @@ const _PostDetailContent = (props: any) => {
     : t('post:title_post_detail');
 
   useEffect(() => {
+    const event = DeviceEventEmitter.addListener(
+      'sticker-board-visible-change',
+      (payload: boolean) => {
+        setStickerBoardVisible(payload);
+      },
+    );
     return () => {
+      event.remove();
       dispatch(postActions.setCreatePostInitAudiences());
     };
   }, []);
 
   const onPressBack = () => {
+    const _stickerBoardVisible =
+      commentInputRef?.current?.getStickerBoardVisible?.();
+
+    if (_stickerBoardVisible) {
+      commentInputRef?.current?.onBackPress?.();
+      return;
+    }
+
     const newCommentInput = commentInputRef?.current?.getText?.() || '';
-    const newCommentSelectedImage =
-      commentInputRef?.current?.getSelectedImage?.();
+    const newCommentSelectedImage = commentInputRef?.current?.hasMedia?.();
+
     if (newCommentInput !== '' || newCommentSelectedImage) {
       dispatch(
         modalActions.showAlert({
@@ -377,6 +394,7 @@ const _PostDetailContent = (props: any) => {
         <View style={styles.postDetailContainer}>
           <SectionList
             ref={listRef}
+            disableScrollViewPanResponder={stickerBoardVisible}
             sections={deleted ? defaultList : sectionData}
             renderItem={renderCommentItem}
             renderSectionHeader={renderSectionHeader}

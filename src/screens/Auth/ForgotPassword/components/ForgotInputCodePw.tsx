@@ -74,12 +74,6 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
   };
   const disableRequest = checkDisableRequest();
 
-  const checkDisableInputPassword = () => {
-    const code = getValues('code');
-    return !code || errors.code;
-  };
-  const disableInputPassword = checkDisableInputPassword();
-
   const onConfirmForgotPassword = () => {
     const email = getValues('email');
     const code = getValues('code');
@@ -99,7 +93,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
     }
   };
 
-  const onRequestForgotPassword = async () => {
+  const onRequestForgotPassword = () => {
     const email = getValues('email');
     if (email && !disableRequest) {
       setValue('code', '', {shouldValidate: false});
@@ -179,7 +173,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
               message: t('auth:text_err_password_characters'),
             },
             minLength: {
-              value: 6,
+              value: 8,
               message: t('auth:text_err_password_characters'),
             },
             validate: () => {
@@ -204,7 +198,6 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
             },
           }}
           loading={forgotPasswordLoading}
-          disableInput={disableInputPassword}
           testID={'inputNewPassword'}
           placeholder={t('auth:input_label_new_password')}
           validateValue={validateNewPassword}
@@ -218,7 +211,6 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
             required: t('auth:text_err_password_blank'),
           }}
           loading={forgotPasswordLoading}
-          disableInput={disableInputPassword}
           testID={'inputConfirmPassword'}
           placeholder={t('auth:input_label_confirm_new_password')}
           validateValue={validateConfirmPassword}
@@ -229,8 +221,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
         testID="btnChangePassword"
         disabled={disableConfirm}
         loading={forgotPasswordLoading}
-        onPress={onConfirmForgotPassword}
-        style={styles.btnConfirmNewPassword}>
+        onPress={onConfirmForgotPassword}>
         {t('auth:btn_submit')}
       </Button.Primary>
     </View>
@@ -245,14 +236,11 @@ const themeStyles = (theme: ITheme) => {
       paddingTop: spacing.padding.big,
     },
     inputSectionContainer: {
-      marginBottom: spacing.margin.big,
+      marginBottom: spacing.margin.base,
     },
     desc: {
       marginBottom: spacing.margin.base,
       marginTop: spacing.margin.tiny,
-    },
-    btnConfirmNewPassword: {
-      marginTop: spacing.margin.extraLarge,
     },
     newPasswordTitle: {
       marginBottom: spacing.margin.small,

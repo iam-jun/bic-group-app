@@ -16,15 +16,16 @@ export const postInitState = {
     searchResultAudienceUsers: [],
     important: {
       active: false,
-      expires_time: '',
+      expires_time: null,
     },
     images: [],
+    video: undefined,
     imagesDraft: [],
     count: 0,
     currentSettings: {
       important: {
         active: false,
-        expires_time: '',
+        expires_time: null,
       },
     },
     initAudiences: null,
@@ -189,6 +190,14 @@ function postReducer(state = postInitState, action: any = {}) {
         createPost: {
           ...state.createPost,
           imagesDraft: payload || [],
+        },
+      };
+    case postTypes.SET_CREATE_POST_VIDEO:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          video: payload,
         },
       };
     case postTypes.SET_SEARCH_RESULT_AUDIENCE_GROUPS:

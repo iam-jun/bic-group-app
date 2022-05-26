@@ -37,6 +37,8 @@
     "btn_create": "Create",
     "btn_join": "Join",
     "btn_view": "View",
+    "btn_leave": "Leave",
+    "btn_stay_on_this_page": "Stay on this page",
     "btn_cancel_request": "Cancel Request",
     "text_search_emoji": "Search Emoji",
     "text_important": "Important",
@@ -61,6 +63,7 @@
     "text_add": "Add",
     "text_retry": "Retry",
     "text_done": "Done",
+    "text_uploading": "Uploading...",
     "text_download": "Download",
     "text_send": "Send",
     "label_confirm_send_file": "Send this file?",
@@ -182,7 +185,7 @@
     "text_err_password_blank": "Password is required!",
     "text_err_new_password_blank": "New password is required!",
     "text_err_password_format_todo_revert": "Password must be eight characters, at least one uppercase letter, one lowercase letter, one number and one special character!",
-    "text_err_password_format": "Password must be six characters, at least one number!",
+    "text_err_password_format": "Password must be eight characters, at least one number!",
     "text_err_email_blank": "Email is required!",
     "text_err_email_format": "Invalid email!",
     "text_err_username_blank": "User name is required!",
@@ -191,10 +194,10 @@
     "text_err_confirm_password_not_matched": "Confirmed password doesn’t match.",
     "text_err_confirm_new_password_not_matched": "Your new password is not matched.",
     "text_err_limit_exceeded": "Your account is deactivated in 2 hours for requesting too many time. Please try again later.",
-    "text_err_wrong_code": "Wrong Code Input? ",
+    "text_err_wrong_code": "Incorrect code, please try again. ",
     "text_err_missing_token": "Oops, something went wrong. ",
     "text_err_wrong_current_password": "Wrong current password",
-    "text_request_new_code": "Resend new code.",
+    "text_request_new_code": "Haven’t received code yet,",
     "text_title_success": "Successfully!",
     "text_sign_up_desc": "Don’t have an account?",
     "text_sign_up_success": "Please check your email to confirm your account.",
@@ -220,7 +223,7 @@
     "text_forgot_password_email_not_found": "This email is not linked to any account.",
     "btn_resend_code": "Resend code",
     "btn_submit": "Submit",
-    "text_err_password_characters": "Passwords must be at least 6-20 characters long.",
+    "text_err_password_characters": "Passwords must be at least 8-20 characters long.",
     "text_err_password_required": "Password required!",
     "text_err_password_required_lower_case": "Please use at least one lowercase (a-z)!",
     "text_err_password_required_upper_case": "Please use at least one uppercase (A-Z)!",
@@ -532,14 +535,16 @@
       "text_no_draft_posts": "You have no draft post left",
       "text_draft_published": "Your post has been published",
       "text_draft_saved": "Your draft has been saved",
-      "text_draft_deleted": "Your draft has been deleted"
+      "text_draft_deleted": "Your draft has been deleted",
+      "text_processing_publish": "Your video post will be ready soon"
     },
     "comment": {
       "title_delete_comment": "Delete this comment",
       "text_delete_comment": "When you delete this comment, all of its reply will also be deleted. Continue?",
       "text_delete_comment_error": "Delete comment failed!",
       "text_delete_comment_success": "Comment deleted",
-      "text_edited": "Edited"
+      "text_edited": "Edited",
+      "search_giphy": "Search GIPHY"
     },
     "settings": "Post Settings",
     "people_can_comment": "People can comment on this post",
@@ -799,5 +804,19 @@
     "text_other_member_other": "{{count}} others are members",
     "text_is_member": "is a member",
     "title_discover_groups": "Discover Groups"
+  },
+  "upload": {
+    "text_create_video_id_request_failed": "Cannot request id",
+    "text_create_video_id_response_failed": "Cannot create id",
+    "text_upload_video_request_failed": "Cannot request upload video",
+    "text_upload_video_response_failed": "Cannot upload video",
+    "text_create_media_request_failed": "Cannot request create media",
+    "text_create_media_response_failed": "Cannot create media",
+    "title_delete_video": "Delete Video?",
+    "text_delete_video": "Are you sure you want to delete video?",
+    "text_upload_video_error": "Can’t upload this video",
+    "title_leave_uploading_video": "Leave this page?",
+    "text_leave_uploading_video": "Are you sure you want to leave this page? Your video process will be lost.",
+    "text_video_over_size": "Your video must be less than 300MB"
   }
 }

@@ -1,15 +1,15 @@
 import i18next from 'i18next';
 import React from 'react';
 import {renderWithRedux} from '~/test/testUtils';
-import SearchMemberModal from './SearchMemberModal';
+import SearchMemberView from './SearchMemberView';
 
-describe('SearchMemberModal component', () => {
+describe('SearchMemberView component', () => {
   const communityId = 1;
   const isOpen = true;
 
   it('should render Type search keyword description correctly', () => {
     const wrapper = renderWithRedux(
-      <SearchMemberModal
+      <SearchMemberView
         communityId={communityId}
         isOpen={isOpen}
         initSearch=""
@@ -25,7 +25,7 @@ describe('SearchMemberModal component', () => {
 
   it('should render data list correctly', () => {
     const wrapper = renderWithRedux(
-      <SearchMemberModal
+      <SearchMemberView
         communityId={communityId}
         isOpen={isOpen}
         initSearch="test"

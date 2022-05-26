@@ -54,13 +54,21 @@ const ForgotPassword = () => {
   let imgSize = dimensions.width - 2 * imgPadding;
   if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
 
+  const goBack = () => {
+    if (forgotPasswordStage === forgotPasswordStages.INPUT_CODE_PW) {
+      dispatch(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_ID));
+    } else {
+      rootNavigation.goBack();
+    }
+  };
+
   const renderBtnBack = () => {
     return (
       <Icon
         // @ts-ignore
         icon={icons.iconBack}
-        size={28}
-        onPress={() => rootNavigation.goBack()}
+        size={20}
+        onPress={goBack}
         testID="forgot_button.back"
       />
     );
@@ -140,7 +148,9 @@ const themeStyles = (theme: ITheme, isPhone: boolean) => {
     headerContainer: {
       alignSelf: 'flex-start',
       marginTop: spacing.margin.small,
-      paddingVertical: spacing.padding.small,
+      padding: spacing.padding.small,
+      backgroundColor: colors.primary1,
+      borderRadius: spacing.borderRadius.tiny,
     },
     contentContainer: {
       flex: 1,

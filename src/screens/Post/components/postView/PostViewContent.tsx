@@ -8,28 +8,34 @@ import {IActivityDataImage, IMarkdownAudience} from '~/interfaces/IPost';
 import mainStack from '~/router/navigator/MainStack/stack';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import Image from '~/beinComponents/Image';
-import {getResourceUrl} from '~/configs/resourceConfig';
+import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
 
 import {ITheme} from '~/theme/interfaces';
 import Markdown from '~/beinComponents/Markdown';
 import postKeySelector from '../../redux/keySelector';
+import VideoPlayer from '~/beinComponents/VideoPlayer';
+import UploadingFile from '~/beinComponents/UploadingFile';
 
 export interface PostViewContentProps {
   postId: number;
   content?: string;
   images?: IActivityDataImage[];
+  videos?: any[];
   isPostDetail: boolean;
   onContentLayout?: () => void;
   isLite?: boolean;
+  isDraft?: boolean;
 }
 
 const PostViewContent: FC<PostViewContentProps> = ({
   postId,
   content = '',
   images = [],
+  videos = [],
   isPostDetail,
   onContentLayout,
   isLite,
+  isDraft,
 }: PostViewContentProps) => {
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
@@ -45,7 +51,11 @@ const PostViewContent: FC<PostViewContentProps> = ({
     onContentLayout?.();
   };
 
-  if (!content && (!images || images?.length === 0)) {
+  if (
+    !content &&
+    (!images || images?.length === 0) &&
+    (!videos || videos?.length === 0)
+  ) {
     return null;
   }
 
@@ -107,11 +117,22 @@ const PostViewContent: FC<PostViewContentProps> = ({
     <View onLayout={onLayout}>
       <View style={styles.contentContainer}>{renderContent()}</View>
       {!isLite && (
-        <PostPhotoPreview
-          data={images || []}
-          uploadType={'postImage'}
-          enableGalleryModal
-        />
+        <>
+          <PostPhotoPreview
+            data={images || []}
+            uploadType={'postImage'}
+            enableGalleryModal
+          />
+          {isDraft ? (
+            <UploadingFile
+              uploadType={uploadTypes.postVideo}
+              file={videos?.[0]}
+              disableClose
+            />
+          ) : (
+            <VideoPlayer data={videos?.[0]} />
+          )}
+        </>
       )}
     </View>
   );

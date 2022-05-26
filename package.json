@@ -34,6 +34,7 @@
     "reverse": "adb reverse tcp:8081 tcp:8081 && adb reverse tcp:9090 tcp:9090"
   },
   "dependencies": {
+    "@giphy/react-native-sdk": "^1.7.1",
     "@iconscout/react-native-unicons": "1.0.3",
     "@iconscout/react-unicons": "1.1.6",
     "@msgpack/msgpack": "2.7.1",
@@ -109,6 +110,7 @@
     "react-native-uuid": "2.0.1",
     "react-native-vector-icons": "8.1.0",
     "react-native-video": "5.2.0",
+    "react-native-video-controls": "2.8.1",
     "react-native-web": "0.16.5",
     "react-native-web-linear-gradient": "1.1.2",
     "react-redux": "7.2.6",
