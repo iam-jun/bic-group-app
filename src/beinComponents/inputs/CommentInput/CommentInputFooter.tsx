@@ -98,7 +98,7 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
             <Icon
               style={styles.icon}
               tintColor={colors.iconTintLight}
-              icon={'Smile'}
+              icon="iconAddGif"
             />
           </Button>
         </View>

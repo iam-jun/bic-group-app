@@ -394,6 +394,7 @@ const _PostDetailContent = (props: any) => {
         <View style={styles.postDetailContainer}>
           <SectionList
             ref={listRef}
+            bounces={!stickerBoardVisible}
             disableScrollViewPanResponder={stickerBoardVisible}
             sections={deleted ? defaultList : sectionData}
             renderItem={renderCommentItem}
