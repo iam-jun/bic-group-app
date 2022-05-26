@@ -543,7 +543,8 @@
       "text_delete_comment": "When you delete this comment, all of its reply will also be deleted. Continue?",
       "text_delete_comment_error": "Delete comment failed!",
       "text_delete_comment_success": "Comment deleted",
-      "text_edited": "Edited"
+      "text_edited": "Edited",
+      "search_giphy": "Search GIPHY"
     },
     "settings": "Post Settings",
     "people_can_comment": "People can comment on this post",

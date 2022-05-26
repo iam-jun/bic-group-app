@@ -39,6 +39,11 @@ export interface IFilePicked {
   [x: string]: any;
 }
 
+export interface IGiphy {
+  id: string;
+  type: string;
+}
+
 export interface IResponseData {
   code: number;
   data: any;

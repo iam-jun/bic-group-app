@@ -30,6 +30,7 @@ const persistConfig = {
     'noInternet',
     'mentionInput',
     'chat',
+    'giphy',
   ],
   // whitelist: ['chat', 'language'],
 };
