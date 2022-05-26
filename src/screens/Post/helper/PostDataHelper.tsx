@@ -142,6 +142,7 @@ export const postApiConfig = {
       postId: params?.postId,
       content: params?.data?.content,
       media: params?.data?.media,
+      giphy: params?.data?.giphy,
       mentions: params?.data?.mentions,
     },
   }),

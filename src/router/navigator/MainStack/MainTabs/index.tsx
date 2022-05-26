@@ -15,12 +15,15 @@ import BottomTabBar from '~/router/components/BottomTabBar';
 import mainTabStack from '~/router/navigator/MainStack/MainTabs/stack';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
+import giphyActions from '~/store/giphy/actions';
 import {initPushTokenMessage} from '~/services/helper';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens, screensWebLaptop} from './screens';
 import {useChatSocket} from '~/hooks/chat';
+import {useKeySelector} from '~/hooks/selector';
+import {GiphySDK} from '@giphy/react-native-sdk';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -44,6 +47,7 @@ const MainTabs = () => {
   const dispatch = useDispatch();
 
   const userId = useUserIdAuth();
+  const giphyAPIKey = useKeySelector('giphy.APIKey');
 
   useEffect(() => {
     let tokenRefreshSubscription: any;
@@ -54,6 +58,7 @@ const MainTabs = () => {
     }
 
     dispatch(postActions.getDraftPosts({}));
+    dispatch(giphyActions.getAPIKey());
     if (Platform.OS !== 'web') {
       dispatch(notificationsActions.registerPushToken());
       initPushTokenMessage()
@@ -72,6 +77,13 @@ const MainTabs = () => {
       tokenRefreshSubscription && tokenRefreshSubscription();
     };
   }, [userId]);
+
+  useEffect(() => {
+    // Configure GiphySDK API keys
+    GiphySDK.configure({
+      apiKey: giphyAPIKey,
+    });
+  }, [giphyAPIKey]);
 
   const isWebLaptop = Platform.OS === 'web' && isLaptop;
   if (isWebLaptop) {

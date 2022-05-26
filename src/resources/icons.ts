@@ -80,6 +80,7 @@ import iconTabCommunitiesBein from '../../assets/icons/icon_communities_bein.svg
 import iconLock from '../../assets/icons/icon_lock.svg';
 import iconSecret from '../../assets/icons/icon_secret_group.svg';
 import iconFileVideo from '../../assets/icons/icon_file_video.svg';
+import iconPlayGif from '../../assets/icons/ic_play_gif.svg';
 
 const icons = {
   iconTabHome,
@@ -267,6 +268,7 @@ const icons = {
   iconFileVideo,
   VolumeMute: 'VolumeMute',
   CheckCircle: 'CheckCircle',
+  iconPlayGif,
 };
 
 export default icons;

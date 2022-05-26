@@ -17,6 +17,7 @@ import auth from '../screens/Auth/redux/reducer';
 import noInternetReducer from '../screens/NoInternet/redux/reducer';
 import mentionInputReducer from '~/beinComponents/inputs/MentionInput/redux/reducer';
 import chatReducer from './chat/reducer';
+import giphyReducer from './giphy/reducer';
 
 import app from './app/reducer';
 import modal from './modal/reducer';
@@ -46,6 +47,7 @@ export const appReducer = combineReducers({
   noInternet: noInternetReducer,
   mentionInput: mentionInputReducer,
   chat: chatReducer,
+  giphy: giphyReducer,
 });
 
 // @ts-ignore
