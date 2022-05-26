@@ -86,6 +86,8 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
   }, [visible]);
 
   const show = () => {
+    if (visible) return;
+
     setVisible(true);
     Keyboard.dismiss();
     const _height = Math.max(keyboardHeight, INITIAL_KEYBOARD_HEIGHT);
@@ -109,6 +111,8 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
   const hide = () => {
     const onHideDone = () => {
       setVisible(false);
+      setIsExpanded(false);
+      setSearchQuery('');
     };
     height.value = withTiming(0, {duration: 200}, () => {
       runOnJS(onHideDone)();
@@ -117,7 +121,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
 
   const hideImmediately = () => {
     setVisible(false);
-    height.value = 0;
+    runOnJS(hide)();
   };
 
   const handleDown = () => {
@@ -169,7 +173,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
     onMediaSelect(e.nativeEvent.media);
   };
 
-  // if (!visible) return null;
+  if (!visible) return null;
 
   const offset = dimension.headerHeight + insets.top + keyboardHeight;
 
@@ -227,8 +231,7 @@ const createStyle = (theme: ITheme) => {
       position: 'absolute',
       left: 0,
       right: 0,
-      zIndex: 3,
-      backgroundColor: 'pink',
+      zIndex: 99,
     },
     header: {
       paddingVertical: spacing.margin.base,
