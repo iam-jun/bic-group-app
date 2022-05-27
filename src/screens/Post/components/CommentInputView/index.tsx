@@ -139,7 +139,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       const payload: IPayloadCreateComment = {
         postId,
         parentCommentId: replyTargetId || defaultReplyTargetId,
-        commentData: {content: content?.trim(), media},
+        commentData: {content: content?.trim(), media, giphy: sendData?.giphy},
         userId: Number(userId),
         onSuccess: _onCommentSuccess,
         isCommentLevel1Screen: isCommentLevel1Screen,

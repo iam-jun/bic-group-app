@@ -1,4 +1,16 @@
-import React, {useEffect, useRef, useState, useImperativeHandle} from 'react';
+import {
+  GiphyDialog,
+  GiphyMedia,
+  GiphyMediaView,
+  GiphyThemePreset,
+} from '@giphy/react-native-sdk';
+import React, {
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState,
+  useCallback,
+} from 'react';
 import {
   Animated,
   Keyboard,
@@ -12,32 +24,31 @@ import {
   ViewStyle,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
-
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useDispatch} from 'react-redux';
+import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
+import Image from '~/beinComponents/Image';
 import ImagePicker from '~/beinComponents/ImagePicker';
+import CommentInputFooter from '~/beinComponents/inputs/CommentInput/CommentInputFooter';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
-import {IFilePicked} from '~/interfaces/common';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import StickerView from '~/beinComponents/StickerView';
+import Text from '~/beinComponents/Text';
+import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
+import {useBaseHook} from '~/hooks';
+import {IFilePicked, IGiphy} from '~/interfaces/common';
+import {IActivityDataImage} from '~/interfaces/IPost';
+import FileUploader, {IGetFile} from '~/services/fileUploader';
+import modalActions from '~/store/modal/actions';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
-import Button from '~/beinComponents/Button';
-import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
-import Image from '~/beinComponents/Image';
-import FileUploader, {IGetFile} from '~/services/fileUploader';
-import {IActivityDataImage} from '~/interfaces/IPost';
-import {useBaseHook} from '~/hooks';
-import {useDispatch} from 'react-redux';
-import Text from '~/beinComponents/Text';
-import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import EmojiBoardAnimated from '~/beinComponents/emoji/EmojiBoardAnimated';
-import modalActions from '~/store/modal/actions';
-import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import CommentInputFooter from '~/beinComponents/inputs/CommentInput/CommentInputFooter';
 import {checkPermission} from '~/utils/permission';
 
 export interface ICommentInputSendParam {
   content: string;
   image?: IActivityDataImage;
+  giphy?: IGiphy;
 }
 
 export interface CommentInputProps {
@@ -119,10 +130,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const [selectedImage, setSelectedImage] = useState<IFilePicked>();
+  const [selectedGiphy, setSelectedGiphy] = useState<GiphyMedia>();
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
 
-  const emojiBoardRef = useRef<any>();
+  const stickerViewRef = useRef<any>();
   const _textInputRef = textInputRef || useRef();
 
   const _loading = loading || uploading;
@@ -141,6 +153,10 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const isWeb = Platform.OS === 'web';
 
   useEffect(() => {
+    GiphyDialog.configure({theme: GiphyThemePreset.Light});
+  });
+
+  useEffect(() => {
     /**
      * Clone text in order to handling empty newline
      * as the <Text> does not adding the height of
@@ -155,11 +171,22 @@ const CommentInput: React.FC<CommentInputProps> = ({
     }
   }, [text, selectedImage]);
 
+  useEffect(() => {
+    if (selectedGiphy) {
+      if (text) {
+        focus();
+      } else {
+        _onPressSend();
+      }
+    }
+  }, [selectedGiphy]);
+
   const _onPressSelectImage = () => {
     checkPermission('photo', dispatch, canOpenPicker => {
       if (canOpenPicker) {
         ImagePicker.openPickerSingle().then(file => {
           if (!file) return;
+          setSelectedGiphy(undefined);
           if (!isHandleUpload) {
             onPressSelectImage?.(file);
           } else {
@@ -183,27 +210,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const onPressEmoji = (event: any) => {
-    if (!isWeb) {
-      emojiBoardRef?.current?.show?.();
-    } else {
-      dispatch(
-        modalActions.showModal({
-          isOpen: true,
-          ContentComponent: (
-            <EmojiBoard
-              width={320}
-              height={280}
-              onEmojiSelected={onEmojiSelected}
-            />
-          ),
-          props: {
-            webModalStyle: {minHeight: undefined},
-            isContextMenu: true,
-            position: {x: event?.pageX, y: event?.pageY},
-          },
-        }),
-      );
-    }
+    stickerViewRef?.current?.show?.();
+    // GiphyDialog.show();
   };
 
   const handleUpload = () => {
@@ -248,7 +256,16 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const _onPressSend = () => {
     if (!_loading) {
       blurOnSubmit && Keyboard.dismiss();
-      if (!isHandleUpload) {
+      if (selectedGiphy) {
+        onPressSend?.({
+          content: text,
+          giphy: {
+            id: selectedGiphy.id,
+            type: selectedGiphy.data.type,
+          },
+        });
+        setSelectedGiphy(undefined);
+      } else if (!isHandleUpload) {
         onPressSend?.({content: text});
       } else {
         handleUpload();
@@ -257,7 +274,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const _onFocus = () => {
-    emojiBoardRef?.current?.hide?.();
+    stickerViewRef?.current?.hideImmediately?.();
   };
 
   const _onChangeText = (value: string) => {
@@ -276,34 +293,14 @@ const CommentInput: React.FC<CommentInputProps> = ({
     Platform.OS === 'web' && setInputSelection(event.nativeEvent.selection);
   };
 
-  const addTextToCursor = (newText: string) => {
-    if (selection?.end && !addToEnd) {
-      _onChangeText(
-        `${text.slice(0, selection.end)}${newText}${text.slice(selection.end)}`,
-      );
-    } else {
-      _onChangeText(`${text}${newText}`);
-    }
-  };
-
-  const backSpaceFromCursor = () => {
-    if (selection?.end && !addToEnd) {
-      _onChangeText(
-        `${text.slice(0, selection.end - 1)}${text.slice(selection.end)}`,
-      );
-    } else {
-      if (text?.length > 0) {
-        _onChangeText(`${text.slice(0, text.length - 1)}`);
-      }
-    }
-  };
-
-  const onEmojiSelected = (emoji: string) => {
-    if (isWeb) {
-      dispatch(modalActions.hideModal());
-    }
-    addTextToCursor(emoji);
-  };
+  const onMediaSelect = useCallback(
+    (media: GiphyMedia) => {
+      setSelectedImage(undefined);
+      stickerViewRef?.current?.hideImmediately?.();
+      setSelectedGiphy(media);
+    },
+    [text],
+  );
 
   const handleKeyEvent = (event: any) => {
     if (
@@ -358,30 +355,43 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const getText = () => text;
 
-  const getSelectedImage = () => selectedImage;
+  const hasMedia = () => selectedImage || selectedGiphy;
 
   const clear = () => {
     setText('');
     setUploadError('');
     setUploading(false);
     setSelectedImage(undefined);
+    setSelectedGiphy(undefined);
     onChangeText?.('');
   };
 
-  const focus = () => _textInputRef.current?.focus?.();
+  const focus = () => {
+    _textInputRef.current?.focus?.();
+  };
 
   const isFocused = () => _textInputRef.current?.isFocused?.();
 
   const send = () => _onPressSend();
 
+  const onBackPress = () => {
+    stickerViewRef?.current?.onBackPress?.();
+  };
+
+  const getStickerBoardVisible = () => {
+    return stickerViewRef?.current?.getVisible?.();
+  };
+
   useImperativeHandle(commentInputRef, () => ({
     setText,
     getText,
-    getSelectedImage,
+    hasMedia,
     clear,
     focus,
     isFocused,
     send,
+    onBackPress,
+    getStickerBoardVisible,
   }));
 
   const _onKeyPress = (e: any) => {
@@ -396,7 +406,28 @@ const CommentInput: React.FC<CommentInputProps> = ({
     Platform.OS === 'web' ? {outlineWidth: 0, height: textTextInputHeight} : {},
   ]);
 
-  const renderSelectedImage = () => {
+  const renderSelectedMedia = () => {
+    if (selectedGiphy) {
+      if (!text) return null;
+
+      return (
+        <View style={{backgroundColor: colors.background}}>
+          <View style={styles.selectedImageWrapper}>
+            <View style={styles.selectedImageContainer}>
+              <GiphyMediaView
+                media={selectedGiphy}
+                style={styles.selectedImage}
+              />
+            </View>
+            <Button
+              style={styles.iconCloseSelectedImage}
+              onPress={() => setSelectedGiphy(undefined)}>
+              <Icon size={12} icon={'iconCloseSmall'} />
+            </Button>
+          </View>
+        </View>
+      );
+    }
     if (!selectedImage || !isHandleUpload) {
       return null;
     }
@@ -485,7 +516,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
             )}
           </Animated.View>
         </View>
-        {renderSelectedImage()}
+        {renderSelectedMedia()}
         <CommentInputFooter
           useTestID={useTestID}
           onPressFile={_onPressFile}
@@ -494,18 +525,13 @@ const CommentInput: React.FC<CommentInputProps> = ({
           onPressEmoji={onPressEmoji}
           onPressSend={_onPressSend}
           loading={_loading}
-          disabledBtnSend={_loading || (!text.trim() && !selectedImage)}
+          disabledBtnSend={_loading || (!text.trim() && !hasMedia())}
         />
       </View>
-      {!isWeb && (
-        <EmojiBoardAnimated
-          emojiBoardRef={emojiBoardRef}
-          onEmojiSelected={onEmojiSelected}
-          onPressKeyboard={focus}
-          onPressSpace={() => addTextToCursor(' ')}
-          onPressBackSpace={backSpaceFromCursor}
-        />
-      )}
+      <StickerView
+        stickerViewRef={stickerViewRef}
+        onMediaSelect={onMediaSelect}
+      />
       {disableKeyboardSpacer !== false && <KeyboardSpacer iosOnly />}
     </View>
   );

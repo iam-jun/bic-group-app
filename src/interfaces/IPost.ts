@@ -1,4 +1,4 @@
-import {IFilePicked} from '~/interfaces/common';
+import {IFilePicked, IGiphy} from '~/interfaces/common';
 import {ReactionType} from '~/constants/reactions';
 import {IUploadType} from '~/configs/resourceConfig';
 
@@ -85,6 +85,7 @@ export interface ICommentData {
   parentCommentId?: string | number; // used when retry/cancel adding new comment
   reactionsOfActor?: IOwnReaction;
   reaction?: IReaction;
+  giphy?: IGiphy;
 }
 
 export interface ICreatePostImage {

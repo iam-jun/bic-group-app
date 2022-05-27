@@ -148,7 +148,7 @@ const _MentionInput = ({
       event?.key === 'Enter' &&
       !event?.shiftKey &&
       (componentInputProps?.value?.trim?.()?.length > 0 ||
-        componentInputProps?.commentInputRef?.current?.getSelectedImage?.())
+        componentInputProps?.commentInputRef?.current?.hasMedia?.())
     ) {
       if (componentInputProps?.commentInputRef?.current?.send) {
         event.preventDefault();

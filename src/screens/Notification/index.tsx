@@ -183,7 +183,12 @@ const Notification = () => {
     }
 
     // finally mark the notification as read
-    dispatch(notificationsActions.markAsRead(item.id));
+    dispatch(
+      notificationsActions.markAsRead({
+        id: item.id,
+        flag: notificationMenuData[selectedIndex]?.type || 'ALL',
+      }),
+    );
   };
 
   // load more notification handler
