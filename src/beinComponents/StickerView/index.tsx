@@ -1,11 +1,18 @@
 import {GiphyContent, GiphyGridView, GiphyMedia} from '@giphy/react-native-sdk';
 import i18next from 'i18next';
 import {useKeyboard} from '@react-native-community/hooks';
-import React, {useEffect, useImperativeHandle, useRef, useState} from 'react';
+import React, {
+  useEffect,
+  useImperativeHandle,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import {
   DeviceEventEmitter,
   Keyboard,
   NativeSyntheticEvent,
+  Platform,
   StyleSheet,
   View,
 } from 'react-native';
@@ -79,6 +86,8 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
   }, [visible]);
 
   const show = () => {
+    if (visible) return;
+
     setVisible(true);
     Keyboard.dismiss();
     const _height = Math.max(keyboardHeight, INITIAL_KEYBOARD_HEIGHT);
@@ -93,13 +102,17 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
   };
 
   const colapse = () => {
-    height.value = withTiming(keyboardHeight, {duration: 200});
+    Keyboard.dismiss();
+    const _height = Math.max(keyboardHeight, INITIAL_KEYBOARD_HEIGHT);
+    height.value = withTiming(_height, {duration: 200});
     setIsExpanded(false);
   };
 
   const hide = () => {
     const onHideDone = () => {
       setVisible(false);
+      setIsExpanded(false);
+      setSearchQuery('');
     };
     height.value = withTiming(0, {duration: 200}, () => {
       runOnJS(onHideDone)();
@@ -108,7 +121,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
 
   const hideImmediately = () => {
     setVisible(false);
-    height.value = 0;
+    runOnJS(hide)();
   };
 
   const handleDown = () => {
@@ -160,20 +173,25 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
     onMediaSelect(e.nativeEvent.media);
   };
 
-  // if (!visible) return null;
+  if (!visible) return null;
 
-  const contentHeight =
-    dimension.deviceHeight -
-    dimension.headerHeight -
-    insets.top -
-    keyboardHeight;
+  const offset = dimension.headerHeight + insets.top + keyboardHeight;
+
+  const contentHeight = dimension.deviceHeight - offset;
 
   return (
     <FlingGestureHandler
       direction={Directions.DOWN}
       onEnded={handleDown}
       onHandlerStateChange={onDownFlingHandlerStateChange}>
-      <View style={[isExpanded && {...styles.expanded, height: contentHeight}]}>
+      <View
+        style={[
+          isExpanded && {
+            ...styles.expanded,
+            height: contentHeight,
+            bottom: Platform.OS === 'android' ? 0 : keyboardHeight,
+          },
+        ]}>
         <Animated.View
           style={[isExpanded ? styles.animatedViewExpanded : animatedStyle]}>
           <View style={styles.stickerView}>
@@ -199,7 +217,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
             />
           </View>
         </Animated.View>
-        <KeyboardSpacer extraHeight={100} />
+        {Platform.OS === 'android' && visible && <KeyboardSpacer />}
       </View>
     </FlingGestureHandler>
   );
@@ -211,11 +229,9 @@ const createStyle = (theme: ITheme) => {
   return StyleSheet.create({
     expanded: {
       position: 'absolute',
-      bottom: 0,
       left: 0,
       right: 0,
-      zIndex: 3,
-      backgroundColor: 'pink',
+      zIndex: 99,
     },
     header: {
       paddingVertical: spacing.margin.base,
@@ -244,5 +260,5 @@ const createStyle = (theme: ITheme) => {
 };
 
 const StickerView = React.memo(_StickerView);
-StickerView.whyDidYouRender = true;
+// StickerView.whyDidYouRender = true;
 export default StickerView;

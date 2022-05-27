@@ -171,6 +171,16 @@ const CommentInput: React.FC<CommentInputProps> = ({
     }
   }, [text, selectedImage]);
 
+  useEffect(() => {
+    if (selectedGiphy) {
+      if (text) {
+        focus();
+      } else {
+        _onPressSend();
+      }
+    }
+  }, [selectedGiphy]);
+
   const _onPressSelectImage = () => {
     checkPermission('photo', dispatch, canOpenPicker => {
       if (canOpenPicker) {
@@ -286,8 +296,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const onMediaSelect = useCallback(
     (media: GiphyMedia) => {
       setSelectedImage(undefined);
+      stickerViewRef?.current?.hideImmediately?.();
       setSelectedGiphy(media);
-      if (text) focus();
     },
     [text],
   );
@@ -398,6 +408,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const renderSelectedMedia = () => {
     if (selectedGiphy) {
+      if (!text) return null;
+
       return (
         <View style={{backgroundColor: colors.background}}>
           <View style={styles.selectedImageWrapper}>
