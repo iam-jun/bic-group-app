@@ -131,7 +131,8 @@ const SignUp = () => {
                 !getEnv('SELF_DOMAIN')?.includes('sbx') &&
                 !getEnv('SELF_DOMAIN')?.includes('stg')
               ) {
-                const value = getValues('newPassword');
+                const value = getValues('password');
+
                 if (!/(?=.*?[A-Z])/.test(value)) {
                   return t('auth:text_err_password_required_upper_case');
                 }
