@@ -89,14 +89,14 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
   } = createPostData || {};
   const {content} = data || {};
 
-  const users: number[] = [];
-  const groups: number[] = [];
+  const users: any[] = [];
+  const groups: any[] = [];
   const audience = {groupIds: groups, userIds: users};
   chosenAudiences.map((selected: IAudience) => {
     if (selected.type === 'user') {
-      users.push(Number(selected.id));
+      users.push(selected.id);
     } else {
-      groups.push(Number(selected.id));
+      groups.push(selected.id);
     }
   });
 
@@ -172,10 +172,10 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     if (initPostData && (isEditDraftPost || isEditPost)) {
       //get post audience for select audience screen and check audience has changed
       initPostData?.audience?.groups?.map?.(g =>
-        initGroupsRef.current.push(Number(g?.id)),
+        initGroupsRef.current.push(g?.id),
       );
       initPostData?.audience?.users?.map?.(u =>
-        initUsersRef.current.push(Number(u?.id)),
+        initUsersRef.current.push(u?.id),
       );
       const p: IParamGetPostAudiences = {
         group_ids: initGroupsRef.current.join(','),

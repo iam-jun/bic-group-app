@@ -8,14 +8,14 @@ export interface IPostAudience {
 }
 
 export interface IAudienceUser {
-  id?: number;
+  id?: string;
   username?: string;
   fullname?: string;
   avatar?: string;
 }
 
 export interface IAudienceGroup {
-  id?: number;
+  id?: string;
   name?: string;
   icon?: string;
   child?: number[];
@@ -43,7 +43,7 @@ export interface IAudience {
 }
 
 export interface IActivityDataImage {
-  id?: number;
+  id?: string;
   name: string;
   origin_name?: string;
   url?: string;
@@ -66,11 +66,11 @@ export interface IActivityImportant {
 }
 
 export interface ICommentData {
-  id?: number;
-  postId?: number;
+  id?: string;
+  postid?: string;
   totalReply?: number;
   actor?: IAudienceUser;
-  parentId?: number;
+  parentid?: string;
   content?: string;
   media?: IPostMedia;
   mentions?: any;
@@ -124,7 +124,7 @@ export interface IPostComments {
 }
 
 export interface IPostActivity {
-  id?: number;
+  id?: string;
   audience?: IPostAudience;
   content?: string;
   highlight?: string;
@@ -179,7 +179,7 @@ export interface IPayloadCreatePost {
 
 export interface IPayloadCreateComment {
   postId: number;
-  parentCommentId?: number;
+  parentCommentid?: string;
   commentData: ICommentData;
   userId: string | number;
   localId?: string | number[]; // used when retry adding new comment
@@ -260,7 +260,7 @@ export interface IRequestGetPostComment {
   idLT?: number;
   idGT?: number;
   postId: number;
-  parentId?: number;
+  parentid?: string;
   childLimit?: number;
 }
 
@@ -268,12 +268,12 @@ export interface IPayloadGetCommentsById extends IRequestGetPostComment {
   isMerge: boolean;
   callbackLoading?: (loading: boolean, canLoadMore?: boolean) => void;
   position?: string;
-  commentId?: number;
+  commentid?: string;
 }
 
 export interface IReaction {
-  id?: number;
-  postId?: number;
+  id?: string;
+  postid?: string;
   reactionName?: string;
   createdBy?: number;
   createdAt?: string;
@@ -354,7 +354,7 @@ export interface IParamGetReactionDetail {
   target: 'POST' | 'COMMENT';
   limit?: number;
   order?: 'ASC' | 'DESC';
-  latestId?: number;
+  latestid?: string;
 }
 
 export interface IPostAudienceSheet {
@@ -378,8 +378,8 @@ export interface IPayloadReactToPost {
 export interface IPayloadReactToComment {
   id: number;
   comment: IReaction;
-  postId?: number;
-  parentCommentId?: number;
+  postid?: string;
+  parentCommentid?: string;
   reactionId: ReactionType;
   ownerReactions: IOwnReaction;
   reactionsCount: IReactionCounts;
@@ -408,20 +408,20 @@ export interface IPayloadUpdateCommentsById {
   comments: ICommentData[];
   isMerge: boolean;
   isReplace?: boolean;
-  commentId?: number;
+  commentid?: string;
 }
 
 export interface ICreatePostParams {
-  draftPostId?: number;
-  postId?: number;
+  draftPostid?: string;
+  postid?: string;
   replaceWithDetail?: boolean;
   initAudience?: any;
-  createFromGroupId?: number;
+  createFromGroupid?: string;
   initAutoSaveDraft?: boolean;
 }
 
 export interface IPostSettingsParams extends ICreatePostParams {
-  postId?: number;
+  postid?: string;
 }
 
 export interface IPayloadReplying {
@@ -457,7 +457,7 @@ export interface IPayloadPublishDraftPost {
   onSuccess?: () => void;
   onError?: () => void;
   refreshDraftPosts?: boolean;
-  createFromGroupId?: number;
+  createFromGroupid?: string;
 }
 
 export interface IPayloadPutEditDraftPost {
@@ -466,7 +466,7 @@ export interface IPayloadPutEditDraftPost {
   replaceWithDetail?: boolean;
   publishNow: boolean;
   callback?: any;
-  createFromGroupId?: number;
+  createFromGroupid?: string;
 }
 
 export interface IPayloadPutEditAutoSave {
@@ -500,7 +500,7 @@ export interface ICreatePostCurrentSettings {
 
 export interface IPayloadDeleteComment {
   commentId: number;
-  parentCommentId?: number;
+  parentCommentid?: string;
   postId: number;
 }
 

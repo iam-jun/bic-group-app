@@ -1,4 +1,4 @@
-import {AxiosRequestConfig, CancelToken} from 'axios';
+import {AxiosRequestConfig} from 'axios';
 
 import {getEnv} from '~/utils/env';
 import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
@@ -18,7 +18,7 @@ const providers = {
   },
   beinUpload: {
     url: `${getEnv('BEIN_UPLOAD')}`,
-    name: 'BeinNotification',
+    name: 'BeinUpload',
   },
 };
 
