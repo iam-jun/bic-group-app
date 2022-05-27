@@ -29,6 +29,7 @@ import Header from '~/beinComponents/Header';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import MemberOptionsMenu from './components/MemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 const _GroupMembers = (props: any) => {
   const params = props.route.params;
@@ -130,6 +131,10 @@ const _GroupMembers = (props: any) => {
     baseSheetRef.current?.open(e?.pageX, e?.pageY);
   };
 
+  const goToUserProfile = (id: number) => {
+    rootNavigation.navigate(mainStack.userProfile, {userId: id});
+  };
+
   const onLoadMore = () => {
     getMembers();
   };
@@ -143,7 +148,7 @@ const _GroupMembers = (props: any) => {
   };
 
   const renderItem = ({item}: {item: IGroupMembers}) => {
-    const {fullname, avatar, username} = item || {};
+    const {id, fullname, avatar, username} = item || {};
 
     return (
       <PrimaryItem
@@ -151,6 +156,7 @@ const _GroupMembers = (props: any) => {
         menuIconTestID={'group_members.item'}
         style={styles.itemContainer}
         avatar={avatar || images.img_user_avatar_default}
+        onPress={id ? () => goToUserProfile(id) : undefined}
         ContentComponent={
           <Text.H6 numberOfLines={2}>
             {fullname}
@@ -160,7 +166,9 @@ const _GroupMembers = (props: any) => {
               }>{` @${username}`}</Text.Subtitle>
           </Text.H6>
         }
-        onPressMenu={(e: any) => onPressMenu(e, item)}
+        onPressMenu={
+          can_manage_member ? (e: any) => onPressMenu(e, item) : undefined
+        }
       />
     );
   };
