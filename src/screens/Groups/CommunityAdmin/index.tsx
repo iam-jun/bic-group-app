@@ -14,9 +14,7 @@ import Text from '~/beinComponents/Text';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import modalActions from '~/store/modal/actions';
 
-const CommunityAdmin = (props: any) => {
-  const communityId = props?.route?.params?.communityId;
-
+const CommunityAdmin = () => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const dispatch = useDispatch();
