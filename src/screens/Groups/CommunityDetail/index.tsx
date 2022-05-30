@@ -28,7 +28,7 @@ import {formatChannelLink} from '~/utils/link';
 import {openLink} from '~/utils/common';
 import {chatSchemes} from '~/constants/chat';
 import modalActions from '~/store/modal/actions';
-import HeaderMenu from '../GroupDetail/components/HeaderMenu';
+import HeaderMenu from '../components/HeaderMenu';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
