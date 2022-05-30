@@ -27,11 +27,16 @@ import {ICommunity} from '~/interfaces/ICommunity';
 import {formatChannelLink} from '~/utils/link';
 import {openLink} from '~/utils/common';
 import {chatSchemes} from '~/constants/chat';
+import modalActions from '~/store/modal/actions';
+import HeaderMenu from '../GroupDetail/components/HeaderMenu';
+import {useRootNavigation} from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
 const CommunityDetail = (props: any) => {
   const params = props.route.params;
   const communityId = params?.communityId;
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
 
   const headerRef = useRef<any>();
   const [buttonHeight, setButtonHeight] = useState(250);
@@ -40,8 +45,7 @@ const CommunityDetail = (props: any) => {
   const styles = themeStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const {name, icon, join_status, privacy, group_id} = infoDetail;
-  const isPrivate = privacy === groupPrivacy.private;
+  const {name, icon, join_status, privacy, group_id, can_setting} = infoDetail;
   const isMember = join_status === groupJoinStatus.member;
   const isGettingInfoDetail = useKeySelector(
     groupsKeySelector.isGettingInfoDetail,
@@ -81,6 +85,32 @@ const CommunityDetail = (props: any) => {
   }, [communityId]);
 
   useEffect(() => getPosts(), [infoDetail]);
+
+  const onPressAdminTools = () => {
+    dispatch(modalActions.hideModal());
+    rootNavigation.navigate(groupStack.communityAdmin, {communityId});
+  };
+
+  const onRightPress = () => {
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        ContentComponent: (
+          <HeaderMenu
+            type="community"
+            isMember={isMember}
+            can_setting={can_setting}
+            onPressAdminTools={onPressAdminTools}
+          />
+        ),
+        props: {
+          isContextMenu: true,
+          menuMinWidth: 280,
+          modalStyle: {borderTopLeftRadius: 20, borderTopRightRadius: 20},
+        },
+      }),
+    );
+  };
 
   const renderPlaceholder = () => {
     return (
@@ -155,9 +185,10 @@ const CommunityDetail = (props: any) => {
           title={name}
           avatar={icon}
           useAnimationTitle
-          rightIcon="EllipsisV"
+          rightIcon={can_setting ? 'iconShieldStar' : 'EllipsisV'}
           rightIconProps={{backgroundColor: theme.colors.background}}
           onPressChat={isMember ? onPressChat : undefined}
+          onRightPress={onRightPress}
         />
         <View testID="community_detail.content" style={styles.contentContainer}>
           {renderCommunityContent()}
