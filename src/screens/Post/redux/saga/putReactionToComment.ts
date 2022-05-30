@@ -66,7 +66,6 @@ export default function* putReactionToComment({
           }
         }
       }
-
       yield onUpdateReactionOfCommentById(
         id,
         newOwnReaction1,
