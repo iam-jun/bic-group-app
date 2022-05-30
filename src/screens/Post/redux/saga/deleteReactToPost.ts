@@ -26,7 +26,6 @@ export default function* deleteReactToPost({
       cOwnReaction1?.find(
         (item: IReaction) => item?.reactionName === reactionId,
       )?.id || '';
-
     if (rId) {
       yield removeReactionLocal(id, reactionId);
       yield call(postDataHelper.deleteReaction, {
@@ -42,27 +41,27 @@ export default function* deleteReactToPost({
   }
 }
 
-function* addReactionLoadingLocal(
-  id: number,
-  reactionId: string,
-  ownerReaction: IOwnReaction,
-  reactionCounts: IReactionCounts,
-): any {
-  const newOwnReaction1: IOwnReaction = [...ownerReaction];
+// function* addReactionLoadingLocal(
+//   id: number,
+//   reactionId: string,
+//   ownerReaction: IOwnReaction,
+//   reactionCounts: IReactionCounts,
+// ): any {
+//   const newOwnReaction1: IOwnReaction = [...ownerReaction];
 
-  if (newOwnReaction1?.length > 0) {
-    newOwnReaction1.forEach((ownReaction, index) => {
-      if (ownReaction?.reactionName === reactionId) {
-        ownReaction.loading = true;
-        newOwnReaction1[index] = {...ownReaction};
-      }
-    });
-  }
+//   if (newOwnReaction1?.length > 0) {
+//     newOwnReaction1.forEach((ownReaction, index) => {
+//       if (ownReaction?.reactionName === reactionId) {
+//         ownReaction.loading = true;
+//         newOwnReaction1[index] = {...ownReaction};
+//       }
+//     });
+//   }
 
-  yield onUpdateReactionOfPostById(id, newOwnReaction1, {
-    ...reactionCounts,
-  });
-}
+//   yield onUpdateReactionOfPostById(id, newOwnReaction1, {
+//     ...reactionCounts,
+//   });
+// }
 
 function* removeReactionLocal(id: number, reactionId: string): any {
   const post2 = yield select(s => get(s, postKeySelector.postById(id)));

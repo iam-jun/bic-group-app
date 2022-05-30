@@ -47,33 +47,33 @@ export default function* deleteReactToComment({
   }
 }
 
-function* addReactionLoadingLocal(
-  id: number,
-  reactionId: string,
-  comment: ICommentData,
-): any {
-  const cComment1 = yield select(s =>
-    get(s, postKeySelector.commentById(id)),
-  ) || {};
-  const cReactionCount1 = cComment1.reactionsCount || {};
-  const cOwnReactions1 = cComment1.ownerReactions || [];
+// function* addReactionLoadingLocal(
+//   id: number,
+//   reactionId: string,
+//   comment: ICommentData,
+// ): any {
+//   const cComment1 = yield select(s =>
+//     get(s, postKeySelector.commentById(id)),
+//   ) || {};
+//   const cReactionCount1 = cComment1.reactionsCount || {};
+//   const cOwnReactions1 = cComment1.ownerReactions || [];
 
-  const newOwnReaction1: IOwnReaction = [...cOwnReactions1];
-  if (newOwnReaction1?.length > 0) {
-    newOwnReaction1.forEach((item: IReaction, index: number) => {
-      if (item?.reactionName === reactionId) {
-        item.loading = true;
-        newOwnReaction1[index] = {...item};
-      }
-    });
-  }
-  yield onUpdateReactionOfCommentById(
-    id,
-    newOwnReaction1,
-    {...cReactionCount1},
-    comment,
-  );
-}
+//   const newOwnReaction1: IOwnReaction = [...cOwnReactions1];
+//   if (newOwnReaction1?.length > 0) {
+//     newOwnReaction1.forEach((item: IReaction, index: number) => {
+//       if (item?.reactionName === reactionId) {
+//         item.loading = true;
+//         newOwnReaction1[index] = {...item};
+//       }
+//     });
+//   }
+//   yield onUpdateReactionOfCommentById(
+//     id,
+//     newOwnReaction1,
+//     {...cReactionCount1},
+//     comment,
+//   );
+// }
 
 function* removeReactionLocal(
   id: number,
