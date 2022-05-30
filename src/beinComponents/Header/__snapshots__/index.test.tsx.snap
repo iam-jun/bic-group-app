@@ -5,33 +5,30 @@ exports[`Header component renders correctly 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -160,20 +157,17 @@ exports[`Header component renders correctly 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
     </View>
@@ -207,33 +201,30 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -362,20 +353,17 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -537,33 +525,30 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -690,20 +675,17 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -841,12 +823,6 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
           Object {
             "alignItems": "center",
@@ -863,19 +839,7 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
         }
       >
         <View
-          animatedStyle={
-            Object {
-              "value": Object {
-                "opacity": 0,
-              },
-            }
-          }
-          collapsable={false}
-          style={
-            Object {
-              "opacity": 0,
-            }
-          }
+          style={[Function]}
         >
           <View
             accessibilityState={
@@ -995,22 +959,16 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
           }
         >
           <View
-            animatedStyle={
-              Object {
-                "value": Object {
-                  "width": "0%",
-                },
-              }
-            }
-            collapsable={false}
             style={
-              Object {
-                "backgroundColor": "#EAEDF2",
-                "borderRadius": 24,
-                "height": 40,
-                "overflow": "hidden",
-                "width": "0%",
-              }
+              Array [
+                [Function],
+                Object {
+                  "backgroundColor": "#EAEDF2",
+                  "borderRadius": 24,
+                  "height": 40,
+                  "overflow": "hidden",
+                },
+              ]
             }
           >
             <View
@@ -1185,33 +1143,30 @@ exports[`Header component renders correctly with props avatar 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -1340,12 +1295,6 @@ exports[`Header component renders correctly with props avatar 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={Object {}}
       >
         <View
@@ -1485,20 +1434,17 @@ exports[`Header component renders correctly with props avatar 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
     </View>
@@ -1522,33 +1468,30 @@ exports[`Header component renders correctly with props avatar props 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -1677,12 +1620,6 @@ exports[`Header component renders correctly with props avatar props 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={Object {}}
       >
         <View
@@ -1824,20 +1761,17 @@ exports[`Header component renders correctly with props avatar props 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
     </View>
@@ -1861,33 +1795,30 @@ exports[`Header component renders correctly with props button props 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -2016,20 +1947,17 @@ exports[`Header component renders correctly with props button props 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -2105,33 +2033,30 @@ exports[`Header component renders correctly with props button text 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -2260,20 +2185,17 @@ exports[`Header component renders correctly with props button text 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -2353,33 +2275,30 @@ exports[`Header component renders correctly with props disable inset top 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": undefined,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": undefined,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -2508,20 +2427,17 @@ exports[`Header component renders correctly with props disable inset top 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
     </View>
@@ -2552,33 +2468,30 @@ exports[`Header component renders correctly with props header ref 1`] = `
     testID="header"
   >
     <View
-      animatedStyle={
-        Object {
-          "value": Object {
-            "height": 60,
-          },
-        }
-      }
-      collapsable={false}
       style={
-        Object {
-          "alignItems": "flex-end",
-          "backgroundColor": "#FFFFFF",
-          "borderBottomWidth": 0.5,
-          "borderColor": "#EAEDF2",
-          "elevation": 2,
-          "flexDirection": "row",
-          "height": 60,
-          "overflow": "hidden",
-          "paddingTop": 0,
-          "shadowColor": "#000",
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
+        Array [
+          [Function],
+          Object {
+            "alignItems": "flex-end",
+            "backgroundColor": "#FFFFFF",
+            "flexDirection": "row",
+            "overflow": "hidden",
+            "paddingTop": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
-        }
+          Object {
+            "borderBottomWidth": 0.5,
+            "borderColor": "#EAEDF2",
+            "elevation": 2,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.1,
+            "shadowRadius": 1,
+          },
+          undefined,
+        ]
       }
       testID="header.content"
     >
@@ -2707,20 +2620,17 @@ exports[`Header component renders correctly with props header ref 1`] = `
           </View>
         </View>
         <View
-          animatedStyle={
-            Object {
-              "value": Object {},
-            }
-          }
-          collapsable={false}
           style={
-            Object {
-              "flex": 1,
-              "height": "100%",
-              "justifyContent": "center",
-              "marginLeft": 16,
-              "paddingTop": 1.5,
-            }
+            Array [
+              Object {
+                "flex": 1,
+                "height": "100%",
+                "justifyContent": "center",
+                "marginLeft": 16,
+                "paddingTop": 1.5,
+              },
+              Object {},
+            ]
           }
         />
       </View>
@@ -2775,33 +2685,30 @@ exports[`Header component renders correctly with props hide back 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -2820,20 +2727,17 @@ exports[`Header component renders correctly with props hide back 1`] = `
       }
     >
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
     </View>
@@ -2857,33 +2761,30 @@ exports[`Header component renders correctly with props hide back on laptop 1`] =
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -2902,20 +2803,17 @@ exports[`Header component renders correctly with props hide back on laptop 1`] =
       }
     >
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
     </View>
@@ -2939,33 +2837,30 @@ exports[`Header component renders correctly with props icon 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -3094,20 +2989,17 @@ exports[`Header component renders correctly with props icon 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -3243,33 +3135,30 @@ exports[`Header component renders correctly with props left icon 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -3509,20 +3398,17 @@ exports[`Header component renders correctly with props left icon 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
     </View>
@@ -3546,33 +3432,30 @@ exports[`Header component renders correctly with props left icon props 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -3812,20 +3695,17 @@ exports[`Header component renders correctly with props left icon props 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
     </View>
@@ -3849,33 +3729,30 @@ exports[`Header component renders correctly with props menu icon 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -4004,20 +3881,17 @@ exports[`Header component renders correctly with props menu icon 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -4153,33 +4027,30 @@ exports[`Header component renders correctly with props on focus search 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -4308,20 +4179,17 @@ exports[`Header component renders correctly with props on focus search 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -4483,33 +4351,30 @@ exports[`Header component renders correctly with props on focus search 2`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -4636,20 +4501,17 @@ exports[`Header component renders correctly with props on focus search 2`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -4787,12 +4649,6 @@ exports[`Header component renders correctly with props on focus search 2`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
           Object {
             "alignItems": "center",
@@ -4809,19 +4665,7 @@ exports[`Header component renders correctly with props on focus search 2`] = `
         }
       >
         <View
-          animatedStyle={
-            Object {
-              "value": Object {
-                "opacity": 0,
-              },
-            }
-          }
-          collapsable={false}
-          style={
-            Object {
-              "opacity": 0,
-            }
-          }
+          style={[Function]}
         >
           <View
             accessibilityState={
@@ -4941,22 +4785,16 @@ exports[`Header component renders correctly with props on focus search 2`] = `
           }
         >
           <View
-            animatedStyle={
-              Object {
-                "value": Object {
-                  "width": "0%",
-                },
-              }
-            }
-            collapsable={false}
             style={
-              Object {
-                "backgroundColor": "#EAEDF2",
-                "borderRadius": 24,
-                "height": 40,
-                "overflow": "hidden",
-                "width": "0%",
-              }
+              Array [
+                [Function],
+                Object {
+                  "backgroundColor": "#EAEDF2",
+                  "borderRadius": 24,
+                  "height": 40,
+                  "overflow": "hidden",
+                },
+              ]
             }
           >
             <View
@@ -5131,33 +4969,30 @@ exports[`Header component renders correctly with props on press button 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -5286,20 +5121,17 @@ exports[`Header component renders correctly with props on press button 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -5379,33 +5211,30 @@ exports[`Header component renders correctly with props on press chat 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -5534,20 +5363,17 @@ exports[`Header component renders correctly with props on press chat 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View>
@@ -5711,33 +5537,30 @@ exports[`Header component renders correctly with props on press header 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -5866,12 +5689,6 @@ exports[`Header component renders correctly with props on press header 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={Object {}}
       >
         <View
@@ -6011,20 +5828,17 @@ exports[`Header component renders correctly with props on press header 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
     </View>
@@ -6048,33 +5862,30 @@ exports[`Header component renders correctly with props on press icon 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -6203,20 +6014,17 @@ exports[`Header component renders correctly with props on press icon 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -6352,33 +6160,30 @@ exports[`Header component renders correctly with props on press menu 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -6507,20 +6312,17 @@ exports[`Header component renders correctly with props on press menu 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -6656,33 +6458,30 @@ exports[`Header component renders correctly with props on right press 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -6811,20 +6610,17 @@ exports[`Header component renders correctly with props on right press 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -6986,33 +6782,30 @@ exports[`Header component renders correctly with props on show search 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -7141,20 +6934,17 @@ exports[`Header component renders correctly with props on show search 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -7316,33 +7106,30 @@ exports[`Header component renders correctly with props on show search 2`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -7469,20 +7256,17 @@ exports[`Header component renders correctly with props on show search 2`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -7620,12 +7404,6 @@ exports[`Header component renders correctly with props on show search 2`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
           Object {
             "alignItems": "center",
@@ -7642,19 +7420,7 @@ exports[`Header component renders correctly with props on show search 2`] = `
         }
       >
         <View
-          animatedStyle={
-            Object {
-              "value": Object {
-                "opacity": 0,
-              },
-            }
-          }
-          collapsable={false}
-          style={
-            Object {
-              "opacity": 0,
-            }
-          }
+          style={[Function]}
         >
           <View
             accessibilityState={
@@ -7774,22 +7540,16 @@ exports[`Header component renders correctly with props on show search 2`] = `
           }
         >
           <View
-            animatedStyle={
-              Object {
-                "value": Object {
-                  "width": "0%",
-                },
-              }
-            }
-            collapsable={false}
             style={
-              Object {
-                "backgroundColor": "#EAEDF2",
-                "borderRadius": 24,
-                "height": 40,
-                "overflow": "hidden",
-                "width": "0%",
-              }
+              Array [
+                [Function],
+                Object {
+                  "backgroundColor": "#EAEDF2",
+                  "borderRadius": 24,
+                  "height": 40,
+                  "overflow": "hidden",
+                },
+              ]
             }
           >
             <View
@@ -7964,33 +7724,30 @@ exports[`Header component renders correctly with props on submit search 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -8119,20 +7876,17 @@ exports[`Header component renders correctly with props on submit search 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -8294,33 +8048,30 @@ exports[`Header component renders correctly with props on submit search 2`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -8447,20 +8198,17 @@ exports[`Header component renders correctly with props on submit search 2`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -8598,12 +8346,6 @@ exports[`Header component renders correctly with props on submit search 2`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
           Object {
             "alignItems": "center",
@@ -8620,19 +8362,7 @@ exports[`Header component renders correctly with props on submit search 2`] = `
         }
       >
         <View
-          animatedStyle={
-            Object {
-              "value": Object {
-                "opacity": 0,
-              },
-            }
-          }
-          collapsable={false}
-          style={
-            Object {
-              "opacity": 0,
-            }
-          }
+          style={[Function]}
         >
           <View
             accessibilityState={
@@ -8752,22 +8482,16 @@ exports[`Header component renders correctly with props on submit search 2`] = `
           }
         >
           <View
-            animatedStyle={
-              Object {
-                "value": Object {
-                  "width": "0%",
-                },
-              }
-            }
-            collapsable={false}
             style={
-              Object {
-                "backgroundColor": "#EAEDF2",
-                "borderRadius": 24,
-                "height": 40,
-                "overflow": "hidden",
-                "width": "0%",
-              }
+              Array [
+                [Function],
+                Object {
+                  "backgroundColor": "#EAEDF2",
+                  "borderRadius": 24,
+                  "height": 40,
+                  "overflow": "hidden",
+                },
+              ]
             }
           >
             <View
@@ -8942,33 +8666,30 @@ exports[`Header component renders correctly with props on text search 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -9097,20 +8818,17 @@ exports[`Header component renders correctly with props on text search 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -9272,33 +8990,30 @@ exports[`Header component renders correctly with props on text search 2`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -9425,20 +9140,17 @@ exports[`Header component renders correctly with props on text search 2`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -9576,12 +9288,6 @@ exports[`Header component renders correctly with props on text search 2`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
           Object {
             "alignItems": "center",
@@ -9598,19 +9304,7 @@ exports[`Header component renders correctly with props on text search 2`] = `
         }
       >
         <View
-          animatedStyle={
-            Object {
-              "value": Object {
-                "opacity": 0,
-              },
-            }
-          }
-          collapsable={false}
-          style={
-            Object {
-              "opacity": 0,
-            }
-          }
+          style={[Function]}
         >
           <View
             accessibilityState={
@@ -9730,22 +9424,16 @@ exports[`Header component renders correctly with props on text search 2`] = `
           }
         >
           <View
-            animatedStyle={
-              Object {
-                "value": Object {
-                  "width": "0%",
-                },
-              }
-            }
-            collapsable={false}
             style={
-              Object {
-                "backgroundColor": "#EAEDF2",
-                "borderRadius": 24,
-                "height": 40,
-                "overflow": "hidden",
-                "width": "0%",
-              }
+              Array [
+                [Function],
+                Object {
+                  "backgroundColor": "#EAEDF2",
+                  "borderRadius": 24,
+                  "height": 40,
+                  "overflow": "hidden",
+                },
+              ]
             }
           >
             <View
@@ -9920,23 +9608,19 @@ exports[`Header component renders correctly with props remove border and shadow 
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-      }
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
+        },
+        Object {},
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -10065,20 +9749,17 @@ exports[`Header component renders correctly with props remove border and shadow 
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
     </View>
@@ -10102,33 +9783,30 @@ exports[`Header component renders correctly with props right icon 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -10257,20 +9935,17 @@ exports[`Header component renders correctly with props right icon 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -10406,33 +10081,30 @@ exports[`Header component renders correctly with props right icon props 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -10561,20 +10233,17 @@ exports[`Header component renders correctly with props right icon props 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -10710,33 +10379,30 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -10865,20 +10531,17 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -11040,33 +10703,30 @@ exports[`Header component renders correctly with props search input test ID 1`] 
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -11195,20 +10855,17 @@ exports[`Header component renders correctly with props search input test ID 1`] 
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -11370,33 +11027,30 @@ exports[`Header component renders correctly with props search input test ID 2`] 
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -11523,20 +11177,17 @@ exports[`Header component renders correctly with props search input test ID 2`] 
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -11674,12 +11325,6 @@ exports[`Header component renders correctly with props search input test ID 2`] 
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
           Object {
             "alignItems": "center",
@@ -11696,19 +11341,7 @@ exports[`Header component renders correctly with props search input test ID 2`] 
         }
       >
         <View
-          animatedStyle={
-            Object {
-              "value": Object {
-                "opacity": 0,
-              },
-            }
-          }
-          collapsable={false}
-          style={
-            Object {
-              "opacity": 0,
-            }
-          }
+          style={[Function]}
         >
           <View
             accessibilityState={
@@ -11828,22 +11461,16 @@ exports[`Header component renders correctly with props search input test ID 2`] 
           }
         >
           <View
-            animatedStyle={
-              Object {
-                "value": Object {
-                  "width": "0%",
-                },
-              }
-            }
-            collapsable={false}
             style={
-              Object {
-                "backgroundColor": "#EAEDF2",
-                "borderRadius": 24,
-                "height": 40,
-                "overflow": "hidden",
-                "width": "0%",
-              }
+              Array [
+                [Function],
+                Object {
+                  "backgroundColor": "#EAEDF2",
+                  "borderRadius": 24,
+                  "height": 40,
+                  "overflow": "hidden",
+                },
+              ]
             }
           >
             <View
@@ -12018,33 +11645,30 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -12173,20 +11797,17 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -12348,33 +11969,30 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -12501,20 +12119,17 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
       <View
@@ -12652,12 +12267,6 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
           Object {
             "alignItems": "center",
@@ -12674,19 +12283,7 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
         }
       >
         <View
-          animatedStyle={
-            Object {
-              "value": Object {
-                "opacity": 0,
-              },
-            }
-          }
-          collapsable={false}
-          style={
-            Object {
-              "opacity": 0,
-            }
-          }
+          style={[Function]}
         >
           <View
             accessibilityState={
@@ -12806,22 +12403,16 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
           }
         >
           <View
-            animatedStyle={
-              Object {
-                "value": Object {
-                  "width": "0%",
-                },
-              }
-            }
-            collapsable={false}
             style={
-              Object {
-                "backgroundColor": "#EAEDF2",
-                "borderRadius": 24,
-                "height": 40,
-                "overflow": "hidden",
-                "width": "0%",
-              }
+              Array [
+                [Function],
+                Object {
+                  "backgroundColor": "#EAEDF2",
+                  "borderRadius": 24,
+                  "height": 40,
+                  "overflow": "hidden",
+                },
+              ]
             }
           >
             <View
@@ -12996,33 +12587,32 @@ exports[`Header component renders correctly with props style 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#F2F2F2",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        Object {
+          "backgroundColor": "#F2F2F2",
+        },
+      ]
     }
     testID="header.content"
   >
@@ -13151,20 +12741,17 @@ exports[`Header component renders correctly with props style 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       />
     </View>
@@ -13188,33 +12775,30 @@ exports[`Header component renders correctly with props sub title 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -13343,20 +12927,17 @@ exports[`Header component renders correctly with props sub title 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       >
         <View
@@ -13424,33 +13005,30 @@ exports[`Header component renders correctly with props sub title props 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -13579,20 +13157,17 @@ exports[`Header component renders correctly with props sub title props 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       >
         <View
@@ -13662,33 +13237,30 @@ exports[`Header component renders correctly with props title 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -13817,20 +13389,17 @@ exports[`Header component renders correctly with props title 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       >
         <View
@@ -13899,33 +13468,30 @@ exports[`Header component renders correctly with props title props 1`] = `
   testID="header"
 >
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "height": 60,
-        },
-      }
-    }
-    collapsable={false}
     style={
-      Object {
-        "alignItems": "flex-end",
-        "backgroundColor": "#FFFFFF",
-        "borderBottomWidth": 0.5,
-        "borderColor": "#EAEDF2",
-        "elevation": 2,
-        "flexDirection": "row",
-        "height": 60,
-        "overflow": "hidden",
-        "paddingTop": 0,
-        "shadowColor": "#000",
-        "shadowOffset": Object {
-          "height": 1,
-          "width": 0,
+      Array [
+        [Function],
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
         },
-        "shadowOpacity": 0.1,
-        "shadowRadius": 1,
-      }
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
     }
     testID="header.content"
   >
@@ -14054,20 +13620,17 @@ exports[`Header component renders correctly with props title props 1`] = `
         </View>
       </View>
       <View
-        animatedStyle={
-          Object {
-            "value": Object {},
-          }
-        }
-        collapsable={false}
         style={
-          Object {
-            "flex": 1,
-            "height": "100%",
-            "justifyContent": "center",
-            "marginLeft": 16,
-            "paddingTop": 1.5,
-          }
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
         }
       >
         <View

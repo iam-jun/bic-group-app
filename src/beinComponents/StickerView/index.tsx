@@ -1,13 +1,7 @@
 import {GiphyContent, GiphyGridView, GiphyMedia} from '@giphy/react-native-sdk';
 import i18next from 'i18next';
 import {useKeyboard} from '@react-native-community/hooks';
-import React, {
-  useEffect,
-  useImperativeHandle,
-  useMemo,
-  useRef,
-  useState,
-} from 'react';
+import React, {useEffect, useImperativeHandle, useRef} from 'react';
 import {
   DeviceEventEmitter,
   Keyboard,
@@ -44,11 +38,13 @@ export interface Props extends Partial<EmojiBoardProps> {
 
 const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
   const INITIAL_KEYBOARD_HEIGHT = 336;
-  const [visible, setVisible] = useState(false);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [keyboardHeight, setKeyboardHeight] = useState(INITIAL_KEYBOARD_HEIGHT);
+  const [visible, setVisible] = React.useState(false);
+  const [isExpanded, setIsExpanded] = React.useState(false);
+  const [keyboardHeight, setKeyboardHeight] = React.useState(
+    INITIAL_KEYBOARD_HEIGHT,
+  );
+  const [searchQuery, setSearchQuery] = React.useState('');
   const _stickerViewRef = stickerViewRef || useRef();
-  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const request = searchQuery
     ? GiphyContent.search({searchQuery: searchQuery})
@@ -98,13 +94,11 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
 
   const expand = () => {
     setIsExpanded(true);
-    height.value = withTiming(dimension.deviceHeight, {duration: 200});
+    // height.value = withTiming(dimension.deviceHeight, {duration: 200});
   };
 
-  const colapse = () => {
+  const collapse = () => {
     Keyboard.dismiss();
-    const _height = Math.max(keyboardHeight, INITIAL_KEYBOARD_HEIGHT);
-    height.value = withTiming(_height, {duration: 200});
     setIsExpanded(false);
   };
 
@@ -125,7 +119,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
   };
 
   const handleDown = () => {
-    if (isExpanded) runOnJS(colapse)();
+    if (isExpanded) runOnJS(collapse)();
     else runOnJS(hide)();
   };
 
@@ -179,21 +173,29 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
 
   const contentHeight = dimension.deviceHeight - offset;
 
+  const _animatedStyle = isExpanded
+    ? styles.animatedViewExpanded
+    : animatedStyle;
+
   return (
     <FlingGestureHandler
       direction={Directions.DOWN}
       onEnded={handleDown}
       onHandlerStateChange={onDownFlingHandlerStateChange}>
       <View
+        testID="sticker_view"
         style={[
+          {
+            height: contentHeight,
+          },
           isExpanded && {
             ...styles.expanded,
-            height: contentHeight,
             bottom: Platform.OS === 'android' ? 0 : keyboardHeight,
           },
         ]}>
         <Animated.View
-          style={[isExpanded ? styles.animatedViewExpanded : animatedStyle]}>
+          testID="sticker_view.animated_view"
+          style={_animatedStyle}>
           <View style={styles.stickerView}>
             <FlingGestureHandler
               direction={Directions.UP}
@@ -202,6 +204,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
               <View style={styles.header}>
                 <View style={styles.indicator} />
                 <SearchInput
+                  testID="sticker_view.search_input"
                   placeholder={i18next.t('post:comment:search_giphy')}
                   value={searchQuery}
                   onFocus={onSearchFocus}
@@ -210,6 +213,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
               </View>
             </FlingGestureHandler>
             <GiphyGridView
+              testID="sticker_view.grid_view"
               content={request}
               cellPadding={4}
               style={styles.gridView}
@@ -217,7 +221,9 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
             />
           </View>
         </Animated.View>
-        {Platform.OS === 'android' && visible && <KeyboardSpacer />}
+        {Platform.OS === 'android' && visible && (
+          <KeyboardSpacer testID="sticker_view.keyboard_spacer" />
+        )}
       </View>
     </FlingGestureHandler>
   );
@@ -249,6 +255,7 @@ const createStyle = (theme: ITheme) => {
       borderTopWidth: 1,
       borderTopColor: colors.borderDivider,
       backgroundColor: colors.background,
+      height: '100%',
     },
     animatedViewExpanded: {
       height: '100%',
