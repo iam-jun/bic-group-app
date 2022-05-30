@@ -57,39 +57,39 @@ describe('ForgotInputId component', () => {
     setValue: () => jest.fn(),
     formState: {
       errors: {
-        email: {
-          type: 'validate',
-          message: 'signingInError',
-        },
-        password: {
-          type: 'validate',
-          message: 'signingInError',
-        },
+        // email: {
+        //   type: 'validate',
+        //   message: 'signingInError',
+        // },
+        // password: {
+        //   type: 'validate',
+        //   message: 'signingInError',
+        // },
       },
     },
     watch: () => jest.fn(),
   };
 
-  it(`renders correctly`, () => {
-    const forgotPasswordError = {
-      errBox: '',
-      errRequest: '',
-      errConfirm: '',
-    };
-    const storeData = {...initialState};
+  // it(`renders correctly`, () => {
+  //   const forgotPasswordError = {
+  //     errBox: '',
+  //     errRequest: '',
+  //     errConfirm: '',
+  //   };
+  //   const storeData = {...initialState};
 
-    storeData.auth.forgotPasswordStage = '';
-    storeData.auth.forgotPasswordLoading = false;
-    storeData.auth.forgotPasswordError = forgotPasswordError as any;
-    const store = mockStore(storeData);
-    const wrapper = renderWithRedux(
-      <ForgotInputId useFormData={useForm} />,
-      store,
-    );
-    expect(wrapper.toJSON()).toMatchSnapshot();
-  });
+  //   storeData.auth.forgotPasswordStage = '';
+  //   storeData.auth.forgotPasswordLoading = false;
+  //   storeData.auth.forgotPasswordError = forgotPasswordError as any;
+  //   const store = mockStore(storeData);
+  //   const wrapper = renderWithRedux(
+  //     <ForgotInputId useFormData={useForm} />,
+  //     store,
+  //   );
+  //   expect(wrapper.toJSON()).toMatchSnapshot();
+  // });
 
-  it(`show error text when typing an invalid email`, async () => {
+  it(`disable button send code to email when typing an invalid email`, async () => {
     const newUseForm = {
       ...useForm,
       getValues: () => {
@@ -113,17 +113,13 @@ describe('ForgotInputId component', () => {
       store,
     );
 
-    const buttonSend = wrapper.getByTestId('btnSend');
-    expect(buttonSend).toBeDefined();
-    expect(buttonSend.props?.accessibilityState?.disabled).toBe(true);
-
     const textInputComponent = wrapper.getByTestId('inputEmail');
     expect(textInputComponent).toBeDefined();
     fireEvent.changeText(textInputComponent, 'y');
 
-    const helperText = wrapper.queryByTestId('text_input.text_helper');
-    expect(helperText).not.toBeNull();
-    expect(helperText?.props?.children?.[0]).toBe('signingInError');
+    const buttonSend = wrapper.getByTestId('btnSend');
+    expect(buttonSend).toBeDefined();
+    expect(buttonSend.props?.accessibilityState?.disabled).toBe(true);
   });
 
   it(`request code to forgot password with valid email`, async () => {

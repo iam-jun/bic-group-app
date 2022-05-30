@@ -19,3 +19,13 @@ exports[`NotificationAvatar component renders correctly with COMMENT verb with a
   }
 />
 `;
+
+exports[`NotificationAvatar component renders correctly with verb is with action comment lv2 1`] = `
+<View
+  style={
+    Object {
+      "flexDirection": "row",
+    }
+  }
+/>
+`;
