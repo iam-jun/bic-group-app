@@ -321,9 +321,14 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
 
   const prepareData = () => {
     const _content = mentionInputRef?.current?.getContent?.() || content;
+    const _video = {
+      id: video?.id,
+      name: video?.fileName || video?.name,
+      ...(video?.url ? {} : {status: 'waiting_process'}),
+    };
     const media = {
       images,
-      videos: video?.id ? [{id: video?.id}] : [],
+      videos: video?.id ? [_video] : [],
       files: [],
     };
     const setting: any = {};

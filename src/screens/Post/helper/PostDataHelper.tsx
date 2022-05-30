@@ -1,7 +1,6 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import {
-  IActivityData,
   IParamDeleteReaction,
   ICommentData,
   IParamGetDraftPosts,
@@ -15,7 +14,6 @@ import {
   IRequestGetPostComment,
   IRequestPostComment,
   IRequestReplyComment,
-  IPostCreateMediaVideo,
 } from '~/interfaces/IPost';
 import {Platform} from 'react-native';
 import {convertReactKeyForRequest} from '~/utils/common';
@@ -49,15 +47,6 @@ export const postApiConfig = {
   },
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
     url: `${provider.url}api/v1/posts`,
-    method: 'post',
-    provider,
-    useRetry: true,
-    data,
-  }),
-  postCreateMediaVideo: (
-    data: IPostCreateMediaVideo,
-  ): HttpApiRequestConfig => ({
-    url: `${provider.url}api/v1/media/create`,
     method: 'post',
     provider,
     useRetry: true,
@@ -262,20 +251,6 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  postCreateMediaVideo: async (data: IPostCreateMediaVideo) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.postCreateMediaVideo(data),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
   putReaction: async (param: IParamPutReaction) => {
     try {
       const response: any = await makeHttpRequest(
@@ -304,7 +279,7 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  putEditComment: async (id: string, data: IActivityData) => {
+  putEditComment: async (id: string, data: ICommentData) => {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.putEditComment(id, data),
