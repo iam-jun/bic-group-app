@@ -354,7 +354,7 @@ export interface IParamGetReactionDetail {
   target: 'POST' | 'COMMENT';
   limit?: number;
   order?: 'ASC' | 'DESC';
-  latestid?: string;
+  latestId?: string;
 }
 
 export interface IPostAudienceSheet {

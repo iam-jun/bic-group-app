@@ -97,7 +97,11 @@ const Reaction: React.FC<ReactionProps> = ({
   );
 };
 
-const createStyles = (theme: ITheme, isSelected: boolean, loading: boolean) => {
+const createStyles = (
+  theme: ITheme,
+  isSelected: boolean,
+  loading?: boolean,
+) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({

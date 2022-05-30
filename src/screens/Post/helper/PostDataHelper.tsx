@@ -18,6 +18,7 @@ import {
   IPostCreateMediaVideo,
 } from '~/interfaces/IPost';
 import {Platform} from 'react-native';
+import {convertReactKeyForRequest} from '~/utils/common';
 
 const provider = ApiConfig.providers.beinFeed;
 
@@ -68,7 +69,10 @@ export const postApiConfig = {
       method: 'post',
       provider,
       useRetry: true,
-      data: params,
+      data: {
+        ...params,
+        reactionName: convertReactKeyForRequest(params?.reactionName),
+      },
     };
   },
   putEditPost: (param: IParamPutEditPost): HttpApiRequestConfig => {
@@ -201,7 +205,10 @@ export const postApiConfig = {
     method: 'delete',
     provider,
     useRetry: true,
-    data: data,
+    data: {
+      ...data,
+      reactionName: convertReactKeyForRequest(data?.reactionName),
+    },
   }),
   getReactionDetail: (
     param: IParamGetReactionDetail,
@@ -211,7 +218,7 @@ export const postApiConfig = {
     provider: provider,
     useRetry: true,
     params: {
-      reactionName: param.reactionName,
+      reactionName: convertReactKeyForRequest(param.reactionName),
       targetId: param.targetId,
       target: param.target,
       order: param?.order || 'DESC',
