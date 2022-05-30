@@ -213,7 +213,10 @@ export interface IParamGetPostDetail {
   postId: string;
   commentOrder?: 'ASC' | 'DESC';
   commentLimit?: number;
+  childCommentOrder?: number;
   childCommentLimit?: number;
+  withComment?: boolean;
+  offset?: number;
 }
 
 export interface IParamPutEditPost {

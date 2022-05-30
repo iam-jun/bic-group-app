@@ -446,7 +446,8 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.getPostDetail({
-          commentLimit: Platform.OS === 'web' ? 5 : 10,
+          commentLimit: 10,
+          withComment: true,
           ...params,
         }),
       );
