@@ -221,9 +221,11 @@
     "title_birthday": "Sinh nhật",
     "title_choose_language": "Chọn ngôn ngữ",
     "app_language": "Tiếng Việt",
-    "title_group_moderating": "Group Moderating",
+    "title_group_moderating": "Quản trị Nhóm",
+    "title_community_moderating": "Quản trị Cộng đồng",
     "title_pending_members": "Pending Members",
-    "title_group_settings": "Group Settings",
+    "title_group_settings": "Cài đặt Nhóm",
+    "title_community_settings": "Cài đặt Cộng đồng",
     "title_general_information": "General Information",
     "title_role_management": "Role Management",
     "title_membership_settings": "Membership Settings",
@@ -557,10 +559,16 @@
     "all_groups": "Tất cả",
     "text_search_member": "Tìm kiếm thành viên",
     "group_menu": {
+      "label_admin_tools": "Công cụ quản trị",
       "label_copy_group_link": "Sao chép đường dẫn nhóm",
       "label_leave_group": "Rời nhóm",
+      "label_leave_community": "Rời cộng đồng",
       "label_share_group": "Chia sẻ tới...",
-      "label_share_to_chat": "Chia sẻ trong Bein Chat"
+      "label_share_to_chat": "Chia sẻ trong Bein Chat",
+      "label_following": "Theo dõi",
+      "label_pin_group": "Ghim nhóm",
+      "label_pin_community": "Ghim cộng đồng",
+      "label_notifications": "Thông báo"
     },
     "member_menu": {
       "label_view_profile": "View profile",

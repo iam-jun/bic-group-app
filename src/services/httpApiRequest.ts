@@ -18,6 +18,7 @@ import {ActionTypes, createAction} from '~/utils';
 import {updateUserFromSharedPreferences} from './sharePreferences';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
+import {camelizeKeys, decamelizeKeys} from 'humps';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -100,47 +101,12 @@ const handleSystemIssue = () => {
   Store.store.dispatch(noInternetActions.showSystemIssueThenLogout());
 };
 
-const logInterceptorsRequestSuccess = (config: AxiosRequestConfig) => {
-  console.log(
-    '%c ================ REQUEST ================',
-    'background: #ffff00; color: #000',
-    config.url,
-    config.method?.toUpperCase(),
-    config,
-  );
-  return config;
-};
-
-const logInterceptorsResponseSuccess = (response: AxiosResponse) => {
-  console.log(
-    '%c ================ RESPONSE SUCCESS ================',
-    'background: #66ff33; color: #000',
-    response.config.url,
-    response.config.method?.toUpperCase(),
-    response,
-  );
-};
-
-const logInterceptorsResponseError = (error: AxiosError) => {
-  console.log(
-    '%c ================ RESPONSE ERROR ================',
-    'background: red; color: #fff',
-    error.config.url,
-    error.config.method?.toUpperCase(),
-    error,
-  );
-};
-
 const getBeinIdToken = (): string => {
   return _.get(
     Store.getCurrentUser(),
     'signInUserSession.idToken.jwtToken',
     '',
   );
-};
-
-const getFeedAccessToken = (): string => {
-  return _.get(Store.getCurrentAuth(), 'feed.accessToken', '');
 };
 
 // retryHandler
@@ -310,18 +276,42 @@ const mapResponseSuccessBein = (
   };
 };
 
-const interceptorsRequestSuccess = (requestConfig: AxiosRequestConfig) => {
-  // logInterceptorsRequestSuccess(requestConfig);
-  return requestConfig;
+const interceptorsRequestSuccess = (config: AxiosRequestConfig) => {
+  return config;
+};
+
+const interceptorsRequestSnakeSuccess = (config: AxiosRequestConfig) => {
+  const newConfig = {...config};
+
+  // update data of upload file request will lead to some unknown error
+  if (newConfig.headers?.['Content-Type']?.includes('multipart/form-data')) {
+    return newConfig;
+  }
+
+  if (config.params) {
+    newConfig.params = decamelizeKeys(config.params);
+  }
+  if (config.data) {
+    newConfig.data = decamelizeKeys(config.data);
+  }
+  return newConfig;
+};
+
+const interceptorsResponseCamelSuccess = (response: AxiosResponse) => {
+  if (
+    response.data &&
+    response.headers?.['content-type']?.includes?.('application/json')
+  ) {
+    response.data = camelizeKeys(response.data);
+  }
+  return response;
 };
 
 const interceptorsResponseSuccess = (response: AxiosResponse) => {
-  // logInterceptorsResponseSuccess(response);
   return response;
 };
 
 const interceptorsResponseError = async (error: AxiosError) => {
-  // logInterceptorsResponseError(error);
   return handleResponseError(error);
 };
 
@@ -367,29 +357,27 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
     Authorization: getBeinIdToken(),
   };
 
+  const beinHeaders = {
+    ...commonHeaders,
+    ...requestConfig.headers,
+    ...tokenHeaders,
+  };
+
   switch (requestConfig.provider.name) {
     case apiConfig.providers.bein.name:
       interceptorRequestSuccess = interceptorsRequestSuccess;
       interceptorResponseSuccess = interceptorsResponseSuccess;
       interceptorResponseError = interceptorsResponseError;
-      requestConfig.headers = {
-        ...commonHeaders,
-        ...requestConfig.headers,
-        ...tokenHeaders,
-      };
+      requestConfig.headers = beinHeaders;
       requestConfig.withCredentials = true;
       break;
     case apiConfig.providers.beinFeed.name:
     case apiConfig.providers.beinNotification.name:
     case apiConfig.providers.beinUpload.name:
-      interceptorRequestSuccess = interceptorsRequestSuccess;
-      interceptorResponseSuccess = interceptorsResponseSuccess;
+      interceptorRequestSuccess = interceptorsRequestSnakeSuccess;
+      interceptorResponseSuccess = interceptorsResponseCamelSuccess;
       interceptorResponseError = interceptorsResponseError;
-      requestConfig.headers = {
-        ...commonHeaders,
-        ...requestConfig.headers,
-        ...tokenHeaders,
-      };
+      requestConfig.headers = beinHeaders;
       break;
     default:
       return Promise.resolve(false);

@@ -2,6 +2,7 @@ import {Linking, Platform} from 'react-native';
 import {chatSchemes} from '~/constants/chat';
 import {linkRegex} from '~/constants/commonRegex';
 import {getEnv} from '~/utils/env';
+import {camelize, decamelize} from 'humps';
 
 export const generateAvatar = (name?: string, color?: string) => {
   return `https://ui-avatars.com/api/?name=${
@@ -121,4 +122,21 @@ export const getWebDomain = (url: any, subdomain: boolean) => {
   }
 
   return url;
+};
+
+/**
+ * all data from backend send to client must be snake_case
+ * so we have to convert it to camelCase for use in client's code
+ * @param key
+ */
+export const convertReactKeyFromResponse = (key?: string) => {
+  return key ? camelize(key) : '';
+};
+
+/**
+ * before send react key to backend, we must convert it back to snake_case
+ * @param key
+ */
+export const convertReactKeyForRequest = (key?: string) => {
+  return key ? decamelize(key) : '';
 };
