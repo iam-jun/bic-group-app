@@ -7,10 +7,7 @@ import FileUploader, {
   IGetFile,
   IUploadParam,
 } from '~/services/fileUploader';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
-import {IPostCreateMediaVideo} from '~/interfaces/IPost';
 import {isEmpty} from 'lodash';
-import axios from 'axios';
 
 export default class VideoUploader extends FileUploader {
   static INSTANCE: VideoUploader | null = null;
@@ -149,43 +146,17 @@ export default class VideoUploader extends FileUploader {
       return Promise.reject({meta: {message: e?.error || ''}});
     }
 
-    //create media with video uploaded
-    try {
-      const videoProps = videoUploaded?.properties || {};
-      const payload: IPostCreateMediaVideo = {
-        uploadId: videoUploaded?.id,
-        uploadType: uploadType,
-        ...videoProps,
-      };
-      const mediaResponse = await postDataHelper.postCreateMediaVideo(payload);
-      if (mediaResponse?.data?.data) {
-        mediaCreated = mediaResponse.data.data;
-      } else {
-        this.handleError(
-          file,
-          this.getResponseErrMsg(mediaResponse) ||
-            'upload:text_create_media_response_failed',
-          onError,
-        );
-      }
-    } catch (e: any) {
-      const msg =
-        this.getResponseErrMsg(e) || 'upload:text_create_media_request_failed';
-      this.handleError(file, msg, onError);
-      return Promise.reject({meta: {message: msg}});
-    }
-
     this.fileUploading[file.name] = false;
 
     //upload file success
     this.fileUploaded[file.name] = {
-      id: mediaCreated?.id,
-      url: mediaCreated?.url,
+      id: videoUploaded?.id,
+      url: videoUploaded?.url,
       uploadType,
       uploading: false,
       fileName: file.name,
       size: file?.size,
-      result: mediaCreated,
+      result: videoUploaded,
     };
     onSuccess?.(this.fileUploaded[file.name]);
     this.callbackSuccess?.[file.name]?.(this.fileUploaded[file.name]);

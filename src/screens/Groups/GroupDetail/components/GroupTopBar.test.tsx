@@ -1,5 +1,4 @@
 import React from 'react';
-import navigation from '@react-navigation/native';
 import MockedNavigator from '~/test/MockedNavigator';
 import {renderWithRedux, createTestStore, fireEvent} from '~/test/testUtils';
 import GroupTopBar from './GroupTopBar';
@@ -11,6 +10,8 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 describe('GroupTopBar component', () => {
   it('renders Search icon correctly', () => {
     const state = {...initialState};
+    // @ts-ignore
+    state.auth.user = {username: 'testname1'};
     state.groups.groupDetail.join_status = groupJoinStatus.member;
     const store = createTestStore(state);
 
@@ -25,6 +26,8 @@ describe('GroupTopBar component', () => {
 
   it('renders Chat icon correctly', () => {
     const state = {...initialState};
+    // @ts-ignore
+    state.auth.user = {username: 'testname1'};
     state.groups.groupDetail.join_status = groupJoinStatus.member;
     const store = createTestStore(state);
 
@@ -39,6 +42,8 @@ describe('GroupTopBar component', () => {
 
   it('renders Admin icon correctly when user is an admin', () => {
     const state = {...initialState};
+    // @ts-ignore
+    state.auth.user = {username: 'testname1'};
     state.groups.groupDetail.join_status = groupJoinStatus.member;
     state.groups.groupDetail.can_setting = true;
     const store = createTestStore(state);
@@ -56,6 +61,8 @@ describe('GroupTopBar component', () => {
 
   it('should render group option menu correctly when user is not an admin', () => {
     const state = {...initialState};
+    // @ts-ignore
+    state.auth.user = {username: 'testname1'};
     state.groups.groupDetail.join_status = groupJoinStatus.member;
     state.groups.groupDetail.can_setting = false;
     const store = createTestStore(state);

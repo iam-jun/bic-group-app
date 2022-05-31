@@ -10,9 +10,9 @@ export const checkChangeAudiences = (a1: any, a2: any) => {
     return true;
   }
   const compare = (x: any, y: any) => (x > y ? 1 : -1);
-  const ids1: number[] = [];
-  const ids2: number[] = [];
-  a1?.map?.((a: any) => ids1.push(Number(a?.id)));
-  a2?.map?.((a: any) => ids2.push(Number(a?.id)));
+  const ids1: any[] = [];
+  const ids2: any[] = [];
+  a1?.map?.((a: any) => ids1.push(a?.id));
+  a2?.map?.((a: any) => ids2.push(a?.id));
   return !isEqual(ids1.sort(compare), ids2.sort(compare));
 };

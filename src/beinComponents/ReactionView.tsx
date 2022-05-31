@@ -8,9 +8,10 @@ import Button from '~/beinComponents/Button';
 
 import {ITheme} from '~/theme/interfaces';
 import {blacklistReactions, ReactionType} from '~/constants/reactions';
-import {IOwnReaction, IReaction, IReactionCounts} from '~/interfaces/IPost';
+import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
 import commonActions, {IAction} from '~/constants/commonActions';
 import appConfig from '~/configs/appConfig';
+import {convertReactKeyForRequest} from '~/utils/common';
 
 export interface ReactionViewProps {
   style?: StyleProp<ViewStyle>;
@@ -48,6 +49,10 @@ const ReactionView: FC<ReactionViewProps> = ({
     onLongPressReaction?.(reactionType);
   };
 
+  /**
+   * reaction use in logic is camelCase, but for display, it should be snake_case
+   * we have to convert ownReaction.reactionName and reactionsCount key
+   */
   const renderReactions = () => {
     const _ownReactions: any = {};
     const reactionMap = new Map();
@@ -55,14 +60,16 @@ const ReactionView: FC<ReactionViewProps> = ({
     if (ownerReactions?.length > 0) {
       ownerReactions.forEach(ownReaction => {
         if (ownReaction?.reactionName) {
-          _ownReactions[ownReaction.reactionName] = ownReaction;
+          _ownReactions[convertReactKeyForRequest(ownReaction.reactionName)] =
+            ownReaction;
         }
       });
     }
     Object.values(reactionsCount || {})?.map((reaction: any) => {
       const key = Object.keys(reaction || {})?.[0];
       if (key) {
-        reactionMap.set(key, reaction?.[key]);
+        const convertedKey = convertReactKeyForRequest(key);
+        reactionMap.set(convertedKey, reaction?.[key]);
       }
     });
 
