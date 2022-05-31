@@ -75,7 +75,7 @@ const _PostDetailContent = (props: any) => {
 
   const userId = useUserIdAuth();
 
-  const id = Number(post_id || 0);
+  const id = post_id;
   const actor = useKeySelector(postKeySelector.postActorById(id));
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
   const createdAt = useKeySelector(postKeySelector.postCreatedAtById(id));

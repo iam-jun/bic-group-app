@@ -246,7 +246,7 @@ const reactionCountsEmpty = {};
 
 const ownReactions = [
   {
-    id: 165,
+    id: '165',
     postId: 46,
     reactionName: 'sweat_smile',
     createdBy: 58,

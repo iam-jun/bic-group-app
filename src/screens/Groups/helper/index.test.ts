@@ -30,7 +30,7 @@ describe('Group functions helper', () => {
   it('checkLastAdmin: should dispatch last admin of current group error correctly', async () => {
     jest
       .spyOn(groupsDataHelper, 'getInnerGroupsLastAdmin')
-      .mockImplementation(() => Promise.resolve([{id: Number(groupId)}]));
+      .mockImplementation(() => Promise.resolve([{id: groupId}]));
     const result = await checkLastAdmin(
       groupId,
       userId,
