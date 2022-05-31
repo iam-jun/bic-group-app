@@ -14,7 +14,7 @@ import AddMembersToGroup from '~/screens/Groups/AddMembersToGroup';
 import NewFeature from '~/screens/NewFeature';
 import DraftPost from '~/screens/Post/DraftPost';
 import UserProfile from '~/screens/Menu/UserProfile';
-import PendingMembers from '~/screens/Groups/GroupDetail/groupModerating/PendingMembers';
+import GroupPendingMembers from '~/screens/Groups/GroupDetail/groupModerating/PendingMembers';
 import PostSettings from '~/screens/Post/PostSettings';
 import CommentDetail from '~/screens/Post/CommentDetail';
 
@@ -25,6 +25,7 @@ import CommunityAbout from '~/screens/Groups/CommunityAbout';
 import DiscoverGroups from '~/screens/Groups/DiscoverGroups';
 import CommunityMembers from '~/screens/Groups/CommunityMembers';
 import CommunityAdmin from '~/screens/Groups/CommunityAdmin';
+import CommunityPendingMembers from '~/screens/Groups/CommunityAdmin/PendingMembers';
 
 export default {
   // community
@@ -35,6 +36,7 @@ export default {
   'discover-groups': DiscoverGroups,
   'community-members': CommunityMembers,
   'community-admin': CommunityAdmin,
+  'community-pending-members': CommunityPendingMembers,
 
   // group
   'group-list': Groups,
@@ -57,5 +59,5 @@ export default {
   'comment-detail': CommentDetail,
 
   // group moderating
-  'pending-members': PendingMembers,
+  'group-pending-members': GroupPendingMembers,
 };

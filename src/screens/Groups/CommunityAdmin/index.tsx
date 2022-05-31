@@ -13,6 +13,7 @@ import groupsKeySelector from '../redux/keySelector';
 import Text from '~/beinComponents/Text';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import modalActions from '~/store/modal/actions';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
 const CommunityAdmin = () => {
   const theme = useTheme() as ITheme;
@@ -25,7 +26,7 @@ const CommunityAdmin = () => {
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
 
   const onPressPendingMembers = () => {
-    // TODO: navigate to pending members
+    rootNavigation.navigate(groupStack.communityPendingMembers);
   };
 
   const onPressGeneralInfo = () => {

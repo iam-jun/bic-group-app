@@ -432,6 +432,26 @@ const groupsActions = {
     type: groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM,
     payload,
   }),
+
+  getCommunityMemberRequests: (payload: {
+    communityId: number;
+    params?: any;
+  }) => ({
+    type: groupsTypes.GET_COMMUNITY_MEMBER_REQUESTS,
+    payload,
+  }),
+  setCommunityMemberRequests: (payload: {
+    loading?: boolean;
+    canLoadMore?: boolean;
+    data?: number[];
+    items?: IObject<IJoiningMember>;
+  }) => ({
+    type: groupsTypes.SET_COMMUNITY_MEMBER_REQUESTS,
+    payload,
+  }),
+  resetCommunityMemberRequests: () => ({
+    type: groupsTypes.RESET_COMMUNITY_MEMBER_REQUESTS,
+  }),
 };
 
 export default groupsActions;

@@ -46,6 +46,7 @@ import getCommunitySearchMembers from './getCommunitySearchMembers';
 import getGroupSearchMembers from './getGroupSearchMembers';
 import joinCommunity from './joinCommunity';
 import cancelJoinCommunity from './cancelJoinCommunity';
+import getCommunityMemberRequests from './getCommunityMemberRequests';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -107,6 +108,10 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_DISCOVER_GROUPS, getDiscoverGroups);
   yield takeLatest(groupsTypes.JOIN_COMMUNITY, joinCommunity);
   yield takeLatest(groupsTypes.CANCEL_JOIN_COMMUNITY, cancelJoinCommunity);
+  yield takeLatest(
+    groupsTypes.GET_COMMUNITY_MEMBER_REQUESTS,
+    getCommunityMemberRequests,
+  );
 }
 
 function* getGroupSearch({payload}: {type: string; payload: string}) {
@@ -360,7 +365,7 @@ function* getMemberRequests({
     const response = yield groupsDataHelper.getMemberRequests(groupId, {
       offset: data.length,
       limit: appConfig.recordsPerPage,
-      key: memberRequestStatus.waiting,
+      key: memberRequestStatus.WAITING,
       ...params,
     });
 
