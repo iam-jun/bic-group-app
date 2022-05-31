@@ -14,7 +14,10 @@ export default function* getDiscoverCommunities({
   try {
     yield put(groupsActions.setDiscoverCommunities({loading: true}));
     const params: IParamGetCommunities = {};
-    const response = yield call(groupsDataHelper.getCommunities, params);
+    const response = yield call(
+      groupsDataHelper.getDiscoverCommunities,
+      params,
+    );
 
     //todo handle paging
     const canLoadMore = false;

@@ -208,8 +208,10 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getCommunities: (params: IParamGetCommunities): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities`,
+  getDiscoverCommunities: (
+    params: IParamGetCommunities,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/discover`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
@@ -265,7 +267,7 @@ export const groupsApiConfig = {
     communityId: number,
     params?: IParamGetDiscoverGroups,
   ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}/groups`,
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/groups/discover`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
@@ -576,10 +578,10 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getCommunities: async (params?: IParamGetCommunities) => {
+  getDiscoverCommunities: async (params?: IParamGetCommunities) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.getCommunities(params || {}),
+        groupsApiConfig.getDiscoverCommunities(params || {}),
       );
       if (response && response?.data) {
         return Promise.resolve(response.data);
