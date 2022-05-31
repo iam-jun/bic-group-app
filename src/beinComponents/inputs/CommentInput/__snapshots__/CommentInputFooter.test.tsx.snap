@@ -539,47 +539,73 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
                 <View
                   className="icon-wrapper"
                 >
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={20}
-                    bbWidth={20}
-                    fill="#627286"
-                    focusable={false}
-                    height={20}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
+                  <View
+                    onLayout={[Function]}
                     style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 20,
-                          "width": 20,
-                        },
-                      ]
+                      Object {
+                        "backgroundColor": "transparent",
+                        "position": "relative",
+                      }
                     }
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={20}
                   >
-                    <RNSVGGroup
-                      fill={4284641926}
-                      propList={
+                    <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "opacity": 1,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                    >
+                      <View
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "backgroundColor": "#f9f9f9",
+                            "height": 20,
+                            "justifyContent": "center",
+                            "width": 20,
+                          }
+                        }
+                        testID="Image__placeholder"
+                      />
+                    </View>
+                    <View
+                      style={
                         Array [
-                          "fill",
+                          Object {
+                            "overflow": "hidden",
+                          },
+                          Object {
+                            "height": 20,
+                            "width": 20,
+                          },
                         ]
                       }
                     >
-                      <RNSVGPath
-                        d="M14.36,14.23a3.76,3.76,0,0,1-4.72,0,1,1,0,0,0-1.28,1.54,5.68,5.68,0,0,0,7.28,0,1,1,0,1,0-1.28-1.54ZM9,11a1,1,0,1,0-1-1A1,1,0,0,0,9,11Zm6-2a1,1,0,1,0,1,1A1,1,0,0,0,15,9ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
+                      <FastImageView
+                        onFastImageError={[Function]}
+                        onFastImageLoadEnd={[Function]}
+                        resizeMode="cover"
+                        size={20}
+                        source={null}
+                        style={
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
                       />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
+                    </View>
+                  </View>
                 </View>
               </View>
             </View>
@@ -771,25 +797,7 @@ exports[`CommentInputFooter component renders correctly mention bar invisible 1`
     </View>
   </View>
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "left": 0,
-          "opacity": 0,
-          "position": "absolute",
-          "right": 0,
-        },
-      }
-    }
-    collapsable={false}
-    style={
-      Object {
-        "left": 0,
-        "opacity": 0,
-        "position": "absolute",
-        "right": 0,
-      }
-    }
+    style={[Function]}
     testID="comment_input_footer.mention_bar_container"
   />
 </View>
@@ -1334,47 +1342,73 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
                 <View
                   className="icon-wrapper"
                 >
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={20}
-                    bbWidth={20}
-                    fill="#627286"
-                    focusable={false}
-                    height={20}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
+                  <View
+                    onLayout={[Function]}
                     style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 20,
-                          "width": 20,
-                        },
-                      ]
+                      Object {
+                        "backgroundColor": "transparent",
+                        "position": "relative",
+                      }
                     }
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={20}
                   >
-                    <RNSVGGroup
-                      fill={4284641926}
-                      propList={
+                    <View
+                      collapsable={false}
+                      nativeID="animatedComponent"
+                      style={
+                        Object {
+                          "bottom": 0,
+                          "left": 0,
+                          "opacity": 1,
+                          "position": "absolute",
+                          "right": 0,
+                          "top": 0,
+                        }
+                      }
+                    >
+                      <View
+                        style={
+                          Object {
+                            "alignItems": "center",
+                            "backgroundColor": "#f9f9f9",
+                            "height": 20,
+                            "justifyContent": "center",
+                            "width": 20,
+                          }
+                        }
+                        testID="Image__placeholder"
+                      />
+                    </View>
+                    <View
+                      style={
                         Array [
-                          "fill",
+                          Object {
+                            "overflow": "hidden",
+                          },
+                          Object {
+                            "height": 20,
+                            "width": 20,
+                          },
                         ]
                       }
                     >
-                      <RNSVGPath
-                        d="M14.36,14.23a3.76,3.76,0,0,1-4.72,0,1,1,0,0,0-1.28,1.54,5.68,5.68,0,0,0,7.28,0,1,1,0,1,0-1.28-1.54ZM9,11a1,1,0,1,0-1-1A1,1,0,0,0,9,11Zm6-2a1,1,0,1,0,1,1A1,1,0,0,0,15,9ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
+                      <FastImageView
+                        onFastImageError={[Function]}
+                        onFastImageLoadEnd={[Function]}
+                        resizeMode="cover"
+                        size={20}
+                        source={null}
+                        style={
+                          Object {
+                            "bottom": 0,
+                            "left": 0,
+                            "position": "absolute",
+                            "right": 0,
+                            "top": 0,
+                          }
+                        }
                       />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
+                    </View>
+                  </View>
                 </View>
               </View>
             </View>
@@ -1566,25 +1600,7 @@ exports[`CommentInputFooter component renders correctly mention bar with item 1`
     </View>
   </View>
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "left": 0,
-          "opacity": 0,
-          "position": "absolute",
-          "right": 0,
-        },
-      }
-    }
-    collapsable={false}
-    style={
-      Object {
-        "left": 0,
-        "opacity": 0,
-        "position": "absolute",
-        "right": 0,
-      }
-    }
+    style={[Function]}
     testID="comment_input_footer.mention_bar_container"
   >
     <View

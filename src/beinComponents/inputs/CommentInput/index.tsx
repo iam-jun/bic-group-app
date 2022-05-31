@@ -1,9 +1,4 @@
-import {
-  GiphyDialog,
-  GiphyMedia,
-  GiphyMediaView,
-  GiphyThemePreset,
-} from '@giphy/react-native-sdk';
+import {GiphyMedia, GiphyMediaView} from '@giphy/react-native-sdk';
 import React, {
   useEffect,
   useImperativeHandle,
@@ -153,10 +148,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const isWeb = Platform.OS === 'web';
 
   useEffect(() => {
-    GiphyDialog.configure({theme: GiphyThemePreset.Light});
-  });
-
-  useEffect(() => {
     /**
      * Clone text in order to handling empty newline
      * as the <Text> does not adding the height of
@@ -211,7 +202,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const onPressEmoji = (event: any) => {
     stickerViewRef?.current?.show?.();
-    // GiphyDialog.show();
   };
 
   const handleUpload = () => {
@@ -296,6 +286,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const onMediaSelect = useCallback(
     (media: GiphyMedia) => {
       setSelectedImage(undefined);
+      console.log('stickerViewRef?.current', stickerViewRef?.current);
       stickerViewRef?.current?.hideImmediately?.();
       setSelectedGiphy(media);
     },
