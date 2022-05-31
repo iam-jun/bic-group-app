@@ -9,36 +9,33 @@ import privacyTypes from '~/constants/privacyTypes';
 import Icon from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
-import {useKeySelector} from '~/hooks/selector';
-import groupsKeySelector from '../redux/keySelector';
 
 interface DiscoverItemProps {
-  id: number;
+  item: any;
   testID?: string;
   onPressJoin: (id: number, name: string) => void;
   onPressCancel: (id: number, name: string) => void;
-  onPressGroup: (id: number) => void;
+  onPressView?: (id: number) => void;
 }
 
 const DiscoverItem = ({
-  id,
+  item,
   testID,
-  onPressGroup,
+  onPressView,
   onPressJoin,
   onPressCancel,
 }: DiscoverItemProps) => {
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
+  const {colors} = theme;
   const styles = createStyles(theme);
 
-  const {items} = useKeySelector(groupsKeySelector.discoverGroups);
-  const currentItem = items[id] || {};
-  const {name, icon, user_count, privacy, join_status} = currentItem;
+  const {id, name, icon, user_count, privacy, join_status} = item || {};
   const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
   const {icon: privacyIcon, title: privacyTitle}: any = privacyData || {};
 
   const onView = () => {
-    onPressGroup?.(id);
+    onPressView?.(id);
   };
 
   const onJoin = () => {
@@ -56,6 +53,7 @@ const DiscoverItem = ({
       avatarProps={{variant: 'largeAlt'}}
       style={styles.item}
       title={name}
+      titleProps={{variant: 'h5'}}
       testID={testID}
       onPress={onView}
       ContentComponent={
@@ -64,25 +62,30 @@ const DiscoverItem = ({
             style={styles.iconSmall}
             icon={privacyIcon}
             size={16}
-            tintColor={theme.colors.iconTint}
+            tintColor={colors.textSecondary}
           />
-          <Text.Subtitle useI18n>{privacyTitle}</Text.Subtitle>
-          <Text.Subtitle>{`  •  `}</Text.Subtitle>
+          <Text.BodyS color={colors.textSecondary} useI18n>
+            {privacyTitle}
+          </Text.BodyS>
+          <Text.BodyS color={colors.textSecondary}>{`  •  `}</Text.BodyS>
           <Icon
             style={styles.iconSmall}
             icon={'UsersAlt'}
             size={16}
-            tintColor={theme.colors.iconTint}
+            tintColor={colors.textSecondary}
           />
-          <Text.BodyS>{user_count}</Text.BodyS>
-          <Text.Subtitle>{` ${t('groups:text_members', {
-            count: user_count,
-          })}`}</Text.Subtitle>
+          <Text.BodyS color={colors.textSecondary}>{user_count}</Text.BodyS>
+          <Text.BodyS color={colors.textSecondary}>{` ${t(
+            'groups:text_members',
+            {
+              count: user_count,
+            },
+          )}`}</Text.BodyS>
         </View>
       }
       RightComponent={
         <ButtonDiscoverItemAction
-          data={currentItem}
+          data={item}
           joinStatus={join_status}
           onView={onView}
           onJoin={onJoin}
@@ -110,6 +113,7 @@ const createStyles = (theme: ITheme) => {
     groupInfo: {
       flexDirection: 'row',
       alignItems: 'center',
+      marginTop: 2,
     },
   });
 };

@@ -1,6 +1,5 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, {FC, useEffect} from 'react';
 import {
-  View,
   StyleSheet,
   StyleProp,
   ViewStyle,
@@ -12,21 +11,16 @@ import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 
-import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
-import privacyTypes from '~/constants/privacyTypes';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import Icon from '~/beinComponents/Icon';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useDispatch} from 'react-redux';
-import {useBaseHook} from '~/hooks';
-import ButtonDiscoverItemAction from '~/screens/Groups/components/ButtonDiscoverItemAction';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import {scaleSize} from '~/theme/dimension';
+import DiscoverItem from '../components/DiscoverItem';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -40,33 +34,30 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   onPressCommunities,
 }: DiscoverCommunitiesProps) => {
   const data = useKeySelector(groupsKeySelector.discoverCommunitiesData);
-  const {list, loading} = data || {};
+  const {list, items, loading} = data || {};
 
-  const {t} = useBaseHook();
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
-  const {colors} = theme || {};
   const styles = createStyle(theme);
 
   useEffect(() => {
     getData();
     return () => {
-      dispatch(
-        groupsActions.setDiscoverCommunities({
-          loading: true,
-          canLoadMore: true,
-          list: [],
-        }),
-      );
+      resetData();
     };
   }, []);
 
-  const getData = (isRefresh = false) => {
-    dispatch(groupsActions.getDiscoverCommunities({isRefresh}));
+  const getData = () => {
+    dispatch(groupsActions.getDiscoverCommunities());
+  };
+
+  const resetData = () => {
+    dispatch(groupsActions.resetDiscoverCommunities());
   };
 
   const onRefresh = () => {
-    getData(true);
+    resetData();
+    getData();
   };
 
   const onPressJoin = (data: any) => {
@@ -90,46 +81,15 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
     );
   };
 
-  const renderItem = ({item}: any) => {
-    const {name, icon, user_count, description, privacy} = item || {};
-    const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
-    const {icon: privacyIcon, title: privacyTitle}: any = privacyData || {};
-
+  const renderItem = ({item, index}: {item: number; index: number}) => {
+    const currentItem = items[item];
     return (
-      <PrimaryItem
-        showAvatar
-        avatar={icon}
-        avatarProps={{variant: 'largeAlt'}}
-        style={styles.item}
-        title={name}
-        titleProps={{variant: 'h5'}}
-        testID={`community_${item.id}`}
-        onPress={() => onPressCommunities?.(item)}
-        ContentComponent={
-          <View style={styles.groupInfo}>
-            <Icon
-              style={styles.iconSmall}
-              icon={privacyIcon}
-              size={16}
-              tintColor={colors.textSecondary}
-            />
-            <Text.Subtitle useI18n>{privacyTitle}</Text.Subtitle>
-            <Text.Subtitle> • </Text.Subtitle>
-            <Text.BodySM color={colors.textSecondary}>{user_count}</Text.BodySM>
-            <Text.Subtitle>{` ${t('groups:text_members', {
-              count: user_count,
-            })}`}</Text.Subtitle>
-          </View>
-        }
-        RightComponent={
-          <ButtonDiscoverItemAction
-            data={item}
-            joinStatus={item?.join_status}
-            onView={onPressCommunities}
-            onJoin={onPressJoin}
-            onCancel={onPressCancel}
-          />
-        }
+      <DiscoverItem
+        item={currentItem}
+        testID={`discover_communities_item_${index}`}
+        onPressView={onPressCommunities}
+        onPressJoin={onPressJoin}
+        onPressCancel={onPressCancel}
       />
     );
   };
@@ -143,14 +103,7 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
       ListEmptyComponent={renderEmptyComponent}
       ListHeaderComponent={<DiscoverHeader list={list} />}
       onEndReached={() => getData()}
-      ItemSeparatorComponent={() => (
-        <Divider
-          style={{
-            marginVertical: theme.spacing?.margin.tiny,
-            marginHorizontal: theme.spacing.margin.large,
-          }}
-        />
-      )}
+      ItemSeparatorComponent={() => <Divider style={styles.divider} />}
       refreshControl={
         <RefreshControl
           refreshing={loading}
@@ -194,6 +147,10 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       marginTop: 2,
+    },
+    divider: {
+      marginVertical: spacing.margin.tiny,
+      marginHorizontal: spacing.margin.large,
     },
   });
 };
