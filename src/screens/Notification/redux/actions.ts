@@ -1,4 +1,7 @@
-import {IParamGetNotifications} from '~/interfaces/INotification';
+import {
+  IParamGetNotifications,
+  IParamSetNotifications,
+} from '~/interfaces/INotification';
 import notificationsTypes from '~/screens/Notification/redux/types';
 
 const notificationsActions = {
@@ -8,7 +11,7 @@ const notificationsActions = {
       payload,
     };
   },
-  setNotifications: function (payload: any) {
+  setNotifications: function (payload: IParamSetNotifications) {
     return {
       type: notificationsTypes.SET_NOTIFICATIONS,
       payload,

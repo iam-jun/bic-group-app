@@ -1,13 +1,39 @@
+import {IParamSetNotifications} from '~/interfaces/INotification';
 import notificationsTypes from '~/screens/Notification/redux/types';
 
 export const notiInitState = {
   loadingNotifications: false,
-  notificationList: [],
   unseenNumber: 0,
   noMoreNotification: false,
   isLoadingMore: false,
   showMarkedAsReadToast: false,
   pushToken: '',
+  notificationList: {
+    ALL: {
+      loading: false,
+      data: [],
+      isLoadingMore: false,
+      noMoreData: false,
+    },
+    UNREAD: {
+      loading: false,
+      data: [],
+      isLoadingMore: false,
+      noMoreData: false,
+    },
+    MENTION: {
+      loading: false,
+      data: [],
+      isLoadingMore: false,
+      noMoreData: false,
+    },
+    IMPORTANT: {
+      loading: false,
+      data: [],
+      isLoadingMore: false,
+      noMoreData: false,
+    },
+  },
 };
 
 function notificationsReducer(state = notiInitState, action: any = {}) {
@@ -18,26 +44,35 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
         ...state,
         loadingNotifications: payload,
       };
-    case notificationsTypes.SET_NOTIFICATIONS:
+    case notificationsTypes.SET_NOTIFICATIONS: {
+      const {flag, data, unseen}: IParamSetNotifications = payload;
+      if (!!flag && data && Array.isArray(data)) {
+        const newNotifications = {...state.notificationList};
+        newNotifications[flag].data = [...data];
+        return {
+          ...state,
+          notificationList: {...newNotifications},
+          unseenNumber: unseen,
+        };
+      }
       return {
         ...state,
-        notificationList: payload.notifications || [],
-        unseenNumber: payload.unseen,
       };
+    }
 
     case notificationsTypes.ATTACH: {
       return {
         ...state,
-        notificationList: [payload, ...state.notificationList],
+        // notificationList: [payload, ...state.notificationList],
         unseenNumber: state.unseenNumber + 1,
       };
     }
     case notificationsTypes.DETACH: {
       return {
         ...state,
-        notificationList: state.notificationList.filter(
-          (item: any) => item.id !== payload?.id,
-        ),
+        // notificationList: state.notificationList.filter(
+        //   (item: any) => item.id !== payload?.id,
+        // ),
         unseenNumber: state.unseenNumber - 1,
       };
     }
@@ -58,9 +93,9 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
     case notificationsTypes.CONCAT_NOTIFICATIONS:
       return {
         ...state,
-        notificationList: state.notificationList.concat(
-          payload.notifications || [],
-        ),
+        // notificationList: state.notificationList.concat(
+        //   payload.notifications || [],
+        // ),
       };
     case notificationsTypes.SET_NO_MORE_NOTIFICATION:
       return {

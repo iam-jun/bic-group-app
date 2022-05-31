@@ -8,31 +8,38 @@ import Icon from './Icon';
 import Text from './Text';
 
 export interface FilterProps {
+  filterRef?: React.Ref<ScrollView>;
   testID?: string;
   itemTestID?: string;
   style?: StyleProp<ViewStyle>;
   data?: {id: number; text: string; icon?: string; type: string}[];
   selectedIndex?: number;
   onPress: (item: any, index: number) => void;
+  onLayout?: (index: number, x: any, width: number) => void;
 }
 
-const Filter = ({
+const Filter: React.FC<FilterProps> = ({
+  filterRef,
   testID,
   style,
   data = [],
   selectedIndex,
   itemTestID,
   onPress,
+  onLayout,
 }: FilterProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
-
   const renderReactItem = (item: any, index: number) => {
     const isSelected = index === selectedIndex;
     return (
       <View
         style={styles.itemView}
-        key={`${itemTestID || 'item_filter'}_${item?.text}`}>
+        key={`${itemTestID || 'item_filter'}_${item?.text}`}
+        onLayout={event => {
+          const {x, width} = event?.nativeEvent?.layout || {};
+          onLayout && onLayout(index, x, width);
+        }}>
         <ButtonWrapper
           contentStyle={[
             styles.itemContainer,
@@ -59,13 +66,15 @@ const Filter = ({
       </View>
     );
   };
+
   return (
     <View testID={testID || 'filter'} style={[styles.container, style]}>
       <ScrollView
+        ref={filterRef}
         horizontal
         style={{backgroundColor: theme.colors.background}}
         showsHorizontalScrollIndicator={false}
-        alwaysBounceHorizontal={false}>
+        alwaysBounceHorizontal>
         {data?.map?.(renderReactItem)}
       </ScrollView>
     </View>
@@ -107,4 +116,10 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
-export default Filter;
+const _Filter = React.forwardRef(
+  (props: FilterProps, ref?: React.Ref<ScrollView>) => (
+    <Filter filterRef={ref} {...props} />
+  ),
+);
+
+export default React.memo(_Filter);

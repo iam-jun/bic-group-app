@@ -14,13 +14,7 @@ function* getNotifications({
   type: string;
 }) {
   try {
-    const {flag = 'ALL', clearCurrentNotifications} = payload || {};
-    if (clearCurrentNotifications) {
-      notificationsActions.setNotifications({
-        notifications: [],
-        unseen: 0,
-      });
-    }
+    const {flag = 'ALL'} = payload || {};
     yield put(notificationsActions.setLoadingNotifications(true));
     yield put(notificationsActions.setNoMoreNoti(false));
 
@@ -47,7 +41,8 @@ function* getNotifications({
 
     yield put(
       notificationsActions.setNotifications({
-        notifications: response?.results || [],
+        flag: flag,
+        data: response?.results || [],
         unseen: response.unseen,
       }),
     );

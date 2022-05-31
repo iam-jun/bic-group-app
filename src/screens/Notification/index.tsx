@@ -1,56 +1,46 @@
 import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
-import Divider from '~/beinComponents/Divider';
+import {SceneMap, TabView} from 'react-native-tab-view';
+
 import Filter from '~/beinComponents/Filter';
 import Header from '~/beinComponents/Header';
-import Icon from '~/beinComponents/Icon';
-import NotificationItem from '~/beinComponents/list/items/NotificationItem';
-import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Text from '~/beinComponents/Text';
 import {notificationMenuData} from '~/constants/notificationMenuData';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 import {useRootNavigation, useTabPressListener} from '~/hooks/navigation';
-import {useKeySelector} from '~/hooks/selector';
 import {ITabTypes} from '~/interfaces/IRouter';
-import i18n from '~/localization';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
 import {ITheme} from '~/theme/interfaces';
 import NotificationBottomSheet from './components/NotificationBottomSheet';
 import NotificationOptionBottomSheet from './components/NotificationOptionBottomSheet';
 import notificationsActions from './redux/actions';
-import notificationSelector from './redux/selector';
+import NotificationList from './NotificationList';
+
+const screenWidth = Dimensions.get('window').width;
 
 const Notification = () => {
   const listRef = useRef<any>();
   const menuSheetRef = useRef<any>();
   const notificationOptionRef = useRef<any>();
+  const scrollViewRef = useRef<any>();
+  const tabDimensions: any = {};
 
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const isFocused = useIsFocused();
 
-  const isLoadingMore = useKeySelector(notificationSelector.isLoadingMore);
-  const loadingNotifications = useKeySelector(notificationSelector.isLoading);
-  const notificationList = useKeySelector(notificationSelector.notifications);
-  const noMoreNotification = useKeySelector(
-    notificationSelector.noMoreNotification,
-  );
-
-  const showNoNotification = notificationList.length === 0;
-
-  const [currentPath, setCurrentPath] = useState('');
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [selectedNotification, setSelectedNotification] = useState({});
 
-  useEffect(() => {
-    if (!isFocused) setCurrentPath('');
+  const [navigationState, setNavigationState] = useState({
+    index: 0,
+    routes: [...notificationMenuData],
+  });
 
+  useEffect(() => {
     if (isFocused) {
       dispatch(notificationsActions.markAsSeenAll());
     }
@@ -66,25 +56,21 @@ const Notification = () => {
   );
 
   useEffect(() => {
+    const flag = notificationMenuData[navigationState.index]?.type || 'ALL';
+    //@ts-ignore
+    dispatch(notificationsActions.getNotifications({flag: flag}));
     listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
   }, [selectedIndex]);
 
-  const refreshListNotification = () => {
-    const type = notificationMenuData[selectedIndex]?.type || 'ALL';
-    //@ts-ignore
-    dispatch(notificationsActions.getNotifications({flag: type}));
-  };
-
   const onPressFilterItem = (item: any, index: number) => {
-    setSelectedIndex(index);
-    if (!!item?.type) {
-      dispatch(
-        notificationsActions.getNotifications({
-          flag: item.type,
-          clearCurrentNotifications: true,
-        }),
-      );
-    }
+    // setSelectedIndex(index);
+    // if (!!item?.type) {
+    //   dispatch(
+    //     notificationsActions.getNotifications({
+    //       flag: item.type,
+    //     }),
+    //   );
+    // }
   };
 
   const onPressItemOption = ({item, e}: {item: any; e: any}) => {
@@ -191,74 +177,72 @@ const Notification = () => {
     );
   };
 
-  // load more notification handler
-  const loadMoreNotifications = () => {
-    if (!noMoreNotification && !isLoadingMore) {
-      const type = notificationMenuData[selectedIndex]?.type || 'ALL';
-      //@ts-ignore
-      dispatch(notificationsActions.loadMore({flag: type}));
+  const onChangeTab = (i: number) => {
+    setNavigationState(previousState => {
+      return {...previousState, index: i};
+    });
+    if (tabDimensions && tabDimensions[i.toString()] && scrollViewRef.current) {
+      const {width, x} = tabDimensions[i.toString()];
+      scrollViewRef.current?.scrollTo?.({
+        x: x - (screenWidth - width) / 2,
+        y: 0,
+        animated: true,
+      });
     }
   };
 
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
-  const renderListHeader = () => {
+  const renderListHeader = ({navigationState}: any) => {
     return (
       <Filter
+        ref={scrollViewRef}
         testID={'notification.filter'}
         itemTestID={'notification.filter.item'}
-        style={{
-          paddingVertical: theme.spacing.padding.small,
-          borderBottomWidth: 0,
+        style={styles.filterStyle}
+        data={navigationState?.routes}
+        selectedIndex={navigationState.index}
+        onPress={(item: any, index: number) => {
+          onChangeTab(index);
         }}
-        data={notificationMenuData}
-        selectedIndex={selectedIndex}
-        onPress={onPressFilterItem}
-      />
-    );
-  };
-
-  const renderListFooter = () => {
-    return (
-      <View style={styles.listFooter}>
-        {!noMoreNotification && isLoadingMore && (
-          <ActivityIndicator color={theme.colors.bgFocus} />
-        )}
-        {noMoreNotification && (
-          <Text.Subtitle color={theme.colors.textSecondary}>
-            {i18n.t('notification:no_more_notification')}
-          </Text.Subtitle>
-        )}
-      </View>
-    );
-  };
-
-  const renderItem = ({item, index}: {item: any; index: number}) => {
-    return (
-      <NotificationItem
-        {...item}
-        testID={`list_view.item_wrapper.${index}`}
-        onPress={() => {
-          onItemPress(item);
-        }}
-        onPressOption={(e: any) => {
-          onPressItemOption({item, e});
+        onLayout={(index, x, width) => {
+          tabDimensions[index.toString()] = {x, width};
         }}
       />
     );
   };
 
-  const renderUnReadNotificationsEmpty = () => {
-    return (
-      <View style={styles.unReadNotifications}>
-        <Icon icon="CheckCircle" size={40} tintColor={theme.colors.success} />
-        <Text.Subtitle useI18n style={{marginTop: theme.spacing.margin.base}}>
-          notification:seen_all_notifications
-        </Text.Subtitle>
-      </View>
-    );
-  };
+  const renderScreen = SceneMap({
+    ALL: () => (
+      <NotificationList
+        onItemPress={onItemPress}
+        type="ALL"
+        onPressItemOption={onPressItemOption}
+      />
+    ),
+    UNREAD: () => (
+      <NotificationList
+        onItemPress={onItemPress}
+        type="UNREAD"
+        onPressItemOption={onPressItemOption}
+      />
+    ),
+    MENTION: () => (
+      <NotificationList
+        onItemPress={onItemPress}
+        type="MENTION"
+        onPressItemOption={onPressItemOption}
+      />
+    ),
+    IMPORTANT: () => (
+      <NotificationList
+        onItemPress={onItemPress}
+        type="IMPORTANT"
+        onPressItemOption={onPressItemOption}
+      />
+    ),
+  });
 
   return (
     <ScreenWrapper testID="NotfiticationScreen" isFullView>
@@ -269,35 +253,14 @@ const Notification = () => {
         hideBack
         onPressMenu={onPressMenu}
       />
-      {renderListHeader()}
-      {!loadingNotifications &&
-      showNoNotification &&
-      noMoreNotification &&
-      selectedIndex === 1 ? (
-        renderUnReadNotificationsEmpty()
-      ) : showNoNotification && !loadingNotifications ? (
-        <NoNotificationFound />
-      ) : loadingNotifications ? (
-        <ActivityIndicator color={theme.colors.bgFocus} />
-      ) : null}
-      {!showNoNotification && !loadingNotifications && (
-        <ListView
-          listRef={listRef}
-          style={styles.list}
-          containerStyle={styles.listContainer}
-          isFullView
-          renderItem={renderItem}
-          renderItemSeparator={() => (
-            <Divider size={1} color={theme.colors.borderDivider} />
-          )}
-          data={notificationList}
-          onRefresh={refreshListNotification}
-          refreshing={loadingNotifications}
-          onLoadMore={() => loadMoreNotifications()}
-          ListFooterComponent={renderListFooter}
-          currentPath={currentPath}
-        />
-      )}
+      <TabView
+        navigationState={navigationState}
+        renderTabBar={renderListHeader}
+        onIndexChange={(index: number) => {
+          onChangeTab(index);
+        }}
+        renderScene={renderScreen}
+      />
       <NotificationBottomSheet
         modalizeRef={menuSheetRef}
         flag={notificationMenuData[selectedIndex]?.type || 'ALL'}
@@ -312,26 +275,11 @@ const Notification = () => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const insets = useSafeAreaInsets();
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
   return StyleSheet.create({
-    screenContainer: {
-      paddingTop: insets.top,
-      flex: 1,
-      backgroundColor: colors.background,
-    },
-    list: {},
-    listContainer: {
-      marginHorizontal: Platform.OS === 'web' ? spacing.margin.small : 0,
-    },
-    listFooter: {
-      height: 150,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    unReadNotifications: {
-      alignItems: 'center',
-      marginTop: (spacing.margin.extraLarge || 24) * 2,
+    filterStyle: {
+      paddingVertical: spacing.padding.small,
+      borderBottomWidth: 0,
     },
   });
 };

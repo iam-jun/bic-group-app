@@ -37,7 +37,6 @@ export interface IParamGetNotifications {
   idGT?: string;
   idLT?: string;
   flag?: 'ALL' | 'UNREAD' | 'MENTION' | 'IMPORTANT';
-  clearCurrentNotifications?: boolean;
 }
 
 export interface INotiExtraData {
@@ -46,4 +45,10 @@ export interface INotiExtraData {
   content?: string;
   description?: string;
   media?: any;
+}
+
+export interface IParamSetNotifications {
+  flag?: string;
+  data?: any[];
+  unseen?: number;
 }
