@@ -24,6 +24,7 @@ import YourGroups from '~/screens/Groups/YourGroups';
 import CommunityAbout from '~/screens/Groups/CommunityAbout';
 import DiscoverGroups from '~/screens/Groups/DiscoverGroups';
 import CommunityMembers from '~/screens/Groups/CommunityMembers';
+import CommunityAdmin from '~/screens/Groups/CommunityAdmin';
 
 export default {
   // community
@@ -33,6 +34,7 @@ export default {
   'community-about': CommunityAbout,
   'discover-groups': DiscoverGroups,
   'community-members': CommunityMembers,
+  'community-admin': CommunityAdmin,
 
   // group
   'group-list': Groups,

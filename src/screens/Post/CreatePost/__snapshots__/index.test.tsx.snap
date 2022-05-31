@@ -293,33 +293,30 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                       testID="header"
                     >
                       <View
-                        animatedStyle={
-                          Object {
-                            "value": Object {
-                              "height": 60,
-                            },
-                          }
-                        }
-                        collapsable={false}
                         style={
-                          Object {
-                            "alignItems": "flex-end",
-                            "backgroundColor": "#FFFFFF",
-                            "borderBottomWidth": 0.5,
-                            "borderColor": "#EAEDF2",
-                            "elevation": 2,
-                            "flexDirection": "row",
-                            "height": 60,
-                            "overflow": "hidden",
-                            "paddingTop": 0,
-                            "shadowColor": "#000",
-                            "shadowOffset": Object {
-                              "height": 1,
-                              "width": 0,
+                          Array [
+                            [Function],
+                            Object {
+                              "alignItems": "flex-end",
+                              "backgroundColor": "#FFFFFF",
+                              "flexDirection": "row",
+                              "overflow": "hidden",
+                              "paddingTop": 0,
                             },
-                            "shadowOpacity": 0.1,
-                            "shadowRadius": 1,
-                          }
+                            Object {
+                              "borderBottomWidth": 0.5,
+                              "borderColor": "#EAEDF2",
+                              "elevation": 2,
+                              "shadowColor": "#000",
+                              "shadowOffset": Object {
+                                "height": 1,
+                                "width": 0,
+                              },
+                              "shadowOpacity": 0.1,
+                              "shadowRadius": 1,
+                            },
+                            undefined,
+                          ]
                         }
                         testID="header.content"
                       >
@@ -446,20 +443,17 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                             </View>
                           </View>
                           <View
-                            animatedStyle={
-                              Object {
-                                "value": Object {},
-                              }
-                            }
-                            collapsable={false}
                             style={
-                              Object {
-                                "flex": 1,
-                                "height": "100%",
-                                "justifyContent": "center",
-                                "marginLeft": 16,
-                                "paddingTop": 1.5,
-                              }
+                              Array [
+                                Object {
+                                  "flex": 1,
+                                  "height": "100%",
+                                  "justifyContent": "center",
+                                  "marginLeft": 16,
+                                  "paddingTop": 1.5,
+                                },
+                                Object {},
+                              ]
                             }
                           >
                             <View
@@ -1775,25 +1769,7 @@ exports[`Create Post screen renders correctly with 1 audience selected, empty co
                           </View>
                         </View>
                         <View
-                          animatedStyle={
-                            Object {
-                              "value": Object {
-                                "left": 0,
-                                "opacity": 0,
-                                "position": "absolute",
-                                "right": 0,
-                              },
-                            }
-                          }
-                          collapsable={false}
-                          style={
-                            Object {
-                              "left": 0,
-                              "opacity": 0,
-                              "position": "absolute",
-                              "right": 0,
-                            }
-                          }
+                          style={[Function]}
                           testID="create_post_footer.mention_bar_container"
                         />
                       </View>

@@ -6,6 +6,7 @@ const groupStack = {
   communityAbout: 'community-about',
   discoverGroups: 'discover-groups',
   communityMembers: 'community-members',
+  communityAdmin: 'community-admin',
 
   // group
   groups: 'group-list',
