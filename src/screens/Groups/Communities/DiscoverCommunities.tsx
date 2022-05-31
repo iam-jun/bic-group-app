@@ -26,7 +26,7 @@ const screenWidth = Dimensions.get('window').width;
 
 export interface DiscoverCommunitiesProps {
   style?: StyleProp<ViewStyle>;
-  onPressCommunities?: (community: any) => void;
+  onPressCommunities?: (communityId: number) => void;
   onPressDiscover?: () => void;
 }
 
@@ -60,12 +60,12 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
     getData();
   };
 
-  const onPressJoin = (data: any) => {
-    alert('Request Join ' + data?.name);
+  const onPressJoin = (communityId: number, communityName: string) => {
+    dispatch(groupsActions.joinCommunity({communityId, communityName}));
   };
 
-  const onPressCancel = (data: any) => {
-    alert('Cancel Join ' + data?.name);
+  const onPressCancel = (communityId: number, communityName: string) => {
+    dispatch(groupsActions.cancelJoinCommunity({communityId, communityName}));
   };
 
   const renderEmptyComponent = () => {

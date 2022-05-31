@@ -412,6 +412,26 @@ const groupsActions = {
     type: groupsTypes.EDIT_DISCOVER_GROUP_ITEM,
     payload,
   }),
+  joinCommunity: function (payload: {
+    communityId: number;
+    communityName: string;
+  }) {
+    return {
+      type: groupsTypes.JOIN_COMMUNITY,
+      payload,
+    };
+  },
+  cancelJoinCommunity: (payload: {
+    communityId: number;
+    communityName: string;
+  }) => ({
+    type: groupsTypes.CANCEL_JOIN_COMMUNITY,
+    payload,
+  }),
+  editDiscoverCommunityItem: (payload: {id: number; data: any}) => ({
+    type: groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM,
+    payload,
+  }),
 };
 
 export default groupsActions;

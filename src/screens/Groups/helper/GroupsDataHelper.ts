@@ -273,6 +273,18 @@ export const groupsApiConfig = {
     useRetry: true,
     params,
   }),
+  joinCommunity: (communityId: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/join`,
+    method: 'post',
+    provider: ApiConfig.providers.bein,
+    useRetry: false,
+  }),
+  cancelJoinCommunity: (communityId: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/cancel-joining-request`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: false,
+  }),
 };
 
 const groupsDataHelper = {
@@ -661,6 +673,34 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getDiscoverGroups(communityId, params),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  joinCommunity: async (communityId: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.joinCommunity(communityId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  cancelJoinCommunity: async (communityId: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.cancelJoinCommunity(communityId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

@@ -128,6 +128,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     communitySearchMembers,
     managedCommunities,
     groupSearchMembers,
+    discoverCommunities,
   } = state;
 
   switch (type) {
@@ -572,6 +573,21 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       return {
         ...state,
         managedCommunities: groupInitState.managedCommunities,
+      };
+    case groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM:
+      return {
+        ...state,
+        discoverCommunities: {
+          ...discoverCommunities,
+          items: {
+            ...discoverCommunities.items,
+            [payload.id]: {
+              // @ts-ignore
+              ...discoverCommunities.items[payload.id],
+              ...payload.data,
+            },
+          },
+        },
       };
 
     default:

@@ -44,6 +44,8 @@ import getDiscoverGroups from './getDiscoverGroups';
 import getManagedCommunities from './getManagedCommunities';
 import getCommunitySearchMembers from './getCommunitySearchMembers';
 import getGroupSearchMembers from './getGroupSearchMembers';
+import joinCommunity from './joinCommunity';
+import cancelJoinCommunity from './cancelJoinCommunity';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -103,6 +105,8 @@ export default function* groupsSaga() {
     getCommunitySearchMembers,
   );
   yield takeLatest(groupsTypes.GET_DISCOVER_GROUPS, getDiscoverGroups);
+  yield takeLatest(groupsTypes.JOIN_COMMUNITY, joinCommunity);
+  yield takeLatest(groupsTypes.CANCEL_JOIN_COMMUNITY, cancelJoinCommunity);
 }
 
 function* getGroupSearch({payload}: {type: string; payload: string}) {
