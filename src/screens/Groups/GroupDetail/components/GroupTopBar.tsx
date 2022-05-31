@@ -1,20 +1,30 @@
 import React from 'react';
-import {StyleSheet, useWindowDimensions, View} from 'react-native';
+import {StyleSheet, useWindowDimensions, View, Share} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import Clipboard from '@react-native-clipboard/clipboard';
+
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
-import GroupHeaderMenu from '~/screens/Groups/GroupDetail/components/GroupHeaderMenu';
-import modalActions from '~/store/modal/actions';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import modalActions, {
+  clearToastMessage,
+  showHideToastMessage,
+} from '~/store/modal/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {openLink} from '~/utils/common';
 import {formatChannelLink} from '~/utils/link';
 import groupsKeySelector from '../../redux/keySelector';
+import HeaderMenu from '../../components/HeaderMenu';
+import {getLink, LINK_GROUP} from '~/utils/link';
+import {checkLastAdmin} from '../../helper';
+import useAuth, {useUserIdAuth} from '~/hooks/auth';
+import useLeaveGroup from '../../GroupMembers/components/useLeaveGroup';
 
 const GroupTopBar = () => {
   const dispatch = useDispatch();
@@ -25,7 +35,10 @@ const GroupTopBar = () => {
   const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
+  const isMember = join_status === groupJoinStatus.member;
   const {id: groupId, chat_id: chatId} = groupInfo || {};
+  const {user} = useAuth();
+  const userId = useUserIdAuth();
 
   const dimensions = useWindowDimensions();
   const isLaptop = dimensions.width >= deviceDimensions.laptop;
@@ -33,22 +46,84 @@ const GroupTopBar = () => {
     `chat.unreadChannels.${chatId}.mention_count_root`,
   );
 
+  const alertLeaveGroup = useLeaveGroup({
+    groupId: groupId,
+    username: user.username,
+  });
+
   const onPressBack = () => {
     rootNavigation.goBack();
-    // if (!route.params?.initial) rootNavigation.replace(groupStack.groups);
-    // else rootNavigation.goBack();
   };
 
-  const onPressMenu = (event?: any) => {
+  const onPressAdminTools = () => {
+    dispatch(modalActions.hideModal());
+    rootNavigation.navigate(groupStack.groupAdmin, {groupId});
+  };
+
+  const onPressCopyLink = () => {
+    dispatch(modalActions.hideModal());
+    Clipboard.setString(getLink(LINK_GROUP, groupId));
+    dispatch(
+      showHideToastMessage({
+        content: 'common:text_link_copied_to_clipboard',
+        props: {
+          textProps: {useI18n: true},
+          type: 'success',
+        },
+      }),
+    );
+  };
+
+  const onPressShare = () => {
+    dispatch(modalActions.hideModal());
+    const groupLink = getLink(LINK_GROUP, groupId);
+    try {
+      Share.share({
+        message: groupLink,
+        url: groupLink,
+      }).then(result => {
+        console.log(`\x1b[35m🐣️ Share group result: `, result, `\x1b[0m`);
+      });
+    } catch (error) {
+      console.log(`\x1b[31m🐣️ Share group error: ${error}\x1b[0m`);
+    }
+  };
+
+  const onPressLeave = () => {
+    dispatch(modalActions.hideModal());
+
+    return checkLastAdmin(
+      groupId,
+      userId,
+      dispatch,
+      alertLeaveGroup,
+      navigateToMembers,
+    );
+  };
+
+  const navigateToMembers = () => {
+    dispatch(clearToastMessage());
+    rootNavigation.navigate(groupStack.groupMembers, {groupId});
+  };
+
+  const onPressMenu = () => {
     dispatch(
       modalActions.showModal({
         isOpen: true,
-        ContentComponent: <GroupHeaderMenu groupId={groupId} />,
+        ContentComponent: (
+          <HeaderMenu
+            type="group"
+            isMember={isMember}
+            can_setting={can_setting}
+            onPressAdminTools={onPressAdminTools}
+            onPressCopyLink={onPressCopyLink}
+            onPressShare={onPressShare}
+            onPressLeave={onPressLeave}
+          />
+        ),
         props: {
-          webModalStyle: {minHeight: undefined},
           isContextMenu: true,
           menuMinWidth: 280,
-          position: {x: event?.pageX, y: event?.pageY},
           modalStyle: {borderTopLeftRadius: 20, borderTopRightRadius: 20},
         },
       }),
@@ -76,7 +151,7 @@ const GroupTopBar = () => {
   const renderSearchIcon = () => {
     // only members can see this icon
     return (
-      join_status === groupJoinStatus.member && (
+      isMember && (
         <ButtonWrapper onPress={onPressSearch} testID="group_top_bar.search">
           <Icon
             icon={'iconSearch'}
