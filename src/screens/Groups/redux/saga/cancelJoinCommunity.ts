@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import {put} from 'redux-saga/effects';
+import {put, call} from 'redux-saga/effects';
 import {IToastMessage} from '~/interfaces/common';
 import showError from '~/store/commonSaga/showError';
 import modalActions from '~/store/modal/actions';
@@ -15,7 +15,7 @@ export default function* cancelJoinCommunity({
   try {
     const {communityId, communityName} = payload;
 
-    yield groupsDataHelper.cancelJoinCommunity(communityId);
+    yield call(groupsDataHelper.cancelJoinCommunity, communityId);
 
     // update button Join/Cancel/View status on Discover communities
     yield put(
@@ -39,6 +39,6 @@ export default function* cancelJoinCommunity({
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.error('cancelJoinCommunity catch', err);
-    yield showError(err);
+    yield call(showError, err);
   }
 }

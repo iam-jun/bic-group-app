@@ -57,6 +57,6 @@ export default function* joinCommunity({
     yield put(groupsActions.getCommunityDetail(communityId));
   } catch (err) {
     console.error('joinCommunity catch', err);
-    yield showError(err);
+    yield call(showError, err);
   }
 }

@@ -11,7 +11,7 @@ export default function* getDiscoverCommunities({
   payload,
 }: {
   type: string;
-  payload: any;
+  payload?: any;
 }): any {
   try {
     const {groups} = yield select();
@@ -42,8 +42,8 @@ export default function* getDiscoverCommunities({
       yield put(groupsActions.setDiscoverCommunities(newData));
     }
   } catch (err) {
-    console.log('\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m');
+    console.log('\x1b[33m', 'getDiscoverCommunities : error', err, '\x1b[0m');
     yield put(groupsActions.setDiscoverCommunities({loading: false}));
-    yield showError(err);
+    yield call(showError, err);
   }
 }

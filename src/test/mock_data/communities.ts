@@ -38,6 +38,20 @@ export const communities = [
   },
 ];
 
+export const discoverCommunity = {
+  id: 1,
+  group_id: 1,
+  name: 'Cộng đồng khám phá',
+  slug: '27505c',
+  privacy: 'PRIVATE',
+  description: 'Mô tả về cộng đồng nè',
+  icon: 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/32fc59a2-7361-4313-b5a3-d4eb4a5712af.jpg',
+  background_img_url:
+    'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/cover/images/original/f3a578ea-7382-4b34-94ff-700a818026f5.jpg',
+  user_count: 7,
+  join_status: 1,
+};
+
 export const communityDetailData = {
   id: 1,
   group_id: 1,
