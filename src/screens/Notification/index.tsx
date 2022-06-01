@@ -124,7 +124,10 @@ const Notification = () => {
           }
           case NOTIFICATION_TYPE.COMMENT.POST_CREATOR:
           case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_POST:
-          case NOTIFICATION_TYPE.COMMENT.USER_COMMENTED_ON_POST: {
+          case NOTIFICATION_TYPE.COMMENT.USER_COMMENTED_ON_POST:
+          case NOTIFICATION_TYPE.COMMENT.POST_CREATOR_AGGREGATED:
+          case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_POST_AGGREGATED:
+          case NOTIFICATION_TYPE.COMMENT.USER_COMMENTED_ON_POST_AGGREGATED: {
             rootNavigation.navigate(homeStack.postDetail, {
               post_id: act?.id,
               noti_id: item.id,
