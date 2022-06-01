@@ -49,15 +49,13 @@ const CommentDetailContent = (props: any) => {
   const postDetailLoadingState = useKeySelector(
     postKeySelector.loadingGetPostDetail,
   );
-  const newParentId =
-    typeof parentId === 'string' ? parseInt(parentId) : parentId;
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const {
     childrenComments = [],
     newCommentData,
     viewMore = false,
     notFoundComment,
-  } = getListChildComment(comments, !!newParentId ? newParentId : commentId);
+  } = getListChildComment(comments, !!parentId ? parentId : commentId);
 
   const scrollToCommentsPosition = useKeySelector(
     postKeySelector.scrollToCommentsPosition,
@@ -360,10 +358,10 @@ const CommentLevel1 = ({
 
 const getListChildComment = (
   listData: ICommentData[],
-  parentCommentId: number,
+  parentCommentId: string,
 ) => {
   const parentCommentPosition = listData?.findIndex?.(
-    (item: ICommentData) => item.id == parentCommentId,
+    (item: ICommentData) => item.id === parentCommentId,
   );
 
   const childrenComments = listData?.[parentCommentPosition]?.child?.list || [];
