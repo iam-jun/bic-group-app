@@ -12,7 +12,7 @@ import {useBaseHook} from '~/hooks';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 export interface CommentItemProps {
-  postId: number;
+  postId: string;
   groupIds: string;
   commentData: ICommentData;
   commentParent?: ICommentData;
