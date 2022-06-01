@@ -22,14 +22,14 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import ReplyingView from './ReplyingView';
 
 export interface CommentInputViewProps {
-  postId: number;
+  postId: string;
   groupIds: string;
   autoFocus?: boolean;
   commentInputRef?: any;
   onCommentSuccess?: () => void;
   isCommentLevel1Screen?: boolean;
   showHeader?: boolean;
-  defaultReplyTargetId?: number;
+  defaultReplyTargetId?: string;
   viewMore?: boolean;
 }
 
@@ -70,18 +70,12 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   const loading = useKeySelector(postKeySelector.createComment.loading);
 
   useEffect(() => {
-    dispatch(postActions.setPostDetailReplyingComment());
+    // dispatch(postActions.setPostDetailReplyingComment());
     return () => {
       dispatch(postActions.setCreateComment({content: '', loading: false}));
       dispatch(postActions.setPostDetailReplyingComment());
     };
   }, []);
-
-  useEffect(() => {
-    //clean data when post id change, in case sometime cache data on web
-    dispatch(postActions.setCreateComment({content: '', loading: false}));
-    dispatch(postActions.setPostDetailReplyingComment());
-  }, [postId]);
 
   useEffect(() => {
     if (replyTargetUserId && replyTargetUser?.username) {
