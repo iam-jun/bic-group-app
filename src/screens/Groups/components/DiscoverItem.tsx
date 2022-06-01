@@ -1,10 +1,10 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
+import i18next from 'i18next';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import ButtonDiscoverItemAction from './ButtonDiscoverItemAction';
-import {useBaseHook} from '~/hooks';
 import privacyTypes from '~/constants/privacyTypes';
 import Icon from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
@@ -25,7 +25,6 @@ const DiscoverItem = ({
   onPressJoin,
   onPressCancel,
 }: DiscoverItemProps) => {
-  const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyles(theme);
@@ -75,7 +74,7 @@ const DiscoverItem = ({
             tintColor={colors.textSecondary}
           />
           <Text.BodyS color={colors.textSecondary}>{user_count}</Text.BodyS>
-          <Text.BodyS color={colors.textSecondary}>{` ${t(
+          <Text.BodyS color={colors.textSecondary}>{` ${i18next.t(
             'groups:text_members',
             {
               count: user_count,

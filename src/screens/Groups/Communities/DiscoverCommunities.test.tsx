@@ -14,6 +14,7 @@ describe('DiscoverCommunities Screen', () => {
           loading: false,
           canLoadMore: true,
           list: [],
+          items: {},
         },
       },
     };
@@ -38,15 +39,14 @@ describe('DiscoverCommunities Screen', () => {
         discoverCommunities: {
           loading: false,
           canLoadMore: true,
-          list: [communityDetailData],
+          list: [communityDetailData.id],
+          items: {[communityDetailData.id]: communityDetailData},
         },
       },
     };
     const store = createTestStore(storeData);
     const wrapper = renderWithRedux(<DiscoverCommunities />, store);
-    const commItem = wrapper.queryByTestId(
-      `community_${communityDetailData.id}`,
-    );
+    const commItem = wrapper.queryByTestId(`discover_communities_item_0`);
     expect(commItem).not.toBeNull();
   });
 
@@ -57,7 +57,8 @@ describe('DiscoverCommunities Screen', () => {
         discoverCommunities: {
           loading: false,
           canLoadMore: true,
-          list: [communityDetailData],
+          list: [communityDetailData.id],
+          items: {[communityDetailData.id]: communityDetailData},
         },
       },
     };
@@ -75,6 +76,7 @@ describe('DiscoverCommunities Screen', () => {
           loading: false,
           canLoadMore: true,
           list: [],
+          items: {},
         },
       },
     };

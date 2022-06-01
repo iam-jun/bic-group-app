@@ -5,7 +5,7 @@ import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
 import getDiscoverCommunities from './getDiscoverCommunities';
 import groupsActions from '../actions';
-import {discoverCommunity} from '~/test/mock_data/communities';
+import {communityDetailData} from '~/test/mock_data/communities';
 
 describe('getDiscoverCommunities saga', () => {
   const action = {type: 'test'};
@@ -20,7 +20,7 @@ describe('getDiscoverCommunities saga', () => {
         },
       },
     };
-    const resp = {data: [discoverCommunity]};
+    const resp = {data: [communityDetailData]};
 
     return expectSaga(getDiscoverCommunities, action)
       .withState(state)
@@ -32,8 +32,8 @@ describe('getDiscoverCommunities saga', () => {
         groupsActions.setDiscoverCommunities({
           loading: false,
           canLoadMore: false,
-          list: [discoverCommunity.id],
-          items: {1: discoverCommunity},
+          list: [communityDetailData.id],
+          items: {[communityDetailData.id]: communityDetailData},
         }),
       )
       .run()
