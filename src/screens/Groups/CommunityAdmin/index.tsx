@@ -77,8 +77,8 @@ const CommunityAdmin = () => {
         settings:title_community_settings
       </Text.Body>
       <MenuItem
-        testID="community_admin.general_info"
-        title="settings:title_general_information"
+        testID="community_admin.profile_info"
+        title="settings:title_profile_info"
         icon="Cog"
         iconProps={{icon: 'Cog', tintColor: theme.colors.primary6}}
         rightSubIcon="AngleRightB"
