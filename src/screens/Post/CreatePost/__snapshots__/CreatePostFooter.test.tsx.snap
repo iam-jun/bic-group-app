@@ -761,25 +761,7 @@ exports[`CreatePostFooter component renders correctly 1`] = `
     </View>
   </View>
   <View
-    animatedStyle={
-      Object {
-        "value": Object {
-          "left": 0,
-          "opacity": 0,
-          "position": "absolute",
-          "right": 0,
-        },
-      }
-    }
-    collapsable={false}
-    style={
-      Object {
-        "left": 0,
-        "opacity": 0,
-        "position": "absolute",
-        "right": 0,
-      }
-    }
+    style={[Function]}
     testID="create_post_footer.mention_bar_container"
   />
 </View>

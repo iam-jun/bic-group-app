@@ -26,10 +26,10 @@ import CommentPlaceholder from '~/beinComponents/placeholder/CommentPlaceholder'
 export interface LoadMoreCommentProps {
   style?: StyleProp<ViewStyle>;
   title: string;
-  postId: number;
-  commentId?: number;
-  idLessThan?: number;
-  idGreaterThan?: number;
+  postId: string;
+  commentId?: string;
+  idLessThan?: string;
+  idGreaterThan?: string;
   onPress?: () => void;
 }
 
@@ -85,8 +85,8 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
             postActions.getCommentsByPostId({
               postId: postId,
               order: 'DESC',
-              idLT: idLessThan,
-              idGT: idGreaterThan,
+              idLt: idLessThan,
+              idGt: idGreaterThan,
               parentId: commentId,
               limit: 10,
               isMerge: true,
@@ -98,7 +98,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
         dispatch(
           postActions.getCommentsByPostId({
             postId: postId,
-            idLT: idLessThan,
+            idLt: idLessThan,
             parentId: commentId,
             limit: commentId ? 3 : 10,
             isMerge: true,
@@ -129,7 +129,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme, commentId?: number) => {
+const createStyle = (theme: ITheme, commentId?: string) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {

@@ -21,7 +21,6 @@ import API_ERROR_CODE from '~/constants/apiErrorCode';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import LoadMoreComment from '../components/LoadMoreComment';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import {parseInt} from 'lodash';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -49,15 +48,13 @@ const CommentDetailContent = (props: any) => {
   const postDetailLoadingState = useKeySelector(
     postKeySelector.loadingGetPostDetail,
   );
-  const newParentId =
-    typeof parentId === 'string' ? parseInt(parentId) : parentId;
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const {
     childrenComments = [],
     newCommentData,
     viewMore = false,
     notFoundComment,
-  } = getListChildComment(comments, !!newParentId ? newParentId : commentId);
+  } = getListChildComment(comments, !!parentId ? parentId : commentId);
 
   const scrollToCommentsPosition = useKeySelector(
     postKeySelector.scrollToCommentsPosition,
@@ -263,7 +260,7 @@ const CommentDetailContent = (props: any) => {
           title={'post:text_load_more_replies'}
           postId={id}
           idGreaterThan={lastItem?.id}
-          commentId={parseInt(_parentId || '0')}
+          commentId={_parentId}
         />
       );
     } else return <ViewSpacing height={12} />;
@@ -360,10 +357,10 @@ const CommentLevel1 = ({
 
 const getListChildComment = (
   listData: ICommentData[],
-  parentCommentId: number,
+  parentCommentId: string,
 ) => {
   const parentCommentPosition = listData?.findIndex?.(
-    (item: ICommentData) => item.id == parentCommentId,
+    (item: ICommentData) => item.id === parentCommentId,
   );
 
   const childrenComments = listData?.[parentCommentPosition]?.child?.list || [];

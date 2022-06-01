@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react';
 import {act, render, cleanup, fireEvent} from '@testing-library/react-native';
 import {renderHook} from '@testing-library/react-hooks';
@@ -10,6 +11,9 @@ import {
   advanceAnimationByFrame,
   getAnimatedStyle,
 } from 'react-native-reanimated/src/reanimated2/jestUtils';
+
+// WARNING: Don't remove this import
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Store from '~/store';
 
 import {applyMiddleware, compose, createStore} from 'redux';
@@ -50,6 +54,15 @@ const getHookReduxWrapper = (store = createTestStore()) => {
   return wrapper;
 };
 
+// must use React.useState
+const setHookTestState = newState => {
+  const setStateMockFn = () => {};
+  return Object.keys(newState).reduce((acc, val) => {
+    acc = acc?.mockImplementationOnce(() => [newState[val], setStateMockFn]);
+    return acc;
+  }, jest.fn());
+};
+
 export * from '@testing-library/react-native';
 export {
   defaultStore as store,
@@ -66,4 +79,5 @@ export {
   waitForUpdateRedux,
   renderHook,
   getHookReduxWrapper,
+  setHookTestState,
 };

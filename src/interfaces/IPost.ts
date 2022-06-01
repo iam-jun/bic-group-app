@@ -7,7 +7,7 @@ export interface IPostAudience {
 }
 
 export interface IAudienceUser {
-  id?: string;
+  id?: number;
   username?: string;
   fullname?: string;
   avatar?: string;
@@ -257,10 +257,10 @@ export interface IRequestGetPostComment {
   order?: 'ASC' | 'DESC';
   limit?: number;
   offset?: number;
-  idGTE?: number;
-  idLTE?: number;
-  idLT?: number;
-  idGT?: number;
+  idGte?: string;
+  idLte?: string;
+  idLt?: string;
+  idGt?: string;
   postId: string;
   parentId?: string;
   childLimit?: number;
@@ -428,10 +428,10 @@ export interface IParamGetDraftPosts {
   order?: 'ASC';
   offset?: number;
   limit?: number;
-  idGTE?: number;
-  idLTE?: number;
-  idGT?: number;
-  idLT?: number;
+  idGte?: string;
+  idLte?: string;
+  idGt?: string;
+  idLt?: string;
 }
 
 export interface IPayloadGetDraftPosts {

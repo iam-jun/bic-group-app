@@ -43,9 +43,9 @@ import {useBaseHook} from '~/hooks';
 import actions from '~/beinComponents/inputs/MentionInput/redux/actions';
 
 export interface CommentViewProps {
-  postId: number;
+  postId: string;
   groupIds: string;
-  parentCommentId?: number;
+  parentCommentId?: string;
   commentData: ICommentData;
   onPressReply: (data: IReaction) => void;
   contentBackgroundColor?: string;
