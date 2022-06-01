@@ -11,7 +11,7 @@ import loadMore from './loadMore';
 import markAsUnRead from './markAsUnRead';
 
 export default function* notificationsSaga() {
-  yield takeLatest(notificationsTypes.GET_NOTIFICATIONS, getNotifications);
+  yield takeEvery(notificationsTypes.GET_NOTIFICATIONS, getNotifications);
   yield takeLatest(notificationsTypes.MARK_AS_READ_ALL, markAsReadAll);
   yield takeLatest(notificationsTypes.MARK_AS_SEEN_ALL, markAsSeenAll);
   yield takeLatest(notificationsTypes.MARK_AS_READ, markAsRead);

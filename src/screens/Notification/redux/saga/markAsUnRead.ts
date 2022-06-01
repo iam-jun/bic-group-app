@@ -21,7 +21,7 @@ function* markAsUnRead({payload}: {payload: any; type: string}): any {
       const _data = value?.data || [];
       if (key === 'UNREAD') {
         const newData = _data.filter((item: any) => item?.id !== payload?.id);
-        newData.push(payload);
+        newData.push({...payload, isRead: false});
         const dataSorted = sortNotifications(newData);
         newNotifications[key] = {...value, data: dataSorted};
       } else {

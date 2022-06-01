@@ -52,13 +52,13 @@ const NotificationList = ({onItemPress, type, onPressItemOption}: Props) => {
   );
 
   useEffect(() => {
-    console.log('useEffect1111111', type);
-    //@ts-ignore
-    dispatch(notificationsActions.getNotifications({flag: type}));
+    if (notificationList?.length < 1) {
+      //@ts-ignore
+      dispatch(notificationsActions.getNotifications({flag: type}));
+    }
   }, []);
 
   const refreshListNotification = () => {
-    console.log('refreshListNotification', type);
     //@ts-ignore
     dispatch(notificationsActions.getNotifications({flag: type}));
   };
@@ -66,7 +66,6 @@ const NotificationList = ({onItemPress, type, onPressItemOption}: Props) => {
   // load more notification handler
   const loadMoreNotifications = () => {
     if (!noMoreNotification && !isLoadingMore) {
-      console.log('loadMoreNotifications type>>>>>>>>>>>>>>>>>', type);
       //@ts-ignore
       dispatch(notificationsActions.loadMore({flag: type}));
     }

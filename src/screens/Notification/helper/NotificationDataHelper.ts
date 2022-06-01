@@ -26,9 +26,9 @@ export const notificationApiConfig = {
       useRetry: true,
     };
   },
-  putMarkAllAsRead: (): HttpApiRequestConfig => {
+  putMarkAllAsRead: (flag: string): HttpApiRequestConfig => {
     return {
-      url: `${ApiConfig.providers.beinNotification.url}notifications/mark-read`,
+      url: `${ApiConfig.providers.beinNotification.url}notifications/mark-read/${flag}`,
       method: 'put',
       provider: ApiConfig.providers.beinNotification,
       useRetry: true,
@@ -89,7 +89,7 @@ const notificationsDataHelper = {
       const response: any = await makeHttpRequest(
         notificationApiConfig.getNotifications({
           limit,
-          idGTE: fromNotiGroupId,
+          idGte: fromNotiGroupId,
         }),
       );
       if (response && response?.data?.data) {
@@ -131,10 +131,10 @@ const notificationsDataHelper = {
     return {filteredNotis, userHisOwnNotiCount};
   },
 
-  markAsReadAll: async () => {
+  markAsReadAll: async (flag: string) => {
     try {
       const response: any = await makeHttpRequest(
-        notificationApiConfig.putMarkAllAsRead(),
+        notificationApiConfig.putMarkAllAsRead(flag),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

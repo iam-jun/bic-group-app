@@ -8,56 +8,43 @@ import notificationsDataHelper from '../../helper/NotificationDataHelper';
 import notificationsActions from '../actions';
 import notificationSelector from '../selector';
 
-function* markAsReadAll({payload}: {payload: string; type: string}) {
+function* markAsReadAll({payload}: {payload: string; type: string}): any {
   try {
     // send request to Getstream to mark notification as read without waiting response
-    yield call(notificationsDataHelper.markAsReadAll);
+    yield call(notificationsDataHelper.markAsReadAll, payload);
 
-    if (payload === 'UNREAD') {
-      const noMoreNotification: boolean = yield select(state =>
-        get(state, notificationSelector.noMoreNotification),
-      );
-      yield put(
-        notificationsActions.setNotifications({
-          notifications: [],
-          unseen: 0, // hardcode because we re-use setNotifications function
-        }),
-      );
-      if (!noMoreNotification) {
-        yield put(notificationsActions.getNotifications({flag: 'UNREAD'}));
+    // get all notifications from store
+    const notifications: IObject<any> =
+      cloneDeep(
+        yield select(state => get(state, notificationSelector.notifications)),
+      ) || {};
+
+    const newNotifications: any = {};
+    for (const [key, value] of Object.entries(notifications)) {
+      const _data = value?.data || [];
+      if (key === 'UNREAD') {
+        newNotifications[key] = {...value, data: []};
       } else {
-        yield put(notificationsActions.setNoMoreNoti(true));
+        // then set mapped notificaton's is_read field by true to un-highlight it directly on device store
+        _data.forEach((item: any) => {
+          item.isRead = true;
+        });
+        newNotifications[key] = {...value, data: _data};
       }
-    } else {
-      // get all notifications from store
-      const notifications: IObject<any> =
-        cloneDeep(
-          yield select(state => get(state, notificationSelector.notifications)),
-        ) || [];
-
-      // then set theirs is_read field by true to un-highlight them directly on device store
-      notifications.forEach((item: any) => {
-        item.isRead = true;
-      });
-
-      // finally, set notification back to store,
-      yield put(
-        notificationsActions.setNotifications({
-          notifications: notifications,
-          unseen: 0, // hardcode because we re-use setNotifications function
-        }),
-      );
-
-      yield put(
-        modalActions.showHideToastMessage({
-          content: 'notification:mark_all_as_read_success',
-          props: {
-            textProps: {useI18n: true},
-            type: 'success',
-          },
-        }),
-      );
     }
+
+    // finally, set notification back to store,
+    yield put(notificationsActions.setAllNotifications(newNotifications));
+
+    yield put(
+      modalActions.showHideToastMessage({
+        content: 'notification:mark_all_as_read_success',
+        props: {
+          textProps: {useI18n: true},
+          type: 'success',
+        },
+      }),
+    );
   } catch (err) {
     console.log('\x1b[33m', 'notification markAsReadAll error', err, '\x1b[0m');
     yield showError(err);

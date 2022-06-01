@@ -24,7 +24,6 @@ function* getNotifications({
       notificationsDataHelper.getNotificationList,
       payload || {},
     );
-    console.log('111111111111111111', flag);
 
     if (flag === 'UNREAD' && response?.results?.length < 1) {
       yield put(groupsActions.getMyCommunities({}));
@@ -43,7 +42,6 @@ function* getNotifications({
       }
     }
 
-    console.log('22222222222222222', flag);
     yield put(
       notificationsActions.setNotifications({
         flag: flag,
@@ -51,7 +49,6 @@ function* getNotifications({
         unseen: response.unseen,
       }),
     );
-    console.log('3333333333333333', flag);
     yield put(
       notificationsActions.setLoadingNotifications({flag, value: false}),
     );
