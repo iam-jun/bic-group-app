@@ -12,8 +12,8 @@ function* markAsSeenAll() {
     yield call(notificationsDataHelper.markAsSeenAll);
 
     // get all notifications from store
-    const notifications: IObject<any> = yield select(state =>
-      get(state, notificationSelector.notifications),
+    const notifications: any[] = yield select(state =>
+      get(state, notificationSelector.notificationByType('ALL')),
     ) || [];
 
     // then set theirs is_seen field by true
@@ -24,7 +24,8 @@ function* markAsSeenAll() {
     // finally, set notification back to store, and set unseen number to 0 without using Getstream response
     yield put(
       notificationsActions.setNotifications({
-        notifications: notifications,
+        flag: 'ALL',
+        data: notifications,
         unseen: 0,
       }),
     );

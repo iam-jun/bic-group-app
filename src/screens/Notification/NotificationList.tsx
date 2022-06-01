@@ -28,26 +28,19 @@ const NotificationList = ({onItemPress, type, onPressItemOption}: Props) => {
   const listRef = useRef<any>();
 
   const dispatch = useDispatch();
-  const isFocused = useIsFocused();
 
-  const notificationData = useKeySelector(
+  const notificationList = useKeySelector(
     notificationSelector.notificationByType(type),
   );
-  const isLoadingMore = notificationData?.isLoadingMore;
-  const loadingNotifications = notificationData?.loading;
-  const noMoreNotification = notificationData?.noMoreData;
-  const notificationList = notificationData?.data || [];
-  const showNoNotification = notificationList.length === 0;
-
-  const [currentPath, setCurrentPath] = useState('');
-
-  useEffect(() => {
-    if (!isFocused) setCurrentPath('');
-
-    if (isFocused) {
-      dispatch(notificationsActions.markAsSeenAll());
-    }
-  }, [isFocused]);
+  const isLoadingMore = useKeySelector(
+    notificationSelector.isLoadingMore(type),
+  );
+  const loadingNotifications = useKeySelector(
+    notificationSelector.isLoading(type),
+  );
+  const noMoreNotification = useKeySelector(
+    notificationSelector.noMoreNotification(type),
+  );
 
   useTabPressListener(
     (tabName: ITabTypes) => {
@@ -58,7 +51,14 @@ const NotificationList = ({onItemPress, type, onPressItemOption}: Props) => {
     [listRef],
   );
 
+  useEffect(() => {
+    console.log('useEffect1111111', type);
+    //@ts-ignore
+    dispatch(notificationsActions.getNotifications({flag: type}));
+  }, []);
+
   const refreshListNotification = () => {
+    console.log('refreshListNotification', type);
     //@ts-ignore
     dispatch(notificationsActions.getNotifications({flag: type}));
   };
@@ -66,6 +66,7 @@ const NotificationList = ({onItemPress, type, onPressItemOption}: Props) => {
   // load more notification handler
   const loadMoreNotifications = () => {
     if (!noMoreNotification && !isLoadingMore) {
+      console.log('loadMoreNotifications type>>>>>>>>>>>>>>>>>', type);
       //@ts-ignore
       dispatch(notificationsActions.loadMore({flag: type}));
     }
@@ -75,18 +76,21 @@ const NotificationList = ({onItemPress, type, onPressItemOption}: Props) => {
   const styles = themeStyles(theme);
 
   const renderListFooter = () => {
-    return (
-      <View style={styles.listFooter}>
-        {!noMoreNotification && isLoadingMore && (
-          <ActivityIndicator color={theme.colors.bgFocus} />
-        )}
-        {noMoreNotification && (
-          <Text.Subtitle color={theme.colors.textSecondary}>
-            {i18n.t('notification:no_more_notification')}
-          </Text.Subtitle>
-        )}
-      </View>
-    );
+    if (notificationList?.length > 0) {
+      return (
+        <View style={styles.listFooter}>
+          {!noMoreNotification && isLoadingMore && (
+            <ActivityIndicator color={theme.colors.bgFocus} />
+          )}
+          {noMoreNotification && (
+            <Text.Subtitle color={theme.colors.textSecondary}>
+              {i18n.t('notification:no_more_notification')}
+            </Text.Subtitle>
+          )}
+        </View>
+      );
+    }
+    return null;
   };
 
   const renderItem = ({item, index}: {item: any; index: number}) => {
@@ -105,29 +109,23 @@ const NotificationList = ({onItemPress, type, onPressItemOption}: Props) => {
   };
 
   const renderUnReadNotificationsEmpty = () => {
-    return (
-      <View style={styles.unReadNotifications}>
-        <Icon icon="CheckCircle" size={40} tintColor={theme.colors.success} />
-        <Text.Subtitle useI18n style={{marginTop: theme.spacing.margin.base}}>
-          notification:seen_all_notifications
-        </Text.Subtitle>
-      </View>
-    );
+    if (type === 'UNREAD' && noMoreNotification) {
+      return (
+        <View style={styles.unReadNotifications}>
+          <Icon icon="CheckCircle" size={40} tintColor={theme.colors.success} />
+          <Text.Subtitle useI18n style={{marginTop: theme.spacing.margin.base}}>
+            notification:seen_all_notifications
+          </Text.Subtitle>
+        </View>
+      );
+    } else {
+      return <NoNotificationFound />;
+    }
   };
 
   return (
     <View style={{flex: 1}}>
-      {!loadingNotifications &&
-      showNoNotification &&
-      noMoreNotification &&
-      type === 'UNREAD' ? (
-        renderUnReadNotificationsEmpty()
-      ) : showNoNotification && !loadingNotifications ? (
-        <NoNotificationFound />
-      ) : loadingNotifications ? (
-        <ActivityIndicator color={theme.colors.bgFocus} />
-      ) : null}
-      {!showNoNotification && !loadingNotifications && (
+      {!loadingNotifications ? (
         <ListView
           listRef={listRef}
           style={styles.list}
@@ -140,10 +138,12 @@ const NotificationList = ({onItemPress, type, onPressItemOption}: Props) => {
           data={notificationList}
           onRefresh={refreshListNotification}
           refreshing={loadingNotifications}
+          ListEmptyComponent={renderUnReadNotificationsEmpty()}
           onLoadMore={() => loadMoreNotifications()}
           ListFooterComponent={renderListFooter}
-          currentPath={currentPath}
         />
+      ) : (
+        <ActivityIndicator color={theme.colors.bgFocus} />
       )}
     </View>
   );

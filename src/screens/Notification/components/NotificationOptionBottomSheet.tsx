@@ -29,7 +29,7 @@ const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
     if (!data?.isRead) {
       dispatch(notificationsActions.markAsRead({id: data?.id || '', flag}));
     } else {
-      dispatch(notificationsActions.markAsUnRead(data?.id || ''));
+      dispatch(notificationsActions.markAsUnRead(data));
     }
     modalizeRef.current?.close();
   };

@@ -11,16 +11,16 @@ export const notificationMenuData = [
     type: 'UNREAD',
     key: 'UNREAD',
   },
-  {
-    id: 3,
-    text: 'notification:text_mention',
-    type: 'MENTION',
-    key: 'MENTION',
-  },
-  {
-    id: 4,
-    text: 'notification:text_important',
-    type: 'IMPORTANT',
-    key: 'IMPORTANT',
-  },
+  // {
+  //   id: 3,
+  //   text: 'notification:text_mention',
+  //   type: 'MENTION',
+  //   key: 'MENTION',
+  // },
+  // {
+  //   id: 4,
+  //   text: 'notification:text_important',
+  //   type: 'IMPORTANT',
+  //   key: 'IMPORTANT',
+  // },
 ];

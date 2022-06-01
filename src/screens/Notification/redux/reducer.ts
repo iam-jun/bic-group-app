@@ -39,11 +39,20 @@ export const notiInitState = {
 function notificationsReducer(state = notiInitState, action: any = {}) {
   const {type, payload} = action;
   switch (type) {
-    case notificationsTypes.SET_LOADING_NOTIFICATIONS:
+    case notificationsTypes.SET_LOADING_NOTIFICATIONS: {
+      const {flag, value}: any = payload;
+      if (!!flag) {
+        const newNotifications = {...state.notificationList};
+        newNotifications[flag].loading = value;
+        return {
+          ...state,
+          notificationList: {...newNotifications},
+        };
+      }
       return {
         ...state,
-        loadingNotifications: payload,
       };
+    }
     case notificationsTypes.SET_NOTIFICATIONS: {
       const {flag, data, unseen}: IParamSetNotifications = payload;
       if (!!flag && data && Array.isArray(data)) {
@@ -97,15 +106,38 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
         //   payload.notifications || [],
         // ),
       };
-    case notificationsTypes.SET_NO_MORE_NOTIFICATION:
+    case notificationsTypes.SET_NO_MORE_NOTIFICATION: {
+      const {flag, value}: any = payload;
+      if (!!flag) {
+        const newNotifications = {...state.notificationList};
+        newNotifications[flag].noMoreData = value;
+        return {
+          ...state,
+          notificationList: {...newNotifications},
+        };
+      }
       return {
         ...state,
-        noMoreNotification: payload,
       };
+    }
     case notificationsTypes.SET_IS_LOADING_MORE: {
+      const {flag, value}: any = payload;
+      if (!!flag) {
+        const newNotifications = {...state.notificationList};
+        newNotifications[flag].isLoadingMore = value;
+        return {
+          ...state,
+          notificationList: {...newNotifications},
+        };
+      }
       return {
         ...state,
-        isLoadingMore: payload,
+      };
+    }
+    case notificationsTypes.SET_ALL_NOTIFICATIONS: {
+      return {
+        ...state,
+        notificationList: {...payload},
       };
     }
     case notificationsTypes.SAVE_PUSH_TOKEN: {

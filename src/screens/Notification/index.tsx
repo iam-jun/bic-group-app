@@ -55,12 +55,12 @@ const Notification = () => {
     [listRef],
   );
 
-  useEffect(() => {
-    const flag = notificationMenuData[navigationState.index]?.type || 'ALL';
-    //@ts-ignore
-    dispatch(notificationsActions.getNotifications({flag: flag}));
-    listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
-  }, [selectedIndex]);
+  // useEffect(() => {
+  //   const flag = notificationMenuData[navigationState.index]?.type || 'ALL';
+  //   //@ts-ignore
+  //   dispatch(notificationsActions.getNotifications({flag: flag}));
+  //   listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
+  // }, [selectedIndex]);
 
   const onPressFilterItem = (item: any, index: number) => {
     // setSelectedIndex(index);
@@ -213,36 +213,44 @@ const Notification = () => {
     );
   };
 
-  const renderScreen = SceneMap({
-    ALL: () => (
-      <NotificationList
-        onItemPress={onItemPress}
-        type="ALL"
-        onPressItemOption={onPressItemOption}
-      />
-    ),
-    UNREAD: () => (
-      <NotificationList
-        onItemPress={onItemPress}
-        type="UNREAD"
-        onPressItemOption={onPressItemOption}
-      />
-    ),
-    MENTION: () => (
-      <NotificationList
-        onItemPress={onItemPress}
-        type="MENTION"
-        onPressItemOption={onPressItemOption}
-      />
-    ),
-    IMPORTANT: () => (
-      <NotificationList
-        onItemPress={onItemPress}
-        type="IMPORTANT"
-        onPressItemOption={onPressItemOption}
-      />
-    ),
-  });
+  const renderScreen = ({route}: any) => {
+    switch (route?.key) {
+      case 'ALL':
+        return (
+          <NotificationList
+            onItemPress={onItemPress}
+            type="ALL"
+            onPressItemOption={onPressItemOption}
+          />
+        );
+      case 'UNREAD':
+        return (
+          <NotificationList
+            onItemPress={onItemPress}
+            type="UNREAD"
+            onPressItemOption={onPressItemOption}
+          />
+        );
+      case 'MENTION':
+        return (
+          <NotificationList
+            onItemPress={onItemPress}
+            type="MENTION"
+            onPressItemOption={onPressItemOption}
+          />
+        );
+      case 'IMPORTANT':
+        return (
+          <NotificationList
+            onItemPress={onItemPress}
+            type="IMPORTANT"
+            onPressItemOption={onPressItemOption}
+          />
+        );
+      default:
+        return null;
+    }
+  };
 
   return (
     <ScreenWrapper testID="NotfiticationScreen" isFullView>

@@ -9,9 +9,10 @@ import notificationSelector from '../selector';
 
 // load more old notifications
 function* loadMore({payload}: {payload: IParamGetNotifications; type: string}) {
+  const {flag = 'ALL'} = payload || {};
   try {
     // show loading more spinner, set isLoadingMore = true
-    yield put(notificationsActions.setIsLoadingMore(true));
+    yield put(notificationsActions.setIsLoadingMore({flag, value: true}));
 
     // get all notifications from store
     const notifications: IObject<any> =
@@ -21,13 +22,13 @@ function* loadMore({payload}: {payload: IParamGetNotifications; type: string}) {
     const response: IObject<any> = yield call(
       notificationsDataHelper.getNotificationList,
       {
-        offset: notifications.length + 1,
+        offset: (notifications[flag]?.data?.length || 0) + 1,
         ...payload,
       },
     );
 
     // hide loading more spinner, set isLoadingMore = false
-    yield put(notificationsActions.setIsLoadingMore(false));
+    yield put(notificationsActions.setIsLoadingMore({flag, value: false}));
 
     // add loaded notification to bottom of current notification list
     // set noMoreNotification = true if loaded notification is empty
@@ -39,10 +40,10 @@ function* loadMore({payload}: {payload: IParamGetNotifications; type: string}) {
         }),
       );
     } else {
-      yield put(notificationsActions.setNoMoreNoti(true));
+      yield put(notificationsActions.setNoMoreNoti({flag, value: true}));
     }
   } catch (err) {
-    yield put(notificationsActions.setIsLoadingMore(false));
+    yield put(notificationsActions.setIsLoadingMore({flag, value: false}));
     console.log('\x1b[33m', '--- load more : error', err, '\x1b[0m');
   }
 }

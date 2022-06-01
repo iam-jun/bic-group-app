@@ -15,13 +15,17 @@ function* getNotifications({
 }) {
   try {
     const {flag = 'ALL'} = payload || {};
-    yield put(notificationsActions.setLoadingNotifications(true));
-    yield put(notificationsActions.setNoMoreNoti(false));
+    yield put(
+      notificationsActions.setLoadingNotifications({flag, value: true}),
+    );
+    yield put(notificationsActions.setNoMoreNoti({flag, value: false}));
 
     const response: IObject<any> = yield call(
       notificationsDataHelper.getNotificationList,
       payload || {},
     );
+    console.log('111111111111111111', flag);
+
     if (flag === 'UNREAD' && response?.results?.length < 1) {
       yield put(groupsActions.getMyCommunities({}));
       yield timeOut(500);
@@ -34,11 +38,12 @@ function* getNotifications({
           {flag: 'ALL'},
         );
         if (_response?.results?.length > 1) {
-          yield put(notificationsActions.setNoMoreNoti(true));
+          yield put(notificationsActions.setNoMoreNoti({flag, value: true}));
         }
       }
     }
 
+    console.log('22222222222222222', flag);
     yield put(
       notificationsActions.setNotifications({
         flag: flag,
@@ -46,9 +51,17 @@ function* getNotifications({
         unseen: response.unseen,
       }),
     );
-    yield put(notificationsActions.setLoadingNotifications(false));
+    console.log('3333333333333333', flag);
+    yield put(
+      notificationsActions.setLoadingNotifications({flag, value: false}),
+    );
   } catch (err) {
-    yield put(notificationsActions.setLoadingNotifications(false));
+    yield put(
+      notificationsActions.setLoadingNotifications({
+        flag: payload.flag,
+        value: false,
+      }),
+    );
     console.log(`\x1b[31m🐣️ saga getNotifications err: `, err, `\x1b[0m`);
   }
 }
