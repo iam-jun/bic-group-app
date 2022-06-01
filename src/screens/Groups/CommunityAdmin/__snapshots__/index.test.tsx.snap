@@ -14,33 +14,30 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
     testID="header"
   >
     <View
-      animatedStyle={
-        Object {
-          "value": Object {
-            "height": 60,
-          },
-        }
-      }
-      collapsable={false}
       style={
-        Object {
-          "alignItems": "flex-end",
-          "backgroundColor": "#FFFFFF",
-          "borderBottomWidth": 0.5,
-          "borderColor": "#EAEDF2",
-          "elevation": 2,
-          "flexDirection": "row",
-          "height": 60,
-          "overflow": "hidden",
-          "paddingTop": 0,
-          "shadowColor": "#000",
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
+        Array [
+          [Function],
+          Object {
+            "alignItems": "flex-end",
+            "backgroundColor": "#FFFFFF",
+            "flexDirection": "row",
+            "overflow": "hidden",
+            "paddingTop": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
-        }
+          Object {
+            "borderBottomWidth": 0.5,
+            "borderColor": "#EAEDF2",
+            "elevation": 2,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.1,
+            "shadowRadius": 1,
+          },
+          undefined,
+        ]
       }
       testID="header.content"
     >
@@ -167,20 +164,17 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
           </View>
         </View>
         <View
-          animatedStyle={
-            Object {
-              "value": Object {},
-            }
-          }
-          collapsable={false}
           style={
-            Object {
-              "flex": 1,
-              "height": "100%",
-              "justifyContent": "center",
-              "marginLeft": 16,
-              "paddingTop": 1.5,
-            }
+            Array [
+              Object {
+                "flex": 1,
+                "height": "100%",
+                "justifyContent": "center",
+                "marginLeft": 16,
+                "paddingTop": 1.5,
+              },
+              Object {},
+            ]
           }
         />
       </View>
@@ -932,7 +926,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
             "opacity": 1,
           }
         }
-        testID="community_admin.general_info"
+        testID="community_admin.profile_info"
       >
         <View
           style={
@@ -1072,7 +1066,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
               }
               testID="menu_item.title"
             >
-              General Information
+              Profile Info
             </Text>
           </View>
           <View
