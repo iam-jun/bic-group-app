@@ -117,6 +117,7 @@ export const groupInitState = {
     canLoadMore: true,
   },
   communityMemberRequests: {
+    total: 0,
     loading: false,
     canLoadMore: true,
     data: [],

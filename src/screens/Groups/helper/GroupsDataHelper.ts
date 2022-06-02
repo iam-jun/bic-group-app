@@ -730,7 +730,7 @@ const groupsDataHelper = {
         groupsApiConfig.getCommunityMemberRequests(communityId, params),
       );
       if (response && response?.data?.data) {
-        return Promise.resolve(response?.data?.data);
+        return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);
       }
