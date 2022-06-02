@@ -56,10 +56,8 @@ const Communities: React.FC = () => {
     setSelectedIndex(2);
   };
 
-  const onPressCommunities = (item: ICommunity) => {
-    rootNavigation.navigate(groupStack.communityDetail, {
-      communityId: item?.id || 0,
-    });
+  const onPressCommunities = (communityId: number) => {
+    rootNavigation.navigate(groupStack.communityDetail, {communityId});
   };
 
   const renderContent = () => {

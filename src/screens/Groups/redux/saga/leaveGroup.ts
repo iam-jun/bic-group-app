@@ -11,6 +11,7 @@ import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import showError from '~/store/commonSaga/showError';
+import groupJoinStatus from '~/constants/groupJoinStatus';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -30,7 +31,7 @@ export default function* leaveGroup({
     yield put(
       groupsActions.editDiscoverGroupItem({
         id: payload,
-        data: {join_status: 1},
+        data: {join_status: groupJoinStatus.visitor},
       }),
     );
 
