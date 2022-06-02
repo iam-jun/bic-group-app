@@ -19,6 +19,7 @@ import groupsKeySelector from '../../redux/keySelector';
 import Text from '~/beinComponents/Text';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import Divider from '~/beinComponents/Divider';
+import CommunityMemberRequest from './CommunityMemberRequest';
 
 const CommunityPendingMembers = () => {
   const theme = useTheme() as ITheme;
@@ -30,12 +31,9 @@ const CommunityPendingMembers = () => {
   );
 
   useEffect(() => {
-    getData();
-    dispatch(groupsActions.getCommunityDetail(communityId)); // need to update total pending requests
-
+    // No need to get data here since we already did it in admin screen
     return () => {
-      resetData();
-      dispatch(groupsActions.getCommunityDetail(communityId));
+      getData(); // to update the total member requests again on press back
     };
   }, [communityId]);
 
@@ -79,8 +77,7 @@ const CommunityPendingMembers = () => {
   };
 
   const renderItem = ({item}: {item: number}) => {
-    const currentItem = items[item];
-    // return <PendingUserItem requestId={item} />;
+    return <CommunityMemberRequest requestId={item} />;
   };
 
   const renderListFooter = () => {

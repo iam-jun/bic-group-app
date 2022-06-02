@@ -1,5 +1,5 @@
 import {StyleSheet, View} from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -14,14 +14,26 @@ import Text from '~/beinComponents/Text';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import modalActions from '~/store/modal/actions';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupsActions from '../redux/actions';
 
 const CommunityAdmin = () => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
+  const {
+    id: communityId,
+    name,
+    icon,
+  } = useKeySelector(groupsKeySelector.communityDetail);
+  const {total} = useKeySelector(groupsKeySelector.communityMemberRequests);
 
-  const {name, icon} = useKeySelector(groupsKeySelector.communityDetail);
+  useEffect(() => {
+    dispatch(groupsActions.getCommunityMemberRequests({communityId}));
+    return () => {
+      dispatch(groupsActions.resetCommunityMemberRequests());
+    };
+  }, [communityId]);
 
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
 
@@ -47,7 +59,7 @@ const CommunityAdmin = () => {
         title={'settings:title_pending_members'}
         icon={'UserExclamation'}
         iconProps={{icon: 'UserExclamation', tintColor: theme.colors.primary6}}
-        notificationsBadgeNumber={3}
+        notificationsBadgeNumber={total}
         notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
         rightSubIcon="AngleRightB"
         onPress={onPressPendingMembers}
