@@ -138,5 +138,5 @@ export const convertReactKeyFromResponse = (key?: string) => {
  * @param key
  */
 export const convertReactKeyForRequest = (key?: string) => {
-  return key ? decamelize(key) : '';
+  return key ? decamelize(key, {split: /(?=[A-Z0-9])/}) : '';
 };
