@@ -136,7 +136,6 @@ const Markdown = ({value, ...rest}) => {
           </TouchableOpacity>
         ),
         useAppBottomSheet: false,
-        props: {webModalStyle: {minHeight: undefined}},
       }),
     );
   };

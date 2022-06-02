@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {Platform, ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
@@ -34,7 +34,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   const styles = createStyle(theme);
 
@@ -84,7 +84,6 @@ const PostSettings = ({route}: PostSettingsProps) => {
           onConfirm: () => {
             rootNavigation.goBack();
           },
-          stretchOnWeb: true,
         }),
       );
     }
@@ -109,10 +108,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
           style={styles.buttonDate}
           onPress={() => setSelectingDate(true)}
           color={colors.bgHover}
-          textProps={{color: colors.textPrimary}}
-          contentStyle={
-            Platform.OS === 'web' ? {padding: spacing.padding.base} : {}
-          }>
+          textProps={{color: colors.textPrimary}}>
           {date}
         </Button.Secondary>
         <Button.Secondary
@@ -122,10 +118,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
           style={styles.buttonTime}
           onPress={() => setSelectingTime(true)}
           color={colors.bgHover}
-          textProps={{color: colors.textPrimary}}
-          contentStyle={
-            Platform.OS === 'web' ? {padding: spacing.padding.base} : {}
-          }>
+          textProps={{color: colors.textPrimary}}>
           {time}
         </Button.Secondary>
       </View>
@@ -197,7 +190,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
               }
               minDate={getMinDate()}
               maxDate={getMaxDate()}
-              mode={Platform.OS === 'web' ? 'time' : 'date'}
+              mode={'date'}
               onConfirm={handleChangeDatePicker}
               onCancel={handleChangeDatePicker}
               testID={'post_settings.important.date_picker'}
@@ -249,17 +242,11 @@ const createStyle = (theme: ITheme) => {
       marginRight: spacing.margin.base,
       backgroundColor: colors.bgHover,
       padding: spacing.padding.base,
-      ...Platform.select({
-        web: {padding: 0},
-      }),
     },
     buttonTime: {
       flex: 1,
       backgroundColor: colors.bgHover,
       padding: spacing.padding.base,
-      ...Platform.select({
-        web: {padding: 0},
-      }),
     },
   });
 };

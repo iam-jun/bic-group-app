@@ -37,10 +37,10 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
   const styles = createStyle(theme);
 
-  const {key, offset, limit, data, canLoadMore, loading} =
+  const {data, canLoadMore} =
     useKeySelector(homeKeySelector.newsfeedSearchUsers) || {};
 
   useEffect(() => {
@@ -63,11 +63,11 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
     return (
       <ItemWrapper onPress={() => onPressUser(item)}>
         <PrimaryItem
-          height={Platform.OS === 'web' ? 48 : 40}
+          height={40}
           title={item?.fullname}
           showAvatar
           avatar={item?.avatar}
-          avatarProps={{variant: Platform.OS === 'web' ? 'medium' : 'small'}}
+          avatarProps={{variant: 'small'}}
           style={styles.item}
           onPress={() => onPressUser(item)}
         />
@@ -115,13 +115,10 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing, dimension} = theme;
+  const {spacing, dimension} = theme;
   return StyleSheet.create({
     container: {
-      height:
-        Platform.select({web: 0.55, default: 0.5}) * dimension?.deviceHeight,
-      minWidth: Platform.OS === 'web' ? 340 : undefined,
-      paddingTop: Platform.OS === 'web' ? spacing.padding.base : 0,
+      height: dimension?.deviceHeight * 0.5,
       paddingHorizontal: 0,
       paddingBottom: 0,
     },

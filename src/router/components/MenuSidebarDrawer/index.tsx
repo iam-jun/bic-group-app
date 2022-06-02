@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Dimensions, Platform, StyleSheet, TouchableOpacity} from 'react-native';
+import {Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
 import Animated, {
@@ -12,10 +12,11 @@ import Animated, {
 } from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
+
 import {useKeySelector} from '~/hooks/selector';
 import MenuSidebarContent from '~/router/components/MenuSidebarDrawer/MenuSidebarContent';
-import {ITheme} from '~/theme/interfaces';
 import appActions from '~/store/app/actions';
+import {ITheme} from '~/theme/interfaces';
 
 const DeviceWidth = Dimensions.get('window').width;
 
@@ -95,7 +96,7 @@ const MenuSidebarDrawer = () => {
     },
   });
 
-  if (Platform.OS === 'web' || !isShow) {
+  if (!isShow) {
     return null;
   }
 

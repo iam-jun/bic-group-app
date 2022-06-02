@@ -8,8 +8,6 @@ export const mentionInputInitState = {
   topPosition: 0,
   loading: false,
   data: [],
-  highlightIndex: -1,
-  highlightItem: null,
   tempSelected: {},
 };
 
@@ -49,16 +47,6 @@ const reducer = (state = mentionInputInitState, action: any = {}) => {
         data: payload,
         loading: false,
         key: null,
-      };
-    case types.SET_HIGHLIGHT_INDEX:
-      return {
-        ...state,
-        highlightIndex: payload,
-      };
-    case types.SET_HIGHLIGHT_ITEM:
-      return {
-        ...state,
-        highlightItem: payload,
       };
     case types.ADD_TEMP_SELECTED:
       return {

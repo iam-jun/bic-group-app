@@ -1,7 +1,6 @@
 import i18next from 'i18next';
 import React, {useEffect, useRef, useState} from 'react';
 import {
-  Platform,
   StyleSheet,
   useWindowDimensions,
   View,
@@ -180,12 +179,6 @@ const themeStyles = (theme: ITheme, screenHeight: number) => {
   return StyleSheet.create({
     contentComponent: {
       maxHeight: 0.8 * screenHeight,
-      ...Platform.select({
-        web: {
-          maxHeight: 0.55 * screenHeight,
-          paddingBottom: spacing.padding.base,
-        },
-      }),
     },
     chooseText: {
       margin: spacing.margin.base,

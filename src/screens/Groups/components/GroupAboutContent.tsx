@@ -1,25 +1,22 @@
-import React, {useEffect} from 'react';
-import {View, StyleSheet, Platform, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
-
-import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
-import {useKeySelector} from '~/hooks/selector';
-import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
-import privacyTypes from '~/constants/privacyTypes';
-import groupsKeySelector from '../redux/keySelector';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {useRootNavigation} from '~/hooks/navigation';
-import groupJoinStatus from '~/constants/groupJoinStatus';
-import {useDispatch} from 'react-redux';
-import groupsActions from '../redux/actions';
 import {isEmpty} from 'lodash';
-import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import React from 'react';
+import {StyleSheet, View} from 'react-native';
+import {useTheme} from 'react-native-paper';
+
 import MenuItem from '~/beinComponents/list/items/MenuItem';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import Text from '~/beinComponents/Text';
+import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
+import groupJoinStatus from '~/constants/groupJoinStatus';
+import privacyTypes from '~/constants/privacyTypes';
+import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import {ITheme} from '~/theme/interfaces';
+import groupsKeySelector from '../redux/keySelector';
 
 const GroupAboutContent = () => {
-  const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -33,21 +30,6 @@ const GroupAboutContent = () => {
 
   const privacyData = privacyTypes.find(item => item?.type === privacy) || {};
   const {icon, title, subtitle}: any = privacyData || {};
-
-  useEffect(() => {
-    // just to fetch group detail when first access on Web
-    if (Platform.OS === 'web' && isEmpty(groupData)) {
-      const initUrl = window.location.href;
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const parse = require('url-parse');
-      const url = parse(initUrl, true);
-      const paths = url.pathname.split('/');
-      // paths = ['', 'groups', '{id}', 'about']
-      const id = parseInt(paths[2], 10);
-
-      dispatch(groupsActions.getGroupDetail(id));
-    }
-  }, []);
 
   const onPressMembers = () => {
     rootNavigation.navigate(groupStack.groupMembers, {groupId});

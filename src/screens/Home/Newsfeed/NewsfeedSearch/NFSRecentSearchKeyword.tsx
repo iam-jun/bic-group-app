@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {View, StyleSheet, TouchableOpacity, Platform} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {useBaseHook} from '~/hooks';
@@ -114,9 +114,7 @@ const createStyle = (theme: ITheme) => {
     },
     item: {
       paddingVertical: spacing.padding.base,
-      paddingLeft: Platform.OS === 'web' ? spacing.padding.base : 0,
-      paddingRight:
-        Platform.OS === 'web' ? spacing.padding.large : spacing.padding.small,
+      paddingRight: spacing.padding.small,
     },
     textEmpty: {
       textAlign: 'center',

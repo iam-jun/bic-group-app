@@ -14,6 +14,7 @@ import {
 import DeviceInfo from 'react-native-device-info';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
@@ -22,25 +23,26 @@ import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
+import UploadingFile from '~/beinComponents/UploadingFile';
 import {uploadTypes} from '~/configs/resourceConfig';
 import {useBaseHook} from '~/hooks';
 import {useKeyboardStatus} from '~/hooks/keyboard';
 import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
+import {IFilePicked} from '~/interfaces/common';
 import {IAudience, ICreatePostParams} from '~/interfaces/IPost';
+
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import CreatePostFooter from '~/screens/Post/CreatePost/CreatePostFooter';
 import useCreatePost from '~/screens/Post/CreatePost/useCreatePost';
 import postActions from '~/screens/Post/redux/actions';
+import VideoUploader from '~/services/videoUploader';
 import modalActions from '~/store/modal/actions';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
 import {padding} from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
-import UploadingFile from '~/beinComponents/UploadingFile';
-import {IFilePicked} from '~/interfaces/common';
-import VideoUploader from '~/services/videoUploader';
 
 export interface CreatePostProps {
   route?: {
@@ -64,8 +66,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     deviceVersion = parseInt(systemVersion);
   }
   const isAndroidAnimated = isAndroid && deviceVersion === 8;
-  const isWeb = Platform.OS === 'web';
-  const isAnimated = isAndroidAnimated || isWeb;
+  const isAnimated = isAndroidAnimated;
 
   const {height} = useWindowDimensions();
   const minInputHeight = height * 0.3;
@@ -131,7 +132,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const sPostId = sPostData?.id;
   const isEdit = !!(sPostId && !sPostData?.isDraft);
-  const isDraftPost = !!(sPostId && sPostData?.isDraft);
 
   let imageDisabled, fileDisabled, videoDisabled;
 
@@ -204,7 +204,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             cancelLabel: t('common:btn_discard'),
             confirmLabel: t('post:create_post:btn_keep_edit'),
             onDismiss: () => rootNavigation.goBack(),
-            stretchOnWeb: true,
           }),
         );
         return;
@@ -344,11 +343,11 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     refTextInput.current?.setFocus();
   };
 
-  const onCloseFile = (file: any) => {
+  const onCloseFile = () => {
     dispatch(postActions.setCreatePostVideo());
   };
 
-  const onUploadVideoError = (e: any) => {
+  const onUploadVideoError = () => {
     dispatch(
       modalActions.showHideToastMessage({
         content: 'upload:text_upload_video_error',
@@ -377,7 +376,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             <Animated.View
               style={isAnimated ? {height: heightAnimated} : styles.flex1}>
               <MentionInput
-                disableAutoComplete={Platform.OS !== 'web'}
+                disableAutoComplete={true}
                 groupIds={strGroupIds}
                 mentionInputRef={mentionInputRef}
                 style={styles.flex1}

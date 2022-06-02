@@ -42,7 +42,7 @@ import {checkPermission} from '~/utils/permission';
 const inputMinHeight = 66;
 const isAndroid8 =
   Platform.OS === 'android' && parseInt(DeviceInfo.getSystemVersion()) === 8;
-const isAnimated = isAndroid8 || Platform.OS === 'web';
+const isAnimated = isAndroid8;
 
 export interface CreateCommentProps {
   route?: {
@@ -174,7 +174,6 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
           cancelLabel: t('common:btn_continue_editing'),
           confirmLabel: t('common:btn_discard'),
           onConfirm: () => rootNavigation.goBack(),
-          stretchOnWeb: true,
         }),
       );
       return;
@@ -270,7 +269,7 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
             }}>
             <MentionInput
               groupIds={groupIds || ''}
-              disableAutoComplete={Platform.OS !== 'web'}
+              disableAutoComplete={true}
               style={styles.flex1}
               textInputStyle={styles.flex1}
               mentionInputRef={mentionInputRef}
@@ -298,7 +297,7 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
         </Animated.ScrollView>
       </TouchableOpacity>
       {showToolbar && <CommentToolbar onSelectImage={onSelectImage} />}
-      {Platform.OS !== 'web' && <MentionBar />}
+      <MentionBar />
       <KeyboardSpacer iosOnly />
     </ScreenWrapper>
   );

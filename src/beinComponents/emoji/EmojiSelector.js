@@ -61,7 +61,7 @@ export const Categories = {
   },
 };
 
-const PADDING_HORIZONTAL = Platform.OS === 'web' ? 12 : 0;
+const PADDING_HORIZONTAL =  0;
 
 const charFromUtf16 = utf16 =>
   String.fromCodePoint(...utf16.split('-').map(u => '0x' + u));

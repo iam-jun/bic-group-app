@@ -3,9 +3,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {
   DeviceEventEmitter,
   InteractionManager,
-  Platform,
   StyleSheet,
-  useWindowDimensions,
   View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
@@ -45,9 +43,6 @@ const Newsfeed = () => {
   const dispatch = useDispatch();
 
   const token = useAuthToken();
-
-  const dimensions = useWindowDimensions();
-  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
@@ -148,25 +143,6 @@ const Newsfeed = () => {
   };
 
   const renderHeader = () => {
-    if (isLaptop)
-      return (
-        <Header
-          headerRef={headerRef}
-          hideBack
-          title={'post:news_feed'}
-          titleTextProps={{useI18n: true}}
-          style={styles.headerOnLaptop}
-          removeBorderAndShadow
-          onPressChat={navigateToChat}
-          onShowSearch={onShowSearch}
-          onSearchText={onSearchText}
-          searchPlaceholder={t('input:search_post')}
-          autoFocusSearch
-          onFocusSearch={onFocusSearch}
-          onSubmitSearch={onSubmitSearch}
-        />
-      );
-
     return (
       <View style={styles.headerMobile}>
         <Header
@@ -207,12 +183,7 @@ const Newsfeed = () => {
           canLoadMore={!noMoreHomePosts}
           onEndReach={onEndReach}
           onRefresh={onRefresh}
-          HeaderComponent={
-            <HeaderCreatePost
-              style={styles.headerCreatePost}
-              parentWidth={newsfeedWidth}
-            />
-          }
+          HeaderComponent={<HeaderCreatePost style={styles.headerCreatePost} />}
         />
         <NewsfeedSearch headerRef={headerRef} />
       </View>
@@ -221,27 +192,19 @@ const Newsfeed = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing, dimension} = theme;
+  const {colors, spacing} = theme;
 
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {
       flex: 1,
-      backgroundColor:
-        Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
+      backgroundColor: colors.bgSecondary,
     },
     headerOnLaptop: {
       backgroundColor: colors.surface,
     },
     placeholder: {
       flex: 1,
-      ...Platform.select({
-        web: {
-          width: '100%',
-          maxWidth: dimension.maxNewsfeedWidth,
-          alignSelf: 'center',
-        },
-      }),
     },
     listContainer: {
       flex: 1,
@@ -261,10 +224,12 @@ const createStyle = (theme: ITheme) => {
       paddingTop: spacing.padding.large,
       paddingBottom: spacing.padding.small,
     },
-    headerMobile:
-      Platform.OS !== 'web'
-        ? {position: 'absolute', top: 0, width: '100%', zIndex: 1}
-        : {},
+    headerMobile: {
+      position: 'absolute',
+      top: 0,
+      width: '100%',
+      zIndex: 1,
+    },
   });
 };
 

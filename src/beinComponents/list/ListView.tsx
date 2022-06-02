@@ -3,7 +3,6 @@ import React from 'react';
 import {
   ActivityIndicator,
   FlatList,
-  Platform,
   RefreshControl,
   StyleProp,
   StyleSheet,
@@ -14,14 +13,12 @@ import {
 import {useTheme} from 'react-native-paper';
 import items, {IListViewItem} from '~/beinComponents/list/items';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import loadings from '~/beinComponents/list/loadings';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import {IAction} from '~/constants/commonActions';
 import {useKeySelector} from '~/hooks/selector';
-
 import {spacing} from '~/theme';
 import {ITheme} from '~/theme/interfaces';
-import loadings from '~/beinComponents/list/loadings';
 
 export interface ListViewProps {
   data?: Array<any>;
@@ -78,7 +75,6 @@ const ListView: React.FC<ListViewProps> = ({
 
   onItemPress,
   onItemLongPress,
-  onActionPress,
   onRefresh,
   onLoadMore,
 
@@ -210,7 +206,7 @@ const ListView: React.FC<ListViewProps> = ({
       {_renderLoading()}
       <FlatList
         testID="list_view.flat_list"
-        showsVerticalScrollIndicator={Platform.OS !== 'web'}
+        showsVerticalScrollIndicator={true}
         ref={listRef}
         data={data}
         style={listStyle}

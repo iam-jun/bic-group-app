@@ -1,18 +1,16 @@
 import React, {FC} from 'react';
-import {View, StyleSheet, Platform} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Animated, {
+  interpolate,
   useAnimatedStyle,
   useSharedValue,
-  interpolate,
   withTiming,
 } from 'react-native-reanimated';
-
-import {ITheme} from '~/theme/interfaces';
-
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
+import {ITheme} from '~/theme/interfaces';
 
 export interface CommentInputFooterProps {
   useTestID?: boolean;
@@ -120,16 +118,11 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
   return (
     <View style={styles.container}>
       {renderButtons()}
-      {Platform.OS !== 'web' && (
-        <Animated.View
-          testID={'comment_input_footer.mention_bar_container'}
-          style={mentionContainerStyle}>
-          <MentionBar
-            onVisible={onVisibleMentionBar}
-            style={styles.mentionBar}
-          />
-        </Animated.View>
-      )}
+      <Animated.View
+        testID={'comment_input_footer.mention_bar_container'}
+        style={mentionContainerStyle}>
+        <MentionBar onVisible={onVisibleMentionBar} style={styles.mentionBar} />
+      </Animated.View>
     </View>
   );
 };

@@ -1,6 +1,6 @@
 import {createStackNavigator} from '@react-navigation/stack';
 import React, {useEffect} from 'react';
-import {Platform} from 'react-native';
+
 import {AppConfig} from '~/configs';
 import {authStack} from '~/configs/navigator';
 import {useUserIdAuth} from '~/hooks/auth';
@@ -14,7 +14,7 @@ const AuthStack = () => {
   const Stacks: IObject<any> = authStacks;
   const currentUserId = useUserIdAuth();
   useEffect(() => {
-    if (!currentUserId && Platform.OS !== 'web') {
+    if (!currentUserId) {
       // make sure delete push token when user logout (when no internet)
       initPushTokenMessage()
         .then(messaging => {

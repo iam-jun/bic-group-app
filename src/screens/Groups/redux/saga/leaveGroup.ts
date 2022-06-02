@@ -1,5 +1,4 @@
 import i18next from 'i18next';
-import {Platform} from 'react-native';
 import {put, select, call} from 'redux-saga/effects';
 
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
@@ -35,12 +34,7 @@ export default function* leaveGroup({
     );
 
     if (privacy === groupPrivacy.secret) {
-      if (Platform.OS !== 'web') {
-        yield call(navigationReplace);
-      } else {
-        const topParentGroupId = groups?.joinedGroups[0]?.id;
-        yield call(navigateToGroup, topParentGroupId);
-      }
+      yield call(navigationReplace);
     } else {
       yield call(navigateToGroup, payload);
     }

@@ -1,12 +1,11 @@
 import React, {FC} from 'react';
-import {Platform, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 
 import PostToolbar from '~/screens/Post/components/PostToolbar';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
-import Div from '~/beinComponents/Div';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -51,7 +50,7 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
   };
 
   return (
-    <Div className="post-toolbar-container">
+    <View>
       <PostToolbar
         toolbarRef={toolbarRef}
         disabled={loading}
@@ -60,18 +59,16 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
         videoDisabled={videoDisabled}
         fileDisabled={fileDisabled}
       />
-      {Platform.OS !== 'web' && (
-        <Animated.View
-          testID={'create_post_footer.mention_bar_container'}
-          style={mentionContainerStyle}>
-          <MentionBar
-            testID={'mention_bar'}
-            onVisible={onVisibleMentionBar}
-            style={styles.mentionBar}
-          />
-        </Animated.View>
-      )}
-    </Div>
+      <Animated.View
+        testID={'create_post_footer.mention_bar_container'}
+        style={mentionContainerStyle}>
+        <MentionBar
+          testID={'mention_bar'}
+          onVisible={onVisibleMentionBar}
+          style={styles.mentionBar}
+        />
+      </Animated.View>
+    </View>
   );
 };
 

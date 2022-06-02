@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, Platform} from 'react-native';
+import {StyleSheet} from 'react-native';
 
 import {useKeySelector} from '~/hooks/selector';
 import BannerMessage from './BannerMessage';
@@ -29,13 +29,10 @@ const ToastMessage = () => {
     );
   }
 
-  if (Platform.OS === 'web') ToastMessageComponent = NormalToastMessage;
-  else ToastMessageComponent = SimpleToastMessage;
-
   return (
-    <ToastMessageComponent style={[styles.toastStyle, style]} {...restProps}>
+    <SimpleToastMessage style={[styles.toastStyle, style]} {...restProps}>
       {toastMessage?.content}
-    </ToastMessageComponent>
+    </SimpleToastMessage>
   );
 };
 
@@ -46,15 +43,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginHorizontal: 12,
     marginBottom: 4,
-    ...Platform.select({
-      web: {
-        left: 40,
-        bottom: 40,
-        alignSelf: undefined,
-        marginHorizontal: undefined,
-        marginBottom: undefined,
-      },
-    }),
   },
 });
 

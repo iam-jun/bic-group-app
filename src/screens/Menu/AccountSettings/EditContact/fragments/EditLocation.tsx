@@ -75,8 +75,6 @@ const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
       modalizeRef={modalizeRef}
       modalStyle={styles.modalStyle}
       childrenStyle={styles.childrenStyle}
-      //@ts-ignore
-      menuMinWidth={Platform.OS === 'web' && 360}
       ContentComponent={
         <KeyboardAvoidingView
           testID="edit_location.keyboard_avoiding_view"
@@ -132,12 +130,6 @@ const createStyles = (theme: ITheme, screenHeight: number) => {
     },
     contentComponent: {
       maxHeight: 0.8 * screenHeight,
-      ...Platform.select({
-        web: {
-          maxHeight: 0.55 * screenHeight,
-          paddingTop: spacing.padding.large,
-        },
-      }),
       borderTopRightRadius: spacing.borderRadius.small,
       borderTopLeftRadius: spacing.borderRadius.small,
     },
@@ -153,11 +145,6 @@ const createStyles = (theme: ITheme, screenHeight: number) => {
     titleSearch: {
       marginLeft: spacing.margin.large,
       marginTop: spacing.margin.extraLarge,
-      ...Platform.select({
-        web: {
-          marginTop: 0,
-        },
-      }),
     },
     childrenStyle: {
       paddingBottom: 0,
