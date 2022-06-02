@@ -307,6 +307,15 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
+  declineSingleCommunityMemberRequest: (
+    communityId: number,
+    requestId: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/${requestId}/decline`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
 };
 
 const groupsDataHelper = {
@@ -754,6 +763,26 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.approveSingleCommunityMemberRequest(
+          communityId,
+          requestId,
+        ),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  declineSingleCommunityMemberRequest: async (
+    communityId: number,
+    requestId: number,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.declineSingleCommunityMemberRequest(
           communityId,
           requestId,
         ),

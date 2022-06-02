@@ -689,6 +689,7 @@
     },
     "text_requested_at": "Requested at",
     "text_declining_user": "Declining user",
+    "text_declined_user": "Declined user",
     "text_approved_user": "Approved user",
     "text_approved_all_one": "Approved {{count}} user",
     "text_approved_all_other": "Approved {{count}} users",

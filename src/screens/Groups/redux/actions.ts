@@ -436,9 +436,10 @@ const groupsActions = {
     payload,
   }),
   setCommunityMemberRequests: (payload: {
+    total?: number;
     loading?: boolean;
     canLoadMore?: boolean;
-    data?: number[];
+    ids?: number[];
     items?: IObject<IJoiningMember>;
   }) => ({
     type: groupsTypes.SET_COMMUNITY_MEMBER_REQUESTS,
@@ -451,9 +452,16 @@ const groupsActions = {
     communityId: number;
     requestId: number;
     fullName: string;
-    callback: () => void;
   }) => ({
     type: groupsTypes.APPROVE_SINGLE_COMMUNITY_MEMBER_REQUEST,
+    payload,
+  }),
+  declineSingleCommunityMemberRequest: (payload: {
+    communityId: number;
+    requestId: number;
+    fullName: string;
+  }) => ({
+    type: groupsTypes.DECLINE_SINGLE_COMMUNITY_MEMBER_REQUEST,
     payload,
   }),
 };

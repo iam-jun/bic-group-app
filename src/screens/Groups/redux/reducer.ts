@@ -611,22 +611,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         ...state,
         communityMemberRequests: groupInitState.communityMemberRequests,
       };
-    case groupsTypes.APPROVE_SINGLE_COMMUNITY_MEMBER_REQUEST: {
-      const requestItems = {...communityMemberRequests.items};
-      // @ts-ignore
-      delete requestItems[payload.requestId];
-      return {
-        ...state,
-        communityMemberRequests: {
-          ...communityMemberRequests,
-          total: communityMemberRequests.total - 1,
-          ids: communityMemberRequests.ids.filter(
-            (item: number) => item !== payload.requestId,
-          ),
-          items: requestItems,
-        },
-      };
-    }
 
     default:
       return state;

@@ -22,24 +22,24 @@ const CommunityMemberRequest = ({requestId}: {requestId: number}) => {
   const {user} = requestItem;
   const {fullname: fullName} = user;
 
-  const navigateToCommunityMembers = () => {
-    dispatch(clearToastMessage());
-    rootNavigation.navigate(groupStack.communityMembers, {communityId});
-  };
-
   const onPressApprove = () => {
     dispatch(
       groupsActions.approveSingleCommunityMemberRequest({
         communityId,
         requestId,
         fullName,
-        callback: navigateToCommunityMembers,
       }),
     );
   };
 
   const onPressDecline = () => {
-    // TODO: ADD FUNCTIONALITY
+    dispatch(
+      groupsActions.declineSingleCommunityMemberRequest({
+        communityId,
+        requestId,
+        fullName,
+      }),
+    );
   };
 
   return (
