@@ -48,6 +48,7 @@ import joinCommunity from './joinCommunity';
 import cancelJoinCommunity from './cancelJoinCommunity';
 import getCommunityMemberRequests from './getCommunityMemberRequests';
 import groupJoinStatus from '~/constants/groupJoinStatus';
+import approveSingleCommunityMemberRequest from './approveSingleCommunityMemberRequest';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -112,6 +113,10 @@ export default function* groupsSaga() {
   yield takeLatest(
     groupsTypes.GET_COMMUNITY_MEMBER_REQUESTS,
     getCommunityMemberRequests,
+  );
+  yield takeLatest(
+    groupsTypes.APPROVE_SINGLE_COMMUNITY_MEMBER_REQUEST,
+    approveSingleCommunityMemberRequest,
   );
 }
 
@@ -523,7 +528,11 @@ export function* refreshGroupMembers(groupId: number) {
   yield put(groupsActions.getGroupDetail(groupId));
 }
 
-function* approvalError(groupId: number, code: string, fullName?: string) {
+export function* approvalError(
+  groupId: number,
+  code: string,
+  fullName?: string,
+) {
   let errorMsg: string;
   if (code === approveDeclineCode.CANNOT_APPROVE) {
     errorMsg = i18next

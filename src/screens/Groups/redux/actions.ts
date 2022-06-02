@@ -447,6 +447,15 @@ const groupsActions = {
   resetCommunityMemberRequests: () => ({
     type: groupsTypes.RESET_COMMUNITY_MEMBER_REQUESTS,
   }),
+  approveSingleCommunityMemberRequest: (payload: {
+    communityId: number;
+    requestId: number;
+    fullName: string;
+    callback: () => void;
+  }) => ({
+    type: groupsTypes.APPROVE_SINGLE_COMMUNITY_MEMBER_REQUEST,
+    payload,
+  }),
 };
 
 export default groupsActions;

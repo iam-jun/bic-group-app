@@ -298,6 +298,15 @@ export const groupsApiConfig = {
       key: !!params?.key?.trim?.() ? params.key : undefined,
     },
   }),
+  approveSingleCommunityMemberRequest: (
+    communityId: number,
+    requestId: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/${requestId}/approve`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
 };
 
 const groupsDataHelper = {
@@ -730,6 +739,26 @@ const groupsDataHelper = {
         groupsApiConfig.getCommunityMemberRequests(communityId, params),
       );
       if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  approveSingleCommunityMemberRequest: async (
+    communityId: number,
+    requestId: number,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.approveSingleCommunityMemberRequest(
+          communityId,
+          requestId,
+        ),
+      );
+      if (response && response?.data) {
         return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);

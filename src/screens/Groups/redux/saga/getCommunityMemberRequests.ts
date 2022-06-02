@@ -17,9 +17,9 @@ export default function* getCommunityMemberRequests({
     const {groups} = yield select();
 
     const {communityId, params} = payload;
-    const {data, items, canLoadMore} = groups.communityMemberRequests || {};
+    const {ids, items, canLoadMore} = groups.communityMemberRequests || {};
     yield put(
-      groupsActions.setCommunityMemberRequests({loading: data.length === 0}),
+      groupsActions.setCommunityMemberRequests({loading: ids.length === 0}),
     );
 
     if (!canLoadMore) return;
@@ -28,7 +28,7 @@ export default function* getCommunityMemberRequests({
     const response = yield groupsDataHelper.getCommunityMemberRequests(
       communityId,
       {
-        offset: data.length,
+        offset: ids.length,
         limit: appConfig.recordsPerPage,
         key: memberRequestStatus.WAITING,
         ...params,
@@ -42,7 +42,7 @@ export default function* getCommunityMemberRequests({
       total: response?.meta?.total,
       loading: false,
       canLoadMore: requestIds.length === appConfig.recordsPerPage,
-      data: [...data, ...requestIds],
+      ids: [...ids, ...requestIds],
       items: {
         ...items,
         ...requestItems,

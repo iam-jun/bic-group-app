@@ -26,12 +26,13 @@ const CommunityPendingMembers = () => {
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const {id: communityId} = useKeySelector(groupsKeySelector.communityDetail);
-  const {total, loading, canLoadMore, data, items} = useKeySelector(
+  const {total, loading, canLoadMore, ids} = useKeySelector(
     groupsKeySelector.communityMemberRequests,
   );
 
   useEffect(() => {
-    // No need to get data here since we already did it in admin screen
+    onRefresh();
+
     return () => {
       getData(); // to update the total member requests again on press back
     };
@@ -84,7 +85,7 @@ const CommunityPendingMembers = () => {
     return (
       !loading &&
       canLoadMore &&
-      data.length > 0 && (
+      ids.length > 0 && (
         <View style={styles.listFooter}>
           <ActivityIndicator />
         </View>
@@ -99,7 +100,7 @@ const CommunityPendingMembers = () => {
       <FlatList
         testID="flatlist"
         style={styles.flatList}
-        data={data}
+        data={ids}
         renderItem={renderItem}
         keyExtractor={(item, index) => `requests_${item}_${index}`}
         ListEmptyComponent={renderEmpty}
