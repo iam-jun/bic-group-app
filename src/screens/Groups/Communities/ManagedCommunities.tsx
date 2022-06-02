@@ -15,11 +15,10 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import CommunityItem from '../components/CommunityItem';
 import {ITheme} from '~/theme/interfaces';
-import {ICommunity} from '~/interfaces/ICommunity';
 import actions from '~/screens/Groups/redux/actions';
 
 interface ManagedCommunitiesProps {
-  onPressCommunities?: (community: ICommunity) => void;
+  onPressCommunities?: (communityId: number) => void;
   onPressMenu?: (community?: any) => void;
 }
 

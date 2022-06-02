@@ -671,6 +671,7 @@
       "last_admin_inner_group_remove": "Cannot remove. This user is the last admin of an inner group"
     },
     "text_successfully_join_group": "Successfully join group",
+    "text_successfully_join_community": "Successfully join community",
     "text_no_pending_members_notice": "There's no pending members",
     "text_pending_request_notice": "People who request to join your group will show here.",
     "text_respond_all_member_requests": {
@@ -693,7 +694,9 @@
     "text_declining_all_one": "Declining {{count}} user",
     "text_declining_all_other": "Declining {{count}} users",
     "text_request_join_group": "Requested to join group",
+    "text_request_join_community": "Requested to join community",
     "text_cancel_join_group": "Cancelled the member request to group",
+    "text_cancel_join_community": "Cancelled the member request to community",
     "text_approved_member_group": "You have been approved to be a member of this group",
     "title_members": "Members",
     "text_cannot_approve_all": "Cannot approve all because there are changes in the pending member list. Please review again",

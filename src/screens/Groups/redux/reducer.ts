@@ -87,7 +87,8 @@ export const groupInitState = {
   discoverCommunities: {
     loading: true,
     canLoadMore: true,
-    list: [],
+    ids: [],
+    items: {},
   },
   managedCommunities: {
     loading: false,
@@ -127,6 +128,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     communitySearchMembers,
     managedCommunities,
     groupSearchMembers,
+    discoverCommunities,
   } = state;
 
   switch (type) {
@@ -456,6 +458,11 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           ...payload,
         },
       };
+    case groupsTypes.RESET_DISCOVER_COMMUNITIES:
+      return {
+        ...state,
+        discoverCommunities: groupInitState.discoverCommunities,
+      };
 
     case groupsTypes.GET_COMMUNITY_GROUPS:
       return {
@@ -566,6 +573,21 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       return {
         ...state,
         managedCommunities: groupInitState.managedCommunities,
+      };
+    case groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM:
+      return {
+        ...state,
+        discoverCommunities: {
+          ...discoverCommunities,
+          items: {
+            ...discoverCommunities.items,
+            [payload.id]: {
+              // @ts-ignore
+              ...discoverCommunities.items[payload.id],
+              ...payload.data,
+            },
+          },
+        },
       };
 
     default:

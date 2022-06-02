@@ -314,13 +314,16 @@ const groupsActions = {
   resetManagedCommunities: () => ({
     type: groupsTypes.RESET_MANAGED_COMMUNITIES,
   }),
-  getDiscoverCommunities: (payload: any) => ({
+  getDiscoverCommunities: (payload?: any) => ({
     type: groupsTypes.GET_DISCOVER_COMMUNITIES,
     payload,
   }),
   setDiscoverCommunities: (payload: any) => ({
     type: groupsTypes.SET_DISCOVER_COMMUNITIES,
     payload,
+  }),
+  resetDiscoverCommunities: () => ({
+    type: groupsTypes.RESET_DISCOVER_COMMUNITIES,
   }),
   getYourGroupsSearch: (payload: IGetYourGroupsSearch) => ({
     type: groupsTypes.GET_YOUR_GROUPS_SEARCH,
@@ -407,6 +410,21 @@ const groupsActions = {
   }),
   editDiscoverGroupItem: (payload: {id: number; data: any}) => ({
     type: groupsTypes.EDIT_DISCOVER_GROUP_ITEM,
+    payload,
+  }),
+  joinCommunity: (payload: {communityId: number; communityName: string}) => ({
+    type: groupsTypes.JOIN_COMMUNITY,
+    payload,
+  }),
+  cancelJoinCommunity: (payload: {
+    communityId: number;
+    communityName: string;
+  }) => ({
+    type: groupsTypes.CANCEL_JOIN_COMMUNITY,
+    payload,
+  }),
+  editDiscoverCommunityItem: (payload: {id: number; data: any}) => ({
+    type: groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM,
     payload,
   }),
 };
