@@ -87,7 +87,7 @@ export const groupInitState = {
   discoverCommunities: {
     loading: true,
     canLoadMore: true,
-    list: [],
+    ids: [],
     items: {},
   },
   managedCommunities: {

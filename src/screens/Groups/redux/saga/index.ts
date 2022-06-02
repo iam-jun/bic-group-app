@@ -47,6 +47,7 @@ import getGroupSearchMembers from './getGroupSearchMembers';
 import joinCommunity from './joinCommunity';
 import cancelJoinCommunity from './cancelJoinCommunity';
 import getCommunityMemberRequests from './getCommunityMemberRequests';
+import groupJoinStatus from '~/constants/groupJoinStatus';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -310,7 +311,7 @@ function* cancelJoinGroup({
     yield put(
       groupsActions.editDiscoverGroupItem({
         id: groupId,
-        data: {join_status: 1},
+        data: {join_status: groupJoinStatus.visitor},
       }),
     );
 

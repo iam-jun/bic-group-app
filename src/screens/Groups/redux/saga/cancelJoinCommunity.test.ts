@@ -7,6 +7,7 @@ import showError from '~/store/commonSaga/showError';
 import cancelJoinCommunity from './cancelJoinCommunity';
 import groupsActions from '../actions';
 import modalActions from '~/store/modal/actions';
+import groupJoinStatus from '~/constants/groupJoinStatus';
 
 describe('cancelJoinCommuniity saga', () => {
   const communityId = 1;
@@ -22,7 +23,7 @@ describe('cancelJoinCommuniity saga', () => {
       .put(
         groupsActions.editDiscoverCommunityItem({
           id: communityId,
-          data: {join_status: 1},
+          data: {join_status: groupJoinStatus.visitor},
         }),
       )
       .put(groupsActions.getCommunityDetail(communityId))

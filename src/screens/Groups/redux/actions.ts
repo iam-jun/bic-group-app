@@ -412,15 +412,10 @@ const groupsActions = {
     type: groupsTypes.EDIT_DISCOVER_GROUP_ITEM,
     payload,
   }),
-  joinCommunity: function (payload: {
-    communityId: number;
-    communityName: string;
-  }) {
-    return {
-      type: groupsTypes.JOIN_COMMUNITY,
-      payload,
-    };
-  },
+  joinCommunity: (payload: {communityId: number; communityName: string}) => ({
+    type: groupsTypes.JOIN_COMMUNITY,
+    payload,
+  }),
   cancelJoinCommunity: (payload: {
     communityId: number;
     communityName: string;
