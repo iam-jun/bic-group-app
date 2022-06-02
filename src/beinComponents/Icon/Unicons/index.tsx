@@ -15,7 +15,8 @@ const Unicons: React.FC<UniconsProps> = ({
   tintColor,
   ...props
 }: UniconsProps) => {
-  const Comp = RnUnicons[name] || RnUnicons[`Uil${name}`];
+  // @ts-ignore
+  const Comp = RnUnicons[name];
 
   if (!Comp) {
     return null;

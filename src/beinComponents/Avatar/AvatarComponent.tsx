@@ -25,6 +25,7 @@ export type AvatarType =
 
 export type AvatarStatus = 'online';
 
+// @ts-ignore
 export interface AvatarProps extends ImageProps {
   style?: StyleProp<ViewStyle>;
   variant?: AvatarType;
@@ -39,7 +40,7 @@ export interface AvatarProps extends ImageProps {
   badgeCheck?: boolean;
   badgeCheckSize?: number;
   iconCheckSize?: number;
-  counter?: counter;
+  counter?: string | number;
 }
 
 const AvatarComponent: React.FC<AvatarProps> = ({
@@ -202,7 +203,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
         }}>
         <Icon
           size={iconCheckSize}
-          icon="UilCheck"
+          icon="Check"
           tintColor={colors.iconTintReversed}
         />
       </View>

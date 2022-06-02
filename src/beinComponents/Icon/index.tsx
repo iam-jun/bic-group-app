@@ -78,7 +78,8 @@ const Icon: React.FC<IconProps> = ({
 
   let IconComponent, type, name, source;
 
-  if (Unicons[`${_icon || icon}`] || Unicons[`Uil${_icon || icon}`]) {
+  // @ts-ignore
+  if (Unicons[`${_icon || icon}`]) {
     IconComponent = Unicons;
     name = _icon || icon;
   } else if (typeof _icon === 'function') {
@@ -117,7 +118,7 @@ const Icon: React.FC<IconProps> = ({
           ]}>
           <Div className="icon-wrapper" testID={testID}>
             <IconComponent
-              style={_style}
+              style={_style as any}
               tintColor={_tintColor}
               size={size}
               type={type}
