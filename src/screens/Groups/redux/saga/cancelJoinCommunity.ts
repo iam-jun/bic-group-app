@@ -1,5 +1,6 @@
 import i18next from 'i18next';
 import {put, call} from 'redux-saga/effects';
+import groupJoinStatus from '~/constants/groupJoinStatus';
 import {IToastMessage} from '~/interfaces/common';
 import showError from '~/store/commonSaga/showError';
 import modalActions from '~/store/modal/actions';
@@ -21,7 +22,7 @@ export default function* cancelJoinCommunity({
     yield put(
       groupsActions.editDiscoverCommunityItem({
         id: communityId,
-        data: {join_status: 1},
+        data: {join_status: groupJoinStatus.visitor},
       }),
     );
 

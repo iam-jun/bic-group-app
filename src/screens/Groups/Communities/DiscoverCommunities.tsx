@@ -34,7 +34,7 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   onPressCommunities,
 }: DiscoverCommunitiesProps) => {
   const data = useKeySelector(groupsKeySelector.discoverCommunitiesData);
-  const {list, items, loading} = data || {};
+  const {ids, items, loading} = data || {};
 
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
@@ -97,11 +97,11 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   return (
     <FlatList
       testID="flatlist"
-      data={list}
+      data={ids}
       renderItem={renderItem}
       keyExtractor={(item, index) => `community_${item}_${index}`}
       ListEmptyComponent={renderEmptyComponent}
-      ListHeaderComponent={<DiscoverHeader list={list} />}
+      ListHeaderComponent={<DiscoverHeader list={ids} />}
       onEndReached={() => getData()}
       ItemSeparatorComponent={() => <Divider style={styles.divider} />}
       refreshControl={

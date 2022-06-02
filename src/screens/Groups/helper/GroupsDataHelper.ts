@@ -90,7 +90,7 @@ export const groupsApiConfig = {
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/users/add`,
     method: 'post',
     provider: ApiConfig.providers.bein,
-    useRetry: false,
+    useRetry: true,
     data: {
       user_ids: userIds,
     },
@@ -103,7 +103,7 @@ export const groupsApiConfig = {
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/users/remove`,
     method: 'put',
     provider: ApiConfig.providers.bein,
-    useRetry: false,
+    useRetry: true,
     data: {
       [type || 'user_ids']: userIds,
     },
@@ -112,19 +112,19 @@ export const groupsApiConfig = {
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/join`,
     method: 'post',
     provider: ApiConfig.providers.bein,
-    useRetry: false,
+    useRetry: true,
   }),
   cancelJoinGroup: (groupId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/cancel-joining-request`,
     method: 'put',
     provider: ApiConfig.providers.bein,
-    useRetry: false,
+    useRetry: true,
   }),
   leaveGroup: (groupId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/leave`,
     method: 'post',
     provider: ApiConfig.providers.bein,
-    useRetry: false,
+    useRetry: true,
   }),
   setGroupAdmin: (
     groupId: number,
@@ -277,13 +277,13 @@ export const groupsApiConfig = {
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/join`,
     method: 'post',
     provider: ApiConfig.providers.bein,
-    useRetry: false,
+    useRetry: true,
   }),
   cancelJoinCommunity: (communityId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/cancel-joining-request`,
     method: 'put',
     provider: ApiConfig.providers.bein,
-    useRetry: false,
+    useRetry: true,
   }),
 };
 

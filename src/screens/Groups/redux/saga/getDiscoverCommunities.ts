@@ -15,13 +15,13 @@ export default function* getDiscoverCommunities({
 }): any {
   try {
     const {groups} = yield select();
-    const {list, items, canLoadMore} = groups.discoverCommunities;
+    const {ids, items, canLoadMore} = groups.discoverCommunities;
     if (!canLoadMore) return;
 
     yield put(groupsActions.setDiscoverCommunities({loading: true}));
     const params: IParamGetCommunities = {
       limit: appConfig.recordsPerPage,
-      offset: list.length,
+      offset: ids.length,
     };
     const response = yield call(
       groupsDataHelper.getDiscoverCommunities,
@@ -36,7 +36,7 @@ export default function* getDiscoverCommunities({
       const newData = {
         loading: false,
         canLoadMore: newIds.length === appConfig.recordsPerPage,
-        list: [...list, ...newIds],
+        ids: [...ids, ...newIds],
         items: {...items, ...newItems},
       };
       yield put(groupsActions.setDiscoverCommunities(newData));
