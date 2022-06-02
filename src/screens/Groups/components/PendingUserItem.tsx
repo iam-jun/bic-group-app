@@ -1,8 +1,7 @@
-import React, {useContext, useRef} from 'react';
+import React, {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
-import {useDispatch} from 'react-redux';
 
 import Avatar from '~/beinComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
@@ -12,31 +11,24 @@ import {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
 import {formatFullTime} from '~/beinComponents/TimeView';
 import {AppContext} from '~/contexts/AppContext';
-import groupsActions from '~/screens/Groups/redux/actions';
-import {useKeySelector} from '~/hooks/selector';
-import {clearToastMessage, showHideToastMessage} from '~/store/modal/actions';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {useRootNavigation} from '~/hooks/navigation';
-import {IToastMessage} from '~/interfaces/common';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import {IJoiningMember} from '~/interfaces/IGroup';
 
-const PendingUserItem = ({requestId}: {requestId: number}) => {
+interface PendingUserItemProps {
+  requestItem: IJoiningMember;
+  onPressApprove: () => void;
+  onPressDecline: () => void;
+}
+
+const PendingUserItem = ({
+  requestItem,
+  onPressApprove,
+  onPressDecline,
+}: PendingUserItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const {language} = useContext(AppContext);
-  const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
-  const timeoutRef = useRef<any>();
 
-  const pendingMemberRequests = useKeySelector(
-    groupsKeySelector.pendingMemberRequests,
-  );
-  const {items: requestItems} = pendingMemberRequests;
-
-  const currentRequest = requestItems[requestId];
-
-  const {user, group_id: groupId, created_at: createdAt} = currentRequest || {};
-
+  const {user, created_at: createdAt} = requestItem || {};
   const {
     avatar,
     fullname: fullName,
@@ -45,56 +37,6 @@ const PendingUserItem = ({requestId}: {requestId: number}) => {
     phone,
     latest_work: latestWork,
   } = user || {};
-
-  const navigateToGroupMembers = () => {
-    dispatch(clearToastMessage());
-    rootNavigation.navigate(groupStack.groupMembers, {groupId});
-  };
-
-  const onPressApprove = () => {
-    dispatch(
-      groupsActions.approveSingleMemberRequest({
-        groupId,
-        requestId,
-        fullName,
-        callback: navigateToGroupMembers,
-      }),
-    );
-  };
-
-  const onPressUndo = () => {
-    timeoutRef?.current && clearTimeout(timeoutRef?.current);
-    dispatch(clearToastMessage());
-    dispatch(groupsActions.undoDeclineMemberRequests());
-  };
-
-  const onPressDecline = () => {
-    dispatch(groupsActions.storeUndoData());
-    dispatch(groupsActions.removeSingleMemberRequest({requestId}));
-
-    const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_declining_user')} ${fullName}`,
-      props: {
-        textProps: {useI18n: true},
-        type: 'informative',
-        rightText: 'Undo',
-        onPressRight: onPressUndo,
-      },
-      duration: 4000,
-      toastType: 'normal',
-    };
-    dispatch(showHideToastMessage(toastMessage));
-
-    timeoutRef.current = setTimeout(() => {
-      dispatch(
-        groupsActions.declineSingleMemberRequest({
-          groupId,
-          requestId,
-          fullName,
-        }),
-      );
-    }, 4500);
-  };
 
   const renderItem = ({
     icon,
