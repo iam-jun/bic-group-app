@@ -1,6 +1,6 @@
 import React from 'react';
 // @ts-ignore
-import * as RnUnicons from '@iconscout/react-native-unicons';
+import * as RnUnicons from 'react-native-unicons';
 
 export interface UniconsProps {
   icon?: string | number;
@@ -21,7 +21,7 @@ const Unicons: React.FC<UniconsProps> = ({
     return null;
   }
 
-  return <Comp size={size} color={tintColor} {...props} />;
+  return <Comp width={size} height={size} color={tintColor} {...props} />;
 };
 
 export default Object.assign(Unicons, RnUnicons);
