@@ -1,5 +1,4 @@
-import {Linking, Platform} from 'react-native';
-import {chatSchemes} from '~/constants/chat';
+import {Linking} from 'react-native';
 import {linkRegex} from '~/constants/commonRegex';
 import {getEnv} from '~/utils/env';
 import {camelize, decamelize} from 'humps';
@@ -13,17 +12,7 @@ export const generateAvatar = (name?: string, color?: string) => {
 export const openLink = async (link: string) => {
   const supported = await Linking.canOpenURL(link);
   if (supported) {
-    let _link = link;
-
-    // If on web browser => replace 'beinchat://' in deeplink with 'https://'
-    if (Platform.OS === 'web' && link.includes(chatSchemes.PREFIX_DEEPLINK)) {
-      _link = _link.replace(
-        chatSchemes.PREFIX_DEEPLINK,
-        chatSchemes.PREFIX_HTTPS,
-      );
-    }
-
-    await Linking.openURL(_link);
+    await Linking.openURL(link);
   } else {
     console.log('\x1b[31m', `🐣️ openLink : cant open url ${link}`, '\x1b[0m');
   }

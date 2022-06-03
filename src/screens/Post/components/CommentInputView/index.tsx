@@ -1,7 +1,8 @@
 import React, {FC, useEffect, useRef} from 'react';
-import {Platform, View} from 'react-native';
+import {View} from 'react-native';
 import uuid from 'react-native-uuid';
 import {useDispatch} from 'react-redux';
+
 import CommentInput, {
   ICommentInputSendParam,
 } from '~/beinComponents/inputs/CommentInput';
@@ -62,7 +63,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     replying?.comment?.actor || replying?.parentComment?.actor;
   const replyTargetUserId = replyTargetUser?.id;
   let replyTargetName = replyTargetUser?.fullname;
-  if (replyTargetUserId === Number(userId)) {
+  if (replyTargetUserId === userId) {
     replyTargetName = t('post:label_yourself');
   }
 
@@ -80,13 +81,10 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   useEffect(() => {
     if (replyTargetUserId && replyTargetUser?.username) {
       let content = `@${replyTargetUser?.username} `;
-      if (replyTargetUserId === Number(userId)) {
+      if (replyTargetUserId === userId) {
         content = '';
       }
-      // difference ref because of android use mention input children, web use prop value
-      Platform.OS === 'web'
-        ? _commentInputRef?.current?.setText?.(content)
-        : mentionInputRef?.current?.setContent(content);
+      mentionInputRef?.current?.setContent(content);
     }
   }, [replyTargetName, replyTargetUserId]);
 
@@ -109,14 +107,16 @@ const CommentInputView: FC<CommentInputViewProps> = ({
       if (sendData?.image) {
         images.push(sendData?.image);
       }
+
       const media: IPostMedia = {
         images,
       };
+
       const preComment: ICommentData = {
         status: 'pending',
         localId: uuid.v4(), // localId is used for finding and updating comment data from API later
         actor: {
-          id: Number(userId),
+          id: userId,
           username,
           fullname,
           avatar,
@@ -130,6 +130,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         createdAt: new Date().toISOString(),
         parentCommentId: replyTargetId || defaultReplyTargetId,
       };
+
       const payload: IPayloadCreateComment = {
         postId,
         parentCommentId: replyTargetId || defaultReplyTargetId,
@@ -140,6 +141,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         viewMore,
         preComment,
       };
+
       dispatch(postActions.postCreateNewComment(payload));
     }
   };
@@ -152,7 +154,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   return (
     <View>
       <MentionInput
-        disableAutoComplete={Platform.OS !== 'web'}
+        disableAutoComplete={true}
         groupIds={groupIds}
         ComponentInput={CommentInput}
         mentionInputRef={mentionInputRef}
@@ -160,9 +162,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
           commentInputRef: _commentInputRef,
           value: content,
           autoFocus: autoFocus,
-          HeaderComponent:
-            ((!!showHeader || Platform.OS === 'web') && <ReplyingView />) ||
-            null,
+          HeaderComponent: (!!showHeader && <ReplyingView />) || null,
           loading: loading,
           isHandleUpload: true,
           placeholder: t('post:placeholder_write_comment'),
@@ -170,7 +170,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
           onPressSend,
         }}
         autocompleteProps={{
-          modalPosition: Platform.OS === 'web' ? 'top' : 'above-keyboard',
+          modalPosition: 'above-keyboard',
         }}
       />
     </View>

@@ -187,6 +187,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
         style={[
           {
             height: contentHeight,
+            backgroundColor: theme.colors.background,
           },
           isExpanded && {
             ...styles.expanded,
@@ -254,8 +255,10 @@ const createStyle = (theme: ITheme) => {
     stickerView: {
       borderTopWidth: 1,
       borderTopColor: colors.borderDivider,
-      backgroundColor: colors.background,
-      height: '100%',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
     },
     animatedViewExpanded: {
       height: '100%',

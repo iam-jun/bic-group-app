@@ -196,7 +196,6 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
               );
               rootNavigation.goBack();
             },
-            stretchOnWeb: true,
           }),
         );
       } else {
@@ -221,7 +220,6 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
             cancelLabel: t('common:btn_discard'),
             confirmLabel: t('post:create_post:btn_keep_selecting'),
             onDismiss: () => rootNavigation.goBack(),
-            stretchOnWeb: true,
           }),
         );
       } else {
@@ -238,7 +236,6 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
             cancelLabel: t('common:btn_discard'),
             confirmLabel: t('post:create_post:btn_keep_edit'),
             onDismiss: () => rootNavigation.goBack(),
-            stretchOnWeb: true,
           }),
         );
       } else {

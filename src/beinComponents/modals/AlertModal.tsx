@@ -14,7 +14,6 @@ import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import useModal from '~/hooks/modal';
 import * as actions from '~/store/modal/actions';
-import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import Icon from '../Icon';
 import TextInput from '../inputs/TextInput';
@@ -53,7 +52,6 @@ const AlertModal: React.FC<AlertModalProps> = ({
     CancelBtnComponent,
     showCloseButton,
     style: alertModalStyle,
-    stretchOnWeb,
     children = null as React.ReactNode,
     titleProps,
     buttonViewStyle,
@@ -86,12 +84,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
       visible={visible}
       dismissable={isDismissible}
       onDismiss={_onDismiss}
-      contentContainerStyle={StyleSheet.flatten([
-        styles.modal,
-        stretchOnWeb && Platform.OS === 'web' && styles.stretchModal,
-        style,
-        alertModalStyle,
-      ])}
+      contentContainerStyle={[styles.modal, style, alertModalStyle]}
       {...props}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -168,9 +161,8 @@ const AlertModal: React.FC<AlertModalProps> = ({
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, dimension, spacing} = theme;
+  const {colors, spacing} = theme;
   const defaultAlertWidth = 320;
-  const alertWidth = (100 * defaultAlertWidth) / deviceDimensions.phone;
 
   return StyleSheet.create({
     root: {
@@ -183,11 +175,6 @@ const themeStyles = (theme: ITheme) => {
       borderColor: colors.borderCard,
       borderRadius: 6,
       alignSelf: 'center',
-    },
-    stretchModal: {
-      width: alertWidth + '%',
-      minWidth: defaultAlertWidth,
-      maxWidth: dimension.maxNewsfeedWidth,
     },
     modalContainer: {
       paddingHorizontal: spacing?.padding.extraLarge,

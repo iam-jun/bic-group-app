@@ -7,7 +7,6 @@ import TextInput, {TextInputProps} from './TextInput';
 interface Props extends TextInputProps {
   useFormData: IObject<any>;
   validateValue: (text: string) => void;
-  loading?: boolean;
   name: string;
   rules: any;
   defaultValue?: any;
@@ -23,7 +22,6 @@ interface Props extends TextInputProps {
 const TextInputController: React.FC<Props> = ({
   useFormData,
   validateValue,
-  loading,
   name,
   rules,
   defaultValue,
@@ -57,7 +55,7 @@ const TextInputController: React.FC<Props> = ({
       placeholder={placeholder}
       error={errors?.code}
       value={value}
-      editable={!loading}
+      // editable={!loading}
       onChangeText={text => {
         onChange(text.trim());
         validateValue(text);

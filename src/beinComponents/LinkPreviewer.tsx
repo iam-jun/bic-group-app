@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Image from '~/beinComponents/Image';
@@ -81,8 +81,8 @@ const createStyle = (theme: ITheme) => {
       marginBottom: spacing.margin.base,
     },
     thumbnail: {
-      width: Platform.OS === 'web' ? '100%' : scaleSize(307),
-      height: Platform.OS === 'web' ? 200 : scaleSize(225.5),
+      width: scaleSize(307),
+      height: scaleSize(225.5),
     },
     metadata: {
       paddingHorizontal: spacing.padding.small,

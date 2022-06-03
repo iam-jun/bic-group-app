@@ -5,14 +5,7 @@ import React, {
   useState,
   useImperativeHandle,
 } from 'react';
-import {
-  StyleSheet,
-  View,
-  TextInput,
-  StyleProp,
-  ViewStyle,
-  Platform,
-} from 'react-native';
+import {StyleSheet, View, TextInput, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -128,11 +121,6 @@ const createStyles = (theme: ITheme) => {
       alignItems: 'center',
     },
     searchIcon: {
-      ...Platform.select({
-        web: {
-          marginTop: 3,
-        },
-      }),
       marginRight: spacing.margin.small,
     },
     textInput: {

@@ -15,7 +15,7 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 
 export interface ButtonMarkAsReadProps {
   style?: StyleProp<ViewStyle>;
-  postId: number;
+  postId: string;
   isImportant?: boolean;
   expireTime?: string | null;
   markedReadPost: boolean;

@@ -216,7 +216,7 @@ const postActions = {
     payload,
   }),
   showPostAudiencesBottomSheet: (payload: {
-    postId: number;
+    postId: string;
     fromStack: string;
   }) => ({
     type: postTypes.SHOW_POST_AUDIENCES_BOTTOM_SHEET,

@@ -1,37 +1,33 @@
-import React, {useEffect, Fragment, useState} from 'react';
-import {View, StyleSheet, Platform} from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
+import {isEmpty} from 'lodash';
+import React, {Fragment, useEffect} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
-import {isEmpty} from 'lodash';
-import {useFocusEffect} from '@react-navigation/native';
-
-import {ITheme} from '~/theme/interfaces';
-import {useUserIdAuth} from '~/hooks/auth';
-import groupsActions from '~/screens/Groups/redux/actions';
-import {useKeySelector} from '~/hooks/selector';
-import groupsKeySelector from '../redux/keySelector';
-import {groupPrivacy} from '~/constants/privacyTypes';
-import groupJoinStatus from '~/constants/groupJoinStatus';
-import NoGroupFound from '~/screens/Groups/GroupDetail/components/NoGroupFound';
-import GroupContent from '~/screens/Groups/GroupDetail/components/GroupContent';
-import {useRootNavigation} from '~/hooks/navigation';
-
-import GroupTopBar from './components/GroupTopBar';
 import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
-import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
-import {deviceDimensions} from '~/theme/dimension';
-import GroupPrivateWelcome from './components/GroupPrivateWelcome';
+import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
+import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import groupJoinStatus from '~/constants/groupJoinStatus';
+import {groupPrivacy} from '~/constants/privacyTypes';
+import {useUserIdAuth} from '~/hooks/auth';
+import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
 import {rootSwitch} from '~/router/stack';
+import GroupContent from '~/screens/Groups/GroupDetail/components/GroupContent';
+import NoGroupFound from '~/screens/Groups/GroupDetail/components/NoGroupFound';
+import groupsActions from '~/screens/Groups/redux/actions';
+import {ITheme} from '~/theme/interfaces';
+import groupsKeySelector from '../redux/keySelector';
+import GroupPrivateWelcome from './components/GroupPrivateWelcome';
+import GroupTopBar from './components/GroupTopBar';
 
 const GroupDetail = (props: any) => {
   const params = props.route.params;
   const groupId = params?.groupId;
 
-  const [viewWidth, setViewWidth] = useState<number>(deviceDimensions.phone);
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
@@ -51,7 +47,7 @@ const GroupDetail = (props: any) => {
   const {rootNavigation} = useRootNavigation();
 
   useFocusEffect(() => {
-    if (!userId && Platform.OS === 'web') {
+    if (!userId) {
       rootNavigation.replace(rootSwitch.authStack);
     }
   });
@@ -86,18 +82,16 @@ const GroupDetail = (props: any) => {
     // visitors can only see "About" of Private group
 
     if (!isMember && privacy === groupPrivacy.private) {
-      return <GroupPrivateWelcome parentWidth={viewWidth} />;
+      return <GroupPrivateWelcome />;
     }
 
-    return (
-      <GroupContent getGroupPosts={getGroupPosts} parentWidth={viewWidth} />
-    );
+    return <GroupContent getGroupPosts={getGroupPosts} />;
   };
 
   const renderPlaceholder = () => {
     return (
       <View style={styles.contentContainer} testID="group_detail.placeholder">
-        <View style={styles.placeholder}>
+        <View>
           <GroupProfilePlaceholder disableRandom />
           <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
           <PostViewPlaceholder disableRandom />
@@ -114,10 +108,7 @@ const GroupDetail = (props: any) => {
         <Header>
           <GroupTopBar />
         </Header>
-        <View
-          testID="group_detail.content"
-          style={styles.contentContainer}
-          onLayout={event => setViewWidth(event.nativeEvent.layout.width)}>
+        <View testID="group_detail.content" style={styles.contentContainer}>
           {renderGroupContent()}
         </View>
       </Fragment>
@@ -139,7 +130,7 @@ const GroupDetail = (props: any) => {
 
 const themeStyles = (theme: ITheme) => {
   const insets = useSafeAreaInsets();
-  const {colors, dimension, spacing} = theme;
+  const {colors, spacing} = theme;
   return StyleSheet.create({
     screenContainer: {
       paddingTop: insets.top,
@@ -147,21 +138,11 @@ const themeStyles = (theme: ITheme) => {
     },
     contentContainer: {
       flex: 1,
-      backgroundColor:
-        Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
+      backgroundColor: colors.bgSecondary,
     },
     headerCreatePost: {
       marginTop: spacing.margin.small,
       marginBottom: spacing.margin.large,
-    },
-    placeholder: {
-      ...Platform.select({
-        web: {
-          width: '100%',
-          maxWidth: dimension.maxNewsfeedWidth,
-          alignSelf: 'center',
-        },
-      }),
     },
   });
 };

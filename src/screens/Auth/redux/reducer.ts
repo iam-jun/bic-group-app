@@ -1,8 +1,6 @@
 import _ from 'lodash';
-import {Platform} from 'react-native';
 import {forgotPasswordStages} from '~/constants/authConstants';
 import {ActionTypes} from '~/utils';
-import {setChatAuthenticationInfo} from '~/utils/common';
 import types from './types';
 
 export const authInitState = {
@@ -83,12 +81,6 @@ function authReducer(state = authInitState, action: any = {}) {
       });
     }
     case ActionTypes.SaveAuthTokens: {
-      if (Platform.OS === 'web') {
-        const user = state?.user as any;
-        const username = user?.username;
-        const exp = user?.signInUserSession?.idToken?.payload?.exp;
-        username && exp && setChatAuthenticationInfo(username, exp);
-      }
       return _.merge({}, state, {
         feed: {
           accessToken: action.payload.feedAccessToken,

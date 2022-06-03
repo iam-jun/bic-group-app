@@ -5,7 +5,6 @@ import {
   AppState,
   Image,
   Keyboard,
-  Platform,
   StyleSheet,
   TouchableOpacity,
   TouchableWithoutFeedback,
@@ -36,7 +35,6 @@ import {
   getUserFromSharedPreferences,
   isAppInstalled,
 } from '~/services/sharePreferences';
-import {getUserEmailFromChatCookie} from '~/utils/cookie';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 import TextInputController from '~/beinComponents/inputs/TextInputController';
 import {getEnv} from '~/utils/env';
@@ -55,10 +53,8 @@ const SignIn = () => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
 
-  const isWeb = Platform.OS === 'web';
   const useFormData = useForm();
   const {
-    control,
     formState: {errors},
     trigger,
     setError,
@@ -80,15 +76,8 @@ const SignIn = () => {
       checkAuthSessions,
     );
 
-    if (isWeb) {
-      document.addEventListener('visibilitychange', checkAuthSessions);
-    }
-
     return () => {
       appStateChangeEvent.remove();
-      if (isWeb) {
-        document.removeEventListener('visibilitychange', checkAuthSessions);
-      }
     };
   }, []);
 
@@ -113,11 +102,6 @@ const SignIn = () => {
   }, [signingInError]);
 
   const checkAuthSessions = async () => {
-    if (isWeb) {
-      checkChatWebLogin();
-      return;
-    }
-
     const isInstalled = await isAppInstalled();
     if (isInstalled) {
       const user = await getUserFromSharedPreferences();
@@ -127,14 +111,6 @@ const SignIn = () => {
       setValue('email', '');
       setAuthSessions(null);
     }
-  };
-
-  const checkChatWebLogin = () => {
-    const userEmail = getUserEmailFromChatCookie();
-    setValue('email', userEmail);
-
-    const newAuthSessions = userEmail === '' ? {} : {email: userEmail};
-    setAuthSessions(newAuthSessions);
   };
 
   const clearAllErrors = () => {
@@ -191,7 +167,7 @@ const SignIn = () => {
   };
 
   const hideKeyboard = () => {
-    !isWeb && Keyboard.dismiss();
+    Keyboard.dismiss();
   };
 
   const goToForgotPassword = () =>
@@ -230,17 +206,14 @@ const SignIn = () => {
                 clearFieldError('email');
                 checkDisableSignIn();
               }}
-              label={
-                !isWeb && !loading ? t('auth:input_label_email') : undefined
-              }
-              placeholder={
-                !isWeb ? 'sample@email.com' : t('auth:input_label_email')
-              }
+              label={!loading ? t('auth:input_label_email') : undefined}
+              placeholder={'sample@email.com'}
               keyboardType="email-address"
               autoCapitalize="none"
               style={styles.inputEmail}
-              onSubmitEditing={onSubmitEmail}
               helperContent={signingInError}
+              disabled={!!authSessions || loading}
+              onSubmitEditing={onSubmitEmail}
             />
             <PasswordInputController
               ref={inputPasswordRef}
@@ -279,14 +252,13 @@ const SignIn = () => {
                 },
               }}
               disableInput={loading}
-              label={
-                !isWeb && !loading ? t('auth:input_label_password') : undefined
-              }
+              label={!loading ? t('auth:input_label_password') : undefined}
               placeholder={t('auth:input_label_password')}
               validateValue={() => {
                 clearFieldError('password');
                 checkDisableSignIn();
               }}
+              onSubmitEditing={onSignIn}
             />
             <View style={styles.forgotButton}>
               <TouchableOpacity
@@ -348,11 +320,6 @@ const themeStyles = (theme: ITheme) => {
       alignContent: 'center',
       width: '100%',
       maxWidth: 375,
-      ...Platform.select({
-        web: {
-          paddingTop: 15,
-        },
-      }),
     },
     flex1: {flex: 1},
     logo: {

@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, Platform} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -186,11 +186,6 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     groupInfo: {
       flexDirection: 'row',
       alignItems: 'center',
-      ...Platform.select({
-        web: {
-          marginTop: spacing.margin.small,
-        },
-      }),
     },
     nameHeader: {},
     btnGroupAction: {

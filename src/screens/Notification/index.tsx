@@ -1,6 +1,6 @@
 import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
@@ -287,7 +287,6 @@ const Notification = () => {
         <ListView
           listRef={listRef}
           style={styles.list}
-          containerStyle={styles.listContainer}
           isFullView
           renderItem={renderItem}
           renderItemSeparator={() => (
@@ -324,9 +323,6 @@ const themeStyles = (theme: ITheme) => {
       backgroundColor: colors.background,
     },
     list: {},
-    listContainer: {
-      marginHorizontal: Platform.OS === 'web' ? spacing.margin.small : 0,
-    },
     listFooter: {
       height: 150,
       justifyContent: 'center',

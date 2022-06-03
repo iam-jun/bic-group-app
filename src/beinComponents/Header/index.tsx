@@ -1,39 +1,33 @@
-import React, {useEffect, useRef, useState, useImperativeHandle} from 'react';
+import React, {useEffect, useImperativeHandle, useRef, useState} from 'react';
 import {
-  View,
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
-  Platform,
-  TouchableOpacity,
-  DeviceEventEmitter,
   BackHandler,
-  //   useWindowDimensions,
+  DeviceEventEmitter,
+  Platform,
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-
 import Animated, {
+  interpolate,
   useAnimatedStyle,
   useSharedValue,
-  interpolate,
   withTiming,
 } from 'react-native-reanimated';
-
-import {ITheme} from '~/theme/interfaces';
-import {deviceDimensions} from '~/theme/dimension';
-import {IconType} from '~/resources/icons';
-
-import Text, {TextProps} from '~/beinComponents/Text';
-import Icon, {IconProps} from '~/beinComponents/Icon';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button';
-import {ImageProps} from '../Image';
-import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
-import useWindowDimensions from '~/hooks/windowSize';
-import IconChat from '../IconChat';
+import Icon, {IconProps} from '~/beinComponents/Icon';
+import Text, {TextProps} from '~/beinComponents/Text';
 import {useRootNavigation} from '~/hooks/navigation';
+import {IconType} from '~/resources/icons';
+import {ITheme} from '~/theme/interfaces';
+import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
+import IconChat from '../IconChat';
+import {ImageProps} from '../Image';
 
 export interface HeaderProps {
   headerRef?: any;
@@ -57,7 +51,6 @@ export interface HeaderProps {
   menuIcon?: IconType;
   onPressMenu?: (e: any) => void;
   hideBack?: boolean;
-  hideBackOnLaptop?: boolean;
   onPressBack?: () => void;
   disableInsetTop?: boolean;
   style?: StyleProp<ViewStyle>;
@@ -97,7 +90,6 @@ const Header: React.FC<HeaderProps> = ({
   menuIcon,
   onPressMenu,
   hideBack,
-  hideBackOnLaptop,
   onPressBack,
   disableInsetTop,
   style,
@@ -124,8 +116,6 @@ const Header: React.FC<HeaderProps> = ({
   const {spacing, dimension, colors} = theme;
   const styles = createStyle(theme);
   const insets = useSafeAreaInsets();
-  const windowDimension = useWindowDimensions();
-  const isLaptop = windowDimension.width >= deviceDimensions.laptop;
 
   const showValue = useSharedValue(1);
   const scrollY = useSharedValue(0);
@@ -261,7 +251,7 @@ const Header: React.FC<HeaderProps> = ({
             paddingRight: spacing.padding.small,
             paddingLeft: spacing.padding.small,
           }}>
-          {!hideBack && !(hideBackOnLaptop && isLaptop) && (
+          {!hideBack && (
             <Icon
               testID="header.back"
               icon="iconBack"

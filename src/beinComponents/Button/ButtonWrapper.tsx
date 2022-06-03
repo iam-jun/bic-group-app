@@ -68,7 +68,6 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
 
   const renderIcon = (iconSource: any, iconProps: IconProps | undefined) => {
     if (iconSource) {
-      // In order to fix the title on web is pushed beneath the avg line
       // @ts-ignore
       const size = textStyles[textVariant].lineHeight;
 

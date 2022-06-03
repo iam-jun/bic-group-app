@@ -11,7 +11,7 @@ import i18next from 'i18next';
 
 interface CommunityItemProps {
   item: ICommunity;
-  onPressCommunities?: (community: ICommunity) => void;
+  onPressCommunities?: (communityId: number) => void;
   onPressMenu?: () => void;
 }
 
@@ -24,7 +24,7 @@ const CommunityItem = ({
   const {colors} = theme;
   const styles = createStyles(theme);
 
-  const {name, icon, user_count, privacy} = item || {};
+  const {id, name, icon, user_count, privacy} = item || {};
   const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
   const {icon: privacyIcon, title: privacyTitle}: any = privacyData || {};
 
@@ -60,7 +60,7 @@ const CommunityItem = ({
       title={name}
       titleProps={{variant: 'h5'}}
       testID="community_item"
-      onPress={() => onPressCommunities?.(item)}
+      onPress={() => onPressCommunities?.(id)}
       ContentComponent={renderContentComponent()}
       onPressMenu={onPressMenu}
     />
