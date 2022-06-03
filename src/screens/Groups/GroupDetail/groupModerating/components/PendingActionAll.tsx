@@ -1,10 +1,9 @@
 import React, {useRef} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import Button from '~/beinComponents/Button';
-import Divider from '~/beinComponents/Divider';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import modalActions, {clearToastMessage} from '~/store/modal/actions';
@@ -15,6 +14,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IToastMessage} from '~/interfaces/common';
+import ButtonApproveDeclineAllRequests from '~/beinComponents/ButtonApproveDeclineAllRequests';
 
 interface PendingActionAllProps {
   groupId: number;
@@ -23,7 +23,6 @@ interface PendingActionAllProps {
 
 const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const timeOutRef = useRef<any>();
@@ -128,50 +127,12 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
   };
 
   return (
-    <View style={[styles.container, style]}>
-      <Divider />
-      <View style={styles.buttons}>
-        <Button.Secondary
-          testID="pending_action_all.btn_decline_all"
-          style={styles.buttonDecline}
-          onPress={onPressDeclineAll}
-          useI18n>
-          common:btn_decline_all
-        </Button.Secondary>
-        <Button.Secondary
-          highEmphasis
-          testID="pending_action_all.btn_approve_all"
-          style={styles.buttonApprove}
-          color={theme.colors.primary6}
-          onPress={onPressApproveAll}
-          useI18n>
-          common:btn_approve_all
-        </Button.Secondary>
-      </View>
-    </View>
+    <ButtonApproveDeclineAllRequests
+      style={style}
+      onPressDeclineAll={onPressDeclineAll}
+      onPressApproveAll={onPressApproveAll}
+    />
   );
-};
-
-const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
-
-  return StyleSheet.create({
-    container: {
-      backgroundColor: colors.background,
-      marginBottom: spacing.margin.large,
-    },
-    buttons: {
-      flexDirection: 'row',
-      margin: spacing.margin.large,
-    },
-    buttonDecline: {
-      flex: 1,
-      marginRight: spacing.margin.small,
-    },
-    buttonApprove: {
-      flex: 1,
-    },
-  });
 };
 
 export default PendingActionAll;
