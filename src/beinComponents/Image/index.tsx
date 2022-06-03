@@ -159,16 +159,6 @@ const Image: React.FC<ImageProps> = ({
             />
           </React.Fragment>
         ),
-        web: (
-          <ImageComponent
-            source={_source}
-            {...props}
-            style={StyleSheet.flatten([
-              useOnLayoutSize ? layoutSizeStyle : {},
-              style,
-            ])}
-          />
-        ),
       })}
     </View>
   );

@@ -16,6 +16,30 @@ describe('JoinCancelButton', () => {
     expect(buttonComp).toBeDefined();
   });
 
+  it('should show Join button when user has not joined the community', () => {
+    const state = {...initialState};
+    // @ts-ignore
+    state.groups.communityDetail = {...communityDetailData, join_status: 1};
+    const store = createTestStore(state);
+    const wrapper = renderWithRedux(<JoinCancelButton />, store);
+    const buttonComp = wrapper.getByTestId('join_cancel_button.join');
+    expect(buttonComp).toBeDefined();
+  });
+
+  it('should show Cancel request button when user has requested to join the community', () => {
+    const state = {...initialState};
+    // @ts-ignore
+    state.groups.communityDetail = {
+      ...communityDetailData,
+      join_status: 3,
+      privacy: 'PRIVATE',
+    };
+    const store = createTestStore(state);
+    const wrapper = renderWithRedux(<JoinCancelButton />, store);
+    const buttonComp = wrapper.getByTestId('join_cancel_button.cancel');
+    expect(buttonComp).toBeDefined();
+  });
+
   it('should not show button when user is already a member', () => {
     const state = {...initialState};
     // @ts-ignore

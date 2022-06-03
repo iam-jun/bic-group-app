@@ -17,7 +17,7 @@ import VideoPlayer from '~/beinComponents/VideoPlayer';
 import UploadingFile from '~/beinComponents/UploadingFile';
 
 export interface PostViewContentProps {
-  postId: number;
+  postId: string;
   content?: string;
   images?: IActivityDataImage[];
   videos?: any[];

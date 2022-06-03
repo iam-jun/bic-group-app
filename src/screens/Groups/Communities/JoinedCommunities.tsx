@@ -23,7 +23,7 @@ import {ICommunity} from '~/interfaces/ICommunity';
 
 export interface JoinedCommunitiesProps {
   style?: StyleProp<ViewStyle>;
-  onPressCommunities?: (community: ICommunity) => void;
+  onPressCommunities?: (communityId: number) => void;
   onPressDiscover?: () => void;
 }
 

@@ -1,23 +1,20 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, TextInput, Platform} from 'react-native';
-import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
 import {useNavigation} from '@react-navigation/core';
 import i18next from 'i18next';
+import React, {useEffect, useState} from 'react';
+import {StyleSheet, TextInput, View} from 'react-native';
+import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
-import {ITheme} from '~/theme/interfaces';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
-import groupsActions from '../../redux/actions';
-import {fontFamilies} from '~/theme/fonts';
 import {useKeySelector} from '~/hooks/selector';
+import {fontFamilies} from '~/theme/fonts';
+import {ITheme} from '~/theme/interfaces';
+import groupsActions from '../../redux/actions';
 import groupsKeySelector from '../../redux/keySelector';
 
-const EditGroupDescription = (props: any) => {
-  const params = props.route.params;
-  const {groupId} = params || {};
-
+const EditGroupDescription = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
@@ -29,11 +26,6 @@ const EditGroupDescription = (props: any) => {
   const _onChangeText = (value: string) => {
     setText(value);
   };
-
-  useEffect(() => {
-    // in case for refreshing page on web
-    Platform.OS === 'web' && dispatch(groupsActions.getGroupDetail(groupId));
-  }, [groupId]);
 
   useEffect(() => {
     !text && setText(description);
@@ -67,7 +59,6 @@ const EditGroupDescription = (props: any) => {
           useI18n: true,
         }}
         onPressButton={onSave}
-        hideBackOnLaptop={navigation.canGoBack() ? false : true}
       />
 
       <View style={styles.content}>

@@ -4,7 +4,6 @@ import {
   StyleSheet,
   SectionList,
   ActivityIndicator,
-  Platform,
   Pressable,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
@@ -63,10 +62,7 @@ const _GroupMembers = (props: any) => {
   );
 
   const getGroupProfile = () => {
-    // in case for refreshing page on web
-    Platform.OS === 'web' &&
-      groupId &&
-      dispatch(groupsActions.getGroupDetail(groupId));
+    dispatch(groupsActions.getGroupDetail(groupId));
   };
 
   const getMembers = () => {
@@ -230,11 +226,7 @@ const _GroupMembers = (props: any) => {
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.background}>
-      <Header
-        titleTextProps={{useI18n: true}}
-        title={'groups:title_members'}
-        hideBackOnLaptop={rootNavigation?.canGoBack ? false : true}
-      />
+      <Header titleTextProps={{useI18n: true}} title={'groups:title_members'} />
       <View style={styles.searchBar}>
         <Pressable
           testID="group_members.search"

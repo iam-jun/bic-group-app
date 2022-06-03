@@ -98,12 +98,6 @@ export const deviceDimensions = {
   phone: 375,
   smallTablet: 600,
   bigTablet: 768,
-  laptop: 1024,
-  desktop: 1280,
-  desktopBigger: 1440,
-  totalCols: 10,
-  leftCol: 3,
-  centerAndRightCol: 7,
 };
 
 /* Used for button size width (short, medium, long, max) */

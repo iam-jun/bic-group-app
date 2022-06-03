@@ -23,7 +23,6 @@ export const modalInitState = {
     isDismissible: true,
     showCloseButton: false,
     style: {},
-    stretchOnWeb: false,
     children: null as React.ReactNode,
   },
   alertNewFeature: {

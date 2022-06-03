@@ -1,15 +1,14 @@
 import React, {useCallback} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {useDispatch} from 'react-redux';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+import {useBaseHook} from '~/hooks';
 import {ICommentData, IReaction} from '~/interfaces/IPost';
-import postActions from '~/screens/Post/redux/actions';
 import CommentView from '~/screens/Post/components/CommentView';
 import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
-import {useBaseHook} from '~/hooks';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
+import postActions from '~/screens/Post/redux/actions';
+import {ITheme} from '~/theme/interfaces';
 
 export interface CommentItemProps {
   postId: string;
@@ -42,7 +41,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
   const styles = React.useMemo(() => createStyle(theme), [theme]);
 
   const _onPressReply = useCallback(() => {
-    if (Platform.OS === 'web' || !isNotReplyingComment) {
+    if (!isNotReplyingComment) {
       dispatch(
         postActions.setPostDetailReplyingComment({
           comment: commentData,
@@ -58,16 +57,11 @@ const CommentItem: React.FC<CommentItemProps> = ({
   }, [commentData]);
 
   const childCommentCount = commentData?.totalReply || 0;
-  const loadedChildComment = commentData?.child?.list?.length || 0;
-  const childCommentLeft =
-    !!onPressLoadMore && Platform.OS !== 'web'
-      ? childCommentCount - 1
-      : childCommentCount - loadedChildComment;
+
   const idLessThan = commentData?.child?.list?.[0]?.id;
-  const showLoadPrevious =
-    !!onPressLoadMore && Platform.OS !== 'web'
-      ? childCommentCount - 1 > 0
-      : commentData?.child?.meta?.hasNextPage || false;
+  const showLoadPrevious = !!onPressLoadMore
+    ? childCommentCount - 1 > 0
+    : commentData?.child?.meta?.hasNextPage || false;
 
   return (
     <View style={commentParent ? styles.containerChild : styles.container}>

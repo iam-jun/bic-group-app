@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import i18next from 'i18next';
 import {View, StyleSheet, ScrollView, TextInput, Keyboard} from 'react-native';
-import {useTheme, TextInput as TextInputPaper} from 'react-native-paper';
+import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -12,7 +12,6 @@ import Toggle from '~/beinComponents/SelectionControl/Toggle';
 import Text from '~/beinComponents/Text';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Div from '~/beinComponents/Div';
 
 import {ITheme} from '~/theme/interfaces';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -24,7 +23,7 @@ import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '../../redux/keySelector';
 import {showHideToastMessage} from '~/store/modal/actions';
 import {IToastMessage} from '~/interfaces/common';
-import {isEmpty, isEqual} from 'lodash';
+import {isEmpty} from 'lodash';
 import Button from '~/beinComponents/Button';
 
 const AddWork = () => {
@@ -371,9 +370,7 @@ const AddWork = () => {
       </ScrollView>
 
       {selectingStartDate && (
-        <Div
-          testID="add_work.start_date.bottom_sheet"
-          className="react-datepicker-container">
+        <View testID="add_work.start_date.bottom_sheet">
           <DateTimePicker
             isVisible={selectingStartDate}
             date={new Date()}
@@ -381,13 +378,11 @@ const AddWork = () => {
             onConfirm={onSetStartDate}
             onCancel={onStartDateEditClose}
           />
-        </Div>
+        </View>
       )}
 
       {selectingEndDate && (
-        <Div
-          testID="add_work.end_date.bottom_sheet"
-          className="react-datepicker-container">
+        <View testID="add_work.end_date.bottom_sheet">
           <DateTimePicker
             isVisible={selectingEndDate}
             date={new Date()}
@@ -395,7 +390,7 @@ const AddWork = () => {
             onConfirm={onSetEndDate}
             onCancel={onEndDateEditClose}
           />
-        </Div>
+        </View>
       )}
     </ScreenWrapper>
   );

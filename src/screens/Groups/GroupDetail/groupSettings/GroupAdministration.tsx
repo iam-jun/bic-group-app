@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, StyleSheet, TouchableOpacity, Platform} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -180,7 +180,7 @@ const themeStyles = (theme: ITheme) => {
       borderRadius: spacing.borderRadius.base,
     },
     settingsContainer: {
-      marginHorizontal: Platform.OS === 'web' ? spacing.margin.small : 0,
+      marginHorizontal: 0,
     },
     headerTitle: {
       marginHorizontal: spacing.margin.large,

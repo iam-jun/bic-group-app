@@ -1,4 +1,4 @@
-import {debounce, isEmpty} from 'lodash';
+import {debounce} from 'lodash';
 import React, {useEffect, useRef} from 'react';
 import {
   ActivityIndicator,
@@ -18,10 +18,7 @@ import {
   completeMention,
   ICursorPositionChange,
 } from '../../helper';
-import actions from '../../redux/actions';
 import AtMentionItem from './AtMentionItem';
-
-const DEFAULT_INDEX = -1;
 
 type Props = Partial<AutocompleteProps>;
 
@@ -32,7 +29,7 @@ const AtMention = ({
 }: Props) => {
   const dispatch = useDispatch();
 
-  const {data, loading, highlightIndex} = useKeySelector('mentionInput');
+  const {data, loading} = useKeySelector('mentionInput');
 
   const text = useRef('');
 
@@ -53,16 +50,6 @@ const AtMention = ({
     };
   }, []);
 
-  useEffect(() => {
-    const listener = DeviceEventEmitter.addListener(
-      'autocomplete-on-key-press',
-      handleMentionKey,
-    );
-    return () => {
-      listener?.remove?.();
-    };
-  }, [data, highlightIndex]);
-
   const onCursorPositionChange = debounce(
     ({position, value, groupIds}: ICursorPositionChange) => {
       text.current = value;
@@ -73,38 +60,6 @@ const AtMention = ({
 
   const _completeMention = (item: any) => {
     completeMention({item, dispatch, text: text.current, cursorPosition});
-  };
-
-  const handleMentionKey = (event: any) => {
-    if (!isEmpty(data)) {
-      event.preventDefault();
-      const {key} = event || {};
-      if (key === 'Enter' && data?.[highlightIndex]) {
-        _completeMention(data[highlightIndex]);
-        return;
-      }
-      const step = key === 'ArrowUp' ? -1 : 1;
-      const min = 0;
-      let newIndex =
-        highlightIndex === DEFAULT_INDEX ? min : highlightIndex + step;
-      if (newIndex >= data.length) {
-        newIndex = min;
-      }
-      if (newIndex < min) {
-        newIndex = data.length - 1;
-      }
-
-      const newHighlightItem: any = data?.[newIndex];
-
-      if (newIndex >= 0 && newIndex < data?.length) {
-        listRef.current?.scrollToIndex({
-          index: newIndex,
-          viewPosition: 0.5,
-        });
-      }
-      dispatch(actions.sethHighlightIndex(newIndex));
-      dispatch(actions.sethHighlightItem(newHighlightItem));
-    }
   };
 
   const renderEmpty = () => {

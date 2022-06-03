@@ -1,19 +1,16 @@
 import React from 'react';
-import {View, StyleSheet, Platform, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
-import Icon, {IconProps} from '~/beinComponents/Icon';
-import {IOption} from '~/interfaces/IOption';
-import Text from '~/beinComponents/Text';
-import Div from '~/beinComponents/Div';
-import {useKeySelector} from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import {NotificationsBadgeComponentProps} from '~/beinComponents/Badge/NotificationsBadge/NotificationsBadgeComponent';
+import Icon, {IconProps} from '~/beinComponents/Icon';
+import Text from '~/beinComponents/Text';
+import {useKeySelector} from '~/hooks/selector';
+import {IOption} from '~/interfaces/IOption';
+import postKeySelector from '~/screens/Post/redux/keySelector';
+import {ITheme} from '~/theme/interfaces';
 
 interface MenuItemProps extends IOption {
-  isActive?: boolean;
   RightComponent?: React.ReactNode | React.ReactElement;
   onPress?: () => void;
   disabled?: boolean;
@@ -32,7 +29,6 @@ const MenuItem: React.FC<MenuItemProps> = ({
   subTitle,
   style,
   type,
-  isActive = false,
   RightComponent,
   onPress,
   disabled,
@@ -58,25 +54,12 @@ const MenuItem: React.FC<MenuItemProps> = ({
     }
   }
 
-  let className = 'menu-item';
-  if (isActive) className = className + ` ${className}--active`;
-
-  if (disabled) className = '';
-
-  // TODO: remove cursor pointer on web when disabled is set to true
-  /**
-   * As it still render class cursor pointer although disabled state in TouchableOpacity is set to true
-   * However, in PrimaryItem.tsx still works with this approach, don't know why
-   */
   return (
-    <Div className={className}>
+    <View>
       <TouchableOpacity
         disabled={!isInternetReachable || disabled || !onPress}
         onPress={onPress}
         testID={testID}>
-        {Platform.OS === 'web' && isActive && (
-          <View style={styles.itemActiveIndicator} />
-        )}
         <View style={[styles.container, style]}>
           {icon && <Icon icon={icon} size={24} {...iconProps} />}
           <View style={styles.titleContainer}>
@@ -132,7 +115,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
           {RightComponent}
         </View>
       </TouchableOpacity>
-    </Div>
+    </View>
   );
 };
 
@@ -144,17 +127,7 @@ const themeStyles = (theme: ITheme) => {
       flexDirection: 'row',
       paddingVertical: spacing.padding.base,
       paddingHorizontal: spacing.padding.large,
-      borderRadius: Platform.OS === 'web' ? spacing.borderRadius.small : 0,
       alignItems: 'center',
-    },
-    itemActiveIndicator: {
-      width: 4,
-      height: 32,
-      position: 'absolute',
-      marginTop: 8,
-      backgroundColor: colors.primary5,
-      borderTopRightRadius: 6,
-      borderBottomRightRadius: 6,
     },
     titleContainer: {
       flex: 1,

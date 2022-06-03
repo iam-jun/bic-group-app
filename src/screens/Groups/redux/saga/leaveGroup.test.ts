@@ -8,6 +8,7 @@ import groupsDataHelper from '../../helper/GroupsDataHelper';
 import * as modalActions from '~/store/modal/actions';
 import {groupPrivacy} from '~/constants/privacyTypes';
 import {Platform as RNPlatform} from 'react-native';
+import groupJoinStatus from '~/constants/groupJoinStatus';
 
 describe('Leave Group Saga', () => {
   let Platform: any;
@@ -35,7 +36,7 @@ describe('Leave Group Saga', () => {
       .put(
         groupsActions.editDiscoverGroupItem({
           id: action.payload,
-          data: {join_status: 1},
+          data: {join_status: groupJoinStatus.visitor},
         }),
       )
       .call(navigationReplace)
@@ -65,7 +66,7 @@ describe('Leave Group Saga', () => {
       .put(
         groupsActions.editDiscoverGroupItem({
           id: action.payload,
-          data: {join_status: 1},
+          data: {join_status: groupJoinStatus.visitor},
         }),
       )
       .call(navigateToGroup, action.payload)

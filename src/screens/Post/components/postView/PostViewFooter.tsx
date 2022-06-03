@@ -1,19 +1,16 @@
 import React, {FC} from 'react';
-import {View, StyleSheet, Platform} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
-
-import Divider from '~/beinComponents/Divider';
-import {IconType} from '~/resources/icons';
-import Div from '~/beinComponents/Div';
-import Button from '~/beinComponents/Button';
-import * as modalActions from '~/store/modal/actions';
 import {useDispatch} from 'react-redux';
+
+import Button from '~/beinComponents/Button';
+import Divider from '~/beinComponents/Divider';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import {IReactionCounts} from '~/interfaces/IPost';
-import {blacklistReactions, ReactionType} from '~/constants/reactions';
-import appConfig from '~/configs/appConfig';
+import {IconType} from '~/resources/icons';
+import * as modalActions from '~/store/modal/actions';
+import {ITheme} from '~/theme/interfaces';
+import {validateReactionCount} from './helper';
 
 export interface PostViewFooterProps {
   labelButtonComment: string;
@@ -23,17 +20,6 @@ export interface PostViewFooterProps {
   onPressComment?: () => void;
   reactionCounts: IReactionCounts;
 }
-
-const validateReactionCount = (reactionCounts: any) => {
-  let count = 0;
-  Object.values(reactionCounts || {})?.map((reaction: any) => {
-    const key = Object.keys(reaction || {})?.[0];
-    if (!!key && !!reaction?.[key] && !blacklistReactions?.[key]) {
-      count++;
-    }
-  });
-  return count < appConfig.limitReactionCount;
-};
 
 const PostViewFooter: FC<PostViewFooterProps> = ({
   labelButtonComment,
@@ -45,7 +31,7 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
 }: PostViewFooterProps) => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
-  const {colors, spacing, dimension} = theme;
+  const {colors, dimension} = theme;
   const styles = createStyle(theme);
 
   const validReactionCount = validateReactionCount(reactionCounts);
@@ -57,51 +43,18 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
     }
   };
 
-  const onPressReact = (event: any) => {
+  const onPressReact = () => {
     const payload = {
       isOpen: true,
       ContentComponent: (
         <EmojiBoard
-          width={Platform.OS === 'web' ? 320 : dimension.deviceWidth}
+          width={dimension.deviceWidth}
           height={280}
           onEmojiSelected={onEmojiSelected}
         />
       ),
-      props: {
-        webModalStyle: {minHeight: undefined},
-        isContextMenu: true,
-        position: {x: event?.pageX, y: event?.pageY},
-        side: 'center',
-      },
     };
-
-    if (Platform.OS !== 'web') {
-      dispatch(modalActions.showModal(payload));
-      return;
-    }
-
-    // Handling show reaction bottom sheet on web
-    // @ts-ignore
-    event.target.measure((fx, fy, width, height, px, py) => {
-      const buttonReactPaddingBottom = spacing.padding.tiny || 4;
-      let x = px;
-      let y = py + height + buttonReactPaddingBottom;
-
-      /*
-      As target may be the label, not the whole button itself,
-      which causes the bottom sheet will render in the middle.
-      If pressing on the label, the childElementCount will equal 0.
-      */
-      if (event.target.childElementCount !== 0) {
-        x = x + width / 2;
-      } else {
-        // Move menu further down when pressing on label
-        y = y + buttonReactPaddingBottom * 1.5;
-      }
-      payload.props.position = {x, y};
-
-      dispatch(modalActions.showModal(payload));
-    });
+    dispatch(modalActions.showModal(payload));
   };
 
   const renderReactButtonItem = (
@@ -113,9 +66,7 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
     testID?: string,
   ) => {
     return (
-      <Div
-        className="button-react"
-        style={Platform.OS !== 'web' ? styles.buttonReactContainer : {}}>
+      <View style={styles.buttonReactContainer}>
         <Button
           testID={testID}
           useI18n
@@ -135,7 +86,7 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
           style={styles.buttonReact}>
           {title}
         </Button>
-      </Div>
+      </View>
     );
   };
 

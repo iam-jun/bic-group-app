@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {View, StyleSheet, Keyboard, Platform} from 'react-native';
+import {View, StyleSheet, Keyboard} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -21,7 +21,6 @@ const NewsfeedSearch: FC<NewsfeedSearchProps> = ({
 }: NewsfeedSearchProps) => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
 
@@ -58,11 +57,11 @@ const NewsfeedSearch: FC<NewsfeedSearchProps> = ({
 };
 
 const createStyle = (theme: ITheme, insets: any) => {
-  const {colors, spacing, dimension} = theme;
+  const {colors, dimension} = theme;
   return StyleSheet.create({
     container: {
       position: 'absolute',
-      top: Platform.OS === 'web' ? 0 : insets.top + dimension.headerHeight,
+      top: insets.top + dimension.headerHeight,
       bottom: 0,
       left: 0,
       right: 0,

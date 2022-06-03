@@ -28,7 +28,7 @@ const DiscoverGroups = ({route}: any) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
-  const {data, loading, canLoadMore} = useKeySelector(
+  const {data, items, loading, canLoadMore} = useKeySelector(
     groupsKeySelector.discoverGroups,
   );
 
@@ -69,11 +69,12 @@ const DiscoverGroups = ({route}: any) => {
   };
 
   const renderItem = ({item, index}: {item: number; index: number}) => {
+    const currentItem = items[item];
     return (
       <DiscoverItem
-        id={item}
+        item={currentItem}
         testID={`discover_groups_item_${index}`}
-        onPressGroup={onPressGroup}
+        onPressView={onPressGroup}
         onPressJoin={onPressJoin}
         onPressCancel={onPressCancel}
       />

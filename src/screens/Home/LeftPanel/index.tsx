@@ -1,5 +1,5 @@
 import React from 'react';
-import {DeviceEventEmitter, StyleSheet} from 'react-native';
+import {DeviceEventEmitter, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -7,9 +7,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import * as modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
-import {useKeySelector} from '~/hooks/selector';
 import {IconType} from '~/resources/icons';
-import Div from '~/beinComponents/Div';
 import {appScreens} from '~/configs/navigator';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 
@@ -19,8 +17,6 @@ const LeftPanel = () => {
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
-
-  const currentPath = useKeySelector('app.rootScreenName') || 'newsfeed';
 
   const onPressNewsfeed = () => {
     rootNavigation.navigate(homeStack.newsfeed);
@@ -38,7 +34,6 @@ const LeftPanel = () => {
   const renderItem = ({
     icon,
     title,
-    path,
     onPress,
     ...props
   }: {
@@ -48,18 +43,10 @@ const LeftPanel = () => {
     onPress?: () => void;
     [key: string]: any;
   }) => {
-    const isActive = path === currentPath;
-
     return (
-      <Div style={[styles.itemContainer]}>
-        <MenuItem
-          title={title}
-          icon={icon}
-          isActive={isActive}
-          onPress={onPress}
-          {...props}
-        />
-      </Div>
+      <View style={[styles.itemContainer]}>
+        <MenuItem title={title} icon={icon} onPress={onPress} {...props} />
+      </View>
     );
   };
 

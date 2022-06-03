@@ -1,28 +1,26 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
+import {useIsFocused} from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
-import {ITheme} from '~/theme/interfaces';
-import {useRootNavigation} from '~/hooks/navigation';
-import {useKeySelector} from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-
 import Header from '~/beinComponents/Header';
-import PostViewDraft from '~/screens/Post/components/PostViewDraft';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
-import ListView from '~/beinComponents/list/ListView';
-import postActions from '~/screens/Post/redux/actions';
-import {IPayloadGetDraftPosts} from '~/interfaces/IPost';
-import {useUserIdAuth} from '~/hooks/auth';
-import {AppContext} from '~/contexts/AppContext';
-import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
-import images from '~/resources/images';
-import {useBaseHook} from '~/hooks';
-import {useIsFocused} from '@react-navigation/native';
-import appActions from '~/store/app/actions';
+import ListView from '~/beinComponents/list/ListView';
+import Text from '~/beinComponents/Text';
+import ViewSpacing from '~/beinComponents/ViewSpacing';
+
 import {appScreens} from '~/configs/navigator';
+import {useBaseHook} from '~/hooks';
+import {useUserIdAuth} from '~/hooks/auth';
+import {useKeySelector} from '~/hooks/selector';
+import {IPayloadGetDraftPosts} from '~/interfaces/IPost';
+import images from '~/resources/images';
+import PostViewDraft from '~/screens/Post/components/PostViewDraft';
+import postActions from '~/screens/Post/redux/actions';
+import postKeySelector from '~/screens/Post/redux/keySelector';
+import appActions from '~/store/app/actions';
+import {ITheme} from '~/theme/interfaces';
 
 const DraftPost = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -56,12 +54,7 @@ const DraftPost = () => {
 
   //get draft post called from MainTabs
   const draftPostsData = useKeySelector(postKeySelector.draftPostsData) || {};
-  const {
-    posts: draftPosts = [],
-    canLoadMore,
-    refreshing,
-    loading,
-  } = draftPostsData;
+  const {posts: draftPosts = [], canLoadMore, refreshing} = draftPostsData;
 
   const getData = (isRefreshing?: boolean) => {
     if (userId) {
@@ -72,7 +65,7 @@ const DraftPost = () => {
     }
   };
 
-  const renderItem = ({item, index}: any) => {
+  const renderItem = ({item}: any) => {
     return <PostViewDraft data={item} />;
   };
 
@@ -113,7 +106,7 @@ const DraftPost = () => {
 
   return (
     <View style={styles.container}>
-      <Header title={title} hideBackOnLaptop />
+      <Header title={title} />
       <ListView
         isFullView
         containerStyle={styles.listContainer}
@@ -122,15 +115,7 @@ const DraftPost = () => {
         renderItemSeparator={() => (
           <ViewSpacing height={theme.spacing.margin.large} />
         )}
-        ListHeaderComponent={() => (
-          <ViewSpacing
-            height={
-              Platform.OS === 'web'
-                ? spacing.margin.extraLarge
-                : spacing.margin.base
-            }
-          />
-        )}
+        ListHeaderComponent={() => <ViewSpacing height={spacing.margin.base} />}
         ListFooterComponent={renderFooter}
         ListEmptyComponent={renderEmpty}
         refreshing={refreshing}
@@ -142,22 +127,14 @@ const DraftPost = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing, dimension} = theme;
+  const {colors, dimension} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor:
-        Platform.OS === 'web' ? colors.surface : colors.bgSecondary,
+      backgroundColor: colors.bgSecondary,
     },
     listContainer: {
       flex: 1,
-      ...Platform.select({
-        web: {
-          alignSelf: 'center',
-          width: '100%',
-          maxWidth: dimension.maxNewsfeedWidth,
-        },
-      }),
     },
     listFooter: {
       height: 150,
