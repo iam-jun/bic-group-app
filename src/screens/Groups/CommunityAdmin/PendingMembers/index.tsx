@@ -20,6 +20,7 @@ import Text from '~/beinComponents/Text';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import Divider from '~/beinComponents/Divider';
 import CommunityMemberRequest from './CommunityMemberRequest';
+import ApproveDeclineAllRequests from './ApproveDeclineAllRequests';
 
 const CommunityPendingMembers = () => {
   const theme = useTheme() as ITheme;
@@ -117,6 +118,8 @@ const CommunityPendingMembers = () => {
           />
         }
       />
+
+      {ids.length > 0 && <ApproveDeclineAllRequests />}
     </ScreenWrapper>
   );
 };

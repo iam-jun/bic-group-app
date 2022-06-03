@@ -316,6 +316,18 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
+  approveAllCommunityMemberRequests: (
+    communityId: number,
+    total: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/approve`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {
+      total_joining_requests: total,
+    },
+  }),
 };
 
 const groupsDataHelper = {
@@ -786,6 +798,23 @@ const groupsDataHelper = {
           communityId,
           requestId,
         ),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  approveAllCommunityMemberRequests: async (
+    communityId: number,
+    total: number,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.approveAllCommunityMemberRequests(communityId, total),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

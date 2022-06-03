@@ -464,6 +464,14 @@ const groupsActions = {
     type: groupsTypes.DECLINE_SINGLE_COMMUNITY_MEMBER_REQUEST,
     payload,
   }),
+  approveAllCommunityMemberRequests: (payload: {
+    communityId: number;
+    total: number;
+    callback?: () => void;
+  }) => ({
+    type: groupsTypes.APPROVE_ALL_COMMUNITY_MEMBER_REQUESTS,
+    payload,
+  }),
 };
 
 export default groupsActions;
