@@ -1,5 +1,5 @@
-import {useIsFocused} from '@react-navigation/native';
-import React, {useEffect, useRef, useState} from 'react';
+import {isEmpty, isEqual} from 'lodash';
+import React, {useCallback, useEffect, useRef} from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -29,24 +29,32 @@ export interface Props {
   onPressItemOption: (item: any) => void;
   onItemPress: (item: any) => void;
   type: string;
+  keyValue: string;
+  activeIndex: boolean;
 }
 
-const NotificationList = ({onItemPress, type, onPressItemOption}: Props) => {
+const _NotificationList = ({
+  onItemPress,
+  type,
+  keyValue,
+  onPressItemOption,
+  activeIndex,
+}: Props) => {
   const listRef = useRef<any>();
 
   const dispatch = useDispatch();
 
   const notificationList = useKeySelector(
-    notificationSelector.notificationByType(type),
+    notificationSelector.notificationByType(keyValue),
   );
   const isLoadingMore = useKeySelector(
-    notificationSelector.isLoadingMore(type),
+    notificationSelector.isLoadingMore(keyValue),
   );
   const loadingNotifications = useKeySelector(
-    notificationSelector.isLoading(type),
+    notificationSelector.isLoading(keyValue),
   );
   const noMoreNotification = useKeySelector(
-    notificationSelector.noMoreNotification(type),
+    notificationSelector.noMoreNotification(keyValue),
   );
 
   useTabPressListener(
@@ -59,24 +67,38 @@ const NotificationList = ({onItemPress, type, onPressItemOption}: Props) => {
   );
 
   useEffect(() => {
-    if (notificationList?.length < 1) {
+    if (notificationList?.length < 1 && activeIndex) {
       //@ts-ignore
-      dispatch(notificationsActions.getNotifications({flag: type}));
+      dispatch(notificationsActions.getNotifications({flag: type, keyValue}));
     }
-  }, []);
+  }, [activeIndex]);
 
   const refreshListNotification = () => {
     //@ts-ignore
-    dispatch(notificationsActions.getNotifications({flag: type}));
+    dispatch(notificationsActions.getNotifications({flag: type, keyValue}));
   };
 
   // load more notification handler
   const loadMoreNotifications = () => {
     if (!noMoreNotification && !isLoadingMore) {
       //@ts-ignore
-      dispatch(notificationsActions.loadMore({flag: type}));
+      dispatch(notificationsActions.loadMore({flag: type, keyValue}));
     }
   };
+
+  const _onItemPress = useCallback(
+    (item: any) => {
+      onItemPress?.(item);
+    },
+    [onItemPress],
+  );
+
+  const _onPressItemOption = useCallback(
+    ({item, e}: any) => {
+      onPressItemOption?.({item, e});
+    },
+    [onPressItemOption],
+  );
 
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -102,13 +124,13 @@ const NotificationList = ({onItemPress, type, onPressItemOption}: Props) => {
   const renderItem = ({item, index}: {item: any; index: number}) => {
     return (
       <NotificationItem
-        {...item}
+        id={item}
         testID={`list_view.item_wrapper.${index}`}
-        onPress={() => {
-          onItemPress?.(item);
+        onPress={(data: any) => {
+          _onItemPress(data);
         }}
-        onPressOption={(e: any) => {
-          onPressItemOption({item, e});
+        onPressOption={(data: any) => {
+          _onPressItemOption(data);
         }}
       />
     );
@@ -129,6 +151,20 @@ const NotificationList = ({onItemPress, type, onPressItemOption}: Props) => {
     }
   };
 
+  const _notificationList = React.useMemo(() => {
+    if (
+      notificationList !== undefined &&
+      !isEqual(
+        JSON.stringify(notificationList),
+        JSON.stringify(_notificationList),
+      )
+    ) {
+      return notificationList;
+    }
+  }, [notificationList]);
+
+  const keyExtractor = (item: any) => JSON.stringify(item);
+
   return (
     <View style={{flex: 1, width: screenWidth}}>
       {!loadingNotifications ? (
@@ -137,11 +173,12 @@ const NotificationList = ({onItemPress, type, onPressItemOption}: Props) => {
           style={styles.list}
           containerStyle={styles.listContainer}
           isFullView
+          keyExtractor={keyExtractor}
           renderItem={renderItem}
           renderItemSeparator={() => (
             <Divider size={1} color={theme.colors.borderDivider} />
           )}
-          data={notificationList}
+          data={_notificationList}
           onRefresh={refreshListNotification}
           refreshing={loadingNotifications}
           ListEmptyComponent={renderUnReadNotificationsEmpty()}
@@ -180,4 +217,6 @@ const themeStyles = (theme: ITheme) => {
   });
 };
 
+const NotificationList = React.memo(_NotificationList);
+NotificationList.whyDidYouRender = true;
 export default NotificationList;

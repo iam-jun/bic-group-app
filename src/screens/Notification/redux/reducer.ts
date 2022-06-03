@@ -8,31 +8,30 @@ export const notiInitState = {
   isLoadingMore: false,
   showMarkedAsReadToast: false,
   pushToken: '',
-  notificationList: {
-    ALL: {
-      loading: false,
-      data: [],
-      isLoadingMore: false,
-      noMoreData: false,
-    },
-    UNREAD: {
-      loading: false,
-      data: [],
-      isLoadingMore: false,
-      noMoreData: false,
-    },
-    MENTION: {
-      loading: false,
-      data: [],
-      isLoadingMore: false,
-      noMoreData: false,
-    },
-    IMPORTANT: {
-      loading: false,
-      data: [],
-      isLoadingMore: false,
-      noMoreData: false,
-    },
+  notifications: {},
+  tabAll: {
+    loading: false,
+    data: [],
+    isLoadingMore: false,
+    noMoreData: false,
+  },
+  tabUnread: {
+    loading: false,
+    data: [],
+    isLoadingMore: false,
+    noMoreData: false,
+  },
+  tabMention: {
+    loading: false,
+    data: [],
+    isLoadingMore: false,
+    noMoreData: false,
+  },
+  tabImportant: {
+    loading: false,
+    data: [],
+    isLoadingMore: false,
+    noMoreData: false,
   },
 };
 
@@ -40,13 +39,13 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
   const {type, payload} = action;
   switch (type) {
     case notificationsTypes.SET_LOADING_NOTIFICATIONS: {
-      const {flag, value}: any = payload;
-      if (!!flag) {
-        const newNotifications = {...state.notificationList};
-        newNotifications[flag].loading = value;
+      const {keyValue, value}: any = payload;
+      if (!!keyValue) {
+        const newNotificationData: any = {...state};
+        newNotificationData[keyValue].loading = value;
         return {
           ...state,
-          notificationList: {...newNotifications},
+          ...newNotificationData,
         };
       }
       return {
@@ -54,13 +53,15 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
       };
     }
     case notificationsTypes.SET_NOTIFICATIONS: {
-      const {flag, data, unseen}: IParamSetNotifications = payload;
-      if (!!flag && data && Array.isArray(data)) {
-        const newNotifications = {...state.notificationList};
-        newNotifications[flag].data = [...data];
+      const {keyValue, data, unseen, notifications}: IParamSetNotifications =
+        payload;
+      if (!!keyValue && data && Array.isArray(data)) {
+        const newNotificationData: any = {...state};
+        newNotificationData[keyValue].data = [...data];
         return {
           ...state,
-          notificationList: {...newNotifications},
+          ...newNotificationData,
+          notifications: {...state.notifications, ...notifications},
           unseenNumber: unseen,
         };
       }
@@ -70,50 +71,94 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
     }
 
     case notificationsTypes.ATTACH: {
+      const {notificationFlag} = payload || {};
+      const newNotifications: any = {...state};
+      if (notificationFlag === 'IMPORTANT') {
+        newNotifications.tabImportant.data = [
+          payload.id,
+          ...newNotifications.tabImportant.data,
+        ];
+      } else if (notificationFlag === 'MENTION') {
+        newNotifications.tabMention.data = [
+          payload.id,
+          ...newNotifications.tabMention.data,
+        ];
+      } else {
+        newNotifications.tabAll.data = [
+          payload.id,
+          ...newNotifications.tabAll.data,
+        ];
+        newNotifications.tabUnread.data = [
+          payload.id,
+          ...newNotifications.tabUnread.data,
+        ];
+      }
+      const newNotification: any = {...state.notifications};
+      newNotification[payload.id] = {...payload};
+
       return {
         ...state,
-        // notificationList: [payload, ...state.notificationList],
+        notifications: {...newNotification},
         unseenNumber: state.unseenNumber + 1,
       };
     }
     case notificationsTypes.DETACH: {
+      const newNotificationData: any = {...state};
+      const removeDetachNoti = (value: string) => {
+        newNotificationData[value].data = newNotificationData[
+          value
+        ]?.data?.filter?.((item: any) => item !== payload?.id);
+      };
+      removeDetachNoti('tabAll');
+      removeDetachNoti('tabUnread');
+      removeDetachNoti('tabMention');
+      removeDetachNoti('tabImportant');
+
       return {
         ...state,
-        // notificationList: state.notificationList.filter(
-        //   (item: any) => item.id !== payload?.id,
-        // ),
+        ...newNotificationData,
         unseenNumber: state.unseenNumber - 1,
       };
     }
     case notificationsTypes.UPDATE: {
       let newUnSeenNumber = state.unseenNumber;
-      const newListNotification = state.notificationList.filter((item: any) => {
-        if (item.id === payload?.id && item?.isSeen) {
-          newUnSeenNumber = newUnSeenNumber + 1;
-        }
-        return item.id !== payload?.id;
-      });
+      const {notifications}: any = state;
+      if (notifications[payload.id]?.isSeen) {
+        newUnSeenNumber = newUnSeenNumber + 1;
+      }
+
+      const newNotification: any = {...state.notifications};
+      newNotification[payload.id] = {...payload};
+
       return {
         ...state,
-        notificationList: [payload, ...newListNotification],
+        notifications: {...newNotification},
         unseenNumber: newUnSeenNumber,
       };
     }
-    case notificationsTypes.CONCAT_NOTIFICATIONS:
-      return {
-        ...state,
-        // notificationList: state.notificationList.concat(
-        //   payload.notifications || [],
-        // ),
-      };
-    case notificationsTypes.SET_NO_MORE_NOTIFICATION: {
-      const {flag, value}: any = payload;
-      if (!!flag) {
-        const newNotifications = {...state.notificationList};
-        newNotifications[flag].noMoreData = value;
+    case notificationsTypes.CONCAT_NOTIFICATIONS: {
+      const {keyValue, notifications, data}: any = payload;
+      if (!!keyValue) {
+        const newNotificationData: any = {...state};
+        newNotificationData[keyValue]?.data?.concat(data || []);
         return {
           ...state,
-          notificationList: {...newNotifications},
+          ...newNotificationData,
+          notifications: {...state.notifications, ...notifications},
+        };
+      }
+      return {
+        ...state,
+      };
+    }
+    case notificationsTypes.SET_NO_MORE_NOTIFICATION: {
+      const {keyValue, value}: any = payload;
+      if (!!keyValue) {
+        const newNotificationData: any = {...state};
+        newNotificationData[keyValue].noMoreData = value;
+        return {
+          ...state,
+          ...newNotificationData,
         };
       }
       return {
@@ -121,13 +166,13 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
       };
     }
     case notificationsTypes.SET_IS_LOADING_MORE: {
-      const {flag, value}: any = payload;
-      if (!!flag) {
-        const newNotifications = {...state.notificationList};
-        newNotifications[flag].isLoadingMore = value;
+      const {keyValue, value}: any = payload;
+      if (!!keyValue) {
+        const newNotificationData: any = {...state};
+        newNotificationData[keyValue].isLoadingMore = value;
         return {
           ...state,
-          notificationList: {...newNotifications},
+          ...newNotificationData,
         };
       }
       return {
@@ -137,7 +182,11 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
     case notificationsTypes.SET_ALL_NOTIFICATIONS: {
       return {
         ...state,
-        notificationList: {...payload},
+        notifications: payload.notifications,
+        unseenNumber:
+          typeof payload?.unseenNumber === 'number'
+            ? payload.unseenNumber
+            : state.unseenNumber,
       };
     }
     case notificationsTypes.SAVE_PUSH_TOKEN: {

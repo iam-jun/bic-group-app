@@ -10,15 +10,15 @@ import i18n from 'i18next';
 import * as modalActions from '~/store/modal/actions';
 
 export interface NotificationOptionBottomSheetProps {
-  modalizeRef: any;
+  modalize: any;
+  keyValue: string;
   data: any;
-  flag: string;
 }
 
 const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
   modalizeRef,
   data,
-  flag,
+  keyValue,
 }: NotificationOptionBottomSheetProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -26,8 +26,10 @@ const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
   const dispatch = useDispatch();
 
   const handleMarkNotification = () => {
+    console.log('handleMarkNotification data>>>>>>>>>>>', data);
+
     if (!data?.isRead) {
-      dispatch(notificationsActions.markAsRead({id: data?.id || '', flag}));
+      dispatch(notificationsActions.markAsRead({id: data?.id || '', keyValue}));
     } else {
       dispatch(notificationsActions.markAsUnRead(data));
     }

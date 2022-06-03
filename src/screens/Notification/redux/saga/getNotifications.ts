@@ -13,12 +13,12 @@ function* getNotifications({
   payload: IParamGetNotifications;
   type: string;
 }) {
+  const {flag = 'ALL', keyValue = 'tabAll'} = payload || {};
   try {
-    const {flag = 'ALL'} = payload || {};
     yield put(
-      notificationsActions.setLoadingNotifications({flag, value: true}),
+      notificationsActions.setLoadingNotifications({keyValue, value: true}),
     );
-    yield put(notificationsActions.setNoMoreNoti({flag, value: false}));
+    yield put(notificationsActions.setNoMoreNoti({keyValue, value: false}));
 
     const response: IObject<any> = yield call(
       notificationsDataHelper.getNotificationList,
@@ -37,25 +37,37 @@ function* getNotifications({
           {flag: 'ALL'},
         );
         if (_response?.results?.length > 1) {
-          yield put(notificationsActions.setNoMoreNoti({flag, value: true}));
+          yield put(
+            notificationsActions.setNoMoreNoti({keyValue, value: true}),
+          );
         }
       }
     }
 
+    if (response?.results?.length > 0) {
+      const newData: any[] = [],
+        newResponse: any = {};
+      response.results.forEach((item: any) => {
+        newData.push(item?.id);
+        newResponse[item.id] = {...item};
+      });
+      yield put(
+        notificationsActions.setNotifications({
+          notifications: newResponse,
+          keyValue: keyValue,
+          data: newData,
+          unseen: response.unseen,
+        }),
+      );
+    }
+
     yield put(
-      notificationsActions.setNotifications({
-        flag: flag,
-        data: response?.results || [],
-        unseen: response.unseen,
-      }),
-    );
-    yield put(
-      notificationsActions.setLoadingNotifications({flag, value: false}),
+      notificationsActions.setLoadingNotifications({keyValue, value: false}),
     );
   } catch (err) {
     yield put(
       notificationsActions.setLoadingNotifications({
-        flag: payload?.flag || 'ALL',
+        keyValue,
         value: false,
       }),
     );

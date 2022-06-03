@@ -3,24 +3,24 @@ export const notificationMenuData = [
     id: 1,
     text: 'notification:text_all',
     type: 'ALL',
-    key: 'ALL',
+    key: 'tabAll',
   },
   {
     id: 2,
     text: 'notification:text_unread',
     type: 'UNREAD',
-    key: 'UNREAD',
+    key: 'tabUnread',
   },
   {
     id: 3,
     text: 'notification:text_mention',
     type: 'MENTION',
-    key: 'MENTION',
+    key: 'tabMention',
   },
   {
     id: 4,
     text: 'notification:text_important',
     type: 'IMPORTANT',
-    key: 'IMPORTANT',
+    key: 'tabImportant',
   },
 ];

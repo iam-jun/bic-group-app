@@ -1,6 +1,5 @@
 import {cloneDeep, get} from 'lodash';
 import {put, select, call} from 'redux-saga/effects';
-import {IObject} from '~/interfaces/common';
 
 import showError from '~/store/commonSaga/showError';
 import * as modalActions from '~/store/modal/actions';
@@ -14,27 +13,24 @@ function* markAsReadAll({payload}: {payload: string; type: string}): any {
     yield call(notificationsDataHelper.markAsReadAll, payload);
 
     // get all notifications from store
-    const notifications: IObject<any> =
+    const notifications: any =
       cloneDeep(
         yield select(state => get(state, notificationSelector.notifications)),
       ) || {};
 
-    const newNotifications: any = {};
     for (const [key, value] of Object.entries(notifications)) {
-      const _data = value?.data || [];
-      if (key === 'UNREAD') {
-        newNotifications[key] = {...value, data: []};
-      } else {
-        // then set mapped notificaton's is_read field by true to un-highlight it directly on device store
-        _data.forEach((item: any) => {
-          item.isRead = true;
-        });
-        newNotifications[key] = {...value, data: _data};
-      }
+      notifications[key] = {...((value as any) || {}), isRead: true};
     }
 
     // finally, set notification back to store,
-    yield put(notificationsActions.setAllNotifications(newNotifications));
+    yield put(
+      notificationsActions.setNotifications({
+        notifications: {...notifications},
+        keyValue: 'tabUnread',
+        data: [],
+        unseen: 0,
+      }),
+    );
 
     yield put(
       modalActions.showHideToastMessage({
