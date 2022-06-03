@@ -25,7 +25,6 @@ const SignUp = () => {
   const useFormData = useForm();
 
   const {
-    control,
     formState: {errors},
     trigger,
     setError,
@@ -92,7 +91,7 @@ const SignUp = () => {
           rules={{required: t('auth:text_err_username_blank')}}
           name="username"
           validateValue={validateUsername}
-          loading={loading}
+          disabled={loading}
         />
 
         <TextInputController
@@ -111,7 +110,7 @@ const SignUp = () => {
             },
           }}
           validateValue={validateEmail}
-          loading={loading}
+          disabled={loading}
         />
         <PasswordInputController
           useFormData={useFormData}

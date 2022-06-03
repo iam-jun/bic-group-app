@@ -211,8 +211,9 @@ const SignIn = () => {
               keyboardType="email-address"
               autoCapitalize="none"
               style={styles.inputEmail}
-              onSubmitEditing={onSubmitEmail}
               helperContent={signingInError}
+              disabled={!!authSessions || loading}
+              onSubmitEditing={onSubmitEmail}
             />
             <PasswordInputController
               ref={inputPasswordRef}
@@ -257,6 +258,7 @@ const SignIn = () => {
                 clearFieldError('password');
                 checkDisableSignIn();
               }}
+              onSubmitEditing={onSignIn}
             />
             <View style={styles.forgotButton}>
               <TouchableOpacity
