@@ -8,7 +8,6 @@ import {blacklistReactions, ReactionType} from '~/constants/reactions';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import NodeEmoji from 'node-emoji';
-import {convertReactKeyForRequest} from '~/utils/common';
 
 export interface ReactionTabBarProps {
   initReaction?: ReactionType;
@@ -94,8 +93,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
   const renderItem = ({item, index}: any) => {
     const {reactionType, count} = item || {};
     const isActive = activeIndex === index;
-    const emojiKey = convertReactKeyForRequest(reactionType || '');
-    const emoji = NodeEmoji.find(emojiKey)?.emoji || '';
+    const emoji = NodeEmoji.find(reactionType)?.emoji || '';
     return (
       <View>
         <Button

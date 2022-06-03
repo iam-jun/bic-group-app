@@ -32,10 +32,10 @@ export interface IParamGetNotifications {
   limit?: number;
   offset?: number;
   order?: 'ASC' | 'DESC';
-  idLTE?: string;
-  idGTE?: string;
-  idGT?: string;
-  idLT?: string;
+  idLte?: string;
+  idGte?: string;
+  idGt?: string;
+  idLt?: string;
   flag?: 'ALL' | 'UNREAD' | 'MENTION' | 'IMPORTANT';
   clearCurrentNotifications?: boolean;
 }

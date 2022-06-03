@@ -11,7 +11,7 @@ import {parseSafe} from '~/utils/common';
 import {getEnv} from '~/utils/env';
 import {getMsgPackParser} from '~/utils/socket';
 import {useAuthToken, useUserIdAuth} from './auth';
-import {camelizeKeys} from 'humps';
+import {ConvertHelper} from '~/utils/convertHelper';
 
 const useNotificationSocket = () => {
   const dispatch = useDispatch();
@@ -34,14 +34,16 @@ const useNotificationSocket = () => {
   // with this, we also not to load notification again when access Notification screen
   const handleSocketNoti = (msg: string) => {
     console.log(`\x1b[36m🐣️ notificationSocket receive socket noti \x1b[0m`);
-    const msgData = camelizeKeys(parseSafe(msg));
+    const msgData = ConvertHelper.camelizeKeys(parseSafe(msg));
     const data = msgData || {};
     handleNotification(data);
   };
 
   const handleInternalEvent = (msg: string) => {
     console.log(`\x1b[36m🐣️ notificationSocket receive internal event\x1b[0m`);
-    const msgData = camelizeKeys(parseSafe(msg));
+    const msgData = ConvertHelper.camelizeKeys(parseSafe(msg), {
+      exclude: ['reactions_count'],
+    });
     const data: any = msgData || {};
     if (
       data?.event === notificationEvent.REACT ||
