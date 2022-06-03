@@ -1,15 +1,13 @@
-import React, {FC, memo} from 'react';
-import {Platform, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
 // @ts-ignore
 import mark from 'markdown-it-mark';
-
+import React, {FC, memo} from 'react';
+import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import {
   blacklistDefault,
   blacklistLimit,
 } from '~/beinComponents/MarkdownView/constant';
-
 import Markdown, {
   emojiDefs,
   emojiPlugin,
@@ -20,11 +18,10 @@ import Markdown, {
 import Text from '~/beinComponents/Text';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
 import {audienceRegex} from '~/constants/commonRegex';
-import {fontFamilies} from '~/theme/fonts';
-
-import {ITheme} from '~/theme/interfaces';
-import {sizes} from '~/theme/dimension';
 import {IMarkdownAudience} from '~/interfaces/IPost';
+import {sizes} from '~/theme/dimension';
+import {fontFamilies} from '~/theme/fonts';
+import {ITheme} from '~/theme/interfaces';
 
 export interface MarkdownViewProps {
   testID?: string;
@@ -115,27 +112,6 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
   );
 };
 
-const replaceLineBreak = (content: string) => {
-  if (!content) {
-    return '';
-  }
-  const replacerSplash = (splash: string) => (match: any) => {
-    let middle = match.substring(splash.length, match.lastIndexOf(splash));
-    if (middle) {
-      middle = middle?.replace(new RegExp(splash, 'g'), '<br>');
-      return splash + middle + '<br>';
-    }
-    return '';
-  };
-  return content
-    .replace(/(\r\n)(\r\n)+(\r\n)/g, replacerSplash('\r\n'))
-    .replace(/(\n)(\n)+(\n)/g, replacerSplash('\n'))
-    .replace(/(\r)(\r)+(\r)/g, replacerSplash('\r'))
-    .replace(/\n\n/g, '\n<br>')
-    .replace(/\r\r/g, '\r<br>')
-    .replace(/\r\n\r\n/g, '\r\n<br>');
-};
-
 const createStyle = (theme: ITheme) => {
   const textStyles = createTextStyle(theme);
   const {colors, spacing} = theme;
@@ -144,10 +120,10 @@ const createStyle = (theme: ITheme) => {
     emojiText: {},
     emojiContainer: {
       height: 10,
-      top: Platform.OS === 'web' ? 3 : 0,
+      top: 0,
       paddingHorizontal: 1,
     },
-    emojiIcon: {marginTop: Platform.OS === 'web' ? 0 : -3},
+    emojiIcon: {marginTop: -3},
 
     regex_linebreak: {},
     mark: {

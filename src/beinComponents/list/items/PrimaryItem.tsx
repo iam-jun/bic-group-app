@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Platform,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
@@ -19,7 +18,6 @@ import {IAction} from '~/constants/commonActions';
 import {IconType} from '~/resources/icons';
 import Avatar from '~/beinComponents/Avatar';
 import {AvatarProps} from '~/beinComponents/Avatar/AvatarComponent';
-import Div from '~/beinComponents/Div';
 import {primaryItemHeight} from '~/theme/dimension';
 
 export interface PrimaryItemProps {
@@ -37,17 +35,17 @@ export interface PrimaryItemProps {
   leftIconProps?: IconProps;
   isChecked?: boolean;
   checkboxProps?: CheckboxProps;
-  onPress?: () => void;
-  onPressCheckbox?: (action: IAction) => void;
   toggleChecked?: boolean;
-  onPressToggle?: (action: IAction) => void;
-  onPressEdit?: () => void;
-  onPressMenu?: (e: any) => void;
   menuIconTestID?: string;
   LeftComponent?: React.ReactNode | React.ReactElement;
   RightComponent?: React.ReactNode | React.ReactElement;
   ContentComponent?: React.ReactNode | React.ReactElement;
-  className?: string;
+
+  onPress?: () => void;
+  onPressCheckbox?: (action: IAction) => void;
+  onPressToggle?: (action: IAction) => void;
+  onPressEdit?: () => void;
+  onPressMenu?: (e: any) => void;
 }
 
 const PrimaryItem: React.FC<PrimaryItemProps> = ({
@@ -75,7 +73,6 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   menuIconTestID,
   RightComponent,
   ContentComponent,
-  className = 'button',
 }: PrimaryItemProps) => {
   const theme = useTheme() as ITheme;
   const {spacing} = theme;
@@ -92,10 +89,9 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   ]);
 
   const disabled = !onPress;
-  if (disabled) className = '';
 
   return (
-    <Div className={className}>
+    <View>
       <TouchableOpacity
         style={containerStyle}
         testID={testID}
@@ -119,20 +115,12 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
         )}
         <View style={styles.contentContainer}>
           {!!title && (
-            <Text
-              variant="h6"
-              numberOfLines={2}
-              style={styles.text}
-              {...titleProps}>
+            <Text variant="h6" numberOfLines={2} {...titleProps}>
               {title}
             </Text>
           )}
           {!!subTitle && (
-            <Text
-              variant="body"
-              numberOfLines={2}
-              style={styles.text}
-              {...subTitleProps}>
+            <Text variant="body" numberOfLines={2} {...subTitleProps}>
               {subTitle}
             </Text>
           )}
@@ -170,7 +158,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
         )}
         {RightComponent}
       </TouchableOpacity>
-    </Div>
+    </View>
   );
 };
 
@@ -186,13 +174,6 @@ const createStyle = (theme: ITheme) => {
     },
     avatar: {
       marginRight: spacing?.margin.base,
-    },
-    text: {
-      ...Platform.select({
-        web: {
-          paddingTop: 0,
-        },
-      }),
     },
   });
 };

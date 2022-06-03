@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   Dimensions,
-  Platform,
   ActivityIndicator,
   RefreshControl,
   DeviceEventEmitter,
@@ -14,7 +13,7 @@ import {useTheme} from 'react-native-paper';
 import {DataProvider, LayoutProvider, RecyclerListView} from 'recyclerlistview';
 
 import {ITheme} from '~/theme/interfaces';
-import {deviceDimensions, scaleSize} from '~/theme/dimension';
+import {scaleSize} from '~/theme/dimension';
 
 import Text from '~/beinComponents/Text';
 import PostView from '~/screens/Post/components/PostView';
@@ -56,9 +55,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   const [initializing, setInitializing] = useState(true);
   const listView = useRef<any>();
   const lockHeaderRef = useRef(true);
-  const [newsfeedWidth, setNewsfeedWidth] = useState<number>(
-    deviceDimensions.phone,
-  );
+
   const prevOffsetYRef = useRef(0);
 
   const theme = useTheme() as ITheme;
@@ -200,7 +197,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     300,
   );
 
-  const rowRenderer = (type: any, data: any, index: number) => {
+  const rowRenderer = (type: any, data: any) => {
     if (type === ViewTypes.HEADER && HeaderComponent) {
       return <View style={styles.headerContainer}>{HeaderComponent}</View>;
     }
@@ -221,10 +218,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     }
     return (
       <View style={styles.placeholder}>
-        <HeaderCreatePostPlaceholder
-          style={styles.headerCreatePost}
-          parentWidth={newsfeedWidth}
-        />
+        <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
         <PostViewPlaceholder />
         <PostViewPlaceholder />
         <PostViewPlaceholder />
@@ -290,10 +284,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   };
 
   return (
-    <View
-      testID="newsfeed_list"
-      style={styles.container}
-      onLayout={event => setNewsfeedWidth(event.nativeEvent.layout.width)}>
+    <View testID="newsfeed_list" style={styles.container}>
       {data && data.length > 0 && (
         <RecyclerListView
           testID="newsfeed_list.list"
@@ -354,13 +345,6 @@ const createStyle = (theme: ITheme, insets: any) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      ...Platform.select({
-        web: {
-          width: '100%',
-          maxWidth: dimension.maxNewsfeedWidth,
-          alignSelf: 'center',
-        },
-      }),
     },
     headerCreatePost: {
       marginTop: spacing.margin.small,

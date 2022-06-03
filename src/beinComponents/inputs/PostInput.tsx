@@ -2,21 +2,19 @@ import React, {useImperativeHandle, useRef} from 'react';
 import {
   Keyboard,
   KeyboardType,
+  NativeSyntheticEvent,
   ReturnKeyType,
   StyleProp,
   StyleSheet,
   TextInputProps,
-  ViewStyle,
-  Platform,
-  NativeSyntheticEvent,
   TextInputSelectionChangeEventData,
+  ViewStyle,
 } from 'react-native';
-import AutoGrowingTextInput from '~/beinComponents/inputs/AutoGrowingTextInput';
-
-import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
-import {fontFamilies} from '~/theme/fonts';
+import AutoGrowingTextInput from '~/beinComponents/inputs/AutoGrowingTextInput';
 import {useBaseHook} from '~/hooks';
+import {fontFamilies} from '~/theme/fonts';
+import {ITheme} from '~/theme/interfaces';
 
 export interface PostInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
@@ -58,7 +56,6 @@ const PostInput: React.FC<PostInputProps> = ({
   const inputStyle: any = StyleSheet.flatten([
     styles.container,
     isFullScreen ? {flex: 1} : {},
-    Platform.OS === 'web' ? {outlineWidth: 0} : {},
     style,
   ]);
 
@@ -101,9 +98,8 @@ const PostInput: React.FC<PostInputProps> = ({
       returnKeyType={returnKeyType}
       onSubmitEditing={onSubmitEditing}
       onSelectionChange={onSelectionChange}
-      value={Platform.OS === 'web' ? value : undefined}
       {...props}>
-      {Platform.OS !== 'web' && value}
+      {value}
     </AutoGrowingTextInput>
   );
 };

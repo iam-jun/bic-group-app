@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Platform,
   StyleProp,
   StyleSheet,
   useWindowDimensions,
@@ -88,8 +87,7 @@ const createStyles = (
 ) => {
   const {colors, spacing} = theme;
 
-  const maxTopPosition =
-    Platform.OS === 'web' ? (measuredHeight * 3) / 4 : measuredHeight / 2;
+  const maxTopPosition = measuredHeight / 2;
 
   const minViewableContent = 220;
   const modalHeight = isListEmpty
@@ -163,13 +161,6 @@ const createStyles = (
       paddingTop: 0,
       paddingBottom: 0,
       borderWidth: 0,
-      ...Platform.select({
-        web: {
-          border: 'none',
-          marginTop: '0px important',
-          marginBottom: '0px important',
-        },
-      }),
     },
     textTitle: {
       marginVertical: spacing.margin.small,

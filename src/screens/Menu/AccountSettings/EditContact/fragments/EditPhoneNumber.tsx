@@ -1,34 +1,33 @@
-import React, {useState, useEffect, useCallback, useRef} from 'react';
-import {
-  StyleSheet,
-  View,
-  Platform,
-  useWindowDimensions,
-  ScrollView,
-  Keyboard,
-} from 'react-native';
 import i18next from 'i18next';
-import {useTheme, TextInput as TextInputPaper} from 'react-native-paper';
-import {Controller, useForm} from 'react-hook-form';
-import {useDispatch} from 'react-redux';
 import {debounce} from 'lodash';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {Controller} from 'react-hook-form';
+import {
+  Keyboard,
+  ScrollView,
+  StyleSheet,
+  useWindowDimensions,
+  View,
+} from 'react-native';
+import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
-import TextInput from '~/beinComponents/inputs/TextInput';
-import SearchInput from '~/beinComponents/inputs/SearchInput';
+import BottomSheet from '~/beinComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
+import Divider from '~/beinComponents/Divider';
+import SearchInput from '~/beinComponents/inputs/SearchInput';
+import TextInput from '~/beinComponents/inputs/TextInput';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
-import {ITheme} from '~/theme/interfaces';
-import {useKeySelector} from '~/hooks/selector';
-import menuKeySelector from '../../../redux/keySelector';
-import * as validation from '~/constants/commonRegex';
-import menuActions from '../../../redux/actions';
-import {formatTextRemoveSpace} from '~/utils/formatData';
-import {ICountryCodeList} from '~/interfaces/common';
 import appConfig from '~/configs/appConfig';
+import * as validation from '~/constants/commonRegex';
+import {useKeySelector} from '~/hooks/selector';
+import {ICountryCodeList} from '~/interfaces/common';
+import {ITheme} from '~/theme/interfaces';
+import {formatTextRemoveSpace} from '~/utils/formatData';
+import menuActions from '../../../redux/actions';
+import menuKeySelector from '../../../redux/keySelector';
 import TitleComponent from '../../fragments/TitleComponent';
-import BottomSheet from '~/beinComponents/BottomSheet';
-import Divider from '~/beinComponents/Divider';
 
 interface EditPhoneNumberProps {
   onChangeCountryCode: (value: string) => void;
@@ -243,12 +242,6 @@ const createStyles = (theme: ITheme, screenHeight: number) => {
     },
     contentComponent: {
       minHeight: 0.8 * screenHeight,
-      ...Platform.select({
-        web: {
-          maxHeight: 0.55 * screenHeight,
-          paddingTop: spacing.padding.large,
-        },
-      }),
     },
     modalStyle: {
       borderTopRightRadius: spacing.borderRadius.small,

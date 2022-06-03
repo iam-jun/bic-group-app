@@ -34,10 +34,6 @@ export const checkPermission = async (
   dispatch: any,
   callback: (canOpenPicker: boolean) => void,
 ) => {
-  if (Platform.OS === 'web') {
-    callback(true);
-    return;
-  }
   //@ts-ignore
   const permissions = REQUEST_PERMISSION_TYPE[type][Platform.OS];
 

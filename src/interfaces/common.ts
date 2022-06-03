@@ -32,10 +32,7 @@ export interface IFilePicked {
   size: number;
   width: number;
   height: number;
-  //app
   uri: string;
-  //web
-  base64?: string;
   [x: string]: any;
 }
 

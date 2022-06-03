@@ -63,7 +63,6 @@ const ReactionDetailBottomSheet = () => {
       isOpen={isOpen}
       side="center"
       isContextMenu={false}
-      webModalStyle={{width: 375}}
       onClose={_onClose}
       ContentComponent={
         <View>
