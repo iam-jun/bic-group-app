@@ -24,6 +24,7 @@ export default function* approveAllCommunityMemberRequests({
       total,
     );
 
+    // to update user_count
     yield put(groupsActions.getCommunityDetail(communityId));
 
     let toastProps: ToastMessageProps;

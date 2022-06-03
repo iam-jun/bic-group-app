@@ -51,6 +51,7 @@ import groupJoinStatus from '~/constants/groupJoinStatus';
 import approveSingleCommunityMemberRequest from './approveSingleCommunityMemberRequest';
 import declineSingleCommunityMemberRequest from './declineSingleCommunityMemberRequest';
 import approveAllCommunityMemberRequests from './approveAllCommunityMemberRequests';
+import declineAllCommunityMemberRequests from './declineAllCommunityMemberRequests';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -127,6 +128,10 @@ export default function* groupsSaga() {
   yield takeLatest(
     groupsTypes.APPROVE_ALL_COMMUNITY_MEMBER_REQUESTS,
     approveAllCommunityMemberRequests,
+  );
+  yield takeLatest(
+    groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,
+    declineAllCommunityMemberRequests,
   );
 }
 

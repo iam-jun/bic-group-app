@@ -48,7 +48,6 @@ export default function* declineSingleCommunityMemberRequest({
       toastType: 'normal',
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.getCommunityDetail(communityId)); // to update user_count
   } catch (err: any) {
     console.log('declineSingleCommunityMemberRequest: ', err);
 

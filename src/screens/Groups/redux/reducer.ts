@@ -123,6 +123,12 @@ export const groupInitState = {
     ids: [],
     items: {},
   },
+  // temporarily stores data for `undo` action
+  undoCommunityMemberRequests: {
+    total: 0,
+    ids: [],
+    items: {} as IObject<IJoiningMember>,
+  },
 };
 
 function groupsReducer(state = groupInitState, action: any = {}) {
@@ -610,6 +616,26 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       return {
         ...state,
         communityMemberRequests: groupInitState.communityMemberRequests,
+      };
+    case groupsTypes.STORE_UNDO_COMMUNITY_MEMBER_REQUESTS:
+      return {
+        ...state,
+        undoCommunityMemberRequests: {
+          total: communityMemberRequests.total,
+          ids: [...communityMemberRequests.ids],
+          items: {...communityMemberRequests.items},
+        },
+      };
+    case groupsTypes.UNDO_DECLINED_COMMUNITY_MEMBER_REQUESTS:
+      return {
+        ...state,
+        communityMemberRequests: {
+          ...communityMemberRequests,
+          total: state.undoCommunityMemberRequests.total,
+          ids: [...state.undoCommunityMemberRequests.ids],
+          items: {...state.undoCommunityMemberRequests.items},
+        },
+        undoCommunityMemberRequests: groupInitState.undoCommunityMemberRequests,
       };
 
     default:

@@ -472,6 +472,20 @@ const groupsActions = {
     type: groupsTypes.APPROVE_ALL_COMMUNITY_MEMBER_REQUESTS,
     payload,
   }),
+  declineAllCommunityMemberRequests: (payload: {
+    communityId: number;
+    total: number;
+    callback?: () => void;
+  }) => ({
+    type: groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,
+    payload,
+  }),
+  storeUndoCommunityMemberRequests: () => ({
+    type: groupsTypes.STORE_UNDO_COMMUNITY_MEMBER_REQUESTS,
+  }),
+  undoDeclinedCommunityMemberRequests: () => ({
+    type: groupsTypes.UNDO_DECLINED_COMMUNITY_MEMBER_REQUESTS,
+  }),
 };
 
 export default groupsActions;
