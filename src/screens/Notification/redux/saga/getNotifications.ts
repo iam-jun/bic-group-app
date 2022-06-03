@@ -55,7 +55,7 @@ function* getNotifications({
   } catch (err) {
     yield put(
       notificationsActions.setLoadingNotifications({
-        flag: payload.flag,
+        flag: payload?.flag || 'ALL',
         value: false,
       }),
     );

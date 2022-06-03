@@ -1,32 +1,21 @@
 import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {Dimensions, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {SceneMap, TabView} from 'react-native-tab-view';
 
-import Filter from '~/beinComponents/Filter';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {notificationMenuData} from '~/constants/notificationMenuData';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
-import {useRootNavigation, useTabPressListener} from '~/hooks/navigation';
-import {ITabTypes} from '~/interfaces/IRouter';
+import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import {ITheme} from '~/theme/interfaces';
 import NotificationBottomSheet from './components/NotificationBottomSheet';
 import NotificationOptionBottomSheet from './components/NotificationOptionBottomSheet';
 import notificationsActions from './redux/actions';
-import NotificationList from './NotificationList';
-
-const screenWidth = Dimensions.get('window').width;
+import ScrollableTabBar from './ScrollableTabBar';
 
 const Notification = () => {
-  const listRef = useRef<any>();
   const menuSheetRef = useRef<any>();
   const notificationOptionRef = useRef<any>();
-  const scrollViewRef = useRef<any>();
-  const tabDimensions: any = {};
 
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
@@ -35,42 +24,14 @@ const Notification = () => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [selectedNotification, setSelectedNotification] = useState({});
 
-  const [navigationState, setNavigationState] = useState({
-    index: 0,
-    routes: [...notificationMenuData],
-  });
-
   useEffect(() => {
     if (isFocused) {
       dispatch(notificationsActions.markAsSeenAll());
     }
   }, [isFocused]);
 
-  useTabPressListener(
-    (tabName: ITabTypes) => {
-      if (tabName === 'notification') {
-        listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
-      }
-    },
-    [listRef],
-  );
-
-  // useEffect(() => {
-  //   const flag = notificationMenuData[navigationState.index]?.type || 'ALL';
-  //   //@ts-ignore
-  //   dispatch(notificationsActions.getNotifications({flag: flag}));
-  //   listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
-  // }, [selectedIndex]);
-
-  const onPressFilterItem = (item: any, index: number) => {
-    // setSelectedIndex(index);
-    // if (!!item?.type) {
-    //   dispatch(
-    //     notificationsActions.getNotifications({
-    //       flag: item.type,
-    //     }),
-    //   );
-    // }
+  const onPressFilterItem = (index: number) => {
+    setSelectedIndex(index);
   };
 
   const onPressItemOption = ({item, e}: {item: any; e: any}) => {
@@ -180,81 +141,6 @@ const Notification = () => {
     );
   };
 
-  const onChangeTab = (i: number) => {
-    setNavigationState(previousState => {
-      return {...previousState, index: i};
-    });
-    if (tabDimensions && tabDimensions[i.toString()] && scrollViewRef.current) {
-      const {width, x} = tabDimensions[i.toString()];
-      scrollViewRef.current?.scrollTo?.({
-        x: x - (screenWidth - width) / 2,
-        y: 0,
-        animated: true,
-      });
-    }
-  };
-
-  const theme: ITheme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
-
-  const renderListHeader = ({navigationState}: any) => {
-    return (
-      <Filter
-        ref={scrollViewRef}
-        testID={'notification.filter'}
-        itemTestID={'notification.filter.item'}
-        style={styles.filterStyle}
-        data={navigationState?.routes}
-        selectedIndex={navigationState.index}
-        onPress={(item: any, index: number) => {
-          onChangeTab(index);
-        }}
-        onLayout={(index, x, width) => {
-          tabDimensions[index.toString()] = {x, width};
-        }}
-      />
-    );
-  };
-
-  const renderScreen = ({route}: any) => {
-    switch (route?.key) {
-      case 'ALL':
-        return (
-          <NotificationList
-            onItemPress={onItemPress}
-            type="ALL"
-            onPressItemOption={onPressItemOption}
-          />
-        );
-      case 'UNREAD':
-        return (
-          <NotificationList
-            onItemPress={onItemPress}
-            type="UNREAD"
-            onPressItemOption={onPressItemOption}
-          />
-        );
-      case 'MENTION':
-        return (
-          <NotificationList
-            onItemPress={onItemPress}
-            type="MENTION"
-            onPressItemOption={onPressItemOption}
-          />
-        );
-      case 'IMPORTANT':
-        return (
-          <NotificationList
-            onItemPress={onItemPress}
-            type="IMPORTANT"
-            onPressItemOption={onPressItemOption}
-          />
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
     <ScreenWrapper testID="NotfiticationScreen" isFullView>
       <Header
@@ -264,13 +150,11 @@ const Notification = () => {
         hideBack
         onPressMenu={onPressMenu}
       />
-      <TabView
-        navigationState={navigationState}
-        renderTabBar={renderListHeader}
-        onIndexChange={(index: number) => {
-          onChangeTab(index);
-        }}
-        renderScene={renderScreen}
+      <ScrollableTabBar
+        data={notificationMenuData}
+        onItemPress={onItemPress}
+        onPressItemOption={onPressItemOption}
+        onChangeTab={onPressFilterItem}
       />
       <NotificationBottomSheet
         modalizeRef={menuSheetRef}
@@ -283,16 +167,6 @@ const Notification = () => {
       />
     </ScreenWrapper>
   );
-};
-
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    filterStyle: {
-      paddingVertical: spacing.padding.small,
-      borderBottomWidth: 0,
-    },
-  });
 };
 
 export default Notification;

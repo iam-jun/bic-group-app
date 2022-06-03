@@ -25,11 +25,12 @@ function* markAsRead({payload}: {payload: any; type: string}): any {
         newNotifications[key] = {...value, data: newData};
       } else {
         // then set mapped notificaton's is_read field by true to un-highlight it directly on device store
-        _data.forEach((item: any) => {
-          if (item.id === id) {
-            item.isRead = true;
+        for (let index = 0; index < _data.length; index++) {
+          if (_data[index].id === id) {
+            _data[index].isRead = true;
+            break;
           }
-        });
+        }
         newNotifications[key] = {...value, data: _data};
       }
     }

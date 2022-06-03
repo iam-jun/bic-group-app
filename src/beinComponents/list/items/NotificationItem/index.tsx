@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Dimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import TimeView from '~/beinComponents/TimeView';
 import Icon from '~/beinComponents/Icon';
@@ -12,6 +12,8 @@ import {ITheme} from '~/theme/interfaces';
 import NotificationAvatar from './NotificationAvatar';
 import NotificationContent from './NotificationContent';
 import {useKeySelector} from '~/hooks/selector';
+
+const {width: screenWidth, height} = Dimensions.get('window');
 
 export interface NotificationItemProps {
   activities: IGetStreamNotificationActivity[];
@@ -148,6 +150,7 @@ const createStyles = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'flex-start',
       padding: theme.spacing.padding.large,
+      width: screenWidth,
     },
     row: {
       flexDirection: 'row',

@@ -108,7 +108,7 @@
     "react-native-shared-group-preferences": "https://github.com/minhthu-evol/react-native-shared-group-preferences.git",
     "react-native-svg": "12.1.1",
     "react-native-svg-transformer": "0.13.0",
-    "react-native-tab-view": "^2.16.0",
+    "react-native-tab-view": "2.16.0",
     "react-native-uuid": "2.0.1",
     "react-native-vector-icons": "8.1.0",
     "react-native-video": "5.2.0",

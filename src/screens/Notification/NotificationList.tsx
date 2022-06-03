@@ -1,6 +1,12 @@
 import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
+import {
+  ActivityIndicator,
+  Dimensions,
+  Platform,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
@@ -18,6 +24,7 @@ import {ITheme} from '~/theme/interfaces';
 import notificationsActions from './redux/actions';
 import notificationSelector from './redux/selector';
 
+const {width: screenWidth} = Dimensions.get('window');
 export interface Props {
   onPressItemOption: (item: any) => void;
   onItemPress: (item: any) => void;
@@ -123,7 +130,7 @@ const NotificationList = ({onItemPress, type, onPressItemOption}: Props) => {
   };
 
   return (
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, width: screenWidth}}>
       {!loadingNotifications ? (
         <ListView
           listRef={listRef}
