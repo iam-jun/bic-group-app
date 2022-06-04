@@ -16,7 +16,7 @@ import noInternetActions from '~/screens/NoInternet/redux/actions';
 import {ActionTypes, createAction} from '~/utils';
 import {updateUserFromSharedPreferences} from './sharePreferences';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
-import {camelizeKeys, decamelizeKeys} from 'humps';
+import {ConvertHelper} from '~/utils/convertHelper';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -279,10 +279,10 @@ const interceptorsRequestSnakeSuccess = (config: AxiosRequestConfig) => {
   }
 
   if (config.params) {
-    newConfig.params = decamelizeKeys(config.params);
+    newConfig.params = ConvertHelper.decamelizeKeys(config.params);
   }
   if (config.data) {
-    newConfig.data = decamelizeKeys(config.data);
+    newConfig.data = ConvertHelper.decamelizeKeys(config.data);
   }
   return newConfig;
 };
@@ -292,7 +292,9 @@ const interceptorsResponseCamelSuccess = (response: AxiosResponse) => {
     response.data &&
     response.headers?.['content-type']?.includes?.('application/json')
   ) {
-    response.data = camelizeKeys(response.data);
+    response.data = ConvertHelper.camelizeKeys(response.data, {
+      exclude: ['reactions_count'],
+    });
   }
   return response;
 };
