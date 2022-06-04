@@ -112,7 +112,6 @@ const UploadingFile: FC<UploadingFileProps> = ({
           cancelLabel: t('common:btn_cancel'),
           confirmLabel: t('common:btn_delete'),
           onConfirm: () => onClose?.(file),
-          stretchOnWeb: true,
         }),
       );
     }

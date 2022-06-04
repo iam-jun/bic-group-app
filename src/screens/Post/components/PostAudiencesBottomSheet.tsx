@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {View, StyleSheet, SectionList, Platform} from 'react-native';
+import {View, StyleSheet, SectionList} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -14,12 +14,8 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
 import privacyTypes from '~/constants/privacyTypes';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
-import menuActions from '~/screens/Menu/redux/actions';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import {useUserIdAuth} from '~/hooks/auth';
-import Button from '~/beinComponents/Button';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import mainStack from '~/router/navigator/MainStack/stack';
 
@@ -34,24 +30,16 @@ const PostAudiencesBottomSheet = () => {
   const postAudienceSheetRef = useRef<any>();
   const postAudienceSheet = useKeySelector(postKeySelector.postAudienceSheet);
 
-  const {isShow, data, fromStack} = postAudienceSheet || {};
-  const currentUserId = useUserIdAuth();
+  const {isShow, data} = postAudienceSheet || {};
 
   const onPressClose = () => {
     postAudienceSheetRef?.current?.close?.();
   };
 
   const navigateToGroup = (groupId: any) => {
-    if (Platform.OS === 'web') {
-      rootNavigation.navigate(groupStack.groupDetail, {
-        groupId,
-        initial: false,
-      });
-    } else {
-      rootNavigation.navigate(mainStack.groupDetail, {
-        groupId,
-      });
-    }
+    rootNavigation.navigate(mainStack.groupDetail, {
+      groupId,
+    });
   };
 
   const onPressItem = (item: any) => {
@@ -121,11 +109,6 @@ const PostAudiencesBottomSheet = () => {
         <Text.Subtitle useI18n color={colors.textSecondary}>
           post:label_desc_post_audiences
         </Text.Subtitle>
-        {Platform.OS === 'web' && (
-          <Button style={styles.icClose} onPress={onPressClose}>
-            <Icon icon={'iconClose'} />
-          </Button>
-        )}
       </View>
     );
   };
@@ -156,7 +139,6 @@ const PostAudiencesBottomSheet = () => {
       isOpen={isShow}
       menuMinWidth={375}
       isContextMenu={false}
-      webModalStyle={{width: 375}}
       ContentComponent={renderContent()}
       onClose={() => dispatch(postActions.hidePostAudiencesBottomSheet())}
     />
@@ -167,15 +149,13 @@ const createStyle = (theme: ITheme, insets: any) => {
   const {spacing, dimension, colors} = theme;
   return StyleSheet.create({
     container: {
-      height:
-        Platform.select({web: 0.55, default: 0.7}) * dimension?.deviceHeight,
+      height: dimension?.deviceHeight * 0.7,
       paddingHorizontal: 0,
       paddingBottom: 0,
     },
     headerContainer: {
       paddingHorizontal: spacing.padding.large,
       paddingBottom: spacing.padding.small,
-      paddingTop: Platform.select({web: spacing.padding.small, default: 0}),
       borderBottomWidth: 1,
       borderColor: colors.borderDivider,
     },

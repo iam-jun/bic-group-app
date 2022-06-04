@@ -77,7 +77,7 @@ export interface ICommentData {
   updatedAt?: string;
   ownerReactions?: any;
   reactionsCount?: any;
-  child: IPostComments;
+  child?: IPostComments;
   loading?: boolean;
   status?: 'pending' | 'success' | 'failed';
   localId?: string | number[]; // from uuid-v4
@@ -158,7 +158,7 @@ export interface IAllComments {
 
 export interface IPostCreatePost {
   audience?: {
-    userIds: number[];
+    userIds: string[];
     groupIds: number[];
   };
   content?: string;
@@ -257,10 +257,10 @@ export interface IRequestGetPostComment {
   order?: 'ASC' | 'DESC';
   limit?: number;
   offset?: number;
-  idGTE?: number;
-  idLTE?: number;
-  idLT?: number;
-  idGT?: number;
+  idGte?: string;
+  idLte?: string;
+  idLt?: string;
+  idGt?: string;
   postId: string;
   parentId?: string;
   childLimit?: number;
@@ -428,10 +428,10 @@ export interface IParamGetDraftPosts {
   order?: 'ASC';
   offset?: number;
   limit?: number;
-  idGTE?: number;
-  idLTE?: number;
-  idGT?: number;
-  idLT?: number;
+  idGte?: string;
+  idLte?: string;
+  idGt?: string;
+  idLt?: string;
 }
 
 export interface IPayloadGetDraftPosts {

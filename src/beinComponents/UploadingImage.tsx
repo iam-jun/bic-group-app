@@ -1,18 +1,16 @@
-import React, {FC, useState, useEffect} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle, Platform} from 'react-native';
+import React, {FC, useEffect, useState} from 'react';
+import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
-
-import FileUploader, {IGetFile, IUploadParam} from '~/services/fileUploader';
-import {IFilePicked} from '~/interfaces/common';
+import Button from '~/beinComponents/Button';
+import Icon from '~/beinComponents/Icon';
 import Image from '~/beinComponents/Image';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import Icon from '~/beinComponents/Icon';
-import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
-import {useBaseHook} from '~/hooks';
 import {getResourceUrl, IUploadType} from '~/configs/resourceConfig';
+import {useBaseHook} from '~/hooks';
+import {IFilePicked} from '~/interfaces/common';
+import FileUploader, {IGetFile, IUploadParam} from '~/services/fileUploader';
+import {ITheme} from '~/theme/interfaces';
 
 export interface UploadingImageProps {
   style?: StyleProp<ViewStyle>;
@@ -130,11 +128,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
     <View
       style={StyleSheet.flatten([styles.container, {width, height}, style])}>
       {imageUrl ? (
-        <Image
-          source={imageUrl}
-          useOnLayoutSize={Platform.OS === 'web'}
-          style={Platform.OS === 'web' ? {} : styles.image}
-        />
+        <Image source={imageUrl} useOnLayoutSize={false} style={styles.image} />
       ) : (
         <View style={styles.contentContainer}>
           <LoadingIndicator size={'large'} />
@@ -152,8 +146,6 @@ const createStyle = (theme: ITheme) => {
       backgroundColor: colors.surface,
       borderRadius: spacing.borderRadius.small,
       overflow: 'hidden',
-      // justifyContent: 'center',
-      // alignItems: 'center',
     },
     contentContainer: {
       width: '100%',

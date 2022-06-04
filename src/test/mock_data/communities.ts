@@ -97,7 +97,7 @@ export const memberData = {
     user_count: 5,
     name: 'COMMUNITY_ADMIN',
   },
-  member: {
+  community_member: {
     data: [
       memberDetail,
       memberDetail,

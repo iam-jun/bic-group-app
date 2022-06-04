@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef} from 'react';
-import {Platform, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
@@ -91,7 +91,7 @@ const GeneralSettings = () => {
 
   return (
     <ScreenWrapper testID="AccountSettings" style={styles.container} isFullView>
-      <Header title={t('settings:title_account_settings')} hideBackOnLaptop />
+      <Header title={t('settings:title_account_settings')} />
       <ListView
         type="menu"
         itemTestID="account_settings"
@@ -104,7 +104,7 @@ const GeneralSettings = () => {
       <BottomSheet
         modalizeRef={baseSheetRef}
         ContentComponent={
-          <View style={styles.contentComponent}>
+          <View>
             <Text.ButtonSmall
               color={theme.colors.textSecondary}
               style={styles.chooseLanguageText}
@@ -134,14 +134,6 @@ const themeStyles = (theme: ITheme) => {
     container: {},
     menuList: {
       marginTop: spacing.margin.base,
-      marginHorizontal: Platform.OS === 'web' ? spacing.margin.small : 0,
-    },
-    contentComponent: {
-      ...Platform.select({
-        web: {
-          width: 200,
-        },
-      }),
     },
     chooseLanguageText: {
       margin: spacing.margin.base,

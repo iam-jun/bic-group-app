@@ -1,6 +1,5 @@
 import {Auth} from 'aws-amplify';
 import i18n from 'i18next';
-import {Platform} from 'react-native';
 import {put} from 'redux-saga/effects';
 import {authErrors} from '~/constants/authConstants';
 import * as IAuth from '~/interfaces/IAuth';
@@ -19,16 +18,14 @@ export default function* signIn({
     yield put(actions.setLoading(true));
     yield put(actions.setSigningInError(''));
     // make sure to delete push token of older logged in acc in case delete token in AuthStack failed
-    if (Platform.OS !== 'web') {
-      const messaging = yield initPushTokenMessage();
-      yield messaging()
-        .deleteToken()
-        .catch((e: any) => {
-          console.log('error when delete push token before log in', e);
-          return true;
-        });
-      yield put(notificationsActions.savePushToken(''));
-    }
+    const messaging = yield initPushTokenMessage();
+    yield messaging()
+      .deleteToken()
+      .catch((e: any) => {
+        console.log('error when delete push token before log in', e);
+        return true;
+      });
+    yield put(notificationsActions.savePushToken(''));
     const {email, password} = payload;
     //handle result in useAuthHub
     yield Auth.signIn(email, password);

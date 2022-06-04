@@ -52,16 +52,19 @@ export const NOTIFICATION_TYPE = {
      * send notification to post owner when other users commented on the post
      */
     POST_CREATOR: 'comment.to_post_creator',
-
+    POST_CREATOR_AGGREGATED: 'comment.to_post_creator_aggregated',
     /**
      * Comment created for mentioned user in post
      */
     USER_MENTIONED_IN_POST: 'comment.to_user_mentioned_in_post',
-
+    USER_MENTIONED_IN_POST_AGGREGATED:
+      'comment.to_user_mentioned_in_post_aggregated',
     /**
      * Comment created for commented user
      */
     USER_COMMENTED_ON_POST: 'comment.to_user_commented_on_post',
+    USER_COMMENTED_ON_POST_AGGREGATED:
+      'comment.to_user_commented_on_post_aggregated',
 
     /**
      * Notification for comment creator when the comment was replied
@@ -78,6 +81,7 @@ export const NOTIFICATION_TYPE = {
      */
     USER_REPLIED_TO_THE_SAME_PARENT_COMMENT:
       'comment.to_user_reply_to_the_same_parent_comment',
+
     USER_REPLIED_TO_THE_SAME_PARENT_COMMENT_AGGREGATED:
       'comment.to_user_reply_to_the_same_parent_comment_aggregated',
     /**

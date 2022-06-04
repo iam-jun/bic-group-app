@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
-import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -119,19 +119,12 @@ const UserProfilePreviewBottomSheet = () => {
   };
 
   const renderUserHeader = () => {
-    //in web, we need show text in <span>, so from RN to RJ we can do as nesting text as text inside will consider as span like html
     return (
       <View style={styles.headerContainer}>
         <TouchableOpacity onPress={navigateToUserProfile}>
-          <Text>
-            <Text.H5>{fullname}</Text.H5>
-          </Text>
+          <Text.H5>{fullname}</Text.H5>
         </TouchableOpacity>
-        {!!description && (
-          <Text>
-            <Text.Body>{description}</Text.Body>
-          </Text>
-        )}
+        {!!description && <Text.Body>{description}</Text.Body>}
       </View>
     );
   };
@@ -209,11 +202,6 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
   return StyleSheet.create({
     container: {
       minHeight: containerMinHeight,
-      ...Platform.select({
-        web: {
-          width: 375,
-        },
-      }),
     },
     cover: {
       width: '100%',

@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  ImageStyle,
-  Platform,
-  StyleProp,
-  StyleSheet,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {ImageStyle, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import Image, {ImageProps} from '~/beinComponents/Image';
@@ -25,13 +18,11 @@ export type AvatarType =
 
 export type AvatarStatus = 'online';
 
-// @ts-ignore
 export interface AvatarProps extends ImageProps {
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<ImageStyle>;
   variant?: AvatarType;
   status?: AvatarStatus;
   actionIcon?: IconType;
-  onPressAction?: () => void;
   badge?: any;
   badgeBottom?: boolean;
   isRounded?: boolean;
@@ -40,7 +31,8 @@ export interface AvatarProps extends ImageProps {
   badgeCheck?: boolean;
   badgeCheckSize?: number;
   iconCheckSize?: number;
-  counter?: string | number;
+  counter?: number;
+  onPressAction?: () => void;
 }
 
 const AvatarComponent: React.FC<AvatarProps> = ({
@@ -49,7 +41,6 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   source,
   status,
   actionIcon,
-  onPressAction,
   badge,
   badgeBottom,
   isRounded,
@@ -58,12 +49,12 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   badgeCheckSize = 16,
   iconCheckSize = 12,
   counter,
+  onPressAction,
   ...props
 }: AvatarProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, dimension, colors} = theme;
   const styles = creatStyle(theme);
-  const borderStyles = creatBorderStyle(theme);
 
   const avatarSize = dimension?.avatarSizes[variant] || 24;
   const avatarContainerStyle: StyleProp<ViewStyle> = styles[variant];
@@ -223,11 +214,6 @@ const AvatarComponent: React.FC<AvatarProps> = ({
         <Image
           testID="avatar.image"
           style={[avatarStyle, borderStyle]}
-          containerStyle={
-            Platform.OS === 'web'
-              ? StyleSheet.flatten([borderStyles[variant], borderStyle])
-              : {}
-          }
           source={source}
           {...props}
         />
@@ -293,49 +279,6 @@ const creatStyle = (theme: ITheme) => {
       position: 'absolute',
       justifyContent: 'center',
       alignItems: 'center',
-    },
-  });
-};
-
-const creatBorderStyle = (theme: ITheme) => {
-  const {dimension} = theme;
-  const webBorderWitdth = 8;
-  return StyleSheet.create({
-    tiny: {
-      width: dimension?.avatarSizes?.tiny + webBorderWitdth,
-      height: dimension?.avatarSizes?.tiny + webBorderWitdth,
-      borderRadius: (dimension?.avatarSizes?.tiny + webBorderWitdth || 16) / 2,
-    },
-    small: {
-      width: dimension?.avatarSizes?.small + webBorderWitdth,
-      height: dimension?.avatarSizes?.small + webBorderWitdth,
-      borderRadius: (dimension?.avatarSizes?.small + webBorderWitdth) / 2,
-    },
-    smallAlt: {
-      width: dimension?.avatarSizes?.small + webBorderWitdth,
-      height: dimension?.avatarSizes?.small + webBorderWitdth,
-      borderRadius: (dimension?.avatarSizes?.small + webBorderWitdth) / 2,
-    },
-    medium: {
-      width: dimension?.avatarSizes?.medium + webBorderWitdth,
-      height: dimension?.avatarSizes?.medium + webBorderWitdth,
-      borderRadius: (dimension?.avatarSizes?.medium + webBorderWitdth) / 2,
-    },
-    large: {
-      width: dimension?.avatarSizes?.large + webBorderWitdth,
-      height: dimension?.avatarSizes?.large + webBorderWitdth,
-      borderRadius: (dimension?.avatarSizes?.large + webBorderWitdth) / 2,
-    },
-    largeAlt: {
-      width: dimension?.avatarSizes?.largeAlt + webBorderWitdth,
-      height: dimension?.avatarSizes?.largeAlt + webBorderWitdth,
-      borderRadius: (dimension?.avatarSizes?.largeAlt + webBorderWitdth) / 2,
-    },
-    ultraSuperLarge: {
-      width: dimension?.avatarSizes?.ultraSuperLarge + webBorderWitdth,
-      height: dimension?.avatarSizes?.ultraSuperLarge + webBorderWitdth,
-      borderRadius:
-        (dimension?.avatarSizes?.ultraSuperLarge + webBorderWitdth) / 2,
     },
   });
 };

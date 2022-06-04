@@ -1,9 +1,8 @@
 import React from 'react';
-import {Platform, TouchableOpacity} from 'react-native';
+import {TouchableOpacity, View} from 'react-native';
 import NodeEmoji from 'node-emoji';
 
 import Text from '~/beinComponents/Text';
-import Div from '~/beinComponents/Div';
 import {useKeySelector} from '~/hooks/selector';
 
 const EmojiCell = ({emoji, colSize, onLongPress, ...other}: any) => {
@@ -20,7 +19,7 @@ const EmojiCell = ({emoji, colSize, onLongPress, ...other}: any) => {
   };
 
   return (
-    <Div title={emojiKey}>
+    <View>
       <TouchableOpacity
         activeOpacity={0.5}
         disabled={!isInternetReachable}
@@ -36,12 +35,12 @@ const EmojiCell = ({emoji, colSize, onLongPress, ...other}: any) => {
           testID="emoji_cell"
           style={{
             color: '#FFFFFF',
-            fontSize: (colSize - (Platform.OS === 'web' ? 0 : 12)) * 0.7,
+            fontSize: (colSize - 12) * 0.7,
           }}>
           {charFromEmojiObject(emoji)}
         </Text>
       </TouchableOpacity>
-    </Div>
+    </View>
   );
 };
 

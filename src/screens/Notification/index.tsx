@@ -1,6 +1,6 @@
 import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useRef, useState} from 'react';
-import {ActivityIndicator, Platform, StyleSheet, View} from 'react-native';
+import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
@@ -124,7 +124,10 @@ const Notification = () => {
           }
           case NOTIFICATION_TYPE.COMMENT.POST_CREATOR:
           case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_POST:
-          case NOTIFICATION_TYPE.COMMENT.USER_COMMENTED_ON_POST: {
+          case NOTIFICATION_TYPE.COMMENT.USER_COMMENTED_ON_POST:
+          case NOTIFICATION_TYPE.COMMENT.POST_CREATOR_AGGREGATED:
+          case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_POST_AGGREGATED:
+          case NOTIFICATION_TYPE.COMMENT.USER_COMMENTED_ON_POST_AGGREGATED: {
             rootNavigation.navigate(homeStack.postDetail, {
               post_id: act?.id,
               noti_id: item.id,
@@ -284,7 +287,6 @@ const Notification = () => {
         <ListView
           listRef={listRef}
           style={styles.list}
-          containerStyle={styles.listContainer}
           isFullView
           renderItem={renderItem}
           renderItemSeparator={() => (
@@ -321,9 +323,6 @@ const themeStyles = (theme: ITheme) => {
       backgroundColor: colors.background,
     },
     list: {},
-    listContainer: {
-      marginHorizontal: Platform.OS === 'web' ? spacing.margin.small : 0,
-    },
     listFooter: {
       height: 150,
       justifyContent: 'center',

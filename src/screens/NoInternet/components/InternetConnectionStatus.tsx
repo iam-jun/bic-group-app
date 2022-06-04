@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {StyleSheet, Platform} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useKeySelector} from '~/hooks/selector';
 
 import BannerMessage from '~/beinComponents/ToastMessage/BannerMessage';
@@ -68,15 +68,6 @@ const createStyle = () => {
       alignSelf: 'center',
       marginHorizontal: 12,
       marginBottom: 4,
-      ...Platform.select({
-        web: {
-          left: 40,
-          bottom: 40,
-          alignSelf: undefined,
-          marginHorizontal: undefined,
-          marginBottom: undefined,
-        },
-      }),
     },
   });
 };

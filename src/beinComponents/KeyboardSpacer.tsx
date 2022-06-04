@@ -2,11 +2,13 @@ import React, {useState, useEffect, FC} from 'react';
 import {Animated, Keyboard, Platform} from 'react-native';
 
 export interface KeyboardSpacerProps {
+  testID?: string;
   iosOnly?: boolean;
   extraHeight?: number;
 }
 
 const KeyboardSpacer: FC<KeyboardSpacerProps> = ({
+  testID,
   extraHeight = 0,
   iosOnly,
 }: KeyboardSpacerProps) => {
@@ -50,7 +52,9 @@ const KeyboardSpacer: FC<KeyboardSpacerProps> = ({
       keyboardWillShowListener.remove();
     };
   }, []);
-  return <Animated.View style={{width: '100%', height: height}} />;
+  return (
+    <Animated.View testID={testID} style={{width: '100%', height: height}} />
+  );
 };
 
 export default KeyboardSpacer;

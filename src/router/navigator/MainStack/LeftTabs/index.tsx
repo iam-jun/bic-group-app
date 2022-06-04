@@ -1,10 +1,9 @@
 import React, {useEffect} from 'react';
-import {DeviceEventEmitter, Platform, StyleSheet} from 'react-native';
+import {DeviceEventEmitter, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 
-import Div from '~/beinComponents/Div';
 import Icon from '~/beinComponents/Icon';
 import Image from '~/beinComponents/Image';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
@@ -82,14 +81,8 @@ const LeftTabs: React.FC<Props> = (): React.ReactElement => {
                 // @ts-ignore
                 const unreadCount = tabBadge[name] || undefined;
 
-                let className = 'tab-bar__menu';
-                if (focused) className = className + ` ${className}__active`;
-
                 return (
-                  <Div
-                    testID={`tab_${name}`}
-                    className={className}
-                    style={Platform.OS !== 'web' ? styles.iconContainer : {}}>
+                  <View testID={`tab_${name}`} style={styles.iconContainer}>
                     {renderIcon(name, focused)}
                     {!!unreadCount && (
                       <NotificationsBadge.Alert
@@ -97,7 +90,7 @@ const LeftTabs: React.FC<Props> = (): React.ReactElement => {
                         number={unreadCount}
                       />
                     )}
-                  </Div>
+                  </View>
                 );
               },
             }}
@@ -114,16 +107,7 @@ const CreateStyle = (theme: ITheme) => {
   return StyleSheet.create({
     navigatorContainer: {
       backgroundColor: colors.background,
-      ...Platform.select({
-        web: {
-          width: 84,
-          borderRightColor: colors.borderDivider,
-          borderRightWidth: 1,
-        },
-        default: {
-          width: 48,
-        },
-      }),
+      width: 48,
     },
     logoBein: {
       width: 26.67,

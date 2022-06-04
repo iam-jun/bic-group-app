@@ -65,10 +65,10 @@ export interface IParamGetGroupPosts {
   order?: 'ASC' | 'DESC';
   limit?: number;
   offset?: number;
-  idGTE?: number;
-  idLTE?: number;
-  idGT?: number;
-  idLT?: number;
+  idGte?: number;
+  idLte?: number;
+  idGt?: number;
+  idLt?: number;
   ranking?: 'IMPORTANT' | string;
 }
 

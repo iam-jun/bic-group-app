@@ -15,8 +15,6 @@ import {
   IRequestPostComment,
   IRequestReplyComment,
 } from '~/interfaces/IPost';
-import {Platform} from 'react-native';
-import {convertReactKeyForRequest} from '~/utils/common';
 
 const provider = ApiConfig.providers.beinFeed;
 
@@ -60,7 +58,6 @@ export const postApiConfig = {
       useRetry: true,
       data: {
         ...params,
-        reactionName: convertReactKeyForRequest(params?.reactionName),
       },
     };
   },
@@ -117,10 +114,10 @@ export const postApiConfig = {
       order: params?.order || 'ASC',
       limit: params?.limit || 10,
       offset: params?.offset || 0,
-      idGTE: params?.idGTE,
-      idLTE: params?.idLTE,
-      idLT: params?.idLT,
-      idGT: params?.idGT,
+      idGte: params?.idGte,
+      idLte: params?.idLte,
+      idLt: params?.idLt,
+      idGt: params?.idGt,
       postId: params?.postId,
       parentId: params?.parentId,
       childLimit: params?.childLimit || 1,
@@ -196,7 +193,7 @@ export const postApiConfig = {
     useRetry: true,
     data: {
       ...data,
-      reactionName: convertReactKeyForRequest(data?.reactionName),
+      reactionName: data?.reactionName,
     },
   }),
   getReactionDetail: (
@@ -207,7 +204,7 @@ export const postApiConfig = {
     provider: provider,
     useRetry: true,
     params: {
-      reactionName: convertReactKeyForRequest(param.reactionName),
+      reactionName: param.reactionName,
       targetId: param.targetId,
       target: param.target,
       order: param?.order || 'DESC',

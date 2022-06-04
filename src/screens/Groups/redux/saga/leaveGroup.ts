@@ -1,5 +1,4 @@
 import i18next from 'i18next';
-import {Platform} from 'react-native';
 import {put, select, call} from 'redux-saga/effects';
 
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
@@ -11,6 +10,7 @@ import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import showError from '~/store/commonSaga/showError';
+import groupJoinStatus from '~/constants/groupJoinStatus';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -30,17 +30,12 @@ export default function* leaveGroup({
     yield put(
       groupsActions.editDiscoverGroupItem({
         id: payload,
-        data: {join_status: 1},
+        data: {join_status: groupJoinStatus.visitor},
       }),
     );
 
     if (privacy === groupPrivacy.secret) {
-      if (Platform.OS !== 'web') {
-        yield call(navigationReplace);
-      } else {
-        const topParentGroupId = groups?.joinedGroups[0]?.id;
-        yield call(navigateToGroup, topParentGroupId);
-      }
+      yield call(navigationReplace);
     } else {
       yield call(navigateToGroup, payload);
     }
