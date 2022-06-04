@@ -12,6 +12,7 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		186CA33DFE6F4DE4825AC15C /* SVN-PoppinsMedium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3CEE1AA24A3A42ED9B3DCD82 /* SVN-PoppinsMedium.otf */; };
+		368A0A1CEE2661C52FE68286 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9729A2452185E75BF1E0360A /* ExpoModulesProvider.swift */; };
 		38D5FC5F57D84D9CB87FE48B /* SVN-Poppins.otf in Resources */ = {isa = PBXBuildFile; fileRef = 28F2F768180A4AFC961F428D /* SVN-Poppins.otf */; };
 		51EB5FE323194EBDB79F4AE3 /* SegoeUI.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 15873F56468D415A8A685AB9 /* SegoeUI.ttf */; };
 		67A480EDF9D64414A590D44C /* SegoeUI-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8490B9868C1A4DC8B87C4917 /* SegoeUI-Semibold.ttf */; };
@@ -22,6 +23,7 @@
 		C34A26C5CBCF47018637DA06 /* SegoeUI-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A21B018C25F64F3A93A19904 /* SegoeUI-Italic.ttf */; };
 		D45B5580C2C1082286D1C8D1 /* libPods-bein_group.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AA700F8A3AF0626405ED6FA1 /* libPods-bein_group.a */; };
 		D7214A9E725B40C3A710DAA6 /* SVN-PoppinsSemiBoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = C8FC3B75F2D94B5993703EBE /* SVN-PoppinsSemiBoldItalic.otf */; };
+		DE5964228FDEFE185FAB81F9 /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCEAA39544BFF886F7F20475 /* ExpoModulesProvider.swift */; };
 		E3472CF726CF8EB300CAA2BE /* JetBrainsMono-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3472CF626CF8EB300CAA2BE /* JetBrainsMono-Regular.ttf */; };
 		E3A0403B2784264F0092D778 /* OpenSans-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3A040372784264E0092D778 /* OpenSans-Italic.ttf */; };
 		E3A0403C2784264F0092D778 /* OpenSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3A040382784264F0092D778 /* OpenSans-SemiBold.ttf */; };
@@ -68,8 +70,10 @@
 		803F0D9BDA1E73359B7D061A /* Pods-bein_group-bein_groupTests.debugdevelopment.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bein_group-bein_groupTests.debugdevelopment.xcconfig"; path = "Target Support Files/Pods-bein_group-bein_groupTests/Pods-bein_group-bein_groupTests.debugdevelopment.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = bein_group/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8490B9868C1A4DC8B87C4917 /* SegoeUI-Semibold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SegoeUI-Semibold.ttf"; path = "../assets/fonts/SegoeUI-Semibold.ttf"; sourceTree = "<group>"; };
+		9729A2452185E75BF1E0360A /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-bein_group/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		A21B018C25F64F3A93A19904 /* SegoeUI-Italic.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SegoeUI-Italic.ttf"; path = "../assets/fonts/SegoeUI-Italic.ttf"; sourceTree = "<group>"; };
 		AA700F8A3AF0626405ED6FA1 /* libPods-bein_group.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-bein_group.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		BCEAA39544BFF886F7F20475 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-bein_group-bein_groupTests/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 		BF50800D4E359DF25CF846A1 /* Pods-bein_group-bein_groupTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bein_group-bein_groupTests.debug.xcconfig"; path = "Target Support Files/Pods-bein_group-bein_groupTests/Pods-bein_group-bein_groupTests.debug.xcconfig"; sourceTree = "<group>"; };
 		C8FC3B75F2D94B5993703EBE /* SVN-PoppinsSemiBoldItalic.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-PoppinsSemiBoldItalic.otf"; path = "../assets/fonts/SVN-PoppinsSemiBoldItalic.otf"; sourceTree = "<group>"; };
 		C90741D4EE61574D0DE5EA6A /* Pods-bein_group.releasedevelopment.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bein_group.releasedevelopment.xcconfig"; path = "Target Support Files/Pods-bein_group/Pods-bein_group.releasedevelopment.xcconfig"; sourceTree = "<group>"; };
@@ -171,6 +175,22 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		5E02034C48C2383163D9E386 /* bein_groupTests */ = {
+			isa = PBXGroup;
+			children = (
+				BCEAA39544BFF886F7F20475 /* ExpoModulesProvider.swift */,
+			);
+			name = bein_groupTests;
+			sourceTree = "<group>";
+		};
+		7F11DEE854B464ACE52F2BE8 /* bein_group */ = {
+			isa = PBXGroup;
+			children = (
+				9729A2452185E75BF1E0360A /* ExpoModulesProvider.swift */,
+			);
+			name = bein_group;
+			sourceTree = "<group>";
+		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
@@ -188,6 +208,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				17A21493402B8A5F524B62C9 /* Pods */,
 				DDC2B1B50D934EC49C47D1B6 /* Resources */,
+				A3073893C9AC8813D8DEEC16 /* ExpoModulesProviders */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -201,6 +222,15 @@
 				00E356EE1AD99517003FC87E /* bein_groupTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		A3073893C9AC8813D8DEEC16 /* ExpoModulesProviders */ = {
+			isa = PBXGroup;
+			children = (
+				7F11DEE854B464ACE52F2BE8 /* bein_group */,
+				5E02034C48C2383163D9E386 /* bein_groupTests */,
+			);
+			name = ExpoModulesProviders;
 			sourceTree = "<group>";
 		};
 		DDC2B1B50D934EC49C47D1B6 /* Resources */ = {
@@ -529,6 +559,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00E356F31AD99517003FC87E /* bein_groupTests.m in Sources */,
+				DE5964228FDEFE185FAB81F9 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,6 +569,7 @@
 			files = (
 				E3BF04F62844E7290011A794 /* AppDelegate.mm in Sources */,
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
+				368A0A1CEE2661C52FE68286 /* ExpoModulesProvider.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -562,7 +594,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = bein_groupTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -573,6 +605,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bein_group.app/bein_group";
@@ -587,7 +620,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
 				INFOPLIST_FILE = bein_groupTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -598,6 +631,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bein_group.app/bein_group";
@@ -618,7 +652,7 @@
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = bein_group/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -628,6 +662,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.evol.bein.group.development;
 				PRODUCT_NAME = bein_group;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.evol.bein.group.development";
@@ -651,7 +686,7 @@
 				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
 				INFOPLIST_FILE = bein_group/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -661,6 +696,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.evol.bein.group;
 				PRODUCT_NAME = bein_group;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.evol.bein.group";
@@ -719,7 +755,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -749,7 +785,7 @@
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = bein_group/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -759,6 +795,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = com.evol.bein.group.staging;
 				PRODUCT_NAME = bein_group;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.evol.bein.group.staging";
@@ -779,7 +816,7 @@
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = bein_groupTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -790,6 +827,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_DEBUG";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bein_group.app/bein_group";
@@ -838,7 +876,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -867,7 +905,7 @@
 				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
 				INFOPLIST_FILE = bein_group/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -877,6 +915,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.evol.bein.group.staging;
 				PRODUCT_NAME = bein_group;
 				PROVISIONING_PROFILE_SPECIFIER = "match AppStore com.evol.bein.group.staging";
@@ -894,7 +933,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
 				INFOPLIST_FILE = bein_groupTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -905,6 +944,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bein_group.app/bein_group";
@@ -953,7 +993,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -982,7 +1022,7 @@
 				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
 				INFOPLIST_FILE = bein_group/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -992,6 +1032,7 @@
 					"-ObjC",
 					"-lc++",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = com.evol.bein.group.development;
 				PRODUCT_NAME = bein_group;
 				PROVISIONING_PROFILE_SPECIFIER = "match Development com.evol.bein.group.development";
@@ -1009,7 +1050,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = 44S5N8GAPS;
 				INFOPLIST_FILE = bein_groupTests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1020,6 +1061,7 @@
 					"-lc++",
 					"$(inherited)",
 				);
+				OTHER_SWIFT_FLAGS = "$(inherited) -D EXPO_CONFIGURATION_RELEASE";
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/bein_group.app/bein_group";
@@ -1075,7 +1117,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",
@@ -1133,7 +1175,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					/usr/lib/swift,
 					"$(inherited)",

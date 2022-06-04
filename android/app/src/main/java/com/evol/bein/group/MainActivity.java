@@ -1,4 +1,5 @@
 package com.evol.bein.group;
+import expo.modules.ReactActivityDelegateWrapper;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,7 +37,7 @@ public class MainActivity extends ReactActivity {
    */
   @Override
   protected ReactActivityDelegate createReactActivityDelegate() {
-    return new MainActivityDelegate(this, getMainComponentName());
+    return new ReactActivityDelegateWrapper(this, new MainActivityDelegate(this, getMainComponentName()));
   }
 
   public static class MainActivityDelegate extends ReactActivityDelegate {
