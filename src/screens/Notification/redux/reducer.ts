@@ -8,7 +8,7 @@ export const notiInitState = {
   isLoadingMore: false,
   showMarkedAsReadToast: false,
   pushToken: '',
-  notifications: {},
+  notificationList: {},
   tabAll: {
     loading: false,
     data: [],
@@ -61,7 +61,7 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
         return {
           ...state,
           ...newNotificationData,
-          notifications: {...state.notifications, ...notifications},
+          notificationList: {...state.notificationList, ...notifications},
           unseenNumber: unseen,
         };
       }
@@ -93,12 +93,12 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
           ...newNotifications.tabUnread.data,
         ];
       }
-      const newNotification: any = {...state.notifications};
+      const newNotification: any = {...state.notificationList};
       newNotification[payload.id] = {...payload};
 
       return {
         ...state,
-        notifications: {...newNotification},
+        notificationList: {...newNotification},
         unseenNumber: state.unseenNumber + 1,
       };
     }
@@ -127,12 +127,12 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
         newUnSeenNumber = newUnSeenNumber + 1;
       }
 
-      const newNotification: any = {...state.notifications};
+      const newNotification: any = {...state.notificationList};
       newNotification[payload.id] = {...payload};
 
       return {
         ...state,
-        notifications: {...newNotification},
+        notificationList: {...newNotification},
         unseenNumber: newUnSeenNumber,
       };
     }
@@ -145,7 +145,7 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
         return {
           ...state,
           ...newNotificationData,
-          notifications: {...state.notifications, ...notifications},
+          notificationList: {...state.notificationList, ...notifications},
         };
       }
       return {
@@ -183,7 +183,7 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
     case notificationsTypes.SET_ALL_NOTIFICATIONS: {
       return {
         ...state,
-        notifications: payload.notifications,
+        notificationList: payload.notifications,
         unseenNumber:
           typeof payload?.unseenNumber === 'number'
             ? payload.unseenNumber
