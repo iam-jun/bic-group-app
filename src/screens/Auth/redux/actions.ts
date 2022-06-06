@@ -1,4 +1,3 @@
-import {Platform} from 'react-native';
 import {
   IChangePasswordError,
   IChangePasswordPayload,
@@ -9,7 +8,6 @@ import {
   IUser,
   IUserResponse,
 } from '~/interfaces/IAuth';
-import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
 import types from './types';
 
 export default {
@@ -73,15 +71,6 @@ export default {
   }),
 
   signOut: (shouldNavigate = true) => {
-    /**
-     * Need calling this API before sign out to remove cookies
-     * And not putting it in saga as it needs field Authorization, which is extract from store.
-     * If we call it in saga, it will be null, and we cannot call API.
-     */
-    if (Platform.OS === 'web') {
-      menuDataHelper.logout();
-    }
-
     return {
       type: types.SIGN_OUT,
       payload: shouldNavigate,

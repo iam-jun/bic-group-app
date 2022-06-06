@@ -1,16 +1,15 @@
 import {GiphyMedia, GiphyMediaView} from '@giphy/react-native-sdk';
 import React, {
+  useCallback,
   useEffect,
   useImperativeHandle,
   useRef,
   useState,
-  useCallback,
 } from 'react';
 import {
   Animated,
   Keyboard,
   NativeSyntheticEvent,
-  Platform,
   StyleProp,
   StyleSheet,
   TextInput,
@@ -106,9 +105,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   ...props
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
-  const [cloneTextForWeb, setCloneTextForWeb] = useState<string>(value || '');
   const [selection, setSelection] = useState<{start: number; end: number}>();
-  const [addToEnd, setAddToEnd] = useState(true);
 
   const [textTextInputHeight, setTextInputHeight] = useState(DEFAULT_HEIGHT);
   const heightAnimated = useRef(new Animated.Value(DEFAULT_HEIGHT)).current;
@@ -140,27 +137,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const {colors} = theme;
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets, _loading);
-  const [inputSelection, setInputSelection] = useState<any>();
-  const supportedMarkdownKey = {
-    b: '**',
-    i: '*',
-  };
-  const isWeb = Platform.OS === 'web';
-
-  useEffect(() => {
-    /**
-     * Clone text in order to handling empty newline
-     * as the <Text> does not adding the height of
-     * the empty newline by its own
-     */
-    if (isWeb) {
-      const lastChar = text.substr(text.length - 1);
-      const isEmptyNewline = lastChar === '\n';
-
-      if (isEmptyNewline) setCloneTextForWeb(text + '.');
-      else setCloneTextForWeb(text);
-    }
-  }, [text, selectedImage]);
 
   useEffect(() => {
     if (selectedGiphy) {
@@ -196,11 +172,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
     dispatch(modalActions.showAlertNewFeature());
   };
 
-  const onPressCamera = (event: any) => {
+  const onPressCamera = () => {
     dispatch(modalActions.showAlertNewFeature());
   };
 
-  const onPressEmoji = (event: any) => {
+  const onPressEmoji = () => {
     stickerViewRef?.current?.show?.();
   };
 
@@ -275,49 +251,17 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const _onSelectionChange = (event: any) => {
     setSelection(event.nativeEvent.selection);
     onSelectionChange?.(event);
-    if (selection?.end === text?.length - 1) {
-      setAddToEnd(true);
-    } else {
-      setAddToEnd(false);
-    }
-    Platform.OS === 'web' && setInputSelection(event.nativeEvent.selection);
   };
 
   const onMediaSelect = useCallback(
     (media: GiphyMedia) => {
       setSelectedImage(undefined);
       console.log('stickerViewRef?.current', stickerViewRef?.current);
-      stickerViewRef?.current?.hideImmediately?.();
+      stickerViewRef?.current?.hide?.();
       setSelectedGiphy(media);
     },
     [text],
   );
-
-  const handleKeyEvent = (event: any) => {
-    if (
-      (event.metaKey || event.ctrlKey) &&
-      Object.keys(supportedMarkdownKey).includes(event.key)
-    ) {
-      //@ts-ignore
-      const format = supportedMarkdownKey[event.key];
-      if (inputSelection) {
-        const {start, end} = inputSelection;
-        if (end - start > 0) {
-          const formattedText = `${format}${text}${format}`;
-          _onChangeText(formattedText);
-        } else {
-          const _text = text;
-          const formattedText = `${_text}${format}${format}`;
-
-          _onChangeText(formattedText);
-          setInputSelection({
-            start: _text.length + format.length,
-            end: _text.length + format.length,
-          });
-        }
-      }
-    }
-  };
 
   const calculateTextInputHeight = (height: number) => {
     let newHeight = Math.min(Math.max(DEFAULT_HEIGHT, height), LIMIT_HEIGHT);
@@ -330,16 +274,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const _onContentSizeChange = (e: any) => {
     onContentSizeChange?.(e);
 
-    if (isWeb) return;
     const newHeight = calculateTextInputHeight(
       e.nativeEvent.contentSize.height,
     );
-
-    handleSetTextInputHeight(newHeight);
-  };
-
-  const _onLayout = (e: any) => {
-    const newHeight = calculateTextInputHeight(e.nativeEvent.layout.height);
 
     handleSetTextInputHeight(newHeight);
   };
@@ -387,15 +324,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const _onKeyPress = (e: any) => {
     onKeyPress?.(e);
-    if (Platform.OS === 'web') {
-      handleKeyEvent(e);
-    }
   };
-
-  const inputStyle: any = StyleSheet.flatten([
-    styles.textInput,
-    Platform.OS === 'web' ? {outlineWidth: 0, height: textTextInputHeight} : {},
-  ]);
 
   const renderSelectedMedia = () => {
     if (selectedGiphy) {
@@ -474,37 +403,23 @@ const CommentInput: React.FC<CommentInputProps> = ({
         <View style={styles.container}>
           <Animated.View style={{flex: 1, zIndex: 1, height: heightAnimated}}>
             <TextInput
-              selection={inputSelection}
               {...props}
               testID={useTestID ? 'comment_input' : undefined}
               onContentSizeChange={_onContentSizeChange}
               ref={_textInputRef}
-              style={inputStyle}
+              style={styles.textInput}
               selectionColor={colors.textSecondary}
               multiline={true}
               autoFocus={autoFocus}
               placeholder={placeholder}
               placeholderTextColor={colors.textSecondary}
               editable={!_loading}
-              value={Platform.OS === 'web' ? value : undefined}
               onFocus={_onFocus}
               onChangeText={_onChangeText}
               onSelectionChange={_onSelectionChange}
               onKeyPress={_onKeyPress}>
-              {Platform.OS !== 'web' && text}
+              {text}
             </TextInput>
-            {isWeb && (
-              /**
-               * Add duplicated Text on web to handle changing
-               * content size more precisely
-               */
-              <Text
-                nativeID="lol-text"
-                onLayout={_onLayout}
-                style={[styles.textInput, styles.textDuplicatedOnWeb]}>
-                {cloneTextForWeb || placeholder}
-              </Text>
-            )}
           </Animated.View>
         </View>
         {renderSelectedMedia()}
@@ -561,15 +476,6 @@ const createStyle = (theme: ITheme, insets: any, loading: boolean) => {
       color: loading ? colors.textSecondary : colors.textPrimary,
       fontFamily: fontFamilies.OpenSans,
       fontSize: dimension?.sizes.body,
-    },
-    textDuplicatedOnWeb: {
-      ...Platform.select({
-        web: {
-          position: 'absolute',
-          width: '100%',
-          visibility: 'hidden',
-        },
-      }),
     },
     iconSend: {
       marginBottom: spacing?.margin.base,

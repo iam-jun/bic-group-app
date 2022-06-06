@@ -1,39 +1,43 @@
 import {cloneDeep, get} from 'lodash';
 import {call, put, select} from 'redux-saga/effects';
 
-import {IObject} from '~/interfaces/common';
 import notificationsDataHelper from '../../helper/NotificationDataHelper';
 import notificationsActions from '../actions';
 import notificationSelector from '../selector';
 
 function* markAsRead({payload}: {payload: any; type: string}): any {
   try {
-    const {id, flag} = payload || {};
+    const {id, keyValue} = payload || {};
+    if (!id) return;
+
     yield call(notificationsDataHelper.markAsRead, id);
 
     // get all notifications from store
-    const notifications: IObject<any> =
+    const notifications: any =
       cloneDeep(
         yield select(state => get(state, notificationSelector.notifications)),
-      ) || [];
+      ) || {};
 
-    let newNotifications = [];
-    if (flag === 'UNREAD') {
-      newNotifications = notifications.filter((item: any) => item?.id !== id);
-    } else {
-      // then set mapped notificaton's is_read field by true to un-highlight it directly on device store
-      notifications.forEach((notificationGroup: any) => {
-        if (notificationGroup.id === id) {
-          notificationGroup.isRead = true;
-        }
-      });
+    notifications[id].isRead = true;
+
+    const tabUnreadData: any[] =
+      cloneDeep(
+        yield select(state =>
+          get(state, notificationSelector.notificationByType('tabUnread')),
+        ),
+      ) || [];
+    let newData = [];
+    if (tabUnreadData?.length > 0) {
+      newData = tabUnreadData.filter((item: any) => item !== id);
     }
 
     // finally, set notification back to store,
     yield put(
       notificationsActions.setNotifications({
-        notifications: flag === 'UNREAD' ? newNotifications : notifications,
-        unseen: 0, // hardcode because we re-use setNotifications function
+        unseen: 0,
+        notifications: {...notifications},
+        data: newData,
+        keyValue: 'tabUnread',
       }),
     );
   } catch (err) {

@@ -4,7 +4,6 @@ import {
   StyleSheet,
   StyleProp,
   ViewStyle,
-  Platform,
   TouchableOpacity,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
@@ -12,7 +11,6 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
-import {useBaseHook} from '~/hooks';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {useKeySelector} from '~/hooks/selector';
 import {useDispatch} from 'react-redux';
@@ -25,21 +23,18 @@ import {ISelectAudienceParams} from '~/screens/Post/PostSelectAudience/SelectAud
 export interface HeaderCreatePostProps {
   audience?: any;
   style?: StyleProp<ViewStyle>;
-  parentWidth?: number;
   createFromGroupId?: number;
 }
 
 const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   audience,
   style,
-  parentWidth,
   createFromGroupId,
 }: HeaderCreatePostProps) => {
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
-  const {colors, dimension} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
@@ -75,14 +70,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   };
 
   return (
-    <View
-      style={StyleSheet.flatten([
-        styles.container,
-        parentWidth && parentWidth > dimension.maxNewsfeedWidth
-          ? styles.containerForBigParent
-          : {},
-        style,
-      ])}>
+    <View style={[styles.container, style]}>
       <View style={styles.contentContainer}>
         <Avatar.Medium isRounded={true} source={avatar} />
         <TouchableOpacity
@@ -99,7 +87,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, colors, dimension} = theme;
+  const {spacing, colors} = theme;
   return StyleSheet.create({
     container: {
       paddingVertical: spacing?.padding.small,
@@ -109,16 +97,6 @@ const createStyle = (theme: ITheme) => {
     contentContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-    },
-    containerForBigParent: {
-      ...Platform.select({
-        web: {
-          width: '100%',
-          maxWidth: dimension.maxNewsfeedWidth,
-          alignSelf: 'center',
-          borderRadius: 6,
-        },
-      }),
     },
     buttonContainer: {
       flex: 1,

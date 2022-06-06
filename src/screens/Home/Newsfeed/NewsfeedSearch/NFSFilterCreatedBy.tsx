@@ -1,21 +1,19 @@
 import React, {FC} from 'react';
-import {StyleSheet, Platform, TouchableOpacity} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
-
-import Text from '~/beinComponents/Text';
-import Divider from '~/beinComponents/Divider';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import Icon from '~/beinComponents/Icon';
-import {useBaseHook} from '~/hooks';
-import Button from '~/beinComponents/Button';
 import {useDispatch} from 'react-redux';
-import modalActions from '~/store/modal/actions';
+
+import Button from '~/beinComponents/Button';
+import Divider from '~/beinComponents/Divider';
+import Icon from '~/beinComponents/Icon';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import Text from '~/beinComponents/Text';
+import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import NFSFilterCreateBySpecific from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterCreateBySpecific';
 import {ISelectedFilterUser} from '~/interfaces/IHome';
+import NFSFilterCreateBySpecific from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterCreateBySpecific';
+import modalActions from '~/store/modal/actions';
+import {ITheme} from '~/theme/interfaces';
 
 export interface NFSFilterCreatedByProps {
   selectedCreatedBy?: any;
@@ -34,8 +32,7 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const {colors} = theme;
-  const insets = useSafeAreaInsets();
-  const styles = createStyle(theme, insets);
+  const styles = createStyle(theme);
   const userId = useUserIdAuth();
 
   const _onSelect = (selected?: any) => {
@@ -43,7 +40,7 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
     onSelect?.(selected);
   };
 
-  const _onPressSelectSpecific = (event?: any) => {
+  const _onPressSelectSpecific = () => {
     if (onPressSelectSpecific) {
       onPressSelectSpecific?.();
     } else {
@@ -57,12 +54,6 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
               dismissModalOnPress
             />
           ),
-          // props: {webModalStyle: {minWidth: 400}},
-          props: {
-            isContextMenu: true,
-            side: 'right',
-            position: {x: event?.pageX, y: event?.pageY},
-          },
         }),
       );
     }
@@ -118,15 +109,11 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme, insets: any) => {
+const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
-      paddingBottom:
-        Platform.OS === 'web'
-          ? spacing.padding.tiny
-          : spacing.padding.extraLarge,
-      minWidth: Platform.OS === 'web' ? 300 : undefined,
+      paddingBottom: spacing.padding.extraLarge,
     },
     itemContainer: {
       paddingHorizontal: spacing.padding.extraLarge,
@@ -136,14 +123,12 @@ const createStyle = (theme: ITheme, insets: any) => {
     },
     textHeader: {
       color: colors.textSecondary,
-      marginTop:
-        Platform.OS === 'web' ? spacing.margin.base : spacing.margin.tiny,
+      marginTop: spacing.margin.tiny,
       marginBottom: spacing.margin.tiny,
       marginHorizontal: spacing.margin.extraLarge,
     },
     buttonSpecificRight: {
-      marginLeft:
-        Platform.OS === 'web' ? spacing.margin.extraLarge : spacing.margin.tiny,
+      marginLeft: spacing.margin.tiny,
     },
   });
 };

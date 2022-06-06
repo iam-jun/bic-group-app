@@ -1,26 +1,25 @@
 import React from 'react';
-import {Platform, ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import {ITheme} from '~/theme/interfaces';
-import Text from '~/beinComponents/Text';
+import LockImg from '~/../assets/images/group_private.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import Text from '~/beinComponents/Text';
+import {ITheme} from '~/theme/interfaces';
 import GroupAboutContent from '../../components/GroupAboutContent';
 import GroupInfoHeader from './GroupInfoHeader';
-import LockImg from '~/../assets/images/group_private.svg';
-import {deviceDimensions} from '~/theme/dimension';
 
-const GroupPrivateWelcome = ({parentWidth}: {parentWidth?: number}) => {
+const GroupPrivateWelcome = () => {
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme, parentWidth);
+  const styles = themeStyles(theme);
 
   return (
     <ScrollView showsVerticalScrollIndicator={false}>
       <View style={styles.content} testID="group_private_welcome">
-        <View style={styles.contentSection}>
+        <View>
           <GroupInfoHeader />
         </View>
-        <View style={[styles.contentSection, styles.marginTop]}>
+        <View style={styles.marginTop}>
           <GroupAboutContent />
         </View>
         <View
@@ -38,25 +37,13 @@ const GroupPrivateWelcome = ({parentWidth}: {parentWidth?: number}) => {
   );
 };
 
-const themeStyles = (theme: ITheme, parentWidth = deviceDimensions.phone) => {
-  const {dimension, spacing} = theme;
-  const bigParentOnWeb =
-    Platform.OS === 'web' && parentWidth > dimension.maxNewsfeedWidth;
+const themeStyles = (theme: ITheme) => {
+  const {spacing} = theme;
 
   return StyleSheet.create({
     content: {
       width: '100%',
-      maxWidth: Platform.OS === 'web' ? dimension.maxNewsfeedWidth : undefined,
       alignSelf: 'center',
-      paddingTop: bigParentOnWeb ? spacing.margin.small : 0,
-    },
-    contentSection: {
-      ...Platform.select({
-        web: {
-          borderRadius: bigParentOnWeb ? 6 : 0,
-          overflow: 'hidden',
-        },
-      }),
     },
     marginTop: {
       marginTop: spacing.margin.large,

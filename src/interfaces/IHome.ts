@@ -37,10 +37,10 @@ export interface IParamGetFeed {
   order?: 'ASC' | 'DESC';
   limit?: number;
   offset?: number;
-  idGTE?: number;
-  idLTE?: number;
-  idGT?: number;
-  idLT?: number;
+  idGte?: number;
+  idLte?: number;
+  idGt?: number;
+  idLt?: number;
 }
 
 export interface IParamGetSearchPost {
@@ -52,10 +52,10 @@ export interface IParamGetSearchPost {
   limit?: number;
   order?: IOrder;
   important?: boolean;
-  idGTE?: number;
-  idLTE?: number;
-  idGT?: number;
-  idLT?: number;
+  idGte?: number;
+  idLte?: number;
+  idGt?: number;
+  idLt?: number;
 }
 
 export type IRecentSearchTarget = 'post' | 'user' | 'article' | 'all';
@@ -67,10 +67,10 @@ export interface IParamGetRecentSearchKeywords {
   showLoading?: boolean;
   order?: IOrder;
   offset?: number;
-  idGTE?: number;
-  idLTE?: number;
-  idGT?: number;
-  idLT?: number;
+  idGte?: number;
+  idLte?: number;
+  idGt?: number;
+  idLt?: number;
 }
 
 export interface IParamPostNewRecentSearchKeyword {

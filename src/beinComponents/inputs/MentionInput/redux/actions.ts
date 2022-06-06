@@ -38,18 +38,6 @@ const mentionActions = {
       payload,
     };
   },
-  sethHighlightIndex: (payload: number) => {
-    return {
-      type: types.SET_HIGHLIGHT_INDEX,
-      payload,
-    };
-  },
-  sethHighlightItem: (payload: any) => {
-    return {
-      type: types.SET_HIGHLIGHT_ITEM,
-      payload,
-    };
-  },
   addTempSelected: (payload: {[x: string]: any}) => {
     return {
       type: types.ADD_TEMP_SELECTED,

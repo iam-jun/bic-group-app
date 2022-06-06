@@ -7,7 +7,7 @@ export interface IPostAudience {
 }
 
 export interface IAudienceUser {
-  id?: number;
+  id?: string;
   username?: string;
   fullname?: string;
   avatar?: string;
@@ -77,7 +77,7 @@ export interface ICommentData {
   updatedAt?: string;
   ownerReactions?: any;
   reactionsCount?: any;
-  child: IPostComments;
+  child?: IPostComments;
   loading?: boolean;
   status?: 'pending' | 'success' | 'failed';
   localId?: string | number[]; // from uuid-v4
@@ -158,7 +158,7 @@ export interface IAllComments {
 
 export interface IPostCreatePost {
   audience?: {
-    userIds: number[];
+    userIds: string[];
     groupIds: number[];
   };
   content?: string;

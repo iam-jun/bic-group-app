@@ -1,11 +1,5 @@
 import React from 'react';
-import {
-  StyleSheet,
-  View,
-  useWindowDimensions,
-  ScrollView,
-  Platform,
-} from 'react-native';
+import {StyleSheet, View, useWindowDimensions, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
 
@@ -108,12 +102,6 @@ const createStyles = (theme: ITheme, screenHeight: number) => {
   return StyleSheet.create({
     container: {
       height: 0.8 * screenHeight,
-      ...Platform.select({
-        web: {
-          maxWidth: 0.8 * screenHeight,
-          paddingTop: spacing.padding.large,
-        },
-      }),
     },
     header: {
       flexDirection: 'row',

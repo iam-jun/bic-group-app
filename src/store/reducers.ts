@@ -1,7 +1,8 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {Platform} from 'react-native';
 import {combineReducers} from 'redux';
 import {persistReducer} from 'redux-persist';
+
+import mentionInputReducer from '~/beinComponents/inputs/MentionInput/redux/reducer';
 import types from '~/screens/Auth/redux/types';
 import groupsReducer from '~/screens/Groups/redux/reducer';
 import homeReducer from '~/screens/Home/redux/reducer';
@@ -9,19 +10,15 @@ import menuReducer from '~/screens/Menu/redux/reducer';
 import notificationsReducer from '~/screens/Notification/redux/reducer';
 import postReducer from '~/screens/Post/redux/reducer';
 import {initPushTokenMessage} from '~/services/helper';
-import {makeRemovePushTokenRequest} from '~/services/httpApiRequest';
 
+import {makeRemovePushTokenRequest} from '~/services/httpApiRequest';
 import {ActionTypes} from '~/utils';
-import {setChatAuthenticationInfo} from '~/utils/common';
 import auth from '../screens/Auth/redux/reducer';
 import noInternetReducer from '../screens/NoInternet/redux/reducer';
-import mentionInputReducer from '~/beinComponents/inputs/MentionInput/redux/reducer';
+import app from './app/reducer';
 import chatReducer from './chat/reducer';
 import giphyReducer from './giphy/reducer';
-
-import app from './app/reducer';
 import modal from './modal/reducer';
-import {clearUserCookies} from '~/utils/cookie';
 
 const authPersistConfig = {
   key: 'auth',
@@ -56,24 +53,16 @@ const rootReducers = (state, action) => {
     action.type === types.SIGN_OUT ||
     action.type === ActionTypes.UnauthorizedLogout
   ) {
-    if (Platform.OS !== 'web') {
-      if (state?.auth?.user) {
-        makeRemovePushTokenRequest().catch(e =>
-          console.log('error when call api logout', e),
-        );
-      }
-      initPushTokenMessage()
-        .then(messaging => {
-          return messaging().deleteToken();
-        })
-        .catch(e => console.log('error when delete token', e));
-    } else {
-      /**
-       * To clear all cookies in web browser
-       */
-      clearUserCookies();
-      setChatAuthenticationInfo('', 0);
+    if (state?.auth?.user) {
+      makeRemovePushTokenRequest().catch(e =>
+        console.log('error when call api logout', e),
+      );
     }
+    initPushTokenMessage()
+      .then(messaging => {
+        return messaging().deleteToken();
+      })
+      .catch(e => console.log('error when delete token', e));
     AsyncStorage.multiRemove([
       'persist:root',
       'persist:auth',
