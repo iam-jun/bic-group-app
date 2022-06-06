@@ -257,7 +257,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
     (media: GiphyMedia) => {
       setSelectedImage(undefined);
       console.log('stickerViewRef?.current', stickerViewRef?.current);
-      stickerViewRef?.current?.hideImmediately?.();
+      stickerViewRef?.current?.hide?.();
       setSelectedGiphy(media);
     },
     [text],
