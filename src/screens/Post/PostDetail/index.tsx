@@ -21,7 +21,7 @@ const PostDetail = (props: any) => {
     const taskId = requestAnimationFrame(() => {
       setShowContent(true);
     });
-    return () => cancelAnimationFrame(taskId)
+    return () => cancelAnimationFrame(taskId);
   }, []);
 
   const onContentLayout = useCallback(() => {
