@@ -120,13 +120,6 @@ const GroupAdministration = (props: any) => {
         23,
         'group_administration.pending_posts',
       )}
-      {renderItem(
-        'ExclamationTriangle',
-        'settings:title_reported_posts',
-        displayNewFeature,
-        1,
-        'group_administration.reported_post',
-      )}
     </>
   );
 
