@@ -9,17 +9,25 @@ import React, {
 } from 'react';
 import {
   DeviceEventEmitter,
+  Platform,
   RefreshControl,
   SectionList,
   StyleSheet,
   View,
 } from 'react-native';
+import {
+  Directions,
+  FlingGestureHandler,
+  FlingGestureHandlerStateChangeEvent,
+  State,
+} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
+import Animated, {runOnJS} from 'react-native-reanimated';
 import {useDispatch} from 'react-redux';
-
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
@@ -358,52 +366,78 @@ const _PostDetailContent = (props: any) => {
     }
   }, [layoutSet, sectionData.length, focus_comment, listComment?.length]);
 
+  const handleDown = () => {
+    onRefresh();
+  };
+
+  const onDownFlingHandlerStateChange = ({
+    nativeEvent,
+  }: FlingGestureHandlerStateChangeEvent) => {
+    if (Platform.OS === 'ios') return;
+
+    if (nativeEvent.oldState === State.ACTIVE) {
+      runOnJS(handleDown)();
+    }
+  };
+
   const renderContent = () => {
     if (!createdAt) return <PostViewPlaceholder />;
 
     return (
-      <View style={styles.container}>
-        <View style={styles.postDetailContainer}>
-          <SectionList
-            ref={listRef}
-            bounces={!stickerBoardVisible}
-            disableScrollViewPanResponder={stickerBoardVisible}
-            sections={deleted ? defaultList : sectionData}
-            renderItem={renderCommentItem}
-            renderSectionHeader={renderSectionHeader}
-            ListHeaderComponent={
-              <PostDetailContentHeader
-                id={id}
-                commentLeft={commentLeft}
-                onPressComment={onPressComment}
-                onContentLayout={props?.onContentLayout}
-                idLessThan={listComment?.[0]?.id}
-              />
-            }
-            ListFooterComponent={commentLeft && renderFooter}
-            stickySectionHeadersEnabled={false}
-            ItemSeparatorComponent={() => <View />}
-            keyboardShouldPersistTaps={'handled'}
-            onLayout={onLayout}
-            onContentSizeChange={onLayout}
-            onScrollToIndexFailed={onScrollToIndexFailed}
-            refreshControl={
-              <RefreshControl
-                testID={'post_detail_content.refresh_control'}
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-                tintColor={colors.borderDisable}
-              />
-            }
-          />
-          <CommentInputView
-            commentInputRef={commentInputRef}
-            postId={id}
-            groupIds={groupIds}
-            autoFocus={!!focus_comment}
-          />
+      <FlingGestureHandler
+        direction={Directions.DOWN}
+        onHandlerStateChange={onDownFlingHandlerStateChange}>
+        <View style={styles.container}>
+          {Platform.OS === 'android' && refreshing && (
+            <Animated.View style={styles.refreshing}>
+              <LoadingIndicator size="large" />
+            </Animated.View>
+          )}
+          <View style={styles.postDetailContainer}>
+            <SectionList
+              ref={listRef}
+              bounces={!stickerBoardVisible}
+              disableScrollViewPanResponder={stickerBoardVisible}
+              sections={deleted ? defaultList : sectionData}
+              renderItem={renderCommentItem}
+              renderSectionHeader={renderSectionHeader}
+              ListHeaderComponent={
+                <PostDetailContentHeader
+                  id={id}
+                  commentLeft={commentLeft}
+                  onPressComment={onPressComment}
+                  onContentLayout={props?.onContentLayout}
+                  idLessThan={listComment?.[0]?.id}
+                />
+              }
+              ListFooterComponent={commentLeft && renderFooter}
+              stickySectionHeadersEnabled={false}
+              ItemSeparatorComponent={() => <View />}
+              keyboardShouldPersistTaps={'handled'}
+              onLayout={onLayout}
+              onContentSizeChange={onLayout}
+              onScrollToIndexFailed={onScrollToIndexFailed}
+              refreshControl={
+                Platform.OS === 'ios' ? (
+                  <RefreshControl
+                    testID={'post_detail_content.refresh_control'}
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                    tintColor={colors.borderDisable}
+                  />
+                ) : undefined
+              }
+            />
+
+            <CommentInputView
+              commentInputRef={commentInputRef}
+              postId={id}
+              groupIds={groupIds}
+              autoFocus={!!focus_comment}
+            />
+          </View>
         </View>
-      </View>
+      </FlingGestureHandler>
     );
   };
 
@@ -470,10 +504,15 @@ const getSectionData = (listComment: ICommentData[]) => {
   return result?.length > 0 ? result : defaultList;
 };
 
-const createStyle = (theme: ITheme): any => {
+const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
-    flex1: {flex: 1},
+    flex1: {
+      flex: 1,
+    },
+    refreshing: {
+      padding: spacing.padding.base,
+    },
     container: {
       flex: 1,
     },

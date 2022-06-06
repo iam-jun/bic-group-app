@@ -9,6 +9,10 @@ import Icon from '~/beinComponents/Icon';
 import {useTheme} from 'react-native-paper';
 import images from '~/resources/images';
 import useAuth from '~/hooks/auth';
+import {useRootNavigation} from '~/hooks/navigation';
+import mainStack from '~/router/navigator/MainStack/stack';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '../redux/keySelector';
 
 interface MemberItemProps {
   item: ICommunityMembers;
@@ -20,8 +24,14 @@ const MemberItem = ({item, onPressChat}: MemberItemProps) => {
   const styles = createStyles(theme);
   const {colors} = theme;
   const {user} = useAuth();
+  const {rootNavigation} = useRootNavigation();
 
-  const {fullname, avatar, username} = item || {};
+  const {id, fullname, avatar, username} = item || {};
+  const {can_manage_member} = useKeySelector(groupsKeySelector.communityDetail);
+
+  const goToUserProfile = () => {
+    rootNavigation.navigate(mainStack.userProfile, {userId: id});
+  };
 
   return (
     <PrimaryItem
@@ -30,6 +40,7 @@ const MemberItem = ({item, onPressChat}: MemberItemProps) => {
       style={styles.itemContainer}
       avatar={avatar || images.img_user_avatar_default}
       avatarProps={{isRounded: true, variant: 'medium'}}
+      onPress={goToUserProfile}
       ContentComponent={
         <Text.Body numberOfLines={1}>
           {fullname}
@@ -38,6 +49,7 @@ const MemberItem = ({item, onPressChat}: MemberItemProps) => {
         </Text.Body>
       }
       RightComponent={
+        can_manage_member &&
         user.username !== item.username && (
           <Icon
             icon={'CommentAltDots'}

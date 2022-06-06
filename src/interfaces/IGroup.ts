@@ -131,14 +131,10 @@ export interface IGroupMembers {
   username?: string;
   fullname?: string;
   avatar?: string;
-  roles_ids?: number[];
-  roles?: IGroupMemberRole[];
-}
-
-export interface IGroupMemberRole {
-  id: number;
-  name: 'Admin' | 'Member';
-  type: 'GROUP_ADMIN' | 'MEMBER';
+  chat_user_id?: string;
+  is_admin?: boolean;
+  custom_role_ids?: any[];
+  roles?: any[];
 }
 
 export interface IJoiningMember {

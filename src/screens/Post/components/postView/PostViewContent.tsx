@@ -22,7 +22,6 @@ export interface PostViewContentProps {
   images?: IActivityDataImage[];
   videos?: any[];
   isPostDetail: boolean;
-  onContentLayout?: () => void;
   isLite?: boolean;
   isDraft?: boolean;
 }
@@ -33,7 +32,6 @@ const PostViewContent: FC<PostViewContentProps> = ({
   images = [],
   videos = [],
   isPostDetail,
-  onContentLayout,
   isLite,
   isDraft,
 }: PostViewContentProps) => {
@@ -46,10 +44,6 @@ const PostViewContent: FC<PostViewContentProps> = ({
       rootNavigation.navigate(mainStack.userProfile, {userId: audience.id});
     }
   }).current;
-
-  const onLayout = () => {
-    onContentLayout?.();
-  };
 
   if (
     !content &&
@@ -114,7 +108,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
   };
 
   return (
-    <View onLayout={onLayout}>
+    <View>
       <View style={styles.contentContainer}>{renderContent()}</View>
       {!isLite && (
         <>

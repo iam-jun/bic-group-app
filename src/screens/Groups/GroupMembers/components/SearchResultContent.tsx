@@ -16,6 +16,8 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {IGroupMembers} from '~/interfaces/IGroup';
 import images from '~/resources/images';
+import mainStack from '~/router/navigator/MainStack/stack';
+import {useRootNavigation} from '~/hooks/navigation';
 
 interface SearchResultContentProps {
   onLoadMore?: () => void;
@@ -30,13 +32,21 @@ const SearchResultContent = ({
 }: SearchResultContentProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
+  const {rootNavigation} = useRootNavigation();
 
   const {loading, canLoadMore, data} = useKeySelector(
     groupsKeySelector.groupSearchMembers,
   );
+  const can_manage_member = useKeySelector(
+    groupsKeySelector.groupDetail.can_manage_member,
+  );
+
+  const goToUserProfile = (id: number) => {
+    rootNavigation.navigate(mainStack.userProfile, {userId: id});
+  };
 
   const renderItem = ({item}: {item: IGroupMembers}) => {
-    const {fullname, avatar, username} = item || {};
+    const {id, fullname, avatar, username} = item || {};
 
     return (
       <PrimaryItem
@@ -44,6 +54,7 @@ const SearchResultContent = ({
         menuIconTestID={'search_result_content.item'}
         style={styles.itemContainer}
         avatar={avatar || images.img_user_avatar_default}
+        onPress={id ? () => goToUserProfile(id) : undefined}
         ContentComponent={
           <Text.H6 numberOfLines={2}>
             {fullname}
@@ -53,7 +64,9 @@ const SearchResultContent = ({
               }>{` @${username}`}</Text.Subtitle>
           </Text.H6>
         }
-        onPressMenu={(e: any) => onPressMenu(e, item)}
+        onPressMenu={
+          can_manage_member ? (e: any) => onPressMenu(e, item) : undefined
+        }
       />
     );
   };

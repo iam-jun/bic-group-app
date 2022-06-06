@@ -1,21 +1,40 @@
-import {ScrollView, View} from 'react-native';
+import {RefreshControl, ScrollView, View} from 'react-native';
 import React from 'react';
 import InfoHeader from './InfoHeader';
 import AboutContent from './AboutContent';
 import JoinCancelButton from './JoinCancelButton';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '../../redux/keySelector';
 
 interface PrivateWelcomeProps {
   onScroll: (e: any) => void;
   onButtonLayout: (e: any) => void;
+  onRefresh?: () => void;
 }
 
-const PrivateWelcome = ({onScroll, onButtonLayout}: PrivateWelcomeProps) => {
+const PrivateWelcome = ({
+  onScroll,
+  onButtonLayout,
+  onRefresh,
+}: PrivateWelcomeProps) => {
+  const isGettingInfoDetail = useKeySelector(
+    groupsKeySelector.isGettingInfoDetail,
+  );
+
   return (
     <ScrollView
       testID="private_welcome"
       showsVerticalScrollIndicator={false}
       scrollEventThrottle={16}
-      onScroll={onScroll}>
+      onScroll={onScroll}
+      refreshControl={
+        onRefresh ? (
+          <RefreshControl
+            refreshing={isGettingInfoDetail}
+            onRefresh={onRefresh}
+          />
+        ) : undefined
+      }>
       <View onLayout={onButtonLayout}>
         <InfoHeader />
         <JoinCancelButton />

@@ -11,11 +11,11 @@ import loadMore from './loadMore';
 import markAsUnRead from './markAsUnRead';
 
 export default function* notificationsSaga() {
-  yield takeLatest(notificationsTypes.GET_NOTIFICATIONS, getNotifications);
+  yield takeEvery(notificationsTypes.GET_NOTIFICATIONS, getNotifications);
   yield takeLatest(notificationsTypes.MARK_AS_READ_ALL, markAsReadAll);
   yield takeLatest(notificationsTypes.MARK_AS_SEEN_ALL, markAsSeenAll);
   yield takeLatest(notificationsTypes.MARK_AS_READ, markAsRead);
-  yield takeLatest(notificationsTypes.LOAD_MORE, loadMore);
+  yield takeEvery(notificationsTypes.LOAD_MORE, loadMore);
   yield takeEvery(notificationsTypes.REGISTER_PUSH_TOKEN, registerPushToken);
   yield takeEvery(notificationsTypes.MARK_AS_UNREAD, markAsUnRead);
 }

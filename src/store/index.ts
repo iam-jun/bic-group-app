@@ -31,6 +31,7 @@ const persistConfig = {
     'mentionInput',
     'chat',
     'giphy',
+    'notifications',
   ],
   // whitelist: ['chat', 'language'],
 };
