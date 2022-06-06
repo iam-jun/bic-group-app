@@ -260,7 +260,7 @@ const _PostView: FC<PostViewProps> = ({
         expireTime={importantExpiredAt}
         markedReadPost={markedReadPost}
       />
-      <View style={[styles.container]}>
+      <View style={[styles.container]} onLayout={() => onContentLayout?.()}>
         <PostViewHeader
           audience={audience}
           actor={actor}
@@ -276,7 +276,6 @@ const _PostView: FC<PostViewProps> = ({
           images={images}
           videos={videos}
           isPostDetail={isPostDetail}
-          onContentLayout={onContentLayout}
         />
         {!isLite && (
           <ReactionView
