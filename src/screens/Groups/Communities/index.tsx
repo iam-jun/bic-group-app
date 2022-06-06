@@ -48,7 +48,7 @@ const Communities: React.FC = () => {
     dispatch(groupsActions.setGroupSearch({searchKey: searchText}));
   }, 300);
 
-  const onPress = (index: number) => {
+  const onPress = (item: any, index: number) => {
     setSelectedIndex(index);
   };
 

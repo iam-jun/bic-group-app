@@ -13,7 +13,7 @@ import NotificationAvatar from './NotificationAvatar';
 import NotificationContent from './NotificationContent';
 import {useKeySelector} from '~/hooks/selector';
 import notificationSelector from '~/screens/Notification/redux/selector';
-import {isEqual} from 'lodash';
+import {isEmpty, isEqual} from 'lodash';
 
 const {width: screenWidth, height} = Dimensions.get('window');
 
@@ -69,7 +69,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     }
   }, [itemValue, onPress, onPressOption, testID, id]);
   const {activities, isRead, updatedAt, extra, verb, actorCount}: any =
-    _itemValue;
+    _itemValue || {};
+
+  if (isEmpty(_itemValue)) return null;
 
   const onLayout = (e: any) => {
     const width = e?.nativeEvent?.layout?.width;
