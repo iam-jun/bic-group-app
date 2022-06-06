@@ -8,6 +8,8 @@
     "lint": "npx eslint .",
     "prettier-format": "npx prettier --config .prettierrc.json \"**/*.{js,jsx,ts,tsx}\" --write",
     "start": "npx react-native start",
+    "start:clean": "watchman watch-del '/Users/namanh/ReactNative/bein-comm' ; watchman watch-project '/Users/namanh/ReactNative/bein-comm' && npm start -- --reset-cache",
+    "clean": "watchman watch-del-all && rm -rf /tmp/metro-cache && rm -rf node_modules && rm -rf package-lock.json && npm cache clean --force && npm install --legacy-peer-deps && npm start -- --reset-cache",
     "android": "npx react-native run-android --variant=developmentDebug",
     "android-staging": "npx react-native run-android --variant=stagingDebug",
     "ios": "npx react-native run-ios --scheme=bein_group_dev",
