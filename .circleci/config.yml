@@ -219,7 +219,7 @@ workflows:
       - ios-stg:
           filters:
             branches:
-              only: staging
+              only: /^staging.*$/
           context:
             - bein-group-stg
             - bein-group-stg-ios
@@ -229,7 +229,7 @@ workflows:
       - android-stg:
           filters:
             branches:
-              only: staging
+              only: /^staging.*$/
           context:
             - bein-group-stg
             - bein-group-stg-android
@@ -241,14 +241,14 @@ workflows:
       - ios-pro:
           filters:
             branches:
-              only: master
+              only: /^master.*$/
           context:
             - bein-group-pro
             - bein-group-pro-ios
       - android-pro:
           filters:
             branches:
-              only: master
+              only: /^master.*$/
           context:
             - bein-group-pro
             - bein-group-pro-android
