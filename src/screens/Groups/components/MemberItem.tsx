@@ -40,6 +40,10 @@ const MemberItem = ({item}: MemberItemProps) => {
     openLink(link);
   };
 
+  const onPressMenu = (item: ICommunityMembers) => {
+    // TODO: TO ADD FUNCTIONALITY
+  };
+
   return (
     <PrimaryItem
       showAvatar
@@ -56,16 +60,25 @@ const MemberItem = ({item}: MemberItemProps) => {
         </Text.Body>
       }
       RightComponent={
-        can_manage_member &&
-        user.username !== item.username && (
-          <Icon
-            icon={'CommentAltDots'}
-            backgroundColor={colors.bgSecondary}
-            style={styles.iconChat}
-            onPress={onPressChat}
-            buttonTestID="member_item.icon_chat.button"
-          />
-        )
+        <>
+          {user.username !== username && (
+            <Icon
+              icon={'CommentAltDots'}
+              backgroundColor={colors.bgSecondary}
+              style={styles.iconChat}
+              onPress={onPressChat}
+              buttonTestID="member_item.icon_chat.button"
+            />
+          )}
+          {can_manage_member && (
+            <Icon
+              icon={'EllipsisV'}
+              style={styles.iconOption}
+              onPress={() => onPressMenu(item)}
+              buttonTestID="member_item.icon_option.button"
+            />
+          )}
+        </>
       }
     />
   );
@@ -86,7 +99,10 @@ const createStyles = (theme: ITheme) => {
       justifyContent: 'center',
       alignItems: 'center',
       padding: spacing.padding.small,
-      marginHorizontal: spacing.margin.tiny,
+      marginLeft: spacing.margin.tiny,
+    },
+    iconOption: {
+      marginLeft: spacing.margin.small,
     },
   });
 };

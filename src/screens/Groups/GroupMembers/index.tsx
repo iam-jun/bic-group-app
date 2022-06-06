@@ -30,6 +30,7 @@ import NoSearchResult from '~/beinFragments/NoSearchResult';
 import MemberOptionsMenu from './components/MemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
 import mainStack from '~/router/navigator/MainStack/stack';
+import useAuth from '~/hooks/auth';
 
 const _GroupMembers = (props: any) => {
   const params = props.route.params;
@@ -50,6 +51,7 @@ const _GroupMembers = (props: any) => {
   const styles = createStyle(theme);
   const {rootNavigation} = useRootNavigation();
   const baseSheetRef: any = useRef();
+  const {user} = useAuth();
 
   const groupMember = useKeySelector(groupsKeySelector.groupMember);
   const {user_count: userCount} = useKeySelector(
@@ -135,6 +137,10 @@ const _GroupMembers = (props: any) => {
     rootNavigation.navigate(mainStack.userProfile, {userId: id});
   };
 
+  const onPressChat = () => {
+    // TODO: Add navigation to Chat
+  };
+
   const onLoadMore = () => {
     getMembers();
   };
@@ -166,8 +172,24 @@ const _GroupMembers = (props: any) => {
               }>{` @${username}`}</Text.Subtitle>
           </Text.H6>
         }
-        onPressMenu={
-          can_manage_member ? (e: any) => onPressMenu(e, item) : undefined
+        RightComponent={
+          <>
+            {user.username !== item.username && (
+              <Icon
+                icon={'CommentAltDots'}
+                backgroundColor={colors.bgSecondary}
+                style={styles.iconChat}
+                onPress={onPressChat}
+              />
+            )}
+            {can_manage_member && (
+              <Icon
+                icon={'EllipsisV'}
+                style={styles.iconOption}
+                onPress={(e: any) => onPressMenu(e, item)}
+              />
+            )}
+          </>
         }
       />
     );
@@ -323,6 +345,17 @@ const createStyle = (theme: ITheme) => {
     },
     loadingMember: {
       marginTop: spacing.margin.large,
+    },
+    iconChat: {
+      height: 36,
+      width: 36,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: spacing.padding.small,
+      marginLeft: spacing.margin.tiny,
+    },
+    iconOption: {
+      marginLeft: spacing.margin.small,
     },
   });
 };
