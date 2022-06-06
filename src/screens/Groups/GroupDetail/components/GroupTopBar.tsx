@@ -1,13 +1,13 @@
+import Clipboard from '@react-native-clipboard/clipboard';
 import React from 'react';
-import {StyleSheet, useWindowDimensions, View, Share} from 'react-native';
+import {Share, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import Clipboard from '@react-native-clipboard/clipboard';
-
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
 import groupJoinStatus from '~/constants/groupJoinStatus';
+import useAuth, {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
@@ -15,16 +15,13 @@ import modalActions, {
   clearToastMessage,
   showHideToastMessage,
 } from '~/store/modal/actions';
-import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import {openLink} from '~/utils/common';
-import {formatChannelLink} from '~/utils/link';
-import groupsKeySelector from '../../redux/keySelector';
+import {formatChannelLink, getLink, LINK_GROUP} from '~/utils/link';
 import HeaderMenu from '../../components/HeaderMenu';
-import {getLink, LINK_GROUP} from '~/utils/link';
-import {checkLastAdmin} from '../../helper';
-import useAuth, {useUserIdAuth} from '~/hooks/auth';
 import useLeaveGroup from '../../GroupMembers/components/useLeaveGroup';
+import {checkLastAdmin} from '../../helper';
+import groupsKeySelector from '../../redux/keySelector';
 
 const GroupTopBar = () => {
   const dispatch = useDispatch();
@@ -40,8 +37,6 @@ const GroupTopBar = () => {
   const {user} = useAuth();
   const userId = useUserIdAuth();
 
-  const dimensions = useWindowDimensions();
-  const isLaptop = dimensions.width >= deviceDimensions.laptop;
   const count = useKeySelector(
     `chat.unreadChannels.${chatId}.mention_count_root`,
   );
@@ -193,15 +188,13 @@ const GroupTopBar = () => {
   return (
     <View style={styles.container} testID="group_top_bar">
       <View style={styles.leftComponent}>
-        {!isLaptop && (
-          <Icon
-            buttonTestID="group_top_bar.back"
-            icon="iconBack"
-            size={28}
-            hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
-            onPress={onPressBack}
-          />
-        )}
+        <Icon
+          buttonTestID="group_top_bar.back"
+          icon="iconBack"
+          size={28}
+          hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
+          onPress={onPressBack}
+        />
       </View>
       <View style={styles.rightComponent}>
         {renderSearchIcon()}

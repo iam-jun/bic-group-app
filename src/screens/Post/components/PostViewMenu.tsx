@@ -14,7 +14,7 @@ import {ITheme} from '~/theme/interfaces';
 import {getLink, LINK_POST} from '~/utils/link';
 
 export interface PostViewMenuProps {
-  postId: number;
+  postId: string;
   isPostDetail: boolean;
   isActor: boolean;
   isDraftPost?: boolean;

@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useCallback, useRef} from 'react';
-import {Animated as RNAnimated, Platform, StyleSheet, View} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Animated, {
@@ -11,9 +11,7 @@ import Animated, {
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import Div from '~/beinComponents/Div';
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
-import Icon from '~/beinComponents/Icon';
 import ReactionView from '~/beinComponents/ReactionView';
 import Text from '~/beinComponents/Text';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
@@ -59,8 +57,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
   onPressReply,
   contentBackgroundColor,
 }: CommentViewProps) => {
-  const animated = useRef(new RNAnimated.Value(0)).current;
-
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
   const dispatch = useDispatch();
@@ -99,19 +95,12 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const [commentStatus, setCommentStatus] = useState(
     commentData?.status || null,
   );
-  const isActive =
-    Platform.OS === 'web'
-      ? true
-      : commentStatus === 'success' || commentStatus === null;
+  const isActive = commentStatus === 'success' || commentStatus === null;
 
   const progress = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({opacity: progress.value}));
 
-  const ViewComponent: any = Platform.OS === 'web' ? View : Animated.View;
-
   useEffect(() => {
-    if (Platform.OS === 'web') return;
-
     if (isActive) {
       showComment(1);
     } else if (commentStatus === 'pending') {
@@ -185,13 +174,12 @@ const _CommentView: React.FC<CommentViewProps> = ({
       isOpen: true,
       ContentComponent: (
         <EmojiBoard
-          width={Platform.OS === 'web' ? 320 : dimension.deviceWidth}
+          width={dimension.deviceWidth}
           height={280}
           onEmojiSelected={onEmojiSelected}
         />
       ),
       props: {
-        webModalStyle: {minHeight: undefined},
         isContextMenu: true,
         position: {x: event?.pageX, y: event?.pageY},
         side: 'center',
@@ -253,28 +241,11 @@ const _CommentView: React.FC<CommentViewProps> = ({
           />
         ),
         props: {
-          webModalStyle: {minHeight: undefined},
           isContextMenu: true,
           position: {x: event?.pageX, y: event?.pageY},
         },
       }),
     );
-  };
-
-  const onMouseOver = () => {
-    RNAnimated.timing(animated, {
-      toValue: 1,
-      duration: 0,
-      useNativeDriver: false,
-    }).start();
-  };
-
-  const onMouseLeave = () => {
-    RNAnimated.timing(animated, {
-      toValue: 0,
-      duration: 0,
-      useNativeDriver: false,
-    }).start();
   };
 
   const getReactionStatistics = async (param: any) => {
@@ -304,26 +275,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
     dispatch(showReactionDetailBottomSheet(payload));
   };
 
-  const renderWebMenuButton = () => {
-    if (Platform.OS !== 'web') {
-      return null;
-    }
-
-    return (
-      <RNAnimated.View style={[styles.webMenuButton, {opacity: animated}]}>
-        <Button>
-          <Icon
-            testID={'comment_view.menu'}
-            style={{}}
-            onPress={onLongPress}
-            icon={'EllipsisH'}
-            tintColor={colors.textSecondary}
-            disabled={!isActive}
-          />
-        </Button>
-      </RNAnimated.View>
-    );
-  };
   const renderReactionsReplyView = () => {
     return (
       isActive && (
@@ -377,9 +328,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
   };
 
   return (
-    <Div onMouseOver={onMouseOver} onMouseLeave={onMouseLeave}>
-      <ViewComponent
-        style={[styles.container, Platform.OS !== 'web' && animatedStyle]}>
+    <View>
+      <Animated.View style={[styles.container, animatedStyle]}>
         <ButtonWrapper onPress={onPressUser} testID="comment_view.avatar">
           <Avatar isRounded source={avatar} />
         </ButtonWrapper>
@@ -420,7 +370,6 @@ const _CommentView: React.FC<CommentViewProps> = ({
                       type="short"
                       textProps={{variant: 'h6'}}
                     />
-                    {/* <Icon icon="EllipsisH" size={16} style={styles.options} /> */}
                   </View>
                 </View>
                 <CollapsibleText
@@ -443,10 +392,9 @@ const _CommentView: React.FC<CommentViewProps> = ({
           </Button>
           {renderReactionsReplyView()}
         </View>
-        {renderWebMenuButton()}
-      </ViewComponent>
+      </Animated.View>
       {renderErrorState()}
-    </Div>
+    </View>
   );
 };
 
@@ -475,15 +423,6 @@ const createStyle = (theme: ITheme) => {
     buttonReply: {
       marginRight: spacing?.margin.tiny,
       paddingTop: spacing?.margin.base,
-    },
-    webMenuButton: {
-      width: 32,
-      height: 32,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: spacing.borderRadius.small,
-      backgroundColor: colors.placeholder,
-      marginLeft: spacing.margin.base,
     },
     textTime: {
       marginLeft: 2,

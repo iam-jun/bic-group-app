@@ -1,22 +1,20 @@
+import NodeEmoji from 'node-emoji';
 import React, {FC, useRef} from 'react';
 import {
-  View,
-  StyleSheet,
   StyleProp,
-  ViewStyle,
+  StyleSheet,
   TouchableOpacity,
-  Platform,
+  View,
+  ViewStyle,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
-import NodeEmoji from 'node-emoji';
-
-import {ITheme} from '~/theme/interfaces';
-import EmojiSelector, {Categories} from '~/beinComponents/emoji/EmojiSelector';
 import Button from '~/beinComponents/Button';
+import EmojiNameToast from '~/beinComponents/emoji/EmojiNameToast';
+import EmojiSelector, {Categories} from '~/beinComponents/emoji/EmojiSelector';
 import Icon from '~/beinComponents/Icon';
 import {useBaseHook} from '~/hooks';
-import EmojiNameToast from '~/beinComponents/emoji/EmojiNameToast';
 import {useKeySelector} from '~/hooks/selector';
+import {ITheme} from '~/theme/interfaces';
 
 export interface EmojiBoardProps {
   style?: StyleProp<ViewStyle>;
@@ -29,7 +27,6 @@ export interface EmojiBoardProps {
 }
 
 const EmojiBoard: FC<EmojiBoardProps> = ({
-  style,
   width,
   height,
   onEmojiSelected,
@@ -43,7 +40,7 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
 
   const theme = useTheme() as ITheme;
   const {t} = useBaseHook();
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const _onEmojiSelected = (emoji: string) => {
@@ -89,7 +86,7 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
           )}
         </View>
       )}
-      {Platform.OS !== 'web' && <EmojiNameToast toastRef={emojiRef} />}
+      <EmojiNameToast toastRef={emojiRef} />
     </TouchableOpacity>
   );
 };

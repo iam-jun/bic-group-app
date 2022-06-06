@@ -1,7 +1,7 @@
 import {GiphyContent, GiphyGridView, GiphyMedia} from '@giphy/react-native-sdk';
 import i18next from 'i18next';
 import {useKeyboard} from '@react-native-community/hooks';
-import React, {useEffect, useImperativeHandle, useRef} from 'react';
+import React, {useEffect, useImperativeHandle, useMemo, useRef} from 'react';
 import {
   DeviceEventEmitter,
   Keyboard,
@@ -18,7 +18,6 @@ import {
 } from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
 import Animated, {
-  interpolate,
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
@@ -29,12 +28,14 @@ import {dimension} from '~/theme';
 import {ITheme} from '~/theme/interfaces';
 import {EmojiBoardProps} from '../emoji/EmojiBoard';
 import SearchInput from '../inputs/SearchInput';
-import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+import LoadingIndicator from '../LoadingIndicator';
 
 export interface Props extends Partial<EmojiBoardProps> {
   stickerViewRef: any;
   onMediaSelect: (media: GiphyMedia) => void;
 }
+
+const SEARCH_BAR_HEIGHT = 80;
 
 const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
   const INITIAL_KEYBOARD_HEIGHT = 336;
@@ -44,6 +45,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
     INITIAL_KEYBOARD_HEIGHT,
   );
   const [searchQuery, setSearchQuery] = React.useState('');
+  const [loading, setLoading] = React.useState(true);
   const _stickerViewRef = stickerViewRef || useRef();
 
   const request = searchQuery
@@ -58,13 +60,26 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
 
   const keyboard = useKeyboard();
 
+  const calculateContentHeight = useMemo(() => {
+    const offset = dimension.headerHeight + insets.top + keyboardHeight;
+
+    return dimension.deviceHeight - offset;
+  }, [keyboardHeight]);
+
+  const calculateFullHeight = useMemo(() => {
+    const offset = dimension.headerHeight + insets.top;
+
+    return dimension.deviceHeight - offset;
+  }, [dimension.deviceHeight]);
+
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      height: interpolate(
-        height.value,
-        [0, keyboardHeight],
-        [0, keyboardHeight],
-      ),
+      // height: interpolate(
+      //   height.value,
+      //   [0, keyboardHeight + SEARCH_BAR_HEIGHT],
+      //   [0, keyboardHeight + SEARCH_BAR_HEIGHT],
+      // ),
+      height: height.value,
     };
   });
 
@@ -75,7 +90,8 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
     ) {
       setKeyboardHeight(keyboard?.keyboardHeight);
     }
-  }, [keyboard?.keyboardHeight]);
+    onKeyboardVisibleChanged(keyboard?.keyboardShown);
+  }, [keyboard?.keyboardShown]);
 
   useEffect(() => {
     DeviceEventEmitter.emit('sticker-board-visible-change', visible);
@@ -85,28 +101,50 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
     if (visible) return;
 
     setVisible(true);
+
     Keyboard.dismiss();
-    const _height = Math.max(keyboardHeight, INITIAL_KEYBOARD_HEIGHT);
-    height.value = withTiming(_height, {
+
+    height.value = withTiming(keyboardHeight, {
       duration: 200,
     });
   };
 
   const expand = () => {
-    setIsExpanded(true);
-    // height.value = withTiming(dimension.deviceHeight, {duration: 200});
+    const onDone = () => {
+      setIsExpanded(true);
+    };
+
+    const expandHeight = keyboard.keyboardShown
+      ? calculateContentHeight
+      : calculateFullHeight;
+
+    height.value = withTiming(expandHeight, {duration: 200}, () => {
+      runOnJS(onDone)();
+    });
   };
 
   const collapse = () => {
-    Keyboard.dismiss();
     setIsExpanded(false);
+
+    const onDone = () => {
+      Keyboard.dismiss();
+    };
+    height.value = withTiming(
+      keyboardHeight + SEARCH_BAR_HEIGHT,
+      {
+        duration: 200,
+      },
+      () => {
+        runOnJS(onDone)();
+      },
+    );
   };
 
   const hide = () => {
     const onHideDone = () => {
-      setVisible(false);
-      setIsExpanded(false);
       setSearchQuery('');
+      setIsExpanded(false);
+      setVisible(false);
     };
     height.value = withTiming(0, {duration: 200}, () => {
       runOnJS(onHideDone)();
@@ -129,6 +167,17 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
 
   const getVisible = () => {
     return visible;
+  };
+
+  const onKeyboardVisibleChanged = (keyboardShown: boolean) => {
+    if (!keyboardShown) {
+      //Wait for keyboard to be invisible
+      setTimeout(() => {
+        runOnJS(collapse)();
+      }, 100);
+    } else if (keyboardShown) {
+      if (visible) handleUp();
+    }
   };
 
   useImperativeHandle(_stickerViewRef, () => ({
@@ -155,8 +204,13 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
     }
   };
 
-  const onSearchFocus = () => {
-    setIsExpanded(true);
+  const onChangeText = (value: string) => {
+    setLoading(true);
+    setSearchQuery(value);
+  };
+
+  const onContentUpdate = () => {
+    setLoading(false);
   };
 
   const _onMediaSelect = (
@@ -169,63 +223,54 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
 
   if (!visible) return null;
 
-  const offset = dimension.headerHeight + insets.top + keyboardHeight;
-
-  const contentHeight = dimension.deviceHeight - offset;
-
-  const _animatedStyle = isExpanded
-    ? styles.animatedViewExpanded
-    : animatedStyle;
+  const bottomPosition = keyboard.keyboardShown
+    ? keyboardHeight + SEARCH_BAR_HEIGHT
+    : 0;
 
   return (
     <FlingGestureHandler
       direction={Directions.DOWN}
-      onEnded={handleDown}
+      // onEnded={handleDown}
       onHandlerStateChange={onDownFlingHandlerStateChange}>
-      <View
+      <Animated.View
         testID="sticker_view"
         style={[
-          {
-            height: contentHeight,
-            backgroundColor: theme.colors.background,
-          },
+          styles.container,
+          animatedStyle,
           isExpanded && {
             ...styles.expanded,
-            bottom: Platform.OS === 'android' ? 0 : keyboardHeight,
+            // height: calculateContentHeight,
+            bottom: Platform.OS === 'android' ? 0 : bottomPosition,
           },
         ]}>
-        <Animated.View
-          testID="sticker_view.animated_view"
-          style={_animatedStyle}>
-          <View style={styles.stickerView}>
-            <FlingGestureHandler
-              direction={Directions.UP}
-              onEnded={handleUp}
-              onHandlerStateChange={onUpFlingHandlerStateChange}>
-              <View style={styles.header}>
-                <View style={styles.indicator} />
-                <SearchInput
-                  testID="sticker_view.search_input"
-                  placeholder={i18next.t('post:comment:search_giphy')}
-                  value={searchQuery}
-                  onFocus={onSearchFocus}
-                  onChangeText={setSearchQuery}
-                />
-              </View>
-            </FlingGestureHandler>
+        <View style={styles.stickerView}>
+          <FlingGestureHandler
+            direction={Directions.UP}
+            // onEnded={handleUp}
+            onHandlerStateChange={onUpFlingHandlerStateChange}>
+            <View style={styles.header}>
+              <View style={styles.indicator} />
+              <SearchInput
+                testID="sticker_view.search_input"
+                placeholder={i18next.t('post:comment:search_giphy')}
+                value={searchQuery}
+                onChangeText={onChangeText}
+              />
+            </View>
+          </FlingGestureHandler>
+          <View>
+            {loading && <LoadingIndicator style={styles.loading} />}
             <GiphyGridView
               testID="sticker_view.grid_view"
               content={request}
               cellPadding={4}
               style={styles.gridView}
+              onContentUpdate={onContentUpdate}
               onMediaSelect={_onMediaSelect}
             />
           </View>
-        </Animated.View>
-        {Platform.OS === 'android' && visible && (
-          <KeyboardSpacer testID="sticker_view.keyboard_spacer" />
-        )}
-      </View>
+        </View>
+      </Animated.View>
     </FlingGestureHandler>
   );
 };
@@ -234,6 +279,9 @@ const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
+    container: {
+      backgroundColor: colors.background,
+    },
     expanded: {
       position: 'absolute',
       left: 0,
@@ -243,6 +291,7 @@ const createStyle = (theme: ITheme) => {
     header: {
       paddingVertical: spacing.margin.base,
       marginHorizontal: spacing.margin.base,
+      height: SEARCH_BAR_HEIGHT,
     },
     indicator: {
       backgroundColor: colors.borderDivider,
@@ -255,16 +304,13 @@ const createStyle = (theme: ITheme) => {
     stickerView: {
       borderTopWidth: 1,
       borderTopColor: colors.borderDivider,
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-    },
-    animatedViewExpanded: {
       height: '100%',
     },
     gridView: {
       height: '100%',
+    },
+    loading: {
+      marginTop: spacing.margin.base,
     },
   });
 };

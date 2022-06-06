@@ -32,12 +32,12 @@ export interface IParamGetNotifications {
   limit?: number;
   offset?: number;
   order?: 'ASC' | 'DESC';
-  idLTE?: string;
-  idGTE?: string;
-  idGT?: string;
-  idLT?: string;
+  idLte?: string;
+  idGte?: string;
+  idGt?: string;
+  idLt?: string;
   flag?: 'ALL' | 'UNREAD' | 'MENTION' | 'IMPORTANT';
-  clearCurrentNotifications?: boolean;
+  keyValue?: string;
 }
 
 export interface INotiExtraData {
@@ -46,4 +46,11 @@ export interface INotiExtraData {
   content?: string;
   description?: string;
   media?: any;
+}
+
+export interface IParamSetNotifications {
+  keyValue?: string;
+  data?: any[];
+  unseen?: number;
+  notifications?: any[];
 }

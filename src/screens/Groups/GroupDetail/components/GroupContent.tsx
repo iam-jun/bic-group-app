@@ -1,26 +1,22 @@
 import React from 'react';
-import {Platform, StyleSheet, View, Text, ScrollView} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
 import PostItem from '~/beinComponents/list/items/PostItem';
-
 import ListView from '~/beinComponents/list/ListView';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import groupJoinStatus from '~/constants/groupJoinStatus';
-import {useUserIdAuth} from '~/hooks/auth';
+import {groupPrivacy} from '~/constants/privacyTypes';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import GroupInfoHeader from '~/screens/Groups/GroupDetail/components/GroupInfoHeader';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
-import {deviceDimensions} from '~/theme/dimension';
-import {ITheme} from '~/theme/interfaces';
-import {groupPrivacy} from '~/constants/privacyTypes';
 import {showAlertNewFeature} from '~/store/modal/actions';
+import {ITheme} from '~/theme/interfaces';
 
 const GroupContent = ({
   getGroupPosts,
@@ -32,7 +28,7 @@ const GroupContent = ({
   const theme = useTheme() as ITheme;
   const {rootNavigation} = useRootNavigation();
   const {spacing, colors} = theme || {};
-  const styles = themeStyles(theme, parentWidth);
+  const styles = themeStyles(theme);
   const dispatch = useDispatch();
 
   const posts = useKeySelector(groupsKeySelector.posts);
@@ -150,7 +146,6 @@ const GroupContent = ({
         {isMember && (
           <HeaderCreatePost
             audience={groupData}
-            parentWidth={parentWidth}
             style={styles.createPost}
             createFromGroupId={groupId}
           />
@@ -179,29 +174,17 @@ const GroupContent = ({
   );
 };
 
-const themeStyles = (theme: ITheme, parentWidth = deviceDimensions.phone) => {
-  const {spacing, dimension, colors} = theme;
-  const bigParentOnWeb =
-    Platform.OS === 'web' && parentWidth > dimension.maxNewsfeedWidth;
+const themeStyles = (theme: ITheme) => {
+  const {spacing, colors} = theme;
 
   return StyleSheet.create({
     groupInfo: {
       flex: 1,
-      ...Platform.select({
-        web: {
-          width: '100%',
-          maxWidth: dimension.maxNewsfeedWidth,
-          alignSelf: 'center',
-          borderRadius: bigParentOnWeb ? 6 : 0,
-          overflow: 'hidden',
-        },
-      }),
     },
     listContainer: {
       flex: 1,
     },
     listHeaderComponentStyle: {
-      marginTop: bigParentOnWeb ? spacing.margin.small : 0,
       marginBottom: spacing.margin.base,
     },
     buttonContainer: {

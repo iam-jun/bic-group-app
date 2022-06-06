@@ -5,7 +5,7 @@ import React, {
   useState,
   useImperativeHandle,
 } from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -54,18 +54,13 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
   const showValue = useSharedValue(0);
 
   const theme = useTheme() as ITheme;
-  const {spacing} = theme;
   const styles = createStyle(theme);
 
   const iconStyle = useAnimatedStyle(() => ({
-    opacity: Platform.OS === 'web' ? 1 : showValue.value,
+    opacity: showValue.value,
   }));
   const searchContainerStyle = useAnimatedStyle(() => ({
-    width: `${interpolate(
-      showValue.value,
-      [0, 1],
-      [Platform.OS === 'web' ? 96 : 0, 100],
-    )}%`,
+    width: `${interpolate(showValue.value, [0, 1], [0, 100])}%`,
   }));
 
   const show = () => {

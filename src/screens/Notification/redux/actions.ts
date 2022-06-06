@@ -1,14 +1,17 @@
-import {IParamGetNotifications} from '~/interfaces/INotification';
+import {
+  IParamGetNotifications,
+  IParamSetNotifications,
+} from '~/interfaces/INotification';
 import notificationsTypes from '~/screens/Notification/redux/types';
 
 const notificationsActions = {
-  setLoadingNotifications: function (payload: boolean) {
+  setLoadingNotifications: function (payload: any) {
     return {
       type: notificationsTypes.SET_LOADING_NOTIFICATIONS,
       payload,
     };
   },
-  setNotifications: function (payload: any) {
+  setNotifications: function (payload: IParamSetNotifications) {
     return {
       type: notificationsTypes.SET_NOTIFICATIONS,
       payload,
@@ -63,7 +66,7 @@ const notificationsActions = {
       payload,
     };
   },
-  markAsUnRead: function (payload: string) {
+  markAsUnRead: function (payload: any) {
     return {
       type: notificationsTypes.MARK_AS_UNREAD,
       payload,
@@ -75,13 +78,13 @@ const notificationsActions = {
       payload,
     };
   },
-  setIsLoadingMore: function (payload: boolean) {
+  setIsLoadingMore: function (payload: any) {
     return {
       type: notificationsTypes.SET_IS_LOADING_MORE,
       payload,
     };
   },
-  setNoMoreNoti: (payload: boolean) => {
+  setNoMoreNoti: (payload: any) => {
     return {
       type: notificationsTypes.SET_NO_MORE_NOTIFICATION,
       payload,
@@ -96,6 +99,12 @@ const notificationsActions = {
   savePushToken: (payload: string) => {
     return {
       type: notificationsTypes.SAVE_PUSH_TOKEN,
+      payload,
+    };
+  },
+  setAllNotifications: (payload: any) => {
+    return {
+      type: notificationsTypes.SET_ALL_NOTIFICATIONS,
       payload,
     };
   },

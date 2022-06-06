@@ -3,7 +3,6 @@ import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import i18n from 'i18next';
 import _ from 'lodash';
 import moment from 'moment';
-import {Platform} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {put} from 'redux-saga/effects';
 
@@ -16,9 +15,8 @@ import * as modalActions from '~/store/modal/actions';
 import noInternetActions from '~/screens/NoInternet/redux/actions';
 import {ActionTypes, createAction} from '~/utils';
 import {updateUserFromSharedPreferences} from './sharePreferences';
-import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
-import {camelizeKeys, decamelizeKeys} from 'humps';
+import {ConvertHelper} from '~/utils/convertHelper';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -27,14 +25,6 @@ const commonHeaders = {
 };
 
 const _dispatchLogout = async () => {
-  /**
-   * Need calling this API before sign out to remove cookies
-   * And not putting it in saga as it needs field Authorization, which is extract from store.
-   * If we call it in saga, it will be null, and we cannot call API.
-   */
-  if (Platform.OS === 'web') {
-    await menuDataHelper.logout();
-  }
   Store.store.dispatch(createAction(ActionTypes.UnauthorizedLogout));
 };
 
@@ -289,10 +279,10 @@ const interceptorsRequestSnakeSuccess = (config: AxiosRequestConfig) => {
   }
 
   if (config.params) {
-    newConfig.params = decamelizeKeys(config.params);
+    newConfig.params = ConvertHelper.decamelizeKeys(config.params);
   }
   if (config.data) {
-    newConfig.data = decamelizeKeys(config.data);
+    newConfig.data = ConvertHelper.decamelizeKeys(config.data);
   }
   return newConfig;
 };
@@ -302,7 +292,9 @@ const interceptorsResponseCamelSuccess = (response: AxiosResponse) => {
     response.data &&
     response.headers?.['content-type']?.includes?.('application/json')
   ) {
-    response.data = camelizeKeys(response.data);
+    response.data = ConvertHelper.camelizeKeys(response.data, {
+      exclude: ['reactions_count'],
+    });
   }
   return response;
 };

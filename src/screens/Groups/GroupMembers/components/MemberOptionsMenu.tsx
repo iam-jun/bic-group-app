@@ -9,14 +9,12 @@ import BottomSheet from '~/beinComponents/BottomSheet';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 
-import {IGroupMemberRole, IGroupMembers} from '~/interfaces/IGroup';
+import {IGroupMembers} from '~/interfaces/IGroup';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import {ITheme} from '~/theme/interfaces';
 import useAuth from '~/hooks/auth';
 import modalActions from '~/store/modal/actions';
-import mainStack from '~/router/navigator/MainStack/stack';
-import {useRootNavigation} from '~/hooks/navigation';
 import groupsActions from '../../redux/actions';
 import {checkLastAdmin, handleLeaveInnerGroups} from '../../helper';
 import useRemoveMember from './useRemoveMember';
@@ -40,7 +38,6 @@ const MemberOptionsMenu = ({
   const styles = createStyle(theme);
   const dispatch = useDispatch();
   const {user} = useAuth();
-  const {rootNavigation} = useRootNavigation();
 
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
@@ -55,19 +52,10 @@ const MemberOptionsMenu = ({
   const alertLeaveGroup = useLeaveGroup({groupId, username: user.username});
 
   const onPressMenuOption = (
-    type:
-      | 'view-profile'
-      | 'send-message'
-      | 'set-admin'
-      | 'remove-admin'
-      | 'remove-member'
-      | 'leave-group',
+    type: 'set-admin' | 'remove-admin' | 'remove-member' | 'leave-group',
   ) => {
     modalizeRef.current?.close();
     switch (type) {
-      case 'view-profile':
-        goToUserProfile();
-        break;
       case 'set-admin':
         alertSettingAdmin();
         break;
@@ -83,14 +71,6 @@ const MemberOptionsMenu = ({
       default:
         dispatch(modalActions.showAlertNewFeature());
         break;
-    }
-  };
-
-  const goToUserProfile = () => {
-    if (selectedMember?.id) {
-      rootNavigation.navigate(mainStack.userProfile, {
-        userId: selectedMember.id,
-      });
     }
   };
 
@@ -214,38 +194,14 @@ const MemberOptionsMenu = ({
     }
   };
 
-  const isGroupAdmin = () => {
-    return !!selectedMember?.roles?.find(
-      (role: IGroupMemberRole) => role.type === 'GROUP_ADMIN',
-    );
-  };
-
   return (
     <BottomSheet
       modalizeRef={modalizeRef}
       onClose={onOptionsClosed}
       ContentComponent={
         <View style={styles.bottomSheet}>
-          <PrimaryItem
-            testID="member_options_menu.view_profile"
-            style={styles.menuOption}
-            leftIcon={'UsersAlt'}
-            leftIconProps={{icon: 'UsersAlt', size: 24}}
-            title={i18next.t('groups:member_menu:label_view_profile')}
-            onPress={() => onPressMenuOption('view-profile')}
-          />
-          {selectedMember?.username !== user?.username && (
-            <PrimaryItem
-              testID="member_options_menu.send_message"
-              style={styles.menuOption}
-              leftIcon={'iconSend'}
-              leftIconProps={{icon: 'iconSend', size: 24}}
-              title={i18next.t('groups:member_menu:label_send_message')}
-              onPress={() => onPressMenuOption('send-message')}
-            />
-          )}
           {can_setting &&
-            (isGroupAdmin() ? (
+            (selectedMember?.is_admin ? (
               <PrimaryItem
                 testID="member_options_menu.remove_admin"
                 style={styles.menuOption}

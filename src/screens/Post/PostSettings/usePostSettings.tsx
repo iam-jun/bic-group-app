@@ -17,7 +17,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 const MAX_DAYS = 7;
 
 export interface IUsePostSettings {
-  postId?: number;
+  postId?: string;
   replaceWithDetail?: boolean;
 }
 
@@ -135,14 +135,14 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       return 'doNothing';
     }
 
-    const userIds: number[] = [];
-    const groupIds: number[] = [];
+    const userIds: string[] = [];
+    const groupIds: string[] = [];
     const audienceIds = {groupIds, userIds};
     audience?.users?.map?.(
-      (u: IAudienceUser) => !!u?.id && userIds.push(u.id || 0),
+      (u: IAudienceUser) => !!u?.id && userIds.push(u.id || ''),
     );
     audience?.groups?.map?.(
-      (u: IAudienceUser) => !!u?.id && groupIds.push(u.id || 0),
+      (u: IAudienceUser) => !!u?.id && groupIds.push(u.id || ''),
     );
 
     const newSettings: IPostSetting = {...setting};

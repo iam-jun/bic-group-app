@@ -1,14 +1,7 @@
 import i18next from 'i18next';
-import React, {useEffect, useState} from 'react';
-import {
-  Linking,
-  Platform,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import React from 'react';
+import {StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-
 import Button from '~/beinComponents/Button';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -20,17 +13,6 @@ const NotFound = () => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme);
   const dimensions = useWindowDimensions();
-  const [baseUrl, setBaseUrl] = useState<string>('');
-
-  useEffect(() => {
-    if (Platform.OS === 'web') {
-      const initUrl = window.location.href;
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
-      const parse = require('url-parse');
-      const url = parse(initUrl, true);
-      setBaseUrl(url.origin);
-    }
-  }, []);
 
   const imgMaxWidth = 328;
   const imgPadding = theme.spacing.margin.base || 12;
@@ -38,11 +20,6 @@ const NotFound = () => {
   if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
 
   const onPressGoBack = () => {
-    if (Platform.OS === 'web' && baseUrl) {
-      window.open(baseUrl, '_self');
-      return;
-    }
-
     alert('Pressed "Go back"');
   };
 

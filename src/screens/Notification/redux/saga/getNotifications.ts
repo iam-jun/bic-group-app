@@ -13,21 +13,18 @@ function* getNotifications({
   payload: IParamGetNotifications;
   type: string;
 }) {
+  const {flag = 'ALL', keyValue = 'tabAll'} = payload || {};
   try {
-    const {flag = 'ALL', clearCurrentNotifications} = payload || {};
-    if (clearCurrentNotifications) {
-      notificationsActions.setNotifications({
-        notifications: [],
-        unseen: 0,
-      });
-    }
-    yield put(notificationsActions.setLoadingNotifications(true));
-    yield put(notificationsActions.setNoMoreNoti(false));
+    yield put(
+      notificationsActions.setLoadingNotifications({keyValue, value: true}),
+    );
+    yield put(notificationsActions.setNoMoreNoti({keyValue, value: false}));
 
     const response: IObject<any> = yield call(
       notificationsDataHelper.getNotificationList,
       payload || {},
     );
+
     if (flag === 'UNREAD' && response?.results?.length < 1) {
       yield put(groupsActions.getMyCommunities({}));
       yield timeOut(500);
@@ -40,20 +37,40 @@ function* getNotifications({
           {flag: 'ALL'},
         );
         if (_response?.results?.length > 1) {
-          yield put(notificationsActions.setNoMoreNoti(true));
+          yield put(
+            notificationsActions.setNoMoreNoti({keyValue, value: true}),
+          );
         }
       }
     }
 
+    if (response?.results?.length > 0) {
+      const newData: any[] = [],
+        newResponse: any = {};
+      response.results.forEach((item: any) => {
+        newData.push(item?.id);
+        newResponse[item.id] = {...item};
+      });
+      yield put(
+        notificationsActions.setNotifications({
+          notifications: newResponse,
+          keyValue: keyValue,
+          data: newData,
+          unseen: response.unseen,
+        }),
+      );
+    }
+
     yield put(
-      notificationsActions.setNotifications({
-        notifications: response?.results || [],
-        unseen: response.unseen,
+      notificationsActions.setLoadingNotifications({keyValue, value: false}),
+    );
+  } catch (err) {
+    yield put(
+      notificationsActions.setLoadingNotifications({
+        keyValue,
+        value: false,
       }),
     );
-    yield put(notificationsActions.setLoadingNotifications(false));
-  } catch (err) {
-    yield put(notificationsActions.setLoadingNotifications(false));
     console.log(`\x1b[31m🐣️ saga getNotifications err: `, err, `\x1b[0m`);
   }
 }

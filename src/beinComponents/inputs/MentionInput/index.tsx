@@ -1,4 +1,4 @@
-import {debounce, isEmpty} from 'lodash';
+import {debounce} from 'lodash';
 import React, {useCallback, useImperativeHandle, useRef, useState} from 'react';
 import {
   DeviceEventEmitter,
@@ -12,14 +12,15 @@ import {
   ViewStyle,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
+import {
+  default as actions,
+  default as actionsMention,
+} from '~/beinComponents/inputs/MentionInput/redux/actions';
 import {useKeyboardStatus} from '~/hooks/keyboard';
-import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
 import Autocomplete from './Autocomplete';
 import {ICursorPositionChange, switchKeyboardForCodeBlocks} from './helper';
-import {useDispatch} from 'react-redux';
-import actionsMention from '~/beinComponents/inputs/MentionInput/redux/actions';
-import actions from '~/beinComponents/inputs/MentionInput/redux/actions';
 
 interface Props {
   textInputRef?: any;
@@ -52,7 +53,6 @@ const _MentionInput = ({
   const inputRef = textInputRef || useRef<TextInput>();
   const _mentionInputRef = mentionInputRef || useRef<any>();
 
-  const {data} = useKeySelector('mentionInput');
   const [keyboardType, setKeyboardType] =
     useState<KeyboardTypeOptions>('default');
   const {isOpen: isKeyboardOpen} = useKeyboardStatus();
@@ -62,7 +62,7 @@ const _MentionInput = ({
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
-  const styles = createStyles(theme);
+  const styles = createStyles();
 
   const dispatch = useDispatch();
 
@@ -81,10 +81,6 @@ const _MentionInput = ({
 
   const _setContent = (c: string) => {
     componentInputProps.onChangeText?.(c);
-    if (Platform.OS === 'web') {
-      componentInputProps?.commentInputRef?.current?.focus?.();
-      componentInputProps?.inputRef?.current?.setFocus?.();
-    }
   };
 
   useImperativeHandle(_mentionInputRef, () => ({
@@ -121,22 +117,8 @@ const _MentionInput = ({
     DeviceEventEmitter.emit('autocomplete-on-selection-change', param);
   };
 
-  const handleKeyPress = (event: any) => {
-    DeviceEventEmitter.emit('autocomplete-on-key-press', event);
-  };
-
   const _onKeyPress = (event: any) => {
-    if (!isEmpty(data)) {
-      if (Platform.OS === 'web') {
-        switch (event?.key) {
-          case 'Enter':
-          case 'ArrowDown':
-          case 'ArrowUp':
-            handleKeyPress(event);
-            break;
-        }
-      }
-    } else if (onKeyPress) {
+    if (onKeyPress) {
       onKeyPress?.(event);
     } else {
       checkSendWhenEnter(event);
@@ -178,24 +160,6 @@ const _MentionInput = ({
         testID="_mention_input"
         style={[styles.containerWrapper, style]}
         onLayout={_onLayoutContainer}>
-        {Platform.OS === 'web' && (
-          /*
-        Duplicate ComponentInput because _onContentSizeChange
-        in the below component could not work some times on web.
-        Make sure this and the below ComponentInput share the same styling
-        */
-          <ComponentInput
-            testID="_mention_input.input.web"
-            nativeID="component-input--hidden"
-            multiline
-            editable={!disabled}
-            style={styles.hidden}
-            value={componentInputProps.value}
-            onContentSizeChange={_onContentSizeChange}
-            onKeyPress={_onKeyPress}
-            onChangeText={onChangeText}
-          />
-        )}
         <ComponentInput
           testID="_mention_input.input"
           {...componentInputProps}
@@ -206,9 +170,7 @@ const _MentionInput = ({
             textInputStyle,
             disabled ? {color: colors.textSecondary} : {},
           ]}
-          onContentSizeChange={
-            Platform.OS === 'web' ? undefined : _onContentSizeChange
-          }
+          onContentSizeChange={_onContentSizeChange}
           onSelectionChange={onSelectionChange}
           onKeyPress={_onKeyPress}
           onChangeText={onChangeText}
@@ -228,7 +190,7 @@ const _MentionInput = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
+const createStyles = () => {
   return StyleSheet.create({
     containerWrapper: {
       zIndex: 1,
@@ -241,13 +203,6 @@ const createStyles = (theme: ITheme) => {
       paddingTop: 0,
       paddingBottom: 0,
       borderWidth: 0,
-      ...Platform.select({
-        web: {
-          border: 'none',
-          marginTop: '0px important',
-          marginBottom: '0px important',
-        },
-      }),
     },
   });
 };
