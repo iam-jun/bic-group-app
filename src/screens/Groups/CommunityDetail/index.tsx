@@ -54,8 +54,8 @@ const CommunityDetail = (props: any) => {
 
   const buttonShow = useSharedValue(0);
 
-  const getCommunityDetail = () => {
-    dispatch(actions.getCommunityDetail(communityId, true));
+  const getCommunityDetail = (loadingPage = false) => {
+    dispatch(actions.getCommunityDetail(communityId, loadingPage));
   };
 
   const getPosts = () => {
@@ -77,7 +77,7 @@ const CommunityDetail = (props: any) => {
   };
 
   useEffect(() => {
-    getCommunityDetail();
+    getCommunityDetail(true);
 
     return () => {
       dispatch(actions.setCommunityDetail({} as ICommunity));
@@ -130,7 +130,11 @@ const CommunityDetail = (props: any) => {
   const renderCommunityContent = () => {
     if (!isMember && privacy === groupPrivacy.private) {
       return (
-        <PrivateWelcome onScroll={onScroll} onButtonLayout={onButtonLayout} />
+        <PrivateWelcome
+          onRefresh={getCommunityDetail}
+          onScroll={onScroll}
+          onButtonLayout={onButtonLayout}
+        />
       );
     }
 
