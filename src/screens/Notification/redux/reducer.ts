@@ -140,7 +140,8 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
       const {keyValue, notifications, data}: any = payload;
       if (!!keyValue) {
         const newNotificationData: any = {...state};
-        newNotificationData[keyValue]?.data?.concat(data || []);
+        const _data = newNotificationData[keyValue]?.data?.concat(data || []);
+        newNotificationData[keyValue].data = [..._data];
         return {
           ...state,
           ...newNotificationData,
