@@ -2,17 +2,17 @@
 
 exports[`MemberItem component should render data correctly 1`] = `
 <View
-  className=""
+  className="button"
 >
   <View
     accessibilityState={
       Object {
-        "disabled": true,
+        "disabled": false,
       }
     }
     accessible={true}
     collapsable={false}
-    focusable={false}
+    focusable={true}
     nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
@@ -172,19 +172,19 @@ exports[`MemberItem component should render data correctly 1`] = `
 </View>
 `;
 
-exports[`MemberItem component should render icon chat correctly when that is not current user 1`] = `
+exports[`MemberItem component should render icon chat correctly when user is an admin 1`] = `
 <View
-  className=""
+  className="button"
 >
   <View
     accessibilityState={
       Object {
-        "disabled": true,
+        "disabled": false,
       }
     }
     accessible={true}
     collapsable={false}
-    focusable={false}
+    focusable={true}
     nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
