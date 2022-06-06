@@ -7,17 +7,18 @@ import {useIsFocused} from '@react-navigation/native';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import Image from '~/beinComponents/Image';
 import {spacing} from '~/theme';
 import {useBaseHook} from '~/hooks';
 import {authStack} from '~/configs/navigator';
 import {ITheme} from '~/theme/interfaces';
 import {deviceDimensions} from '~/theme/dimension';
-import images from '~/resources/images';
 import LandingImg from '../../../../assets/images/landing_page.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import useAuth from '~/hooks/auth';
 import {rootSwitch} from '~/router/stack';
+import LogoAnimated from '~/beinComponents/SVGAnimated/LogoAnimated';
+
+const LOGO_SIZE = 72;
 
 const Landing = () => {
   const {user} = useAuth();
@@ -29,11 +30,8 @@ const Landing = () => {
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
   const styles = createStyle(theme, isPhone);
 
-  const logo = images.logo_bein;
-  const imgMaxWidth = 330;
-  const imgPadding = theme.spacing.margin.base || 12;
-  let imgSize = dimensions.width - 2 * imgPadding;
-  if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
+  const IMAGE_WIDTH = (dimensions.width * 26) / 39;
+  const IMAGE_HEIGHT = (IMAGE_WIDTH * 277) / 260;
 
   useEffect(() => {
     isFocused && user && navigation.replace(rootSwitch.mainStack);
@@ -42,13 +40,26 @@ const Landing = () => {
   return (
     <ScreenWrapper isFullView style={styles.root}>
       <View style={styles.container}>
-        {logo && (
-          <Image resizeMode="contain" style={styles.logo} source={logo} />
-        )}
+        <View style={styles.logo}>
+          {/* @ts-ignore */}
+          {/* <SVGIcon source={Logo} size={LOGO_SIZE} tintColor="none" /> */}
+          <LogoAnimated size={LOGO_SIZE} />
+          <Text.H4 style={styles.logoTitle}>
+            {t('auth:text_landing_logo_title')}
+          </Text.H4>
+          <Text.Body>{t('auth:text_landing_logo_description')}</Text.Body>
+        </View>
         <View style={styles.contentContainer}>
           {/* @ts-ignore */}
-          <SVGIcon source={LandingImg} size={imgSize} tintColor="none" />
-          <Text.H5 style={styles.title}>{t('auth:text_landing_title')}</Text.H5>
+          <SVGIcon
+            source={LandingImg}
+            width={IMAGE_WIDTH}
+            height={IMAGE_HEIGHT}
+            tintColor="none"
+          />
+          <Text variant="subtitle" style={styles.title}>
+            {t('auth:text_landing_title')}
+          </Text>
         </View>
         <Button.Primary
           testID="landing.start"
@@ -84,13 +95,13 @@ const createStyle = (theme: ITheme, isPhone: boolean) => {
     },
     contentContainer: {
       flex: 1,
-      justifyContent: 'center',
+      justifyContent: 'flex-start',
       alignItems: 'center',
     },
     title: {
       textAlign: 'center',
-      color: colors.primary6,
-      marginTop: spacing.margin.large,
+      color: colors.text,
+      marginTop: -spacing.margin.extraLarge,
     },
     desc: {
       marginBottom: spacing.margin.tiny,
@@ -100,16 +111,13 @@ const createStyle = (theme: ITheme, isPhone: boolean) => {
       marginBottom: 40,
     },
     logo: {
-      width: 64,
-      height: 64,
       marginTop: spacing.margin.big,
-      marginBottom: 40,
-      alignSelf: 'center',
+      marginBottom: spacing.margin.extraLarge * 2,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
-    img: {
-      width: 305,
-      height: 240,
-      alignSelf: 'center',
+    logoTitle: {
+      marginBottom: spacing.margin.tiny,
     },
   });
 };
