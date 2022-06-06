@@ -32,6 +32,9 @@ import {openLink} from '~/utils/common';
 import homeActions from '~/screens/Home/redux/actions';
 import {checkPermission} from '~/utils/permission';
 import {formatDMLink} from '~/utils/link';
+import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import {isEmpty} from 'lodash';
+import groupsActions from '~/screens/Groups/redux/actions';
 
 const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
@@ -44,6 +47,7 @@ const UserProfile = (props: any) => {
   const myProfileData = useKeySelector(menuKeySelector.myProfile);
   const {username: currentUsername, id} = myProfileData || {};
   const showUserNotFound = useKeySelector(menuKeySelector.showUserNotFound);
+  const joinedCommunities = useKeySelector(groupsKeySelector.joinedCommunities);
 
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const [avatarState, setAvatarState] = useState<string>(avatar);
@@ -157,12 +161,15 @@ const UserProfile = (props: any) => {
   };
 
   const onPressChat = () => {
-    const link = formatDMLink(
-      userProfileData.team_name,
-      userProfileData.username,
-    );
-
-    openLink(link);
+    if (!isEmpty(joinedCommunities)) {
+      const link = formatDMLink(
+        joinedCommunities?.[0]?.slug,
+        userProfileData.username,
+      );
+      openLink(link);
+    } else {
+      dispatch(groupsActions.getMyCommunities({callback: onPressChat}));
+    }
   };
 
   const renderEditButton = (style: any, onPress: any, testID: string) => {

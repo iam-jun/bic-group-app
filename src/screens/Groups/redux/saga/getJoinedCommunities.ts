@@ -11,7 +11,7 @@ export default function* getJoinedCommunities({
   payload: {callback?: () => void};
 }) {
   try {
-    const {callback} = payload;
+    const {callback} = payload || {};
     const list: any[] = yield select(
       state => state?.groups?.communities?.data,
     ) || [];
