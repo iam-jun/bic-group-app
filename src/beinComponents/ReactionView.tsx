@@ -11,7 +11,6 @@ import {blacklistReactions, ReactionType} from '~/constants/reactions';
 import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
 import commonActions, {IAction} from '~/constants/commonActions';
 import appConfig from '~/configs/appConfig';
-import {convertReactKeyForRequest} from '~/utils/common';
 
 export interface ReactionViewProps {
   style?: StyleProp<ViewStyle>;
@@ -60,16 +59,14 @@ const ReactionView: FC<ReactionViewProps> = ({
     if (ownerReactions?.length > 0) {
       ownerReactions.forEach(ownReaction => {
         if (ownReaction?.reactionName) {
-          _ownReactions[convertReactKeyForRequest(ownReaction.reactionName)] =
-            ownReaction;
+          _ownReactions[ownReaction.reactionName] = ownReaction;
         }
       });
     }
     Object.values(reactionsCount || {})?.map((reaction: any) => {
       const key = Object.keys(reaction || {})?.[0];
       if (key) {
-        const convertedKey = convertReactKeyForRequest(key);
-        reactionMap.set(convertedKey, reaction?.[key]);
+        reactionMap.set(key, reaction?.[key]);
       }
     });
 

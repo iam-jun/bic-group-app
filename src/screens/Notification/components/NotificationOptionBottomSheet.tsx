@@ -26,8 +26,6 @@ const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
   const dispatch = useDispatch();
 
   const handleMarkNotification = () => {
-    console.log('handleMarkNotification data>>>>>>>>>>>', data);
-
     if (!data?.isRead) {
       dispatch(notificationsActions.markAsRead({id: data?.id || '', keyValue}));
     } else {
