@@ -55,13 +55,14 @@ const Newsfeed = () => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    InteractionManager.runAfterInteractions(() => {
+    const taskId = requestAnimationFrame(() => {
       if (isFocused) {
         dispatch(appActions.setRootScreenName(appScreens.newsfeed));
       } else {
         DeviceEventEmitter.emit('showHeader', true);
       }
     });
+    return () => cancelAnimationFrame(taskId);
   }, [isFocused]);
 
   const getData = (isRefresh?: boolean) => {
