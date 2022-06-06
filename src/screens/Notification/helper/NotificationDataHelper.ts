@@ -26,9 +26,9 @@ export const notificationApiConfig = {
       useRetry: true,
     };
   },
-  putMarkAllAsRead: (): HttpApiRequestConfig => {
+  putMarkAllAsRead: (flag: string): HttpApiRequestConfig => {
     return {
-      url: `${ApiConfig.providers.beinNotification.url}notifications/mark-read`,
+      url: `${ApiConfig.providers.beinNotification.url}notifications/mark-read/${flag}`,
       method: 'put',
       provider: ApiConfig.providers.beinNotification,
       useRetry: true,
@@ -84,27 +84,6 @@ const notificationsDataHelper = {
     }
   },
 
-  loadNewNotification: async (fromNotiGroupId: string, limit: number) => {
-    try {
-      const response: any = await makeHttpRequest(
-        notificationApiConfig.getNotifications({
-          limit,
-          idGt: fromNotiGroupId,
-        }),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve({
-          results: response?.data?.data || [],
-          unseen: response?.data?.meta?.unSeen,
-        });
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-
   /**
    * Remove current user's activity from a list of notifications then re-calculate unseen
    * @param userId
@@ -131,10 +110,10 @@ const notificationsDataHelper = {
     return {filteredNotis, userHisOwnNotiCount};
   },
 
-  markAsReadAll: async () => {
+  markAsReadAll: async (flag: string) => {
     try {
       const response: any = await makeHttpRequest(
-        notificationApiConfig.putMarkAllAsRead(),
+        notificationApiConfig.putMarkAllAsRead(flag),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);

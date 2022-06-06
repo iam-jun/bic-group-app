@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Dimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import TimeView from '~/beinComponents/TimeView';
 import Icon from '~/beinComponents/Icon';
@@ -12,34 +12,39 @@ import {ITheme} from '~/theme/interfaces';
 import NotificationAvatar from './NotificationAvatar';
 import NotificationContent from './NotificationContent';
 import {useKeySelector} from '~/hooks/selector';
+import notificationSelector from '~/screens/Notification/redux/selector';
+import {isEqual} from 'lodash';
+
+const {width: screenWidth, height} = Dimensions.get('window');
 
 export interface NotificationItemProps {
-  activities: IGetStreamNotificationActivity[];
-  verb: string;
-  isRead: boolean;
-  isSeen: boolean;
-  createdAt: string;
-  updatedAt: string;
-  extra: INotiExtraData;
-  group: string;
-  activityCount: number;
-  actorCount: number;
+  // activities: IGetStreamNotificationActivity[];
+  // verb: string;
+  // isRead: boolean;
+  // isSeen: boolean;
+  // createdAt: string;
+  // updatedAt: string;
+  // extra: INotiExtraData;
+  // group: string;
+  // activityCount: number;
+  // actorCount: number;
   onPress: (...params: any) => void;
   onPressOption: (...params: any) => void;
   testID?: string;
-  id?: string;
+  id: string;
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
-  activities,
-  isRead,
-  updatedAt,
-  extra,
-  verb,
-  actorCount,
+  // activities,
+  // isRead,
+  // updatedAt,
+  // extra,
+  // verb,
+  // actorCount,
   onPress,
   onPressOption,
   testID,
+  id,
 }: NotificationItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
@@ -47,6 +52,24 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
   const [timerWidth, setTimerWidth] = useState(0);
+
+  if (!id) return null;
+
+  const itemValue = useKeySelector(
+    notificationSelector.getNotificationById(id),
+  );
+
+  const _itemValue = React.useMemo(() => {
+    if (
+      itemValue !== undefined &&
+      itemValue !== null &&
+      !isEqual(JSON.stringify(itemValue), JSON.stringify(_itemValue))
+    ) {
+      return itemValue;
+    }
+  }, [itemValue, onPress, onPressOption, testID, id]);
+  const {activities, isRead, updatedAt, extra, verb, actorCount}: any =
+    _itemValue;
 
   const onLayout = (e: any) => {
     const width = e?.nativeEvent?.layout?.width;
@@ -71,7 +94,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     <TouchableOpacity
       testID={testID}
       disabled={!isInternetReachable || !onPress}
-      onPress={onPress}
+      onPress={() => {
+        onPress && onPress(_itemValue);
+      }}
       style={[
         styles.container,
         {
@@ -120,7 +145,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           testID="notificationItem.menuIcon.button"
           style={styles.icon}
           activeOpacity={0.2}
-          onPress={(e: any) => onPressOption && onPressOption(e)}
+          onPress={(e: any) =>
+            onPressOption && onPressOption({e: e, item: _itemValue})
+          }
           hitSlop={{
             bottom: 20,
             left: 20,
@@ -148,6 +175,7 @@ const createStyles = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'flex-start',
       padding: theme.spacing.padding.large,
+      width: screenWidth,
     },
     row: {
       flexDirection: 'row',
@@ -174,4 +202,4 @@ const createStyles = (theme: ITheme) => {
   });
 };
 
-export default NotificationItem;
+export default React.memo(NotificationItem);
