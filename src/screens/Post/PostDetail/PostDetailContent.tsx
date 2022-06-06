@@ -373,7 +373,7 @@ const _PostDetailContent = (props: any) => {
   const onDownFlingHandlerStateChange = ({
     nativeEvent,
   }: FlingGestureHandlerStateChangeEvent) => {
-    if (Platform.OS === 'android') return;
+    if (Platform.OS === 'ios') return;
 
     if (nativeEvent.oldState === State.ACTIVE) {
       runOnJS(handleDown)();
@@ -504,7 +504,7 @@ const getSectionData = (listComment: ICommentData[]) => {
   return result?.length > 0 ? result : defaultList;
 };
 
-const createStyle = (theme: ITheme): any => {
+const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     flex1: {

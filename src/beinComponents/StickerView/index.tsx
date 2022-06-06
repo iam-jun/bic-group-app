@@ -18,7 +18,6 @@ import {
 } from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
 import Animated, {
-  interpolate,
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
@@ -71,7 +70,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
     const offset = dimension.headerHeight + insets.top;
 
     return dimension.deviceHeight - offset;
-  }, []);
+  }, [dimension.deviceHeight]);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
@@ -103,30 +102,42 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
 
     setVisible(true);
 
-    if (keyboard?.keyboardShown) {
-      Keyboard.dismiss();
-    } else {
-      height.value = withTiming(keyboardHeight + SEARCH_BAR_HEIGHT, {
-        duration: 200,
-      });
-    }
+    Keyboard.dismiss();
+
+    height.value = withTiming(keyboardHeight, {
+      duration: 200,
+    });
   };
 
   const expand = () => {
     const onDone = () => {
       setIsExpanded(true);
     };
-    height.value = withTiming(calculateFullHeight, {duration: 200}, () => {
+
+    const expandHeight = keyboard.keyboardShown
+      ? calculateContentHeight
+      : calculateFullHeight;
+
+    height.value = withTiming(expandHeight, {duration: 200}, () => {
       runOnJS(onDone)();
     });
   };
 
   const collapse = () => {
-    // Keyboard.dismiss();
     setIsExpanded(false);
-    height.value = withTiming(keyboardHeight + SEARCH_BAR_HEIGHT, {
-      duration: 200,
-    });
+
+    const onDone = () => {
+      Keyboard.dismiss();
+    };
+    height.value = withTiming(
+      keyboardHeight + SEARCH_BAR_HEIGHT,
+      {
+        duration: 200,
+      },
+      () => {
+        runOnJS(onDone)();
+      },
+    );
   };
 
   const hide = () => {
@@ -146,11 +157,6 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
   };
 
   const handleDown = () => {
-    // handle in onKeyboardVisibleChanged
-    if (keyboard.keyboardShown) {
-      Keyboard.dismiss();
-      return;
-    }
     if (isExpanded) runOnJS(collapse)();
     else runOnJS(hide)();
   };
@@ -165,8 +171,11 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
 
   const onKeyboardVisibleChanged = (keyboardShown: boolean) => {
     if (!keyboardShown) {
-      runOnJS(collapse)();
-    } else {
+      //Wait for keyboard to be invisible
+      setTimeout(() => {
+        runOnJS(collapse)();
+      }, 100);
+    } else if (keyboardShown) {
       if (visible) handleUp();
     }
   };
@@ -214,10 +223,14 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
 
   if (!visible) return null;
 
+  const bottomPosition = keyboard.keyboardShown
+    ? keyboardHeight + SEARCH_BAR_HEIGHT
+    : 0;
+
   return (
     <FlingGestureHandler
       direction={Directions.DOWN}
-      onEnded={handleDown}
+      // onEnded={handleDown}
       onHandlerStateChange={onDownFlingHandlerStateChange}>
       <Animated.View
         testID="sticker_view"
@@ -226,14 +239,14 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
           animatedStyle,
           isExpanded && {
             ...styles.expanded,
-            height: calculateContentHeight,
-            bottom: Platform.OS === 'android' ? 0 : keyboardHeight,
+            // height: calculateContentHeight,
+            bottom: Platform.OS === 'android' ? 0 : bottomPosition,
           },
         ]}>
         <View style={styles.stickerView}>
           <FlingGestureHandler
             direction={Directions.UP}
-            onEnded={handleUp}
+            // onEnded={handleUp}
             onHandlerStateChange={onUpFlingHandlerStateChange}>
             <View style={styles.header}>
               <View style={styles.indicator} />

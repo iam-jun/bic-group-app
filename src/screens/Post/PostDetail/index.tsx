@@ -10,8 +10,8 @@ import PostDetailContent from '~/screens/Post/PostDetail/PostDetailContent';
 import {ITheme} from '~/theme/interfaces';
 
 const PostDetail = (props: any) => {
-  const [showContent, setShowContent] = useState(true);
-  const [showLoading, setShowLoading] = useState(false);
+  const [showContent, setShowContent] = useState(false);
+  const [showLoading, setShowLoading] = useState(true);
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
