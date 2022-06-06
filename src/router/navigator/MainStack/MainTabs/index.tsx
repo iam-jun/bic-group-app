@@ -8,6 +8,7 @@ import {useChatSocket} from '~/hooks/chat';
 import useNotificationSocket from '~/hooks/notificationSocket';
 import {useKeySelector} from '~/hooks/selector';
 import BottomTabBar from '~/router/components/BottomTabBar';
+import groupsActions from '~/screens/Groups/redux/actions';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
 import {initPushTokenMessage} from '~/services/helper';
@@ -45,6 +46,7 @@ const MainTabs = () => {
 
     dispatch(postActions.getDraftPosts({}));
     dispatch(giphyActions.getAPIKey());
+    dispatch(groupsActions.getMyCommunities());
     dispatch(notificationsActions.registerPushToken());
     initPushTokenMessage()
       .then(messaging => {

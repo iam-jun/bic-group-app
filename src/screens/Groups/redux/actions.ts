@@ -292,7 +292,7 @@ const groupsActions = {
   }),
 
   // community
-  getMyCommunities: (payload: {callback?: () => void}) => ({
+  getMyCommunities: (payload?: {callback?: () => void}) => ({
     type: groupsTypes.GET_JOINED_COMMUNITIES,
     payload,
   }),

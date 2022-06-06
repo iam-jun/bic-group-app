@@ -19,13 +19,11 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 interface SearchResultContentProps {
   onLoadMore?: () => void;
   onRefresh?: () => void;
-  onPressChat?: () => void;
 }
 
 const SearchResultContent = ({
   onLoadMore,
   onRefresh,
-  onPressChat,
 }: SearchResultContentProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
@@ -35,7 +33,7 @@ const SearchResultContent = ({
   );
 
   const renderItem = ({item}: {item: ICommunityMembers}) => {
-    return <MemberItem item={item} onPressChat={onPressChat} />;
+    return <MemberItem item={item} />;
   };
 
   const renderEmptyComponent = () => {

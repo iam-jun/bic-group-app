@@ -9,19 +9,28 @@ import Icon from '~/beinComponents/Icon';
 import {useTheme} from 'react-native-paper';
 import images from '~/resources/images';
 import useAuth from '~/hooks/auth';
+import {formatDMLink} from '~/utils/link';
+import {openLink} from '~/utils/common';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '../redux/keySelector';
 
 interface MemberItemProps {
   item: ICommunityMembers;
-  onPressChat?: () => void;
 }
 
-const MemberItem = ({item, onPressChat}: MemberItemProps) => {
+const MemberItem = ({item}: MemberItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const {colors} = theme;
   const {user} = useAuth();
+  const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
 
   const {fullname, avatar, username} = item || {};
+
+  const onPressChat = () => {
+    const link = formatDMLink(infoDetail.slug, username);
+    openLink(link);
+  };
 
   return (
     <PrimaryItem
