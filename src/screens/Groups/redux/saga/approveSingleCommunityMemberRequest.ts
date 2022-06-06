@@ -34,7 +34,8 @@ export default function* approveSingleCommunityMemberRequest({
       }),
     );
 
-    yield groupsDataHelper.approveSingleCommunityMemberRequest(
+    yield call(
+      groupsDataHelper.approveSingleCommunityMemberRequest,
       communityId,
       requestId,
     );

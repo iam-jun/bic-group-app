@@ -14,12 +14,13 @@ export default function* declineAllCommunityMemberRequests({
 }) {
   const {communityId, total, callback} = payload;
   try {
-    yield groupsDataHelper.declineAllCommunityMemberRequests(
+    yield call(
+      groupsDataHelper.declineAllCommunityMemberRequests,
       communityId,
       total,
     );
 
-    if (callback) callback();
+    if (callback) yield call(callback);
   } catch (err: any) {
     console.log('declineAllCommunityMemberRequests: ', err);
 
@@ -29,6 +30,6 @@ export default function* declineAllCommunityMemberRequests({
     //   return;
     // }
 
-    yield showError(err);
+    yield call(showError, err);
   }
 }

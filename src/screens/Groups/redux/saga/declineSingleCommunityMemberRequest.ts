@@ -35,7 +35,8 @@ export default function* declineSingleCommunityMemberRequest({
       }),
     );
 
-    yield groupsDataHelper.declineSingleCommunityMemberRequest(
+    yield call(
+      groupsDataHelper.declineSingleCommunityMemberRequest,
       communityId,
       requestId,
     );

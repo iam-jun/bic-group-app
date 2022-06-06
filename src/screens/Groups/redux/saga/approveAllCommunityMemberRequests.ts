@@ -19,7 +19,8 @@ export default function* approveAllCommunityMemberRequests({
   try {
     yield put(groupsActions.resetCommunityMemberRequests());
 
-    yield groupsDataHelper.approveAllCommunityMemberRequests(
+    yield call(
+      groupsDataHelper.approveAllCommunityMemberRequests,
       communityId,
       total,
     );
