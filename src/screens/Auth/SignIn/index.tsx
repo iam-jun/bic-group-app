@@ -136,7 +136,7 @@ const SignIn = () => {
         keyboardHeightValue.value = withTiming(
           1,
           {
-            duration: event?.duration,
+            duration: 200,
           },
           // eslint-disable-next-line @typescript-eslint/no-empty-function
           () => {},
@@ -149,7 +149,7 @@ const SignIn = () => {
         keyboardHeightValue.value = withTiming(
           0,
           {
-            duration: event?.duration,
+            duration: 200,
           },
           // eslint-disable-next-line @typescript-eslint/no-empty-function
           () => {},
@@ -273,21 +273,6 @@ const SignIn = () => {
       [LOGO_SIZE, LOGO_SMALL_SIZE],
       Extrapolate.CLAMP,
     ),
-    opacity: interpolate(
-      keyboardHeightValue.value,
-      [0, 1],
-      [1, 0],
-      Extrapolate.CLAMP,
-    ),
-  }));
-
-  const smallLogoStyle = useAnimatedStyle(() => ({
-    opacity: interpolate(
-      keyboardHeightValue.value,
-      [0, 1],
-      [0, 1],
-      Extrapolate.CLAMP,
-    ),
   }));
 
   const renderLoading = () => {
@@ -313,20 +298,10 @@ const SignIn = () => {
             accessible={false}
             style={styles.flex1}>
             <View style={styles.paddingView}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                }}>
-                <Animated.Image
-                  source={images.logo_beincomm}
-                  style={[styles.smallLogo, smallLogoStyle]}
-                />
-                <Animated.Image
-                  source={images.logo_beincomm}
-                  style={[{alignSelf: 'center'}, logoContainerStyle]}
-                />
-              </View>
+              <Animated.Image
+                source={images.logo_beincomm}
+                style={[{alignSelf: 'center'}, logoContainerStyle]}
+              />
               <View style={{backgroundColor: 'yellow'}} />
               <Text.H4 testID="sign_in.title" style={styles.title} useI18n>
                 auth:text_sign_in_desc
