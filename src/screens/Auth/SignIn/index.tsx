@@ -334,7 +334,7 @@ const SignIn = () => {
                 helperContent={signingInError}
                 disabled={!!authSessions || loading}
                 onSubmitEditing={onSubmitEmail}
-                placeholderTextColor={theme.colors.placeholder}
+                placeholderTextColor={theme.colors.bgFocus}
                 textColor={theme.colors.background}
                 outlineColor={
                   errors?.email ? theme.colors.error : theme.colors.background
@@ -392,7 +392,7 @@ const SignIn = () => {
                 onSubmitEditing={onSignIn}
                 inputStyle={styles.input}
                 style={styles.inputPassword}
-                placeholderTextColor={theme.colors.placeholder}
+                placeholderTextColor={theme.colors.bgFocus}
                 iconColor={theme.colors.background}
                 textColor={theme.colors.background}
                 outlineColor={theme.colors.background}
