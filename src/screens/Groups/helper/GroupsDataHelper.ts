@@ -285,6 +285,61 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
+  getCommunityMemberRequests: (
+    communityId: number,
+    params: any,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      ...params,
+      key: !!params?.key?.trim?.() ? params.key : undefined,
+    },
+  }),
+  approveSingleCommunityMemberRequest: (
+    communityId: number,
+    requestId: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/${requestId}/approve`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
+  declineSingleCommunityMemberRequest: (
+    communityId: number,
+    requestId: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/${requestId}/decline`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
+  approveAllCommunityMemberRequests: (
+    communityId: number,
+    total: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/approve`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {
+      total_joining_requests: total,
+    },
+  }),
+  declineAllCommunityMemberRequests: (
+    communityId: number,
+    total: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/decline`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {
+      total_joining_requests: total,
+    },
+  }),
 };
 
 const groupsDataHelper = {
@@ -701,6 +756,94 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.cancelJoinCommunity(communityId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getCommunityMemberRequests: async (communityId: number, params: any) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getCommunityMemberRequests(communityId, params),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  approveSingleCommunityMemberRequest: async (
+    communityId: number,
+    requestId: number,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.approveSingleCommunityMemberRequest(
+          communityId,
+          requestId,
+        ),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  declineSingleCommunityMemberRequest: async (
+    communityId: number,
+    requestId: number,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.declineSingleCommunityMemberRequest(
+          communityId,
+          requestId,
+        ),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  approveAllCommunityMemberRequests: async (
+    communityId: number,
+    total: number,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.approveAllCommunityMemberRequests(communityId, total),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  declineAllCommunityMemberRequests: async (
+    communityId: number,
+    total: number,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.declineAllCommunityMemberRequests(communityId, total),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
