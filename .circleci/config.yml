@@ -7,7 +7,7 @@ orbs:
 jobs:
   ios-stg:
     macos:
-      xcode: 13.2.0
+      xcode: 13.4.1
     environment:
       FL_OUTPUT_DIR: ./fastlane/staging/
       FASTLANE_LANE: deploy_staging_ci
@@ -65,7 +65,7 @@ jobs:
 
   ios-pro:
     macos:
-      xcode: 13.2.0
+      xcode: 13.4.1
     environment:
       FL_OUTPUT_DIR: ./fastlane/production/
       FASTLANE_LANE: deploy_production_ci
