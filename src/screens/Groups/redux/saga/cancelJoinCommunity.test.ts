@@ -8,6 +8,7 @@ import cancelJoinCommunity from './cancelJoinCommunity';
 import groupsActions from '../actions';
 import modalActions from '~/store/modal/actions';
 import groupJoinStatus from '~/constants/groupJoinStatus';
+import approveDeclineCode from '~/constants/approveDeclineCode';
 
 describe('cancelJoinCommuniity saga', () => {
   const communityId = 1;
@@ -55,6 +56,29 @@ describe('cancelJoinCommuniity saga', () => {
       .run()
       .then(({allEffects}: any) => {
         expect(allEffects?.length).toEqual(4);
+      });
+  });
+
+  it('should cancel join request and server throws approved error', () => {
+    const error = {code: approveDeclineCode.APPROVED};
+    return expectSaga(cancelJoinCommunity, action)
+      .provide([
+        [
+          matchers.call.fn(groupsDataHelper.cancelJoinCommunity),
+          Promise.reject(error),
+        ],
+      ])
+      .put(
+        groupsActions.editDiscoverCommunityItem({
+          id: communityId,
+          data: {join_status: groupJoinStatus.member},
+        }),
+      )
+      .put(groupsActions.getCommunityDetail(communityId, true))
+      .call(showError, error)
+      .run()
+      .then(({allEffects}: any) => {
+        expect(allEffects?.length).toEqual(6);
       });
   });
 });
