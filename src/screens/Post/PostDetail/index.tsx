@@ -18,9 +18,10 @@ const PostDetail = (props: any) => {
   const styles = createStyle(theme);
 
   useEffect(() => {
-    InteractionManager.runAfterInteractions(() => {
+    const taskId = requestAnimationFrame(() => {
       setShowContent(true);
     });
+    return () => cancelAnimationFrame(taskId);
   }, []);
 
   const onContentLayout = useCallback(() => {

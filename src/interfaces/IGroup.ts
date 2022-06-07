@@ -142,7 +142,27 @@ export interface IJoiningMember {
   user_id: number;
   group_id: number;
   created_at: string;
-  user: IObject<any>;
+  user: IJoiningUserInfo;
+}
+
+export interface IJoiningUserInfo {
+  id: number;
+  username: string;
+  fullname: string;
+  email: string;
+  avatar: string | null;
+  country: string | null;
+  city: string | null;
+  phone: string | null;
+  country_code: string | null;
+  latest_work: {
+    id: number;
+    user_id: number;
+    currently_work_here: boolean;
+    end_date: string | null;
+    company: string | null;
+    title_position: string | null;
+  };
 }
 
 export interface IGetYourGroupsSearch {
