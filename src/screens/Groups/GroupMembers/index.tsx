@@ -31,6 +31,8 @@ import MemberOptionsMenu from './components/MemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
 import mainStack from '~/router/navigator/MainStack/stack';
 import useAuth from '~/hooks/auth';
+import {formatDMLink} from '~/utils/link';
+import {openLink} from '~/utils/common';
 
 const _GroupMembers = (props: any) => {
   const params = props.route.params;
@@ -63,6 +65,8 @@ const _GroupMembers = (props: any) => {
   const loadingGroupMember = useKeySelector(
     groupsKeySelector.loadingGroupMember,
   );
+
+  const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
 
   const getGroupProfile = () => {
     dispatch(groupsActions.getGroupDetail(groupId));
@@ -137,8 +141,10 @@ const _GroupMembers = (props: any) => {
     rootNavigation.navigate(mainStack.userProfile, {userId: id});
   };
 
-  const onPressChat = () => {
-    // TODO: Add navigation to Chat
+  const onPressChat = (username?: string) => {
+    if (!username) return;
+    const link = formatDMLink(groupData.team_name, username);
+    openLink(link);
   };
 
   const onLoadMore = () => {
@@ -179,7 +185,7 @@ const _GroupMembers = (props: any) => {
                 icon={'CommentAltDots'}
                 backgroundColor={colors.bgSecondary}
                 style={styles.iconChat}
-                onPress={onPressChat}
+                onPress={() => onPressChat(item.username)}
               />
             )}
             {can_manage_member && (
