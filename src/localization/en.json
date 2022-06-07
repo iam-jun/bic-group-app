@@ -673,7 +673,8 @@
     "text_successfully_join_group": "Successfully join group",
     "text_successfully_join_community": "Successfully join community",
     "text_no_pending_members_notice": "There's no pending members",
-    "text_pending_request_notice": "People who request to join your group will show here.",
+    "text_pending_request_notice_group": "People who request to join your group will show here.",
+    "text_pending_request_notice_community": "People who request to join your community will show here.",
     "text_respond_all_member_requests": {
       "title": {
         "approve": "Approve all member requests?",
@@ -688,6 +689,7 @@
     },
     "text_requested_at": "Requested at",
     "text_declining_user": "Declining user",
+    "text_declined_user": "Declined user",
     "text_approved_user": "Approved user",
     "text_approved_all_one": "Approved {{count}} user",
     "text_approved_all_other": "Approved {{count}} users",

@@ -22,7 +22,6 @@ interface ContentDataProps {
   canLoadMore: boolean;
   onRefresh?: () => void;
   onLoadMore?: () => void;
-  onPressChat?: () => void;
 }
 
 const ContentData = ({
@@ -32,7 +31,6 @@ const ContentData = ({
   canLoadMore,
   onRefresh,
   onLoadMore,
-  onPressChat,
 }: ContentDataProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
@@ -48,7 +46,7 @@ const ContentData = ({
   };
 
   const renderItem = ({item}: {item: ICommunityMembers}) => {
-    return <MemberItem item={item} onPressChat={onPressChat} />;
+    return <MemberItem item={item} />;
   };
 
   const renderListFooter = () => {

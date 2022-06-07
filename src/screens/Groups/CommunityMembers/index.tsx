@@ -74,13 +74,9 @@ const CommunityMembers = ({route}: any) => {
     setIsOpen(true);
   };
 
-  const onCloseModal = () => {
+  const onCloseModal = React.useCallback(() => {
     setIsOpen(false);
-  };
-
-  const onPressChat = () => {
-    // TODO: add navigate to chat
-  };
+  }, []);
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.background}>
@@ -102,7 +98,6 @@ const CommunityMembers = ({route}: any) => {
         canLoadMore={canLoadMore}
         onRefresh={onRefresh}
         onLoadMore={onLoadMore}
-        onPressChat={onPressChat}
       />
 
       <SearchMemberView
@@ -110,7 +105,6 @@ const CommunityMembers = ({route}: any) => {
         communityId={communityId}
         onClose={onCloseModal}
         placeholder={i18next.t('groups:text_search_member')}
-        onPressChat={onPressChat}
       />
     </ScreenWrapper>
   );

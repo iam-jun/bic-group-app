@@ -52,7 +52,7 @@ const GroupAdministration = (props: any) => {
   };
 
   const goToPendingMembers = () => {
-    rootNavigation.navigate(groupStack.pendingMembers, {groupId});
+    rootNavigation.navigate(groupStack.groupPendingMembers, {groupId});
   };
 
   const goToGeneralInfo = () => {
@@ -119,13 +119,6 @@ const GroupAdministration = (props: any) => {
         displayNewFeature,
         23,
         'group_administration.pending_posts',
-      )}
-      {renderItem(
-        'ExclamationTriangle',
-        'settings:title_reported_posts',
-        displayNewFeature,
-        1,
-        'group_administration.reported_post',
       )}
     </>
   );

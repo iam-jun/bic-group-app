@@ -68,7 +68,16 @@ jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
 jest.doMock('react-i18next', () => ({
   useTranslation: () => {
     return {
-      t: str => get(languages, str?.replaceAll?.(':', '.')),
+      t: (str, params) => {
+        let suffix = '';
+        if (params?.count) {
+          suffix = params.count === 1 ? '_one' : '_other';
+        }
+        return get(
+          languages,
+          `${str}${suffix}`.replaceAll?.(':', '.'),
+        )?.replace('{{count}}', params?.count);
+      },
       i18n: {
         changeLanguage: () => new Promise(() => undefined),
       },

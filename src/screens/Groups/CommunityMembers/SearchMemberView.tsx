@@ -16,7 +16,6 @@ interface SearchMemberViewProps {
   isOpen: boolean;
   placeholder?: string;
   initSearch?: string;
-  onPressChat?: () => void;
   onClose?: () => void;
 }
 
@@ -24,14 +23,13 @@ const SearchMemberView = ({
   communityId,
   isOpen,
   placeholder,
-  onPressChat,
   onClose,
   initSearch,
 }: SearchMemberViewProps) => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const [searchText, setSearchText] = useState(initSearch || '');
-  const styles = createStyles(theme);
+  const styles = createStyles();
 
   const getCommunitySearchMembers = (searchText: string) => {
     dispatch(
@@ -68,10 +66,7 @@ const SearchMemberView = ({
       onClose={onClose}
       onChangeText={onSearchMember}>
       {!!searchText ? (
-        <SearchResultContent
-          onLoadMore={onLoadMore}
-          onPressChat={onPressChat}
-        />
+        <SearchResultContent onLoadMore={onLoadMore} />
       ) : (
         <View style={styles.text}>
           <Text.BodyS
@@ -88,7 +83,7 @@ const SearchMemberView = ({
 
 export default SearchMemberView;
 
-const createStyles = (theme: ITheme) => {
+const createStyles = () => {
   return StyleSheet.create({
     text: {
       marginTop: 33,

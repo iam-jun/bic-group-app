@@ -1,6 +1,5 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import i18next from 'i18next';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
@@ -9,6 +8,7 @@ import privacyTypes from '~/constants/privacyTypes';
 import Icon from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
+import {useBaseHook} from '~/hooks';
 
 interface DiscoverItemProps {
   item: any;
@@ -28,6 +28,7 @@ const DiscoverItem = ({
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyles(theme);
+  const {t} = useBaseHook();
 
   const {id, name, icon, user_count, privacy, join_status} = item || {};
   const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
@@ -74,12 +75,11 @@ const DiscoverItem = ({
             tintColor={colors.textSecondary}
           />
           <Text.BodyS color={colors.textSecondary}>{user_count}</Text.BodyS>
-          <Text.BodyS color={colors.textSecondary}>{` ${i18next.t(
-            'groups:text_members',
-            {
+          <Text.BodyS color={colors.textSecondary}>
+            {` ${t('groups:text_members', {
               count: user_count,
-            },
-          )}`}</Text.BodyS>
+            })}`}
+          </Text.BodyS>
         </View>
       }
       RightComponent={

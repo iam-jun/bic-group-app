@@ -9,6 +9,8 @@ import Icon from '~/beinComponents/Icon';
 import {useTheme} from 'react-native-paper';
 import images from '~/resources/images';
 import useAuth from '~/hooks/auth';
+import {formatDMLink} from '~/utils/link';
+import {openLink} from '~/utils/common';
 import {useRootNavigation} from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {useKeySelector} from '~/hooks/selector';
@@ -16,14 +18,14 @@ import groupsKeySelector from '../redux/keySelector';
 
 interface MemberItemProps {
   item: ICommunityMembers;
-  onPressChat?: () => void;
 }
 
-const MemberItem = ({item, onPressChat}: MemberItemProps) => {
+const MemberItem = ({item}: MemberItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const {colors} = theme;
   const {user} = useAuth();
+  const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {rootNavigation} = useRootNavigation();
 
   const {id, fullname, avatar, username} = item || {};
@@ -31,6 +33,15 @@ const MemberItem = ({item, onPressChat}: MemberItemProps) => {
 
   const goToUserProfile = () => {
     rootNavigation.navigate(mainStack.userProfile, {userId: id});
+  };
+
+  const onPressChat = () => {
+    const link = formatDMLink(infoDetail.slug, username);
+    openLink(link);
+  };
+
+  const onPressMenu = (item: ICommunityMembers) => {
+    // TODO: TO ADD FUNCTIONALITY
   };
 
   return (
@@ -49,16 +60,25 @@ const MemberItem = ({item, onPressChat}: MemberItemProps) => {
         </Text.Body>
       }
       RightComponent={
-        can_manage_member &&
-        user.username !== item.username && (
-          <Icon
-            icon={'CommentAltDots'}
-            backgroundColor={colors.bgSecondary}
-            style={styles.iconChat}
-            onPress={onPressChat}
-            buttonTestID="member_item.icon_chat.button"
-          />
-        )
+        <>
+          {user.username !== username && (
+            <Icon
+              icon={'CommentAltDots'}
+              backgroundColor={colors.bgSecondary}
+              style={styles.iconChat}
+              onPress={onPressChat}
+              buttonTestID="member_item.icon_chat.button"
+            />
+          )}
+          {can_manage_member && (
+            <Icon
+              icon={'EllipsisV'}
+              style={styles.iconOption}
+              onPress={() => onPressMenu(item)}
+              buttonTestID="member_item.icon_option.button"
+            />
+          )}
+        </>
       }
     />
   );
@@ -79,7 +99,10 @@ const createStyles = (theme: ITheme) => {
       justifyContent: 'center',
       alignItems: 'center',
       padding: spacing.padding.small,
-      marginHorizontal: spacing.margin.tiny,
+      marginLeft: spacing.margin.tiny,
+    },
+    iconOption: {
+      marginLeft: spacing.margin.small,
     },
   });
 };

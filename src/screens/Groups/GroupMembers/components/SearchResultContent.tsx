@@ -18,6 +18,8 @@ import {IGroupMembers} from '~/interfaces/IGroup';
 import images from '~/resources/images';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
+import Icon from '~/beinComponents/Icon';
+import useAuth from '~/hooks/auth';
 
 interface SearchResultContentProps {
   onLoadMore?: () => void;
@@ -31,8 +33,10 @@ const SearchResultContent = ({
   onPressMenu,
 }: SearchResultContentProps) => {
   const theme = useTheme() as ITheme;
+  const {colors} = theme;
   const styles = createStyles(theme);
   const {rootNavigation} = useRootNavigation();
+  const {user} = useAuth();
 
   const {loading, canLoadMore, data} = useKeySelector(
     groupsKeySelector.groupSearchMembers,
@@ -43,6 +47,10 @@ const SearchResultContent = ({
 
   const goToUserProfile = (id: number) => {
     rootNavigation.navigate(mainStack.userProfile, {userId: id});
+  };
+
+  const onPressChat = () => {
+    // TODO: Add navigation to Chat
   };
 
   const renderItem = ({item}: {item: IGroupMembers}) => {
@@ -64,8 +72,24 @@ const SearchResultContent = ({
               }>{` @${username}`}</Text.Subtitle>
           </Text.H6>
         }
-        onPressMenu={
-          can_manage_member ? (e: any) => onPressMenu(e, item) : undefined
+        RightComponent={
+          <>
+            {user.username !== item.username && (
+              <Icon
+                icon={'CommentAltDots'}
+                backgroundColor={colors.bgSecondary}
+                style={styles.iconChat}
+                onPress={onPressChat}
+              />
+            )}
+            {can_manage_member && (
+              <Icon
+                icon={'EllipsisV'}
+                style={styles.iconOption}
+                onPress={(e: any) => onPressMenu(e, item)}
+              />
+            )}
+          </>
         }
       />
     );
@@ -150,6 +174,17 @@ const createStyles = (theme: ITheme) => {
       height: undefined,
       paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.tiny,
+    },
+    iconChat: {
+      height: 36,
+      width: 36,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: spacing.padding.small,
+      marginLeft: spacing.margin.tiny,
+    },
+    iconOption: {
+      marginLeft: spacing.margin.small,
     },
   });
 };
