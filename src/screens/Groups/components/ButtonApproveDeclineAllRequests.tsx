@@ -2,8 +2,8 @@ import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import React from 'react';
 import {useTheme} from 'react-native-paper';
 
-import Divider from './Divider';
-import Button from './Button';
+import Divider from '~/beinComponents/Divider';
+import Button from '~/beinComponents/Button';
 import {ITheme} from '~/theme/interfaces';
 
 interface ButtonProps {
@@ -25,7 +25,7 @@ const ButtonApproveDeclineAllRequests = ({
       <Divider />
       <View style={styles.buttons}>
         <Button.Secondary
-          testID="pending_action_all.btn_decline_all"
+          testID="button_approve_decline_all_requests.decline"
           style={styles.buttonDecline}
           color={theme.colors.primary1}
           onPress={onPressDeclineAll}
@@ -34,7 +34,7 @@ const ButtonApproveDeclineAllRequests = ({
         </Button.Secondary>
         <Button.Secondary
           highEmphasis
-          testID="pending_action_all.btn_approve_all"
+          testID="button_approve_decline_all_requests.approve"
           style={styles.buttonApprove}
           color={theme.colors.primary6}
           onPress={onPressApproveAll}

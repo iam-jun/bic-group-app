@@ -4,7 +4,7 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
 
-import ButtonApproveDeclineAllRequests from '~/beinComponents/ButtonApproveDeclineAllRequests';
+import ButtonApproveDeclineAllRequests from '~/screens/Groups/components/ButtonApproveDeclineAllRequests';
 import groupsActions from '../../redux/actions';
 import {
   clearToastMessage,

@@ -14,7 +14,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IToastMessage} from '~/interfaces/common';
-import ButtonApproveDeclineAllRequests from '~/beinComponents/ButtonApproveDeclineAllRequests';
+import ButtonApproveDeclineAllRequests from '~/screens/Groups/components/ButtonApproveDeclineAllRequests';
 
 interface PendingActionAllProps {
   groupId: number;
