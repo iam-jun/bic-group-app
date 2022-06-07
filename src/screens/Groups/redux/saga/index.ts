@@ -46,7 +46,12 @@ import getCommunitySearchMembers from './getCommunitySearchMembers';
 import getGroupSearchMembers from './getGroupSearchMembers';
 import joinCommunity from './joinCommunity';
 import cancelJoinCommunity from './cancelJoinCommunity';
+import getCommunityMemberRequests from './getCommunityMemberRequests';
 import groupJoinStatus from '~/constants/groupJoinStatus';
+import approveSingleCommunityMemberRequest from './approveSingleCommunityMemberRequest';
+import declineSingleCommunityMemberRequest from './declineSingleCommunityMemberRequest';
+import approveAllCommunityMemberRequests from './approveAllCommunityMemberRequests';
+import declineAllCommunityMemberRequests from './declineAllCommunityMemberRequests';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -108,6 +113,26 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_DISCOVER_GROUPS, getDiscoverGroups);
   yield takeLatest(groupsTypes.JOIN_COMMUNITY, joinCommunity);
   yield takeLatest(groupsTypes.CANCEL_JOIN_COMMUNITY, cancelJoinCommunity);
+  yield takeLatest(
+    groupsTypes.GET_COMMUNITY_MEMBER_REQUESTS,
+    getCommunityMemberRequests,
+  );
+  yield takeLatest(
+    groupsTypes.APPROVE_SINGLE_COMMUNITY_MEMBER_REQUEST,
+    approveSingleCommunityMemberRequest,
+  );
+  yield takeLatest(
+    groupsTypes.DECLINE_SINGLE_COMMUNITY_MEMBER_REQUEST,
+    declineSingleCommunityMemberRequest,
+  );
+  yield takeLatest(
+    groupsTypes.APPROVE_ALL_COMMUNITY_MEMBER_REQUESTS,
+    approveAllCommunityMemberRequests,
+  );
+  yield takeLatest(
+    groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,
+    declineAllCommunityMemberRequests,
+  );
 }
 
 function* getGroupSearch({payload}: {type: string; payload: string}) {
@@ -361,7 +386,7 @@ function* getMemberRequests({
     const response = yield groupsDataHelper.getMemberRequests(groupId, {
       offset: data.length,
       limit: appConfig.recordsPerPage,
-      key: memberRequestStatus.waiting,
+      key: memberRequestStatus.WAITING,
       ...params,
     });
 
@@ -518,7 +543,11 @@ export function* refreshGroupMembers(groupId: number) {
   yield put(groupsActions.getGroupDetail(groupId));
 }
 
-function* approvalError(groupId: number, code: string, fullName?: string) {
+export function* approvalError(
+  groupId: number,
+  code: string,
+  fullName?: string,
+) {
   let errorMsg: string;
   if (code === approveDeclineCode.CANNOT_APPROVE) {
     errorMsg = i18next

@@ -7,6 +7,7 @@ const groupStack = {
   discoverGroups: 'discover-groups',
   communityMembers: 'community-members',
   communityAdmin: 'community-admin',
+  communityPendingMembers: 'community-pending-members',
 
   // group
   groups: 'group-list',
@@ -29,7 +30,7 @@ const groupStack = {
   commentDetail: 'comment-detail',
 
   // group moderating
-  pendingMembers: 'pending-members',
+  groupPendingMembers: 'group-pending-members',
 };
 
 export default groupStack;

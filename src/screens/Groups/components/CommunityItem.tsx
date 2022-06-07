@@ -7,7 +7,7 @@ import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import privacyTypes from '~/constants/privacyTypes';
 import {ICommunity} from '~/interfaces/ICommunity';
-import i18next from 'i18next';
+import {useBaseHook} from '~/hooks';
 
 interface CommunityItemProps {
   item: ICommunity;
@@ -23,6 +23,7 @@ const CommunityItem = ({
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyles(theme);
+  const {t} = useBaseHook();
 
   const {id, name, icon, user_count, privacy} = item || {};
   const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
@@ -41,7 +42,7 @@ const CommunityItem = ({
           {privacyTitle}
         </Text.BodyS>
         <Text.BodyS color={colors.textSecondary}>{`  •  `}</Text.BodyS>
-        <Text.BodyS color={colors.textSecondary}>{`${user_count} ${i18next.t(
+        <Text.BodyS color={colors.textSecondary}>{`${user_count} ${t(
           'groups:text_members',
           {
             count: user_count,
