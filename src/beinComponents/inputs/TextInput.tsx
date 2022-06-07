@@ -25,6 +25,7 @@ export type HelperType =
 // @ts-ignore
 export interface TextInputProps extends TextInputPaperProps {
   style?: StyleProp<ViewStyle>;
+  inputStyle?: StyleProp<ViewStyle>;
   helperContent?: string;
   helperType?: HelperType;
   helperError?: string;
@@ -42,10 +43,12 @@ export interface TextInputProps extends TextInputPaperProps {
   onChangeText?: ((text: string) => void) | undefined;
   clearText?: boolean;
   textInputRef?: React.Ref<RNTextInput>;
+  textColor?: string;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
   style,
+  inputStyle,
   helperType,
   helperContent,
   helperTextProps,
@@ -59,6 +62,7 @@ const TextInput: React.FC<TextInputProps> = ({
   onChangeText,
   clearText,
   textInputRef,
+  textColor,
   ...props
 }: TextInputProps) => {
   const theme: ITheme = useTheme() as ITheme;
@@ -72,7 +76,7 @@ const TextInput: React.FC<TextInputProps> = ({
   const customTheme = {
     colors: {
       primary: colors.borderFocus,
-      text: error ? colors.error : colors.textPrimary,
+      text: error ? colors.error : textColor || colors.textPrimary,
       placeholder: colors.textSecondary,
       background: disabled ? colors.bgDisable : colors.background,
     },
@@ -135,7 +139,7 @@ const TextInput: React.FC<TextInputProps> = ({
         disabled={disabled}
         placeholderTextColor={colors.textSecondary}
         value={text}
-        style={styles.input}
+        style={[styles.input, inputStyle]}
         onChangeText={_onChangeText}
         right={
           clearText &&
