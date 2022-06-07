@@ -119,7 +119,7 @@ const App = {
     return {
       url: `${providers.beinNotification.url}device-tokens`,
       method: 'post',
-      provider: providers.bein,
+      provider: providers.beinNotification,
       useRetry: true,
       data: {
         token: deviceToken,
@@ -131,7 +131,7 @@ const App = {
     return {
       url: `${providers.beinNotification.url}device-tokens/${deviceId}`,
       method: 'delete',
-      provider: providers.bein,
+      provider: providers.beinNotification,
       useRetry: false,
       timeout: 5000,
     };
