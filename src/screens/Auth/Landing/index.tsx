@@ -16,7 +16,8 @@ import LandingImg from '../../../../assets/images/landing_page.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import useAuth from '~/hooks/auth';
 import {rootSwitch} from '~/router/stack';
-import LogoAnimated from '~/beinComponents/SVGAnimated/LogoAnimated';
+import images from '~/resources/images';
+import Image from '~/beinComponents/Image';
 
 const LOGO_SIZE = 72;
 
@@ -32,6 +33,7 @@ const Landing = () => {
 
   const IMAGE_WIDTH = (dimensions.width * 26) / 39;
   const IMAGE_HEIGHT = (IMAGE_WIDTH * 277) / 260;
+  const logo = images.logo_beincomm;
 
   useEffect(() => {
     isFocused && user && navigation.replace(rootSwitch.mainStack);
@@ -40,10 +42,11 @@ const Landing = () => {
   return (
     <ScreenWrapper isFullView style={styles.root}>
       <View style={styles.container}>
-        <View style={styles.logo}>
-          {/* @ts-ignore */}
-          {/* <SVGIcon source={Logo} size={LOGO_SIZE} tintColor="none" /> */}
-          <LogoAnimated size={LOGO_SIZE} />
+        <View style={styles.logoContainer}>
+          {logo && (
+            <Image resizeMode="contain" style={styles.logo} source={logo} />
+          )}
+
           <Text.H4 style={styles.logoTitle}>
             {t('auth:text_landing_logo_title')}
           </Text.H4>
@@ -110,11 +113,16 @@ const createStyle = (theme: ITheme, isPhone: boolean) => {
       marginTop: spacing.margin.big,
       marginBottom: 40,
     },
-    logo: {
+    logoContainer: {
       marginTop: spacing.margin.big,
       marginBottom: spacing.margin.extraLarge * 2,
       alignItems: 'center',
       justifyContent: 'center',
+    },
+    logo: {
+      width: LOGO_SIZE,
+      height: LOGO_SIZE,
+      marginBottom: spacing.margin.extraLarge,
     },
     logoTitle: {
       marginBottom: spacing.margin.tiny,

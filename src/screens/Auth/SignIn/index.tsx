@@ -3,22 +3,28 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useForm} from 'react-hook-form';
 import {
   AppState,
-  Image,
   Keyboard,
   StyleSheet,
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  useWindowDimensions,
   ImageBackground,
-  KeyboardAvoidingView,
   Platform,
-  Animated,
+  Dimensions,
+  ScrollView,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {Modal, useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
+import Animated, {
+  Extrapolate,
+  interpolate,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import {useKeyboard} from '@react-native-community/hooks';
 
 import Button from '~/beinComponents/Button';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -43,14 +49,13 @@ import {
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 import TextInputController from '~/beinComponents/inputs/TextInputController';
 import {getEnv} from '~/utils/env';
-import SVGIcon from '~/beinComponents/Icon/SvgIcon';
-import BackgroundEntries1 from '../../../../assets/images/sign_in_bg_entries_1.svg';
-import BackgroundEntries2 from '../../../../assets/images/sign_in_bg_entries_2.svg';
-import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
-import LogoAnimated from '~/beinComponents/SVGAnimated/LogoAnimated';
+import BackgroundComponent from './BackgroundComponent';
+
+const screenWidth = Dimensions.get('window').width;
 
 const LOGO_SIZE = 96;
 const LOGO_SMALL_SIZE = 48;
+const MARGIN_LEFT_LOGO = -(screenWidth / 2 - 32 * 2);
 
 const SignIn = () => {
   useAuthAmplifyHub();
@@ -60,13 +65,11 @@ const SignIn = () => {
   const {loading, signingInError} = useAuth();
   const [disableSignIn, setDisableSignIn] = useState(true);
   const [authSessions, setAuthSessions] = useState<any>(null);
-
   const [keyboardHeight, setKeyboardHeight] = useState(0);
-  const [imageHeight, setImageHeight] = useState(LOGO_SIZE);
 
   const inputPasswordRef = useRef<any>();
-  const imageHeightAnimation = new Animated.Value(LOGO_SIZE);
-  const keyboardHeightAnimation = new Animated.Value(0);
+  const keyboardHeightValue = useSharedValue(0);
+  const keyboard = useKeyboard();
 
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -101,6 +104,7 @@ const SignIn = () => {
 
   useEffect(() => {
     setDisableSignIn(loading);
+    if (loading) Keyboard.dismiss();
   }, [loading]);
 
   useEffect(() => {
@@ -125,45 +129,30 @@ const SignIn = () => {
   const dismissEvent =
     Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide';
 
-  keyboardHeightAnimation.addListener(height => {
-    setKeyboardHeight(height.value);
-  });
-  imageHeightAnimation.addListener(height => {
-    setImageHeight(height.value);
-  });
-
   useEffect(() => {
     const keyboardWillShowListener = Keyboard.addListener(showEvent, event => {
       if (event.endCoordinates?.height) {
-        Animated.parallel([
-          Animated.timing(keyboardHeightAnimation, {
+        keyboardHeightValue.value = withTiming(
+          1,
+          {
             duration: event?.duration,
-            useNativeDriver: false,
-            toValue: event?.endCoordinates?.height,
-          }),
-          Animated.timing(imageHeightAnimation, {
-            toValue: LOGO_SMALL_SIZE,
-            useNativeDriver: false,
-            duration: event?.duration,
-          }),
-        ]).start();
+          },
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          () => {},
+        );
       }
     });
     const keyboardWillHideListener = Keyboard.addListener(
       dismissEvent,
       event => {
-        Animated.parallel([
-          Animated.timing(keyboardHeightAnimation, {
+        keyboardHeightValue.value = withTiming(
+          0,
+          {
             duration: event?.duration,
-            useNativeDriver: false,
-            toValue: 0,
-          }),
-          Animated.timing(imageHeightAnimation, {
-            toValue: LOGO_SIZE,
-            useNativeDriver: false,
-            duration: event?.duration,
-          }),
-        ]).start();
+          },
+          // eslint-disable-next-line @typescript-eslint/no-empty-function
+          () => {},
+        );
       },
     );
 
@@ -172,6 +161,15 @@ const SignIn = () => {
       keyboardWillShowListener.remove();
     };
   }, []);
+
+  useEffect(() => {
+    if (
+      keyboard?.keyboardHeight &&
+      keyboardHeight !== keyboard?.keyboardHeight
+    ) {
+      setKeyboardHeight(keyboard?.keyboardHeight);
+    }
+  }, [keyboard?.keyboardHeight]);
 
   const checkAuthSessions = async () => {
     const isInstalled = await isAppInstalled();
@@ -215,6 +213,8 @@ const SignIn = () => {
     checkDisableSignIn();
     if (!validInputs) return;
 
+    Keyboard.dismiss();
+
     const email = getValues('email');
     const password = getValues('password');
     dispatch(actions.signIn({email, password}));
@@ -245,20 +245,64 @@ const SignIn = () => {
   const goToForgotPassword = () =>
     navigation.navigate(authStack.forgotPassword);
 
+  const logoContainerStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateX: interpolate(
+          keyboardHeightValue.value,
+          [0, 1],
+          [0, MARGIN_LEFT_LOGO],
+          Extrapolate.CLAMP,
+        ),
+      },
+    ],
+    height: interpolate(
+      keyboardHeightValue.value,
+      [0, 1],
+      [LOGO_SIZE, LOGO_SMALL_SIZE],
+      Extrapolate.CLAMP,
+    ),
+    width: interpolate(
+      keyboardHeightValue.value,
+      [0, 1],
+      [LOGO_SIZE, LOGO_SMALL_SIZE],
+      Extrapolate.CLAMP,
+    ),
+    marginTop: interpolate(
+      keyboardHeightValue.value,
+      [0, 1],
+      [50, 10],
+      Extrapolate.CLAMP,
+    ),
+  }));
+
+  const renderLoading = () => {
+    return (
+      <Modal visible={loading} contentContainerStyle={styles.loading}>
+        <LoadingIndicator size={'large'} color={theme.colors.primary6} />
+      </Modal>
+    );
+  };
+
   return (
     <ScreenWrapper testID="sign_in" style={styles.root} isFullView>
-      <ImageBackground source={images.img_bg_sign_in} style={styles.background}>
-        <TouchableWithoutFeedback
-          testID="sign_in.button_hide_keyboard"
-          onPress={hideKeyboard}
-          accessible={false}
-          style={styles.flex1}>
-          <Animated.View
-            style={[styles.container, {marginBottom: keyboardHeight}]}>
-            <View>
-              <Animated.View style={[styles.logo]}>
-                <LogoAnimated size={LOGO_SIZE} />
-              </Animated.View>
+      <BackgroundComponent>
+        <ScrollView
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          style={styles.container}
+          contentContainerStyle={styles.contentContainer}
+          keyboardShouldPersistTaps="handled">
+          <TouchableWithoutFeedback
+            testID="sign_in.button_hide_keyboard"
+            onPress={hideKeyboard}
+            accessible={false}
+            style={styles.flex1}>
+            <View style={styles.paddingView}>
+              <Animated.Image
+                source={images.logo_beincomm}
+                style={[{alignSelf: 'center'}, logoContainerStyle]}
+              />
               <View style={{backgroundColor: 'yellow'}} />
               <Text.H4 testID="sign_in.title" style={styles.title} useI18n>
                 auth:text_sign_in_desc
@@ -292,8 +336,13 @@ const SignIn = () => {
                 onSubmitEditing={onSubmitEmail}
                 placeholderTextColor={theme.colors.placeholder}
                 textColor={theme.colors.background}
-                outlineColor={theme.colors.background}
+                outlineColor={
+                  errors?.email ? theme.colors.error : theme.colors.background
+                }
                 activeOutlineColor={theme.colors.background}
+                helperTextProps={{
+                  style: styles.errorText,
+                }}
               />
               <Text.Body style={styles.label} useI18n>
                 auth:input_label_password
@@ -348,6 +397,9 @@ const SignIn = () => {
                 textColor={theme.colors.background}
                 outlineColor={theme.colors.background}
                 activeOutlineColor={theme.colors.background}
+                helperTextProps={{
+                  style: styles.errorText,
+                }}
               />
               <TouchableOpacity
                 testID="sign_in.btn_forgot_password"
@@ -364,45 +416,27 @@ const SignIn = () => {
                 useI18n
                 color={theme.colors.background}
                 textColor={theme.colors.primary6}>
-                {loading ? (
-                  <LoadingIndicator testID="sign_in.loading" />
-                ) : (
-                  'auth:btn_sign_in'
-                )}
+                {'auth:btn_sign_in'}
               </Button.Primary>
+
+              <View style={styles.signUpContainer}>
+                <Text.Body color={theme.colors.background} useI18n>
+                  auth:text_sign_up_desc
+                </Text.Body>
+                <TouchableOpacity
+                  testID="btnSignInForgotPassword"
+                  // onPress={() => navigation.navigate(authStack.signup)}
+                  onPress={handleSignUpNotFunctioning}>
+                  <Text.H5 style={styles.transparentButton} useI18n>
+                    auth:btn_sign_up_now
+                  </Text.H5>
+                </TouchableOpacity>
+              </View>
             </View>
-            <View style={styles.signUpContainer}>
-              <Text.Body color={theme.colors.background} useI18n>
-                auth:text_sign_up_desc
-              </Text.Body>
-              <TouchableOpacity
-                testID="btnSignInForgotPassword"
-                // onPress={() => navigation.navigate(authStack.signup)}
-                onPress={handleSignUpNotFunctioning}>
-                <Text.H5 style={styles.transparentButton} useI18n>
-                  auth:btn_sign_up_now
-                </Text.H5>
-              </TouchableOpacity>
-            </View>
-          </Animated.View>
-        </TouchableWithoutFeedback>
-        <View style={styles.bgEntries1}>
-          <SVGIcon //@ts-ignore
-            source={BackgroundEntries1}
-            width={164}
-            height={205}
-            tintColor="none"
-          />
-        </View>
-        <View pointerEvents="none" style={styles.bgEntries2}>
-          <SVGIcon //@ts-ignore
-            source={BackgroundEntries2}
-            width={122}
-            height={163}
-            tintColor="none"
-          />
-        </View>
-      </ImageBackground>
+          </TouchableWithoutFeedback>
+        </ScrollView>
+      </BackgroundComponent>
+      {renderLoading()}
     </ScreenWrapper>
   );
 };
@@ -416,36 +450,17 @@ const themeStyles = (theme: ITheme) => {
     root: {
       flex: 1,
     },
-    background: {
-      flex: 1,
-      paddingTop: insets.top,
-      paddingHorizontal: spacing.padding.big,
-      alignContent: 'center',
-      alignItems: 'center',
-    },
-    bgEntries1: {position: 'absolute', right: 0, top: 0, flex: 1},
-    bgEntries2: {
-      position: 'absolute',
-      left: 0,
-      bottom: 0,
-      top: 0,
-      right: 0,
-      flex: 1,
-      justifyContent: 'flex-end',
-      alignItems: 'stretch',
-      alignContent: 'flex-start',
-    },
     container: {
       flex: 1,
       alignContent: 'center',
       width: '100%',
       maxWidth: 375,
     },
-    flex1: {flex: 1},
-    logo: {
-      alignItems: 'center',
-      // paddingVertical: spacing.margin.extraLarge,
+    contentContainer: {
+      flex: 1,
     },
+    flex1: {flex: 1},
+    paddingView: {flex: 1, paddingHorizontal: spacing.padding.big},
     title: {
       marginTop: spacing.margin.extraLarge,
       marginBottom: spacing.margin.large,
@@ -471,9 +486,6 @@ const themeStyles = (theme: ITheme) => {
       color: colors.background,
       fontWeight: '400',
     },
-    orText: {
-      fontWeight: '600',
-    },
     btnSignIn: {
       marginTop: spacing.margin.large,
     },
@@ -487,6 +499,23 @@ const themeStyles = (theme: ITheme) => {
       ...textStyle.h6,
       color: colors.primary,
       fontWeight: '500',
+    },
+    errorText: {
+      backgroundColor: theme.colors.background,
+      paddingHorizontal: spacing.padding.small,
+      paddingVertical: spacing.padding.tiny,
+      marginTop: spacing.margin.tiny,
+    },
+    loading: {
+      position: 'absolute',
+      zIndex: 3,
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: colors.transparent1,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   });
 };

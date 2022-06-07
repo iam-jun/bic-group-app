@@ -17,6 +17,7 @@ const images = {
   img_empty_cant_load_more: require('../../assets/images/img_empty_cant_load_more.png'),
   img_banner_discover_communities: require('../../assets/images/img_banner_discover_communities.jpg'),
   img_bg_sign_in: require('../../assets/images/sign_in_bg.png'),
+  logo_beincomm: require('../../assets/images/logo_beincomm.png'),
 };
 
 export default images;
