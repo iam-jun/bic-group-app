@@ -42,7 +42,7 @@ jobs:
           command: echo $GOOGLE_SERVICES_iOS | base64 --decode > ios/Firebase/GoogleService-Info-Staging.plist
       - run:
           name: Install NPM
-          command: npm install
+          command: npm install --legacy-peer-deps
       - run:
           name: Install Bundle
           command: cd ios && bundle install
@@ -100,7 +100,7 @@ jobs:
           command: echo $GOOGLE_SERVICES_iOS | base64 --decode > ios/Firebase/GoogleService-Info-Production.plist
       - run:
           name: Install NPM
-          command: npm install
+          command: npm install --legacy-peer-deps
       - run:
           name: Install Bundle
           command: cd ios && bundle install
