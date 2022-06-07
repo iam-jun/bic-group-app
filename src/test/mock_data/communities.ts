@@ -110,3 +110,24 @@ export const memberData = {
     name: 'MEMBER',
   },
 };
+
+export const memberRequestDetail = {
+  id: 26,
+  user_id: 16,
+  created_at: '2022-05-21T08:09:22.320Z',
+  group_id: 2,
+  status: 'waiting',
+  user: {
+    id: 16,
+    username: 'usernametest',
+    fullname: 'User Name Test',
+    avatar:
+      'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/949ad541-c16f-4974-a83c-db04f3a393c9.jpg',
+    country: null,
+    city: null,
+    email: 'usernametest@mail.com',
+    phone: null,
+    country_code: null,
+    latest_work: null,
+  },
+};

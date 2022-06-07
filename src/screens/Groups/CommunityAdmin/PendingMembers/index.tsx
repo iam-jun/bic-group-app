@@ -72,7 +72,7 @@ const CommunityPendingMembers = () => {
     if (loading || total === 0) return null;
     return (
       <View style={styles.requestHeader}>
-        <Text.H5 testID="pending_members.request_title">{`${total} ${t(
+        <Text.H5 testID="community_pending_members.request_title">{`${total} ${t(
           'common:text_request',
           {
             count: total,
@@ -91,7 +91,9 @@ const CommunityPendingMembers = () => {
       !loading &&
       canLoadMore &&
       ids.length > 0 && (
-        <View style={styles.listFooter}>
+        <View
+          style={styles.listFooter}
+          testID="community_pending_members.loading_more_indicator">
           <ActivityIndicator />
         </View>
       )

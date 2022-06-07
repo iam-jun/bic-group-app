@@ -25,7 +25,8 @@ export default function* getCommunityMemberRequests({
     if (!canLoadMore) return;
 
     // @ts-ignore
-    const response = yield groupsDataHelper.getCommunityMemberRequests(
+    const response = yield call(
+      groupsDataHelper.getCommunityMemberRequests,
       communityId,
       {
         offset: ids.length,
@@ -51,7 +52,7 @@ export default function* getCommunityMemberRequests({
 
     yield put(groupsActions.setCommunityMemberRequests(newData));
   } catch (err) {
-    console.log('getMemberRequests: ', err);
+    console.log('getCommunityMemberRequests: ', err);
     yield call(showError, err);
   }
 }

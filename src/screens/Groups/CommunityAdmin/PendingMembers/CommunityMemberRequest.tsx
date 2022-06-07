@@ -5,13 +5,9 @@ import PendingUserItem from '../../components/PendingUserItem';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import groupsActions from '../../redux/actions';
-import {clearToastMessage} from '~/store/modal/actions';
-import {useRootNavigation} from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
 const CommunityMemberRequest = ({requestId}: {requestId: number}) => {
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
   const {id: communityId} = useKeySelector(groupsKeySelector.communityDetail);
   const communityMemberRequests = useKeySelector(
     groupsKeySelector.communityMemberRequests,
