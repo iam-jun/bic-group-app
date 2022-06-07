@@ -68,6 +68,7 @@ const SignIn = () => {
   const [keyboardHeight, setKeyboardHeight] = useState(0);
 
   const inputPasswordRef = useRef<any>();
+  const inputEmailRef = useRef<any>();
   const keyboardHeightValue = useSharedValue(0);
   const keyboard = useKeyboard();
 
@@ -171,6 +172,10 @@ const SignIn = () => {
     }
   }, [keyboard?.keyboardHeight]);
 
+  useEffect(() => {
+    inputEmailRef.current?.focus();
+  }, []);
+
   const checkAuthSessions = async () => {
     const isInstalled = await isAppInstalled();
     if (isInstalled) {
@@ -268,10 +273,19 @@ const SignIn = () => {
       [LOGO_SIZE, LOGO_SMALL_SIZE],
       Extrapolate.CLAMP,
     ),
-    marginTop: interpolate(
+    opacity: interpolate(
       keyboardHeightValue.value,
       [0, 1],
-      [50, 10],
+      [1, 0],
+      Extrapolate.CLAMP,
+    ),
+  }));
+
+  const smallLogoStyle = useAnimatedStyle(() => ({
+    opacity: interpolate(
+      keyboardHeightValue.value,
+      [0, 1],
+      [0, 1],
       Extrapolate.CLAMP,
     ),
   }));
@@ -299,10 +313,20 @@ const SignIn = () => {
             accessible={false}
             style={styles.flex1}>
             <View style={styles.paddingView}>
-              <Animated.Image
-                source={images.logo_beincomm}
-                style={[{alignSelf: 'center'}, logoContainerStyle]}
-              />
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                }}>
+                <Animated.Image
+                  source={images.logo_beincomm}
+                  style={[styles.smallLogo, smallLogoStyle]}
+                />
+                <Animated.Image
+                  source={images.logo_beincomm}
+                  style={[{alignSelf: 'center'}, logoContainerStyle]}
+                />
+              </View>
               <View style={{backgroundColor: 'yellow'}} />
               <Text.H4 testID="sign_in.title" style={styles.title} useI18n>
                 auth:text_sign_in_desc
@@ -311,6 +335,7 @@ const SignIn = () => {
                 auth:input_label_email
               </Text.Body>
               <TextInputController
+                ref={inputEmailRef}
                 testID="sign_in.input_email"
                 autoFocus={true}
                 useFormData={useFormData}
@@ -460,7 +485,17 @@ const themeStyles = (theme: ITheme) => {
       flex: 1,
     },
     flex1: {flex: 1},
-    paddingView: {flex: 1, paddingHorizontal: spacing.padding.big},
+    paddingView: {
+      flex: 1,
+      paddingHorizontal: spacing.padding.extraLarge,
+      paddingTop: spacing.padding.extraLarge,
+    },
+    smallLogo: {
+      position: 'absolute',
+      left: 0,
+      width: LOGO_SMALL_SIZE,
+      height: LOGO_SMALL_SIZE,
+    },
     title: {
       marginTop: spacing.margin.extraLarge,
       marginBottom: spacing.margin.large,
