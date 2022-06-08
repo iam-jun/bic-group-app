@@ -154,7 +154,7 @@ export const groupsApiConfig = {
     useRetry: true,
     params: {
       ...params,
-      sort: 'created_at:desc',
+      sort: 'updated_at:desc',
       key: !!params?.key?.trim?.() ? params.key : undefined,
     },
   }),
@@ -296,7 +296,7 @@ export const groupsApiConfig = {
     useRetry: true,
     params: {
       ...params,
-      sort: 'created_at:desc',
+      sort: 'updated_at:desc',
       key: !!params?.key?.trim?.() ? params.key : undefined,
     },
   }),
