@@ -1,6 +1,6 @@
-import {Platform, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
+import {sizes} from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
-import {lineHeights, sizes} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 
 export const createTextStyle = (theme: ITheme) => {
@@ -121,9 +121,5 @@ export const createTextStyle = (theme: ITheme) => {
     },
   };
 
-  if (Platform.OS === 'web') {
-    return style;
-  } else {
-    return StyleSheet.create(style);
-  }
+  return StyleSheet.create(style);
 };

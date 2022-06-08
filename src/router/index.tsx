@@ -1,4 +1,5 @@
 /* @react-navigation v5 */
+import NetInfo from '@react-native-community/netinfo';
 import {
   DarkTheme,
   DefaultTheme,
@@ -7,55 +8,43 @@ import {
 import {createStackNavigator} from '@react-navigation/stack';
 import {Auth} from 'aws-amplify';
 import React, {useEffect} from 'react';
-import {
-  Linking,
-  Platform,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-} from 'react-native';
+import {Linking, StyleSheet, View} from 'react-native';
 /*Theme*/
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {put} from 'redux-saga/effects';
-import NetInfo from '@react-native-community/netinfo';
-
-import Div from '~/beinComponents/Div';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
 import LoadingModal from '~/beinComponents/modals/LoadingModal';
+import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
 import {AppConfig} from '~/configs';
 import {
   linkingConfig,
   linkingConfigFull,
-  linkingConfigFullLaptop,
-  linkingConfigLaptop,
   navigationSetting,
 } from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {RootStackParamList} from '~/interfaces/IRouter';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import authActions from '~/screens/Auth/redux/actions';
+import InternetConnectionStatus from '~/screens/NoInternet/components/InternetConnectionStatus';
+import SystemIssueModal from '~/screens/NoInternet/components/SystemIssueModal';
+import noInternetActions from '~/screens/NoInternet/redux/actions';
+import {makeRemovePushTokenRequest} from '~/services/httpApiRequest';
 import Store from '~/store';
 import * as modalActions from '~/store/modal/actions';
-import {deviceDimensions} from '~/theme/dimension';
 import {isNavigationRefReady} from './helper';
 /*import config navigation*/
 import * as screens from './navigator';
 import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
-import SystemIssueModal from '~/screens/NoInternet/components/SystemIssueModal';
-import noInternetActions from '~/screens/NoInternet/redux/actions';
-import InternetConnectionStatus from '~/screens/NoInternet/components/InternetConnectionStatus';
-import {makeRemovePushTokenRequest} from '~/services/httpApiRequest';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const StackNavigator = (): React.ReactElement => {
-  const {leftNavigation, rootNavigation} = useRootNavigation();
+  const {rootNavigation} = useRootNavigation();
   const theme = useTheme();
   const {t} = useBaseHook();
   const dispatch = useDispatch();
@@ -102,50 +91,14 @@ const StackNavigator = (): React.ReactElement => {
     // Linking.addEventListener('url', handleOpenURL);
     dispatch(noInternetActions.setSystemIssue(false));
 
-    if (!user && Platform.OS !== 'web') {
+    if (!user) {
       makeRemovePushTokenRequest();
     }
   }, []);
 
   /*Handle when app killed*/
   const handleDeepLink = async () => {
-    if (Platform.OS !== 'web') {
-      return;
-    }
-    const initialUrl = await Linking.getInitialURL();
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const parse = require('url-parse');
-    const url = parse(initialUrl, true);
-    const paths = url.pathname.split('/');
-    const route = paths.length > 0 ? paths[1] : '';
-    let navigateRoute = '';
-    switch (route) {
-      case 'groups':
-      case 'menus':
-        navigateRoute = route;
-        break;
-      case 'settings':
-        navigateRoute = 'menus';
-        break;
-      case 'notifications':
-        navigateRoute = 'notification';
-        break;
-      case 'post':
-        navigateRoute = 'home';
-        if (url.query?.noti_id) navigateRoute = 'notification';
-        break;
-      default:
-        navigateRoute = '';
-        break;
-    }
-    if (navigateRoute) leftNavigation.navigate(navigateRoute);
-  };
-
-  /*Handle when app in background*/
-  const handleOpenURL = (event: any) => {
-    // TODO:
-    // const navigation = withNavigation(rootNavigationRef);
-    // navigation.replace(rootSwitch.authStack);
+    // wait for implementation
   };
 
   const cardStyleConfig = navigationSetting.defaultNavigationOption.cardStyle;
@@ -157,93 +110,55 @@ const StackNavigator = (): React.ReactElement => {
     isNavigationRefReady.current = true;
   };
 
-  const onKeyDown = (event: KeyboardEvent) => {
-    if ((event.ctrlKey || event.metaKey) && event.key === 'k') {
-      event.preventDefault();
-      dispatch(modalActions.focusSearchInput(new Date().getTime().toString()));
-    }
-
-    // press ESC key to close alert modal
-    if (event.keyCode === 27) {
-      event.preventDefault();
-      dispatch(modalActions.hideAlertNewFeature());
-    }
-  };
-
-  const dimensions = useWindowDimensions();
-  const isLaptop = dimensions.width >= deviceDimensions.laptop;
-  const configLinkFull =
-    Platform.OS === 'web' && isLaptop
-      ? linkingConfigFullLaptop
-      : linkingConfigFull;
-  const configLink =
-    Platform.OS === 'web' && isLaptop ? linkingConfigLaptop : linkingConfig;
-
   const linking = getLinkingCustomConfig(
-    user ? configLinkFull : configLink,
+    user ? linkingConfigFull : linkingConfig,
     rootNavigation,
   );
 
   return (
-    <Div style={styles.wrapper} tabIndex="0" onKeyDown={onKeyDown}>
-      <View style={styles.container}>
-        <NavigationContainer
-          linking={linking}
-          ref={rootNavigationRef}
-          onReady={onReady}
-          theme={navigationTheme}
-          documentTitle={{
-            enabled: false,
-          }}>
-          <Stack.Navigator
+    <View style={styles.container}>
+      <NavigationContainer
+        linking={linking}
+        ref={rootNavigationRef}
+        onReady={onReady}
+        theme={navigationTheme}
+        documentTitle={{
+          enabled: false,
+        }}>
+        <Stack.Navigator
+          //@ts-ignore
+          initialRouteName={user ? rootSwitch.mainStack : rootSwitch.authStack}
+          screenOptions={{cardStyle: cardStyleConfig}}>
+          <Stack.Screen
+            options={AppConfig.defaultScreenOptions}
             //@ts-ignore
-            initialRouteName={
-              user ? rootSwitch.mainStack : rootSwitch.authStack
-            }
-            screenOptions={{cardStyle: cardStyleConfig}}>
-            <Stack.Screen
-              options={AppConfig.defaultScreenOptions}
-              //@ts-ignore
-              name={rootSwitch.authStack}
-              component={screens.AuthStack}
-            />
-            <Stack.Screen
-              options={AppConfig.defaultScreenOptions}
-              //@ts-ignore
-              name={rootSwitch.mainStack}
-              component={screens.MainStack}
-            />
-            <Stack.Screen
-              options={getOptions(t)}
-              // @ts-ignore
-              name={rootSwitch.notFound}
-              component={screens.NotFound}
-            />
-          </Stack.Navigator>
-        </NavigationContainer>
-        <AlertModal />
-        <AlertNewFeatureModal />
-        <SystemIssueModal />
-        <LoadingModal />
-        <ToastMessage />
-        <InternetConnectionStatus />
-      </View>
-    </Div>
+            name={rootSwitch.authStack}
+            component={screens.AuthStack}
+          />
+          <Stack.Screen
+            options={AppConfig.defaultScreenOptions}
+            //@ts-ignore
+            name={rootSwitch.mainStack}
+            component={screens.MainStack}
+          />
+          <Stack.Screen
+            // @ts-ignore
+            name={rootSwitch.notFound}
+            component={screens.NotFound}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+      <AlertModal />
+      <AlertNewFeatureModal />
+      <SystemIssueModal />
+      <LoadingModal />
+      <ToastMessage />
+      <InternetConnectionStatus />
+    </View>
   );
 };
 
-const getOptions = (t: any) => {
-  if (Platform.OS !== 'web') {
-    return undefined;
-  }
-
-  return {headerShown: false, title: t('web:title_not_found')};
-};
-
 const getLinkingCustomConfig = (config: any, navigation: any) => {
-  if (Platform.OS === 'web') {
-    return config;
-  }
   return {
     ...config,
     subscribe(listener: any) {

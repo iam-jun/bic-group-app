@@ -1,5 +1,4 @@
-import {Linking, Platform} from 'react-native';
-import {chatSchemes} from '~/constants/chat';
+import {Linking} from 'react-native';
 import {linkRegex} from '~/constants/commonRegex';
 import {getEnv} from '~/utils/env';
 
@@ -12,17 +11,7 @@ export const generateAvatar = (name?: string, color?: string) => {
 export const openLink = async (link: string) => {
   const supported = await Linking.canOpenURL(link);
   if (supported) {
-    let _link = link;
-
-    // If on web browser => replace 'beinchat://' in deeplink with 'https://'
-    if (Platform.OS === 'web' && link.includes(chatSchemes.PREFIX_DEEPLINK)) {
-      _link = _link.replace(
-        chatSchemes.PREFIX_DEEPLINK,
-        chatSchemes.PREFIX_HTTPS,
-      );
-    }
-
-    await Linking.openURL(_link);
+    await Linking.openURL(link);
   } else {
     console.log('\x1b[31m', `🐣️ openLink : cant open url ${link}`, '\x1b[0m');
   }
@@ -122,3 +111,21 @@ export const getWebDomain = (url: any, subdomain: boolean) => {
 
   return url;
 };
+/**NOTE: do not use this function for our app bc we handle special case
+ * in socket event and when have any response from BE */
+// /**
+//  * all data from backend send to client must be snake_case
+//  * so we have to convert it to camelCase for use in client's code
+//  * @param key
+//  */
+// export const convertReactKeyFromResponse = (key?: string) => {
+//   return key ? camelize(key) : '';
+// };
+
+// /**
+//  * before send react key to backend, we must convert it back to snake_case
+//  * @param key
+//  */
+// export const convertReactKeyForRequest = (key?: string) => {
+//   return key ? decamelize(key) : '';
+// };

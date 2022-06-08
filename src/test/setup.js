@@ -11,9 +11,6 @@ import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js
 import 'react-native-gesture-handler/jestSetup';
 import {initReactI18next} from 'react-i18next';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-require('react-native-reanimated/lib/reanimated2/jestUtils').setUpTests();
-
 import colors from '~/theme/colors';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
@@ -21,8 +18,13 @@ import mockSafeAreaContext from '~/test/mockSafeAreaContext';
 
 configure({adapter: new Adapter()});
 
+global.__reanimatedWorkletInit = jest.fn();
+
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const languages = require('~/localization/en.json');
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('react-native-reanimated/lib/reanimated2/jestUtils').setUpTests();
 
 jest.mock('@react-native-clipboard/clipboard');
 
@@ -66,7 +68,16 @@ jest.mock('react-native-safe-area-context', () => mockSafeAreaContext);
 jest.doMock('react-i18next', () => ({
   useTranslation: () => {
     return {
-      t: str => get(languages, str?.replaceAll?.(':', '.')),
+      t: (str, params) => {
+        let suffix = '';
+        if (params?.count) {
+          suffix = params.count === 1 ? '_one' : '_other';
+        }
+        return get(
+          languages,
+          `${str}${suffix}`.replaceAll?.(':', '.'),
+        )?.replace('{{count}}', params?.count);
+      },
       i18n: {
         changeLanguage: () => new Promise(() => undefined),
       },
@@ -257,14 +268,6 @@ jest.doMock('react-native', () => {
   );
 });
 
-// jest.doMock('react', () => {
-//   const setState = jest.fn();
-//   return {
-//     ...jest.requireActual('react'),
-//     useState: jest.fn().mockImplementation(init => [init, setState]),
-//   };
-// });
-
 jest.mock('react-hook-form', () => ({
   ...jest.requireActual('react-hook-form'),
   useController: () => ({
@@ -278,3 +281,7 @@ jest.mock('react-hook-form', () => ({
     r: {current: {subject: {subscribe: () => jest.fn()}}},
   }),
 }));
+
+jest.mock('react-native-reanimated', () =>
+  require('react-native-reanimated/mock'),
+);

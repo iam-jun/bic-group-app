@@ -1,5 +1,11 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {View, StyleSheet, Platform, Pressable} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  SectionList,
+  ActivityIndicator,
+  Pressable,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -21,6 +27,10 @@ import Header from '~/beinComponents/Header';
 import MemberOptionsMenu from './components/MemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
 import MemberList from './components/MemberList';
+import mainStack from '~/router/navigator/MainStack/stack';
+import useAuth from '~/hooks/auth';
+import {formatDMLink} from '~/utils/link';
+import {openLink} from '~/utils/common';
 
 const _GroupMembers = (props: any) => {
   const params = props.route.params;
@@ -39,6 +49,7 @@ const _GroupMembers = (props: any) => {
   const styles = createStyle(theme);
   const {rootNavigation} = useRootNavigation();
   const baseSheetRef: any = useRef();
+  const {user} = useAuth();
 
   const {group_admin, group_member} = useKeySelector(
     groupsKeySelector.groupMembers,
@@ -47,11 +58,10 @@ const _GroupMembers = (props: any) => {
     groupsKeySelector.groupDetail.can_manage_member,
   );
 
+  const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
+
   const getGroupProfile = () => {
-    // in case for refreshing page on web
-    Platform.OS === 'web' &&
-      groupId &&
-      dispatch(groupsActions.getGroupDetail(groupId));
+    dispatch(groupsActions.getGroupDetail(groupId));
   };
 
   const getMembers = () => {
@@ -91,6 +101,16 @@ const _GroupMembers = (props: any) => {
 
     setSelectedMember(item);
     baseSheetRef.current?.open(e?.pageX, e?.pageY);
+  };
+
+  const goToUserProfile = (id: number) => {
+    rootNavigation.navigate(mainStack.userProfile, {userId: id});
+  };
+
+  const onPressChat = (username?: string) => {
+    if (!username) return;
+    const link = formatDMLink(groupData.team_name, username);
+    openLink(link);
   };
 
   const onLoadMore = () => {
@@ -139,11 +159,7 @@ const _GroupMembers = (props: any) => {
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.background}>
-      <Header
-        titleTextProps={{useI18n: true}}
-        title={'groups:title_members'}
-        hideBackOnLaptop={rootNavigation?.canGoBack ? false : true}
-      />
+      <Header titleTextProps={{useI18n: true}} title={'groups:title_members'} />
       <View style={styles.searchBar}>
         <Pressable
           testID="group_members.search"

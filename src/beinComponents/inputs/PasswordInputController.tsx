@@ -16,6 +16,7 @@ interface Props extends TextInputProps {
   placeholder: string;
   validateValue?: () => void;
   ref?: any;
+  iconColor?: string;
 }
 
 const PasswordInputController: React.FC<Props> = ({
@@ -29,6 +30,7 @@ const PasswordInputController: React.FC<Props> = ({
   placeholder,
   validateValue,
   ref,
+  iconColor,
   ...props
 }) => {
   const {
@@ -62,6 +64,7 @@ const PasswordInputController: React.FC<Props> = ({
       helperType={errors?.[name]?.message ? 'error' : undefined}
       helperContent={errors?.[name]?.message}
       disabled={disableInput}
+      iconColor={iconColor}
       {...props}
     />
   );

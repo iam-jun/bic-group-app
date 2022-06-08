@@ -1,7 +1,6 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import {
-  IActivityData,
   IParamDeleteReaction,
   ICommentData,
   IParamGetDraftPosts,
@@ -15,9 +14,7 @@ import {
   IRequestGetPostComment,
   IRequestPostComment,
   IRequestReplyComment,
-  IPostCreateMediaVideo,
 } from '~/interfaces/IPost';
-import {Platform} from 'react-native';
 
 const provider = ApiConfig.providers.beinFeed;
 
@@ -53,22 +50,15 @@ export const postApiConfig = {
     useRetry: true,
     data,
   }),
-  postCreateMediaVideo: (
-    data: IPostCreateMediaVideo,
-  ): HttpApiRequestConfig => ({
-    url: `${provider.url}api/v1/media/create`,
-    method: 'post',
-    provider,
-    useRetry: true,
-    data,
-  }),
   putReaction: (params: IParamPutReaction): HttpApiRequestConfig => {
     return {
       url: `${provider.url}api/v1/reactions`,
       method: 'post',
       provider,
       useRetry: true,
-      data: params,
+      data: {
+        ...params,
+      },
     };
   },
   putEditPost: (param: IParamPutEditPost): HttpApiRequestConfig => {
@@ -124,10 +114,10 @@ export const postApiConfig = {
       order: params?.order || 'ASC',
       limit: params?.limit || 10,
       offset: params?.offset || 0,
-      idGTE: params?.idGTE,
-      idLTE: params?.idLTE,
-      idLT: params?.idLT,
-      idGT: params?.idGT,
+      idGte: params?.idGte,
+      idLte: params?.idLte,
+      idLt: params?.idLt,
+      idGt: params?.idGt,
       postId: params?.postId,
       parentId: params?.parentId,
       childLimit: params?.childLimit || 1,
@@ -201,7 +191,10 @@ export const postApiConfig = {
     method: 'delete',
     provider,
     useRetry: true,
-    data: data,
+    data: {
+      ...data,
+      reactionName: data?.reactionName,
+    },
   }),
   getReactionDetail: (
     param: IParamGetReactionDetail,
@@ -255,20 +248,6 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  postCreateMediaVideo: async (data: IPostCreateMediaVideo) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.postCreateMediaVideo(data),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
   putReaction: async (param: IParamPutReaction) => {
     try {
       const response: any = await makeHttpRequest(
@@ -297,7 +276,7 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  putEditComment: async (id: string, data: IActivityData) => {
+  putEditComment: async (id: string, data: ICommentData) => {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.putEditComment(id, data),
@@ -464,7 +443,8 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.getPostDetail({
-          commentLimit: Platform.OS === 'web' ? 5 : 10,
+          commentLimit: 10,
+          withComment: true,
           ...params,
         }),
       );

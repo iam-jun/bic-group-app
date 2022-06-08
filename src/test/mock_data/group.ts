@@ -139,6 +139,26 @@ export const memberData = {
   },
 };
 
+export const discoverGroup = {
+  id: 24,
+  parent_id: 22,
+  name: 'Bein Back-end Bein Group',
+  slug: '504bb9ec-3e69-472a-8d2d-74cbbac75ca9-1641835590',
+  description: null,
+  level: 4,
+  created_by: 1,
+  icon: null,
+  background_img_url: null,
+  privacy: 'PUBLIC',
+  chat_id: 'aj1s4cktxjg53npisjetdspyxy',
+  scheme_id: 'd9e5362a-ca6b-42c7-8530-a3b2aa67f15a',
+  created_at: '2022-01-10T17:26:29.895Z',
+  updated_at: '2022-01-10T17:47:44.883Z',
+  deleted_at: null,
+  user_count: 7,
+  join_status: 1,
+};
+
 /**
  * Selecting status:
  * [ ] EVOL Community

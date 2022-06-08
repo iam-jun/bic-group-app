@@ -1,13 +1,6 @@
 import React, {useState} from 'react';
 import i18next from 'i18next';
-import {
-  Keyboard,
-  ScrollView,
-  StyleSheet,
-  TextInput,
-  View,
-  Platform,
-} from 'react-native';
+import {Keyboard, ScrollView, StyleSheet, TextInput, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -144,11 +137,6 @@ const createStyles = (theme: ITheme) => {
       padding: spacing.margin.base,
       marginTop: spacing.margin.small,
       height: 88,
-      ...Platform.select({
-        web: {
-          height: 150,
-        },
-      }),
     },
     textInputFocus: {
       borderColor: colors.primary6,

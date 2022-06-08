@@ -5,7 +5,6 @@ import {
   ActivityIndicator,
   StyleProp,
   ViewStyle,
-  Platform,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Animated, {
@@ -26,10 +25,10 @@ import CommentPlaceholder from '~/beinComponents/placeholder/CommentPlaceholder'
 export interface LoadMoreCommentProps {
   style?: StyleProp<ViewStyle>;
   title: string;
-  postId: number;
-  commentId?: number;
-  idLessThan?: number;
-  idGreaterThan?: number;
+  postId: string;
+  commentId?: string;
+  idLessThan?: string;
+  idGreaterThan?: string;
   onPress?: () => void;
 }
 
@@ -57,18 +56,16 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   });
 
   useEffect(() => {
-    if (Platform.OS !== 'web') {
-      if (loadingMore) {
-        progress.value = withTiming(150, {
-          duration: 400,
-          easing: Easing.bezier(0.25, 0.1, 0.25, 1),
-        });
-      } else {
-        progress.value = withTiming(0, {
-          duration: 1000,
-          easing: Easing.bezier(0.25, 0.1, 0.25, 1),
-        });
-      }
+    if (loadingMore) {
+      progress.value = withTiming(150, {
+        duration: 400,
+        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+      });
+    } else {
+      progress.value = withTiming(0, {
+        duration: 1000,
+        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+      });
     }
   }, [loadingMore]);
 
@@ -78,34 +75,21 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
       return;
     }
     if (idLessThan || idGreaterThan) {
-      if (Platform.OS !== 'web') {
-        setLoadingMore(true);
-        setTimeout(() => {
-          dispatch(
-            postActions.getCommentsByPostId({
-              postId: postId,
-              order: 'DESC',
-              idLT: idLessThan,
-              idGT: idGreaterThan,
-              parentId: commentId,
-              limit: 10,
-              isMerge: true,
-              callbackLoading: loading => setLoadingMore(loading),
-            }),
-          );
-        }, 150);
-      } else {
+      setLoadingMore(true);
+      setTimeout(() => {
         dispatch(
           postActions.getCommentsByPostId({
             postId: postId,
-            idLT: idLessThan,
+            order: 'DESC',
+            idLt: idLessThan,
+            idGt: idGreaterThan,
             parentId: commentId,
-            limit: commentId ? 3 : 10,
+            limit: 10,
             isMerge: true,
             callbackLoading: loading => setLoadingMore(loading),
           }),
         );
-      }
+      }, 150);
     }
   }, [commentId, idLessThan, idGreaterThan]);
 
@@ -119,17 +103,15 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
         </Button>
         <ActivityIndicator color={colors.disabled} animating={loadingMore} />
       </View>
-      {Platform.OS !== 'web' && (
-        <Animated.View style={[styles.placeholder, animatedStyle]}>
-          <CommentPlaceholder />
-          <CommentPlaceholder />
-        </Animated.View>
-      )}
+      <Animated.View style={[styles.placeholder, animatedStyle]}>
+        <CommentPlaceholder />
+        <CommentPlaceholder />
+      </Animated.View>
     </View>
   );
 };
 
-const createStyle = (theme: ITheme, commentId?: number) => {
+const createStyle = (theme: ITheme, commentId?: string) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {

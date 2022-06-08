@@ -292,7 +292,7 @@ const groupsActions = {
   }),
 
   // community
-  getMyCommunities: (payload: {callback?: () => void}) => ({
+  getMyCommunities: (payload?: {callback?: () => void}) => ({
     type: groupsTypes.GET_JOINED_COMMUNITIES,
     payload,
   }),
@@ -314,13 +314,16 @@ const groupsActions = {
   resetManagedCommunities: () => ({
     type: groupsTypes.RESET_MANAGED_COMMUNITIES,
   }),
-  getDiscoverCommunities: (payload: any) => ({
+  getDiscoverCommunities: (payload?: any) => ({
     type: groupsTypes.GET_DISCOVER_COMMUNITIES,
     payload,
   }),
   setDiscoverCommunities: (payload: any) => ({
     type: groupsTypes.SET_DISCOVER_COMMUNITIES,
     payload,
+  }),
+  resetDiscoverCommunities: () => ({
+    type: groupsTypes.RESET_DISCOVER_COMMUNITIES,
   }),
   getYourGroupsSearch: (payload: IGetYourGroupsSearch) => ({
     type: groupsTypes.GET_YOUR_GROUPS_SEARCH,
@@ -408,6 +411,80 @@ const groupsActions = {
   editDiscoverGroupItem: (payload: {id: number; data: any}) => ({
     type: groupsTypes.EDIT_DISCOVER_GROUP_ITEM,
     payload,
+  }),
+  joinCommunity: (payload: {communityId: number; communityName: string}) => ({
+    type: groupsTypes.JOIN_COMMUNITY,
+    payload,
+  }),
+  cancelJoinCommunity: (payload: {
+    communityId: number;
+    communityName: string;
+  }) => ({
+    type: groupsTypes.CANCEL_JOIN_COMMUNITY,
+    payload,
+  }),
+  editDiscoverCommunityItem: (payload: {id: number; data: any}) => ({
+    type: groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM,
+    payload,
+  }),
+
+  getCommunityMemberRequests: (payload: {
+    communityId: number;
+    params?: any;
+  }) => ({
+    type: groupsTypes.GET_COMMUNITY_MEMBER_REQUESTS,
+    payload,
+  }),
+  setCommunityMemberRequests: (payload: {
+    total?: number;
+    loading?: boolean;
+    canLoadMore?: boolean;
+    ids?: number[];
+    items?: IObject<IJoiningMember>;
+  }) => ({
+    type: groupsTypes.SET_COMMUNITY_MEMBER_REQUESTS,
+    payload,
+  }),
+  resetCommunityMemberRequests: () => ({
+    type: groupsTypes.RESET_COMMUNITY_MEMBER_REQUESTS,
+  }),
+  approveSingleCommunityMemberRequest: (payload: {
+    communityId: number;
+    requestId: number;
+    fullName: string;
+  }) => ({
+    type: groupsTypes.APPROVE_SINGLE_COMMUNITY_MEMBER_REQUEST,
+    payload,
+  }),
+  declineSingleCommunityMemberRequest: (payload: {
+    communityId: number;
+    requestId: number;
+    fullName: string;
+  }) => ({
+    type: groupsTypes.DECLINE_SINGLE_COMMUNITY_MEMBER_REQUEST,
+    payload,
+  }),
+  approveAllCommunityMemberRequests: (payload: {
+    communityId: number;
+    total: number;
+    callback?: () => void;
+  }) => ({
+    type: groupsTypes.APPROVE_ALL_COMMUNITY_MEMBER_REQUESTS,
+    payload,
+  }),
+  declineAllCommunityMemberRequests: (payload: {
+    communityId: number;
+    total: number;
+    callback?: () => void;
+  }) => ({
+    type: groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,
+    payload,
+  }),
+  storeUndoCommunityMemberRequests: () => ({
+    type: groupsTypes.STORE_UNDO_COMMUNITY_MEMBER_REQUESTS,
+  }),
+  undoDeclinedCommunityMemberRequests: () => ({
+    type: groupsTypes.UNDO_DECLINED_COMMUNITY_MEMBER_REQUESTS,
   }),
 };
 

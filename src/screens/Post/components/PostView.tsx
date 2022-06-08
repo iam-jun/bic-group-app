@@ -1,15 +1,18 @@
+import {isEqual} from 'lodash';
 import React, {FC, memo} from 'react';
-import {
-  View,
-  StyleSheet,
-  Keyboard,
-  Platform,
-  TouchableOpacity,
-} from 'react-native';
+import {Keyboard, StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
-import {ITheme} from '~/theme/interfaces';
+import Image from '~/beinComponents/Image';
+import ReactionView from '~/beinComponents/ReactionView';
+import Text from '~/beinComponents/Text';
+import {ReactionType} from '~/constants/reactions';
+import {useBaseHook} from '~/hooks';
+import {useUserIdAuth} from '~/hooks/auth';
+import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
+import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
 import {
   IAudienceUser,
   IOwnReaction,
@@ -19,38 +22,30 @@ import {
   IPostSetting,
   IReactionCounts,
 } from '~/interfaces/IPost';
-import Image from '~/beinComponents/Image';
-import Text from '~/beinComponents/Text';
 import resourceImages from '~/resources/images';
-import {useBaseHook} from '~/hooks';
-import {useUserIdAuth} from '~/hooks/auth';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
-import {formatLargeNumber} from '~/utils/formatData';
-import ReactionView from '~/beinComponents/ReactionView';
-import {useKeySelector} from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import postActions from '~/screens/Post/redux/actions';
-import {ReactionType} from '~/constants/reactions';
-import modalActions from '~/store/modal/actions';
-import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
+
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import ButtonMarkAsRead from '~/screens/Post/components/ButtonMarkAsRead';
 import PostViewContent from '~/screens/Post/components/postView/PostViewContent';
+import PostViewFooter from '~/screens/Post/components/postView/PostViewFooter';
+import PostViewFooterLite from '~/screens/Post/components/postView/PostViewFooterLite';
 import PostViewHeader from '~/screens/Post/components/postView/PostViewHeader';
 import PostViewImportant from '~/screens/Post/components/postView/PostViewImportant';
-import PostViewFooter from '~/screens/Post/components/postView/PostViewFooter';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import {useRootNavigation} from '~/hooks/navigation';
 import PostViewMenu from '~/screens/Post/components/PostViewMenu';
-import {isEqual} from 'lodash';
-import PostViewFooterLite from '~/screens/Post/components/postView/PostViewFooterLite';
-import ButtonMarkAsRead from '~/screens/Post/components/ButtonMarkAsRead';
+import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import postActions from '~/screens/Post/redux/actions';
+import postKeySelector from '~/screens/Post/redux/keySelector';
+import modalActions from '~/store/modal/actions';
+import {ITheme} from '~/theme/interfaces';
+import {formatLargeNumber} from '~/utils/formatData';
 
 export interface PostViewProps {
   style?: any;
   testID?: string;
-  postId: number;
+  postId: string;
   isPostDetail?: boolean;
-  onPressComment?: (postId: number) => void;
-  onPressHeader?: (postId: number) => void;
+  onPressComment?: (postId: string) => void;
+  onPressHeader?: (postId: string) => void;
   onContentLayout?: () => void;
   onPress?: () => void;
   pressNavigateToDetail?: boolean;
@@ -149,7 +144,7 @@ const _PostView: FC<PostViewProps> = ({
     dispatch(postActions.showPostAudiencesBottomSheet(payload));
   };
 
-  const onPressMenu = (event: any) => {
+  const onPressMenu = () => {
     Keyboard.dismiss();
     dispatch(
       modalActions.showModal({
@@ -162,11 +157,6 @@ const _PostView: FC<PostViewProps> = ({
             isDraftPost={isDraft}
           />
         ),
-        props: {
-          webModalStyle: {minHeight: undefined},
-          isContextMenu: true,
-          position: {x: event?.pageX, y: event?.pageY},
-        },
       }),
     );
   };
@@ -263,17 +253,14 @@ const _PostView: FC<PostViewProps> = ({
       activeOpacity={0.8}
       disabled={!onPress && !pressNavigateToDetail}
       onPress={_onPress}
-      style={StyleSheet.flatten([
-        Platform.OS === 'web' && !isPostDetail ? styles.rootOnWeb : {},
-        style,
-      ])}>
+      style={style}>
       <PostViewImportant
         isLite={isLite}
         isImportant={!!isImportant}
         expireTime={importantExpiredAt}
         markedReadPost={markedReadPost}
       />
-      <View style={[styles.container]}>
+      <View style={[styles.container]} onLayout={() => onContentLayout?.()}>
         <PostViewHeader
           audience={audience}
           actor={actor}
@@ -289,7 +276,6 @@ const _PostView: FC<PostViewProps> = ({
           images={images}
           videos={videos}
           isPostDetail={isPostDetail}
-          onContentLayout={onContentLayout}
         />
         {!isLite && (
           <ReactionView
@@ -328,21 +314,9 @@ const _PostView: FC<PostViewProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing, dimension} = theme;
+  const {colors, spacing} = theme;
   return StyleSheet.create({
     rowCenter: {flexDirection: 'row', alignItems: 'center'},
-    rootOnWeb: {
-      alignSelf: 'center',
-      overflow: 'hidden',
-      width: '100%',
-      maxWidth: Platform.OS === 'web' ? dimension.maxNewsfeedWidth : undefined,
-      borderRadius: 6,
-      shadowOffset: {width: 0, height: 1},
-      shadowColor: '#120F22',
-      shadowOpacity: 0.2,
-      shadowRadius: 2,
-      elevation: 2,
-    },
     container: {
       backgroundColor: colors.background,
     },

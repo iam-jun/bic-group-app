@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, StyleSheet, TouchableOpacity, Platform} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -52,7 +52,7 @@ const GroupAdministration = (props: any) => {
   };
 
   const goToPendingMembers = () => {
-    rootNavigation.navigate(groupStack.pendingMembers, {groupId});
+    rootNavigation.navigate(groupStack.groupPendingMembers, {groupId});
   };
 
   const goToGeneralInfo = () => {
@@ -120,13 +120,6 @@ const GroupAdministration = (props: any) => {
         23,
         'group_administration.pending_posts',
       )}
-      {renderItem(
-        'ExclamationTriangle',
-        'settings:title_reported_posts',
-        displayNewFeature,
-        1,
-        'group_administration.reported_post',
-      )}
     </>
   );
 
@@ -180,7 +173,7 @@ const themeStyles = (theme: ITheme) => {
       borderRadius: spacing.borderRadius.base,
     },
     settingsContainer: {
-      marginHorizontal: Platform.OS === 'web' ? spacing.margin.small : 0,
+      marginHorizontal: 0,
     },
     headerTitle: {
       marginHorizontal: spacing.margin.large,

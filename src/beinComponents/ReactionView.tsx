@@ -8,7 +8,7 @@ import Button from '~/beinComponents/Button';
 
 import {ITheme} from '~/theme/interfaces';
 import {blacklistReactions, ReactionType} from '~/constants/reactions';
-import {IOwnReaction, IReaction, IReactionCounts} from '~/interfaces/IPost';
+import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
 import commonActions, {IAction} from '~/constants/commonActions';
 import appConfig from '~/configs/appConfig';
 
@@ -48,6 +48,10 @@ const ReactionView: FC<ReactionViewProps> = ({
     onLongPressReaction?.(reactionType);
   };
 
+  /**
+   * reaction use in logic is camelCase, but for display, it should be snake_case
+   * we have to convert ownReaction.reactionName and reactionsCount key
+   */
   const renderReactions = () => {
     const _ownReactions: any = {};
     const reactionMap = new Map();

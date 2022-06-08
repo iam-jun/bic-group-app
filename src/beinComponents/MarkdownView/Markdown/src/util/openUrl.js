@@ -1,4 +1,4 @@
-import {Linking, Platform} from 'react-native';
+import {Linking} from 'react-native';
 import {getEnv} from '~/utils/env';
 
 export default function openUrl(url, customCallback) {
@@ -13,7 +13,7 @@ export default function openUrl(url, customCallback) {
 }
 
 function openURL(url) {
-  if (Platform.OS !== 'web' && url.includes(getEnv('SELF_DOMAIN'))) {
+  if (url.includes(getEnv('SELF_DOMAIN'))) {
     const newUrl = url.replace(getEnv('SELF_DOMAIN'), 'bein://');
     Linking.canOpenURL(newUrl)
       .then(supported => {

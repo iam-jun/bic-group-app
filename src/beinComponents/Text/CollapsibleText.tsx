@@ -20,7 +20,7 @@ export interface CollapsibleTextProps extends TextProps {
   useMarkdownIt?: boolean;
   onPressAudience?: (audience: any, e?: any) => any;
   limitMarkdownTypes?: boolean;
-  parentCommentId?: number;
+  parentCommentId?: string;
   testID?: string;
   [x: string]: any;
 }

@@ -12,7 +12,6 @@ export interface BaseBottomSheetProps extends ModalizeProps {
   children?: React.ReactNode;
 
   adjustToContentHeight?: boolean;
-  side?: 'left' | 'right' | 'center';
   handlePosition?: 'inside' | 'outside';
   snapPoint?: number;
   modalHeight?: number;
@@ -27,7 +26,6 @@ export interface BaseBottomSheetProps extends ModalizeProps {
 
   handleStyle?: StyleProp<ViewStyle>;
   modalStyle?: StyleProp<ViewStyle>;
-  webModalStyle?: StyleProp<ViewStyle>;
   childrenStyle?: StyleProp<ViewStyle>;
   overlayStyle?: StyleProp<ViewStyle>;
 
@@ -75,12 +73,12 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
       modalStyle,
     ]);
 
-    const _childrenStyle = StyleSheet.flatten([
+    const _childrenStyle = [
       {
         paddingBottom: insets.bottom + (spacing?.padding.large || 16),
       },
       childrenStyle,
-    ]);
+    ];
 
     return (
       <Portal>

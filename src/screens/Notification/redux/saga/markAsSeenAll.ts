@@ -1,31 +1,31 @@
-import {get} from 'lodash';
+import {cloneDeep, get} from 'lodash';
 import {call, put, select} from 'redux-saga/effects';
 
-import {IObject} from '~/interfaces/common';
 import showError from '~/store/commonSaga/showError';
 import notificationsDataHelper from '../../helper/NotificationDataHelper';
 import notificationsActions from '../actions';
 import notificationSelector from '../selector';
 
-function* markAsSeenAll() {
+function* markAsSeenAll(): any {
   try {
     yield call(notificationsDataHelper.markAsSeenAll);
 
     // get all notifications from store
-    const notifications: IObject<any> = yield select(state =>
-      get(state, notificationSelector.notifications),
-    ) || [];
+    const notifications: any =
+      cloneDeep(
+        yield select(state => get(state, notificationSelector.notifications)),
+      ) || {};
 
-    // then set theirs is_seen field by true
-    notifications.forEach((notificationGroup: any) => {
-      notificationGroup.isSeen = true;
-    });
+    // then set theirs isSeen field by true
+    for (const [key, value] of Object.entries(notifications)) {
+      notifications[key] = {...((value as any) || {}), isSeen: true};
+    }
 
     // finally, set notification back to store, and set unseen number to 0 without using Getstream response
     yield put(
-      notificationsActions.setNotifications({
-        notifications: notifications,
-        unseen: 0,
+      notificationsActions.setAllNotifications({
+        notifications: {...notifications},
+        unseenNumber: 0,
       }),
     );
   } catch (err) {

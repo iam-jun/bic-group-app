@@ -25,7 +25,6 @@ const SignUp = () => {
   const useFormData = useForm();
 
   const {
-    control,
     formState: {errors},
     trigger,
     setError,
@@ -92,7 +91,7 @@ const SignUp = () => {
           rules={{required: t('auth:text_err_username_blank')}}
           name="username"
           validateValue={validateUsername}
-          loading={loading}
+          disabled={loading}
         />
 
         <TextInputController
@@ -111,7 +110,7 @@ const SignUp = () => {
             },
           }}
           validateValue={validateEmail}
-          loading={loading}
+          disabled={loading}
         />
         <PasswordInputController
           useFormData={useFormData}
@@ -131,7 +130,8 @@ const SignUp = () => {
                 !getEnv('SELF_DOMAIN')?.includes('sbx') &&
                 !getEnv('SELF_DOMAIN')?.includes('stg')
               ) {
-                const value = getValues('newPassword');
+                const value = getValues('password');
+
                 if (!/(?=.*?[A-Z])/.test(value)) {
                   return t('auth:text_err_password_required_upper_case');
                 }

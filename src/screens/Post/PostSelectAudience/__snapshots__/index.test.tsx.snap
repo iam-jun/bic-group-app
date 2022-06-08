@@ -13,33 +13,30 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
     testID="header"
   >
     <View
-      animatedStyle={
-        Object {
-          "value": Object {
-            "height": 60,
-          },
-        }
-      }
-      collapsable={false}
       style={
-        Object {
-          "alignItems": "flex-end",
-          "backgroundColor": "#FFFFFF",
-          "borderBottomWidth": 0.5,
-          "borderColor": "#EAEDF2",
-          "elevation": 2,
-          "flexDirection": "row",
-          "height": 60,
-          "overflow": "hidden",
-          "paddingTop": 0,
-          "shadowColor": "#000",
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
+        Array [
+          [Function],
+          Object {
+            "alignItems": "flex-end",
+            "backgroundColor": "#FFFFFF",
+            "flexDirection": "row",
+            "overflow": "hidden",
+            "paddingTop": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
-        }
+          Object {
+            "borderBottomWidth": 0.5,
+            "borderColor": "#EAEDF2",
+            "elevation": 2,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.1,
+            "shadowRadius": 1,
+          },
+          undefined,
+        ]
       }
       testID="header.content"
     >
@@ -166,20 +163,17 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
           </View>
         </View>
         <View
-          animatedStyle={
-            Object {
-              "value": Object {},
-            }
-          }
-          collapsable={false}
           style={
-            Object {
-              "flex": 1,
-              "height": "100%",
-              "justifyContent": "center",
-              "marginLeft": 16,
-              "paddingTop": 1.5,
-            }
+            Array [
+              Object {
+                "flex": 1,
+                "height": "100%",
+                "justifyContent": "center",
+                "marginLeft": 16,
+                "paddingTop": 1.5,
+              },
+              Object {},
+            ]
           }
         >
           <View
@@ -1247,33 +1241,30 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
     testID="header"
   >
     <View
-      animatedStyle={
-        Object {
-          "value": Object {
-            "height": 60,
-          },
-        }
-      }
-      collapsable={false}
       style={
-        Object {
-          "alignItems": "flex-end",
-          "backgroundColor": "#FFFFFF",
-          "borderBottomWidth": 0.5,
-          "borderColor": "#EAEDF2",
-          "elevation": 2,
-          "flexDirection": "row",
-          "height": 60,
-          "overflow": "hidden",
-          "paddingTop": 0,
-          "shadowColor": "#000",
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
+        Array [
+          [Function],
+          Object {
+            "alignItems": "flex-end",
+            "backgroundColor": "#FFFFFF",
+            "flexDirection": "row",
+            "overflow": "hidden",
+            "paddingTop": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
-        }
+          Object {
+            "borderBottomWidth": 0.5,
+            "borderColor": "#EAEDF2",
+            "elevation": 2,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.1,
+            "shadowRadius": 1,
+          },
+          undefined,
+        ]
       }
       testID="header.content"
     >
@@ -1400,20 +1391,17 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
           </View>
         </View>
         <View
-          animatedStyle={
-            Object {
-              "value": Object {},
-            }
-          }
-          collapsable={false}
           style={
-            Object {
-              "flex": 1,
-              "height": "100%",
-              "justifyContent": "center",
-              "marginLeft": 16,
-              "paddingTop": 1.5,
-            }
+            Array [
+              Object {
+                "flex": 1,
+                "height": "100%",
+                "justifyContent": "center",
+                "marginLeft": 16,
+                "paddingTop": 1.5,
+              },
+              Object {},
+            ]
           }
         >
           <View
@@ -2481,33 +2469,30 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
     testID="header"
   >
     <View
-      animatedStyle={
-        Object {
-          "value": Object {
-            "height": 60,
-          },
-        }
-      }
-      collapsable={false}
       style={
-        Object {
-          "alignItems": "flex-end",
-          "backgroundColor": "#FFFFFF",
-          "borderBottomWidth": 0.5,
-          "borderColor": "#EAEDF2",
-          "elevation": 2,
-          "flexDirection": "row",
-          "height": 60,
-          "overflow": "hidden",
-          "paddingTop": 0,
-          "shadowColor": "#000",
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
+        Array [
+          [Function],
+          Object {
+            "alignItems": "flex-end",
+            "backgroundColor": "#FFFFFF",
+            "flexDirection": "row",
+            "overflow": "hidden",
+            "paddingTop": 0,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
-        }
+          Object {
+            "borderBottomWidth": 0.5,
+            "borderColor": "#EAEDF2",
+            "elevation": 2,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.1,
+            "shadowRadius": 1,
+          },
+          undefined,
+        ]
       }
       testID="header.content"
     >
@@ -2634,20 +2619,17 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
           </View>
         </View>
         <View
-          animatedStyle={
-            Object {
-              "value": Object {},
-            }
-          }
-          collapsable={false}
           style={
-            Object {
-              "flex": 1,
-              "height": "100%",
-              "justifyContent": "center",
-              "marginLeft": 16,
-              "paddingTop": 1.5,
-            }
+            Array [
+              Object {
+                "flex": 1,
+                "height": "100%",
+                "justifyContent": "center",
+                "marginLeft": 16,
+                "paddingTop": 1.5,
+              },
+              Object {},
+            ]
           }
         >
           <View

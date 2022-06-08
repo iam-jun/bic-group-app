@@ -1,5 +1,5 @@
 import React, {FC, useState} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle, Platform} from 'react-native';
+import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -145,7 +145,6 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
         cancelLabel: t('common:btn_cancel'),
         confirmLabel: t('common:btn_delete'),
         onConfirm: onDelete,
-        stretchOnWeb: true,
       }),
     );
   };
@@ -177,7 +176,6 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
             />
           </View>
         ),
-        props: {webModalStyle: {minHeight: undefined}},
       }),
     );
   };
@@ -213,19 +211,12 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
         expireTime={importantExpiredAt}
         markedReadPost={false}
       />
-      <View
-        style={StyleSheet.flatten([
-          styles.container,
-          Platform.OS === 'web' && !isPostDetail ? styles.containerWeb : {},
-          style,
-        ])}>
+      <View style={style}>
         <PostViewHeader
           audience={audience}
           actor={actor}
           time={createdAt}
           onPressMenu={onPressMenu}
-          // onPressHeader={() => onPressHeader?.(postId)}
-          // onPressShowAudiences={onPressShowAudiences}
         />
         <PostViewContent
           postId={id || ''}
@@ -246,17 +237,6 @@ const createStyle = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       backgroundColor: colors.background,
-    },
-    containerWeb: {
-      overflow: 'hidden',
-      borderWidth: 1,
-      borderRadius: 6,
-      borderColor: colors.borderDivider,
-      shadowOffset: {width: 0, height: 1},
-      shadowColor: '#120F22',
-      shadowOpacity: 0.2,
-      shadowRadius: 2,
-      elevation: 2,
     },
     footerButtonContainer: {
       flexDirection: 'row',

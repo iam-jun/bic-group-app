@@ -1,25 +1,24 @@
 import React, {FC, useContext, useState} from 'react';
-import {View, StyleSheet, TouchableOpacity, Platform} from 'react-native';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
 
+import Button from '~/beinComponents/Button';
+import Divider from '~/beinComponents/Divider';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import Text from '~/beinComponents/Text';
+import {formatDateTime} from '~/beinComponents/TimeView';
 import {ITheme} from '~/theme/interfaces';
 
-import Text from '~/beinComponents/Text';
-import Divider from '~/beinComponents/Divider';
-import {useBaseHook} from '~/hooks';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import Button from '~/beinComponents/Button';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import modalActions from '~/store/modal/actions';
-import {useDispatch} from 'react-redux';
-import {formatDateTime} from '~/beinComponents/TimeView';
-import {useUserIdAuth} from '~/hooks/auth';
 import {AppContext} from '~/contexts/AppContext';
-import homeActions from '~/screens/Home/redux/actions';
-import NFSFilterCreatedBy from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterCreatedBy';
+import {useBaseHook} from '~/hooks';
+import {useUserIdAuth} from '~/hooks/auth';
 import {ISelectedFilterUser} from '~/interfaces/IHome';
-import NFSFilterDate from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterDate';
-import NFSFilterCreateBySpecific from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterCreateBySpecific';
+import NFSFilterCreateBySpecific from './NFSFilterCreateBySpecific';
+import NFSFilterCreatedBy from './NFSFilterCreatedBy';
+import NFSFilterDate from './NFSFilterDate';
+import homeActions from '../../redux/actions';
+import modalActions from '~/store/modal/actions';
 
 export interface NFSFilterOptionMenuProps {
   filterCreatedBy?: any;
@@ -45,8 +44,7 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const {colors} = theme;
-  const insets = useSafeAreaInsets();
-  const styles = createStyle(theme, insets);
+  const styles = createStyle(theme);
   const userId = useUserIdAuth();
   const {language} = useContext(AppContext);
 
@@ -57,6 +55,7 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
       ? t('home:newsfeed_search:filter_created_by_me')
       : `${createdBy?.name}`
     : t('home:newsfeed_search:label_anyone');
+
   const textDate = date
     ? `${formatDateTime(startDate, language)} - ${formatDateTime(
         endDate,
@@ -179,15 +178,11 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme, insets: any) => {
+const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
-      paddingBottom:
-        Platform.OS === 'web'
-          ? spacing.padding.tiny
-          : spacing.padding.extraLarge,
-      minWidth: Platform.OS === 'web' ? 300 : undefined,
+      paddingBottom: spacing.padding.extraLarge,
     },
     divider: {
       marginVertical: spacing.margin.small,
@@ -195,8 +190,7 @@ const createStyle = (theme: ITheme, insets: any) => {
     textHeader: {
       flex: 1,
       color: colors.textSecondary,
-      marginTop:
-        Platform.OS === 'web' ? spacing.margin.base : spacing.margin.tiny,
+      marginTop: spacing.margin.tiny,
       marginBottom: spacing.margin.tiny,
       marginHorizontal: spacing.margin.extraLarge,
     },
@@ -212,8 +206,7 @@ const createStyle = (theme: ITheme, insets: any) => {
       paddingHorizontal: spacing.padding.extraLarge,
     },
     buttonRight: {
-      marginLeft:
-        Platform.OS === 'web' ? spacing.margin.extraLarge : spacing.margin.tiny,
+      marginLeft: spacing.margin.tiny,
     },
     buttonApply: {
       marginHorizontal: spacing.margin.extraLarge,

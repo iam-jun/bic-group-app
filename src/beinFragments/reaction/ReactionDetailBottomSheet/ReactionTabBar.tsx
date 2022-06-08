@@ -93,7 +93,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
   const renderItem = ({item, index}: any) => {
     const {reactionType, count} = item || {};
     const isActive = activeIndex === index;
-    const emoji = NodeEmoji.find(reactionType || '')?.emoji || '';
+    const emoji = NodeEmoji.find(reactionType)?.emoji || '';
     return (
       <View>
         <Button

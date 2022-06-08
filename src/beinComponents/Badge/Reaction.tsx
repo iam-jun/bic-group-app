@@ -1,19 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import NodeEmoji from 'node-emoji';
+import React, {useEffect, useState} from 'react';
 import {
   ActivityIndicator,
-  Platform,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
   ViewStyle,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import commonActions, {IAction} from '~/constants/commonActions';
-import NodeEmoji from 'node-emoji';
 import {useKeySelector} from '~/hooks/selector';
+import {ITheme} from '~/theme/interfaces';
 
 interface ReactionProps {
   testId?: string;
@@ -97,7 +95,11 @@ const Reaction: React.FC<ReactionProps> = ({
   );
 };
 
-const createStyles = (theme: ITheme, isSelected: boolean, loading: boolean) => {
+const createStyles = (
+  theme: ITheme,
+  isSelected: boolean,
+  loading?: boolean,
+) => {
   const {colors, spacing} = theme;
 
   return StyleSheet.create({
@@ -112,10 +114,10 @@ const createStyles = (theme: ITheme, isSelected: boolean, loading: boolean) => {
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
-      height: Platform.OS === 'web' ? 30 : 28,
+      height: 28,
     },
     emoji: {
-      fontSize: Platform.OS === 'web' ? 15 : 13,
+      fontSize: 13,
     },
     text: {
       marginBottom: 2,

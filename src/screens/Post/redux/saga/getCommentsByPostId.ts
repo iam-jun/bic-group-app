@@ -20,7 +20,7 @@ function* getCommentsByPostId({
     parentId: commentId,
     isMerge,
     callbackLoading,
-    idGT,
+    idGt,
   } = payload || {};
   try {
     callbackLoading?.(true);
@@ -34,7 +34,7 @@ function* getCommentsByPostId({
           postId: postId,
           commentId: commentId,
           childComments: newList,
-          meta: !!idGT
+          meta: !!idGt
             ? {hasPreviousPage: meta?.hasPreviousPage}
             : {hasNextPage: meta?.hasNextPage},
         });

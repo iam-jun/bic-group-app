@@ -1,26 +1,24 @@
-import React, {FC, useState, useEffect} from 'react';
-import {StyleSheet, StyleProp, ViewStyle, FlatList} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {FlatList, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
-
-import Header from '~/beinComponents/Header';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {useRootNavigation} from '~/hooks/navigation';
-import * as modalActions from '~/store/modal/actions';
-import i18n from '~/localization';
 import {useDispatch} from 'react-redux';
-import {useKeySelector} from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import {ICreatePostImage} from '~/interfaces/IPost';
-import UploadingImage from '~/beinComponents/UploadingImage';
-import postActions from '~/screens/Post/redux/actions';
 import Button from '~/beinComponents/Button';
-import {useBaseHook} from '~/hooks';
+import Header from '~/beinComponents/Header';
 import ImagePicker from '~/beinComponents/ImagePicker';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import UploadingImage from '~/beinComponents/UploadingImage';
 import appConfig from '~/configs/appConfig';
-import {showHideToastMessage} from '~/store/modal/actions';
 import {uploadTypes} from '~/configs/resourceConfig';
+import {useBaseHook} from '~/hooks';
+import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
+import {ICreatePostImage} from '~/interfaces/IPost';
+import i18n from '~/localization';
+import postActions from '~/screens/Post/redux/actions';
+import postKeySelector from '~/screens/Post/redux/keySelector';
+import * as modalActions from '~/store/modal/actions';
+import {showHideToastMessage} from '~/store/modal/actions';
+import {ITheme} from '~/theme/interfaces';
 import {checkPermission} from '~/utils/permission';
 
 const PostSelectImage = () => {
@@ -63,7 +61,6 @@ const PostSelectImage = () => {
           dispatch(postActions.setCreatePostImagesDraft([]));
           rootNavigation.goBack();
         },
-        stretchOnWeb: true,
       }),
     );
   };

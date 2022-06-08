@@ -1,19 +1,25 @@
 import React from 'react';
 import {TextInput as RNTextInput} from 'react-native';
-import {TextInput as TextInputPaper} from 'react-native-paper';
+import {TextInput as TextInputPaper, useTheme} from 'react-native-paper';
 import TextInput, {TextInputProps} from './TextInput';
 import Icon from '~/beinComponents/Icon';
+import {ITheme} from '~/theme/interfaces';
 
 interface Props extends TextInputProps {
   hideEyeIcon?: boolean;
   passwordInputRef?: React.Ref<RNTextInput>;
+  iconColor?: string;
 }
 
 const PasswordInput: React.FC<Props> = ({
   hideEyeIcon = false,
   passwordInputRef,
+  iconColor,
   ...props
 }) => {
+  const theme: ITheme = useTheme() as ITheme;
+  const {colors} = theme;
+
   const [hidePassword, setHidePassword] = React.useState(true);
   const EyeIcon = (
     <TextInputPaper.Icon
@@ -23,6 +29,7 @@ const PasswordInput: React.FC<Props> = ({
           icon={hidePassword ? 'iconEye' : 'iconEyeOff'}
           size={20}
           onPress={() => setHidePassword(!hidePassword)}
+          tintColor={iconColor || colors.iconTint}
         />
       )}
     />
