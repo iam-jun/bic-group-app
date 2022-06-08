@@ -13,7 +13,7 @@ const providers = {
     name: 'BeinFeed',
   },
   beinNotification: {
-    url: `${getEnv('BEIN_NOTIFICATION')}api/v1/`,
+    url: `${getEnv('BEIN_NOTIFICATION')}`,
     name: 'BeinNotification',
   },
   beinUpload: {
@@ -79,7 +79,7 @@ const Upload = {
       provider = providers.beinUpload;
     } else {
       // upload bein feed
-      url = `${providers.beinFeed.url}api/v1/media`;
+      url = `${providers.beinFeed.url}media`;
       provider = providers.beinFeed;
       data.append('uploadType', type);
     }
