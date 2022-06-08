@@ -13,13 +13,12 @@ import groupsKeySelector from '../../redux/keySelector';
 import {ITheme} from '~/theme/interfaces';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import Text from '~/beinComponents/Text';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {IGroupMembers} from '~/interfaces/IGroup';
-import images from '~/resources/images';
+import MemberItem from '../../components/MemberItem';
 
 interface MemberListProps {
   onLoadMore: () => void;
-  onPressMenu: (e: any, item: IGroupMembers) => void;
+  onPressMenu: (item: IGroupMembers) => void;
   onRefresh?: () => void;
 }
 
@@ -29,26 +28,28 @@ const MemberList = ({onLoadMore, onPressMenu, onRefresh}: MemberListProps) => {
   const styles = createStyles(theme);
   const [sectionList, setSectionList] = useState([]);
 
-  const {loading, canLoadMore, group_admin, group_member} = useKeySelector(
-    groupsKeySelector.groupMembers,
-  );
+  const groupMembers = useKeySelector(groupsKeySelector.groupMembers);
+  const {loading, canLoadMore} = groupMembers || {};
 
   useEffect(() => {
-    const newSectionList: any = [
-      {
-        title: 'Admins',
-        data: group_admin.data,
-        user_count: group_admin.user_count,
-      },
-      {
-        title: 'Members',
-        data: group_member.data,
-        user_count: group_member.user_count,
-      },
-    ];
+    if (groupMembers) {
+      const newSectionList: any = [];
 
-    setSectionList(newSectionList);
-  }, [group_admin.data, group_member.data]);
+      Object.values(groupMembers)?.map((roleData: any) => {
+        const section: any = {};
+        const {name, data} = roleData || {};
+
+        if (name && data) {
+          section.title = `${roleData.name}s`;
+          section.data = roleData.data;
+          section.user_count = roleData.user_count;
+          newSectionList.push(section);
+        }
+      });
+
+      setSectionList(newSectionList);
+    }
+  }, [groupMembers]);
 
   const renderEmpty = () => {
     return !loading ? <NoSearchResult /> : null;
@@ -83,26 +84,7 @@ const MemberList = ({onLoadMore, onPressMenu, onRefresh}: MemberListProps) => {
   };
 
   const renderItem = ({item}: {item: IGroupMembers}) => {
-    const {fullname, avatar, username} = item || {};
-
-    return (
-      <PrimaryItem
-        showAvatar
-        menuIconTestID={'member_list.item'}
-        style={styles.itemContainer}
-        avatar={avatar || images.img_user_avatar_default}
-        ContentComponent={
-          <Text.H6 numberOfLines={2}>
-            {fullname}
-            <Text.Subtitle
-              color={
-                theme.colors.textSecondary
-              }>{` @${username}`}</Text.Subtitle>
-          </Text.H6>
-        }
-        onPressMenu={(e: any) => onPressMenu(e, item)}
-      />
-    );
+    return <MemberItem item={item} onPressMenu={onPressMenu} />;
   };
 
   return (

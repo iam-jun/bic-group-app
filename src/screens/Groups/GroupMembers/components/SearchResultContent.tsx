@@ -13,20 +13,13 @@ import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {IGroupMembers} from '~/interfaces/IGroup';
-import images from '~/resources/images';
-import mainStack from '~/router/navigator/MainStack/stack';
-import {useRootNavigation} from '~/hooks/navigation';
-import Icon from '~/beinComponents/Icon';
-import useAuth from '~/hooks/auth';
-import {formatDMLink} from '~/utils/link';
-import {openLink} from '~/utils/common';
+import MemberItem from '../../components/MemberItem';
 
 interface SearchResultContentProps {
   onLoadMore?: () => void;
   onRefresh?: () => void;
-  onPressMenu: (e: any, item: IGroupMembers) => void;
+  onPressMenu: (item: IGroupMembers) => void;
 }
 
 const SearchResultContent = ({
@@ -35,69 +28,14 @@ const SearchResultContent = ({
   onPressMenu,
 }: SearchResultContentProps) => {
   const theme = useTheme() as ITheme;
-  const {colors} = theme;
   const styles = createStyles(theme);
-  const {rootNavigation} = useRootNavigation();
-  const {user} = useAuth();
-  const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
 
   const {loading, canLoadMore, data} = useKeySelector(
     groupsKeySelector.groupSearchMembers,
   );
-  const can_manage_member = useKeySelector(
-    groupsKeySelector.groupDetail.can_manage_member,
-  );
-
-  const goToUserProfile = (id: number) => {
-    rootNavigation.navigate(mainStack.userProfile, {userId: id});
-  };
-
-  const onPressChat = (username?: string) => {
-    if (!username) return;
-    const link = formatDMLink(groupData.team_name, username);
-    openLink(link);
-  };
 
   const renderItem = ({item}: {item: IGroupMembers}) => {
-    const {id, fullname, avatar, username} = item || {};
-
-    return (
-      <PrimaryItem
-        showAvatar
-        menuIconTestID={'search_result_content.item'}
-        style={styles.itemContainer}
-        avatar={avatar || images.img_user_avatar_default}
-        onPress={id ? () => goToUserProfile(id) : undefined}
-        ContentComponent={
-          <Text.H6 numberOfLines={2}>
-            {fullname}
-            <Text.Subtitle
-              color={
-                theme.colors.textSecondary
-              }>{` @${username}`}</Text.Subtitle>
-          </Text.H6>
-        }
-        RightComponent={
-          <>
-            {user.username !== item.username && (
-              <Icon
-                icon={'CommentAltDots'}
-                backgroundColor={colors.bgSecondary}
-                style={styles.iconChat}
-                onPress={() => onPressChat(username)}
-              />
-            )}
-            {can_manage_member && (
-              <Icon
-                icon={'EllipsisV'}
-                style={styles.iconOption}
-                onPress={(e: any) => onPressMenu(e, item)}
-              />
-            )}
-          </>
-        }
-      />
-    );
+    return <MemberItem item={item} onPressMenu={onPressMenu} />;
   };
 
   const renderEmptyComponent = () => {

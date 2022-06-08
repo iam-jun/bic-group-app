@@ -18,7 +18,7 @@ interface SearchMemberViewProps {
   placeholder?: string;
   initSearch?: string;
   onClose?: () => void;
-  onPressMenu: (e: any, item: IGroupMembers) => void;
+  onPressMenu: (item: IGroupMembers) => void;
 }
 
 const SearchMemberView = ({

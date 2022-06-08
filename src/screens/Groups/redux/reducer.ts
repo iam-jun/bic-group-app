@@ -38,8 +38,8 @@ export const groupInitState = {
   groupMembers: {
     loading: false,
     canLoadMore: true,
-    group_admin: {data: [] as IGroupMembers[], user_count: 0},
-    group_member: {data: [] as IGroupMembers[], user_count: 0},
+    offset: 0, // current fetched data count
+    // group_admin: {}, group_member: {}
   },
   groupSearchMembers: {
     loading: false,

@@ -14,38 +14,41 @@ export default function* getGroupMembers({
   try {
     const {groupId, params} = payload;
     const {groups} = yield select();
-    const {canLoadMore, group_admin, group_member} = groups.groupMembers;
+    const groupMembers = groups.groupMembers;
+    const {canLoadMore, offset} = groupMembers;
 
-    yield put(
-      actions.setGroupMembers({
-        loading: group_admin.data.length + group_member.data.length === 0,
-      }),
-    );
+    yield put(actions.setGroupMembers({loading: offset === 0}));
 
     if (!canLoadMore) return;
 
     // @ts-ignore
     const resp = yield call(groupsDataHelper.getGroupMembers, groupId, {
       limit: appConfig.recordsPerPage,
-      offset: group_admin.data.length + group_member.data.length,
+      offset: offset,
       ...params,
+    });
+
+    let newDataCount = 0;
+    let newDataObj = {};
+    Object.keys(resp)?.map?.((role: string) => {
+      newDataCount += resp[role].data.length;
+      newDataObj = {
+        ...newDataObj,
+        [role]: {
+          name: resp[role].name,
+          user_count: resp[role].user_count,
+          data: groupMembers?.[role]?.data
+            ? [...groupMembers?.[role]?.data, ...resp[role].data]
+            : [...resp[role].data],
+        },
+      };
     });
 
     const newData = {
       loading: false,
-      canLoadMore:
-        resp.group_admin.data.length + resp.group_member.data.length ===
-        appConfig.recordsPerPage,
-      group_admin: {
-        // append data when loading more
-        data: [...group_admin.data, ...resp.group_admin.data],
-        user_count: resp.group_admin.user_count,
-      },
-      group_member: {
-        // append data when loading more
-        data: [...group_member.data, ...resp.group_member.data],
-        user_count: resp.group_member.user_count,
-      },
+      canLoadMore: newDataCount === appConfig.recordsPerPage,
+      offset: offset + newDataCount,
+      ...newDataObj,
     };
 
     yield put(actions.setGroupMembers(newData));

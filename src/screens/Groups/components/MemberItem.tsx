@@ -3,7 +3,6 @@ import React from 'react';
 
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
-import {ICommunityMembers} from '~/interfaces/ICommunity';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
 import {useTheme} from 'react-native-paper';
@@ -17,15 +16,16 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 
 interface MemberItemProps {
-  item: ICommunityMembers;
+  item: any;
+  onPressMenu?: (item: any) => void;
 }
 
-const MemberItem = ({item}: MemberItemProps) => {
+const MemberItem = ({item, onPressMenu}: MemberItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const {colors} = theme;
   const {user} = useAuth();
-  const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
+  const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {rootNavigation} = useRootNavigation();
 
   const {id, fullname, avatar, username} = item || {};
@@ -36,12 +36,9 @@ const MemberItem = ({item}: MemberItemProps) => {
   };
 
   const onPressChat = () => {
-    const link = formatDMLink(infoDetail.slug, username);
+    if (!username) return;
+    const link = formatDMLink(communityDetail.slug, username);
     openLink(link);
-  };
-
-  const onPressMenu = (item: ICommunityMembers) => {
-    // TODO: TO ADD FUNCTIONALITY
   };
 
   return (
@@ -74,7 +71,7 @@ const MemberItem = ({item}: MemberItemProps) => {
             <Icon
               icon={'EllipsisV'}
               style={styles.iconOption}
-              onPress={() => onPressMenu(item)}
+              onPress={onPressMenu ? () => onPressMenu(item) : undefined}
               buttonTestID="member_item.icon_option.button"
             />
           )}

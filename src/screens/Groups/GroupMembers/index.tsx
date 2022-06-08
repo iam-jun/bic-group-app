@@ -1,11 +1,5 @@
 import React, {useState, useEffect, useRef} from 'react';
-import {
-  View,
-  StyleSheet,
-  SectionList,
-  ActivityIndicator,
-  Pressable,
-} from 'react-native';
+import {View, StyleSheet, Pressable} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -27,10 +21,6 @@ import Header from '~/beinComponents/Header';
 import MemberOptionsMenu from './components/MemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
 import MemberList from './components/MemberList';
-import mainStack from '~/router/navigator/MainStack/stack';
-import useAuth from '~/hooks/auth';
-import {formatDMLink} from '~/utils/link';
-import {openLink} from '~/utils/common';
 
 const _GroupMembers = (props: any) => {
   const params = props.route.params;
@@ -49,16 +39,11 @@ const _GroupMembers = (props: any) => {
   const styles = createStyle(theme);
   const {rootNavigation} = useRootNavigation();
   const baseSheetRef: any = useRef();
-  const {user} = useAuth();
 
-  const {group_admin, group_member} = useKeySelector(
-    groupsKeySelector.groupMembers,
-  );
+  const {offset} = useKeySelector(groupsKeySelector.groupMembers);
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
   );
-
-  const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
 
   const getGroupProfile = () => {
     dispatch(groupsActions.getGroupDetail(groupId));
@@ -76,7 +61,7 @@ const _GroupMembers = (props: any) => {
       return;
     }
 
-    const isDataEmpty = !group_admin || !group_member;
+    const isDataEmpty = offset === 0;
     if (needReloadWhenReconnected && isDataEmpty) {
       getMembers();
       getGroupProfile();
@@ -96,21 +81,11 @@ const _GroupMembers = (props: any) => {
 
   const clearSelectedMember = () => setSelectedMember(undefined);
 
-  const onPressMenu = (e: any, item: IGroupMembers) => {
+  const onPressMenu = (item: IGroupMembers) => {
     if (!item || !item.id) return;
 
     setSelectedMember(item);
-    baseSheetRef.current?.open(e?.pageX, e?.pageY);
-  };
-
-  const goToUserProfile = (id: number) => {
-    rootNavigation.navigate(mainStack.userProfile, {userId: id});
-  };
-
-  const onPressChat = (username?: string) => {
-    if (!username) return;
-    const link = formatDMLink(groupData.team_name, username);
-    openLink(link);
+    baseSheetRef.current?.open();
   };
 
   const onLoadMore = () => {

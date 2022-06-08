@@ -28,13 +28,18 @@ export default function* getGroupSearchMembers({
       ...params,
     });
 
+    let newDataCount = 0;
+    let newDataArr: any = [];
+    Object.keys(resp)?.map?.((role: string) => {
+      newDataCount += resp[role].data.length;
+      newDataArr = [...newDataArr, ...resp[role].data];
+    });
+
     // update search results data
     const newData = {
       loading: false,
-      canLoadMore:
-        resp.group_admin.data.length + resp.group_member.data.length ===
-        appConfig.recordsPerPage,
-      data: [...data, ...resp.group_admin.data, ...resp.group_member.data],
+      canLoadMore: newDataCount === appConfig.recordsPerPage,
+      data: [...data, ...newDataArr],
     };
 
     yield put(actions.setGroupSearchMembers(newData));
