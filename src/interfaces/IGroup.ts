@@ -162,7 +162,7 @@ export interface IJoiningUserInfo {
     end_date: string | null;
     company: string | null;
     title_position: string | null;
-  };
+  } | null;
 }
 
 export interface IGetYourGroupsSearch {
