@@ -113,6 +113,7 @@ const CommunityPendingMembers = () => {
         ListEmptyComponent={renderEmpty}
         ListHeaderComponent={renderListHeader}
         ListFooterComponent={renderListFooter}
+        showsVerticalScrollIndicator={false}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.1}
         ItemSeparatorComponent={() => <Divider style={styles.divider} />}

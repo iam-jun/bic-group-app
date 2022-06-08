@@ -1,8 +1,7 @@
 import React from 'react';
 
 import PendingUserItem from './PendingUserItem';
-import initialState from '~/store/initialState';
-import {renderWithRedux, createTestStore, fireEvent} from '~/test/testUtils';
+import {renderWithRedux, fireEvent} from '~/test/testUtils';
 import {memberRequestDetail} from '~/test/mock_data/communities';
 
 describe('PendingUserItem component', () => {
