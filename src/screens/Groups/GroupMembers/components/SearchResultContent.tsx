@@ -20,6 +20,8 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import Icon from '~/beinComponents/Icon';
 import useAuth from '~/hooks/auth';
+import {formatDMLink} from '~/utils/link';
+import {openLink} from '~/utils/common';
 
 interface SearchResultContentProps {
   onLoadMore?: () => void;
@@ -37,6 +39,7 @@ const SearchResultContent = ({
   const styles = createStyles(theme);
   const {rootNavigation} = useRootNavigation();
   const {user} = useAuth();
+  const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
 
   const {loading, canLoadMore, data} = useKeySelector(
     groupsKeySelector.groupSearchMembers,
@@ -49,8 +52,10 @@ const SearchResultContent = ({
     rootNavigation.navigate(mainStack.userProfile, {userId: id});
   };
 
-  const onPressChat = () => {
-    // TODO: Add navigation to Chat
+  const onPressChat = (username?: string) => {
+    if (!username) return;
+    const link = formatDMLink(groupData.team_name, username);
+    openLink(link);
   };
 
   const renderItem = ({item}: {item: IGroupMembers}) => {
@@ -79,7 +84,7 @@ const SearchResultContent = ({
                 icon={'CommentAltDots'}
                 backgroundColor={colors.bgSecondary}
                 style={styles.iconChat}
-                onPress={onPressChat}
+                onPress={() => onPressChat(username)}
               />
             )}
             {can_manage_member && (
