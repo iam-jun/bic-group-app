@@ -7,7 +7,6 @@ import {
 } from 'react-native';
 import React, {useEffect} from 'react';
 import {useTheme} from 'react-native-paper';
-import i18next from 'i18next';
 import {useDispatch} from 'react-redux';
 
 import {ITheme} from '~/theme/interfaces';
@@ -21,11 +20,13 @@ import EmptyScreen from '~/beinFragments/EmptyScreen';
 import Divider from '~/beinComponents/Divider';
 import CommunityMemberRequest from './CommunityMemberRequest';
 import ApproveDeclineAllRequests from './ApproveDeclineAllRequests';
+import {useBaseHook} from '~/hooks';
 
 const CommunityPendingMembers = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
+  const {t} = useBaseHook();
   const {id: communityId} = useKeySelector(groupsKeySelector.communityDetail);
   const {total, loading, canLoadMore, ids} = useKeySelector(
     groupsKeySelector.communityMemberRequests,
@@ -71,9 +72,12 @@ const CommunityPendingMembers = () => {
     if (loading || total === 0) return null;
     return (
       <View style={styles.requestHeader}>
-        <Text.H5>{`${total} ${i18next.t('common:text_request', {
-          count: total,
-        })}`}</Text.H5>
+        <Text.H5 testID="community_pending_members.request_title">{`${total} ${t(
+          'common:text_request',
+          {
+            count: total,
+          },
+        )}`}</Text.H5>
       </View>
     );
   };
@@ -87,7 +91,9 @@ const CommunityPendingMembers = () => {
       !loading &&
       canLoadMore &&
       ids.length > 0 && (
-        <View style={styles.listFooter}>
+        <View
+          style={styles.listFooter}
+          testID="community_pending_members.loading_more_indicator">
           <ActivityIndicator />
         </View>
       )
@@ -96,7 +102,7 @@ const CommunityPendingMembers = () => {
 
   return (
     <ScreenWrapper testID="CommunityPendingMembers" isFullView>
-      <Header title={i18next.t('settings:title_pending_members')} />
+      <Header title={t('settings:title_pending_members')} />
 
       <FlatList
         testID="flatlist"
