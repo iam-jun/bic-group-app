@@ -14,6 +14,7 @@ import NotificationContent from './NotificationContent';
 import {useKeySelector} from '~/hooks/selector';
 import notificationSelector from '~/screens/Notification/redux/selector';
 import {isEmpty, isEqual} from 'lodash';
+import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 
 const {width: screenWidth, height} = Dimensions.get('window');
 
@@ -80,16 +81,21 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     }
   };
 
-  const renderIndicator = () => {
+  const renderIndicator = (style?: any) => {
     if (!isRead) {
       return (
         <View
           testID="notification_item.indicator"
-          style={styles.stateIndicatorUnread}
+          style={[styles.stateIndicatorUnread, style]}
         />
       );
     }
   };
+
+  const notShowAvatar =
+    extra?.type === NOTIFICATION_TYPE.POST.VIDEO.PROCESSING ||
+    extra?.type === NOTIFICATION_TYPE.POST.VIDEO.FAILED ||
+    extra?.type === NOTIFICATION_TYPE.POST.VIDEO.PUBLISHED;
 
   // render notification item
   return (
@@ -107,29 +113,45 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
             : theme.colors.bgSecondary,
         },
       ]}>
-      <View
-        style={{
-          flex: 1,
-        }}>
-        <View style={[styles.row, {flex: 1, justifyContent: 'flex-start'}]}>
-          {renderIndicator()}
-          <NotificationAvatar
-            actor={extra.actor}
+      {notShowAvatar ? (
+        <View
+          style={[
+            {flexDirection: 'row', flex: 1, justifyContent: 'flex-start'},
+          ]}>
+          {renderIndicator(styles.indicatorMargin)}
+          <NotificationContent
+            description={extra?.description || ''}
+            defaultContent={extra?.content || ''}
             activities={activities}
-            actorCount={actorCount}
             verb={verb}
-            isRead={isRead}
-            timerWidth={timerWidth}
+            actorCount={actorCount}
           />
         </View>
-        <NotificationContent
-          description={extra?.description || ''}
-          defaultContent={extra?.content || ''}
-          activities={activities}
-          verb={verb}
-          actorCount={actorCount}
-        />
-      </View>
+      ) : (
+        <View
+          style={{
+            flex: 1,
+          }}>
+          <View style={[styles.row, {flex: 1, justifyContent: 'flex-start'}]}>
+            {renderIndicator()}
+            <NotificationAvatar
+              actor={extra.actor}
+              activities={activities}
+              actorCount={actorCount}
+              verb={verb}
+              isRead={isRead}
+              timerWidth={timerWidth}
+            />
+          </View>
+          <NotificationContent
+            description={extra?.description || ''}
+            defaultContent={extra?.content || ''}
+            activities={activities}
+            verb={verb}
+            actorCount={actorCount}
+          />
+        </View>
+      )}
 
       <View
         onLayout={onLayout}
@@ -200,6 +222,9 @@ const createStyles = (theme: ITheme) => {
       height: 28,
       justifyContent: 'center',
       alignItems: 'center',
+    },
+    indicatorMargin: {
+      marginTop: spacing.margin.base,
     },
   });
 };
