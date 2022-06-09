@@ -170,7 +170,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
   };
 
   const onKeyboardVisibleChanged = (keyboardShown: boolean) => {
-    if (!keyboardShown) {
+    if (visible && !keyboardShown) {
       //Wait for keyboard to be invisible
       setTimeout(() => {
         runOnJS(collapse)();
