@@ -16,6 +16,7 @@ import {useTheme} from 'react-native-paper';
 import MemberItem from '../components/MemberItem';
 
 interface ContentDataProps {
+  canManageMember: boolean;
   style?: StyleProp<ViewStyle>;
   sectionList: any[];
   loading: boolean;
@@ -26,6 +27,7 @@ interface ContentDataProps {
 
 const ContentData = ({
   style,
+  canManageMember,
   sectionList,
   loading,
   canLoadMore,
@@ -46,7 +48,7 @@ const ContentData = ({
   };
 
   const renderItem = ({item}: {item: ICommunityMembers}) => {
-    return <MemberItem item={item} />;
+    return <MemberItem item={item} canManageMember={canManageMember} />;
   };
 
   const renderListFooter = () => {

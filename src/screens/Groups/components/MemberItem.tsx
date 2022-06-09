@@ -17,10 +17,11 @@ import groupsKeySelector from '../redux/keySelector';
 
 interface MemberItemProps {
   item: any;
+  canManageMember: boolean;
   onPressMenu?: (item: any) => void;
 }
 
-const MemberItem = ({item, onPressMenu}: MemberItemProps) => {
+const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
   const {colors} = theme;
@@ -29,7 +30,6 @@ const MemberItem = ({item, onPressMenu}: MemberItemProps) => {
   const {rootNavigation} = useRootNavigation();
 
   const {id, fullname, avatar, username} = item || {};
-  const {can_manage_member} = useKeySelector(groupsKeySelector.communityDetail);
 
   const goToUserProfile = () => {
     rootNavigation.navigate(mainStack.userProfile, {userId: id});
@@ -67,7 +67,7 @@ const MemberItem = ({item, onPressMenu}: MemberItemProps) => {
               buttonTestID="member_item.icon_chat.button"
             />
           )}
-          {can_manage_member && (
+          {canManageMember && (
             <Icon
               icon={'EllipsisV'}
               style={styles.iconOption}

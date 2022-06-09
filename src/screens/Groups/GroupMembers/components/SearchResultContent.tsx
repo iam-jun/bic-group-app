@@ -17,12 +17,14 @@ import {IGroupMembers} from '~/interfaces/IGroup';
 import MemberItem from '../../components/MemberItem';
 
 interface SearchResultContentProps {
+  canManageMember: boolean;
   onLoadMore?: () => void;
   onRefresh?: () => void;
   onPressMenu: (item: IGroupMembers) => void;
 }
 
 const SearchResultContent = ({
+  canManageMember,
   onLoadMore,
   onRefresh,
   onPressMenu,
@@ -35,7 +37,13 @@ const SearchResultContent = ({
   );
 
   const renderItem = ({item}: {item: IGroupMembers}) => {
-    return <MemberItem item={item} onPressMenu={onPressMenu} />;
+    return (
+      <MemberItem
+        item={item}
+        canManageMember={canManageMember}
+        onPressMenu={onPressMenu}
+      />
+    );
   };
 
   const renderEmptyComponent = () => {

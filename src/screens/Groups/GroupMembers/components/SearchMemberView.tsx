@@ -11,6 +11,8 @@ import {useTheme} from 'react-native-paper';
 import SearchResultContent from './SearchResultContent';
 import {IGroupMembers} from '~/interfaces/IGroup';
 import SearchBaseView from '~/beinComponents/SearchBaseView';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '../../redux/keySelector';
 
 interface SearchMemberViewProps {
   groupId: number;
@@ -33,6 +35,9 @@ const SearchMemberView = ({
   const theme = useTheme() as ITheme;
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles(theme);
+  const can_manage_member = useKeySelector(
+    groupsKeySelector.groupDetail.can_manage_member,
+  );
 
   const getGroupSearchMembers = (searchText: string) => {
     dispatch(
@@ -69,6 +74,7 @@ const SearchMemberView = ({
         <SearchResultContent
           onLoadMore={onLoadMore}
           onPressMenu={onPressMenu}
+          canManageMember={can_manage_member}
         />
       ) : (
         <View style={styles.text}>

@@ -27,6 +27,7 @@ const CommunityMembers = ({route}: any) => {
   const {loading, canLoadMore, community_admin, member} = useKeySelector(
     groupsKeySelector.communityMembers,
   );
+  const {can_manage_member} = useKeySelector(groupsKeySelector.communityDetail);
 
   const getCommunityMembers = () => {
     dispatch(actions.getCommunityMembers({communityId}));
@@ -93,6 +94,7 @@ const CommunityMembers = ({route}: any) => {
       </View>
 
       <ContentData
+        canManageMember={can_manage_member}
         sectionList={sectionList}
         loading={loading}
         canLoadMore={canLoadMore}

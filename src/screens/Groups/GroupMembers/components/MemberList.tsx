@@ -17,12 +17,18 @@ import {IGroupMembers} from '~/interfaces/IGroup';
 import MemberItem from '../../components/MemberItem';
 
 interface MemberListProps {
+  canManageMember: boolean;
   onLoadMore: () => void;
   onPressMenu: (item: IGroupMembers) => void;
   onRefresh?: () => void;
 }
 
-const MemberList = ({onLoadMore, onPressMenu, onRefresh}: MemberListProps) => {
+const MemberList = ({
+  canManageMember,
+  onLoadMore,
+  onPressMenu,
+  onRefresh,
+}: MemberListProps) => {
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyles(theme);
@@ -84,7 +90,13 @@ const MemberList = ({onLoadMore, onPressMenu, onRefresh}: MemberListProps) => {
   };
 
   const renderItem = ({item}: {item: IGroupMembers}) => {
-    return <MemberItem item={item} onPressMenu={onPressMenu} />;
+    return (
+      <MemberItem
+        item={item}
+        canManageMember={canManageMember}
+        onPressMenu={onPressMenu}
+      />
+    );
   };
 
   return (

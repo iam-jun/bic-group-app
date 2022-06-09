@@ -10,6 +10,8 @@ import appConfig from '~/configs/appConfig';
 import Text from '~/beinComponents/Text';
 import {useTheme} from 'react-native-paper';
 import SearchResultContent from './SearchResultContent';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '../redux/keySelector';
 
 interface SearchMemberViewProps {
   communityId: number;
@@ -30,6 +32,7 @@ const SearchMemberView = ({
   const theme = useTheme() as ITheme;
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles();
+  const {can_manage_member} = useKeySelector(groupsKeySelector.communityDetail);
 
   const getCommunitySearchMembers = (searchText: string) => {
     dispatch(
@@ -66,7 +69,10 @@ const SearchMemberView = ({
       onClose={onClose}
       onChangeText={onSearchMember}>
       {!!searchText ? (
-        <SearchResultContent onLoadMore={onLoadMore} />
+        <SearchResultContent
+          canManageMember={can_manage_member}
+          onLoadMore={onLoadMore}
+        />
       ) : (
         <View style={styles.text}>
           <Text.BodyS

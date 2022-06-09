@@ -17,11 +17,13 @@ import groupsKeySelector from '../redux/keySelector';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 interface SearchResultContentProps {
+  canManageMember: boolean;
   onLoadMore?: () => void;
   onRefresh?: () => void;
 }
 
 const SearchResultContent = ({
+  canManageMember,
   onLoadMore,
   onRefresh,
 }: SearchResultContentProps) => {
@@ -33,7 +35,7 @@ const SearchResultContent = ({
   );
 
   const renderItem = ({item}: {item: ICommunityMembers}) => {
-    return <MemberItem item={item} />;
+    return <MemberItem item={item} canManageMember={canManageMember} />;
   };
 
   const renderEmptyComponent = () => {

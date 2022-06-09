@@ -93,6 +93,7 @@ const _GroupMembers = (props: any) => {
   };
 
   const onRefresh = () => {
+    getGroupProfile(); // to update can_manage_member when member role changes
     dispatch(groupsActions.clearGroupMembers());
     getMembers();
   };
@@ -148,6 +149,7 @@ const _GroupMembers = (props: any) => {
       </View>
 
       <MemberList
+        canManageMember={can_manage_member}
         onLoadMore={onLoadMore}
         onPressMenu={onPressMenu}
         onRefresh={onRefresh}
