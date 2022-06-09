@@ -120,7 +120,7 @@ export const groupInitState = {
     total: 0,
     loading: false,
     canLoadMore: true,
-    ids: [],
+    ids: [] as number[],
     items: {},
   },
   // temporarily stores data for `undo` action

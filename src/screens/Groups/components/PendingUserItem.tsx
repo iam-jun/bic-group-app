@@ -1,7 +1,6 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import i18next from 'i18next';
 
 import Avatar from '~/beinComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
@@ -12,6 +11,7 @@ import {ITheme} from '~/theme/interfaces';
 import {formatFullTime} from '~/beinComponents/TimeView';
 import {AppContext} from '~/contexts/AppContext';
 import {IJoiningMember} from '~/interfaces/IGroup';
+import {useBaseHook} from '~/hooks';
 
 interface PendingUserItemProps {
   requestItem: IJoiningMember;
@@ -26,9 +26,10 @@ const PendingUserItem = ({
 }: PendingUserItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
+  const {t} = useBaseHook();
   const {language} = useContext(AppContext);
 
-  const {user, created_at: createdAt} = requestItem || {};
+  const {user, updated_at: updatedAt} = requestItem || {};
   const {
     avatar,
     fullname: fullName,
@@ -36,6 +37,8 @@ const PendingUserItem = ({
     country_code: countryCode,
     phone,
     latest_work: latestWork,
+    city,
+    country,
   } = user || {};
 
   const renderItem = ({
@@ -44,16 +47,14 @@ const PendingUserItem = ({
     TitleComponent,
   }: {
     icon: IconType;
-    title?: string;
+    title?: string | null;
     TitleComponent?: React.ReactNode;
   }) => {
     return (
       (!!title || !!TitleComponent) && (
         <View style={styles.itemComponent}>
           <Icon icon={icon} tintColor={theme.colors.primary5} size={24} />
-          <Text.Body style={styles.text} useI18n>
-            {title}
-          </Text.Body>
+          <Text.Body style={styles.text}>{title}</Text.Body>
           {TitleComponent}
         </View>
       )
@@ -67,8 +68,8 @@ const PendingUserItem = ({
         <View style={styles.textHeader}>
           <Text.ButtonBase>{fullName}</Text.ButtonBase>
           <Text.Body color={theme.colors.textSecondary}>
-            {`${i18next.t('groups:text_requested_at')} ${formatFullTime(
-              createdAt,
+            {`${t('groups:text_requested_at')} ${formatFullTime(
+              updatedAt,
               language,
             )}`}
           </Text.Body>
@@ -80,9 +81,13 @@ const PendingUserItem = ({
           icon: 'iconSuitcase',
           title:
             latestWork &&
-            `${latestWork?.title_position} ${i18next.t('common:text_at')} ${
+            `${latestWork?.title_position} ${t('common:text_at')} ${
               latestWork?.company
             }`,
+        })}
+        {renderItem({
+          icon: 'LocationPoint',
+          title: city && country ? `${city}, ${country}` : undefined,
         })}
         {renderItem({icon: 'Envelope', title: email})}
         {renderItem({

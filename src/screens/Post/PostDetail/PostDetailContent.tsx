@@ -290,8 +290,7 @@ const _PostDetailContent = (props: any) => {
 
   const onPressReplySectionHeader = useCallback(
     (commentData, section, index) => {
-      scrollTo(index, 0);
-      commentInputRef?.current?.focus?.();
+      navigateToCommentDetailScreen(commentData, commentData);
     },
     [sectionData],
   );
@@ -326,8 +325,11 @@ const _PostDetailContent = (props: any) => {
 
   const onPressReplyCommentItem = useCallback(
     (commentData, section, index) => {
-      scrollTo(section?.index, index + 1);
-      commentInputRef?.current?.focus?.();
+      navigateToCommentDetailScreen(
+        section?.comment || {},
+        commentData,
+        section?.comment,
+      );
     },
     [sectionData],
   );
