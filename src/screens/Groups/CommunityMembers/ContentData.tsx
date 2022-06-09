@@ -23,6 +23,7 @@ interface ContentDataProps {
   canLoadMore: boolean;
   onRefresh?: () => void;
   onLoadMore?: () => void;
+  onPressMenu: (item: ICommunityMembers) => void;
 }
 
 const ContentData = ({
@@ -33,6 +34,7 @@ const ContentData = ({
   canLoadMore,
   onRefresh,
   onLoadMore,
+  onPressMenu,
 }: ContentDataProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
@@ -48,7 +50,13 @@ const ContentData = ({
   };
 
   const renderItem = ({item}: {item: ICommunityMembers}) => {
-    return <MemberItem item={item} canManageMember={canManageMember} />;
+    return (
+      <MemberItem
+        item={item}
+        canManageMember={canManageMember}
+        onPressMenu={onPressMenu}
+      />
+    );
   };
 
   const renderListFooter = () => {

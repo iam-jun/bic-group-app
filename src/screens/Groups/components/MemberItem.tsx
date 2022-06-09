@@ -18,7 +18,7 @@ import groupsKeySelector from '../redux/keySelector';
 interface MemberItemProps {
   item: any;
   canManageMember: boolean;
-  onPressMenu?: (item: any) => void;
+  onPressMenu: (item: any) => void;
 }
 
 const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
@@ -71,7 +71,7 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
             <Icon
               icon={'EllipsisV'}
               style={styles.iconOption}
-              onPress={onPressMenu ? () => onPressMenu(item) : undefined}
+              onPress={() => onPressMenu(item)}
               buttonTestID="member_item.icon_option.button"
             />
           )}

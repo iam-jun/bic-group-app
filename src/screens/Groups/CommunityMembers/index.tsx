@@ -2,7 +2,6 @@ import {StyleSheet, View, Pressable} from 'react-native';
 import React, {useEffect, useState} from 'react';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import i18next from 'i18next';
 
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -13,6 +12,8 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import SearchMemberView from './SearchMemberView';
 import ContentData from './ContentData';
+import {ICommunityMembers} from '~/interfaces/ICommunity';
+import {useBaseHook} from '~/hooks';
 
 const CommunityMembers = ({route}: any) => {
   const {communityId} = route.params;
@@ -20,6 +21,7 @@ const CommunityMembers = ({route}: any) => {
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyles(theme);
+  const {t} = useBaseHook();
 
   const [sectionList, setSectionList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -62,6 +64,10 @@ const CommunityMembers = ({route}: any) => {
     setSectionList(newSectionList);
   }, [community_admin.data, member.data]);
 
+  const onPressMenu = (item: ICommunityMembers) => {
+    // TODO: ADD PRESS MENU
+  };
+
   const onLoadMore = () => {
     getCommunityMembers();
   };
@@ -88,7 +94,7 @@ const CommunityMembers = ({route}: any) => {
           onPress={onPressSearch}
           style={styles.searchAndInvite}>
           <View pointerEvents="none">
-            <SearchInput placeholder={i18next.t('groups:text_search_member')} />
+            <SearchInput placeholder={t('groups:text_search_member')} />
           </View>
         </Pressable>
       </View>
@@ -100,13 +106,15 @@ const CommunityMembers = ({route}: any) => {
         canLoadMore={canLoadMore}
         onRefresh={onRefresh}
         onLoadMore={onLoadMore}
+        onPressMenu={onPressMenu}
       />
 
       <SearchMemberView
         isOpen={isOpen}
         communityId={communityId}
         onClose={onCloseModal}
-        placeholder={i18next.t('groups:text_search_member')}
+        onPressMenu={onPressMenu}
+        placeholder={t('groups:text_search_member')}
       />
     </ScreenWrapper>
   );

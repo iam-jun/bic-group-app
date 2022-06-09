@@ -9,9 +9,10 @@ import {debounce} from 'lodash';
 import appConfig from '~/configs/appConfig';
 import Text from '~/beinComponents/Text';
 import {useTheme} from 'react-native-paper';
-import SearchResultContent from './SearchResultContent';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
+import {ICommunityMembers} from '~/interfaces/ICommunity';
+import MemberSearchResult from '../components/MemberSearchResult';
 
 interface SearchMemberViewProps {
   communityId: number;
@@ -19,20 +20,25 @@ interface SearchMemberViewProps {
   placeholder?: string;
   initSearch?: string;
   onClose?: () => void;
+  onPressMenu: (item: ICommunityMembers) => void;
 }
 
 const SearchMemberView = ({
   communityId,
   isOpen,
   placeholder,
-  onClose,
   initSearch,
+  onClose,
+  onPressMenu,
 }: SearchMemberViewProps) => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles();
   const {can_manage_member} = useKeySelector(groupsKeySelector.communityDetail);
+  const communitySearchMembers = useKeySelector(
+    groupsKeySelector.communitySearchMembers,
+  );
 
   const getCommunitySearchMembers = (searchText: string) => {
     dispatch(
@@ -69,9 +75,11 @@ const SearchMemberView = ({
       onClose={onClose}
       onChangeText={onSearchMember}>
       {!!searchText ? (
-        <SearchResultContent
+        <MemberSearchResult
           canManageMember={can_manage_member}
+          memberSearchData={communitySearchMembers}
           onLoadMore={onLoadMore}
+          onPressMenu={onPressMenu}
         />
       ) : (
         <View style={styles.text}>

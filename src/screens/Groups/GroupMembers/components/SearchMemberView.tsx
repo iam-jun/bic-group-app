@@ -8,11 +8,11 @@ import {debounce} from 'lodash';
 import appConfig from '~/configs/appConfig';
 import Text from '~/beinComponents/Text';
 import {useTheme} from 'react-native-paper';
-import SearchResultContent from './SearchResultContent';
 import {IGroupMembers} from '~/interfaces/IGroup';
 import SearchBaseView from '~/beinComponents/SearchBaseView';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
+import MemberSearchResult from '../../components/MemberSearchResult';
 
 interface SearchMemberViewProps {
   groupId: number;
@@ -37,6 +37,9 @@ const SearchMemberView = ({
   const styles = createStyles(theme);
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
+  );
+  const groupSearchMembers = useKeySelector(
+    groupsKeySelector.groupSearchMembers,
   );
 
   const getGroupSearchMembers = (searchText: string) => {
@@ -71,10 +74,11 @@ const SearchMemberView = ({
       onClose={onClose}
       onChangeText={onSearchMembers}>
       {!!searchText ? (
-        <SearchResultContent
+        <MemberSearchResult
+          canManageMember={can_manage_member}
+          memberSearchData={groupSearchMembers}
           onLoadMore={onLoadMore}
           onPressMenu={onPressMenu}
-          canManageMember={can_manage_member}
         />
       ) : (
         <View style={styles.text}>

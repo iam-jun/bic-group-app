@@ -8,34 +8,39 @@ import {
 import React from 'react';
 import {useTheme} from 'react-native-paper';
 
-import {ICommunityMembers} from '~/interfaces/ICommunity';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
-import MemberItem from '../components/MemberItem';
-import {useKeySelector} from '~/hooks/selector';
-import groupsKeySelector from '../redux/keySelector';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import MemberItem from './MemberItem';
 
-interface SearchResultContentProps {
+interface MemberSearchResultProps {
   canManageMember: boolean;
+  memberSearchData: {loading: boolean; canLoadMore: boolean; data: any[]};
   onLoadMore?: () => void;
   onRefresh?: () => void;
+  onPressMenu: (item: any) => void;
 }
 
-const SearchResultContent = ({
+const MemberSearchResult = ({
   canManageMember,
+  memberSearchData,
   onLoadMore,
   onRefresh,
-}: SearchResultContentProps) => {
+  onPressMenu,
+}: MemberSearchResultProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
 
-  const {loading, canLoadMore, data} = useKeySelector(
-    groupsKeySelector.communitySearchMembers,
-  );
+  const {loading, canLoadMore, data} = memberSearchData;
 
-  const renderItem = ({item}: {item: ICommunityMembers}) => {
-    return <MemberItem item={item} canManageMember={canManageMember} />;
+  const renderItem = ({item}: {item: any}) => {
+    return (
+      <MemberItem
+        item={item}
+        canManageMember={canManageMember}
+        onPressMenu={onPressMenu}
+      />
+    );
   };
 
   const renderEmptyComponent = () => {
@@ -45,7 +50,7 @@ const SearchResultContent = ({
         <Text.Body
           color={theme.colors.textSecondary}
           useI18n
-          testID="search_result_content.no_results">
+          testID="member_search_result.no_results">
           common:text_no_results_found
         </Text.Body>
       </View>
@@ -64,7 +69,7 @@ const SearchResultContent = ({
     if (!loading && canLoadMore && data.length > 0)
       return (
         <View style={styles.listFooter}>
-          <ActivityIndicator testID="search_result_content.loading_more" />
+          <ActivityIndicator testID="member_search_result.loading_more" />
         </View>
       );
 
@@ -76,10 +81,11 @@ const SearchResultContent = ({
       testID="flatlist"
       data={data}
       renderItem={renderItem}
-      keyExtractor={(item, index) => `result_item_${item}_${index}`}
+      keyExtractor={(item, index) => `search_item_${item}_${index}`}
       ListHeaderComponent={renderHeaderComponent}
       ListFooterComponent={renderListFooter}
       ListEmptyComponent={renderEmptyComponent}
+      showsVerticalScrollIndicator={false}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.1}
       refreshControl={
@@ -100,11 +106,6 @@ const createStyles = (theme: ITheme) => {
   const {spacing} = theme;
 
   return StyleSheet.create({
-    listFooter: {
-      height: 100,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
     textSearchResults: {
       marginHorizontal: spacing.margin.large,
       marginVertical: spacing.margin.base,
@@ -113,7 +114,12 @@ const createStyles = (theme: ITheme) => {
       alignItems: 'center',
       marginVertical: 100,
     },
+    listFooter: {
+      height: 100,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
   });
 };
 
-export default SearchResultContent;
+export default MemberSearchResult;
