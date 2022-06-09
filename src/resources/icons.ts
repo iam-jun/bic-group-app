@@ -243,6 +243,8 @@ const icons = {
   FileTimesAlt: 'FileTimesAlt',
   WifiSlash: 'WifiSlash',
   SignOutAlt: 'SignOutAlt',
+  Bug: 'Bug',
+  Bars: 'Bars',
   Channel: 'Channel',
   addUsers,
   iconMapPin,
