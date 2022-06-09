@@ -4,7 +4,7 @@ import {makeHttpRequest} from '~/services/httpApiRequest';
 
 export const giphyApiConfig = {
   getAPIKey: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/v1/authorization/giphy-key`,
+    url: `${ApiConfig.providers.beinFeed.url}authorization/giphy-key`,
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,

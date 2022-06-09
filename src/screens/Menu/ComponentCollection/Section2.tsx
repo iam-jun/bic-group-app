@@ -13,7 +13,6 @@ import Reaction from '~/beinComponents/Badge/Reaction';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import * as modalActions from '~/store/modal/actions';
 import Tag from '~/beinComponents/Tag';
-import TabView from '~/beinComponents/Tab';
 import {IMenuItemProps} from '~/interfaces/IMenu';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import {IUser} from '~/interfaces/IAuth';
@@ -116,7 +115,6 @@ const Section2 = () => {
     const userData: IUser[] = [
       {
         id: '1',
-        _id: '1',
         name: 'Name Name Name Name Name name 1',
         email: '',
         avatarUrl: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
@@ -310,8 +308,6 @@ const Section2 = () => {
           />
         </View>
         <Text.H5 style={{margin: spacing?.margin.base}}>Tab Menu</Text.H5>
-
-        <TabView data={data} />
 
         <Divider
           style={{
