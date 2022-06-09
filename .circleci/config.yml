@@ -18,9 +18,7 @@ jobs:
           command: |
             cat >.env.staging \<<EOL
             SELF_DOMAIN=${SELF_DOMAIN}
-            CHAT_DOMAIN=${CHAT_DOMAIN}
             BEIN_FEED=${BEIN_FEED}
-            BEIN_FEED_VERSION=${BEIN_FEED_VERSION}
             BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
             BEIN_API=${BEIN_API}
             BEIN_NOTIFICATION=${BEIN_NOTIFICATION}
@@ -76,9 +74,7 @@ jobs:
           command: |
             cat >.env.production \<<EOL
             SELF_DOMAIN=${SELF_DOMAIN}
-            CHAT_DOMAIN=${CHAT_DOMAIN}
             BEIN_FEED=${BEIN_FEED}
-            BEIN_FEED_VERSION=${BEIN_FEED_VERSION}
             BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
             BEIN_API=${BEIN_API}
             BEIN_NOTIFICATION=${BEIN_NOTIFICATION}
@@ -128,9 +124,7 @@ jobs:
           command: |
             cat >.env.staging \<<EOL
             SELF_DOMAIN=${SELF_DOMAIN}
-            CHAT_DOMAIN=${CHAT_DOMAIN}
             BEIN_FEED=${BEIN_FEED}
-            BEIN_FEED_VERSION=${BEIN_FEED_VERSION}
             BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
             BEIN_API=${BEIN_API}
             BEIN_NOTIFICATION=${BEIN_NOTIFICATION}
@@ -174,9 +168,7 @@ jobs:
           command: |
             cat >.env.production \<<EOL
             SELF_DOMAIN=${SELF_DOMAIN}
-            CHAT_DOMAIN=${CHAT_DOMAIN}
             BEIN_FEED=${BEIN_FEED}
-            BEIN_FEED_VERSION=${BEIN_FEED_VERSION}
             BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
             BEIN_API=${BEIN_API}
             BEIN_NOTIFICATION=${BEIN_NOTIFICATION}
