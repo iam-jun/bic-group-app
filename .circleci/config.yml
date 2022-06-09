@@ -7,7 +7,7 @@ orbs:
 jobs:
   ios-stg:
     macos:
-      xcode: 13.2.0
+      xcode: 13.4.1
     environment:
       FL_OUTPUT_DIR: ./fastlane/staging/
       FASTLANE_LANE: deploy_staging_ci
@@ -18,9 +18,7 @@ jobs:
           command: |
             cat >.env.staging \<<EOL
             SELF_DOMAIN=${SELF_DOMAIN}
-            CHAT_DOMAIN=${CHAT_DOMAIN}
             BEIN_FEED=${BEIN_FEED}
-            BEIN_FEED_VERSION=${BEIN_FEED_VERSION}
             BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
             BEIN_API=${BEIN_API}
             BEIN_NOTIFICATION=${BEIN_NOTIFICATION}
@@ -42,7 +40,7 @@ jobs:
           command: echo $GOOGLE_SERVICES_iOS | base64 --decode > ios/Firebase/GoogleService-Info-Staging.plist
       - run:
           name: Install NPM
-          command: npm install
+          command: npm install --legacy-peer-deps
       - run:
           name: Install Bundle
           command: cd ios && bundle install
@@ -65,7 +63,7 @@ jobs:
 
   ios-pro:
     macos:
-      xcode: 13.2.0
+      xcode: 13.4.1
     environment:
       FL_OUTPUT_DIR: ./fastlane/production/
       FASTLANE_LANE: deploy_production_ci
@@ -76,9 +74,7 @@ jobs:
           command: |
             cat >.env.production \<<EOL
             SELF_DOMAIN=${SELF_DOMAIN}
-            CHAT_DOMAIN=${CHAT_DOMAIN}
             BEIN_FEED=${BEIN_FEED}
-            BEIN_FEED_VERSION=${BEIN_FEED_VERSION}
             BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
             BEIN_API=${BEIN_API}
             BEIN_NOTIFICATION=${BEIN_NOTIFICATION}
@@ -100,7 +96,7 @@ jobs:
           command: echo $GOOGLE_SERVICES_iOS | base64 --decode > ios/Firebase/GoogleService-Info-Production.plist
       - run:
           name: Install NPM
-          command: npm install
+          command: npm install --legacy-peer-deps
       - run:
           name: Install Bundle
           command: cd ios && bundle install
@@ -128,9 +124,7 @@ jobs:
           command: |
             cat >.env.staging \<<EOL
             SELF_DOMAIN=${SELF_DOMAIN}
-            CHAT_DOMAIN=${CHAT_DOMAIN}
             BEIN_FEED=${BEIN_FEED}
-            BEIN_FEED_VERSION=${BEIN_FEED_VERSION}
             BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
             BEIN_API=${BEIN_API}
             BEIN_NOTIFICATION=${BEIN_NOTIFICATION}
@@ -174,9 +168,7 @@ jobs:
           command: |
             cat >.env.production \<<EOL
             SELF_DOMAIN=${SELF_DOMAIN}
-            CHAT_DOMAIN=${CHAT_DOMAIN}
             BEIN_FEED=${BEIN_FEED}
-            BEIN_FEED_VERSION=${BEIN_FEED_VERSION}
             BEIN_FEED_WS_MSGPACK=${BEIN_FEED_WS_MSGPACK}
             BEIN_API=${BEIN_API}
             BEIN_NOTIFICATION=${BEIN_NOTIFICATION}
@@ -219,7 +211,7 @@ workflows:
       - ios-stg:
           filters:
             branches:
-              only: staging
+              only: /^staging.*$/
           context:
             - bein-group-stg
             - bein-group-stg-ios
@@ -229,7 +221,7 @@ workflows:
       - android-stg:
           filters:
             branches:
-              only: staging
+              only: /^staging.*$/
           context:
             - bein-group-stg
             - bein-group-stg-android
@@ -241,14 +233,14 @@ workflows:
       - ios-pro:
           filters:
             branches:
-              only: master
+              only: /^master.*$/
           context:
             - bein-group-pro
             - bein-group-pro-ios
       - android-pro:
           filters:
             branches:
-              only: master
+              only: /^master.*$/
           context:
             - bein-group-pro
             - bein-group-pro-android

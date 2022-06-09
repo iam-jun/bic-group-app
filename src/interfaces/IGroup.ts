@@ -142,6 +142,7 @@ export interface IJoiningMember {
   user_id: number;
   group_id: number;
   created_at: string;
+  updated_at: string;
   user: IJoiningUserInfo;
 }
 
@@ -162,7 +163,7 @@ export interface IJoiningUserInfo {
     end_date: string | null;
     company: string | null;
     title_position: string | null;
-  };
+  } | null;
 }
 
 export interface IGetYourGroupsSearch {

@@ -117,7 +117,7 @@
     "btn_decline": "Decline",
     "btn_approve_all": "Approve All",
     "btn_decline_all": "Decline All",
-    "text_request": "Request",
+    "text_request_one": "Request",
     "text_request_other": "Requests",
     "text_admin": "Admin",
     "text_failed_to_upload": "Failed to upload",

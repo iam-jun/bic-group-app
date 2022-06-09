@@ -55,7 +55,7 @@ const screenWidth = Dimensions.get('window').width;
 
 const LOGO_SIZE = 96;
 const LOGO_SMALL_SIZE = 48;
-const MARGIN_LEFT_LOGO = -(screenWidth / 2 - 32 * 2);
+const MARGIN_LEFT_LOGO = -(screenWidth / 2 - 24 * 2);
 
 const SignIn = () => {
   useAuthAmplifyHub();
@@ -454,7 +454,6 @@ const themeStyles = (theme: ITheme) => {
       flex: 1,
       alignContent: 'center',
       width: '100%',
-      maxWidth: 375,
     },
     contentContainer: {
       flex: 1,
