@@ -130,7 +130,7 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
       })}
       {renderDivider()}
       <MenuSidebarItem
-        icon="UilSignOutAlt"
+        icon="SignOutAlt"
         tintColor={colors.error}
         title="auth:text_sign_out"
         titleProps={{style: {color: colors.error}}}

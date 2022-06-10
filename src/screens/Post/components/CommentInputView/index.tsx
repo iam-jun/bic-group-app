@@ -169,9 +169,6 @@ const CommentInputView: FC<CommentInputViewProps> = ({
           onChangeText,
           onPressSend,
         }}
-        autocompleteProps={{
-          modalPosition: 'above-keyboard',
-        }}
       />
     </View>
   );

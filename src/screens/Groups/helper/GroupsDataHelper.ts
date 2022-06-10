@@ -14,7 +14,7 @@ import appConfig from '~/configs/appConfig';
 
 export const groupsApiConfig = {
   getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/v1/feeds/timeline`,
+    url: `${ApiConfig.providers.beinFeed.url}feeds/timeline`,
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
@@ -154,7 +154,7 @@ export const groupsApiConfig = {
     useRetry: true,
     params: {
       ...params,
-      sort: 'created_at:desc',
+      sort: 'updated_at:desc',
       key: !!params?.key?.trim?.() ? params.key : undefined,
     },
   }),
@@ -296,7 +296,7 @@ export const groupsApiConfig = {
     useRetry: true,
     params: {
       ...params,
-      sort: 'created_at:desc',
+      sort: 'updated_at:desc',
       key: !!params?.key?.trim?.() ? params.key : undefined,
     },
   }),

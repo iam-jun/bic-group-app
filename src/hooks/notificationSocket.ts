@@ -61,9 +61,9 @@ const useNotificationSocket = () => {
 
     dispatch(actions.getNotifications());
 
-    const socket = io(getEnv('BEIN_NOTIFICATION'), {
+    const socket = io(getEnv('BEIN_NOTIFICATION_WS_DOMAIN'), {
       transports: ['websocket'],
-      path: '/ws',
+      path: getEnv('BEIN_NOTIFICATION_WS_PATH'),
       ...getMsgPackParser(getEnv('BEIN_FEED_WS_MSGPACK') !== 'disable'),
     });
 
