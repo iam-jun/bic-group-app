@@ -5,26 +5,29 @@ import {
   RefreshControl,
   ActivityIndicator,
 } from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {useTheme} from 'react-native-paper';
 
-import {useKeySelector} from '~/hooks/selector';
-import groupsKeySelector from '../../redux/keySelector';
 import {ITheme} from '~/theme/interfaces';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import Text from '~/beinComponents/Text';
-import {IGroupMembers} from '~/interfaces/IGroup';
-import MemberItem from '../../components/MemberItem';
+import MemberItem from './MemberItem';
 
 interface MemberListProps {
   canManageMember: boolean;
+  memberData: {
+    loading: boolean;
+    canLoadMore: boolean;
+    sectionList: any;
+  };
   onLoadMore: () => void;
-  onPressMenu: (item: IGroupMembers) => void;
+  onPressMenu: (item: any) => void;
   onRefresh?: () => void;
 }
 
 const MemberList = ({
   canManageMember,
+  memberData,
   onLoadMore,
   onPressMenu,
   onRefresh,
@@ -32,30 +35,8 @@ const MemberList = ({
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyles(theme);
-  const [sectionList, setSectionList] = useState([]);
 
-  const groupMembers = useKeySelector(groupsKeySelector.groupMembers);
-  const {loading, canLoadMore} = groupMembers || {};
-
-  useEffect(() => {
-    if (groupMembers) {
-      const newSectionList: any = [];
-
-      Object.values(groupMembers)?.map((roleData: any) => {
-        const section: any = {};
-        const {name, data} = roleData || {};
-
-        if (name && data) {
-          section.title = `${roleData.name}s`;
-          section.data = roleData.data;
-          section.user_count = roleData.user_count;
-          newSectionList.push(section);
-        }
-      });
-
-      setSectionList(newSectionList);
-    }
-  }, [groupMembers]);
+  const {loading, canLoadMore, sectionList} = memberData;
 
   const renderEmpty = () => {
     return !loading ? <NoSearchResult /> : null;
@@ -72,24 +53,22 @@ const MemberList = ({
 
   const renderListFooter = () => {
     if (
-      !(
-        canLoadMore &&
-        // @ts-ignore
-        sectionList[0]?.data?.length + sectionList[1]?.data?.length > 0
-      )
-    )
-      return null;
+      canLoadMore &&
+      sectionList[0]?.data?.length + sectionList[1]?.data?.length > 0
+    ) {
+      return (
+        <View
+          testID="member_list.loading_more_indicator"
+          style={styles.listFooter}>
+          <ActivityIndicator />
+        </View>
+      );
+    }
 
-    return (
-      <View
-        testID="member_list.loading_more_indicator"
-        style={styles.listFooter}>
-        <ActivityIndicator />
-      </View>
-    );
+    return null;
   };
 
-  const renderItem = ({item}: {item: IGroupMembers}) => {
+  const renderItem = ({item}: {item: any}) => {
     return (
       <MemberItem
         item={item}
@@ -104,7 +83,7 @@ const MemberList = ({
       testID="member_list"
       style={styles.content}
       sections={sectionList}
-      keyExtractor={(item, index) => `section_list_${item}_${index}`}
+      keyExtractor={(item, index) => `member_list_${item}_${index}`}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.1}
       ListEmptyComponent={renderEmpty}

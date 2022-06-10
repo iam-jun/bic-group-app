@@ -1,80 +1,29 @@
 import {StyleSheet, View, Pressable} from 'react-native';
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
 
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import {ITheme} from '~/theme/interfaces';
-import actions from '~/screens/Groups/redux/actions';
-import {useKeySelector} from '~/hooks/selector';
-import groupsKeySelector from '../redux/keySelector';
+
 import SearchMemberView from './SearchMemberView';
-import ContentData from './ContentData';
+import MembersContent from './MembersContent';
 import {ICommunityMembers} from '~/interfaces/ICommunity';
 import {useBaseHook} from '~/hooks';
 
 const CommunityMembers = ({route}: any) => {
   const {communityId} = route.params;
-  const dispatch = useDispatch();
+
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyles(theme);
   const {t} = useBaseHook();
 
-  const [sectionList, setSectionList] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
-
-  const {loading, canLoadMore, community_admin, member} = useKeySelector(
-    groupsKeySelector.communityMembers,
-  );
-  const {can_manage_member} = useKeySelector(groupsKeySelector.communityDetail);
-
-  const getCommunityMembers = () => {
-    dispatch(actions.getCommunityMembers({communityId}));
-  };
-
-  const resetCommunityMembers = () => {
-    dispatch(actions.resetCommunityMembers());
-  };
-
-  useEffect(() => {
-    getCommunityMembers();
-
-    return () => {
-      resetCommunityMembers();
-    };
-  }, [communityId]);
-
-  useEffect(() => {
-    const newSectionList: any = [
-      {
-        title: 'Admins',
-        data: community_admin.data,
-        user_count: community_admin.user_count,
-      },
-      {
-        title: 'Members',
-        data: member.data,
-        user_count: member.user_count,
-      },
-    ];
-
-    setSectionList(newSectionList);
-  }, [community_admin.data, member.data]);
 
   const onPressMenu = (item: ICommunityMembers) => {
     // TODO: ADD PRESS MENU
-  };
-
-  const onLoadMore = () => {
-    getCommunityMembers();
-  };
-
-  const onRefresh = () => {
-    resetCommunityMembers();
-    getCommunityMembers();
   };
 
   const onPressSearch = () => {
@@ -99,15 +48,7 @@ const CommunityMembers = ({route}: any) => {
         </Pressable>
       </View>
 
-      <ContentData
-        canManageMember={can_manage_member}
-        sectionList={sectionList}
-        loading={loading}
-        canLoadMore={canLoadMore}
-        onRefresh={onRefresh}
-        onLoadMore={onLoadMore}
-        onPressMenu={onPressMenu}
-      />
+      <MembersContent communityId={communityId} onPressMenu={onPressMenu} />
 
       <SearchMemberView
         isOpen={isOpen}

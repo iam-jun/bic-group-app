@@ -20,7 +20,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import MemberOptionsMenu from './components/MemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
-import MemberList from './components/MemberList';
+import MembersContent from './components/MembersContent';
 
 const _GroupMembers = (props: any) => {
   const params = props.route.params;
@@ -69,16 +69,6 @@ const _GroupMembers = (props: any) => {
     }
   }, [isInternetReachable]);
 
-  useEffect(() => {
-    dispatch(groupsActions.clearGroupMembers());
-    getMembers();
-    getGroupProfile();
-
-    return () => {
-      dispatch(groupsActions.clearGroupMembers());
-    };
-  }, [groupId]);
-
   const clearSelectedMember = () => setSelectedMember(undefined);
 
   const onPressMenu = (item: IGroupMembers) => {
@@ -86,16 +76,6 @@ const _GroupMembers = (props: any) => {
 
     setSelectedMember(item);
     baseSheetRef.current?.open();
-  };
-
-  const onLoadMore = () => {
-    getMembers();
-  };
-
-  const onRefresh = () => {
-    getGroupProfile(); // to update can_manage_member when member role changes
-    dispatch(groupsActions.clearGroupMembers());
-    getMembers();
   };
 
   const onPressSearch = () => {
@@ -148,12 +128,7 @@ const _GroupMembers = (props: any) => {
         {renderInviteMemberButton()}
       </View>
 
-      <MemberList
-        canManageMember={can_manage_member}
-        onLoadMore={onLoadMore}
-        onPressMenu={onPressMenu}
-        onRefresh={onRefresh}
-      />
+      <MembersContent groupId={groupId} onPressMenu={onPressMenu} />
 
       <MemberOptionsMenu
         groupId={groupId}

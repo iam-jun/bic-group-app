@@ -15,39 +15,37 @@ export default function* getCommunityMembers({
   try {
     const {groups} = yield select();
     const {communityId, params} = payload;
-    const {canLoadMore, community_admin, member} = groups.communityMembers;
+    const {canLoadMore, community_admin, community_member, offset} =
+      groups.communityMembers;
 
-    yield put(
-      actions.setCommunityMembers({
-        loading: community_admin.data.length + member.data.length === 0,
-      }),
-    );
+    yield put(actions.setCommunityMembers({loading: offset === 0}));
 
     if (!canLoadMore) return;
 
     // @ts-ignore
     const resp = yield call(groupsDataHelper.getCommunityMembers, communityId, {
       limit: appConfig.recordsPerPage,
-      offset: community_admin.data.length + member.data.length,
+      offset: offset,
       ...params,
     });
 
     const respData = resp?.data;
     if (respData) {
+      const newDataCount =
+        respData.community_admin.data.length +
+        respData.community_member.data.length;
       const newData = {
         loading: false,
-        canLoadMore:
-          respData.community_admin.data.length +
-            respData.community_member.data.length ===
-          appConfig.recordsPerPage,
+        canLoadMore: newDataCount === appConfig.recordsPerPage,
+        offset: offset + newDataCount,
         community_admin: {
           // append data when loading more
           data: [...community_admin.data, ...respData.community_admin.data],
           user_count: respData.community_admin.user_count,
         },
-        member: {
+        community_member: {
           // append data when loading more
-          data: [...member.data, ...respData.community_member.data],
+          data: [...community_member.data, ...respData.community_member.data],
           user_count: respData.community_member.user_count,
         },
       };
