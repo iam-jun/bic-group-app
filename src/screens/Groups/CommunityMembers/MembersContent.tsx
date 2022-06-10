@@ -46,8 +46,8 @@ const MembersContent = ({communityId, onPressMenu}: MembersContentProps) => {
     };
   }, [communityId]);
 
-  const getCommunityMembers = () => {
-    dispatch(actions.getCommunityMembers({communityId}));
+  const getCommunityMembers = (isRefreshing?: boolean) => {
+    dispatch(actions.getCommunityMembers({communityId, isRefreshing}));
   };
 
   const resetCommunityMembers = () => {
@@ -65,8 +65,8 @@ const MembersContent = ({communityId, onPressMenu}: MembersContentProps) => {
 
   const onRefresh = () => {
     getCommunityDetail();
-    resetCommunityMembers();
-    getCommunityMembers();
+    // resetCommunityMembers();
+    getCommunityMembers(true);
   };
 
   return (
