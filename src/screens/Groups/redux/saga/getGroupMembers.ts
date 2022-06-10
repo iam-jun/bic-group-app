@@ -12,19 +12,21 @@ export default function* getGroupMembers({
   payload: IGroupGetMembers;
 }) {
   try {
-    const {groupId, params} = payload;
+    const {groupId, params, isRefreshing} = payload;
     const {groups} = yield select();
     const groupMembers = groups.groupMembers;
     const {canLoadMore, offset} = groupMembers;
 
-    yield put(actions.setGroupMembers({loading: offset === 0}));
+    yield put(
+      actions.setGroupMembers({loading: isRefreshing ? true : offset === 0}),
+    );
 
-    if (!canLoadMore) return;
+    if (!isRefreshing && !canLoadMore) return;
 
     // @ts-ignore
     const resp = yield call(groupsDataHelper.getGroupMembers, groupId, {
       limit: appConfig.recordsPerPage,
-      offset: offset,
+      offset: isRefreshing ? 0 : offset,
       ...params,
     });
 
@@ -37,7 +39,9 @@ export default function* getGroupMembers({
         [role]: {
           name: resp[role].name,
           user_count: resp[role].user_count,
-          data: groupMembers?.[role]?.data
+          data: isRefreshing
+            ? [...resp[role].data]
+            : groupMembers?.[role]?.data
             ? [...groupMembers?.[role]?.data, ...resp[role].data]
             : [...resp[role].data],
         },
@@ -47,7 +51,7 @@ export default function* getGroupMembers({
     const newData = {
       loading: false,
       canLoadMore: newDataCount === appConfig.recordsPerPage,
-      offset: offset + newDataCount,
+      offset: isRefreshing ? newDataCount : offset + newDataCount,
       ...newDataObj,
     };
 

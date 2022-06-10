@@ -65,7 +65,6 @@ const MembersContent = ({communityId, onPressMenu}: MembersContentProps) => {
 
   const onRefresh = () => {
     getCommunityDetail();
-    // resetCommunityMembers();
     getCommunityMembers(true);
   };
 

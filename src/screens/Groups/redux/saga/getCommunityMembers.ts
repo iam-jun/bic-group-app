@@ -27,6 +27,7 @@ export default function* getCommunityMembers({
         loading: isRefreshing ? true : offset === 0,
       }),
     );
+
     if (!isRefreshing && !canLoadMore) return;
 
     // @ts-ignore

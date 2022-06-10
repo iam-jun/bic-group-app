@@ -23,12 +23,13 @@ const MembersContent = ({groupId, onPressMenu}: MembersContentProps) => {
   const {loading, canLoadMore} = groupMembers || {};
 
   const getGroupProfile = () => {
+    // to update can_manage_member when member role changes
     dispatch(actions.getGroupDetail(groupId));
   };
 
-  const getMembers = () => {
+  const getMembers = (isRefreshing?: boolean) => {
     if (groupId) {
-      dispatch(actions.getGroupMembers({groupId}));
+      dispatch(actions.getGroupMembers({groupId, isRefreshing}));
     }
   };
 
@@ -67,9 +68,8 @@ const MembersContent = ({groupId, onPressMenu}: MembersContentProps) => {
   };
 
   const onRefresh = () => {
-    getGroupProfile(); // to update can_manage_member when member role changes
-    dispatch(actions.clearGroupMembers());
-    getMembers();
+    getGroupProfile();
+    getMembers(true);
   };
 
   return (
