@@ -699,17 +699,22 @@
     "title_discover_groups": "Khám phá các nhóm"
   },
   "upload": {
-    "text_create_video_id_request_failed": "Có lỗi khi yêu cầu tạo id",
-    "text_create_video_id_response_failed": "Có lỗi khi tạo id",
-    "text_upload_video_request_failed": "Có lỗi khi yêu cầu tải video",
-    "text_upload_video_response_failed": "Có lỗi khi tải video",
+    "text_create_file_id_request_failed": "Có lỗi khi yêu cầu tạo id",
+    "text_create_file_id_response_failed": "Có lỗi khi tạo id",
+    "text_upload_request_failed": "Có lỗi khi yêu cầu tải {{file_type}}",
+    "text_upload_response_failed": "Có lỗi khi tải {{file_type}}",
     "text_create_media_request_failed": "Có lỗi khi yêu cầu tạo media",
     "text_create_media_response_failed": "Có lỗi khi tạo media",
-    "title_delete_video": "Xoá Video?",
-    "text_delete_video": "Bạn có chắc muốn xoá video?",
-    "text_upload_video_error": "Không thể tải lên video này",
-    "title_leave_uploading_video": "Đóng màn hình này?",
-    "text_leave_uploading_video": "Bạn có chắc muốn đóng màn hình này? Video bạn đang tải lên sẽ bị huỷ.",
+    "title_delete_file": "Xoá {{file_type}}?",
+    "text_delete_file": "Bạn có chắc muốn xoá {{file_type}}?",
+    "text_upload_error": "Không thể tải lên {{file_type}} này",
+    "title_leave_uploading": "Đóng màn hình này?",
+    "text_leave_uploading": "Bạn có chắc muốn đóng màn hình này? Video bạn đang tải lên sẽ bị huỷ.",
     "text_video_over_size": "Video của bạn phải nhỏ hơn 300MB"
+  },
+  "file_type": {
+    "image": "hình ảnh",
+    "video": "video",
+    "file": "tệp"
   }
 }

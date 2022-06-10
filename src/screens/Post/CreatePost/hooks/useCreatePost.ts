@@ -1,7 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
-import {validateImages, validateVideo} from '~/screens/Post/CreatePost/helper';
+import {
+  validateFiles,
+  validateImages,
+  validateVideo,
+} from '~/screens/Post/CreatePost/helper';
 import modalActions from '~/store/modal/actions';
 import {
   IAudience,
@@ -63,15 +67,21 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
   const initUsersRef = useRef<any>([]);
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
   const selectingVideo = useKeySelector(postKeySelector.createPost.video);
+  const selectingFiles = useKeySelector(postKeySelector.createPost.files);
   const {images, imageUploading} = validateImages(selectingImages, t);
   const {video, videoUploading} = validateVideo(selectingVideo, t);
+  const {files, fileUploading} = validateFiles(selectingFiles, t);
+
+  // const [hasVideoProgress, setHasVideoProgress] = useState(videoUploading);
 
   const tempMentions = useKeySelector('mentionInput.tempSelected') || {};
 
   let initPostData: IPostActivity = {};
+
   if (postId) {
     initPostData = useKeySelector(postKeySelector.postById(postId));
   }
+
   if (draftPostId) {
     const draftPosts = useKeySelector(postKeySelector.draft.posts) || [];
     initPostData = draftPosts?.find(
@@ -140,6 +150,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
   const disableButtonPost =
     imageUploading ||
     videoUploading ||
+    fileUploading ||
     loading ||
     content?.trim?.()?.length === 0 ||
     chosenAudiences.length === 0 ||
@@ -329,7 +340,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     const media = {
       images,
       videos: video?.id ? [_video] : [],
-      files: [],
+      files,
     };
     const setting: any = {};
     if (important?.active) {
@@ -450,7 +461,6 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     }
 
     const {imageError} = validateImages(selectingImages, t);
-    const {videoError} = validateVideo(selectingVideo, t);
 
     if (imageError) {
       dispatch(
@@ -504,6 +514,11 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     dispatch(postActions.setCreatePostData({...data, content: text}));
   };
 
+  // useEffect(() => {
+  //   console.log('useCreatePost videoUploading', videoUploading);
+  //   setHasVideoProgress(videoUploading);
+  // }, [videoUploading]);
+
   return {
     refIsRefresh,
     isShowToastAutoSave,
@@ -511,7 +526,9 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     createPostData,
     images,
     video: selectingVideo,
+    files,
     videoUploading,
+    fileUploading,
     disableButtonPost,
     isEditPost,
     isEditDraftPost,

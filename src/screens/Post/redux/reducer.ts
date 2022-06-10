@@ -1,3 +1,4 @@
+import {IFilePicked} from '~/interfaces/common';
 import {ICommentData} from '~/interfaces/IPost';
 import postTypes from './types';
 
@@ -20,6 +21,7 @@ export const postInitState = {
     },
     images: [],
     video: undefined,
+    files: [],
     imagesDraft: [],
     count: 0,
     currentSettings: {
@@ -200,6 +202,24 @@ function postReducer(state = postInitState, action: any = {}) {
           video: payload,
         },
       };
+    case postTypes.SET_CREATE_POST_FILES:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          files: [...state.createPost.files, ...payload],
+        },
+      };
+    case postTypes.REMOVE_CREATE_POST_FILE:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          files: state.createPost.files.filter(
+            (file: IFilePicked) => file.name !== payload.name,
+          ),
+        },
+      };
     case postTypes.SET_SEARCH_RESULT_AUDIENCE_GROUPS:
       return {
         ...state,
@@ -343,7 +363,7 @@ function postReducer(state = postInitState, action: any = {}) {
         ...state,
         commentErrorCode: payload,
       };
-    case postTypes.REMOVE_CHILD_COMMENT:
+    case postTypes.REMOVE_CHILD_COMMENT: {
       const allCommentsByPost: any = {...state.allCommentsByParentIds};
 
       // eslint-disable-next-line no-case-declarations
@@ -378,6 +398,7 @@ function postReducer(state = postInitState, action: any = {}) {
         ...state,
         allCommentsByParentIds: allCommentsByPost,
       };
+    }
     case postTypes.REMOVE_COMMENT_DELETED: {
       const allCommentsByPost: any = {...state.allCommentsByParentIds};
       const newAllPosts: any = {...state.allPosts};

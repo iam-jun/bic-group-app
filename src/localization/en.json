@@ -819,17 +819,22 @@
     "title_discover_groups": "Discover Groups"
   },
   "upload": {
-    "text_create_video_id_request_failed": "Cannot request id",
-    "text_create_video_id_response_failed": "Cannot create id",
-    "text_upload_video_request_failed": "Cannot request upload video",
-    "text_upload_video_response_failed": "Cannot upload video",
+    "text_create_file_id_request_failed": "Cannot request id",
+    "text_create_file_id_response_failed": "Cannot create id",
+    "text_upload_request_failed": "Cannot request upload {{file_type}}",
+    "text_upload_response_failed": "Cannot upload video {{file_type}}",
     "text_create_media_request_failed": "Cannot request create media",
     "text_create_media_response_failed": "Cannot create media",
-    "title_delete_video": "Delete Video?",
-    "text_delete_video": "Are you sure you want to delete video?",
-    "text_upload_video_error": "Can’t upload this video",
-    "title_leave_uploading_video": "Leave this page?",
-    "text_leave_uploading_video": "Are you sure you want to leave this page? Your video process will be lost.",
+    "title_delete_file": "Delete {{file_type}}?",
+    "text_delete_file": "Are you sure you want to delete {{file_type}}?",
+    "text_upload_error": "Can't upload this {{file_type}}",
+    "title_leave_uploading": "Leave this page?",
+    "text_leave_uploading": "Are you sure you want to leave this page? Your {{file_type}} process will be lost.",
     "text_video_over_size": "Your video must be less than 300MB"
+  },
+  "file_type": {
+    "image": "image",
+    "video": "video",
+    "file": "file"
   }
 }

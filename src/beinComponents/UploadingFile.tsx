@@ -12,7 +12,7 @@ import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 import {formatBytes} from '~/utils/formatData';
 import {isEmpty} from 'lodash';
-import {IGetFile} from '~/services/fileUploader';
+import FileUploader, {IGetFile} from '~/services/fileUploader';
 import {useBaseHook} from '~/hooks';
 import modalActions from '~/store/modal/actions';
 import {useDispatch} from 'react-redux';
@@ -65,29 +65,37 @@ const UploadingFile: FC<UploadingFileProps> = ({
   };
 
   const uploadFile = async () => {
-    if (!uploadTypes) {
+    if (!uploadType) {
       return;
     }
+
+    //ensure video not uploaded
+    if (!file || isEmpty(file) || file?.id || file?.url) {
+      setUploading(false);
+      return;
+    }
+
+    setError('');
+    setUploading(true);
     if (
       uploadType === uploadTypes.postVideo ||
       uploadType === uploadTypes.commentVideo
     ) {
-      //ensure video not uploaded
-      if (file && !isEmpty(file) && !file?.id && !file?.url) {
-        setError('');
-        setUploading(true);
-        await VideoUploader.getInstance().upload({
-          file,
-          uploadType,
-          onProgress: _onProgress,
-          onSuccess: _onSuccess,
-          onError: _onError,
-        });
-      } else {
-        setUploading(false);
-      }
+      await VideoUploader.getInstance().upload({
+        file,
+        uploadType,
+        onProgress: _onProgress,
+        onSuccess: _onSuccess,
+        onError: _onError,
+      });
     } else {
-      //todo upload file
+      await FileUploader.getInstance().upload({
+        file,
+        uploadType,
+        onProgress: _onProgress,
+        onSuccess: _onSuccess,
+        onError: _onError,
+      });
     }
   };
 
@@ -106,8 +114,12 @@ const UploadingFile: FC<UploadingFileProps> = ({
     } else {
       dispatch(
         modalActions.showAlert({
-          title: t('upload:title_delete_video'),
-          content: t('upload:title_delete_video'),
+          title: t('upload:title_delete_file', {
+            file_type: t('file_type:video'),
+          }),
+          content: t('upload:text_delete_file', {
+            file_type: t('file_type:video'),
+          }),
           cancelBtn: true,
           cancelLabel: t('common:btn_cancel'),
           confirmLabel: t('common:btn_delete'),

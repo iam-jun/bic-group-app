@@ -19,7 +19,7 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import modalActions from '~/store/modal/actions';
 import useCreatePost, {
   handlePressPostResultType,
-} from '~/screens/Post/CreatePost/useCreatePost';
+} from '~/screens/Post/CreatePost/hooks/useCreatePost';
 import MockedNavigator from '~/test/MockedNavigator';
 
 describe('Create Post screen', () => {

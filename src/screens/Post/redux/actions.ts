@@ -36,6 +36,7 @@ import {
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 import {ReactionType} from '~/constants/reactions';
+import {IFilePicked} from '~/interfaces/common';
 
 const postActions = {
   setAllPosts: (payload: IAllPosts) => ({
@@ -91,6 +92,14 @@ const postActions = {
   }),
   setCreatePostVideo: (payload?: any) => ({
     type: postTypes.SET_CREATE_POST_VIDEO,
+    payload,
+  }),
+  setCreatePostFiles: (payload?: IFilePicked[]) => ({
+    type: postTypes.SET_CREATE_POST_FILES,
+    payload,
+  }),
+  removeCreatePostFile: (payload?: IFilePicked) => ({
+    type: postTypes.REMOVE_CREATE_POST_FILE,
     payload,
   }),
   setCreatePostInitAudiences: (payload?: IPostAudience) => ({
