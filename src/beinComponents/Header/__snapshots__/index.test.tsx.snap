@@ -7,7 +7,9 @@ exports[`Header component renders correctly 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -63,7 +65,6 @@ exports[`Header component renders correctly 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -108,14 +109,13 @@ exports[`Header component renders correctly 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -135,20 +135,24 @@ exports[`Header component renders correctly 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -203,7 +207,9 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -259,7 +265,6 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -304,14 +309,13 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -331,20 +335,24 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -383,7 +391,6 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -430,7 +437,6 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.searchIcon"
             >
               <View
@@ -444,7 +450,6 @@ exports[`Header component renders correctly with props auto focus search 1`] = `
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,
@@ -527,7 +532,9 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -573,6 +580,7 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
           }
         }
         accessible={true}
+        collapsable={false}
         focusable={true}
         hitSlop={
           Object {
@@ -626,14 +634,13 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -653,20 +660,24 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -695,6 +706,7 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
           }
         }
         accessible={true}
+        collapsable={false}
         focusable={true}
         hitSlop={
           Object {
@@ -750,7 +762,6 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.searchIcon"
             >
               <View
@@ -763,6 +774,7 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
                 }
               >
                 <View
+                  collapsable={false}
                   style={
                     Object {
                       "bottom": 0,
@@ -839,7 +851,11 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
         }
       >
         <View
-          style={[Function]}
+          style={
+            Object {
+              "opacity": 0,
+            }
+          }
         >
           <View
             accessibilityState={
@@ -858,7 +874,6 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
                 "top": 20,
               }
             }
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -901,14 +916,12 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
                   ]
                 }
               >
-                <View
-                  className="icon-wrapper"
-                >
+                <View>
                   <RNSVGSvgView
                     align="xMidYMid"
                     bbHeight={24}
                     bbWidth={24}
-                    fill="#2F3945"
+                    color={4281284933}
                     focusable={false}
                     height={24}
                     meetOrSlice={0}
@@ -928,20 +941,24 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
                         },
                       ]
                     }
+                    tintColor={4281284933}
                     vbHeight={24}
                     vbWidth={24}
                     width={24}
                   >
-                    <RNSVGGroup
-                      fill={4281284933}
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGPath
-                        d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                        d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                        fill={
+                          Array [
+                            2,
+                          ]
+                        }
+                        propList={
+                          Array [
+                            "fill",
+                          ]
+                        }
                       />
                     </RNSVGGroup>
                   </RNSVGSvgView>
@@ -961,7 +978,9 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
           <View
             style={
               Array [
-                [Function],
+                Object {
+                  "width": "undefined%",
+                },
                 Object {
                   "backgroundColor": "#EAEDF2",
                   "borderRadius": 24,
@@ -1008,7 +1027,6 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
                       "top": 10,
                     }
                   }
-                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -1047,14 +1065,12 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
                         ]
                       }
                     >
-                      <View
-                        className="icon-wrapper"
-                      >
+                      <View>
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={20}
                           bbWidth={20}
-                          fill="#627286"
+                          color={4284641926}
                           focusable={false}
                           height={20}
                           meetOrSlice={0}
@@ -1074,20 +1090,24 @@ exports[`Header component renders correctly with props auto focus search 2`] = `
                               },
                             ]
                           }
+                          tintColor={4284641926}
                           vbHeight={24}
                           vbWidth={24}
                           width={20}
                         >
-                          <RNSVGGroup
-                            fill={4284641926}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"
+                              d="M21.71 20.29L18 16.61A9 9 0 1016.61 18l3.68 3.68a1 1 0 001.42 0 1 1 0 000-1.39zM11 18a7 7 0 117-7 7 7 0 01-7 7z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -1145,7 +1165,9 @@ exports[`Header component renders correctly with props avatar 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -1201,7 +1223,6 @@ exports[`Header component renders correctly with props avatar 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1246,14 +1267,13 @@ exports[`Header component renders correctly with props avatar 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -1273,20 +1293,24 @@ exports[`Header component renders correctly with props avatar 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -1306,7 +1330,6 @@ exports[`Header component renders correctly with props avatar 1`] = `
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -1366,7 +1389,6 @@ exports[`Header component renders correctly with props avatar 1`] = `
                 >
                   <View
                     collapsable={false}
-                    nativeID="animatedComponent"
                     style={
                       Object {
                         "bottom": 0,
@@ -1470,7 +1492,9 @@ exports[`Header component renders correctly with props avatar props 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -1526,7 +1550,6 @@ exports[`Header component renders correctly with props avatar props 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1571,14 +1594,13 @@ exports[`Header component renders correctly with props avatar props 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -1598,20 +1620,24 @@ exports[`Header component renders correctly with props avatar props 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -1631,7 +1657,6 @@ exports[`Header component renders correctly with props avatar props 1`] = `
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -1693,7 +1718,6 @@ exports[`Header component renders correctly with props avatar props 1`] = `
                 >
                   <View
                     collapsable={false}
-                    nativeID="animatedComponent"
                     style={
                       Object {
                         "bottom": 0,
@@ -1797,7 +1821,9 @@ exports[`Header component renders correctly with props button props 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -1853,7 +1879,6 @@ exports[`Header component renders correctly with props button props 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1898,14 +1923,13 @@ exports[`Header component renders correctly with props button props 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -1925,20 +1949,24 @@ exports[`Header component renders correctly with props button props 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -2035,7 +2063,9 @@ exports[`Header component renders correctly with props button text 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -2091,7 +2121,6 @@ exports[`Header component renders correctly with props button text 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -2136,14 +2165,13 @@ exports[`Header component renders correctly with props button text 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -2163,20 +2191,24 @@ exports[`Header component renders correctly with props button text 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -2277,7 +2309,9 @@ exports[`Header component renders correctly with props disable inset top 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -2333,7 +2367,6 @@ exports[`Header component renders correctly with props disable inset top 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -2378,14 +2411,13 @@ exports[`Header component renders correctly with props disable inset top 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -2405,20 +2437,24 @@ exports[`Header component renders correctly with props disable inset top 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -2470,7 +2506,9 @@ exports[`Header component renders correctly with props header ref 1`] = `
     <View
       style={
         Array [
-          [Function],
+          Object {
+            "height": undefined,
+          },
           Object {
             "alignItems": "flex-end",
             "backgroundColor": "#FFFFFF",
@@ -2526,7 +2564,6 @@ exports[`Header component renders correctly with props header ref 1`] = `
               "top": 20,
             }
           }
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -2571,14 +2608,13 @@ exports[`Header component renders correctly with props header ref 1`] = `
               }
             >
               <View
-                className="icon-wrapper"
                 testID="header.back"
               >
                 <RNSVGSvgView
                   align="xMidYMid"
                   bbHeight={24}
                   bbWidth={24}
-                  fill="#2F3945"
+                  color={4281284933}
                   focusable={false}
                   height={24}
                   meetOrSlice={0}
@@ -2598,20 +2634,24 @@ exports[`Header component renders correctly with props header ref 1`] = `
                       },
                     ]
                   }
+                  tintColor={4281284933}
                   vbHeight={24}
                   vbWidth={24}
                   width={24}
                 >
-                  <RNSVGGroup
-                    fill={4281284933}
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  >
+                  <RNSVGGroup>
                     <RNSVGPath
-                      d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                      d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                      fill={
+                        Array [
+                          2,
+                        ]
+                      }
+                      propList={
+                        Array [
+                          "fill",
+                        ]
+                      }
                     />
                   </RNSVGGroup>
                 </RNSVGSvgView>
@@ -2659,7 +2699,6 @@ exports[`Header component renders correctly with props header ref 1`] = `
       accessible={true}
       collapsable={false}
       focusable={true}
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -2687,7 +2726,9 @@ exports[`Header component renders correctly with props hide back 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -2763,83 +2804,9 @@ exports[`Header component renders correctly with props hide back on laptop 1`] =
   <View
     style={
       Array [
-        [Function],
         Object {
-          "alignItems": "flex-end",
-          "backgroundColor": "#FFFFFF",
-          "flexDirection": "row",
-          "overflow": "hidden",
-          "paddingTop": 0,
+          "height": undefined,
         },
-        Object {
-          "borderBottomWidth": 0.5,
-          "borderColor": "#EAEDF2",
-          "elevation": 2,
-          "shadowColor": "#000",
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
-          },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
-        },
-        undefined,
-      ]
-    }
-    testID="header.content"
-  >
-    <View
-      style={
-        Object {
-          "alignItems": "center",
-          "backgroundColor": "#FFFFFF",
-          "flex": 1,
-          "flexDirection": "row",
-          "height": 60,
-          "overflow": "hidden",
-          "paddingLeft": 8,
-          "paddingRight": 8,
-        }
-      }
-    >
-      <View
-        style={
-          Array [
-            Object {
-              "flex": 1,
-              "height": "100%",
-              "justifyContent": "center",
-              "marginLeft": 16,
-              "paddingTop": 1.5,
-            },
-            Object {},
-          ]
-        }
-      />
-    </View>
-    <View
-      style={
-        Object {
-          "backgroundColor": "#FFFFFF",
-          "height": 0,
-          "position": "absolute",
-          "top": 0,
-          "width": "100%",
-        }
-      }
-    />
-  </View>
-</View>
-`;
-
-exports[`Header component renders correctly with props icon 1`] = `
-<View
-  testID="header"
->
-  <View
-    style={
-      Array [
-        [Function],
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -2895,7 +2862,6 @@ exports[`Header component renders correctly with props icon 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -2940,14 +2906,13 @@ exports[`Header component renders correctly with props icon 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -2967,20 +2932,214 @@ exports[`Header component renders correctly with props icon 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
+                  />
+                </RNSVGGroup>
+              </RNSVGSvgView>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        style={
+          Array [
+            Object {
+              "flex": 1,
+              "height": "100%",
+              "justifyContent": "center",
+              "marginLeft": 16,
+              "paddingTop": 1.5,
+            },
+            Object {},
+          ]
+        }
+      />
+    </View>
+    <View
+      style={
+        Object {
+          "backgroundColor": "#FFFFFF",
+          "height": 0,
+          "position": "absolute",
+          "top": 0,
+          "width": "100%",
+        }
+      }
+    />
+  </View>
+</View>
+`;
+
+exports[`Header component renders correctly with props icon 1`] = `
+<View
+  testID="header"
+>
+  <View
+    style={
+      Array [
+        Object {
+          "height": undefined,
+        },
+        Object {
+          "alignItems": "flex-end",
+          "backgroundColor": "#FFFFFF",
+          "flexDirection": "row",
+          "overflow": "hidden",
+          "paddingTop": 0,
+        },
+        Object {
+          "borderBottomWidth": 0.5,
+          "borderColor": "#EAEDF2",
+          "elevation": 2,
+          "shadowColor": "#000",
+          "shadowOffset": Object {
+            "height": 1,
+            "width": 0,
+          },
+          "shadowOpacity": 0.1,
+          "shadowRadius": 1,
+        },
+        undefined,
+      ]
+    }
+    testID="header.content"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "backgroundColor": "#FFFFFF",
+          "flex": 1,
+          "flexDirection": "row",
+          "height": 60,
+          "overflow": "hidden",
+          "paddingLeft": 8,
+          "paddingRight": 8,
+        }
+      }
+    >
+      <View
+        accessibilityState={
+          Object {
+            "disabled": false,
+          }
+        }
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        hitSlop={
+          Object {
+            "bottom": 20,
+            "left": 20,
+            "right": 20,
+            "top": 20,
+          }
+        }
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "opacity": 1,
+          }
+        }
+        testID="header.back.button"
+      >
+        <View
+          style={
+            Array [
+              Object {
+                "alignItems": "center",
+                "flexDirection": "row",
+              },
+              Object {
+                "alignItems": "center",
+                "height": 48,
+                "justifyContent": "center",
+                "padding": 12,
+                "width": 48,
+              },
+              Object {
+                "backgroundColor": undefined,
+              },
+            ]
+          }
+        >
+          <View
+            style={
+              Array [
+                undefined,
+                undefined,
+                undefined,
+              ]
+            }
+          >
+            <View
+              testID="header.back"
+            >
+              <RNSVGSvgView
+                align="xMidYMid"
+                bbHeight={24}
+                bbWidth={24}
+                color={4281284933}
+                focusable={false}
+                height={24}
+                meetOrSlice={0}
+                minX={0}
+                minY={0}
+                style={
+                  Array [
+                    Object {
+                      "backgroundColor": "transparent",
+                      "borderWidth": 0,
+                    },
+                    Object {},
+                    Object {
+                      "flex": 0,
+                      "height": 24,
+                      "width": 24,
+                    },
+                  ]
+                }
+                tintColor={4281284933}
+                vbHeight={24}
+                vbWidth={24}
+                width={24}
+              >
+                <RNSVGGroup>
+                  <RNSVGPath
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -3019,7 +3178,6 @@ exports[`Header component renders correctly with props icon 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -3066,14 +3224,14 @@ exports[`Header component renders correctly with props icon 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.icon"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
+                data-name="Layer 1"
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -3093,20 +3251,24 @@ exports[`Header component renders correctly with props icon 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M19,14h2a1,1,0,0,0,0-2H19V11a5.15,5.15,0,0,0-.21-1.36A5,5,0,0,0,22,5a1,1,0,0,0-2,0,3,3,0,0,1-2.14,2.87A5,5,0,0,0,16,6.4,2.58,2.58,0,0,0,16,6,4,4,0,0,0,8,6a2.58,2.58,0,0,0,0,.4,5,5,0,0,0-1.9,1.47A3,3,0,0,1,4,5,1,1,0,0,0,2,5,5,5,0,0,0,5.21,9.64,5.15,5.15,0,0,0,5,11v1H3a1,1,0,0,0,0,2H5v1a7,7,0,0,0,.14,1.38A5,5,0,0,0,2,21a1,1,0,0,0,2,0,3,3,0,0,1,1.81-2.74,7,7,0,0,0,12.38,0A3,3,0,0,1,20,21a1,1,0,0,0,2,0,5,5,0,0,0-3.14-4.62A7,7,0,0,0,19,15Zm-8,5.9A5,5,0,0,1,7,15V11a3,3,0,0,1,3-3h1ZM10,6a2,2,0,0,1,4,0Zm7,9a5,5,0,0,1-4,4.9V8h1a3,3,0,0,1,3,3Z"
+                    d="M19 14h2a1 1 0 000-2h-2v-1a5.15 5.15 0 00-.21-1.36A5 5 0 0022 5a1 1 0 00-2 0 3 3 0 01-2.14 2.87A5 5 0 0016 6.4a2.58 2.58 0 000-.4 4 4 0 00-8 0 2.58 2.58 0 000 .4 5 5 0 00-1.9 1.47A3 3 0 014 5a1 1 0 00-2 0 5 5 0 003.21 4.64A5.15 5.15 0 005 11v1H3a1 1 0 000 2h2v1a7 7 0 00.14 1.38A5 5 0 002 21a1 1 0 002 0 3 3 0 011.81-2.74 7 7 0 0012.38 0A3 3 0 0120 21a1 1 0 002 0 5 5 0 00-3.14-4.62A7 7 0 0019 15zm-8 5.9A5 5 0 017 15v-4a3 3 0 013-3h1zM10 6a2 2 0 014 0zm7 9a5 5 0 01-4 4.9V8h1a3 3 0 013 3z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -3137,7 +3299,9 @@ exports[`Header component renders correctly with props left icon 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -3193,7 +3357,6 @@ exports[`Header component renders correctly with props left icon 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -3238,14 +3401,13 @@ exports[`Header component renders correctly with props left icon 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -3265,20 +3427,24 @@ exports[`Header component renders correctly with props left icon 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -3303,7 +3469,6 @@ exports[`Header component renders correctly with props left icon 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -3349,14 +3514,14 @@ exports[`Header component renders correctly with props left icon 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.leftIcon"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
+                data-name="Layer 1"
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -3376,20 +3541,24 @@ exports[`Header component renders correctly with props left icon 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M19,14h2a1,1,0,0,0,0-2H19V11a5.15,5.15,0,0,0-.21-1.36A5,5,0,0,0,22,5a1,1,0,0,0-2,0,3,3,0,0,1-2.14,2.87A5,5,0,0,0,16,6.4,2.58,2.58,0,0,0,16,6,4,4,0,0,0,8,6a2.58,2.58,0,0,0,0,.4,5,5,0,0,0-1.9,1.47A3,3,0,0,1,4,5,1,1,0,0,0,2,5,5,5,0,0,0,5.21,9.64,5.15,5.15,0,0,0,5,11v1H3a1,1,0,0,0,0,2H5v1a7,7,0,0,0,.14,1.38A5,5,0,0,0,2,21a1,1,0,0,0,2,0,3,3,0,0,1,1.81-2.74,7,7,0,0,0,12.38,0A3,3,0,0,1,20,21a1,1,0,0,0,2,0,5,5,0,0,0-3.14-4.62A7,7,0,0,0,19,15Zm-8,5.9A5,5,0,0,1,7,15V11a3,3,0,0,1,3-3h1ZM10,6a2,2,0,0,1,4,0Zm7,9a5,5,0,0,1-4,4.9V8h1a3,3,0,0,1,3,3Z"
+                    d="M19 14h2a1 1 0 000-2h-2v-1a5.15 5.15 0 00-.21-1.36A5 5 0 0022 5a1 1 0 00-2 0 3 3 0 01-2.14 2.87A5 5 0 0016 6.4a2.58 2.58 0 000-.4 4 4 0 00-8 0 2.58 2.58 0 000 .4 5 5 0 00-1.9 1.47A3 3 0 014 5a1 1 0 00-2 0 5 5 0 003.21 4.64A5.15 5.15 0 005 11v1H3a1 1 0 000 2h2v1a7 7 0 00.14 1.38A5 5 0 002 21a1 1 0 002 0 3 3 0 011.81-2.74 7 7 0 0012.38 0A3 3 0 0120 21a1 1 0 002 0 5 5 0 00-3.14-4.62A7 7 0 0019 15zm-8 5.9A5 5 0 017 15v-4a3 3 0 013-3h1zM10 6a2 2 0 014 0zm7 9a5 5 0 01-4 4.9V8h1a3 3 0 013 3z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -3434,7 +3603,9 @@ exports[`Header component renders correctly with props left icon props 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -3490,7 +3661,6 @@ exports[`Header component renders correctly with props left icon props 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -3535,14 +3705,13 @@ exports[`Header component renders correctly with props left icon props 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -3562,20 +3731,24 @@ exports[`Header component renders correctly with props left icon props 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -3600,7 +3773,6 @@ exports[`Header component renders correctly with props left icon props 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -3646,14 +3818,14 @@ exports[`Header component renders correctly with props left icon props 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.leftIcon"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#421187"
+                color={4282519943}
+                data-name="Layer 1"
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -3673,20 +3845,24 @@ exports[`Header component renders correctly with props left icon props 1`] = `
                     },
                   ]
                 }
+                tintColor={4282519943}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4282519943}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M19,14h2a1,1,0,0,0,0-2H19V11a5.15,5.15,0,0,0-.21-1.36A5,5,0,0,0,22,5a1,1,0,0,0-2,0,3,3,0,0,1-2.14,2.87A5,5,0,0,0,16,6.4,2.58,2.58,0,0,0,16,6,4,4,0,0,0,8,6a2.58,2.58,0,0,0,0,.4,5,5,0,0,0-1.9,1.47A3,3,0,0,1,4,5,1,1,0,0,0,2,5,5,5,0,0,0,5.21,9.64,5.15,5.15,0,0,0,5,11v1H3a1,1,0,0,0,0,2H5v1a7,7,0,0,0,.14,1.38A5,5,0,0,0,2,21a1,1,0,0,0,2,0,3,3,0,0,1,1.81-2.74,7,7,0,0,0,12.38,0A3,3,0,0,1,20,21a1,1,0,0,0,2,0,5,5,0,0,0-3.14-4.62A7,7,0,0,0,19,15Zm-8,5.9A5,5,0,0,1,7,15V11a3,3,0,0,1,3-3h1ZM10,6a2,2,0,0,1,4,0Zm7,9a5,5,0,0,1-4,4.9V8h1a3,3,0,0,1,3,3Z"
+                    d="M19 14h2a1 1 0 000-2h-2v-1a5.15 5.15 0 00-.21-1.36A5 5 0 0022 5a1 1 0 00-2 0 3 3 0 01-2.14 2.87A5 5 0 0016 6.4a2.58 2.58 0 000-.4 4 4 0 00-8 0 2.58 2.58 0 000 .4 5 5 0 00-1.9 1.47A3 3 0 014 5a1 1 0 00-2 0 5 5 0 003.21 4.64A5.15 5.15 0 005 11v1H3a1 1 0 000 2h2v1a7 7 0 00.14 1.38A5 5 0 002 21a1 1 0 002 0 3 3 0 011.81-2.74 7 7 0 0012.38 0A3 3 0 0120 21a1 1 0 002 0 5 5 0 00-3.14-4.62A7 7 0 0019 15zm-8 5.9A5 5 0 017 15v-4a3 3 0 013-3h1zM10 6a2 2 0 014 0zm7 9a5 5 0 01-4 4.9V8h1a3 3 0 013 3z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -3731,7 +3907,9 @@ exports[`Header component renders correctly with props menu icon 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -3787,7 +3965,6 @@ exports[`Header component renders correctly with props menu icon 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -3832,14 +4009,13 @@ exports[`Header component renders correctly with props menu icon 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -3859,20 +4035,24 @@ exports[`Header component renders correctly with props menu icon 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -3911,7 +4091,6 @@ exports[`Header component renders correctly with props menu icon 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -3958,14 +4137,13 @@ exports[`Header component renders correctly with props menu icon 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.menuIcon"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -3985,20 +4163,24 @@ exports[`Header component renders correctly with props menu icon 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M3,8H21a1,1,0,0,0,0-2H3A1,1,0,0,0,3,8Zm18,8H3a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Zm0-5H3a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Z"
+                    d="M3 8h18a1 1 0 000-2H3a1 1 0 000 2zm18 8H3a1 1 0 000 2h18a1 1 0 000-2zm0-5H3a1 1 0 000 2h18a1 1 0 000-2z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -4029,7 +4211,9 @@ exports[`Header component renders correctly with props on focus search 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -4085,7 +4269,6 @@ exports[`Header component renders correctly with props on focus search 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -4130,14 +4313,13 @@ exports[`Header component renders correctly with props on focus search 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -4157,20 +4339,24 @@ exports[`Header component renders correctly with props on focus search 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -4209,7 +4395,6 @@ exports[`Header component renders correctly with props on focus search 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -4256,7 +4441,6 @@ exports[`Header component renders correctly with props on focus search 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.searchIcon"
             >
               <View
@@ -4270,7 +4454,6 @@ exports[`Header component renders correctly with props on focus search 1`] = `
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,
@@ -4353,7 +4536,9 @@ exports[`Header component renders correctly with props on focus search 2`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -4399,6 +4584,7 @@ exports[`Header component renders correctly with props on focus search 2`] = `
           }
         }
         accessible={true}
+        collapsable={false}
         focusable={true}
         hitSlop={
           Object {
@@ -4452,14 +4638,13 @@ exports[`Header component renders correctly with props on focus search 2`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -4479,20 +4664,24 @@ exports[`Header component renders correctly with props on focus search 2`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -4521,6 +4710,7 @@ exports[`Header component renders correctly with props on focus search 2`] = `
           }
         }
         accessible={true}
+        collapsable={false}
         focusable={true}
         hitSlop={
           Object {
@@ -4576,7 +4766,6 @@ exports[`Header component renders correctly with props on focus search 2`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.searchIcon"
             >
               <View
@@ -4589,6 +4778,7 @@ exports[`Header component renders correctly with props on focus search 2`] = `
                 }
               >
                 <View
+                  collapsable={false}
                   style={
                     Object {
                       "bottom": 0,
@@ -4665,7 +4855,11 @@ exports[`Header component renders correctly with props on focus search 2`] = `
         }
       >
         <View
-          style={[Function]}
+          style={
+            Object {
+              "opacity": 0,
+            }
+          }
         >
           <View
             accessibilityState={
@@ -4684,7 +4878,6 @@ exports[`Header component renders correctly with props on focus search 2`] = `
                 "top": 20,
               }
             }
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -4727,14 +4920,12 @@ exports[`Header component renders correctly with props on focus search 2`] = `
                   ]
                 }
               >
-                <View
-                  className="icon-wrapper"
-                >
+                <View>
                   <RNSVGSvgView
                     align="xMidYMid"
                     bbHeight={24}
                     bbWidth={24}
-                    fill="#2F3945"
+                    color={4281284933}
                     focusable={false}
                     height={24}
                     meetOrSlice={0}
@@ -4754,20 +4945,24 @@ exports[`Header component renders correctly with props on focus search 2`] = `
                         },
                       ]
                     }
+                    tintColor={4281284933}
                     vbHeight={24}
                     vbWidth={24}
                     width={24}
                   >
-                    <RNSVGGroup
-                      fill={4281284933}
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGPath
-                        d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                        d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                        fill={
+                          Array [
+                            2,
+                          ]
+                        }
+                        propList={
+                          Array [
+                            "fill",
+                          ]
+                        }
                       />
                     </RNSVGGroup>
                   </RNSVGSvgView>
@@ -4787,7 +4982,9 @@ exports[`Header component renders correctly with props on focus search 2`] = `
           <View
             style={
               Array [
-                [Function],
+                Object {
+                  "width": "undefined%",
+                },
                 Object {
                   "backgroundColor": "#EAEDF2",
                   "borderRadius": 24,
@@ -4834,7 +5031,6 @@ exports[`Header component renders correctly with props on focus search 2`] = `
                       "top": 10,
                     }
                   }
-                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -4873,14 +5069,12 @@ exports[`Header component renders correctly with props on focus search 2`] = `
                         ]
                       }
                     >
-                      <View
-                        className="icon-wrapper"
-                      >
+                      <View>
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={20}
                           bbWidth={20}
-                          fill="#627286"
+                          color={4284641926}
                           focusable={false}
                           height={20}
                           meetOrSlice={0}
@@ -4900,20 +5094,24 @@ exports[`Header component renders correctly with props on focus search 2`] = `
                               },
                             ]
                           }
+                          tintColor={4284641926}
                           vbHeight={24}
                           vbWidth={24}
                           width={20}
                         >
-                          <RNSVGGroup
-                            fill={4284641926}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"
+                              d="M21.71 20.29L18 16.61A9 9 0 1016.61 18l3.68 3.68a1 1 0 001.42 0 1 1 0 000-1.39zM11 18a7 7 0 117-7 7 7 0 01-7 7z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -4971,7 +5169,9 @@ exports[`Header component renders correctly with props on press button 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -5027,7 +5227,6 @@ exports[`Header component renders correctly with props on press button 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -5072,14 +5271,13 @@ exports[`Header component renders correctly with props on press button 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -5099,20 +5297,24 @@ exports[`Header component renders correctly with props on press button 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -5213,7 +5415,9 @@ exports[`Header component renders correctly with props on press chat 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -5269,7 +5473,6 @@ exports[`Header component renders correctly with props on press chat 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -5314,14 +5517,13 @@ exports[`Header component renders correctly with props on press chat 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -5341,20 +5543,24 @@ exports[`Header component renders correctly with props on press chat 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -5394,7 +5600,6 @@ exports[`Header component renders correctly with props on press chat 1`] = `
               "top": 10,
             }
           }
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -5441,7 +5646,6 @@ exports[`Header component renders correctly with props on press chat 1`] = `
               }
             >
               <View
-                className="icon-wrapper"
                 testID="header.iconChat"
               >
                 <View
@@ -5455,7 +5659,6 @@ exports[`Header component renders correctly with props on press chat 1`] = `
                 >
                   <View
                     collapsable={false}
-                    nativeID="animatedComponent"
                     style={
                       Object {
                         "bottom": 0,
@@ -5539,7 +5742,9 @@ exports[`Header component renders correctly with props on press header 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -5595,7 +5800,6 @@ exports[`Header component renders correctly with props on press header 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -5640,14 +5844,13 @@ exports[`Header component renders correctly with props on press header 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -5667,20 +5870,24 @@ exports[`Header component renders correctly with props on press header 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -5700,7 +5907,6 @@ exports[`Header component renders correctly with props on press header 1`] = `
           accessible={true}
           collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -5760,7 +5966,6 @@ exports[`Header component renders correctly with props on press header 1`] = `
                 >
                   <View
                     collapsable={false}
-                    nativeID="animatedComponent"
                     style={
                       Object {
                         "bottom": 0,
@@ -5864,7 +6069,9 @@ exports[`Header component renders correctly with props on press icon 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -5920,7 +6127,6 @@ exports[`Header component renders correctly with props on press icon 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -5965,14 +6171,13 @@ exports[`Header component renders correctly with props on press icon 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -5992,20 +6197,24 @@ exports[`Header component renders correctly with props on press icon 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -6044,7 +6253,6 @@ exports[`Header component renders correctly with props on press icon 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -6091,14 +6299,14 @@ exports[`Header component renders correctly with props on press icon 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.icon"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
+                data-name="Layer 1"
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -6118,20 +6326,24 @@ exports[`Header component renders correctly with props on press icon 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M19,14h2a1,1,0,0,0,0-2H19V11a5.15,5.15,0,0,0-.21-1.36A5,5,0,0,0,22,5a1,1,0,0,0-2,0,3,3,0,0,1-2.14,2.87A5,5,0,0,0,16,6.4,2.58,2.58,0,0,0,16,6,4,4,0,0,0,8,6a2.58,2.58,0,0,0,0,.4,5,5,0,0,0-1.9,1.47A3,3,0,0,1,4,5,1,1,0,0,0,2,5,5,5,0,0,0,5.21,9.64,5.15,5.15,0,0,0,5,11v1H3a1,1,0,0,0,0,2H5v1a7,7,0,0,0,.14,1.38A5,5,0,0,0,2,21a1,1,0,0,0,2,0,3,3,0,0,1,1.81-2.74,7,7,0,0,0,12.38,0A3,3,0,0,1,20,21a1,1,0,0,0,2,0,5,5,0,0,0-3.14-4.62A7,7,0,0,0,19,15Zm-8,5.9A5,5,0,0,1,7,15V11a3,3,0,0,1,3-3h1ZM10,6a2,2,0,0,1,4,0Zm7,9a5,5,0,0,1-4,4.9V8h1a3,3,0,0,1,3,3Z"
+                    d="M19 14h2a1 1 0 000-2h-2v-1a5.15 5.15 0 00-.21-1.36A5 5 0 0022 5a1 1 0 00-2 0 3 3 0 01-2.14 2.87A5 5 0 0016 6.4a2.58 2.58 0 000-.4 4 4 0 00-8 0 2.58 2.58 0 000 .4 5 5 0 00-1.9 1.47A3 3 0 014 5a1 1 0 00-2 0 5 5 0 003.21 4.64A5.15 5.15 0 005 11v1H3a1 1 0 000 2h2v1a7 7 0 00.14 1.38A5 5 0 002 21a1 1 0 002 0 3 3 0 011.81-2.74 7 7 0 0012.38 0A3 3 0 0120 21a1 1 0 002 0 5 5 0 00-3.14-4.62A7 7 0 0019 15zm-8 5.9A5 5 0 017 15v-4a3 3 0 013-3h1zM10 6a2 2 0 014 0zm7 9a5 5 0 01-4 4.9V8h1a3 3 0 013 3z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -6162,7 +6374,9 @@ exports[`Header component renders correctly with props on press menu 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -6218,7 +6432,6 @@ exports[`Header component renders correctly with props on press menu 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -6263,14 +6476,13 @@ exports[`Header component renders correctly with props on press menu 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -6290,20 +6502,24 @@ exports[`Header component renders correctly with props on press menu 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -6342,7 +6558,6 @@ exports[`Header component renders correctly with props on press menu 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -6389,14 +6604,13 @@ exports[`Header component renders correctly with props on press menu 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.menuIcon"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -6416,20 +6630,24 @@ exports[`Header component renders correctly with props on press menu 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M3,8H21a1,1,0,0,0,0-2H3A1,1,0,0,0,3,8Zm18,8H3a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Zm0-5H3a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Z"
+                    d="M3 8h18a1 1 0 000-2H3a1 1 0 000 2zm18 8H3a1 1 0 000 2h18a1 1 0 000-2zm0-5H3a1 1 0 000 2h18a1 1 0 000-2z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -6460,7 +6678,9 @@ exports[`Header component renders correctly with props on right press 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -6516,7 +6736,6 @@ exports[`Header component renders correctly with props on right press 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -6561,14 +6780,13 @@ exports[`Header component renders correctly with props on right press 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -6588,20 +6806,24 @@ exports[`Header component renders correctly with props on right press 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -6640,7 +6862,6 @@ exports[`Header component renders correctly with props on right press 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -6687,7 +6908,6 @@ exports[`Header component renders correctly with props on right press 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.rightIcon"
             >
               <View
@@ -6701,7 +6921,6 @@ exports[`Header component renders correctly with props on right press 1`] = `
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,
@@ -6784,7 +7003,9 @@ exports[`Header component renders correctly with props on show search 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -6840,7 +7061,6 @@ exports[`Header component renders correctly with props on show search 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -6885,14 +7105,13 @@ exports[`Header component renders correctly with props on show search 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -6912,20 +7131,24 @@ exports[`Header component renders correctly with props on show search 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -6964,7 +7187,6 @@ exports[`Header component renders correctly with props on show search 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -7011,7 +7233,6 @@ exports[`Header component renders correctly with props on show search 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.searchIcon"
             >
               <View
@@ -7025,7 +7246,6 @@ exports[`Header component renders correctly with props on show search 1`] = `
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,
@@ -7108,7 +7328,9 @@ exports[`Header component renders correctly with props on show search 2`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -7154,6 +7376,7 @@ exports[`Header component renders correctly with props on show search 2`] = `
           }
         }
         accessible={true}
+        collapsable={false}
         focusable={true}
         hitSlop={
           Object {
@@ -7207,14 +7430,13 @@ exports[`Header component renders correctly with props on show search 2`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -7234,20 +7456,24 @@ exports[`Header component renders correctly with props on show search 2`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -7276,6 +7502,7 @@ exports[`Header component renders correctly with props on show search 2`] = `
           }
         }
         accessible={true}
+        collapsable={false}
         focusable={true}
         hitSlop={
           Object {
@@ -7331,7 +7558,6 @@ exports[`Header component renders correctly with props on show search 2`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.searchIcon"
             >
               <View
@@ -7344,6 +7570,7 @@ exports[`Header component renders correctly with props on show search 2`] = `
                 }
               >
                 <View
+                  collapsable={false}
                   style={
                     Object {
                       "bottom": 0,
@@ -7420,7 +7647,11 @@ exports[`Header component renders correctly with props on show search 2`] = `
         }
       >
         <View
-          style={[Function]}
+          style={
+            Object {
+              "opacity": 0,
+            }
+          }
         >
           <View
             accessibilityState={
@@ -7439,7 +7670,6 @@ exports[`Header component renders correctly with props on show search 2`] = `
                 "top": 20,
               }
             }
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -7482,14 +7712,12 @@ exports[`Header component renders correctly with props on show search 2`] = `
                   ]
                 }
               >
-                <View
-                  className="icon-wrapper"
-                >
+                <View>
                   <RNSVGSvgView
                     align="xMidYMid"
                     bbHeight={24}
                     bbWidth={24}
-                    fill="#2F3945"
+                    color={4281284933}
                     focusable={false}
                     height={24}
                     meetOrSlice={0}
@@ -7509,20 +7737,24 @@ exports[`Header component renders correctly with props on show search 2`] = `
                         },
                       ]
                     }
+                    tintColor={4281284933}
                     vbHeight={24}
                     vbWidth={24}
                     width={24}
                   >
-                    <RNSVGGroup
-                      fill={4281284933}
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGPath
-                        d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                        d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                        fill={
+                          Array [
+                            2,
+                          ]
+                        }
+                        propList={
+                          Array [
+                            "fill",
+                          ]
+                        }
                       />
                     </RNSVGGroup>
                   </RNSVGSvgView>
@@ -7542,7 +7774,9 @@ exports[`Header component renders correctly with props on show search 2`] = `
           <View
             style={
               Array [
-                [Function],
+                Object {
+                  "width": "undefined%",
+                },
                 Object {
                   "backgroundColor": "#EAEDF2",
                   "borderRadius": 24,
@@ -7589,7 +7823,6 @@ exports[`Header component renders correctly with props on show search 2`] = `
                       "top": 10,
                     }
                   }
-                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -7628,14 +7861,12 @@ exports[`Header component renders correctly with props on show search 2`] = `
                         ]
                       }
                     >
-                      <View
-                        className="icon-wrapper"
-                      >
+                      <View>
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={20}
                           bbWidth={20}
-                          fill="#627286"
+                          color={4284641926}
                           focusable={false}
                           height={20}
                           meetOrSlice={0}
@@ -7655,20 +7886,24 @@ exports[`Header component renders correctly with props on show search 2`] = `
                               },
                             ]
                           }
+                          tintColor={4284641926}
                           vbHeight={24}
                           vbWidth={24}
                           width={20}
                         >
-                          <RNSVGGroup
-                            fill={4284641926}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"
+                              d="M21.71 20.29L18 16.61A9 9 0 1016.61 18l3.68 3.68a1 1 0 001.42 0 1 1 0 000-1.39zM11 18a7 7 0 117-7 7 7 0 01-7 7z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -7726,7 +7961,9 @@ exports[`Header component renders correctly with props on submit search 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -7782,7 +8019,6 @@ exports[`Header component renders correctly with props on submit search 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -7827,14 +8063,13 @@ exports[`Header component renders correctly with props on submit search 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -7854,20 +8089,24 @@ exports[`Header component renders correctly with props on submit search 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -7906,7 +8145,6 @@ exports[`Header component renders correctly with props on submit search 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -7953,7 +8191,6 @@ exports[`Header component renders correctly with props on submit search 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.searchIcon"
             >
               <View
@@ -7967,7 +8204,6 @@ exports[`Header component renders correctly with props on submit search 1`] = `
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,
@@ -8050,7 +8286,9 @@ exports[`Header component renders correctly with props on submit search 2`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -8096,6 +8334,7 @@ exports[`Header component renders correctly with props on submit search 2`] = `
           }
         }
         accessible={true}
+        collapsable={false}
         focusable={true}
         hitSlop={
           Object {
@@ -8149,14 +8388,13 @@ exports[`Header component renders correctly with props on submit search 2`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -8176,20 +8414,24 @@ exports[`Header component renders correctly with props on submit search 2`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -8218,6 +8460,7 @@ exports[`Header component renders correctly with props on submit search 2`] = `
           }
         }
         accessible={true}
+        collapsable={false}
         focusable={true}
         hitSlop={
           Object {
@@ -8273,7 +8516,6 @@ exports[`Header component renders correctly with props on submit search 2`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.searchIcon"
             >
               <View
@@ -8286,6 +8528,7 @@ exports[`Header component renders correctly with props on submit search 2`] = `
                 }
               >
                 <View
+                  collapsable={false}
                   style={
                     Object {
                       "bottom": 0,
@@ -8362,7 +8605,11 @@ exports[`Header component renders correctly with props on submit search 2`] = `
         }
       >
         <View
-          style={[Function]}
+          style={
+            Object {
+              "opacity": 0,
+            }
+          }
         >
           <View
             accessibilityState={
@@ -8381,7 +8628,6 @@ exports[`Header component renders correctly with props on submit search 2`] = `
                 "top": 20,
               }
             }
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -8424,14 +8670,12 @@ exports[`Header component renders correctly with props on submit search 2`] = `
                   ]
                 }
               >
-                <View
-                  className="icon-wrapper"
-                >
+                <View>
                   <RNSVGSvgView
                     align="xMidYMid"
                     bbHeight={24}
                     bbWidth={24}
-                    fill="#2F3945"
+                    color={4281284933}
                     focusable={false}
                     height={24}
                     meetOrSlice={0}
@@ -8451,20 +8695,24 @@ exports[`Header component renders correctly with props on submit search 2`] = `
                         },
                       ]
                     }
+                    tintColor={4281284933}
                     vbHeight={24}
                     vbWidth={24}
                     width={24}
                   >
-                    <RNSVGGroup
-                      fill={4281284933}
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGPath
-                        d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                        d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                        fill={
+                          Array [
+                            2,
+                          ]
+                        }
+                        propList={
+                          Array [
+                            "fill",
+                          ]
+                        }
                       />
                     </RNSVGGroup>
                   </RNSVGSvgView>
@@ -8484,7 +8732,9 @@ exports[`Header component renders correctly with props on submit search 2`] = `
           <View
             style={
               Array [
-                [Function],
+                Object {
+                  "width": "undefined%",
+                },
                 Object {
                   "backgroundColor": "#EAEDF2",
                   "borderRadius": 24,
@@ -8531,7 +8781,6 @@ exports[`Header component renders correctly with props on submit search 2`] = `
                       "top": 10,
                     }
                   }
-                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -8570,14 +8819,12 @@ exports[`Header component renders correctly with props on submit search 2`] = `
                         ]
                       }
                     >
-                      <View
-                        className="icon-wrapper"
-                      >
+                      <View>
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={20}
                           bbWidth={20}
-                          fill="#627286"
+                          color={4284641926}
                           focusable={false}
                           height={20}
                           meetOrSlice={0}
@@ -8597,20 +8844,24 @@ exports[`Header component renders correctly with props on submit search 2`] = `
                               },
                             ]
                           }
+                          tintColor={4284641926}
                           vbHeight={24}
                           vbWidth={24}
                           width={20}
                         >
-                          <RNSVGGroup
-                            fill={4284641926}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"
+                              d="M21.71 20.29L18 16.61A9 9 0 1016.61 18l3.68 3.68a1 1 0 001.42 0 1 1 0 000-1.39zM11 18a7 7 0 117-7 7 7 0 01-7 7z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -8668,7 +8919,9 @@ exports[`Header component renders correctly with props on text search 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -8724,7 +8977,6 @@ exports[`Header component renders correctly with props on text search 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -8769,14 +9021,13 @@ exports[`Header component renders correctly with props on text search 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -8796,20 +9047,24 @@ exports[`Header component renders correctly with props on text search 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -8848,7 +9103,6 @@ exports[`Header component renders correctly with props on text search 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -8895,7 +9149,6 @@ exports[`Header component renders correctly with props on text search 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.searchIcon"
             >
               <View
@@ -8909,7 +9162,6 @@ exports[`Header component renders correctly with props on text search 1`] = `
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,
@@ -8992,7 +9244,9 @@ exports[`Header component renders correctly with props on text search 2`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -9038,6 +9292,7 @@ exports[`Header component renders correctly with props on text search 2`] = `
           }
         }
         accessible={true}
+        collapsable={false}
         focusable={true}
         hitSlop={
           Object {
@@ -9091,14 +9346,13 @@ exports[`Header component renders correctly with props on text search 2`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -9118,20 +9372,24 @@ exports[`Header component renders correctly with props on text search 2`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -9160,6 +9418,7 @@ exports[`Header component renders correctly with props on text search 2`] = `
           }
         }
         accessible={true}
+        collapsable={false}
         focusable={true}
         hitSlop={
           Object {
@@ -9215,7 +9474,6 @@ exports[`Header component renders correctly with props on text search 2`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.searchIcon"
             >
               <View
@@ -9228,6 +9486,7 @@ exports[`Header component renders correctly with props on text search 2`] = `
                 }
               >
                 <View
+                  collapsable={false}
                   style={
                     Object {
                       "bottom": 0,
@@ -9304,7 +9563,11 @@ exports[`Header component renders correctly with props on text search 2`] = `
         }
       >
         <View
-          style={[Function]}
+          style={
+            Object {
+              "opacity": 0,
+            }
+          }
         >
           <View
             accessibilityState={
@@ -9323,7 +9586,6 @@ exports[`Header component renders correctly with props on text search 2`] = `
                 "top": 20,
               }
             }
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -9366,14 +9628,12 @@ exports[`Header component renders correctly with props on text search 2`] = `
                   ]
                 }
               >
-                <View
-                  className="icon-wrapper"
-                >
+                <View>
                   <RNSVGSvgView
                     align="xMidYMid"
                     bbHeight={24}
                     bbWidth={24}
-                    fill="#2F3945"
+                    color={4281284933}
                     focusable={false}
                     height={24}
                     meetOrSlice={0}
@@ -9393,20 +9653,24 @@ exports[`Header component renders correctly with props on text search 2`] = `
                         },
                       ]
                     }
+                    tintColor={4281284933}
                     vbHeight={24}
                     vbWidth={24}
                     width={24}
                   >
-                    <RNSVGGroup
-                      fill={4281284933}
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGPath
-                        d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                        d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                        fill={
+                          Array [
+                            2,
+                          ]
+                        }
+                        propList={
+                          Array [
+                            "fill",
+                          ]
+                        }
                       />
                     </RNSVGGroup>
                   </RNSVGSvgView>
@@ -9426,7 +9690,9 @@ exports[`Header component renders correctly with props on text search 2`] = `
           <View
             style={
               Array [
-                [Function],
+                Object {
+                  "width": "undefined%",
+                },
                 Object {
                   "backgroundColor": "#EAEDF2",
                   "borderRadius": 24,
@@ -9473,7 +9739,6 @@ exports[`Header component renders correctly with props on text search 2`] = `
                       "top": 10,
                     }
                   }
-                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -9512,14 +9777,12 @@ exports[`Header component renders correctly with props on text search 2`] = `
                         ]
                       }
                     >
-                      <View
-                        className="icon-wrapper"
-                      >
+                      <View>
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={20}
                           bbWidth={20}
-                          fill="#627286"
+                          color={4284641926}
                           focusable={false}
                           height={20}
                           meetOrSlice={0}
@@ -9539,20 +9802,24 @@ exports[`Header component renders correctly with props on text search 2`] = `
                               },
                             ]
                           }
+                          tintColor={4284641926}
                           vbHeight={24}
                           vbWidth={24}
                           width={20}
                         >
-                          <RNSVGGroup
-                            fill={4284641926}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"
+                              d="M21.71 20.29L18 16.61A9 9 0 1016.61 18l3.68 3.68a1 1 0 001.42 0 1 1 0 000-1.39zM11 18a7 7 0 117-7 7 7 0 01-7 7z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -9610,7 +9877,9 @@ exports[`Header component renders correctly with props remove border and shadow 
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -9655,7 +9924,6 @@ exports[`Header component renders correctly with props remove border and shadow 
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -9700,14 +9968,13 @@ exports[`Header component renders correctly with props remove border and shadow 
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -9727,20 +9994,24 @@ exports[`Header component renders correctly with props remove border and shadow 
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -9785,7 +10056,9 @@ exports[`Header component renders correctly with props right icon 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -9841,7 +10114,6 @@ exports[`Header component renders correctly with props right icon 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -9886,14 +10158,13 @@ exports[`Header component renders correctly with props right icon 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -9913,20 +10184,24 @@ exports[`Header component renders correctly with props right icon 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -9965,7 +10240,6 @@ exports[`Header component renders correctly with props right icon 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -10012,14 +10286,14 @@ exports[`Header component renders correctly with props right icon 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.rightIcon"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
+                data-name="Layer 1"
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -10039,20 +10313,24 @@ exports[`Header component renders correctly with props right icon 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M19,14h2a1,1,0,0,0,0-2H19V11a5.15,5.15,0,0,0-.21-1.36A5,5,0,0,0,22,5a1,1,0,0,0-2,0,3,3,0,0,1-2.14,2.87A5,5,0,0,0,16,6.4,2.58,2.58,0,0,0,16,6,4,4,0,0,0,8,6a2.58,2.58,0,0,0,0,.4,5,5,0,0,0-1.9,1.47A3,3,0,0,1,4,5,1,1,0,0,0,2,5,5,5,0,0,0,5.21,9.64,5.15,5.15,0,0,0,5,11v1H3a1,1,0,0,0,0,2H5v1a7,7,0,0,0,.14,1.38A5,5,0,0,0,2,21a1,1,0,0,0,2,0,3,3,0,0,1,1.81-2.74,7,7,0,0,0,12.38,0A3,3,0,0,1,20,21a1,1,0,0,0,2,0,5,5,0,0,0-3.14-4.62A7,7,0,0,0,19,15Zm-8,5.9A5,5,0,0,1,7,15V11a3,3,0,0,1,3-3h1ZM10,6a2,2,0,0,1,4,0Zm7,9a5,5,0,0,1-4,4.9V8h1a3,3,0,0,1,3,3Z"
+                    d="M19 14h2a1 1 0 000-2h-2v-1a5.15 5.15 0 00-.21-1.36A5 5 0 0022 5a1 1 0 00-2 0 3 3 0 01-2.14 2.87A5 5 0 0016 6.4a2.58 2.58 0 000-.4 4 4 0 00-8 0 2.58 2.58 0 000 .4 5 5 0 00-1.9 1.47A3 3 0 014 5a1 1 0 00-2 0 5 5 0 003.21 4.64A5.15 5.15 0 005 11v1H3a1 1 0 000 2h2v1a7 7 0 00.14 1.38A5 5 0 002 21a1 1 0 002 0 3 3 0 011.81-2.74 7 7 0 0012.38 0A3 3 0 0120 21a1 1 0 002 0 5 5 0 00-3.14-4.62A7 7 0 0019 15zm-8 5.9A5 5 0 017 15v-4a3 3 0 013-3h1zM10 6a2 2 0 014 0zm7 9a5 5 0 01-4 4.9V8h1a3 3 0 013 3z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -10083,7 +10361,9 @@ exports[`Header component renders correctly with props right icon props 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -10139,7 +10419,6 @@ exports[`Header component renders correctly with props right icon props 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -10184,14 +10463,13 @@ exports[`Header component renders correctly with props right icon props 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -10211,20 +10489,24 @@ exports[`Header component renders correctly with props right icon props 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -10263,7 +10545,6 @@ exports[`Header component renders correctly with props right icon props 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -10310,14 +10591,14 @@ exports[`Header component renders correctly with props right icon props 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.rightIcon"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#421187"
+                color={4282519943}
+                data-name="Layer 1"
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -10337,20 +10618,24 @@ exports[`Header component renders correctly with props right icon props 1`] = `
                     },
                   ]
                 }
+                tintColor={4282519943}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4282519943}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M19,14h2a1,1,0,0,0,0-2H19V11a5.15,5.15,0,0,0-.21-1.36A5,5,0,0,0,22,5a1,1,0,0,0-2,0,3,3,0,0,1-2.14,2.87A5,5,0,0,0,16,6.4,2.58,2.58,0,0,0,16,6,4,4,0,0,0,8,6a2.58,2.58,0,0,0,0,.4,5,5,0,0,0-1.9,1.47A3,3,0,0,1,4,5,1,1,0,0,0,2,5,5,5,0,0,0,5.21,9.64,5.15,5.15,0,0,0,5,11v1H3a1,1,0,0,0,0,2H5v1a7,7,0,0,0,.14,1.38A5,5,0,0,0,2,21a1,1,0,0,0,2,0,3,3,0,0,1,1.81-2.74,7,7,0,0,0,12.38,0A3,3,0,0,1,20,21a1,1,0,0,0,2,0,5,5,0,0,0-3.14-4.62A7,7,0,0,0,19,15Zm-8,5.9A5,5,0,0,1,7,15V11a3,3,0,0,1,3-3h1ZM10,6a2,2,0,0,1,4,0Zm7,9a5,5,0,0,1-4,4.9V8h1a3,3,0,0,1,3,3Z"
+                    d="M19 14h2a1 1 0 000-2h-2v-1a5.15 5.15 0 00-.21-1.36A5 5 0 0022 5a1 1 0 00-2 0 3 3 0 01-2.14 2.87A5 5 0 0016 6.4a2.58 2.58 0 000-.4 4 4 0 00-8 0 2.58 2.58 0 000 .4 5 5 0 00-1.9 1.47A3 3 0 014 5a1 1 0 00-2 0 5 5 0 003.21 4.64A5.15 5.15 0 005 11v1H3a1 1 0 000 2h2v1a7 7 0 00.14 1.38A5 5 0 002 21a1 1 0 002 0 3 3 0 011.81-2.74 7 7 0 0012.38 0A3 3 0 0120 21a1 1 0 002 0 5 5 0 00-3.14-4.62A7 7 0 0019 15zm-8 5.9A5 5 0 017 15v-4a3 3 0 013-3h1zM10 6a2 2 0 014 0zm7 9a5 5 0 01-4 4.9V8h1a3 3 0 013 3z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -10381,7 +10666,9 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -10437,7 +10724,6 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -10482,14 +10768,13 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -10509,20 +10794,24 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -10561,7 +10850,6 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -10608,7 +10896,6 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.searchIcon"
             >
               <View
@@ -10622,7 +10909,6 @@ exports[`Header component renders correctly with props search icon test ID 1`] =
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,
@@ -10705,7 +10991,9 @@ exports[`Header component renders correctly with props search input test ID 1`] 
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -10761,7 +11049,6 @@ exports[`Header component renders correctly with props search input test ID 1`] 
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -10806,14 +11093,13 @@ exports[`Header component renders correctly with props search input test ID 1`] 
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -10833,20 +11119,24 @@ exports[`Header component renders correctly with props search input test ID 1`] 
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -10885,7 +11175,6 @@ exports[`Header component renders correctly with props search input test ID 1`] 
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -10932,7 +11221,6 @@ exports[`Header component renders correctly with props search input test ID 1`] 
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.searchIcon"
             >
               <View
@@ -10946,7 +11234,6 @@ exports[`Header component renders correctly with props search input test ID 1`] 
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,
@@ -11029,7 +11316,9 @@ exports[`Header component renders correctly with props search input test ID 2`] 
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -11075,6 +11364,7 @@ exports[`Header component renders correctly with props search input test ID 2`] 
           }
         }
         accessible={true}
+        collapsable={false}
         focusable={true}
         hitSlop={
           Object {
@@ -11128,14 +11418,13 @@ exports[`Header component renders correctly with props search input test ID 2`] 
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -11155,20 +11444,24 @@ exports[`Header component renders correctly with props search input test ID 2`] 
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -11197,6 +11490,7 @@ exports[`Header component renders correctly with props search input test ID 2`] 
           }
         }
         accessible={true}
+        collapsable={false}
         focusable={true}
         hitSlop={
           Object {
@@ -11252,7 +11546,6 @@ exports[`Header component renders correctly with props search input test ID 2`] 
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.searchIcon"
             >
               <View
@@ -11265,6 +11558,7 @@ exports[`Header component renders correctly with props search input test ID 2`] 
                 }
               >
                 <View
+                  collapsable={false}
                   style={
                     Object {
                       "bottom": 0,
@@ -11341,7 +11635,11 @@ exports[`Header component renders correctly with props search input test ID 2`] 
         }
       >
         <View
-          style={[Function]}
+          style={
+            Object {
+              "opacity": 0,
+            }
+          }
         >
           <View
             accessibilityState={
@@ -11360,7 +11658,6 @@ exports[`Header component renders correctly with props search input test ID 2`] 
                 "top": 20,
               }
             }
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -11403,14 +11700,12 @@ exports[`Header component renders correctly with props search input test ID 2`] 
                   ]
                 }
               >
-                <View
-                  className="icon-wrapper"
-                >
+                <View>
                   <RNSVGSvgView
                     align="xMidYMid"
                     bbHeight={24}
                     bbWidth={24}
-                    fill="#2F3945"
+                    color={4281284933}
                     focusable={false}
                     height={24}
                     meetOrSlice={0}
@@ -11430,20 +11725,24 @@ exports[`Header component renders correctly with props search input test ID 2`] 
                         },
                       ]
                     }
+                    tintColor={4281284933}
                     vbHeight={24}
                     vbWidth={24}
                     width={24}
                   >
-                    <RNSVGGroup
-                      fill={4281284933}
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGPath
-                        d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                        d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                        fill={
+                          Array [
+                            2,
+                          ]
+                        }
+                        propList={
+                          Array [
+                            "fill",
+                          ]
+                        }
                       />
                     </RNSVGGroup>
                   </RNSVGSvgView>
@@ -11463,7 +11762,9 @@ exports[`Header component renders correctly with props search input test ID 2`] 
           <View
             style={
               Array [
-                [Function],
+                Object {
+                  "width": "undefined%",
+                },
                 Object {
                   "backgroundColor": "#EAEDF2",
                   "borderRadius": 24,
@@ -11510,7 +11811,6 @@ exports[`Header component renders correctly with props search input test ID 2`] 
                       "top": 10,
                     }
                   }
-                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -11549,14 +11849,12 @@ exports[`Header component renders correctly with props search input test ID 2`] 
                         ]
                       }
                     >
-                      <View
-                        className="icon-wrapper"
-                      >
+                      <View>
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={20}
                           bbWidth={20}
-                          fill="#627286"
+                          color={4284641926}
                           focusable={false}
                           height={20}
                           meetOrSlice={0}
@@ -11576,20 +11874,24 @@ exports[`Header component renders correctly with props search input test ID 2`] 
                               },
                             ]
                           }
+                          tintColor={4284641926}
                           vbHeight={24}
                           vbWidth={24}
                           width={20}
                         >
-                          <RNSVGGroup
-                            fill={4284641926}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"
+                              d="M21.71 20.29L18 16.61A9 9 0 1016.61 18l3.68 3.68a1 1 0 001.42 0 1 1 0 000-1.39zM11 18a7 7 0 117-7 7 7 0 01-7 7z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -11647,7 +11949,9 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -11703,7 +12007,6 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -11748,14 +12051,13 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -11775,20 +12077,24 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -11827,7 +12133,6 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -11874,7 +12179,6 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.searchIcon"
             >
               <View
@@ -11888,7 +12192,6 @@ exports[`Header component renders correctly with props search placeholder 1`] = 
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,
@@ -11971,7 +12274,9 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -12017,6 +12322,7 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
           }
         }
         accessible={true}
+        collapsable={false}
         focusable={true}
         hitSlop={
           Object {
@@ -12070,14 +12376,13 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -12097,20 +12402,24 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -12139,6 +12448,7 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
           }
         }
         accessible={true}
+        collapsable={false}
         focusable={true}
         hitSlop={
           Object {
@@ -12194,7 +12504,6 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.searchIcon"
             >
               <View
@@ -12207,6 +12516,7 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
                 }
               >
                 <View
+                  collapsable={false}
                   style={
                     Object {
                       "bottom": 0,
@@ -12283,7 +12593,11 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
         }
       >
         <View
-          style={[Function]}
+          style={
+            Object {
+              "opacity": 0,
+            }
+          }
         >
           <View
             accessibilityState={
@@ -12302,7 +12616,6 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
                 "top": 20,
               }
             }
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -12345,14 +12658,12 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
                   ]
                 }
               >
-                <View
-                  className="icon-wrapper"
-                >
+                <View>
                   <RNSVGSvgView
                     align="xMidYMid"
                     bbHeight={24}
                     bbWidth={24}
-                    fill="#2F3945"
+                    color={4281284933}
                     focusable={false}
                     height={24}
                     meetOrSlice={0}
@@ -12372,20 +12683,24 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
                         },
                       ]
                     }
+                    tintColor={4281284933}
                     vbHeight={24}
                     vbWidth={24}
                     width={24}
                   >
-                    <RNSVGGroup
-                      fill={4281284933}
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGPath
-                        d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                        d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                        fill={
+                          Array [
+                            2,
+                          ]
+                        }
+                        propList={
+                          Array [
+                            "fill",
+                          ]
+                        }
                       />
                     </RNSVGGroup>
                   </RNSVGSvgView>
@@ -12405,7 +12720,9 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
           <View
             style={
               Array [
-                [Function],
+                Object {
+                  "width": "undefined%",
+                },
                 Object {
                   "backgroundColor": "#EAEDF2",
                   "borderRadius": 24,
@@ -12452,7 +12769,6 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
                       "top": 10,
                     }
                   }
-                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -12491,14 +12807,12 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
                         ]
                       }
                     >
-                      <View
-                        className="icon-wrapper"
-                      >
+                      <View>
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={20}
                           bbWidth={20}
-                          fill="#627286"
+                          color={4284641926}
                           focusable={false}
                           height={20}
                           meetOrSlice={0}
@@ -12518,20 +12832,24 @@ exports[`Header component renders correctly with props search placeholder 2`] = 
                               },
                             ]
                           }
+                          tintColor={4284641926}
                           vbHeight={24}
                           vbWidth={24}
                           width={20}
                         >
-                          <RNSVGGroup
-                            fill={4284641926}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"
+                              d="M21.71 20.29L18 16.61A9 9 0 1016.61 18l3.68 3.68a1 1 0 001.42 0 1 1 0 000-1.39zM11 18a7 7 0 117-7 7 7 0 01-7 7z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -12589,7 +12907,9 @@ exports[`Header component renders correctly with props style 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -12647,7 +12967,6 @@ exports[`Header component renders correctly with props style 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -12692,14 +13011,13 @@ exports[`Header component renders correctly with props style 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -12719,20 +13037,24 @@ exports[`Header component renders correctly with props style 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -12777,7 +13099,9 @@ exports[`Header component renders correctly with props sub title 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -12833,7 +13157,6 @@ exports[`Header component renders correctly with props sub title 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -12878,14 +13201,13 @@ exports[`Header component renders correctly with props sub title 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -12905,20 +13227,24 @@ exports[`Header component renders correctly with props sub title 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -12949,7 +13275,6 @@ exports[`Header component renders correctly with props sub title 1`] = `
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -13007,7 +13332,9 @@ exports[`Header component renders correctly with props sub title props 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -13063,7 +13390,6 @@ exports[`Header component renders correctly with props sub title props 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -13108,14 +13434,13 @@ exports[`Header component renders correctly with props sub title props 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -13135,20 +13460,24 @@ exports[`Header component renders correctly with props sub title props 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -13179,7 +13508,6 @@ exports[`Header component renders correctly with props sub title props 1`] = `
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -13239,7 +13567,9 @@ exports[`Header component renders correctly with props title 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -13295,7 +13625,6 @@ exports[`Header component renders correctly with props title 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -13340,14 +13669,13 @@ exports[`Header component renders correctly with props title 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -13367,20 +13695,24 @@ exports[`Header component renders correctly with props title 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -13411,7 +13743,6 @@ exports[`Header component renders correctly with props title 1`] = `
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -13470,7 +13801,9 @@ exports[`Header component renders correctly with props title props 1`] = `
   <View
     style={
       Array [
-        [Function],
+        Object {
+          "height": undefined,
+        },
         Object {
           "alignItems": "flex-end",
           "backgroundColor": "#FFFFFF",
@@ -13526,7 +13859,6 @@ exports[`Header component renders correctly with props title props 1`] = `
             "top": 20,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -13571,14 +13903,13 @@ exports[`Header component renders correctly with props title props 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="header.back"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -13598,20 +13929,24 @@ exports[`Header component renders correctly with props title props 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                    d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -13642,7 +13977,6 @@ exports[`Header component renders correctly with props title props 1`] = `
           accessible={true}
           collapsable={false}
           focusable={false}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}

@@ -47,7 +47,6 @@ exports[`Avatar Group component renders correctly 1`] = `
       >
         <View
           collapsable={false}
-          nativeID="animatedComponent"
           style={
             Object {
               "bottom": 0,
@@ -160,7 +159,6 @@ exports[`Avatar Group component renders correctly avatar when call Avatar.Group 
       >
         <View
           collapsable={false}
-          nativeID="animatedComponent"
           style={
             Object {
               "bottom": 0,
@@ -274,6 +272,7 @@ exports[`Avatar Group component renders correctly group with 2 member 1`] = `
         }
       >
         <View
+          collapsable={false}
           style={
             Object {
               "bottom": 0,
@@ -359,6 +358,7 @@ exports[`Avatar Group component renders correctly group with 2 member 1`] = `
         }
       >
         <View
+          collapsable={false}
           style={
             Object {
               "bottom": 0,
@@ -472,6 +472,7 @@ exports[`Avatar Group component renders correctly group with 3 member 1`] = `
           }
         >
           <View
+            collapsable={false}
             style={
               Object {
                 "bottom": 0,
@@ -557,6 +558,7 @@ exports[`Avatar Group component renders correctly group with 3 member 1`] = `
           }
         >
           <View
+            collapsable={false}
             style={
               Object {
                 "bottom": 0,
@@ -651,6 +653,7 @@ exports[`Avatar Group component renders correctly group with 3 member 1`] = `
           }
         >
           <View
+            collapsable={false}
             style={
               Object {
                 "bottom": 0,
@@ -765,6 +768,7 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
           }
         >
           <View
+            collapsable={false}
             style={
               Object {
                 "bottom": 0,
@@ -850,6 +854,7 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
           }
         >
           <View
+            collapsable={false}
             style={
               Object {
                 "bottom": 0,
@@ -944,6 +949,7 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
           }
         >
           <View
+            collapsable={false}
             style={
               Object {
                 "bottom": 0,
@@ -1029,6 +1035,7 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
           }
         >
           <View
+            collapsable={false}
             style={
               Object {
                 "bottom": 0,
@@ -1143,6 +1150,7 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
           }
         >
           <View
+            collapsable={false}
             style={
               Object {
                 "bottom": 0,
@@ -1228,6 +1236,7 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
           }
         >
           <View
+            collapsable={false}
             style={
               Object {
                 "bottom": 0,
@@ -1322,6 +1331,7 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
           }
         >
           <View
+            collapsable={false}
             style={
               Object {
                 "bottom": 0,
@@ -1470,6 +1480,7 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
           }
         >
           <View
+            collapsable={false}
             style={
               Object {
                 "bottom": 0,
@@ -1555,6 +1566,7 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
           }
         >
           <View
+            collapsable={false}
             style={
               Object {
                 "bottom": 0,
@@ -1649,6 +1661,7 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
           }
         >
           <View
+            collapsable={false}
             style={
               Object {
                 "bottom": 0,
@@ -1746,6 +1759,7 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
             }
           >
             <View
+              collapsable={false}
               style={
                 Object {
                   "bottom": 0,
@@ -1859,7 +1873,6 @@ exports[`Avatar Group component renders correctly group with no member 1`] = `
       >
         <View
           collapsable={false}
-          nativeID="animatedComponent"
           style={
             Object {
               "bottom": 0,
