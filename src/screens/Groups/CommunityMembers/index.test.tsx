@@ -15,7 +15,7 @@ describe('CommunityMembers', () => {
 
   it('should render list data correctly', () => {
     const wrapper = renderWithRedux(<MockedNavigator component={component} />);
-    const searchInput = wrapper.getByTestId('content_data.list');
+    const searchInput = wrapper.getByTestId('member_list');
     expect(searchInput).toBeDefined();
   });
 });
