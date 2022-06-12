@@ -51,8 +51,9 @@ export interface IParamGetDiscoverGroups {
 export interface ISetMembers {
   loading?: boolean;
   canLoadMore?: boolean;
+  offset?: number;
   community_admin?: {data: ICommunityMembers[]; user_count: number};
-  member?: {data: ICommunityMembers[]; user_count: number};
+  community_member?: {data: ICommunityMembers[]; user_count: number};
 }
 
 export interface ISetCommunitySearchMembers {

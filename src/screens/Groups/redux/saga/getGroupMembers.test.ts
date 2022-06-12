@@ -21,6 +21,7 @@ describe('getGroupMembers saga', () => {
         groupMembers: {
           loading: false,
           canLoadMore: true,
+          offset: 0,
           group_admin: {data: [], user_count: 0},
           group_member: {data: [], user_count: 0},
         },
@@ -35,13 +36,16 @@ describe('getGroupMembers saga', () => {
         actions.setGroupMembers({
           loading: false,
           canLoadMore: false,
+          offset: 7,
           group_admin: {
             data: [adminDetail, adminDetail, adminDetail],
             user_count: 3,
+            name: 'Admin',
           },
           group_member: {
             data: [memberDetail, memberDetail, memberDetail, memberDetail],
             user_count: 4,
+            name: 'Member',
           },
         }),
       )
@@ -57,6 +61,7 @@ describe('getGroupMembers saga', () => {
         groupMembers: {
           loading: false,
           canLoadMore: false,
+          offset: 0,
           group_admin: {data: [], user_count: 0},
           group_member: {data: [], user_count: 0},
         },
@@ -78,6 +83,7 @@ describe('getGroupMembers saga', () => {
         groupMembers: {
           loading: false,
           canLoadMore: true,
+          offset: 0,
           group_admin: {data: [], user_count: 0},
           group_member: {data: [], user_count: 0},
         },
@@ -97,6 +103,60 @@ describe('getGroupMembers saga', () => {
       .run()
       .then(({allEffects}: any) => {
         expect(allEffects?.length).toEqual(6);
+      });
+  });
+
+  it('should refresh data correctly', async () => {
+    const action = {
+      type: 'test',
+      payload: {groupId: 1, params: {}, isRefreshing: true},
+    };
+
+    const resp = {...memberData};
+    const state = {
+      groups: {
+        groupMembers: {
+          loading: false,
+          canLoadMore: false,
+          offset: 7,
+          group_admin: {
+            data: [adminDetail, adminDetail, adminDetail],
+            user_count: 3,
+            name: 'Admin',
+          },
+          group_member: {
+            data: [memberDetail, memberDetail, memberDetail, memberDetail],
+            user_count: 4,
+            name: 'Member',
+          },
+        },
+      },
+    };
+
+    return expectSaga(getGroupMembers, action)
+      .withState(state)
+      .put(actions.setGroupMembers({loading: true}))
+      .provide([[matchers.call.fn(groupsDataHelper.getGroupMembers), resp]])
+      .put(
+        actions.setGroupMembers({
+          loading: false,
+          canLoadMore: false,
+          offset: 7,
+          group_admin: {
+            data: [adminDetail, adminDetail, adminDetail],
+            user_count: 3,
+            name: 'Admin',
+          },
+          group_member: {
+            data: [memberDetail, memberDetail, memberDetail, memberDetail],
+            user_count: 4,
+            name: 'Member',
+          },
+        }),
+      )
+      .run()
+      .then(({allEffects}: any) => {
+        expect(allEffects?.length).toEqual(4);
       });
   });
 });
