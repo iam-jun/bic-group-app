@@ -58,7 +58,7 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
       }
       RightComponent={
         <>
-          {user.username !== username && (
+          {user?.username !== username && (
             <Icon
               icon={'CommentAltDots'}
               backgroundColor={colors.bgSecondary}

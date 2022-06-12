@@ -39,11 +39,10 @@ export default function* getGroupMembers({
         [role]: {
           name: resp[role].name,
           user_count: resp[role].user_count,
-          data: isRefreshing
-            ? [...resp[role].data]
-            : groupMembers?.[role]?.data
-            ? [...groupMembers?.[role]?.data, ...resp[role].data]
-            : [...resp[role].data],
+          data:
+            isRefreshing || !groupMembers?.[role]?.data
+              ? [...resp[role].data]
+              : [...groupMembers?.[role]?.data, ...resp[role].data],
         },
       };
     });

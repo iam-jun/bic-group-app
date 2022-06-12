@@ -49,7 +49,7 @@ const MemberOptionsMenu = ({
     selectedMember,
   });
   const alertRemovingAdmin = useRemoveAdmin({groupId, selectedMember});
-  const alertLeaveGroup = useLeaveGroup({groupId, username: user.username});
+  const alertLeaveGroup = useLeaveGroup({groupId, username: user?.username});
 
   const onPressMenuOption = (
     type: 'set-admin' | 'remove-admin' | 'remove-member' | 'leave-group',
