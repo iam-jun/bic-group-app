@@ -9,8 +9,7 @@ import {ICommunity} from '~/interfaces/ICommunity';
 describe('get Community Detail saga', () => {
   const action = {
     type: 'test',
-    payload: 1,
-    loadingPage: false,
+    payload: {communityId: 1, loadingPage: false},
   };
 
   it('should get community details successfully', () => {

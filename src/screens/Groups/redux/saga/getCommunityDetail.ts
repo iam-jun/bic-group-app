@@ -8,16 +8,21 @@ import {ICommunity} from '~/interfaces/ICommunity';
 
 export default function* getCommunityDetail({
   payload,
-  loadingPage,
 }: {
   type: string;
-  payload: number;
-  loadingPage: boolean;
+  payload: {
+    communityId: number;
+    loadingPage?: boolean;
+    showLoading?: boolean;
+  };
 }) {
   try {
+    const {communityId, loadingPage, showLoading} = payload;
+    if (showLoading) yield put(actions.setCommunityLoading(true));
+
     if (loadingPage) yield put(actions.setLoadingPage(true));
     // @ts-ignore
-    const resp = yield call(groupsDataHelper.getCommunityDetail, payload);
+    const resp = yield call(groupsDataHelper.getCommunityDetail, communityId);
     yield put(actions.setCommunityDetail(resp?.data));
 
     const {groups} = yield select();
@@ -31,6 +36,7 @@ export default function* getCommunityDetail({
     if (!isMember && !isPublic) yield put(actions.setLoadingPage(false));
   } catch (err) {
     console.log('getCommunityDetail:', err);
+    yield put(actions.setCommunityLoading(false));
     yield put(actions.setLoadingPage(false));
     yield put(actions.setCommunityDetail({} as ICommunity));
   }

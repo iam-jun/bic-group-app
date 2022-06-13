@@ -55,7 +55,13 @@ const CommunityDetail = (props: any) => {
   const buttonShow = useSharedValue(0);
 
   const getCommunityDetail = (loadingPage = false) => {
-    dispatch(actions.getCommunityDetail(communityId, loadingPage));
+    dispatch(
+      actions.getCommunityDetail({communityId, loadingPage, showLoading: true}),
+    );
+  };
+
+  const onRefresh = () => {
+    getCommunityDetail();
   };
 
   const getPosts = () => {
@@ -131,7 +137,7 @@ const CommunityDetail = (props: any) => {
     if (!isMember && privacy === groupPrivacy.private) {
       return (
         <PrivateWelcome
-          onRefresh={getCommunityDetail}
+          onRefresh={onRefresh}
           onScroll={onScroll}
           onButtonLayout={onButtonLayout}
         />

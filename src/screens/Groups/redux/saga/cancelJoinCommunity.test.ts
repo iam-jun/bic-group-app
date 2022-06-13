@@ -27,7 +27,7 @@ describe('cancelJoinCommuniity saga', () => {
           data: {join_status: groupJoinStatus.visitor},
         }),
       )
-      .put(groupsActions.getCommunityDetail(communityId))
+      .put(groupsActions.getCommunityDetail({communityId}))
       .put(
         modalActions.showHideToastMessage({
           content: `${i18next.t(
@@ -74,7 +74,7 @@ describe('cancelJoinCommuniity saga', () => {
           data: {join_status: groupJoinStatus.member},
         }),
       )
-      .put(groupsActions.getCommunityDetail(communityId, true))
+      .put(groupsActions.getCommunityDetail({communityId, loadingPage: true}))
       .call(showError, error)
       .run()
       .then(({allEffects}: any) => {
