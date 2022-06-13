@@ -17,6 +17,7 @@ import {ActionTypes, createAction} from '~/utils';
 import {updateUserFromSharedPreferences} from './sharePreferences';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import {ConvertHelper} from '~/utils/convertHelper';
+import ApiConfig from '~/configs/apiConfig';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -266,8 +267,36 @@ const mapResponseSuccessBein = (
   };
 };
 
+const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
+  switch (endPoint) {
+    case `${ApiConfig.providers.bein.url}permissions/categories`:
+      return true;
+  }
+  return false;
+};
+
 const interceptorsRequestSuccess = (config: AxiosRequestConfig) => {
-  return config;
+  const newConfig = {...config};
+
+  // apply rule snake camel for each bein group's api
+  // we will remove this check after all apis is updated
+  if (shouldApplyAutoSnakeCamel(config?.url)) {
+    // update data of upload file request will lead to some unknown error
+    if (newConfig.headers?.['Content-Type']?.includes('multipart/form-data')) {
+      return newConfig;
+    }
+
+    if (config.params) {
+      newConfig.params = ConvertHelper.decamelizeKeys(config.params);
+    }
+    if (config.data) {
+      newConfig.data = ConvertHelper.decamelizeKeys(config.data);
+    }
+
+    return newConfig;
+  }
+
+  return newConfig;
 };
 
 const interceptorsRequestSnakeSuccess = (config: AxiosRequestConfig) => {
@@ -300,6 +329,19 @@ const interceptorsResponseCamelSuccess = (response: AxiosResponse) => {
 };
 
 const interceptorsResponseSuccess = (response: AxiosResponse) => {
+  // apply rule snake camel for each bein group's api
+  // we will remove this check after all apis is updated
+  if (shouldApplyAutoSnakeCamel(response?.config?.url)) {
+    if (
+      response.data &&
+      response.headers?.['content-type']?.includes?.('application/json')
+    ) {
+      response.data = ConvertHelper.camelizeKeys(response.data, {
+        exclude: ['reactions_count'],
+      });
+    }
+    return response;
+  }
   return response;
 };
 
