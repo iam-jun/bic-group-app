@@ -52,8 +52,7 @@ export interface ISetMembers {
   loading?: boolean;
   canLoadMore?: boolean;
   offset?: number;
-  community_admin?: {data: ICommunityMembers[]; user_count: number};
-  community_member?: {data: ICommunityMembers[]; user_count: number};
+  [roleName: string]: any;
 }
 
 export interface ISetCommunitySearchMembers {

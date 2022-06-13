@@ -102,8 +102,7 @@ export const groupInitState = {
     loading: false,
     canLoadMore: true,
     offset: 0, // current fetched data count
-    community_admin: {data: [], user_count: 0},
-    community_member: {data: [], user_count: 0},
+    // community_admin: {}, community_member: {}
   },
   communitySearchMembers: {
     loading: false,

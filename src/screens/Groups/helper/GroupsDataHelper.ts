@@ -714,8 +714,8 @@ const groupsDataHelper = {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getCommunityMembers(communityId, params),
       );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data?.data);
       } else {
         return Promise.reject(response);
       }

@@ -18,7 +18,7 @@ describe('get Community members', () => {
   };
 
   it('getCommunityMembers: should get data correctly', async () => {
-    const resp = {data: memberData};
+    const resp = {...memberData};
 
     const state = {
       groups: {
@@ -26,8 +26,6 @@ describe('get Community members', () => {
           loading: false,
           canLoadMore: true,
           offset: 0,
-          community_admin: {data: [], user_count: 0},
-          community_member: {data: [], user_count: 0},
         },
       },
     };
@@ -50,6 +48,7 @@ describe('get Community members', () => {
               adminDetail,
             ],
             user_count: 5,
+            name: memberData.community_admin.name,
           },
           community_member: {
             data: [
@@ -61,6 +60,7 @@ describe('get Community members', () => {
               memberDetail,
             ],
             user_count: 6,
+            name: memberData.community_member.name,
           },
         }),
       )
@@ -88,31 +88,6 @@ describe('get Community members', () => {
       .run()
       .then(({allEffects}: any) => {
         expect(allEffects?.length).toEqual(2);
-      });
-  });
-
-  it('getCommunityMembers: should return nothing when there is no data from response', () => {
-    const resp = {};
-
-    const state = {
-      groups: {
-        communityMembers: {
-          loading: false,
-          canLoadMore: true,
-          offset: 0,
-          community_admin: {data: [], user_count: 0},
-          community_member: {data: [], user_count: 0},
-        },
-      },
-    };
-
-    return expectSaga(getCommunityMembers, action)
-      .withState(state)
-      .put(actions.setCommunityMembers({loading: true}))
-      .provide([[matchers.call.fn(groupsDataHelper.getCommunityMembers), resp]])
-      .run()
-      .then(({allEffects}: any) => {
-        expect(allEffects?.length).toEqual(3);
       });
   });
 
@@ -152,7 +127,7 @@ describe('get Community members', () => {
       payload: {communityId: 1, params: {}, isRefreshing: true},
     };
 
-    const resp = {data: memberData};
+    const resp = {...memberData};
 
     const state = {
       groups: {
@@ -203,6 +178,7 @@ describe('get Community members', () => {
               adminDetail,
             ],
             user_count: 5,
+            name: memberData.community_admin.name,
           },
           community_member: {
             data: [
@@ -214,6 +190,7 @@ describe('get Community members', () => {
               memberDetail,
             ],
             user_count: 6,
+            name: memberData.community_member.name,
           },
         }),
       )

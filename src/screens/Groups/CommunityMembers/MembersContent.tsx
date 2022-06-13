@@ -16,25 +16,28 @@ const MembersContent = ({communityId, onPressMenu}: MembersContentProps) => {
   const dispatch = useDispatch();
   const [sectionList, setSectionList] = useState([]);
 
-  const {loading, canLoadMore, community_admin, community_member, offset} =
-    useKeySelector(groupsKeySelector.communityMembers);
+  const communityMembers = useKeySelector(groupsKeySelector.communityMembers);
+  const {loading, canLoadMore, offset} = communityMembers || {};
   const {can_manage_member} = useKeySelector(groupsKeySelector.communityDetail);
 
   useEffect(() => {
-    const newSectionList: any = [
-      {
-        title: 'Admins',
-        data: community_admin.data,
-        user_count: community_admin.user_count,
-      },
-      {
-        title: 'Members',
-        data: community_member.data,
-        user_count: community_member.user_count,
-      },
-    ];
+    if (communityMembers) {
+      const newSectionList: any = [];
 
-    setSectionList(newSectionList);
+      Object.values(communityMembers)?.map((roleData: any) => {
+        const section: any = {};
+        const {name, data} = roleData || {};
+
+        if (name && data) {
+          section.title = `${roleData.name}`;
+          section.data = roleData.data;
+          section.user_count = roleData.user_count;
+          newSectionList.push(section);
+        }
+      });
+
+      setSectionList(newSectionList);
+    }
   }, [offset]);
 
   useEffect(() => {

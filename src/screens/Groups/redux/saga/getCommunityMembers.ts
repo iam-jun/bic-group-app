@@ -19,8 +19,8 @@ export default function* getCommunityMembers({
   try {
     const {groups} = yield select();
     const {communityId, isRefreshing, params} = payload;
-    const {canLoadMore, community_admin, community_member, offset} =
-      groups.communityMembers;
+    const communityMembers = groups.communityMembers;
+    const {canLoadMore, offset} = communityMembers;
 
     yield put(
       actions.setCommunityMembers({
@@ -37,31 +37,31 @@ export default function* getCommunityMembers({
       ...params,
     });
 
-    const respData = resp?.data;
-    if (respData) {
-      const newDataCount =
-        respData.community_admin.data.length +
-        respData.community_member.data.length;
-      const newData = {
-        loading: false,
-        canLoadMore: newDataCount === appConfig.recordsPerPage,
-        offset: isRefreshing ? newDataCount : offset + newDataCount,
-        community_admin: {
-          data: isRefreshing
-            ? [...respData.community_admin.data]
-            : [...community_admin.data, ...respData.community_admin.data],
-          user_count: respData.community_admin.user_count,
-        },
-        community_member: {
-          data: isRefreshing
-            ? [...respData.community_member.data]
-            : [...community_member.data, ...respData.community_member.data],
-          user_count: respData.community_member.user_count,
+    let newDataCount = 0;
+    let newDataObj = {};
+    Object.keys(resp)?.map?.((role: string) => {
+      newDataCount += resp[role]?.data?.length;
+      newDataObj = {
+        ...newDataObj,
+        [role]: {
+          name: resp[role]?.name,
+          user_count: resp[role]?.user_count,
+          data:
+            isRefreshing || !communityMembers?.[role]?.data
+              ? [...resp[role]?.data]
+              : [...communityMembers?.[role]?.data, ...resp[role]?.data],
         },
       };
+    });
 
-      yield put(actions.setCommunityMembers(newData));
-    }
+    const newData = {
+      loading: false,
+      canLoadMore: newDataCount === appConfig.recordsPerPage,
+      offset: isRefreshing ? newDataCount : offset + newDataCount,
+      ...newDataObj,
+    };
+
+    yield put(actions.setCommunityMembers(newData));
   } catch (err: any) {
     console.log('getCommunityMembers error:', err);
     yield call(showError, err);

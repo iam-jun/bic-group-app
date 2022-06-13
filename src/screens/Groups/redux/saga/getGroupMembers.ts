@@ -12,8 +12,8 @@ export default function* getGroupMembers({
   payload: IGroupGetMembers;
 }) {
   try {
-    const {groupId, params, isRefreshing} = payload;
     const {groups} = yield select();
+    const {groupId, params, isRefreshing} = payload;
     const groupMembers = groups.groupMembers;
     const {canLoadMore, offset} = groupMembers;
 
@@ -33,16 +33,16 @@ export default function* getGroupMembers({
     let newDataCount = 0;
     let newDataObj = {};
     Object.keys(resp)?.map?.((role: string) => {
-      newDataCount += resp[role].data.length;
+      newDataCount += resp[role]?.data?.length;
       newDataObj = {
         ...newDataObj,
         [role]: {
-          name: resp[role].name,
-          user_count: resp[role].user_count,
+          name: resp[role]?.name,
+          user_count: resp[role]?.user_count,
           data:
             isRefreshing || !groupMembers?.[role]?.data
-              ? [...resp[role].data]
-              : [...groupMembers?.[role]?.data, ...resp[role].data],
+              ? [...resp[role]?.data]
+              : [...groupMembers?.[role]?.data, ...resp[role]?.data],
         },
       };
     });

@@ -107,7 +107,7 @@ export const memberData = {
       memberDetail,
     ],
     user_count: 6,
-    name: 'MEMBER',
+    name: 'COMMUNITY_MEMBER',
   },
 };
 
