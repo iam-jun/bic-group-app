@@ -15,7 +15,7 @@ import * as modalActions from '~/store/modal/actions';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
 import {mapData, mapItems} from '../../helper/mapper';
 import appConfig from '~/configs/appConfig';
-import FileUploader, {IGetFile} from '~/services/fileUploader';
+import ImageUploader, {IGetFile} from '~/services/imageUploader';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
@@ -213,7 +213,7 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
     const {file, id, fieldName, uploadType} = payload;
     yield updateLoadingImageState(fieldName, true);
 
-    const data: IGetFile = yield FileUploader.getInstance().upload({
+    const data: IGetFile = yield ImageUploader.getInstance().upload({
       file,
       uploadType,
     });

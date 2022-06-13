@@ -3,7 +3,6 @@ import deviceInfoModule from 'react-native-device-info';
 import {IFilePicked} from '~/interfaces/common';
 import {IActivityDataFile, IActivityDataImage} from '~/interfaces/IPost';
 import FileUploader from '~/services/fileUploader';
-import VideoUploader from '~/services/videoUploader';
 import {
   CONTENT_INSET_HEIGHT,
   CONTENT_MIN_HEIGHT,
@@ -67,7 +66,7 @@ export const validateVideo = (
       selectingVideo?.fileName ||
       selectingVideo?.filename ||
       selectingVideo?.name;
-    const {uploading, result} = VideoUploader.getInstance().getFile(filename);
+    const {uploading, result} = FileUploader.getInstance().getFile(filename);
     if (uploading) {
       videoUploading = true;
       videoError = t('post:error_wait_uploading');
@@ -128,16 +127,17 @@ export const validateFiles = (selectingFiles: IFilePicked[], t: any) => {
   selectingFiles?.map?.((item: any) => {
     if (item?.url) {
       files.push({
+        ...item,
         id: item?.id,
-        name: item?.url || '',
+        name: item?.name || item?.fileName || '',
         origin_name: item?.name,
-        size: item?.file?.size,
-        type: item?.file?.type,
+        size: item?.size,
+        type: item?.type,
       });
     } else {
       const {url, uploading, result} =
         FileUploader.getInstance().getFile(item.name) || {};
-      console.log('validateFiles upload', url, uploading, result);
+      // console.log('validateFiles upload', url, uploading, result);
       if (uploading) {
         fileUploading = true;
         fileError = t('post:error_wait_uploading');

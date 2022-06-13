@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import {Keyboard} from 'react-native';
-import VideoUploader from '~/services/videoUploader';
+import FileUploader from '~/services/fileUploader';
 import modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import postActions from '../redux/actions';
@@ -38,7 +38,7 @@ export const handleBack = (
     }
   } else if (hasPostId) {
     if (videoUploading) {
-      VideoUploader.getInstance().cancel({file: video} as any);
+      FileUploader.getInstance().cancel({file: video} as any);
       dispatch(
         modalActions.showAlert({
           title: i18next.t('upload:title_leave_uploading'),

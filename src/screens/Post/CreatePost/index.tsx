@@ -44,6 +44,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     createPostData,
     images,
     video,
+    files,
     videoUploading,
     disableButtonPost,
     isEditPost,
@@ -84,6 +85,9 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   } else if (images?.length > 0) {
     videoDisabled = true;
     fileDisabled = true;
+  } else if (files?.length > 0) {
+    videoDisabled = true;
+    imageDisabled = true;
   }
 
   const handleBackPress = () => {

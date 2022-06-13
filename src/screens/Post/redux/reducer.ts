@@ -207,9 +207,30 @@ function postReducer(state = postInitState, action: any = {}) {
         ...state,
         createPost: {
           ...state.createPost,
+          files: payload || [],
+        },
+      };
+    case postTypes.ADD_CREATE_POST_FILES:
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
           files: [...state.createPost.files, ...payload],
         },
       };
+    case postTypes.SET_CREATE_POST_FILE: {
+      const filename = payload?.name || payload?.filename || payload?.fileName;
+
+      return {
+        ...state,
+        createPost: {
+          ...state.createPost,
+          files: state.createPost.files.map((file: IFilePicked) =>
+            file.name === filename ? payload : file,
+          ),
+        },
+      };
+    }
     case postTypes.REMOVE_CREATE_POST_FILE:
       return {
         ...state,

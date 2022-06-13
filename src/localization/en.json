@@ -830,7 +830,8 @@
     "text_upload_error": "Can't upload this {{file_type}}",
     "title_leave_uploading": "Leave this page?",
     "text_leave_uploading": "Are you sure you want to leave this page? Your {{file_type}} process will be lost.",
-    "text_video_over_size": "Your video must be less than 300MB"
+    "text_video_over_size": "Your video must be less than 300MB",
+    "text_file_over_size": "Your file must be less than 5MB"
   },
   "file_type": {
     "image": "image",

@@ -168,7 +168,7 @@ const PostToolbar = ({
   const onPressAddFile = async () => {
     try {
       const files: any = await DocumentPicker.openPickerMultiple();
-      dispatch(postActions.setCreatePostFiles(files));
+      dispatch(postActions.addCreatePostFiles(files));
     } catch (e) {
       console.log(
         `\x1b[36m🐣️ DocumentPicker.openPickerSingle error: \x1b[0m`,

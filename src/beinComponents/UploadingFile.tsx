@@ -5,9 +5,8 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 
 import Text from '~/beinComponents/Text';
-import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
+import {IUploadType} from '~/configs/resourceConfig';
 import {IFilePicked} from '~/interfaces/common';
-import VideoUploader from '~/services/videoUploader';
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 import {formatBytes} from '~/utils/formatData';
@@ -19,13 +18,13 @@ import {useDispatch} from 'react-redux';
 
 export interface UploadingFileProps {
   style?: StyleProp<ViewStyle>;
-  uploadType?: IUploadType | string;
-  file?: IFilePicked;
   url?: string;
+  uploadType?: IUploadType;
+  file?: IFilePicked;
+  disableClose?: boolean;
   onClose?: (file: IFilePicked) => void;
   onSuccess?: (file: IGetFile) => void;
   onError?: (e?: any) => void;
-  disableClose?: boolean;
 }
 
 const UploadingFile: FC<UploadingFileProps> = ({
@@ -69,34 +68,23 @@ const UploadingFile: FC<UploadingFileProps> = ({
       return;
     }
 
-    //ensure video not uploaded
+    //ensure file not uploaded
     if (!file || isEmpty(file) || file?.id || file?.url) {
       setUploading(false);
       return;
     }
 
+    console.log('uploadFile', !file, isEmpty(file), file?.id, file?.url);
+
     setError('');
     setUploading(true);
-    if (
-      uploadType === uploadTypes.postVideo ||
-      uploadType === uploadTypes.commentVideo
-    ) {
-      await VideoUploader.getInstance().upload({
-        file,
-        uploadType,
-        onProgress: _onProgress,
-        onSuccess: _onSuccess,
-        onError: _onError,
-      });
-    } else {
-      await FileUploader.getInstance().upload({
-        file,
-        uploadType,
-        onProgress: _onProgress,
-        onSuccess: _onSuccess,
-        onError: _onError,
-      });
-    }
+    await FileUploader.getInstance().upload({
+      file,
+      uploadType,
+      onProgress: _onProgress,
+      onSuccess: _onSuccess,
+      onError: _onError,
+    });
   };
 
   useEffect(() => {
@@ -110,15 +98,15 @@ const UploadingFile: FC<UploadingFileProps> = ({
   const onPressClose = () => {
     if (uploading) {
       onClose?.(file);
-      VideoUploader.getInstance().cancel({file, uploadType});
+      FileUploader.getInstance().cancel({file, uploadType});
     } else {
       dispatch(
         modalActions.showAlert({
           title: t('upload:title_delete_file', {
-            file_type: t('file_type:video'),
+            file_type: t(`file_type:${uploadType}`),
           }),
           content: t('upload:text_delete_file', {
-            file_type: t('file_type:video'),
+            file_type: t(`file_type:${uploadType}`),
           }),
           cancelBtn: true,
           cancelLabel: t('common:btn_cancel'),

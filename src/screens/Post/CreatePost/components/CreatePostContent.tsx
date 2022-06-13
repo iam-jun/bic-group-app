@@ -28,6 +28,7 @@ import {CONTENT_MIN_HEIGHT, MIN_INPUT_HEIGHT} from '../constanst';
 import {calculateInputHeight, isAndroidAnimated} from '../helper';
 import useCreatePost from '../hooks/useCreatePost';
 import ToastAutoSave from './ToastAutoSave';
+import FilesView from '../';
 
 interface Props {
   groupIds: any[];
@@ -52,6 +53,7 @@ const Content = ({groupIds, screenParams, inputRef}: Props) => {
     files,
     handleChangeContent,
     handleUploadVideoSuccess,
+    handleUploadFileSuccess,
   } = useCreatePost({
     screenParams,
     mentionInputRef,
@@ -132,11 +134,11 @@ const Content = ({groupIds, screenParams, inputRef}: Props) => {
     dispatch(postActions.removeCreatePostFile(file));
   };
 
-  const onUploadVideoError = () => {
+  const onUploadError = (type: string) => {
     dispatch(
       modalActions.showHideToastMessage({
         content: t('upload:text_upload_error', {
-          file_type: t('file_type:video'),
+          file_type: t(`file_type:${type}`),
         }),
         props: {type: 'error'},
       }),
@@ -146,25 +148,6 @@ const Content = ({groupIds, screenParams, inputRef}: Props) => {
   const onLayoutCloneText = (e: any) => {
     const height = e?.nativeEvent?.layout?.height || MIN_INPUT_HEIGHT;
     setInputHeight(height);
-  };
-
-  const renderFiles = () => {
-    if (isEmpty(files)) return null;
-
-    return (
-      <>
-        {files.map((item: any, index: number) => (
-          <UploadingFile
-            key={`create-post-file-${index}`}
-            file={item}
-            uploadType={uploadTypes.postFile}
-            onClose={() => onRemoveFile(item)}
-            onSuccess={handleUploadVideoSuccess}
-            onError={onUploadVideoError}
-          />
-        ))}
-      </>
-    );
   };
 
   return (
@@ -217,14 +200,22 @@ const Content = ({groupIds, screenParams, inputRef}: Props) => {
                   rootNavigation.navigate(homeStack.postSelectImage)
                 }
               />
-              <UploadingFile
-                uploadType={uploadTypes.postVideo}
-                file={video as IFilePicked}
-                onClose={onRemoveVideo}
-                onSuccess={handleUploadVideoSuccess}
-                onError={onUploadVideoError}
+              {video && (
+                <UploadingFile
+                  uploadType={uploadTypes.postVideo}
+                  file={video as IFilePicked}
+                  onClose={onRemoveVideo}
+                  onError={() => onUploadError('video')}
+                  onSuccess={handleUploadVideoSuccess}
+                />
+              )}
+              <FilesView
+                files={files}
+                uploadType={uploadTypes.postFile}
+                onRemoveFile={onRemoveFile}
+                onError={() => onUploadError('file')}
+                onSuccess={handleUploadFileSuccess}
               />
-              {renderFiles()}
             </View>
           </Animated.View>
         </View>

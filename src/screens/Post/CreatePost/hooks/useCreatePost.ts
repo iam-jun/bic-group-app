@@ -256,6 +256,8 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
 
       const initVideo = initPostData?.media?.videos?.[0];
       dispatch(postActions.setCreatePostVideo(initVideo));
+      const initFiles = initPostData?.media?.files;
+      dispatch(postActions.setCreatePostFiles(initFiles));
 
       prevData.current = {
         ...prevData.current,
@@ -284,8 +286,16 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
       ),
       isEqual(important, prevData?.current?.important),
       isEqual(selectingVideo, prevData?.current?.selectingVideo),
+      isEmpty(
+        differenceWith(
+          selectingFiles,
+          prevData?.current?.selectingFiles,
+          isEqual,
+        ),
+      ),
     ];
     const newDataChange = dataChangeList.filter(i => !i);
+    console.log('new data change', newDataChange.length);
     if (isAutoSave && newDataChange.length > 0 && sPostId) {
       prevData.current = {
         ...prevData.current,
@@ -293,6 +303,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         chosenAudiences,
         important,
         selectingVideo,
+        selectingFiles,
       };
       autoSaveDraftPost();
     }
@@ -302,6 +313,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     selectingVideo?.id,
     selectingVideo?.name,
     important,
+    JSON.stringify(selectingFiles),
   ]);
 
   useEffect(() => {
@@ -365,6 +377,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
 
   const autoSaveDraftPost = async () => {
     setPause(true);
+    console.log('autoSaveDraftPost', (sIsLoading && !sPostId) || loading);
 
     try {
       if ((sIsLoading && !sPostId) || loading) {
@@ -379,9 +392,13 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         t,
       );
 
-      const newContent = mentionInputRef?.current?.getContent?.() || content;
+      const {fileError, files, fileUploading} = validateFiles(
+        selectingVideo,
+        t,
+      );
 
-      if (imageUploading || videoUploading) {
+      const newContent = mentionInputRef?.current?.getContent?.() || content;
+      if (imageUploading || videoUploading || fileUploading) {
         console.log(`\x1b[36m🐣️ autoSaveDraftPost uploading media\x1b[0m`);
         return;
       }
@@ -391,8 +408,10 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         !video &&
         chosenAudiences.length < 1 &&
         !important?.active &&
-        !sPostId;
-      if (invalidData || !isAutoSave || imageError || videoError) {
+        !sPostId &&
+        isEmpty(files);
+
+      if (invalidData || !isAutoSave || imageError || videoError || fileError) {
         if (imageError) {
           dispatch(
             modalActions.showHideToastMessage({
@@ -431,6 +450,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         }
         setLoading(false);
       }
+      console.log('isEdit', isEdit);
       if (!isEdit) {
         dispatch(postActions.setSavingDraftPost(false));
         setShowToastAutoSave(true);
@@ -449,6 +469,10 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
 
   const handleUploadVideoSuccess = (file: IGetFile) => {
     dispatch(postActions.setCreatePostVideo(file));
+  };
+
+  const handleUploadFileSuccess = (file: IGetFile) => {
+    dispatch(postActions.setCreatePostFile(file));
   };
 
   const handlePressPost = () => {
@@ -533,11 +557,12 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     isEditPost,
     isEditDraftPost,
     isEditPostHasChange,
+    isNewsfeed,
+    content,
     handlePressPost,
     handleChangeContent,
     handleUploadVideoSuccess,
-    isNewsfeed,
-    content,
+    handleUploadFileSuccess,
   };
 };
 
