@@ -126,6 +126,7 @@ const icons = {
   CornerDownRight: 'CornerDownRight',
   Trash: 'Trash',
   FileEditAlt: 'FileEditAlt',
+  FileLockAlt: 'FileLockAlt',
   Edit: 'Edit',
   Redo: 'Redo',
   ImageV: 'ImageV',
