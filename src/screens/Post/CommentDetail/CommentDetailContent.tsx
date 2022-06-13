@@ -21,6 +21,7 @@ import API_ERROR_CODE from '~/constants/apiErrorCode';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import LoadMoreComment from '../components/LoadMoreComment';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeActions from '~/screens/Home/redux/actions';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -209,6 +210,7 @@ const CommentDetailContent = (props: any) => {
         onConfirm: () => {
           if (type === 'deleted_post') {
             rootNavigation.replace(homeStack.newsfeed);
+            dispatch(homeActions.getHomePosts({isRefresh: true}));
           } else {
             rootNavigation.goBack();
           }
@@ -222,6 +224,7 @@ const CommentDetailContent = (props: any) => {
         onDismiss: () => {
           if (type === 'deleted_post') {
             rootNavigation.replace(homeStack.newsfeed);
+            dispatch(homeActions.getHomePosts({isRefresh: true}));
           } else {
             rootNavigation.goBack();
           }

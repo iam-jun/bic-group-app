@@ -54,6 +54,7 @@ import {ITheme} from '~/theme/interfaces';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
 import Text from '~/beinComponents/Text';
+import homeActions from '~/screens/Home/redux/actions';
 
 const defaultList = [{title: '', type: 'empty', data: []}];
 
@@ -243,6 +244,7 @@ const _PostDetailContent = (props: any) => {
           isDismissible: true,
           onConfirm: () => {
             rootNavigation.replace(homeStack.newsfeed);
+            dispatch(homeActions.getHomePosts({isRefresh: true}));
           },
           confirmLabel: t('post:deleted_post:button_text'),
           content: t('post:deleted_post:description'),
@@ -252,6 +254,7 @@ const _PostDetailContent = (props: any) => {
           headerStyle: {marginBottom: 0},
           onDismiss: () => {
             rootNavigation.replace(homeStack.newsfeed);
+            dispatch(homeActions.getHomePosts({isRefresh: true}));
           },
         }),
       );
