@@ -10,7 +10,7 @@ const POST = {
   commentDeleted: 'app.comment.reply.existing.app_error',
   copiedCommentIsDeleted: 'app.comment.not_found.app_error',
   postPrivacy: 'api.forbidden',
-  postDeleted: 'app.post.not_found',
+  postDeleted: 'app.post.not_existing.app_error',
 };
 
 const GROUP = {};

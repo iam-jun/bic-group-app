@@ -511,6 +511,12 @@
       "title": "Trang này không tồn tại.",
       "description": "Bình luận này có thể bị xóa hoặc bạn không có quyền xem bình luận này",
       "button_text": "Quay về Bài viết"
+    },
+    "text_post_deleted": "Bài viết này đã bị xoá, không thể gửi bình luận trả lời của bạn",
+    "deleted_post": {
+      "title": "Trang này không tồn tại.",
+      "description": "Bình luận này có thể bị xóa hoặc bạn không có quyền xem bình luận này",
+      "button_text": "Quay về News Feed"
     }
   },
   "comment": {

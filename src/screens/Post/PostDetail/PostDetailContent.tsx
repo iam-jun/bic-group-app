@@ -29,6 +29,7 @@ import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
@@ -50,6 +51,9 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import Store from '~/store';
 import modalActions, {showHideToastMessage} from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
+import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
+import Text from '~/beinComponents/Text';
 
 const defaultList = [{title: '', type: 'empty', data: []}];
 
@@ -57,6 +61,8 @@ const _PostDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
   const [stickerBoardVisible, setStickerBoardVisible] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
+
   let countRetryScrollToBottom = useRef(0).current;
   const commentInputRef = useRef<any>();
   const internetReachableRef = useRef(true);
@@ -86,6 +92,8 @@ const _PostDetailContent = (props: any) => {
   const commentLeft = useKeySelector(
     postKeySelector.postCommentOnlyCountById(id),
   );
+  const commentError = useKeySelector(postKeySelector.commentErrorCode);
+
   const commentList = useKeySelector(postKeySelector.postCommentListById(id));
   const scrollToLatestItem = useKeySelector(postKeySelector.scrollToLatestItem);
 
@@ -210,7 +218,49 @@ const _PostDetailContent = (props: any) => {
     }
   };
 
-  const onRefresh = () => getPostDetail(loading => setRefreshing(loading));
+  const onRefresh = () => {
+    if (commentError === API_ERROR_CODE.POST.postDeleted) {
+      setRefreshing(true);
+      setIsEmpty(true);
+      dispatch(
+        modalActions.showAlert({
+          // @ts-ignore
+          HeaderImageComponent: (
+            <View style={{alignItems: 'center'}}>
+              <SVGIcon
+                // @ts-ignore
+                source={CommentNotFoundImg}
+                width={120}
+                height={120}
+                tintColor="none"
+              />
+            </View>
+          ),
+          title: t('post:deleted_post:title'),
+          titleProps: {style: {flex: 1, textAlign: 'center'}},
+          showCloseButton: false,
+          cancelBtn: false,
+          isDismissible: true,
+          onConfirm: () => {
+            rootNavigation.replace(homeStack.newsfeed);
+          },
+          confirmLabel: t('post:deleted_post:button_text'),
+          content: t('post:deleted_post:description'),
+          contentProps: {style: {textAlign: 'center'}},
+          ContentComponent: Text.BodyS,
+          buttonViewStyle: {justifyContent: 'center'},
+          headerStyle: {marginBottom: 0},
+          onDismiss: () => {
+            rootNavigation.replace(homeStack.newsfeed);
+          },
+        }),
+      );
+      setRefreshing(false);
+      return;
+    } else {
+      getPostDetail(loading => setRefreshing(loading));
+    }
+  };
 
   const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
     if (sectionData.length > 0) {
@@ -384,6 +434,8 @@ const _PostDetailContent = (props: any) => {
 
   const renderContent = () => {
     if (!createdAt) return <PostViewPlaceholder />;
+
+    if (isEmpty) return null;
 
     return (
       <FlingGestureHandler
