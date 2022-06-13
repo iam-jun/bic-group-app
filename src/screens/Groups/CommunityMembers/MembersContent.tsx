@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 
 import {useKeySelector} from '~/hooks/selector';
@@ -14,31 +14,7 @@ interface MembersContentProps {
 
 const MembersContent = ({communityId, onPressMenu}: MembersContentProps) => {
   const dispatch = useDispatch();
-  const [sectionList, setSectionList] = useState([]);
-
-  const communityMembers = useKeySelector(groupsKeySelector.communityMembers);
-  const {loading, canLoadMore, offset} = communityMembers || {};
   const {can_manage_member} = useKeySelector(groupsKeySelector.communityDetail);
-
-  useEffect(() => {
-    if (communityMembers) {
-      const newSectionList: any = [];
-
-      Object.values(communityMembers)?.map((roleData: any) => {
-        const section: any = {};
-        const {name, data} = roleData || {};
-
-        if (name && data) {
-          section.title = `${roleData.name}`;
-          section.data = roleData.data;
-          section.user_count = roleData.user_count;
-          newSectionList.push(section);
-        }
-      });
-
-      setSectionList(newSectionList);
-    }
-  }, [offset]);
 
   useEffect(() => {
     getCommunityDetail();
@@ -73,8 +49,8 @@ const MembersContent = ({communityId, onPressMenu}: MembersContentProps) => {
 
   return (
     <MemberList
+      type="community"
       canManageMember={can_manage_member}
-      memberData={{loading, canLoadMore, sectionList}}
       onLoadMore={onLoadMore}
       onPressMenu={onPressMenu}
       onRefresh={onRefresh}

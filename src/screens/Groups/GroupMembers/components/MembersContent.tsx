@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 
 import {useKeySelector} from '~/hooks/selector';
@@ -14,13 +14,9 @@ interface MembersContentProps {
 
 const MembersContent = ({groupId, onPressMenu}: MembersContentProps) => {
   const dispatch = useDispatch();
-  const [sectionList, setSectionList] = useState([]);
-
-  const groupMembers = useKeySelector(groupsKeySelector.groupMembers);
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
   );
-  const {loading, canLoadMore} = groupMembers || {};
 
   const getGroupProfile = () => {
     // to update can_manage_member when member role changes
@@ -32,26 +28,6 @@ const MembersContent = ({groupId, onPressMenu}: MembersContentProps) => {
       dispatch(actions.getGroupMembers({groupId, isRefreshing}));
     }
   };
-
-  useEffect(() => {
-    if (groupMembers) {
-      const newSectionList: any = [];
-
-      Object.values(groupMembers)?.map((roleData: any) => {
-        const section: any = {};
-        const {name, data} = roleData || {};
-
-        if (name && data) {
-          section.title = `${roleData.name}s`;
-          section.data = roleData.data;
-          section.user_count = roleData.user_count;
-          newSectionList.push(section);
-        }
-      });
-
-      setSectionList(newSectionList);
-    }
-  }, [groupMembers]);
 
   useEffect(() => {
     dispatch(actions.clearGroupMembers());
@@ -74,8 +50,8 @@ const MembersContent = ({groupId, onPressMenu}: MembersContentProps) => {
 
   return (
     <MemberList
+      type="group"
       canManageMember={can_manage_member}
-      memberData={{loading, canLoadMore, sectionList}}
       onLoadMore={onLoadMore}
       onPressMenu={onPressMenu}
       onRefresh={onRefresh}

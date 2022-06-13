@@ -1,8 +1,9 @@
 import React from 'react';
 
-import {renderWithRedux} from '~/test/testUtils';
+import {renderWithRedux, createTestStore} from '~/test/testUtils';
 import MemberList from './MemberList';
 import {memberDetail, adminDetail} from '~/test/mock_data/group';
+import initialState from '~/store/initialState';
 
 describe('MemberList component', () => {
   const onLoadMore = jest.fn();
@@ -10,28 +11,36 @@ describe('MemberList component', () => {
   const onRefresh = jest.fn();
 
   const canManageMember = true;
-  const memberData = {
-    loading: false,
-    canLoadMore: false,
-    sectionList: [
-      {title: 'Admins', data: [adminDetail], user_count: 1},
-      {
-        title: 'Members',
-        data: [memberDetail, memberDetail, memberDetail],
-        user_count: 3,
-      },
-    ],
-  };
 
   it('should render data correctly', () => {
+    const state = {...initialState};
+    state.groups.communityMembers = {
+      loading: false,
+      canLoadMore: false,
+      offset: 4,
+      // @ts-ignore
+      community_admin: {
+        name: 'COMMUNITY_ADMIN',
+        user_count: 1,
+        data: [adminDetail],
+      },
+      community_member: {
+        name: 'COMMUNITY_MEMBER',
+        user_count: 3,
+        data: [memberDetail, memberDetail, memberDetail],
+      },
+    };
+    const store = createTestStore(state);
+
     const wrapper = renderWithRedux(
       <MemberList
+        type="community"
         canManageMember={canManageMember}
-        memberData={memberData}
         onLoadMore={onLoadMore}
         onPressMenu={onPressMenu}
         onRefresh={onRefresh}
       />,
+      store,
     );
     const dataItem = wrapper.getAllByTestId('member_item');
     expect(wrapper).toMatchSnapshot();
@@ -39,16 +48,34 @@ describe('MemberList component', () => {
   });
 
   it('should render loading more indicator correctly when getting more data', () => {
-    memberData.canLoadMore = true;
+    const state = {...initialState};
+    state.groups.communityMembers = {
+      loading: false,
+      canLoadMore: true,
+      offset: 4,
+      // @ts-ignore
+      community_admin: {
+        name: 'COMMUNITY_ADMIN',
+        user_count: 1,
+        data: [adminDetail],
+      },
+      community_member: {
+        name: 'COMMUNITY_MEMBER',
+        user_count: 3,
+        data: [memberDetail, memberDetail, memberDetail],
+      },
+    };
+    const store = createTestStore(state);
 
     const wrapper = renderWithRedux(
       <MemberList
+        type="community"
         canManageMember={canManageMember}
-        memberData={memberData}
         onLoadMore={onLoadMore}
         onPressMenu={onPressMenu}
         onRefresh={onRefresh}
       />,
+      store,
     );
 
     const loadingIndicator = wrapper.getByTestId(
@@ -58,15 +85,34 @@ describe('MemberList component', () => {
   });
 
   it('should NOT render loading more indicator correctly when no data left from API', () => {
-    memberData.canLoadMore = false;
+    const state = {...initialState};
+    state.groups.communityMembers = {
+      loading: false,
+      canLoadMore: false,
+      offset: 4,
+      // @ts-ignore
+      community_admin: {
+        name: 'COMMUNITY_ADMIN',
+        user_count: 1,
+        data: [adminDetail],
+      },
+      community_member: {
+        name: 'COMMUNITY_MEMBER',
+        user_count: 3,
+        data: [memberDetail, memberDetail, memberDetail],
+      },
+    };
+    const store = createTestStore(state);
+
     const wrapper = renderWithRedux(
       <MemberList
+        type="community"
         canManageMember={canManageMember}
-        memberData={memberData}
         onLoadMore={onLoadMore}
         onPressMenu={onPressMenu}
         onRefresh={onRefresh}
       />,
+      store,
     );
 
     const loadingIndicator = wrapper.queryByTestId(

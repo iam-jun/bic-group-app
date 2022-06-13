@@ -12,22 +12,20 @@ import {ITheme} from '~/theme/interfaces';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import Text from '~/beinComponents/Text';
 import MemberItem from './MemberItem';
+import {getMembersSection} from '../redux/selectors';
+import appConfig from '~/configs/appConfig';
 
 interface MemberListProps {
+  type: 'group' | 'community';
   canManageMember: boolean;
-  memberData: {
-    loading: boolean;
-    canLoadMore: boolean;
-    sectionList: any;
-  };
   onLoadMore: () => void;
   onPressMenu: (item: any) => void;
   onRefresh?: () => void;
 }
 
 const MemberList = ({
+  type,
   canManageMember,
-  memberData,
   onLoadMore,
   onPressMenu,
   onRefresh,
@@ -36,7 +34,8 @@ const MemberList = ({
   const {colors} = theme;
   const styles = createStyles(theme);
 
-  const {loading, canLoadMore, sectionList} = memberData;
+  const memberSectionData = getMembersSection(type);
+  const {loading, canLoadMore, sectionList} = memberSectionData;
 
   const renderEmpty = () => {
     return !loading ? <NoSearchResult /> : null;
@@ -83,10 +82,11 @@ const MemberList = ({
       testID="member_list"
       style={styles.content}
       sections={sectionList}
-      keyExtractor={(item, index) => `member_list_${item}_${index}`}
+      keyExtractor={(item, index) => `member_list_${item.id}_${index}`}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.1}
       ListEmptyComponent={renderEmpty}
+      initialNumToRender={appConfig.recordsPerPage}
       ListFooterComponent={renderListFooter}
       renderSectionHeader={renderSectionHeader}
       renderItem={renderItem}
@@ -130,4 +130,4 @@ const createStyles = (theme: ITheme) => {
   });
 };
 
-export default MemberList;
+export default React.memo(MemberList);
