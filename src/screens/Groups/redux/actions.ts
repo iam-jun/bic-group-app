@@ -254,9 +254,6 @@ const groupsActions = {
   undoDeclineMemberRequests: () => ({
     type: groupsTypes.UNDO_DECLINE_MEMBER_REQUESTS,
   }),
-  removeAllMemberRequests: () => ({
-    type: groupsTypes.REMOVE_ALL_MEMBER_REQUESTS,
-  }),
   approveSingleMemberRequest: (payload: {
     groupId: number;
     requestId: number;

@@ -29,12 +29,13 @@ const GroupAdministration = (props: any) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {name, icon} = useKeySelector(groupsKeySelector.groupDetail.group);
-  const totalPendingMembers = useKeySelector(
-    groupsKeySelector.groupDetail.total_pending_members,
-  );
+  const {total} = useKeySelector(groupsKeySelector.pendingMemberRequests);
 
   useEffect(() => {
-    dispatch(groupsActions.getGroupDetail(groupId));
+    dispatch(groupsActions.getMemberRequests({groupId}));
+    return () => {
+      dispatch(groupsActions.resetMemberRequests());
+    };
   }, [groupId]);
 
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
@@ -110,7 +111,7 @@ const GroupAdministration = (props: any) => {
         'UserExclamation',
         'settings:title_pending_members',
         goToPendingMembers,
-        totalPendingMembers,
+        total,
         'group_administration.pending_members',
       )}
       {renderItem(

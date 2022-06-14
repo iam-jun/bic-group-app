@@ -36,11 +36,12 @@ export default function* getGroupMemberRequests({
       },
     );
 
-    const requestIds = response?.data.map((item: IJoiningMember) => item.id);
-    const requestItems = mapItems(response?.data);
+    const requestIds = response.data.map((item: IJoiningMember) => item.id);
+    const requestItems = mapItems(response.data);
 
     yield put(
       groupsActions.setGroupMemberRequests({
+        total: response?.meta?.total,
         loading: false,
         canLoadMore: requestIds.length === appConfig.recordsPerPage,
         data: [...data, ...requestIds],

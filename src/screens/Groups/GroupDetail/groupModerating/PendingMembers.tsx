@@ -1,12 +1,17 @@
 import React, {useEffect} from 'react';
-import {View, StyleSheet, ActivityIndicator} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  FlatList,
+  RefreshControl,
+} from 'react-native';
 import i18next from 'i18next';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import ListView from '~/beinComponents/list/ListView';
 import Divider from '~/beinComponents/Divider';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
@@ -27,23 +32,31 @@ const PendingMembers = (props: any) => {
   const pendingMemberRequests = useKeySelector(
     groupsKeySelector.pendingMemberRequests,
   );
-  const {data, loading, canLoadMore} = pendingMemberRequests;
-  const totalPendingMembers = useKeySelector(
-    groupsKeySelector.groupDetail.total_pending_members,
-  );
+  const {data, loading, canLoadMore, total} = pendingMemberRequests;
+
+  const getData = () => {
+    dispatch(groupsActions.getMemberRequests({groupId}));
+  };
+
+  const resetData = () => {
+    dispatch(groupsActions.resetMemberRequests());
+  };
 
   useEffect(() => {
-    dispatch(groupsActions.getMemberRequests({groupId}));
-    dispatch(groupsActions.getGroupDetail(groupId)); // need to update total pending requests
+    onRefresh();
 
     return () => {
-      dispatch(groupsActions.resetMemberRequests());
-      dispatch(groupsActions.getGroupDetail(groupId));
+      getData(); // to update the total member requests again on press back
     };
   }, [groupId]);
 
   const onLoadMore = () => {
-    dispatch(groupsActions.getMemberRequests({groupId}));
+    getData();
+  };
+
+  const onRefresh = () => {
+    resetData();
+    getData();
   };
 
   const renderItem = ({item}: {item: number}) => {
@@ -51,15 +64,13 @@ const PendingMembers = (props: any) => {
   };
 
   const renderListHeader = () => {
+    if (loading || total === 0) return null;
     return (
-      !loading &&
-      totalPendingMembers > 0 && (
-        <View style={styles.requestHeader}>
-          <Text.H5>{`${totalPendingMembers} ${i18next.t('common:text_request', {
-            count: totalPendingMembers,
-          })}`}</Text.H5>
-        </View>
-      )
+      <View style={styles.requestHeader}>
+        <Text.H5>{`${total} ${i18next.t('common:text_request', {
+          count: total,
+        })}`}</Text.H5>
+      </View>
     );
   };
 
@@ -76,14 +87,13 @@ const PendingMembers = (props: any) => {
   };
 
   const renderEmpty = () => {
+    if (loading) return null;
     return (
-      !loading && (
-        <EmptyScreen
-          source={'addUsers'}
-          title="groups:text_no_pending_members_notice"
-          description="groups:text_pending_request_notice_group"
-        />
-      )
+      <EmptyScreen
+        source={'addUsers'}
+        title="groups:text_no_pending_members_notice"
+        description="groups:text_pending_request_notice_group"
+      />
     );
   };
 
@@ -91,17 +101,26 @@ const PendingMembers = (props: any) => {
     <ScreenWrapper testID="PendingMembers" isFullView>
       <Header title={i18next.t('settings:title_pending_members')} />
 
-      <ListView
-        data={data}
-        loading={loading}
+      <FlatList
+        testID="flatlist"
         style={styles.listStyle}
-        isFullView
+        data={data}
         renderItem={renderItem}
-        onEndReached={onLoadMore}
+        keyExtractor={(item, index) => `requests_${item}_${index}`}
         ListEmptyComponent={renderEmpty}
         ListHeaderComponent={renderListHeader}
         ListFooterComponent={renderListFooter}
-        renderItemSeparator={() => <Divider style={styles.divider} />}
+        showsVerticalScrollIndicator={false}
+        onEndReached={onLoadMore}
+        onEndReachedThreshold={0.1}
+        ItemSeparatorComponent={() => <Divider style={styles.divider} />}
+        refreshControl={
+          <RefreshControl
+            refreshing={loading}
+            onRefresh={onRefresh}
+            tintColor={theme.colors.borderDisable}
+          />
+        }
       />
 
       {data.length > 0 && <PendingActionAll groupId={groupId} />}

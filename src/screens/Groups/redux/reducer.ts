@@ -69,6 +69,7 @@ export const groupInitState = {
   loadingCover: false,
 
   pendingMemberRequests: {
+    total: 0,
     loading: false,
     data: [],
     items: {} as IObject<IJoiningMember>,
@@ -377,16 +378,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
     }
-    case groupsTypes.APPROVE_ALL_MEMBER_REQUESTS:
-    case groupsTypes.REMOVE_ALL_MEMBER_REQUESTS:
-      return {
-        ...state,
-        groupDetail: {
-          ...state.groupDetail,
-          total_pending_members: 0,
-        },
-        pendingMemberRequests: groupInitState.pendingMemberRequests,
-      };
     case groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST:
     case groupsTypes.DECLINE_ALL_MEMBER_REQUESTS:
       return {
@@ -396,12 +387,9 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     case groupsTypes.UNDO_DECLINE_MEMBER_REQUESTS:
       return {
         ...state,
-        groupDetail: {
-          ...state.groupDetail,
-          total_pending_members: state.undoData.total,
-        },
         pendingMemberRequests: {
-          ...state.pendingMemberRequests,
+          ...pendingMemberRequests,
+          total: state.undoData.total,
           data: [...state.undoData.data],
           items: {...state.undoData.items},
         },
@@ -411,7 +399,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       return {
         ...state,
         undoData: {
-          total: state.groupDetail.total_pending_members,
+          total: pendingMemberRequests.total,
           data: [...pendingMemberRequests.data],
           items: {...pendingMemberRequests.items},
         },
@@ -635,6 +623,11 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           ids: [...state.undoCommunityMemberRequests.ids],
           items: {...state.undoCommunityMemberRequests.items},
         },
+        undoCommunityMemberRequests: groupInitState.undoCommunityMemberRequests,
+      };
+    case groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS:
+      return {
+        ...state,
         undoCommunityMemberRequests: groupInitState.undoCommunityMemberRequests,
       };
     case groupsTypes.EDIT_COMMUNITY_MEMBER_REQUEST:

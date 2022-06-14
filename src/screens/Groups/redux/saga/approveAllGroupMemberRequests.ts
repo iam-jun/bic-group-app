@@ -15,6 +15,8 @@ export default function* approveAllGroupMemberRequests({
 }) {
   const {groupId, callback} = payload;
   try {
+    yield put(groupsActions.resetMemberRequests());
+
     yield call(groupsDataHelper.approveAllGroupMemberRequests, groupId);
 
     // to update user_count

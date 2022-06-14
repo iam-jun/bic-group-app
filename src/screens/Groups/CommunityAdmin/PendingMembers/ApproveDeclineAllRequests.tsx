@@ -86,11 +86,7 @@ const ApproveDeclineAllRequests = ({style}: ActionProps) => {
     dispatch(showHideToastMessage(toastMessage));
 
     timeOutRef.current = setTimeout(() => {
-      dispatch(
-        groupsActions.declineAllCommunityMemberRequests({
-          communityId,
-        }),
-      );
+      dispatch(groupsActions.declineAllCommunityMemberRequests({communityId}));
     }, 4500);
   };
 

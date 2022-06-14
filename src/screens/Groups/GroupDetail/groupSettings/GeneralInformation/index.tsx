@@ -30,10 +30,7 @@ const GeneralInformation = (props: any) => {
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const {privacy} = useKeySelector(groupsKeySelector.groupDetail.group) || {};
-
-  const totalPendingMembers = useKeySelector(
-    groupsKeySelector.groupDetail.total_pending_members,
-  );
+  const {total} = useKeySelector(groupsKeySelector.pendingMemberRequests);
 
   const baseSheetRef: any = useRef();
 
@@ -66,27 +63,19 @@ const GeneralInformation = (props: any) => {
   };
 
   const approveAllGroupMemberRequests = () => {
-    dispatch(
-      groupsActions.approveAllGroupMemberRequests({
-        groupId: id,
-      }),
-    );
+    dispatch(groupsActions.approveAllGroupMemberRequests({groupId: id}));
     editGroupPrivacy({type: groupPrivacy.public});
   };
 
   const declineAllGroupMemberRequests = () => {
-    dispatch(
-      groupsActions.declineAllGroupMemberRequests({
-        groupId: id,
-      }),
-    );
+    dispatch(groupsActions.declineAllGroupMemberRequests({groupId: id}));
     editGroupPrivacy({type: groupPrivacy.secret});
   };
 
   const onPrivacyMenuPress = (item: any) => {
     baseSheetRef.current?.close();
 
-    if (privacy === groupPrivacy.private && totalPendingMembers > 0) {
+    if (privacy === groupPrivacy.private && total > 0) {
       if (item.type === groupPrivacy.public) {
         alertAction(
           dispatch,

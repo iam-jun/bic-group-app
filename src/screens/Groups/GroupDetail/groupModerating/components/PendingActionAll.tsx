@@ -28,9 +28,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
   const timeOutRef = useRef<any>();
 
   const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group) || {};
-  const totalPendingMembers = useKeySelector(
-    groupsKeySelector.groupDetail.total_pending_members,
-  );
+  const {total} = useKeySelector(groupsKeySelector.pendingMemberRequests);
 
   const navigateToGroupMembers = () => {
     dispatch(clearToastMessage());
@@ -64,7 +62,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
       i18next.t('groups:text_respond_all_member_requests:title:approve'),
       i18next
         .t('groups:text_respond_all_member_requests:content:approve', {
-          count: totalPendingMembers,
+          count: total,
         })
         .replace('{0}', groupDetail?.name),
       doApproveAll,
@@ -84,7 +82,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
     alertAction(
       i18next.t('groups:text_respond_all_member_requests:title:decline'),
       i18next.t('groups:text_respond_all_member_requests:content:decline', {
-        count: totalPendingMembers,
+        count: total,
       }),
       doDeclineAll,
     );
@@ -98,7 +96,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
 
   const doDeclineAll = () => {
     dispatch(groupsActions.storeUndoData());
-    dispatch(groupsActions.removeAllMemberRequests());
+    dispatch(groupsActions.resetMemberRequests());
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_declining_all')}`,
