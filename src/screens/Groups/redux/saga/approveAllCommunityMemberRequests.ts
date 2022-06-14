@@ -13,17 +13,13 @@ export default function* approveAllCommunityMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; total: number; callback?: () => void};
+  payload: {communityId: number; callback?: () => void};
 }) {
-  const {communityId, total, callback} = payload;
+  const {communityId, callback} = payload;
   try {
     yield put(groupsActions.resetCommunityMemberRequests());
 
-    yield call(
-      groupsDataHelper.approveAllCommunityMemberRequests,
-      communityId,
-      total,
-    );
+    yield call(groupsDataHelper.approveAllCommunityMemberRequests, communityId);
 
     // to update user_count
     yield put(groupsActions.getCommunityDetail({communityId}));
@@ -45,7 +41,7 @@ export default function* approveAllCommunityMemberRequests({
     }
 
     const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_approved_all', {count: total})}`,
+      content: `${i18next.t('groups:text_approved_all')}`,
       props: toastProps,
       toastType: 'normal',
     };

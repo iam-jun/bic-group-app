@@ -456,7 +456,7 @@ function* approveAllMemberRequests({
 
     if (callback) {
       const toastMessage: IToastMessage = {
-        content: `${i18next.t('groups:text_approved_all', {count: total})}`,
+        content: `${i18next.t('groups:text_approved_all')}`,
         props: {
           textProps: {useI18n: true},
           type: 'success',

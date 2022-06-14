@@ -102,9 +102,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
     dispatch(groupsActions.removeAllMemberRequests());
 
     const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_declining_all', {
-        count: totalPendingMembers,
-      })}`,
+      content: `${i18next.t('groups:text_declining_all')}`,
       props: {
         textProps: {useI18n: true},
         type: 'informative',

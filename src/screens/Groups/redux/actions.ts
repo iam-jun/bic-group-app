@@ -473,7 +473,6 @@ const groupsActions = {
   }),
   approveAllCommunityMemberRequests: (payload: {
     communityId: number;
-    total: number;
     callback?: () => void;
   }) => ({
     type: groupsTypes.APPROVE_ALL_COMMUNITY_MEMBER_REQUESTS,
@@ -481,7 +480,6 @@ const groupsActions = {
   }),
   declineAllCommunityMemberRequests: (payload: {
     communityId: number;
-    total: number;
     callback?: () => void;
   }) => ({
     type: groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,

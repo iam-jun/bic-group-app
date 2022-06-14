@@ -10,15 +10,11 @@ export default function* declineAllCommunityMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; total: number; callback?: () => void};
+  payload: {communityId: number; callback?: () => void};
 }) {
-  const {communityId, total, callback} = payload;
+  const {communityId, callback} = payload;
   try {
-    yield call(
-      groupsDataHelper.declineAllCommunityMemberRequests,
-      communityId,
-      total,
-    );
+    yield call(groupsDataHelper.declineAllCommunityMemberRequests, communityId);
 
     if (callback) yield call(callback);
   } catch (err: any) {
