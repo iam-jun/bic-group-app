@@ -130,7 +130,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
             <VideoPlayer data={videos?.[0]} />
           )}
 
-          <FilesView files={files} disableClose />
+          <FilesView files={files} disableClose showDownload />
         </>
       )}
     </View>

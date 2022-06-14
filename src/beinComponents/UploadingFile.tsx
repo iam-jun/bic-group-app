@@ -16,6 +16,7 @@ import {useBaseHook} from '~/hooks';
 import modalActions from '~/store/modal/actions';
 import {useDispatch} from 'react-redux';
 import {supportedTypes} from '~/beinComponents/DocumentPicker';
+import {openLink} from '~/utils/common';
 
 export interface UploadingFileProps {
   style?: StyleProp<ViewStyle>;
@@ -23,6 +24,7 @@ export interface UploadingFileProps {
   uploadType?: IUploadType;
   file?: IFilePicked;
   disableClose?: boolean;
+  showDownload?: boolean;
   onClose?: (file: IFilePicked) => void;
   onSuccess?: (file: IGetFile) => void;
   onError?: (e?: any) => void;
@@ -32,10 +34,11 @@ const UploadingFile: FC<UploadingFileProps> = ({
   style,
   uploadType,
   file,
+  showDownload,
+  disableClose,
   onClose,
   onSuccess,
   onError,
-  disableClose,
 }: UploadingFileProps) => {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
@@ -129,6 +132,10 @@ const UploadingFile: FC<UploadingFileProps> = ({
     uploadFile();
   };
 
+  const onPressDownload = () => {
+    openLink(file.url);
+  };
+
   return (
     <View style={[styles.container, style]}>
       <Icon size={40} icon={'iconFileVideo'} />
@@ -167,6 +174,13 @@ const UploadingFile: FC<UploadingFileProps> = ({
           hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}
           onPress={onPressClose}>
           <Icon icon={'iconCloseSmall'} />
+        </Button>
+      )}
+      {showDownload && !!file.url && (
+        <Button
+          hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}
+          onPress={onPressDownload}>
+          <Icon icon={'download'} />
         </Button>
       )}
     </View>

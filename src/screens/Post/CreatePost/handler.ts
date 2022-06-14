@@ -17,8 +17,6 @@ export const handleBack = (
   isNewsfeed: boolean | undefined,
   onPressDraftPost: () => void,
 ) => {
-  console.log('cancel upload video', hasPostId, videoUploading);
-
   const {colors, spacing} = theme;
   Keyboard.dismiss();
   if (isEditPost) {
