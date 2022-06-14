@@ -491,6 +491,10 @@ const groupsActions = {
   undoDeclinedCommunityMemberRequests: () => ({
     type: groupsTypes.UNDO_DECLINED_COMMUNITY_MEMBER_REQUESTS,
   }),
+  editCommunityMemberRequest: (payload: {id: number; data: any}) => ({
+    type: groupsTypes.EDIT_COMMUNITY_MEMBER_REQUEST,
+    payload,
+  }),
 };
 
 export default groupsActions;

@@ -1,10 +1,7 @@
-import {call, put, select} from 'redux-saga/effects';
-import i18next from 'i18next';
+import {call} from 'redux-saga/effects';
 
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
-import approveDeclineCode from '~/constants/approveDeclineCode';
-import {approvalError} from '.';
 
 export default function* declineAllCommunityMemberRequests({
   payload,
@@ -19,12 +16,6 @@ export default function* declineAllCommunityMemberRequests({
     if (callback) yield call(callback);
   } catch (err: any) {
     console.log('declineAllCommunityMemberRequests: ', err);
-
-    // TODO: TO UPDATE FOR BOTH COMMUNITY & GROUP
-    // if (err?.code === approveDeclineCode.CANNOT_DECLINE_ALL) {
-    //   yield approvalError(communityId, err.code);
-    //   return;
-    // }
 
     yield call(showError, err);
   }

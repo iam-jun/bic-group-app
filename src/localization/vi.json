@@ -602,7 +602,14 @@
       "last_admin_inner_group_leave": "Không thể rời đi. Bạn là quản trị viên cuối cùng của một nhóm bên trong",
       "last_admin_remove": "Bạn là quản trị viên cuối cùng của nhóm này. Vui lòng đặt một quản trị viên khác trước khi xóa vai trò quản trị viên",
       "last_admin_inner_group_remove": "Không thể loại khỏi nhóm. Người dùng này là quản trị viên cuối cùng của một nhóm bên trong"
-    }
+    },
+    "text_requested_at": "Gửi lúc",
+    "text_declining_user": "Đang từ chối người dùng",
+    "text_declined_user": "Từ chối người dùng",
+    "text_approved_user": "Phê duyệt người dùng",
+    "text_approved_all": "Phê duyệt tất cả yêu cầu thành viên",
+    "text_declining_all": "Từ chối tất cả yêu cầu thành viên",
+    "text_request_been_canceled": "Yêu cầu này đã bị hủy"
   },
   "profile": {
     "title_edit_profile": "Chỉnh sửa thông tin",

@@ -637,6 +637,21 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
         undoCommunityMemberRequests: groupInitState.undoCommunityMemberRequests,
       };
+    case groupsTypes.EDIT_COMMUNITY_MEMBER_REQUEST:
+      return {
+        ...state,
+        communityMemberRequests: {
+          ...communityMemberRequests,
+          items: {
+            ...communityMemberRequests.items,
+            [payload.id]: {
+              // @ts-ignore
+              ...communityMemberRequests.items[payload.id],
+              ...payload.data,
+            },
+          },
+        },
+      };
 
     default:
       return state;
