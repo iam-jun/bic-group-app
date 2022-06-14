@@ -348,6 +348,12 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
+  getSystemScheme: (): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}system-scheme`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
 };
 
 const groupsDataHelper = {
@@ -866,6 +872,20 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getPermissionCategories(),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getSystemScheme: async () => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getSystemScheme(),
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);

@@ -6,6 +6,16 @@ import {IGroupDetail, IGroupMembers, IJoiningMember} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
 
 export const groupInitState = {
+  permissionScheme: {
+    categories: {
+      data: undefined,
+      loading: false,
+    },
+    systemScheme: {
+      data: undefined,
+      loading: false,
+    },
+  },
   isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
   joinedGroups: [],
@@ -109,7 +119,6 @@ export const groupInitState = {
     canLoadMore: true,
     data: [] as ICommunityMembers[],
   },
-
   discoverGroups: {
     loading: false,
     data: [],
@@ -319,6 +328,24 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       return {
         ...state,
         users: groupInitState.users,
+      };
+
+    // Permission
+    case groupsTypes.SET_PERMISSION_CATEGORIES:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          categories: payload,
+        },
+      };
+    case groupsTypes.SET_SYSTEM_SCHEME:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          systemScheme: payload,
+        },
       };
 
     case groupsTypes.SET_LOADING_AVATAR:

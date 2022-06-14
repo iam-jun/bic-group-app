@@ -28,6 +28,22 @@ import {
 } from '~/interfaces/ICommunity';
 
 const groupsActions = {
+  // permission
+  getPermissionCategories: () => ({
+    type: groupsTypes.GET_PERMISSION_CATEGORIES,
+  }),
+  setPermissionCategories: (payload: any) => ({
+    type: groupsTypes.SET_PERMISSION_CATEGORIES,
+    payload,
+  }),
+  getSystemScheme: () => ({
+    type: groupsTypes.GET_SYSTEM_SCHEME,
+  }),
+  setSystemScheme: (payload: any) => ({
+    type: groupsTypes.SET_SYSTEM_SCHEME,
+    payload,
+  }),
+
   setPrivacyModalOpen: (payload: boolean) => {
     return {
       type: groupsTypes.SET_PRIVACY_MODAL_OPEN,
