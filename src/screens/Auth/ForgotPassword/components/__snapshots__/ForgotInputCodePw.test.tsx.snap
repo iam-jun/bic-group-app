@@ -65,7 +65,6 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         allowFontScaling={true}
         blurOnSubmit={true}
         dense={true}
-        editable={true}
         focusable={true}
         forwardedRef={null}
         keyboardType="numeric"
@@ -73,6 +72,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         mostRecentEventCount={0}
         onBlur={[Function]}
         onChange={[Function]}
+        onChangeSync={null}
         onChangeText={[Function]}
         onClick={[Function]}
         onFocus={[Function]}
@@ -91,7 +91,12 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         rejectResponderTermination={true}
         selection={null}
         selectionColor="#627286"
-        style={Object {}}
+        style={
+          Array [
+            Object {},
+            undefined,
+          ]
+        }
         testID="inputCode"
         text=""
         theme={
@@ -198,6 +203,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         mostRecentEventCount={0}
         onBlur={[Function]}
         onChange={[Function]}
+        onChangeSync={null}
         onChangeText={[Function]}
         onClick={[Function]}
         onFocus={[Function]}
@@ -223,7 +229,12 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         secureTextEntry={true}
         selection={null}
         selectionColor="#627286"
-        style={Object {}}
+        style={
+          Array [
+            Object {},
+            undefined,
+          ]
+        }
         testID="inputNewPassword"
         text=""
         textContentType="oneTimeCode"
@@ -271,6 +282,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         mostRecentEventCount={0}
         onBlur={[Function]}
         onChange={[Function]}
+        onChangeSync={null}
         onChangeText={[Function]}
         onClick={[Function]}
         onFocus={[Function]}
@@ -296,7 +308,12 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         secureTextEntry={true}
         selection={null}
         selectionColor="#627286"
-        style={Object {}}
+        style={
+          Array [
+            Object {},
+            undefined,
+          ]
+        }
         testID="inputConfirmPassword"
         text=""
         textContentType="oneTimeCode"

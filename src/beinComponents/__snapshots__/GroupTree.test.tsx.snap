@@ -51,7 +51,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -91,7 +90,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 "top": 10,
               }
             }
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -148,7 +146,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                       "top": 10,
                     }
                   }
-                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -186,14 +183,13 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                       }
                     >
                       <View
-                        className="icon-wrapper"
                         testID="group_item.button_wrapper.icon"
                       >
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={18}
                           bbWidth={18}
-                          fill="#2F3945"
+                          color={4281284933}
                           focusable={false}
                           height={18}
                           meetOrSlice={0}
@@ -213,20 +209,24 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                               },
                             ]
                           }
+                          tintColor={4281284933}
                           vbHeight={24}
                           vbWidth={24}
                           width={18}
                         >
-                          <RNSVGGroup
-                            fill={4281284933}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M17,9.17a1,1,0,0,0-1.41,0L12,12.71,8.46,9.17a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42l4.24,4.24a1,1,0,0,0,1.42,0L17,10.59A1,1,0,0,0,17,9.17Z"
+                              d="M17 9.17a1 1 0 00-1.41 0L12 12.71 8.46 9.17a1 1 0 00-1.41 0 1 1 0 000 1.42l4.24 4.24a1 1 0 001.42 0L17 10.59a1 1 0 000-1.42z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -286,7 +286,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                   >
                     <View
                       collapsable={false}
-                      nativeID="animatedComponent"
                       style={
                         Object {
                           "bottom": 0,
@@ -350,7 +349,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 accessible={true}
                 collapsable={false}
                 focusable={true}
-                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -398,7 +396,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                         "top": 10,
                       }
                     }
-                    nativeID="animatedComponent"
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -435,9 +432,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                           ]
                         }
                       >
-                        <View
-                          className="icon-wrapper"
-                        >
+                        <View>
                           <View
                             onLayout={[Function]}
                             style={
@@ -449,7 +444,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                           >
                             <View
                               collapsable={false}
-                              nativeID="animatedComponent"
                               style={
                                 Object {
                                   "bottom": 0,
@@ -564,7 +558,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                       "top": 10,
                     }
                   }
-                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -601,14 +594,12 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                         ]
                       }
                     >
-                      <View
-                        className="icon-wrapper"
-                      >
+                      <View>
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={16}
                           bbWidth={16}
-                          fill="#627286"
+                          color={4284641926}
                           focusable={false}
                           height={16}
                           meetOrSlice={0}
@@ -628,20 +619,24 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                               },
                             ]
                           }
+                          tintColor={4284641926}
                           vbHeight={24}
                           vbWidth={24}
                           width={16}
                         >
-                          <RNSVGGroup
-                            fill={4284641926}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M12.3,12.22A4.92,4.92,0,0,0,14,8.5a5,5,0,0,0-10,0,4.92,4.92,0,0,0,1.7,3.72A8,8,0,0,0,1,19.5a1,1,0,0,0,2,0,6,6,0,0,1,12,0,1,1,0,0,0,2,0A8,8,0,0,0,12.3,12.22ZM9,11.5a3,3,0,1,1,3-3A3,3,0,0,1,9,11.5Zm9.74.32A5,5,0,0,0,15,3.5a1,1,0,0,0,0,2,3,3,0,0,1,3,3,3,3,0,0,1-1.5,2.59,1,1,0,0,0-.5.84,1,1,0,0,0,.45.86l.39.26.13.07a7,7,0,0,1,4,6.38,1,1,0,0,0,2,0A9,9,0,0,0,18.74,11.82Z"
+                              d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -677,7 +672,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -728,7 +722,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 "top": 10,
               }
             }
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -785,7 +778,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                       "top": 10,
                     }
                   }
-                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -823,14 +815,13 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                       }
                     >
                       <View
-                        className="icon-wrapper"
                         testID="group_item.button_wrapper.icon"
                       >
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={18}
                           bbWidth={18}
-                          fill="#2F3945"
+                          color={4281284933}
                           focusable={false}
                           height={18}
                           meetOrSlice={0}
@@ -850,20 +841,24 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                               },
                             ]
                           }
+                          tintColor={4281284933}
                           vbHeight={24}
                           vbWidth={24}
                           width={18}
                         >
-                          <RNSVGGroup
-                            fill={4281284933}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M17,9.17a1,1,0,0,0-1.41,0L12,12.71,8.46,9.17a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42l4.24,4.24a1,1,0,0,0,1.42,0L17,10.59A1,1,0,0,0,17,9.17Z"
+                              d="M17 9.17a1 1 0 00-1.41 0L12 12.71 8.46 9.17a1 1 0 00-1.41 0 1 1 0 000 1.42l4.24 4.24a1 1 0 001.42 0L17 10.59a1 1 0 000-1.42z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -923,7 +918,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                   >
                     <View
                       collapsable={false}
-                      nativeID="animatedComponent"
                       style={
                         Object {
                           "bottom": 0,
@@ -987,7 +981,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 accessible={true}
                 collapsable={false}
                 focusable={true}
-                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -1035,7 +1028,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                         "top": 10,
                       }
                     }
-                    nativeID="animatedComponent"
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -1072,9 +1064,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                           ]
                         }
                       >
-                        <View
-                          className="icon-wrapper"
-                        >
+                        <View>
                           <View
                             onLayout={[Function]}
                             style={
@@ -1086,7 +1076,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                           >
                             <View
                               collapsable={false}
-                              nativeID="animatedComponent"
                               style={
                                 Object {
                                   "bottom": 0,
@@ -1201,7 +1190,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                       "top": 10,
                     }
                   }
-                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -1238,14 +1226,12 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                         ]
                       }
                     >
-                      <View
-                        className="icon-wrapper"
-                      >
+                      <View>
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={16}
                           bbWidth={16}
-                          fill="#627286"
+                          color={4284641926}
                           focusable={false}
                           height={16}
                           meetOrSlice={0}
@@ -1265,20 +1251,24 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                               },
                             ]
                           }
+                          tintColor={4284641926}
                           vbHeight={24}
                           vbWidth={24}
                           width={16}
                         >
-                          <RNSVGGroup
-                            fill={4284641926}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M12.3,12.22A4.92,4.92,0,0,0,14,8.5a5,5,0,0,0-10,0,4.92,4.92,0,0,0,1.7,3.72A8,8,0,0,0,1,19.5a1,1,0,0,0,2,0,6,6,0,0,1,12,0,1,1,0,0,0,2,0A8,8,0,0,0,12.3,12.22ZM9,11.5a3,3,0,1,1,3-3A3,3,0,0,1,9,11.5Zm9.74.32A5,5,0,0,0,15,3.5a1,1,0,0,0,0,2,3,3,0,0,1,3,3,3,3,0,0,1-1.5,2.59,1,1,0,0,0-.5.84,1,1,0,0,0,.45.86l.39.26.13.07a7,7,0,0,1,4,6.38,1,1,0,0,0,2,0A9,9,0,0,0,18.74,11.82Z"
+                              d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -1314,7 +1304,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
         accessible={true}
         collapsable={false}
         focusable={true}
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1376,7 +1365,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 "top": 10,
               }
             }
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -1456,7 +1444,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                   >
                     <View
                       collapsable={false}
-                      nativeID="animatedComponent"
                       style={
                         Object {
                           "bottom": 0,
@@ -1520,7 +1507,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 accessible={true}
                 collapsable={false}
                 focusable={true}
-                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -1568,7 +1554,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                         "top": 10,
                       }
                     }
-                    nativeID="animatedComponent"
                     onClick={[Function]}
                     onResponderGrant={[Function]}
                     onResponderMove={[Function]}
@@ -1605,9 +1590,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                           ]
                         }
                       >
-                        <View
-                          className="icon-wrapper"
-                        >
+                        <View>
                           <View
                             onLayout={[Function]}
                             style={
@@ -1619,7 +1602,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                           >
                             <View
                               collapsable={false}
-                              nativeID="animatedComponent"
                               style={
                                 Object {
                                   "bottom": 0,
@@ -1734,7 +1716,6 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                       "top": 10,
                     }
                   }
-                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -1771,14 +1752,12 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                         ]
                       }
                     >
-                      <View
-                        className="icon-wrapper"
-                      >
+                      <View>
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={16}
                           bbWidth={16}
-                          fill="#627286"
+                          color={4284641926}
                           focusable={false}
                           height={16}
                           meetOrSlice={0}
@@ -1798,20 +1777,24 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                               },
                             ]
                           }
+                          tintColor={4284641926}
                           vbHeight={24}
                           vbWidth={24}
                           width={16}
                         >
-                          <RNSVGGroup
-                            fill={4284641926}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M12.3,12.22A4.92,4.92,0,0,0,14,8.5a5,5,0,0,0-10,0,4.92,4.92,0,0,0,1.7,3.72A8,8,0,0,0,1,19.5a1,1,0,0,0,2,0,6,6,0,0,1,12,0,1,1,0,0,0,2,0A8,8,0,0,0,12.3,12.22ZM9,11.5a3,3,0,1,1,3-3A3,3,0,0,1,9,11.5Zm9.74.32A5,5,0,0,0,15,3.5a1,1,0,0,0,0,2,3,3,0,0,1,3,3,3,3,0,0,1-1.5,2.59,1,1,0,0,0-.5.84,1,1,0,0,0,.45.86l.39.26.13.07a7,7,0,0,1,4,6.38,1,1,0,0,0,2,0A9,9,0,0,0,18.74,11.82Z"
+                              d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -1863,6 +1846,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
     >
       <View
         accessible={true}
+        collapsable={false}
         focusable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
@@ -1893,6 +1877,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
               }
             }
             accessible={true}
+            collapsable={false}
             focusable={true}
             hitSlop={
               Object {
@@ -1948,6 +1933,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                     }
                   }
                   accessible={true}
+                  collapsable={false}
                   focusable={false}
                   hitSlop={
                     Object {
@@ -1994,14 +1980,13 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                       }
                     >
                       <View
-                        className="icon-wrapper"
                         testID="group_item.button_wrapper.icon"
                       >
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={18}
                           bbWidth={18}
-                          fill="#2F3945"
+                          color={4281284933}
                           focusable={false}
                           height={18}
                           meetOrSlice={0}
@@ -2021,20 +2006,24 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                               },
                             ]
                           }
+                          tintColor={4281284933}
                           vbHeight={24}
                           vbWidth={24}
                           width={18}
                         >
-                          <RNSVGGroup
-                            fill={4281284933}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M17,9.17a1,1,0,0,0-1.41,0L12,12.71,8.46,9.17a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42l4.24,4.24a1,1,0,0,0,1.42,0L17,10.59A1,1,0,0,0,17,9.17Z"
+                              d="M17 9.17a1 1 0 00-1.41 0L12 12.71 8.46 9.17a1 1 0 00-1.41 0 1 1 0 000 1.42l4.24 4.24a1 1 0 001.42 0L17 10.59a1 1 0 000-1.42z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -2093,6 +2082,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                     }
                   >
                     <View
+                      collapsable={false}
                       style={
                         Object {
                           "bottom": 0,
@@ -2154,6 +2144,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
               </View>
               <View
                 accessible={true}
+                collapsable={false}
                 focusable={true}
                 onClick={[Function]}
                 onResponderGrant={[Function]}
@@ -2192,6 +2183,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                       }
                     }
                     accessible={true}
+                    collapsable={false}
                     focusable={false}
                     hitSlop={
                       Object {
@@ -2237,9 +2229,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                           ]
                         }
                       >
-                        <View
-                          className="icon-wrapper"
-                        >
+                        <View>
                           <View
                             onLayout={[Function]}
                             style={
@@ -2250,6 +2240,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                             }
                           >
                             <View
+                              collapsable={false}
                               style={
                                 Object {
                                   "bottom": 0,
@@ -2354,6 +2345,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                     }
                   }
                   accessible={true}
+                  collapsable={false}
                   focusable={false}
                   hitSlop={
                     Object {
@@ -2399,14 +2391,12 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                         ]
                       }
                     >
-                      <View
-                        className="icon-wrapper"
-                      >
+                      <View>
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={16}
                           bbWidth={16}
-                          fill="#627286"
+                          color={4284641926}
                           focusable={false}
                           height={16}
                           meetOrSlice={0}
@@ -2426,20 +2416,24 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                               },
                             ]
                           }
+                          tintColor={4284641926}
                           vbHeight={24}
                           vbWidth={24}
                           width={16}
                         >
-                          <RNSVGGroup
-                            fill={4284641926}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M12.3,12.22A4.92,4.92,0,0,0,14,8.5a5,5,0,0,0-10,0,4.92,4.92,0,0,0,1.7,3.72A8,8,0,0,0,1,19.5a1,1,0,0,0,2,0,6,6,0,0,1,12,0,1,1,0,0,0,2,0A8,8,0,0,0,12.3,12.22ZM9,11.5a3,3,0,1,1,3-3A3,3,0,0,1,9,11.5Zm9.74.32A5,5,0,0,0,15,3.5a1,1,0,0,0,0,2,3,3,0,0,1,3,3,3,3,0,0,1-1.5,2.59,1,1,0,0,0-.5.84,1,1,0,0,0,.45.86l.39.26.13.07a7,7,0,0,1,4,6.38,1,1,0,0,0,2,0A9,9,0,0,0,18.74,11.82Z"
+                              d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -2473,6 +2467,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
       </View>
       <View
         accessible={true}
+        collapsable={false}
         focusable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
@@ -2514,6 +2509,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
               }
             }
             accessible={true}
+            collapsable={false}
             focusable={true}
             hitSlop={
               Object {
@@ -2569,6 +2565,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                     }
                   }
                   accessible={true}
+                  collapsable={false}
                   focusable={false}
                   hitSlop={
                     Object {
@@ -2615,14 +2612,13 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                       }
                     >
                       <View
-                        className="icon-wrapper"
                         testID="group_item.button_wrapper.icon"
                       >
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={18}
                           bbWidth={18}
-                          fill="#2F3945"
+                          color={4281284933}
                           focusable={false}
                           height={18}
                           meetOrSlice={0}
@@ -2642,20 +2638,24 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                               },
                             ]
                           }
+                          tintColor={4281284933}
                           vbHeight={24}
                           vbWidth={24}
                           width={18}
                         >
-                          <RNSVGGroup
-                            fill={4281284933}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M17,9.17a1,1,0,0,0-1.41,0L12,12.71,8.46,9.17a1,1,0,0,0-1.41,0,1,1,0,0,0,0,1.42l4.24,4.24a1,1,0,0,0,1.42,0L17,10.59A1,1,0,0,0,17,9.17Z"
+                              d="M17 9.17a1 1 0 00-1.41 0L12 12.71 8.46 9.17a1 1 0 00-1.41 0 1 1 0 000 1.42l4.24 4.24a1 1 0 001.42 0L17 10.59a1 1 0 000-1.42z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -2714,6 +2714,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                     }
                   >
                     <View
+                      collapsable={false}
                       style={
                         Object {
                           "bottom": 0,
@@ -2775,6 +2776,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
               </View>
               <View
                 accessible={true}
+                collapsable={false}
                 focusable={true}
                 onClick={[Function]}
                 onResponderGrant={[Function]}
@@ -2813,6 +2815,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                       }
                     }
                     accessible={true}
+                    collapsable={false}
                     focusable={false}
                     hitSlop={
                       Object {
@@ -2858,9 +2861,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                           ]
                         }
                       >
-                        <View
-                          className="icon-wrapper"
-                        >
+                        <View>
                           <View
                             onLayout={[Function]}
                             style={
@@ -2871,6 +2872,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                             }
                           >
                             <View
+                              collapsable={false}
                               style={
                                 Object {
                                   "bottom": 0,
@@ -2975,6 +2977,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                     }
                   }
                   accessible={true}
+                  collapsable={false}
                   focusable={false}
                   hitSlop={
                     Object {
@@ -3020,14 +3023,12 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                         ]
                       }
                     >
-                      <View
-                        className="icon-wrapper"
-                      >
+                      <View>
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={16}
                           bbWidth={16}
-                          fill="#627286"
+                          color={4284641926}
                           focusable={false}
                           height={16}
                           meetOrSlice={0}
@@ -3047,20 +3048,24 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                               },
                             ]
                           }
+                          tintColor={4284641926}
                           vbHeight={24}
                           vbWidth={24}
                           width={16}
                         >
-                          <RNSVGGroup
-                            fill={4284641926}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M12.3,12.22A4.92,4.92,0,0,0,14,8.5a5,5,0,0,0-10,0,4.92,4.92,0,0,0,1.7,3.72A8,8,0,0,0,1,19.5a1,1,0,0,0,2,0,6,6,0,0,1,12,0,1,1,0,0,0,2,0A8,8,0,0,0,12.3,12.22ZM9,11.5a3,3,0,1,1,3-3A3,3,0,0,1,9,11.5Zm9.74.32A5,5,0,0,0,15,3.5a1,1,0,0,0,0,2,3,3,0,0,1,3,3,3,3,0,0,1-1.5,2.59,1,1,0,0,0-.5.84,1,1,0,0,0,.45.86l.39.26.13.07a7,7,0,0,1,4,6.38,1,1,0,0,0,2,0A9,9,0,0,0,18.74,11.82Z"
+                              d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -3094,6 +3099,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
       </View>
       <View
         accessible={true}
+        collapsable={false}
         focusable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
@@ -3146,6 +3152,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
               }
             }
             accessible={true}
+            collapsable={false}
             focusable={true}
             hitSlop={
               Object {
@@ -3233,6 +3240,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                     }
                   >
                     <View
+                      collapsable={false}
                       style={
                         Object {
                           "bottom": 0,
@@ -3294,6 +3302,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
               </View>
               <View
                 accessible={true}
+                collapsable={false}
                 focusable={true}
                 onClick={[Function]}
                 onResponderGrant={[Function]}
@@ -3332,6 +3341,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                       }
                     }
                     accessible={true}
+                    collapsable={false}
                     focusable={false}
                     hitSlop={
                       Object {
@@ -3377,9 +3387,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                           ]
                         }
                       >
-                        <View
-                          className="icon-wrapper"
-                        >
+                        <View>
                           <View
                             onLayout={[Function]}
                             style={
@@ -3390,6 +3398,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                             }
                           >
                             <View
+                              collapsable={false}
                               style={
                                 Object {
                                   "bottom": 0,
@@ -3494,6 +3503,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                     }
                   }
                   accessible={true}
+                  collapsable={false}
                   focusable={false}
                   hitSlop={
                     Object {
@@ -3539,14 +3549,12 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                         ]
                       }
                     >
-                      <View
-                        className="icon-wrapper"
-                      >
+                      <View>
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={16}
                           bbWidth={16}
-                          fill="#627286"
+                          color={4284641926}
                           focusable={false}
                           height={16}
                           meetOrSlice={0}
@@ -3566,20 +3574,24 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                               },
                             ]
                           }
+                          tintColor={4284641926}
                           vbHeight={24}
                           vbWidth={24}
                           width={16}
                         >
-                          <RNSVGGroup
-                            fill={4284641926}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M12.3,12.22A4.92,4.92,0,0,0,14,8.5a5,5,0,0,0-10,0,4.92,4.92,0,0,0,1.7,3.72A8,8,0,0,0,1,19.5a1,1,0,0,0,2,0,6,6,0,0,1,12,0,1,1,0,0,0,2,0A8,8,0,0,0,12.3,12.22ZM9,11.5a3,3,0,1,1,3-3A3,3,0,0,1,9,11.5Zm9.74.32A5,5,0,0,0,15,3.5a1,1,0,0,0,0,2,3,3,0,0,1,3,3,3,3,0,0,1-1.5,2.59,1,1,0,0,0-.5.84,1,1,0,0,0,.45.86l.39.26.13.07a7,7,0,0,1,4,6.38,1,1,0,0,0,2,0A9,9,0,0,0,18.74,11.82Z"
+                              d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -3631,6 +3643,7 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
     >
       <View
         accessible={true}
+        collapsable={false}
         focusable={true}
         onClick={[Function]}
         onResponderGrant={[Function]}
@@ -3661,6 +3674,7 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
               }
             }
             accessible={true}
+            collapsable={false}
             focusable={true}
             hitSlop={
               Object {
@@ -3716,6 +3730,7 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                     }
                   }
                   accessible={true}
+                  collapsable={false}
                   focusable={false}
                   hitSlop={
                     Object {
@@ -3762,14 +3777,13 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                       }
                     >
                       <View
-                        className="icon-wrapper"
                         testID="group_item.button_wrapper.icon"
                       >
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={18}
                           bbWidth={18}
-                          fill="#2F3945"
+                          color={4281284933}
                           focusable={false}
                           height={18}
                           meetOrSlice={0}
@@ -3789,20 +3803,24 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                               },
                             ]
                           }
+                          tintColor={4281284933}
                           vbHeight={24}
                           vbWidth={24}
                           width={18}
                         >
-                          <RNSVGGroup
-                            fill={4281284933}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M14.83,11.29,10.59,7.05a1,1,0,0,0-1.42,0,1,1,0,0,0,0,1.41L12.71,12,9.17,15.54a1,1,0,0,0,0,1.41,1,1,0,0,0,.71.29,1,1,0,0,0,.71-.29l4.24-4.24A1,1,0,0,0,14.83,11.29Z"
+                              d="M14.83 11.29l-4.24-4.24a1 1 0 00-1.42 0 1 1 0 000 1.41L12.71 12l-3.54 3.54a1 1 0 000 1.41 1 1 0 00.71.29 1 1 0 00.71-.29l4.24-4.24a1 1 0 000-1.42z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -3861,6 +3879,7 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                     }
                   >
                     <View
+                      collapsable={false}
                       style={
                         Object {
                           "bottom": 0,
@@ -3963,6 +3982,7 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                     }
                   }
                   accessible={true}
+                  collapsable={false}
                   focusable={false}
                   hitSlop={
                     Object {
@@ -4008,14 +4028,12 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                         ]
                       }
                     >
-                      <View
-                        className="icon-wrapper"
-                      >
+                      <View>
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={16}
                           bbWidth={16}
-                          fill="#627286"
+                          color={4284641926}
                           focusable={false}
                           height={16}
                           meetOrSlice={0}
@@ -4035,20 +4053,24 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                               },
                             ]
                           }
+                          tintColor={4284641926}
                           vbHeight={24}
                           vbWidth={24}
                           width={16}
                         >
-                          <RNSVGGroup
-                            fill={4284641926}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M12.3,12.22A4.92,4.92,0,0,0,14,8.5a5,5,0,0,0-10,0,4.92,4.92,0,0,0,1.7,3.72A8,8,0,0,0,1,19.5a1,1,0,0,0,2,0,6,6,0,0,1,12,0,1,1,0,0,0,2,0A8,8,0,0,0,12.3,12.22ZM9,11.5a3,3,0,1,1,3-3A3,3,0,0,1,9,11.5Zm9.74.32A5,5,0,0,0,15,3.5a1,1,0,0,0,0,2,3,3,0,0,1,3,3,3,3,0,0,1-1.5,2.59,1,1,0,0,0-.5.84,1,1,0,0,0,.45.86l.39.26.13.07a7,7,0,0,1,4,6.38,1,1,0,0,0,2,0A9,9,0,0,0,18.74,11.82Z"
+                              d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>

@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Menu Item component renders correctly 1`] = `
-<View
-  className="menu-item"
->
+<View>
   <View
     accessibilityState={
       Object {
@@ -13,7 +11,6 @@ exports[`Menu Item component renders correctly 1`] = `
     accessible={true}
     collapsable={false}
     focusable={false}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -32,7 +29,6 @@ exports[`Menu Item component renders correctly 1`] = `
         Array [
           Object {
             "alignItems": "center",
-            "borderRadius": 0,
             "flexDirection": "row",
             "paddingHorizontal": 16,
             "paddingVertical": 12,
@@ -77,9 +73,7 @@ exports[`Menu Item component renders correctly 1`] = `
 `;
 
 exports[`Menu Item component renders correctly RightComponent 1`] = `
-<View
-  className="menu-item"
->
+<View>
   <View
     accessibilityState={
       Object {
@@ -89,7 +83,6 @@ exports[`Menu Item component renders correctly RightComponent 1`] = `
     accessible={true}
     collapsable={false}
     focusable={false}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -108,7 +101,6 @@ exports[`Menu Item component renders correctly RightComponent 1`] = `
         Array [
           Object {
             "alignItems": "center",
-            "borderRadius": 0,
             "flexDirection": "row",
             "paddingHorizontal": 16,
             "paddingVertical": 12,
@@ -164,7 +156,6 @@ exports[`Menu Item component renders correctly RightComponent 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -202,14 +193,13 @@ exports[`Menu Item component renders correctly RightComponent 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="menu_item.right_component"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={20}
                 bbWidth={20}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={20}
                 meetOrSlice={0}
@@ -229,20 +219,24 @@ exports[`Menu Item component renders correctly RightComponent 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={20}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"
+                    d="M18.71 7.21a1 1 0 00-1.42 0l-7.45 7.46-3.13-3.14A1 1 0 105.29 13l3.84 3.84a1 1 0 001.42 0l8.16-8.16a1 1 0 000-1.47z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -256,9 +250,7 @@ exports[`Menu Item component renders correctly RightComponent 1`] = `
 `;
 
 exports[`Menu Item component renders correctly item disable 1`] = `
-<View
-  className=""
->
+<View>
   <View
     accessibilityState={
       Object {
@@ -268,7 +260,6 @@ exports[`Menu Item component renders correctly item disable 1`] = `
     accessible={true}
     collapsable={false}
     focusable={false}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -288,7 +279,6 @@ exports[`Menu Item component renders correctly item disable 1`] = `
         Array [
           Object {
             "alignItems": "center",
-            "borderRadius": 0,
             "flexDirection": "row",
             "paddingHorizontal": 16,
             "paddingVertical": 12,
@@ -333,9 +323,7 @@ exports[`Menu Item component renders correctly item disable 1`] = `
 `;
 
 exports[`Menu Item component renders correctly rightSubIcon 1`] = `
-<View
-  className="menu-item"
->
+<View>
   <View
     accessibilityState={
       Object {
@@ -345,7 +333,6 @@ exports[`Menu Item component renders correctly rightSubIcon 1`] = `
     accessible={true}
     collapsable={false}
     focusable={false}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -364,7 +351,6 @@ exports[`Menu Item component renders correctly rightSubIcon 1`] = `
         Array [
           Object {
             "alignItems": "center",
-            "borderRadius": 0,
             "flexDirection": "row",
             "paddingHorizontal": 16,
             "paddingVertical": 12,
@@ -420,7 +406,6 @@ exports[`Menu Item component renders correctly rightSubIcon 1`] = `
               "top": 10,
             }
           }
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -460,14 +445,14 @@ exports[`Menu Item component renders correctly rightSubIcon 1`] = `
               }
             >
               <View
-                className="icon-wrapper"
                 testID="menu_item.right_sub_icon"
               >
                 <RNSVGSvgView
                   align="xMidYMid"
                   bbHeight={20}
                   bbWidth={20}
-                  fill="#2F3945"
+                  color={4281284933}
+                  data-name="Layer 1"
                   focusable={false}
                   height={20}
                   meetOrSlice={0}
@@ -487,20 +472,24 @@ exports[`Menu Item component renders correctly rightSubIcon 1`] = `
                       },
                     ]
                   }
+                  tintColor={4281284933}
                   vbHeight={24}
                   vbWidth={24}
                   width={20}
                 >
-                  <RNSVGGroup
-                    fill={4281284933}
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  >
+                  <RNSVGGroup>
                     <RNSVGPath
-                      d="M12,19a1,1,0,1,0-1-1A1,1,0,0,0,12,19Zm5,0a1,1,0,1,0-1-1A1,1,0,0,0,17,19Zm0-4a1,1,0,1,0-1-1A1,1,0,0,0,17,15Zm-5,0a1,1,0,1,0-1-1A1,1,0,0,0,12,15ZM19,3H18V2a1,1,0,0,0-2,0V3H8V2A1,1,0,0,0,6,2V3H5A3,3,0,0,0,2,6V20a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V6A3,3,0,0,0,19,3Zm1,17a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V11H20ZM20,9H4V6A1,1,0,0,1,5,5H6V6A1,1,0,0,0,8,6V5h8V6a1,1,0,0,0,2,0V5h1a1,1,0,0,1,1,1ZM7,15a1,1,0,1,0-1-1A1,1,0,0,0,7,15Zm0,4a1,1,0,1,0-1-1A1,1,0,0,0,7,19Z"
+                      d="M12 19a1 1 0 10-1-1 1 1 0 001 1zm5 0a1 1 0 10-1-1 1 1 0 001 1zm0-4a1 1 0 10-1-1 1 1 0 001 1zm-5 0a1 1 0 10-1-1 1 1 0 001 1zm7-12h-1V2a1 1 0 00-2 0v1H8V2a1 1 0 00-2 0v1H5a3 3 0 00-3 3v14a3 3 0 003 3h14a3 3 0 003-3V6a3 3 0 00-3-3zm1 17a1 1 0 01-1 1H5a1 1 0 01-1-1v-9h16zm0-11H4V6a1 1 0 011-1h1v1a1 1 0 002 0V5h8v1a1 1 0 002 0V5h1a1 1 0 011 1zM7 15a1 1 0 10-1-1 1 1 0 001 1zm0 4a1 1 0 10-1-1 1 1 0 001 1z"
+                      fill={
+                        Array [
+                          2,
+                        ]
+                      }
+                      propList={
+                        Array [
+                          "fill",
+                        ]
+                      }
                     />
                   </RNSVGGroup>
                 </RNSVGSvgView>
@@ -515,9 +504,7 @@ exports[`Menu Item component renders correctly rightSubIcon 1`] = `
 `;
 
 exports[`Menu Item component renders correctly rightSubTitle 1`] = `
-<View
-  className="menu-item"
->
+<View>
   <View
     accessibilityState={
       Object {
@@ -527,7 +514,6 @@ exports[`Menu Item component renders correctly rightSubTitle 1`] = `
     accessible={true}
     collapsable={false}
     focusable={false}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -546,7 +532,6 @@ exports[`Menu Item component renders correctly rightSubTitle 1`] = `
         Array [
           Object {
             "alignItems": "center",
-            "borderRadius": 0,
             "flexDirection": "row",
             "paddingHorizontal": 16,
             "paddingVertical": 12,
@@ -608,9 +593,7 @@ exports[`Menu Item component renders correctly rightSubTitle 1`] = `
 `;
 
 exports[`Menu Item component renders correctly subTitle 1`] = `
-<View
-  className="menu-item"
->
+<View>
   <View
     accessibilityState={
       Object {
@@ -620,7 +603,6 @@ exports[`Menu Item component renders correctly subTitle 1`] = `
     accessible={true}
     collapsable={false}
     focusable={false}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -639,7 +621,6 @@ exports[`Menu Item component renders correctly subTitle 1`] = `
         Array [
           Object {
             "alignItems": "center",
-            "borderRadius": 0,
             "flexDirection": "row",
             "paddingHorizontal": 16,
             "paddingVertical": 12,
@@ -699,9 +680,7 @@ exports[`Menu Item component renders correctly subTitle 1`] = `
 `;
 
 exports[`Menu Item component renders correctly testID 1`] = `
-<View
-  className="menu-item"
->
+<View>
   <View
     accessibilityState={
       Object {
@@ -711,7 +690,6 @@ exports[`Menu Item component renders correctly testID 1`] = `
     accessible={true}
     collapsable={false}
     focusable={false}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -731,7 +709,6 @@ exports[`Menu Item component renders correctly testID 1`] = `
         Array [
           Object {
             "alignItems": "center",
-            "borderRadius": 0,
             "flexDirection": "row",
             "paddingHorizontal": 16,
             "paddingVertical": 12,
@@ -776,9 +753,7 @@ exports[`Menu Item component renders correctly testID 1`] = `
 `;
 
 exports[`Menu Item component should render NotificationsBadge 1`] = `
-<View
-  className="menu-item"
->
+<View>
   <View
     accessibilityState={
       Object {
@@ -788,7 +763,6 @@ exports[`Menu Item component should render NotificationsBadge 1`] = `
     accessible={true}
     collapsable={false}
     focusable={false}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -807,7 +781,6 @@ exports[`Menu Item component should render NotificationsBadge 1`] = `
         Array [
           Object {
             "alignItems": "center",
-            "borderRadius": 0,
             "flexDirection": "row",
             "paddingHorizontal": 16,
             "paddingVertical": 12,
@@ -893,9 +866,7 @@ exports[`Menu Item component should render NotificationsBadge 1`] = `
 `;
 
 exports[`Menu Item component should render badge Number when type= draftPost 1`] = `
-<View
-  className="menu-item"
->
+<View>
   <View
     accessibilityState={
       Object {
@@ -905,7 +876,6 @@ exports[`Menu Item component should render badge Number when type= draftPost 1`]
     accessible={true}
     collapsable={false}
     focusable={false}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -924,7 +894,6 @@ exports[`Menu Item component should render badge Number when type= draftPost 1`]
         Array [
           Object {
             "alignItems": "center",
-            "borderRadius": 0,
             "flexDirection": "row",
             "paddingHorizontal": 16,
             "paddingVertical": 12,
@@ -1007,9 +976,7 @@ exports[`Menu Item component should render badge Number when type= draftPost 1`]
 `;
 
 exports[`Menu Item component should render badge Number when type= draftPost and draftPost.length > 9 1`] = `
-<View
-  className="menu-item"
->
+<View>
   <View
     accessibilityState={
       Object {
@@ -1019,7 +986,6 @@ exports[`Menu Item component should render badge Number when type= draftPost and
     accessible={true}
     collapsable={false}
     focusable={false}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -1038,7 +1004,6 @@ exports[`Menu Item component should render badge Number when type= draftPost and
         Array [
           Object {
             "alignItems": "center",
-            "borderRadius": 0,
             "flexDirection": "row",
             "paddingHorizontal": 16,
             "paddingVertical": 12,
@@ -1121,9 +1086,7 @@ exports[`Menu Item component should render badge Number when type= draftPost and
 `;
 
 exports[`Menu Item component should render icon with iconProps 1`] = `
-<View
-  className="menu-item"
->
+<View>
   <View
     accessibilityState={
       Object {
@@ -1133,7 +1096,6 @@ exports[`Menu Item component should render icon with iconProps 1`] = `
     accessible={true}
     collapsable={false}
     focusable={false}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -1152,7 +1114,6 @@ exports[`Menu Item component should render icon with iconProps 1`] = `
         Array [
           Object {
             "alignItems": "center",
-            "borderRadius": 0,
             "flexDirection": "row",
             "paddingHorizontal": 16,
             "paddingVertical": 12,
@@ -1178,7 +1139,6 @@ exports[`Menu Item component should render icon with iconProps 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1216,14 +1176,14 @@ exports[`Menu Item component should render icon with iconProps 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="menu_item.icon"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#2F3945"
+                color={4281284933}
+                data-name="Layer 1"
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -1243,20 +1203,24 @@ exports[`Menu Item component should render icon with iconProps 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M12,19a1,1,0,1,0-1-1A1,1,0,0,0,12,19Zm5,0a1,1,0,1,0-1-1A1,1,0,0,0,17,19Zm0-4a1,1,0,1,0-1-1A1,1,0,0,0,17,15Zm-5,0a1,1,0,1,0-1-1A1,1,0,0,0,12,15ZM19,3H18V2a1,1,0,0,0-2,0V3H8V2A1,1,0,0,0,6,2V3H5A3,3,0,0,0,2,6V20a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V6A3,3,0,0,0,19,3Zm1,17a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V11H20ZM20,9H4V6A1,1,0,0,1,5,5H6V6A1,1,0,0,0,8,6V5h8V6a1,1,0,0,0,2,0V5h1a1,1,0,0,1,1,1ZM7,15a1,1,0,1,0-1-1A1,1,0,0,0,7,15Zm0,4a1,1,0,1,0-1-1A1,1,0,0,0,7,19Z"
+                    d="M12 19a1 1 0 10-1-1 1 1 0 001 1zm5 0a1 1 0 10-1-1 1 1 0 001 1zm0-4a1 1 0 10-1-1 1 1 0 001 1zm-5 0a1 1 0 10-1-1 1 1 0 001 1zm7-12h-1V2a1 1 0 00-2 0v1H8V2a1 1 0 00-2 0v1H5a3 3 0 00-3 3v14a3 3 0 003 3h14a3 3 0 003-3V6a3 3 0 00-3-3zm1 17a1 1 0 01-1 1H5a1 1 0 01-1-1v-9h16zm0-11H4V6a1 1 0 011-1h1v1a1 1 0 002 0V5h8v1a1 1 0 002 0V5h1a1 1 0 011 1zM7 15a1 1 0 10-1-1 1 1 0 001 1zm0 4a1 1 0 10-1-1 1 1 0 001 1z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>

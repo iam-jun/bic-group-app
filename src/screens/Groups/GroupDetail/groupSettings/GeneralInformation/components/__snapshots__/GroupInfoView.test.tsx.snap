@@ -12,7 +12,6 @@ exports[`GroupInfoView component renders correctly 1`] = `
     accessible={true}
     collapsable={false}
     focusable={false}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -27,9 +26,7 @@ exports[`GroupInfoView component renders correctly 1`] = `
     }
     testID="group_info_view.name"
   >
-    <View
-      className=""
-    >
+    <View>
       <View
         accessibilityState={
           Object {
@@ -39,7 +36,6 @@ exports[`GroupInfoView component renders correctly 1`] = `
         accessible={true}
         collapsable={false}
         focusable={false}
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -74,7 +70,7 @@ exports[`GroupInfoView component renders correctly 1`] = `
                   "fontSize": 14,
                 },
                 Object {},
-                Object {},
+                undefined,
               ]
             }
           >
@@ -98,7 +94,6 @@ exports[`GroupInfoView component renders correctly 1`] = `
               "top": 10,
             }
           }
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -137,14 +132,12 @@ exports[`GroupInfoView component renders correctly 1`] = `
                 ]
               }
             >
-              <View
-                className="icon-wrapper"
-              >
+              <View>
                 <RNSVGSvgView
                   align="xMidYMid"
                   bbHeight={20}
                   bbWidth={20}
-                  fill="#2F3945"
+                  color={4281284933}
                   focusable={false}
                   height={20}
                   meetOrSlice={0}
@@ -164,20 +157,24 @@ exports[`GroupInfoView component renders correctly 1`] = `
                       },
                     ]
                   }
+                  tintColor={4281284933}
                   vbHeight={24}
                   vbWidth={24}
                   width={20}
                 >
-                  <RNSVGGroup
-                    fill={4281284933}
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  >
+                  <RNSVGGroup>
                     <RNSVGPath
-                      d="M15.54,11.29,9.88,5.64a1,1,0,0,0-1.42,0,1,1,0,0,0,0,1.41l4.95,5L8.46,17a1,1,0,0,0,0,1.41,1,1,0,0,0,.71.3,1,1,0,0,0,.71-.3l5.66-5.65A1,1,0,0,0,15.54,11.29Z"
+                      d="M15.54 11.29L9.88 5.64a1 1 0 00-1.42 0 1 1 0 000 1.41l4.95 5L8.46 17a1 1 0 000 1.41 1 1 0 00.71.3 1 1 0 00.71-.3l5.66-5.65a1 1 0 000-1.47z"
+                      fill={
+                        Array [
+                          2,
+                        ]
+                      }
+                      propList={
+                        Array [
+                          "fill",
+                        ]
+                      }
                     />
                   </RNSVGGroup>
                 </RNSVGSvgView>
@@ -192,7 +189,6 @@ exports[`GroupInfoView component renders correctly 1`] = `
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -207,9 +203,7 @@ exports[`GroupInfoView component renders correctly 1`] = `
     }
     testID="group_info_view.description"
   >
-    <View
-      className=""
-    >
+    <View>
       <View
         accessibilityState={
           Object {
@@ -219,7 +213,6 @@ exports[`GroupInfoView component renders correctly 1`] = `
         accessible={true}
         collapsable={false}
         focusable={false}
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -254,7 +247,7 @@ exports[`GroupInfoView component renders correctly 1`] = `
                   "fontSize": 14,
                 },
                 Object {},
-                Object {},
+                undefined,
               ]
             }
           >
@@ -278,7 +271,6 @@ exports[`GroupInfoView component renders correctly 1`] = `
               "top": 10,
             }
           }
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -317,14 +309,12 @@ exports[`GroupInfoView component renders correctly 1`] = `
                 ]
               }
             >
-              <View
-                className="icon-wrapper"
-              >
+              <View>
                 <RNSVGSvgView
                   align="xMidYMid"
                   bbHeight={20}
                   bbWidth={20}
-                  fill="#2F3945"
+                  color={4281284933}
                   focusable={false}
                   height={20}
                   meetOrSlice={0}
@@ -344,20 +334,24 @@ exports[`GroupInfoView component renders correctly 1`] = `
                       },
                     ]
                   }
+                  tintColor={4281284933}
                   vbHeight={24}
                   vbWidth={24}
                   width={20}
                 >
-                  <RNSVGGroup
-                    fill={4281284933}
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  >
+                  <RNSVGGroup>
                     <RNSVGPath
-                      d="M15.54,11.29,9.88,5.64a1,1,0,0,0-1.42,0,1,1,0,0,0,0,1.41l4.95,5L8.46,17a1,1,0,0,0,0,1.41,1,1,0,0,0,.71.3,1,1,0,0,0,.71-.3l5.66-5.65A1,1,0,0,0,15.54,11.29Z"
+                      d="M15.54 11.29L9.88 5.64a1 1 0 00-1.42 0 1 1 0 000 1.41l4.95 5L8.46 17a1 1 0 000 1.41 1 1 0 00.71.3 1 1 0 00.71-.3l5.66-5.65a1 1 0 000-1.47z"
+                      fill={
+                        Array [
+                          2,
+                        ]
+                      }
+                      propList={
+                        Array [
+                          "fill",
+                        ]
+                      }
                     />
                   </RNSVGGroup>
                 </RNSVGSvgView>
@@ -372,7 +366,6 @@ exports[`GroupInfoView component renders correctly 1`] = `
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -387,9 +380,7 @@ exports[`GroupInfoView component renders correctly 1`] = `
     }
     testID="group_info_view.privacy"
   >
-    <View
-      className=""
-    >
+    <View>
       <View
         accessibilityState={
           Object {
@@ -399,7 +390,6 @@ exports[`GroupInfoView component renders correctly 1`] = `
         accessible={true}
         collapsable={false}
         focusable={false}
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -434,7 +424,7 @@ exports[`GroupInfoView component renders correctly 1`] = `
                   "fontSize": 14,
                 },
                 Object {},
-                Object {},
+                undefined,
               ]
             }
           >
@@ -458,7 +448,6 @@ exports[`GroupInfoView component renders correctly 1`] = `
               "top": 10,
             }
           }
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -497,14 +486,12 @@ exports[`GroupInfoView component renders correctly 1`] = `
                 ]
               }
             >
-              <View
-                className="icon-wrapper"
-              >
+              <View>
                 <RNSVGSvgView
                   align="xMidYMid"
                   bbHeight={20}
                   bbWidth={20}
-                  fill="#2F3945"
+                  color={4281284933}
                   focusable={false}
                   height={20}
                   meetOrSlice={0}
@@ -524,20 +511,24 @@ exports[`GroupInfoView component renders correctly 1`] = `
                       },
                     ]
                   }
+                  tintColor={4281284933}
                   vbHeight={24}
                   vbWidth={24}
                   width={20}
                 >
-                  <RNSVGGroup
-                    fill={4281284933}
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  >
+                  <RNSVGGroup>
                     <RNSVGPath
-                      d="M5,18H9.24a1,1,0,0,0,.71-.29l6.92-6.93h0L19.71,8a1,1,0,0,0,0-1.42L15.47,2.29a1,1,0,0,0-1.42,0L11.23,5.12h0L4.29,12.05a1,1,0,0,0-.29.71V17A1,1,0,0,0,5,18ZM14.76,4.41l2.83,2.83L16.17,8.66,13.34,5.83ZM6,13.17l5.93-5.93,2.83,2.83L8.83,16H6ZM21,20H3a1,1,0,0,0,0,2H21a1,1,0,0,0,0-2Z"
+                      d="M5 18h4.24a1 1 0 00.71-.29l6.92-6.93L19.71 8a1 1 0 000-1.42l-4.24-4.29a1 1 0 00-1.42 0l-2.82 2.83-6.94 6.93a1 1 0 00-.29.71V17a1 1 0 001 1zm9.76-13.59l2.83 2.83-1.42 1.42-2.83-2.83zM6 13.17l5.93-5.93 2.83 2.83L8.83 16H6zM21 20H3a1 1 0 000 2h18a1 1 0 000-2z"
+                      fill={
+                        Array [
+                          2,
+                        ]
+                      }
+                      propList={
+                        Array [
+                          "fill",
+                        ]
+                      }
                     />
                   </RNSVGGroup>
                 </RNSVGSvgView>
