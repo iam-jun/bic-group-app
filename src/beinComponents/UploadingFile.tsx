@@ -15,6 +15,7 @@ import FileUploader, {IGetFile} from '~/services/fileUploader';
 import {useBaseHook} from '~/hooks';
 import modalActions from '~/store/modal/actions';
 import {useDispatch} from 'react-redux';
+import {supportedTypes} from '~/beinComponents/DocumentPicker';
 
 export interface UploadingFileProps {
   style?: StyleProp<ViewStyle>;
@@ -68,13 +69,17 @@ const UploadingFile: FC<UploadingFileProps> = ({
       return;
     }
 
+    const ext = fileName?.split('.')?.pop?.();
+    if (!supportedTypes.includes(ext)) {
+      setError(t('upload:text_file_extension_not_supported'));
+      return;
+    }
+
     //ensure file not uploaded
     if (!file || isEmpty(file) || file?.id || file?.url) {
       setUploading(false);
       return;
     }
-
-    console.log('uploadFile', !file, isEmpty(file), file?.id, file?.url);
 
     setError('');
     setUploading(true);
@@ -111,7 +116,10 @@ const UploadingFile: FC<UploadingFileProps> = ({
           cancelBtn: true,
           cancelLabel: t('common:btn_cancel'),
           confirmLabel: t('common:btn_delete'),
-          onConfirm: () => onClose?.(file),
+          onConfirm: () => {
+            setError('');
+            onClose?.(file);
+          },
         }),
       );
     }

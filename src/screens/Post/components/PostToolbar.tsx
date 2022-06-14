@@ -23,6 +23,7 @@ import appConfig from '~/configs/appConfig';
 import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
+import {IToastMessage} from '~/interfaces/common';
 import {ICreatePostImage} from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import postActions from '~/screens/Post/redux/actions';
@@ -37,21 +38,23 @@ export interface PostToolbarProps {
   toolbarRef?: any;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
-  onPressBack?: () => void;
+  filesLength: number;
   disabled?: boolean;
   imageDisabled?: boolean;
   videoDisabled?: boolean;
   fileDisabled?: boolean;
+  onPressBack?: () => void;
 }
 
 const PostToolbar = ({
   toolbarRef,
   style,
+  filesLength,
   containerStyle,
-  onPressBack,
   imageDisabled,
   videoDisabled,
   fileDisabled,
+  onPressBack,
   ...props
 }: PostToolbarProps) => {
   const animated = useRef(new Animated.Value(0)).current;
@@ -168,6 +171,19 @@ const PostToolbar = ({
   const onPressAddFile = async () => {
     try {
       const files: any = await DocumentPicker.openPickerMultiple();
+
+      if (files.length + filesLength > appConfig.maxFiles) {
+        const toastMessage: IToastMessage = {
+          content: t('upload:text_file_over_length', {
+            max_files: appConfig.maxFiles,
+          }),
+          props: {
+            type: 'error',
+          },
+        };
+        dispatch(showHideToastMessage(toastMessage));
+        return;
+      }
       dispatch(postActions.addCreatePostFiles(files));
     } catch (e) {
       console.log(

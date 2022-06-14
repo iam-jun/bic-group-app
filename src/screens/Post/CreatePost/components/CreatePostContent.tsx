@@ -1,4 +1,3 @@
-import {isEmpty} from 'lodash';
 import React, {useEffect, useRef} from 'react';
 import {
   Animated,
@@ -28,7 +27,8 @@ import {CONTENT_MIN_HEIGHT, MIN_INPUT_HEIGHT} from '../constanst';
 import {calculateInputHeight, isAndroidAnimated} from '../helper';
 import useCreatePost from '../hooks/useCreatePost';
 import ToastAutoSave from './ToastAutoSave';
-import FilesView from '../';
+import FilesView from '../../components/FilesView';
+import {IGetFile} from '~/services/fileUploader';
 
 interface Props {
   groupIds: any[];
@@ -130,7 +130,7 @@ const Content = ({groupIds, screenParams, inputRef}: Props) => {
     dispatch(postActions.setCreatePostVideo());
   };
 
-  const onRemoveFile = (file: IFilePicked) => {
+  const onRemoveFile = (file: IGetFile) => {
     dispatch(postActions.removeCreatePostFile(file));
   };
 

@@ -146,12 +146,13 @@ export default class FileUploader {
         ),
       );
       if (response?.data?.data) {
+        const data = response?.data?.data;
         const result = {
-          id: response?.data?.data?.id,
-          fileName: response?.data?.data?.properties?.name,
-          size: response?.data?.data?.properties?.size,
-          url: response?.data?.data.originUrl,
-          type: response?.data?.data?.properties?.mimeType,
+          id: data?.id,
+          fileName: data?.properties?.name,
+          size: data?.properties?.size,
+          url: data?.originUrl,
+          type: data?.properties?.mimeType,
         };
         return {files: result, error: ''};
       } else {

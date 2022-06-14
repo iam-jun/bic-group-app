@@ -6,4 +6,19 @@ const BeinDocumentPicker = {
   openPickerMultiple: DocumentPicker.pickMultiple,
 };
 
+export const supportedTypes = [
+  'ods',
+  'odt',
+  'htm',
+  'html',
+  'doc',
+  'docx',
+  'pdf',
+  'txt',
+  'xls',
+  'xlsx',
+  'ppt',
+  'pptx',
+];
+
 export default BeinDocumentPicker;

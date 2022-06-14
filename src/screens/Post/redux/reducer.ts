@@ -231,16 +231,23 @@ function postReducer(state = postInitState, action: any = {}) {
         },
       };
     }
-    case postTypes.REMOVE_CREATE_POST_FILE:
+    case postTypes.REMOVE_CREATE_POST_FILE: {
+      let name = payload.name;
+      if (!name) name = payload.fileName;
+
       return {
         ...state,
         createPost: {
           ...state.createPost,
-          files: state.createPost.files.filter(
-            (file: IFilePicked) => file.name !== payload.name,
-          ),
+          files: state.createPost.files.filter((file: IFilePicked) => {
+            let itemName = file.name;
+            if (!itemName) itemName = file.fileName;
+
+            return itemName !== name;
+          }),
         },
       };
+    }
     case postTypes.SET_SEARCH_RESULT_AUDIENCE_GROUPS:
       return {
         ...state,

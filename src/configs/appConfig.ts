@@ -12,6 +12,7 @@ const appConfig = {
   },
   postPhotoLimit: 10,
   limitReactionCount: 21,
+  maxFiles: 5,
 };
 
 export default appConfig;

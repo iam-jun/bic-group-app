@@ -711,7 +711,9 @@
     "title_leave_uploading": "Đóng màn hình này?",
     "text_leave_uploading": "Bạn có chắc muốn đóng màn hình này? Video bạn đang tải lên sẽ bị huỷ.",
     "text_video_over_size": "Video của bạn phải nhỏ hơn 300MB",
-    "text_file_over_size": "Tệp của bạn phải nhỏ hơn 5MB"
+    "text_file_over_size": "Tệp của bạn phải nhỏ hơn 5MB",
+    "text_file_over_length": "Bạn không thể tải lên hơn {{max_files}} tệp",
+    "text_file_extension_not_supported": "Phần mở rộng của tệp không được hỗ trợ"
   },
   "file_type": {
     "image": "hình ảnh",

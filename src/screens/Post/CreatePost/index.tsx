@@ -2,10 +2,13 @@ import React, {FC, useEffect, useRef} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+
+import appConfig from '~/configs/appConfig';
 import {useBaseHook} from '~/hooks';
 import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
 import {IAudience, ICreatePostParams} from '~/interfaces/IPost';
@@ -90,6 +93,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     imageDisabled = true;
   }
 
+  if (files.length === appConfig.maxFiles) fileDisabled = true;
+
   const handleBackPress = () => {
     toolbarRef?.current?.goBack?.();
   };
@@ -125,13 +130,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     }
   }, [content, images]);
 
-  useEffect(() => {
-    console.log('CreatePost videoUploading', videoUploading);
-  }, [videoUploading]);
-
   const onPressBack = () => {
-    console.log('onPressBack', videoUploading);
-
     handleBack(
       !!(isEditPost && !isEditDraftPost),
       isEditPostHasChange,

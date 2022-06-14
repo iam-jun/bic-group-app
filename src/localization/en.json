@@ -822,7 +822,7 @@
     "text_create_file_id_request_failed": "Cannot request id",
     "text_create_file_id_response_failed": "Cannot create id",
     "text_upload_request_failed": "Cannot request upload {{file_type}}",
-    "text_upload_response_failed": "Cannot upload video {{file_type}}",
+    "text_upload_response_failed": "Cannot upload {{file_type}}",
     "text_create_media_request_failed": "Cannot request create media",
     "text_create_media_response_failed": "Cannot create media",
     "title_delete_file": "Delete {{file_type}}?",
@@ -831,7 +831,9 @@
     "title_leave_uploading": "Leave this page?",
     "text_leave_uploading": "Are you sure you want to leave this page? Your {{file_type}} process will be lost.",
     "text_video_over_size": "Your video must be less than 300MB",
-    "text_file_over_size": "Your file must be less than 5MB"
+    "text_file_over_size": "Your file must be less than 5MB",
+    "text_file_over_length": "You cannot upload more than {{max_files}} files",
+    "text_file_extension_not_supported": "Your File Extersion is not supported"
   },
   "file_type": {
     "image": "image",

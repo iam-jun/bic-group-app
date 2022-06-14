@@ -107,7 +107,7 @@ const postActions = {
     type: postTypes.ADD_CREATE_POST_FILES,
     payload,
   }),
-  removeCreatePostFile: (payload?: IFilePicked) => ({
+  removeCreatePostFile: (payload?: IFilePicked | IGetFile) => ({
     type: postTypes.REMOVE_CREATE_POST_FILE,
     payload,
   }),
