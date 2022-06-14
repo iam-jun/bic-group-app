@@ -45,6 +45,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
           }
         >
           <View
+            collapsable={false}
             style={
               Object {
                 "bottom": 0,
@@ -184,7 +185,6 @@ exports[`PendingUserItem component should render data correctly 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -226,7 +226,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#A17AF2"
+                color={4288772850}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -246,20 +246,24 @@ exports[`PendingUserItem component should render data correctly 1`] = `
                     },
                   ]
                 }
+                tintColor={4288772850}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4288772850}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M18,4.48a8.45,8.45,0,0,0-12,12l5.27,5.28a1,1,0,0,0,1.42,0L18,16.43A8.45,8.45,0,0,0,18,4.48ZM16.57,15,12,19.59,7.43,15a6.46,6.46,0,1,1,9.14,0ZM9,7.41a4.32,4.32,0,0,0,0,6.1,4.31,4.31,0,0,0,7.36-3,4.24,4.24,0,0,0-1.26-3.05A4.3,4.3,0,0,0,9,7.41Zm4.69,4.68a2.33,2.33,0,1,1,.67-1.63A2.33,2.33,0,0,1,13.64,12.09Z"
+                    d="M18 4.48a8.45 8.45 0 00-12 12l5.27 5.28a1 1 0 001.42 0L18 16.43a8.45 8.45 0 000-11.95zM16.57 15L12 19.59 7.43 15a6.46 6.46 0 119.14 0zM9 7.41a4.32 4.32 0 000 6.1 4.31 4.31 0 007.36-3 4.24 4.24 0 00-1.26-3.05A4.3 4.3 0 009 7.41zm4.69 4.68a2.33 2.33 0 11.67-1.63 2.33 2.33 0 01-.72 1.63z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -312,7 +316,6 @@ exports[`PendingUserItem component should render data correctly 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -354,7 +357,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
                 align="xMidYMid"
                 bbHeight={24}
                 bbWidth={24}
-                fill="#A17AF2"
+                color={4288772850}
                 focusable={false}
                 height={24}
                 meetOrSlice={0}
@@ -374,20 +377,24 @@ exports[`PendingUserItem component should render data correctly 1`] = `
                     },
                   ]
                 }
+                tintColor={4288772850}
                 vbHeight={24}
                 vbWidth={24}
                 width={24}
               >
-                <RNSVGGroup
-                  fill={4288772850}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M19,4H5A3,3,0,0,0,2,7V17a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V7A3,3,0,0,0,19,4Zm-.41,2-5.88,5.88a1,1,0,0,1-1.42,0L5.41,6ZM20,17a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V7.41l5.88,5.88a3,3,0,0,0,4.24,0L20,7.41Z"
+                    d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm-.41 2l-5.88 5.88a1 1 0 01-1.42 0L5.41 6zM20 17a1 1 0 01-1 1H5a1 1 0 01-1-1V7.41l5.88 5.88a3 3 0 004.24 0L20 7.41z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>

@@ -31,7 +31,7 @@ export default function* joinCommunity({
     );
 
     if (hasRequested) {
-      yield put(groupsActions.getCommunityDetail(communityId));
+      yield put(groupsActions.getCommunityDetail({communityId}));
       const toastMessage: IToastMessage = {
         content: `${i18next.t(
           'groups:text_request_join_community',
@@ -54,7 +54,7 @@ export default function* joinCommunity({
     };
 
     yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.getCommunityDetail(communityId));
+    yield put(groupsActions.getCommunityDetail({communityId}));
   } catch (err) {
     console.error('joinCommunity catch', err);
     yield call(showError, err);

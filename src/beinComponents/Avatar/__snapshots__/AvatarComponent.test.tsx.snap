@@ -32,7 +32,6 @@ exports[`Avatar component renders correctly 1`] = `
     >
       <View
         collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
             "bottom": 0,
@@ -130,7 +129,6 @@ exports[`Avatar component renders correctly badge 1`] = `
     >
       <View
         collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
             "bottom": 0,
@@ -234,7 +232,6 @@ exports[`Avatar component renders correctly badge 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -271,9 +268,7 @@ exports[`Avatar component renders correctly badge 1`] = `
               ]
             }
           >
-            <View
-              className="icon-wrapper"
-            >
+            <View>
               <View
                 onLayout={[Function]}
                 style={
@@ -285,7 +280,6 @@ exports[`Avatar component renders correctly badge 1`] = `
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,
@@ -382,7 +376,6 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
     >
       <View
         collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
             "bottom": 0,
@@ -486,7 +479,6 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -523,9 +515,7 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
               ]
             }
           >
-            <View
-              className="icon-wrapper"
-            >
+            <View>
               <View
                 onLayout={[Function]}
                 style={
@@ -537,7 +527,6 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,
@@ -634,7 +623,6 @@ exports[`Avatar component renders correctly badge check 1`] = `
     >
       <View
         collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
             "bottom": 0,
@@ -739,7 +727,6 @@ exports[`Avatar component renders correctly badge check 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -776,14 +763,12 @@ exports[`Avatar component renders correctly badge check 1`] = `
               ]
             }
           >
-            <View
-              className="icon-wrapper"
-            >
+            <View>
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={12}
                 bbWidth={12}
-                fill="#FFFFFF"
+                color={4294967295}
                 focusable={false}
                 height={12}
                 meetOrSlice={0}
@@ -803,20 +788,24 @@ exports[`Avatar component renders correctly badge check 1`] = `
                     },
                   ]
                 }
+                tintColor={4294967295}
                 vbHeight={24}
                 vbWidth={24}
                 width={12}
               >
-                <RNSVGGroup
-                  fill={4294967295}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"
+                    d="M18.71 7.21a1 1 0 00-1.42 0l-7.45 7.46-3.13-3.14A1 1 0 105.29 13l3.84 3.84a1 1 0 001.42 0l8.16-8.16a1 1 0 000-1.47z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
@@ -861,7 +850,6 @@ exports[`Avatar component renders correctly status 1`] = `
     >
       <View
         collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
             "bottom": 0,
@@ -975,7 +963,6 @@ exports[`Avatar component should call props onPressAction 1`] = `
     >
       <View
         collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
             "bottom": 0,
@@ -1070,7 +1057,6 @@ exports[`Avatar component should call props onPressAction 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1108,14 +1094,13 @@ exports[`Avatar component should call props onPressAction 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="avatar.action_icon.button"
             >
               <RNSVGSvgView
                 align="xMidYMid"
                 bbHeight={12}
                 bbWidth={12}
-                fill="#2F3945"
+                color={4281284933}
                 focusable={false}
                 height={12}
                 meetOrSlice={0}
@@ -1135,20 +1120,24 @@ exports[`Avatar component should call props onPressAction 1`] = `
                     },
                   ]
                 }
+                tintColor={4281284933}
                 vbHeight={24}
                 vbWidth={24}
                 width={12}
               >
-                <RNSVGGroup
-                  fill={4281284933}
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                >
+                <RNSVGGroup>
                   <RNSVGPath
-                    d="M13.41,12l6.3-6.29a1,1,0,1,0-1.42-1.42L12,10.59,5.71,4.29A1,1,0,0,0,4.29,5.71L10.59,12l-6.3,6.29a1,1,0,0,0,0,1.42,1,1,0,0,0,1.42,0L12,13.41l6.29,6.3a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42Z"
+                    d="M13.41 12l6.3-6.29a1 1 0 10-1.42-1.42L12 10.59l-6.29-6.3a1 1 0 00-1.42 1.42l6.3 6.29-6.3 6.29a1 1 0 000 1.42 1 1 0 001.42 0l6.29-6.3 6.29 6.3a1 1 0 001.42 0 1 1 0 000-1.42z"
+                    fill={
+                      Array [
+                        2,
+                      ]
+                    }
+                    propList={
+                      Array [
+                        "fill",
+                      ]
+                    }
                   />
                 </RNSVGGroup>
               </RNSVGSvgView>
