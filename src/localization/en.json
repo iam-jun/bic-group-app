@@ -564,6 +564,12 @@
       "title": "This page is not existing.",
       "description": "It might be deleted or you don't have permission to see it",
       "button_text": "Back to Post"
+    },
+    "text_post_deleted": "Post doesn’t exist, cannot send your reply",
+    "deleted_post": {
+      "title": "This page is not existing.",
+      "description": "It might be deleted or you don't have permission to see it",
+      "button_text": "Back to News Feed"
     }
   },
   "comment": {

@@ -10,7 +10,6 @@ exports[`Collapsible Text component renders correctly 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -86,7 +85,6 @@ exports[`Collapsible Text component renders correctly testID 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -163,7 +161,6 @@ exports[`Collapsible Text component renders correctly with markdown 1`] = `
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -218,6 +215,7 @@ exports[`Collapsible Text component should render full text when click read more
     }
   }
   accessible={true}
+  collapsable={false}
   focusable={true}
   onClick={[Function]}
   onResponderGrant={[Function]}
@@ -295,7 +293,6 @@ exports[`Collapsible Text component should render short text with a short length
   accessible={true}
   collapsable={false}
   focusable={true}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}

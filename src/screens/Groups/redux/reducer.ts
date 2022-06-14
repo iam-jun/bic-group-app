@@ -490,10 +490,10 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         loadingJoinedGroups: false,
         joinedGroups: payload || [],
       };
-    case groupsTypes.GET_COMMUNITY_DETAIL:
+    case groupsTypes.SET_COMMUNITY_LOADING:
       return {
         ...state,
-        isGettingInfoDetail: true,
+        isGettingInfoDetail: payload,
       };
     case groupsTypes.SET_COMMUNITY_DETAIL:
       return {

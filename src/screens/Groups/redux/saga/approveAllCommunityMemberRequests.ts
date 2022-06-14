@@ -26,7 +26,7 @@ export default function* approveAllCommunityMemberRequests({
     );
 
     // to update user_count
-    yield put(groupsActions.getCommunityDetail(communityId));
+    yield put(groupsActions.getCommunityDetail({communityId}));
 
     let toastProps: ToastMessageProps;
     if (callback) {

@@ -120,19 +120,16 @@ exports[`Community members - ContentData component should render data correctly 
       onLayout={[Function]}
       style={null}
     >
-      <View
-        className=""
-      >
+      <View>
         <View
           accessibilityState={
             Object {
-              "disabled": true,
+              "disabled": false,
             }
           }
           accessible={true}
           collapsable={false}
-          focusable={false}
-          nativeID="animatedComponent"
+          focusable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -183,6 +180,7 @@ exports[`Community members - ContentData component should render data correctly 
                 }
               >
                 <View
+                  collapsable={false}
                   style={
                     Object {
                       "bottom": 0,
@@ -290,12 +288,12 @@ exports[`Community members - ContentData component should render data correctly 
           <View
             accessibilityState={
               Object {
-                "disabled": true,
+                "disabled": false,
               }
             }
             accessible={true}
             collapsable={false}
-            focusable={false}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 10,
@@ -304,7 +302,6 @@ exports[`Community members - ContentData component should render data correctly 
                 "top": 10,
               }
             }
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -330,7 +327,7 @@ exports[`Community members - ContentData component should render data correctly 
                     "alignItems": "center",
                     "height": 36,
                     "justifyContent": "center",
-                    "marginHorizontal": 4,
+                    "marginLeft": 4,
                     "padding": 8,
                     "width": 36,
                   },
@@ -349,14 +346,12 @@ exports[`Community members - ContentData component should render data correctly 
                   ]
                 }
               >
-                <View
-                  className="icon-wrapper"
-                >
+                <View>
                   <RNSVGSvgView
                     align="xMidYMid"
                     bbHeight={20}
                     bbWidth={20}
-                    fill="#2F3945"
+                    color={4281284933}
                     focusable={false}
                     height={20}
                     meetOrSlice={0}
@@ -376,20 +371,24 @@ exports[`Community members - ContentData component should render data correctly 
                         },
                       ]
                     }
+                    tintColor={4281284933}
                     vbHeight={24}
                     vbWidth={24}
                     width={20}
                   >
-                    <RNSVGGroup
-                      fill={4281284933}
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGPath
-                        d="M12,9a1,1,0,1,0,1,1A1,1,0,0,0,12,9Zm7-7H5A3,3,0,0,0,2,5V15a3,3,0,0,0,3,3H16.59l3.7,3.71A1,1,0,0,0,21,22a.84.84,0,0,0,.38-.08A1,1,0,0,0,22,21V5A3,3,0,0,0,19,2Zm1,16.59-2.29-2.3A1,1,0,0,0,17,16H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4H19a1,1,0,0,1,1,1ZM8,9a1,1,0,1,0,1,1A1,1,0,0,0,8,9Zm8,0a1,1,0,1,0,1,1A1,1,0,0,0,16,9Z"
+                        d="M12 9a1 1 0 101 1 1 1 0 00-1-1zm7-7H5a3 3 0 00-3 3v10a3 3 0 003 3h11.59l3.7 3.71A1 1 0 0021 22a.84.84 0 00.38-.08A1 1 0 0022 21V5a3 3 0 00-3-3zm1 16.59l-2.29-2.3A1 1 0 0017 16H5a1 1 0 01-1-1V5a1 1 0 011-1h14a1 1 0 011 1zM8 9a1 1 0 101 1 1 1 0 00-1-1zm8 0a1 1 0 101 1 1 1 0 00-1-1z"
+                        fill={
+                          Array [
+                            2,
+                          ]
+                        }
+                        propList={
+                          Array [
+                            "fill",
+                          ]
+                        }
                       />
                     </RNSVGGroup>
                   </RNSVGSvgView>
@@ -440,19 +439,16 @@ exports[`Community members - ContentData component should render data correctly 
       onLayout={[Function]}
       style={null}
     >
-      <View
-        className=""
-      >
+      <View>
         <View
           accessibilityState={
             Object {
-              "disabled": true,
+              "disabled": false,
             }
           }
           accessible={true}
           collapsable={false}
-          focusable={false}
-          nativeID="animatedComponent"
+          focusable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -503,6 +499,7 @@ exports[`Community members - ContentData component should render data correctly 
                 }
               >
                 <View
+                  collapsable={false}
                   style={
                     Object {
                       "bottom": 0,
@@ -610,12 +607,12 @@ exports[`Community members - ContentData component should render data correctly 
           <View
             accessibilityState={
               Object {
-                "disabled": true,
+                "disabled": false,
               }
             }
             accessible={true}
             collapsable={false}
-            focusable={false}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 10,
@@ -624,7 +621,6 @@ exports[`Community members - ContentData component should render data correctly 
                 "top": 10,
               }
             }
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -650,7 +646,7 @@ exports[`Community members - ContentData component should render data correctly 
                     "alignItems": "center",
                     "height": 36,
                     "justifyContent": "center",
-                    "marginHorizontal": 4,
+                    "marginLeft": 4,
                     "padding": 8,
                     "width": 36,
                   },
@@ -669,14 +665,12 @@ exports[`Community members - ContentData component should render data correctly 
                   ]
                 }
               >
-                <View
-                  className="icon-wrapper"
-                >
+                <View>
                   <RNSVGSvgView
                     align="xMidYMid"
                     bbHeight={20}
                     bbWidth={20}
-                    fill="#2F3945"
+                    color={4281284933}
                     focusable={false}
                     height={20}
                     meetOrSlice={0}
@@ -696,20 +690,24 @@ exports[`Community members - ContentData component should render data correctly 
                         },
                       ]
                     }
+                    tintColor={4281284933}
                     vbHeight={24}
                     vbWidth={24}
                     width={20}
                   >
-                    <RNSVGGroup
-                      fill={4281284933}
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGPath
-                        d="M12,9a1,1,0,1,0,1,1A1,1,0,0,0,12,9Zm7-7H5A3,3,0,0,0,2,5V15a3,3,0,0,0,3,3H16.59l3.7,3.71A1,1,0,0,0,21,22a.84.84,0,0,0,.38-.08A1,1,0,0,0,22,21V5A3,3,0,0,0,19,2Zm1,16.59-2.29-2.3A1,1,0,0,0,17,16H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4H19a1,1,0,0,1,1,1ZM8,9a1,1,0,1,0,1,1A1,1,0,0,0,8,9Zm8,0a1,1,0,1,0,1,1A1,1,0,0,0,16,9Z"
+                        d="M12 9a1 1 0 101 1 1 1 0 00-1-1zm7-7H5a3 3 0 00-3 3v10a3 3 0 003 3h11.59l3.7 3.71A1 1 0 0021 22a.84.84 0 00.38-.08A1 1 0 0022 21V5a3 3 0 00-3-3zm1 16.59l-2.29-2.3A1 1 0 0017 16H5a1 1 0 01-1-1V5a1 1 0 011-1h14a1 1 0 011 1zM8 9a1 1 0 101 1 1 1 0 00-1-1zm8 0a1 1 0 101 1 1 1 0 00-1-1z"
+                        fill={
+                          Array [
+                            2,
+                          ]
+                        }
+                        propList={
+                          Array [
+                            "fill",
+                          ]
+                        }
                       />
                     </RNSVGGroup>
                   </RNSVGSvgView>
@@ -724,19 +722,16 @@ exports[`Community members - ContentData component should render data correctly 
       onLayout={[Function]}
       style={null}
     >
-      <View
-        className=""
-      >
+      <View>
         <View
           accessibilityState={
             Object {
-              "disabled": true,
+              "disabled": false,
             }
           }
           accessible={true}
           collapsable={false}
-          focusable={false}
-          nativeID="animatedComponent"
+          focusable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -787,6 +782,7 @@ exports[`Community members - ContentData component should render data correctly 
                 }
               >
                 <View
+                  collapsable={false}
                   style={
                     Object {
                       "bottom": 0,
@@ -894,12 +890,12 @@ exports[`Community members - ContentData component should render data correctly 
           <View
             accessibilityState={
               Object {
-                "disabled": true,
+                "disabled": false,
               }
             }
             accessible={true}
             collapsable={false}
-            focusable={false}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 10,
@@ -908,7 +904,6 @@ exports[`Community members - ContentData component should render data correctly 
                 "top": 10,
               }
             }
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -934,7 +929,7 @@ exports[`Community members - ContentData component should render data correctly 
                     "alignItems": "center",
                     "height": 36,
                     "justifyContent": "center",
-                    "marginHorizontal": 4,
+                    "marginLeft": 4,
                     "padding": 8,
                     "width": 36,
                   },
@@ -953,14 +948,12 @@ exports[`Community members - ContentData component should render data correctly 
                   ]
                 }
               >
-                <View
-                  className="icon-wrapper"
-                >
+                <View>
                   <RNSVGSvgView
                     align="xMidYMid"
                     bbHeight={20}
                     bbWidth={20}
-                    fill="#2F3945"
+                    color={4281284933}
                     focusable={false}
                     height={20}
                     meetOrSlice={0}
@@ -980,20 +973,24 @@ exports[`Community members - ContentData component should render data correctly 
                         },
                       ]
                     }
+                    tintColor={4281284933}
                     vbHeight={24}
                     vbWidth={24}
                     width={20}
                   >
-                    <RNSVGGroup
-                      fill={4281284933}
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGPath
-                        d="M12,9a1,1,0,1,0,1,1A1,1,0,0,0,12,9Zm7-7H5A3,3,0,0,0,2,5V15a3,3,0,0,0,3,3H16.59l3.7,3.71A1,1,0,0,0,21,22a.84.84,0,0,0,.38-.08A1,1,0,0,0,22,21V5A3,3,0,0,0,19,2Zm1,16.59-2.29-2.3A1,1,0,0,0,17,16H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4H19a1,1,0,0,1,1,1ZM8,9a1,1,0,1,0,1,1A1,1,0,0,0,8,9Zm8,0a1,1,0,1,0,1,1A1,1,0,0,0,16,9Z"
+                        d="M12 9a1 1 0 101 1 1 1 0 00-1-1zm7-7H5a3 3 0 00-3 3v10a3 3 0 003 3h11.59l3.7 3.71A1 1 0 0021 22a.84.84 0 00.38-.08A1 1 0 0022 21V5a3 3 0 00-3-3zm1 16.59l-2.29-2.3A1 1 0 0017 16H5a1 1 0 01-1-1V5a1 1 0 011-1h14a1 1 0 011 1zM8 9a1 1 0 101 1 1 1 0 00-1-1zm8 0a1 1 0 101 1 1 1 0 00-1-1z"
+                        fill={
+                          Array [
+                            2,
+                          ]
+                        }
+                        propList={
+                          Array [
+                            "fill",
+                          ]
+                        }
                       />
                     </RNSVGGroup>
                   </RNSVGSvgView>
@@ -1008,19 +1005,16 @@ exports[`Community members - ContentData component should render data correctly 
       onLayout={[Function]}
       style={null}
     >
-      <View
-        className=""
-      >
+      <View>
         <View
           accessibilityState={
             Object {
-              "disabled": true,
+              "disabled": false,
             }
           }
           accessible={true}
           collapsable={false}
-          focusable={false}
-          nativeID="animatedComponent"
+          focusable={true}
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -1071,6 +1065,7 @@ exports[`Community members - ContentData component should render data correctly 
                 }
               >
                 <View
+                  collapsable={false}
                   style={
                     Object {
                       "bottom": 0,
@@ -1178,12 +1173,12 @@ exports[`Community members - ContentData component should render data correctly 
           <View
             accessibilityState={
               Object {
-                "disabled": true,
+                "disabled": false,
               }
             }
             accessible={true}
             collapsable={false}
-            focusable={false}
+            focusable={true}
             hitSlop={
               Object {
                 "bottom": 10,
@@ -1192,7 +1187,6 @@ exports[`Community members - ContentData component should render data correctly 
                 "top": 10,
               }
             }
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -1218,7 +1212,7 @@ exports[`Community members - ContentData component should render data correctly 
                     "alignItems": "center",
                     "height": 36,
                     "justifyContent": "center",
-                    "marginHorizontal": 4,
+                    "marginLeft": 4,
                     "padding": 8,
                     "width": 36,
                   },
@@ -1237,14 +1231,12 @@ exports[`Community members - ContentData component should render data correctly 
                   ]
                 }
               >
-                <View
-                  className="icon-wrapper"
-                >
+                <View>
                   <RNSVGSvgView
                     align="xMidYMid"
                     bbHeight={20}
                     bbWidth={20}
-                    fill="#2F3945"
+                    color={4281284933}
                     focusable={false}
                     height={20}
                     meetOrSlice={0}
@@ -1264,20 +1256,24 @@ exports[`Community members - ContentData component should render data correctly 
                         },
                       ]
                     }
+                    tintColor={4281284933}
                     vbHeight={24}
                     vbWidth={24}
                     width={20}
                   >
-                    <RNSVGGroup
-                      fill={4281284933}
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGPath
-                        d="M12,9a1,1,0,1,0,1,1A1,1,0,0,0,12,9Zm7-7H5A3,3,0,0,0,2,5V15a3,3,0,0,0,3,3H16.59l3.7,3.71A1,1,0,0,0,21,22a.84.84,0,0,0,.38-.08A1,1,0,0,0,22,21V5A3,3,0,0,0,19,2Zm1,16.59-2.29-2.3A1,1,0,0,0,17,16H5a1,1,0,0,1-1-1V5A1,1,0,0,1,5,4H19a1,1,0,0,1,1,1ZM8,9a1,1,0,1,0,1,1A1,1,0,0,0,8,9Zm8,0a1,1,0,1,0,1,1A1,1,0,0,0,16,9Z"
+                        d="M12 9a1 1 0 101 1 1 1 0 00-1-1zm7-7H5a3 3 0 00-3 3v10a3 3 0 003 3h11.59l3.7 3.71A1 1 0 0021 22a.84.84 0 00.38-.08A1 1 0 0022 21V5a3 3 0 00-3-3zm1 16.59l-2.29-2.3A1 1 0 0017 16H5a1 1 0 01-1-1V5a1 1 0 011-1h14a1 1 0 011 1zM8 9a1 1 0 101 1 1 1 0 00-1-1zm8 0a1 1 0 101 1 1 1 0 00-1-1z"
+                        fill={
+                          Array [
+                            2,
+                          ]
+                        }
+                        propList={
+                          Array [
+                            "fill",
+                          ]
+                        }
                       />
                     </RNSVGGroup>
                   </RNSVGSvgView>
