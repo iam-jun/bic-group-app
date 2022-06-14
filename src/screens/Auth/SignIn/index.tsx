@@ -336,9 +336,7 @@ const SignIn = () => {
                 onSubmitEditing={onSubmitEmail}
                 placeholderTextColor={theme.colors.bgFocus}
                 textColor={theme.colors.background}
-                outlineColor={
-                  errors?.email ? theme.colors.error : theme.colors.background
-                }
+                outlineColor={theme.colors.background}
                 activeOutlineColor={theme.colors.background}
                 helperTextProps={{
                   style: styles.errorText,

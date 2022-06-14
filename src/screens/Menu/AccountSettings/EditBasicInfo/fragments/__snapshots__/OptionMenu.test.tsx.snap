@@ -45,7 +45,6 @@ exports[`OptionMenu conponent renders correctly 1`] = `
           accessible={true}
           collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -60,9 +59,7 @@ exports[`OptionMenu conponent renders correctly 1`] = `
           }
           testID="edit_user_info.option_menu.item_MALE"
         >
-          <View
-            className=""
-          >
+          <View>
             <View
               accessibilityState={
                 Object {
@@ -72,7 +69,6 @@ exports[`OptionMenu conponent renders correctly 1`] = `
               accessible={true}
               collapsable={false}
               focusable={false}
-              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -107,7 +103,7 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                         "fontSize": 14,
                       },
                       Object {},
-                      Object {},
+                      undefined,
                     ]
                   }
                 >
@@ -123,7 +119,6 @@ exports[`OptionMenu conponent renders correctly 1`] = `
           accessible={true}
           collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -138,9 +133,7 @@ exports[`OptionMenu conponent renders correctly 1`] = `
           }
           testID="edit_user_info.option_menu.item_FEMALE"
         >
-          <View
-            className=""
-          >
+          <View>
             <View
               accessibilityState={
                 Object {
@@ -150,7 +143,6 @@ exports[`OptionMenu conponent renders correctly 1`] = `
               accessible={true}
               collapsable={false}
               focusable={false}
-              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -185,7 +177,7 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                         "fontSize": 14,
                       },
                       Object {},
-                      Object {},
+                      undefined,
                     ]
                   }
                 >
@@ -209,7 +201,6 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                     "top": 10,
                   }
                 }
-                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -246,14 +237,12 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                       ]
                     }
                   >
-                    <View
-                      className="icon-wrapper"
-                    >
+                    <View>
                       <RNSVGSvgView
                         align="xMidYMid"
                         bbHeight={24}
                         bbWidth={24}
-                        fill="#421187"
+                        color={4282519943}
                         focusable={false}
                         height={24}
                         meetOrSlice={0}
@@ -273,20 +262,24 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                             },
                           ]
                         }
+                        tintColor={4282519943}
                         vbHeight={24}
                         vbWidth={24}
                         width={24}
                       >
-                        <RNSVGGroup
-                          fill={4282519943}
-                          propList={
-                            Array [
-                              "fill",
-                            ]
-                          }
-                        >
+                        <RNSVGGroup>
                           <RNSVGPath
-                            d="M18.71,7.21a1,1,0,0,0-1.42,0L9.84,14.67,6.71,11.53A1,1,0,1,0,5.29,13l3.84,3.84a1,1,0,0,0,1.42,0l8.16-8.16A1,1,0,0,0,18.71,7.21Z"
+                            d="M18.71 7.21a1 1 0 00-1.42 0l-7.45 7.46-3.13-3.14A1 1 0 105.29 13l3.84 3.84a1 1 0 001.42 0l8.16-8.16a1 1 0 000-1.47z"
+                            fill={
+                              Array [
+                                2,
+                              ]
+                            }
+                            propList={
+                              Array [
+                                "fill",
+                              ]
+                            }
                           />
                         </RNSVGGroup>
                       </RNSVGSvgView>
@@ -303,7 +296,6 @@ exports[`OptionMenu conponent renders correctly 1`] = `
           accessible={true}
           collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -318,9 +310,7 @@ exports[`OptionMenu conponent renders correctly 1`] = `
           }
           testID="edit_user_info.option_menu.item_OTHERS"
         >
-          <View
-            className=""
-          >
+          <View>
             <View
               accessibilityState={
                 Object {
@@ -330,7 +320,6 @@ exports[`OptionMenu conponent renders correctly 1`] = `
               accessible={true}
               collapsable={false}
               focusable={false}
-              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -365,7 +354,7 @@ exports[`OptionMenu conponent renders correctly 1`] = `
                         "fontSize": 14,
                       },
                       Object {},
-                      Object {},
+                      undefined,
                     ]
                   }
                 >

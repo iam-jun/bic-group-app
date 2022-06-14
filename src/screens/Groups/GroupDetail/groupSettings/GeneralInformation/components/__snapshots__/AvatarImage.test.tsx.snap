@@ -38,7 +38,6 @@ exports[`AvatarImage component renders correctly 1`] = `
       accessible={true}
       collapsable={false}
       focusable={true}
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -102,7 +101,6 @@ exports[`AvatarImage component renders correctly 1`] = `
     >
       <View
         collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
             "bottom": 0,

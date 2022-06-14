@@ -25,7 +25,7 @@ describe('approveAllCommunityMemberRequests saga', () => {
           {},
         ],
       ])
-      .put(groupsActions.getCommunityDetail(communityId))
+      .put(groupsActions.getCommunityDetail({communityId}))
       .put(
         modalActions.showHideToastMessage({
           content: `${i18next.t('groups:text_approved_all', {count: total})}`,
@@ -58,7 +58,7 @@ describe('approveAllCommunityMemberRequests saga', () => {
           {},
         ],
       ])
-      .put(groupsActions.getCommunityDetail(communityId))
+      .put(groupsActions.getCommunityDetail({communityId}))
       .put(
         modalActions.showHideToastMessage({
           content: `${i18next.t('groups:text_approved_all', {count: total})}`,

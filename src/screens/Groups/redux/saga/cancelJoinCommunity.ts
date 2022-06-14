@@ -26,7 +26,7 @@ export default function* cancelJoinCommunity({
       }),
     );
 
-    yield put(groupsActions.getCommunityDetail(communityId));
+    yield put(groupsActions.getCommunityDetail({communityId}));
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t(
@@ -48,7 +48,9 @@ export default function* cancelJoinCommunity({
           data: {join_status: groupJoinStatus.member},
         }),
       );
-      yield put(groupsActions.getCommunityDetail(communityId, true));
+      yield put(
+        groupsActions.getCommunityDetail({communityId, loadingPage: true}),
+      );
     }
 
     yield call(showError, err);

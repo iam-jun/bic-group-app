@@ -51,7 +51,7 @@ describe('approveSingleCommunityMemberRequest saga', () => {
           toastType: 'normal',
         }),
       )
-      .put(groupsActions.getCommunityDetail(communityId))
+      .put(groupsActions.getCommunityDetail({communityId}))
       .run()
       .then(({allEffects}: any) => {
         expect(allEffects?.length).toEqual(5);

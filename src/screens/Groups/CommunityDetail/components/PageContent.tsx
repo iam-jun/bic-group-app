@@ -72,7 +72,7 @@ const PageContent = ({
   };
 
   const _onRefresh = () => {
-    dispatch(actions.getCommunityDetail(communityId));
+    dispatch(actions.getCommunityDetail({communityId}));
     getPosts();
   };
 

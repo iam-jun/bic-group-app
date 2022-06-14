@@ -17,7 +17,7 @@ exports[`Filter component renders correctly 1`] = `
   testID="filter"
 >
   <RCTScrollView
-    alwaysBounceHorizontal={false}
+    alwaysBounceHorizontal={true}
     horizontal={true}
     showsHorizontalScrollIndicator={false}
     style={
@@ -40,7 +40,6 @@ exports[`Filter component renders correctly 1`] = `
           accessible={true}
           collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -50,43 +49,33 @@ exports[`Filter component renders correctly 1`] = `
           onStartShouldSetResponder={[Function]}
           style={
             Object {
+              "backgroundColor": "#B2BDCD",
+              "borderColor": "#B2BDCD",
+              "borderRadius": 100,
+              "borderWidth": 1,
+              "flexDirection": "row",
               "opacity": 1,
+              "paddingHorizontal": 16,
+              "paddingVertical": 8,
             }
           }
           testID="item_filter_1"
         >
-          <View
+          <Text
             style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#B2BDCD",
-                "borderColor": "#B2BDCD",
-                "borderRadius": 100,
-                "borderWidth": 1,
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-SemiBold",
+                  "fontSize": 16,
+                },
+                Object {},
+                undefined,
+              ]
             }
-            testID="button_wrapper.content"
           >
-            <Text
-              style={
-                Array [
-                  Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-SemiBold",
-                    "fontSize": 16,
-                  },
-                  Object {},
-                  undefined,
-                ]
-              }
-            >
-              You've joined
-            </Text>
-          </View>
+            You've joined
+          </Text>
         </View>
       </View>
       <View
@@ -102,7 +91,6 @@ exports[`Filter component renders correctly 1`] = `
           accessible={true}
           collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -112,43 +100,33 @@ exports[`Filter component renders correctly 1`] = `
           onStartShouldSetResponder={[Function]}
           style={
             Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#EAEDF2",
+              "borderRadius": 100,
+              "borderWidth": 1,
+              "flexDirection": "row",
               "opacity": 1,
+              "paddingHorizontal": 16,
+              "paddingVertical": 8,
             }
           }
           testID="item_filter_2"
         >
-          <View
+          <Text
             style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#FFFFFF",
-                "borderColor": "#EAEDF2",
-                "borderRadius": 100,
-                "borderWidth": 1,
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-Regular",
+                  "fontSize": 16,
+                },
+                Object {},
+                undefined,
+              ]
             }
-            testID="button_wrapper.content"
           >
-            <Text
-              style={
-                Array [
-                  Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-Regular",
-                    "fontSize": 16,
-                  },
-                  Object {},
-                  undefined,
-                ]
-              }
-            >
-              You manage
-            </Text>
-          </View>
+            You manage
+          </Text>
         </View>
       </View>
       <View
@@ -164,7 +142,6 @@ exports[`Filter component renders correctly 1`] = `
           accessible={true}
           collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -174,43 +151,33 @@ exports[`Filter component renders correctly 1`] = `
           onStartShouldSetResponder={[Function]}
           style={
             Object {
+              "backgroundColor": "#FFFFFF",
+              "borderColor": "#EAEDF2",
+              "borderRadius": 100,
+              "borderWidth": 1,
+              "flexDirection": "row",
               "opacity": 1,
+              "paddingHorizontal": 16,
+              "paddingVertical": 8,
             }
           }
           testID="item_filter_3"
         >
-          <View
+          <Text
             style={
-              Object {
-                "alignItems": "center",
-                "backgroundColor": "#FFFFFF",
-                "borderColor": "#EAEDF2",
-                "borderRadius": 100,
-                "borderWidth": 1,
-                "flexDirection": "row",
-                "justifyContent": "center",
-                "paddingHorizontal": 16,
-                "paddingVertical": 8,
-              }
+              Array [
+                Object {
+                  "color": "#2F3945",
+                  "fontFamily": "OpenSans-Regular",
+                  "fontSize": 16,
+                },
+                Object {},
+                undefined,
+              ]
             }
-            testID="button_wrapper.content"
           >
-            <Text
-              style={
-                Array [
-                  Object {
-                    "color": "#2F3945",
-                    "fontFamily": "OpenSans-Regular",
-                    "fontSize": 16,
-                  },
-                  Object {},
-                  undefined,
-                ]
-              }
-            >
-              Discover
-            </Text>
-          </View>
+            Discover
+          </Text>
         </View>
       </View>
     </View>
