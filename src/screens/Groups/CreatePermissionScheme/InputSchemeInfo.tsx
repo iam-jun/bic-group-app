@@ -17,7 +17,6 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
   const [isFocusDesc, setIsFocusDesc] = useState(false);
 
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
   const onChangeName = (value: string) => {
@@ -40,7 +39,7 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
     <View style={styles.container}>
       <Text.H5 style={styles.textTitle}>Scheme name:</Text.H5>
       <TextInput
-        // value={fullname}
+        value={'Test scheme'} //todo handle input
         testID="input_scheme_info.input_name"
         style={styles.textInputName}
         onChangeText={onChangeName}
@@ -48,6 +47,7 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
         // helperContent={
         //   error ? i18next.t('profile:text_name_must_not_be_empty') : undefined
         // }
+        placeholder={'Enter scheme name'}
         activeOutlineColor={theme.colors.primary6}
         outlineColor={theme.colors.borderCard}
         maxLength={32}
@@ -59,11 +59,11 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
           isFocusDesc ? styles.textInputActive : styles.textInputInactive,
         ]}>
         <TextInput
-          // value={fullname}
+          value={'This is a test scheme'} //todo handle input
           testID="input_scheme_info.input_desc"
           onChangeText={onChangeDesc}
           multiline
-          placeholder={'Write your description here ( maximum 255 characters)'}
+          placeholder={'Write your description here (maximum 255 characters)'}
           activeOutlineColor={theme.colors.background}
           outlineColor={theme.colors.background}
           maxLength={255}

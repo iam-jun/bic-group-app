@@ -8,6 +8,7 @@ import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import Icon from '~/beinComponents/Icon';
+import RoleItem from '~/screens/Groups/CreatePermissionScheme/components/RoleItem';
 
 export interface SchemeRolesProps {
   style?: StyleProp<ViewStyle>;
@@ -34,6 +35,10 @@ const SchemeRoles: FC<SchemeRolesProps> = ({style}: SchemeRolesProps) => {
     `${JSON.stringify(schemeData, undefined, 2)}\x1b[0m`,
   );
 
+  const _onPressPermission = (per: any) => {
+    console.log(`\x1b[35m🐣️ SchemeRoles _onPressPermission `, per, `\x1b[0m`);
+  };
+
   return (
     <>
       <Text.BodyM
@@ -48,30 +53,21 @@ const SchemeRoles: FC<SchemeRolesProps> = ({style}: SchemeRolesProps) => {
         Edit Roles
       </Text.BodyM>
       {roles?.map?.((role: any, roleIndex: number) => (
-        <View key={`role_${role?.id}`}>
-          <Text style={styles.roleName}>{role?.name}</Text>
-          {categories?.map?.((cat: any, catIndex: number) => (
-            <View key={`role_${role?.id}_cat_${cat?.key}`}>
-              <Text.ButtonSmall style={styles.catName}>
-                {cat?.name}
-              </Text.ButtonSmall>
-              {cat?.subCategories?.map((subCat: any, subCatIndex: number) => (
-                <View
-                  key={`role_${role?.id}_cat_${cat?.key}_subCat_${subCat?.key}`}>
-                  <Text.H5 style={styles.subCatName}>{subCat?.name}</Text.H5>
-                  {subCat?.permissions?.map((per: any, perIndex: number) => (
-                    <View
-                      style={styles.permissionItem}
-                      key={`role_${role?.id}_cat_${cat?.key}_subCat_${subCat?.key}_per_${per?.key}`}>
-                      <Text style={styles.permissionName}>{per?.name}</Text>
-                      <Icon icon={'iconCheckbox'} />
-                    </View>
-                  ))}
-                </View>
-              ))}
-            </View>
-          ))}
-        </View>
+        <RoleItem
+          key={`role_${role?.id}`}
+          categories={categories}
+          role={role}
+          onLayout={({
+            nativeEvent: {
+              layout: {y: anchor},
+            },
+          }: any) => {
+            console.log(
+              `\x1b[36m🐣️ SchemeRoles role anchor: ${anchor}\x1b[0m`,
+            );
+          }}
+          onPressPermission={_onPressPermission}
+        />
       ))}
     </>
   );
@@ -89,6 +85,9 @@ const createStyle = (theme: ITheme) => {
       marginTop: spacing.margin.small,
       backgroundColor: colors.background,
       padding: spacing.padding.large,
+      borderTopWidth: 1,
+      borderBottomWidth: 1,
+      borderColor: colors.bgFocus,
     },
     catName: {
       textTransform: 'uppercase',
