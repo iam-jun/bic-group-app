@@ -16,6 +16,12 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {IGroupMembers} from '~/interfaces/IGroup';
 import images from '~/resources/images';
+import mainStack from '~/router/navigator/MainStack/stack';
+import {useRootNavigation} from '~/hooks/navigation';
+import Icon from '~/beinComponents/Icon';
+import useAuth from '~/hooks/auth';
+import {formatDMLink} from '~/utils/link';
+import {openLink} from '~/utils/common';
 
 interface SearchResultContentProps {
   onLoadMore?: () => void;
@@ -29,14 +35,31 @@ const SearchResultContent = ({
   onPressMenu,
 }: SearchResultContentProps) => {
   const theme = useTheme() as ITheme;
+  const {colors} = theme;
   const styles = createStyles(theme);
+  const {rootNavigation} = useRootNavigation();
+  const {user} = useAuth();
+  const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
 
   const {loading, canLoadMore, data} = useKeySelector(
     groupsKeySelector.groupSearchMembers,
   );
+  const can_manage_member = useKeySelector(
+    groupsKeySelector.groupDetail.can_manage_member,
+  );
+
+  const goToUserProfile = (id: number) => {
+    rootNavigation.navigate(mainStack.userProfile, {userId: id});
+  };
+
+  const onPressChat = (username?: string) => {
+    if (!username) return;
+    const link = formatDMLink(groupData.team_name, username);
+    openLink(link);
+  };
 
   const renderItem = ({item}: {item: IGroupMembers}) => {
-    const {fullname, avatar, username} = item || {};
+    const {id, fullname, avatar, username} = item || {};
 
     return (
       <PrimaryItem
@@ -44,6 +67,7 @@ const SearchResultContent = ({
         menuIconTestID={'search_result_content.item'}
         style={styles.itemContainer}
         avatar={avatar || images.img_user_avatar_default}
+        onPress={id ? () => goToUserProfile(id) : undefined}
         ContentComponent={
           <Text.H6 numberOfLines={2}>
             {fullname}
@@ -53,7 +77,25 @@ const SearchResultContent = ({
               }>{` @${username}`}</Text.Subtitle>
           </Text.H6>
         }
-        onPressMenu={(e: any) => onPressMenu(e, item)}
+        RightComponent={
+          <>
+            {user.username !== item.username && (
+              <Icon
+                icon={'CommentAltDots'}
+                backgroundColor={colors.bgSecondary}
+                style={styles.iconChat}
+                onPress={() => onPressChat(username)}
+              />
+            )}
+            {can_manage_member && (
+              <Icon
+                icon={'EllipsisV'}
+                style={styles.iconOption}
+                onPress={(e: any) => onPressMenu(e, item)}
+              />
+            )}
+          </>
+        }
       />
     );
   };
@@ -137,6 +179,17 @@ const createStyles = (theme: ITheme) => {
       height: undefined,
       paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.tiny,
+    },
+    iconChat: {
+      height: 36,
+      width: 36,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: spacing.padding.small,
+      marginLeft: spacing.margin.tiny,
+    },
+    iconOption: {
+      marginLeft: spacing.margin.small,
     },
   });
 };

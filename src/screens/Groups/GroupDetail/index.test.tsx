@@ -27,6 +27,8 @@ describe('GroupDetail component', () => {
     const state = {...initialState};
     state.groups.loadingPage = false;
     state.groups.groupDetail = {...groupDetailData};
+    // @ts-ignore
+    state.auth.user = {username: 'testname'};
     const store = createTestStore(state);
 
     const wrapper = renderWithRedux(

@@ -10,7 +10,6 @@ exports[`Header Avatar View component renders correctly 1`] = `
   accessible={true}
   collapsable={false}
   focusable={false}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -64,6 +63,7 @@ exports[`Header Avatar View component renders correctly 1`] = `
         }
       >
         <View
+          collapsable={false}
           style={
             Object {
               "bottom": 0,

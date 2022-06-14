@@ -21,7 +21,7 @@ import API_ERROR_CODE from '~/constants/apiErrorCode';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import LoadMoreComment from '../components/LoadMoreComment';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import {parseInt} from 'lodash';
+import homeActions from '~/screens/Home/redux/actions';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -31,7 +31,6 @@ const CommentDetailContent = (props: any) => {
   const [isScrollFirst, setIsScrollFirst] = useState(false);
 
   const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
 
   const {t} = useBaseHook();
   const dispatch = useDispatch();
@@ -49,15 +48,13 @@ const CommentDetailContent = (props: any) => {
   const postDetailLoadingState = useKeySelector(
     postKeySelector.loadingGetPostDetail,
   );
-  const newParentId =
-    typeof parentId === 'string' ? parseInt(parentId) : parentId;
   const comments = useKeySelector(postKeySelector.commentsByParentId(id));
   const {
     childrenComments = [],
     newCommentData,
     viewMore = false,
     notFoundComment,
-  } = getListChildComment(comments, !!newParentId ? newParentId : commentId);
+  } = getListChildComment(comments, !!parentId ? parentId : commentId);
 
   const scrollToCommentsPosition = useKeySelector(
     postKeySelector.scrollToCommentsPosition,
@@ -190,43 +187,63 @@ const CommentDetailContent = (props: any) => {
     });
   };
 
+  const showNotice = (type = 'deleted_comment') => {
+    dispatch(
+      modalActions.showAlert({
+        // @ts-ignore
+        HeaderImageComponent: (
+          <View style={{alignItems: 'center'}}>
+            <SVGIcon
+              // @ts-ignore
+              source={CommentNotFoundImg}
+              width={120}
+              height={120}
+              tintColor="none"
+            />
+          </View>
+        ),
+        title: t(`post:${type}:title`),
+        titleProps: {style: {flex: 1, textAlign: 'center'}},
+        showCloseButton: false,
+        cancelBtn: false,
+        isDismissible: true,
+        onConfirm: () => {
+          if (type === 'deleted_post') {
+            rootNavigation.replace(homeStack.newsfeed);
+            dispatch(homeActions.getHomePosts({isRefresh: true}));
+          } else {
+            rootNavigation.goBack();
+          }
+        },
+        confirmLabel: t(`post:${type}:button_text`),
+        content: t(`post:${type}:description`),
+        contentProps: {style: {textAlign: 'center'}},
+        ContentComponent: Text.BodyS,
+        buttonViewStyle: {justifyContent: 'center'},
+        headerStyle: {marginBottom: 0},
+        onDismiss: () => {
+          if (type === 'deleted_post') {
+            rootNavigation.replace(homeStack.newsfeed);
+            dispatch(homeActions.getHomePosts({isRefresh: true}));
+          } else {
+            rootNavigation.goBack();
+          }
+        },
+      }),
+    );
+  };
+
   const onRefresh = () => {
     if (copyCommentError === API_ERROR_CODE.POST.commentDeleted) {
       setIsEmpty(true);
       setRefreshing(true);
-      dispatch(
-        modalActions.showAlert({
-          // @ts-ignore
-          HeaderImageComponent: (
-            <View style={{alignItems: 'center'}}>
-              <SVGIcon
-                // @ts-ignore
-                source={CommentNotFoundImg}
-                width={120}
-                height={120}
-                tintColor="none"
-              />
-            </View>
-          ),
-          title: t('post:deleted_comment:title'),
-          titleProps: {style: {flex: 1, textAlign: 'center'}},
-          showCloseButton: false,
-          cancelBtn: false,
-          isDismissible: true,
-          onConfirm: () => {
-            rootNavigation.goBack();
-          },
-          confirmLabel: t('post:deleted_comment:button_text'),
-          content: t('post:deleted_comment:description'),
-          contentProps: {style: {textAlign: 'center'}},
-          ContentComponent: Text.BodyS,
-          buttonViewStyle: {justifyContent: 'center'},
-          headerStyle: {marginBottom: 0},
-          onDismiss: () => {
-            rootNavigation.goBack();
-          },
-        }),
-      );
+      showNotice();
+      setRefreshing(false);
+      return;
+    } else if (copyCommentError === API_ERROR_CODE.POST.postDeleted) {
+      setIsEmpty(true);
+      setRefreshing(true);
+      showNotice('deleted_post');
       setRefreshing(false);
       return;
     }
@@ -263,7 +280,7 @@ const CommentDetailContent = (props: any) => {
           title={'post:text_load_more_replies'}
           postId={id}
           idGreaterThan={lastItem?.id}
-          commentId={parseInt(_parentId || '0')}
+          commentId={_parentId}
         />
       );
     } else return <ViewSpacing height={12} />;
@@ -360,10 +377,10 @@ const CommentLevel1 = ({
 
 const getListChildComment = (
   listData: ICommentData[],
-  parentCommentId: number,
+  parentCommentId: string,
 ) => {
   const parentCommentPosition = listData?.findIndex?.(
-    (item: ICommentData) => item.id == parentCommentId,
+    (item: ICommentData) => item.id === parentCommentId,
   );
 
   const childrenComments = listData?.[parentCommentPosition]?.child?.list || [];

@@ -20,9 +20,9 @@ import {quickReactions} from '~/configs/reactionConfig';
 import {getLink, LINK_COMMENT} from '~/utils/link';
 
 export interface CommentViewMenuProps {
-  commentId: number;
-  parentCommentId?: number;
-  postId?: number;
+  commentId: string;
+  parentCommentId?: string;
+  postId?: string;
   content: string;
   groupIds: string;
   isActor: boolean;

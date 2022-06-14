@@ -13,33 +13,32 @@ exports[`NoGroupFound component should render correctly 1`] = `
     testID="header"
   >
     <View
-      animatedStyle={
-        Object {
-          "value": Object {
-            "height": 60,
-          },
-        }
-      }
-      collapsable={false}
       style={
-        Object {
-          "alignItems": "flex-end",
-          "backgroundColor": "#FFFFFF",
-          "borderBottomWidth": 0.5,
-          "borderColor": "#EAEDF2",
-          "elevation": 2,
-          "flexDirection": "row",
-          "height": 60,
-          "overflow": "hidden",
-          "paddingTop": 0,
-          "shadowColor": "#000",
-          "shadowOffset": Object {
-            "height": 1,
-            "width": 0,
+        Array [
+          Object {
+            "height": undefined,
           },
-          "shadowOpacity": 0.1,
-          "shadowRadius": 1,
-        }
+          Object {
+            "alignItems": "flex-end",
+            "backgroundColor": "#FFFFFF",
+            "flexDirection": "row",
+            "overflow": "hidden",
+            "paddingTop": 0,
+          },
+          Object {
+            "borderBottomWidth": 0.5,
+            "borderColor": "#EAEDF2",
+            "elevation": 2,
+            "shadowColor": "#000",
+            "shadowOffset": Object {
+              "height": 1,
+              "width": 0,
+            },
+            "shadowOpacity": 0.1,
+            "shadowRadius": 1,
+          },
+          undefined,
+        ]
       }
       testID="header.content"
     >
@@ -64,6 +63,7 @@ exports[`NoGroupFound component should render correctly 1`] = `
             }
           }
           accessible={true}
+          collapsable={false}
           focusable={true}
           hitSlop={
             Object {
@@ -117,14 +117,13 @@ exports[`NoGroupFound component should render correctly 1`] = `
               }
             >
               <View
-                className="icon-wrapper"
                 testID="header.back"
               >
                 <RNSVGSvgView
                   align="xMidYMid"
                   bbHeight={24}
                   bbWidth={24}
-                  fill="#2F3945"
+                  color={4281284933}
                   focusable={false}
                   height={24}
                   meetOrSlice={0}
@@ -144,20 +143,24 @@ exports[`NoGroupFound component should render correctly 1`] = `
                       },
                     ]
                   }
+                  tintColor={4281284933}
                   vbHeight={24}
                   vbWidth={24}
                   width={24}
                 >
-                  <RNSVGGroup
-                    fill={4281284933}
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  >
+                  <RNSVGGroup>
                     <RNSVGPath
-                      d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                      d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                      fill={
+                        Array [
+                          2,
+                        ]
+                      }
+                      propList={
+                        Array [
+                          "fill",
+                        ]
+                      }
                     />
                   </RNSVGGroup>
                 </RNSVGSvgView>
@@ -166,20 +169,17 @@ exports[`NoGroupFound component should render correctly 1`] = `
           </View>
         </View>
         <View
-          animatedStyle={
-            Object {
-              "value": Object {},
-            }
-          }
-          collapsable={false}
           style={
-            Object {
-              "flex": 1,
-              "height": "100%",
-              "justifyContent": "center",
-              "marginLeft": 16,
-              "paddingTop": 1.5,
-            }
+            Array [
+              Object {
+                "flex": 1,
+                "height": "100%",
+                "justifyContent": "center",
+                "marginLeft": 16,
+                "paddingTop": 1.5,
+              },
+              Object {},
+            ]
           }
         >
           <View
@@ -189,6 +189,7 @@ exports[`NoGroupFound component should render correctly 1`] = `
               }
             }
             accessible={true}
+            collapsable={false}
             focusable={false}
             onClick={[Function]}
             onResponderGrant={[Function]}

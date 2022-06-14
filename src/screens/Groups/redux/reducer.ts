@@ -87,7 +87,8 @@ export const groupInitState = {
   discoverCommunities: {
     loading: true,
     canLoadMore: true,
-    list: [],
+    ids: [],
+    items: {},
   },
   managedCommunities: {
     loading: false,
@@ -115,6 +116,19 @@ export const groupInitState = {
     items: {},
     canLoadMore: true,
   },
+  communityMemberRequests: {
+    total: 0,
+    loading: false,
+    canLoadMore: true,
+    ids: [] as number[],
+    items: {},
+  },
+  // temporarily stores data for `undo` action
+  undoCommunityMemberRequests: {
+    total: 0,
+    ids: [],
+    items: {} as IObject<IJoiningMember>,
+  },
 };
 
 function groupsReducer(state = groupInitState, action: any = {}) {
@@ -127,6 +141,8 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     communitySearchMembers,
     managedCommunities,
     groupSearchMembers,
+    discoverCommunities,
+    communityMemberRequests,
   } = state;
 
   switch (type) {
@@ -456,6 +472,11 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           ...payload,
         },
       };
+    case groupsTypes.RESET_DISCOVER_COMMUNITIES:
+      return {
+        ...state,
+        discoverCommunities: groupInitState.discoverCommunities,
+      };
 
     case groupsTypes.GET_COMMUNITY_GROUPS:
       return {
@@ -469,10 +490,10 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         loadingJoinedGroups: false,
         joinedGroups: payload || [],
       };
-    case groupsTypes.GET_COMMUNITY_DETAIL:
+    case groupsTypes.SET_COMMUNITY_LOADING:
       return {
         ...state,
-        isGettingInfoDetail: true,
+        isGettingInfoDetail: payload,
       };
     case groupsTypes.SET_COMMUNITY_DETAIL:
       return {
@@ -566,6 +587,55 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       return {
         ...state,
         managedCommunities: groupInitState.managedCommunities,
+      };
+    case groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM:
+      return {
+        ...state,
+        discoverCommunities: {
+          ...discoverCommunities,
+          items: {
+            ...discoverCommunities.items,
+            [payload.id]: {
+              // @ts-ignore
+              ...discoverCommunities.items[payload.id],
+              ...payload.data,
+            },
+          },
+        },
+      };
+
+    case groupsTypes.SET_COMMUNITY_MEMBER_REQUESTS:
+      return {
+        ...state,
+        communityMemberRequests: {
+          ...communityMemberRequests,
+          ...payload,
+        },
+      };
+    case groupsTypes.RESET_COMMUNITY_MEMBER_REQUESTS:
+      return {
+        ...state,
+        communityMemberRequests: groupInitState.communityMemberRequests,
+      };
+    case groupsTypes.STORE_UNDO_COMMUNITY_MEMBER_REQUESTS:
+      return {
+        ...state,
+        undoCommunityMemberRequests: {
+          total: communityMemberRequests.total,
+          ids: [...communityMemberRequests.ids],
+          items: {...communityMemberRequests.items},
+        },
+      };
+    case groupsTypes.UNDO_DECLINED_COMMUNITY_MEMBER_REQUESTS:
+      return {
+        ...state,
+        communityMemberRequests: {
+          ...communityMemberRequests,
+          total: state.undoCommunityMemberRequests.total,
+          ids: [...state.undoCommunityMemberRequests.ids],
+          items: {...state.undoCommunityMemberRequests.items},
+        },
+        undoCommunityMemberRequests: groupInitState.undoCommunityMemberRequests,
       };
 
     default:

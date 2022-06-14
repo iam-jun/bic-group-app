@@ -1,8 +1,10 @@
 const notificationSelector = {
-  isLoading: 'notifications.loadingNotifications',
+  isLoading: (type: string) => `notifications.${type}.loading`,
   notifications: 'notifications.notificationList',
-  noMoreNotification: 'notifications.noMoreNotification',
-  isLoadingMore: 'notifications.isLoadingMore',
+  getNotificationById: (id: string) => `notifications.notificationList.${id}`,
+  notificationByType: (type: string) => `notifications.${type}.data`,
+  noMoreNotification: (type: string) => `notifications.${type}.noMoreData`,
+  isLoadingMore: (type: string) => `notifications.${type}.isLoadingMore`,
   showMarkedAsReadToast: 'notifications.showMarkedAsReadToast',
 };
 

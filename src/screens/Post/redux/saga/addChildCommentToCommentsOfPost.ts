@@ -11,7 +11,7 @@ function* addChildCommentToCommentsOfPost({
   shouldAddChildrenCount,
   meta,
 }: {
-  postId: number;
+  postId: string;
   commentId: string | number;
   childComments: ICommentData[];
   shouldAddChildrenCount?: boolean;

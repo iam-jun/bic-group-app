@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, FlatList, Platform} from 'react-native';
+import {FlatList, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import Animated, {
   runOnJS,
@@ -7,18 +7,17 @@ import Animated, {
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-
-import {ITheme} from '~/theme/interfaces';
-
-import Text from '~/beinComponents/Text';
-import {useKeySelector} from '~/hooks/selector';
-import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {useDispatch} from 'react-redux';
-import groupsActions from '~/screens/Groups/redux/actions';
+
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
+import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import GroupItemPlaceholder from '~/screens/Groups/components/GroupItemPlaceholder';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
+import {useKeySelector} from '~/hooks/selector';
+import GroupItemPlaceholder from '~/screens/Groups/components/GroupItemPlaceholder';
+import groupsActions from '~/screens/Groups/redux/actions';
+import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import {ITheme} from '~/theme/interfaces';
 
 const GroupSearch = () => {
   const [_isShow, _setIsShow] = useState(false);
@@ -33,7 +32,7 @@ const GroupSearch = () => {
     useKeySelector(groupsKeySelector.groupSearch) || {};
 
   const containerStyle = useAnimatedStyle(() => ({
-    opacity: Platform.OS === 'web' ? 1 : showValue.value,
+    opacity: showValue.value,
   }));
 
   const show = () => {
@@ -97,11 +96,9 @@ const GroupSearch = () => {
     if (loading) {
       return (
         <View>
-          {Array.from(Array(Platform.OS === 'web' ? 20 : 10).keys()).map(
-            item => (
-              <GroupItemPlaceholder key={'group_search_placeholder_' + item} />
-            ),
-          )}
+          {Array.from(Array(10).keys()).map(item => (
+            <GroupItemPlaceholder key={'group_search_placeholder_' + item} />
+          ))}
         </View>
       );
     }

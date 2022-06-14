@@ -1,0 +1,164 @@
+import {View, StyleProp, ViewStyle, StyleSheet} from 'react-native';
+import React from 'react';
+import i18next from 'i18next';
+import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
+
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import {ITheme} from '~/theme/interfaces';
+import Icon from '~/beinComponents/Icon';
+import modalActions from '~/store/modal/actions';
+
+interface HeaderMenuProps {
+  type: 'community' | 'group';
+  isMember: boolean;
+  can_setting: boolean;
+  containerStyle?: StyleProp<ViewStyle>;
+  onPressAdminTools?: () => void;
+  onPressCopyLink?: () => void;
+  onPressShare?: () => void;
+  onPressFollowing?: () => void;
+  onPressPin?: () => void;
+  onPressNotification?: () => void;
+  onPressLeave?: () => void;
+}
+
+const HeaderMenu = ({
+  type,
+  isMember,
+  can_setting,
+  containerStyle,
+  onPressAdminTools,
+  onPressCopyLink,
+  onPressShare,
+  onPressFollowing,
+  onPressPin,
+  onPressNotification,
+  onPressLeave,
+}: HeaderMenuProps) => {
+  const theme = useTheme() as ITheme;
+  const styles = createStyles(theme);
+  const dispatch = useDispatch();
+
+  const onPressNewFeature = () => {
+    dispatch(modalActions.hideModal());
+    dispatch(modalActions.showAlertNewFeature());
+  };
+
+  return (
+    <View style={containerStyle}>
+      {can_setting && (
+        <PrimaryItem
+          testID="header_menu.admin_tools"
+          height={48}
+          leftIconProps={{
+            icon: 'iconShieldStar',
+            size: 24,
+            tintColor: theme.colors.primary6,
+            style: styles.iconLeftStyle,
+          }}
+          leftIcon={'iconShieldStar'}
+          title={i18next.t('groups:group_menu:label_admin_tools')}
+          onPress={onPressAdminTools || onPressNewFeature}
+          RightComponent={
+            <Icon
+              icon={'RightArrow'}
+              size={12}
+              tintColor={theme.colors.textSecondary}
+            />
+          }
+        />
+      )}
+      <PrimaryItem
+        testID="header_menu.copy_link"
+        height={48}
+        leftIconProps={{
+          icon: 'Copy',
+          size: 24,
+          tintColor: theme.colors.primary6,
+          style: styles.iconLeftStyle,
+        }}
+        leftIcon={'Link'}
+        title={i18next.t('groups:group_menu:label_copy_group_link')}
+        onPress={onPressCopyLink || onPressNewFeature}
+      />
+      <PrimaryItem
+        testID={`header_menu.share_${type}`}
+        height={48}
+        leftIconProps={{
+          icon: 'ShareAlt',
+          size: 24,
+          tintColor: theme.colors.primary6,
+          style: styles.iconLeftStyle,
+        }}
+        leftIcon={'ShareAlt'}
+        title={i18next.t('groups:group_menu:label_share_group')}
+        onPress={onPressShare || onPressNewFeature}
+      />
+      <PrimaryItem
+        testID="header_menu.following"
+        height={48}
+        leftIconProps={{
+          icon: 'iconAddSquareDone',
+          size: 24,
+          tintColor: theme.colors.primary6,
+          style: styles.iconLeftStyle,
+        }}
+        leftIcon={'iconAddSquareDone'}
+        title={i18next.t('groups:group_menu:label_following')}
+        onPress={onPressFollowing || onPressNewFeature}
+      />
+      <PrimaryItem
+        testID={`header_menu.pin_${type}`}
+        height={48}
+        leftIconProps={{
+          icon: 'iconMapPin',
+          size: 24,
+          tintColor: theme.colors.primary6,
+          style: styles.iconLeftStyle,
+        }}
+        leftIcon={'iconMapPin'}
+        title={i18next.t(`groups:group_menu:label_pin_${type}`)}
+        onPress={onPressPin || onPressNewFeature}
+      />
+      <PrimaryItem
+        testID="header_menu.notifications"
+        height={48}
+        leftIconProps={{
+          icon: 'Bell',
+          size: 24,
+          tintColor: theme.colors.primary6,
+          style: styles.iconLeftStyle,
+        }}
+        leftIcon={'Bell'}
+        title={i18next.t('groups:group_menu:label_notifications')}
+        onPress={onPressNotification || onPressNewFeature}
+      />
+      {isMember && (
+        <PrimaryItem
+          testID={`header_menu.leave_${type}`}
+          height={48}
+          leftIconProps={{
+            icon: 'SignOutAlt',
+            size: 24,
+            tintColor: theme.colors.error,
+            style: styles.iconLeftStyle,
+          }}
+          leftIcon={'SignOutAlt'}
+          title={i18next.t(`groups:group_menu:label_leave_${type}`)}
+          titleProps={{color: theme.colors.error}}
+          onPress={onPressLeave || onPressNewFeature}
+        />
+      )}
+    </View>
+  );
+};
+
+const createStyles = (theme: ITheme) => {
+  const {spacing} = theme;
+  return StyleSheet.create({
+    iconLeftStyle: {marginRight: spacing.margin.base},
+  });
+};
+
+export default HeaderMenu;

@@ -18,7 +18,6 @@ export interface IShowAlert {
   isDismissible?: boolean;
   showCloseButton?: boolean;
   style?: StyleProp<ViewStyle>;
-  stretchOnWeb?: boolean;
 }
 
 export interface IPayloadReactionDetailBottomSheet {

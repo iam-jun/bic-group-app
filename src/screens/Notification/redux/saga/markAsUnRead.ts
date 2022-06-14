@@ -6,28 +6,31 @@ import notificationsDataHelper from '../../helper/NotificationDataHelper';
 import notificationsActions from '../actions';
 import notificationSelector from '../selector';
 
-function* markAsUnRead({payload}: {payload: string; type: string}): any {
+function* markAsUnRead({payload}: {payload: any; type: string}): any {
   try {
-    yield call(notificationsDataHelper.markAsUnRead, payload);
+    if (!payload?.id) return;
+    yield call(notificationsDataHelper.markAsUnRead, payload.id);
 
     // get all notifications from store
-    const notifications: IObject<any> =
+    const notifications: any =
       cloneDeep(
         yield select(state => get(state, notificationSelector.notifications)),
-      ) || [];
+      ) || {};
 
-    // then set mapped notificaton's isRead field by false to un-highlight it directly on device store
-    notifications.forEach((notificationGroup: any) => {
-      if (notificationGroup.id === payload) {
-        notificationGroup.isRead = false;
-      }
-    });
+    notifications[payload.id].isRead = false;
+
+    //call api to refresh unread tab
+    yield put(
+      notificationsActions.getNotifications({
+        flag: 'UNREAD',
+        keyValue: 'tabUnread',
+      }),
+    );
 
     // finally, set notification back to store,
     yield put(
-      notificationsActions.setNotifications({
-        notifications: notifications,
-        unseen: 0, // hardcode because we re-use setNotifications function
+      notificationsActions.setAllNotifications({
+        notifications: {...notifications},
       }),
     );
   } catch (err) {

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Platform, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
@@ -42,7 +42,7 @@ const SecurityLogin = () => {
         data={securityLoginMenu.password}
         scrollEnabled={false}
         onItemPress={onSecurityLoginPress}
-        style={[styles.firstMenuGroup, styles.menuGroup]}
+        style={styles.firstMenuGroup}
       />
       <Divider style={styles.divider} />
       <ListView
@@ -50,7 +50,6 @@ const SecurityLogin = () => {
         data={securityLoginMenu.security}
         scrollEnabled={false}
         onItemPress={onSecurityLoginPress}
-        style={styles.menuGroup}
       />
     </ScreenWrapper>
   );
@@ -64,9 +63,6 @@ const themeStyles = (theme: ITheme) => {
   return StyleSheet.create({
     firstMenuGroup: {
       marginTop: spacing.margin.base,
-    },
-    menuGroup: {
-      marginHorizontal: Platform.OS === 'web' ? spacing.margin.small : 0,
     },
     divider: {
       marginHorizontal: spacing.margin.large,

@@ -1,5 +1,5 @@
 import React, {useState, useRef} from 'react';
-import {StyleSheet, Platform, Keyboard, ScrollView} from 'react-native';
+import {StyleSheet, Keyboard, ScrollView, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -13,7 +13,6 @@ import menuActions from '~/screens/Menu/redux/actions';
 import {
   GENDER_TYPE,
   IGenderItem,
-  IOptionItem,
   IRelationshipItem,
   RELATIONSHIP_TYPE,
 } from '~/interfaces/IEditUser';
@@ -30,7 +29,7 @@ import EditName from './fragments/EditName';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
 import TitleComponent from '../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
-import Div from '~/beinComponents/Div';
+import {dataMapping, maxBirthday} from './helper';
 
 const EditBasicInfo = () => {
   const theme = useTheme() as ITheme;
@@ -56,14 +55,6 @@ const EditBasicInfo = () => {
     useState<RELATIONSHIP_TYPE>(relationship_status);
 
   const [error, setError] = useState<boolean>(false);
-
-  const dataMapping = (dataObject: any): IOptionItem[] => {
-    const dataList = Object.keys(dataObject).map(type => ({
-      type,
-      title: dataObject[type],
-    }));
-    return dataList;
-  };
 
   const relationshipStatusList = dataMapping(relationshipStatus);
   const gendersList = dataMapping(genders);
@@ -129,17 +120,6 @@ const EditBasicInfo = () => {
     setLanguageState(languages);
   };
 
-  const maxBirthday = () => {
-    const currentMoment = new Date();
-    const currentDay = currentMoment.getDate();
-    const currentMonth = currentMoment.getMonth();
-    const currentYear = currentMoment.getFullYear();
-
-    // user must be at least 8 years old up to today
-    const maxDateToSelect = new Date(currentYear - 8, currentMonth, currentDay);
-    return maxDateToSelect;
-  };
-
   const _onPressBack = () => {
     if (isValid) {
       Keyboard.dismiss();
@@ -154,7 +134,6 @@ const EditBasicInfo = () => {
           },
           confirmLabel: i18next.t('common:btn_discard'),
           content: i18next.t('common:text_not_saved_changes_warning'),
-          stretchOnWeb: true,
         }),
       );
     } else {
@@ -237,18 +216,16 @@ const EditBasicInfo = () => {
             i18next.t('common:text_not_set')}
         </Button>
         {selectingDate && (
-          <Div
-            testID="edit_basic_info.date_picker"
-            className="react-datepicker-container-important">
+          <View testID="edit_basic_info.date_picker">
             <DateTimePicker
               isVisible={selectingDate}
               date={maxBirthday()}
-              mode={Platform.OS === 'web' ? 'time' : 'date'}
+              mode={'date'}
               onConfirm={onSetBirthday}
               onCancel={onDateEditClose}
               maxDate={maxBirthday()}
             />
-          </Div>
+          </View>
         )}
         <LanguageOptionMenu
           title={'settings:title_choose_languages'}

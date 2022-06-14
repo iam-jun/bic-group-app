@@ -4,7 +4,6 @@ import {
   StyleSheet,
   SectionList,
   ActivityIndicator,
-  Platform,
   Pressable,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
@@ -30,6 +29,10 @@ import Header from '~/beinComponents/Header';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import MemberOptionsMenu from './components/MemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
+import mainStack from '~/router/navigator/MainStack/stack';
+import useAuth from '~/hooks/auth';
+import {formatDMLink} from '~/utils/link';
+import {openLink} from '~/utils/common';
 
 const _GroupMembers = (props: any) => {
   const params = props.route.params;
@@ -50,6 +53,7 @@ const _GroupMembers = (props: any) => {
   const styles = createStyle(theme);
   const {rootNavigation} = useRootNavigation();
   const baseSheetRef: any = useRef();
+  const {user} = useAuth();
 
   const groupMember = useKeySelector(groupsKeySelector.groupMember);
   const {user_count: userCount} = useKeySelector(
@@ -62,11 +66,10 @@ const _GroupMembers = (props: any) => {
     groupsKeySelector.loadingGroupMember,
   );
 
+  const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
+
   const getGroupProfile = () => {
-    // in case for refreshing page on web
-    Platform.OS === 'web' &&
-      groupId &&
-      dispatch(groupsActions.getGroupDetail(groupId));
+    dispatch(groupsActions.getGroupDetail(groupId));
   };
 
   const getMembers = () => {
@@ -134,6 +137,16 @@ const _GroupMembers = (props: any) => {
     baseSheetRef.current?.open(e?.pageX, e?.pageY);
   };
 
+  const goToUserProfile = (id: number) => {
+    rootNavigation.navigate(mainStack.userProfile, {userId: id});
+  };
+
+  const onPressChat = (username?: string) => {
+    if (!username) return;
+    const link = formatDMLink(groupData.team_name, username);
+    openLink(link);
+  };
+
   const onLoadMore = () => {
     getMembers();
   };
@@ -147,7 +160,7 @@ const _GroupMembers = (props: any) => {
   };
 
   const renderItem = ({item}: {item: IGroupMembers}) => {
-    const {fullname, avatar, username} = item || {};
+    const {id, fullname, avatar, username} = item || {};
 
     return (
       <PrimaryItem
@@ -155,6 +168,7 @@ const _GroupMembers = (props: any) => {
         menuIconTestID={'group_members.item'}
         style={styles.itemContainer}
         avatar={avatar || images.img_user_avatar_default}
+        onPress={id ? () => goToUserProfile(id) : undefined}
         ContentComponent={
           <Text.H6 numberOfLines={2}>
             {fullname}
@@ -164,7 +178,25 @@ const _GroupMembers = (props: any) => {
               }>{` @${username}`}</Text.Subtitle>
           </Text.H6>
         }
-        onPressMenu={(e: any) => onPressMenu(e, item)}
+        RightComponent={
+          <>
+            {user.username !== item.username && (
+              <Icon
+                icon={'CommentAltDots'}
+                backgroundColor={colors.bgSecondary}
+                style={styles.iconChat}
+                onPress={() => onPressChat(item.username)}
+              />
+            )}
+            {can_manage_member && (
+              <Icon
+                icon={'EllipsisV'}
+                style={styles.iconOption}
+                onPress={(e: any) => onPressMenu(e, item)}
+              />
+            )}
+          </>
+        }
       />
     );
   };
@@ -230,11 +262,7 @@ const _GroupMembers = (props: any) => {
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.background}>
-      <Header
-        titleTextProps={{useI18n: true}}
-        title={'groups:title_members'}
-        hideBackOnLaptop={rootNavigation?.canGoBack ? false : true}
-      />
+      <Header titleTextProps={{useI18n: true}} title={'groups:title_members'} />
       <View style={styles.searchBar}>
         <Pressable
           testID="group_members.search"
@@ -323,6 +351,17 @@ const createStyle = (theme: ITheme) => {
     },
     loadingMember: {
       marginTop: spacing.margin.large,
+    },
+    iconChat: {
+      height: 36,
+      width: 36,
+      justifyContent: 'center',
+      alignItems: 'center',
+      padding: spacing.padding.small,
+      marginLeft: spacing.margin.tiny,
+    },
+    iconOption: {
+      marginLeft: spacing.margin.small,
     },
   });
 };

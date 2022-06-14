@@ -1,46 +1,71 @@
-import React from 'react';
-import {View, StyleSheet, ScrollView, StyleProp, ViewStyle} from 'react-native';
+import React, {useCallback, useMemo, useState} from 'react';
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  StyleProp,
+  ViewStyle,
+  TouchableOpacity,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
-import ButtonWrapper from './Button/ButtonWrapper';
 import Icon from './Icon';
 import Text from './Text';
 
 export interface FilterProps {
+  filterRef?: React.Ref<ScrollView>;
   testID?: string;
   itemTestID?: string;
   style?: StyleProp<ViewStyle>;
   data?: {id: number; text: string; icon?: string; type: string}[];
   selectedIndex?: number;
   onPress: (item: any, index: number) => void;
+  // onLayout?: (index: number, x: any, width: number) => void;
 }
 
-const Filter = ({
+const FilterComponent: React.FC<FilterProps> = ({
+  filterRef,
   testID,
   style,
   data = [],
-  selectedIndex,
   itemTestID,
   onPress,
-}: FilterProps) => {
+}: // onLayout,
+FilterProps) => {
   const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
+  const styles = useMemo(() => createStyle(theme), [theme, style]);
+
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+
+  const _onPress = useCallback(
+    (item: any, index: number) => {
+      setSelectedIndex(index);
+      onPress?.(item, index);
+    },
+    [onPress],
+  );
 
   const renderReactItem = (item: any, index: number) => {
     const isSelected = index === selectedIndex;
     return (
       <View
         style={styles.itemView}
-        key={`${itemTestID || 'item_filter'}_${item?.text}`}>
-        <ButtonWrapper
-          contentStyle={[
+        key={`${itemTestID || 'item_filter'}_${item?.text}`}
+        // onLayout={event => {
+        //   const {x, width} = event?.nativeEvent?.layout || {};
+        //   onLayout && onLayout(index, x, width);
+        // }}
+      >
+        <TouchableOpacity
+          activeOpacity={0.25}
+          style={[
             styles.itemContainer,
             isSelected ? styles.itemSelectedContainer : {},
           ]}
           testID={`${itemTestID || 'item_filter'}_${item.id}`}
           onPress={() => {
-            onPress(item, index);
+            _onPress(item, index);
           }}>
           {!!item?.icon && (
             <Icon
@@ -55,17 +80,19 @@ const Filter = ({
           <Text variant={isSelected ? 'bodyM' : 'body'} useI18n>
             {item.text}
           </Text>
-        </ButtonWrapper>
+        </TouchableOpacity>
       </View>
     );
   };
+
   return (
     <View testID={testID || 'filter'} style={[styles.container, style]}>
       <ScrollView
+        ref={filterRef}
         horizontal
         style={{backgroundColor: theme.colors.background}}
         showsHorizontalScrollIndicator={false}
-        alwaysBounceHorizontal={false}>
+        alwaysBounceHorizontal>
         {data?.map?.(renderReactItem)}
       </ScrollView>
     </View>
@@ -107,4 +134,12 @@ const createStyle = (theme: ITheme) => {
   });
 };
 
+const _Filter = React.forwardRef(
+  (props: FilterProps, ref?: React.Ref<ScrollView>) => (
+    <FilterComponent filterRef={ref} {...props} />
+  ),
+);
+
+const Filter = React.memo(_Filter);
+Filter.whyDidYouRender = true;
 export default Filter;

@@ -1,7 +1,6 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 import {
-  IActivityData,
   IParamDeleteReaction,
   ICommentData,
   IParamGetDraftPosts,
@@ -15,9 +14,7 @@ import {
   IRequestGetPostComment,
   IRequestPostComment,
   IRequestReplyComment,
-  IPostCreateMediaVideo,
 } from '~/interfaces/IPost';
-import {Platform} from 'react-native';
 
 const provider = ApiConfig.providers.beinFeed;
 
@@ -27,7 +24,7 @@ export const postApiConfig = {
   getPostDetail: (params: IParamGetPostDetail): HttpApiRequestConfig => {
     const {postId, ...restParams} = params;
     return {
-      url: `${provider.url}api/v1/posts/${postId}`,
+      url: `${provider.url}posts/${postId}`,
       method: 'get',
       provider,
       useRetry: true,
@@ -36,7 +33,7 @@ export const postApiConfig = {
   },
   getDraftPosts: (params: IParamGetDraftPosts): HttpApiRequestConfig => {
     return {
-      url: `${provider.url}api/v1/posts/draft`,
+      url: `${provider.url}posts/draft`,
       method: 'get',
       provider,
       useRetry: true,
@@ -47,16 +44,7 @@ export const postApiConfig = {
     };
   },
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
-    url: `${provider.url}api/v1/posts`,
-    method: 'post',
-    provider,
-    useRetry: true,
-    data,
-  }),
-  postCreateMediaVideo: (
-    data: IPostCreateMediaVideo,
-  ): HttpApiRequestConfig => ({
-    url: `${provider.url}api/v1/media/create`,
+    url: `${provider.url}posts`,
     method: 'post',
     provider,
     useRetry: true,
@@ -64,17 +52,19 @@ export const postApiConfig = {
   }),
   putReaction: (params: IParamPutReaction): HttpApiRequestConfig => {
     return {
-      url: `${provider.url}api/v1/reactions`,
+      url: `${provider.url}reactions`,
       method: 'post',
       provider,
       useRetry: true,
-      data: params,
+      data: {
+        ...params,
+      },
     };
   },
   putEditPost: (param: IParamPutEditPost): HttpApiRequestConfig => {
     const {postId, data} = param || {};
     return {
-      url: `${provider.url}api/v1/posts/${postId}`,
+      url: `${provider.url}posts/${postId}`,
       method: 'put',
       provider,
       useRetry: true,
@@ -82,21 +72,21 @@ export const postApiConfig = {
     };
   },
   putEditComment: (id: string, data: ICommentData): HttpApiRequestConfig => ({
-    url: `${provider.url}api/v1/comments/${id}`,
+    url: `${provider.url}comments/${id}`,
     method: 'put',
     provider,
     useRetry: true,
     data,
   }),
   deletePost: (id: string, isDraftPost?: boolean): HttpApiRequestConfig => ({
-    url: `${provider.url}api/v1/posts/${id}`,
+    url: `${provider.url}posts/${id}`,
     method: 'delete',
     provider,
     useRetry: true,
     ...(isDraftPost ? {params: {is_draft: true}} : {}),
   }),
   deleteComment: (id: number): HttpApiRequestConfig => ({
-    url: `${provider.url}api/v1/comments/${id}`,
+    url: `${provider.url}comments/${id}`,
     method: 'delete',
     provider,
     useRetry: true,
@@ -116,7 +106,7 @@ export const postApiConfig = {
   getCommentsByPostId: (
     params: IRequestGetPostComment,
   ): HttpApiRequestConfig => ({
-    url: `${provider.url}api/v1/comments`,
+    url: `${provider.url}comments`,
     method: 'get',
     provider,
     useRetry: true,
@@ -124,17 +114,17 @@ export const postApiConfig = {
       order: params?.order || 'ASC',
       limit: params?.limit || 10,
       offset: params?.offset || 0,
-      idGTE: params?.idGTE,
-      idLTE: params?.idLTE,
-      idLT: params?.idLT,
-      idGT: params?.idGT,
+      idGte: params?.idGte,
+      idLte: params?.idLte,
+      idLt: params?.idLt,
+      idGt: params?.idGt,
       postId: params?.postId,
       parentId: params?.parentId,
       childLimit: params?.childLimit || 1,
     },
   }),
   postNewComment: (params: IRequestPostComment): HttpApiRequestConfig => ({
-    url: `${provider.url}api/v1/comments`,
+    url: `${provider.url}comments`,
     method: 'post',
     provider,
     useRetry: true,
@@ -149,7 +139,7 @@ export const postApiConfig = {
   postReplyComment: (params: IRequestReplyComment): HttpApiRequestConfig => {
     const {postId, parentCommentId, data} = params;
     return {
-      url: `${provider.url}api/v1/comments/${parentCommentId}/reply`,
+      url: `${provider.url}comments/${parentCommentId}/reply`,
       method: 'post',
       provider,
       useRetry: true,
@@ -160,7 +150,7 @@ export const postApiConfig = {
     };
   },
   putMarkAsRead: (postId: number): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}api/v1/posts/${postId}/mark-as-read`,
+    url: `${ApiConfig.providers.beinFeed.url}posts/${postId}/mark-as-read`,
     method: 'put',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
@@ -197,16 +187,19 @@ export const postApiConfig = {
     },
   }),
   deleteReaction: (data: IParamDeleteReaction): HttpApiRequestConfig => ({
-    url: `${provider.url}api/v1/reactions`,
+    url: `${provider.url}reactions`,
     method: 'delete',
     provider,
     useRetry: true,
-    data: data,
+    data: {
+      ...data,
+      reactionName: data?.reactionName,
+    },
   }),
   getReactionDetail: (
     param: IParamGetReactionDetail,
   ): HttpApiRequestConfig => ({
-    url: `${provider.url}api/v1/reactions`,
+    url: `${provider.url}reactions`,
     method: 'get',
     provider: provider,
     useRetry: true,
@@ -220,7 +213,7 @@ export const postApiConfig = {
     },
   }),
   postPublishDraftPost: (draftPostId: string): HttpApiRequestConfig => ({
-    url: `${provider.url}api/v1/posts/${draftPostId}/publish`,
+    url: `${provider.url}posts/${draftPostId}/publish`,
     method: 'put',
     provider: provider,
     useRetry: true,
@@ -229,7 +222,7 @@ export const postApiConfig = {
     commentId: number,
     params: IRequestGetPostComment,
   ): HttpApiRequestConfig => ({
-    url: `${provider.url}api/v1/comments/${commentId}`,
+    url: `${provider.url}comments/${commentId}`,
     method: 'get',
     provider,
     useRetry: true,
@@ -248,20 +241,6 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  postCreateMediaVideo: async (data: IPostCreateMediaVideo) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.postCreateMediaVideo(data),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response);
       } else {
         return Promise.reject(response);
       }
@@ -297,7 +276,7 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  putEditComment: async (id: string, data: IActivityData) => {
+  putEditComment: async (id: string, data: ICommentData) => {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.putEditComment(id, data),
@@ -464,7 +443,8 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.getPostDetail({
-          commentLimit: Platform.OS === 'web' ? 5 : 10,
+          commentLimit: 10,
+          withComment: true,
           ...params,
         }),
       );

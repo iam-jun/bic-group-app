@@ -35,6 +35,7 @@ const groupsKeySelector = {
   communityMembers: 'groups.communityMembers',
   communitySearchMembers: 'groups.communitySearchMembers',
   discoverGroups: 'groups.discoverGroups',
+  communityMemberRequests: 'groups.communityMemberRequests',
 };
 
 export default groupsKeySelector;

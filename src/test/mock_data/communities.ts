@@ -97,7 +97,7 @@ export const memberData = {
     user_count: 5,
     name: 'COMMUNITY_ADMIN',
   },
-  member: {
+  community_member: {
     data: [
       memberDetail,
       memberDetail,
@@ -108,5 +108,27 @@ export const memberData = {
     ],
     user_count: 6,
     name: 'MEMBER',
+  },
+};
+
+export const memberRequestDetail = {
+  id: 26,
+  user_id: 16,
+  created_at: '2022-05-21T08:09:22.320Z',
+  updated_at: '2022-06-06T08:12:53.483Z',
+  group_id: 2,
+  status: 'waiting',
+  user: {
+    id: 16,
+    username: 'usernametest',
+    fullname: 'User Name Test',
+    avatar:
+      'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/949ad541-c16f-4974-a83c-db04f3a393c9.jpg',
+    country: 'Việt Nam',
+    city: 'Hồ Chí Minh',
+    email: 'usernametest@mail.com',
+    phone: null,
+    country_code: null,
+    latest_work: null,
   },
 };

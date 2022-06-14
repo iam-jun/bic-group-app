@@ -1,7 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import Video from 'react-native-video';
 // @ts-ignore
 import {default as RNVideoControls} from 'react-native-video-controls';
 
@@ -17,7 +16,6 @@ const PLAYER_HEIGHT = scaleSize(232);
 
 const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
   const {url} = data || {};
@@ -27,8 +25,8 @@ const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
   }
 
   return (
-    <View style={styles.container}>
-      <RNVideoControls paused source={{uri: url}} />
+    <View style={[styles.container, style]}>
+      <RNVideoControls style={styles.player} source={{uri: url}} paused />
     </View>
   );
 };

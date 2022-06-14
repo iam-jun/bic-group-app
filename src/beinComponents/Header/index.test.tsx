@@ -157,7 +157,7 @@ describe('Header component', () => {
   });
 
   it(`renders correctly with props left icon`, () => {
-    const rendered = render(<Header leftIcon="UilBug" />);
+    const rendered = render(<Header leftIcon="Bug" />);
     expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.leftIcon');
     expect(leftIconComponent).toBeDefined();
@@ -165,26 +165,26 @@ describe('Header component', () => {
 
   it(`renders correctly with props left icon props`, () => {
     const rendered = render(
-      <Header leftIcon="UilBug" leftIconProps={{tintColor: '#421187'}} />,
+      <Header leftIcon="Bug" leftIconProps={{tintColor: '#421187'}} />,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.leftIcon');
     expect(leftIconComponent).toBeDefined();
-    expect(leftIconComponent.findByType('RNSVGSvgView').props.fill).toBe(
+    expect(leftIconComponent.findByType('RNSVGSvgView' as any).props.fill).toBe(
       '#421187',
     );
   });
 
   it(`renders correctly with props icon`, () => {
     const onPressIcon = jest.fn();
-    const rendered = render(<Header icon="UilBug" onPressIcon={onPressIcon} />);
+    const rendered = render(<Header icon="Bug" onPressIcon={onPressIcon} />);
     expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.icon');
     expect(leftIconComponent).toBeDefined();
   });
 
   it(`renders correctly with props right icon`, () => {
-    const rendered = render(<Header rightIcon="UilBug" />);
+    const rendered = render(<Header rightIcon="Bug" />);
     expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.rightIcon');
     expect(leftIconComponent).toBeDefined();
@@ -192,19 +192,19 @@ describe('Header component', () => {
 
   it(`renders correctly with props right icon props`, () => {
     const rendered = render(
-      <Header rightIcon="UilBug" rightIconProps={{tintColor: '#421187'}} />,
+      <Header rightIcon="Bug" rightIconProps={{tintColor: '#421187'}} />,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.rightIcon');
     expect(leftIconComponent).toBeDefined();
-    expect(leftIconComponent.findByType('RNSVGSvgView').props.fill).toBe(
+    expect(leftIconComponent.findByType('RNSVGSvgView' as any).props.fill).toBe(
       '#421187',
     );
   });
 
   it(`renders correctly with props on press icon`, () => {
     const onPressIcon = jest.fn();
-    const rendered = render(<Header icon="UilBug" onPressIcon={onPressIcon} />);
+    const rendered = render(<Header icon="Bug" onPressIcon={onPressIcon} />);
     expect(rendered.toJSON()).toMatchSnapshot();
     const iconComponent = rendered.getByTestId('header.icon');
     expect(iconComponent).toBeDefined();
@@ -271,7 +271,7 @@ describe('Header component', () => {
   it(`renders correctly with props menu icon`, () => {
     const onPressMenu = jest.fn();
     const rendered = render(
-      <Header menuIcon="UilBars" onPressMenu={onPressMenu} />,
+      <Header menuIcon="Bars" onPressMenu={onPressMenu} />,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.menuIcon');
@@ -281,7 +281,7 @@ describe('Header component', () => {
   it(`renders correctly with props on press menu`, () => {
     const onPressMenu = jest.fn();
     const rendered = render(
-      <Header menuIcon="UilBars" onPressMenu={onPressMenu} />,
+      <Header menuIcon="Bars" onPressMenu={onPressMenu} />,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     const leftIconComponent = rendered.getByTestId('header.menuIcon');

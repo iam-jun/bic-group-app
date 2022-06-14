@@ -1,11 +1,10 @@
-import React, {useRef, useEffect} from 'react';
-import {Platform, Modal, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useEffect, useRef} from 'react';
+import {Modal, StyleSheet, TouchableOpacity} from 'react-native';
 import {useDispatch} from 'react-redux';
-
 import BottomSheet from '~/beinComponents/BottomSheet';
 import {useKeySelector} from '~/hooks/selector';
-import modalKeySelector from '~/store/modal/keySelector';
 import modalActions from '~/store/modal/actions';
+import modalKeySelector from '~/store/modal/keySelector';
 
 const CommonModal = () => {
   const modalizeRef = useRef<any>();
@@ -32,7 +31,7 @@ const CommonModal = () => {
     closeOutSide && dispatch(modalActions.hideModal());
   };
 
-  if (Platform.OS !== 'web' && !useAppBottomSheet) {
+  if (!useAppBottomSheet) {
     return (
       <Modal
         visible={isOpen}

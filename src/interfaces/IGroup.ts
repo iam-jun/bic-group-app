@@ -65,10 +65,10 @@ export interface IParamGetGroupPosts {
   order?: 'ASC' | 'DESC';
   limit?: number;
   offset?: number;
-  idGTE?: number;
-  idLTE?: number;
-  idGT?: number;
-  idLT?: number;
+  idGte?: number;
+  idLte?: number;
+  idGt?: number;
+  idLt?: number;
   ranking?: 'IMPORTANT' | string;
 }
 
@@ -131,14 +131,10 @@ export interface IGroupMembers {
   username?: string;
   fullname?: string;
   avatar?: string;
-  roles_ids?: number[];
-  roles?: IGroupMemberRole[];
-}
-
-export interface IGroupMemberRole {
-  id: number;
-  name: 'Admin' | 'Member';
-  type: 'GROUP_ADMIN' | 'MEMBER';
+  chat_user_id?: string;
+  is_admin?: boolean;
+  custom_role_ids?: any[];
+  roles?: any[];
 }
 
 export interface IJoiningMember {
@@ -146,7 +142,28 @@ export interface IJoiningMember {
   user_id: number;
   group_id: number;
   created_at: string;
-  user: IObject<any>;
+  updated_at: string;
+  user: IJoiningUserInfo;
+}
+
+export interface IJoiningUserInfo {
+  id: number;
+  username: string;
+  fullname: string;
+  email: string;
+  avatar: string | null;
+  country: string | null;
+  city: string | null;
+  phone: string | null;
+  country_code: string | null;
+  latest_work: {
+    id: number;
+    user_id: number;
+    currently_work_here: boolean;
+    end_date: string | null;
+    company: string | null;
+    title_position: string | null;
+  } | null;
 }
 
 export interface IGetYourGroupsSearch {

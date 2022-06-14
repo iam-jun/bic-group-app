@@ -3,7 +3,6 @@ import axios, {AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
 import i18n from 'i18next';
 import _ from 'lodash';
 import moment from 'moment';
-import {Platform} from 'react-native';
 import DeviceInfo from 'react-native-device-info';
 import {put} from 'redux-saga/effects';
 
@@ -16,8 +15,9 @@ import * as modalActions from '~/store/modal/actions';
 import noInternetActions from '~/screens/NoInternet/redux/actions';
 import {ActionTypes, createAction} from '~/utils';
 import {updateUserFromSharedPreferences} from './sharePreferences';
-import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
+import {ConvertHelper} from '~/utils/convertHelper';
+import ApiConfig from '~/configs/apiConfig';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -26,14 +26,6 @@ const commonHeaders = {
 };
 
 const _dispatchLogout = async () => {
-  /**
-   * Need calling this API before sign out to remove cookies
-   * And not putting it in saga as it needs field Authorization, which is extract from store.
-   * If we call it in saga, it will be null, and we cannot call API.
-   */
-  if (Platform.OS === 'web') {
-    await menuDataHelper.logout();
-  }
   Store.store.dispatch(createAction(ActionTypes.UnauthorizedLogout));
 };
 
@@ -100,47 +92,12 @@ const handleSystemIssue = () => {
   Store.store.dispatch(noInternetActions.showSystemIssueThenLogout());
 };
 
-const logInterceptorsRequestSuccess = (config: AxiosRequestConfig) => {
-  console.log(
-    '%c ================ REQUEST ================',
-    'background: #ffff00; color: #000',
-    config.url,
-    config.method?.toUpperCase(),
-    config,
-  );
-  return config;
-};
-
-const logInterceptorsResponseSuccess = (response: AxiosResponse) => {
-  console.log(
-    '%c ================ RESPONSE SUCCESS ================',
-    'background: #66ff33; color: #000',
-    response.config.url,
-    response.config.method?.toUpperCase(),
-    response,
-  );
-};
-
-const logInterceptorsResponseError = (error: AxiosError) => {
-  console.log(
-    '%c ================ RESPONSE ERROR ================',
-    'background: red; color: #fff',
-    error.config.url,
-    error.config.method?.toUpperCase(),
-    error,
-  );
-};
-
 const getBeinIdToken = (): string => {
   return _.get(
     Store.getCurrentUser(),
     'signInUserSession.idToken.jwtToken',
     '',
   );
-};
-
-const getFeedAccessToken = (): string => {
-  return _.get(Store.getCurrentAuth(), 'feed.accessToken', '');
 };
 
 // retryHandler
@@ -310,18 +267,85 @@ const mapResponseSuccessBein = (
   };
 };
 
-const interceptorsRequestSuccess = (requestConfig: AxiosRequestConfig) => {
-  // logInterceptorsRequestSuccess(requestConfig);
-  return requestConfig;
+const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
+  switch (endPoint) {
+    case `${ApiConfig.providers.bein.url}permissions/categories`:
+      return true;
+  }
+  return false;
+};
+
+const interceptorsRequestSuccess = (config: AxiosRequestConfig) => {
+  const newConfig = {...config};
+
+  // apply rule snake camel for each bein group's api
+  // we will remove this check after all apis is updated
+  if (shouldApplyAutoSnakeCamel(config?.url)) {
+    // update data of upload file request will lead to some unknown error
+    if (newConfig.headers?.['Content-Type']?.includes('multipart/form-data')) {
+      return newConfig;
+    }
+
+    if (config.params) {
+      newConfig.params = ConvertHelper.decamelizeKeys(config.params);
+    }
+    if (config.data) {
+      newConfig.data = ConvertHelper.decamelizeKeys(config.data);
+    }
+
+    return newConfig;
+  }
+
+  return newConfig;
+};
+
+const interceptorsRequestSnakeSuccess = (config: AxiosRequestConfig) => {
+  const newConfig = {...config};
+
+  // update data of upload file request will lead to some unknown error
+  if (newConfig.headers?.['Content-Type']?.includes('multipart/form-data')) {
+    return newConfig;
+  }
+
+  if (config.params) {
+    newConfig.params = ConvertHelper.decamelizeKeys(config.params);
+  }
+  if (config.data) {
+    newConfig.data = ConvertHelper.decamelizeKeys(config.data);
+  }
+  return newConfig;
+};
+
+const interceptorsResponseCamelSuccess = (response: AxiosResponse) => {
+  if (
+    response.data &&
+    response.headers?.['content-type']?.includes?.('application/json')
+  ) {
+    response.data = ConvertHelper.camelizeKeys(response.data, {
+      exclude: ['reactions_count'],
+    });
+  }
+  return response;
 };
 
 const interceptorsResponseSuccess = (response: AxiosResponse) => {
-  // logInterceptorsResponseSuccess(response);
+  // apply rule snake camel for each bein group's api
+  // we will remove this check after all apis is updated
+  if (shouldApplyAutoSnakeCamel(response?.config?.url)) {
+    if (
+      response.data &&
+      response.headers?.['content-type']?.includes?.('application/json')
+    ) {
+      response.data = ConvertHelper.camelizeKeys(response.data, {
+        exclude: ['reactions_count'],
+      });
+    }
+    return response;
+  }
   return response;
 };
 
 const interceptorsResponseError = async (error: AxiosError) => {
-  // logInterceptorsResponseError(error);
   return handleResponseError(error);
 };
 
@@ -367,29 +391,27 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
     Authorization: getBeinIdToken(),
   };
 
+  const beinHeaders = {
+    ...commonHeaders,
+    ...requestConfig.headers,
+    ...tokenHeaders,
+  };
+
   switch (requestConfig.provider.name) {
     case apiConfig.providers.bein.name:
       interceptorRequestSuccess = interceptorsRequestSuccess;
       interceptorResponseSuccess = interceptorsResponseSuccess;
       interceptorResponseError = interceptorsResponseError;
-      requestConfig.headers = {
-        ...commonHeaders,
-        ...requestConfig.headers,
-        ...tokenHeaders,
-      };
+      requestConfig.headers = beinHeaders;
       requestConfig.withCredentials = true;
       break;
     case apiConfig.providers.beinFeed.name:
     case apiConfig.providers.beinNotification.name:
     case apiConfig.providers.beinUpload.name:
-      interceptorRequestSuccess = interceptorsRequestSuccess;
-      interceptorResponseSuccess = interceptorsResponseSuccess;
+      interceptorRequestSuccess = interceptorsRequestSnakeSuccess;
+      interceptorResponseSuccess = interceptorsResponseCamelSuccess;
       interceptorResponseError = interceptorsResponseError;
-      requestConfig.headers = {
-        ...commonHeaders,
-        ...requestConfig.headers,
-        ...tokenHeaders,
-      };
+      requestConfig.headers = beinHeaders;
       break;
     default:
       return Promise.resolve(false);

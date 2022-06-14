@@ -24,7 +24,6 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
     >
       <View
         collapsable={false}
-        nativeID="animatedComponent"
         style={
           Object {
             "bottom": 0,
@@ -133,7 +132,6 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
           >
             <View
               collapsable={false}
-              nativeID="animatedComponent"
               style={
                 Object {
                   "bottom": 0,
@@ -242,7 +240,6 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
                   "top": 10,
                 }
               }
-              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -282,9 +279,7 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
                     ]
                   }
                 >
-                  <View
-                    className="icon-wrapper"
-                  >
+                  <View>
                     <View
                       onLayout={[Function]}
                       style={
@@ -296,7 +291,6 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
                     >
                       <View
                         collapsable={false}
-                        nativeID="animatedComponent"
                         style={
                           Object {
                             "bottom": 0,
@@ -485,7 +479,6 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
                 "top": 10,
               }
             }
-            nativeID="animatedComponent"
             onClick={[Function]}
             onResponderGrant={[Function]}
             onResponderMove={[Function]}
@@ -525,14 +518,13 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
                 }
               >
                 <View
-                  className="icon-wrapper"
                   testID="button_wrapper.icon"
                 >
                   <RNSVGSvgView
                     align="xMidYMid"
                     bbHeight={20}
                     bbWidth={20}
-                    fill="#FFFFFF"
+                    color={4294967295}
                     focusable={false}
                     height={20}
                     meetOrSlice={0}
@@ -552,20 +544,24 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
                         },
                       ]
                     }
+                    tintColor={4294967295}
                     vbHeight={24}
                     vbWidth={24}
                     width={20}
                   >
-                    <RNSVGGroup
-                      fill={4294967295}
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    >
+                    <RNSVGGroup>
                       <RNSVGPath
-                        d="M19,11H13V5a1,1,0,0,0-2,0v6H5a1,1,0,0,0,0,2h6v6a1,1,0,0,0,2,0V13h6a1,1,0,0,0,0-2Z"
+                        d="M19 11h-6V5a1 1 0 00-2 0v6H5a1 1 0 000 2h6v6a1 1 0 002 0v-6h6a1 1 0 000-2z"
+                        fill={
+                          Array [
+                            2,
+                          ]
+                        }
+                        propList={
+                          Array [
+                            "fill",
+                          ]
+                        }
                       />
                     </RNSVGGroup>
                   </RNSVGSvgView>

@@ -12,7 +12,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
   <View
     style={
       Object {
-        "marginBottom": 32,
+        "marginBottom": 12,
       }
     }
   >
@@ -22,14 +22,14 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
           Object {
             "color": "#2F3945",
             "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 14,
+            "fontSize": 16,
           },
           Object {},
           undefined,
         ]
       }
     >
-      Confirm Code
+      We sent a code to your email
     </Text>
     <Text
       style={
@@ -37,16 +37,17 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
           Object {
             "color": "#2F3945",
             "fontFamily": "OpenSans-Regular",
-            "fontSize": 16,
+            "fontSize": 14,
           },
           Object {},
           Object {
             "marginBottom": 12,
+            "marginTop": 4,
           },
         ]
       }
     >
-      Confirm the code & new password
+      Enter the 6-digit verification code sent to . If you don’t see the email in your inbox, please check your spam folder
     </Text>
     <View
       style={
@@ -64,16 +65,14 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         allowFontScaling={true}
         blurOnSubmit={true}
         dense={true}
-        editable={true}
         focusable={true}
         forwardedRef={null}
-        helperContentTriggerAction="Wrong Code Input? "
         keyboardType="numeric"
-        label="Code"
         mode="outlined"
         mostRecentEventCount={0}
         onBlur={[Function]}
         onChange={[Function]}
+        onChangeSync={null}
         onChangeText={[Function]}
         onClick={[Function]}
         onFocus={[Function]}
@@ -87,12 +86,17 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         onSelectionChangeShouldSetResponder={[Function]}
         onStartShouldSetResponder={[Function]}
         outlineColor="#2F3945"
-        placeholder="Code"
+        placeholder="6-digit code"
         placeholderTextColor="#627286"
         rejectResponderTermination={true}
         selection={null}
         selectionColor="#627286"
-        style={Object {}}
+        style={
+          Array [
+            Object {},
+            undefined,
+          ]
+        }
         testID="inputCode"
         text=""
         theme={
@@ -115,11 +119,46 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         value=""
       />
     </View>
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 14,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+    >
+      Haven’t received code yet,
+       
+      <Text
+        onPress={[Function]}
+        style={
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 14,
+            },
+            Object {},
+            Object {
+              "color": "#627286",
+            },
+          ]
+        }
+        suppressHighlighting={true}
+      >
+        Resend code
+      </Text>
+    </Text>
   </View>
   <View
     style={
       Object {
-        "marginBottom": 32,
+        "marginBottom": 12,
       }
     }
   >
@@ -129,31 +168,16 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
           Object {
             "color": "#2F3945",
             "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 14,
-          },
-          Object {},
-          undefined,
-        ]
-      }
-    >
-      New password
-    </Text>
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
             "fontSize": 16,
           },
           Object {},
           Object {
-            "marginBottom": 12,
+            "marginBottom": 8,
           },
         ]
       }
     >
-      Create your new password
+      Choose new password
     </Text>
     <View
       style={
@@ -172,15 +196,14 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         autoCapitalize="none"
         blurOnSubmit={true}
         dense={true}
-        disabled={true}
         editable={true}
         focusable={true}
         forwardedRef={null}
-        label="New password"
         mode="outlined"
         mostRecentEventCount={0}
         onBlur={[Function]}
         onChange={[Function]}
+        onChangeSync={null}
         onChangeText={[Function]}
         onClick={[Function]}
         onFocus={[Function]}
@@ -206,13 +229,19 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         secureTextEntry={true}
         selection={null}
         selectionColor="#627286"
-        style={Object {}}
+        style={
+          Array [
+            Object {},
+            undefined,
+          ]
+        }
         testID="inputNewPassword"
         text=""
+        textContentType="oneTimeCode"
         theme={
           Object {
             "colors": Object {
-              "background": "#D5DCE5",
+              "background": "#FFFFFF",
               "placeholder": "#627286",
               "primary": "#B2BDCD",
               "text": "#2F3945",
@@ -246,15 +275,14 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         autoCapitalize="none"
         blurOnSubmit={true}
         dense={true}
-        disabled={true}
         editable={true}
         focusable={true}
         forwardedRef={null}
-        label="Confirm new password"
         mode="outlined"
         mostRecentEventCount={0}
         onBlur={[Function]}
         onChange={[Function]}
+        onChangeSync={null}
         onChangeText={[Function]}
         onClick={[Function]}
         onFocus={[Function]}
@@ -280,13 +308,19 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         secureTextEntry={true}
         selection={null}
         selectionColor="#627286"
-        style={Object {}}
+        style={
+          Array [
+            Object {},
+            undefined,
+          ]
+        }
         testID="inputConfirmPassword"
         text=""
+        textContentType="oneTimeCode"
         theme={
           Object {
             "colors": Object {
-              "background": "#D5DCE5",
+              "background": "#FFFFFF",
               "placeholder": "#627286",
               "primary": "#B2BDCD",
               "text": "#2F3945",
@@ -324,7 +358,6 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         "alignItems": "center",
         "backgroundColor": "#D5DCE5",
         "borderRadius": 6,
-        "marginTop": 24,
         "paddingHorizontal": 12,
         "paddingVertical": 8,
       }
@@ -358,7 +391,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
           ]
         }
       >
-        Confirm new password
+        Submit
       </Text>
     </View>
   </View>

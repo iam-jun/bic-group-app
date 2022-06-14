@@ -13,7 +13,6 @@ exports[`Button Wrapper component render correctly TouchableComponent 1`] = `
   <View
     accessible={true}
     collapsable={false}
-    nativeID="animatedComponent"
     style={Object {}}
   >
     <View
@@ -43,7 +42,6 @@ exports[`Button Wrapper component render correctly hitSlop 1`] = `
       "top": 10,
     }
   }
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -76,7 +74,6 @@ exports[`Button Wrapper component renders correctly 1`] = `
   accessible={true}
   collapsable={false}
   focusable={false}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -113,7 +110,6 @@ exports[`Button Wrapper component renders correctly button disable 1`] = `
   accessible={true}
   collapsable={false}
   focusable={false}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -146,7 +142,6 @@ exports[`Button Wrapper component renders correctly children 1`] = `
   accessible={true}
   collapsable={false}
   focusable={false}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -187,7 +182,6 @@ exports[`Button Wrapper component renders correctly children 1`] = `
           "top": 10,
         }
       }
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -225,14 +219,13 @@ exports[`Button Wrapper component renders correctly children 1`] = `
           }
         >
           <View
-            className="icon-wrapper"
             testID="button_wrapper.children"
           >
             <RNSVGSvgView
               align="xMidYMid"
               bbHeight={20}
               bbWidth={20}
-              fill="#2F3945"
+              color={4281284933}
               focusable={false}
               height={20}
               meetOrSlice={0}
@@ -252,20 +245,24 @@ exports[`Button Wrapper component renders correctly children 1`] = `
                   },
                 ]
               }
+              tintColor={4281284933}
               vbHeight={24}
               vbWidth={24}
               width={20}
             >
-              <RNSVGGroup
-                fill={4281284933}
-                propList={
-                  Array [
-                    "fill",
-                  ]
-                }
-              >
+              <RNSVGGroup>
                 <RNSVGPath
-                  d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"
+                  d="M12 10a2 2 0 102 2 2 2 0 00-2-2zm-7 0a2 2 0 102 2 2 2 0 00-2-2zm14 0a2 2 0 102 2 2 2 0 00-2-2z"
+                  fill={
+                    Array [
+                      2,
+                    ]
+                  }
+                  propList={
+                    Array [
+                      "fill",
+                    ]
+                  }
                 />
               </RNSVGGroup>
             </RNSVGSvgView>
@@ -282,7 +279,6 @@ exports[`Button Wrapper component renders correctly children with useI18n 1`] = 
   accessible={true}
   collapsable={false}
   focusable={false}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -330,7 +326,6 @@ exports[`Button Wrapper component renders correctly contentStyle 1`] = `
   accessible={true}
   collapsable={false}
   focusable={false}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -363,7 +358,6 @@ exports[`Button Wrapper component renders correctly style 1`] = `
   accessible={true}
   collapsable={false}
   focusable={false}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -397,7 +391,6 @@ exports[`Button Wrapper component renders correctly testID 1`] = `
   accessible={true}
   collapsable={false}
   focusable={false}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -430,7 +423,6 @@ exports[`Button Wrapper component should render leftIcon 1`] = `
   accessible={true}
   collapsable={false}
   focusable={false}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -471,7 +463,6 @@ exports[`Button Wrapper component should render leftIcon 1`] = `
           "top": 10,
         }
       }
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -511,14 +502,14 @@ exports[`Button Wrapper component should render leftIcon 1`] = `
           }
         >
           <View
-            className="icon-wrapper"
             testID="button_wrapper.icon"
           >
             <RNSVGSvgView
               align="xMidYMid"
               bbHeight={20}
               bbWidth={20}
-              fill="#2F3945"
+              color={4281284933}
+              data-name="Layer 1"
               focusable={false}
               height={20}
               meetOrSlice={0}
@@ -538,20 +529,24 @@ exports[`Button Wrapper component should render leftIcon 1`] = `
                   },
                 ]
               }
+              tintColor={4281284933}
               vbHeight={24}
               vbWidth={24}
               width={20}
             >
-              <RNSVGGroup
-                fill={4281284933}
-                propList={
-                  Array [
-                    "fill",
-                  ]
-                }
-              >
+              <RNSVGGroup>
                 <RNSVGPath
-                  d="M12,19a1,1,0,1,0-1-1A1,1,0,0,0,12,19Zm5,0a1,1,0,1,0-1-1A1,1,0,0,0,17,19Zm0-4a1,1,0,1,0-1-1A1,1,0,0,0,17,15Zm-5,0a1,1,0,1,0-1-1A1,1,0,0,0,12,15ZM19,3H18V2a1,1,0,0,0-2,0V3H8V2A1,1,0,0,0,6,2V3H5A3,3,0,0,0,2,6V20a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V6A3,3,0,0,0,19,3Zm1,17a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V11H20ZM20,9H4V6A1,1,0,0,1,5,5H6V6A1,1,0,0,0,8,6V5h8V6a1,1,0,0,0,2,0V5h1a1,1,0,0,1,1,1ZM7,15a1,1,0,1,0-1-1A1,1,0,0,0,7,15Zm0,4a1,1,0,1,0-1-1A1,1,0,0,0,7,19Z"
+                  d="M12 19a1 1 0 10-1-1 1 1 0 001 1zm5 0a1 1 0 10-1-1 1 1 0 001 1zm0-4a1 1 0 10-1-1 1 1 0 001 1zm-5 0a1 1 0 10-1-1 1 1 0 001 1zm7-12h-1V2a1 1 0 00-2 0v1H8V2a1 1 0 00-2 0v1H5a3 3 0 00-3 3v14a3 3 0 003 3h14a3 3 0 003-3V6a3 3 0 00-3-3zm1 17a1 1 0 01-1 1H5a1 1 0 01-1-1v-9h16zm0-11H4V6a1 1 0 011-1h1v1a1 1 0 002 0V5h8v1a1 1 0 002 0V5h1a1 1 0 011 1zM7 15a1 1 0 10-1-1 1 1 0 001 1zm0 4a1 1 0 10-1-1 1 1 0 001 1z"
+                  fill={
+                    Array [
+                      2,
+                    ]
+                  }
+                  propList={
+                    Array [
+                      "fill",
+                    ]
+                  }
                 />
               </RNSVGGroup>
             </RNSVGSvgView>
@@ -568,7 +563,6 @@ exports[`Button Wrapper component should render leftIcon with leftIconProps 1`] 
   accessible={true}
   collapsable={false}
   focusable={false}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -609,7 +603,6 @@ exports[`Button Wrapper component should render leftIcon with leftIconProps 1`] 
           "top": 10,
         }
       }
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -649,14 +642,13 @@ exports[`Button Wrapper component should render leftIcon with leftIconProps 1`] 
           }
         >
           <View
-            className="icon-wrapper"
             testID="LEFT_ICON"
           >
             <RNSVGSvgView
               align="xMidYMid"
               bbHeight={20}
               bbWidth={20}
-              fill="#2F3945"
+              color={4281284933}
               focusable={false}
               height={20}
               meetOrSlice={0}
@@ -676,20 +668,24 @@ exports[`Button Wrapper component should render leftIcon with leftIconProps 1`] 
                   },
                 ]
               }
+              tintColor={4281284933}
               vbHeight={24}
               vbWidth={24}
               width={20}
             >
-              <RNSVGGroup
-                fill={4281284933}
-                propList={
-                  Array [
-                    "fill",
-                  ]
-                }
-              >
+              <RNSVGGroup>
                 <RNSVGPath
-                  d="M15.54,11.29,9.88,5.64a1,1,0,0,0-1.42,0,1,1,0,0,0,0,1.41l4.95,5L8.46,17a1,1,0,0,0,0,1.41,1,1,0,0,0,.71.3,1,1,0,0,0,.71-.3l5.66-5.65A1,1,0,0,0,15.54,11.29Z"
+                  d="M15.54 11.29L9.88 5.64a1 1 0 00-1.42 0 1 1 0 000 1.41l4.95 5L8.46 17a1 1 0 000 1.41 1 1 0 00.71.3 1 1 0 00.71-.3l5.66-5.65a1 1 0 000-1.47z"
+                  fill={
+                    Array [
+                      2,
+                    ]
+                  }
+                  propList={
+                    Array [
+                      "fill",
+                    ]
+                  }
                 />
               </RNSVGGroup>
             </RNSVGSvgView>
@@ -706,7 +702,6 @@ exports[`Button Wrapper component should render rightIcon 1`] = `
   accessible={true}
   collapsable={false}
   focusable={false}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -747,7 +742,6 @@ exports[`Button Wrapper component should render rightIcon 1`] = `
           "top": 10,
         }
       }
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -787,14 +781,14 @@ exports[`Button Wrapper component should render rightIcon 1`] = `
           }
         >
           <View
-            className="icon-wrapper"
             testID="button_wrapper.icon"
           >
             <RNSVGSvgView
               align="xMidYMid"
               bbHeight={20}
               bbWidth={20}
-              fill="#2F3945"
+              color={4281284933}
+              data-name="Layer 1"
               focusable={false}
               height={20}
               meetOrSlice={0}
@@ -814,20 +808,24 @@ exports[`Button Wrapper component should render rightIcon 1`] = `
                   },
                 ]
               }
+              tintColor={4281284933}
               vbHeight={24}
               vbWidth={24}
               width={20}
             >
-              <RNSVGGroup
-                fill={4281284933}
-                propList={
-                  Array [
-                    "fill",
-                  ]
-                }
-              >
+              <RNSVGGroup>
                 <RNSVGPath
-                  d="M12,19a1,1,0,1,0-1-1A1,1,0,0,0,12,19Zm5,0a1,1,0,1,0-1-1A1,1,0,0,0,17,19Zm0-4a1,1,0,1,0-1-1A1,1,0,0,0,17,15Zm-5,0a1,1,0,1,0-1-1A1,1,0,0,0,12,15ZM19,3H18V2a1,1,0,0,0-2,0V3H8V2A1,1,0,0,0,6,2V3H5A3,3,0,0,0,2,6V20a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V6A3,3,0,0,0,19,3Zm1,17a1,1,0,0,1-1,1H5a1,1,0,0,1-1-1V11H20ZM20,9H4V6A1,1,0,0,1,5,5H6V6A1,1,0,0,0,8,6V5h8V6a1,1,0,0,0,2,0V5h1a1,1,0,0,1,1,1ZM7,15a1,1,0,1,0-1-1A1,1,0,0,0,7,15Zm0,4a1,1,0,1,0-1-1A1,1,0,0,0,7,19Z"
+                  d="M12 19a1 1 0 10-1-1 1 1 0 001 1zm5 0a1 1 0 10-1-1 1 1 0 001 1zm0-4a1 1 0 10-1-1 1 1 0 001 1zm-5 0a1 1 0 10-1-1 1 1 0 001 1zm7-12h-1V2a1 1 0 00-2 0v1H8V2a1 1 0 00-2 0v1H5a3 3 0 00-3 3v14a3 3 0 003 3h14a3 3 0 003-3V6a3 3 0 00-3-3zm1 17a1 1 0 01-1 1H5a1 1 0 01-1-1v-9h16zm0-11H4V6a1 1 0 011-1h1v1a1 1 0 002 0V5h8v1a1 1 0 002 0V5h1a1 1 0 011 1zM7 15a1 1 0 10-1-1 1 1 0 001 1zm0 4a1 1 0 10-1-1 1 1 0 001 1z"
+                  fill={
+                    Array [
+                      2,
+                    ]
+                  }
+                  propList={
+                    Array [
+                      "fill",
+                    ]
+                  }
                 />
               </RNSVGGroup>
             </RNSVGSvgView>
@@ -844,7 +842,6 @@ exports[`Button Wrapper component should render rightIcon with rightIconProps 1`
   accessible={true}
   collapsable={false}
   focusable={false}
-  nativeID="animatedComponent"
   onClick={[Function]}
   onResponderGrant={[Function]}
   onResponderMove={[Function]}
@@ -885,7 +882,6 @@ exports[`Button Wrapper component should render rightIcon with rightIconProps 1`
           "top": 10,
         }
       }
-      nativeID="animatedComponent"
       onClick={[Function]}
       onResponderGrant={[Function]}
       onResponderMove={[Function]}
@@ -925,14 +921,13 @@ exports[`Button Wrapper component should render rightIcon with rightIconProps 1`
           }
         >
           <View
-            className="icon-wrapper"
             testID="RIGHT_ICON"
           >
             <RNSVGSvgView
               align="xMidYMid"
               bbHeight={20}
               bbWidth={20}
-              fill="#2F3945"
+              color={4281284933}
               focusable={false}
               height={20}
               meetOrSlice={0}
@@ -952,20 +947,24 @@ exports[`Button Wrapper component should render rightIcon with rightIconProps 1`
                   },
                 ]
               }
+              tintColor={4281284933}
               vbHeight={24}
               vbWidth={24}
               width={20}
             >
-              <RNSVGGroup
-                fill={4281284933}
-                propList={
-                  Array [
-                    "fill",
-                  ]
-                }
-              >
+              <RNSVGGroup>
                 <RNSVGPath
-                  d="M15.54,11.29,9.88,5.64a1,1,0,0,0-1.42,0,1,1,0,0,0,0,1.41l4.95,5L8.46,17a1,1,0,0,0,0,1.41,1,1,0,0,0,.71.3,1,1,0,0,0,.71-.3l5.66-5.65A1,1,0,0,0,15.54,11.29Z"
+                  d="M15.54 11.29L9.88 5.64a1 1 0 00-1.42 0 1 1 0 000 1.41l4.95 5L8.46 17a1 1 0 000 1.41 1 1 0 00.71.3 1 1 0 00.71-.3l5.66-5.65a1 1 0 000-1.47z"
+                  fill={
+                    Array [
+                      2,
+                    ]
+                  }
+                  propList={
+                    Array [
+                      "fill",
+                    ]
+                  }
                 />
               </RNSVGGroup>
             </RNSVGSvgView>

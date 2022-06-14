@@ -7,7 +7,7 @@ export const postFeatureMenu = [
     type: 'draftPost',
     title: 'settings:title_post_feature_draft',
     icon: 'FileEditAlt',
-    rightIcon: 'UilAngleRightB',
+    rightIcon: 'AngleRightB',
   },
 ];
 
@@ -140,8 +140,8 @@ export const settingsMenu = [
   {
     type: 'accountSettings',
     title: 'settings:title_account_settings',
-    icon: 'UilCog',
-    rightIcon: 'UilAngleRightB',
+    icon: 'Cog',
+    rightIcon: 'AngleRightB',
   },
 ];
 
@@ -149,7 +149,7 @@ export const infoMenu = [
   {
     type: 'aboutBein',
     title: 'settings:title_about_bein',
-    icon: 'UilInfoCircle',
+    icon: 'InfoCircle',
     rightTitle: getEnv('APP_VERSION')
       ? i18n.t('settings:text_version') + ' ' + getEnv('APP_VERSION')
       : undefined,
@@ -157,16 +157,16 @@ export const infoMenu = [
   {
     type: 'appPolicies',
     title: 'settings:title_app_policies',
-    icon: 'UilBookOpen',
+    icon: 'BookOpen',
   },
   {
     type: 'help_and_support',
     title: 'settings:title_help_and_support',
-    icon: 'UilQuestionCircle',
+    icon: 'QuestionCircle',
   },
   {
     type: 'feedback',
     title: 'settings:title_feedback',
-    icon: 'UilCommentHeart',
+    icon: 'CommentHeart',
   },
 ];

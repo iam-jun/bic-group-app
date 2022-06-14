@@ -1,11 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  ActivityIndicator,
-  Platform,
-} from 'react-native';
+import {StyleSheet, View, ScrollView, ActivityIndicator} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
@@ -38,6 +32,9 @@ import {openLink} from '~/utils/common';
 import homeActions from '~/screens/Home/redux/actions';
 import {checkPermission} from '~/utils/permission';
 import {formatDMLink} from '~/utils/link';
+import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import {isEmpty} from 'lodash';
+import groupsActions from '~/screens/Groups/redux/actions';
 
 const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
@@ -50,6 +47,7 @@ const UserProfile = (props: any) => {
   const myProfileData = useKeySelector(menuKeySelector.myProfile);
   const {username: currentUsername, id} = myProfileData || {};
   const showUserNotFound = useKeySelector(menuKeySelector.showUserNotFound);
+  const joinedCommunities = useKeySelector(groupsKeySelector.joinedCommunities);
 
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const [avatarState, setAvatarState] = useState<string>(avatar);
@@ -163,12 +161,15 @@ const UserProfile = (props: any) => {
   };
 
   const onPressChat = () => {
-    const link = formatDMLink(
-      userProfileData.team_name,
-      userProfileData.username,
-    );
-
-    openLink(link);
+    if (!isEmpty(joinedCommunities)) {
+      const link = formatDMLink(
+        joinedCommunities?.[0]?.slug,
+        userProfileData.username,
+      );
+      openLink(link);
+    } else {
+      dispatch(groupsActions.getMyCommunities({callback: onPressChat}));
+    }
   };
 
   const renderEditButton = (style: any, onPress: any, testID: string) => {
@@ -204,7 +205,6 @@ const UserProfile = (props: any) => {
       <View style={styles.imageButton}>
         <View>
           <Avatar.UltraSuperLarge
-            style={styles.avatar}
             source={avatarState || images.img_user_avatar_default}
             isRounded={true}
             showBorder={true}
@@ -220,7 +220,6 @@ const UserProfile = (props: any) => {
   };
 
   const renderUserHeader = () => {
-    //in web, we need show text in <span>, so from RN to RJ we can do as nesting text as text inside will consider as span like html
     return (
       <View style={styles.headerName}>
         <Text>
@@ -241,13 +240,10 @@ const UserProfile = (props: any) => {
       <Button.Secondary
         testID="user_profile.edit"
         textColor={theme.colors.primary6}
-        style={Platform.OS === 'web' ? styles.buttonEditWeb : styles.buttonEdit}
+        style={styles.buttonEdit}
         leftIcon={'EditAlt'}
         onPress={onEditProfileButton}
-        borderRadius={theme.spacing.borderRadius.small}
-        contentStyle={
-          Platform.OS === 'web' ? styles.buttonEditWebContainer : {}
-        }>
+        borderRadius={theme.spacing.borderRadius.small}>
         {i18next.t('profile:title_edit_profile')}
       </Button.Secondary>
     ) : (
@@ -277,7 +273,7 @@ const UserProfile = (props: any) => {
 
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
-      <Header hideBackOnLaptop />
+      <Header />
 
       {loadingUserProfile ? (
         renderLoading()
@@ -309,15 +305,6 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     container: {
       backgroundColor: colors.background,
     },
-    coverHeader: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.small,
-    },
-    divider: {
-      marginVertical: spacing.margin.small,
-    },
     cover: {
       width: '100%',
       height: coverHeight,
@@ -325,12 +312,6 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     imageButton: {
       alignItems: 'center',
       marginTop: -44,
-    },
-    avatar: {
-      // width: scaleSize(100),
-      // height: scaleSize(100),
-      // maxHeight: 125,
-      // maxWidth: 125,
     },
     headerName: {
       alignItems: 'center',
@@ -364,22 +345,9 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       position: 'absolute',
       bottom: 0,
       right: spacing?.margin.small,
-      ...Platform.select({
-        web: {
-          right: 0,
-        },
-      }),
     },
     buttonEdit: {
       marginHorizontal: spacing.margin.large,
-      borderWidth: 1,
-      borderColor: colors.primary6,
-    },
-    buttonEditWeb: {
-      marginHorizontal: spacing.margin.large,
-    },
-    buttonEditWebContainer: {
-      marginHorizontal: 0,
       borderWidth: 1,
       borderColor: colors.primary6,
     },

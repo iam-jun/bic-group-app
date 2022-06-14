@@ -1,4 +1,4 @@
-import {AxiosRequestConfig, CancelToken} from 'axios';
+import {AxiosRequestConfig} from 'axios';
 
 import {getEnv} from '~/utils/env';
 import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
@@ -13,12 +13,12 @@ const providers = {
     name: 'BeinFeed',
   },
   beinNotification: {
-    url: `${getEnv('BEIN_NOTIFICATION')}api/v1/`,
+    url: `${getEnv('BEIN_NOTIFICATION')}`,
     name: 'BeinNotification',
   },
   beinUpload: {
     url: `${getEnv('BEIN_UPLOAD')}`,
-    name: 'BeinNotification',
+    name: 'BeinUpload',
   },
 };
 
@@ -79,7 +79,7 @@ const Upload = {
       provider = providers.beinUpload;
     } else {
       // upload bein feed
-      url = `${providers.beinFeed.url}api/v1/media`;
+      url = `${providers.beinFeed.url}media`;
       provider = providers.beinFeed;
       data.append('uploadType', type);
     }
@@ -119,7 +119,7 @@ const App = {
     return {
       url: `${providers.beinNotification.url}device-tokens`,
       method: 'post',
-      provider: providers.bein,
+      provider: providers.beinNotification,
       useRetry: true,
       data: {
         token: deviceToken,
@@ -131,7 +131,7 @@ const App = {
     return {
       url: `${providers.beinNotification.url}device-tokens/${deviceId}`,
       method: 'delete',
-      provider: providers.bein,
+      provider: providers.beinNotification,
       useRetry: false,
       timeout: 5000,
     };

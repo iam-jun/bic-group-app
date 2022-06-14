@@ -1,13 +1,15 @@
-import React, {useState, useEffect, useCallback} from 'react';
-import PostDetailContent from '~/screens/Post/PostDetail/PostDetailContent';
-import {InteractionManager, View, StyleSheet} from 'react-native';
-import ScreenWrapper from '~/beinComponents/ScreenWrapper';
+import React, {useCallback, useEffect, useState} from 'react';
+import {InteractionManager, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
+import {useDispatch} from 'react-redux';
+
 import Header from '~/beinComponents/Header';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
-import {Platform} from 'react-native';
+import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import images from '~/resources/images';
+import PostDetailContent from '~/screens/Post/PostDetail/PostDetailContent';
+import {ITheme} from '~/theme/interfaces';
+import postActions from '../redux/actions';
 
 const PostDetail = (props: any) => {
   const [showContent, setShowContent] = useState(false);
@@ -17,10 +19,16 @@ const PostDetail = (props: any) => {
   const {colors} = theme;
   const styles = createStyle(theme);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    InteractionManager.runAfterInteractions(() => {
+    const taskId = requestAnimationFrame(() => {
       setShowContent(true);
     });
+    return () => {
+      cancelAnimationFrame(taskId);
+      dispatch(postActions.setCommentErrorCode(false));
+    };
   }, []);
 
   const onContentLayout = useCallback(() => {
@@ -37,7 +45,7 @@ const PostDetail = (props: any) => {
           <Header
             titleTextProps={{useI18n: true}}
             title={'post:title_post_detail'}
-            avatar={Platform.OS === 'web' ? undefined : images.logo_bein}
+            avatar={images.logo_bein}
           />
           <PostViewPlaceholder testID={'post_detail.post_view_placeholder'} />
         </View>

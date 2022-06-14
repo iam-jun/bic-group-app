@@ -9,13 +9,13 @@ import Header from '~/beinComponents/Header';
 import ListView from '~/beinComponents/list/ListView';
 import Divider from '~/beinComponents/Divider';
 import Text from '~/beinComponents/Text';
-import PendingUserItem from './components/PendingUserItem';
 import {ITheme} from '~/theme/interfaces';
 import PendingActionAll from './components/PendingActionAll';
 import groupsActions from '../../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
+import GroupMemberRequest from './components/GroupMemberRequest';
 
 const PendingMembers = (props: any) => {
   const params = props.route.params;
@@ -47,7 +47,7 @@ const PendingMembers = (props: any) => {
   };
 
   const renderItem = ({item}: {item: number}) => {
-    return <PendingUserItem requestId={item} />;
+    return <GroupMemberRequest requestId={item} />;
   };
 
   const renderListHeader = () => {
@@ -81,7 +81,7 @@ const PendingMembers = (props: any) => {
         <EmptyScreen
           source={'addUsers'}
           title="groups:text_no_pending_members_notice"
-          description="groups:text_pending_request_notice"
+          description="groups:text_pending_request_notice_group"
         />
       )
     );

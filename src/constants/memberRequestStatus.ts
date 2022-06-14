@@ -1,6 +1,6 @@
 export default {
-  waiting: 'waiting',
-  approved: 'approved',
-  canceled: 'canceled',
-  rejected: 'rejected',
+  WAITING: 'waiting',
+  APPROVED: 'approved',
+  CANCELED: 'canceled',
+  REJECTED: 'rejected',
 };

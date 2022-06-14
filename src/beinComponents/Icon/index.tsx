@@ -6,7 +6,6 @@ import {
   TextStyle,
   ViewStyle,
   StyleSheet,
-  Platform,
 } from 'react-native';
 
 import Unicons, {UniconsProps} from './Unicons';
@@ -20,7 +19,6 @@ import icons, {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
 import {View} from 'react-native';
 import TextEmojiIcon from '~/beinComponents/Icon/TextEmojiIcon';
-import Div from '../Div';
 import {useNetInfo} from '@react-native-community/netinfo';
 
 export interface IconProps extends SVGIconProps, UniconsProps {
@@ -78,7 +76,8 @@ const Icon: React.FC<IconProps> = ({
 
   let IconComponent, type, name, source;
 
-  if (Unicons[`${_icon || icon}`] || Unicons[`Uil${_icon || icon}`]) {
+  // @ts-ignore
+  if (Unicons[`${_icon || icon}`]) {
     IconComponent = Unicons;
     name = _icon || icon;
   } else if (typeof _icon === 'function') {
@@ -100,7 +99,6 @@ const Icon: React.FC<IconProps> = ({
     _style.height = size;
     _tintColor = undefined;
   }
-  const Wrapper = Platform.OS === 'web' ? Text : View;
 
   return (
     <TouchableOpacity
@@ -108,24 +106,24 @@ const Icon: React.FC<IconProps> = ({
       onPress={onPress}
       hitSlop={hitSlop}
       testID={buttonTestID}>
-      <Wrapper style={[styles.container, style, {backgroundColor}]}>
-        <Div
+      <View style={[styles.container, style, {backgroundColor}]}>
+        <View
           style={[
             isButton && styles.button,
             disabled && isButton && styles.disabled,
             iconStyle,
           ]}>
-          <Div className="icon-wrapper" testID={testID}>
+          <View testID={testID}>
             <IconComponent
-              style={_style}
+              style={_style as any}
               tintColor={_tintColor}
               size={size}
               type={type}
               name={name}
               source={source}
             />
-          </Div>
-        </Div>
+          </View>
+        </View>
         {label && (
           <Text.ButtonBase
             useI18n
@@ -137,7 +135,7 @@ const Icon: React.FC<IconProps> = ({
             {label}
           </Text.ButtonBase>
         )}
-      </Wrapper>
+      </View>
     </TouchableOpacity>
   );
 };

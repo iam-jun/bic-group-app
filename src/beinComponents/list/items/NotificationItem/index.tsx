@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, TouchableOpacity, Dimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import TimeView from '~/beinComponents/TimeView';
 import Icon from '~/beinComponents/Icon';
@@ -12,34 +12,40 @@ import {ITheme} from '~/theme/interfaces';
 import NotificationAvatar from './NotificationAvatar';
 import NotificationContent from './NotificationContent';
 import {useKeySelector} from '~/hooks/selector';
+import notificationSelector from '~/screens/Notification/redux/selector';
+import {isEmpty, isEqual} from 'lodash';
+import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
+
+const {width: screenWidth, height} = Dimensions.get('window');
 
 export interface NotificationItemProps {
-  activities: IGetStreamNotificationActivity[];
-  verb: string;
-  isRead: boolean;
-  isSeen: boolean;
-  createdAt: string;
-  updatedAt: string;
-  extra: INotiExtraData;
-  group: string;
-  activityCount: number;
-  actorCount: number;
+  // activities: IGetStreamNotificationActivity[];
+  // verb: string;
+  // isRead: boolean;
+  // isSeen: boolean;
+  // createdAt: string;
+  // updatedAt: string;
+  // extra: INotiExtraData;
+  // group: string;
+  // activityCount: number;
+  // actorCount: number;
   onPress: (...params: any) => void;
   onPressOption: (...params: any) => void;
   testID?: string;
-  id?: string;
+  id: string;
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
-  activities,
-  isRead,
-  updatedAt,
-  extra,
-  verb,
-  actorCount,
+  // activities,
+  // isRead,
+  // updatedAt,
+  // extra,
+  // verb,
+  // actorCount,
   onPress,
   onPressOption,
   testID,
+  id,
 }: NotificationItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyles(theme);
@@ -48,6 +54,26 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
   const [timerWidth, setTimerWidth] = useState(0);
 
+  if (!id) return null;
+
+  const itemValue = useKeySelector(
+    notificationSelector.getNotificationById(id),
+  );
+
+  const _itemValue = React.useMemo(() => {
+    if (
+      itemValue !== undefined &&
+      itemValue !== null &&
+      !isEqual(JSON.stringify(itemValue), JSON.stringify(_itemValue))
+    ) {
+      return itemValue;
+    }
+  }, [itemValue, onPress, onPressOption, testID, id]);
+  const {activities, isRead, updatedAt, extra, verb, actorCount}: any =
+    _itemValue || {};
+
+  if (isEmpty(_itemValue)) return null;
+
   const onLayout = (e: any) => {
     const width = e?.nativeEvent?.layout?.width;
     if (width) {
@@ -55,23 +81,30 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     }
   };
 
-  const renderIndicator = () => {
+  const renderIndicator = (style?: any) => {
     if (!isRead) {
       return (
         <View
           testID="notification_item.indicator"
-          style={styles.stateIndicatorUnread}
+          style={[styles.stateIndicatorUnread, style]}
         />
       );
     }
   };
+
+  const notShowAvatar =
+    extra?.type === NOTIFICATION_TYPE.POST.VIDEO.PROCESSING ||
+    extra?.type === NOTIFICATION_TYPE.POST.VIDEO.FAILED ||
+    extra?.type === NOTIFICATION_TYPE.POST.VIDEO.PUBLISHED;
 
   // render notification item
   return (
     <TouchableOpacity
       testID={testID}
       disabled={!isInternetReachable || !onPress}
-      onPress={onPress}
+      onPress={() => {
+        onPress && onPress(_itemValue);
+      }}
       style={[
         styles.container,
         {
@@ -80,29 +113,45 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
             : theme.colors.bgSecondary,
         },
       ]}>
-      <View
-        style={{
-          flex: 1,
-        }}>
-        <View style={[styles.row, {flex: 1, justifyContent: 'flex-start'}]}>
-          {renderIndicator()}
-          <NotificationAvatar
-            actor={extra.actor}
+      {notShowAvatar ? (
+        <View
+          style={[
+            {flexDirection: 'row', flex: 1, justifyContent: 'flex-start'},
+          ]}>
+          {renderIndicator(styles.indicatorMargin)}
+          <NotificationContent
+            description={extra?.description || ''}
+            defaultContent={extra?.content || ''}
             activities={activities}
-            actorCount={actorCount}
             verb={verb}
-            isRead={isRead}
-            timerWidth={timerWidth}
+            actorCount={actorCount}
           />
         </View>
-        <NotificationContent
-          description={extra?.description || ''}
-          defaultContent={extra?.content || ''}
-          activities={activities}
-          verb={verb}
-          actorCount={actorCount}
-        />
-      </View>
+      ) : (
+        <View
+          style={{
+            flex: 1,
+          }}>
+          <View style={[styles.row, {flex: 1, justifyContent: 'flex-start'}]}>
+            {renderIndicator()}
+            <NotificationAvatar
+              actor={extra.actor}
+              activities={activities}
+              actorCount={actorCount}
+              verb={verb}
+              isRead={isRead}
+              timerWidth={timerWidth}
+            />
+          </View>
+          <NotificationContent
+            description={extra?.description || ''}
+            defaultContent={extra?.content || ''}
+            activities={activities}
+            verb={verb}
+            actorCount={actorCount}
+          />
+        </View>
+      )}
 
       <View
         onLayout={onLayout}
@@ -120,7 +169,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           testID="notificationItem.menuIcon.button"
           style={styles.icon}
           activeOpacity={0.2}
-          onPress={(e: any) => onPressOption && onPressOption(e)}
+          onPress={(e: any) =>
+            onPressOption && onPressOption({e: e, item: _itemValue})
+          }
           hitSlop={{
             bottom: 20,
             left: 20,
@@ -148,6 +199,7 @@ const createStyles = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'flex-start',
       padding: theme.spacing.padding.large,
+      width: screenWidth,
     },
     row: {
       flexDirection: 'row',
@@ -171,7 +223,10 @@ const createStyles = (theme: ITheme) => {
       justifyContent: 'center',
       alignItems: 'center',
     },
+    indicatorMargin: {
+      marginTop: spacing.margin.base,
+    },
   });
 };
 
-export default NotificationItem;
+export default React.memo(NotificationItem);

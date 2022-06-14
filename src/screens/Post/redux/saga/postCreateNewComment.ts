@@ -193,6 +193,37 @@ function* postCreateNewComment({
           },
         }),
       );
+    } else if (e?.code === API_ERROR_CODE.POST.postDeleted) {
+      yield put(
+        postActions.setCommentErrorCode(API_ERROR_CODE.POST.postDeleted),
+      );
+      if (!!parentCommentId) {
+        yield put(
+          postActions.removeChildComment({
+            localId: preComment?.localId,
+            postId,
+            parentCommentId,
+          }),
+        );
+      } else {
+        yield put(
+          postActions.removeCommentLevel1Deleted({
+            postId,
+            localId: preComment?.localId,
+          }),
+        );
+      }
+      yield put(
+        modalActions.showHideToastMessage({
+          content: 'post:text_post_deleted',
+          toastType: 'banner',
+          props: {
+            textProps: {useI18n: true},
+            type: 'informative',
+            leftIcon: 'iconCannotComment',
+          },
+        }),
+      );
     } else {
       yield showError(e);
     }

@@ -381,12 +381,11 @@ function postReducer(state = postInitState, action: any = {}) {
     case postTypes.REMOVE_COMMENT_DELETED: {
       const allCommentsByPost: any = {...state.allCommentsByParentIds};
       const newAllPosts: any = {...state.allPosts};
-      const {postId, commentId} = payload || {};
+      const {postId, commentId, localId} = payload || {};
 
       const deleteCommentPost = {...newAllPosts[postId]};
       const postComments = [...allCommentsByPost[postId]];
       if (commentId && postComments) {
-        // find parent comment
         const pIndexCommentNeedDelete = postComments.findIndex(
           (item: ICommentData) => item.id === commentId,
         );
@@ -400,6 +399,23 @@ function postReducer(state = postInitState, action: any = {}) {
 
         const newPostComments = postComments?.filter?.(
           (cmt: ICommentData) => cmt.id !== commentId,
+        );
+        newAllPosts[postId] = {...deleteCommentPost};
+        allCommentsByPost[postId] = newPostComments;
+      } else if (localId && postComments) {
+        const pIndexCommentNeedDelete = postComments.findIndex(
+          (item: ICommentData) => item.localId === localId,
+        );
+
+        deleteCommentPost.commentsCount = Math.max(
+          0,
+          (deleteCommentPost.commentsCount || 0) -
+            1 -
+            postComments[pIndexCommentNeedDelete].totalReply,
+        );
+
+        const newPostComments = postComments?.filter?.(
+          (cmt: ICommentData) => cmt.localId !== localId,
         );
         newAllPosts[postId] = {...deleteCommentPost};
         allCommentsByPost[postId] = newPostComments;

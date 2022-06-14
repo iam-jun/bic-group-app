@@ -13,15 +13,23 @@ import {
   RefreshControl,
   SectionList,
   StyleSheet,
-  useWindowDimensions,
   View,
 } from 'react-native';
+import {
+  Directions,
+  FlingGestureHandler,
+  FlingGestureHandlerStateChangeEvent,
+  State,
+} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
+import Animated, {runOnJS} from 'react-native-reanimated';
 import {useDispatch} from 'react-redux';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
+import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
@@ -41,10 +49,12 @@ import PostView from '~/screens/Post/components/PostView';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import Store from '~/store';
-import modalActions from '~/store/modal/actions';
-import {showHideToastMessage} from '~/store/modal/actions';
-import {deviceDimensions} from '~/theme/dimension';
+import modalActions, {showHideToastMessage} from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
+import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
+import Text from '~/beinComponents/Text';
+import homeActions from '~/screens/Home/redux/actions';
 
 const defaultList = [{title: '', type: 'empty', data: []}];
 
@@ -52,6 +62,8 @@ const _PostDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
   const [stickerBoardVisible, setStickerBoardVisible] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
+
   let countRetryScrollToBottom = useRef(0).current;
   const commentInputRef = useRef<any>();
   const internetReachableRef = useRef(true);
@@ -67,15 +79,13 @@ const _PostDetailContent = (props: any) => {
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
-  const windowDimension = useWindowDimensions();
-  const isLaptop = windowDimension.width >= deviceDimensions.laptop;
-  const styles = useMemo(() => createStyle(theme, isLaptop), [theme, isLaptop]);
+  const styles = useMemo(() => createStyle(theme), [theme]);
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const userId = useUserIdAuth();
 
-  const id = Number(post_id || 0);
+  const id = post_id;
   const actor = useKeySelector(postKeySelector.postActorById(id));
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
   const createdAt = useKeySelector(postKeySelector.postCreatedAtById(id));
@@ -83,6 +93,8 @@ const _PostDetailContent = (props: any) => {
   const commentLeft = useKeySelector(
     postKeySelector.postCommentOnlyCountById(id),
   );
+  const commentError = useKeySelector(postKeySelector.commentErrorCode);
+
   const commentList = useKeySelector(postKeySelector.postCommentListById(id));
   const scrollToLatestItem = useKeySelector(postKeySelector.scrollToLatestItem);
 
@@ -132,7 +144,6 @@ const _PostDetailContent = (props: any) => {
           cancelLabel: t('post:btn_continue_comment'),
           confirmLabel: t('post:btn_discard_comment'),
           onConfirm: () => rootNavigation.goBack(),
-          stretchOnWeb: true,
         }),
       );
       return;
@@ -147,7 +158,7 @@ const _PostDetailContent = (props: any) => {
   useBackPressListener(onPressBack);
 
   useEffect(() => {
-    if (!user && Platform.OS === 'web') {
+    if (!user) {
       rootNavigation.replace(rootSwitch.authStack);
     }
   }, [isFocused, user]);
@@ -160,20 +171,16 @@ const _PostDetailContent = (props: any) => {
     if (id && userId && internetReachableRef.current) {
       getPostDetail((loading, success) => {
         if (!loading && !success && internetReachableRef.current) {
-          if (Platform.OS === 'web') {
-            rootNavigation.replace(rootSwitch.notFound);
-          } else {
-            rootNavigation.canGoBack && rootNavigation.goBack();
-            dispatch(
-              showHideToastMessage({
-                content: t('post:error_post_detail_deleted'),
-                props: {
-                  textProps: {useI18n: true},
-                  type: 'error',
-                },
-              }),
-            );
-          }
+          rootNavigation.canGoBack && rootNavigation.goBack();
+          dispatch(
+            showHideToastMessage({
+              content: t('post:error_post_detail_deleted'),
+              props: {
+                textProps: {useI18n: true},
+                type: 'error',
+              },
+            }),
+          );
         }
       });
     }
@@ -212,7 +219,51 @@ const _PostDetailContent = (props: any) => {
     }
   };
 
-  const onRefresh = () => getPostDetail(loading => setRefreshing(loading));
+  const onRefresh = () => {
+    if (commentError === API_ERROR_CODE.POST.postDeleted) {
+      setRefreshing(true);
+      setIsEmpty(true);
+      dispatch(
+        modalActions.showAlert({
+          // @ts-ignore
+          HeaderImageComponent: (
+            <View style={{alignItems: 'center'}}>
+              <SVGIcon
+                // @ts-ignore
+                source={CommentNotFoundImg}
+                width={120}
+                height={120}
+                tintColor="none"
+              />
+            </View>
+          ),
+          title: t('post:deleted_post:title'),
+          titleProps: {style: {flex: 1, textAlign: 'center'}},
+          showCloseButton: false,
+          cancelBtn: false,
+          isDismissible: true,
+          onConfirm: () => {
+            rootNavigation.replace(homeStack.newsfeed);
+            dispatch(homeActions.getHomePosts({isRefresh: true}));
+          },
+          confirmLabel: t('post:deleted_post:button_text'),
+          content: t('post:deleted_post:description'),
+          contentProps: {style: {textAlign: 'center'}},
+          ContentComponent: Text.BodyS,
+          buttonViewStyle: {justifyContent: 'center'},
+          headerStyle: {marginBottom: 0},
+          onDismiss: () => {
+            rootNavigation.replace(homeStack.newsfeed);
+            dispatch(homeActions.getHomePosts({isRefresh: true}));
+          },
+        }),
+      );
+      setRefreshing(false);
+      return;
+    } else {
+      getPostDetail(loading => setRefreshing(loading));
+    }
+  };
 
   const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
     if (sectionData.length > 0) {
@@ -292,15 +343,7 @@ const _PostDetailContent = (props: any) => {
 
   const onPressReplySectionHeader = useCallback(
     (commentData, section, index) => {
-      if (Platform.OS === 'web') {
-        scrollTo(index, 0);
-        // set time out to wait hide context menu on web
-        setTimeout(() => {
-          commentInputRef?.current?.focus?.();
-        }, 200);
-      } else {
-        navigateToCommentDetailScreen(commentData, commentData);
-      }
+      navigateToCommentDetailScreen(commentData, commentData);
     },
     [sectionData],
   );
@@ -335,19 +378,11 @@ const _PostDetailContent = (props: any) => {
 
   const onPressReplyCommentItem = useCallback(
     (commentData, section, index) => {
-      if (Platform.OS === 'web') {
-        scrollTo(section?.index, index + 1);
-        // set time out to wait hide context menu on web
-        setTimeout(() => {
-          commentInputRef?.current?.focus?.();
-        }, 200);
-      } else {
-        navigateToCommentDetailScreen(
-          section?.comment || {},
-          commentData,
-          section?.comment,
-        );
-      }
+      navigateToCommentDetailScreen(
+        section?.comment || {},
+        commentData,
+        section?.comment,
+      );
     },
     [sectionData],
   );
@@ -380,58 +415,86 @@ const _PostDetailContent = (props: any) => {
         const sectionIndex = Math.min(9, sectionData.length - 1);
         scrollTo(sectionIndex, -1);
       }
-      if (focus_comment && Platform.OS === 'web') {
+      if (focus_comment) {
         commentInputRef.current?.focus?.();
       }
     }
   }, [layoutSet, sectionData.length, focus_comment, listComment?.length]);
 
+  const handleDown = () => {
+    onRefresh();
+  };
+
+  const onDownFlingHandlerStateChange = ({
+    nativeEvent,
+  }: FlingGestureHandlerStateChangeEvent) => {
+    if (Platform.OS === 'ios') return;
+
+    if (nativeEvent.oldState === State.ACTIVE) {
+      runOnJS(handleDown)();
+    }
+  };
+
   const renderContent = () => {
     if (!createdAt) return <PostViewPlaceholder />;
 
+    if (isEmpty) return null;
+
     return (
-      <View style={styles.container}>
-        <View style={styles.postDetailContainer}>
-          <SectionList
-            ref={listRef}
-            bounces={!stickerBoardVisible}
-            disableScrollViewPanResponder={stickerBoardVisible}
-            sections={deleted ? defaultList : sectionData}
-            renderItem={renderCommentItem}
-            renderSectionHeader={renderSectionHeader}
-            ListHeaderComponent={
-              <PostDetailContentHeader
-                id={id}
-                commentLeft={commentLeft}
-                onPressComment={onPressComment}
-                onContentLayout={props?.onContentLayout}
-                idLessThan={listComment?.[0]?.id}
-              />
-            }
-            ListFooterComponent={commentLeft && renderFooter}
-            stickySectionHeadersEnabled={false}
-            ItemSeparatorComponent={() => <View />}
-            keyboardShouldPersistTaps={'handled'}
-            onLayout={onLayout}
-            onContentSizeChange={onLayout}
-            onScrollToIndexFailed={onScrollToIndexFailed}
-            refreshControl={
-              <RefreshControl
-                testID={'post_detail_content.refresh_control'}
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-                tintColor={colors.borderDisable}
-              />
-            }
-          />
-          <CommentInputView
-            commentInputRef={commentInputRef}
-            postId={id}
-            groupIds={groupIds}
-            autoFocus={!!focus_comment}
-          />
+      <FlingGestureHandler
+        direction={Directions.DOWN}
+        onHandlerStateChange={onDownFlingHandlerStateChange}>
+        <View style={styles.container}>
+          {Platform.OS === 'android' && refreshing && (
+            <Animated.View style={styles.refreshing}>
+              <LoadingIndicator size="large" />
+            </Animated.View>
+          )}
+          <View style={styles.postDetailContainer}>
+            <SectionList
+              ref={listRef}
+              bounces={!stickerBoardVisible}
+              disableScrollViewPanResponder={stickerBoardVisible}
+              sections={deleted ? defaultList : sectionData}
+              renderItem={renderCommentItem}
+              renderSectionHeader={renderSectionHeader}
+              ListHeaderComponent={
+                <PostDetailContentHeader
+                  id={id}
+                  commentLeft={commentLeft}
+                  onPressComment={onPressComment}
+                  onContentLayout={props?.onContentLayout}
+                  idLessThan={listComment?.[0]?.id}
+                />
+              }
+              ListFooterComponent={commentLeft && renderFooter}
+              stickySectionHeadersEnabled={false}
+              ItemSeparatorComponent={() => <View />}
+              keyboardShouldPersistTaps={'handled'}
+              onLayout={onLayout}
+              onContentSizeChange={onLayout}
+              onScrollToIndexFailed={onScrollToIndexFailed}
+              refreshControl={
+                Platform.OS === 'ios' ? (
+                  <RefreshControl
+                    testID={'post_detail_content.refresh_control'}
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                    tintColor={colors.borderDisable}
+                  />
+                ) : undefined
+              }
+            />
+
+            <CommentInputView
+              commentInputRef={commentInputRef}
+              postId={id}
+              groupIds={groupIds}
+              autoFocus={!!focus_comment}
+            />
+          </View>
         </View>
-      </View>
+      </FlingGestureHandler>
     );
   };
 
@@ -440,7 +503,7 @@ const _PostDetailContent = (props: any) => {
       <Header
         title={headerTitle}
         onPressBack={onPressBack}
-        avatar={Platform.OS === 'web' ? undefined : images.logo_bein}
+        avatar={images.logo_bein}
       />
       {renderContent()}
     </View>
@@ -490,7 +553,7 @@ const getSectionData = (listComment: ICommentData[]) => {
         : [];
     item.comment = comment;
     item.index = index;
-    item.data = Platform.OS === 'web' ? lastChildComment : _data;
+    item.data = _data;
     result.push(item);
   });
   // long post without comment cant scroll to bottom
@@ -498,31 +561,20 @@ const getSectionData = (listComment: ICommentData[]) => {
   return result?.length > 0 ? result : defaultList;
 };
 
-const createStyle = (theme: ITheme, isLaptop: boolean): any => {
-  const {colors, dimension, spacing} = theme;
+const createStyle = (theme: ITheme) => {
+  const {colors, spacing} = theme;
   return StyleSheet.create({
-    flex1: {flex: 1},
+    flex1: {
+      flex: 1,
+    },
+    refreshing: {
+      padding: spacing.padding.base,
+    },
     container: {
       flex: 1,
-      ...Platform.select({
-        web: {
-          backgroundColor: colors.surface,
-          alignItems: 'center',
-        },
-      }),
     },
     postDetailContainer: {
       flex: 1,
-      ...Platform.select({
-        web: {
-          width: '100%',
-          maxWidth: dimension.maxNewsfeedWidth,
-          marginTop: isLaptop ? spacing.margin.base : 0,
-          overflow: 'hidden',
-          borderTopLeftRadius: isLaptop ? 6 : 0,
-          borderTopRightRadius: isLaptop ? 6 : 0,
-        },
-      }),
     },
     footer: {height: spacing.margin.base, backgroundColor: colors.background},
   });
