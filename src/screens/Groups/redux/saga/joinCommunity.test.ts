@@ -27,7 +27,7 @@ describe('joinCommuniity saga', () => {
           data: {join_status: 3},
         }),
       )
-      .put(groupsActions.getCommunityDetail(communityId))
+      .put(groupsActions.getCommunityDetail({communityId}))
       .put(
         modalActions.showHideToastMessage({
           content: `${i18next.t(
@@ -65,7 +65,7 @@ describe('joinCommuniity saga', () => {
           },
         }),
       )
-      .put(groupsActions.getCommunityDetail(communityId))
+      .put(groupsActions.getCommunityDetail({communityId}))
       .run()
       .then(({allEffects}: any) => {
         expect(allEffects?.length).toEqual(4);
