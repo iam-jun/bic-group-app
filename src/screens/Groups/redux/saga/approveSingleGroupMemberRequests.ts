@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import {put, call} from 'redux-saga/effects';
+import {put, call, select} from 'redux-saga/effects';
 
 import approveDeclineCode from '~/constants/approveDeclineCode';
 import {IToastMessage} from '~/interfaces/common';
@@ -27,7 +27,18 @@ export default function* approveSingleGroupMemberRequest({
       requestId,
     );
 
-    yield put(groupsActions.getGroupDetail(groupId));
+    // Update data state
+    const {groups} = yield select();
+    const {total, data, items} = groups.pendingMemberRequests;
+    const requestItems = {...items};
+    delete requestItems[requestId];
+    yield put(
+      groupsActions.setGroupMemberRequests({
+        total: total - 1,
+        data: data.filter((item: number) => item !== requestId),
+        items: requestItems,
+      }),
+    );
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
@@ -46,7 +57,12 @@ export default function* approveSingleGroupMemberRequest({
     console.log('approveSingleGroupMemberRequest: ', err);
 
     if (err?.code === approveDeclineCode.CANCELED) {
-      // TODO: dispatch action to show hint message on request item
+      yield put(
+        groupsActions.editGroupMemberRequest({
+          id: requestId,
+          data: {isCanceled: true},
+        }),
+      );
       return;
     }
 

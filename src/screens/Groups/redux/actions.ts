@@ -234,9 +234,12 @@ const groupsActions = {
     type: groupsTypes.GET_MEMBER_REQUESTS,
     payload,
   }),
-  setMemberRequests: (payload: {
-    requestIds: number[];
-    requestItems: IObject<IJoiningMember>;
+  setGroupMemberRequests: (payload: {
+    total?: number;
+    loading?: boolean;
+    canLoadMore?: boolean;
+    data?: number[];
+    items?: IObject<IJoiningMember>;
   }) => ({
     type: groupsTypes.SET_MEMBER_REQUESTS,
     payload,
@@ -287,6 +290,10 @@ const groupsActions = {
   }),
   storeUndoData: () => ({
     type: groupsTypes.STORE_UNDO_DATA,
+  }),
+  editGroupMemberRequest: (payload: {id: number; data: any}) => ({
+    type: groupsTypes.EDIT_GROUP_MEMBER_REQUEST,
+    payload,
   }),
 
   // community

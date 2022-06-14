@@ -346,27 +346,12 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       };
 
     // PENDING MEMBER REQUESTS
-    case groupsTypes.GET_MEMBER_REQUESTS:
-      return {
-        ...state,
-        pendingMemberRequests: {
-          ...pendingMemberRequests,
-          loading: pendingMemberRequests.data.length === 0,
-          params: payload.params,
-        },
-      };
     case groupsTypes.SET_MEMBER_REQUESTS:
       return {
         ...state,
         pendingMemberRequests: {
           ...pendingMemberRequests,
-          loading: false,
-          data: [...pendingMemberRequests.data, ...payload.requestIds],
-          items: {
-            ...pendingMemberRequests.items,
-            ...payload.requestItems,
-          },
-          canLoadMore: payload.requestIds.length === appConfig.recordsPerPage,
+          ...payload,
         },
       };
     case groupsTypes.RESET_MEMBER_REQUESTS:
@@ -374,7 +359,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         ...state,
         pendingMemberRequests: groupInitState.pendingMemberRequests,
       };
-    case groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST:
     case groupsTypes.REMOVE_SINGLE_MEMBER_REQUEST: {
       const requestItems = {...pendingMemberRequests.items};
       delete requestItems[payload];
@@ -432,6 +416,22 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           items: {...pendingMemberRequests.items},
         },
       };
+    case groupsTypes.EDIT_GROUP_MEMBER_REQUEST:
+      return {
+        ...state,
+        pendingMemberRequests: {
+          ...pendingMemberRequests,
+          items: {
+            ...pendingMemberRequests.items,
+            [payload.id]: {
+              // @ts-ignore
+              ...pendingMemberRequests.items[payload.id],
+              ...payload.data,
+            },
+          },
+        },
+      };
+
     case groupsTypes.SET_YOUR_GROUPS_SEARCH:
       return {
         ...state,

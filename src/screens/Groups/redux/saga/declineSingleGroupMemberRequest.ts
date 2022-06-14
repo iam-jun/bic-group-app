@@ -23,7 +23,12 @@ export default function* declineSingleGroupMemberRequest({
     console.log('declineSingleGroupMemberRequest: ', err);
 
     if (err?.code === approveDeclineCode.CANNOT_DECLINE) {
-      // TODO: dispatch action to show hint message on request item
+      yield put(
+        groupsActions.editGroupMemberRequest({
+          id: requestId,
+          data: {isCanceled: true},
+        }),
+      );
       return;
     }
 

@@ -56,6 +56,7 @@ import approveAllGroupMemberRequests from './approveAllGroupMemberRequests';
 import declineAllGroupMemberRequests from './declineAllGroupMemberRequests';
 import approveSingleGroupMemberRequest from './approveSingleGroupMemberRequests';
 import declineSingleGroupMemberRequest from './declineSingleGroupMemberRequest';
+import getGroupMemberRequests from './getGroupMemberRequests';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -81,7 +82,7 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.SET_GROUP_ADMIN, setGroupAdmin);
   yield takeLatest(groupsTypes.REMOVE_GROUP_ADMIN, removeGroupAdmin);
 
-  yield takeLatest(groupsTypes.GET_MEMBER_REQUESTS, getMemberRequests);
+  yield takeLatest(groupsTypes.GET_MEMBER_REQUESTS, getGroupMemberRequests);
   yield takeLatest(
     groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST,
     approveSingleGroupMemberRequest,
@@ -372,38 +373,6 @@ function* cancelJoinGroup({
   }
 }
 
-function* getMemberRequests({
-  payload,
-}: {
-  type: string;
-  payload: {groupId: number; params?: any};
-}) {
-  try {
-    const {groups} = yield select();
-
-    const {groupId, params} = payload;
-    const {data, canLoadMore} = groups.pendingMemberRequests || {};
-
-    if (!canLoadMore) return;
-
-    // @ts-ignore
-    const response = yield groupsDataHelper.getMemberRequests(groupId, {
-      offset: data.length,
-      limit: appConfig.recordsPerPage,
-      key: memberRequestStatus.WAITING,
-      ...params,
-    });
-
-    const requestIds = response?.data.map((item: IJoiningMember) => item.id);
-    const requestItems = mapItems(response?.data);
-
-    yield put(groupsActions.setMemberRequests({requestIds, requestItems}));
-  } catch (err) {
-    console.log('getMemberRequests: ', err);
-    yield showError(err);
-  }
-}
-
 function* updateLoadingImageState(
   fieldName: 'icon' | 'background_img_url',
   value: boolean,
@@ -418,44 +387,5 @@ function* updateLoadingImageState(
 export function* refreshGroupMembers(groupId: number) {
   yield put(groupsActions.clearGroupMembers());
   yield put(groupsActions.getGroupMembers({groupId}));
-  yield put(groupsActions.getGroupDetail(groupId));
-}
-
-export function* approvalError(
-  groupId: number,
-  code: string,
-  fullName?: string,
-) {
-  let errorMsg: string;
-  if (code === approveDeclineCode.CANNOT_APPROVE) {
-    errorMsg = i18next
-      .t('groups:text_cannot_approve_single')
-      // @ts-ignore
-      .replace('{0}', fullName);
-  } else if (code === approveDeclineCode.CANNOT_APPROVE_ALL) {
-    errorMsg = i18next.t('groups:text_cannot_approve_all');
-  } else if (code === approveDeclineCode.CANNOT_DECLINE) {
-    errorMsg = i18next
-      .t('groups:text_cannot_decline_single')
-      // @ts-ignore
-      .replace('{0}', fullName);
-  } else {
-    errorMsg = i18next.t('groups:text_cannot_decline_all');
-  }
-
-  yield put(
-    modalActions.showHideToastMessage({
-      content: errorMsg,
-      props: {
-        textProps: {useI18n: true},
-        type: 'informative',
-      },
-      toastType: 'normal',
-    }),
-  );
-
-  // reload page
-  yield put(groupsActions.resetMemberRequests());
-  yield put(groupsActions.getMemberRequests({groupId}));
   yield put(groupsActions.getGroupDetail(groupId));
 }

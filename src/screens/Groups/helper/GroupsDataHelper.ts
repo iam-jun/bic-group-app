@@ -147,7 +147,10 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getMemberRequests: (groupId: number, params: any): HttpApiRequestConfig => ({
+  getGroupMemberRequests: (
+    groupId: number,
+    params: any,
+  ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests`,
     method: 'get',
     provider: ApiConfig.providers.bein,
@@ -543,12 +546,12 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getMemberRequests: async (groupId: number, params: any) => {
+  getGroupMemberRequests: async (groupId: number, params: any) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.getMemberRequests(groupId, params),
+        groupsApiConfig.getGroupMemberRequests(groupId, params),
       );
-      if (response && response?.data) {
+      if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);
