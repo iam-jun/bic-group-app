@@ -35,7 +35,7 @@ const MembersContent = ({communityId, onPressMenu}: MembersContentProps) => {
 
   const getCommunityDetail = () => {
     // to update can_manage_member when member role changes
-    dispatch(actions.getCommunityDetail(communityId));
+    dispatch(actions.getCommunityDetail({communityId}));
   };
 
   const onLoadMore = () => {

@@ -1,26 +1,19 @@
 import {createSelector} from 'reselect';
 import {useSelector} from 'react-redux';
 
-const groupState = (state: any) => state.groups;
-
 export const getMembersSection = (type: 'group' | 'community') =>
   useSelector(
     createSelector(
-      state => groupState(state),
-      groupState => {
-        const members =
-          type === 'group'
-            ? groupState.groupMembers
-            : groupState.communityMembers;
-
+      (state: any) => state.groups[`${type}Members`],
+      memberState => {
         const sectionList: any = [];
 
-        Object.values(members)?.map((roleData: any) => {
+        Object.values(memberState)?.map((roleData: any) => {
           const section: any = {};
-          const {name, data} = roleData || {};
+          const {name, data, user_count} = roleData || {};
 
-          if (name && data) {
-            section.title = `${roleData.name}`;
+          if (name && data && user_count) {
+            section.title = `${roleData.name}s`;
             section.data = roleData.data;
             section.user_count = roleData.user_count;
             sectionList.push(section);
@@ -29,8 +22,8 @@ export const getMembersSection = (type: 'group' | 'community') =>
 
         return {
           sectionList,
-          loading: members.loading,
-          canLoadMore: members.canLoadMore,
+          loading: memberState.loading,
+          canLoadMore: memberState.canLoadMore,
         };
       },
     ),
