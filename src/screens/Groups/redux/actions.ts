@@ -263,9 +263,8 @@ const groupsActions = {
     type: groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST,
     payload,
   }),
-  approveAllMemberRequests: (payload: {
+  approveAllGroupMemberRequests: (payload: {
     groupId: number;
-    total: number;
     callback?: () => void;
   }) => ({
     type: groupsTypes.APPROVE_ALL_MEMBER_REQUESTS,
@@ -279,9 +278,8 @@ const groupsActions = {
     type: groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST,
     payload,
   }),
-  declineAllMemberRequests: (payload: {
+  declineAllGroupMemberRequests: (payload: {
     groupId: number;
-    total: number;
     callback?: () => void;
   }) => ({
     type: groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,

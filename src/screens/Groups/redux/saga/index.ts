@@ -52,6 +52,8 @@ import approveSingleCommunityMemberRequest from './approveSingleCommunityMemberR
 import declineSingleCommunityMemberRequest from './declineSingleCommunityMemberRequest';
 import approveAllCommunityMemberRequests from './approveAllCommunityMemberRequests';
 import declineAllCommunityMemberRequests from './declineAllCommunityMemberRequests';
+import approveAllGroupMemberRequests from './approveAllGroupMemberRequests';
+import declineAllGroupMemberRequests from './declineAllGroupMemberRequests';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -84,7 +86,7 @@ export default function* groupsSaga() {
   );
   yield takeLatest(
     groupsTypes.APPROVE_ALL_MEMBER_REQUESTS,
-    approveAllMemberRequests,
+    approveAllGroupMemberRequests,
   );
   yield takeLatest(
     groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST,
@@ -92,7 +94,7 @@ export default function* groupsSaga() {
   );
   yield takeLatest(
     groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
-    declineAllMemberRequests,
+    declineAllGroupMemberRequests,
   );
   yield takeLatest(groupsTypes.GET_YOUR_GROUPS_SEARCH, getYourGroupsSearch);
   yield takeLatest(groupsTypes.GET_YOUR_GROUPS_TREE, getYourGroupsTree);
@@ -442,44 +444,6 @@ function* approveSingleMemberRequest({
   }
 }
 
-function* approveAllMemberRequests({
-  payload,
-}: {
-  type: string;
-  payload: {groupId: number; total: number; callback?: () => void};
-}) {
-  const {groupId, total, callback} = payload;
-  try {
-    yield groupsDataHelper.approveAllMemberRequests(groupId, total);
-
-    yield put(groupsActions.getGroupDetail(groupId));
-
-    if (callback) {
-      const toastMessage: IToastMessage = {
-        content: `${i18next.t('groups:text_approved_all')}`,
-        props: {
-          textProps: {useI18n: true},
-          type: 'success',
-          rightIcon: 'UsersAlt',
-          rightText: 'Members',
-          onPressRight: callback,
-        },
-        toastType: 'normal',
-      };
-      yield put(modalActions.showHideToastMessage(toastMessage));
-    }
-  } catch (err: any) {
-    console.log('approveAllMemberRequests: ', err);
-
-    if (err?.code === approveDeclineCode.CANNOT_APPROVE_ALL) {
-      yield approvalError(groupId, err.code);
-      return;
-    }
-
-    yield showError(err);
-  }
-}
-
 function* declineSingleMemberRequest({
   payload,
 }: {
@@ -495,30 +459,6 @@ function* declineSingleMemberRequest({
 
     if (err?.code === approveDeclineCode.CANNOT_DECLINE) {
       yield approvalError(groupId, err.code, fullName);
-      return;
-    }
-
-    yield showError(err);
-  }
-}
-
-function* declineAllMemberRequests({
-  payload,
-}: {
-  type: string;
-  payload: {groupId: number; total: number; callback?: () => void};
-}) {
-  const {groupId, total, callback} = payload;
-  try {
-    yield groupsDataHelper.declineAllMemberRequests(groupId, total);
-    yield put(groupsActions.getGroupDetail(groupId));
-
-    if (callback) callback();
-  } catch (err: any) {
-    console.log('declineAllMemberRequests: ', err);
-
-    if (err?.code === approveDeclineCode.CANNOT_DECLINE_ALL) {
-      yield approvalError(groupId, err.code);
       return;
     }
 

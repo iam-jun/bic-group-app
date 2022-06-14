@@ -65,21 +65,19 @@ const GeneralInformation = (props: any) => {
     );
   };
 
-  const approveAllMemberRequests = () => {
+  const approveAllGroupMemberRequests = () => {
     dispatch(
-      groupsActions.approveAllMemberRequests({
+      groupsActions.approveAllGroupMemberRequests({
         groupId: id,
-        total: totalPendingMembers,
       }),
     );
     editGroupPrivacy({type: groupPrivacy.public});
   };
 
-  const declineAllMemberRequests = () => {
+  const declineAllGroupMemberRequests = () => {
     dispatch(
-      groupsActions.declineAllMemberRequests({
+      groupsActions.declineAllGroupMemberRequests({
         groupId: id,
-        total: totalPendingMembers,
       }),
     );
     editGroupPrivacy({type: groupPrivacy.secret});
@@ -95,7 +93,7 @@ const GeneralInformation = (props: any) => {
           theme,
           i18next.t('groups:update_privacy_modal:title'),
           i18next.t('groups:update_privacy_modal:content:approve'),
-          approveAllMemberRequests,
+          approveAllGroupMemberRequests,
         );
       }
 
@@ -105,7 +103,7 @@ const GeneralInformation = (props: any) => {
           theme,
           i18next.t('groups:update_privacy_modal:title'),
           i18next.t('groups:update_privacy_modal:content:decline'),
-          declineAllMemberRequests,
+          declineAllGroupMemberRequests,
         );
       }
     } else {

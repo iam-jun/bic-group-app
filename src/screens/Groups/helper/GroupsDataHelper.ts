@@ -167,17 +167,11 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  approveAllMemberRequests: (
-    groupId: number,
-    total: number,
-  ): HttpApiRequestConfig => ({
+  approveAllGroupMemberRequests: (groupId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/approve`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    data: {
-      total_joining_requests: total,
-    },
   }),
   declineSingleMemberRequest: (
     groupId: number,
@@ -188,17 +182,11 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  declineAllMemberRequests: (
-    groupId: number,
-    total: number,
-  ): HttpApiRequestConfig => ({
+  declineAllGroupMemberRequests: (groupId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/decline`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    data: {
-      total_joining_requests: total,
-    },
   }),
   getInnerGroupsLastAdmin: (
     groupId: number,
@@ -583,10 +571,10 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  approveAllMemberRequests: async (groupId: number, total: number) => {
+  approveAllGroupMemberRequests: async (groupId: number) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.approveAllMemberRequests(groupId, total),
+        groupsApiConfig.approveAllGroupMemberRequests(groupId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -611,10 +599,10 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  declineAllMemberRequests: async (groupId: number, total: number) => {
+  declineAllGroupMemberRequests: async (groupId: number) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.declineAllMemberRequests(groupId, total),
+        groupsApiConfig.declineAllGroupMemberRequests(groupId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
