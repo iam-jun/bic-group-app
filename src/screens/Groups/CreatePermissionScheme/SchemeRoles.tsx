@@ -7,14 +7,18 @@ import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import Icon from '~/beinComponents/Icon';
 import RoleItem from '~/screens/Groups/CreatePermissionScheme/components/RoleItem';
+import {IPermission} from '~/interfaces/IGroup';
 
 export interface SchemeRolesProps {
   style?: StyleProp<ViewStyle>;
+  onPressPermission?: (permission: IPermission, roleIndex: number) => void;
 }
 
-const SchemeRoles: FC<SchemeRolesProps> = ({style}: SchemeRolesProps) => {
+const SchemeRoles: FC<SchemeRolesProps> = ({
+  style,
+  onPressPermission,
+}: SchemeRolesProps) => {
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
@@ -22,22 +26,15 @@ const SchemeRoles: FC<SchemeRolesProps> = ({style}: SchemeRolesProps) => {
   const permissionCategories = useKeySelector(
     groupsKeySelector.permission.categories,
   );
-  const systemScheme = useKeySelector(
-    groupsKeySelector.permission.systemScheme,
+  const creatingScheme = useKeySelector(
+    groupsKeySelector.permission.creatingScheme,
   );
-
-  const schemeData = systemScheme?.data || {};
+  const {data: schemeData, memberRoleIndex} = creatingScheme || {};
   const {roles = []} = schemeData || {};
+
+  const memberRole = roles?.[memberRoleIndex] || {};
+
   const categories = permissionCategories?.data || [];
-
-  console.log(
-    `\x1b[34m🐣️ SchemeRoles SchemeRoles`,
-    `${JSON.stringify(schemeData, undefined, 2)}\x1b[0m`,
-  );
-
-  const _onPressPermission = (per: any) => {
-    console.log(`\x1b[35m🐣️ SchemeRoles _onPressPermission `, per, `\x1b[0m`);
-  };
 
   return (
     <>
@@ -54,9 +51,11 @@ const SchemeRoles: FC<SchemeRolesProps> = ({style}: SchemeRolesProps) => {
       </Text.BodyM>
       {roles?.map?.((role: any, roleIndex: number) => (
         <RoleItem
-          key={`role_${role?.id}`}
+          key={`role_${role?.id || `${role?.type}_${role?.scope}`}`}
           categories={categories}
           role={role}
+          roleIndex={roleIndex}
+          inheritedRole={roleIndex !== memberRoleIndex ? memberRole : undefined}
           onLayout={({
             nativeEvent: {
               layout: {y: anchor},
@@ -66,7 +65,7 @@ const SchemeRoles: FC<SchemeRolesProps> = ({style}: SchemeRolesProps) => {
               `\x1b[36m🐣️ SchemeRoles role anchor: ${anchor}\x1b[0m`,
             );
           }}
-          onPressPermission={_onPressPermission}
+          onPressPermission={onPressPermission}
         />
       ))}
     </>

@@ -39,6 +39,7 @@ const groupsKeySelector = {
   permission: {
     categories: 'groups.permissionScheme.categories',
     systemScheme: 'groups.permissionScheme.systemScheme',
+    creatingScheme: 'groups.permissionScheme.creatingScheme',
   },
 };
 

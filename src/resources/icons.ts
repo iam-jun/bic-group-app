@@ -37,7 +37,7 @@ import iconCheckboxSelected from '../../assets/icons/icon_checkbox_selected.png'
 import iconCheckboxInherited from '../../assets/icons/icon_checkbox_inherited.png';
 // @ts-ignore
 import iconCheckboxUnselected from '../../assets/icons/icon_checkbox_unselected.png';
-import iconCheckboxRetricted from '../../assets/icons/icon_checkbox_retricted.svg';
+import iconCheckboxRestricted from '../../assets/icons/icon_checkbox_retricted.svg';
 
 import iconMenuMoon from '../../assets/icons/icon_menu_moon.svg';
 import iconMenuSetting from '../../assets/icons/icon_menu_setting.svg';
@@ -168,7 +168,7 @@ const icons = {
   iconCheckboxUnselected,
   iconCheckboxSelected,
   iconCheckboxInherited,
-  iconCheckboxRetricted,
+  iconCheckboxRestricted,
   users: 'UsersAlt',
   search: 'Search',
   addUser: 'UserPlus',

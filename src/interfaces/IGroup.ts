@@ -21,10 +21,10 @@ export interface IPermission {
 export interface IScheme {
   id?: string;
   chatSchemeId?: string;
-  scope: string;
+  scope?: string;
   roles: IRole[];
-  name?: string;
-  description?: string;
+  name: string;
+  description: string;
   isSystem?: boolean;
   usedInsideCommId?: string | number;
   createdAt?: string;

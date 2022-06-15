@@ -16,6 +16,7 @@ import {
   IStateSearch,
   IStateList,
   IGroupMembers,
+  IPermission,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 import {IObject} from '~/interfaces/common';
@@ -41,6 +42,17 @@ const groupsActions = {
   }),
   setSystemScheme: (payload: any) => ({
     type: groupsTypes.SET_SYSTEM_SCHEME,
+    payload,
+  }),
+  setCreatingScheme: (payload?: any) => ({
+    type: groupsTypes.SET_CREATING_SCHEME,
+    payload,
+  }),
+  updateCreatingSchemePermission: (payload?: {
+    permission: IPermission;
+    roleIndex: number;
+  }) => ({
+    type: groupsTypes.UPDATE_CREATING_SCHEME_PERMISSION,
     payload,
   }),
 

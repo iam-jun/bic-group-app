@@ -7,31 +7,50 @@ import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
-import {IPermission} from '~/interfaces/IGroup';
+import {IPermission, IRole} from '~/interfaces/IGroup';
 
 export interface PermissionItemProps {
   permission: IPermission;
-  onPress?: (permission: IPermission) => void;
+  role: IRole;
+  roleIndex: number;
+  onPress?: (permission: IPermission, roleIndex: number) => void;
+  isChecked?: boolean;
+  isInherited?: boolean;
 }
 
 const PermissionItem: FC<PermissionItemProps> = ({
   permission,
+  role,
+  roleIndex,
   onPress,
+  isChecked,
+  isInherited,
 }: PermissionItemProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
+  const {restrictedRoles = [], name = ''} = permission;
+
+  const isRestricted = restrictedRoles?.includes?.(role.type || '');
+
   const _onPress = () => {
-    onPress?.(permission);
+    onPress?.(permission, roleIndex);
   };
 
-  const icon = 'iconCheckboxUnselected';
+  let icon: any = 'iconCheckboxUnselected';
+  if (isInherited) {
+    icon = 'iconCheckboxInherited';
+  } else if (isRestricted) {
+    icon = 'iconCheckboxRestricted';
+  } else if (isChecked) {
+    icon = 'iconCheckboxSelected';
+  }
 
   return (
     <View style={styles.permissionItem}>
-      <Text style={styles.permissionName}>{permission?.name}</Text>
+      <Text style={styles.permissionName}>{name}</Text>
       {onPress && (
-        <Button onPress={_onPress}>
+        <Button disabled={isRestricted || isInherited} onPress={_onPress}>
           <Icon icon={icon} />
         </Button>
       )}

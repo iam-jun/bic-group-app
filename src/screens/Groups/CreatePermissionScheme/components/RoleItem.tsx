@@ -12,13 +12,17 @@ import {ICategory, IPermission, IRole} from '~/interfaces/IGroup';
 export interface RoleItemProps {
   categories: ICategory[];
   role: IRole;
+  roleIndex: number;
+  inheritedRole?: IRole;
   onLayout: (e: any) => void;
-  onPressPermission?: (permission: IPermission) => void;
+  onPressPermission?: (permission: IPermission, roleIndex: number) => void;
 }
 
 const RoleItem: FC<RoleItemProps> = ({
   categories,
   role,
+  roleIndex,
+  inheritedRole,
   onLayout,
   onPressPermission,
 }: RoleItemProps) => {
@@ -31,6 +35,8 @@ const RoleItem: FC<RoleItemProps> = ({
     setIsExpand(!isExpand);
   };
 
+  const keyRoleId = role?.id || `${role?.type}_${role?.scope}`;
+
   return (
     <View onLayout={onLayout}>
       <TouchableOpacity onPress={onPress} style={styles.row}>
@@ -39,19 +45,23 @@ const RoleItem: FC<RoleItemProps> = ({
       </TouchableOpacity>
       {isExpand &&
         categories?.map?.((cat: ICategory) => (
-          <View key={`role_${role?.id}_cat_${cat?.key}`}>
+          <View key={`role_${keyRoleId}_cat_${cat?.key}`}>
             <Text.ButtonSmall style={styles.catName}>
               {cat?.name}
             </Text.ButtonSmall>
             {cat?.subCategories?.map((subCat: any) => (
               <View
-                key={`role_${role?.id}_cat_${cat?.key}_subCat_${subCat?.key}`}>
+                key={`role_${keyRoleId}_cat_${cat?.key}_subCat_${subCat?.key}`}>
                 <Text.H5 style={styles.subCatName}>{subCat?.name}</Text.H5>
                 {subCat?.permissions?.map((per: IPermission) => (
                   <PermissionItem
-                    key={`role_${role?.id}_cat_${cat?.key}_subCat_${subCat?.key}_per_${per?.key}`}
+                    key={`role_${keyRoleId}_cat_${cat?.key}_subCat_${subCat?.key}_per_${per?.key}`}
                     permission={per}
+                    role={role}
+                    roleIndex={roleIndex}
                     onPress={onPressPermission}
+                    isChecked={role?.permissions?.includes(per?.key)}
+                    isInherited={inheritedRole?.permissions?.includes(per?.key)}
                   />
                 ))}
               </View>

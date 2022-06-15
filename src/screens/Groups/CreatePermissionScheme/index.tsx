@@ -14,6 +14,8 @@ import InputSchemeInfo from '~/screens/Groups/CreatePermissionScheme/InputScheme
 import SchemeRoles from '~/screens/Groups/CreatePermissionScheme/SchemeRoles';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Text from '~/beinComponents/Text';
+import {getNewSchemeFromSystemScheme} from '~/screens/Groups/CreatePermissionScheme/helper';
+import {IPermission} from '~/interfaces/IGroup';
 
 export interface CreatePermissionSchemeProps {
   style?: StyleProp<ViewStyle>;
@@ -49,7 +51,27 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     if (!systemScheme?.data && !systemScheme?.loading) {
       dispatch(groupsActions.getSystemScheme());
     }
+    return () => {
+      dispatch(groupsActions.setCreatingScheme());
+    };
   }, []);
+
+  useEffect(() => {
+    if (systemScheme?.data) {
+      const {newScheme, memberRoleIndex} = getNewSchemeFromSystemScheme(
+        systemScheme.data,
+      );
+      dispatch(
+        groupsActions.setCreatingScheme({data: newScheme, memberRoleIndex}),
+      );
+    }
+  }, [systemScheme?.data]);
+
+  const onPressPermission = (permission: IPermission, roleIndex: number) => {
+    dispatch(
+      groupsActions.updateCreatingSchemePermission({permission, roleIndex}),
+    );
+  };
 
   const onPressCreate = () => {
     console.log(`\x1b[36m🐣️ index onPressCreate\x1b[0m`);
@@ -69,7 +91,7 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     return (
       <ScrollView>
         <InputSchemeInfo />
-        <SchemeRoles />
+        <SchemeRoles onPressPermission={onPressPermission} />
       </ScrollView>
     );
   };
