@@ -6,6 +6,10 @@ import {ITheme} from '~/theme/interfaces';
 
 import Text from '~/beinComponents/Text';
 import TextInput from '~/beinComponents/inputs/TextInput';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupsActions from '~/screens/Groups/redux/actions';
+import {useDispatch} from 'react-redux';
 
 export interface InputSchemeInfoProps {
   style?: StyleProp<ViewStyle>;
@@ -16,15 +20,21 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
 }: InputSchemeInfoProps) => {
   const [isFocusDesc, setIsFocusDesc] = useState(false);
 
+  const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
+  const name = useKeySelector(groupsKeySelector.permission.creatingScheme.name);
+  const description = useKeySelector(
+    groupsKeySelector.permission.creatingScheme.description,
+  );
+
   const onChangeName = (value: string) => {
-    console.log(`\x1b[36m🐣️ InputSchemeInfo onChangeName: ${value}\x1b[0m`);
+    dispatch(groupsActions.setCreatingSchemeData({name: value, description}));
   };
 
   const onChangeDesc = (value: string) => {
-    console.log(`\x1b[36m🐣️ InputSchemeInfo onChangeDesc: ${value}\x1b[0m`);
+    dispatch(groupsActions.setCreatingSchemeData({name, description: value}));
   };
 
   const onFocusDesc = () => {
@@ -36,10 +46,10 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <Text.H5 style={styles.textTitle}>Scheme name:</Text.H5>
       <TextInput
-        value={'Test scheme'} //todo handle input
+        value={name}
         testID="input_scheme_info.input_name"
         style={styles.textInputName}
         onChangeText={onChangeName}
@@ -59,7 +69,7 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
           isFocusDesc ? styles.textInputActive : styles.textInputInactive,
         ]}>
         <TextInput
-          value={'This is a test scheme'} //todo handle input
+          value={description}
           testID="input_scheme_info.input_desc"
           onChangeText={onChangeDesc}
           multiline

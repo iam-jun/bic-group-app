@@ -39,7 +39,12 @@ const groupsKeySelector = {
   permission: {
     categories: 'groups.permissionScheme.categories',
     systemScheme: 'groups.permissionScheme.systemScheme',
-    creatingScheme: 'groups.permissionScheme.creatingScheme',
+    creatingScheme: {
+      name: 'groups.permissionScheme.creatingScheme.data.name',
+      description: 'groups.permissionScheme.creatingScheme.data.description',
+      roles: 'groups.permissionScheme.creatingScheme.data.roles',
+      memberRoleIndex: 'groups.permissionScheme.creatingScheme.memberRoleIndex',
+    },
   },
 };
 

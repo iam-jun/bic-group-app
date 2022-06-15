@@ -48,6 +48,10 @@ const groupsActions = {
     type: groupsTypes.SET_CREATING_SCHEME,
     payload,
   }),
+  setCreatingSchemeData: (payload?: any) => ({
+    type: groupsTypes.SET_CREATING_SCHEME_DATA,
+    payload,
+  }),
   updateCreatingSchemePermission: (payload?: {
     permission: IPermission;
     roleIndex: number;

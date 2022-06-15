@@ -26,11 +26,11 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
   const permissionCategories = useKeySelector(
     groupsKeySelector.permission.categories,
   );
-  const creatingScheme = useKeySelector(
-    groupsKeySelector.permission.creatingScheme,
+  const roles =
+    useKeySelector(groupsKeySelector.permission.creatingScheme.roles) || [];
+  const memberRoleIndex = useKeySelector(
+    groupsKeySelector.permission.creatingScheme.memberRoleIndex,
   );
-  const {data: schemeData, memberRoleIndex} = creatingScheme || {};
-  const {roles = []} = schemeData || {};
 
   const memberRole = roles?.[memberRoleIndex] || {};
 
