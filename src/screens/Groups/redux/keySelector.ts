@@ -12,7 +12,7 @@ const groupsKeySelector = {
   groupSearch: 'groups.groupSearch',
   refreshingGroupPosts: 'groups.refreshingGroupPosts',
   loadingGroupMember: 'groups.loadingGroupMember',
-  groupMember: 'groups.groupMember',
+  groupMembers: 'groups.groupMembers',
   groupSearchMembers: 'groups.groupSearchMembers',
   selectedUsers: 'groups.selectedUsers',
   users: 'groups.users',
@@ -36,6 +36,11 @@ const groupsKeySelector = {
   communitySearchMembers: 'groups.communitySearchMembers',
   discoverGroups: 'groups.discoverGroups',
   communityMemberRequests: 'groups.communityMemberRequests',
+  permission: {
+    categories: 'groups.permissionScheme.categories',
+    systemScheme: 'groups.permissionScheme.systemScheme',
+    creatingScheme: 'groups.permissionScheme.creatingScheme',
+  },
 };
 
 export default groupsKeySelector;

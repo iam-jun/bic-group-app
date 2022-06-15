@@ -8,48 +8,61 @@ import * as navigationHook from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 
 describe('MemberItem component', () => {
+  const canManageMember = true;
+  const onPressMenu = jest.fn();
+
   it('should render data correctly', () => {
     const state = {...initialState};
     // @ts-ignore
     state.auth.user = {username: 'test'};
     const item = {...adminDetail};
     const store = createTestStore(state);
-    const wrapper = renderWithRedux(<MemberItem item={item} />, store);
+    const wrapper = renderWithRedux(
+      <MemberItem
+        item={item}
+        canManageMember={canManageMember}
+        onPressMenu={onPressMenu}
+      />,
+      store,
+    );
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should render icon chat correctly when user is an admin', () => {
-    const onPressChat = jest.fn();
+  it('should render icon member option correctly when user is an admin', () => {
     const state = {...initialState};
     // @ts-ignore
     state.auth.user = {username: 'anothertest'};
-    state.groups.communityDetail.can_manage_member = true;
     const item = {...adminDetail};
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
-      <MemberItem item={item} onPressChat={onPressChat} />,
+      <MemberItem
+        item={item}
+        canManageMember={canManageMember}
+        onPressMenu={onPressMenu}
+      />,
       store,
     );
-    const iconClose = wrapper.getByTestId('member_item.icon_chat.button');
-    expect(iconClose).toBeDefined();
-    fireEvent.press(iconClose);
-    expect(onPressChat).toBeCalled();
+    const iconOption = wrapper.getByTestId('member_item.icon_option.button');
+    expect(iconOption).toBeDefined();
+    fireEvent.press(iconOption);
     expect(wrapper).toMatchSnapshot();
   });
 
-  it('should NOT render icon chat correctly when user is NOT an admin', () => {
-    const onPressChat = jest.fn();
+  it('should NOT render icon member option correctly when user is NOT an admin', () => {
     const state = {...initialState};
     // @ts-ignore
     state.auth.user = {username: 'anothertest'};
-    state.groups.communityDetail.can_manage_member = false;
     const item = {...adminDetail};
     const store = createTestStore(state);
     const wrapper = renderWithRedux(
-      <MemberItem item={item} onPressChat={onPressChat} />,
+      <MemberItem
+        item={item}
+        canManageMember={false}
+        onPressMenu={onPressMenu}
+      />,
       store,
     );
-    const iconClose = wrapper.queryByTestId('member_item.icon_chat.button');
+    const iconClose = wrapper.queryByTestId('member_item.icon_option.button');
     expect(iconClose).toBeNull();
   });
 
@@ -65,7 +78,14 @@ describe('MemberItem component', () => {
       return {rootNavigation} as any;
     });
 
-    const wrapper = renderWithRedux(<MemberItem item={item} />, store);
+    const wrapper = renderWithRedux(
+      <MemberItem
+        item={item}
+        canManageMember={canManageMember}
+        onPressMenu={onPressMenu}
+      />,
+      store,
+    );
 
     const memberItem = wrapper.getByTestId('member_item');
     fireEvent.press(memberItem);

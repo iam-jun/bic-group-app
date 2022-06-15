@@ -2,6 +2,46 @@ import {GROUP_TYPE, PRIVACY_TYPE} from '~/constants/privacyTypes';
 import {IFilePicked, IObject} from './common';
 import {IUploadType} from '~/configs/resourceConfig';
 
+export interface IRole {
+  id?: string;
+  name?: string;
+  scope: string;
+  type: string;
+  permissions: string[];
+}
+
+export interface IPermission {
+  key: string;
+  name: string;
+  description: string;
+  scope: string;
+  restrictedRoles: string[];
+}
+
+export interface IScheme {
+  id?: string;
+  chatSchemeId?: string;
+  scope?: string;
+  roles: IRole[];
+  name: string;
+  description: string;
+  isSystem?: boolean;
+  usedInsideCommId?: string | number;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: string;
+}
+
+export interface ICategory {
+  key: string;
+  name: string;
+  subCategories: {
+    key: string;
+    name: string;
+    permissions: IPermission[];
+  }[];
+}
+
 export interface IGroup {
   id: number;
   name: string;
@@ -101,6 +141,7 @@ export interface IGroupGetJoinableMembers {
 
 export interface IGroupGetMembers {
   groupId: number;
+  isRefreshing?: boolean;
   params?: IParamGetGroupMembers;
 }
 

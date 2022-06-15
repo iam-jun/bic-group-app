@@ -28,24 +28,21 @@ export default function* getCommunitySearchMembers({
       ...params,
     });
 
-    // update search results data
-    const respData = resp?.data;
-    if (respData) {
-      const newData = {
-        loading: false,
-        canLoadMore:
-          respData.community_admin.data.length +
-            respData.community_member.data.length ===
-          appConfig.recordsPerPage,
-        data: [
-          ...data,
-          ...respData.community_admin.data,
-          ...respData.community_member.data,
-        ],
-      };
+    let newDataCount = 0;
+    let newDataArr: any = [];
+    Object.keys(resp)?.map?.((role: string) => {
+      newDataCount += resp[role]?.data?.length;
+      newDataArr = [...newDataArr, ...resp[role]?.data];
+    });
 
-      yield put(actions.setCommunitySearchMembers(newData));
-    }
+    // update search results data
+    const newData = {
+      loading: false,
+      canLoadMore: newDataCount === appConfig.recordsPerPage,
+      data: [...data, ...newDataArr],
+    };
+
+    yield put(actions.setCommunitySearchMembers(newData));
   } catch (err: any) {
     console.log('getCommunitySearchMembers error:', err);
     yield call(showError, err);

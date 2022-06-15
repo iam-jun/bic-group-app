@@ -19,7 +19,7 @@ import modalActions from '~/store/modal/actions';
 import {useBaseHook} from '~/hooks';
 import {formatDate} from '~/utils/formatData';
 import {usePostSettings} from '~/screens/Post/PostSettings/usePostSettings';
-import useCreatePost from '~/screens/Post/CreatePost/useCreatePost';
+import useCreatePost from '~/screens/Post/CreatePost/hooks/useCreatePost';
 import {IPostSettingsParams} from '~/interfaces/IPost';
 import postActions from '~/screens/Post/redux/actions';
 

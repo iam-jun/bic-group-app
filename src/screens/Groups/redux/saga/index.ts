@@ -4,23 +4,19 @@ import {put, select, takeLatest} from 'redux-saga/effects';
 import {
   IGroupAddMembers,
   IGroupGetJoinableMembers,
-  IGroupGetMembers,
   IGroupImageUpload,
-  IJoiningMember,
 } from '~/interfaces/IGroup';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsTypes from '~/screens/Groups/redux/types';
 import * as modalActions from '~/store/modal/actions';
 import {IResponseData, IToastMessage} from '~/interfaces/common';
-import {mapData, mapItems} from '../../helper/mapper';
+import {mapData} from '../../helper/mapper';
 import appConfig from '~/configs/appConfig';
-import FileUploader, {IGetFile} from '~/services/fileUploader';
+import ImageUploader, {IGetFile} from '~/services/imageUploader';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import memberRequestStatus from '~/constants/memberRequestStatus';
-import approveDeclineCode from '~/constants/approveDeclineCode';
 
 import joinNewGroup from './joinNewGroup';
 import leaveGroup from './leaveGroup';
@@ -43,6 +39,7 @@ import getCommunityMembers from './getCommunityMembers';
 import getDiscoverGroups from './getDiscoverGroups';
 import getManagedCommunities from './getManagedCommunities';
 import getCommunitySearchMembers from './getCommunitySearchMembers';
+import getGroupMembers from './getGroupMembers';
 import getGroupSearchMembers from './getGroupSearchMembers';
 import joinCommunity from './joinCommunity';
 import cancelJoinCommunity from './cancelJoinCommunity';
@@ -57,12 +54,19 @@ import declineAllGroupMemberRequests from './declineAllGroupMemberRequests';
 import approveSingleGroupMemberRequest from './approveSingleGroupMemberRequests';
 import declineSingleGroupMemberRequest from './declineSingleGroupMemberRequest';
 import getGroupMemberRequests from './getGroupMemberRequests';
+import getPermissionCategories from '~/screens/Groups/redux/saga/getPermissionCategories';
+import getSystemScheme from '~/screens/Groups/redux/saga/getSystemScheme';
 
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* groupsSaga() {
+  yield takeLatest(
+    groupsTypes.GET_PERMISSION_CATEGORIES,
+    getPermissionCategories,
+  );
+  yield takeLatest(groupsTypes.GET_SYSTEM_SCHEME, getSystemScheme);
   yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
-  yield takeLatest(groupsTypes.GET_GROUP_MEMBER, getGroupMember);
+  yield takeLatest(groupsTypes.GET_GROUP_MEMBER, getGroupMembers);
   yield takeLatest(groupsTypes.GET_GROUP_SEARCH_MEMBERS, getGroupSearchMembers);
   yield takeLatest(groupsTypes.GET_GROUP_POSTS, getGroupPosts);
   yield takeLatest(groupsTypes.MERGE_EXTRA_GROUP_POSTS, mergeExtraGroupPosts);
@@ -163,62 +167,12 @@ function* getGroupSearch({payload}: {type: string; payload: string}) {
   }
 }
 
-function* getGroupMember({payload}: {type: string; payload: IGroupGetMembers}) {
-  try {
-    yield put(groupsActions.setLoadingGroupMembers(true));
-    const {groupId, params} = payload;
-
-    const {groups} = yield select();
-    const {groupMember} = groups;
-    const newGroupMembers = Object.assign({}, groupMember || {});
-    const {skip = 0, canLoadMore = true} = newGroupMembers;
-    if (canLoadMore) {
-      const response: IResponseData = yield groupsDataHelper.getGroupMembers(
-        groupId,
-        {
-          offset: skip,
-          limit: appConfig.recordsPerPage,
-          ...params,
-        },
-      );
-
-      let newSkip = skip;
-      let newCanLoadMore = canLoadMore;
-      if (response) {
-        Object.keys(response)?.map?.((role: any) => {
-          // @ts-ignore
-          newSkip = newSkip + response?.[role]?.data?.length || 0;
-          if (newGroupMembers?.[role]) {
-            const roleData = {...newGroupMembers[role]};
-            newGroupMembers[role].data = roleData.data?.concat(
-              // @ts-ignore
-              response?.[role]?.data || [],
-            );
-          } else {
-            // @ts-ignore
-            newGroupMembers[role] = response?.[role];
-          }
-          newGroupMembers.skip = newSkip;
-        });
-        if (newSkip === skip) {
-          newCanLoadMore = false;
-        }
-        newGroupMembers.canLoadMore = newCanLoadMore;
-        yield put(groupsActions.setGroupMembers(newGroupMembers));
-      }
-    }
-    yield put(groupsActions.setLoadingGroupMembers(false));
-  } catch (e) {
-    console.log(`\x1b[31m🐣️ getGroupMember | getGroupMember : ${e} \x1b[0m`);
-  }
-}
-
 function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
   try {
     const {file, id, fieldName, uploadType} = payload;
     yield updateLoadingImageState(fieldName, true);
 
-    const data: IGetFile = yield FileUploader.getInstance().upload({
+    const data: IGetFile = yield ImageUploader.getInstance().upload({
       file,
       uploadType,
     });

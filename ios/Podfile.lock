@@ -14,6 +14,8 @@ PODS:
     - ExpoModulesCore
   - EXConstants (13.1.1):
     - ExpoModulesCore
+  - EXErrorRecovery (3.1.0):
+    - ExpoModulesCore
   - EXFileSystem (14.0.0):
     - ExpoModulesCore
   - EXFont (10.1.0):
@@ -396,7 +398,7 @@ PODS:
     - react-native-config/App (= 1.4.5)
   - react-native-config/App (1.4.5):
     - React-Core
-  - react-native-document-picker (6.0.5):
+  - react-native-document-picker (8.1.0):
     - React-Core
   - react-native-netinfo (6.0.4):
     - React-Core
@@ -596,6 +598,7 @@ DEPENDENCIES:
   - EXAV (from `../node_modules/expo-av/ios`)
   - EXCamera (from `../node_modules/expo-camera/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
+  - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
   - Expo (from `../node_modules/expo/ios`)
@@ -732,6 +735,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-camera/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
+  EXErrorRecovery:
+    :path: "../node_modules/expo-error-recovery/ios"
   EXFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   EXFont:
@@ -864,6 +869,7 @@ SPEC CHECKSUMS:
   EXAV: 88f61c5af8415715b7ee51f084c1020235b85c56
   EXCamera: 2cbc8206cb520562c1527fe565aa9f00df8e5e8f
   EXConstants: fdbe52259365b6a6faaa5e99a3b82cfa6bc2eb61
+  EXErrorRecovery: 3ce46e5d42e53c0371ff048a7f0cbc959968ef4a
   EXFileSystem: 2aa2d9289f84bca9532b9ccbd81504fa31eb1ded
   EXFont: 04235cc22e6fef86028feb67db452978dc6f240f
   Expo: b9fff0a1eac0f424fc68ea49b4347fb308e52e17
@@ -913,7 +919,7 @@ SPEC CHECKSUMS:
   React-jsinspector: c5989c77cb89ae6a69561095a61cce56a44ae8e8
   React-logger: a0833912d93b36b791b7a521672d8ee89107aff1
   react-native-config: 6502b1879f97ed5ac570a029961fc35ea606cd14
-  react-native-document-picker: 73ae67717ba14756a5dd291116fb7d35506b1200
+  react-native-document-picker: 5663fe4bcdb646200683a41790464d2793307ac8
   react-native-netinfo: 1c7676413ab265759c7b3da205efab163f5366ef
   react-native-pager-view: c44c385eb20f0733c53685456fb9eb8d8469a1bb
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
@@ -957,4 +963,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 4ea75a6c732ba56b3a489e36208a1afae3d37d37
 
-COCOAPODS: 1.11.3
+COCOAPODS: 1.11.2

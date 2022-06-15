@@ -42,7 +42,11 @@ const CommunityAdmin = () => {
   };
 
   const onPressGeneralInfo = () => {
-    // TODO: navigate to general info
+    dispatch(modalActions.showAlertNewFeature());
+  };
+
+  const onPressPermission = () => {
+    rootNavigation.navigate(groupStack.communityPermission);
   };
 
   const renderModerating = () => (
@@ -98,18 +102,18 @@ const CommunityAdmin = () => {
         onPress={onPressGeneralInfo}
       />
       <MenuItem
+        testID="community_admin.permission_settings"
+        title="settings:title_permission_settings"
+        icon="FileLockAlt"
+        iconProps={{icon: 'FileLockAlt', tintColor: theme.colors.primary6}}
+        rightSubIcon="AngleRightB"
+        onPress={onPressPermission}
+      />
+      <MenuItem
         testID="community_admin.post_settings"
         title="settings:title_post_settings"
         icon="FileCopyAlt"
         iconProps={{icon: 'FileCopyAlt', tintColor: theme.colors.primary6}}
-        rightSubIcon="AngleRightB"
-        onPress={displayNewFeature}
-      />
-      <MenuItem
-        testID="community_admin.membership_settings"
-        title="settings:title_membership_settings"
-        icon="UserCircle"
-        iconProps={{icon: 'UserCircle', tintColor: theme.colors.primary6}}
         rightSubIcon="AngleRightB"
         onPress={displayNewFeature}
       />

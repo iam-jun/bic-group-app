@@ -209,8 +209,7 @@ const CommentDetailContent = (props: any) => {
         isDismissible: true,
         onConfirm: () => {
           if (type === 'deleted_post') {
-            rootNavigation.replace(homeStack.newsfeed);
-            dispatch(homeActions.getHomePosts({isRefresh: true}));
+            rootNavigation.popToTop();
           } else {
             rootNavigation.goBack();
           }
@@ -223,8 +222,7 @@ const CommentDetailContent = (props: any) => {
         headerStyle: {marginBottom: 0},
         onDismiss: () => {
           if (type === 'deleted_post') {
-            rootNavigation.replace(homeStack.newsfeed);
-            dispatch(homeActions.getHomePosts({isRefresh: true}));
+            rootNavigation.popToTop();
           } else {
             rootNavigation.goBack();
           }

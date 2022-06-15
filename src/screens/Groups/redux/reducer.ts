@@ -4,8 +4,23 @@ import groupsTypes from '~/screens/Groups/redux/types';
 import {IUser} from '~/interfaces/IAuth';
 import {IGroupDetail, IGroupMembers, IJoiningMember} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
+import {getNewSchemeRolesOnUpdatePermission} from '~/screens/Groups/CreatePermissionScheme/helper';
 
 export const groupInitState = {
+  permissionScheme: {
+    categories: {
+      data: undefined,
+      loading: false,
+    },
+    systemScheme: {
+      data: undefined,
+      loading: false,
+    },
+    creatingScheme: {
+      data: undefined,
+      memberRoleIndex: 0,
+    },
+  },
   isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
   joinedGroups: [],
@@ -35,11 +50,11 @@ export const groupInitState = {
     result: [],
   },
   loadingGroupMember: false,
-  groupMember: {
-    skip: 0,
-    take: 20,
+  groupMembers: {
+    loading: false,
     canLoadMore: true,
-    //type admin, member...
+    offset: 0, // current fetched data count
+    // group_admin: {}, group_member: {}
   },
   groupSearchMembers: {
     loading: false,
@@ -104,15 +119,14 @@ export const groupInitState = {
   communityMembers: {
     loading: false,
     canLoadMore: true,
-    community_admin: {data: [], user_count: 0},
-    member: {data: [], user_count: 0},
+    offset: 0, // current fetched data count
+    // community_admin: {}, community_member: {}
   },
   communitySearchMembers: {
     loading: false,
     canLoadMore: true,
     data: [] as ICommunityMembers[],
   },
-
   discoverGroups: {
     loading: false,
     data: [],
@@ -145,12 +159,68 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     communityMembers,
     communitySearchMembers,
     managedCommunities,
+    groupMembers,
     groupSearchMembers,
     discoverCommunities,
     communityMemberRequests,
   } = state;
 
   switch (type) {
+    // Permission
+    case groupsTypes.SET_PERMISSION_CATEGORIES:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          categories: payload,
+        },
+      };
+    case groupsTypes.SET_SYSTEM_SCHEME:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          systemScheme: payload,
+        },
+      };
+    case groupsTypes.SET_CREATING_SCHEME:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          creatingScheme: payload
+            ? {
+                ...state.permissionScheme.creatingScheme,
+                ...payload,
+              }
+            : {},
+        },
+      };
+    case groupsTypes.UPDATE_CREATING_SCHEME_PERMISSION: {
+      const {permission, roleIndex} = payload || {};
+      // @ts-ignore
+      const roles = state.permissionScheme.creatingScheme?.data?.roles || [];
+      const newRoles = getNewSchemeRolesOnUpdatePermission(
+        permission,
+        roleIndex,
+        roles,
+      );
+      const newData = Object.assign(
+        state.permissionScheme.creatingScheme.data,
+        {roles: newRoles},
+      );
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          creatingScheme: {
+            ...state.permissionScheme.creatingScheme,
+            data: newData,
+          },
+        },
+      };
+    }
+
     case groupsTypes.SET_PRIVACY_MODAL_OPEN:
       return {
         ...state,
@@ -174,20 +244,18 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
 
-    case groupsTypes.SET_LOADING_GROUP_MEMBER:
-      return {
-        ...state,
-        loadingGroupMember: payload,
-      };
     case groupsTypes.CLEAR_GROUP_MEMBER:
       return {
         ...state,
-        groupMember: groupInitState.groupMember,
+        groupMembers: groupInitState.groupMembers,
       };
     case groupsTypes.SET_GROUP_MEMBER:
       return {
         ...state,
-        groupMember: action.payload,
+        groupMembers: {
+          ...groupMembers,
+          ...payload,
+        },
       };
 
     case groupsTypes.GET_GROUP_POSTS:

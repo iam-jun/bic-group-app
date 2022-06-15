@@ -36,6 +36,8 @@ import {
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 import {ReactionType} from '~/constants/reactions';
+import {IFilePicked} from '~/interfaces/common';
+import {IGetFile} from '~/services/imageUploader';
 
 const postActions = {
   setAllPosts: (payload: IAllPosts) => ({
@@ -91,6 +93,22 @@ const postActions = {
   }),
   setCreatePostVideo: (payload?: any) => ({
     type: postTypes.SET_CREATE_POST_VIDEO,
+    payload,
+  }),
+  setCreatePostFiles: (payload?: IFilePicked[]) => ({
+    type: postTypes.SET_CREATE_POST_FILES,
+    payload,
+  }),
+  setCreatePostFile: (payload?: IGetFile) => ({
+    type: postTypes.SET_CREATE_POST_FILE,
+    payload,
+  }),
+  addCreatePostFiles: (payload?: IFilePicked[]) => ({
+    type: postTypes.ADD_CREATE_POST_FILES,
+    payload,
+  }),
+  removeCreatePostFile: (payload?: IFilePicked | IGetFile) => ({
+    type: postTypes.REMOVE_CREATE_POST_FILE,
     payload,
   }),
   setCreatePostInitAudiences: (payload?: IPostAudience) => ({
@@ -301,6 +319,10 @@ const postActions = {
   }),
   removeCommentLevel1Deleted: (payload: any) => ({
     type: postTypes.REMOVE_COMMENT_DELETED,
+    payload,
+  }),
+  deletePostLocal: (payload: string) => ({
+    type: postTypes.DELETE_POST_LOCAL,
     payload,
   }),
 };

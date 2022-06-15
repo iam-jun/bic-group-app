@@ -43,13 +43,13 @@ const MemberOptionsMenu = ({
     groupsKeySelector.groupDetail.can_manage_member,
   );
   const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
-  const groupMember = useKeySelector(groupsKeySelector.groupMember);
+  const groupMembers = useKeySelector(groupsKeySelector.groupMembers);
   const {getInnerGroupsNames} = useRemoveMember({
     groupId,
     selectedMember,
   });
   const alertRemovingAdmin = useRemoveAdmin({groupId, selectedMember});
-  const alertLeaveGroup = useLeaveGroup({groupId, username: user.username});
+  const alertLeaveGroup = useLeaveGroup({groupId, username: user?.username});
 
   const onPressMenuOption = (
     type: 'set-admin' | 'remove-admin' | 'remove-member' | 'leave-group',
@@ -107,7 +107,7 @@ const MemberOptionsMenu = ({
 
   const onPressRemoveAdmin = () => {
     if (selectedMember?.id) {
-      const adminCount = groupMember?.group_admin?.user_count;
+      const adminCount = groupMembers?.group_admin?.user_count;
       if (adminCount > 1) {
         alertRemovingAdmin();
       } else {

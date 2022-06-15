@@ -17,8 +17,8 @@ describe('get Search members', () => {
     payload: {communityId: 1, params: {}},
   };
 
-  it('should get data correctly', () => {
-    const resp = {data: memberData};
+  it('should get data correctly', async () => {
+    const resp = {...memberData};
 
     const state = {
       groups: {
@@ -59,7 +59,7 @@ describe('get Search members', () => {
       });
   });
 
-  it('should NOT call API when canLoadMore = false', () => {
+  it('should NOT call API when canLoadMore = false', async () => {
     const state = {
       groups: {
         communitySearchMembers: {
@@ -78,7 +78,7 @@ describe('get Search members', () => {
       });
   });
 
-  it('should call server and throws error', () => {
+  it('should call server and throws error', async () => {
     const error = {code: 1};
     const state = {
       groups: {
@@ -103,29 +103,6 @@ describe('get Search members', () => {
       .run()
       .then(({allEffects}: any) => {
         expect(allEffects?.length).toEqual(6);
-      });
-  });
-
-  it('should return nothing when there is no data from response', () => {
-    const resp = {};
-
-    const state = {
-      groups: {
-        communitySearchMembers: {
-          loading: false,
-          canLoadMore: true,
-          data: [],
-        },
-      },
-    };
-
-    return expectSaga(getCommunitySearchMembers, action)
-      .withState(state)
-      .put(actions.setCommunitySearchMembers({loading: true}))
-      .provide([[matchers.call.fn(groupsDataHelper.getCommunityMembers), resp]])
-      .run()
-      .then(({allEffects}: any) => {
-        expect(allEffects?.length).toEqual(3);
       });
   });
 });
