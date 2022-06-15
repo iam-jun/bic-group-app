@@ -27,6 +27,120 @@ export const groupDetailData: IGroupDetail = {
   total_pending_members: 0,
 };
 
+export const adminDetail = {
+  id: 1,
+  username: 'testmember',
+  fullname: 'Test Name Admin',
+  avatar:
+    'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png',
+  chat_user_id: 'mdp9rococ3d83qk9nbrybxay3e',
+  is_admin: true,
+  custom_role_ids: [],
+  roles: [
+    {
+      data_values: {
+        id: '23a07c64-27d7-4438-a17d-9aae7bbbd4df',
+        name: 'Admin',
+        type: 'GROUP_ADMIN',
+        permissions: [
+          'view_group_profile',
+          'view_group_members',
+          'view_message',
+          'view_message_history',
+          'send_message',
+          'send_files',
+          'send_images',
+          'react',
+          'send_tickers',
+          'mention_all_here',
+          'pin_message',
+          'view_post',
+          'view_post_statistic',
+          'create_post',
+          'view_related_post',
+          'report_member',
+          'manage_member',
+          'setting',
+          'approve_post',
+          'report_post',
+          'mark_important_post',
+          'delete_post',
+          'edit_group_profile',
+          'change_parent_group',
+          'delete_message',
+        ],
+      },
+      previous_data_values: {
+        id: '23a07c64-27d7-4438-a17d-9aae7bbbd4df',
+        name: 'Admin',
+        type: 'GROUP_ADMIN',
+        permissions: [
+          'view_group_profile',
+          'view_group_members',
+          'view_message',
+          'view_message_history',
+          'send_message',
+          'send_files',
+          'send_images',
+          'react',
+          'send_tickers',
+          'mention_all_here',
+          'pin_message',
+          'view_post',
+          'view_post_statistic',
+          'create_post',
+          'view_related_post',
+          'report_member',
+          'manage_member',
+          'setting',
+          'approve_post',
+          'report_post',
+          'mark_important_post',
+          'delete_post',
+          'edit_group_profile',
+          'change_parent_group',
+          'delete_message',
+        ],
+      },
+      changed: {},
+      options: {
+        is_new_record: false,
+        schema: 'bein',
+        schema_delimiter: '',
+        include_validated: true,
+        raw: true,
+        attributes: ['id', 'name', 'type', 'permissions'],
+      },
+      is_new_record: false,
+    },
+  ],
+};
+
+export const memberDetail = {
+  id: 2,
+  username: 'testmember',
+  fullname: 'Test Name Member',
+  avatar:
+    'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg',
+  chat_user_id: '4bkzernmdtgb7eiy9yspw3n4ra',
+  is_admin: false,
+  custom_role_ids: [],
+  roles: [],
+};
+
+export const memberData = {
+  group_admin: {
+    name: 'Admin',
+    data: [adminDetail, adminDetail, adminDetail],
+    user_count: 3,
+  },
+  group_member: {
+    name: 'Member',
+    data: [memberDetail, memberDetail, memberDetail, memberDetail],
+    user_count: 4,
+  },
+};
+
 export const discoverGroup = {
   id: 24,
   parent_id: 22,

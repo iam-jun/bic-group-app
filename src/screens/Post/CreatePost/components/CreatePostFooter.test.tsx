@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {configureStore, renderWithRedux} from '~/test/testUtils';
-import CreatePostFooter from '~/screens/Post/CreatePost/CreatePostFooter';
+import CreatePostFooter from '~/screens/Post/CreatePost/components/CreatePostFooter';
 import initialState from '~/store/initialState';
 
 describe('CreatePostFooter component', () => {

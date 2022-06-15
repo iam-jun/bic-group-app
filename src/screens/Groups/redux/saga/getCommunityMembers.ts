@@ -10,50 +10,58 @@ export default function* getCommunityMembers({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; params?: IParamGetCommunityMembers};
+  payload: {
+    communityId: number;
+    isRefreshing?: boolean;
+    params?: IParamGetCommunityMembers;
+  };
 }) {
   try {
     const {groups} = yield select();
-    const {communityId, params} = payload;
-    const {canLoadMore, community_admin, member} = groups.communityMembers;
+    const {communityId, isRefreshing, params} = payload;
+    const communityMembers = groups.communityMembers;
+    const {canLoadMore, offset} = communityMembers;
 
     yield put(
       actions.setCommunityMembers({
-        loading: community_admin.data.length + member.data.length === 0,
+        loading: isRefreshing ? true : offset === 0,
       }),
     );
 
-    if (!canLoadMore) return;
+    if (!isRefreshing && !canLoadMore) return;
 
     // @ts-ignore
     const resp = yield call(groupsDataHelper.getCommunityMembers, communityId, {
       limit: appConfig.recordsPerPage,
-      offset: community_admin.data.length + member.data.length,
+      offset: isRefreshing ? 0 : offset,
       ...params,
     });
 
-    const respData = resp?.data;
-    if (respData) {
-      const newData = {
-        loading: false,
-        canLoadMore:
-          respData.community_admin.data.length +
-            respData.community_member.data.length ===
-          appConfig.recordsPerPage,
-        community_admin: {
-          // append data when loading more
-          data: [...community_admin.data, ...respData.community_admin.data],
-          user_count: respData.community_admin.user_count,
-        },
-        member: {
-          // append data when loading more
-          data: [...member.data, ...respData.community_member.data],
-          user_count: respData.community_member.user_count,
+    let newDataCount = 0;
+    let newDataObj = {};
+    Object.keys(resp)?.map?.((role: string) => {
+      newDataCount += resp[role]?.data?.length;
+      newDataObj = {
+        ...newDataObj,
+        [role]: {
+          name: resp[role]?.name,
+          user_count: resp[role]?.user_count,
+          data:
+            isRefreshing || !communityMembers?.[role]?.data
+              ? [...resp[role]?.data]
+              : [...communityMembers?.[role]?.data, ...resp[role]?.data],
         },
       };
+    });
 
-      yield put(actions.setCommunityMembers(newData));
-    }
+    const newData = {
+      loading: false,
+      canLoadMore: newDataCount === appConfig.recordsPerPage,
+      offset: isRefreshing ? newDataCount : offset + newDataCount,
+      ...newDataObj,
+    };
+
+    yield put(actions.setCommunityMembers(newData));
   } catch (err: any) {
     console.log('getCommunityMembers error:', err);
     yield call(showError, err);
