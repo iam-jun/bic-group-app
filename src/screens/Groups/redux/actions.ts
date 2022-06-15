@@ -375,6 +375,7 @@ const groupsActions = {
   }),
   getCommunityMembers: (payload: {
     communityId: number;
+    isRefreshing?: boolean;
     params?: IParamGetCommunityMembers;
   }) => ({
     type: groupsTypes.GET_COMMUNITY_MEMBERS,
