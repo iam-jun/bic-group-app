@@ -271,6 +271,7 @@ const icons = {
   VolumeMute: 'VolumeMute',
   CheckCircle: 'CheckCircle',
   iconPlayGif,
+  download: 'CloudDownload',
 };
 
 export default icons;

@@ -11,6 +11,8 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '../../redux/keySelector';
 
 export interface CreatePostFooterProps {
   toolbarRef?: any;
@@ -33,6 +35,7 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
 
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
+  const selectingFiles = useKeySelector(postKeySelector.createPost.files);
 
   const mentionContainerStyle = useAnimatedStyle(() => ({
     position: 'absolute',
@@ -54,10 +57,11 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
       <PostToolbar
         toolbarRef={toolbarRef}
         disabled={loading}
-        onPressBack={onPressBack}
+        filesLength={selectingFiles.length}
         imageDisabled={imageDisabled}
         videoDisabled={videoDisabled}
         fileDisabled={fileDisabled}
+        onPressBack={onPressBack}
       />
       <Animated.View
         testID={'create_post_footer.mention_bar_container'}
