@@ -269,6 +269,7 @@ const mapResponseSuccessBein = (
 
 const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
   switch (endPoint) {
+    case `${ApiConfig.providers.bein.url}system-scheme`:
     case `${ApiConfig.providers.bein.url}permissions/categories`:
       return true;
   }

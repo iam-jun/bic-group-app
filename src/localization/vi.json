@@ -233,6 +233,7 @@
     "title_general_information": "Thông tin chung",
     "title_profile_info": "Thông tin chung",
     "title_role_management": "Role Management",
+    "title_permission_settings": "Cài đặt quyền",
     "title_membership_settings": "Cài đặt thành viên",
     "title_post_settings": "Cài đặt bài viết",
     "title_module_settings": "Module Settings",
@@ -702,7 +703,17 @@
     "text_other_member_one": "{{count}} người khác là thành viên",
     "text_other_member_other": "{{count}} người khác là thành viên",
     "text_is_member": "là thành viên",
-    "title_discover_groups": "Khám phá các nhóm"
+    "title_discover_groups": "Khám phá các nhóm",
+    "permission": {
+      "title_permission": "Cài đặt quyền",
+      "title_system_scheme": "Quyền hệ thống",
+      "title_community_scheme": "Quyền cộng đồng",
+      "title_group_scheme": "Quyền nhóm",
+      "title_create_community_scheme": "Tạo quyền cho cộng đồng",
+      "text_desc_system_scheme": "Sử dụng quyền mặc định của hệ thống. Nếu không có bất cứ quyền tự tạo nào, quyền hệ thống sẽ tự động được chọn.",
+      "text_desc_community_scheme": "Tạo quyền áp dụng cho cộng đồng.",
+      "text_desc_group_scheme": "Tạo quyền áp dụng cho những nhóm cụ thể."
+    }
   },
   "upload": {
     "text_create_file_id_request_failed": "Có lỗi khi yêu cầu tạo id",

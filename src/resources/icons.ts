@@ -31,6 +31,13 @@ import iconMenuLogout from '../../assets/icons/icon_menu_logout.svg';
 import iconMenuMenu from '../../assets/icons/icon_menu_menu.svg';
 import iconMenuMonitor from '../../assets/icons/icon_menu_monitor.svg';
 import iconSendComment from '../../assets/icons/icon_send_comment.svg';
+// @ts-ignore
+import iconCheckboxSelected from '../../assets/icons/icon_checkbox_selected.png';
+// @ts-ignore
+import iconCheckboxInherited from '../../assets/icons/icon_checkbox_inherited.png';
+// @ts-ignore
+import iconCheckboxUnselected from '../../assets/icons/icon_checkbox_unselected.png';
+import iconCheckboxRestricted from '../../assets/icons/icon_checkbox_retricted.svg';
 
 import iconMenuMoon from '../../assets/icons/icon_menu_moon.svg';
 import iconMenuSetting from '../../assets/icons/icon_menu_setting.svg';
@@ -126,6 +133,7 @@ const icons = {
   CornerDownRight: 'CornerDownRight',
   Trash: 'Trash',
   FileEditAlt: 'FileEditAlt',
+  FileLockAlt: 'FileLockAlt',
   Edit: 'Edit',
   Redo: 'Redo',
   ImageV: 'ImageV',
@@ -157,6 +165,10 @@ const icons = {
   iconLanguageEn,
   iconLanguageVi,
   iconCheckbox,
+  iconCheckboxUnselected,
+  iconCheckboxSelected,
+  iconCheckboxInherited,
+  iconCheckboxRestricted,
   users: 'UsersAlt',
   search: 'Search',
   addUser: 'UserPlus',

@@ -36,6 +36,11 @@ const groupsKeySelector = {
   communitySearchMembers: 'groups.communitySearchMembers',
   discoverGroups: 'groups.discoverGroups',
   communityMemberRequests: 'groups.communityMemberRequests',
+  permission: {
+    categories: 'groups.permissionScheme.categories',
+    systemScheme: 'groups.permissionScheme.systemScheme',
+    creatingScheme: 'groups.permissionScheme.creatingScheme',
+  },
 };
 
 export default groupsKeySelector;

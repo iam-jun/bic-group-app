@@ -52,10 +52,17 @@ import approveSingleCommunityMemberRequest from './approveSingleCommunityMemberR
 import declineSingleCommunityMemberRequest from './declineSingleCommunityMemberRequest';
 import approveAllCommunityMemberRequests from './approveAllCommunityMemberRequests';
 import declineAllCommunityMemberRequests from './declineAllCommunityMemberRequests';
+import getPermissionCategories from '~/screens/Groups/redux/saga/getPermissionCategories';
+import getSystemScheme from '~/screens/Groups/redux/saga/getSystemScheme';
 
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* groupsSaga() {
+  yield takeLatest(
+    groupsTypes.GET_PERMISSION_CATEGORIES,
+    getPermissionCategories,
+  );
+  yield takeLatest(groupsTypes.GET_SYSTEM_SCHEME, getSystemScheme);
   yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
   yield takeLatest(groupsTypes.GET_GROUP_MEMBER, getGroupMembers);
   yield takeLatest(groupsTypes.GET_GROUP_SEARCH_MEMBERS, getGroupSearchMembers);
