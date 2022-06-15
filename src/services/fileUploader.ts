@@ -278,4 +278,17 @@ export default class FileUploader {
     const filename = file?.name || file?.filename || file?.fileName;
     this.fileAbortController?.[filename]?.abort?.();
   }
+
+  resetData() {
+    this.fileUploaded = {};
+    this.fileUploading = {};
+    this.fileAbortController = {};
+    console.log(
+      `\x1b[36m🐣️ fileUploader reset data fileUploaded: ${JSON.stringify(
+        this.fileUploaded,
+      )}\nfileUploading ${this.fileUploading}\nfileAbortController ${
+        this.fileAbortController
+      }\x1b[0m`,
+    );
+  }
 }

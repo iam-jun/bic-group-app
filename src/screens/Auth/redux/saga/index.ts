@@ -22,6 +22,7 @@ import forgotPasswordRequest from './forgotPasswordRequest';
 import signIn from './signIn';
 import signInSuccess from './signInSuccess';
 import showError from '~/store/commonSaga/showError';
+import FileUploader from '~/services/fileUploader';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -151,6 +152,7 @@ function* signOut({payload}: any) {
       };
       yield saveUserToSharedPreferences(data);
     }
+    FileUploader.getInstance()?.resetData?.();
   } catch (err) {
     yield showError(err);
     if (!payload) {
