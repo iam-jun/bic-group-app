@@ -34,12 +34,8 @@ const PendingMembers = (props: any) => {
   );
   const {data, loading, canLoadMore, total} = pendingMemberRequests;
 
-  const getData = () => {
-    dispatch(groupsActions.getMemberRequests({groupId}));
-  };
-
-  const resetData = () => {
-    dispatch(groupsActions.resetMemberRequests());
+  const getData = (isRefreshing?: boolean) => {
+    dispatch(groupsActions.getGroupMemberRequests({groupId, isRefreshing}));
   };
 
   useEffect(() => {
@@ -55,8 +51,7 @@ const PendingMembers = (props: any) => {
   };
 
   const onRefresh = () => {
-    resetData();
-    getData();
+    getData(true);
   };
 
   const renderItem = ({item}: {item: number}) => {

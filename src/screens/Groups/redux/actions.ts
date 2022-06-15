@@ -230,7 +230,11 @@ const groupsActions = {
     payload,
   }),
 
-  getMemberRequests: (payload: {groupId: number; params?: any}) => ({
+  getGroupMemberRequests: (payload: {
+    groupId: number;
+    isRefreshing?: boolean;
+    params?: any;
+  }) => ({
     type: groupsTypes.GET_MEMBER_REQUESTS,
     payload,
   }),
@@ -435,6 +439,7 @@ const groupsActions = {
 
   getCommunityMemberRequests: (payload: {
     communityId: number;
+    isRefreshing?: boolean;
     params?: any;
   }) => ({
     type: groupsTypes.GET_COMMUNITY_MEMBER_REQUESTS,

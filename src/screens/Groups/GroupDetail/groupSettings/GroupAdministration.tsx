@@ -32,7 +32,7 @@ const GroupAdministration = (props: any) => {
   const {total} = useKeySelector(groupsKeySelector.pendingMemberRequests);
 
   useEffect(() => {
-    dispatch(groupsActions.getMemberRequests({groupId}));
+    dispatch(groupsActions.getGroupMemberRequests({groupId}));
     return () => {
       dispatch(groupsActions.resetMemberRequests());
     };

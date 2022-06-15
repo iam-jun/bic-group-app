@@ -11,25 +11,28 @@ export default function* getGroupMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {groupId: number; params?: any};
+  payload: {groupId: number; isRefreshing?: boolean; params?: any};
 }) {
   try {
     const {groups} = yield select();
 
-    const {groupId, params} = payload;
+    const {groupId, isRefreshing, params} = payload;
     const {data, canLoadMore, items} = groups.pendingMemberRequests || {};
+
     yield put(
-      groupsActions.setGroupMemberRequests({loading: data.length === 0}),
+      groupsActions.setGroupMemberRequests({
+        loading: isRefreshing ? true : data.length === 0,
+      }),
     );
 
-    if (!canLoadMore) return;
+    if (!isRefreshing && !canLoadMore) return;
 
     // @ts-ignore
     const response = yield call(
       groupsDataHelper.getGroupMemberRequests,
       groupId,
       {
-        offset: data.length,
+        offset: isRefreshing ? 0 : data.length,
         limit: appConfig.recordsPerPage,
         key: memberRequestStatus.WAITING,
         ...params,
@@ -44,12 +47,12 @@ export default function* getGroupMemberRequests({
         total: response?.meta?.total,
         loading: false,
         canLoadMore: requestIds.length === appConfig.recordsPerPage,
-        data: [...data, ...requestIds],
-        items: {...items, ...requestItems},
+        data: isRefreshing ? [...requestIds] : [...data, ...requestIds],
+        items: isRefreshing ? {...requestItems} : {...items, ...requestItems},
       }),
     );
   } catch (err) {
     console.log('getGroupMemberRequests: ', err);
-    yield showError(err);
+    yield call(showError, err);
   }
 }

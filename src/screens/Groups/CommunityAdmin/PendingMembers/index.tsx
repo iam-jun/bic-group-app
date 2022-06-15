@@ -40,12 +40,10 @@ const CommunityPendingMembers = () => {
     };
   }, [communityId]);
 
-  const getData = () => {
-    dispatch(groupsActions.getCommunityMemberRequests({communityId}));
-  };
-
-  const resetData = () => {
-    dispatch(groupsActions.resetCommunityMemberRequests());
+  const getData = (isRefreshing?: boolean) => {
+    dispatch(
+      groupsActions.getCommunityMemberRequests({communityId, isRefreshing}),
+    );
   };
 
   const onLoadMore = () => {
@@ -53,8 +51,7 @@ const CommunityPendingMembers = () => {
   };
 
   const onRefresh = () => {
-    resetData();
-    getData();
+    getData(true);
   };
 
   const renderEmpty = () => {
