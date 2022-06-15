@@ -226,6 +226,7 @@ export interface IParamPutEditPost {
 
 export interface IPayloadGetPostDetail extends IParamGetPostDetail {
   callbackLoading?: (loading: boolean, success: boolean) => void;
+  showToast?: boolean;
 }
 
 export type IReactionKind = 'comment' | 'seen' | ReactionType;
