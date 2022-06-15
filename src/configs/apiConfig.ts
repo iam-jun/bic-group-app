@@ -51,7 +51,7 @@ const Upload = {
       signal: abortSignal,
     };
   },
-  uploadFile: (
+  uploadImage: (
     type: any,
     data: FormData,
     onUploadProgress?: (progressEvent: any) => void,
@@ -94,6 +94,36 @@ const Upload = {
       provider,
       onUploadProgress: onUploadProgress,
       data,
+    };
+  },
+  createFileId: (uploadType: string): HttpApiRequestConfig => {
+    const type = uploadType.split('_')[1];
+    return {
+      url: `${providers.beinUpload.url}${type}s`,
+      method: 'post',
+      provider: providers.beinUpload,
+      useRetry: true,
+    };
+  },
+  uploadFile: (
+    id: string,
+    uploadType: string,
+    data: FormData,
+    onUploadProgress?: (progressEvent: any) => void,
+    abortSignal?: AbortSignal,
+  ): HttpApiRequestConfig => {
+    const type = uploadType.split('_')[1];
+    return {
+      url: `${providers.beinUpload.url}${type}s/${id}`,
+      method: 'post',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      useRetry: true,
+      provider: providers.beinUpload,
+      onUploadProgress: onUploadProgress,
+      data,
+      signal: abortSignal,
     };
   },
 };

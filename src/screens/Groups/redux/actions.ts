@@ -385,10 +385,17 @@ const groupsActions = {
     type: groupsTypes.SET_COMMUNITY_GROUPS,
     payload,
   }),
-  getCommunityDetail: (payload: number, loadingPage = false) => ({
+  getCommunityDetail: (payload: {
+    communityId: number;
+    loadingPage?: boolean;
+    showLoading?: boolean;
+  }) => ({
     type: groupsTypes.GET_COMMUNITY_DETAIL,
     payload,
-    loadingPage,
+  }),
+  setCommunityLoading: (payload: boolean) => ({
+    type: groupsTypes.SET_COMMUNITY_LOADING,
+    payload,
   }),
   setCommunityDetail: (payload: ICommunity) => ({
     type: groupsTypes.SET_COMMUNITY_DETAIL,
@@ -396,6 +403,7 @@ const groupsActions = {
   }),
   getCommunityMembers: (payload: {
     communityId: number;
+    isRefreshing?: boolean;
     params?: IParamGetCommunityMembers;
   }) => ({
     type: groupsTypes.GET_COMMUNITY_MEMBERS,

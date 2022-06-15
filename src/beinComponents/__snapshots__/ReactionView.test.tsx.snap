@@ -20,7 +20,6 @@ exports[`ReactionView component renders correctly 1`] = `
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -88,7 +87,6 @@ exports[`ReactionView component renders correctly 1`] = `
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -156,7 +154,6 @@ exports[`ReactionView component renders correctly 1`] = `
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -224,7 +221,6 @@ exports[`ReactionView component renders correctly 1`] = `
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -292,7 +288,6 @@ exports[`ReactionView component renders correctly 1`] = `
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -342,7 +337,6 @@ exports[`ReactionView component renders correctly 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -380,7 +374,6 @@ exports[`ReactionView component renders correctly 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="reaction_view.react"
             >
               <View
@@ -394,7 +387,6 @@ exports[`ReactionView component renders correctly 1`] = `
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,
@@ -479,7 +471,6 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -547,7 +538,6 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -615,7 +605,6 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -683,7 +672,6 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -751,7 +739,6 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -801,7 +788,6 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -839,7 +825,6 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
             }
           >
             <View
-              className="icon-wrapper"
               testID="reaction_view.react"
             >
               <View
@@ -853,7 +838,6 @@ exports[`ReactionView component renders correctly with props Reactions Order  1`
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,
@@ -932,7 +916,6 @@ exports[`ReactionView component renders correctly with props Reactions Order emp
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -982,7 +965,6 @@ exports[`ReactionView component renders correctly with props Reactions Order emp
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1019,9 +1001,7 @@ exports[`ReactionView component renders correctly with props Reactions Order emp
               ]
             }
           >
-            <View
-              className="icon-wrapper"
-            >
+            <View>
               <View
                 onLayout={[Function]}
                 style={
@@ -1033,7 +1013,6 @@ exports[`ReactionView component renders correctly with props Reactions Order emp
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,
@@ -1124,7 +1103,6 @@ exports[`ReactionView component renders correctly with props showSelectReactionW
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -1174,7 +1152,6 @@ exports[`ReactionView component renders correctly with props showSelectReactionW
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1211,9 +1188,7 @@ exports[`ReactionView component renders correctly with props showSelectReactionW
               ]
             }
           >
-            <View
-              className="icon-wrapper"
-            >
+            <View>
               <View
                 onLayout={[Function]}
                 style={
@@ -1225,7 +1200,6 @@ exports[`ReactionView component renders correctly with props showSelectReactionW
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,
@@ -1312,7 +1286,6 @@ exports[`ReactionView component renders correctly with props style 1`] = `
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -1380,7 +1353,6 @@ exports[`ReactionView component renders correctly with props style 1`] = `
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -1448,7 +1420,6 @@ exports[`ReactionView component renders correctly with props style 1`] = `
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -1516,7 +1487,6 @@ exports[`ReactionView component renders correctly with props style 1`] = `
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -1584,7 +1554,6 @@ exports[`ReactionView component renders correctly with props style 1`] = `
     accessible={true}
     collapsable={false}
     focusable={true}
-    nativeID="animatedComponent"
     onClick={[Function]}
     onResponderGrant={[Function]}
     onResponderMove={[Function]}
@@ -1634,7 +1603,6 @@ exports[`ReactionView component renders correctly with props style 1`] = `
             "top": 10,
           }
         }
-        nativeID="animatedComponent"
         onClick={[Function]}
         onResponderGrant={[Function]}
         onResponderMove={[Function]}
@@ -1672,7 +1640,6 @@ exports[`ReactionView component renders correctly with props style 1`] = `
             }
           >
             <View
-              className="icon-wrapper"
               testID="reaction_view.react"
             >
               <View
@@ -1686,7 +1653,6 @@ exports[`ReactionView component renders correctly with props style 1`] = `
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,

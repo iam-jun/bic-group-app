@@ -141,6 +141,7 @@ export interface IGroupGetJoinableMembers {
 
 export interface IGroupGetMembers {
   groupId: number;
+  isRefreshing?: boolean;
   params?: IParamGetGroupMembers;
 }
 

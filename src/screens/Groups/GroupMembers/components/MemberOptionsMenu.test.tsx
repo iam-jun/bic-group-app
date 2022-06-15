@@ -12,8 +12,6 @@ import MemberOptionsMenu from './MemberOptionsMenu';
 import initialState from '~/store/initialState';
 import {IGroupMembers} from '~/interfaces/IGroup';
 import useRemoveMember from './useRemoveMember';
-import * as navigationHook from '~/hooks/navigation';
-import mainStack from '~/router/navigator/MainStack/stack';
 import * as helper from '../../helper';
 import modalActions from '~/store/modal/actions';
 import i18next from 'i18next';
@@ -175,7 +173,7 @@ describe('MemberOptionsMenu component', () => {
 
     const selectedMember = {
       id: 1,
-      roles: [{type: 'GROUP_ADMIN'}],
+      is_admin: true,
     } as IGroupMembers;
 
     const {getByTestId} = renderWithRedux(
@@ -195,7 +193,7 @@ describe('MemberOptionsMenu component', () => {
   it('should dispatch alertRemovingAdmin correctly', () => {
     const state = {...initialState};
     state.groups.groupDetail.can_setting = true;
-    state.groups.groupMember = {
+    state.groups.groupMembers = {
       // @ts-ignore
       group_admin: {user_count: 2},
     };
@@ -203,7 +201,7 @@ describe('MemberOptionsMenu component', () => {
 
     const selectedMember = {
       id: 1,
-      roles: [{type: 'GROUP_ADMIN'}],
+      is_admin: true,
     } as IGroupMembers;
 
     const {getByTestId} = renderWithRedux(
@@ -226,13 +224,13 @@ describe('MemberOptionsMenu component', () => {
 
     const state = {...initialState};
     state.groups.groupDetail.can_setting = true;
-    state.groups.groupMember = {group_admin: {user_count: 1}} as any;
+    state.groups.groupMembers = {group_admin: {user_count: 1}} as any;
     state.auth.user = {username: 'testname1'} as any;
     const store = createTestStore(state);
 
     const selectedMember = {
       id: 1,
-      roles: [{type: 'GROUP_ADMIN'}],
+      is_admin: true,
     } as IGroupMembers;
 
     const {getByTestId} = renderWithRedux(
@@ -262,7 +260,7 @@ describe('MemberOptionsMenu component', () => {
 
     const selectedMember = {
       id: 1,
-      roles: [{type: 'MEMBER'}],
+      is_admin: false,
     } as IGroupMembers;
 
     const {getByTestId} = renderWithRedux(
@@ -284,62 +282,5 @@ describe('MemberOptionsMenu component', () => {
         title: i18next.t('groups:modal_confirm_set_admin:title'),
       }),
     );
-  });
-
-  it('should navigate to user profile correctly when pressing View profile option', () => {
-    const selectedMember = {
-      id: 1,
-      roles: [{type: 'MEMBER'}],
-    } as IGroupMembers;
-
-    const navigate = jest.fn();
-    const rootNavigation = {navigate};
-    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
-      return {rootNavigation} as any;
-    });
-
-    const {getByTestId} = renderWithRedux(
-      <MemberOptionsMenu
-        groupId={groupId}
-        modalizeRef={baseSheetRef}
-        selectedMember={selectedMember}
-        onOptionsClosed={onOptionsClosed}
-      />,
-    );
-
-    const item = getByTestId('member_options_menu.view_profile');
-    expect(item).toBeDefined();
-    fireEvent.press(item);
-    expect(navigate).toBeCalledWith(mainStack.userProfile, {
-      userId: selectedMember.id,
-    });
-  });
-
-  it('renders Send message option correctly when admin clicks on another user', () => {
-    const spy = jest.spyOn(modalActions, 'showAlertNewFeature');
-
-    const state = {...initialState};
-    // @ts-ignore
-    state.auth.user = {username: 'testname1'};
-    const store = createTestStore(state);
-    const selectedMember = {
-      id: 1,
-      username: 'testname2',
-    } as IGroupMembers;
-
-    const {getByTestId} = renderWithRedux(
-      <MemberOptionsMenu
-        groupId={groupId}
-        modalizeRef={baseSheetRef}
-        selectedMember={selectedMember}
-        onOptionsClosed={onOptionsClosed}
-      />,
-      store,
-    );
-    const itemComponent = getByTestId('member_options_menu.send_message');
-    expect(itemComponent).toBeDefined();
-    expect(itemComponent.props).toHaveProperty('onClick');
-    fireEvent.press(itemComponent);
-    expect(spy).toBeCalled();
   });
 });

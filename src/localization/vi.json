@@ -512,6 +512,12 @@
       "title": "Trang này không tồn tại.",
       "description": "Bình luận này có thể bị xóa hoặc bạn không có quyền xem bình luận này",
       "button_text": "Quay về Bài viết"
+    },
+    "text_post_deleted": "Bài viết này đã bị xoá, không thể gửi bình luận trả lời của bạn",
+    "deleted_post": {
+      "title": "Trang này không tồn tại.",
+      "description": "Bình luận này có thể bị xóa hoặc bạn không có quyền xem bình luận này",
+      "button_text": "Quay về News Feed"
     }
   },
   "comment": {
@@ -710,17 +716,25 @@
     }
   },
   "upload": {
-    "text_create_video_id_request_failed": "Có lỗi khi yêu cầu tạo id",
-    "text_create_video_id_response_failed": "Có lỗi khi tạo id",
-    "text_upload_video_request_failed": "Có lỗi khi yêu cầu tải video",
-    "text_upload_video_response_failed": "Có lỗi khi tải video",
+    "text_create_file_id_request_failed": "Có lỗi khi yêu cầu tạo id",
+    "text_create_file_id_response_failed": "Có lỗi khi tạo id",
+    "text_upload_request_failed": "Có lỗi khi yêu cầu tải {{file_type}}",
+    "text_upload_response_failed": "Có lỗi khi tải {{file_type}}",
     "text_create_media_request_failed": "Có lỗi khi yêu cầu tạo media",
     "text_create_media_response_failed": "Có lỗi khi tạo media",
-    "title_delete_video": "Xoá Video?",
-    "text_delete_video": "Bạn có chắc muốn xoá video?",
-    "text_upload_video_error": "Không thể tải lên video này",
-    "title_leave_uploading_video": "Đóng màn hình này?",
-    "text_leave_uploading_video": "Bạn có chắc muốn đóng màn hình này? Video bạn đang tải lên sẽ bị huỷ.",
-    "text_video_over_size": "Video của bạn phải nhỏ hơn 300MB"
+    "title_delete_file": "Xoá {{file_type}}?",
+    "text_delete_file": "Bạn có chắc muốn xoá {{file_type}}?",
+    "text_upload_error": "Không thể tải lên {{file_type}} này",
+    "title_leave_uploading": "Đóng màn hình này?",
+    "text_leave_uploading": "Bạn có chắc muốn đóng màn hình này? Video bạn đang tải lên sẽ bị huỷ.",
+    "text_video_over_size": "Video của bạn phải nhỏ hơn 300MB",
+    "text_file_over_size": "Tệp của bạn phải nhỏ hơn 5MB",
+    "text_file_over_length": "Bạn không thể tải lên hơn {{max_files}} tệp",
+    "text_file_extension_not_supported": "Phần mở rộng của tệp không được hỗ trợ"
+  },
+  "file_type": {
+    "image": "hình ảnh",
+    "video": "video",
+    "file": "tệp"
   }
 }

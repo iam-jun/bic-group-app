@@ -505,7 +505,7 @@
     "post_exit_option_continue": "Continue Editing",
     "title_discard_comment": "Discard Comment",
     "text_discard_comment": "If you discard now, you'll lose any changes that you've made",
-    "btn_continue_comment": "Continue Comment",
+    "btn_continue_comment": "Continue",
     "btn_discard_comment": "Discard",
     "text_edit_post_success": "Post has been published successfully",
     "text_edit_post_failed": "Post was failed to publish",
@@ -565,6 +565,12 @@
       "title": "This page is not existing.",
       "description": "It might be deleted or you don't have permission to see it",
       "button_text": "Back to Post"
+    },
+    "text_post_deleted": "Post doesn’t exist, cannot send your reply",
+    "deleted_post": {
+      "title": "This page is not existing.",
+      "description": "It might be deleted or you don't have permission to see it",
+      "button_text": "Back to News Feed"
     }
   },
   "comment": {
@@ -830,17 +836,25 @@
     }
   },
   "upload": {
-    "text_create_video_id_request_failed": "Cannot request id",
-    "text_create_video_id_response_failed": "Cannot create id",
-    "text_upload_video_request_failed": "Cannot request upload video",
-    "text_upload_video_response_failed": "Cannot upload video",
+    "text_create_file_id_request_failed": "Cannot request id",
+    "text_create_file_id_response_failed": "Cannot create id",
+    "text_upload_request_failed": "Cannot request upload {{file_type}}",
+    "text_upload_response_failed": "Cannot upload {{file_type}}",
     "text_create_media_request_failed": "Cannot request create media",
     "text_create_media_response_failed": "Cannot create media",
-    "title_delete_video": "Delete Video?",
-    "text_delete_video": "Are you sure you want to delete video?",
-    "text_upload_video_error": "Can’t upload this video",
-    "title_leave_uploading_video": "Leave this page?",
-    "text_leave_uploading_video": "Are you sure you want to leave this page? Your video process will be lost.",
-    "text_video_over_size": "Your video must be less than 300MB"
+    "title_delete_file": "Delete {{file_type}}?",
+    "text_delete_file": "Are you sure you want to delete {{file_type}}?",
+    "text_upload_error": "Can't upload this {{file_type}}",
+    "title_leave_uploading": "Leave this page?",
+    "text_leave_uploading": "Are you sure you want to leave this page? Your {{file_type}} process will be lost.",
+    "text_video_over_size": "Your video must be less than 300MB",
+    "text_file_over_size": "Your file must be less than 5MB",
+    "text_file_over_length": "You cannot upload more than {{max_files}} files",
+    "text_file_extension_not_supported": "Your File Extersion is not supported"
+  },
+  "file_type": {
+    "image": "image",
+    "video": "video",
+    "file": "file"
   }
 }

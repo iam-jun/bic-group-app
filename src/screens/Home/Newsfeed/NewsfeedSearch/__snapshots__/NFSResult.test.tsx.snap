@@ -78,7 +78,6 @@ exports[`NFSResult component should render empty search result 1`] = `
                     "top": 10,
                   }
                 }
-                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -119,14 +118,13 @@ exports[`NFSResult component should render empty search result 1`] = `
                     }
                   >
                     <View
-                      className="icon-wrapper"
                       testID="button_wrapper.icon"
                     >
                       <RNSVGSvgView
                         align="xMidYMid"
                         bbHeight={20}
                         bbWidth={20}
-                        fill="#7843DD"
+                        color={4286071773}
                         focusable={false}
                         height={20}
                         meetOrSlice={0}
@@ -146,20 +144,24 @@ exports[`NFSResult component should render empty search result 1`] = `
                             },
                           ]
                         }
+                        tintColor={4286071773}
                         vbHeight={24}
                         vbWidth={24}
                         width={20}
                       >
-                        <RNSVGGroup
-                          fill={4286071773}
-                          propList={
-                            Array [
-                              "fill",
-                            ]
-                          }
-                        >
+                        <RNSVGGroup>
                           <RNSVGPath
-                            d="M20,8.18V3a1,1,0,0,0-2,0V8.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V13.82a3,3,0,0,0,0-5.64ZM19,12a1,1,0,1,1,1-1A1,1,0,0,1,19,12Zm-6,2.18V3a1,1,0,0,0-2,0V14.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V19.82a3,3,0,0,0,0-5.64ZM12,18a1,1,0,1,1,1-1A1,1,0,0,1,12,18ZM6,6.18V3A1,1,0,0,0,4,3V6.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V11.82A3,3,0,0,0,6,6.18ZM5,10A1,1,0,1,1,6,9,1,1,0,0,1,5,10Z"
+                            d="M20 8.18V3a1 1 0 00-2 0v5.18a3 3 0 000 5.64V21a1 1 0 002 0v-7.18a3 3 0 000-5.64zM19 12a1 1 0 111-1 1 1 0 01-1 1zm-6 2.18V3a1 1 0 00-2 0v11.18a3 3 0 000 5.64V21a1 1 0 002 0v-1.18a3 3 0 000-5.64zM12 18a1 1 0 111-1 1 1 0 01-1 1zM6 6.18V3a1 1 0 00-2 0v3.18a3 3 0 000 5.64V21a1 1 0 002 0v-9.18a3 3 0 000-5.64zM5 10a1 1 0 111-1 1 1 0 01-1 1z"
+                            fill={
+                              Array [
+                                2,
+                              ]
+                            }
+                            propList={
+                              Array [
+                                "fill",
+                              ]
+                            }
                           />
                         </RNSVGGroup>
                       </RNSVGSvgView>
@@ -399,7 +401,6 @@ exports[`NFSResult component should render empty search result 1`] = `
         >
           <View
             collapsable={false}
-            nativeID="animatedComponent"
             style={
               Object {
                 "bottom": 0,
@@ -576,7 +577,6 @@ exports[`NFSResult component should render list search result 1`] = `
                     "top": 10,
                   }
                 }
-                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -617,14 +617,13 @@ exports[`NFSResult component should render list search result 1`] = `
                     }
                   >
                     <View
-                      className="icon-wrapper"
                       testID="button_wrapper.icon"
                     >
                       <RNSVGSvgView
                         align="xMidYMid"
                         bbHeight={20}
                         bbWidth={20}
-                        fill="#7843DD"
+                        color={4286071773}
                         focusable={false}
                         height={20}
                         meetOrSlice={0}
@@ -644,20 +643,24 @@ exports[`NFSResult component should render list search result 1`] = `
                             },
                           ]
                         }
+                        tintColor={4286071773}
                         vbHeight={24}
                         vbWidth={24}
                         width={20}
                       >
-                        <RNSVGGroup
-                          fill={4286071773}
-                          propList={
-                            Array [
-                              "fill",
-                            ]
-                          }
-                        >
+                        <RNSVGGroup>
                           <RNSVGPath
-                            d="M20,8.18V3a1,1,0,0,0-2,0V8.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V13.82a3,3,0,0,0,0-5.64ZM19,12a1,1,0,1,1,1-1A1,1,0,0,1,19,12Zm-6,2.18V3a1,1,0,0,0-2,0V14.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V19.82a3,3,0,0,0,0-5.64ZM12,18a1,1,0,1,1,1-1A1,1,0,0,1,12,18ZM6,6.18V3A1,1,0,0,0,4,3V6.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V11.82A3,3,0,0,0,6,6.18ZM5,10A1,1,0,1,1,6,9,1,1,0,0,1,5,10Z"
+                            d="M20 8.18V3a1 1 0 00-2 0v5.18a3 3 0 000 5.64V21a1 1 0 002 0v-7.18a3 3 0 000-5.64zM19 12a1 1 0 111-1 1 1 0 01-1 1zm-6 2.18V3a1 1 0 00-2 0v11.18a3 3 0 000 5.64V21a1 1 0 002 0v-1.18a3 3 0 000-5.64zM12 18a1 1 0 111-1 1 1 0 01-1 1zM6 6.18V3a1 1 0 00-2 0v3.18a3 3 0 000 5.64V21a1 1 0 002 0v-9.18a3 3 0 000-5.64zM5 10a1 1 0 111-1 1 1 0 01-1 1z"
+                            fill={
+                              Array [
+                                2,
+                              ]
+                            }
+                            propList={
+                              Array [
+                                "fill",
+                              ]
+                            }
                           />
                         </RNSVGGroup>
                       </RNSVGSvgView>
@@ -943,7 +946,6 @@ exports[`NFSResult component should render list search result 1`] = `
           accessible={true}
           collapsable={false}
           focusable={true}
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -993,7 +995,6 @@ exports[`NFSResult component should render list search result 1`] = `
                   "top": 10,
                 }
               }
-              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -1034,9 +1035,7 @@ exports[`NFSResult component should render list search result 1`] = `
                     ]
                   }
                 >
-                  <View
-                    className="icon-wrapper"
-                  >
+                  <View>
                     <View
                       onLayout={[Function]}
                       style={
@@ -1048,7 +1047,6 @@ exports[`NFSResult component should render list search result 1`] = `
                     >
                       <View
                         collapsable={false}
-                        nativeID="animatedComponent"
                         style={
                           Object {
                             "bottom": 0,
@@ -1110,6 +1108,7 @@ exports[`NFSResult component should render list search result 1`] = `
             </View>
           </View>
           <View
+            onLayout={[Function]}
             style={
               Array [
                 Object {
@@ -1127,7 +1126,6 @@ exports[`NFSResult component should render list search result 1`] = `
               accessible={true}
               collapsable={false}
               focusable={true}
-              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -1153,7 +1151,6 @@ exports[`NFSResult component should render list search result 1`] = `
                 accessible={true}
                 collapsable={false}
                 focusable={true}
-                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -1200,6 +1197,7 @@ exports[`NFSResult component should render list search result 1`] = `
                       }
                     >
                       <View
+                        collapsable={false}
                         style={
                           Object {
                             "bottom": 0,
@@ -1280,7 +1278,6 @@ exports[`NFSResult component should render list search result 1`] = `
                   accessible={true}
                   collapsable={false}
                   focusable={true}
-                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -1410,7 +1407,6 @@ exports[`NFSResult component should render list search result 1`] = `
                       "top": 10,
                     }
                   }
-                  nativeID="animatedComponent"
                   onClick={[Function]}
                   onResponderGrant={[Function]}
                   onResponderMove={[Function]}
@@ -1450,14 +1446,13 @@ exports[`NFSResult component should render list search result 1`] = `
                       }
                     >
                       <View
-                        className="icon-wrapper"
                         testID="post_view_header.menu"
                       >
                         <RNSVGSvgView
                           align="xMidYMid"
                           bbHeight={20}
                           bbWidth={20}
-                          fill="#2F3945"
+                          color={4281284933}
                           focusable={false}
                           height={20}
                           meetOrSlice={0}
@@ -1477,20 +1472,24 @@ exports[`NFSResult component should render list search result 1`] = `
                               },
                             ]
                           }
+                          tintColor={4281284933}
                           vbHeight={24}
                           vbWidth={24}
                           width={20}
                         >
-                          <RNSVGGroup
-                            fill={4281284933}
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          >
+                          <RNSVGGroup>
                             <RNSVGPath
-                              d="M12,10a2,2,0,1,0,2,2A2,2,0,0,0,12,10ZM5,10a2,2,0,1,0,2,2A2,2,0,0,0,5,10Zm14,0a2,2,0,1,0,2,2A2,2,0,0,0,19,10Z"
+                              d="M12 10a2 2 0 102 2 2 2 0 00-2-2zm-7 0a2 2 0 102 2 2 2 0 00-2-2zm14 0a2 2 0 102 2 2 2 0 00-2-2z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
                             />
                           </RNSVGGroup>
                         </RNSVGSvgView>
@@ -1500,9 +1499,7 @@ exports[`NFSResult component should render list search result 1`] = `
                 </View>
               </View>
             </View>
-            <View
-              onLayout={[Function]}
-            >
+            <View>
               <View
                 style={
                   Object {
@@ -1535,7 +1532,6 @@ exports[`NFSResult component should render list search result 1`] = `
                       accessible={true}
                       collapsable={false}
                       focusable={true}
-                      nativeID="animatedComponent"
                       onClick={[Function]}
                       onResponderGrant={[Function]}
                       onResponderMove={[Function]}
@@ -1724,7 +1720,6 @@ exports[`NFSResult component should render loading search result 1`] = `
                     "top": 10,
                   }
                 }
-                nativeID="animatedComponent"
                 onClick={[Function]}
                 onResponderGrant={[Function]}
                 onResponderMove={[Function]}
@@ -1765,14 +1760,13 @@ exports[`NFSResult component should render loading search result 1`] = `
                     }
                   >
                     <View
-                      className="icon-wrapper"
                       testID="button_wrapper.icon"
                     >
                       <RNSVGSvgView
                         align="xMidYMid"
                         bbHeight={20}
                         bbWidth={20}
-                        fill="#7843DD"
+                        color={4286071773}
                         focusable={false}
                         height={20}
                         meetOrSlice={0}
@@ -1792,20 +1786,24 @@ exports[`NFSResult component should render loading search result 1`] = `
                             },
                           ]
                         }
+                        tintColor={4286071773}
                         vbHeight={24}
                         vbWidth={24}
                         width={20}
                       >
-                        <RNSVGGroup
-                          fill={4286071773}
-                          propList={
-                            Array [
-                              "fill",
-                            ]
-                          }
-                        >
+                        <RNSVGGroup>
                           <RNSVGPath
-                            d="M20,8.18V3a1,1,0,0,0-2,0V8.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V13.82a3,3,0,0,0,0-5.64ZM19,12a1,1,0,1,1,1-1A1,1,0,0,1,19,12Zm-6,2.18V3a1,1,0,0,0-2,0V14.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V19.82a3,3,0,0,0,0-5.64ZM12,18a1,1,0,1,1,1-1A1,1,0,0,1,12,18ZM6,6.18V3A1,1,0,0,0,4,3V6.18a3,3,0,0,0,0,5.64V21a1,1,0,0,0,2,0V11.82A3,3,0,0,0,6,6.18ZM5,10A1,1,0,1,1,6,9,1,1,0,0,1,5,10Z"
+                            d="M20 8.18V3a1 1 0 00-2 0v5.18a3 3 0 000 5.64V21a1 1 0 002 0v-7.18a3 3 0 000-5.64zM19 12a1 1 0 111-1 1 1 0 01-1 1zm-6 2.18V3a1 1 0 00-2 0v11.18a3 3 0 000 5.64V21a1 1 0 002 0v-1.18a3 3 0 000-5.64zM12 18a1 1 0 111-1 1 1 0 01-1 1zM6 6.18V3a1 1 0 00-2 0v3.18a3 3 0 000 5.64V21a1 1 0 002 0v-9.18a3 3 0 000-5.64zM5 10a1 1 0 111-1 1 1 0 01-1 1z"
+                            fill={
+                              Array [
+                                2,
+                              ]
+                            }
+                            propList={
+                              Array [
+                                "fill",
+                              ]
+                            }
                           />
                         </RNSVGGroup>
                       </RNSVGSvgView>
