@@ -47,7 +47,7 @@ const PendingMembers = (props: any) => {
   }, [groupId]);
 
   const onLoadMore = () => {
-    getData();
+    canLoadMore && getData();
   };
 
   const onRefresh = () => {
@@ -59,7 +59,7 @@ const PendingMembers = (props: any) => {
   };
 
   const renderListHeader = () => {
-    if (loading || total === 0) return null;
+    if (!total) return null;
     return (
       <View style={styles.requestHeader}>
         <Text.H5>{`${total} ${i18next.t('common:text_request', {

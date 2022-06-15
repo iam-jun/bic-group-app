@@ -47,7 +47,7 @@ const CommunityPendingMembers = () => {
   };
 
   const onLoadMore = () => {
-    getData();
+    canLoadMore && getData();
   };
 
   const onRefresh = () => {
@@ -66,7 +66,7 @@ const CommunityPendingMembers = () => {
   };
 
   const renderListHeader = () => {
-    if (loading || total === 0) return null;
+    if (!total) return null;
     return (
       <View style={styles.requestHeader}>
         <Text.H5 testID="community_pending_members.request_title">{`${total} ${t(
