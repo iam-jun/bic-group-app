@@ -42,7 +42,7 @@ const PendingMembers = (props: any) => {
     onRefresh();
 
     return () => {
-      getData(); // to update the total member requests again on press back
+      onRefresh(); // to update the total member requests again on press back
     };
   }, [groupId]);
 
