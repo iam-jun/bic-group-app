@@ -247,14 +247,10 @@ const groupsActions = {
   resetMemberRequests: () => ({
     type: groupsTypes.RESET_MEMBER_REQUESTS,
   }),
-  removeSingleMemberRequest: (payload: {requestId: number}) => ({
-    type: groupsTypes.REMOVE_SINGLE_MEMBER_REQUEST,
-    payload,
-  }),
   undoDeclineMemberRequests: () => ({
     type: groupsTypes.UNDO_DECLINE_MEMBER_REQUESTS,
   }),
-  approveSingleMemberRequest: (payload: {
+  approveSingleGroupMemberRequest: (payload: {
     groupId: number;
     requestId: number;
     fullName: string;
@@ -270,7 +266,7 @@ const groupsActions = {
     type: groupsTypes.APPROVE_ALL_MEMBER_REQUESTS,
     payload,
   }),
-  declineSingleMemberRequest: (payload: {
+  declineSingleGroupMemberRequest: (payload: {
     groupId: number;
     requestId: number;
     fullName: string;

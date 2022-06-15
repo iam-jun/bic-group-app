@@ -78,6 +78,8 @@ export const groupInitState = {
   // temporarily stores data for `undo` action
   undoData: {
     total: 0,
+    loading: null,
+    canLoadMore: null,
     data: [],
     items: {} as IObject<IJoiningMember>,
   },
@@ -127,6 +129,8 @@ export const groupInitState = {
   // temporarily stores data for `undo` action
   undoCommunityMemberRequests: {
     total: 0,
+    loading: null,
+    canLoadMore: null,
     ids: [],
     items: {} as IObject<IJoiningMember>,
   },
@@ -360,25 +364,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         ...state,
         pendingMemberRequests: groupInitState.pendingMemberRequests,
       };
-    case groupsTypes.REMOVE_SINGLE_MEMBER_REQUEST: {
-      const requestItems = {...pendingMemberRequests.items};
-      delete requestItems[payload];
-      return {
-        ...state,
-        groupDetail: {
-          ...state.groupDetail,
-          total_pending_members: state.groupDetail.total_pending_members - 1,
-        },
-        pendingMemberRequests: {
-          ...pendingMemberRequests,
-          data: pendingMemberRequests.data.filter(
-            (item: number) => item !== payload.requestId,
-          ),
-          items: requestItems,
-        },
-      };
-    }
-    case groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST:
     case groupsTypes.DECLINE_ALL_MEMBER_REQUESTS:
       return {
         ...state,
@@ -387,22 +372,13 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     case groupsTypes.UNDO_DECLINE_MEMBER_REQUESTS:
       return {
         ...state,
-        pendingMemberRequests: {
-          ...pendingMemberRequests,
-          total: state.undoData.total,
-          data: [...state.undoData.data],
-          items: {...state.undoData.items},
-        },
+        pendingMemberRequests: {...state.undoData},
         undoData: groupInitState.undoData,
       };
     case groupsTypes.STORE_UNDO_DATA:
       return {
         ...state,
-        undoData: {
-          total: pendingMemberRequests.total,
-          data: [...pendingMemberRequests.data],
-          items: {...pendingMemberRequests.items},
-        },
+        undoData: {...pendingMemberRequests},
       };
     case groupsTypes.EDIT_GROUP_MEMBER_REQUEST:
       return {
@@ -608,21 +584,12 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     case groupsTypes.STORE_UNDO_COMMUNITY_MEMBER_REQUESTS:
       return {
         ...state,
-        undoCommunityMemberRequests: {
-          total: communityMemberRequests.total,
-          ids: [...communityMemberRequests.ids],
-          items: {...communityMemberRequests.items},
-        },
+        undoCommunityMemberRequests: {...communityMemberRequests},
       };
     case groupsTypes.UNDO_DECLINED_COMMUNITY_MEMBER_REQUESTS:
       return {
         ...state,
-        communityMemberRequests: {
-          ...communityMemberRequests,
-          total: state.undoCommunityMemberRequests.total,
-          ids: [...state.undoCommunityMemberRequests.ids],
-          items: {...state.undoCommunityMemberRequests.items},
-        },
+        communityMemberRequests: {...state.undoCommunityMemberRequests},
         undoCommunityMemberRequests: groupInitState.undoCommunityMemberRequests,
       };
     case groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS:
