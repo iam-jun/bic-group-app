@@ -303,6 +303,10 @@ const postActions = {
     type: postTypes.REMOVE_COMMENT_DELETED,
     payload,
   }),
+  deletePostLocal: (payload: string) => ({
+    type: postTypes.DELETE_POST_LOCAL,
+    payload,
+  }),
 };
 
 export default postActions;

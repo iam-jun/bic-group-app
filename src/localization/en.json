@@ -504,7 +504,7 @@
     "post_exit_option_continue": "Continue Editing",
     "title_discard_comment": "Discard Comment",
     "text_discard_comment": "If you discard now, you'll lose any changes that you've made",
-    "btn_continue_comment": "Continue Comment",
+    "btn_continue_comment": "Continue",
     "btn_discard_comment": "Discard",
     "text_edit_post_success": "Post has been published successfully",
     "text_edit_post_failed": "Post was failed to publish",
