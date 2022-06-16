@@ -16,6 +16,7 @@ import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Text from '~/beinComponents/Text';
 import {getNewSchemeFromSystemScheme} from '~/screens/Groups/CreatePermissionScheme/helper';
 import {IPermission} from '~/interfaces/IGroup';
+import CreateSchemeHeader from '~/screens/Groups/CreatePermissionScheme/components/CreateSchemeHeader';
 
 export interface CreatePermissionSchemeProps {
   style?: StyleProp<ViewStyle>;
@@ -41,8 +42,6 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     !permissionCategories?.loading &&
     !systemScheme?.loading &&
     (!permissionCategories?.data || !systemScheme?.data);
-  const creating = false;
-  const disableButtonCreate = loading || loadDataFailed;
 
   useEffect(() => {
     if (!permissionCategories?.data && !permissionCategories?.loading) {
@@ -73,10 +72,6 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     );
   };
 
-  const onPressCreate = () => {
-    console.log(`\x1b[36m🐣️ index onPressCreate\x1b[0m`);
-  };
-
   const renderContent = () => {
     if (loading) {
       return <LoadingIndicator style={styles.loading} />;
@@ -98,18 +93,9 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
 
   return (
     <View style={styles.container}>
-      <Header
-        title={t('communities:permission:title_create_community_scheme')}
-        onPressButton={onPressCreate}
-        buttonText={'common:btn_create'}
-        buttonProps={{
-          loading: creating,
-          disabled: disableButtonCreate,
-          useI18n: true,
-          highEmphasis: true,
-          style: {borderWidth: 0},
-          testID: 'common.btn_create',
-        }}
+      <CreateSchemeHeader
+        loadingData={loading}
+        loadDataFailed={loadDataFailed}
       />
       {renderContent()}
     </View>

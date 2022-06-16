@@ -19,6 +19,7 @@ export const groupInitState = {
     creatingScheme: {
       data: undefined,
       memberRoleIndex: 0,
+      creating: false,
     },
   },
   isPrivacyModalOpen: false,

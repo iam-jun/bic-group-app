@@ -59,6 +59,10 @@ const groupsActions = {
     type: groupsTypes.UPDATE_CREATING_SCHEME_PERMISSION,
     payload,
   }),
+  postCreateSchemePermission: (payload?: {communityId: number | string}) => ({
+    type: groupsTypes.POST_CREATE_SCHEME_PERMISSION,
+    payload,
+  }),
 
   setPrivacyModalOpen: (payload: boolean) => {
     return {

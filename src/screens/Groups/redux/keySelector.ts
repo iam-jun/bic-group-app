@@ -44,6 +44,7 @@ const groupsKeySelector = {
       description: 'groups.permissionScheme.creatingScheme.data.description',
       roles: 'groups.permissionScheme.creatingScheme.data.roles',
       memberRoleIndex: 'groups.permissionScheme.creatingScheme.memberRoleIndex',
+      creating: 'groups.permissionScheme.creatingScheme.creating',
     },
   },
 };

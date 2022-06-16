@@ -4,6 +4,7 @@ import {
   IGroupDetailEdit,
   IParamGetCommunities,
   IParamGetGroupPosts,
+  IScheme,
 } from '~/interfaces/IGroup';
 import {
   IParamGetCommunityMembers,
@@ -13,6 +14,30 @@ import {makeHttpRequest} from '~/services/httpApiRequest';
 import appConfig from '~/configs/appConfig';
 
 export const groupsApiConfig = {
+  getPermissionCategories: (): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}permissions/categories`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
+  getSystemScheme: (): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}system-scheme`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
+  postCreateSchemePermission: (
+    communityId: string | number,
+    schemeData: IScheme,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/scheme`,
+    method: 'post',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {
+      ...schemeData,
+    },
+  }),
   getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.beinFeed.url}feeds/timeline`,
     method: 'get',
@@ -342,21 +367,57 @@ export const groupsApiConfig = {
       total_joining_requests: total,
     },
   }),
-  getPermissionCategories: (): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}permissions/categories`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
-  }),
-  getSystemScheme: (): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}system-scheme`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
-  }),
 };
 
 const groupsDataHelper = {
+  getPermissionCategories: async () => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getPermissionCategories(),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getSystemScheme: async () => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getSystemScheme(),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  postCreateSchemePermission: async (
+    communityId: number | string,
+    scheme: IScheme,
+  ) => {
+    if (!communityId || !scheme) {
+      return Promise.reject('postCreateSchemePermission invalid data');
+    }
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.postCreateSchemePermission(communityId, scheme),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
   getSearchGroups: async (params?: any) => {
     try {
       const response: any = await makeHttpRequest(
@@ -860,34 +921,6 @@ const groupsDataHelper = {
         groupsApiConfig.declineAllCommunityMemberRequests(communityId, total),
       );
       if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  getPermissionCategories: async () => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getPermissionCategories(),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  getSystemScheme: async () => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getSystemScheme(),
-      );
-      if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);
