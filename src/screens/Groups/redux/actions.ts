@@ -527,6 +527,22 @@ const groupsActions = {
     type: groupsTypes.EDIT_COMMUNITY_MEMBER_REQUEST,
     payload,
   }),
+
+  getCommunitySearch: (payload: {key: string; isLoadMore?: boolean}) => ({
+    type: groupsTypes.GET_COMMUNITY_SEARCH,
+    payload,
+  }),
+  setCommunitySearch: (payload: {
+    showSearch?: boolean;
+    loading?: boolean;
+    canLoadMore?: boolean;
+    key?: string;
+    ids?: number[];
+    items?: any;
+  }) => ({
+    type: groupsTypes.SET_COMMUNITY_SEARCH,
+    payload,
+  }),
 };
 
 export default groupsActions;

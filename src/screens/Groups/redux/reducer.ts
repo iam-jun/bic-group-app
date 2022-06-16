@@ -148,6 +148,15 @@ export const groupInitState = {
     ids: [],
     items: {} as IObject<IJoiningMember>,
   },
+
+  communitySearch: {
+    showSearch: false,
+    loading: false,
+    canLoadMore: false,
+    key: '',
+    ids: [],
+    items: {},
+  },
 };
 
 function groupsReducer(state = groupInitState, action: any = {}) {
@@ -206,6 +215,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         roles,
       );
       const newData = Object.assign(
+        // @ts-ignore
         state.permissionScheme.creatingScheme.data,
         {roles: newRoles},
       );
@@ -678,6 +688,15 @@ function groupsReducer(state = groupInitState, action: any = {}) {
               ...payload.data,
             },
           },
+        },
+      };
+
+    case groupsTypes.SET_COMMUNITY_SEARCH:
+      return {
+        ...state,
+        communitySearch: {
+          ...state.communitySearch,
+          ...payload,
         },
       };
 

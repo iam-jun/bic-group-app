@@ -16,6 +16,8 @@ import DiscoverCommunities from '~/screens/Groups/Communities/DiscoverCommunitie
 import {communityMenuData} from '~/constants/communityMenuData';
 import ManagedCommunities from './ManagedCommunities';
 import {ICommunity} from '~/interfaces/ICommunity';
+import CommunitySearch from './CommunitySearch';
+import appConfig from '~/configs/appConfig';
 
 const Communities: React.FC = () => {
   const headerRef = useRef<any>();
@@ -34,19 +36,12 @@ const Communities: React.FC = () => {
   useBackPressListener(handleBackPress);
 
   const onShowSearch = (isShow: boolean) => {
-    dispatch(
-      groupsActions.setGroupSearch({
-        isShow: isShow,
-        loading: false,
-        searchKey: '',
-        result: [],
-      }),
-    );
+    dispatch(groupsActions.setCommunitySearch({showSearch: isShow, key: ''}));
   };
 
   const onSearchText = debounce((searchText: string) => {
-    dispatch(groupsActions.setGroupSearch({searchKey: searchText}));
-  }, 300);
+    dispatch(groupsActions.getCommunitySearch({key: searchText}));
+  }, appConfig.searchTriggerTime);
 
   const onPress = (item: any, index: number) => {
     setSelectedIndex(index);
@@ -95,6 +90,7 @@ const Communities: React.FC = () => {
           itemTestID="item_community_data"
         />
         {renderContent()}
+        <CommunitySearch />
       </View>
     </View>
   );
