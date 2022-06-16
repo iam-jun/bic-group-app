@@ -25,6 +25,7 @@ const CommunityAdmin = () => {
     id: communityId,
     name,
     icon,
+    can_manage_scheme,
   } = useKeySelector(groupsKeySelector.communityDetail);
   const {total} = useKeySelector(groupsKeySelector.communityMemberRequests);
 
@@ -101,14 +102,16 @@ const CommunityAdmin = () => {
         rightSubIcon="AngleRightB"
         onPress={onPressGeneralInfo}
       />
-      <MenuItem
-        testID="community_admin.permission_settings"
-        title="settings:title_permission_settings"
-        icon="FileLockAlt"
-        iconProps={{icon: 'FileLockAlt', tintColor: theme.colors.primary6}}
-        rightSubIcon="AngleRightB"
-        onPress={onPressPermission}
-      />
+      {!!can_manage_scheme && (
+        <MenuItem
+          testID="community_admin.permission_settings"
+          title="settings:title_permission_settings"
+          icon="FileLockAlt"
+          iconProps={{icon: 'FileLockAlt', tintColor: theme.colors.primary6}}
+          rightSubIcon="AngleRightB"
+          onPress={onPressPermission}
+        />
+      )}
       <MenuItem
         testID="community_admin.post_settings"
         title="settings:title_post_settings"
