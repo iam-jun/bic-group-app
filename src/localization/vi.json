@@ -34,6 +34,7 @@
     "btn_done": "Xong",
     "btn_next": "Tiếp tục",
     "btn_confirm": "Xác nhận",
+    "btn_create": "Tạo",
     "btn_join": "Tham gia",
     "btn_view": "Xem",
     "btn_leave": "Đóng",
@@ -712,7 +713,9 @@
       "title_create_community_scheme": "Tạo quyền cho cộng đồng",
       "text_desc_system_scheme": "Sử dụng quyền mặc định của hệ thống. Nếu không có bất cứ quyền tự tạo nào, quyền hệ thống sẽ tự động được chọn.",
       "text_desc_community_scheme": "Tạo quyền áp dụng cho cộng đồng.",
-      "text_desc_group_scheme": "Tạo quyền áp dụng cho những nhóm cụ thể."
+      "text_desc_group_scheme": "Tạo quyền áp dụng cho những nhóm cụ thể.",
+      "text_create_scheme_name": "Nhập tên",
+      "text_create_scheme_desc": "Viết mô tả của bạn (tối đa 255 ký tự)"
     }
   },
   "upload": {

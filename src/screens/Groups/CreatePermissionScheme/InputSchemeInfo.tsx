@@ -10,6 +10,7 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useDispatch} from 'react-redux';
+import {useBaseHook} from '~/hooks';
 
 export interface InputSchemeInfoProps {
   style?: StyleProp<ViewStyle>;
@@ -20,6 +21,7 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
 }: InputSchemeInfoProps) => {
   const [isFocusDesc, setIsFocusDesc] = useState(false);
 
+  const {t} = useBaseHook();
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -57,7 +59,7 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
         // helperContent={
         //   error ? i18next.t('profile:text_name_must_not_be_empty') : undefined
         // }
-        placeholder={'Enter scheme name'}
+        placeholder={t('communities:permission:text_create_scheme_name')}
         activeOutlineColor={theme.colors.primary6}
         outlineColor={theme.colors.borderCard}
         maxLength={32}
@@ -73,7 +75,7 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
           testID="input_scheme_info.input_desc"
           onChangeText={onChangeDesc}
           multiline
-          placeholder={'Write your description here (maximum 255 characters)'}
+          placeholder={t('communities:permission:text_create_scheme_desc')}
           activeOutlineColor={theme.colors.background}
           outlineColor={theme.colors.background}
           maxLength={255}

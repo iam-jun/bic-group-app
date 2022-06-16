@@ -832,7 +832,9 @@
       "title_create_community_scheme": "Create community scheme",
       "text_desc_system_scheme": "Use system default permission scheme. If there is no custom scheme applied, this option is auto-enabled.",
       "text_desc_community_scheme": "Create new permission scheme to apply to community",
-      "text_desc_group_scheme": "Create new permission scheme to apply to specific groups."
+      "text_desc_group_scheme": "Create new permission scheme to apply to specific groups.",
+      "text_create_scheme_name": "Enter scheme name",
+      "text_create_scheme_desc": "Write your description here (maximum 255 characters)"
     }
   },
   "upload": {
