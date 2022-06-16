@@ -278,4 +278,10 @@ export default class FileUploader {
     const filename = file?.name || file?.filename || file?.fileName;
     this.fileAbortController?.[filename]?.abort?.();
   }
+
+  resetData() {
+    this.fileUploaded = {};
+    this.fileUploading = {};
+    this.fileAbortController = {};
+  }
 }

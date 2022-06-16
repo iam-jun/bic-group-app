@@ -17,6 +17,7 @@ import modalActions from '~/store/modal/actions';
 import {useDispatch} from 'react-redux';
 import {supportedTypes} from '~/beinComponents/DocumentPicker';
 import {openLink} from '~/utils/common';
+import {uploadTypes} from '~/configs/resourceConfig';
 
 export interface UploadingFileProps {
   style?: StyleProp<ViewStyle>;
@@ -73,7 +74,13 @@ const UploadingFile: FC<UploadingFileProps> = ({
     }
 
     const ext = fileName?.split('.')?.pop?.();
-    if (!supportedTypes.includes(ext)) {
+
+    // temp skip check extention for video
+    if (
+      uploadType !== uploadTypes.postVideo &&
+      uploadType !== uploadTypes.commentVideo &&
+      !supportedTypes.includes(ext)
+    ) {
       setError(t('upload:text_file_extension_not_supported'));
       return;
     }
