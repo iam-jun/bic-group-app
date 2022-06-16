@@ -502,7 +502,7 @@
     "post_exit_desc": "You can save it as a draft for later editing",
     "post_exit_option_save": "Save as Draft",
     "post_exit_option_discard": "Discard Post",
-    "post_exit_option_continue": "Continue Editing",
+    "post_exit_option_continue": "Continue",
     "title_discard_comment": "Discard Comment",
     "text_discard_comment": "If you discard now, you'll lose any changes that you've made",
     "btn_continue_comment": "Continue",
