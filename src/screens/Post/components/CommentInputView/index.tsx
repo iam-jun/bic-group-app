@@ -81,7 +81,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   useEffect(() => {
     if (replyTargetUserId && replyTargetUser?.username) {
       let content = `@${replyTargetUser?.username} `;
-      if (replyTargetUserId === userId) {
+      if (replyTargetUserId === Number(userId)) {
         content = '';
       }
       mentionInputRef?.current?.setContent(content);
