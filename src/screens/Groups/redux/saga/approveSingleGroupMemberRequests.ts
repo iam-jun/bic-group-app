@@ -1,5 +1,6 @@
 import i18next from 'i18next';
-import {call, put, select} from 'redux-saga/effects';
+import {put, call, select} from 'redux-saga/effects';
+
 import approveDeclineCode from '~/constants/approveDeclineCode';
 import {IToastMessage} from '~/interfaces/common';
 import showError from '~/store/commonSaga/showError';
@@ -7,33 +8,34 @@ import modalActions from '~/store/modal/actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import groupsActions from '../actions';
 
-export default function* approveSingleCommunityMemberRequest({
+export default function* approveSingleGroupMemberRequest({
   payload,
 }: {
   type: string;
   payload: {
-    communityId: number;
+    groupId: number;
     requestId: number;
     fullName: string;
+    callback: () => void;
   };
 }) {
-  const {communityId, requestId, fullName} = payload;
+  const {groupId, requestId, fullName, callback} = payload;
   try {
     yield call(
-      groupsDataHelper.approveSingleCommunityMemberRequest,
-      communityId,
+      groupsDataHelper.approveSingleGroupMemberRequest,
+      groupId,
       requestId,
     );
 
     // Update data state
     const {groups} = yield select();
-    const {total, ids, items} = groups.communityMemberRequests;
+    const {total, data, items} = groups.pendingMemberRequests;
     const requestItems = {...items};
     delete requestItems[requestId];
     yield put(
-      groupsActions.setCommunityMemberRequests({
+      groupsActions.setGroupMemberRequests({
         total: total - 1,
-        ids: ids.filter((item: number) => item !== requestId),
+        data: data.filter((item: number) => item !== requestId),
         items: requestItems,
       }),
     );
@@ -43,17 +45,20 @@ export default function* approveSingleCommunityMemberRequest({
       props: {
         textProps: {useI18n: true},
         type: 'success',
+        rightIcon: 'UsersAlt',
+        rightText: 'Members',
+        onPressRight: callback,
       },
       toastType: 'normal',
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.getCommunityDetail({communityId})); // to update user_count
+    yield put(groupsActions.getGroupDetail(groupId));
   } catch (err: any) {
-    console.log('approveSingleCommunityMemberRequest: ', err);
+    console.log('approveSingleGroupMemberRequest: ', err);
 
     if (err?.code === approveDeclineCode.CANCELED) {
       yield put(
-        groupsActions.editCommunityMemberRequest({
+        groupsActions.editGroupMemberRequest({
           id: requestId,
           data: {isCanceled: true},
         }),

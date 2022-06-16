@@ -258,13 +258,20 @@ const groupsActions = {
     payload,
   }),
 
-  getMemberRequests: (payload: {groupId: number; params?: any}) => ({
+  getGroupMemberRequests: (payload: {
+    groupId: number;
+    isRefreshing?: boolean;
+    params?: any;
+  }) => ({
     type: groupsTypes.GET_MEMBER_REQUESTS,
     payload,
   }),
-  setMemberRequests: (payload: {
-    requestIds: number[];
-    requestItems: IObject<IJoiningMember>;
+  setGroupMemberRequests: (payload: {
+    total?: number;
+    loading?: boolean;
+    canLoadMore?: boolean;
+    data?: number[];
+    items?: IObject<IJoiningMember>;
   }) => ({
     type: groupsTypes.SET_MEMBER_REQUESTS,
     payload,
@@ -272,17 +279,10 @@ const groupsActions = {
   resetMemberRequests: () => ({
     type: groupsTypes.RESET_MEMBER_REQUESTS,
   }),
-  removeSingleMemberRequest: (payload: {requestId: number}) => ({
-    type: groupsTypes.REMOVE_SINGLE_MEMBER_REQUEST,
-    payload,
-  }),
   undoDeclineMemberRequests: () => ({
     type: groupsTypes.UNDO_DECLINE_MEMBER_REQUESTS,
   }),
-  removeAllMemberRequests: () => ({
-    type: groupsTypes.REMOVE_ALL_MEMBER_REQUESTS,
-  }),
-  approveSingleMemberRequest: (payload: {
+  approveSingleGroupMemberRequest: (payload: {
     groupId: number;
     requestId: number;
     fullName: string;
@@ -291,15 +291,14 @@ const groupsActions = {
     type: groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST,
     payload,
   }),
-  approveAllMemberRequests: (payload: {
+  approveAllGroupMemberRequests: (payload: {
     groupId: number;
-    total: number;
     callback?: () => void;
   }) => ({
     type: groupsTypes.APPROVE_ALL_MEMBER_REQUESTS,
     payload,
   }),
-  declineSingleMemberRequest: (payload: {
+  declineSingleGroupMemberRequest: (payload: {
     groupId: number;
     requestId: number;
     fullName: string;
@@ -307,9 +306,8 @@ const groupsActions = {
     type: groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST,
     payload,
   }),
-  declineAllMemberRequests: (payload: {
+  declineAllGroupMemberRequests: (payload: {
     groupId: number;
-    total: number;
     callback?: () => void;
   }) => ({
     type: groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
@@ -317,6 +315,10 @@ const groupsActions = {
   }),
   storeUndoData: () => ({
     type: groupsTypes.STORE_UNDO_DATA,
+  }),
+  editGroupMemberRequest: (payload: {id: number; data: any}) => ({
+    type: groupsTypes.EDIT_GROUP_MEMBER_REQUEST,
+    payload,
   }),
 
   // community
@@ -466,6 +468,7 @@ const groupsActions = {
 
   getCommunityMemberRequests: (payload: {
     communityId: number;
+    isRefreshing?: boolean;
     params?: any;
   }) => ({
     type: groupsTypes.GET_COMMUNITY_MEMBER_REQUESTS,
@@ -502,7 +505,6 @@ const groupsActions = {
   }),
   approveAllCommunityMemberRequests: (payload: {
     communityId: number;
-    total: number;
     callback?: () => void;
   }) => ({
     type: groupsTypes.APPROVE_ALL_COMMUNITY_MEMBER_REQUESTS,
@@ -510,7 +512,6 @@ const groupsActions = {
   }),
   declineAllCommunityMemberRequests: (payload: {
     communityId: number;
-    total: number;
     callback?: () => void;
   }) => ({
     type: groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,
@@ -521,6 +522,10 @@ const groupsActions = {
   }),
   undoDeclinedCommunityMemberRequests: () => ({
     type: groupsTypes.UNDO_DECLINED_COMMUNITY_MEMBER_REQUESTS,
+  }),
+  editCommunityMemberRequest: (payload: {id: number; data: any}) => ({
+    type: groupsTypes.EDIT_COMMUNITY_MEMBER_REQUEST,
+    payload,
   }),
 };
 

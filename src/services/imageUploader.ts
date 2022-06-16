@@ -155,4 +155,10 @@ export default class ImageUploader {
   delete() {
     console.log(`\x1b[36m🐣️ fileUploader delete\x1b[0m`);
   }
+
+  resetData() {
+    this.fileUploaded = {};
+    this.fileUploading = {};
+    this.fileAbortController = {};
+  }
 }
