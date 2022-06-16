@@ -74,7 +74,13 @@ const UploadingFile: FC<UploadingFileProps> = ({
     }
 
     const ext = fileName?.split('.')?.pop?.();
-    if (uploadType !== uploadTypes.postVideo && !supportedTypes.includes(ext)) {
+
+    // temp skip check extention for video
+    if (
+      uploadType !== uploadTypes.postVideo &&
+      uploadType !== uploadTypes.commentVideo &&
+      !supportedTypes.includes(ext)
+    ) {
       setError(t('upload:text_file_extension_not_supported'));
       return;
     }

@@ -23,6 +23,8 @@ import signIn from './signIn';
 import signInSuccess from './signInSuccess';
 import showError from '~/store/commonSaga/showError';
 import FileUploader from '~/services/fileUploader';
+import VideoUploader from '~/services/videoUploader';
+import ImageUploader from '~/services/imageUploader';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -153,6 +155,8 @@ function* signOut({payload}: any) {
       yield saveUserToSharedPreferences(data);
     }
     FileUploader.getInstance()?.resetData?.();
+    VideoUploader.getInstance()?.resetData?.();
+    ImageUploader.getInstance()?.resetData?.();
   } catch (err) {
     yield showError(err);
     if (!payload) {
