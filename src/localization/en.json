@@ -832,7 +832,8 @@
       "text_desc_system_scheme": "Use system default permission scheme. If there is no custom scheme applied, this option is auto-enabled.",
       "text_desc_community_scheme": "Create new permission scheme to apply to community",
       "text_desc_group_scheme": "Create new permission scheme to apply to specific groups."
-    }
+    },
+    "text_search_communities": "Search Communities"
   },
   "upload": {
     "text_create_file_id_request_failed": "Cannot request id",

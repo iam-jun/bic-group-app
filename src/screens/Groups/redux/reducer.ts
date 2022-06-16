@@ -150,11 +150,9 @@ export const groupInitState = {
   },
 
   communitySearch: {
-    showSearch: false,
     loading: false,
-    canLoadMore: false,
-    key: '',
-    ids: [],
+    canLoadMore: true,
+    ids: [] as number[],
     items: {},
   },
 };
@@ -698,6 +696,11 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           ...state.communitySearch,
           ...payload,
         },
+      };
+    case groupsTypes.RESET_COMMUNITY_SEARCH:
+      return {
+        ...state,
+        communitySearch: groupInitState.communitySearch,
       };
 
     default:

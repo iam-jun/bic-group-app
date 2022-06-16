@@ -720,7 +720,8 @@
       "text_desc_system_scheme": "Sử dụng quyền mặc định của hệ thống. Nếu không có bất cứ quyền tự tạo nào, quyền hệ thống sẽ tự động được chọn.",
       "text_desc_community_scheme": "Tạo quyền áp dụng cho cộng đồng.",
       "text_desc_group_scheme": "Tạo quyền áp dụng cho những nhóm cụ thể."
-    }
+    },
+    "text_search_communities": "Tìm kiếm Cộng đồng"
   },
   "upload": {
     "text_create_file_id_request_failed": "Có lỗi khi yêu cầu tạo id",

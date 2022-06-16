@@ -26,6 +26,7 @@ import {
   IParamGetDiscoverGroups,
   ISetMembers,
   ISetCommunitySearchMembers,
+  IParamGetCommunities,
 } from '~/interfaces/ICommunity';
 
 const groupsActions = {
@@ -528,20 +529,21 @@ const groupsActions = {
     payload,
   }),
 
-  getCommunitySearch: (payload: {key: string; isLoadMore?: boolean}) => ({
+  getCommunitySearch: (payload: IParamGetCommunities) => ({
     type: groupsTypes.GET_COMMUNITY_SEARCH,
     payload,
   }),
   setCommunitySearch: (payload: {
-    showSearch?: boolean;
     loading?: boolean;
     canLoadMore?: boolean;
-    key?: string;
     ids?: number[];
     items?: any;
   }) => ({
     type: groupsTypes.SET_COMMUNITY_SEARCH,
     payload,
+  }),
+  resetCommunitySearch: () => ({
+    type: groupsTypes.RESET_COMMUNITY_SEARCH,
   }),
 };
 

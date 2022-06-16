@@ -1,6 +1,6 @@
 import {call, put, select} from 'redux-saga/effects';
 import appConfig from '~/configs/appConfig';
-import {ICommunity} from '~/interfaces/ICommunity';
+import {ICommunity, IParamGetCommunities} from '~/interfaces/ICommunity';
 import showError from '~/store/commonSaga/showError';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import {mapItems} from '../../helper/mapper';
@@ -10,33 +10,21 @@ export default function* getCommunitySearch({
   payload,
 }: {
   type: string;
-  payload: {key: string; isLoadMore?: boolean};
+  payload: IParamGetCommunities;
 }) {
-  const {key, isLoadMore} = payload || {};
-  if (!key?.trim?.()) {
-    yield put(
-      groupsActions.setCommunitySearch({
-        loading: false,
-        ids: [],
-        items: {},
-        key: '',
-      }),
-    );
-    return;
-  }
   try {
-    if (!isLoadMore) {
-      yield put(groupsActions.setCommunitySearch({loading: true, key}));
-    }
-
     const {groups} = yield select();
-    const {ids, items} = groups.communitySearch;
+    const {canLoadMore, ids, items} = groups.communitySearch;
+
+    yield put(groupsActions.setCommunitySearch({loading: ids.length === 0}));
+
+    if (!canLoadMore) return;
 
     // @ts-ignore
     const data = yield call(groupsDataHelper.getCommunities, {
-      key,
-      offset: isLoadMore ? ids.length : 0,
       limit: appConfig.recordsPerPage,
+      offset: ids.length,
+      ...payload,
     });
 
     const newIds = data.map((item: ICommunity) => item.id);
@@ -45,9 +33,9 @@ export default function* getCommunitySearch({
     yield put(
       groupsActions.setCommunitySearch({
         loading: false,
-        ids: isLoadMore ? [...ids, ...newIds] : [...newIds],
-        items: isLoadMore ? {...items, ...newItems} : {...newItems},
         canLoadMore: newIds.length === appConfig.recordsPerPage,
+        ids: [...ids, ...newIds],
+        items: {...items, ...newItems},
       }),
     );
   } catch (err) {
