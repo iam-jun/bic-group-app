@@ -7,21 +7,21 @@ import groupsDataHelper from '../../helper/GroupsDataHelper';
 import {mapItems} from '../../helper/mapper';
 import groupsActions from '../actions';
 
-export default function* getCommunityMemberRequests({
+export default function* getGroupMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; isRefreshing?: boolean; params?: any};
+  payload: {groupId: number; isRefreshing?: boolean; params?: any};
 }) {
   try {
     const {groups} = yield select();
 
-    const {communityId, isRefreshing, params} = payload;
-    const {ids, items, canLoadMore} = groups.communityMemberRequests || {};
+    const {groupId, isRefreshing, params} = payload;
+    const {data, canLoadMore, items} = groups.pendingMemberRequests || {};
 
     yield put(
-      groupsActions.setCommunityMemberRequests({
-        loading: isRefreshing ? true : ids.length === 0,
+      groupsActions.setGroupMemberRequests({
+        loading: isRefreshing ? true : data.length === 0,
       }),
     );
 
@@ -29,10 +29,10 @@ export default function* getCommunityMemberRequests({
 
     // @ts-ignore
     const response = yield call(
-      groupsDataHelper.getCommunityMemberRequests,
-      communityId,
+      groupsDataHelper.getGroupMemberRequests,
+      groupId,
       {
-        offset: isRefreshing ? 0 : ids.length,
+        offset: isRefreshing ? 0 : data.length,
         limit: appConfig.recordsPerPage,
         key: memberRequestStatus.WAITING,
         ...params,
@@ -42,17 +42,17 @@ export default function* getCommunityMemberRequests({
     const requestIds = response.data.map((item: IJoiningMember) => item.id);
     const requestItems = mapItems(response.data);
 
-    const newData = {
-      total: response?.meta?.total,
-      loading: false,
-      canLoadMore: requestIds.length === appConfig.recordsPerPage,
-      ids: isRefreshing ? [...requestIds] : [...ids, ...requestIds],
-      items: isRefreshing ? {...requestItems} : {...items, ...requestItems},
-    };
-
-    yield put(groupsActions.setCommunityMemberRequests(newData));
+    yield put(
+      groupsActions.setGroupMemberRequests({
+        total: response?.meta?.total,
+        loading: false,
+        canLoadMore: requestIds.length === appConfig.recordsPerPage,
+        data: isRefreshing ? [...requestIds] : [...data, ...requestIds],
+        items: isRefreshing ? {...requestItems} : {...items, ...requestItems},
+      }),
+    );
   } catch (err) {
-    console.log('getCommunityMemberRequests: ', err);
+    console.log('getGroupMemberRequests: ', err);
     yield call(showError, err);
   }
 }

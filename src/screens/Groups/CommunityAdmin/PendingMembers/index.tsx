@@ -36,25 +36,22 @@ const CommunityPendingMembers = () => {
     onRefresh();
 
     return () => {
-      getData(); // to update the total member requests again on press back
+      onRefresh(); // to update the total member requests again on press back
     };
   }, [communityId]);
 
-  const getData = () => {
-    dispatch(groupsActions.getCommunityMemberRequests({communityId}));
-  };
-
-  const resetData = () => {
-    dispatch(groupsActions.resetCommunityMemberRequests());
+  const getData = (isRefreshing?: boolean) => {
+    dispatch(
+      groupsActions.getCommunityMemberRequests({communityId, isRefreshing}),
+    );
   };
 
   const onLoadMore = () => {
-    getData();
+    canLoadMore && getData();
   };
 
   const onRefresh = () => {
-    resetData();
-    getData();
+    getData(true);
   };
 
   const renderEmpty = () => {
@@ -69,7 +66,7 @@ const CommunityPendingMembers = () => {
   };
 
   const renderListHeader = () => {
-    if (loading || total === 0) return null;
+    if (!total) return null;
     return (
       <View style={styles.requestHeader}>
         <Text.H5 testID="community_pending_members.request_title">{`${total} ${t(

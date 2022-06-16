@@ -147,7 +147,10 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getMemberRequests: (groupId: number, params: any): HttpApiRequestConfig => ({
+  getGroupMemberRequests: (
+    groupId: number,
+    params: any,
+  ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests`,
     method: 'get',
     provider: ApiConfig.providers.bein,
@@ -158,7 +161,7 @@ export const groupsApiConfig = {
       key: !!params?.key?.trim?.() ? params.key : undefined,
     },
   }),
-  approveSingleMemberRequest: (
+  approveSingleGroupMemberRequest: (
     groupId: number,
     requestId: number,
   ): HttpApiRequestConfig => ({
@@ -167,19 +170,13 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  approveAllMemberRequests: (
-    groupId: number,
-    total: number,
-  ): HttpApiRequestConfig => ({
+  approveAllGroupMemberRequests: (groupId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/approve`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    data: {
-      total_joining_requests: total,
-    },
   }),
-  declineSingleMemberRequest: (
+  declineSingleGroupMemberRequest: (
     groupId: number,
     requestId: number,
   ): HttpApiRequestConfig => ({
@@ -188,17 +185,11 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  declineAllMemberRequests: (
-    groupId: number,
-    total: number,
-  ): HttpApiRequestConfig => ({
+  declineAllGroupMemberRequests: (groupId: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/decline`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    data: {
-      total_joining_requests: total,
-    },
   }),
   getInnerGroupsLastAdmin: (
     groupId: number,
@@ -320,27 +311,19 @@ export const groupsApiConfig = {
   }),
   approveAllCommunityMemberRequests: (
     communityId: number,
-    total: number,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/approve`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    data: {
-      total_joining_requests: total,
-    },
   }),
   declineAllCommunityMemberRequests: (
     communityId: number,
-    total: number,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/decline`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    data: {
-      total_joining_requests: total,
-    },
   }),
   getPermissionCategories: (): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}permissions/categories`,
@@ -575,10 +558,27 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getMemberRequests: async (groupId: number, params: any) => {
+  getGroupMemberRequests: async (groupId: number, params: any) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.getMemberRequests(groupId, params),
+        groupsApiConfig.getGroupMemberRequests(groupId, params),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  approveSingleGroupMemberRequest: async (
+    groupId: number,
+    requestId: number,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.approveSingleGroupMemberRequest(groupId, requestId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -589,10 +589,10 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  approveSingleMemberRequest: async (groupId: number, requestId: number) => {
+  approveAllGroupMemberRequests: async (groupId: number) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.approveSingleMemberRequest(groupId, requestId),
+        groupsApiConfig.approveAllGroupMemberRequests(groupId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -603,10 +603,13 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  approveAllMemberRequests: async (groupId: number, total: number) => {
+  declineSingleGroupMemberRequest: async (
+    groupId: number,
+    requestId: number,
+  ) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.approveAllMemberRequests(groupId, total),
+        groupsApiConfig.declineSingleGroupMemberRequest(groupId, requestId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -617,24 +620,10 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  declineSingleMemberRequest: async (groupId: number, requestId: number) => {
+  declineAllGroupMemberRequests: async (groupId: number) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.declineSingleMemberRequest(groupId, requestId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  declineAllMemberRequests: async (groupId: number, total: number) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.declineAllMemberRequests(groupId, total),
+        groupsApiConfig.declineAllGroupMemberRequests(groupId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -834,13 +823,10 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  approveAllCommunityMemberRequests: async (
-    communityId: number,
-    total: number,
-  ) => {
+  approveAllCommunityMemberRequests: async (communityId: number) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.approveAllCommunityMemberRequests(communityId, total),
+        groupsApiConfig.approveAllCommunityMemberRequests(communityId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -851,13 +837,10 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  declineAllCommunityMemberRequests: async (
-    communityId: number,
-    total: number,
-  ) => {
+  declineAllCommunityMemberRequests: async (communityId: number) => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.declineAllCommunityMemberRequests(communityId, total),
+        groupsApiConfig.declineAllCommunityMemberRequests(communityId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
