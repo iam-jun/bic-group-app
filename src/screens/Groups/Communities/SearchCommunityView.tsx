@@ -73,7 +73,7 @@ const SearchCommunityView = ({
         <View style={styles.text}>
           <Text.BodyS
             color={theme.colors.textSecondary}
-            testID="search_community_modal.type_search"
+            testID="search_community_view.type_search"
             useI18n>
             common:text_type_search_keyword
           </Text.BodyS>

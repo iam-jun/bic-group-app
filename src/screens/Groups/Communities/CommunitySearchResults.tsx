@@ -48,7 +48,7 @@ const CommunitySearchResults = ({
           style={styles.noResultText}
           color={theme.colors.textSecondary}
           useI18n
-          testID="community_search_result.no_results">
+          testID="community_search_results.no_results">
           common:text_search_no_results
         </Text.BodyS>
       </View>
@@ -67,7 +67,7 @@ const CommunitySearchResults = ({
     if (!loading && canLoadMore && ids.length > 0)
       return (
         <View style={styles.listFooter}>
-          <ActivityIndicator testID="community_search_result.loading_more" />
+          <ActivityIndicator testID="community_search_results.loading_more" />
         </View>
       );
 
