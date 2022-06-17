@@ -6,7 +6,6 @@ import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import showError from '~/store/commonSaga/showError';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
-import postKeySelector from '../keySelector';
 
 function* getCommentDetail({
   payload,
@@ -49,7 +48,8 @@ function* getCommentDetail({
     console.log(`\x1b[31m🐣️ saga getCommentDetail error: `, e, `\x1b[0m`);
     if (
       e?.code === API_ERROR_CODE.POST.postPrivacy ||
-      e?.code === API_ERROR_CODE.POST.copiedCommentIsDeleted
+      e?.code === API_ERROR_CODE.POST.copiedCommentIsDeleted ||
+      e?.code === API_ERROR_CODE.POST.postDeleted
     ) {
       yield put(postActions.setCommentErrorCode(e.code));
     } else {

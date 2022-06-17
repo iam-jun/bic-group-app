@@ -21,7 +21,6 @@ import API_ERROR_CODE from '~/constants/apiErrorCode';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import LoadMoreComment from '../components/LoadMoreComment';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import homeActions from '~/screens/Home/redux/actions';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -40,7 +39,8 @@ const CommentDetailContent = (props: any) => {
   const commentInputRef = useRef<any>();
 
   const params = props?.route?.params;
-  const {postId, replyItem, commentParent, commentId, parentId} = params || {};
+  const {postId, replyItem, commentParent, commentId, parentId, notiId} =
+    params || {};
   const id = postId;
 
   const actor = useKeySelector(postKeySelector.postActorById(id));
@@ -79,7 +79,8 @@ const CommentDetailContent = (props: any) => {
     if (copyCommentError === API_ERROR_CODE.POST.postPrivacy) {
       props?.showPrivacy?.(true);
     } else if (
-      copyCommentError === API_ERROR_CODE.POST.copiedCommentIsDeleted
+      copyCommentError === API_ERROR_CODE.POST.copiedCommentIsDeleted &&
+      !postDetailLoadingState
     ) {
       setIsEmpty(true);
       dispatch(
@@ -94,11 +95,27 @@ const CommentDetailContent = (props: any) => {
       );
       rootNavigation.replace(homeStack.postDetail, {post_id: postId});
     }
+    if (copyCommentError === API_ERROR_CODE.POST.postDeleted && !!notiId) {
+      dispatch(postActions.deletePostLocal(id));
+      dispatch(
+        modalActions.showHideToastMessage({
+          content: 'post:error_post_detail_deleted',
+          toastType: 'banner',
+          props: {
+            textProps: {useI18n: true},
+            type: 'informative',
+            leftIcon: 'iconCannotComment',
+          },
+        }),
+      );
+      rootNavigation.popToTop();
+    }
     if (!postDetailLoadingState && !copyCommentError) {
       dispatch(postActions.setScrollCommentsPosition(null));
       dispatch(
         postActions.getCommentDetail({
           commentId,
+          postId: postId,
           callbackLoading: (loading: boolean) => {
             setLoading(loading);
             if (!loading && !!replyItem) {
@@ -239,6 +256,7 @@ const CommentDetailContent = (props: any) => {
       setRefreshing(false);
       return;
     } else if (copyCommentError === API_ERROR_CODE.POST.postDeleted) {
+      dispatch(postActions.setLoadingGetPostDetail(true));
       setIsEmpty(true);
       setRefreshing(true);
       showNotice('deleted_post');
@@ -248,6 +266,7 @@ const CommentDetailContent = (props: any) => {
     dispatch(
       postActions.getCommentDetail({
         commentId: !!parentId ? parentId : commentId,
+        postId: postId,
         callbackLoading: (_loading: boolean) => {
           setRefreshing(_loading);
         },
