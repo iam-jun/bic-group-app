@@ -8,22 +8,45 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import images from '~/resources/images';
 import PostDetailContent from '~/screens/Post/PostDetail/PostDetailContent';
 import {ITheme} from '~/theme/interfaces';
+import {IPayloadPutMarkAsRead} from '~/interfaces/IPost';
+
+import {useDispatch} from 'react-redux';
+import postActions from '../redux/actions';
 
 const PostDetail = (props: any) => {
   const [showContent, setShowContent] = useState(false);
   const [showLoading, setShowLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
+  const dispatch = useDispatch();
+
+  const params = props?.route?.params;
+  const {post_id, focus_comment, noti_id = ''} = params || {};
+  const postId = post_id;
 
   useEffect(() => {
     const taskId = requestAnimationFrame(() => {
       setShowContent(true);
     });
+    onPressMarkSeenPost();
     return () => cancelAnimationFrame(taskId);
   }, []);
 
+  const onPressMarkSeenPost = () => {
+    if (!loading) {
+      setLoading(true);
+      const payload: IPayloadPutMarkAsRead = {
+        postId,
+        callback: () => {
+          setLoading(false);
+        },
+      };
+      dispatch(postActions.putMarkSeenPost(payload));
+    }
+  };
   const onContentLayout = useCallback(() => {
     setShowLoading(false);
   }, []);

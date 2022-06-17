@@ -13,6 +13,7 @@ import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
+import {ISeenListBottomSheet} from '~/interfaces/IModalSeenList';
 import {
   IAudienceUser,
   IOwnReaction,
@@ -21,6 +22,7 @@ import {
   IPostAudience,
   IPostSetting,
   IReactionCounts,
+  ISeenPeopleListSheet,
 } from '~/interfaces/IPost';
 import resourceImages from '~/resources/images';
 
@@ -38,6 +40,8 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {formatLargeNumber} from '~/utils/formatData';
+import ShowPeopleSeePost from './ShowPeopleSeePost';
+import ShowSeenPeopleListBottomSheet from './ShowSeenPeopleListBottomSheet';
 
 export interface PostViewProps {
   style?: any;
@@ -90,7 +94,8 @@ const _PostView: FC<PostViewProps> = ({
     content: string,
     highlight: string,
     setting: IPostSetting,
-    commentsCount: number;
+    commentsCount: number,
+    seenPeopleCount: number;
 
   if (isUseReduxState) {
     actor = useKeySelector(postKeySelector.postActorById(postId));
@@ -113,6 +118,9 @@ const _PostView: FC<PostViewProps> = ({
     reactionsCount = useKeySelector(
       postKeySelector.postReactionCountsById(postId),
     );
+    seenPeopleCount = useKeySelector(
+      postKeySelector.postTotalUsersSeenById(postId),
+    );
   } else {
     actor = postData?.actor;
     audience = postData?.audience;
@@ -127,6 +135,7 @@ const _PostView: FC<PostViewProps> = ({
     commentsCount = postData?.commentsCount || 0;
     ownerReactions = postData?.ownerReactions || [];
     reactionsCount = postData?.reactionsCount || {};
+    seenPeopleCount = postData?.totalUsersSeen || 0;
   }
 
   const {images, videos} = media || {};
@@ -209,6 +218,14 @@ const _PostView: FC<PostViewProps> = ({
     dispatch(modalActions.showReactionDetailBottomSheet(payload));
   };
 
+  const onPressSeenBy = () => {
+    dispatch(
+      modalActions.showModal({
+        isOpen: true,
+        ContentComponent: <ShowSeenPeopleListBottomSheet postId={postId} />,
+      }),
+    );
+  };
   const _onPressHeader = () => {
     if (onPressHeader) {
       onPressHeader?.(postId);
@@ -277,6 +294,12 @@ const _PostView: FC<PostViewProps> = ({
           videos={videos}
           isPostDetail={isPostDetail}
         />
+        {seenPeopleCount > 0 && (
+          <ShowPeopleSeePost
+            onPressSeenBy={onPressSeenBy}
+            seenPeopleCount={seenPeopleCount}
+          />
+        )}
         {!isLite && (
           <ReactionView
             style={styles.reactions}

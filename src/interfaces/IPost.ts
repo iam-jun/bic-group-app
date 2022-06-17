@@ -140,6 +140,7 @@ export interface IPostActivity {
   markedReadPost?: boolean;
   createdAt?: string;
   createdBy?: number;
+  totalUsersSeen?: number;
 }
 
 export type IOwnReaction = Array<IReaction>;
@@ -496,7 +497,10 @@ export interface IPayloadPutMarkAsRead {
   postId: string;
   callback?: (isSuccess: boolean) => void;
 }
-
+export interface IPayloadPutMarkSeenPost {
+  postId: string;
+  callback?: (isSuccess: boolean) => void;
+}
 export interface IGetStreamCommentData {
   id: string;
   actor: IGetStreamUser;
@@ -506,4 +510,23 @@ export interface IGetStreamCommentData {
   reaction?: IReaction;
   reactionsCount?: IReactionCounts;
   child?: IGetStreamCommentData;
+}
+export interface ISeenUserList {
+  postId: string;
+  limit?: number;
+  offset?: number;
+}
+export interface ISeenPeopleListSheet {
+  isShow: boolean;
+  data: any[];
+}
+export interface ISeenPostListSheet {
+  total?: number;
+  data: any[];
+  canLoadMore?: boolean;
+}
+export interface IGetSeenPostListSheet {
+  postId: string;
+  offset?: number;
+  canLoadMore?: boolean;
 }

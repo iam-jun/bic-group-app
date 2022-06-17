@@ -14,6 +14,7 @@ import {
   IRequestGetPostComment,
   IRequestPostComment,
   IRequestReplyComment,
+  ISeenUserList,
 } from '~/interfaces/IPost';
 
 const provider = ApiConfig.providers.beinFeed;
@@ -155,6 +156,12 @@ export const postApiConfig = {
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
   }),
+  putMarkSeenPost: (postId: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.beinFeed.url}feeds/seen/${postId}`,
+    method: 'put',
+    provider: ApiConfig.providers.beinFeed,
+    useRetry: true,
+  }),
   getSearchAudiences: (key: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}post-audiences`,
     method: 'get',
@@ -231,6 +238,20 @@ export const postApiConfig = {
       offset: params?.offset || 0,
     },
   }),
+  getSeenList: (params: ISeenUserList): HttpApiRequestConfig => {
+    // const {postId, ...restParams} = params;
+    return {
+      url: `${provider.url}feeds/seen/user`,
+      method: 'get',
+      provider,
+      useRetry: true,
+      params: {
+        postId: params.postId,
+        limit: params?.limit || 20,
+        offset: params?.offset || 0,
+      },
+    };
+  },
 };
 
 const postDataHelper = {
@@ -367,6 +388,20 @@ const postDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.putMarkAsRead(postId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  putMarkSeenPost: async (postId: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.putMarkSeenPost(postId),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
@@ -514,6 +549,22 @@ const postDataHelper = {
       );
       if (response && response?.data && response.data?.data) {
         return Promise.resolve(response.data.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getSeenList: async (params: ISeenUserList) => {
+    try {
+      const response: any = await makeHttpRequest(
+        postApiConfig.getSeenList({
+          ...params,
+        }),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);
       }

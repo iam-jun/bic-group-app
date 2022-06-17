@@ -32,6 +32,11 @@ import {
   IPayloadDeleteComment,
   ICommentData,
   IPayloadPutMarkAsRead,
+  ISeenUserList,
+  ISeenPeopleListSheet,
+  ISeenPostListSheet,
+  IPayloadPutMarkSeenPost,
+  IGetSeenPostListSheet,
 } from '~/interfaces/IPost';
 import {IGroup} from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -301,6 +306,18 @@ const postActions = {
   }),
   removeCommentLevel1Deleted: (payload: any) => ({
     type: postTypes.REMOVE_COMMENT_DELETED,
+    payload,
+  }),
+  getSeenPost: (payload: IGetSeenPostListSheet) => ({
+    type: postTypes.GET_SEEN_PEOPLE_LIST_BOTTOM_SHEET,
+    payload,
+  }),
+  setSeenPost: (payload: ISeenPostListSheet) => ({
+    type: postTypes.SET_SEEN_PEOPLE_LIST_BOTTOM_SHEET,
+    payload,
+  }),
+  putMarkSeenPost: (payload: IPayloadPutMarkSeenPost) => ({
+    type: postTypes.PUT_MARK_SEEN_POST,
     payload,
   }),
 };
