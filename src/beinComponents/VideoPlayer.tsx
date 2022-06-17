@@ -8,7 +8,7 @@ import {
   PixelRatio,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {Video, AVPlaybackStatus, ResizeMode} from 'expo-av';
+import {Video, ResizeMode} from 'expo-av';
 
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
@@ -22,13 +22,39 @@ const PLAYER_HEIGHT = scaleSize(232);
 
 const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
   const theme = useTheme() as ITheme;
+  const {dimension} = theme;
   const styles = createStyle(theme);
+
   const video = React.useRef(null);
-  const {url, id} = data || {};
+  const {url, id, thumbnails} = data || {};
+
+  const getThumbnailImageLink = () => {
+    const deviceWidthPixel = PixelRatio.get() * dimension.deviceWidth;
+    if (thumbnails?.length > 0) {
+      for (let index = 0; index < thumbnails.length; index++) {
+        if (thumbnails[index]?.width >= deviceWidthPixel) {
+          return thumbnails[index]?.url;
+        }
+      }
+      return thumbnails[thumbnails.length - 1]?.url;
+    }
+    return '';
+  };
 
   useEffect(() => {
-    console.log('PixelRatio', PixelRatio.get());
+    if (video.current) {
+      try {
+        video.current?.loadAsync?.({
+          uri: url,
+          overrideFileExtensionAndroid: 'm3u8',
+        });
+      } catch (error) {
+        console.log('>>>>>>>loadAsync error>>>>>>>', error);
+      }
+    }
+  }, []);
 
+  useEffect(() => {
     const showBottomBarListener = DeviceEventEmitter.addListener(
       'stopPlayingVideo',
       (videoId: any) => {
@@ -52,14 +78,17 @@ const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
     return null;
   }
 
+  const posterUrl = getThumbnailImageLink();
+
   return (
     <View style={[styles.container]}>
       <Video
         ref={video}
-        source={{
-          uri: url,
-          overrideFileExtensionAndroid: 'm3u8',
-        }}
+        // source={{
+        //   uri: url,
+        //   overrideFileExtensionAndroid: 'm3u8',
+        // }}
+        posterSource={{uri: posterUrl}}
         style={styles.player}
         useNativeControls
         resizeMode={ResizeMode.CONTAIN}
@@ -81,7 +110,7 @@ const createStyle = (theme: ITheme) => {
       height: PLAYER_HEIGHT,
       flex: 1,
       justifyContent: 'center',
-      backgroundColor: colors.borderDisable,
+      backgroundColor: colors.textPrimary,
     },
     player: {
       position: 'absolute',
