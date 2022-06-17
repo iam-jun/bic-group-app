@@ -9,6 +9,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
   }
 >
   <View
+    collapsable={false}
     pointerEvents="box-none"
     style={
       Object {
@@ -24,6 +25,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
       style={null}
     >
       <View
+        collapsable={false}
         pointerEvents="box-none"
         style={
           Object {
@@ -38,6 +40,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
         }
       >
         <View
+          collapsable={false}
           style={
             Object {
               "backgroundColor": "rgb(255, 255, 255)",
@@ -55,6 +58,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
         />
       </View>
       <View
+        collapsable={false}
         pointerEvents="box-none"
         style={
           Object {
@@ -86,6 +90,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
           }
         >
           <View
+            collapsable={false}
             pointerEvents="box-none"
             style={
               Object {
@@ -98,7 +103,6 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
               accessibilityRole="header"
               aria-level="1"
               collapsable={false}
-              nativeID="animatedComponent"
               numberOfLines={1}
               onLayout={[Function]}
               style={
@@ -126,6 +130,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
   >
     <RNSScreen
       activityState={2}
+      collapsable={false}
       forwardedRef={[Function]}
       pointerEvents="box-none"
       style={
@@ -201,7 +206,6 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
       >
         <View
           collapsable={false}
-          nativeID="animatedComponent"
           needsOffscreenAlphaCompositing={false}
           pointerEvents="box-none"
           style={
@@ -230,6 +234,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
             }
           >
             <View
+              collapsable={false}
               pointerEvents="none"
               style={
                 Object {
@@ -294,7 +299,9 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                       <View
                         style={
                           Array [
-                            [Function],
+                            Object {
+                              "height": undefined,
+                            },
                             Object {
                               "alignItems": "flex-end",
                               "backgroundColor": "#FFFFFF",
@@ -340,6 +347,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                               }
                             }
                             accessible={true}
+                            collapsable={false}
                             focusable={true}
                             hitSlop={
                               Object {
@@ -393,14 +401,13 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                 }
                               >
                                 <View
-                                  className="icon-wrapper"
                                   testID="header.back"
                                 >
                                   <RNSVGSvgView
                                     align="xMidYMid"
                                     bbHeight={24}
                                     bbWidth={24}
-                                    fill="#2F3945"
+                                    color={4281284933}
                                     focusable={false}
                                     height={24}
                                     meetOrSlice={0}
@@ -420,20 +427,24 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                         },
                                       ]
                                     }
+                                    tintColor={4281284933}
                                     vbHeight={24}
                                     vbWidth={24}
                                     width={24}
                                   >
-                                    <RNSVGGroup
-                                      fill={4281284933}
-                                      propList={
-                                        Array [
-                                          "fill",
-                                        ]
-                                      }
-                                    >
+                                    <RNSVGGroup>
                                       <RNSVGPath
-                                        d="M8.5,12.8l5.7,5.6c0.4,0.4,1,0.4,1.4,0c0,0,0,0,0,0c0.4-0.4,0.4-1,0-1.4l-4.9-5l4.9-5c0.4-0.4,0.4-1,0-1.4c-0.2-0.2-0.4-0.3-0.7-0.3c-0.3,0-0.5,0.1-0.7,0.3l-5.7,5.6C8.1,11.7,8.1,12.3,8.5,12.8C8.5,12.7,8.5,12.7,8.5,12.8z"
+                                        d="M8.5 12.8l5.7 5.6c.4.4 1 .4 1.4 0 .4-.4.4-1 0-1.4l-4.9-5 4.9-5c.4-.4.4-1 0-1.4-.2-.2-.4-.3-.7-.3-.3 0-.5.1-.7.3l-5.7 5.6c-.4.5-.4 1.1 0 1.6 0-.1 0-.1 0 0z"
+                                        fill={
+                                          Array [
+                                            2,
+                                          ]
+                                        }
+                                        propList={
+                                          Array [
+                                            "fill",
+                                          ]
+                                        }
                                       />
                                     </RNSVGGroup>
                                   </RNSVGSvgView>
@@ -462,6 +473,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                 }
                               }
                               accessible={true}
+                              collapsable={false}
                               focusable={false}
                               onClick={[Function]}
                               onResponderGrant={[Function]}
@@ -505,6 +517,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                               }
                             }
                             accessible={true}
+                            collapsable={false}
                             focusable={true}
                             hitSlop={
                               Object {
@@ -559,9 +572,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                   ]
                                 }
                               >
-                                <View
-                                  className="icon-wrapper"
-                                >
+                                <View>
                                   <View
                                     onLayout={[Function]}
                                     style={
@@ -572,6 +583,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                     }
                                   >
                                     <View
+                                      collapsable={false}
                                       style={
                                         Object {
                                           "bottom": 0,
@@ -686,9 +698,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                           onLayout={[Function]}
                           style={null}
                         >
-                          <View
-                            className="button"
-                          >
+                          <View>
                             <View
                               accessibilityState={
                                 Object {
@@ -696,6 +706,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                 }
                               }
                               accessible={true}
+                              collapsable={false}
                               focusable={true}
                               onClick={[Function]}
                               onResponderGrant={[Function]}
@@ -749,6 +760,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                     }
                                   >
                                     <View
+                                      collapsable={false}
                                       style={
                                         Object {
                                           "bottom": 0,
@@ -825,7 +837,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                         "fontSize": 16,
                                       },
                                       Object {},
-                                      Object {},
+                                      undefined,
                                     ]
                                   }
                                 >
@@ -847,6 +859,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                       }
                                     }
                                     accessible={true}
+                                    collapsable={false}
                                     focusable={false}
                                     hitSlop={
                                       Object {
@@ -895,14 +908,12 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                           ]
                                         }
                                       >
-                                        <View
-                                          className="icon-wrapper"
-                                        >
+                                        <View>
                                           <RNSVGSvgView
                                             align="xMidYMid"
                                             bbHeight={16}
                                             bbWidth={16}
-                                            fill="#627286"
+                                            color={4284641926}
                                             focusable={false}
                                             height={16}
                                             meetOrSlice={0}
@@ -922,20 +933,24 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                                 },
                                               ]
                                             }
+                                            tintColor={4284641926}
                                             vbHeight={24}
                                             vbWidth={24}
                                             width={16}
                                           >
-                                            <RNSVGGroup
-                                              fill={4284641926}
-                                              propList={
-                                                Array [
-                                                  "fill",
-                                                ]
-                                              }
-                                            >
+                                            <RNSVGGroup>
                                               <RNSVGPath
-                                                d="M21.41,8.64s0,0,0-.05a10,10,0,0,0-18.78,0s0,0,0,.05a9.86,9.86,0,0,0,0,6.72s0,0,0,.05a10,10,0,0,0,18.78,0s0,0,0-.05a9.86,9.86,0,0,0,0-6.72ZM4.26,14a7.82,7.82,0,0,1,0-4H6.12a16.73,16.73,0,0,0,0,4Zm.82,2h1.4a12.15,12.15,0,0,0,1,2.57A8,8,0,0,1,5.08,16Zm1.4-8H5.08A8,8,0,0,1,7.45,5.43,12.15,12.15,0,0,0,6.48,8ZM11,19.7A6.34,6.34,0,0,1,8.57,16H11ZM11,14H8.14a14.36,14.36,0,0,1,0-4H11Zm0-6H8.57A6.34,6.34,0,0,1,11,4.3Zm7.92,0h-1.4a12.15,12.15,0,0,0-1-2.57A8,8,0,0,1,18.92,8ZM13,4.3A6.34,6.34,0,0,1,15.43,8H13Zm0,15.4V16h2.43A6.34,6.34,0,0,1,13,19.7ZM15.86,14H13V10h2.86a14.36,14.36,0,0,1,0,4Zm.69,4.57a12.15,12.15,0,0,0,1-2.57h1.4A8,8,0,0,1,16.55,18.57ZM19.74,14H17.88A16.16,16.16,0,0,0,18,12a16.28,16.28,0,0,0-.12-2h1.86a7.82,7.82,0,0,1,0,4Z"
+                                                d="M21.41 8.64v-.05a10 10 0 00-18.78 0v.05a9.86 9.86 0 000 6.72v.05a10 10 0 0018.78 0v-.05a9.86 9.86 0 000-6.72zM4.26 14a7.82 7.82 0 010-4h1.86a16.73 16.73 0 000 4zm.82 2h1.4a12.15 12.15 0 001 2.57A8 8 0 015.08 16zm1.4-8h-1.4a8 8 0 012.37-2.57A12.15 12.15 0 006.48 8zM11 19.7A6.34 6.34 0 018.57 16H11zm0-5.7H8.14a14.36 14.36 0 010-4H11zm0-6H8.57A6.34 6.34 0 0111 4.3zm7.92 0h-1.4a12.15 12.15 0 00-1-2.57A8 8 0 0118.92 8zM13 4.3A6.34 6.34 0 0115.43 8H13zm0 15.4V16h2.43A6.34 6.34 0 0113 19.7zm2.86-5.7H13v-4h2.86a14.36 14.36 0 010 4zm.69 4.57a12.15 12.15 0 001-2.57h1.4a8 8 0 01-2.4 2.57zM19.74 14h-1.86a16.16 16.16 0 00.12-2 16.28 16.28 0 00-.12-2h1.86a7.82 7.82 0 010 4z"
+                                                fill={
+                                                  Array [
+                                                    2,
+                                                  ]
+                                                }
+                                                propList={
+                                                  Array [
+                                                    "fill",
+                                                  ]
+                                                }
                                               />
                                             </RNSVGGroup>
                                           </RNSVGSvgView>
@@ -984,6 +999,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                       }
                                     }
                                     accessible={true}
+                                    collapsable={false}
                                     focusable={false}
                                     hitSlop={
                                       Object {
@@ -1032,14 +1048,12 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                           ]
                                         }
                                       >
-                                        <View
-                                          className="icon-wrapper"
-                                        >
+                                        <View>
                                           <RNSVGSvgView
                                             align="xMidYMid"
                                             bbHeight={16}
                                             bbWidth={16}
-                                            fill="#627286"
+                                            color={4284641926}
                                             focusable={false}
                                             height={16}
                                             meetOrSlice={0}
@@ -1059,20 +1073,24 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                                 },
                                               ]
                                             }
+                                            tintColor={4284641926}
                                             vbHeight={24}
                                             vbWidth={24}
                                             width={16}
                                           >
-                                            <RNSVGGroup
-                                              fill={4284641926}
-                                              propList={
-                                                Array [
-                                                  "fill",
-                                                ]
-                                              }
-                                            >
+                                            <RNSVGGroup>
                                               <RNSVGPath
-                                                d="M12.3,12.22A4.92,4.92,0,0,0,14,8.5a5,5,0,0,0-10,0,4.92,4.92,0,0,0,1.7,3.72A8,8,0,0,0,1,19.5a1,1,0,0,0,2,0,6,6,0,0,1,12,0,1,1,0,0,0,2,0A8,8,0,0,0,12.3,12.22ZM9,11.5a3,3,0,1,1,3-3A3,3,0,0,1,9,11.5Zm9.74.32A5,5,0,0,0,15,3.5a1,1,0,0,0,0,2,3,3,0,0,1,3,3,3,3,0,0,1-1.5,2.59,1,1,0,0,0-.5.84,1,1,0,0,0,.45.86l.39.26.13.07a7,7,0,0,1,4,6.38,1,1,0,0,0,2,0A9,9,0,0,0,18.74,11.82Z"
+                                                d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
+                                                fill={
+                                                  Array [
+                                                    2,
+                                                  ]
+                                                }
+                                                propList={
+                                                  Array [
+                                                    "fill",
+                                                  ]
+                                                }
                                               />
                                             </RNSVGGroup>
                                           </RNSVGSvgView>
@@ -1152,6 +1170,7 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                       }
                                     }
                                     accessible={true}
+                                    collapsable={false}
                                     focusable={false}
                                     hitSlop={
                                       Object {
@@ -1200,14 +1219,13 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                         }
                                       >
                                         <View
-                                          className="icon-wrapper"
                                           testID="button_wrapper.icon"
                                         >
                                           <RNSVGSvgView
                                             align="xMidYMid"
                                             bbHeight={20}
                                             bbWidth={20}
-                                            fill="#2F3945"
+                                            color={4281284933}
                                             focusable={false}
                                             height={20}
                                             meetOrSlice={0}
@@ -1227,20 +1245,24 @@ exports[`DiscoverGroups component should render data correctly 1`] = `
                                                 },
                                               ]
                                             }
+                                            tintColor={4281284933}
                                             vbHeight={24}
                                             vbWidth={24}
                                             width={20}
                                           >
-                                            <RNSVGGroup
-                                              fill={4281284933}
-                                              propList={
-                                                Array [
-                                                  "fill",
-                                                ]
-                                              }
-                                            >
+                                            <RNSVGGroup>
                                               <RNSVGPath
-                                                d="M19,11H13V5a1,1,0,0,0-2,0v6H5a1,1,0,0,0,0,2h6v6a1,1,0,0,0,2,0V13h6a1,1,0,0,0,0-2Z"
+                                                d="M19 11h-6V5a1 1 0 00-2 0v6H5a1 1 0 000 2h6v6a1 1 0 002 0v-6h6a1 1 0 000-2z"
+                                                fill={
+                                                  Array [
+                                                    2,
+                                                  ]
+                                                }
+                                                propList={
+                                                  Array [
+                                                    "fill",
+                                                  ]
+                                                }
                                               />
                                             </RNSVGGroup>
                                           </RNSVGSvgView>

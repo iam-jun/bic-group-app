@@ -11,25 +11,28 @@ export default function* getCommunityMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; params?: any};
+  payload: {communityId: number; isRefreshing?: boolean; params?: any};
 }) {
   try {
     const {groups} = yield select();
 
-    const {communityId, params} = payload;
+    const {communityId, isRefreshing, params} = payload;
     const {ids, items, canLoadMore} = groups.communityMemberRequests || {};
+
     yield put(
-      groupsActions.setCommunityMemberRequests({loading: ids.length === 0}),
+      groupsActions.setCommunityMemberRequests({
+        loading: isRefreshing ? true : ids.length === 0,
+      }),
     );
 
-    if (!canLoadMore) return;
+    if (!isRefreshing && !canLoadMore) return;
 
     // @ts-ignore
     const response = yield call(
       groupsDataHelper.getCommunityMemberRequests,
       communityId,
       {
-        offset: ids.length,
+        offset: isRefreshing ? 0 : ids.length,
         limit: appConfig.recordsPerPage,
         key: memberRequestStatus.WAITING,
         ...params,
@@ -43,11 +46,8 @@ export default function* getCommunityMemberRequests({
       total: response?.meta?.total,
       loading: false,
       canLoadMore: requestIds.length === appConfig.recordsPerPage,
-      ids: [...ids, ...requestIds],
-      items: {
-        ...items,
-        ...requestItems,
-      },
+      ids: isRefreshing ? [...requestIds] : [...ids, ...requestIds],
+      items: isRefreshing ? {...requestItems} : {...items, ...requestItems},
     };
 
     yield put(groupsActions.setCommunityMemberRequests(newData));

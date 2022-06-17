@@ -46,7 +46,10 @@ const TextComponent: React.FC<TextProps> = ({
   const textStyle = styles[variant || 'body'];
 
   return (
-    <TextRN {...props} style={[textStyle, color ? {color} : {}, style]}>
+    <TextRN
+      // allowFontScaling={false} disable block font scaling because somewhere not set fontSize (markdown, input) still use scale size
+      {...props}
+      style={[textStyle, color ? {color} : {}, style]}>
       {useI18n ? t(children) : children}
     </TextRN>
   );

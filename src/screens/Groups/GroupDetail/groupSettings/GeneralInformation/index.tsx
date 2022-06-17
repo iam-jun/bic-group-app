@@ -30,10 +30,7 @@ const GeneralInformation = (props: any) => {
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const {privacy} = useKeySelector(groupsKeySelector.groupDetail.group) || {};
-
-  const totalPendingMembers = useKeySelector(
-    groupsKeySelector.groupDetail.total_pending_members,
-  );
+  const {total} = useKeySelector(groupsKeySelector.pendingMemberRequests);
 
   const baseSheetRef: any = useRef();
 
@@ -65,37 +62,27 @@ const GeneralInformation = (props: any) => {
     );
   };
 
-  const approveAllMemberRequests = () => {
-    dispatch(
-      groupsActions.approveAllMemberRequests({
-        groupId: id,
-        total: totalPendingMembers,
-      }),
-    );
+  const approveAllGroupMemberRequests = () => {
+    dispatch(groupsActions.approveAllGroupMemberRequests({groupId: id}));
     editGroupPrivacy({type: groupPrivacy.public});
   };
 
-  const declineAllMemberRequests = () => {
-    dispatch(
-      groupsActions.declineAllMemberRequests({
-        groupId: id,
-        total: totalPendingMembers,
-      }),
-    );
+  const declineAllGroupMemberRequests = () => {
+    dispatch(groupsActions.declineAllGroupMemberRequests({groupId: id}));
     editGroupPrivacy({type: groupPrivacy.secret});
   };
 
   const onPrivacyMenuPress = (item: any) => {
     baseSheetRef.current?.close();
 
-    if (privacy === groupPrivacy.private && totalPendingMembers > 0) {
+    if (privacy === groupPrivacy.private && total > 0) {
       if (item.type === groupPrivacy.public) {
         alertAction(
           dispatch,
           theme,
           i18next.t('groups:update_privacy_modal:title'),
           i18next.t('groups:update_privacy_modal:content:approve'),
-          approveAllMemberRequests,
+          approveAllGroupMemberRequests,
         );
       }
 
@@ -105,7 +92,7 @@ const GeneralInformation = (props: any) => {
           theme,
           i18next.t('groups:update_privacy_modal:title'),
           i18next.t('groups:update_privacy_modal:content:decline'),
-          declineAllMemberRequests,
+          declineAllGroupMemberRequests,
         );
       }
     } else {

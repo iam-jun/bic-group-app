@@ -8,6 +8,7 @@ const postKeySelector = {
     all: 'post.createPost',
     images: 'post.createPost.images',
     video: 'post.createPost.video',
+    files: 'post.createPost.files',
     imagesDraft: 'post.createPost.imagesDraft',
     initAudiences: 'post.createPost.initAudiences',
     chosenAudiences: 'post.createPost.chosenAudiences',

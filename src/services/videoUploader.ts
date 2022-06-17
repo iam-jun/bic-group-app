@@ -42,11 +42,11 @@ export default class VideoUploader extends FileUploader {
         return {
           error:
             this.getResponseErrMsg(response) ||
-            'upload:text_create_video_id_response_failed',
+            'upload:text_create_file_id_response_failed',
         };
       }
     } catch (e) {
-      return {error: 'upload:text_create_video_id_request_failed'};
+      return {error: 'upload:text_create_file_id_request_failed'};
     }
   }
 
@@ -90,14 +90,18 @@ export default class VideoUploader extends FileUploader {
         return {
           error:
             this.getResponseErrMsg(response) ||
-            'upload:text_upload_video_response_failed',
+            i18next.t('upload:text_upload_response_failed', {
+              file_type: i18next.t('file_type:video'),
+            }),
         };
       }
     } catch (e) {
       return {
         error:
           this.getResponseErrMsg(e) ||
-          'upload:text_upload_video_request_failed',
+          i18next.t('upload:text_upload_request_failed', {
+            file_type: i18next.t('file_type:video'),
+          }),
       };
     }
   }

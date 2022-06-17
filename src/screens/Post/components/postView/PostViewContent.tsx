@@ -15,12 +15,14 @@ import Markdown from '~/beinComponents/Markdown';
 import postKeySelector from '../../redux/keySelector';
 import VideoPlayer from '~/beinComponents/VideoPlayer';
 import UploadingFile from '~/beinComponents/UploadingFile';
+import FilesView from '../FilesView';
 
 export interface PostViewContentProps {
   postId: string;
   content?: string;
   images?: IActivityDataImage[];
   videos?: any[];
+  files?: any[];
   isPostDetail: boolean;
   isLite?: boolean;
   isDraft?: boolean;
@@ -31,6 +33,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
   content = '',
   images = [],
   videos = [],
+  files = [],
   isPostDetail,
   isLite,
   isDraft,
@@ -126,6 +129,8 @@ const PostViewContent: FC<PostViewContentProps> = ({
           ) : (
             <VideoPlayer data={videos?.[0]} />
           )}
+
+          <FilesView files={files} disableClose showDownload />
         </>
       )}
     </View>

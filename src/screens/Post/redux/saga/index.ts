@@ -48,6 +48,7 @@ import getCommentDetail from './getCommentDetail';
 import putMarkAsRead from '~/screens/Post/redux/saga/putMarkAsRead';
 import getSeenPost from './getSeenPost';
 import putMarkSeenPost from './putMarKSeenPost';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -96,6 +97,7 @@ export default function* postSaga() {
     getCreatePostInitAudiences,
   );
   yield takeLatest(postTypes.GET_SEEN_PEOPLE_LIST_BOTTOM_SHEET, getSeenPost);
+  yield takeLatest(postTypes.DELETE_POST_LOCAL, deletePostLocal);
 }
 
 function* postCreateNewPost({
@@ -483,14 +485,28 @@ function* getPostDetail({
     yield timeOut(500);
     yield put(postActions.setLoadingGetPostDetail(false));
     callbackLoading?.(false, false);
-    const post = yield select(state =>
-      get(state, postKeySelector.postById(postId)),
-    );
-    if (post && e?.results?.length === 0) {
-      post.deleted = true;
-      yield put(postActions.addToAllPosts({data: post}));
+    if (
+      e?.code === API_ERROR_CODE.POST.postDeleted ||
+      e?.code === API_ERROR_CODE.POST.postPrivacy
+    ) {
+      yield put(postActions.deletePostLocal(postId));
+      yield put(postActions.setCommentErrorCode(e.code));
+      if (!!payload?.showToast) {
+        yield put(
+          modalActions.showHideToastMessage({
+            content: 'post:error_post_detail_deleted',
+            toastType: 'banner',
+            props: {
+              textProps: {useI18n: true},
+              type: 'informative',
+              leftIcon: 'iconCannotComment',
+            },
+          }),
+        );
+      }
+    } else {
+      yield showError(e);
     }
-    yield showError(e);
   }
 }
 
@@ -509,5 +525,23 @@ function* getCreatePostInitAudiences({
     }
   } catch (e: any) {
     console.log(`\x1b[31m🐣️ saga getCreatePostInitAudiences e:`, e, `\x1b[0m`);
+  }
+}
+
+function* deletePostLocal({payload}: {type: string; payload: string}): any {
+  if (!payload) {
+    console.log(`\x1b[31m🐣️ saga deletePost: id not found\x1b[0m`);
+    return;
+  }
+  try {
+    const post = yield select(state =>
+      get(state, postKeySelector.postById(payload)),
+    );
+    if (!!post) {
+      post.deleted = true;
+      yield put(postActions.addToAllPosts({data: post}));
+    }
+  } catch (e) {
+    yield showError(e);
   }
 }

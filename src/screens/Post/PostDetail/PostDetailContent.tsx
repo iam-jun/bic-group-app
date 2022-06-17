@@ -29,6 +29,7 @@ import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
 import {useBaseHook} from '~/hooks';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
@@ -50,6 +51,9 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import Store from '~/store';
 import modalActions, {showHideToastMessage} from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
+import SVGIcon from '~/beinComponents/Icon/SvgIcon';
+import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
+import Text from '~/beinComponents/Text';
 
 const defaultList = [{title: '', type: 'empty', data: []}];
 
@@ -57,12 +61,14 @@ const _PostDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
   const [stickerBoardVisible, setStickerBoardVisible] = useState(false);
+  const [isEmpty, setIsEmpty] = useState(false);
+
   let countRetryScrollToBottom = useRef(0).current;
   const commentInputRef = useRef<any>();
   const internetReachableRef = useRef(true);
 
   const params = props?.route?.params;
-  const {post_id, focus_comment} = params || {};
+  const {post_id, focus_comment, noti_id = ''} = params || {};
 
   const listRef = useRef<any>();
   const layoutSet = useRef(false);
@@ -86,6 +92,8 @@ const _PostDetailContent = (props: any) => {
   const commentLeft = useKeySelector(
     postKeySelector.postCommentOnlyCountById(id),
   );
+  const commentError = useKeySelector(postKeySelector.commentErrorCode);
+
   const commentList = useKeySelector(postKeySelector.postCommentListById(id));
   const scrollToLatestItem = useKeySelector(postKeySelector.scrollToLatestItem);
 
@@ -110,8 +118,17 @@ const _PostDetailContent = (props: any) => {
     return () => {
       event.remove();
       dispatch(postActions.setCreatePostInitAudiences());
+      dispatch(postActions.setCommentErrorCode(false));
     };
   }, []);
+
+  useEffect(() => {
+    return () => {
+      if (commentError === API_ERROR_CODE.POST.postDeleted) {
+        dispatch(postActions.deletePostLocal(id));
+      }
+    };
+  }, [commentError]);
 
   const onPressBack = () => {
     const _stickerBoardVisible =
@@ -162,16 +179,7 @@ const _PostDetailContent = (props: any) => {
     if (id && userId && internetReachableRef.current) {
       getPostDetail((loading, success) => {
         if (!loading && !success && internetReachableRef.current) {
-          rootNavigation.canGoBack && rootNavigation.goBack();
-          dispatch(
-            showHideToastMessage({
-              content: t('post:error_post_detail_deleted'),
-              props: {
-                textProps: {useI18n: true},
-                type: 'error',
-              },
-            }),
-          );
+          // showNotice();
         }
       });
     }
@@ -185,9 +193,50 @@ const _PostDetailContent = (props: any) => {
     }
   }, [audience?.groups]);
 
+  const showNotice = (isSetRefreshing?: boolean) => {
+    isSetRefreshing && setRefreshing(true);
+    setIsEmpty(true);
+    dispatch(
+      modalActions.showAlert({
+        // @ts-ignore
+        HeaderImageComponent: (
+          <View style={{alignItems: 'center'}}>
+            <SVGIcon
+              // @ts-ignore
+              source={CommentNotFoundImg}
+              width={120}
+              height={120}
+              tintColor="none"
+            />
+          </View>
+        ),
+        title: t('post:deleted_post:title'),
+        titleProps: {style: {flex: 1, textAlign: 'center'}},
+        showCloseButton: false,
+        cancelBtn: false,
+        isDismissible: true,
+        onConfirm: () => {
+          rootNavigation.canGoBack && rootNavigation.goBack();
+        },
+        confirmLabel: t('post:deleted_post:button_text'),
+        content: t('post:deleted_post:description'),
+        contentProps: {style: {textAlign: 'center'}},
+        ContentComponent: Text.BodyS,
+        buttonViewStyle: {justifyContent: 'center'},
+        headerStyle: {marginBottom: 0},
+        onDismiss: () => {
+          rootNavigation.canGoBack && rootNavigation.goBack();
+        },
+      }),
+    );
+    isSetRefreshing && setRefreshing(false);
+  };
+
   useEffect(() => {
     if (deleted) {
-      rootNavigation.goBack();
+      if (!!noti_id) {
+        rootNavigation.goBack();
+      } else showNotice();
     }
   }, [deleted]);
 
@@ -205,12 +254,23 @@ const _PostDetailContent = (props: any) => {
       const payload: IPayloadGetPostDetail = {
         postId: id,
         callbackLoading,
+        showToast: !!noti_id,
       };
       dispatch(postActions.getPostDetail(payload));
     }
   };
 
-  const onRefresh = () => getPostDetail(loading => setRefreshing(loading));
+  const onRefresh = () => {
+    if (
+      commentError === API_ERROR_CODE.POST.postDeleted ||
+      commentError === API_ERROR_CODE.POST.postPrivacy
+    ) {
+      showNotice(true);
+      return;
+    } else {
+      getPostDetail(loading => setRefreshing(loading));
+    }
+  };
 
   const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
     if (sectionData.length > 0) {
@@ -384,6 +444,8 @@ const _PostDetailContent = (props: any) => {
 
   const renderContent = () => {
     if (!createdAt) return <PostViewPlaceholder />;
+
+    if (isEmpty) return null;
 
     return (
       <FlingGestureHandler

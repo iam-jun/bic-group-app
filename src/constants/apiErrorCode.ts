@@ -7,9 +7,10 @@ const AUTH = {
 };
 
 const POST = {
-  commentDeleted: 'app.comment.reply.existing.app_error',
-  copiedCommentIsDeleted: 'app.comment.not_found.app_error',
+  commentDeleted: 'app.comment.reply.not_existing.app_error',
+  copiedCommentIsDeleted: 'app.comment.not_existing.app_error',
   postPrivacy: 'api.forbidden',
+  postDeleted: 'app.post.not_existing.app_error',
 };
 
 const GROUP = {};

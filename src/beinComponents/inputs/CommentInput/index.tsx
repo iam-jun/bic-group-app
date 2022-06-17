@@ -33,7 +33,7 @@ import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
 import {useBaseHook} from '~/hooks';
 import {IFilePicked, IGiphy} from '~/interfaces/common';
 import {IActivityDataImage} from '~/interfaces/IPost';
-import FileUploader, {IGetFile} from '~/services/fileUploader';
+import ImageUploader, {IGetFile} from '~/services/imageUploader';
 import modalActions from '~/store/modal/actions';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
@@ -190,7 +190,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
       };
       const promise = uploadFilePromise
         ? uploadFilePromise({...param, text})
-        : FileUploader.getInstance().upload(param);
+        : ImageUploader.getInstance().upload(param);
       promise
         .then((result: IGetFile) => {
           setUploading(false);

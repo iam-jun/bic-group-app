@@ -138,7 +138,7 @@ const _PostView: FC<PostViewProps> = ({
     seenPeopleCount = postData?.totalUsersSeen || 0;
   }
 
-  const {images, videos} = media || {};
+  const {images, videos, files} = media || {};
   const {isImportant, importantExpiredAt} = setting || {};
 
   const userId = useUserIdAuth();
@@ -292,6 +292,7 @@ const _PostView: FC<PostViewProps> = ({
           content={isLite && highlight ? highlight : content}
           images={images}
           videos={videos}
+          files={files}
           isPostDetail={isPostDetail}
         />
         {seenPeopleCount > 0 && (

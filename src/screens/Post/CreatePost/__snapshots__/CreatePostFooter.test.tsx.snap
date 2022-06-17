@@ -1,9 +1,7 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`CreatePostFooter component renders correctly 1`] = `
-<View
-  className="post-toolbar-container"
->
+<View>
   <View
     collapsable={false}
     forwardedRef={[Function]}
@@ -51,7 +49,6 @@ exports[`CreatePostFooter component renders correctly 1`] = `
               "top": 10,
             }
           }
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -89,14 +86,13 @@ exports[`CreatePostFooter component renders correctly 1`] = `
                 ]
               }
             >
-              <View
-                className="icon-wrapper"
-              >
+              <View>
                 <RNSVGSvgView
                   align="xMidYMid"
                   bbHeight={20}
                   bbWidth={20}
-                  fill="#B2BDCD"
+                  color={4289904077}
+                  data-name="Layer 1"
                   focusable={false}
                   height={20}
                   meetOrSlice={0}
@@ -116,20 +112,24 @@ exports[`CreatePostFooter component renders correctly 1`] = `
                       },
                     ]
                   }
+                  tintColor={4289904077}
                   vbHeight={24}
                   vbWidth={24}
                   width={20}
                 >
-                  <RNSVGGroup
-                    fill={4289904077}
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  >
+                  <RNSVGGroup>
                     <RNSVGPath
-                      d="M20,17.57a4.3,4.3,0,1,0-3.67,2.06A4.37,4.37,0,0,0,18.57,19l1.72,1.73a1,1,0,0,0,1.42,0,1,1,0,0,0,0-1.42ZM18,17a2.37,2.37,0,0,1-3.27,0,2.32,2.32,0,0,1,0-3.27,2.31,2.31,0,0,1,3.27,0A2.32,2.32,0,0,1,18,17ZM19,3H5A3,3,0,0,0,2,6v9a3,3,0,0,0,3,3H9a1,1,0,0,0,0-2H5a1,1,0,0,1-1-1V9H20v1a1,1,0,0,0,2,0V6A3,3,0,0,0,19,3Zm1,4H4V6A1,1,0,0,1,5,5H19a1,1,0,0,1,1,1ZM10,11H7a1,1,0,0,0,0,2h3a1,1,0,0,0,0-2Z"
+                      d="M20 17.57a4.3 4.3 0 10-3.67 2.06 4.37 4.37 0 002.24-.63l1.72 1.73a1 1 0 001.42 0 1 1 0 000-1.42zM18 17a2.37 2.37 0 01-3.27 0 2.32 2.32 0 010-3.27 2.31 2.31 0 013.27 0A2.32 2.32 0 0118 17zm1-14H5a3 3 0 00-3 3v9a3 3 0 003 3h4a1 1 0 000-2H5a1 1 0 01-1-1V9h16v1a1 1 0 002 0V6a3 3 0 00-3-3zm1 4H4V6a1 1 0 011-1h14a1 1 0 011 1zm-10 4H7a1 1 0 000 2h3a1 1 0 000-2z"
+                      fill={
+                        Array [
+                          2,
+                        ]
+                      }
+                      propList={
+                        Array [
+                          "fill",
+                        ]
+                      }
                     />
                   </RNSVGGroup>
                 </RNSVGSvgView>
@@ -164,7 +164,6 @@ exports[`CreatePostFooter component renders correctly 1`] = `
               "top": 10,
             }
           }
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -202,14 +201,12 @@ exports[`CreatePostFooter component renders correctly 1`] = `
                 ]
               }
             >
-              <View
-                className="icon-wrapper"
-              >
+              <View>
                 <RNSVGSvgView
                   align="xMidYMid"
                   bbHeight={20}
                   bbWidth={20}
-                  fill="#2F3945"
+                  color={4281284933}
                   focusable={false}
                   height={20}
                   meetOrSlice={0}
@@ -229,20 +226,24 @@ exports[`CreatePostFooter component renders correctly 1`] = `
                       },
                     ]
                   }
+                  tintColor={4281284933}
                   vbHeight={24}
                   vbWidth={24}
                   width={20}
                 >
-                  <RNSVGGroup
-                    fill={4281284933}
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  >
+                  <RNSVGGroup>
                     <RNSVGPath
-                      d="M19,10a1,1,0,0,0-1,1v3.38L16.52,12.9a2.79,2.79,0,0,0-3.93,0l-.7.71L9.41,11.12a2.79,2.79,0,0,0-3.93,0L4,12.61V7A1,1,0,0,1,5,6h8a1,1,0,0,0,0-2H5A3,3,0,0,0,2,7V19.22A2.79,2.79,0,0,0,4.78,22H17.22a2.88,2.88,0,0,0,.8-.12h0a2.74,2.74,0,0,0,2-2.65V11A1,1,0,0,0,19,10ZM5,20a1,1,0,0,1-1-1V15.43l2.89-2.89a.78.78,0,0,1,1.1,0L15.46,20Zm13-1a1,1,0,0,1-.18.54L13.3,15l.71-.7a.77.77,0,0,1,1.1,0L18,17.21ZM21,4H20V3a1,1,0,0,0-2,0V4H17a1,1,0,0,0,0,2h1V7a1,1,0,0,0,2,0V6h1a1,1,0,0,0,0-2Z"
+                      d="M19 10a1 1 0 00-1 1v3.38l-1.48-1.48a2.79 2.79 0 00-3.93 0l-.7.71-2.48-2.49a2.79 2.79 0 00-3.93 0L4 12.61V7a1 1 0 011-1h8a1 1 0 000-2H5a3 3 0 00-3 3v12.22A2.79 2.79 0 004.78 22h12.44a2.88 2.88 0 00.8-.12 2.74 2.74 0 002-2.65V11A1 1 0 0019 10zM5 20a1 1 0 01-1-1v-3.57l2.89-2.89a.78.78 0 011.1 0L15.46 20zm13-1a1 1 0 01-.18.54L13.3 15l.71-.7a.77.77 0 011.1 0L18 17.21zm3-15h-1V3a1 1 0 00-2 0v1h-1a1 1 0 000 2h1v1a1 1 0 002 0V6h1a1 1 0 000-2z"
+                      fill={
+                        Array [
+                          2,
+                        ]
+                      }
+                      propList={
+                        Array [
+                          "fill",
+                        ]
+                      }
                     />
                   </RNSVGGroup>
                 </RNSVGSvgView>
@@ -277,7 +278,6 @@ exports[`CreatePostFooter component renders correctly 1`] = `
               "top": 10,
             }
           }
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -315,14 +315,12 @@ exports[`CreatePostFooter component renders correctly 1`] = `
                 ]
               }
             >
-              <View
-                className="icon-wrapper"
-              >
+              <View>
                 <RNSVGSvgView
                   align="xMidYMid"
                   bbHeight={20}
                   bbWidth={20}
-                  fill="#2F3945"
+                  color={4281284933}
                   focusable={false}
                   height={20}
                   meetOrSlice={0}
@@ -342,20 +340,24 @@ exports[`CreatePostFooter component renders correctly 1`] = `
                       },
                     ]
                   }
+                  tintColor={4281284933}
                   vbHeight={24}
                   vbWidth={24}
                   width={20}
                 >
-                  <RNSVGGroup
-                    fill={4281284933}
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  >
+                  <RNSVGGroup>
                     <RNSVGPath
-                      d="M16,10.27,11,7.38A2,2,0,0,0,8,9.11v5.78a2,2,0,0,0,1,1.73,2,2,0,0,0,2,0l5-2.89a2,2,0,0,0,0-3.46ZM15,12l-5,2.89V9.11L15,12ZM12,2A10,10,0,1,0,22,12,10,10,0,0,0,12,2Zm0,18a8,8,0,1,1,8-8A8,8,0,0,1,12,20Z"
+                      d="M16 10.27l-5-2.89a2 2 0 00-3 1.73v5.78a2 2 0 001 1.73 2 2 0 002 0l5-2.89a2 2 0 000-3.46zM15 12l-5 2.89V9.11L15 12zM12 2a10 10 0 1010 10A10 10 0 0012 2zm0 18a8 8 0 118-8 8 8 0 01-8 8z"
+                      fill={
+                        Array [
+                          2,
+                        ]
+                      }
+                      propList={
+                        Array [
+                          "fill",
+                        ]
+                      }
                     />
                   </RNSVGGroup>
                 </RNSVGSvgView>
@@ -390,7 +392,6 @@ exports[`CreatePostFooter component renders correctly 1`] = `
               "top": 10,
             }
           }
-          nativeID="animatedComponent"
           onClick={[Function]}
           onResponderGrant={[Function]}
           onResponderMove={[Function]}
@@ -428,14 +429,12 @@ exports[`CreatePostFooter component renders correctly 1`] = `
                 ]
               }
             >
-              <View
-                className="icon-wrapper"
-              >
+              <View>
                 <RNSVGSvgView
                   align="xMidYMid"
                   bbHeight={20}
                   bbWidth={20}
-                  fill="#2F3945"
+                  color={4281284933}
                   focusable={false}
                   height={20}
                   meetOrSlice={0}
@@ -455,20 +454,24 @@ exports[`CreatePostFooter component renders correctly 1`] = `
                       },
                     ]
                   }
+                  tintColor={4281284933}
                   vbHeight={24}
                   vbWidth={24}
                   width={20}
                 >
-                  <RNSVGGroup
-                    fill={4281284933}
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  >
+                  <RNSVGGroup>
                     <RNSVGPath
-                      d="M10,17.55,8.23,19.27a2.47,2.47,0,0,1-3.5-3.5l4.54-4.55a2.46,2.46,0,0,1,3.39-.09l.12.1a1,1,0,0,0,1.4-1.43A2.75,2.75,0,0,0,14,9.59a4.46,4.46,0,0,0-6.09.22L3.31,14.36a4.48,4.48,0,0,0,6.33,6.33L11.37,19A1,1,0,0,0,10,17.55ZM20.69,3.31a4.49,4.49,0,0,0-6.33,0L12.63,5A1,1,0,0,0,14,6.45l1.73-1.72a2.47,2.47,0,0,1,3.5,3.5l-4.54,4.55a2.46,2.46,0,0,1-3.39.09l-.12-.1a1,1,0,0,0-1.4,1.43,2.75,2.75,0,0,0,.23.21,4.47,4.47,0,0,0,6.09-.22l4.55-4.55A4.49,4.49,0,0,0,20.69,3.31Z"
+                      d="M10 17.55l-1.77 1.72a2.47 2.47 0 01-3.5-3.5l4.54-4.55a2.46 2.46 0 013.39-.09l.12.1a1 1 0 001.4-1.43 2.75 2.75 0 00-.18-.21 4.46 4.46 0 00-6.09.22l-4.6 4.55a4.48 4.48 0 006.33 6.33L11.37 19A1 1 0 0010 17.55zM20.69 3.31a4.49 4.49 0 00-6.33 0L12.63 5A1 1 0 0014 6.45l1.73-1.72a2.47 2.47 0 013.5 3.5l-4.54 4.55a2.46 2.46 0 01-3.39.09l-.12-.1a1 1 0 00-1.4 1.43 2.75 2.75 0 00.23.21 4.47 4.47 0 006.09-.22l4.55-4.55a4.49 4.49 0 00.04-6.33z"
+                      fill={
+                        Array [
+                          2,
+                        ]
+                      }
+                      propList={
+                        Array [
+                          "fill",
+                        ]
+                      }
                     />
                   </RNSVGGroup>
                 </RNSVGSvgView>
@@ -480,7 +483,6 @@ exports[`CreatePostFooter component renders correctly 1`] = `
     </View>
     <View
       collapsable={false}
-      nativeID="animatedComponent"
       style={
         Object {
           "height": 0,
@@ -630,7 +632,6 @@ exports[`CreatePostFooter component renders correctly 1`] = `
               >
                 <View
                   collapsable={false}
-                  nativeID="animatedComponent"
                   style={
                     Object {
                       "bottom": 0,
@@ -761,7 +762,14 @@ exports[`CreatePostFooter component renders correctly 1`] = `
     </View>
   </View>
   <View
-    style={[Function]}
+    style={
+      Object {
+        "left": 0,
+        "opacity": 0,
+        "position": "absolute",
+        "right": 0,
+      }
+    }
     testID="create_post_footer.mention_bar_container"
   />
 </View>

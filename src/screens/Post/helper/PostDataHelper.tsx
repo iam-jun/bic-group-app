@@ -236,6 +236,7 @@ export const postApiConfig = {
     params: {
       limit: params?.limit || 1,
       offset: params?.offset || 0,
+      postId: params?.postId || '',
     },
   }),
   getSeenList: (params: ISeenUserList): HttpApiRequestConfig => {

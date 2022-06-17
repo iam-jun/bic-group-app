@@ -280,6 +280,7 @@
     "title_general_information": "General Information",
     "title_profile_info": "Profile Info",
     "title_role_management": "Role Management",
+    "title_permission_settings": "Permission",
     "title_membership_settings": "Membership Settings",
     "title_post_settings": "Post Settings",
     "title_module_settings": "Module Settings",
@@ -502,10 +503,10 @@
     "post_exit_desc": "You can save it as a draft for later editing",
     "post_exit_option_save": "Save as Draft",
     "post_exit_option_discard": "Discard Post",
-    "post_exit_option_continue": "Continue Editing",
+    "post_exit_option_continue": "Continue",
     "title_discard_comment": "Discard Comment",
     "text_discard_comment": "If you discard now, you'll lose any changes that you've made",
-    "btn_continue_comment": "Continue Comment",
+    "btn_continue_comment": "Continue",
     "btn_discard_comment": "Discard",
     "text_edit_post_success": "Post has been published successfully",
     "text_edit_post_failed": "Post was failed to publish",
@@ -565,6 +566,12 @@
       "title": "This page is not existing.",
       "description": "It might be deleted or you don't have permission to see it",
       "button_text": "Back to Post"
+    },
+    "text_post_deleted": "Post doesn’t exist, cannot send your reply",
+    "deleted_post": {
+      "title": "This page is not existing.",
+      "description": "It might be deleted or you don't have permission to see it",
+      "button_text": "Back to News Feed"
     }
   },
   "comment": {
@@ -695,10 +702,9 @@
     "text_declining_user": "Declining user",
     "text_declined_user": "Declined user",
     "text_approved_user": "Approved user",
-    "text_approved_all_one": "Approved {{count}} user",
-    "text_approved_all_other": "Approved {{count}} users",
-    "text_declining_all_one": "Declining {{count}} user",
-    "text_declining_all_other": "Declining {{count}} users",
+    "text_approved_all": "Approved all joining requests",
+    "text_declining_all": "Declining all joining requests",
+    "text_request_been_canceled": "This join request has just been canceled",
     "text_request_join_group": "Requested to join group",
     "text_request_join_community": "Requested to join community",
     "text_cancel_join_group": "Cancelled the member request to group",
@@ -817,20 +823,38 @@
     "text_other_member_one": "{{count}} other are members",
     "text_other_member_other": "{{count}} others are members",
     "text_is_member": "is a member",
-    "title_discover_groups": "Discover Groups"
+    "title_discover_groups": "Discover Groups",
+    "permission": {
+      "title_permission": "Permission",
+      "title_system_scheme": "System Scheme",
+      "title_community_scheme": "Community Scheme",
+      "title_group_scheme": "Group Scheme",
+      "title_create_community_scheme": "Create community scheme",
+      "text_desc_system_scheme": "Use system default permission scheme. If there is no custom scheme applied, this option is auto-enabled.",
+      "text_desc_community_scheme": "Create new permission scheme to apply to community",
+      "text_desc_group_scheme": "Create new permission scheme to apply to specific groups."
+    }
   },
   "upload": {
-    "text_create_video_id_request_failed": "Cannot request id",
-    "text_create_video_id_response_failed": "Cannot create id",
-    "text_upload_video_request_failed": "Cannot request upload video",
-    "text_upload_video_response_failed": "Cannot upload video",
+    "text_create_file_id_request_failed": "Cannot request id",
+    "text_create_file_id_response_failed": "Cannot create id",
+    "text_upload_request_failed": "Cannot request upload {{file_type}}",
+    "text_upload_response_failed": "Cannot upload {{file_type}}",
     "text_create_media_request_failed": "Cannot request create media",
     "text_create_media_response_failed": "Cannot create media",
-    "title_delete_video": "Delete Video?",
-    "text_delete_video": "Are you sure you want to delete video?",
-    "text_upload_video_error": "Can’t upload this video",
-    "title_leave_uploading_video": "Leave this page?",
-    "text_leave_uploading_video": "Are you sure you want to leave this page? Your video process will be lost.",
-    "text_video_over_size": "Your video must be less than 300MB"
+    "title_delete_file": "Delete {{file_type}}?",
+    "text_delete_file": "Are you sure you want to delete {{file_type}}?",
+    "text_upload_error": "Can't upload this {{file_type}}",
+    "title_leave_uploading": "Leave this page?",
+    "text_leave_uploading": "Are you sure you want to leave this page? Your {{file_type}} process will be lost.",
+    "text_video_over_size": "Your video must be less than 300MB",
+    "text_file_over_size": "Your file must be less than 5MB",
+    "text_file_over_length": "You cannot upload more than {{max_files}} files",
+    "text_file_extension_not_supported": "Your File Extersion is not supported"
+  },
+  "file_type": {
+    "image": "image",
+    "video": "video",
+    "file": "file"
   }
 }

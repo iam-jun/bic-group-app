@@ -9,7 +9,7 @@ import Text from '~/beinComponents/Text';
 import {getResourceUrl, IUploadType} from '~/configs/resourceConfig';
 import {useBaseHook} from '~/hooks';
 import {IFilePicked} from '~/interfaces/common';
-import FileUploader, {IGetFile, IUploadParam} from '~/services/fileUploader';
+import ImageUploader, {IGetFile, IUploadParam} from '~/services/imageUploader';
 import {ITheme} from '~/theme/interfaces';
 
 export interface UploadingImageProps {
@@ -70,12 +70,12 @@ const UploadingImage: FC<UploadingImageProps> = ({
         },
       };
       try {
-        await FileUploader.getInstance().upload(param);
+        await ImageUploader.getInstance().upload(param);
       } catch (e) {
         console.log(`\x1b[35m🐣️ UploadingImage upload error:`, e, `\x1b[0m`);
       }
     } else if (fileName) {
-      const result: IGetFile = FileUploader.getInstance().getFile(
+      const result: IGetFile = ImageUploader.getInstance().getFile(
         fileName,
         (data: IGetFile) => {
           _setImageUrl(data.url || '');

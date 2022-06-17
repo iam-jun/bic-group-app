@@ -30,7 +30,6 @@ const CommentDetailContent = (props: any) => {
   const [isScrollFirst, setIsScrollFirst] = useState(false);
 
   const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
 
   const {t} = useBaseHook();
   const dispatch = useDispatch();
@@ -40,7 +39,8 @@ const CommentDetailContent = (props: any) => {
   const commentInputRef = useRef<any>();
 
   const params = props?.route?.params;
-  const {postId, replyItem, commentParent, commentId, parentId} = params || {};
+  const {postId, replyItem, commentParent, commentId, parentId, notiId} =
+    params || {};
   const id = postId;
 
   const actor = useKeySelector(postKeySelector.postActorById(id));
@@ -79,7 +79,8 @@ const CommentDetailContent = (props: any) => {
     if (copyCommentError === API_ERROR_CODE.POST.postPrivacy) {
       props?.showPrivacy?.(true);
     } else if (
-      copyCommentError === API_ERROR_CODE.POST.copiedCommentIsDeleted
+      copyCommentError === API_ERROR_CODE.POST.copiedCommentIsDeleted &&
+      !postDetailLoadingState
     ) {
       setIsEmpty(true);
       dispatch(
@@ -94,11 +95,27 @@ const CommentDetailContent = (props: any) => {
       );
       rootNavigation.replace(homeStack.postDetail, {post_id: postId});
     }
+    if (copyCommentError === API_ERROR_CODE.POST.postDeleted && !!notiId) {
+      dispatch(postActions.deletePostLocal(id));
+      dispatch(
+        modalActions.showHideToastMessage({
+          content: 'post:error_post_detail_deleted',
+          toastType: 'banner',
+          props: {
+            textProps: {useI18n: true},
+            type: 'informative',
+            leftIcon: 'iconCannotComment',
+          },
+        }),
+      );
+      rootNavigation.popToTop();
+    }
     if (!postDetailLoadingState && !copyCommentError) {
       dispatch(postActions.setScrollCommentsPosition(null));
       dispatch(
         postActions.getCommentDetail({
           commentId,
+          postId: postId,
           callbackLoading: (loading: boolean) => {
             setLoading(loading);
             if (!loading && !!replyItem) {
@@ -187,49 +204,69 @@ const CommentDetailContent = (props: any) => {
     });
   };
 
+  const showNotice = (type = 'deleted_comment') => {
+    dispatch(
+      modalActions.showAlert({
+        // @ts-ignore
+        HeaderImageComponent: (
+          <View style={{alignItems: 'center'}}>
+            <SVGIcon
+              // @ts-ignore
+              source={CommentNotFoundImg}
+              width={120}
+              height={120}
+              tintColor="none"
+            />
+          </View>
+        ),
+        title: t(`post:${type}:title`),
+        titleProps: {style: {flex: 1, textAlign: 'center'}},
+        showCloseButton: false,
+        cancelBtn: false,
+        isDismissible: true,
+        onConfirm: () => {
+          if (type === 'deleted_post') {
+            rootNavigation.popToTop();
+          } else {
+            rootNavigation.goBack();
+          }
+        },
+        confirmLabel: t(`post:${type}:button_text`),
+        content: t(`post:${type}:description`),
+        contentProps: {style: {textAlign: 'center'}},
+        ContentComponent: Text.BodyS,
+        buttonViewStyle: {justifyContent: 'center'},
+        headerStyle: {marginBottom: 0},
+        onDismiss: () => {
+          if (type === 'deleted_post') {
+            rootNavigation.popToTop();
+          } else {
+            rootNavigation.goBack();
+          }
+        },
+      }),
+    );
+  };
+
   const onRefresh = () => {
     if (copyCommentError === API_ERROR_CODE.POST.commentDeleted) {
       setIsEmpty(true);
       setRefreshing(true);
-      dispatch(
-        modalActions.showAlert({
-          // @ts-ignore
-          HeaderImageComponent: (
-            <View style={{alignItems: 'center'}}>
-              <SVGIcon
-                // @ts-ignore
-                source={CommentNotFoundImg}
-                width={120}
-                height={120}
-                tintColor="none"
-              />
-            </View>
-          ),
-          title: t('post:deleted_comment:title'),
-          titleProps: {style: {flex: 1, textAlign: 'center'}},
-          showCloseButton: false,
-          cancelBtn: false,
-          isDismissible: true,
-          onConfirm: () => {
-            rootNavigation.goBack();
-          },
-          confirmLabel: t('post:deleted_comment:button_text'),
-          content: t('post:deleted_comment:description'),
-          contentProps: {style: {textAlign: 'center'}},
-          ContentComponent: Text.BodyS,
-          buttonViewStyle: {justifyContent: 'center'},
-          headerStyle: {marginBottom: 0},
-          onDismiss: () => {
-            rootNavigation.goBack();
-          },
-        }),
-      );
+      showNotice();
+      setRefreshing(false);
+      return;
+    } else if (copyCommentError === API_ERROR_CODE.POST.postDeleted) {
+      dispatch(postActions.setLoadingGetPostDetail(true));
+      setIsEmpty(true);
+      setRefreshing(true);
+      showNotice('deleted_post');
       setRefreshing(false);
       return;
     }
     dispatch(
       postActions.getCommentDetail({
         commentId: !!parentId ? parentId : commentId,
+        postId: postId,
         callbackLoading: (_loading: boolean) => {
           setRefreshing(_loading);
         },

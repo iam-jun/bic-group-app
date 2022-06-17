@@ -27,7 +27,8 @@ const ButtonApproveDeclineAllRequests = ({
         <Button.Secondary
           testID="button_approve_decline_all_requests.decline"
           style={styles.buttonDecline}
-          color={theme.colors.primary1}
+          color={theme.colors.bgHover}
+          textColor={theme.colors.textPrimary}
           onPress={onPressDeclineAll}
           useI18n>
           common:btn_decline_all

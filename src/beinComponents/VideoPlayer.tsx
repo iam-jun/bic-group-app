@@ -26,7 +26,12 @@ const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
 
   return (
     <View style={[styles.container, style]}>
-      <RNVideoControls style={styles.player} source={{uri: url}} paused />
+      <RNVideoControls
+        style={styles.player}
+        source={{uri: url}}
+        paused
+        onError={(err: any) => console.log('Video ERROR', err)}
+      />
     </View>
   );
 };

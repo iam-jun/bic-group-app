@@ -50,6 +50,15 @@ export interface IActivityDataImage {
   height?: number;
 }
 
+export interface IActivityDataFile {
+  id?: string;
+  name: string;
+  origin_name?: string;
+  url?: string;
+  size?: number;
+  type?: string;
+}
+
 export interface IActivityData {
   content?: string;
   highlight?: string;
@@ -227,6 +236,7 @@ export interface IParamPutEditPost {
 
 export interface IPayloadGetPostDetail extends IParamGetPostDetail {
   callbackLoading?: (loading: boolean, success: boolean) => void;
+  showToast?: boolean;
 }
 
 export type IReactionKind = 'comment' | 'seen' | ReactionType;

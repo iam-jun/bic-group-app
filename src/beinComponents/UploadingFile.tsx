@@ -5,37 +5,41 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 
 import Text from '~/beinComponents/Text';
-import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
+import {IUploadType} from '~/configs/resourceConfig';
 import {IFilePicked} from '~/interfaces/common';
-import VideoUploader from '~/services/videoUploader';
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 import {formatBytes} from '~/utils/formatData';
 import {isEmpty} from 'lodash';
-import {IGetFile} from '~/services/fileUploader';
+import FileUploader, {IGetFile} from '~/services/fileUploader';
 import {useBaseHook} from '~/hooks';
 import modalActions from '~/store/modal/actions';
 import {useDispatch} from 'react-redux';
+import {supportedTypes} from '~/beinComponents/DocumentPicker';
+import {openLink} from '~/utils/common';
+import {uploadTypes} from '~/configs/resourceConfig';
 
 export interface UploadingFileProps {
   style?: StyleProp<ViewStyle>;
-  uploadType?: IUploadType | string;
-  file?: IFilePicked;
   url?: string;
+  uploadType?: IUploadType;
+  file?: IFilePicked;
+  disableClose?: boolean;
+  showDownload?: boolean;
   onClose?: (file: IFilePicked) => void;
   onSuccess?: (file: IGetFile) => void;
   onError?: (e?: any) => void;
-  disableClose?: boolean;
 }
 
 const UploadingFile: FC<UploadingFileProps> = ({
   style,
   uploadType,
   file,
+  showDownload,
+  disableClose,
   onClose,
   onSuccess,
   onError,
-  disableClose,
 }: UploadingFileProps) => {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
@@ -65,30 +69,37 @@ const UploadingFile: FC<UploadingFileProps> = ({
   };
 
   const uploadFile = async () => {
-    if (!uploadTypes) {
+    if (!uploadType) {
       return;
     }
+
+    const ext = fileName?.split('.')?.pop?.();
+
+    // temp skip check extention for video
     if (
-      uploadType === uploadTypes.postVideo ||
-      uploadType === uploadTypes.commentVideo
+      uploadType !== uploadTypes.postVideo &&
+      uploadType !== uploadTypes.commentVideo &&
+      !supportedTypes.includes(ext)
     ) {
-      //ensure video not uploaded
-      if (file && !isEmpty(file) && !file?.id && !file?.url) {
-        setError('');
-        setUploading(true);
-        await VideoUploader.getInstance().upload({
-          file,
-          uploadType,
-          onProgress: _onProgress,
-          onSuccess: _onSuccess,
-          onError: _onError,
-        });
-      } else {
-        setUploading(false);
-      }
-    } else {
-      //todo upload file
+      setError(t('upload:text_file_extension_not_supported'));
+      return;
     }
+
+    //ensure file not uploaded
+    if (!file || isEmpty(file) || file?.id || file?.url) {
+      setUploading(false);
+      return;
+    }
+
+    setError('');
+    setUploading(true);
+    await FileUploader.getInstance().upload({
+      file,
+      uploadType,
+      onProgress: _onProgress,
+      onSuccess: _onSuccess,
+      onError: _onError,
+    });
   };
 
   useEffect(() => {
@@ -102,16 +113,23 @@ const UploadingFile: FC<UploadingFileProps> = ({
   const onPressClose = () => {
     if (uploading) {
       onClose?.(file);
-      VideoUploader.getInstance().cancel({file, uploadType});
+      FileUploader.getInstance().cancel({file, uploadType});
     } else {
       dispatch(
         modalActions.showAlert({
-          title: t('upload:title_delete_video'),
-          content: t('upload:title_delete_video'),
+          title: t('upload:title_delete_file', {
+            file_type: t(`file_type:${uploadType}`),
+          }),
+          content: t('upload:text_delete_file', {
+            file_type: t(`file_type:${uploadType}`),
+          }),
           cancelBtn: true,
           cancelLabel: t('common:btn_cancel'),
           confirmLabel: t('common:btn_delete'),
-          onConfirm: () => onClose?.(file),
+          onConfirm: () => {
+            setError('');
+            onClose?.(file);
+          },
         }),
       );
     }
@@ -119,6 +137,10 @@ const UploadingFile: FC<UploadingFileProps> = ({
 
   const onPressRetry = () => {
     uploadFile();
+  };
+
+  const onPressDownload = () => {
+    openLink(file.url);
   };
 
   return (
@@ -159,6 +181,13 @@ const UploadingFile: FC<UploadingFileProps> = ({
           hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}
           onPress={onPressClose}>
           <Icon icon={'iconCloseSmall'} />
+        </Button>
+      )}
+      {showDownload && !!file.url && (
+        <Button
+          hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}
+          onPress={onPressDownload}>
+          <Icon icon={'download'} />
         </Button>
       )}
     </View>
