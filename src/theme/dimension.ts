@@ -48,7 +48,7 @@ export const sizes = {
   subtitle: 12,
   error: 16,
   code: 16,
-  heading: 11,
+  heading: 12,
 };
 
 /* Line Height used for Text */

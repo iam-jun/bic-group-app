@@ -35,12 +35,13 @@ export default function* postCreateSchemePermission({
     if (response && response.data) {
       navigation.goBack();
       const toastMessage: IToastMessage = {
-        content: 'Create scheme successfully',
+        content: 'communities:permission:text_create_scheme_success',
         props: {
           textProps: {useI18n: true},
           type: 'success',
         },
       };
+      yield put(groupsActions.setCommunityScheme({data: response.data}));
       yield put(modalActions.showHideToastMessage(toastMessage));
     }
   } catch (err) {

@@ -63,6 +63,7 @@ export interface IThemeColors extends ReactNativePaper.ThemeColors {
 
   badgeActive?: string;
   badgeInfo?: string;
+  badgeError?: string;
   badgeBackgroundActive?: string;
   badgeBackgroundInfo?: string;
 }

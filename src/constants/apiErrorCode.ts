@@ -13,7 +13,9 @@ const POST = {
   postDeleted: 'app.post.not_existing.app_error',
 };
 
-const GROUP = {};
+const GROUP = {
+  SCHEME_NOT_FOUND: 'scheme.not_found',
+};
 
 const API_ERROR_CODE = {
   COMMON,

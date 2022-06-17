@@ -717,7 +717,10 @@
       "text_desc_group_scheme": "Tạo quyền áp dụng cho những nhóm cụ thể.",
       "text_create_scheme_name": "Nhập tên",
       "text_create_scheme_desc": "Viết mô tả của bạn (tối đa 255 ký tự)",
-      "btn_view_permission": "Xem quyền"
+      "btn_view_permission": "Xem quyền",
+      "text_title_delete_community_scheme": "Xoá quyền này",
+      "text_desc_delete_community_scheme": "Hành động này không thể hoàn tác.",
+      "text_create_scheme_success": "Đã tạo thành công"
     }
   },
   "upload": {

@@ -55,6 +55,7 @@ export default {
 
       badgeActive: '#0AC458',
       badgeInfo: '#007AFF',
+      badgeError: '#E8455F',
       badgeBackgroundActive: 'rgba(10, 196, 88, 0.12)',
       badgeBackgroundInfo: 'rgba(35, 150, 255, 0.2)',
 
@@ -134,6 +135,7 @@ export default {
 
       badgeActive: '#0AC458',
       badgeInfo: '#007AFF',
+      badgeError: '#E8455F',
       badgeBackgroundActive: 'rgba(10, 196, 88, 0.12)',
       badgeBackgroundInfo: 'rgba(35, 150, 255, 0.2)',
 

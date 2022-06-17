@@ -3,8 +3,9 @@ import {put, call} from 'redux-saga/effects';
 import actions from '../actions';
 import showError from '~/store/commonSaga/showError';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
 
-export default function* getCommunitySchemes({
+export default function* getCommunityScheme({
   payload,
 }: {
   type: string;
@@ -24,9 +25,11 @@ export default function* getCommunitySchemes({
     } else {
       yield put(actions.setCommunityScheme({loading: false}));
     }
-  } catch (err) {
+  } catch (err: any) {
     yield put(actions.setCommunityScheme({loading: false}));
-    console.log('getSchemes error:', err);
-    yield call(showError, err);
+    console.log('getCommunityScheme error:', err);
+    if (err?.code !== API_ERROR_CODE.GROUP.SCHEME_NOT_FOUND) {
+      yield call(showError, err);
+    }
   }
 }

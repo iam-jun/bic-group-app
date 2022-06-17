@@ -18,6 +18,7 @@ export const groupInitState = {
     },
     communityScheme: {
       loading: false,
+      deleting: false,
       data: undefined,
     },
     schemes: {

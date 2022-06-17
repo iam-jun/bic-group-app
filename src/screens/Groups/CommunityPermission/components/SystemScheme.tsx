@@ -28,28 +28,24 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.flex1}>
-        <View style={[styles.row]}>
-          <View style={[styles.flex1, styles.row]}>
-            <Text.H5 useI18n>
-              communities:permission:title_system_scheme
-            </Text.H5>
-            {!loading && !communityScheme && (
-              <TextBadge useI18n value={'common:text_activated'} />
-            )}
-          </View>
-          <Button.Primary
-            onPress={onPressView}
-            useI18n
-            textColor={colors.textPrimary}
-            style={styles.buttonView}>
-            communities:permission:btn_view_permission
-          </Button.Primary>
+      <View style={styles.titleContainer}>
+        <View style={[styles.flex1, styles.row]}>
+          <Text.H5 useI18n>communities:permission:title_system_scheme</Text.H5>
+          {!loading && !communityScheme && (
+            <TextBadge useI18n value={'common:text_activated'} />
+          )}
         </View>
-        <Text.Subtitle useI18n>
-          communities:permission:text_desc_system_scheme
-        </Text.Subtitle>
+        <Button.Primary
+          onPress={onPressView}
+          useI18n
+          textColor={colors.textPrimary}
+          style={styles.buttonView}>
+          communities:permission:btn_view_permission
+        </Button.Primary>
       </View>
+      <Text.Subtitle useI18n>
+        communities:permission:text_desc_system_scheme
+      </Text.Subtitle>
     </View>
   );
 };
@@ -59,7 +55,6 @@ const createStyle = (theme: ITheme) => {
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {
-      flexDirection: 'row',
       padding: spacing.padding.large,
       backgroundColor: colors.background,
       marginTop: spacing.margin.base,
@@ -68,6 +63,11 @@ const createStyle = (theme: ITheme) => {
     row: {
       flexDirection: 'row',
       alignItems: 'center',
+    },
+    titleContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: spacing.margin.small,
     },
     buttonView: {
       paddingVertical: spacing.padding.tiny,
