@@ -16,6 +16,17 @@ export const groupInitState = {
       data: undefined,
       loading: false,
     },
+    communityScheme: {
+      loading: false,
+      data: undefined,
+    },
+    schemes: {
+      loading: false,
+      data: {
+        communityScheme: undefined,
+        groupSchemes: undefined,
+      },
+    },
     creatingScheme: {
       data: undefined,
       memberRoleIndex: 0,
@@ -232,6 +243,22 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
     }
+    case groupsTypes.SET_COMMUNITY_SCHEME:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          communityScheme: payload,
+        },
+      };
+    case groupsTypes.SET_SCHEMES:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          schemes: payload,
+        },
+      };
 
     case groupsTypes.SET_PRIVACY_MODAL_OPEN:
       return {

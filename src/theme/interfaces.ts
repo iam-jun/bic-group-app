@@ -60,6 +60,11 @@ export interface IThemeColors extends ReactNativePaper.ThemeColors {
   facebook?: string;
   google?: string;
   apple?: string;
+
+  badgeActive?: string;
+  badgeInfo?: string;
+  badgeBackgroundActive?: string;
+  badgeBackgroundInfo?: string;
 }
 
 export interface ISpacing {

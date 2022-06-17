@@ -268,22 +268,24 @@ const mapResponseSuccessBein = (
 };
 
 const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
+  let result = false;
   // add apis have param in path to this array
   const apisWithParam = [
     `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/scheme`,
+    `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/schemes`,
   ];
   apisWithParam.map(api => {
     if (new RegExp(api, 'g').test(endPoint || '')) {
-      return true;
+      result = true;
     }
   });
 
   switch (endPoint) {
     case `${ApiConfig.providers.bein.url}system-scheme`:
     case `${ApiConfig.providers.bein.url}permissions/categories`:
-      return true;
+      result = true;
   }
-  return false;
+  return result;
 };
 
 const interceptorsRequestSuccess = (config: AxiosRequestConfig) => {

@@ -8,6 +8,8 @@ import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 
 export interface CommunitySchemeProps {
   style?: StyleProp<ViewStyle>;
@@ -19,6 +21,9 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
+
+  const {loading: loadingCommunityScheme, data: communityScheme} =
+    useKeySelector(groupsKeySelector.permission.communityScheme) || {};
 
   const onPressCreate = () => {
     rootNavigation.navigate(groupStack.createPermissionScheme);

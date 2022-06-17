@@ -76,6 +76,7 @@
     "text_end_date": "Ngày kết thúc",
     "text_present": "Hiện tại",
     "text_group": "Nhóm",
+    "text_activated": "Hiện tại",
     "text_at": "tại",
     "text_to": "tới",
     "permission_photo_title": "Cho phép Bein truy cập thư viện ảnh và video của bạn",
@@ -715,7 +716,8 @@
       "text_desc_community_scheme": "Tạo quyền áp dụng cho cộng đồng.",
       "text_desc_group_scheme": "Tạo quyền áp dụng cho những nhóm cụ thể.",
       "text_create_scheme_name": "Nhập tên",
-      "text_create_scheme_desc": "Viết mô tả của bạn (tối đa 255 ký tự)"
+      "text_create_scheme_desc": "Viết mô tả của bạn (tối đa 255 ký tự)",
+      "btn_view_permission": "Xem quyền"
     }
   },
   "upload": {

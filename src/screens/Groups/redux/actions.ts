@@ -17,6 +17,7 @@ import {
   IStateList,
   IGroupMembers,
   IPermission,
+  IScheme,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 import {IObject} from '~/interfaces/common';
@@ -61,6 +62,22 @@ const groupsActions = {
   }),
   postCreateSchemePermission: (payload?: {communityId: number | string}) => ({
     type: groupsTypes.POST_CREATE_SCHEME_PERMISSION,
+    payload,
+  }),
+  getCommunityScheme: (payload?: {communityId: number | string}) => ({
+    type: groupsTypes.GET_COMMUNITY_SCHEME,
+    payload,
+  }),
+  setCommunityScheme: (payload?: {loading?: boolean; data?: IScheme}) => ({
+    type: groupsTypes.SET_COMMUNITY_SCHEME,
+    payload,
+  }),
+  getSchemes: (payload?: {communityId: number | string}) => ({
+    type: groupsTypes.GET_SCHEMES,
+    payload,
+  }),
+  setSchemes: (payload?: {loading?: boolean; data?: any}) => ({
+    type: groupsTypes.SET_SCHEMES,
     payload,
   }),
 

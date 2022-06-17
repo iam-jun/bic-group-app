@@ -55,6 +55,8 @@ import declineAllCommunityMemberRequests from './declineAllCommunityMemberReques
 import getPermissionCategories from '~/screens/Groups/redux/saga/getPermissionCategories';
 import getSystemScheme from '~/screens/Groups/redux/saga/getSystemScheme';
 import postCreateSchemePermission from '~/screens/Groups/redux/saga/postCreateSchemePermission';
+import getSchemes from '~/screens/Groups/redux/saga/getSchemes';
+import getCommunitySchemes from '~/screens/Groups/redux/saga/getCommunitySchemes';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -64,6 +66,8 @@ export default function* groupsSaga() {
     getPermissionCategories,
   );
   yield takeLatest(groupsTypes.GET_SYSTEM_SCHEME, getSystemScheme);
+  yield takeLatest(groupsTypes.GET_SCHEMES, getSchemes);
+  yield takeLatest(groupsTypes.GET_COMMUNITY_SCHEME, getCommunitySchemes);
   yield takeLatest(
     groupsTypes.POST_CREATE_SCHEME_PERMISSION,
     postCreateSchemePermission,

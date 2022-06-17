@@ -26,6 +26,18 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
+  getCommunityScheme: (communityId: number | string): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/scheme`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
+  getSchemes: (communityId: number | string): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/schemes`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
   postCreateSchemePermission: (
     communityId: string | number,
     schemeData: IScheme,
@@ -388,6 +400,40 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getSystemScheme(),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getCommunityScheme: async (communityId: number | string) => {
+    try {
+      if (!communityId) {
+        return Promise.reject('getCommunityScheme invalid communityId');
+      }
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getCommunityScheme(communityId),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getSchemes: async (communityId: number | string) => {
+    try {
+      if (!communityId) {
+        return Promise.reject('getSchemes invalid communityId');
+      }
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getSchemes(communityId),
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
