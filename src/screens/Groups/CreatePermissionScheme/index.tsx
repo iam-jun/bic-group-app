@@ -17,6 +17,7 @@ import Text from '~/beinComponents/Text';
 import {getNewSchemeFromSystemScheme} from '~/screens/Groups/CreatePermissionScheme/helper';
 import {IPermission, IScheme} from '~/interfaces/IGroup';
 import CreateSchemeHeader from '~/screens/Groups/CreatePermissionScheme/components/CreateSchemeHeader';
+import SelectSchemeRolesView from '~/screens/Groups/CreatePermissionScheme/SelectSchemeRolesView';
 
 export interface CreatePermissionSchemeProps {
   route?: {
@@ -101,7 +102,7 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     return (
       <ScrollView>
         <InputSchemeInfo />
-        <SchemeRoles onPressPermission={onPressPermission} />
+        <SelectSchemeRolesView onPressPermission={onPressPermission} />
       </ScrollView>
     );
   };

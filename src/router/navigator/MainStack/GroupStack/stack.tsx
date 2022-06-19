@@ -8,6 +8,7 @@ const groupStack = {
   communityMembers: 'community-members',
   communityAdmin: 'community-admin',
   communityPermission: 'community-permission',
+  communityPermissionDetail: 'community-permission-detail',
   communityPendingMembers: 'community-pending-members',
   createPermissionScheme: 'create-permission-scheme',
 

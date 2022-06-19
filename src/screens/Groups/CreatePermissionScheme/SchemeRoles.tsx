@@ -8,29 +8,33 @@ import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import RoleItem from '~/screens/Groups/CreatePermissionScheme/components/RoleItem';
-import {IPermission} from '~/interfaces/IGroup';
+import {IPermission, IRole} from '~/interfaces/IGroup';
 
 export interface SchemeRolesProps {
-  style?: StyleProp<ViewStyle>;
+  roles: IRole[];
+  title?: string;
   onPressPermission?: (permission: IPermission, roleIndex: number) => void;
 }
 
 const SchemeRoles: FC<SchemeRolesProps> = ({
-  style,
+  roles,
+  title,
   onPressPermission,
 }: SchemeRolesProps) => {
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
   const permissionCategories = useKeySelector(
     groupsKeySelector.permission.categories,
   );
-  const roles =
-    useKeySelector(groupsKeySelector.permission.creatingScheme.roles) || [];
+
   const memberRoleIndex = useKeySelector(
     groupsKeySelector.permission.creatingScheme.memberRoleIndex,
   );
+
+  if (!roles || !permissionCategories) {
+    return null;
+  }
 
   const memberRole = roles?.[memberRoleIndex] || {};
 
@@ -38,17 +42,7 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
 
   return (
     <>
-      <Text.BodyM
-        style={styles.title}
-        onLayout={({
-          nativeEvent: {
-            layout: {y: anchor},
-          },
-        }) => {
-          console.log(`\x1b[36m🐣️ SchemeRoles title anchor: ${anchor}\x1b[0m`);
-        }}>
-        Edit Roles
-      </Text.BodyM>
+      {!!title && <Text.BodyM style={styles.title}>{title}</Text.BodyM>}
       {roles?.map?.((role: any, roleIndex: number) => (
         <RoleItem
           key={`role_${role?.id || `${role?.type}_${role?.scope}`}`}

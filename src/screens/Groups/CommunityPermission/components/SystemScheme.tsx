@@ -1,4 +1,4 @@
-import React, {FC} from 'react';
+import React, {FC, useEffect} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -12,6 +12,9 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import modalActions from '~/store/modal/actions';
 import {useDispatch} from 'react-redux';
 import {useBaseHook} from '~/hooks';
+import {useRootNavigation} from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupsActions from '~/screens/Groups/redux/actions';
 
 export interface SystemSchemeProps {
   style?: StyleProp<ViewStyle>;
@@ -24,13 +27,25 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
   const styles = createStyle(theme);
   const {colors} = theme || {};
 
-  const {data: communityScheme, loading} =
-    useKeySelector(groupsKeySelector.permission.communityScheme) || {};
+  const {rootNavigation} = useRootNavigation();
 
-  const usingCustomScheme = !loading && !communityScheme;
+  const {data: communityScheme, loadingCommunityScheme} =
+    useKeySelector(groupsKeySelector.permission.communityScheme) || {};
+  const systemScheme =
+    useKeySelector(groupsKeySelector.permission.systemScheme) || {};
+
+  useEffect(() => {
+    if (!systemScheme?.data && !systemScheme?.loading) {
+      dispatch(groupsActions.getSystemScheme());
+    }
+  }, []);
 
   const onPressView = () => {
-    alert('Show permission detail');
+    if (systemScheme?.data) {
+      rootNavigation.navigate(groupStack.communityPermissionDetail, {
+        scheme: systemScheme.data,
+      });
+    }
   };
 
   const onPressApply = () => {
@@ -48,24 +63,28 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
       <View style={styles.titleContainer}>
         <View style={[styles.flex1, styles.row]}>
           <Text.H5 useI18n>communities:permission:title_system_scheme</Text.H5>
-          {usingCustomScheme && (
+          {!loadingCommunityScheme && !communityScheme && (
             <TextBadge useI18n value={'common:text_activated'} />
           )}
         </View>
         <Button.Primary
           onPress={onPressView}
           useI18n
+          colorHover={colors.borderCard}
           textColor={colors.textPrimary}
           style={styles.buttonView}>
           communities:permission:btn_view_permission
         </Button.Primary>
-        <Button.Primary
-          onPress={onPressApply}
-          useI18n
-          textColor={colors.textPrimary}
-          style={styles.buttonView}>
-          communities:permission:btn_apply
-        </Button.Primary>
+        {!loadingCommunityScheme && communityScheme && (
+          <Button.Primary
+            onPress={onPressApply}
+            useI18n
+            colorHover={colors.borderCard}
+            textColor={colors.textPrimary}
+            style={styles.buttonView}>
+            communities:permission:btn_apply
+          </Button.Primary>
+        )}
       </View>
       <Text.Subtitle useI18n>
         communities:permission:text_desc_system_scheme
