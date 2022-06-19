@@ -49,6 +49,7 @@ const groupsKeySelector = {
       creating: 'groups.permissionScheme.creatingScheme.creating',
     },
   },
+  communitySearch: 'groups.communitySearch',
 };
 
 export default groupsKeySelector;

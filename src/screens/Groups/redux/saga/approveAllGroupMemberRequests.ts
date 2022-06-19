@@ -7,20 +7,20 @@ import modalActions from '~/store/modal/actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import groupsActions from '../actions';
 
-export default function* approveAllCommunityMemberRequests({
+export default function* approveAllGroupMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; callback?: () => void};
+  payload: {groupId: number; callback?: () => void};
 }) {
-  const {communityId, callback} = payload;
+  const {groupId, callback} = payload;
   try {
-    yield put(groupsActions.resetCommunityMemberRequests());
+    yield put(groupsActions.resetMemberRequests());
 
-    yield call(groupsDataHelper.approveAllCommunityMemberRequests, communityId);
+    yield call(groupsDataHelper.approveAllGroupMemberRequests, groupId);
 
     // to update user_count
-    yield put(groupsActions.getCommunityDetail({communityId}));
+    yield put(groupsActions.getGroupDetail(groupId));
 
     let toastProps: ToastMessageProps;
     if (callback) {
@@ -45,7 +45,7 @@ export default function* approveAllCommunityMemberRequests({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log('approveAllCommunityMemberRequest: ', err);
+    console.log('approveAllGroupMemberRequests: ', err);
 
     yield call(showError, err);
   }

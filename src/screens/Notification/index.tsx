@@ -91,6 +91,7 @@ const Notification = () => {
               rootNavigation.navigate(homeStack.commentDetail, {
                 postId: act?.id,
                 commentId: act?.comment?.id,
+                notiId: item.id,
               });
               break;
             }
@@ -111,6 +112,7 @@ const Notification = () => {
                 postId: act?.id,
                 commentId: act?.comment?.child?.id,
                 parentId: act?.comment?.id,
+                notiId: item.id,
               });
               break;
             }

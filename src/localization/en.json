@@ -504,7 +504,7 @@
     "post_exit_desc": "You can save it as a draft for later editing",
     "post_exit_option_save": "Save as Draft",
     "post_exit_option_discard": "Discard Post",
-    "post_exit_option_continue": "Continue Editing",
+    "post_exit_option_continue": "Continue",
     "title_discard_comment": "Discard Comment",
     "text_discard_comment": "If you discard now, you'll lose any changes that you've made",
     "btn_continue_comment": "Continue",
@@ -703,10 +703,9 @@
     "text_declining_user": "Declining user",
     "text_declined_user": "Declined user",
     "text_approved_user": "Approved user",
-    "text_approved_all_one": "Approved {{count}} user",
-    "text_approved_all_other": "Approved {{count}} users",
-    "text_declining_all_one": "Declining {{count}} user",
-    "text_declining_all_other": "Declining {{count}} users",
+    "text_approved_all": "Approved all joining requests",
+    "text_declining_all": "Declining all joining requests",
+    "text_request_been_canceled": "This join request has just been canceled",
     "text_request_join_group": "Requested to join group",
     "text_request_join_community": "Requested to join community",
     "text_cancel_join_group": "Cancelled the member request to group",
@@ -845,7 +844,8 @@
       "text_title_delete_community_scheme": "Delete this scheme",
       "text_desc_delete_community_scheme": "This action cannot redo.",
       "text_create_scheme_success": "Create scheme successfully"
-    }
+    },
+    "text_search_communities": "Search Communities"
   },
   "upload": {
     "text_create_file_id_request_failed": "Cannot request id",

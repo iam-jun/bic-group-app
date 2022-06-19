@@ -20,6 +20,14 @@ export interface ICommunity {
   members?: IPreviewMember[];
 }
 
+export interface IParamGetCommunities {
+  key?: string;
+  offset?: number;
+  limit?: number;
+  sort?: string;
+  preview_members?: boolean;
+}
+
 export interface IPreviewMember {
   id: number;
   username: string;

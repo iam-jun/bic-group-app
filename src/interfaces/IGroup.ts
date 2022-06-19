@@ -112,14 +112,6 @@ export interface IParamGetGroupPosts {
   ranking?: 'IMPORTANT' | string;
 }
 
-export interface IParamGetCommunities {
-  key?: string;
-  offset?: number;
-  limit?: number;
-  sort?: string;
-  preview_members?: boolean;
-}
-
 export interface IParamGetGroupMembers {
   key?: string;
   offset?: number;
@@ -184,6 +176,7 @@ export interface IJoiningMember {
   group_id: number;
   created_at: string;
   updated_at: string;
+  isCanceled?: boolean;
   user: IJoiningUserInfo;
 }
 
