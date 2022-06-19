@@ -12,6 +12,7 @@ import {Video, ResizeMode} from 'expo-av';
 
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
+import {orderBy} from 'lodash';
 
 export interface VideoPlayerProps {
   style?: StyleProp<ViewStyle>;
@@ -31,12 +32,13 @@ const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
   const getThumbnailImageLink = () => {
     const deviceWidthPixel = PixelRatio.get() * dimension.deviceWidth;
     if (thumbnails?.length > 0) {
+      const newThumbnails = orderBy(thumbnails, ['width'], ['asc']);
       for (let index = 0; index < thumbnails.length; index++) {
-        if (thumbnails[index]?.width >= deviceWidthPixel) {
-          return thumbnails[index]?.url;
+        if (newThumbnails[index]?.width >= deviceWidthPixel) {
+          return newThumbnails[index]?.url;
         }
       }
-      return thumbnails[thumbnails.length - 1]?.url;
+      return newThumbnails[thumbnails.length - 1]?.url;
     }
     return '';
   };
@@ -55,8 +57,8 @@ const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
   }, []);
 
   useEffect(() => {
-    const showBottomBarListener = DeviceEventEmitter.addListener(
-      'stopPlayingVideo',
+    const videoListener = DeviceEventEmitter.addListener(
+      'playVideo',
       (videoId: any) => {
         if (!!videoId && videoId !== id) {
           video.current?.setStatusAsync?.({shouldPlay: false});
@@ -64,13 +66,13 @@ const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
       },
     );
     return () => {
-      showBottomBarListener?.remove();
+      videoListener?.remove();
     };
   }, []);
 
   const handlePlaybackStatusUpdate = (status: any) => {
     if (status?.isPlaying) {
-      DeviceEventEmitter.emit('stopPlayingVideo', id);
+      DeviceEventEmitter.emit('playVideo', id);
     }
   };
 

@@ -31,6 +31,9 @@
     "jest:open-cov": "open ./coverage/lcov-report/index.html",
     "reverse": "adb reverse tcp:8081 tcp:8081 && adb reverse tcp:9090 tcp:9090"
   },
+  "//dependencies": {
+    "//@giphy/react-native-sdk": "use this version (1.3.0) to match with exoplayer version in expo-av"
+  },
   "dependencies": {
     "@giphy/react-native-sdk": "1.3.0",
     "@iconscout/react-unicons": "1.1.6",
@@ -120,8 +123,7 @@
     "reselect": "4.0.0",
     "rn-placeholder": "3.0.3",
     "socket.io-client": "4.4.0",
-    "url-parse": "^1.5.10",
-    "react-native-video": "5.2.0"
+    "url-parse": "^1.5.10"
   },
   "devDependencies": {
     "@babel/core": "7.16.0",
