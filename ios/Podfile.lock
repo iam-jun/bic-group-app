@@ -10,11 +10,7 @@ PODS:
     - ExpoModulesCore
     - React-runtimeexecutor
     - ReactCommon
-  - EXCamera (12.2.0):
-    - ExpoModulesCore
   - EXConstants (13.1.1):
-    - ExpoModulesCore
-  - EXErrorRecovery (3.1.0):
     - ExpoModulesCore
   - EXFileSystem (14.0.0):
     - ExpoModulesCore
@@ -123,10 +119,10 @@ PODS:
     - FlipperKit/Core
     - FlipperKit/FlipperKitNetworkPlugin
   - fmt (6.2.1)
-  - Giphy (2.1.21):
+  - Giphy (2.1.16):
     - libwebp
-  - giphy-react-native-sdk (1.7.1):
-    - Giphy (= 2.1.21)
+  - giphy-react-native-sdk (1.3.0):
+    - Giphy (= 2.1.16)
     - React-Core
   - glog (0.3.5)
   - GoogleDataTransport (9.1.4):
@@ -406,11 +402,6 @@ PODS:
     - React-Core
   - react-native-safe-area-context (3.3.2):
     - React-Core
-  - react-native-video (5.2.0):
-    - React-Core
-    - react-native-video/Video (= 5.2.0)
-  - react-native-video/Video (5.2.0):
-    - React-Core
   - React-perflogger (0.68.2)
   - React-RCTActionSheet (0.68.2):
     - React-Core/RCTActionSheetHeaders (= 0.68.2)
@@ -574,8 +565,8 @@ PODS:
     - Yoga
   - RNScreens (3.2.0):
     - React-Core
-  - RNSVG (12.1.1):
-    - React
+  - RNSVG (12.3.0):
+    - React-Core
   - RNVectorIcons (8.1.0):
     - React-Core
   - SDWebImage (5.11.1):
@@ -596,9 +587,7 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - EXApplication (from `../node_modules/expo-application/ios`)
   - EXAV (from `../node_modules/expo-av/ios`)
-  - EXCamera (from `../node_modules/expo-camera/ios`)
   - EXConstants (from `../node_modules/expo-constants/ios`)
-  - EXErrorRecovery (from `../node_modules/expo-error-recovery/ios`)
   - EXFileSystem (from `../node_modules/expo-file-system/ios`)
   - EXFont (from `../node_modules/expo-font/ios`)
   - Expo (from `../node_modules/expo/ios`)
@@ -654,7 +643,6 @@ DEPENDENCIES:
   - "react-native-netinfo (from `../node_modules/@react-native-community/netinfo`)"
   - react-native-pager-view (from `../node_modules/react-native-pager-view`)
   - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
-  - react-native-video (from `../node_modules/react-native-video`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
   - React-RCTActionSheet (from `../node_modules/react-native/Libraries/ActionSheetIOS`)
   - React-RCTAnimation (from `../node_modules/react-native/Libraries/NativeAnimation`)
@@ -731,12 +719,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/expo-application/ios"
   EXAV:
     :path: "../node_modules/expo-av/ios"
-  EXCamera:
-    :path: "../node_modules/expo-camera/ios"
   EXConstants:
     :path: "../node_modules/expo-constants/ios"
-  EXErrorRecovery:
-    :path: "../node_modules/expo-error-recovery/ios"
   EXFileSystem:
     :path: "../node_modules/expo-file-system/ios"
   EXFont:
@@ -795,8 +779,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-pager-view"
   react-native-safe-area-context:
     :path: "../node_modules/react-native-safe-area-context"
-  react-native-video:
-    :path: "../node_modules/react-native-video"
   React-perflogger:
     :path: "../node_modules/react-native/ReactCommon/reactperflogger"
   React-RCTActionSheet:
@@ -867,9 +849,7 @@ SPEC CHECKSUMS:
   DoubleConversion: 831926d9b8bf8166fd87886c4abab286c2422662
   EXApplication: d6562af1204162e0ac46d341a7d4e5dc720b33de
   EXAV: 88f61c5af8415715b7ee51f084c1020235b85c56
-  EXCamera: 2cbc8206cb520562c1527fe565aa9f00df8e5e8f
   EXConstants: fdbe52259365b6a6faaa5e99a3b82cfa6bc2eb61
-  EXErrorRecovery: 3ce46e5d42e53c0371ff048a7f0cbc959968ef4a
   EXFileSystem: 2aa2d9289f84bca9532b9ccbd81504fa31eb1ded
   EXFont: 04235cc22e6fef86028feb67db452978dc6f240f
   Expo: b9fff0a1eac0f424fc68ea49b4347fb308e52e17
@@ -892,8 +872,8 @@ SPEC CHECKSUMS:
   Flipper-RSocket: d9d9ade67cbecf6ac10730304bf5607266dd2541
   FlipperKit: cbdee19bdd4e7f05472a66ce290f1b729ba3cb86
   fmt: ff9d55029c625d3757ed641535fd4a75fedc7ce9
-  Giphy: 96e473c9ae2db3d543d09df587d89b1651dc3e3e
-  giphy-react-native-sdk: 9f21b941416e3ba226133ca26a59db4c6fd23c67
+  Giphy: 1272a1f1505c208b2070df8c93f0de56513e0fae
+  giphy-react-native-sdk: 9ce33f9af818f12c6914f29b3433218d95122397
   glog: 476ee3e89abb49e07f822b48323c51c57124b572
   GoogleDataTransport: 5fffe35792f8b96ec8d6775f5eccd83c998d5a3b
   GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
@@ -923,7 +903,6 @@ SPEC CHECKSUMS:
   react-native-netinfo: 1c7676413ab265759c7b3da205efab163f5366ef
   react-native-pager-view: c44c385eb20f0733c53685456fb9eb8d8469a1bb
   react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
-  react-native-video: a4c2635d0802f983594b7057e1bce8f442f0ad28
   React-perflogger: a18b4f0bd933b8b24ecf9f3c54f9bf65180f3fe6
   React-RCTActionSheet: 547fe42fdb4b6089598d79f8e1d855d7c23e2162
   React-RCTAnimation: bc9440a1c37b06ae9ebbb532d244f607805c6034
@@ -952,7 +931,7 @@ SPEC CHECKSUMS:
   RNReactNativeSharedGroupPreferences: de0121a4224c267bc7e9fb16c398f3f087c8da81
   RNReanimated: 64573e25e078ae6bec03b891586d50b9ec284393
   RNScreens: c277bfc4b5bb7c2fe977d19635df6f974f95dfd6
-  RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
+  RNSVG: 302bfc9905bd8122f08966dc2ce2d07b7b52b9f8
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
   SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
@@ -963,4 +942,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 4ea75a6c732ba56b3a489e36208a1afae3d37d37
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

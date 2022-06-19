@@ -17,6 +17,7 @@ import {
   IStateList,
   IGroupMembers,
   IPermission,
+  IScheme,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 import {IObject} from '~/interfaces/common';
@@ -26,6 +27,7 @@ import {
   IParamGetDiscoverGroups,
   ISetMembers,
   ISetCommunitySearchMembers,
+  IParamGetCommunities,
 } from '~/interfaces/ICommunity';
 
 const groupsActions = {
@@ -48,11 +50,43 @@ const groupsActions = {
     type: groupsTypes.SET_CREATING_SCHEME,
     payload,
   }),
+  setCreatingSchemeData: (payload?: any) => ({
+    type: groupsTypes.SET_CREATING_SCHEME_DATA,
+    payload,
+  }),
   updateCreatingSchemePermission: (payload?: {
     permission: IPermission;
     roleIndex: number;
   }) => ({
     type: groupsTypes.UPDATE_CREATING_SCHEME_PERMISSION,
+    payload,
+  }),
+  postCreateSchemePermission: (payload?: {communityId: number | string}) => ({
+    type: groupsTypes.POST_CREATE_SCHEME_PERMISSION,
+    payload,
+  }),
+  getCommunityScheme: (payload?: {communityId: number | string}) => ({
+    type: groupsTypes.GET_COMMUNITY_SCHEME,
+    payload,
+  }),
+  setCommunityScheme: (payload?: {
+    loading?: boolean;
+    data?: IScheme;
+    deleting?: boolean;
+  }) => ({
+    type: groupsTypes.SET_COMMUNITY_SCHEME,
+    payload,
+  }),
+  deleteCommunityScheme: (payload?: {communityId: number | string}) => ({
+    type: groupsTypes.DELETE_COMMUNITY_SCHEME,
+    payload,
+  }),
+  getSchemes: (payload?: {communityId: number | string}) => ({
+    type: groupsTypes.GET_SCHEMES,
+    payload,
+  }),
+  setSchemes: (payload?: {loading?: boolean; data?: any}) => ({
+    type: groupsTypes.SET_SCHEMES,
     payload,
   }),
 
@@ -526,6 +560,23 @@ const groupsActions = {
   editCommunityMemberRequest: (payload: {id: number; data: any}) => ({
     type: groupsTypes.EDIT_COMMUNITY_MEMBER_REQUEST,
     payload,
+  }),
+
+  getCommunitySearch: (payload: IParamGetCommunities) => ({
+    type: groupsTypes.GET_COMMUNITY_SEARCH,
+    payload,
+  }),
+  setCommunitySearch: (payload: {
+    loading?: boolean;
+    canLoadMore?: boolean;
+    ids?: number[];
+    items?: any;
+  }) => ({
+    type: groupsTypes.SET_COMMUNITY_SEARCH,
+    payload,
+  }),
+  resetCommunitySearch: () => ({
+    type: groupsTypes.RESET_COMMUNITY_SEARCH,
   }),
 };
 

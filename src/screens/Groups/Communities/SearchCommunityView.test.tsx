@@ -1,39 +1,37 @@
-import i18next from 'i18next';
 import React from 'react';
 import {renderWithRedux} from '~/test/testUtils';
-import SearchMemberView from './SearchMemberView';
+import SearchCommunityView from './SearchCommunityView';
 
-describe('SearchMemberView component', () => {
-  const communityId = 1;
+describe('SearchCommunityView component', () => {
   const isOpen = true;
-  const onPressMenu = jest.fn();
+  const onPressCommunity = jest.fn();
 
   it('should render Type search keyword description correctly', () => {
     const wrapper = renderWithRedux(
-      <SearchMemberView
-        communityId={communityId}
+      <SearchCommunityView
         isOpen={isOpen}
         initSearch=""
-        onPressMenu={onPressMenu}
+        onPressCommunity={onPressCommunity}
       />,
     );
-    const textComponent = wrapper.getByTestId('search_member_view.type_search');
+    const textComponent = wrapper.getByTestId(
+      'search_community_view.type_search',
+    );
     expect(textComponent.props.children).toBe(
-      i18next.t('common:text_type_search_keyword'),
+      'Type search keyword to see the search results',
     );
   });
 
   it('should render data list correctly', () => {
     const wrapper = renderWithRedux(
-      <SearchMemberView
-        communityId={communityId}
+      <SearchCommunityView
         isOpen={isOpen}
         initSearch="test"
-        onPressMenu={onPressMenu}
+        onPressCommunity={onPressCommunity}
       />,
     );
     const textComponent = wrapper.queryByTestId(
-      'search_member_view.type_search',
+      'search_community_view.type_search',
     );
     expect(textComponent).toBeNull();
 

@@ -26,6 +26,7 @@
     "text_message_link_copied_to_clipboard": "Message link copied to clipboard",
     "btn_cancel": "Cancel",
     "btn_delete": "Delete",
+    "btn_close": "Close",
     "btn_continue_editing": "Continue Editing",
     "btn_discard": "Discard",
     "btn_edit": "Edit",
@@ -107,6 +108,7 @@
     "text_start_date": "Start Date",
     "text_end_date": "End Date",
     "text_group": "Group",
+    "text_activated": "Activated",
     "text_at": "at",
     "text_to": "to",
     "text_updated_successfully": "updated successfully",
@@ -829,10 +831,21 @@
       "title_community_scheme": "Community Scheme",
       "title_group_scheme": "Group Scheme",
       "title_create_community_scheme": "Create community scheme",
+      "title_edit_roles": "Edit roles",
       "text_desc_system_scheme": "Use system default permission scheme. If there is no custom scheme applied, this option is auto-enabled.",
       "text_desc_community_scheme": "Create new permission scheme to apply to community",
-      "text_desc_group_scheme": "Create new permission scheme to apply to specific groups."
-    }
+      "text_desc_group_scheme": "Create new permission scheme to apply to specific groups.",
+      "text_create_scheme_name": "Enter scheme name",
+      "text_create_scheme_desc": "Write your description here (maximum 255 characters)",
+      "btn_view_permission": "View permission",
+      "btn_apply": "Apply",
+      "text_title_apply_system_scheme": "Apply system scheme?",
+      "text_desc_apply_system_scheme": "You must delete custom scheme",
+      "text_title_delete_community_scheme": "Delete this scheme",
+      "text_desc_delete_community_scheme": "This action cannot redo.",
+      "text_create_scheme_success": "Create scheme successfully"
+    },
+    "text_search_communities": "Search Communities"
   },
   "upload": {
     "text_create_file_id_request_failed": "Cannot request id",

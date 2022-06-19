@@ -36,5 +36,5 @@ export const getNewSchemeRolesOnUpdatePermission = (
     // add key
     permissions.push(newKey);
   }
-  return roles;
+  return [...roles];
 };

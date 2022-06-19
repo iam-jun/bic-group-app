@@ -16,9 +16,22 @@ export const groupInitState = {
       data: undefined,
       loading: false,
     },
+    communityScheme: {
+      loading: false,
+      deleting: false,
+      data: undefined,
+    },
+    schemes: {
+      loading: false,
+      data: {
+        communityScheme: undefined,
+        groupSchemes: undefined,
+      },
+    },
     creatingScheme: {
       data: undefined,
       memberRoleIndex: 0,
+      creating: false,
     },
   },
   isPrivacyModalOpen: false,
@@ -148,6 +161,13 @@ export const groupInitState = {
     ids: [],
     items: {} as IObject<IJoiningMember>,
   },
+
+  communitySearch: {
+    loading: false,
+    canLoadMore: true,
+    ids: [] as number[],
+    items: {},
+  },
 };
 
 function groupsReducer(state = groupInitState, action: any = {}) {
@@ -196,6 +216,22 @@ function groupsReducer(state = groupInitState, action: any = {}) {
             : {},
         },
       };
+    case groupsTypes.SET_CREATING_SCHEME_DATA:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          creatingScheme: {
+            ...state.permissionScheme.creatingScheme,
+            data: payload
+              ? Object.assign(
+                  state.permissionScheme.creatingScheme.data,
+                  payload,
+                )
+              : {},
+          },
+        },
+      };
     case groupsTypes.UPDATE_CREATING_SCHEME_PERMISSION: {
       const {permission, roleIndex} = payload || {};
       // @ts-ignore
@@ -206,6 +242,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         roles,
       );
       const newData = Object.assign(
+        // @ts-ignore
         state.permissionScheme.creatingScheme.data,
         {roles: newRoles},
       );
@@ -220,6 +257,22 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
     }
+    case groupsTypes.SET_COMMUNITY_SCHEME:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          communityScheme: payload,
+        },
+      };
+    case groupsTypes.SET_SCHEMES:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          schemes: payload,
+        },
+      };
 
     case groupsTypes.SET_PRIVACY_MODAL_OPEN:
       return {
@@ -679,6 +732,20 @@ function groupsReducer(state = groupInitState, action: any = {}) {
             },
           },
         },
+      };
+
+    case groupsTypes.SET_COMMUNITY_SEARCH:
+      return {
+        ...state,
+        communitySearch: {
+          ...state.communitySearch,
+          ...payload,
+        },
+      };
+    case groupsTypes.RESET_COMMUNITY_SEARCH:
+      return {
+        ...state,
+        communitySearch: groupInitState.communitySearch,
       };
 
     default:
