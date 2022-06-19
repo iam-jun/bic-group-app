@@ -56,6 +56,7 @@ import declineSingleGroupMemberRequest from './declineSingleGroupMemberRequest';
 import getGroupMemberRequests from './getGroupMemberRequests';
 import getPermissionCategories from '~/screens/Groups/redux/saga/getPermissionCategories';
 import getSystemScheme from '~/screens/Groups/redux/saga/getSystemScheme';
+import getCommunitySearch from './getCommunitySearch';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -142,6 +143,7 @@ export default function* groupsSaga() {
     groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,
     declineAllCommunityMemberRequests,
   );
+  yield takeLatest(groupsTypes.GET_COMMUNITY_SEARCH, getCommunitySearch);
 }
 
 function* getGroupSearch({payload}: {type: string; payload: string}) {

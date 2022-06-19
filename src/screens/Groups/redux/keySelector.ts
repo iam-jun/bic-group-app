@@ -41,6 +41,7 @@ const groupsKeySelector = {
     systemScheme: 'groups.permissionScheme.systemScheme',
     creatingScheme: 'groups.permissionScheme.creatingScheme',
   },
+  communitySearch: 'groups.communitySearch',
 };
 
 export default groupsKeySelector;

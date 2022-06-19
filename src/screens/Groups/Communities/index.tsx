@@ -1,31 +1,30 @@
 import React, {useRef, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import {useDispatch} from 'react-redux';
 
-import groupsActions from '~/screens/Groups/redux/actions';
 import Header from '~/beinComponents/Header';
 
 import {ITheme} from '~/theme/interfaces';
 import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
-import {debounce} from 'lodash';
 import Filter from '../../../beinComponents/Filter';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import JoinedCommunities from '~/screens/Groups/Communities/JoinedCommunities';
 import DiscoverCommunities from '~/screens/Groups/Communities/DiscoverCommunities';
 import {communityMenuData} from '~/constants/communityMenuData';
 import ManagedCommunities from './ManagedCommunities';
-import {ICommunity} from '~/interfaces/ICommunity';
+import SearchCommunityView from './SearchCommunityView';
+import {useBaseHook} from '~/hooks';
 
 const Communities: React.FC = () => {
   const headerRef = useRef<any>();
 
-  const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
+  const {t} = useBaseHook();
 
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleBackPress = () => {
     headerRef?.current?.goBack?.();
@@ -33,20 +32,13 @@ const Communities: React.FC = () => {
 
   useBackPressListener(handleBackPress);
 
-  const onShowSearch = (isShow: boolean) => {
-    dispatch(
-      groupsActions.setGroupSearch({
-        isShow: isShow,
-        loading: false,
-        searchKey: '',
-        result: [],
-      }),
-    );
+  const onPressSearch = () => {
+    setIsOpen(true);
   };
 
-  const onSearchText = debounce((searchText: string) => {
-    dispatch(groupsActions.setGroupSearch({searchKey: searchText}));
-  }, 300);
+  const onCloseSearch = React.useCallback(() => {
+    setIsOpen(false);
+  }, []);
 
   const onPress = (item: any, index: number) => {
     setSelectedIndex(index);
@@ -83,8 +75,8 @@ const Communities: React.FC = () => {
         headerRef={headerRef}
         title="tabs:communities"
         titleTextProps={{useI18n: true}}
-        onShowSearch={onShowSearch}
-        onSearchText={onSearchText}
+        rightIcon={'iconSearch'}
+        onRightPress={onPressSearch}
       />
       <View style={{flex: 1}}>
         <Filter
@@ -96,6 +88,12 @@ const Communities: React.FC = () => {
         />
         {renderContent()}
       </View>
+      <SearchCommunityView
+        isOpen={isOpen}
+        onClose={onCloseSearch}
+        onPressCommunity={onPressCommunities}
+        placeholder={t('communities:text_search_communities')}
+      />
     </View>
   );
 };

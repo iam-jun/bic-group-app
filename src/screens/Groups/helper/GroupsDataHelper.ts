@@ -2,10 +2,10 @@ import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {
   IGetCommunityGroup,
   IGroupDetailEdit,
-  IParamGetCommunities,
   IParamGetGroupPosts,
 } from '~/interfaces/IGroup';
 import {
+  IParamGetCommunities,
   IParamGetCommunityMembers,
   IParamGetDiscoverGroups,
 } from '~/interfaces/ICommunity';
@@ -336,6 +336,16 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
+  }),
+  getCommunities: (params?: IParamGetCommunities): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    params: {
+      ...params,
+      key: !!params?.key?.trim?.() ? params.key : undefined,
+    },
   }),
 };
 
@@ -872,6 +882,20 @@ const groupsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getCommunities: async (params?: IParamGetCommunities) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getCommunities(params),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response.data.data);
       } else {
         return Promise.reject(response);
       }
