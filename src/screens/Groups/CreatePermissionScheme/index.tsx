@@ -15,20 +15,28 @@ import SchemeRoles from '~/screens/Groups/CreatePermissionScheme/SchemeRoles';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Text from '~/beinComponents/Text';
 import {getNewSchemeFromSystemScheme} from '~/screens/Groups/CreatePermissionScheme/helper';
-import {IPermission} from '~/interfaces/IGroup';
+import {IPermission, IScheme} from '~/interfaces/IGroup';
 import CreateSchemeHeader from '~/screens/Groups/CreatePermissionScheme/components/CreateSchemeHeader';
 
 export interface CreatePermissionSchemeProps {
-  style?: StyleProp<ViewStyle>;
+  route?: {
+    params?: {
+      isEdit?: boolean;
+      initScheme?: IScheme;
+    };
+  };
 }
 
 const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
-  style,
+  route,
 }: CreatePermissionSchemeProps) => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
+
+  const isEdit = route?.params?.isEdit;
+  const initScheme = route?.params?.initScheme;
 
   const permissionCategories = useKeySelector(
     groupsKeySelector.permission.categories,
@@ -44,6 +52,13 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     (!permissionCategories?.data || !systemScheme?.data);
 
   useEffect(() => {
+    if (isEdit && initScheme) {
+      dispatch(
+        groupsActions.setCreatingScheme({
+          data: initScheme,
+        }),
+      );
+    }
     if (!permissionCategories?.data && !permissionCategories?.loading) {
       dispatch(groupsActions.getPermissionCategories());
     }
@@ -56,7 +71,7 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
   }, []);
 
   useEffect(() => {
-    if (systemScheme?.data) {
+    if (systemScheme?.data && !isEdit) {
       const {newScheme, memberRoleIndex} = getNewSchemeFromSystemScheme(
         systemScheme.data,
       );
@@ -96,6 +111,7 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
       <CreateSchemeHeader
         loadingData={loading}
         loadDataFailed={loadDataFailed}
+        isEdit={isEdit}
       />
       {renderContent()}
     </View>

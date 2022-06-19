@@ -47,7 +47,10 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
   };
 
   const onPressEdit = () => {
-    console.log(`\x1b[36m🐣️ CommunityScheme onPressEdit\x1b[0m`);
+    rootNavigation.navigate(groupStack.createPermissionScheme, {
+      isEdit: true,
+      initScheme: communityScheme,
+    });
   };
 
   const onPressDelete = () => {

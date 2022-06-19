@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -75,6 +75,7 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
           testID="input_scheme_info.input_desc"
           onChangeText={onChangeDesc}
           multiline
+          style={{marginTop: 0}}
           placeholder={t('communities:permission:text_create_scheme_desc')}
           activeOutlineColor={theme.colors.background}
           outlineColor={theme.colors.background}
@@ -82,7 +83,9 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
           onFocus={onFocusDesc}
           onBlur={onBlurDesc}
         />
-        <Text.Subtitle style={styles.textCount}>0/255</Text.Subtitle>
+        <Text.Subtitle style={styles.textCount}>
+          {description?.length || 0}/255
+        </Text.Subtitle>
       </View>
     </View>
   );

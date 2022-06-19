@@ -12,11 +12,13 @@ export interface CreateSchemeHeaderProps {
   style?: StyleProp<ViewStyle>;
   loadingData: boolean;
   loadDataFailed: boolean;
+  isEdit?: boolean;
 }
 
 const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
   loadingData,
   loadDataFailed,
+  isEdit,
 }: CreateSchemeHeaderProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -29,15 +31,19 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
 
   const disableButtonCreate = loadingData || loadDataFailed || !name;
 
-  const onPressCreate = () => {
-    dispatch(groupsActions.postCreateSchemePermission({communityId: id}));
+  const onPress = () => {
+    if (isEdit) {
+      alert('Waiting for story edit scheme...');
+    } else {
+      dispatch(groupsActions.postCreateSchemePermission({communityId: id}));
+    }
   };
 
   return (
     <Header
       title={t('communities:permission:title_create_community_scheme')}
-      onPressButton={onPressCreate}
-      buttonText={'common:btn_create'}
+      onPressButton={onPress}
+      buttonText={isEdit ? 'common:btn_save' : 'common:btn_create'}
       buttonProps={{
         loading: creating,
         disabled: disableButtonCreate,
