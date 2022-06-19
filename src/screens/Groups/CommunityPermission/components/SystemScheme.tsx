@@ -9,12 +9,17 @@ import TextBadge from '~/beinComponents/Badge/TextBadge';
 import Button from '~/beinComponents/Button';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import modalActions from '~/store/modal/actions';
+import {useDispatch} from 'react-redux';
+import {useBaseHook} from '~/hooks';
 
 export interface SystemSchemeProps {
   style?: StyleProp<ViewStyle>;
 }
 
 const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
+  const {t} = useBaseHook();
+  const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
   const {colors} = theme || {};
@@ -22,8 +27,20 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
   const {data: communityScheme, loading} =
     useKeySelector(groupsKeySelector.permission.communityScheme) || {};
 
+  const usingCustomScheme = !loading && !communityScheme;
+
   const onPressView = () => {
     alert('Show permission detail');
+  };
+
+  const onPressApply = () => {
+    dispatch(
+      modalActions.showAlert({
+        title: t('communities:permission:text_title_apply_system_scheme'),
+        content: t('communities:permission:text_desc_apply_system_scheme'),
+        confirmLabel: t('common:btn_close'),
+      }),
+    );
   };
 
   return (
@@ -31,7 +48,7 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
       <View style={styles.titleContainer}>
         <View style={[styles.flex1, styles.row]}>
           <Text.H5 useI18n>communities:permission:title_system_scheme</Text.H5>
-          {!loading && !communityScheme && (
+          {usingCustomScheme && (
             <TextBadge useI18n value={'common:text_activated'} />
           )}
         </View>
@@ -41,6 +58,13 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
           textColor={colors.textPrimary}
           style={styles.buttonView}>
           communities:permission:btn_view_permission
+        </Button.Primary>
+        <Button.Primary
+          onPress={onPressApply}
+          useI18n
+          textColor={colors.textPrimary}
+          style={styles.buttonView}>
+          communities:permission:btn_apply
         </Button.Primary>
       </View>
       <Text.Subtitle useI18n>
@@ -71,6 +95,8 @@ const createStyle = (theme: ITheme) => {
     },
     buttonView: {
       paddingVertical: spacing.padding.tiny,
+      paddingHorizontal: spacing.padding.tiny,
+      marginLeft: spacing.margin.small,
       backgroundColor: colors.bgHover,
     },
   });
