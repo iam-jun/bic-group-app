@@ -1,5 +1,12 @@
 import React, {useState, useEffect, FC} from 'react';
-import {View, StyleSheet, SectionList, ActivityIndicator} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  SectionList,
+  ActivityIndicator,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import debounce from 'lodash/debounce';
@@ -31,6 +38,7 @@ import {
 } from './SelectAudienceHelper';
 import {ICreatePostParams} from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export interface PostSelectAudienceProps {
   route?: {
@@ -74,6 +82,8 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const {spacing, colors} = theme;
   const styles = createStyle(theme);
+
+  const insets = useSafeAreaInsets();
 
   const createPostData = useKeySelector(postKeySelector.createPost.all);
   const {
@@ -386,47 +396,56 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     }
     return <NoSearchResult />;
   };
+  console.log('insets?.top', insets?.bottom);
 
   return (
     <ScreenWrapper isFullView style={styles.container}>
-      <Header
-        title={'post:select_audience'}
-        titleTextProps={{useI18n: true}}
-        buttonText={isFirstStep ? 'common:btn_next' : 'common:btn_done'}
-        buttonProps={{
-          useI18n: true,
-          disabled: disableButtonSave,
-          testID: 'select_audience.btn_done',
-        }}
-        onPressButton={onPressSave}
-        onPressBack={onPressBack}
-      />
-      <SearchInput
-        autoFocus
-        testID="post_select_audience.search"
-        style={styles.searchInput}
-        onChangeText={onChangeTextSearch}
-        placeholder={t('post:search_audiences_placeholder')}
-      />
-      <SelectingAudiences
-        list={selectingAudiences}
-        onRemoveItem={onRemoveItem}
-      />
-      <SectionList
-        style={{paddingHorizontal: spacing?.padding.large}}
-        sections={sectionListData}
-        keyExtractor={(item, index) =>
-          item?.unique || `section_list_${item}_${index}`
-        }
-        ListHeaderComponent={renderListHeader}
-        ListFooterComponent={renderListFooter}
-        ListEmptyComponent={renderEmpty}
-        renderSectionHeader={renderSectionHeader}
-        renderItem={renderItem}
-        ItemSeparatorComponent={() => (
-          <View style={{height: spacing?.margin.large}} />
-        )}
-      />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        enabled={true}
+        style={{flex: 1}}
+        keyboardVerticalOffset={
+          Platform.OS === 'ios' ? (!!insets?.bottom ? 90 : 60) : 0
+        }>
+        <Header
+          title={'post:select_audience'}
+          titleTextProps={{useI18n: true}}
+          buttonText={isFirstStep ? 'common:btn_next' : 'common:btn_done'}
+          buttonProps={{
+            useI18n: true,
+            disabled: disableButtonSave,
+            testID: 'select_audience.btn_done',
+          }}
+          onPressButton={onPressSave}
+          onPressBack={onPressBack}
+        />
+        <SearchInput
+          autoFocus
+          testID="post_select_audience.search"
+          style={styles.searchInput}
+          onChangeText={onChangeTextSearch}
+          placeholder={t('post:search_audiences_placeholder')}
+        />
+        <SelectingAudiences
+          list={selectingAudiences}
+          onRemoveItem={onRemoveItem}
+        />
+        <SectionList
+          style={{paddingHorizontal: spacing?.padding.large}}
+          sections={sectionListData}
+          keyExtractor={(item, index) =>
+            item?.unique || `section_list_${item}_${index}`
+          }
+          ListHeaderComponent={renderListHeader}
+          ListFooterComponent={renderListFooter}
+          ListEmptyComponent={renderEmpty}
+          renderSectionHeader={renderSectionHeader}
+          renderItem={renderItem}
+          ItemSeparatorComponent={() => (
+            <View style={{height: spacing?.margin.large}} />
+          )}
+        />
+      </KeyboardAvoidingView>
     </ScreenWrapper>
   );
 };
