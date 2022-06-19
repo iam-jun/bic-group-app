@@ -6,7 +6,7 @@ import {ITheme} from '~/theme/interfaces';
 
 import Header from '~/beinComponents/Header';
 import {IScheme} from '~/interfaces/IGroup';
-import SchemeRoles from '~/screens/Groups/CreatePermissionScheme/SchemeRoles';
+import SchemeRoles from '~/screens/Groups/components/SchemeRoles';
 
 export interface CommunityPermissionDetailProps {
   route?: {

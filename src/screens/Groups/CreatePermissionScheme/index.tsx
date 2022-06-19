@@ -11,7 +11,7 @@ import {useDispatch} from 'react-redux';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useBaseHook} from '~/hooks';
 import InputSchemeInfo from '~/screens/Groups/CreatePermissionScheme/InputSchemeInfo';
-import SchemeRoles from '~/screens/Groups/CreatePermissionScheme/SchemeRoles';
+import SchemeRoles from '~/screens/Groups/components/SchemeRoles';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Text from '~/beinComponents/Text';
 import {getNewSchemeFromSystemScheme} from '~/screens/Groups/CreatePermissionScheme/helper';

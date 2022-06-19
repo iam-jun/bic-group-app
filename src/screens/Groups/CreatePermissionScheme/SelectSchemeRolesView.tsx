@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 import {IPermission} from '~/interfaces/IGroup';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import SchemeRoles from '~/screens/Groups/CreatePermissionScheme/SchemeRoles';
+import SchemeRoles from '~/screens/Groups/components/SchemeRoles';
 import {useBaseHook} from '~/hooks';
 
 export interface SelectSchemeRolesViewProps {
