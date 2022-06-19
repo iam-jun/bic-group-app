@@ -29,7 +29,7 @@ const CommunityPermissionDetail: FC<CommunityPermissionDetailProps> = ({
     <View style={styles.container}>
       <Header title={name} />
       <ScrollView contentContainerStyle={styles.contentContainer}>
-        <SchemeRoles roles={roles || []} />
+        <SchemeRoles roles={roles || []} selectedRolesOnly />
       </ScrollView>
     </View>
   );

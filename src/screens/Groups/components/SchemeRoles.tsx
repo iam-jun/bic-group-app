@@ -14,12 +14,14 @@ export interface SchemeRolesProps {
   roles: IRole[];
   title?: string;
   onPressPermission?: (permission: IPermission, roleIndex: number) => void;
+  selectedRolesOnly?: boolean;
 }
 
 const SchemeRoles: FC<SchemeRolesProps> = ({
   roles,
   title,
   onPressPermission,
+  selectedRolesOnly,
 }: SchemeRolesProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -49,6 +51,7 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
           categories={categories}
           role={role}
           roleIndex={roleIndex}
+          selectedRolesOnly={selectedRolesOnly}
           inheritedRole={roleIndex !== memberRoleIndex ? memberRole : undefined}
           onLayout={({
             nativeEvent: {
