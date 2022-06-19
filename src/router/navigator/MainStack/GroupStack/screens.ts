@@ -28,6 +28,7 @@ import CommunityAdmin from '~/screens/Groups/CommunityAdmin';
 import CommunityPermission from '~/screens/Groups/CommunityPermission';
 import CommunityPendingMembers from '~/screens/Groups/CommunityAdmin/PendingMembers';
 import CreatePermissionScheme from '~/screens/Groups/CreatePermissionScheme';
+import CommunityPermissionDetail from '~/screens/Groups/CommunityPermissionDetail';
 
 export default {
   // community
@@ -39,6 +40,7 @@ export default {
   'community-members': CommunityMembers,
   'community-admin': CommunityAdmin,
   'community-permission': CommunityPermission,
+  'community-permission-detail': CommunityPermissionDetail,
   'community-pending-members': CommunityPendingMembers,
   'create-permission-scheme': CreatePermissionScheme,
 

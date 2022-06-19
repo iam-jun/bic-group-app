@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC, useEffect, useRef, useState} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -6,6 +6,11 @@ import {ITheme} from '~/theme/interfaces';
 
 import Text from '~/beinComponents/Text';
 import TextInput from '~/beinComponents/inputs/TextInput';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import groupsActions from '~/screens/Groups/redux/actions';
+import {useDispatch} from 'react-redux';
+import {useBaseHook} from '~/hooks';
 
 export interface InputSchemeInfoProps {
   style?: StyleProp<ViewStyle>;
@@ -16,15 +21,22 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
 }: InputSchemeInfoProps) => {
   const [isFocusDesc, setIsFocusDesc] = useState(false);
 
+  const {t} = useBaseHook();
+  const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
+  const name = useKeySelector(groupsKeySelector.permission.creatingScheme.name);
+  const description = useKeySelector(
+    groupsKeySelector.permission.creatingScheme.description,
+  );
+
   const onChangeName = (value: string) => {
-    console.log(`\x1b[36m🐣️ InputSchemeInfo onChangeName: ${value}\x1b[0m`);
+    dispatch(groupsActions.setCreatingSchemeData({name: value, description}));
   };
 
   const onChangeDesc = (value: string) => {
-    console.log(`\x1b[36m🐣️ InputSchemeInfo onChangeDesc: ${value}\x1b[0m`);
+    dispatch(groupsActions.setCreatingSchemeData({name, description: value}));
   };
 
   const onFocusDesc = () => {
@@ -36,10 +48,10 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, style]}>
       <Text.H5 style={styles.textTitle}>Scheme name:</Text.H5>
       <TextInput
-        value={'Test scheme'} //todo handle input
+        value={name}
         testID="input_scheme_info.input_name"
         style={styles.textInputName}
         onChangeText={onChangeName}
@@ -47,7 +59,7 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
         // helperContent={
         //   error ? i18next.t('profile:text_name_must_not_be_empty') : undefined
         // }
-        placeholder={'Enter scheme name'}
+        placeholder={t('communities:permission:text_create_scheme_name')}
         activeOutlineColor={theme.colors.primary6}
         outlineColor={theme.colors.borderCard}
         maxLength={32}
@@ -59,18 +71,21 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
           isFocusDesc ? styles.textInputActive : styles.textInputInactive,
         ]}>
         <TextInput
-          value={'This is a test scheme'} //todo handle input
+          value={description}
           testID="input_scheme_info.input_desc"
           onChangeText={onChangeDesc}
           multiline
-          placeholder={'Write your description here (maximum 255 characters)'}
+          style={{marginTop: 0}}
+          placeholder={t('communities:permission:text_create_scheme_desc')}
           activeOutlineColor={theme.colors.background}
           outlineColor={theme.colors.background}
           maxLength={255}
           onFocus={onFocusDesc}
           onBlur={onBlurDesc}
         />
-        <Text.Subtitle style={styles.textCount}>0/255</Text.Subtitle>
+        <Text.Subtitle style={styles.textCount}>
+          {description?.length || 0}/255
+        </Text.Subtitle>
       </View>
     </View>
   );

@@ -11,23 +11,33 @@ import {useDispatch} from 'react-redux';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useBaseHook} from '~/hooks';
 import InputSchemeInfo from '~/screens/Groups/CreatePermissionScheme/InputSchemeInfo';
-import SchemeRoles from '~/screens/Groups/CreatePermissionScheme/SchemeRoles';
+import SchemeRoles from '~/screens/Groups/components/SchemeRoles';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Text from '~/beinComponents/Text';
 import {getNewSchemeFromSystemScheme} from '~/screens/Groups/CreatePermissionScheme/helper';
-import {IPermission} from '~/interfaces/IGroup';
+import {IPermission, IScheme} from '~/interfaces/IGroup';
+import CreateSchemeHeader from '~/screens/Groups/CreatePermissionScheme/components/CreateSchemeHeader';
+import SelectSchemeRolesView from '~/screens/Groups/CreatePermissionScheme/SelectSchemeRolesView';
 
 export interface CreatePermissionSchemeProps {
-  style?: StyleProp<ViewStyle>;
+  route?: {
+    params?: {
+      isEdit?: boolean;
+      initScheme?: IScheme;
+    };
+  };
 }
 
 const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
-  style,
+  route,
 }: CreatePermissionSchemeProps) => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
+
+  const isEdit = route?.params?.isEdit;
+  const initScheme = route?.params?.initScheme;
 
   const permissionCategories = useKeySelector(
     groupsKeySelector.permission.categories,
@@ -41,10 +51,15 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     !permissionCategories?.loading &&
     !systemScheme?.loading &&
     (!permissionCategories?.data || !systemScheme?.data);
-  const creating = false;
-  const disableButtonCreate = loading || loadDataFailed;
 
   useEffect(() => {
+    if (isEdit && initScheme) {
+      dispatch(
+        groupsActions.setCreatingScheme({
+          data: initScheme,
+        }),
+      );
+    }
     if (!permissionCategories?.data && !permissionCategories?.loading) {
       dispatch(groupsActions.getPermissionCategories());
     }
@@ -57,7 +72,7 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
   }, []);
 
   useEffect(() => {
-    if (systemScheme?.data) {
+    if (systemScheme?.data && !isEdit) {
       const {newScheme, memberRoleIndex} = getNewSchemeFromSystemScheme(
         systemScheme.data,
       );
@@ -71,10 +86,6 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     dispatch(
       groupsActions.updateCreatingSchemePermission({permission, roleIndex}),
     );
-  };
-
-  const onPressCreate = () => {
-    console.log(`\x1b[36m🐣️ index onPressCreate\x1b[0m`);
   };
 
   const renderContent = () => {
@@ -91,25 +102,17 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     return (
       <ScrollView>
         <InputSchemeInfo />
-        <SchemeRoles onPressPermission={onPressPermission} />
+        <SelectSchemeRolesView onPressPermission={onPressPermission} />
       </ScrollView>
     );
   };
 
   return (
     <View style={styles.container}>
-      <Header
-        title={t('communities:permission:title_create_community_scheme')}
-        onPressButton={onPressCreate}
-        buttonText={'common:btn_create'}
-        buttonProps={{
-          loading: creating,
-          disabled: disableButtonCreate,
-          useI18n: true,
-          highEmphasis: true,
-          style: {borderWidth: 0},
-          testID: 'common.btn_create',
-        }}
+      <CreateSchemeHeader
+        loadingData={loading}
+        loadDataFailed={loadDataFailed}
+        isEdit={isEdit}
       />
       {renderContent()}
     </View>

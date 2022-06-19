@@ -16,6 +16,7 @@ export interface RoleItemProps {
   inheritedRole?: IRole;
   onLayout: (e: any) => void;
   onPressPermission?: (permission: IPermission, roleIndex: number) => void;
+  selectedRolesOnly?: boolean;
 }
 
 const RoleItem: FC<RoleItemProps> = ({
@@ -25,6 +26,7 @@ const RoleItem: FC<RoleItemProps> = ({
   inheritedRole,
   onLayout,
   onPressPermission,
+  selectedRolesOnly,
 }: RoleItemProps) => {
   const [isExpand, setIsExpand] = useState(false);
 
@@ -53,17 +55,26 @@ const RoleItem: FC<RoleItemProps> = ({
               <View
                 key={`role_${keyRoleId}_cat_${cat?.key}_subCat_${subCat?.key}`}>
                 <Text.H5 style={styles.subCatName}>{subCat?.name}</Text.H5>
-                {subCat?.permissions?.map((per: IPermission) => (
-                  <PermissionItem
-                    key={`role_${keyRoleId}_cat_${cat?.key}_subCat_${subCat?.key}_per_${per?.key}`}
-                    permission={per}
-                    role={role}
-                    roleIndex={roleIndex}
-                    onPress={onPressPermission}
-                    isChecked={role?.permissions?.includes(per?.key)}
-                    isInherited={inheritedRole?.permissions?.includes(per?.key)}
-                  />
-                ))}
+                {subCat?.permissions?.map((per: IPermission) => {
+                  const isChecked = role?.permissions?.includes(per?.key);
+                  const isInherited = inheritedRole?.permissions?.includes(
+                    per?.key,
+                  );
+                  if (selectedRolesOnly && !isChecked && !isInherited) {
+                    return null;
+                  }
+                  return (
+                    <PermissionItem
+                      key={`role_${keyRoleId}_cat_${cat?.key}_subCat_${subCat?.key}_per_${per?.key}`}
+                      permission={per}
+                      role={role}
+                      roleIndex={roleIndex}
+                      onPress={onPressPermission}
+                      isChecked={isChecked}
+                      isInherited={isInherited}
+                    />
+                  );
+                })}
               </View>
             ))}
           </View>

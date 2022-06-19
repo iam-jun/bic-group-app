@@ -3,6 +3,7 @@ import {
   IGetCommunityGroup,
   IGroupDetailEdit,
   IParamGetGroupPosts,
+  IScheme,
 } from '~/interfaces/IGroup';
 import {
   IParamGetCommunities,
@@ -13,6 +14,50 @@ import {makeHttpRequest} from '~/services/httpApiRequest';
 import appConfig from '~/configs/appConfig';
 
 export const groupsApiConfig = {
+  getPermissionCategories: (): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}permissions/categories`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
+  getSystemScheme: (): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}system-scheme`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
+  getCommunityScheme: (communityId: number | string): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/scheme`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
+  deleteCommunityScheme: (
+    communityId: number | string,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/scheme`,
+    method: 'delete',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
+  getSchemes: (communityId: number | string): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/schemes`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
+  postCreateSchemePermission: (
+    communityId: string | number,
+    schemeData: IScheme,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/scheme`,
+    method: 'post',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {
+      ...schemeData,
+    },
+  }),
   getGroupPosts: (params?: IParamGetGroupPosts): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.beinFeed.url}feeds/timeline`,
     method: 'get',
@@ -325,18 +370,6 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getPermissionCategories: (): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}permissions/categories`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
-  }),
-  getSystemScheme: (): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}system-scheme`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
-  }),
   getCommunities: (params?: IParamGetCommunities): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities`,
     method: 'get',
@@ -350,6 +383,105 @@ export const groupsApiConfig = {
 };
 
 const groupsDataHelper = {
+  getPermissionCategories: async () => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getPermissionCategories(),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getSystemScheme: async () => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getSystemScheme(),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getCommunityScheme: async (communityId: number | string) => {
+    try {
+      if (!communityId) {
+        return Promise.reject('getCommunityScheme invalid communityId');
+      }
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getCommunityScheme(communityId),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  deleteCommunityScheme: async (communityId: number | string) => {
+    try {
+      if (!communityId) {
+        return Promise.reject('deleteCommunityScheme invalid communityId');
+      }
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.deleteCommunityScheme(communityId),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getSchemes: async (communityId: number | string) => {
+    try {
+      if (!communityId) {
+        return Promise.reject('getSchemes invalid communityId');
+      }
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getSchemes(communityId),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  postCreateSchemePermission: async (
+    communityId: number | string,
+    scheme: IScheme,
+  ) => {
+    if (!communityId || !scheme) {
+      return Promise.reject('postCreateSchemePermission invalid data');
+    }
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.postCreateSchemePermission(communityId, scheme),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
   getSearchGroups: async (params?: any) => {
     try {
       const response: any = await makeHttpRequest(
@@ -853,34 +985,6 @@ const groupsDataHelper = {
         groupsApiConfig.declineAllCommunityMemberRequests(communityId),
       );
       if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  getPermissionCategories: async () => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getPermissionCategories(),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
-      }
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  getSystemScheme: async () => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getSystemScheme(),
-      );
-      if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);

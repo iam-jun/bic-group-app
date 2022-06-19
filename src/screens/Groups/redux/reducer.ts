@@ -16,9 +16,22 @@ export const groupInitState = {
       data: undefined,
       loading: false,
     },
+    communityScheme: {
+      loading: false,
+      deleting: false,
+      data: undefined,
+    },
+    schemes: {
+      loading: false,
+      data: {
+        communityScheme: undefined,
+        groupSchemes: undefined,
+      },
+    },
     creatingScheme: {
       data: undefined,
       memberRoleIndex: 0,
+      creating: false,
     },
   },
   isPrivacyModalOpen: false,
@@ -203,6 +216,22 @@ function groupsReducer(state = groupInitState, action: any = {}) {
             : {},
         },
       };
+    case groupsTypes.SET_CREATING_SCHEME_DATA:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          creatingScheme: {
+            ...state.permissionScheme.creatingScheme,
+            data: payload
+              ? Object.assign(
+                  state.permissionScheme.creatingScheme.data,
+                  payload,
+                )
+              : {},
+          },
+        },
+      };
     case groupsTypes.UPDATE_CREATING_SCHEME_PERMISSION: {
       const {permission, roleIndex} = payload || {};
       // @ts-ignore
@@ -228,6 +257,22 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
     }
+    case groupsTypes.SET_COMMUNITY_SCHEME:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          communityScheme: payload,
+        },
+      };
+    case groupsTypes.SET_SCHEMES:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          schemes: payload,
+        },
+      };
 
     case groupsTypes.SET_PRIVACY_MODAL_OPEN:
       return {
