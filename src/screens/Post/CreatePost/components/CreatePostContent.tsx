@@ -25,18 +25,17 @@ import PostPhotoPreview from '../../components/PostPhotoPreview';
 import postActions from '../../redux/actions';
 import {CONTENT_MIN_HEIGHT, MIN_INPUT_HEIGHT} from '../constanst';
 import {calculateInputHeight, isAndroidAnimated} from '../helper';
-import useCreatePost from '../hooks/useCreatePost';
 import ToastAutoSave from './ToastAutoSave';
 import FilesView from '../../components/FilesView';
 import {IGetFile} from '~/services/fileUploader';
 
 interface Props {
   groupIds: any[];
-  screenParams: any;
+  useCreatePostData: any;
   inputRef: any;
 }
 
-const Content = ({groupIds, screenParams, inputRef}: Props) => {
+const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -54,10 +53,7 @@ const Content = ({groupIds, screenParams, inputRef}: Props) => {
     handleChangeContent,
     handleUploadVideoSuccess,
     handleUploadFileSuccess,
-  } = useCreatePost({
-    screenParams,
-    mentionInputRef,
-  });
+  } = useCreatePostData;
 
   const {loading, data} = createPostData || {};
   const {content} = data || {};

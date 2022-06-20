@@ -41,6 +41,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const styles = themeStyles(theme);
   const refTextInput = useRef<any>();
 
+  const useCreatePostData = useCreatePost({
+    screenParams,
+    mentionInputRef,
+  });
   const {
     refIsRefresh,
     sPostData,
@@ -55,10 +59,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     isEditPostHasChange,
     handlePressPost,
     isNewsfeed,
-  } = useCreatePost({
-    screenParams,
-    mentionInputRef,
-  });
+  } = useCreatePostData;
 
   const {
     loading,
@@ -192,8 +193,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         </View>
         <CreatePostContent
           groupIds={groupIds}
-          screenParams={screenParams}
           inputRef={refTextInput}
+          useCreatePostData={useCreatePostData}
         />
         <View style={styles.setting}>
           <Button.Secondary

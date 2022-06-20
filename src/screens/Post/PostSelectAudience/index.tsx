@@ -396,7 +396,6 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     }
     return <NoSearchResult />;
   };
-  console.log('insets?.top', insets?.bottom);
 
   return (
     <ScreenWrapper isFullView style={styles.container}>

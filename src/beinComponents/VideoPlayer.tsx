@@ -17,11 +17,16 @@ import {orderBy} from 'lodash';
 export interface VideoPlayerProps {
   style?: StyleProp<ViewStyle>;
   data: any;
+  postId?: string;
 }
 
 const PLAYER_HEIGHT = scaleSize(232);
 
-const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
+const VideoPlayer: FC<VideoPlayerProps> = ({
+  style,
+  data,
+  postId,
+}: VideoPlayerProps) => {
   const theme = useTheme() as ITheme;
   const {dimension} = theme;
   const styles = createStyle(theme);
@@ -44,16 +49,19 @@ const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
   };
 
   useEffect(() => {
-    if (video.current) {
-      try {
-        video.current?.loadAsync?.({
-          uri: url,
-          overrideFileExtensionAndroid: 'm3u8',
-        });
-      } catch (error) {
-        console.log('>>>>>>>loadAsync error>>>>>>>', error);
+    const loadAsyncVideo = async () => {
+      if (video.current) {
+        try {
+          await video.current?.loadAsync?.({
+            uri: url,
+            overrideFileExtensionAndroid: 'm3u8',
+          });
+        } catch (error) {
+          console.log('>>>>>>>loadAsync error>>>>>>>', error);
+        }
       }
-    }
+    };
+    loadAsyncVideo();
   }, []);
 
   useEffect(() => {
@@ -86,11 +94,15 @@ const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
     <View style={[styles.container]}>
       <Video
         ref={video}
+        key={`video_item_${postId}`}
         // source={{
         //   uri: url,
         //   overrideFileExtensionAndroid: 'm3u8',
         // }}
-        posterSource={{uri: posterUrl}}
+        usePoster={true}
+        posterSource={{
+          uri: posterUrl,
+        }}
         style={styles.player}
         useNativeControls
         resizeMode={ResizeMode.CONTAIN}

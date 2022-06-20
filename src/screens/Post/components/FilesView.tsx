@@ -31,7 +31,10 @@ const FilesView = ({files, onRemoveFile, ...props}: Props) => {
             {...props}
           />
           {index < files.length - 1 && (
-            <ViewSpacing height={theme.spacing.margin.small} />
+            <ViewSpacing
+              key={`create-post-file-spacing-${index}`}
+              height={theme.spacing.margin.small}
+            />
           )}
         </>
       ))}
