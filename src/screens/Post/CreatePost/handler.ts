@@ -9,8 +9,6 @@ export const handleBack = (
   isEditPost: boolean | undefined,
   isEditPostHasChange: boolean | undefined,
   hasPostId: boolean | undefined,
-  videoUploading: boolean | undefined,
-  video: any,
   theme: ITheme,
   rootNavigation: any,
   dispatch: any,
@@ -19,34 +17,35 @@ export const handleBack = (
 ) => {
   const {colors, spacing} = theme;
   Keyboard.dismiss();
-  if (isEditPost) {
-    if (isEditPostHasChange) {
-      dispatch(
-        modalActions.showAlert({
-          title: i18next.t('post:create_post:title_discard_changes'),
-          content: i18next.t('post:alert_content_back_edit_post'),
-          showCloseButton: true,
-          cancelBtn: true,
-          cancelLabel: i18next.t('common:btn_discard'),
-          confirmLabel: i18next.t('post:create_post:btn_keep_edit'),
-          onDismiss: () => rootNavigation.goBack(),
-        }),
-      );
-      return;
-    }
+  if (isEditPost && isEditPostHasChange) {
+    dispatch(
+      modalActions.showAlert({
+        title: i18next.t('post:create_post:title_discard_changes'),
+        content: i18next.t('post:alert_content_back_edit_post'),
+        showCloseButton: true,
+        cancelBtn: true,
+        cancelLabel: i18next.t('common:btn_discard'),
+        confirmLabel: i18next.t('post:create_post:btn_keep_edit'),
+        onDismiss: () => rootNavigation.goBack(),
+      }),
+    );
+    return;
   } else if (hasPostId) {
-    if (videoUploading) {
-      FileUploader.getInstance().cancel({file: video} as any);
+    const hasUploadingProcess =
+      FileUploader.getInstance().hasUploadingProcess();
+
+    if (hasUploadingProcess) {
       dispatch(
         modalActions.showAlert({
           title: i18next.t('upload:title_leave_uploading'),
-          content: i18next.t('upload:text_leave_uploading', {
-            file_type: i18next.t('file_type:video'),
-          }),
+          content: i18next.t('upload:text_leave_uploading'),
           cancelBtn: true,
           cancelLabel: i18next.t('common:btn_leave'),
           confirmLabel: i18next.t('common:btn_stay_on_this_page'),
-          onDismiss: () => rootNavigation.goBack(),
+          onDismiss: () => {
+            FileUploader.getInstance().cancelAllFiles();
+            rootNavigation.goBack();
+          },
         }),
       );
       return;

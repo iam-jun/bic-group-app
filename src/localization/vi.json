@@ -747,7 +747,7 @@
     "text_delete_file": "Bạn có chắc muốn xoá {{file_type}}?",
     "text_upload_error": "Không thể tải lên {{file_type}} này",
     "title_leave_uploading": "Đóng màn hình này?",
-    "text_leave_uploading": "Bạn có chắc muốn đóng màn hình này? Video bạn đang tải lên sẽ bị huỷ.",
+    "text_leave_uploading": "Bạn có chắc muốn đóng màn hình này? Quá trình tải lên của bạn sẽ bị huỷ.",
     "text_video_over_size": "Video của bạn phải nhỏ hơn 300MB",
     "text_file_over_size": "Tổng kích thước các tệp của bạn lớn hơn 25MB",
     "text_file_over_length": "Bạn không thể tải lên hơn {{max_files}} tệp",

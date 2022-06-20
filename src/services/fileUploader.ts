@@ -100,11 +100,18 @@ export default class FileUploader {
       if (id) {
         return {id, error: ''};
       } else {
-        return {
-          error:
-            this.getResponseErrMsg(response) ||
-            'upload:text_create_file_id_response_failed',
-        };
+        // cancel request
+        if (response.code !== 600) {
+          return {
+            error:
+              this.getResponseErrMsg(response) ||
+              'upload:text_create_file_id_response_failed',
+          };
+        } else {
+          return {
+            error: 'canceled',
+          };
+        }
       }
     } catch (e) {
       return {error: 'upload:text_create_file_id_request_failed'};
@@ -161,13 +168,20 @@ export default class FileUploader {
 
         return {file: result, error: ''};
       } else {
-        return {
-          error:
-            this.getResponseErrMsg(response) ||
-            i18next.t('upload:text_upload_response_failed', {
-              file_type: i18next.t('file_type:file'),
-            }),
-        };
+        // cancel request
+        if (response.code !== 600) {
+          return {
+            error:
+              this.getResponseErrMsg(response) ||
+              i18next.t('upload:text_upload_response_failed', {
+                file_type: i18next.t('file_type:file'),
+              }),
+          };
+        } else {
+          return {
+            error: 'canceled',
+          };
+        }
       }
     } catch (e) {
       return {
@@ -196,6 +210,10 @@ export default class FileUploader {
       if (createIdResponse?.id) {
         fileId = createIdResponse.id;
       } else {
+        // cancel request do nothing
+        if (createIdResponse?.error === 'canceled') {
+          return Promise.resolve(null);
+        }
         this.handleError(file, createIdResponse?.error, onError);
         return Promise.reject({meta: {message: createIdResponse?.error || ''}});
       }
@@ -216,6 +234,11 @@ export default class FileUploader {
       if (uploadResponse?.file) {
         fileUploaded = uploadResponse.file;
       } else {
+        // cancel request do nothing
+        if (uploadResponse?.error === 'canceled') {
+          return Promise.resolve(null);
+        }
+
         this.handleError(file, uploadResponse?.error, onError);
         return Promise.reject({meta: {message: uploadResponse?.error || ''}});
       }
@@ -271,13 +294,26 @@ export default class FileUploader {
     return this.startUpload(file, uploadType, onSuccess, onProgress, onError);
   }
 
+  hasUploadingProcess() {
+    let count = 0;
+    Object.keys(this.fileUploading).forEach(key => {
+      if (this.fileUploading[key]) {
+        count++;
+      }
+    });
+    return count > 0;
+  }
+
   delete() {
     console.log(`\x1b[36m🐣️ fileUploader delete\x1b[0m`);
   }
 
-  cancel(params: ICancelUploadParam) {
-    console.log(`\x1b[36m🐣️ videoUploader cancel\x1b[0m`);
-    const {file} = params || {};
+  cancelAllFiles() {
+    Object.keys(this.fileUploading).forEach(key => this.cancel({name: key}));
+  }
+
+  cancel(file: any) {
+    console.log(`\x1b[36m🐣️ fileUploader cancel\x1b[0m`);
     const filename = file?.name || file?.filename || file?.fileName;
     this.fileAbortController?.[filename]?.abort?.();
   }
