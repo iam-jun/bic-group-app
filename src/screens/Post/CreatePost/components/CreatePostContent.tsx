@@ -28,6 +28,7 @@ import {calculateInputHeight, isAndroidAnimated} from '../helper';
 import ToastAutoSave from './ToastAutoSave';
 import FilesView from '../../components/FilesView';
 import {IGetFile} from '~/services/fileUploader';
+import VideoPlayer from '~/beinComponents/VideoPlayer';
 
 interface Props {
   groupIds: any[];
@@ -45,6 +46,7 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
   const refTextInput = inputRef;
 
   const {
+    sPostData,
     isShowToastAutoSave,
     createPostData,
     images,
@@ -196,7 +198,9 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
                   rootNavigation.navigate(homeStack.postSelectImage)
                 }
               />
-              {video && (
+              {video && video?.thumbnails?.length > 0 ? (
+                <VideoPlayer data={video} postId={sPostData?.id || ''} />
+              ) : !!video ? (
                 <UploadingFile
                   uploadType={uploadTypes.postVideo}
                   file={video as IFilePicked}
@@ -204,7 +208,7 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
                   onError={() => onUploadError('video')}
                   onSuccess={handleUploadVideoSuccess}
                 />
-              )}
+              ) : null}
               <FilesView
                 files={files}
                 uploadType={uploadTypes.postFile}

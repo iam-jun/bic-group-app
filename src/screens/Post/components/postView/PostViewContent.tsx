@@ -120,14 +120,14 @@ const PostViewContent: FC<PostViewContentProps> = ({
             uploadType={'postImage'}
             enableGalleryModal
           />
-          {isDraft ? (
+          {!isDraft && videos?.[0]?.thumbnails?.length > 0 ? (
+            <VideoPlayer data={videos?.[0]} postId={postId} />
+          ) : (
             <UploadingFile
               uploadType={uploadTypes.postVideo}
               file={videos?.[0]}
               disableClose
             />
-          ) : (
-            <VideoPlayer data={videos?.[0]} postId={postId} />
           )}
 
           <FilesView files={files} disableClose showDownload />

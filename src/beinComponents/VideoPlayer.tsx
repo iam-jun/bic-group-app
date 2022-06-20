@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -6,6 +6,7 @@ import {
   ViewStyle,
   DeviceEventEmitter,
   PixelRatio,
+  TouchableOpacity,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {Video, ResizeMode} from 'expo-av';
@@ -13,6 +14,8 @@ import {Video, ResizeMode} from 'expo-av';
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
 import {orderBy} from 'lodash';
+import Icon from './Icon';
+import LoadingIndicator from './LoadingIndicator';
 
 export interface VideoPlayerProps {
   style?: StyleProp<ViewStyle>;
@@ -28,10 +31,12 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   postId,
 }: VideoPlayerProps) => {
   const theme = useTheme() as ITheme;
-  const {dimension} = theme;
+  const {dimension, colors} = theme;
   const styles = createStyle(theme);
 
-  const video = React.useRef(null);
+  const video = React.useRef();
+  const [isPlaying, setPlaying] = useState(false);
+  const [loading, setLoading] = useState(false);
   const {url, id, thumbnails} = data || {};
 
   const getThumbnailImageLink = () => {
@@ -48,28 +53,29 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
     return '';
   };
 
-  useEffect(() => {
-    const loadAsyncVideo = async () => {
-      if (video.current) {
-        try {
-          await video.current?.loadAsync?.({
-            uri: url,
-            overrideFileExtensionAndroid: 'm3u8',
-          });
-        } catch (error) {
-          console.log('>>>>>>>loadAsync error>>>>>>>', error);
-        }
+  const loadAsyncVideo = async () => {
+    if (video.current && !!url) {
+      setLoading(true);
+      try {
+        await video.current?.loadAsync?.({
+          uri: url,
+          overrideFileExtensionAndroid: 'm3u8',
+        });
+        video.current?.playAsync();
+        setPlaying(true);
+      } catch (error) {
+        setLoading(false);
+        console.log('>>>>>>>loadAsync error>>>>>>>', error);
       }
-    };
-    loadAsyncVideo();
-  }, []);
+    }
+  };
 
   useEffect(() => {
     const videoListener = DeviceEventEmitter.addListener(
       'playVideo',
       (videoId: any) => {
-        if (!!videoId && videoId !== id) {
-          video.current?.setStatusAsync?.({shouldPlay: false});
+        if (!!videoId && videoId !== id && isPlaying) {
+          video.current?.pauseAsync?.();
         }
       },
     );
@@ -80,11 +86,12 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
 
   const handlePlaybackStatusUpdate = (status: any) => {
     if (status?.isPlaying) {
+      setLoading(false);
       DeviceEventEmitter.emit('playVideo', id);
     }
   };
 
-  if (!url) {
+  if (!url && thumbnails?.length < 1) {
     return null;
   }
 
@@ -99,10 +106,8 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         //   uri: url,
         //   overrideFileExtensionAndroid: 'm3u8',
         // }}
-        usePoster={true}
-        posterSource={{
-          uri: posterUrl,
-        }}
+        usePoster={!isPlaying}
+        posterSource={{uri: posterUrl}}
         style={styles.player}
         useNativeControls
         resizeMode={ResizeMode.CONTAIN}
@@ -112,6 +117,18 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
           console.warn('video failed', error);
         }}
       />
+
+      {loading ? (
+        <LoadingIndicator size={60} color={colors.bgDisable} />
+      ) : !isPlaying ? (
+        <TouchableOpacity
+          onPress={() => {
+            loadAsyncVideo();
+          }}
+          style={styles.buttonPlay}>
+          <Icon size={60} tintColor={colors.bgDisable} icon="PlayCircle" />
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };
@@ -130,6 +147,15 @@ const createStyle = (theme: ITheme) => {
       position: 'absolute',
       width: '100%',
       height: PLAYER_HEIGHT,
+    },
+    thumbnail: {
+      width: '100%',
+      height: PLAYER_HEIGHT,
+    },
+    buttonPlay: {
+      position: 'absolute',
+      zIndex: 2,
+      alignSelf: 'center',
     },
   });
 };
