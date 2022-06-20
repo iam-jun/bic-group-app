@@ -103,7 +103,9 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <View style={[styles.flex1, styles.row]}>
-          <Text.H5 useI18n>communities:permission:title_system_scheme</Text.H5>
+          <Text.H5 useI18n>
+            communities:permission:title_community_scheme
+          </Text.H5>
           {!loading && communityScheme && (
             <TextBadge useI18n value={'common:text_activated'} />
           )}
@@ -111,7 +113,7 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
         <View style={styles.buttonContainer}>{renderButtons()}</View>
       </View>
       <Text.Subtitle useI18n>
-        communities:permission:text_desc_system_scheme
+        communities:permission:text_desc_community_scheme
       </Text.Subtitle>
       {!!name && (
         <Text.HeadingSB style={styles.textName}>{name}</Text.HeadingSB>

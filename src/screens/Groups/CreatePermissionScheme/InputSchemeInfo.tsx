@@ -101,8 +101,9 @@ const createStyle = (theme: ITheme) => {
       paddingHorizontal: spacing.padding.large,
     },
     textTitle: {marginTop: spacing.margin.large},
-    textInputName: {marginBottom: spacing.margin.small},
+    textInputName: {marginBottom: spacing.margin.small, marginTop: 0},
     textInput: {
+      marginTop: spacing.margin.small,
       borderRadius: spacing.borderRadius.small,
       paddingBottom: spacing.padding.extraLarge,
       height: 120, //fixed height to avoid callback layout another components below this in scrollview
