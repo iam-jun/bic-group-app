@@ -147,14 +147,19 @@ export default class FileUploader {
       );
       if (response?.data?.data) {
         const data = response?.data?.data;
-        const result = {
+        const result: any = {
           id: data?.id,
           fileName: data?.properties?.name,
           size: data?.properties?.size,
           url: data?.originUrl,
           type: data?.properties?.mimeType,
         };
-        return {files: result, error: ''};
+
+        if (uploadType.includes('video')) {
+          result.thumbnails = data?.thumbnails;
+        }
+
+        return {file: result, error: ''};
       } else {
         return {
           error:
@@ -208,8 +213,8 @@ export default class FileUploader {
         onSuccess,
         onProgress,
       );
-      if (uploadResponse?.files) {
-        fileUploaded = uploadResponse.files;
+      if (uploadResponse?.file) {
+        fileUploaded = uploadResponse.file;
       } else {
         this.handleError(file, uploadResponse?.error, onError);
         return Promise.reject({meta: {message: uploadResponse?.error || ''}});
@@ -223,13 +228,11 @@ export default class FileUploader {
 
     //upload file success
     this.fileUploaded[file.name] = {
-      id: fileUploaded?.id,
-      url: fileUploaded?.url,
       uploadType,
       uploading: false,
-      fileName: file.name,
-      size: file?.size,
       result: fileUploaded,
+      ...fileUploaded,
+      ...file,
     };
     onSuccess?.(this.fileUploaded[file.name]);
     this.callbackSuccess?.[file.name]?.(this.fileUploaded[file.name]);
@@ -259,7 +262,7 @@ export default class FileUploader {
     //@ts-ignore
     const maxSize = AppConfig.maxFileSize[type];
 
-    if (file.size > maxSize) {
+    if (!!maxSize && file.size > maxSize) {
       const error = i18next.t(`upload:text_${type}_over_size`);
       console.log(`\x1b[31m🐣️ FileUploader upload error: ${error}\x1b[0m`);
       onError?.(error);

@@ -18,6 +18,7 @@ import useCreatePost from '~/screens/Post/CreatePost/hooks/useCreatePost';
 import postActions from '~/screens/Post/redux/actions';
 import {ITheme} from '~/theme/interfaces';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
+import {getTotalFileSize} from '../redux/selectors';
 import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
 import {handleBack} from './handler';
@@ -69,6 +70,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     count,
   } = createPostData || {};
   const {content} = data || {};
+  const {totalFiles, totalSize} = getTotalFileSize();
 
   const groupIds: any[] = [];
   chosenAudiences.map((selected: IAudience) => {
@@ -94,7 +96,12 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     imageDisabled = true;
   }
 
-  if (files.length === appConfig.maxFiles) fileDisabled = true;
+  if (
+    totalFiles === appConfig.maxFiles ||
+    totalSize > appConfig.totalFileSize
+  ) {
+    fileDisabled = true;
+  }
 
   const handleBackPress = () => {
     toolbarRef?.current?.goBack?.();

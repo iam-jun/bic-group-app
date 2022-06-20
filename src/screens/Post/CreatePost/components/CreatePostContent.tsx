@@ -29,6 +29,8 @@ import ToastAutoSave from './ToastAutoSave';
 import FilesView from '../../components/FilesView';
 import {IGetFile} from '~/services/fileUploader';
 import VideoPlayer from '~/beinComponents/VideoPlayer';
+import {getTotalFileSize} from '../../redux/selectors';
+import appConfig from '~/configs/appConfig';
 
 interface Props {
   groupIds: any[];
@@ -73,6 +75,7 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
 
   const {isOpen: isKeyboardOpen} = useKeyboardStatus();
   const isAnimated = isAndroidAnimated();
+  const {totalSize} = getTotalFileSize();
 
   useEffect(() => {
     if (content !== contentInput && isAnimated) {
@@ -148,6 +151,8 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
     setInputHeight(height);
   };
 
+  const remainingSize = appConfig.totalFileSize - totalSize;
+
   return (
     <>
       {isAnimated && (
@@ -212,6 +217,7 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
               <FilesView
                 files={files}
                 uploadType={uploadTypes.postFile}
+                remainingSize={remainingSize}
                 onRemoveFile={onRemoveFile}
                 onError={() => onUploadError('file')}
                 onSuccess={handleUploadFileSuccess}
