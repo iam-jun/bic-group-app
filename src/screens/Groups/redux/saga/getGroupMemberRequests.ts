@@ -17,7 +17,7 @@ export default function* getGroupMemberRequests({
     const {groups} = yield select();
 
     const {groupId, isRefreshing, params} = payload;
-    const {data, canLoadMore, items} = groups.pendingMemberRequests || {};
+    const {data, canLoadMore, items} = groups.groupMemberRequests || {};
 
     yield put(
       groupsActions.setGroupMemberRequests({

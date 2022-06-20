@@ -28,7 +28,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
   const timeOutRef = useRef<any>();
 
   const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group) || {};
-  const {total} = useKeySelector(groupsKeySelector.pendingMemberRequests);
+  const {total} = useKeySelector(groupsKeySelector.groupMemberRequests);
 
   const navigateToGroupMembers = () => {
     dispatch(clearToastMessage());
@@ -91,12 +91,12 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
   const onPressUndo = () => {
     timeOutRef?.current && clearTimeout(timeOutRef?.current);
     dispatch(clearToastMessage());
-    dispatch(groupsActions.undoDeclineMemberRequests());
+    dispatch(groupsActions.undoDeclinedGroupMemberRequests());
   };
 
   const doDeclineAll = () => {
-    dispatch(groupsActions.storeUndoData());
-    dispatch(groupsActions.resetMemberRequests());
+    dispatch(groupsActions.storeUndoGroupMemberRequests());
+    dispatch(groupsActions.resetGroupMemberRequests());
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_declining_all')}`,

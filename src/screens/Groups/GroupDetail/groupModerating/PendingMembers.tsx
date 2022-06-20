@@ -29,10 +29,10 @@ const PendingMembers = (props: any) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
-  const pendingMemberRequests = useKeySelector(
-    groupsKeySelector.pendingMemberRequests,
+  const groupMemberRequests = useKeySelector(
+    groupsKeySelector.groupMemberRequests,
   );
-  const {data, loading, canLoadMore, total} = pendingMemberRequests;
+  const {data, loading, canLoadMore, total} = groupMemberRequests;
 
   const getData = (isRefreshing?: boolean) => {
     dispatch(groupsActions.getGroupMemberRequests({groupId, isRefreshing}));

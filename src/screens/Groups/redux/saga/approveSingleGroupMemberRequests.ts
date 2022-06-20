@@ -29,7 +29,7 @@ export default function* approveSingleGroupMemberRequest({
 
     // Update data state
     const {groups} = yield select();
-    const {total, data, items} = groups.pendingMemberRequests;
+    const {total, data, items} = groups.groupMemberRequests;
     const requestItems = {...items};
     delete requestItems[requestId];
     yield put(

@@ -98,21 +98,24 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.SET_GROUP_ADMIN, setGroupAdmin);
   yield takeLatest(groupsTypes.REMOVE_GROUP_ADMIN, removeGroupAdmin);
 
-  yield takeLatest(groupsTypes.GET_MEMBER_REQUESTS, getGroupMemberRequests);
   yield takeLatest(
-    groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST,
+    groupsTypes.GET_GROUP_MEMBER_REQUESTS,
+    getGroupMemberRequests,
+  );
+  yield takeLatest(
+    groupsTypes.APPROVE_SINGLE_GROUP_MEMBER_REQUEST,
     approveSingleGroupMemberRequest,
   );
   yield takeLatest(
-    groupsTypes.APPROVE_ALL_MEMBER_REQUESTS,
+    groupsTypes.APPROVE_ALL_GROUP_MEMBER_REQUESTS,
     approveAllGroupMemberRequests,
   );
   yield takeLatest(
-    groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST,
+    groupsTypes.DECLINE_SINGLE_GROUP_MEMBER_REQUEST,
     declineSingleGroupMemberRequest,
   );
   yield takeLatest(
-    groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
+    groupsTypes.DECLINE_ALL_GROUP_MEMBER_REQUESTS,
     declineAllGroupMemberRequests,
   );
   yield takeLatest(groupsTypes.GET_YOUR_GROUPS_SEARCH, getYourGroupsSearch);

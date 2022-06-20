@@ -29,12 +29,12 @@ const GroupAdministration = (props: any) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {name, icon} = useKeySelector(groupsKeySelector.groupDetail.group);
-  const {total} = useKeySelector(groupsKeySelector.pendingMemberRequests);
+  const {total} = useKeySelector(groupsKeySelector.groupMemberRequests);
 
   useEffect(() => {
     dispatch(groupsActions.getGroupMemberRequests({groupId}));
     return () => {
-      dispatch(groupsActions.resetMemberRequests());
+      dispatch(groupsActions.resetGroupMemberRequests());
     };
   }, [groupId]);
 
