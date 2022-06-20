@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, Fragment} from 'react';
+import React, {useState, useEffect, useRef, Fragment, useCallback} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -64,7 +64,7 @@ const CommunityDetail = (props: any) => {
     getCommunityDetail();
   };
 
-  const getPosts = () => {
+  const getPosts = useCallback(() => {
     /* Avoid getting group posts of the nonexisting group, 
     which will lead to endless fetching group posts in 
     httpApiRequest > makeGetStreamRequest */
@@ -74,13 +74,12 @@ const CommunityDetail = (props: any) => {
       privacy === groupPrivacy.open;
 
     if (isGettingInfoDetail || isEmpty(infoDetail) || !privilegeToFetchPost) {
-      console.log('[getPosts] stop fetching');
       return;
     }
 
     dispatch(actions.clearGroupPosts());
     dispatch(actions.getGroupPosts(group_id));
-  };
+  }, [group_id, isMember, privacy, isGettingInfoDetail, infoDetail]);
 
   useEffect(() => {
     getCommunityDetail(true);
@@ -162,16 +161,16 @@ const CommunityDetail = (props: any) => {
     openLink(link);
   };
 
-  const onButtonLayout = (e: any) => {
+  const onButtonLayout = useCallback((e: any) => {
     // to get the height from the start of the cover image to the end of button
     setButtonHeight(e.nativeEvent.layout.height);
-  };
+  }, []);
 
-  const onScroll = (e: any) => {
+  const onScroll = useCallback((e: any) => {
     const offsetY = e?.nativeEvent?.contentOffset?.y;
     headerRef?.current?.setScrollY?.(offsetY);
     buttonShow.value = offsetY;
-  };
+  }, []);
 
   const buttonStyle = useAnimatedStyle(
     () => ({
