@@ -62,7 +62,7 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
         placeholder={t('communities:permission:text_create_scheme_name')}
         activeOutlineColor={theme.colors.primary6}
         outlineColor={theme.colors.borderCard}
-        maxLength={32}
+        maxLength={64}
       />
       <Text.H5 style={styles.textTitle}>Scheme description:</Text.H5>
       <View
