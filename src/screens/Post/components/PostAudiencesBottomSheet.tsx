@@ -42,10 +42,16 @@ const PostAudiencesBottomSheet = () => {
     });
   };
 
+  const navigateToCommunity = (communityId: number) => {
+    rootNavigation.navigate(mainStack.communityDetail, {
+      communityId,
+    });
+  };
+
   const onPressItem = (item: any) => {
-    const {id, type} = item || {};
-    if (type === 'user') {
-      rootNavigation.navigate(mainStack.userProfile, {userId: id});
+    const {id, communityId} = item || {};
+    if (communityId) {
+      navigateToCommunity(communityId);
     } else {
       navigateToGroup(id);
     }
