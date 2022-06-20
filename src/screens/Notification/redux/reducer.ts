@@ -83,16 +83,16 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
           payload.id,
           ...newNotifications.tabMention.data,
         ];
-      } else {
-        newNotifications.tabAll.data = [
-          payload.id,
-          ...newNotifications.tabAll.data,
-        ];
-        newNotifications.tabUnread.data = [
-          payload.id,
-          ...newNotifications.tabUnread.data,
-        ];
       }
+      newNotifications.tabAll.data = [
+        payload.id,
+        ...newNotifications.tabAll.data,
+      ];
+      newNotifications.tabUnread.data = [
+        payload.id,
+        ...newNotifications.tabUnread.data,
+      ];
+
       const newNotification: any = {...state.notificationList};
       newNotification[payload.id] = {...payload};
 
