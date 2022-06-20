@@ -1,4 +1,4 @@
-import {throttle} from 'lodash';
+import {isEmpty, throttle} from 'lodash';
 import React, {useImperativeHandle, useRef, useState} from 'react';
 import {
   Animated,
@@ -23,7 +23,6 @@ import appConfig from '~/configs/appConfig';
 import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
-import {IToastMessage} from '~/interfaces/common';
 import {ICreatePostImage} from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import postActions from '~/screens/Post/redux/actions';
@@ -32,13 +31,14 @@ import {showHideToastMessage} from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {getChatDomain} from '~/utils/link';
 import {checkPermission} from '~/utils/permission';
+import {clearExistingFiles, validateFilesPicker} from '../CreatePost/helper';
+import {getTotalFileSize} from '../redux/selectors';
 import ReviewMarkdown from './ReviewMarkdown';
 
 export interface PostToolbarProps {
   toolbarRef?: any;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
-  filesLength: number;
   disabled?: boolean;
   imageDisabled?: boolean;
   videoDisabled?: boolean;
@@ -49,7 +49,6 @@ export interface PostToolbarProps {
 const PostToolbar = ({
   toolbarRef,
   style,
-  filesLength,
   containerStyle,
   imageDisabled,
   videoDisabled,
@@ -71,6 +70,9 @@ const PostToolbar = ({
     postKeySelector.createPost.images,
   );
   const content = useKeySelector(postKeySelector.createPost.content);
+  const selectedFiles = useKeySelector(postKeySelector.createPost.files);
+  const {totalFiles, totalSize} = getTotalFileSize();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = throttle((e?: any) => {
@@ -171,19 +173,12 @@ const PostToolbar = ({
   const onPressAddFile = async () => {
     try {
       const files: any = await DocumentPicker.openPickerMultiple();
+      const valid = validateFilesPicker(files, totalFiles, totalSize, dispatch);
+      if (!valid) return;
 
-      if (files.length + filesLength > appConfig.maxFiles) {
-        const toastMessage: IToastMessage = {
-          content: t('upload:text_file_over_length', {
-            max_files: appConfig.maxFiles,
-          }),
-          props: {
-            type: 'error',
-          },
-        };
-        dispatch(showHideToastMessage(toastMessage));
-        return;
-      }
+      const newFiles = clearExistingFiles(selectedFiles, files);
+      if (isEmpty(newFiles)) return;
+
       dispatch(postActions.addCreatePostFiles(files));
     } catch (e) {
       console.log(

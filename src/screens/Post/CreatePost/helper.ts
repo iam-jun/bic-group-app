@@ -1,8 +1,11 @@
 import {Platform} from 'react-native';
 import deviceInfoModule from 'react-native-device-info';
-import {IFilePicked} from '~/interfaces/common';
+import appConfig from '~/configs/appConfig';
+import {IFilePicked, IToastMessage} from '~/interfaces/common';
 import {IActivityDataFile, IActivityDataImage} from '~/interfaces/IPost';
-import FileUploader from '~/services/fileUploader';
+import i18n from '~/localization';
+import FileUploader, {IGetFile} from '~/services/fileUploader';
+import {showHideToastMessage} from '~/store/modal/actions';
 import {
   CONTENT_INSET_HEIGHT,
   CONTENT_MIN_HEIGHT,
@@ -76,7 +79,6 @@ export const validateVideo = (
       video = result;
     }
   }
-  console.log('validateVideo videoUploading', videoUploading);
 
   return {video, videoError, videoUploading};
 };
@@ -131,13 +133,10 @@ export const validateFiles = (selectingFiles: IFilePicked[], t: any) => {
         id: item?.id,
         name: item?.name || item?.fileName || '',
         origin_name: item?.name,
-        size: item?.size,
-        type: item?.type,
       });
     } else {
       const {url, uploading, result} =
         FileUploader.getInstance().getFile(item.name) || {};
-      // console.log('validateFiles upload', url, uploading, result);
       if (uploading) {
         fileUploading = true;
         fileError = t('post:error_wait_uploading');
@@ -146,12 +145,72 @@ export const validateFiles = (selectingFiles: IFilePicked[], t: any) => {
       }
       files.push({
         ...result,
-        name: item.name,
+        ...item,
         origin_name: item.name,
-        size: item?.size,
-        type: item?.type,
       });
     }
   });
   return {fileError, files, fileUploading};
+};
+
+export const validateFilesPicker = (
+  files: IGetFile[],
+  totalFiles: number,
+  totalSize: number,
+  dispatch: any,
+): boolean => {
+  if (files.length + totalFiles > appConfig.maxFiles) {
+    const toastMessage: IToastMessage = {
+      content: i18n.t('upload:text_file_over_length', {
+        max_files: appConfig.maxFiles,
+      }),
+      props: {
+        type: 'error',
+      },
+    };
+    dispatch(showHideToastMessage(toastMessage));
+    return false;
+  }
+
+  let size = 0;
+  files.forEach((file: IGetFile) => {
+    size += file.size;
+  });
+
+  if (size + totalSize > appConfig.totalFileSize) {
+    const toastMessage: IToastMessage = {
+      content: i18n.t('upload:text_file_over_size', {
+        max_files: appConfig.maxFiles,
+      }),
+      props: {
+        type: 'error',
+      },
+    };
+    dispatch(showHideToastMessage(toastMessage));
+    return false;
+  }
+
+  return true;
+};
+
+export const clearExistingFiles = (
+  files: IFilePicked[],
+  newFiles: IFilePicked[],
+): IFilePicked[] => {
+  const fileResult: IFilePicked[] = [];
+  newFiles.forEach(newFile => {
+    let isExisting = false;
+
+    files.some(file => {
+      if (newFile.name === file.name && newFile.size === file.size) {
+        isExisting = true;
+        return;
+      }
+    });
+
+    if (!isExisting) {
+      fileResult.push(newFile);
+    }
+  });
+  return fileResult;
 };
