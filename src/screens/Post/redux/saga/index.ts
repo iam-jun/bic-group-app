@@ -96,7 +96,7 @@ export default function* postSaga() {
     postTypes.GET_CREATE_POST_INIT_AUDIENCES,
     getCreatePostInitAudiences,
   );
-  yield takeLatest(postTypes.GET_SEEN_PEOPLE_LIST_BOTTOM_SHEET, getSeenPost);
+  yield takeLatest(postTypes.GET_USERS_SEEN_POST, getSeenPost);
   yield takeLatest(postTypes.DELETE_POST_LOCAL, deletePostLocal);
 }
 

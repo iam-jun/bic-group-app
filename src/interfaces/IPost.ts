@@ -521,14 +521,10 @@ export interface IGetStreamCommentData {
   reactionsCount?: IReactionCounts;
   child?: IGetStreamCommentData;
 }
-export interface ISeenUserList {
+export interface IRequestGetUsersSeenPost {
   postId: string;
   limit?: number;
   offset?: number;
-}
-export interface ISeenPeopleListSheet {
-  isShow: boolean;
-  data: any[];
 }
 export interface ISeenPostListSheet {
   total?: number;

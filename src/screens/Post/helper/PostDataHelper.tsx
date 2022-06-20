@@ -14,7 +14,7 @@ import {
   IRequestGetPostComment,
   IRequestPostComment,
   IRequestReplyComment,
-  ISeenUserList,
+  IRequestGetUsersSeenPost,
 } from '~/interfaces/IPost';
 
 const provider = ApiConfig.providers.beinFeed;
@@ -156,7 +156,7 @@ export const postApiConfig = {
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
   }),
-  putMarkSeenPost: (postId: number): HttpApiRequestConfig => ({
+  putMarkSeenPost: (postId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.beinFeed.url}feeds/seen/${postId}`,
     method: 'put',
     provider: ApiConfig.providers.beinFeed,
@@ -239,7 +239,9 @@ export const postApiConfig = {
       postId: params?.postId || '',
     },
   }),
-  getSeenList: (params: ISeenUserList): HttpApiRequestConfig => {
+  getUsersSeenPost: (
+    params: IRequestGetUsersSeenPost,
+  ): HttpApiRequestConfig => {
     // const {postId, ...restParams} = params;
     return {
       url: `${provider.url}feeds/seen/user`,
@@ -399,7 +401,7 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  putMarkSeenPost: async (postId: number) => {
+  putMarkSeenPost: async (postId: string) => {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.putMarkSeenPost(postId),
@@ -557,10 +559,10 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  getSeenList: async (params: ISeenUserList) => {
+  getSeenList: async (params: IRequestGetUsersSeenPost) => {
     try {
       const response: any = await makeHttpRequest(
-        postApiConfig.getSeenList({
+        postApiConfig.getUsersSeenPost({
           ...params,
         }),
       );

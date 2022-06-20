@@ -375,7 +375,7 @@ function postReducer(state = postInitState, action: any = {}) {
         ...state,
         reactionBottomSheet: payload || postInitState.reactionBottomSheet,
       };
-    case postTypes.SET_SEEN_PEOPLE_LIST_BOTTOM_SHEET:
+    case postTypes.SET_USERS_SEEN_POST:
       return {
         ...state,
         seenPostList: payload || postInitState.seenPostList,

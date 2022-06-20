@@ -1,49 +1,40 @@
 import React, {useRef} from 'react';
-import {
-  View,
-  StyleSheet,
-  SectionList,
-  FlatList,
-  Dimensions,
-  RefreshControl,
-} from 'react-native';
+import {View, StyleSheet, FlatList, Dimensions} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-
 import {ITheme} from '~/theme/interfaces';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
-
-import BottomSheet from '~/beinComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
-import Icon from '~/beinComponents/Icon';
-import privacyTypes from '~/constants/privacyTypes';
 import {useRootNavigation} from '~/hooks/navigation';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
-import ViewSpacing from '~/beinComponents/ViewSpacing';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {useBaseHook} from '~/hooks';
 import {fontFamilies} from '~/theme/fonts';
 import modalActions from '~/store/modal/actions';
 
-const ShowSeenPeopleListBottomSheet = ({postId}) => {
+const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const insets = useSafeAreaInsets();
   const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
   const styles = createStyle(theme, insets);
-
   const {t} = useBaseHook();
-  const screenHeight = Dimensions.get('window').height;
-  const contentBarHeight = 0.6 * screenHeight;
+
   React.useEffect(() => {
-    const payload = {postId: postId, offset: 0, canLoadMore: false};
-    dispatch(postActions.getSeenPost(payload));
+    dispatch(postActions.getSeenPost({postId: postId}));
+    return () => {
+      const payloadSet = {
+        data: [],
+        canLoadMore: false,
+      };
+      dispatch(postActions.setSeenPost(payloadSet));
+    };
   }, []);
+
   const loading = useKeySelector(postKeySelector.seenPostList.loading);
   const dataList = useKeySelector(postKeySelector.seenPostList.dataList);
   const canLoadMore = useKeySelector(postKeySelector.seenPostList.canLoadMore);
@@ -68,19 +59,11 @@ const ShowSeenPeopleListBottomSheet = ({postId}) => {
     }
   };
 
-  const renderEmpty = () => {
-    return <LoadingIndicator />;
-  };
   const renderFooter = () => {
     return canLoadMore && <LoadingIndicator />;
   };
   const getSeenPost = () => {
-    dispatch(
-      postActions.getSeenPost({
-        postId: postId,
-        offset: dataList.length,
-      }),
-    );
+    dispatch(postActions.getSeenPost({postId: postId}));
   };
   const onLoadMore = () => {
     getSeenPost();
@@ -89,7 +72,7 @@ const ShowSeenPeopleListBottomSheet = ({postId}) => {
   const renderItem = (item: any) => {
     return (
       <PrimaryItem
-        testID={`reaction_detail_bottomSheet.${item?.item?.fullname}`}
+        testID={`seen_post_bottomSheet.${item?.item?.fullname}`}
         showAvatar
         height={44}
         onPress={() => onPressItem(item)}
@@ -110,7 +93,6 @@ const ShowSeenPeopleListBottomSheet = ({postId}) => {
         data={dataList}
         renderItem={renderItem}
         keyExtractor={item => item.id}
-        ListEmptyComponent={renderEmpty}
         ListFooterComponent={renderFooter}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.1}
@@ -176,4 +158,4 @@ const createStyle = (theme: ITheme, insets: any) => {
   });
 };
 
-export default ShowSeenPeopleListBottomSheet;
+export default UsersSeenPostBottomSheet;

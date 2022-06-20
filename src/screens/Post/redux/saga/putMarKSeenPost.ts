@@ -25,8 +25,6 @@ function* putMarkSeenPost({
       const post = yield select(state =>
         get(state, postKeySelector.postById(postId)),
       );
-      post.markedSeenPost = true;
-      post.markedSeenSuccess = true;
       yield put(postActions.addToAllPosts({...post}));
     }
   } catch (e) {

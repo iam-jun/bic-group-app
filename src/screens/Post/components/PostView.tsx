@@ -13,7 +13,6 @@ import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import {IPayloadReactionDetailBottomSheet} from '~/interfaces/IModal';
-import {ISeenListBottomSheet} from '~/interfaces/IModalSeenList';
 import {
   IAudienceUser,
   IOwnReaction,
@@ -22,10 +21,8 @@ import {
   IPostAudience,
   IPostSetting,
   IReactionCounts,
-  ISeenPeopleListSheet,
 } from '~/interfaces/IPost';
 import resourceImages from '~/resources/images';
-
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import ButtonMarkAsRead from '~/screens/Post/components/ButtonMarkAsRead';
 import PostViewContent from '~/screens/Post/components/postView/PostViewContent';
@@ -40,8 +37,8 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {formatLargeNumber} from '~/utils/formatData';
-import ShowPeopleSeePost from './ShowPeopleSeePost';
-import ShowSeenPeopleListBottomSheet from './ShowSeenPeopleListBottomSheet';
+import ShowPeopleSeePost from './SeenCountsView';
+import ShowSeenPeopleListBottomSheet from './UsersSeenPostBottomSheet';
 
 export interface PostViewProps {
   style?: any;
@@ -95,7 +92,7 @@ const _PostView: FC<PostViewProps> = ({
     highlight: string,
     setting: IPostSetting,
     commentsCount: number,
-    seenPeopleCount: number;
+    totalUsersSeen: number;
 
   if (isUseReduxState) {
     actor = useKeySelector(postKeySelector.postActorById(postId));
@@ -118,7 +115,7 @@ const _PostView: FC<PostViewProps> = ({
     reactionsCount = useKeySelector(
       postKeySelector.postReactionCountsById(postId),
     );
-    seenPeopleCount = useKeySelector(
+    totalUsersSeen = useKeySelector(
       postKeySelector.postTotalUsersSeenById(postId),
     );
   } else {
@@ -135,7 +132,7 @@ const _PostView: FC<PostViewProps> = ({
     commentsCount = postData?.commentsCount || 0;
     ownerReactions = postData?.ownerReactions || [];
     reactionsCount = postData?.reactionsCount || {};
-    seenPeopleCount = postData?.totalUsersSeen || 0;
+    totalUsersSeen = postData?.totalUsersSeen || 0;
   }
 
   const {images, videos, files} = media || {};
@@ -295,10 +292,10 @@ const _PostView: FC<PostViewProps> = ({
           files={files}
           isPostDetail={isPostDetail}
         />
-        {seenPeopleCount > 0 && (
+        {totalUsersSeen > 0 && (
           <ShowPeopleSeePost
-            onPressSeenBy={onPressSeenBy}
-            seenPeopleCount={seenPeopleCount}
+            onPress={onPressSeenBy}
+            seenPeopleCount={totalUsersSeen}
           />
         )}
         {!isLite && (

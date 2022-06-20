@@ -32,8 +32,7 @@ import {
   IPayloadDeleteComment,
   ICommentData,
   IPayloadPutMarkAsRead,
-  ISeenUserList,
-  ISeenPeopleListSheet,
+  IRequestGetUsersSeenPost,
   ISeenPostListSheet,
   IPayloadPutMarkSeenPost,
   IGetSeenPostListSheet,
@@ -327,15 +326,16 @@ const postActions = {
     payload,
   }),
   getSeenPost: (payload: IGetSeenPostListSheet) => ({
-    type: postTypes.GET_SEEN_PEOPLE_LIST_BOTTOM_SHEET,
+    type: postTypes.GET_USERS_SEEN_POST,
     payload,
   }),
   setSeenPost: (payload: ISeenPostListSheet) => ({
-    type: postTypes.SET_SEEN_PEOPLE_LIST_BOTTOM_SHEET,
+    type: postTypes.SET_USERS_SEEN_POST,
     payload,
   }),
   putMarkSeenPost: (payload: IPayloadPutMarkSeenPost) => ({
     type: postTypes.PUT_MARK_SEEN_POST,
+    payload,
   }),
   deletePostLocal: (payload: string) => ({
     type: postTypes.DELETE_POST_LOCAL,
