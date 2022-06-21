@@ -845,7 +845,8 @@
       "text_desc_apply_system_scheme": "You must delete custom scheme",
       "text_title_delete_community_scheme": "Delete this scheme",
       "text_desc_delete_community_scheme": "This action cannot redo.",
-      "text_create_scheme_success": "Create scheme successfully"
+      "text_create_scheme_success": "Create scheme successfully",
+      "text_set_by": "Set by"
     },
     "text_search_communities": "Search Communities"
   },

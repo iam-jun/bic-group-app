@@ -73,6 +73,7 @@ const RoleItem: FC<RoleItemProps> = ({
                       onPress={onPressPermission}
                       isChecked={isChecked}
                       isInherited={isInherited}
+                      inheritedRoleName={inheritedRole?.name}
                     />
                   );
                 })}
