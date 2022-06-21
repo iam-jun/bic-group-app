@@ -65,7 +65,9 @@ export const useChatSocket = () => {
   }, []);
 
   useEffect(() => {
-    dispatch(chatAction.initChat());
+    if (userId) {
+      dispatch(chatAction.initChat());
+    }
     chatSocketClient.setEventCallback((evt: any) =>
       dispatch(chatAction.handleChatEvent(evt)),
     );
