@@ -24,19 +24,23 @@ const GroupScheme: FC<GroupSchemeProps> = ({style}: GroupSchemeProps) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.flex1}>
-        <Text.H5 useI18n>communities:permission:title_group_scheme</Text.H5>
-        <Text.Subtitle useI18n>
-          communities:permission:text_desc_group_scheme
-        </Text.Subtitle>
+      <View style={styles.titleContainer}>
+        <View style={[styles.flex1, styles.row]}>
+          <Text.H5 useI18n>communities:permission:title_group_scheme</Text.H5>
+        </View>
+        <View style={styles.buttonContainer}>
+          <Button.Primary
+            onPress={onPressCreate}
+            useI18n
+            style={styles.buttonCreate}
+            leftIcon={'Plus'}>
+            common:btn_create
+          </Button.Primary>
+        </View>
       </View>
-      <Button.Primary
-        useI18n
-        style={styles.buttonCreate}
-        leftIcon={'Plus'}
-        onPress={onPressCreate}>
-        common:btn_create
-      </Button.Primary>
+      <Text.Subtitle useI18n>
+        communities:permission:text_desc_group_scheme
+      </Text.Subtitle>
     </View>
   );
 };
@@ -46,7 +50,6 @@ const createStyle = (theme: ITheme) => {
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {
-      flexDirection: 'row',
       padding: spacing.padding.large,
       backgroundColor: colors.background,
       marginTop: spacing.margin.base,
@@ -54,13 +57,19 @@ const createStyle = (theme: ITheme) => {
     },
     row: {
       flexDirection: 'row',
+      alignItems: 'center',
+    },
+    titleContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginBottom: spacing.margin.small,
     },
     buttonCreate: {
       paddingLeft: 0,
       paddingRight: spacing.padding.base,
       paddingVertical: spacing.padding.tiny,
-      alignSelf: 'flex-start',
     },
+    buttonContainer: {minHeight: 30, justifyContent: 'center'},
   });
 };
 

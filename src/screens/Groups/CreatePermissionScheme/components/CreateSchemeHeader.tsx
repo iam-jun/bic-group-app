@@ -43,7 +43,7 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
     <Header
       title={t('communities:permission:title_create_community_scheme')}
       onPressButton={onPress}
-      buttonText={isEdit ? 'common:btn_save' : 'common:btn_create'}
+      buttonText={'common:btn_save'}
       buttonProps={{
         loading: creating,
         disabled: disableButtonCreate,
