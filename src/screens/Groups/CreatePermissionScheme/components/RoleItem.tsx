@@ -8,6 +8,7 @@ import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
 import PermissionItem from '~/screens/Groups/CreatePermissionScheme/components/PermissionItem';
 import {ICategory, IPermission, IRole} from '~/interfaces/IGroup';
+import {permissionRoleSectionHeaderHeight} from '~/theme/dimension';
 
 export interface RoleItemProps {
   categories: ICategory[];
@@ -40,7 +41,7 @@ const RoleItem: FC<RoleItemProps> = ({
   const keyRoleId = role?.id || `${role?.type}_${role?.scope}`;
 
   return (
-    <View onLayout={onLayout}>
+    <View onLayout={onLayout} style={styles.container}>
       <TouchableOpacity onPress={onPress} style={styles.row}>
         <Text style={styles.roleName}>{role?.name}</Text>
         <Icon icon={isExpand ? 'AngleDown' : 'AngleRight'} />
@@ -72,6 +73,7 @@ const RoleItem: FC<RoleItemProps> = ({
                       onPress={onPressPermission}
                       isChecked={isChecked}
                       isInherited={isInherited}
+                      inheritedRoleName={inheritedRole?.name}
                     />
                   );
                 })}
@@ -86,13 +88,15 @@ const RoleItem: FC<RoleItemProps> = ({
 const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
-    container: {},
+    container: {
+      paddingBottom: spacing.margin.small,
+    },
     row: {
       flexDirection: 'row',
       alignItems: 'center',
-      marginTop: spacing.margin.small,
+      minHeight: permissionRoleSectionHeaderHeight,
       backgroundColor: colors.background,
-      padding: spacing.padding.large,
+      paddingHorizontal: spacing.padding.large,
       borderTopWidth: 1,
       borderBottomWidth: 1,
       borderColor: colors.bgFocus,
