@@ -17,19 +17,21 @@ export const handleBack = (
 ) => {
   const {colors, spacing} = theme;
   Keyboard.dismiss();
-  if (isEditPost && isEditPostHasChange) {
-    dispatch(
-      modalActions.showAlert({
-        title: i18next.t('post:create_post:title_discard_changes'),
-        content: i18next.t('post:alert_content_back_edit_post'),
-        showCloseButton: true,
-        cancelBtn: true,
-        cancelLabel: i18next.t('common:btn_discard'),
-        confirmLabel: i18next.t('post:create_post:btn_keep_edit'),
-        onDismiss: () => rootNavigation.goBack(),
-      }),
-    );
-    return;
+  if (isEditPost) {
+    if (isEditPostHasChange) {
+      dispatch(
+        modalActions.showAlert({
+          title: i18next.t('post:create_post:title_discard_changes'),
+          content: i18next.t('post:alert_content_back_edit_post'),
+          showCloseButton: true,
+          cancelBtn: true,
+          cancelLabel: i18next.t('common:btn_discard'),
+          confirmLabel: i18next.t('post:create_post:btn_keep_edit'),
+          onDismiss: () => rootNavigation.goBack(),
+        }),
+      );
+      return;
+    }
   } else if (hasPostId) {
     const hasUploadingProcess =
       FileUploader.getInstance().hasUploadingProcess();
