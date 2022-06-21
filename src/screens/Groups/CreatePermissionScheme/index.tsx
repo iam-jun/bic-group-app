@@ -1,23 +1,26 @@
-import React, {FC, useEffect} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle, ScrollView} from 'react-native';
+import React, {FC, useEffect, useState} from 'react';
+import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from 'react-native-reanimated';
 
 import {ITheme} from '~/theme/interfaces';
 
-import Header from '~/beinComponents/Header';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {useDispatch} from 'react-redux';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useBaseHook} from '~/hooks';
 import InputSchemeInfo from '~/screens/Groups/CreatePermissionScheme/InputSchemeInfo';
-import SchemeRoles from '~/screens/Groups/components/SchemeRoles';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Text from '~/beinComponents/Text';
 import {getNewSchemeFromSystemScheme} from '~/screens/Groups/CreatePermissionScheme/helper';
 import {IPermission, IScheme} from '~/interfaces/IGroup';
 import CreateSchemeHeader from '~/screens/Groups/CreatePermissionScheme/components/CreateSchemeHeader';
 import SelectSchemeRolesView from '~/screens/Groups/CreatePermissionScheme/SelectSchemeRolesView';
+import RoleHeaderAnimated from '~/screens/Groups/components/RoleHeaderAnimated';
 
 export interface CreatePermissionSchemeProps {
   route?: {
@@ -31,6 +34,9 @@ export interface CreatePermissionSchemeProps {
 const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
   route,
 }: CreatePermissionSchemeProps) => {
+  const [anchorRole, setAnchorRole] = useState({});
+  const translationY = useSharedValue(0);
+
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
@@ -51,6 +57,14 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     !permissionCategories?.loading &&
     !systemScheme?.loading &&
     (!permissionCategories?.data || !systemScheme?.data);
+
+  const scrollHandler = useAnimatedScrollHandler(event => {
+    translationY.value = event.contentOffset.y;
+  });
+
+  const onAnchorRole = (i: number, role: any, anchor: number) => {
+    setAnchorRole({...anchorRole, [i]: {role, anchor}});
+  };
 
   useEffect(() => {
     if (isEdit && initScheme) {
@@ -100,10 +114,19 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     }
 
     return (
-      <ScrollView>
-        <InputSchemeInfo />
-        <SelectSchemeRolesView onPressPermission={onPressPermission} />
-      </ScrollView>
+      <View style={{flex: 1}}>
+        <Animated.ScrollView scrollEventThrottle={1} onScroll={scrollHandler}>
+          <InputSchemeInfo />
+          <SelectSchemeRolesView
+            onPressPermission={onPressPermission}
+            onAnchorRole={onAnchorRole}
+          />
+        </Animated.ScrollView>
+        <RoleHeaderAnimated
+          sharedValue={translationY}
+          anchorRole={anchorRole}
+        />
+      </View>
     );
   };
 

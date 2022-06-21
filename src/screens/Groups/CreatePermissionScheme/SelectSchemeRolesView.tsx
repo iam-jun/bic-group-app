@@ -7,10 +7,12 @@ import {useBaseHook} from '~/hooks';
 
 export interface SelectSchemeRolesViewProps {
   onPressPermission?: (permission: IPermission, roleIndex: number) => void;
+  onAnchorRole?: (index: number, role: any, anchor: number) => void;
 }
 
 const SelectSchemeRolesView: FC<SelectSchemeRolesViewProps> = ({
   onPressPermission,
+  onAnchorRole,
 }: SelectSchemeRolesViewProps) => {
   const {t} = useBaseHook();
 
@@ -20,6 +22,7 @@ const SelectSchemeRolesView: FC<SelectSchemeRolesViewProps> = ({
   return (
     <SchemeRoles
       roles={roles}
+      onAnchorRole={onAnchorRole}
       title={t('communities:permission:title_edit_roles')}
       onPressPermission={onPressPermission}
     />

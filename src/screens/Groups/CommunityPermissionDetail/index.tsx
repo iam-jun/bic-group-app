@@ -54,11 +54,6 @@ const CommunityPermissionDetail: FC<CommunityPermissionDetailProps> = ({
     translationY.value = event.contentOffset.y;
   });
 
-  console.log(
-    `\x1b[34m🐣️ index CommunityPermissionDetail`,
-    `${JSON.stringify(anchorRole, undefined, 2)}\x1b[0m`,
-  );
-
   const onAnchorRole = (i: number, role: any, anchor: number) => {
     setAnchorRole({...anchorRole, [i]: {role, anchor}});
   };
