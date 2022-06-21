@@ -51,7 +51,7 @@ import approveAllCommunityMemberRequests from './approveAllCommunityMemberReques
 import declineAllCommunityMemberRequests from './declineAllCommunityMemberRequests';
 import approveAllGroupMemberRequests from './approveAllGroupMemberRequests';
 import declineAllGroupMemberRequests from './declineAllGroupMemberRequests';
-import approveSingleGroupMemberRequest from './approveSingleGroupMemberRequests';
+import approveSingleGroupMemberRequest from './approveSingleGroupMemberRequest';
 import declineSingleGroupMemberRequest from './declineSingleGroupMemberRequest';
 import getGroupMemberRequests from './getGroupMemberRequests';
 import getPermissionCategories from '~/screens/Groups/redux/saga/getPermissionCategories';
