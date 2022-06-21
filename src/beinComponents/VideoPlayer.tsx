@@ -120,7 +120,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         <LoadingIndicator size={60} color={colors.bgDisable} />
       ) : !isPlaying ? (
         <TouchableOpacity
-          activeOpacity={!!url ? 0.85 : 0}
+          activeOpacity={!!url ? 0.85 : 1}
           onPress={() => {
             loadAsyncVideo();
           }}
