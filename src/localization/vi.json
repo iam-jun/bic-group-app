@@ -357,6 +357,7 @@
     "title_edit_images": "Sửa ảnh",
     "mention_title": "Có thể nhắc đến những người là đối tượng của bài viết",
     "mention_empty_content": "Không tìm thấy",
+    "label_seen_by": "Đã xem bởi ",
     "button_like": "Thích",
     "button_reply": "Trả lời",
     "button_react": "Tương tác",
@@ -747,11 +748,12 @@
     "text_delete_file": "Bạn có chắc muốn xoá {{file_type}}?",
     "text_upload_error": "Không thể tải lên {{file_type}} này",
     "title_leave_uploading": "Đóng màn hình này?",
-    "text_leave_uploading": "Bạn có chắc muốn đóng màn hình này? Video bạn đang tải lên sẽ bị huỷ.",
+    "text_leave_uploading": "Bạn có chắc muốn đóng màn hình này? Quá trình tải lên của bạn sẽ bị huỷ.",
     "text_video_over_size": "Video của bạn phải nhỏ hơn 300MB",
-    "text_file_over_size": "Tệp của bạn phải nhỏ hơn 5MB",
+    "text_file_over_size": "Tổng kích thước các tệp của bạn lớn hơn 25MB",
     "text_file_over_length": "Bạn không thể tải lên hơn {{max_files}} tệp",
-    "text_file_extension_not_supported": "Phần mở rộng của tệp không được hỗ trợ"
+    "text_file_extension_not_supported": "Phần mở rộng của tệp không được hỗ trợ",
+    "text_file_remainning": "Tổng tệp có thể thêm là {{max_files}} và dung lượng còn lại là {{remaining_size}}"
   },
   "file_type": {
     "image": "hình ảnh",

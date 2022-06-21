@@ -18,6 +18,8 @@ import {useDispatch} from 'react-redux';
 import {supportedTypes} from '~/beinComponents/DocumentPicker';
 import {openLink} from '~/utils/common';
 import {uploadTypes} from '~/configs/resourceConfig';
+import {getFileIcons} from '~/configs';
+import {IconType} from '~/resources/icons';
 
 export interface UploadingFileProps {
   style?: StyleProp<ViewStyle>;
@@ -103,7 +105,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
   };
 
   useEffect(() => {
-    uploadFile();
+    if (!uploading) uploadFile();
   }, [file]);
 
   if (!file || isEmpty(file)) {
@@ -113,7 +115,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
   const onPressClose = () => {
     if (uploading) {
       onClose?.(file);
-      FileUploader.getInstance().cancel({file, uploadType});
+      FileUploader.getInstance().cancel(file);
     } else {
       dispatch(
         modalActions.showAlert({
@@ -143,9 +145,13 @@ const UploadingFile: FC<UploadingFileProps> = ({
     openLink(file.url);
   };
 
+  const fileExt = fileName?.split('.')?.pop?.()?.toUpperCase?.();
+
+  const icon = getFileIcons(fileExt) as IconType;
+
   return (
     <View style={[styles.container, style]}>
-      <Icon size={40} icon={'iconFileVideo'} />
+      <Icon size={40} icon={icon} />
       <View style={styles.contentContainer}>
         <Text.BodyS
           color={error ? colors.error : colors.textPrimary}
@@ -161,7 +167,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
             style={{justifyContent: 'center'}}
             color={colors.textSecondary}
             numberOfLines={1}>
-            {fileName?.split('.')?.pop?.()?.toUpperCase?.()} ∙{' '}
+            {fileExt} ∙{' '}
             {uploading
               ? t('common:text_uploading')
               : formatBytes(file?.size || 0)}
