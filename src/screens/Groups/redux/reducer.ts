@@ -99,7 +99,7 @@ export const groupInitState = {
   groupMemberRequests: {
     total: 0,
     loading: false,
-    data: [],
+    ids: [],
     items: {} as IObject<IJoiningMember>,
     canLoadMore: true,
   },

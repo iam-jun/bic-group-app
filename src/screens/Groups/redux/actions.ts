@@ -304,7 +304,7 @@ const groupsActions = {
     total?: number;
     loading?: boolean;
     canLoadMore?: boolean;
-    data?: number[];
+    ids?: number[];
     items?: IObject<IJoiningMember>;
   }) => ({
     type: groupsTypes.SET_GROUP_MEMBER_REQUESTS,

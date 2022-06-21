@@ -24,13 +24,13 @@ export default function* declineSingleGroupMemberRequest({
 
     // Update data state
     const {groups} = yield select();
-    const {total, data, items} = groups.groupMemberRequests;
+    const {total, ids, items} = groups.groupMemberRequests;
     const requestItems = {...items};
     delete requestItems[requestId];
     yield put(
       groupsActions.setGroupMemberRequests({
         total: total - 1,
-        data: data.filter((item: number) => item !== requestId),
+        ids: ids.filter((item: number) => item !== requestId),
         items: requestItems,
       }),
     );

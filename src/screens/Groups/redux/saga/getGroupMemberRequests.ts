@@ -17,11 +17,11 @@ export default function* getGroupMemberRequests({
     const {groups} = yield select();
 
     const {groupId, isRefreshing, params} = payload;
-    const {data, canLoadMore, items} = groups.groupMemberRequests || {};
+    const {ids, canLoadMore, items} = groups.groupMemberRequests || {};
 
     yield put(
       groupsActions.setGroupMemberRequests({
-        loading: isRefreshing ? true : data.length === 0,
+        loading: isRefreshing ? true : ids.length === 0,
       }),
     );
 
@@ -32,7 +32,7 @@ export default function* getGroupMemberRequests({
       groupsDataHelper.getGroupMemberRequests,
       groupId,
       {
-        offset: isRefreshing ? 0 : data.length,
+        offset: isRefreshing ? 0 : ids.length,
         limit: appConfig.recordsPerPage,
         key: memberRequestStatus.WAITING,
         ...params,
@@ -47,7 +47,7 @@ export default function* getGroupMemberRequests({
         total: response?.meta?.total,
         loading: false,
         canLoadMore: requestIds.length === appConfig.recordsPerPage,
-        data: isRefreshing ? [...requestIds] : [...data, ...requestIds],
+        ids: isRefreshing ? [...requestIds] : [...ids, ...requestIds],
         items: isRefreshing ? {...requestItems} : {...items, ...requestItems},
       }),
     );

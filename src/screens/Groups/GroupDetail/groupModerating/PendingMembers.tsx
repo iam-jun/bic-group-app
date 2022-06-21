@@ -32,7 +32,7 @@ const PendingMembers = (props: any) => {
   const groupMemberRequests = useKeySelector(
     groupsKeySelector.groupMemberRequests,
   );
-  const {data, loading, canLoadMore, total} = groupMemberRequests;
+  const {ids, loading, canLoadMore, total} = groupMemberRequests;
 
   const getData = (isRefreshing?: boolean) => {
     dispatch(groupsActions.getGroupMemberRequests({groupId, isRefreshing}));
@@ -73,7 +73,7 @@ const PendingMembers = (props: any) => {
     return (
       !loading &&
       canLoadMore &&
-      data.length > 0 && (
+      ids.length > 0 && (
         <View style={styles.listFooter}>
           <ActivityIndicator />
         </View>
@@ -99,7 +99,7 @@ const PendingMembers = (props: any) => {
       <FlatList
         testID="flatlist"
         style={styles.listStyle}
-        data={data}
+        data={ids}
         renderItem={renderItem}
         keyExtractor={(item, index) => `requests_${item}_${index}`}
         ListEmptyComponent={renderEmpty}
@@ -118,7 +118,7 @@ const PendingMembers = (props: any) => {
         }
       />
 
-      {data.length > 0 && <PendingActionAll groupId={groupId} />}
+      {ids.length > 0 && <PendingActionAll groupId={groupId} />}
     </ScreenWrapper>
   );
 };
