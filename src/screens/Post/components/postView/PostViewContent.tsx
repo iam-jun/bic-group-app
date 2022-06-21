@@ -16,6 +16,8 @@ import postKeySelector from '../../redux/keySelector';
 import VideoPlayer from '~/beinComponents/VideoPlayer';
 import UploadingFile from '~/beinComponents/UploadingFile';
 import FilesView from '../FilesView';
+import CopyableView from '~/beinComponents/CopyableView';
+import {escapeMarkDown} from '~/utils/formatData';
 
 export interface PostViewContentProps {
   postId: string;
@@ -89,11 +91,13 @@ const PostViewContent: FC<PostViewContentProps> = ({
     }
     if (isPostDetail) {
       return (
-        <Markdown
-          value={content}
-          selector={`${postKeySelector.allPosts}.${postId}.mentions`}
-          onPressAudience={onPressMentionAudience}
-        />
+        <CopyableView content={escapeMarkDown(content)}>
+          <Markdown
+            value={content}
+            selector={`${postKeySelector.allPosts}.${postId}.mentions`}
+            onPressAudience={onPressMentionAudience}
+          />
+        </CopyableView>
       );
     }
     return (

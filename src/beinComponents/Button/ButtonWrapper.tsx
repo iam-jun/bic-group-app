@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  LayoutChangeEvent,
   StyleProp,
   StyleSheet,
   TouchableOpacity,
@@ -19,8 +20,6 @@ export interface ButtonWrapperProps {
   style?: StyleProp<ViewStyle>;
   contentStyle?: StyleProp<ViewStyle>;
   disabled?: boolean;
-  onPress?: (e: any) => void;
-  onLongPress?: (e: any) => void;
   textVariant?: TextVariant;
   textProps?: TextProps;
   useI18n?: boolean;
@@ -34,6 +33,9 @@ export interface ButtonWrapperProps {
   loading?: boolean;
   activeOpacity?: number;
   hitSlop?: {top: number; bottom: number; right: number; left: number};
+  onPress?: (e: any) => void;
+  onLongPress?: (e: any) => void;
+  onLayout?: (event: LayoutChangeEvent) => void;
 }
 
 const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
@@ -42,8 +44,6 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   children,
   style,
   contentStyle,
-  onPress,
-  onLongPress,
   disabled,
   textVariant,
   textProps,
@@ -57,6 +57,9 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   activeOpacity,
   hitSlop,
   TouchableComponent = TouchableOpacity,
+  onPress,
+  onLongPress,
+  onLayout,
 }: ButtonWrapperProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
@@ -103,23 +106,24 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
     <TouchableComponent
       nativeID={nativeID}
       testID={testID}
+      style={style}
       disabled={!isInternetReachable || disabled}
-      onPress={onPress}
-      onLongPress={onLongPress}
       underlayColor={underlayColor}
       hitSlop={hitSlop}
       activeOpacity={activeOpacity}
-      style={StyleSheet.flatten([style])}>
+      onPress={onPress}
+      onLongPress={onLongPress}
+      onLayout={onLayout}>
       <View
         testID="button_wrapper.content"
-        style={StyleSheet.flatten([
+        style={[
           {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
           },
           contentStyle,
-        ])}>
+        ]}>
         {renderLoading()}
         {renderIcon(leftIcon, leftIconProps)}
         {typeof children === 'string' ? (
