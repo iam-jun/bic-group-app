@@ -438,7 +438,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         refIsRefresh.current = true;
       } else if (isEdit && sPostId) {
         console.log(`\x1b[36m🐣️ useCreatePost skip autosave edit post\x1b[0m`);
-      } else {
+      } else if (!sPostId) {
         setLoading(true);
         data.isDraft = true;
         const resp = await postDataHelper.postCreateNewPost(data);
