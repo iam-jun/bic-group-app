@@ -53,7 +53,7 @@ const GroupAdministration = (props: any) => {
   };
 
   const goToPendingMembers = () => {
-    rootNavigation.navigate(groupStack.groupPendingMembers, {groupId});
+    rootNavigation.navigate(groupStack.groupPendingMembers);
   };
 
   const goToGeneralInfo = () => {
