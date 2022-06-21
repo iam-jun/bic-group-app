@@ -7,6 +7,9 @@ import {useDispatch} from 'react-redux';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import modalActions from '~/store/modal/actions';
+import i18next from 'i18next';
+import {useRootNavigation} from '~/hooks/navigation';
 
 export interface CreateSchemeHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -20,11 +23,15 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
   loadDataFailed,
   isEdit,
 }: CreateSchemeHeaderProps) => {
+  const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
   const {t} = useBaseHook();
 
   const {id} = useKeySelector(groupsKeySelector.communityDetail) || {};
   const name = useKeySelector(groupsKeySelector.permission.creatingScheme.name);
+  const desc = useKeySelector(
+    groupsKeySelector.permission.creatingScheme.description,
+  );
   const creating = useKeySelector(
     groupsKeySelector.permission.creatingScheme.creating,
   );
@@ -36,6 +43,28 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
       alert('Waiting for story edit scheme...');
     } else {
       dispatch(groupsActions.postCreateSchemePermission({communityId: id}));
+    }
+  };
+
+  const onPressBack = () => {
+    if (name || desc) {
+      dispatch(
+        modalActions.showAlert({
+          title: i18next.t(
+            'communities:permission:text_title_discard_create_scheme',
+          ),
+          content: i18next.t(
+            'communities:permission:text_desc_discard_create_scheme',
+          ),
+          showCloseButton: true,
+          cancelBtn: true,
+          cancelLabel: i18next.t('common:btn_discard'),
+          confirmLabel: i18next.t('communities:permission:btn_keep_selecting'),
+          onDismiss: () => rootNavigation.goBack(),
+        }),
+      );
+    } else {
+      rootNavigation.goBack();
     }
   };
 
@@ -52,6 +81,7 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
         style: {borderWidth: 0},
         testID: 'common.btn_create',
       }}
+      onPressBack={onPressBack}
     />
   );
 };
