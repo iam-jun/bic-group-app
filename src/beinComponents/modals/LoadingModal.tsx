@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ImageBackground} from 'react-native';
 import {ActivityIndicator, Modal, useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
@@ -18,19 +18,23 @@ const LoadingModal = () => {
 
   return (
     <Modal visible={visible} contentContainerStyle={styles.root}>
-      <View style={styles.logoContainer}>
-        <Image
-          resizeMode="contain"
-          style={styles.logo}
-          source={images.logo_bein}
-        />
-        <ActivityIndicator
-          size={72}
-          style={styles.loadingIndicator}
-          color={theme.colors.primary6}
-        />
-      </View>
-      <Text.ButtonSmall>Loading...</Text.ButtonSmall>
+      <ImageBackground source={images.img_bg_sign_in} style={styles.background}>
+        <View style={styles.logoContainer}>
+          <Image
+            resizeMode="contain"
+            style={styles.logo}
+            source={images.logo_beincomm}
+          />
+          <ActivityIndicator
+            size={72}
+            style={styles.loadingIndicator}
+            color={theme.colors.background}
+          />
+        </View>
+        <Text.ButtonSmall style={styles.textLoading}>
+          Loading...
+        </Text.ButtonSmall>
+      </ImageBackground>
     </Modal>
   );
 };
@@ -42,8 +46,10 @@ const themeStyles = (theme: ITheme) => {
   return StyleSheet.create({
     root: {
       flex: 1,
+    },
+    background: {
+      flex: 1,
       paddingTop: insets.top,
-      backgroundColor: colors.background,
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -55,6 +61,9 @@ const themeStyles = (theme: ITheme) => {
       width: 48,
       height: 48,
       borderRadius: 50,
+    },
+    textLoading: {
+      color: colors.background,
     },
     loadingIndicator: {
       position: 'absolute',

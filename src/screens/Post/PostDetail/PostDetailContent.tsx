@@ -54,7 +54,7 @@ import {ITheme} from '~/theme/interfaces';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
 import Text from '~/beinComponents/Text';
-
+import {IPayloadPutMarkAsRead} from '~/interfaces/IPost';
 const defaultList = [{title: '', type: 'empty', data: []}];
 
 const _PostDetailContent = (props: any) => {
@@ -62,6 +62,7 @@ const _PostDetailContent = (props: any) => {
   const [refreshing, setRefreshing] = useState(false);
   const [stickerBoardVisible, setStickerBoardVisible] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   let countRetryScrollToBottom = useRef(0).current;
   const commentInputRef = useRef<any>();
@@ -69,7 +70,7 @@ const _PostDetailContent = (props: any) => {
 
   const params = props?.route?.params;
   const {post_id, focus_comment, noti_id = ''} = params || {};
-
+  const postId = post_id;
   const listRef = useRef<any>();
   const layoutSet = useRef(false);
 
@@ -115,6 +116,7 @@ const _PostDetailContent = (props: any) => {
         setStickerBoardVisible(payload);
       },
     );
+    onPressMarkSeenPost();
     return () => {
       event.remove();
       dispatch(postActions.setCreatePostInitAudiences());
@@ -129,6 +131,19 @@ const _PostDetailContent = (props: any) => {
       }
     };
   }, [commentError]);
+
+  const onPressMarkSeenPost = () => {
+    if (!loading) {
+      setLoading(true);
+      const payload: IPayloadPutMarkAsRead = {
+        postId,
+        callback: () => {
+          setLoading(false);
+        },
+      };
+      dispatch(postActions.putMarkSeenPost(payload));
+    }
+  };
 
   const onPressBack = () => {
     const _stickerBoardVisible =

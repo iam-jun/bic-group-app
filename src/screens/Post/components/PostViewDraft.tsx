@@ -224,7 +224,6 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
           images={images}
           videos={videos}
           isPostDetail={isPostDetail}
-          isDraft
         />
         {renderFooter()}
       </View>

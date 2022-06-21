@@ -11,6 +11,7 @@ const mainStack = {
   securityLogin: 'security-and-login',
   changePassword: 'change-password',
   groupDetail: 'group-detail',
+  communityDetail: 'community-detail',
 };
 
 export default mainStack;

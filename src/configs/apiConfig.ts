@@ -2,6 +2,7 @@ import {AxiosRequestConfig} from 'axios';
 
 import {getEnv} from '~/utils/env';
 import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
+import appConfig from './appConfig';
 
 const providers = {
   bein: {
@@ -121,9 +122,10 @@ const Upload = {
       },
       useRetry: true,
       provider: providers.beinUpload,
-      onUploadProgress: onUploadProgress,
       data,
       signal: abortSignal,
+      timeout: appConfig.fileUploadTimeout,
+      onUploadProgress: onUploadProgress,
     };
   },
 };
