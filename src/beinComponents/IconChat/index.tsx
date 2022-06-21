@@ -19,7 +19,7 @@ const IconChat = ({onPress}: Props) => {
   return (
     <View>
       <Icon
-        icon="iconChat"
+        icon="iconBeinChat"
         size={24}
         style={styles.icon}
         onPress={onPress}

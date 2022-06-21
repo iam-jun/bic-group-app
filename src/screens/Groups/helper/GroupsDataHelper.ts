@@ -95,12 +95,12 @@ export const groupsApiConfig = {
     },
   }),
   getInfoGroups: (ids: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}groups`,
+    url: `${ApiConfig.providers.bein.url}post-audiences/groups`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
     params: {
-      ids: ids,
+      group_ids: ids,
     },
   }),
   getGroupDetail: (groupId: number): HttpApiRequestConfig => ({

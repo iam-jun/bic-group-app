@@ -146,7 +146,7 @@ export const getScreenAndParams = (data: any) => {
             screen: 'home',
             params: {
               screen: 'comment-detail',
-              params: {post_id: postId, commentId: commentId},
+              params: {postId: postId, commentId: commentId},
             },
           };
 
@@ -165,7 +165,7 @@ export const getScreenAndParams = (data: any) => {
             params: {
               screen: 'comment-detail',
               params: {
-                post_id: postId,
+                postId: postId,
                 commentId: child?.commentId,
                 parentId: commentId,
               },
