@@ -80,8 +80,10 @@ import iconLock from '../../assets/icons/icon_lock.svg';
 import iconSecret from '../../assets/icons/icon_secret_group.svg';
 import iconPlayGif from '../../assets/icons/ic_play_gif.svg';
 import fileIcons from './fileIcons';
+import iconBeinChat from '../../assets/icons/icon_bein_chat.svg';
 
 const icons = {
+  iconBeinChat,
   iconTabHome,
   iconTabHomeBein,
   iconTabGroups,

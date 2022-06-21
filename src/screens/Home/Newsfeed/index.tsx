@@ -148,7 +148,7 @@ const Newsfeed = () => {
       <View style={styles.headerMobile}>
         <Header
           headerRef={headerRef}
-          avatar={images.logo_bein}
+          avatar={images.logo_beincomm}
           hideBack
           searchPlaceholder={t('input:search_post')}
           autoFocusSearch
