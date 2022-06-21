@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, {FC, useEffect, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -6,6 +6,8 @@ import {
   ViewStyle,
   DeviceEventEmitter,
   PixelRatio,
+  TouchableOpacity,
+  Image,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {Video, ResizeMode} from 'expo-av';
@@ -13,20 +15,29 @@ import {Video, ResizeMode} from 'expo-av';
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
 import {orderBy} from 'lodash';
+import Icon from './Icon';
+import LoadingIndicator from './LoadingIndicator';
 
 export interface VideoPlayerProps {
   style?: StyleProp<ViewStyle>;
   data: any;
+  postId?: string;
 }
 
 const PLAYER_HEIGHT = scaleSize(232);
 
-const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
+const VideoPlayer: FC<VideoPlayerProps> = ({
+  style,
+  data,
+  postId,
+}: VideoPlayerProps) => {
   const theme = useTheme() as ITheme;
-  const {dimension} = theme;
+  const {dimension, colors} = theme;
   const styles = createStyle(theme);
 
-  const video = React.useRef(null);
+  const video = React.useRef();
+  const [isPlaying, setPlaying] = useState(false);
+  const [loading, setLoading] = useState(false);
   const {url, id, thumbnails} = data || {};
 
   const getThumbnailImageLink = () => {
@@ -43,25 +54,29 @@ const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
     return '';
   };
 
-  useEffect(() => {
-    if (video.current) {
+  const loadAsyncVideo = async () => {
+    if (video.current && !!url) {
+      setLoading(true);
       try {
-        video.current?.loadAsync?.({
+        await video.current?.loadAsync?.({
           uri: url,
           overrideFileExtensionAndroid: 'm3u8',
         });
+        video.current?.playAsync();
+        setPlaying(true);
       } catch (error) {
+        setLoading(false);
         console.log('>>>>>>>loadAsync error>>>>>>>', error);
       }
     }
-  }, []);
+  };
 
   useEffect(() => {
     const videoListener = DeviceEventEmitter.addListener(
       'playVideo',
       (videoId: any) => {
-        if (!!videoId && videoId !== id) {
-          video.current?.setStatusAsync?.({shouldPlay: false});
+        if (!!videoId && videoId !== id && isPlaying) {
+          video.current?.pauseAsync?.();
         }
       },
     );
@@ -72,11 +87,12 @@ const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
 
   const handlePlaybackStatusUpdate = (status: any) => {
     if (status?.isPlaying) {
+      setLoading(false);
       DeviceEventEmitter.emit('playVideo', id);
     }
   };
 
-  if (!url) {
+  if (!url && thumbnails?.length < 1) {
     return null;
   }
 
@@ -86,11 +102,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
     <View style={[styles.container]}>
       <Video
         ref={video}
-        // source={{
-        //   uri: url,
-        //   overrideFileExtensionAndroid: 'm3u8',
-        // }}
-        posterSource={{uri: posterUrl}}
+        key={`video_item_${postId}`}
         style={styles.player}
         useNativeControls
         resizeMode={ResizeMode.CONTAIN}
@@ -100,6 +112,22 @@ const VideoPlayer: FC<VideoPlayerProps> = ({style, data}: VideoPlayerProps) => {
           console.warn('video failed', error);
         }}
       />
+      {!isPlaying && (
+        <Image style={styles.thumbnail} source={{uri: posterUrl}} />
+      )}
+
+      {loading ? (
+        <LoadingIndicator size={60} color={colors.bgDisable} />
+      ) : !isPlaying ? (
+        <TouchableOpacity
+          activeOpacity={!!url ? 0.85 : 1}
+          onPress={() => {
+            loadAsyncVideo();
+          }}
+          style={styles.buttonPlay}>
+          <Icon size={60} tintColor={colors.bgDisable} icon="PlayCircle" />
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };
@@ -112,12 +140,26 @@ const createStyle = (theme: ITheme) => {
       height: PLAYER_HEIGHT,
       flex: 1,
       justifyContent: 'center',
-      backgroundColor: colors.textPrimary,
+      backgroundColor: colors.onSurface,
     },
     player: {
       position: 'absolute',
       width: '100%',
       height: PLAYER_HEIGHT,
+    },
+    thumbnail: {
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0,
+      resizeMode: 'contain',
+      backgroundColor: colors.onSurface,
+    },
+    buttonPlay: {
+      position: 'absolute',
+      zIndex: 2,
+      alignSelf: 'center',
     },
   });
 };
