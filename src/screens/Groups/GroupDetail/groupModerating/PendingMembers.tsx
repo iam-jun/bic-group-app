@@ -6,7 +6,7 @@ import Header from '~/beinComponents/Header';
 import groupsActions from '../../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
-import PendingActionAll from './components/PendingActionAll';
+import GroupApproveDeclineAllRequests from './components/GroupApproveDeclineAllRequests';
 import MemberRequestList from '../../components/MemberRequestList';
 
 const GroupPendingMembers = () => {
@@ -49,7 +49,7 @@ const GroupPendingMembers = () => {
         onRefresh={onRefresh}
       />
 
-      {ids.length > 0 && <PendingActionAll groupId={groupId} />}
+      {ids.length > 0 && <GroupApproveDeclineAllRequests />}
     </ScreenWrapper>
   );
 };

@@ -95,6 +95,12 @@ export const groupInitState = {
 
   loadingAvatar: false,
   loadingCover: false,
+  discoverGroups: {
+    loading: false,
+    data: [],
+    items: {},
+    canLoadMore: true,
+  },
 
   groupMemberRequests: {
     total: 0,
@@ -139,12 +145,6 @@ export const groupInitState = {
     loading: false,
     canLoadMore: true,
     data: [] as ICommunityMembers[],
-  },
-  discoverGroups: {
-    loading: false,
-    data: [],
-    items: {},
-    canLoadMore: true,
   },
   communityMemberRequests: {
     total: 0,

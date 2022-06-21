@@ -6,7 +6,7 @@ import Header from '~/beinComponents/Header';
 import groupsActions from '../../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
-import ApproveDeclineAllRequests from './ApproveDeclineAllRequests';
+import CommunityApproveDeclineAllRequests from './CommunityApproveDeclineAllRequests';
 import MemberRequestList from '../../components/MemberRequestList';
 
 const CommunityPendingMembers = () => {
@@ -51,7 +51,7 @@ const CommunityPendingMembers = () => {
         onRefresh={onRefresh}
       />
 
-      {ids.length > 0 && <ApproveDeclineAllRequests />}
+      {ids.length > 0 && <CommunityApproveDeclineAllRequests />}
     </ScreenWrapper>
   );
 };

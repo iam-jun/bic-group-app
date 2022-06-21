@@ -1,5 +1,4 @@
 import React, {useRef} from 'react';
-import {StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
@@ -7,7 +6,6 @@ import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import modalActions, {clearToastMessage} from '~/store/modal/actions';
-import i18next from 'i18next';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
@@ -15,19 +13,17 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IToastMessage} from '~/interfaces/common';
 import ButtonApproveDeclineAllRequests from '~/screens/Groups/components/ButtonApproveDeclineAllRequests';
+import {useBaseHook} from '~/hooks';
 
-interface PendingActionAllProps {
-  groupId: number;
-  style?: StyleProp<ViewStyle>;
-}
-
-const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
+const GroupApproveDeclineAllRequests = () => {
   const theme = useTheme() as ITheme;
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const timeOutRef = useRef<any>();
+  const {t} = useBaseHook();
 
-  const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group) || {};
+  const {id: groupId, name} =
+    useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const {total} = useKeySelector(groupsKeySelector.groupMemberRequests);
 
   const navigateToGroupMembers = () => {
@@ -49,7 +45,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
         textColor: theme.colors.primary7,
       },
       onConfirm: () => doAction(),
-      confirmLabel: i18next.t('common:btn_confirm'),
+      confirmLabel: t('common:btn_confirm'),
       ConfirmBtnComponent: Button.Secondary,
       confirmBtnProps: {highEmphasis: true},
     };
@@ -59,12 +55,10 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
 
   const onPressApproveAll = () => {
     alertAction(
-      i18next.t('groups:text_respond_all_member_requests:title:approve'),
-      i18next
-        .t('groups:text_respond_all_member_requests:content:approve', {
-          count: total,
-        })
-        .replace('{0}', groupDetail?.name),
+      t('groups:text_respond_all_member_requests:title:approve'),
+      t('groups:text_respond_all_member_requests:content:approve', {
+        count: total,
+      }).replace('{0}', name),
       doApproveAll,
     );
   };
@@ -80,8 +74,8 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
 
   const onPressDeclineAll = () => {
     alertAction(
-      i18next.t('groups:text_respond_all_member_requests:title:decline'),
-      i18next.t('groups:text_respond_all_member_requests:content:decline', {
+      t('groups:text_respond_all_member_requests:title:decline'),
+      t('groups:text_respond_all_member_requests:content:decline', {
         count: total,
       }),
       doDeclineAll,
@@ -99,7 +93,7 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
     dispatch(groupsActions.resetGroupMemberRequests());
 
     const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_declining_all')}`,
+      content: `${t('groups:text_declining_all')}`,
       props: {
         textProps: {useI18n: true},
         type: 'informative',
@@ -118,11 +112,10 @@ const PendingActionAll = ({groupId, style}: PendingActionAllProps) => {
 
   return (
     <ButtonApproveDeclineAllRequests
-      style={style}
       onPressDeclineAll={onPressDeclineAll}
       onPressApproveAll={onPressApproveAll}
     />
   );
 };
 
-export default PendingActionAll;
+export default GroupApproveDeclineAllRequests;
