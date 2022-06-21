@@ -120,6 +120,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         <LoadingIndicator size={60} color={colors.bgDisable} />
       ) : !isPlaying ? (
         <TouchableOpacity
+          activeOpacity={!!url ? 0.85 : 0}
           onPress={() => {
             loadAsyncVideo();
           }}
@@ -139,7 +140,7 @@ const createStyle = (theme: ITheme) => {
       height: PLAYER_HEIGHT,
       flex: 1,
       justifyContent: 'center',
-      backgroundColor: colors.textPrimary,
+      backgroundColor: colors.onSurface,
     },
     player: {
       position: 'absolute',
@@ -153,6 +154,7 @@ const createStyle = (theme: ITheme) => {
       right: 0,
       bottom: 0,
       resizeMode: 'contain',
+      backgroundColor: colors.onSurface,
     },
     buttonPlay: {
       position: 'absolute',
