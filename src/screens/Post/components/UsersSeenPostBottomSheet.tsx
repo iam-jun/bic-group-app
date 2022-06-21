@@ -13,7 +13,6 @@ import {useRootNavigation} from '~/hooks/navigation';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {useBaseHook} from '~/hooks';
-import {fontFamilies} from '~/theme/fonts';
 import modalActions from '~/store/modal/actions';
 
 const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
@@ -22,6 +21,7 @@ const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
   const insets = useSafeAreaInsets();
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme, insets);
+  const {colors, spacing} = theme;
   const {t} = useBaseHook();
 
   React.useEffect(() => {
@@ -29,13 +29,12 @@ const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
     return () => {
       const payloadSet = {
         data: [],
-        canLoadMore: false,
+        canLoadMore: true,
       };
       dispatch(postActions.setSeenPost(payloadSet));
     };
   }, []);
 
-  const loading = useKeySelector(postKeySelector.seenPostList.loading);
   const dataList = useKeySelector(postKeySelector.seenPostList.dataList);
   const canLoadMore = useKeySelector(postKeySelector.seenPostList.canLoadMore);
   const total = useKeySelector(postKeySelector.seenPostList.total);
@@ -84,10 +83,10 @@ const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>
+      <Text.H6 style={styles.header} color={colors.primary6} numberOfLines={1}>
         {t('post:label_seen_by')}
         {total}
-      </Text>
+      </Text.H6>
       <View style={styles.ruler}></View>
       <FlatList
         data={dataList}
@@ -115,18 +114,13 @@ const createStyle = (theme: ITheme, insets: any) => {
       borderBottomWidth: 1,
       borderColor: colors.borderDivider,
     },
-    sectionContainer: {
-      paddingBottom: spacing.padding.base + insets.bottom,
-    },
     header: {
       paddingTop: spacing.padding.small,
       paddingLeft: 14,
       paddingBottom: 8,
-      fontFamily: fontFamilies.OpenSans,
-      fontStyle: 'normal',
-      fontWeight: '600',
-      fontSize: 14,
-      color: colors.primary6,
+    },
+    sectionContainer: {
+      paddingBottom: spacing.padding.base + insets.bottom,
     },
     itemGroupContent: {
       flexDirection: 'row',
@@ -148,7 +142,6 @@ const createStyle = (theme: ITheme, insets: any) => {
       fontSize: 16,
     },
     ruler: {
-      //marginTop: spacing.padding.small,
       marginLeft: 14,
       marginBottom: spacing.padding.large,
       height: 2,

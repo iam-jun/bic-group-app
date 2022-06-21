@@ -12,6 +12,9 @@ function* putMarkSeenPost({
   type: string;
   payload: IPayloadPutMarkSeenPost;
 }): any {
+  if (!payload) {
+    return;
+  }
   const {postId, callback} = payload;
   if (!postId) {
     console.log(`\x1b[36m🐣️ postMarkAsRead postId not found\x1b[0m`);

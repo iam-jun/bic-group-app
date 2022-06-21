@@ -37,8 +37,8 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {formatLargeNumber} from '~/utils/formatData';
-import ShowPeopleSeePost from './SeenCountsView';
-import ShowSeenPeopleListBottomSheet from './UsersSeenPostBottomSheet';
+import SeenCountsView from './SeenCountsView';
+import UsersSeenPostBottomSheet from './UsersSeenPostBottomSheet';
 
 export interface PostViewProps {
   style?: any;
@@ -219,7 +219,7 @@ const _PostView: FC<PostViewProps> = ({
     dispatch(
       modalActions.showModal({
         isOpen: true,
-        ContentComponent: <ShowSeenPeopleListBottomSheet postId={postId} />,
+        ContentComponent: <UsersSeenPostBottomSheet postId={postId} />,
       }),
     );
   };
@@ -293,7 +293,7 @@ const _PostView: FC<PostViewProps> = ({
           isPostDetail={isPostDetail}
         />
         {totalUsersSeen > 0 && (
-          <ShowPeopleSeePost
+          <SeenCountsView
             onPress={onPressSeenBy}
             seenPeopleCount={totalUsersSeen}
           />

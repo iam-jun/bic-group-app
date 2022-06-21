@@ -7,7 +7,6 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import images from '~/resources/images';
 import PostDetailContent from '~/screens/Post/PostDetail/PostDetailContent';
 import {ITheme} from '~/theme/interfaces';
-import {useDispatch} from 'react-redux';
 
 const PostDetail = (props: any) => {
   const [showContent, setShowContent] = useState(false);
@@ -16,7 +15,6 @@ const PostDetail = (props: any) => {
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = createStyle(theme);
-  const dispatch = useDispatch();
 
   useEffect(() => {
     const taskId = requestAnimationFrame(() => {

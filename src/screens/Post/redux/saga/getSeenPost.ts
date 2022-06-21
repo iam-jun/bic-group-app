@@ -10,7 +10,7 @@ import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import addChildCommentToCommentsOfPost from '~/screens/Post/redux/saga/addChildCommentToCommentsOfPost';
 import postActions from '~/screens/Post/redux/actions';
 import showError from '~/store/commonSaga/showError';
-import {concat} from 'lodash';
+import {concat, isBuffer} from 'lodash';
 
 function* getSeenPost({
   payload,
@@ -19,7 +19,7 @@ function* getSeenPost({
   payload: IGetSeenPostListSheet;
 }): any {
   try {
-    const {data, canLoadMore, loading} = yield select(
+    const {data, canLoadMore} = yield select(
       state => state?.post?.seenPostList,
     ) || {};
     const params = {
@@ -27,6 +27,9 @@ function* getSeenPost({
       offset: data.length,
     };
 
+    if (!canLoadMore) {
+      return;
+    }
     const response = yield call(postDataHelper.getSeenList, params);
 
     if (response && response?.data?.list) {

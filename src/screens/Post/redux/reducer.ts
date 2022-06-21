@@ -77,7 +77,7 @@ export const postInitState = {
   seenPostList: {
     loading: false,
     data: [],
-    canLoadMore: false,
+    canLoadMore: true,
     total: 0,
   },
 };
