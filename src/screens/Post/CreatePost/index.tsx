@@ -96,7 +96,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   if (
     totalFiles === appConfig.maxFiles ||
-    totalSize > appConfig.totalFileSize
+    totalSize >= appConfig.totalFileSize
   ) {
     fileDisabled = true;
   }
