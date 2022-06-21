@@ -236,8 +236,11 @@ const handleResponseError = async (
     }
     return mapResponseSuccessBein(error.response);
   } else if (error.request) {
-    console.error(error.request);
-    handleSystemIssue();
+    // cancel request
+    if (error.request.status !== 0) {
+      console.error(error.request);
+      handleSystemIssue();
+    }
 
     return {
       code: error.request.status, // request made, no response
