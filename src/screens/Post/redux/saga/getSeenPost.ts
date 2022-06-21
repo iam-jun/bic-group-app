@@ -1,16 +1,8 @@
-import {
-  ICommentData,
-  IPayloadGetCommentsById,
-  IReaction,
-  IAudienceUser,
-  IGetSeenPostListSheet,
-} from '~/interfaces/IPost';
+import {IGetSeenPostListSheet} from '~/interfaces/IPost';
 import {call, put, select} from 'redux-saga/effects';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
-import addChildCommentToCommentsOfPost from '~/screens/Post/redux/saga/addChildCommentToCommentsOfPost';
 import postActions from '~/screens/Post/redux/actions';
 import showError from '~/store/commonSaga/showError';
-import {concat, isBuffer} from 'lodash';
 
 function* getSeenPost({
   payload,
