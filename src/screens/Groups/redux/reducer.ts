@@ -105,7 +105,7 @@ export const groupInitState = {
   groupMemberRequests: {
     total: 0,
     loading: false,
-    ids: [],
+    ids: [] as number[],
     items: {} as IObject<IJoiningMember>,
     canLoadMore: true,
   },
@@ -133,8 +133,8 @@ export const groupInitState = {
     data: [] as number[],
     items: {},
   },
-  communityDetail: {} as ICommunity,
   isGettingInfoDetail: false,
+  communityDetail: {} as ICommunity,
   communityMembers: {
     loading: false,
     canLoadMore: true,
@@ -151,7 +151,7 @@ export const groupInitState = {
     loading: false,
     canLoadMore: true,
     ids: [] as number[],
-    items: {},
+    items: {} as IObject<IJoiningMember>,
   },
   // temporarily stores data for `undo` action
   undoCommunityMemberRequests: {
