@@ -7,6 +7,7 @@ import {
   DeviceEventEmitter,
   PixelRatio,
   TouchableOpacity,
+  Image,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {Video, ResizeMode} from 'expo-av';
@@ -102,12 +103,6 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
       <Video
         ref={video}
         key={`video_item_${postId}`}
-        // source={{
-        //   uri: url,
-        //   overrideFileExtensionAndroid: 'm3u8',
-        // }}
-        usePoster={!isPlaying}
-        posterSource={{uri: posterUrl}}
         style={styles.player}
         useNativeControls
         resizeMode={ResizeMode.CONTAIN}
@@ -117,6 +112,9 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
           console.warn('video failed', error);
         }}
       />
+      {!isPlaying && (
+        <Image style={styles.thumbnail} source={{uri: posterUrl}} />
+      )}
 
       {loading ? (
         <LoadingIndicator size={60} color={colors.bgDisable} />
@@ -149,8 +147,12 @@ const createStyle = (theme: ITheme) => {
       height: PLAYER_HEIGHT,
     },
     thumbnail: {
-      width: '100%',
-      height: PLAYER_HEIGHT,
+      position: 'absolute',
+      left: 0,
+      top: 0,
+      right: 0,
+      bottom: 0,
+      resizeMode: 'contain',
     },
     buttonPlay: {
       position: 'absolute',
