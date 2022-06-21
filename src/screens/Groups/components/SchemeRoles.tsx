@@ -15,6 +15,7 @@ export interface SchemeRolesProps {
   title?: string;
   onPressPermission?: (permission: IPermission, roleIndex: number) => void;
   selectedRolesOnly?: boolean;
+  onAnchorRole?: (index: number, role: any, anchor: number) => void;
 }
 
 const SchemeRoles: FC<SchemeRolesProps> = ({
@@ -22,6 +23,7 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
   title,
   onPressPermission,
   selectedRolesOnly,
+  onAnchorRole,
 }: SchemeRolesProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -58,9 +60,7 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
               layout: {y: anchor},
             },
           }: any) => {
-            console.log(
-              `\x1b[36m🐣️ SchemeRoles role anchor: ${anchor}\x1b[0m`,
-            );
+            onAnchorRole?.(roleIndex, role?.name, anchor);
           }}
           onPressPermission={onPressPermission}
         />

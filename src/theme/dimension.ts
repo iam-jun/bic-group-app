@@ -133,6 +133,7 @@ export const commentBarHeight = 44;
 export const postToolbarHeight = 52;
 export const maxNewsfeedWidth = 584;
 export const bottomBarHeight = 60;
+export const permissionRoleSectionHeaderHeight = 56;
 
 export const scaleSize = (size: number): number =>
   (DeviceWidth / guidelineBaseWidth) * size;
