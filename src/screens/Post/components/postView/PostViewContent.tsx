@@ -130,7 +130,12 @@ const PostViewContent: FC<PostViewContentProps> = ({
             />
           )}
 
-          <FilesView files={files} disableClose showDownload />
+          <FilesView
+            files={files}
+            disableClose
+            showDownload
+            collapsible={!isPostDetail}
+          />
         </>
       )}
     </View>

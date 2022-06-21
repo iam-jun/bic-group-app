@@ -53,7 +53,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     images,
     video,
     files,
-    videoUploading,
     disableButtonPost,
     isEditPost,
     isEditDraftPost,
@@ -98,7 +97,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   if (
     totalFiles === appConfig.maxFiles ||
-    totalSize > appConfig.totalFileSize
+    totalSize >= appConfig.totalFileSize
   ) {
     fileDisabled = true;
   }
@@ -143,8 +142,6 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       !!(isEditPost && !isEditDraftPost),
       isEditPostHasChange,
       !!(sPostId && refIsRefresh.current),
-      videoUploading,
-      video,
       theme,
       rootNavigation,
       dispatch,

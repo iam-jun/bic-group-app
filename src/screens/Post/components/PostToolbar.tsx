@@ -179,7 +179,7 @@ const PostToolbar = ({
       const newFiles = clearExistingFiles(selectedFiles, files);
       if (isEmpty(newFiles)) return;
 
-      dispatch(postActions.addCreatePostFiles(files));
+      dispatch(postActions.addCreatePostFiles(newFiles));
     } catch (e) {
       console.log(
         `\x1b[36m🐣️ DocumentPicker.openPickerSingle error: \x1b[0m`,
