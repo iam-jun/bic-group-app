@@ -74,6 +74,12 @@ export const postInitState = {
   },
   loadingGetPostDetail: false,
   commentErrorCode: '',
+  seenPostList: {
+    loading: false,
+    data: [],
+    canLoadMore: true,
+    total: 0,
+  },
 };
 
 function postReducer(state = postInitState, action: any = {}) {
@@ -368,6 +374,11 @@ function postReducer(state = postInitState, action: any = {}) {
       return {
         ...state,
         reactionBottomSheet: payload || postInitState.reactionBottomSheet,
+      };
+    case postTypes.SET_USERS_SEEN_POST:
+      return {
+        ...state,
+        seenPostList: payload || postInitState.seenPostList,
       };
     case postTypes.SET_POST_SELECT_AUDIENCE_STATE:
       return {

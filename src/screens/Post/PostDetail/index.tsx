@@ -1,7 +1,6 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {InteractionManager, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-
 import Header from '~/beinComponents/Header';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -21,9 +20,8 @@ const PostDetail = (props: any) => {
     const taskId = requestAnimationFrame(() => {
       setShowContent(true);
     });
-    return () => {
-      cancelAnimationFrame(taskId);
-    };
+
+    return () => cancelAnimationFrame(taskId);
   }, []);
 
   const onContentLayout = useCallback(() => {

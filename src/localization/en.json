@@ -411,6 +411,7 @@
     "title_edit_images": "Edit images",
     "mention_title": "Can only mention people in your selected audiences",
     "mention_empty_content": "No people found",
+    "label_seen_by": "Seen by ",
     "button_like": "Like",
     "button_reply": "Reply",
     "button_react": "React",

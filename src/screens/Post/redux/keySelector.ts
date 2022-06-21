@@ -26,6 +26,12 @@ const postKeySelector = {
     loading: 'post.draftPosts.loading',
     refreshing: 'post.draftPosts.refreshing',
   },
+  seenPostList: {
+    dataList: 'post.seenPostList.data',
+    total: 'post.seenPostList.total',
+    canLoadMore: 'post.seenPostList.canLoadMore',
+    loading: 'post.seenPostList.loading',
+  },
 
   //Post data
   postById: (id: string | number) => `post.allPosts.${id}`,
@@ -55,6 +61,8 @@ const postKeySelector = {
     `post.allPosts.${id}.markedReadPost`,
   postMarkedReadSuccessById: (id: string | number) =>
     `post.allPosts.${id}.markedReadSuccess`,
+  postTotalUsersSeenById: (id: string | number) =>
+    `post.allPosts.${id}.totalUsersSeen`,
 
   //Comment data
   allCommentsByParentIds: 'post.allCommentsByParentIds',

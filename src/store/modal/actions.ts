@@ -134,6 +134,10 @@ export const hideUserProfilePreviewBottomSheet = () => ({
   type: Actions.HIDE_USER_PROFILE_PREVIEW_BOTTOM_SHEET,
 });
 
+export const showSeenPeopleListBottomSheet = () => ({
+  type: Actions.SHOW_SEEN_PEOPLE_LIST_BOTTOM_SHEET,
+});
+
 const modalActions = {
   setModal,
   showModal,
@@ -155,5 +159,6 @@ const modalActions = {
   setUserProfilePreviewBottomSheet,
   showUserProfilePreviewBottomSheet,
   hideUserProfilePreviewBottomSheet,
+  showSeenPeopleListBottomSheet,
 };
 export default modalActions;
