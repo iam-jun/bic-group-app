@@ -643,6 +643,7 @@
 			baseConfigurationReference = 1FA401022A8353E74511E18C /* Pods-bein_group.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				BEIN_APP_NAME = "Bein Development";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = bein_group/bein_group.entitlements;
@@ -678,6 +679,7 @@
 			baseConfigurationReference = 1F149DFEE29163840D4A0A19 /* Pods-bein_group.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				BEIN_APP_NAME = Bein;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = bein_group/bein_groupRelease.entitlements;
@@ -776,6 +778,7 @@
 			baseConfigurationReference = 4234E01FE67A719703AAC96D /* Pods-bein_group.debugstaging.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				BEIN_APP_NAME = "Bein Staging";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = bein_group/bein_groupDebugStaging.entitlements;
@@ -897,6 +900,7 @@
 			baseConfigurationReference = 41716E043C99B422BCC4F88D /* Pods-bein_group.releasestaging.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				BEIN_APP_NAME = "Bein Staging";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = bein_group/bein_groupReleaseStaging.entitlements;
@@ -1014,6 +1018,7 @@
 			baseConfigurationReference = C90741D4EE61574D0DE5EA6A /* Pods-bein_group.releasedevelopment.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				BEIN_APP_NAME = "Bein Development";
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = bein_group/bein_group.entitlements;

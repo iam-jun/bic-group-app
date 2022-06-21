@@ -295,7 +295,6 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
       ),
     ];
     const newDataChange = dataChangeList.filter(i => !i);
-    console.log('new data change', newDataChange.length);
     if (isAutoSave && newDataChange.length > 0 && sPostId) {
       prevData.current = {
         ...prevData.current,
@@ -347,6 +346,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
     const _video = {
       id: video?.id,
       name: video?.fileName || video?.name,
+      thumbnails: video?.thumbnails || [],
       ...(video?.url ? {} : {status: 'waiting_process'}),
     };
     const media = {
@@ -377,7 +377,6 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
 
   const autoSaveDraftPost = async () => {
     setPause(true);
-    console.log('autoSaveDraftPost', (sIsLoading && !sPostId) || loading);
 
     try {
       if ((sIsLoading && !sPostId) || loading) {
@@ -393,7 +392,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
       );
 
       const {fileError, files, fileUploading} = validateFiles(
-        selectingVideo,
+        selectingFiles,
         t,
       );
 
@@ -439,7 +438,7 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         refIsRefresh.current = true;
       } else if (isEdit && sPostId) {
         console.log(`\x1b[36m🐣️ useCreatePost skip autosave edit post\x1b[0m`);
-      } else {
+      } else if (!sPostId) {
         setLoading(true);
         data.isDraft = true;
         const resp = await postDataHelper.postCreateNewPost(data);

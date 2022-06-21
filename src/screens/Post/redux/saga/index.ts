@@ -46,6 +46,8 @@ import putEditComment from '~/screens/Post/redux/saga/putEditComment';
 import {timeOut} from '~/utils/common';
 import getCommentDetail from './getCommentDetail';
 import putMarkAsRead from '~/screens/Post/redux/saga/putMarkAsRead';
+import getSeenPost from './getSeenPost';
+import putMarkSeenPost from './putMarKSeenPost';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 
 const navigation = withNavigation(rootNavigationRef);
@@ -83,6 +85,8 @@ export default function* postSaga() {
   yield takeLatest(postTypes.PUT_EDIT_DRAFT_POST, putEditDraftPost);
   yield takeLatest(postTypes.UPDATE_REACTION_BY_SOCKET, updateReactionBySocket);
   yield takeLatest(postTypes.PUT_MARK_AS_READ, putMarkAsRead);
+  yield takeLatest(postTypes.PUT_MARK_SEEN_POST, putMarkSeenPost);
+
   yield takeLatest(
     postTypes.UPDATE_UN_REACTION_BY_SOCKET,
     updateUnReactionBySocket,
@@ -92,6 +96,7 @@ export default function* postSaga() {
     postTypes.GET_CREATE_POST_INIT_AUDIENCES,
     getCreatePostInitAudiences,
   );
+  yield takeLatest(postTypes.GET_USERS_SEEN_POST, getSeenPost);
   yield takeLatest(postTypes.DELETE_POST_LOCAL, deletePostLocal);
 }
 

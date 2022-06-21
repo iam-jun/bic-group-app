@@ -25,18 +25,20 @@ import PostPhotoPreview from '../../components/PostPhotoPreview';
 import postActions from '../../redux/actions';
 import {CONTENT_MIN_HEIGHT, MIN_INPUT_HEIGHT} from '../constanst';
 import {calculateInputHeight, isAndroidAnimated} from '../helper';
-import useCreatePost from '../hooks/useCreatePost';
 import ToastAutoSave from './ToastAutoSave';
 import FilesView from '../../components/FilesView';
 import {IGetFile} from '~/services/fileUploader';
+import VideoPlayer from '~/beinComponents/VideoPlayer';
+import {getTotalFileSize} from '../../redux/selectors';
+import appConfig from '~/configs/appConfig';
 
 interface Props {
   groupIds: any[];
-  screenParams: any;
+  useCreatePostData: any;
   inputRef: any;
 }
 
-const Content = ({groupIds, screenParams, inputRef}: Props) => {
+const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -46,6 +48,7 @@ const Content = ({groupIds, screenParams, inputRef}: Props) => {
   const refTextInput = inputRef;
 
   const {
+    sPostData,
     isShowToastAutoSave,
     createPostData,
     images,
@@ -54,10 +57,7 @@ const Content = ({groupIds, screenParams, inputRef}: Props) => {
     handleChangeContent,
     handleUploadVideoSuccess,
     handleUploadFileSuccess,
-  } = useCreatePost({
-    screenParams,
-    mentionInputRef,
-  });
+  } = useCreatePostData;
 
   const {loading, data} = createPostData || {};
   const {content} = data || {};
@@ -75,6 +75,7 @@ const Content = ({groupIds, screenParams, inputRef}: Props) => {
 
   const {isOpen: isKeyboardOpen} = useKeyboardStatus();
   const isAnimated = isAndroidAnimated();
+  const {totalSize} = getTotalFileSize();
 
   useEffect(() => {
     if (content !== contentInput && isAnimated) {
@@ -150,6 +151,8 @@ const Content = ({groupIds, screenParams, inputRef}: Props) => {
     setInputHeight(height);
   };
 
+  const remainingSize = appConfig.totalFileSize - totalSize;
+
   return (
     <>
       {isAnimated && (
@@ -200,7 +203,9 @@ const Content = ({groupIds, screenParams, inputRef}: Props) => {
                   rootNavigation.navigate(homeStack.postSelectImage)
                 }
               />
-              {video && (
+              {video && video?.thumbnails?.length > 0 ? (
+                <VideoPlayer data={video} postId={sPostData?.id || ''} />
+              ) : !!video ? (
                 <UploadingFile
                   uploadType={uploadTypes.postVideo}
                   file={video as IFilePicked}
@@ -208,10 +213,11 @@ const Content = ({groupIds, screenParams, inputRef}: Props) => {
                   onError={() => onUploadError('video')}
                   onSuccess={handleUploadVideoSuccess}
                 />
-              )}
+              ) : null}
               <FilesView
                 files={files}
                 uploadType={uploadTypes.postFile}
+                remainingSize={remainingSize}
                 onRemoveFile={onRemoveFile}
                 onError={() => onUploadError('file')}
                 onSuccess={handleUploadFileSuccess}

@@ -25,7 +25,7 @@ interface PageContentProps {
   onButtonLayout: (e: any) => void;
 }
 
-const PageContent = ({
+const _PageContent = ({
   communityId,
   getPosts,
   onScroll,
@@ -166,6 +166,8 @@ const PageContent = ({
   );
 };
 
+const PageContent = React.memo(_PageContent);
+PageContent.whyDidYouRender = true;
 export default PageContent;
 
 const createStyles = (theme: ITheme) => {
