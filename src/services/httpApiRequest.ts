@@ -196,13 +196,6 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
         //For sharing data between Group and Chat
         await updateUserFromSharedPreferences({token: idToken, exp});
       }
-      const isRefreshSuccess = await refreshAuthTokens();
-      if (!isRefreshSuccess) {
-        await Auth.currentAuthenticatedUser();
-        refreshFailKickOut();
-        isSuccess = false;
-        return;
-      }
     } catch (e) {
       refreshFailKickOut();
       return;
@@ -220,11 +213,14 @@ const handleResponseError = async (
 ): Promise<HttpApiResponseFormat | unknown> => {
   // Sometime aws return old id token, using this old id token to refresh token will return 401
   // should reset value isRefreshingToken for refresh later
-  const authConfig = apiConfig.App.tokens();
-  if (authConfig.url === error?.config?.url) {
-    isRefreshingToken = false;
-    await timeout(5000);
-  }
+
+  // Recheck this issue!
+
+  // const authConfig = apiConfig.App.tokens();
+  // if (authConfig.url === error?.config?.url) {
+  //   isRefreshingToken = false;
+  //   await timeout(5000);
+  // }
 
   if (error.response) {
     const responseTokenExpired =
@@ -365,39 +361,6 @@ const interceptorsResponseError = async (error: AxiosError) => {
   return handleResponseError(error);
 };
 
-const refreshAuthTokens = async () => {
-  const dataTokens = await getAuthTokens();
-  if (!dataTokens) {
-    return false;
-  }
-
-  const {feedAccessToken, notiSubscribeToken} = dataTokens;
-  dispatchStoreAuthTokens(feedAccessToken, notiSubscribeToken);
-
-  return true;
-};
-
-const getAuthTokens = async () => {
-  try {
-    const httpResponse = await makeHttpRequest(apiConfig.App.tokens());
-    // @ts-ignore
-    const data = mapResponseSuccessBein(httpResponse);
-
-    // @ts-ignore
-    if (data.code != 200 && data.code?.toUpperCase?.() !== 'OK') return false;
-
-    const {access_token: feedAccessToken, subscribe_token: notiSubscribeToken} =
-      data.data?.stream;
-
-    return {
-      feedAccessToken,
-      notiSubscribeToken,
-    };
-  } catch (e) {
-    return false;
-  }
-};
-
 const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
   let interceptorRequestSuccess,
     interceptorResponseSuccess,
@@ -467,6 +430,5 @@ export {
   makePushTokenRequest,
   makeRemovePushTokenRequest,
   mapResponseSuccessBein,
-  refreshAuthTokens,
   getTokenAndCallBackBein,
 };
