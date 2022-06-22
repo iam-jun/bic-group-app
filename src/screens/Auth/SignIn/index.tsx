@@ -8,13 +8,11 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
-  ImageBackground,
   Platform,
   Dimensions,
   ScrollView,
 } from 'react-native';
 import {Modal, useTheme} from 'react-native-paper';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import Animated, {
@@ -143,19 +141,16 @@ const SignIn = () => {
         );
       }
     });
-    const keyboardWillHideListener = Keyboard.addListener(
-      dismissEvent,
-      event => {
-        keyboardHeightValue.value = withTiming(
-          0,
-          {
-            duration: 200,
-          },
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          () => {},
-        );
-      },
-    );
+    const keyboardWillHideListener = Keyboard.addListener(dismissEvent, () => {
+      keyboardHeightValue.value = withTiming(
+        0,
+        {
+          duration: 200,
+        },
+        // eslint-disable-next-line @typescript-eslint/no-empty-function
+        () => {},
+      );
+    });
 
     return () => {
       keyboardWillHideListener.remove();
@@ -440,7 +435,6 @@ const SignIn = () => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const insets = useSafeAreaInsets();
   const {spacing, colors} = theme;
   const textStyle = createTextStyle(theme);
 
