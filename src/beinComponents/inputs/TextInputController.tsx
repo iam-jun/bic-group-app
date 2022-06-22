@@ -1,13 +1,10 @@
 import React from 'react';
 import {useController} from 'react-hook-form';
-import {useTheme} from 'react-native-paper';
 
 import {IObject} from '~/interfaces/common';
-import {ITheme} from '~/theme/interfaces';
 import TextInput, {TextInputProps} from './TextInput';
-import {fontFamilies} from '~/theme/fonts';
 
-interface Props extends TextInputProps {
+interface Props extends Partial<TextInputProps> {
   useFormData: IObject<any>;
   validateValue: (text: string) => void;
   name: string;
@@ -20,7 +17,6 @@ interface Props extends TextInputProps {
   helperAction?: string;
   helperContentTriggerAction?: string;
   helperContent?: string;
-  mode?: string;
 }
 
 const TextInputController: React.FC<Props> = ({
@@ -36,8 +32,6 @@ const TextInputController: React.FC<Props> = ({
   placeholder,
   helperContentTriggerAction,
   helperContent,
-  mode = 'outlined',
-  disabled,
   ...props
 }) => {
   const {
@@ -54,9 +48,6 @@ const TextInputController: React.FC<Props> = ({
     defaultValue: defaultValue || '',
   });
 
-  const theme: ITheme = useTheme() as ITheme;
-  const {spacing, colors} = theme;
-
   return (
     <TextInput
       testID={testID}
@@ -64,7 +55,6 @@ const TextInputController: React.FC<Props> = ({
       placeholder={placeholder}
       error={errors?.code}
       value={value}
-      // editable={!loading}
       onChangeText={text => {
         onChange(text.trim());
         validateValue(text);
