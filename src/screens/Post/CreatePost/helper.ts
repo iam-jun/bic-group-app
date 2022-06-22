@@ -163,26 +163,19 @@ export const validateFilesPicker = (
 
   const remainningFilesCount = appConfig.maxFiles - totalFiles;
 
-  const sortedFilesBySize = files.sort(function (a, b) {
-    return a.size - b.size;
-  });
-
-  let results: IFilePicked[] = sortedFilesBySize;
+  let results: IFilePicked[] = [];
 
   let size = 0;
 
-  for (let index = 0; index < sortedFilesBySize.length; index++) {
-    const file = sortedFilesBySize[index];
-    size += file.size;
-
-    if (size + totalSize > appConfig.totalFileSize) {
-      toastMessage = i18n.t('upload:text_file_over_size');
-
-      results = sortedFilesBySize.slice(0, index);
-
-      break;
+  files.forEach((file: IFilePicked) => {
+    if (size + file.size + totalSize <= appConfig.totalFileSize) {
+      size += file.size;
+      results.push(file);
     }
-  }
+  });
+
+  if (results.length < files.length)
+    toastMessage = i18n.t('upload:text_file_over_size');
 
   if (results.length > remainningFilesCount) {
     toastMessage = i18n.t('upload:text_file_over_length', {
@@ -210,22 +203,19 @@ export const clearExistingFiles = (
   newFiles: IFilePicked[],
 ): IFilePicked[] => {
   const fileResult: IFilePicked[] = [];
-
   newFiles.forEach(newFile => {
     let isExisting = false;
 
-    for (let index = 0; index < files.length; index++) {
-      const file = files[index];
+    files.some(file => {
       if (newFile.name === file.name && newFile.size === file.size) {
         isExisting = true;
-        break;
+        return;
       }
-    }
+    });
 
     if (!isExisting) {
       fileResult.push(newFile);
     }
   });
-
   return fileResult;
 };
