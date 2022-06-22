@@ -106,7 +106,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
     <TouchableComponent
       nativeID={nativeID}
       testID={testID}
-      style={style}
+      style={StyleSheet.flatten([style])}
       disabled={!isInternetReachable || disabled}
       underlayColor={underlayColor}
       hitSlop={hitSlop}
@@ -116,14 +116,14 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
       onLayout={onLayout}>
       <View
         testID="button_wrapper.content"
-        style={[
+        style={StyleSheet.flatten([
           {
             flexDirection: 'row',
             alignItems: 'center',
             justifyContent: 'center',
           },
           contentStyle,
-        ]}>
+        ])}>
         {renderLoading()}
         {renderIcon(leftIcon, leftIconProps)}
         {typeof children === 'string' ? (
