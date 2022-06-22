@@ -1,13 +1,14 @@
 import React, {FC, memo, useEffect, useState} from 'react';
-import {View, StyleProp, TouchableOpacity, ViewStyle} from 'react-native';
+import {View, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
-import i18next from 'i18next';
 
 import {useBaseHook} from '~/hooks';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import MarkdownView from '~/beinComponents/MarkdownView';
 import Markdown from '~/beinComponents/Markdown';
+import CopyableView from '../CopyableView';
+import {escapeMarkDown} from '~/utils/formatData';
 
 export interface CollapsibleTextProps extends TextProps {
   style?: StyleProp<ViewStyle>;
@@ -133,13 +134,14 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   };
 
   return (
-    <TouchableOpacity
+    <CopyableView
       testID={testID}
       activeOpacity={0.6}
+      content={escapeMarkDown(content)}
       disabled={!(onPress || (toggleOnPress && shortContent))}
       onPress={_onPress}>
       {useMarkdown ? renderContentWithMarkdown() : renderContent()}
-    </TouchableOpacity>
+    </CopyableView>
   );
 };
 
