@@ -173,10 +173,15 @@ const PostToolbar = ({
   const onPressAddFile = async () => {
     try {
       const files: any = await DocumentPicker.openPickerMultiple();
-      const valid = validateFilesPicker(files, totalFiles, totalSize, dispatch);
-      if (!valid) return;
+      const validFiles = validateFilesPicker(
+        files,
+        totalFiles,
+        totalSize,
+        dispatch,
+      );
+      if (validFiles.length === 0) return;
 
-      const newFiles = clearExistingFiles(selectedFiles, files);
+      const newFiles = clearExistingFiles(selectedFiles, validFiles);
       if (isEmpty(newFiles)) return;
 
       dispatch(postActions.addCreatePostFiles(newFiles));

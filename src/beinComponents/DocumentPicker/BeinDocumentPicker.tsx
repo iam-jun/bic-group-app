@@ -19,6 +19,7 @@ export const supportedTypes = [
   'xlsx',
   'ppt',
   'pptx',
+  'zip',
 ];
 
 export default BeinDocumentPicker;
