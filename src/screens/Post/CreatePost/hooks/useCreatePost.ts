@@ -449,7 +449,6 @@ const useCreatePost = ({screenParams, mentionInputRef}: IUseCreatePost) => {
         }
         setLoading(false);
       }
-      console.log('isEdit', isEdit);
       if (!isEdit) {
         dispatch(postActions.setSavingDraftPost(false));
         setShowToastAutoSave(true);

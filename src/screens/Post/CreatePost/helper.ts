@@ -1,10 +1,10 @@
 import {Platform} from 'react-native';
 import deviceInfoModule from 'react-native-device-info';
 import appConfig from '~/configs/appConfig';
-import {IFilePicked, IToastMessage} from '~/interfaces/common';
+import {IFilePicked} from '~/interfaces/common';
 import {IActivityDataFile, IActivityDataImage} from '~/interfaces/IPost';
 import i18n from '~/localization';
-import FileUploader, {IGetFile} from '~/services/fileUploader';
+import FileUploader from '~/services/fileUploader';
 import {showHideToastMessage} from '~/store/modal/actions';
 import {
   CONTENT_INSET_HEIGHT,
@@ -154,43 +154,55 @@ export const validateFiles = (selectingFiles: IFilePicked[], t: any) => {
 };
 
 export const validateFilesPicker = (
-  files: IGetFile[],
+  files: IFilePicked[],
   totalFiles: number,
   totalSize: number,
   dispatch: any,
-): boolean => {
-  if (files.length + totalFiles > appConfig.maxFiles) {
-    const toastMessage: IToastMessage = {
-      content: i18n.t('upload:text_file_over_length', {
-        max_files: appConfig.maxFiles,
-      }),
-      props: {
-        type: 'error',
-      },
-    };
-    dispatch(showHideToastMessage(toastMessage));
-    return false;
-  }
+): IFilePicked[] => {
+  let toastMessage: string | null = null;
 
-  let size = 0;
-  files.forEach((file: IGetFile) => {
-    size += file.size;
+  const remainningFilesCount = appConfig.maxFiles - totalFiles;
+
+  const sortedFilesBySize = files.sort(function (a, b) {
+    return a.size - b.size;
   });
 
-  if (size + totalSize > appConfig.totalFileSize) {
-    const toastMessage: IToastMessage = {
-      content: i18n.t('upload:text_file_over_size', {
-        max_files: appConfig.maxFiles,
-      }),
-      props: {
-        type: 'error',
-      },
-    };
-    dispatch(showHideToastMessage(toastMessage));
-    return false;
+  let results: IFilePicked[] = sortedFilesBySize;
+
+  let size = 0;
+
+  for (let index = 0; index < sortedFilesBySize.length; index++) {
+    const file = sortedFilesBySize[index];
+    size += file.size;
+
+    if (size + totalSize > appConfig.totalFileSize) {
+      toastMessage = i18n.t('upload:text_file_over_size');
+
+      results = sortedFilesBySize.slice(0, index);
+
+      break;
+    }
   }
 
-  return true;
+  if (results.length > remainningFilesCount) {
+    toastMessage = i18n.t('upload:text_file_over_length', {
+      max_files: appConfig.maxFiles,
+    });
+
+    results = results.slice(0, remainningFilesCount);
+  }
+
+  if (toastMessage)
+    dispatch(
+      showHideToastMessage({
+        content: toastMessage,
+        props: {
+          type: 'error',
+        },
+      }),
+    );
+
+  return results;
 };
 
 export const clearExistingFiles = (
@@ -198,19 +210,22 @@ export const clearExistingFiles = (
   newFiles: IFilePicked[],
 ): IFilePicked[] => {
   const fileResult: IFilePicked[] = [];
+
   newFiles.forEach(newFile => {
     let isExisting = false;
 
-    files.some(file => {
+    for (let index = 0; index < files.length; index++) {
+      const file = files[index];
       if (newFile.name === file.name && newFile.size === file.size) {
         isExisting = true;
-        return;
+        break;
       }
-    });
+    }
 
     if (!isExisting) {
       fileResult.push(newFile);
     }
   });
+
   return fileResult;
 };
