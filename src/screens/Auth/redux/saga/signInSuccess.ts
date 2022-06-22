@@ -1,11 +1,9 @@
-import i18n from 'i18next';
 import {delay, put} from 'redux-saga/effects';
 import {IObject} from '~/interfaces/common';
 import {IUserResponse} from '~/interfaces/IAuth';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {rootSwitch} from '~/router/stack';
-import {refreshAuthTokens} from '~/services/httpApiRequest';
 import {
   getUserFromSharedPreferences,
   saveUserToSharedPreferences,
@@ -52,22 +50,8 @@ export default function* signInSuccess({
 
   yield put(actions.setUser(userResponse));
 
-  // @ts-ignore
-  const refreshSuccess = yield refreshAuthTokens();
-  if (!refreshSuccess) {
-    yield put(actions.signOut(false));
-    yield onSignInFailed(i18n.t('error:http:unknown'));
-    return;
-  }
-
   navigation.replace(rootSwitch.mainStack);
   yield put(actions.setLoading(false));
   yield delay(500); // Delay to avoid showing authStack
   yield put(modalActions.hideLoading());
-}
-
-function* onSignInFailed(errorMessage: string) {
-  yield put(modalActions.hideLoading());
-  yield put(actions.setLoading(false));
-  yield put(actions.setSigningInError(errorMessage));
 }

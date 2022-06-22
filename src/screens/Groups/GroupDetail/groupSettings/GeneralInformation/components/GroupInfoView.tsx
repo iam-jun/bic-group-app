@@ -17,6 +17,9 @@ interface Props {
 const GroupInfoView = ({id, onPressPrivacy}: Props) => {
   const {name, description, privacy} =
     useKeySelector(groupsKeySelector.groupDetail.group) || {};
+  const can_edit_privacy = useKeySelector(
+    groupsKeySelector.groupDetail.can_edit_privacy,
+  );
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
@@ -44,13 +47,15 @@ const GroupInfoView = ({id, onPressPrivacy}: Props) => {
         rightIcon={'AngleRightB'}
       />
 
-      <GroupSectionItem
-        testID="group_info_view.privacy"
-        title={'settings:title_privacy'}
-        subtitle={titleCase(privacy) || ''}
-        rightIcon={'EditAlt'}
-        onPress={onPressPrivacy}
-      />
+      {!!can_edit_privacy && (
+        <GroupSectionItem
+          testID="group_info_view.privacy"
+          title={'settings:title_privacy'}
+          subtitle={titleCase(privacy) || ''}
+          rightIcon={'EditAlt'}
+          onPress={onPressPrivacy}
+        />
+      )}
     </View>
   );
 };
