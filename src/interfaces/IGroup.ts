@@ -94,8 +94,12 @@ export interface IGroupDetailEdit {
 
 export interface IGroupDetail {
   group: IGroup;
-  can_manage_member: boolean;
   can_setting: boolean;
+  can_edit_info?: boolean;
+  can_edit_privacy?: boolean;
+  can_manage_member?: boolean;
+  can_leave?: boolean;
+  can_manage_scheme?: boolean;
   join_status: number;
   total_pending_members: number;
 }
