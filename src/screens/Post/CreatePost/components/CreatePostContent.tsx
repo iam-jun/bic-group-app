@@ -31,6 +31,7 @@ import {IGetFile} from '~/services/fileUploader';
 import VideoPlayer from '~/beinComponents/VideoPlayer';
 import {getTotalFileSize} from '../../redux/selectors';
 import appConfig from '~/configs/appConfig';
+import Button from '~/beinComponents/Button';
 
 interface Props {
   groupIds: any[];
@@ -214,6 +215,8 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
                   onSuccess={handleUploadVideoSuccess}
                 />
               ) : null}
+            </View>
+            <Button activeOpacity={1}>
               <FilesView
                 files={files}
                 uploadType={uploadTypes.postFile}
@@ -222,7 +225,7 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
                 onError={() => onUploadError('file')}
                 onSuccess={handleUploadFileSuccess}
               />
-            </View>
+            </Button>
           </Animated.View>
         </View>
       </ScrollView>
