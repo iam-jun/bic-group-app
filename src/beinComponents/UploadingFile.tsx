@@ -117,13 +117,15 @@ const UploadingFile: FC<UploadingFileProps> = ({
       onClose?.(file);
       FileUploader.getInstance().cancel(file);
     } else {
+      const type = uploadType?.split('_')[1];
+
       dispatch(
         modalActions.showAlert({
           title: t('upload:title_delete_file', {
-            file_type: t(`file_type:${uploadType}`),
+            file_type: t(`file_type:${type}`),
           }),
           content: t('upload:text_delete_file', {
-            file_type: t(`file_type:${uploadType}`),
+            file_type: t(`file_type:${type}`),
           }),
           cancelBtn: true,
           cancelLabel: t('common:btn_cancel'),
