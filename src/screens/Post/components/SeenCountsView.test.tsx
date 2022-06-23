@@ -5,19 +5,19 @@ import {fireEvent} from '~/test/testUtils';
 afterEach(cleanup);
 
 describe('SeenCountsView', () => {
-  it(`renders correctly`, () => {
+  it(`renders correctly seen counts view`, () => {
     const rendered = render(<SeenCountsView />).toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
-  it('onpress seen by', () => {
+  it('press container should call prop onPress', () => {
     const onPress = jest.fn();
     const {getByTestId} = render(
       <SeenCountsView seenPeopleCount={3} onPress={onPress} />,
     );
-    const seenCountsViewComponent = getByTestId('text_seen_counts');
+    const seenCountsViewComponent = getByTestId('txtSeenCountsTestID');
     expect(seenCountsViewComponent.props.children[1]).toBe(3);
-    const btn = getByTestId('onPress_seen_by');
+    const btn = getByTestId('btnSeenCountsTestID');
     fireEvent.press(btn);
     expect(onPress).toBeCalled();
   });

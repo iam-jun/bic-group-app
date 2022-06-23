@@ -27,11 +27,11 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
       <TouchableOpacity
         onPress={() => _onPress()}
         activeOpacity={1}
-        testID={'onPress_seen_by'}>
+        testID={'btnSeenCountsTestID'}>
         <Text.H6
           color={colors.iconTintLight}
           numberOfLines={1}
-          testID={'text_seen_counts'}>
+          testID={'txtSeenCountsTestID'}>
           {t('post:label_seen_by')}
           {seenPeopleCount}
         </Text.H6>
