@@ -127,6 +127,9 @@ export const getScreenAndParams = (data: any) => {
         case NOTIFICATION_TYPE.COMMENT.POST_CREATOR:
         case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_POST:
         case NOTIFICATION_TYPE.COMMENT.USER_COMMENTED_ON_POST:
+        case NOTIFICATION_TYPE.COMMENT.POST_CREATOR_AGGREGATED:
+        case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_POST_AGGREGATED:
+        case NOTIFICATION_TYPE.COMMENT.USER_COMMENTED_ON_POST_AGGREGATED:
           return {
             screen: 'home',
             params: {
@@ -143,7 +146,7 @@ export const getScreenAndParams = (data: any) => {
             screen: 'home',
             params: {
               screen: 'comment-detail',
-              params: {post_id: postId, commentId: commentId},
+              params: {postId: postId, commentId: commentId},
             },
           };
 
@@ -162,7 +165,7 @@ export const getScreenAndParams = (data: any) => {
             params: {
               screen: 'comment-detail',
               params: {
-                post_id: postId,
+                postId: postId,
                 commentId: child?.commentId,
                 parentId: commentId,
               },

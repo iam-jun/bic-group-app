@@ -25,6 +25,9 @@ const CommunityAdmin = () => {
     id: communityId,
     name,
     icon,
+    can_manage_scheme,
+    can_edit_info,
+    can_manage_member,
   } = useKeySelector(groupsKeySelector.communityDetail);
   const {total} = useKeySelector(groupsKeySelector.communityMemberRequests);
 
@@ -42,7 +45,11 @@ const CommunityAdmin = () => {
   };
 
   const onPressGeneralInfo = () => {
-    // TODO: navigate to general info
+    displayNewFeature();
+  };
+
+  const onPressPermission = () => {
+    rootNavigation.navigate(groupStack.communityPermission);
   };
 
   const renderModerating = () => (
@@ -54,16 +61,21 @@ const CommunityAdmin = () => {
         useI18n>
         settings:title_community_moderating
       </Text.Body>
-      <MenuItem
-        testID={'community_admin.pending_members'}
-        title={'settings:title_pending_members'}
-        icon={'UserExclamation'}
-        iconProps={{icon: 'UserExclamation', tintColor: theme.colors.primary6}}
-        notificationsBadgeNumber={total}
-        notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
-        rightSubIcon="AngleRightB"
-        onPress={onPressPendingMembers}
-      />
+      {!!can_manage_member && (
+        <MenuItem
+          testID={'community_admin.pending_members'}
+          title={'settings:title_pending_members'}
+          icon={'UserExclamation'}
+          iconProps={{
+            icon: 'UserExclamation',
+            tintColor: theme.colors.primary6,
+          }}
+          notificationsBadgeNumber={total}
+          notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
+          rightSubIcon="AngleRightB"
+          onPress={onPressPendingMembers}
+        />
+      )}
       <MenuItem
         testID={'community_admin.pending_posts'}
         title={'settings:title_pending_posts'}
@@ -89,27 +101,31 @@ const CommunityAdmin = () => {
         useI18n>
         settings:title_community_settings
       </Text.Body>
-      <MenuItem
-        testID="community_admin.profile_info"
-        title="settings:title_profile_info"
-        icon="Cog"
-        iconProps={{icon: 'Cog', tintColor: theme.colors.primary6}}
-        rightSubIcon="AngleRightB"
-        onPress={onPressGeneralInfo}
-      />
+      {!!can_edit_info && (
+        <MenuItem
+          testID="community_admin.profile_info"
+          title="settings:title_profile_info"
+          icon="Cog"
+          iconProps={{icon: 'Cog', tintColor: theme.colors.primary6}}
+          rightSubIcon="AngleRightB"
+          onPress={onPressGeneralInfo}
+        />
+      )}
+      {!!can_manage_scheme && (
+        <MenuItem
+          testID="community_admin.permission_settings"
+          title="settings:title_permission_settings"
+          icon="FileLockAlt"
+          iconProps={{icon: 'FileLockAlt', tintColor: theme.colors.primary6}}
+          rightSubIcon="AngleRightB"
+          onPress={onPressPermission}
+        />
+      )}
       <MenuItem
         testID="community_admin.post_settings"
         title="settings:title_post_settings"
         icon="FileCopyAlt"
         iconProps={{icon: 'FileCopyAlt', tintColor: theme.colors.primary6}}
-        rightSubIcon="AngleRightB"
-        onPress={displayNewFeature}
-      />
-      <MenuItem
-        testID="community_admin.membership_settings"
-        title="settings:title_membership_settings"
-        icon="UserCircle"
-        iconProps={{icon: 'UserCircle', tintColor: theme.colors.primary6}}
         rightSubIcon="AngleRightB"
         onPress={displayNewFeature}
       />

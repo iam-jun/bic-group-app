@@ -2,7 +2,6 @@ import {StyleProp, ViewStyle} from 'react-native';
 import React, {useRef} from 'react';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import i18next from 'i18next';
 
 import ButtonApproveDeclineAllRequests from '~/screens/Groups/components/ButtonApproveDeclineAllRequests';
 import groupsActions from '../../redux/actions';
@@ -19,6 +18,7 @@ import Button from '~/beinComponents/Button';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import {IToastMessage} from '~/interfaces/common';
+import {useBaseHook} from '~/hooks';
 
 interface ActionProps {
   style?: StyleProp<ViewStyle>;
@@ -29,6 +29,7 @@ const ApproveDeclineAllRequests = ({style}: ActionProps) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const timeOutRef = useRef<any>();
+  const {t} = useBaseHook();
 
   const {id: communityId, name} = useKeySelector(
     groupsKeySelector.communityDetail,
@@ -49,7 +50,7 @@ const ApproveDeclineAllRequests = ({style}: ActionProps) => {
         textColor: theme.colors.primary7,
       },
       onConfirm: doAction,
-      confirmLabel: i18next.t('common:btn_confirm'),
+      confirmLabel: t('common:btn_confirm'),
       ConfirmBtnComponent: Button.Secondary,
       confirmBtnProps: {highEmphasis: true},
     };
@@ -59,8 +60,8 @@ const ApproveDeclineAllRequests = ({style}: ActionProps) => {
 
   const onPressDeclineAll = () => {
     alertAction(
-      i18next.t('groups:text_respond_all_member_requests:title:decline'),
-      i18next.t('groups:text_respond_all_member_requests:content:decline', {
+      t('groups:text_respond_all_member_requests:title:decline'),
+      t('groups:text_respond_all_member_requests:content:decline', {
         count: total,
       }),
       doDeclineAll,
@@ -72,9 +73,7 @@ const ApproveDeclineAllRequests = ({style}: ActionProps) => {
     dispatch(groupsActions.resetCommunityMemberRequests());
 
     const toastMessage: IToastMessage = {
-      content: `${i18next.t('groups:text_declining_all', {
-        count: total,
-      })}`,
+      content: `${t('groups:text_declining_all')}`,
       props: {
         textProps: {useI18n: true},
         type: 'informative',
@@ -87,12 +86,7 @@ const ApproveDeclineAllRequests = ({style}: ActionProps) => {
     dispatch(showHideToastMessage(toastMessage));
 
     timeOutRef.current = setTimeout(() => {
-      dispatch(
-        groupsActions.declineAllCommunityMemberRequests({
-          communityId,
-          total: total,
-        }),
-      );
+      dispatch(groupsActions.declineAllCommunityMemberRequests({communityId}));
     }, 4500);
   };
 
@@ -104,12 +98,10 @@ const ApproveDeclineAllRequests = ({style}: ActionProps) => {
 
   const onPressApproveAll = () => {
     alertAction(
-      i18next.t('groups:text_respond_all_member_requests:title:approve'),
-      i18next
-        .t('groups:text_respond_all_member_requests:content:approve', {
-          count: total,
-        })
-        .replace('{0}', name),
+      t('groups:text_respond_all_member_requests:title:approve'),
+      t('groups:text_respond_all_member_requests:content:approve', {
+        count: total,
+      }).replace('{0}', name),
       doApproveAll,
     );
   };
@@ -118,7 +110,6 @@ const ApproveDeclineAllRequests = ({style}: ActionProps) => {
     dispatch(
       groupsActions.approveAllCommunityMemberRequests({
         communityId,
-        total,
         callback: navigateToCommunityMembers,
       }),
     );

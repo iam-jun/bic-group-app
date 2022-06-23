@@ -3,7 +3,6 @@ import {get} from 'lodash';
 import {languages} from '~/test/testUtils';
 import FileUploader from '~/services/fileUploader';
 import {imagePicked, videoSelected, videoUploaded} from '~/test/mock_data/file';
-import VideoUploader from '~/services/videoUploader';
 
 describe('CreatePost helper', () => {
   // @ts-ignore
@@ -114,7 +113,7 @@ describe('CreatePost helper', () => {
   });
 
   it('validateVideo: return error uploading file', () => {
-    jest.spyOn(VideoUploader, 'getInstance').mockImplementation(() => {
+    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
       return {
         getFile: jest
           .fn()
@@ -131,7 +130,7 @@ describe('CreatePost helper', () => {
   });
 
   it('validateVideo: return error upload failed', () => {
-    jest.spyOn(VideoUploader, 'getInstance').mockImplementation(() => {
+    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
       return {
         getFile: jest
           .fn()
@@ -148,7 +147,7 @@ describe('CreatePost helper', () => {
   });
 
   it('validateVideo: return file uploaded', () => {
-    jest.spyOn(VideoUploader, 'getInstance').mockImplementation(() => {
+    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
       return {
         getFile: jest.fn().mockImplementation(() => ({
           uploading: false,

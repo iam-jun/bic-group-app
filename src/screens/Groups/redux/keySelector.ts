@@ -2,7 +2,10 @@ const groupsKeySelector = {
   groupDetail: {
     group: 'groups.groupDetail.group',
     can_setting: 'groups.groupDetail.can_setting',
+    can_edit_info: 'groups.groupDetail.can_edit_info',
+    can_edit_privacy: 'groups.groupDetail.can_edit_privacy',
     can_manage_member: 'groups.groupDetail.can_manage_member',
+    can_manage_scheme: 'groups.groupDetail.can_manage_scheme',
     join_status: 'groups.groupDetail.join_status',
     total_pending_members: 'groups.groupDetail.total_pending_members',
   },
@@ -12,7 +15,7 @@ const groupsKeySelector = {
   groupSearch: 'groups.groupSearch',
   refreshingGroupPosts: 'groups.refreshingGroupPosts',
   loadingGroupMember: 'groups.loadingGroupMember',
-  groupMember: 'groups.groupMember',
+  groupMembers: 'groups.groupMembers',
   groupSearchMembers: 'groups.groupSearchMembers',
   selectedUsers: 'groups.selectedUsers',
   users: 'groups.users',
@@ -36,6 +39,20 @@ const groupsKeySelector = {
   communitySearchMembers: 'groups.communitySearchMembers',
   discoverGroups: 'groups.discoverGroups',
   communityMemberRequests: 'groups.communityMemberRequests',
+  permission: {
+    categories: 'groups.permissionScheme.categories',
+    systemScheme: 'groups.permissionScheme.systemScheme',
+    schemes: 'groups.permissionScheme.schemes',
+    communityScheme: 'groups.permissionScheme.communityScheme',
+    creatingScheme: {
+      name: 'groups.permissionScheme.creatingScheme.data.name',
+      description: 'groups.permissionScheme.creatingScheme.data.description',
+      roles: 'groups.permissionScheme.creatingScheme.data.roles',
+      memberRoleIndex: 'groups.permissionScheme.creatingScheme.memberRoleIndex',
+      creating: 'groups.permissionScheme.creatingScheme.creating',
+    },
+  },
+  communitySearch: 'groups.communitySearch',
 };
 
 export default groupsKeySelector;

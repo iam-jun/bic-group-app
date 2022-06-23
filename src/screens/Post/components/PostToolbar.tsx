@@ -1,3 +1,4 @@
+import {isEmpty, throttle} from 'lodash';
 import React, {useImperativeHandle, useRef, useState} from 'react';
 import {
   Animated,
@@ -7,54 +8,52 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {throttle} from 'lodash';
-import {useTheme} from 'react-native-paper';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {GestureEvent} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
+import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-
 import BottomSheet from '~/beinComponents/BottomSheet/index';
-import Text from '~/beinComponents/Text';
+import DocumentPicker from '~/beinComponents/DocumentPicker';
 import Icon from '~/beinComponents/Icon';
-import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
-
-import {ITheme} from '~/theme/interfaces';
-
-import postActions from '~/screens/Post/redux/actions';
-import {useBaseHook} from '~/hooks';
-
 import ImagePicker from '~/beinComponents/ImagePicker';
-import {useRootNavigation} from '~/hooks/navigation';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import {ICreatePostImage} from '~/interfaces/IPost';
-import {useKeySelector} from '~/hooks/selector';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import appConfig from '~/configs/appConfig';
-import {showHideToastMessage} from '~/store/modal/actions';
-import {checkPermission} from '~/utils/permission';
+import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import {tryOpenURL} from '~/beinComponents/Markdown/utils/url.js';
-import ReviewMarkdown from './ReviewMarkdown';
+import Text from '~/beinComponents/Text';
+import appConfig from '~/configs/appConfig';
+import {useBaseHook} from '~/hooks';
+import {useRootNavigation} from '~/hooks/navigation';
+import {useKeySelector} from '~/hooks/selector';
+import {ICreatePostImage} from '~/interfaces/IPost';
+import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import postActions from '~/screens/Post/redux/actions';
+import postKeySelector from '~/screens/Post/redux/keySelector';
+import {showHideToastMessage} from '~/store/modal/actions';
+import {ITheme} from '~/theme/interfaces';
 import {getChatDomain} from '~/utils/link';
+import {checkPermission} from '~/utils/permission';
+import {clearExistingFiles, validateFilesPicker} from '../CreatePost/helper';
+import {getTotalFileSize} from '../redux/selectors';
+import ReviewMarkdown from './ReviewMarkdown';
 
 export interface PostToolbarProps {
   toolbarRef?: any;
   style?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
-  onPressBack?: () => void;
   disabled?: boolean;
   imageDisabled?: boolean;
   videoDisabled?: boolean;
   fileDisabled?: boolean;
+  onPressBack?: () => void;
 }
 
 const PostToolbar = ({
   toolbarRef,
   style,
   containerStyle,
-  onPressBack,
   imageDisabled,
   videoDisabled,
   fileDisabled,
+  onPressBack,
   ...props
 }: PostToolbarProps) => {
   const animated = useRef(new Animated.Value(0)).current;
@@ -71,6 +70,9 @@ const PostToolbar = ({
     postKeySelector.createPost.images,
   );
   const content = useKeySelector(postKeySelector.createPost.content);
+  const selectedFiles = useKeySelector(postKeySelector.createPost.files);
+  const {totalFiles, totalSize} = getTotalFileSize();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const openModal = throttle((e?: any) => {
@@ -168,8 +170,27 @@ const PostToolbar = ({
       });
   };
 
-  const onPressAddFile = () => {
-    // TODO
+  const onPressAddFile = async () => {
+    try {
+      const files: any = await DocumentPicker.openPickerMultiple();
+      const validFiles = validateFilesPicker(
+        files,
+        totalFiles,
+        totalSize,
+        dispatch,
+      );
+      if (validFiles.length === 0) return;
+
+      const newFiles = clearExistingFiles(selectedFiles, validFiles);
+      if (isEmpty(newFiles)) return;
+
+      dispatch(postActions.addCreatePostFiles(newFiles));
+    } catch (e) {
+      console.log(
+        `\x1b[36m🐣️ DocumentPicker.openPickerSingle error: \x1b[0m`,
+        e,
+      );
+    }
   };
 
   const onPressHelp = () => {
@@ -182,11 +203,13 @@ const PostToolbar = ({
     testID: string,
     onPressIcon?: (e: any) => void,
   ) => {
+    const tintColor = onPressIcon ? colors.iconTint : colors.textDisabled;
+
     return (
       <View style={styles.toolbarButton}>
         <Icon
           size={20}
-          tintColor={onPressIcon ? colors.iconTint : colors.textDisabled}
+          tintColor={tintColor}
           icon={icon}
           buttonTestID={testID}
           onPress={onPressIcon}
@@ -218,7 +241,7 @@ const PostToolbar = ({
               !videoDisabled ? _onPressSelectVideo : undefined,
             )}
             {renderToolbarButton(
-              'Link',
+              'attachment',
               'post_toolbar.add_file',
               !fileDisabled ? onPressAddFile : undefined,
             )}
@@ -253,7 +276,6 @@ const PostToolbar = ({
       ContentComponent={<ReviewMarkdown onPressDone={closeModal} />}
       panGestureAnimatedValue={animated}
       modalStyle={styles.modalStyle}
-      side={'right'}
       {...props}>
       {renderToolbar()}
     </BottomSheet>

@@ -34,6 +34,7 @@ const CommentDetail = (props: any) => {
   useEffect(() => {
     return () => {
       dispatch(postActions.setCommentErrorCode(false));
+      dispatch(postActions.setLoadingGetPostDetail(false));
     };
   }, []);
 

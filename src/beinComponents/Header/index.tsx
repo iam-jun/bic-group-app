@@ -28,6 +28,7 @@ import {ITheme} from '~/theme/interfaces';
 import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
 import IconChat from '../IconChat';
 import {ImageProps} from '../Image';
+import {debounce} from 'lodash';
 
 export interface HeaderProps {
   headerRef?: any;
@@ -188,6 +189,10 @@ const Header: React.FC<HeaderProps> = ({
   const _onSearchText = (text: string) => {
     onSearchText?.(text, inputRef);
   };
+
+  const _onPressButton = debounce(() => {
+    onPressButton?.();
+  });
 
   const insetTop = disableInsetTop ? 0 : insets.top;
   const contentHeight = dimension?.headerHeight || 44;
@@ -357,7 +362,7 @@ const Header: React.FC<HeaderProps> = ({
                 marginRight: spacing.margin.tiny,
               }}
               textColor={colors.primary6}
-              onPress={onPressButton}
+              onPress={_onPressButton}
               textProps={{testID: 'header.button.text'}}
               {...buttonProps}>
               {buttonText}

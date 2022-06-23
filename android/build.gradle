@@ -50,10 +50,10 @@ allprojects {
         }
         google()
         maven { url 'https://www.jitpack.io' }
-        maven {
-            // expo-camera bundles a custom com.google.android:cameraview
-            url "$rootDir/../node_modules/expo-camera/android/maven"
-        }
+        // maven {
+        //     // expo-camera bundles a custom com.google.android:cameraview
+        //     url "$rootDir/../node_modules/expo-camera/android/maven"
+        // }
         jcenter() {
             content {
                 includeModule("com.yqritc", "android-scalablevideoview")

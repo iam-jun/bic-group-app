@@ -12,6 +12,7 @@ import {formatFullTime} from '~/beinComponents/TimeView';
 import {AppContext} from '~/contexts/AppContext';
 import {IJoiningMember} from '~/interfaces/IGroup';
 import {useBaseHook} from '~/hooks';
+import Divider from '~/beinComponents/Divider';
 
 interface PendingUserItemProps {
   requestItem: IJoiningMember;
@@ -29,7 +30,7 @@ const PendingUserItem = ({
   const {t} = useBaseHook();
   const {language} = useContext(AppContext);
 
-  const {user, updated_at: updatedAt} = requestItem || {};
+  const {user, updated_at: updatedAt, isCanceled} = requestItem || {};
   const {
     avatar,
     fullname: fullName,
@@ -38,7 +39,6 @@ const PendingUserItem = ({
     phone,
     latest_work: latestWork,
     city,
-    country,
   } = user || {};
 
   const renderItem = ({
@@ -53,7 +53,7 @@ const PendingUserItem = ({
     return (
       (!!title || !!TitleComponent) && (
         <View style={styles.itemComponent}>
-          <Icon icon={icon} tintColor={theme.colors.primary5} size={24} />
+          <Icon icon={icon} tintColor={theme.colors.primary6} size={24} />
           <Text.Body style={styles.text}>{title}</Text.Body>
           {TitleComponent}
         </View>
@@ -64,7 +64,8 @@ const PendingUserItem = ({
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Avatar.Large source={avatar} />
+        <Avatar.Large source={avatar} isRounded />
+
         <View style={styles.textHeader}>
           <Text.ButtonBase>{fullName}</Text.ButtonBase>
           <Text.Body color={theme.colors.textSecondary}>
@@ -73,49 +74,59 @@ const PendingUserItem = ({
               language,
             )}`}
           </Text.Body>
+
+          <Divider style={{marginVertical: 8}} />
+
+          {renderItem({
+            icon: 'iconSuitcase',
+            title:
+              latestWork &&
+              `${latestWork?.title_position} ${t('common:text_at')} ${
+                latestWork?.company
+              }`,
+          })}
+          {renderItem({
+            icon: 'LocationPoint',
+            title: city,
+          })}
+          {renderItem({icon: 'Envelope', title: email})}
+          {renderItem({
+            icon: 'Phone',
+            title:
+              countryCode && phone ? `(+${countryCode}) ${phone}` : undefined,
+          })}
         </View>
       </View>
 
-      <View style={styles.aboutProfile}>
-        {renderItem({
-          icon: 'iconSuitcase',
-          title:
-            latestWork &&
-            `${latestWork?.title_position} ${t('common:text_at')} ${
-              latestWork?.company
-            }`,
-        })}
-        {renderItem({
-          icon: 'LocationPoint',
-          title: city && country ? `${city}, ${country}` : undefined,
-        })}
-        {renderItem({icon: 'Envelope', title: email})}
-        {renderItem({
-          icon: 'Phone',
-          title:
-            countryCode && phone ? `(+${countryCode}) ${phone}` : undefined,
-        })}
-      </View>
-
-      <View style={styles.buttons}>
-        <Button.Secondary
-          testID="pending_user_item.btn_decline"
-          style={styles.buttonDecline}
-          color={theme.colors.primary1}
-          onPress={onPressDecline}
-          useI18n>
-          common:btn_decline
-        </Button.Secondary>
-        <Button.Secondary
-          highEmphasis
-          testID="pending_user_item.btn_approve"
-          style={styles.buttonApprove}
-          color={theme.colors.primary6}
-          onPress={onPressApprove}
-          useI18n>
-          common:btn_approve
-        </Button.Secondary>
-      </View>
+      {isCanceled ? (
+        <View style={styles.hintMessage}>
+          <Icon style={{marginRight: 4}} icon={'InfoCircle'} size={18} />
+          <Text.Subtitle useI18n>
+            groups:text_request_been_canceled
+          </Text.Subtitle>
+        </View>
+      ) : (
+        <View style={styles.buttons}>
+          <Button.Secondary
+            testID="pending_user_item.btn_decline"
+            style={styles.buttonDecline}
+            color={theme.colors.bgHover}
+            textColor={theme.colors.textPrimary}
+            onPress={onPressDecline}
+            useI18n>
+            common:btn_decline
+          </Button.Secondary>
+          <Button.Secondary
+            highEmphasis
+            testID="pending_user_item.btn_approve"
+            style={styles.buttonApprove}
+            color={theme.colors.primary6}
+            onPress={onPressApprove}
+            useI18n>
+            common:btn_approve
+          </Button.Secondary>
+        </View>
+      )}
     </View>
   );
 };
@@ -133,6 +144,7 @@ const themeStyles = (theme: ITheme) => {
     textHeader: {
       marginLeft: spacing.margin.base,
       justifyContent: 'center',
+      flex: 1,
     },
     itemComponent: {
       flexDirection: 'row',
@@ -142,9 +154,6 @@ const themeStyles = (theme: ITheme) => {
     },
     text: {
       marginLeft: spacing.margin.large,
-    },
-    aboutProfile: {
-      marginTop: spacing.margin.large,
     },
     buttons: {
       flexDirection: 'row',
@@ -156,6 +165,11 @@ const themeStyles = (theme: ITheme) => {
     },
     buttonApprove: {
       flex: 1,
+    },
+    hintMessage: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      marginVertical: spacing.margin.tiny,
     },
   });
 };

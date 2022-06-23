@@ -4,7 +4,6 @@ import approveDeclineCode from '~/constants/approveDeclineCode';
 import {IToastMessage} from '~/interfaces/common';
 import showError from '~/store/commonSaga/showError';
 import modalActions from '~/store/modal/actions';
-import {approvalError} from '.';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import groupsActions from '../actions';
 
@@ -20,10 +19,15 @@ export default function* approveSingleCommunityMemberRequest({
 }) {
   const {communityId, requestId, fullName} = payload;
   try {
-    const {groups} = yield select();
-    const {total, ids, items} = groups.communityMemberRequests;
+    yield call(
+      groupsDataHelper.approveSingleCommunityMemberRequest,
+      communityId,
+      requestId,
+    );
 
     // Update data state
+    const {groups} = yield select();
+    const {total, ids, items} = groups.communityMemberRequests;
     const requestItems = {...items};
     delete requestItems[requestId];
     yield put(
@@ -32,12 +36,6 @@ export default function* approveSingleCommunityMemberRequest({
         ids: ids.filter((item: number) => item !== requestId),
         items: requestItems,
       }),
-    );
-
-    yield call(
-      groupsDataHelper.approveSingleCommunityMemberRequest,
-      communityId,
-      requestId,
     );
 
     const toastMessage: IToastMessage = {
@@ -53,11 +51,15 @@ export default function* approveSingleCommunityMemberRequest({
   } catch (err: any) {
     console.log('approveSingleCommunityMemberRequest: ', err);
 
-    // TODO: TO UPDATE FOR BOTH COMMUNITY & GROUP
-    // if (err?.code === approveDeclineCode.CANNOT_APPROVE) {
-    //   yield approvalError(communityId, err.code, fullName);
-    //   return;
-    // }
+    if (err?.code === approveDeclineCode.CANCELED) {
+      yield put(
+        groupsActions.editCommunityMemberRequest({
+          id: requestId,
+          data: {isCanceled: true},
+        }),
+      );
+      return;
+    }
 
     yield call(showError, err);
   }

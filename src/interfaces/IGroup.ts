@@ -2,6 +2,46 @@ import {GROUP_TYPE, PRIVACY_TYPE} from '~/constants/privacyTypes';
 import {IFilePicked, IObject} from './common';
 import {IUploadType} from '~/configs/resourceConfig';
 
+export interface IRole {
+  id?: string;
+  name?: string;
+  scope: string;
+  type: string;
+  permissions: string[];
+}
+
+export interface IPermission {
+  key: string;
+  name: string;
+  description: string;
+  scope: string;
+  restrictedRoles: string[];
+}
+
+export interface IScheme {
+  id?: string;
+  chatSchemeId?: string;
+  scope?: string;
+  roles: IRole[];
+  name: string;
+  description: string;
+  isSystem?: boolean;
+  usedInsideCommId?: string | number;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: string;
+}
+
+export interface ICategory {
+  key: string;
+  name: string;
+  subCategories: {
+    key: string;
+    name: string;
+    permissions: IPermission[];
+  }[];
+}
+
 export interface IGroup {
   id: number;
   name: string;
@@ -54,8 +94,12 @@ export interface IGroupDetailEdit {
 
 export interface IGroupDetail {
   group: IGroup;
-  can_manage_member: boolean;
   can_setting: boolean;
+  can_edit_info?: boolean;
+  can_edit_privacy?: boolean;
+  can_manage_member?: boolean;
+  can_leave?: boolean;
+  can_manage_scheme?: boolean;
   join_status: number;
   total_pending_members: number;
 }
@@ -70,14 +114,6 @@ export interface IParamGetGroupPosts {
   idGt?: number;
   idLt?: number;
   ranking?: 'IMPORTANT' | string;
-}
-
-export interface IParamGetCommunities {
-  key?: string;
-  offset?: number;
-  limit?: number;
-  sort?: string;
-  preview_members?: boolean;
 }
 
 export interface IParamGetGroupMembers {
@@ -101,6 +137,7 @@ export interface IGroupGetJoinableMembers {
 
 export interface IGroupGetMembers {
   groupId: number;
+  isRefreshing?: boolean;
   params?: IParamGetGroupMembers;
 }
 
@@ -143,6 +180,7 @@ export interface IJoiningMember {
   group_id: number;
   created_at: string;
   updated_at: string;
+  isCanceled?: boolean;
   user: IJoiningUserInfo;
 }
 

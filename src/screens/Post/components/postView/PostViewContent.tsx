@@ -15,12 +15,17 @@ import Markdown from '~/beinComponents/Markdown';
 import postKeySelector from '../../redux/keySelector';
 import VideoPlayer from '~/beinComponents/VideoPlayer';
 import UploadingFile from '~/beinComponents/UploadingFile';
+import FilesView from '../FilesView';
+import CopyableView from '~/beinComponents/CopyableView';
+import {escapeMarkDown} from '~/utils/formatData';
+import {isEmpty} from 'lodash';
 
 export interface PostViewContentProps {
   postId: string;
   content?: string;
   images?: IActivityDataImage[];
   videos?: any[];
+  files?: any[];
   isPostDetail: boolean;
   isLite?: boolean;
   isDraft?: boolean;
@@ -31,6 +36,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
   content = '',
   images = [],
   videos = [],
+  files = [],
   isPostDetail,
   isLite,
   isDraft,
@@ -48,7 +54,8 @@ const PostViewContent: FC<PostViewContentProps> = ({
   if (
     !content &&
     (!images || images?.length === 0) &&
-    (!videos || videos?.length === 0)
+    (!videos || videos?.length === 0) &&
+    isEmpty(files)
   ) {
     return null;
   }
@@ -86,11 +93,13 @@ const PostViewContent: FC<PostViewContentProps> = ({
     }
     if (isPostDetail) {
       return (
-        <Markdown
-          value={content}
-          selector={`${postKeySelector.allPosts}.${postId}.mentions`}
-          onPressAudience={onPressMentionAudience}
-        />
+        <CopyableView content={escapeMarkDown(content)}>
+          <Markdown
+            value={content}
+            selector={`${postKeySelector.allPosts}.${postId}.mentions`}
+            onPressAudience={onPressMentionAudience}
+          />
+        </CopyableView>
       );
     }
     return (
@@ -117,15 +126,22 @@ const PostViewContent: FC<PostViewContentProps> = ({
             uploadType={'postImage'}
             enableGalleryModal
           />
-          {isDraft ? (
+          {!isDraft && videos?.[0]?.thumbnails?.length > 0 ? (
+            <VideoPlayer data={videos?.[0]} postId={postId} />
+          ) : (
             <UploadingFile
               uploadType={uploadTypes.postVideo}
               file={videos?.[0]}
               disableClose
             />
-          ) : (
-            <VideoPlayer data={videos?.[0]} />
           )}
+
+          <FilesView
+            files={files}
+            disableClose
+            showDownload
+            collapsible={!isPostDetail}
+          />
         </>
       )}
     </View>

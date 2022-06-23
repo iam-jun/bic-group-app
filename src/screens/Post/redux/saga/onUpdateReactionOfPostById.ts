@@ -14,9 +14,11 @@ export default function* onUpdateReactionOfPostById(
     const post = yield select(state =>
       get(state, postKeySelector.postById(postId)),
     );
-    post.reactionsCount = reactionCounts;
-    post.ownerReactions = ownReaction;
-    yield put(postActions.addToAllPosts({data: post}));
+    if (!!post) {
+      post.reactionsCount = reactionCounts;
+      post.ownerReactions = ownReaction;
+      yield put(postActions.addToAllPosts({data: post}));
+    }
   } catch (e) {
     console.log('\x1b[31m', '🐣️ onUpdateReactionOfPost error: ', e, '\x1b[0m');
   }

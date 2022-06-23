@@ -2,6 +2,7 @@ import {AxiosRequestConfig} from 'axios';
 
 import {getEnv} from '~/utils/env';
 import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
+import appConfig from './appConfig';
 
 const providers = {
   bein: {
@@ -51,7 +52,7 @@ const Upload = {
       signal: abortSignal,
     };
   },
-  uploadFile: (
+  uploadImage: (
     type: any,
     data: FormData,
     onUploadProgress?: (progressEvent: any) => void,
@@ -96,20 +97,43 @@ const Upload = {
       data,
     };
   },
+  createFileId: (uploadType: string): HttpApiRequestConfig => {
+    const type = uploadType.split('_')[1];
+    return {
+      url: `${providers.beinUpload.url}${type}s`,
+      method: 'post',
+      provider: providers.beinUpload,
+      useRetry: true,
+    };
+  },
+  uploadFile: (
+    id: string,
+    uploadType: string,
+    data: FormData,
+    onUploadProgress?: (progressEvent: any) => void,
+    abortSignal?: AbortSignal,
+  ): HttpApiRequestConfig => {
+    const type = uploadType.split('_')[1];
+    return {
+      url: `${providers.beinUpload.url}${type}s/${id}`,
+      method: 'post',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+      useRetry: true,
+      provider: providers.beinUpload,
+      data,
+      signal: abortSignal,
+      timeout: appConfig.fileUploadTimeout,
+      onUploadProgress: onUploadProgress,
+    };
+  },
 };
 
 const App = {
   info: (): HttpApiRequestConfig => {
     return {
       url: `${providers.bein.url}hello/bein`,
-      method: 'get',
-      provider: providers.bein,
-      useRetry: true,
-    };
-  },
-  tokens: (): HttpApiRequestConfig => {
-    return {
-      url: `${providers.bein.url}auth/token`,
       method: 'get',
       provider: providers.bein,
       useRetry: true,

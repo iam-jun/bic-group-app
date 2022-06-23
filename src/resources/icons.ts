@@ -31,6 +31,13 @@ import iconMenuLogout from '../../assets/icons/icon_menu_logout.svg';
 import iconMenuMenu from '../../assets/icons/icon_menu_menu.svg';
 import iconMenuMonitor from '../../assets/icons/icon_menu_monitor.svg';
 import iconSendComment from '../../assets/icons/icon_send_comment.svg';
+// @ts-ignore
+import iconCheckboxSelected from '../../assets/icons/icon_checkbox_selected.png';
+// @ts-ignore
+import iconCheckboxInherited from '../../assets/icons/icon_checkbox_inherited.png';
+// @ts-ignore
+import iconCheckboxUnselected from '../../assets/icons/icon_checkbox_unselected.png';
+import iconCheckboxRestricted from '../../assets/icons/icon_checkbox_retricted.svg';
 
 import iconMenuMoon from '../../assets/icons/icon_menu_moon.svg';
 import iconMenuSetting from '../../assets/icons/icon_menu_setting.svg';
@@ -42,14 +49,6 @@ import iconPin from '../../assets/icons/icon_pin_outline.svg';
 import iconPinGroup from '../../assets/icons/icon_pin_group.svg';
 import iconPlay from '../../assets/icons/icon_play.svg';
 import iconReact from '../../assets/icons/icon_react.svg';
-import iconReactionAngry from '../../assets/icons/icon_reaction_angry.svg';
-import iconReactionDislike from '../../assets/icons/icon_reaction_dislike.svg';
-import iconReactionHaha from '../../assets/icons/icon_reaction_haha.svg';
-import iconReactionLike from '../../assets/icons/icon_reaction_like.svg';
-import iconReactionLove from '../../assets/icons/icon_reaction_love.svg';
-import iconReactionSad from '../../assets/icons/icon_reaction_sad.svg';
-import iconReactionShocked from '../../assets/icons/icon_reaction_shocked.svg';
-import iconReactionSmile from '../../assets/icons/icon_reaction_smile.svg';
 import iconReply from '../../assets/icons/icon_reply.svg';
 import iconReplyGrey from '../../assets/icons/icon_reply_grey.svg';
 import iconReport from '../../assets/icons/icon_report.svg';
@@ -79,10 +78,12 @@ import iconTabCommunities from '../../assets/icons/icon_communities.svg';
 import iconTabCommunitiesBein from '../../assets/icons/icon_communities_bein.svg';
 import iconLock from '../../assets/icons/icon_lock.svg';
 import iconSecret from '../../assets/icons/icon_secret_group.svg';
-import iconFileVideo from '../../assets/icons/icon_file_video.svg';
 import iconPlayGif from '../../assets/icons/ic_play_gif.svg';
+import fileIcons from './fileIcons';
+import iconBeinChat from '../../assets/icons/icon_bein_chat.svg';
 
 const icons = {
+  iconBeinChat,
   iconTabHome,
   iconTabHomeBein,
   iconTabGroups,
@@ -100,14 +101,6 @@ const icons = {
   iconOptions: 'EllipsisV',
   iconAddImage: 'ImagePlus',
   iconUploadImage: 'ImageUpload',
-  iconReactionAngry,
-  iconReactionDislike,
-  iconReactionHaha,
-  iconReactionLike,
-  iconReactionLove,
-  iconReactionSad,
-  iconReactionShocked,
-  iconReactionSmile,
   iconArrowDown,
   iconReply,
   iconReplyGrey,
@@ -126,6 +119,7 @@ const icons = {
   CornerDownRight: 'CornerDownRight',
   Trash: 'Trash',
   FileEditAlt: 'FileEditAlt',
+  FileLockAlt: 'FileLockAlt',
   Edit: 'Edit',
   Redo: 'Redo',
   ImageV: 'ImageV',
@@ -157,6 +151,10 @@ const icons = {
   iconLanguageEn,
   iconLanguageVi,
   iconCheckbox,
+  iconCheckboxUnselected,
+  iconCheckboxSelected,
+  iconCheckboxInherited,
+  iconCheckboxRestricted,
   users: 'UsersAlt',
   search: 'Search',
   addUser: 'UserPlus',
@@ -267,10 +265,11 @@ const icons = {
   PlayCircle: 'PlayCircle',
   Sitemap: 'Sitemap',
   iconSecret,
-  iconFileVideo,
   VolumeMute: 'VolumeMute',
   CheckCircle: 'CheckCircle',
   iconPlayGif,
+  download: 'CloudDownload',
+  ...fileIcons,
 };
 
 export default icons;

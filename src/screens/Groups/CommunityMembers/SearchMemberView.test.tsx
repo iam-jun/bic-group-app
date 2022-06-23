@@ -6,6 +6,7 @@ import SearchMemberView from './SearchMemberView';
 describe('SearchMemberView component', () => {
   const communityId = 1;
   const isOpen = true;
+  const onPressMenu = jest.fn();
 
   it('should render Type search keyword description correctly', () => {
     const wrapper = renderWithRedux(
@@ -13,11 +14,10 @@ describe('SearchMemberView component', () => {
         communityId={communityId}
         isOpen={isOpen}
         initSearch=""
+        onPressMenu={onPressMenu}
       />,
     );
-    const textComponent = wrapper.getByTestId(
-      'search_member_modal.type_search',
-    );
+    const textComponent = wrapper.getByTestId('search_member_view.type_search');
     expect(textComponent.props.children).toBe(
       i18next.t('common:text_type_search_keyword'),
     );
@@ -29,10 +29,11 @@ describe('SearchMemberView component', () => {
         communityId={communityId}
         isOpen={isOpen}
         initSearch="test"
+        onPressMenu={onPressMenu}
       />,
     );
     const textComponent = wrapper.queryByTestId(
-      'search_member_modal.type_search',
+      'search_member_view.type_search',
     );
     expect(textComponent).toBeNull();
 

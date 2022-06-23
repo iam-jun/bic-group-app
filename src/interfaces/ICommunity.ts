@@ -14,10 +14,21 @@ export interface ICommunity {
   updated_at: string;
   user_count: number;
   can_setting?: boolean;
+  can_edit_info?: boolean;
+  can_edit_privacy?: boolean;
   can_manage_member?: boolean;
   can_leave?: boolean;
+  can_manage_scheme?: boolean;
   join_status?: number;
   members?: IPreviewMember[];
+}
+
+export interface IParamGetCommunities {
+  key?: string;
+  offset?: number;
+  limit?: number;
+  sort?: string;
+  preview_members?: boolean;
 }
 
 export interface IPreviewMember {
@@ -51,8 +62,8 @@ export interface IParamGetDiscoverGroups {
 export interface ISetMembers {
   loading?: boolean;
   canLoadMore?: boolean;
-  community_admin?: {data: ICommunityMembers[]; user_count: number};
-  member?: {data: ICommunityMembers[]; user_count: number};
+  offset?: number;
+  [roleName: string]: any;
 }
 
 export interface ISetCommunitySearchMembers {

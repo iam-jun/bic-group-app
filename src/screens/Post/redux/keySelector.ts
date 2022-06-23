@@ -8,6 +8,7 @@ const postKeySelector = {
     all: 'post.createPost',
     images: 'post.createPost.images',
     video: 'post.createPost.video',
+    files: 'post.createPost.files',
     imagesDraft: 'post.createPost.imagesDraft',
     initAudiences: 'post.createPost.initAudiences',
     chosenAudiences: 'post.createPost.chosenAudiences',
@@ -24,6 +25,12 @@ const postKeySelector = {
     canLoadMore: 'post.draftPosts.canLoadMore',
     loading: 'post.draftPosts.loading',
     refreshing: 'post.draftPosts.refreshing',
+  },
+  seenPostList: {
+    dataList: 'post.seenPostList.data',
+    total: 'post.seenPostList.total',
+    canLoadMore: 'post.seenPostList.canLoadMore',
+    loading: 'post.seenPostList.loading',
   },
 
   //Post data
@@ -54,6 +61,8 @@ const postKeySelector = {
     `post.allPosts.${id}.markedReadPost`,
   postMarkedReadSuccessById: (id: string | number) =>
     `post.allPosts.${id}.markedReadSuccess`,
+  postTotalUsersSeenById: (id: string | number) =>
+    `post.allPosts.${id}.totalUsersSeen`,
 
   //Comment data
   allCommentsByParentIds: 'post.allCommentsByParentIds',

@@ -50,6 +50,15 @@ export interface IActivityDataImage {
   height?: number;
 }
 
+export interface IActivityDataFile {
+  id?: string;
+  name: string;
+  origin_name?: string;
+  url?: string;
+  size?: number;
+  type?: string;
+}
+
 export interface IActivityData {
   content?: string;
   highlight?: string;
@@ -140,6 +149,7 @@ export interface IPostActivity {
   markedReadPost?: boolean;
   createdAt?: string;
   createdBy?: number;
+  totalUsersSeen?: number;
 }
 
 export type IOwnReaction = Array<IReaction>;
@@ -226,6 +236,7 @@ export interface IParamPutEditPost {
 
 export interface IPayloadGetPostDetail extends IParamGetPostDetail {
   callbackLoading?: (loading: boolean, success: boolean) => void;
+  showToast?: boolean;
 }
 
 export type IReactionKind = 'comment' | 'seen' | ReactionType;
@@ -496,7 +507,10 @@ export interface IPayloadPutMarkAsRead {
   postId: string;
   callback?: (isSuccess: boolean) => void;
 }
-
+export interface IPayloadPutMarkSeenPost {
+  postId: string;
+  callback?: (isSuccess: boolean) => void;
+}
 export interface IGetStreamCommentData {
   id: string;
   actor: IGetStreamUser;
@@ -506,4 +520,19 @@ export interface IGetStreamCommentData {
   reaction?: IReaction;
   reactionsCount?: IReactionCounts;
   child?: IGetStreamCommentData;
+}
+export interface IRequestGetUsersSeenPost {
+  postId: string;
+  limit?: number;
+  offset?: number;
+}
+export interface ISeenPostListSheet {
+  total?: number;
+  data: any[];
+  canLoadMore?: boolean;
+}
+export interface IGetSeenPostListSheet {
+  postId: string;
+  offset?: number;
+  canLoadMore?: boolean;
 }
