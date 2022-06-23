@@ -50,8 +50,7 @@ const GeneralInformation = (props: any) => {
     );
   };
 
-  const openGroupPrivacyModal = (e: any) =>
-    baseSheetRef?.current?.open?.(e?.pageX, e?.pageY);
+  const openGroupPrivacyModal = () => baseSheetRef?.current?.open?.();
 
   const editGroupPrivacy = (item: any) => {
     dispatch(
