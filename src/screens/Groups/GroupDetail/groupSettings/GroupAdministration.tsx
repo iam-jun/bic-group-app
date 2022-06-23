@@ -40,7 +40,9 @@ const GroupAdministration = (props: any) => {
   const {total} = useKeySelector(groupsKeySelector.pendingMemberRequests);
 
   useEffect(() => {
-    dispatch(groupsActions.getGroupMemberRequests({groupId}));
+    can_manage_member &&
+      dispatch(groupsActions.getGroupMemberRequests({groupId}));
+
     return () => {
       dispatch(groupsActions.resetMemberRequests());
     };
