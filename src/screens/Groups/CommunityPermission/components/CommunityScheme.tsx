@@ -92,6 +92,7 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
       <Button.Primary
         onPress={onPressCreate}
         useI18n
+        disabled={true}
         style={styles.buttonCreate}
         leftIcon={'Plus'}>
         common:btn_create
