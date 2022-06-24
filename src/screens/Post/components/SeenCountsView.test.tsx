@@ -15,9 +15,9 @@ describe('SeenCountsView', () => {
     const {getByTestId} = render(
       <SeenCountsView seenPeopleCount={3} onPress={onPress} />,
     );
-    const seenCountsViewComponent = getByTestId('txtSeenCountsTestID');
+    const seenCountsViewComponent = getByTestId('seen_counts_view.show_text');
     expect(seenCountsViewComponent.props.children[1]).toBe(3);
-    const btn = getByTestId('btnSeenCountsTestID');
+    const btn = getByTestId('seen_counts_view.touchable_opacity');
     fireEvent.press(btn);
     expect(onPress).toBeCalled();
   });

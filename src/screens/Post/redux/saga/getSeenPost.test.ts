@@ -6,6 +6,7 @@ import {IGetSeenPostListSheet} from '~/interfaces/IPost';
 import getSeenPost from '~/screens/Post/redux/saga/getSeenPost';
 import {POST_DETAIL, SEEN_POST} from '~/test/mock_data/post';
 import {throwError} from 'redux-saga-test-plan/providers';
+import modalActions from '~/store/modal/actions';
 
 describe('Get Seen Post Saga', () => {
   const storeData = {post: {seenPostList: {data: [], canLoadMore: true}}};
@@ -57,11 +58,10 @@ describe('Get Seen Post Saga', () => {
         expect(allEffects?.length).toEqual(1);
       });
   });
-  it('call server get as seen post api exception', () => {
+  it('call server get as seen post failed', () => {
     // @ts-ignore
     const payload: IGetSeenPostListSheet = {postId: '25', offset: 0};
     const params = {postId: '25', offset: 0};
-    const seenPost: any = {...SEEN_POST};
     return expectSaga(getSeenPost, {type: 'test', payload})
       .withState(storeData)
       .provide([[matchers.call.fn(postDataHelper.getSeenList), null]])

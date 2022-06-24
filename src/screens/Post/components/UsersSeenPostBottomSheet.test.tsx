@@ -3,6 +3,8 @@ import {render, cleanup, waitFor} from '@testing-library/react-native';
 import UsersSeenPostBottomSheet from './UsersSeenPostBottomSheet';
 import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
 import initialState from '~/store/initialState';
+import * as navigationHook from '~/hooks/navigation';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 afterEach(cleanup);
 
@@ -32,10 +34,10 @@ describe('UsersSeenPostBottomSheet component', () => {
     canLoadMore: true,
   };
 
-  const mockStore = configureStore([]);
-  it(`renders correctly users seen bottom sheet view`, async () => {
+  const createTestStore = configureStore([]);
+  it(`renders correctly loading data users seen post bottom sheet view`, async () => {
     const storeData = {...initialState};
-    const store = mockStore(storeData);
+    const store = createTestStore(storeData);
 
     const rendered = await waitFor(() =>
       renderWithRedux(<UsersSeenPostBottomSheet postId={'7'} />, store),
@@ -47,7 +49,7 @@ describe('UsersSeenPostBottomSheet component', () => {
     const storeData = {...initialState};
     // @ts-ignore
     storeData.post.seenPostList = fake_data;
-    const store = mockStore(storeData);
+    const store = createTestStore(storeData);
     const rendered = await waitFor(() =>
       renderWithRedux(<UsersSeenPostBottomSheet postId={'7'} />, store),
     );
@@ -55,31 +57,49 @@ describe('UsersSeenPostBottomSheet component', () => {
   });
 
   it(`should call navigate to user profile by id when click item`, async () => {
+    const navigate = jest.fn();
+    const rootNavigation = {navigate};
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
+      return {rootNavigation} as any;
+    });
     const storeData = {...initialState};
     // @ts-ignore
     storeData.post.seenPostList = fake_data;
-    const store = mockStore(storeData);
+    const store = createTestStore(storeData);
     const rendered = await waitFor(() =>
       renderWithRedux(<UsersSeenPostBottomSheet postId={'7'} />, store),
     );
     const itemComponent = rendered.getByTestId(
-      'seen_post_bottomSheet.Hoàng Nhật',
+      'users_seen_post_bottom_sheet.item_username.hoangnhat',
     );
     expect(itemComponent).toBeDefined();
     fireEvent.press(itemComponent);
+
+    expect(navigate).toBeCalledWith('user-profile', {
+      userId: 43,
+    });
   });
 
   it(`should call navigate to user profile by username when click item`, async () => {
+    const navigate = jest.fn();
+    const rootNavigation = {navigate};
+    jest.spyOn(navigationHook, 'useRootNavigation').mockImplementation(() => {
+      return {rootNavigation} as any;
+    });
     const storeData = {...initialState};
     // @ts-ignore
-    const store = mockStore(storeData);
+    const store = createTestStore(storeData);
     const rendered = await waitFor(() =>
       renderWithRedux(<UsersSeenPostBottomSheet postId={'7'} />, store),
     );
     const itemComponent = rendered.getByTestId(
-      'seen_post_bottomSheet.Nguyễn Anh Thiện',
+      'users_seen_post_bottom_sheet.item_username.anhthien',
     );
     expect(itemComponent).toBeDefined();
     fireEvent.press(itemComponent);
+    expect(navigate).toBeCalledWith('user-profile', {
+      params: {type: 'username'},
+      userId: 'anhthien',
+    });
   });
 });

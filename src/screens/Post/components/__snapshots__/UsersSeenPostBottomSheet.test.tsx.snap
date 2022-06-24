@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`UsersSeenPostBottomSheet component renders correctly users seen bottom sheet view 1`] = `
+exports[`UsersSeenPostBottomSheet component renders correctly loading data users seen post bottom sheet view 1`] = `
 <View
   style={
     Object {
@@ -202,7 +202,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                 "paddingHorizontal": 12,
               }
             }
-            testID="seen_post_bottomSheet.Hoàng Nhật"
+            testID="users_seen_post_bottom_sheet.item_username.hoangnhat"
           >
             <View
               style={
@@ -356,7 +356,7 @@ exports[`UsersSeenPostBottomSheet component should render list users seen post 1
                 "paddingHorizontal": 12,
               }
             }
-            testID="seen_post_bottomSheet.Nguyễn Anh Thiện"
+            testID="users_seen_post_bottom_sheet.item_username.anhthien"
           >
             <View
               style={

@@ -26,7 +26,7 @@ exports[`SeenCountsView renders correctly seen counts view 1`] = `
         "opacity": 1,
       }
     }
-    testID="btnSeenCountsTestID"
+    testID="seen_counts_view.touchable_opacity"
   >
     <Text
       numberOfLines={1}
@@ -43,7 +43,7 @@ exports[`SeenCountsView renders correctly seen counts view 1`] = `
           undefined,
         ]
       }
-      testID="txtSeenCountsTestID"
+      testID="seen_counts_view.show_text"
     >
       Seen by 
     </Text>
