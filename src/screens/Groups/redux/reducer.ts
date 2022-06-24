@@ -30,7 +30,7 @@ export const groupInitState = {
     },
     creatingScheme: {
       data: undefined,
-      memberRoleIndex: 0,
+      memberRoleIndex: undefined,
       creating: false,
     },
   },
@@ -213,7 +213,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
                 ...state.permissionScheme.creatingScheme,
                 ...payload,
               }
-            : {},
+            : groupInitState.permissionScheme.creatingScheme,
         },
       };
     case groupsTypes.SET_CREATING_SCHEME_DATA:
@@ -228,7 +228,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
                   state.permissionScheme.creatingScheme.data,
                   payload,
                 )
-              : {},
+              : groupInitState.permissionScheme.creatingScheme.data,
           },
         },
       };
