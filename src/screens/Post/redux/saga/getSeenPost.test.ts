@@ -5,19 +5,15 @@ import postActions from '~/screens/Post/redux/actions';
 import {IGetSeenPostListSheet} from '~/interfaces/IPost';
 import getSeenPost from '~/screens/Post/redux/saga/getSeenPost';
 import {POST_DETAIL, SEEN_POST} from '~/test/mock_data/post';
-import {throwError} from 'redux-saga-test-plan/providers';
 import modalActions from '~/store/modal/actions';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
 
 describe('Get Seen Post Saga', () => {
   const storeData = {post: {seenPostList: {data: [], canLoadMore: true}}};
-  it('should do nothing with invalid payload', async () => {
-    const payload: IGetSeenPostListSheet = {} as any;
-    return expectSaga(getSeenPost, {type: 'test', payload})
-      .run()
-      .then(({allEffects}: any) => {
-        expect(allEffects?.length).toEqual(2);
-      });
-  });
+  const storeData_2 = {
+    post: {seenPostList: {data: [], canLoadMore: false}},
+  };
+
   it('call server get as seen post success', () => {
     // @ts-ignore
     const payload: IGetSeenPostListSheet = {postId: '25', offset: 0};
@@ -46,7 +42,6 @@ describe('Get Seen Post Saga', () => {
   });
   it('when do not load more seen post', () => {
     // @ts-ignore
-    const storeData_2 = {post: {seenPostList: {data: [], canLoadMore: false}}};
     const payload: IGetSeenPostListSheet = {
       postId: '25',
       offset: 0,
@@ -58,7 +53,7 @@ describe('Get Seen Post Saga', () => {
         expect(allEffects?.length).toEqual(1);
       });
   });
-  it('call server get as seen post failed', () => {
+  it('call server get as seen post response not data', () => {
     // @ts-ignore
     const payload: IGetSeenPostListSheet = {postId: '25', offset: 0};
     const params = {postId: '25', offset: 0};
@@ -70,5 +65,27 @@ describe('Get Seen Post Saga', () => {
       .then(({allEffects}: any) => {
         expect(allEffects?.length).toEqual(2);
       });
+  });
+  it('call server get as seen post api exception', () => {
+    const showAlert = jest.spyOn(modalActions, 'showAlert');
+    const payload: IGetSeenPostListSheet = {} as any;
+    const resp = {
+      code: API_ERROR_CODE.POST.copiedCommentIsDeleted,
+      data: null,
+      meta: {
+        message: 'Not a valid JWT token',
+      },
+    };
+    //@ts-ignore
+    return expectSaga(getSeenPost, {type: 'test', payload})
+      .withState(storeData)
+      .provide([
+        [matchers.call.fn(postDataHelper.getSeenList), Promise.reject(resp)],
+      ])
+      .run()
+      .then(({allEffects}: any) => {
+        expect(allEffects?.length).toEqual(3);
+      })
+      .catch(expect(showAlert).toBeCalled);
   });
 });
