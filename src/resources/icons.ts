@@ -192,6 +192,7 @@ const icons = {
   CommentsAlt: 'CommentsAlt',
   CommentSlash: 'CommentSlash',
   Phone: 'Phone',
+  CodeBranch: 'CodeBranch',
   Envelope: 'Envelope',
   EnvelopeAlt: 'EnvelopeAlt',
   SlidersAlt: 'SlidersVAlt',

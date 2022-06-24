@@ -236,6 +236,7 @@
     "title_community_settings": "Cài đặt Cộng đồng",
     "title_general_information": "Thông tin chung",
     "title_profile_info": "Thông tin chung",
+    "title_group_structure": "Cài đặt cấu trúc nhóm",
     "title_role_management": "Role Management",
     "title_permission_settings": "Cài đặt quyền",
     "title_membership_settings": "Cài đặt thành viên",
@@ -740,6 +741,11 @@
       "text_desc_delete_community_scheme": "Hành động này không thể hoàn tác. Bạn có chắc muốn thực hiện?",
       "text_create_scheme_success": "Đã tạo thành công",
       "text_set_by": "Đặt bởi"
+    },
+    "group_structure": {
+      "title_group_structure_settings": "Cài đặt cấu trúc nhóm",
+      "title_reorder_group": "Sắp xếp nhóm",
+      "title_move_group": "Di chuyển nhóm"
     },
     "text_search_communities": "Tìm kiếm Cộng đồng"
   },

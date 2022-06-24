@@ -283,6 +283,7 @@
     "title_community_settings": "Community Settings",
     "title_general_information": "General Information",
     "title_profile_info": "Profile Info",
+    "title_group_structure": "Group Structure Settings",
     "title_role_management": "Role Management",
     "title_permission_settings": "Permission",
     "title_membership_settings": "Membership Settings",
@@ -851,6 +852,11 @@
       "text_desc_delete_community_scheme": "This action cannot be undone. Are you sure to do this?",
       "text_create_scheme_success": "Create scheme successfully",
       "text_set_by": "Set by"
+    },
+    "group_structure": {
+      "title_group_structure_settings": "Group Structure Settings",
+      "title_reorder_group": "Reorder Group",
+      "title_move_group": "Move Group"
     },
     "text_search_communities": "Search Communities"
   },

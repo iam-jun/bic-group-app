@@ -52,6 +52,10 @@ const CommunityAdmin = () => {
     rootNavigation.navigate(groupStack.communityPermission);
   };
 
+  const onPressGroupStructure = () => {
+    rootNavigation.navigate(groupStack.groupStructureSettings);
+  };
+
   const renderModerating = () => (
     <>
       <Text.Body
@@ -111,6 +115,14 @@ const CommunityAdmin = () => {
           onPress={onPressGeneralInfo}
         />
       )}
+      <MenuItem //todo update can can
+        testID="community_admin.group_structure_settings"
+        title="settings:title_group_structure"
+        icon="CodeBranch"
+        iconProps={{icon: 'CodeBranch', tintColor: theme.colors.primary6}}
+        rightSubIcon="AngleRightB"
+        onPress={onPressGroupStructure}
+      />
       {!!can_manage_scheme && (
         <MenuItem
           testID="community_admin.permission_settings"
