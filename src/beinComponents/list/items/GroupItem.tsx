@@ -23,6 +23,7 @@ export interface GroupItemProps extends IParsedGroup {
   isCollapsing: boolean;
   onPressItem?: (item: GroupItemProps) => void;
   onToggleItem?: (item: GroupItemProps) => void;
+  onPressMenu?: (item: GroupItemProps) => void;
   onCheckedItem?: (item: GroupItemProps, isChecked: boolean) => void;
   disableOnPressItem?: boolean;
   showPrivacy?: boolean;
@@ -45,6 +46,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     isCollapsing = false,
     onPressItem,
     onToggleItem,
+    onPressMenu,
     onCheckedItem,
     disableOnPressItem,
     privacy,
@@ -75,6 +77,10 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
         initial: true,
       });
     }
+  };
+
+  const _onPressMenu = () => {
+    onPressMenu?.(props);
   };
 
   const _onToggleItem = () => {
@@ -181,6 +187,16 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
               </Text.BodyS>
             </View>
           </View>
+          {!!onPressMenu && (
+            <View style={styles.btnMenu}>
+              <Icon
+                style={{alignSelf: 'auto'}}
+                icon={'EllipsisH'}
+                testID={'group_item.button_menu'}
+                onPress={_onPressMenu}
+              />
+            </View>
+          )}
         </View>
       </View>
     </TouchableOpacity>
@@ -240,6 +256,7 @@ const themeStyles = (theme: IObject<any>) => {
     privacyTitle: {
       marginLeft: spacing.margin.tiny,
     },
+    btnMenu: {marginRight: 8},
   });
 };
 

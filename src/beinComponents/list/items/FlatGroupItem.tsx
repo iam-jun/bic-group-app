@@ -21,6 +21,7 @@ export interface FlatGroupItemProps extends GroupItemProps {
   toggleOnPress?: boolean;
   onPressGroup?: (group: IGroup) => void;
   onPressItem?: (group: IGroup) => void;
+  onPressMenu?: (item: GroupItemProps) => void;
   hidePath?: boolean;
   initShowTree?: boolean;
 }
@@ -43,6 +44,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   toggleOnPress,
   onPressGroup,
   onPressItem,
+  onPressMenu,
   hidePath = false,
   initShowTree = true,
   showPrivacy,
@@ -171,6 +173,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           onPressGroup={onPressGroup}
           showPrivacy={showPrivacy}
           showPrivacyName={showPrivacyName}
+          onPressMenu={onPressMenu}
         />
       ) : (
         <GroupItem
@@ -181,6 +184,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           onCheckedItem={onChangeCheckedGroups ? onCheckedGroup : undefined}
           showPrivacy={showPrivacy}
           showPrivacyName={showPrivacyName}
+          onPressMenu={onPressMenu}
         />
       )}
     </View>

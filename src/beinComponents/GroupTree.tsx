@@ -13,6 +13,7 @@ export interface GroupTreeProps {
   onChangeCheckedGroups?: (data: OnChangeCheckedGroupsData) => void;
   toggleOnPress?: boolean;
   onPressGroup?: (group: IGroup) => void;
+  onPressMenu?: (item: GroupItemProps) => void;
   showPrivacy?: boolean;
   showPrivacyName?: boolean;
 }
@@ -26,6 +27,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
   selectingData,
   onChangeCheckedGroups,
   onPressGroup,
+  onPressMenu,
   toggleOnPress,
   showPrivacy,
   showPrivacyName,
@@ -190,6 +192,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
           onPressItem={_onPressGroup}
           onToggleItem={onToggleGroup}
           onCheckedItem={onChangeCheckedGroups ? onCheckedGroup : undefined}
+          onPressMenu={onPressMenu}
         />,
       ),
     );
