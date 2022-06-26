@@ -1,6 +1,11 @@
-import React, {useCallback, useMemo, useRef, useState} from 'react';
-import {StyleSheet, View, Animated, Dimensions} from 'react-native';
+import React, {useCallback, useMemo, useRef} from 'react';
+import {StyleSheet, View, Dimensions} from 'react-native';
+import Animated, {
+  useAnimatedScrollHandler,
+  useSharedValue,
+} from 'react-native-reanimated';
 import {useTheme} from 'react-native-paper';
+
 import Filter from '~/beinComponents/Filter';
 import {ITheme} from '~/theme/interfaces';
 import NotificationList from './NotificationList';
@@ -25,6 +30,7 @@ export interface Props {
   onItemPress: (item: any) => void;
   data?: any[];
   onChangeTab: (index: number) => void;
+  activeIndex?: number;
 }
 
 const ScrollableTabBar = ({
@@ -32,30 +38,23 @@ const ScrollableTabBar = ({
   data,
   onPressItemOption,
   onChangeTab,
+  activeIndex = 0,
 }: Props) => {
   const theme: ITheme = useTheme() as ITheme;
   const styles = useMemo(() => themeStyles(theme), [theme]);
 
   const scrollViewRef = useRef<any>();
   const filterRef = useRef<any>();
-  const tabDimensions: any = {};
-
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const translateX = useSharedValue(0);
 
   const _onChangeTab = useCallback(
     (i: number) => {
-      setSelectedIndex(i);
       onChangeTab(i);
-      // if (tabDimensions && tabDimensions[i.toString()] && filterRef.current) {
-      //   const {width, x} = tabDimensions[i.toString()];
-      //   filterRef.current?.scrollTo?.({
-      //     x: x - (screenWidth - width) / 2,
-      //     y: 0,
-      //     animated: true,
-      //   });
-      // }
       if (!!scrollViewRef.current) {
-        scrollViewRef.current?.scrollToIndex?.({index: i || 0});
+        scrollViewRef.current?.scrollTo?.({
+          x: screenWidth * i,
+          animated: true,
+        });
       }
     },
     [onChangeTab],
@@ -75,30 +74,25 @@ const ScrollableTabBar = ({
     [onPressItemOption],
   );
 
-  const scrollX = React.useRef(new Animated.Value(0)).current;
-
-  const keyExtractor = (item: any) => item.type;
-
-  const getItemLayout = (data: any, index: number) => {
-    return {length: screenWidth, offset: screenWidth * index, index};
+  const onMomentumScrollEnd = (e: any) => {
+    const contentOffset = e.nativeEvent.contentOffset;
+    const viewSize = e.nativeEvent.layoutMeasurement;
+    const pageNum = parseInt(contentOffset.x / viewSize.width);
+    if (activeIndex !== pageNum) {
+      onChangeTab(pageNum);
+    }
   };
 
-  const renderItem = ({item, index}: any) => {
-    return (
-      <NotificationList
-        onItemPress={_onItemPress}
-        type={item.type}
-        keyValue={item.key}
-        onPressItemOption={_onPressItemOption}
-        activeIndex={selectedIndex === index}
-      />
-    );
-  };
+  const scrollHandler = useAnimatedScrollHandler(event => {
+    translateX.value = event.contentOffset.x;
+  });
 
   return (
     <View style={styles.container}>
       <Filter
         ref={filterRef}
+        activeIndex={activeIndex}
+        translateX={translateX}
         testID={'notification.filter'}
         itemTestID={'notification.filter.item'}
         style={styles.filterStyle}
@@ -106,34 +100,30 @@ const ScrollableTabBar = ({
         onPress={(item: any, index: number) => {
           _onChangeTab(index);
         }}
-        // onLayout={(index: number, x: any, width: number) => {
-        //   tabDimensions[index.toString()] = {x, width};
-        // }}
       />
-      <Animated.FlatList
+      <Animated.ScrollView
         ref={scrollViewRef}
         style={{flex: 1}}
-        data={data}
-        keyExtractor={keyExtractor}
         horizontal
-        bounces={false}
         pagingEnabled
         showsHorizontalScrollIndicator={false}
-        onScroll={Animated.event(
-          [
-            {
-              nativeEvent: {
-                contentOffset: {
-                  x: scrollX,
-                },
-              },
-            },
-          ],
-          {useNativeDriver: false},
-        )}
-        getItemLayout={getItemLayout}
-        renderItem={renderItem}
-      />
+        onScroll={scrollHandler}
+        onMomentumScrollEnd={onMomentumScrollEnd}
+        scrollEventThrottle={16}>
+        {data?.length > 0 &&
+          data?.map((item: any, index: number) => {
+            return (
+              <NotificationList
+                key={'NOTI_ITEM_SCREEN_' + index + item?.type}
+                onItemPress={_onItemPress}
+                type={item?.type}
+                keyValue={item?.key}
+                onPressItemOption={_onPressItemOption}
+                activeIndex={activeIndex === index}
+              />
+            );
+          })}
+      </Animated.ScrollView>
     </View>
   );
 };

@@ -81,7 +81,7 @@ const Communities: React.FC = () => {
       <View style={{flex: 1}}>
         <Filter
           data={communityMenuData}
-          selectedIndex={selectedIndex}
+          activeIndex={selectedIndex}
           onPress={onPress}
           testID="community_menu"
           itemTestID="item_community_data"
