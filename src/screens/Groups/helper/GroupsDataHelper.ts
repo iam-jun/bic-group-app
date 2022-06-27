@@ -32,6 +32,18 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
+  updateCommunityScheme: (
+    communityId: string | number,
+    schemeData: IScheme,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/scheme`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {
+      ...schemeData,
+    },
+  }),
   deleteCommunityScheme: (
     communityId: number | string,
   ): HttpApiRequestConfig => ({
@@ -420,6 +432,26 @@ const groupsDataHelper = {
         groupsApiConfig.getCommunityScheme(communityId),
       );
       if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  updateCommunityScheme: async (
+    communityId: number | string,
+    scheme: IScheme,
+  ) => {
+    if (!communityId || !scheme) {
+      return Promise.reject('updateCommunityScheme invalid data');
+    }
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.updateCommunityScheme(communityId, scheme),
+      );
+      if (response && response?.data) {
         return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);

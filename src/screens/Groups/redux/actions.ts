@@ -77,6 +77,10 @@ const groupsActions = {
     type: groupsTypes.SET_COMMUNITY_SCHEME,
     payload,
   }),
+  updateCommunityScheme: (payload?: {communityId: number | string}) => ({
+    type: groupsTypes.UPDATE_COMMUNITY_SCHEME,
+    payload,
+  }),
   deleteCommunityScheme: (payload?: {communityId: number | string}) => ({
     type: groupsTypes.DELETE_COMMUNITY_SCHEME,
     payload,

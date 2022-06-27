@@ -739,6 +739,7 @@
       "text_title_delete_community_scheme": "Xoá quyền này",
       "text_desc_delete_community_scheme": "Hành động này không thể hoàn tác. Bạn có chắc muốn thực hiện?",
       "text_create_scheme_success": "Đã tạo thành công",
+      "text_update_scheme_success": "Đã cập nhật thành công",
       "text_set_by": "Đặt bởi"
     },
     "text_search_communities": "Tìm kiếm Cộng đồng"

@@ -850,6 +850,7 @@
       "text_title_delete_community_scheme": "Delete this scheme",
       "text_desc_delete_community_scheme": "This action cannot be undone. Are you sure to do this?",
       "text_create_scheme_success": "Create scheme successfully",
+      "text_update_scheme_success": "Updated scheme successfully",
       "text_set_by": "Set by"
     },
     "text_search_communities": "Search Communities"

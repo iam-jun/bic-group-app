@@ -40,7 +40,7 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
 
   const onPress = () => {
     if (isEdit) {
-      alert('Waiting for story edit scheme...');
+      dispatch(groupsActions.updateCommunityScheme({communityId: id}));
     } else {
       dispatch(groupsActions.postCreateSchemePermission({communityId: id}));
     }
