@@ -212,6 +212,8 @@ const icons = {
   FileCopyAlt: 'FileCopyAlt',
   WebGrid: 'WebGrid',
   EyeSlash: 'EyeSlash',
+  Layers: 'Layers',
+  Exclude: 'Exclude',
   Check: 'Check',
   UsersAlt: 'UsersAlt',
   Heart: 'Heart',

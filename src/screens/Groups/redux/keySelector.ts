@@ -52,6 +52,9 @@ const groupsKeySelector = {
       creating: 'groups.permissionScheme.creatingScheme.creating',
     },
   },
+  groupStructure: {
+    communityTree: 'groups.groupStructure.communityTree',
+  },
   communitySearch: 'groups.communitySearch',
 };
 

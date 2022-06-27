@@ -90,6 +90,20 @@ const groupsActions = {
     payload,
   }),
 
+  //group structure settings
+  setGroupStructure: (payload?: any) => ({
+    type: groupsTypes.SET_GROUP_STRUCTURE,
+    payload,
+  }),
+  getGroupStructureCommunityTree: (payload?: any) => ({
+    type: groupsTypes.GET_GROUP_STRUCTURE_COMMUNITY_TREE,
+    payload,
+  }),
+  setGroupStructureCommunityTree: (payload?: any) => ({
+    type: groupsTypes.SET_GROUP_STRUCTURE_COMMUNITY_TREE,
+    payload,
+  }),
+
   setPrivacyModalOpen: (payload: boolean) => {
     return {
       type: groupsTypes.SET_PRIVACY_MODAL_OPEN,

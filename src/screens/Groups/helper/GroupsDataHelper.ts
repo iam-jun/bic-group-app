@@ -14,6 +14,12 @@ import {makeHttpRequest} from '~/services/httpApiRequest';
 import appConfig from '~/configs/appConfig';
 
 export const groupsApiConfig = {
+  getCommunityGroupsTree: (id: number | string): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}admin/groups/${id}/tree`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
   getPermissionCategories: (): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}permissions/categories`,
     method: 'get',
@@ -383,6 +389,20 @@ export const groupsApiConfig = {
 };
 
 const groupsDataHelper = {
+  getCommunityGroupTree: async (id: number | string) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getCommunityGroupsTree(id),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
   getPermissionCategories: async () => {
     try {
       const response: any = await makeHttpRequest(

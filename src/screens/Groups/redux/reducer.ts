@@ -34,6 +34,13 @@ export const groupInitState = {
       creating: false,
     },
   },
+  groupStructure: {
+    communityTree: {
+      loading: false,
+      data: undefined,
+    },
+    communityWithChildren: undefined,
+  },
   isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
   joinedGroups: [],
@@ -186,6 +193,24 @@ function groupsReducer(state = groupInitState, action: any = {}) {
   } = state;
 
   switch (type) {
+    //Group Structure Settings
+    case groupsTypes.SET_GROUP_STRUCTURE:
+      return {
+        ...state,
+        groupStructure: payload ? {...payload} : groupInitState.groupStructure,
+      };
+    case groupsTypes.SET_GROUP_STRUCTURE_COMMUNITY_TREE:
+      return {
+        ...state,
+        groupStructure: {
+          ...state.groupStructure,
+          communityTree: payload
+            ? {
+                ...payload,
+              }
+            : groupInitState.groupStructure.communityTree,
+        },
+      };
     // Permission
     case groupsTypes.SET_PERMISSION_CATEGORIES:
       return {

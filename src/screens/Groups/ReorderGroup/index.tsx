@@ -7,16 +7,28 @@ import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import Header from '~/beinComponents/Header';
 import {useBaseHook} from '~/hooks';
+import {IGroup} from '~/interfaces/IGroup';
 
 export interface ReorderGroupProps {
-  style?: StyleProp<ViewStyle>;
+  route?: {
+    params?: {
+      group: IGroup;
+    };
+  };
 }
 
-const ReorderGroup: FC<ReorderGroupProps> = ({style}: ReorderGroupProps) => {
+const ReorderGroup: FC<ReorderGroupProps> = ({route}: ReorderGroupProps) => {
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const {colors, spacing} = theme;
   const styles = createStyle(theme);
+
+  const initGroup = route?.params?.group;
+
+  console.log(
+    `\x1b[34m🐣️ index ReorderGroup`,
+    `${JSON.stringify(initGroup, undefined, 2)}\x1b[0m`,
+  );
 
   return (
     <View style={styles.container}>
