@@ -1,5 +1,6 @@
 import React, {FC} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
+import {useTheme} from 'react-native-paper';
 
 import Header from '~/beinComponents/Header';
 import {useBaseHook} from '~/hooks';
@@ -8,8 +9,8 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import modalActions from '~/store/modal/actions';
-import i18next from 'i18next';
 import {useRootNavigation} from '~/hooks/navigation';
+import {ITheme} from '~/theme/interfaces';
 
 export interface CreateSchemeHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -26,6 +27,7 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
   const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
   const {t} = useBaseHook();
+  const theme = useTheme() as ITheme;
 
   const {id} = useKeySelector(groupsKeySelector.communityDetail) || {};
   const name = useKeySelector(groupsKeySelector.permission.creatingScheme.name);
@@ -50,16 +52,13 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
     if (name || desc) {
       dispatch(
         modalActions.showAlert({
-          title: i18next.t(
-            'communities:permission:text_title_discard_create_scheme',
-          ),
-          content: i18next.t(
-            'communities:permission:text_desc_discard_create_scheme',
-          ),
+          title: t('communities:permission:text_title_discard_create_scheme'),
+          content: t('communities:permission:text_desc_discard_create_scheme'),
           showCloseButton: true,
           cancelBtn: true,
-          cancelLabel: i18next.t('common:btn_discard'),
-          confirmLabel: i18next.t('communities:permission:btn_keep_selecting'),
+          cancelLabel: t('common:btn_discard'),
+          confirmLabel: t('communities:permission:btn_continue'),
+          cancelBtnProps: {textColor: theme.colors.textPrimary},
           onDismiss: () => rootNavigation.goBack(),
         }),
       );

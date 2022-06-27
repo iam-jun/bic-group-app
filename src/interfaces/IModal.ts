@@ -2,6 +2,7 @@ import {StyleProp, ViewStyle} from 'react-native';
 import {TextInputProps} from '~/beinComponents/inputs/TextInput';
 import {ReactionType} from '~/constants/reactions';
 import {IReactionCounts} from '~/interfaces/IPost';
+import {ButtonSecondaryProps} from '~/beinComponents/Button/ButtonSecondary';
 
 export interface IShowAlert {
   title?: string;
@@ -18,6 +19,8 @@ export interface IShowAlert {
   isDismissible?: boolean;
   showCloseButton?: boolean;
   style?: StyleProp<ViewStyle>;
+  confirmBtnProps?: ButtonSecondaryProps;
+  cancelBtnProps?: ButtonSecondaryProps;
 }
 
 export interface IPayloadReactionDetailBottomSheet {
