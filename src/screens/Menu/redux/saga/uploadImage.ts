@@ -3,7 +3,7 @@ import {IUploadType} from '~/configs/resourceConfig';
 import {IFilePicked} from '~/interfaces/common';
 
 import {IUserImageUpload} from '~/interfaces/IEditUser';
-import FileUploader, {IGetFile} from '~/services/fileUploader';
+import ImageUploader, {IGetFile} from '~/services/imageUploader';
 import menuActions from '../actions';
 import showError from '~/store/commonSaga/showError';
 
@@ -30,7 +30,7 @@ export default function* uploadImage({
 }
 
 function* upload(file: IFilePicked, uploadType: IUploadType) {
-  const data: IGetFile = yield FileUploader.getInstance().upload({
+  const data: IGetFile = yield ImageUploader.getInstance().upload({
     file,
     uploadType,
   });
