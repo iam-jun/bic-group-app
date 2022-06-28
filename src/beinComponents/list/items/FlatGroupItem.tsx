@@ -26,6 +26,7 @@ export interface FlatGroupItemProps extends GroupItemProps {
   hidePath?: boolean;
   initShowTree?: boolean;
   disableOnPressItem?: boolean;
+  disableHorizontal?: boolean;
 }
 
 type PathData = {
@@ -51,7 +52,9 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   initShowTree = true,
   showPrivacy,
   showPrivacyName,
+  showInfo,
   disableOnPressItem,
+  disableHorizontal,
   ...props
 }: FlatGroupItemProps) => {
   const [showTree, setShowTree] = useState(initShowTree);
@@ -183,8 +186,10 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           onPressGroup={onPressGroup}
           showPrivacy={showPrivacy}
           showPrivacyName={showPrivacyName}
+          showInfo={showInfo}
           onPressMenu={onPressMenu}
           disableOnPressItem={disableOnPressItem}
+          disableHorizontal={disableHorizontal}
         />
       ) : (
         <GroupItem
@@ -195,8 +200,10 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           onCheckedItem={onChangeCheckedGroups ? onCheckedGroup : undefined}
           showPrivacy={showPrivacy}
           showPrivacyName={showPrivacyName}
+          showInfo={showInfo}
           onPressMenu={onPressMenu}
           disableOnPressItem={disableOnPressItem}
+          disableHorizontal={disableHorizontal}
         />
       )}
     </View>

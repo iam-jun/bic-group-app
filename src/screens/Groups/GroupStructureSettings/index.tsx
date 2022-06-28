@@ -85,7 +85,9 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = ({
         ) : (
           <FlatGroupItem
             {...communityTree}
-            disableOnPressItem={true}
+            disableOnPressItem
+            disableHorizontal
+            showInfo={false}
             onPressMenu={onPressMenu}
           />
         )}

@@ -17,7 +17,9 @@ export interface GroupTreeProps {
   onPressMenu?: (item: GroupItemProps) => void;
   showPrivacy?: boolean;
   showPrivacyName?: boolean;
+  showInfo?: boolean;
   disableOnPressItem?: boolean;
+  disableHorizontal?: boolean;
 }
 
 type TreeData = {[x: string]: IParsedGroup};
@@ -33,7 +35,9 @@ const GroupTree: React.FC<GroupTreeProps> = ({
   toggleOnPress,
   showPrivacy,
   showPrivacyName,
+  showInfo,
   disableOnPressItem,
+  disableHorizontal,
 }: GroupTreeProps) => {
   const [treeData, setTreeData] = useState<TreeData>({});
   const [renderedTree, setRenderedTree] = useState<React.ReactNode[]>([]);
@@ -198,17 +202,22 @@ const GroupTree: React.FC<GroupTreeProps> = ({
           {...group}
           showPrivacy={showPrivacy}
           showPrivacyName={showPrivacyName}
+          showInfo={showInfo}
           onPressItem={_onPressGroup}
           onToggleItem={onToggleGroup}
           onCheckedItem={onChangeCheckedGroups ? onCheckedGroup : undefined}
           onPressMenu={onPressMenu}
           disableOnPressItem={disableOnPressItem}
+          disableHorizontal={disableHorizontal}
         />,
       ),
     );
     setRenderedTree(tree);
   };
 
+  if (disableHorizontal) {
+    return <View style={styles.container}>{renderedTree}</View>;
+  }
   return (
     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
       <View style={styles.container}>{renderedTree}</View>
