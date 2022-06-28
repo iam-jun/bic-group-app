@@ -2,7 +2,10 @@ const groupsKeySelector = {
   groupDetail: {
     group: 'groups.groupDetail.group',
     can_setting: 'groups.groupDetail.can_setting',
+    can_edit_info: 'groups.groupDetail.can_edit_info',
+    can_edit_privacy: 'groups.groupDetail.can_edit_privacy',
     can_manage_member: 'groups.groupDetail.can_manage_member',
+    can_manage_scheme: 'groups.groupDetail.can_manage_scheme',
     join_status: 'groups.groupDetail.join_status',
     total_pending_members: 'groups.groupDetail.total_pending_members',
   },

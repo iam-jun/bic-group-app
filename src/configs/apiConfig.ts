@@ -139,14 +139,6 @@ const App = {
       useRetry: true,
     };
   },
-  tokens: (): HttpApiRequestConfig => {
-    return {
-      url: `${providers.bein.url}auth/token`,
-      method: 'get',
-      provider: providers.bein,
-      useRetry: true,
-    };
-  },
   pushToken: (deviceToken: string, deviceId: string): HttpApiRequestConfig => {
     return {
       url: `${providers.beinNotification.url}device-tokens`,

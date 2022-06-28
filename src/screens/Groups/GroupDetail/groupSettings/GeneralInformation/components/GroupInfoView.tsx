@@ -1,25 +1,36 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import GroupSectionItem from '../../../components/GroupSectionItem';
-import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
+
+import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {titleCase} from '~/utils/common';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import Icon from '~/beinComponents/Icon';
+import modalActions from '~/store/modal/actions';
 
 interface Props {
   id: string;
-  onPressPrivacy?: (e: any) => void;
+  onPressPrivacy?: () => void;
 }
 
 const GroupInfoView = ({id, onPressPrivacy}: Props) => {
   const {name, description, privacy} =
     useKeySelector(groupsKeySelector.groupDetail.group) || {};
+  const can_edit_privacy = useKeySelector(
+    groupsKeySelector.groupDetail.can_edit_privacy,
+  );
+  const can_edit_info = useKeySelector(
+    groupsKeySelector.groupDetail.can_edit_info,
+  );
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
+  const dispatch = useDispatch();
 
   const {rootNavigation} = useRootNavigation();
 
@@ -27,29 +38,48 @@ const GroupInfoView = ({id, onPressPrivacy}: Props) => {
     rootNavigation.navigate(groupStack.editGroupDescription, {groupId: id});
   };
 
+  const editGroupname = () => {
+    // TODO: Add feature
+    dispatch(modalActions.showAlertNewFeature());
+  };
+
   return (
     <View style={styles.container}>
-      <GroupSectionItem
+      <PrimaryItem
         testID="group_info_view.name"
         title={'settings:title_group_name'}
-        subtitle={name}
-        rightIcon={'AngleRightB'}
+        titleProps={{useI18n: true}}
+        subTitle={name}
+        onPress={can_edit_info ? editGroupname : undefined}
+        RightComponent={
+          can_edit_info && (
+            <Icon icon={'AngleRightB'} style={styles.rightIcon} />
+          )
+        }
       />
 
-      <GroupSectionItem
+      <PrimaryItem
         testID="group_info_view.description"
         title={'settings:title_group_description'}
-        subtitle={description}
-        onPress={editGroupDescripton}
-        rightIcon={'AngleRightB'}
+        titleProps={{useI18n: true}}
+        subTitle={description}
+        onPress={can_edit_info ? editGroupDescripton : undefined}
+        RightComponent={
+          can_edit_info && (
+            <Icon icon={'AngleRightB'} style={styles.rightIcon} />
+          )
+        }
       />
 
-      <GroupSectionItem
+      <PrimaryItem
         testID="group_info_view.privacy"
         title={'settings:title_privacy'}
-        subtitle={titleCase(privacy) || ''}
-        rightIcon={'EditAlt'}
-        onPress={onPressPrivacy}
+        titleProps={{useI18n: true}}
+        subTitle={titleCase(privacy) || ''}
+        onPress={can_edit_privacy ? onPressPrivacy : undefined}
+        RightComponent={
+          can_edit_privacy && <Icon icon={'EditAlt'} style={styles.rightIcon} />
+        }
       />
     </View>
   );
@@ -60,6 +90,9 @@ const themeStyles = (theme: ITheme) => {
   return StyleSheet.create({
     container: {
       marginHorizontal: spacing.margin.tiny,
+    },
+    rightIcon: {
+      marginLeft: spacing.margin.extraLarge,
     },
   });
 };

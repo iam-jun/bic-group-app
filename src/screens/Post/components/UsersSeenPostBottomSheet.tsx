@@ -71,7 +71,7 @@ const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
   const renderItem = (item: any) => {
     return (
       <PrimaryItem
-        testID={`seen_post_bottomSheet.${item?.item?.fullname}`}
+        testID={`users_seen_post_bottom_sheet.item_username.${item?.item?.username}`}
         showAvatar
         height={44}
         onPress={() => onPressItem(item)}

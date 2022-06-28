@@ -16,8 +16,6 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
-import ListView from '~/beinComponents/list/ListView';
-import {groupSettings} from '~/constants/groupAdminSettings';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 
 const GroupAdministration = (props: any) => {
@@ -30,9 +28,20 @@ const GroupAdministration = (props: any) => {
   const {rootNavigation} = useRootNavigation();
   const {name, icon} = useKeySelector(groupsKeySelector.groupDetail.group);
   const {total} = useKeySelector(groupsKeySelector.groupMemberRequests);
+  const can_manage_member = useKeySelector(
+    groupsKeySelector.groupDetail.can_manage_member,
+  );
+  const can_edit_info = useKeySelector(
+    groupsKeySelector.groupDetail.can_edit_info,
+  );
+  const can_edit_privacy = useKeySelector(
+    groupsKeySelector.groupDetail.can_edit_privacy,
+  );
 
   useEffect(() => {
-    dispatch(groupsActions.getGroupMemberRequests({groupId}));
+    can_manage_member &&
+      dispatch(groupsActions.getGroupMemberRequests({groupId}));
+
     return () => {
       dispatch(groupsActions.resetGroupMemberRequests());
     };
@@ -40,41 +49,12 @@ const GroupAdministration = (props: any) => {
 
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
 
-  const onGroupAdminPress = (item: any) => {
-    const {type} = item;
-    switch (type) {
-      case 'generalInfo':
-        goToGeneralInfo();
-        break;
-      default:
-        displayNewFeature();
-        break;
-    }
-  };
-
   const goToPendingMembers = () => {
     rootNavigation.navigate(groupStack.groupPendingMembers);
   };
 
   const goToGeneralInfo = () => {
     rootNavigation.navigate(groupStack.generalInfo, {groupId});
-  };
-
-  const renderGroupSettingItem = ({item, index}: any) => {
-    if (!item) return null;
-    const {title = '', icon = '', rightSubIcon = ''} = item;
-    return (
-      <MenuItem
-        testID={`group_administration.settings.item.${index}`}
-        title={title}
-        icon={icon}
-        iconProps={{icon: icon, tintColor: theme.colors.primary6}}
-        rightSubIcon={rightSubIcon}
-        onPress={() => {
-          onGroupAdminPress(item);
-        }}
-      />
-    );
   };
 
   const renderItem = (
@@ -107,13 +87,14 @@ const GroupAdministration = (props: any) => {
         useI18n>
         settings:title_group_moderating
       </Text.H5>
-      {renderItem(
-        'UserExclamation',
-        'settings:title_pending_members',
-        goToPendingMembers,
-        total,
-        'group_administration.pending_members',
-      )}
+      {!!can_manage_member &&
+        renderItem(
+          'UserExclamation',
+          'settings:title_pending_members',
+          goToPendingMembers,
+          total,
+          'group_administration.pending_members',
+        )}
       {renderItem(
         'FileExclamationAlt',
         'settings:title_pending_posts',
@@ -133,13 +114,28 @@ const GroupAdministration = (props: any) => {
         useI18n>
         settings:title_group_settings
       </Text.H5>
-      <ListView
-        data={groupSettings}
-        renderItem={renderGroupSettingItem}
-        scrollEnabled={false}
-        style={styles.settingsContainer}
-        showItemSeparator={false}
-      />
+      {(!!can_edit_info || !!can_edit_privacy) &&
+        renderItem(
+          'Cog',
+          'settings:title_profile_info',
+          goToGeneralInfo,
+          undefined,
+          'group_administration.profile_info',
+        )}
+      {renderItem(
+        'FileCopyAlt',
+        'settings:title_post_settings',
+        displayNewFeature,
+        undefined,
+        'group_administration.post_settings',
+      )}
+      {renderItem(
+        'UserCircle',
+        'settings:title_membership_settings',
+        displayNewFeature,
+        undefined,
+        'group_administration.membership_settings',
+      )}
     </>
   );
 

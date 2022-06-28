@@ -16,6 +16,9 @@ import postKeySelector from '../../redux/keySelector';
 import VideoPlayer from '~/beinComponents/VideoPlayer';
 import UploadingFile from '~/beinComponents/UploadingFile';
 import FilesView from '../FilesView';
+import CopyableView from '~/beinComponents/CopyableView';
+import {escapeMarkDown} from '~/utils/formatData';
+import {isEmpty} from 'lodash';
 
 export interface PostViewContentProps {
   postId: string;
@@ -51,7 +54,8 @@ const PostViewContent: FC<PostViewContentProps> = ({
   if (
     !content &&
     (!images || images?.length === 0) &&
-    (!videos || videos?.length === 0)
+    (!videos || videos?.length === 0) &&
+    isEmpty(files)
   ) {
     return null;
   }
@@ -89,11 +93,13 @@ const PostViewContent: FC<PostViewContentProps> = ({
     }
     if (isPostDetail) {
       return (
-        <Markdown
-          value={content}
-          selector={`${postKeySelector.allPosts}.${postId}.mentions`}
-          onPressAudience={onPressMentionAudience}
-        />
+        <CopyableView content={escapeMarkDown(content)}>
+          <Markdown
+            value={content}
+            selector={`${postKeySelector.allPosts}.${postId}.mentions`}
+            onPressAudience={onPressMentionAudience}
+          />
+        </CopyableView>
       );
     }
     return (

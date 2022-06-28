@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SeenCountsView renders correctly seen counts view 1`] = `
+<View
+  style={
+    Object {
+      "alignItems": "flex-end",
+      "marginEnd": 16,
+      "marginTop": 16,
+    }
+  }
+>
+  <View
+    accessible={true}
+    collapsable={false}
+    focusable={true}
+    onClick={[Function]}
+    onResponderGrant={[Function]}
+    onResponderMove={[Function]}
+    onResponderRelease={[Function]}
+    onResponderTerminate={[Function]}
+    onResponderTerminationRequest={[Function]}
+    onStartShouldSetResponder={[Function]}
+    style={
+      Object {
+        "opacity": 1,
+      }
+    }
+    testID="seen_counts_view.touchable_opacity"
+  >
+    <Text
+      numberOfLines={1}
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-SemiBold",
+            "fontSize": 14,
+          },
+          Object {
+            "color": "#627286",
+          },
+          undefined,
+        ]
+      }
+      testID="seen_counts_view.show_text"
+    >
+      Seen by 
+    </Text>
+  </View>
+</View>
+`;
