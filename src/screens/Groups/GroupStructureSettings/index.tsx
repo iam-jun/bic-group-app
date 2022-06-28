@@ -15,6 +15,7 @@ import {useDispatch} from 'react-redux';
 import GroupStructureMenu from '~/screens/Groups/GroupStructureSettings/components/GroupStructureMenu';
 import groupsActions from '~/screens/Groups/redux/actions';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import {isEmpty} from 'lodash';
 
 export interface GroupStructureSettingsProps {
   style?: StyleProp<ViewStyle>;
@@ -56,10 +57,19 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = ({
   };
 
   const onPressMenu = (group: GroupItemProps) => {
+    const {community_id, childrenUiIds, level = 0} = group || {};
+    const disableMove = !!community_id || level <= 1;
+    const disableReorder = isEmpty(childrenUiIds); //props generated when render UI tree
     dispatch(
       modalActions.showModal({
         isOpen: true,
-        ContentComponent: <GroupStructureMenu group={getGroup(group?.id)} />,
+        ContentComponent: (
+          <GroupStructureMenu
+            group={getGroup(group?.id)}
+            disableMove={disableMove}
+            disableReorder={disableReorder}
+          />
+        ),
       }),
     );
   };

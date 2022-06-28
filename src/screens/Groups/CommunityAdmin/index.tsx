@@ -115,14 +115,16 @@ const CommunityAdmin = () => {
           onPress={onPressGeneralInfo}
         />
       )}
-      <MenuItem //todo update can can
-        testID="community_admin.group_structure_settings"
-        title="settings:title_group_structure"
-        icon="CodeBranch"
-        iconProps={{icon: 'CodeBranch', tintColor: theme.colors.primary6}}
-        rightSubIcon="AngleRightB"
-        onPress={onPressGroupStructure}
-      />
+      {!!can_edit_info && ( //todo temp use can edit info, should use correct permission when BE update
+        <MenuItem
+          testID="community_admin.group_structure_settings"
+          title="settings:title_group_structure"
+          icon="CodeBranch"
+          iconProps={{icon: 'CodeBranch', tintColor: theme.colors.primary6}}
+          rightSubIcon="AngleRightB"
+          onPress={onPressGroupStructure}
+        />
+      )}
       {!!can_manage_scheme && (
         <MenuItem
           testID="community_admin.permission_settings"

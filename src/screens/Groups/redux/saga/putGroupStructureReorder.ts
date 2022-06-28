@@ -7,6 +7,7 @@ import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import {IToastMessage} from '~/interfaces/common';
 import modalActions from '~/store/modal/actions';
+import {timeOut} from '~/utils/common';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -29,13 +30,14 @@ export default function* putGroupStructureReorder({
       newOrder,
     );
     if (response?.data) {
-      yield put(actions.setGroupStructureReorder({loading: false}));
       yield put(
         actions.getGroupStructureCommunityTree({
           communityId,
           showLoading: false,
         }),
       );
+      yield timeOut(600); //wait for refresh group tree
+      yield put(actions.setGroupStructureReorder({loading: false}));
       navigation.goBack();
       const toastMessage: IToastMessage = {
         content: 'communities:group_structure:text_reorder_success',

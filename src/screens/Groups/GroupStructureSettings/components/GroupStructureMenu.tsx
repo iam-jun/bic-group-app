@@ -12,18 +12,21 @@ import modalActions from '~/store/modal/actions';
 
 export interface GroupStructureMenuProps {
   group: GroupItemProps;
+  disableMove?: boolean;
+  disableReorder?: boolean;
 }
 
 const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
   group,
+  disableMove,
+  disableReorder,
 }: GroupStructureMenuProps) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
+  const {colors} = theme || {};
   const styles = createStyle(theme);
-
-  const getGroup = (id: number | string) => {};
 
   const onPressReorderGroup = () => {
     rootNavigation.navigate(groupStack.reorderGroup, {group});
@@ -41,17 +44,31 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
         testID={'group_structure_menu.reorder'}
         style={styles.item}
         leftIcon={'Layers'}
-        leftIconProps={{icon: 'Layers', size: 24}}
+        leftIconProps={{
+          icon: 'Layers',
+          size: 24,
+          tintColor: disableReorder ? colors.textDisabled : colors.textPrimary,
+        }}
+        titleProps={{
+          color: disableReorder ? colors.textDisabled : colors.textPrimary,
+        }}
         title={t('communities:group_structure:title_reorder_group')}
-        onPress={onPressReorderGroup}
+        onPress={disableReorder ? undefined : onPressReorderGroup}
       />
       <PrimaryItem
         testID={'group_structure_menu.reorder'}
         style={styles.item}
         leftIcon={'Exclude'}
-        leftIconProps={{icon: 'Exclude', size: 24}}
+        leftIconProps={{
+          icon: 'Exclude',
+          size: 24,
+          tintColor: disableMove ? colors.textDisabled : colors.textPrimary,
+        }}
+        titleProps={{
+          color: disableMove ? colors.textDisabled : colors.textPrimary,
+        }}
         title={t('communities:group_structure:title_move_group')}
-        onPress={onPressMoveGroup}
+        onPress={disableMove ? undefined : onPressMoveGroup}
       />
     </View>
   );
