@@ -36,7 +36,10 @@ const groupsActions = {
     type: groupsTypes.SET_GROUP_STRUCTURE,
     payload,
   }),
-  getGroupStructureCommunityTree: (payload?: any) => ({
+  getGroupStructureCommunityTree: (payload: {
+    communityId: number;
+    showLoading?: boolean;
+  }) => ({
     type: groupsTypes.GET_GROUP_STRUCTURE_COMMUNITY_TREE,
     payload,
   }),

@@ -30,7 +30,12 @@ export default function* putGroupStructureReorder({
     );
     if (response?.data) {
       yield put(actions.setGroupStructureReorder({loading: false}));
-      yield put(actions.getGroupStructureCommunityTree(communityId));
+      yield put(
+        actions.getGroupStructureCommunityTree({
+          communityId,
+          showLoading: false,
+        }),
+      );
       navigation.goBack();
       const toastMessage: IToastMessage = {
         content: 'communities:group_structure:text_reorder_success',

@@ -5,7 +5,6 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 
 import Header from '~/beinComponents/Header';
-import {useRootNavigation} from '~/hooks/navigation';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
@@ -37,7 +36,7 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = ({
   );
 
   useEffect(() => {
-    dispatch(groupsActions.getGroupStructureCommunityTree(communityId));
+    dispatch(groupsActions.getGroupStructureCommunityTree({communityId}));
   }, []);
 
   const getGroup = (id: number) => {
@@ -70,7 +69,7 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = ({
       <Header
         title={t('communities:group_structure:title_group_structure_settings')}
       />
-      <ScrollView style={styles.contentContainer}>
+      <ScrollView contentContainerStyle={styles.contentContainer}>
         {loading ? (
           <LoadingIndicator style={styles.loading} />
         ) : (

@@ -5,13 +5,16 @@ import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
 
 export default function* getGroupStructureCommunityTree({
-  payload: communityId,
+  payload,
 }: {
   type: string;
-  payload: number | string;
+  payload: {communityId: number; showLoading?: boolean};
 }): any {
+  const {communityId, showLoading = true} = payload || {};
   try {
-    yield put(groupsActions.setGroupStructureCommunityTree({loading: true}));
+    if (showLoading) {
+      yield put(groupsActions.setGroupStructureCommunityTree({loading: true}));
+    }
     const response =
       (yield call(groupsDataHelper.getCommunityGroupTree, communityId)) || [];
 
