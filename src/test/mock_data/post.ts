@@ -520,3 +520,18 @@ export const COMMENT_HAS_REACTION = {
     },
   },
 };
+
+export const SEEN_POST = {
+  data: [
+    {
+      fullname:
+        'Admin 1 Tên siêu dài saddd dddddddddddddddddddddddddddddddddddde',
+      id: 43,
+      username: 'admin1',
+      email: 'admin1@tgm.vn',
+      avatar:
+        'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/78442999-8f69-403e-afc7-d1a9e4083f7d.jpg',
+      groups: [1, 2, 3],
+    },
+  ],
+};
