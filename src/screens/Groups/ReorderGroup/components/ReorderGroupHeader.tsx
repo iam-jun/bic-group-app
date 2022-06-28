@@ -5,86 +5,65 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 
 import Text from '~/beinComponents/Text';
-import {IGroup} from '~/interfaces/IGroup';
-import Icon from '~/beinComponents/Icon';
-import privacyTypes from '~/constants/privacyTypes';
-import Avatar from '~/beinComponents/Avatar';
+import Header from '~/beinComponents/Header';
+import {useBaseHook} from '~/hooks';
+import {useKeySelector} from '~/hooks/selector';
+import groupsKeySelector from '~/screens/Groups/redux/keySelector';
+import {isEqual} from 'lodash';
+import {dispatch} from 'jest-circus/build/state';
+import groupsActions from '~/screens/Groups/redux/actions';
+import {useDispatch} from 'react-redux';
 
 export interface ReorderGroupHeaderProps {
   style?: StyleProp<ViewStyle>;
-  group: IGroup;
+  initOrder?: any;
 }
 
 const ReorderGroupHeader: FC<ReorderGroupHeaderProps> = ({
-  group,
+  style,
+  initOrder,
 }: ReorderGroupHeaderProps) => {
+  const dispatch = useDispatch();
+  const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
-  const {spacing} = theme;
+  const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
-  const {privacy, icon, name} = group || {};
-  const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
-  const {icon: privacyIcon}: any = privacyData || {};
+  const {id: communityId} = useKeySelector(groupsKeySelector.communityDetail);
+  const {loading, newOrder} = useKeySelector(
+    groupsKeySelector.groupStructure.reorder,
+  );
+
+  const hasChanged = !!newOrder && !isEqual(newOrder, initOrder);
+  const disabled = loading || !hasChanged;
+
+  const onPressSave = () => {
+    if (communityId && newOrder) {
+      dispatch(groupsActions.putGroupStructureReorder({communityId, newOrder}));
+    }
+  };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.title}>
-        <Icon icon={'InfoCircle'} />
-        <Text.BodyS> Drag and drop reorder the group</Text.BodyS>
-      </View>
-      <View style={styles.groupInfo}>
-        <View style={styles.grayDot} />
-        <View>
-          <Avatar.Small source={icon} />
-          <View style={styles.iconPrivacy}>
-            <Icon size={spacing.margin.base} icon={privacyIcon} />
-          </View>
-        </View>
-        <Text.H6 numberOfLines={1} style={styles.textName}>
-          {name}
-        </Text.H6>
-      </View>
-    </View>
+    <Header
+      title={t('communities:group_structure:title_reorder_group')}
+      onPressButton={onPressSave}
+      buttonText={'common:btn_save'}
+      buttonProps={{
+        loading: loading,
+        disabled: disabled,
+        useI18n: true,
+        highEmphasis: true,
+        style: {borderWidth: 0},
+        testID: 'create_post.btn_post',
+      }}
+    />
   );
 };
 
 const createStyle = (theme: ITheme) => {
   const {colors, spacing} = theme;
   return StyleSheet.create({
-    container: {
-      marginHorizontal: spacing.margin.large,
-      marginTop: spacing.margin.base,
-    },
-    title: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginBottom: spacing.margin.tiny,
-      marginLeft: spacing.margin.small,
-    },
-    iconPrivacy: {
-      width: spacing.margin.base,
-      height: spacing.margin.base,
-      position: 'absolute',
-      bottom: 0,
-      right: 0,
-      backgroundColor: colors.background,
-      borderRadius: 2,
-    },
-    groupInfo: {
-      marginTop: spacing.margin.large,
-      marginBottom: spacing.margin.large,
-      flexDirection: 'row',
-      alignItems: 'center',
-    },
-    textName: {flex: 1, marginLeft: spacing.margin.small},
-    grayDot: {
-      marginLeft: spacing.margin.base,
-      marginRight: spacing.margin.small,
-      width: 6,
-      height: 6,
-      borderRadius: 3,
-      backgroundColor: colors.bgFocus,
-    },
+    container: {},
   });
 };
 

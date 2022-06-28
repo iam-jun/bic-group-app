@@ -31,6 +31,30 @@ import {
 } from '~/interfaces/ICommunity';
 
 const groupsActions = {
+  //group structure settings
+  setGroupStructure: (payload?: any) => ({
+    type: groupsTypes.SET_GROUP_STRUCTURE,
+    payload,
+  }),
+  getGroupStructureCommunityTree: (payload?: any) => ({
+    type: groupsTypes.GET_GROUP_STRUCTURE_COMMUNITY_TREE,
+    payload,
+  }),
+  setGroupStructureCommunityTree: (payload?: any) => ({
+    type: groupsTypes.SET_GROUP_STRUCTURE_COMMUNITY_TREE,
+    payload,
+  }),
+  setGroupStructureReorder: (payload?: any) => ({
+    type: groupsTypes.SET_GROUP_STRUCTURE_REORDER,
+    payload,
+  }),
+  putGroupStructureReorder: (payload: {
+    communityId: number;
+    newOrder: number[];
+  }) => ({
+    type: groupsTypes.PUT_GROUP_STRUCTURE_REORDER,
+    payload,
+  }),
   // permission
   getPermissionCategories: () => ({
     type: groupsTypes.GET_PERMISSION_CATEGORIES,
@@ -87,20 +111,6 @@ const groupsActions = {
   }),
   setSchemes: (payload?: {loading?: boolean; data?: any}) => ({
     type: groupsTypes.SET_SCHEMES,
-    payload,
-  }),
-
-  //group structure settings
-  setGroupStructure: (payload?: any) => ({
-    type: groupsTypes.SET_GROUP_STRUCTURE,
-    payload,
-  }),
-  getGroupStructureCommunityTree: (payload?: any) => ({
-    type: groupsTypes.GET_GROUP_STRUCTURE_COMMUNITY_TREE,
-    payload,
-  }),
-  setGroupStructureCommunityTree: (payload?: any) => ({
-    type: groupsTypes.SET_GROUP_STRUCTURE_COMMUNITY_TREE,
     payload,
   }),
 

@@ -54,6 +54,7 @@ const groupsKeySelector = {
   },
   groupStructure: {
     communityTree: 'groups.groupStructure.communityTree',
+    reorder: 'groups.groupStructure.reorder',
   },
   communitySearch: 'groups.communitySearch',
 };

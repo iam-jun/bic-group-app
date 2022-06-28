@@ -20,6 +20,16 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
+  putGroupStructureReorder: (
+    communityId: number,
+    data: number[],
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-structure/order`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data,
+  }),
   getPermissionCategories: (): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}permissions/categories`,
     method: 'get',
@@ -395,6 +405,20 @@ const groupsDataHelper = {
         groupsApiConfig.getCommunityGroupsTree(id),
       );
       if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  putGroupStructureReorder: async (communityId: number, data: number[]) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.putGroupStructureReorder(communityId, data),
+      );
+      if (response && response?.data) {
         return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);

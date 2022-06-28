@@ -39,7 +39,10 @@ export const groupInitState = {
       loading: false,
       data: undefined,
     },
-    communityWithChildren: undefined,
+    reorder: {
+      newOrder: undefined,
+      loading: false,
+    },
   },
   isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
@@ -205,10 +208,18 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         groupStructure: {
           ...state.groupStructure,
           communityTree: payload
-            ? {
-                ...payload,
-              }
+            ? {...payload}
             : groupInitState.groupStructure.communityTree,
+        },
+      };
+    case groupsTypes.SET_GROUP_STRUCTURE_REORDER:
+      return {
+        ...state,
+        groupStructure: {
+          ...state.groupStructure,
+          reorder: payload
+            ? {...payload}
+            : groupInitState.groupStructure.reorder,
         },
       };
     // Permission

@@ -62,6 +62,7 @@ import getCommunityScheme from '~/screens/Groups/redux/saga/getCommunityScheme';
 import deleteCommunityScheme from '~/screens/Groups/redux/saga/deleteCommunityScheme';
 import getCommunitySearch from './getCommunitySearch';
 import getGroupStructureCommunityTree from '~/screens/Groups/redux/saga/getGroupStructureCommunityTree';
+import putGroupStructureReorder from '~/screens/Groups/redux/saga/putGroupStructureReorder';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -73,6 +74,10 @@ export default function* groupsSaga() {
   yield takeLatest(
     groupsTypes.GET_PERMISSION_CATEGORIES,
     getPermissionCategories,
+  );
+  yield takeLatest(
+    groupsTypes.PUT_GROUP_STRUCTURE_REORDER,
+    putGroupStructureReorder,
   );
   yield takeLatest(groupsTypes.GET_SYSTEM_SCHEME, getSystemScheme);
   yield takeLatest(groupsTypes.GET_SCHEMES, getSchemes);
