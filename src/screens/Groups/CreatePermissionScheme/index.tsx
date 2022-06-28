@@ -5,6 +5,7 @@ import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
+import {cloneDeep} from 'lodash';
 
 import {ITheme} from '~/theme/interfaces';
 
@@ -70,7 +71,7 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     if (isEdit && initScheme) {
       dispatch(
         groupsActions.setCreatingScheme({
-          data: {...initScheme},
+          data: cloneDeep(initScheme),
         }),
       );
     }
@@ -133,6 +134,7 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
   return (
     <View style={styles.container}>
       <CreateSchemeHeader
+        initScheme={initScheme}
         loadingData={loading}
         loadDataFailed={loadDataFailed}
         isEdit={isEdit}

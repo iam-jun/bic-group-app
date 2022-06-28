@@ -1,6 +1,7 @@
 import React, {FC} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {isEqual} from 'lodash';
 
 import Header from '~/beinComponents/Header';
 import {useBaseHook} from '~/hooks';
@@ -11,15 +12,18 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import modalActions from '~/store/modal/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import {ITheme} from '~/theme/interfaces';
+import {IScheme} from '~/interfaces/IGroup';
 
 export interface CreateSchemeHeaderProps {
   style?: StyleProp<ViewStyle>;
+  initScheme?: IScheme;
   loadingData: boolean;
   loadDataFailed: boolean;
   isEdit?: boolean;
 }
 
 const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
+  initScheme,
   loadingData,
   loadDataFailed,
   isEdit,
@@ -37,6 +41,14 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
   const creating = useKeySelector(
     groupsKeySelector.permission.creatingScheme.creating,
   );
+  const roles = useKeySelector(
+    groupsKeySelector.permission.creatingScheme.roles,
+  );
+  const {
+    name: initName,
+    description: initDesc,
+    roles: initRoles,
+  } = initScheme || {};
 
   const disableButtonCreate = loadingData || loadDataFailed || !name;
 
@@ -49,7 +61,7 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
   };
 
   const onPressBack = () => {
-    if (name || desc) {
+    if (name !== initName || desc !== initDesc || !isEqual(roles, initRoles)) {
       dispatch(
         modalActions.showAlert({
           title: t('communities:permission:text_title_discard_create_scheme'),
