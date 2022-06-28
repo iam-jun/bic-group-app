@@ -83,7 +83,11 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = ({
         {loading ? (
           <LoadingIndicator style={styles.loading} />
         ) : (
-          <FlatGroupItem {...communityTree} onPressMenu={onPressMenu} />
+          <FlatGroupItem
+            {...communityTree}
+            disableOnPressItem={true}
+            onPressMenu={onPressMenu}
+          />
         )}
       </ScrollView>
     </View>

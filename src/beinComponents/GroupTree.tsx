@@ -6,6 +6,7 @@ import {IGroup, IParsedGroup} from '~/interfaces/IGroup';
 import GroupItem, {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 export interface GroupTreeProps {
   data?: IGroup[] | IGroup;
@@ -16,6 +17,7 @@ export interface GroupTreeProps {
   onPressMenu?: (item: GroupItemProps) => void;
   showPrivacy?: boolean;
   showPrivacyName?: boolean;
+  disableOnPressItem?: boolean;
 }
 
 type TreeData = {[x: string]: IParsedGroup};
@@ -31,6 +33,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
   toggleOnPress,
   showPrivacy,
   showPrivacyName,
+  disableOnPressItem,
 }: GroupTreeProps) => {
   const [treeData, setTreeData] = useState<TreeData>({});
   const [renderedTree, setRenderedTree] = useState<React.ReactNode[]>([]);
@@ -69,10 +72,16 @@ const GroupTree: React.FC<GroupTreeProps> = ({
     } else if (toggleOnPress) {
       onToggleGroup(group);
     } else {
-      rootNavigation.navigate(groupStack.groupDetail, {
-        groupId: group.id,
-        initial: true,
-      });
+      if (group.community_id) {
+        rootNavigation.navigate(mainStack.communityDetail, {
+          communityId: group.community_id,
+        });
+      } else {
+        rootNavigation.navigate(groupStack.groupDetail, {
+          groupId: group.id,
+          initial: true,
+        });
+      }
     }
   };
 
@@ -193,6 +202,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
           onToggleItem={onToggleGroup}
           onCheckedItem={onChangeCheckedGroups ? onCheckedGroup : undefined}
           onPressMenu={onPressMenu}
+          disableOnPressItem={disableOnPressItem}
         />,
       ),
     );

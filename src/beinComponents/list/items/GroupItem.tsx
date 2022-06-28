@@ -16,6 +16,7 @@ import commonActions, {IAction} from '~/constants/commonActions';
 import {generateUniqueId} from '~/utils/generator';
 import {useKeySelector} from '~/hooks/selector';
 import privacyTypes from '~/constants/privacyTypes';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 export interface GroupItemProps extends IParsedGroup {
   testID?: string;
@@ -33,6 +34,7 @@ export interface GroupItemProps extends IParsedGroup {
 const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   const {
     id,
+    community_id,
     name,
     user_count,
     icon,
@@ -72,10 +74,16 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     if (onPressItem) {
       onPressItem(props);
     } else {
-      rootNavigation.navigate(groupStack.groupDetail, {
-        groupId: id,
-        initial: true,
-      });
+      if (community_id) {
+        rootNavigation.navigate(mainStack.communityDetail, {
+          communityId: community_id,
+        });
+      } else {
+        rootNavigation.navigate(groupStack.groupDetail, {
+          groupId: id,
+          initial: true,
+        });
+      }
     }
   };
 
