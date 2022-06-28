@@ -32,7 +32,9 @@ const CommunityAdmin = () => {
   const {total} = useKeySelector(groupsKeySelector.communityMemberRequests);
 
   useEffect(() => {
-    dispatch(groupsActions.getCommunityMemberRequests({communityId}));
+    can_manage_member &&
+      dispatch(groupsActions.getCommunityMemberRequests({communityId}));
+
     return () => {
       dispatch(groupsActions.resetCommunityMemberRequests());
     };

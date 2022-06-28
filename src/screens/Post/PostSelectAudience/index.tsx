@@ -6,6 +6,7 @@ import {
   ActivityIndicator,
   Platform,
   KeyboardAvoidingView,
+  DeviceEventEmitter,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -136,6 +137,12 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     } else {
       dispatch(postActions.setPostSelectAudienceState({loading: false}));
     }
+
+    setTimeout(() => {
+      //emit event show header to avoid case quick scroll then press create, lead to missing header
+      DeviceEventEmitter.emit('showHeader', true);
+      DeviceEventEmitter.emit('showBottomBar', true);
+    }, 2000);
 
     return () => {
       dispatch(postActions.setPostSelectAudienceState());

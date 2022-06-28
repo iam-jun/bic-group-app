@@ -4,7 +4,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import uploadImage from './uploadImage';
 import menuActions from '../actions';
 import * as modalActions from '~/store/modal/actions';
-import FileUploader from '~/services/fileUploader';
+import ImageUploader from '~/services/imageUploader';
 import {uploadTypes} from '~/configs/resourceConfig';
 
 describe('Update User Profile Image Saga', () => {
@@ -35,11 +35,11 @@ describe('Update User Profile Image Saga', () => {
       avatar: avatar,
     };
 
-    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
+    jest.spyOn(ImageUploader, 'getInstance').mockImplementation(() => {
       return {upload: jest.fn().mockResolvedValue({url: avatar})} as any;
     });
 
-    const fileUploader = FileUploader.getInstance();
+    const fileUploader = ImageUploader.getInstance();
     //@ts-ignore
     return expectSaga(uploadImage, action)
       .put(menuActions.setLoadingAvatar(true))
@@ -74,13 +74,13 @@ describe('Update User Profile Image Saga', () => {
       background_img_url: background_img_url,
     };
 
-    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
+    jest.spyOn(ImageUploader, 'getInstance').mockImplementation(() => {
       return {
         upload: jest.fn().mockResolvedValue({url: background_img_url}),
       } as any;
     });
 
-    const fileUploader = FileUploader.getInstance();
+    const fileUploader = ImageUploader.getInstance();
     //@ts-ignore
     return expectSaga(uploadImage, coverPhotoAction)
       .put(menuActions.setLoadingCover(true))
@@ -92,13 +92,13 @@ describe('Update User Profile Image Saga', () => {
   it('should request to upload image failure', () => {
     const error = {meta: {message: 'Something went wrong'}};
 
-    jest.spyOn(FileUploader, 'getInstance').mockImplementation(() => {
+    jest.spyOn(ImageUploader, 'getInstance').mockImplementation(() => {
       return {
         upload: jest.fn().mockRejectedValue(false),
       } as any;
     });
 
-    const fileUploader = FileUploader.getInstance();
+    const fileUploader = ImageUploader.getInstance();
     //@ts-ignore
     return expectSaga(uploadImage, action)
       .put(menuActions.setLoadingAvatar(true))

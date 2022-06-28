@@ -33,11 +33,16 @@ const GroupAdministration = (props: any) => {
   const can_edit_info = useKeySelector(
     groupsKeySelector.groupDetail.can_edit_info,
   );
+  const can_edit_privacy = useKeySelector(
+    groupsKeySelector.groupDetail.can_edit_privacy,
+  );
 
   const {total} = useKeySelector(groupsKeySelector.pendingMemberRequests);
 
   useEffect(() => {
-    dispatch(groupsActions.getGroupMemberRequests({groupId}));
+    can_manage_member &&
+      dispatch(groupsActions.getGroupMemberRequests({groupId}));
+
     return () => {
       dispatch(groupsActions.resetMemberRequests());
     };
@@ -110,7 +115,7 @@ const GroupAdministration = (props: any) => {
         useI18n>
         settings:title_group_settings
       </Text.H5>
-      {!!can_edit_info &&
+      {(!!can_edit_info || !!can_edit_privacy) &&
         renderItem(
           'Cog',
           'settings:title_profile_info',
