@@ -46,8 +46,12 @@ const CommunityPermission = () => {
 };
 
 const createStyle = (theme: ITheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
-    container: {},
+    container: {
+      flex: 1,
+      backgroundColor: colors.background,
+    },
   });
 };
 
