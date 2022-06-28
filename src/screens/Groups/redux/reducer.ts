@@ -262,7 +262,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         ...state,
         permissionScheme: {
           ...state.permissionScheme,
-          communityScheme: payload,
+          communityScheme: {...payload},
         },
       };
     case groupsTypes.SET_SCHEMES:

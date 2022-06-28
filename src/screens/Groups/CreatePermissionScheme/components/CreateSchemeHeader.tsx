@@ -54,7 +54,6 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
         modalActions.showAlert({
           title: t('communities:permission:text_title_discard_create_scheme'),
           content: t('communities:permission:text_desc_discard_create_scheme'),
-          showCloseButton: true,
           cancelBtn: true,
           cancelLabel: t('common:btn_discard'),
           confirmLabel: t('communities:permission:btn_continue'),

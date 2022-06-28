@@ -70,7 +70,7 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     if (isEdit && initScheme) {
       dispatch(
         groupsActions.setCreatingScheme({
-          data: initScheme,
+          data: {...initScheme},
         }),
       );
     }
