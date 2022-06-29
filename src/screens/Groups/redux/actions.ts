@@ -58,6 +58,31 @@ const groupsActions = {
     type: groupsTypes.PUT_GROUP_STRUCTURE_REORDER,
     payload,
   }),
+  setGroupStructureMove: (payload?: {
+    loading?: boolean;
+    targetGroups?: any[];
+    movingGroup?: any;
+    key?: string;
+  }) => ({
+    type: groupsTypes.SET_GROUP_STRUCTURE_MOVE,
+    payload,
+  }),
+  getGroupStructureMoveTargets: (payload?: {
+    communityId: number;
+    groupId: number;
+    key?: string;
+  }) => ({
+    type: groupsTypes.GET_GROUP_STRUCTURE_MOVE_TARGETS,
+    payload,
+  }),
+  putGroupStructureMoveToTarget: (payload: {
+    communityId: number;
+    moveId: number;
+    targetId: number;
+  }) => ({
+    type: groupsTypes.PUT_GROUP_STRUCTURE_MOVE_TO_TARGET,
+    payload,
+  }),
   // permission
   getPermissionCategories: () => ({
     type: groupsTypes.GET_PERMISSION_CATEGORIES,

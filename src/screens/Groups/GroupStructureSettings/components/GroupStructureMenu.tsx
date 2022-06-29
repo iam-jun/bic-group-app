@@ -9,9 +9,10 @@ import {ITheme} from '~/theme/interfaces';
 import {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import modalActions from '~/store/modal/actions';
+import {IGroup} from "~/interfaces/IGroup";
 
 export interface GroupStructureMenuProps {
-  group: GroupItemProps;
+  group?: IGroup;
   disableMove?: boolean;
   disableReorder?: boolean;
 }
@@ -53,7 +54,7 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
           color: disableReorder ? colors.textDisabled : colors.textPrimary,
         }}
         title={t('communities:group_structure:title_reorder_group')}
-        onPress={disableReorder ? undefined : onPressReorderGroup}
+        onPress={disableReorder || !group ? undefined : onPressReorderGroup}
       />
       <PrimaryItem
         testID={'group_structure_menu.reorder'}
@@ -68,7 +69,7 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
           color: disableMove ? colors.textDisabled : colors.textPrimary,
         }}
         title={t('communities:group_structure:title_move_group')}
-        onPress={disableMove ? undefined : onPressMoveGroup}
+        onPress={disableMove || !group ? undefined : onPressMoveGroup}
       />
     </View>
   );

@@ -858,6 +858,7 @@
       "title_reorder_group": "Reorder Group",
       "title_move_group": "Move Group",
       "text_reorder_success": "Reorder group successfully",
+      "text_move_success": "Move group successfully",
       "text_info_reorder": "Drag and drop reorder the group"
     },
     "text_search_communities": "Search Communities"

@@ -43,6 +43,12 @@ export const groupInitState = {
       newOrder: undefined,
       loading: false,
     },
+    move: {
+      loading: false,
+      searchKey: '',
+      targetGroups: undefined,
+      movingGroup: undefined,
+    },
   },
   isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
@@ -220,6 +226,14 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           reorder: payload
             ? {...payload}
             : groupInitState.groupStructure.reorder,
+        },
+      };
+    case groupsTypes.SET_GROUP_STRUCTURE_MOVE:
+      return {
+        ...state,
+        groupStructure: {
+          ...state.groupStructure,
+          move: payload ? {...payload} : groupInitState.groupStructure.move,
         },
       };
     // Permission

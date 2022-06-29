@@ -16,6 +16,8 @@ import GroupStructureMenu from '~/screens/Groups/GroupStructureSettings/componen
 import groupsActions from '~/screens/Groups/redux/actions';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import {isEmpty} from 'lodash';
+import {getGroupFromTreeById} from '~/screens/Groups/helper';
+import {IGroup} from '~/interfaces/IGroup';
 
 export interface GroupStructureSettingsProps {
   style?: StyleProp<ViewStyle>;
@@ -40,32 +42,20 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = ({
     dispatch(groupsActions.getGroupStructureCommunityTree({communityId}));
   }, []);
 
-  const getGroup = (id: number) => {
-    let group: GroupItemProps = communityTree;
-    communityTree?.children?.map?.((g: any) => {
-      if (g.id === Number(id)) {
-        group = g;
-      } else {
-        g?.children?.map?.((child: any) => {
-          if (child.id === id) {
-            group = child;
-          }
-        });
-      }
-    });
-    return group;
-  };
-
   const onPressMenu = (group: GroupItemProps) => {
     const {community_id, childrenUiIds, level = 0} = group || {};
     const disableMove = !!community_id || level <= 1;
     const disableReorder = isEmpty(childrenUiIds); //props generated when render UI tree
+    const groupFromTree: IGroup = getGroupFromTreeById(
+      communityTree,
+      group?.id,
+    );
     dispatch(
       modalActions.showModal({
         isOpen: true,
         ContentComponent: (
           <GroupStructureMenu
-            group={getGroup(group?.id)}
+            group={groupFromTree}
             disableMove={disableMove}
             disableReorder={disableReorder}
           />

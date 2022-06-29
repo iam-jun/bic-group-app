@@ -49,6 +49,7 @@ export default function* putGroupStructureReorder({
       yield put(modalActions.showHideToastMessage(toastMessage));
     } else {
       yield put(actions.setGroupStructureReorder({loading: false, newOrder}));
+      yield call(showError, response);
     }
   } catch (err: any) {
     yield put(actions.setGroupStructureReorder({loading: false, newOrder}));

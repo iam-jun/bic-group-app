@@ -30,6 +30,31 @@ export const groupsApiConfig = {
     useRetry: true,
     data,
   }),
+  getCommunityStructureMoveTargets: (
+    communityId: number,
+    groupId: number,
+    key?: string,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-structure/move-targets/${groupId}`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    ...(key ? {params: {key}} : {}),
+  }),
+  putGroupStructureMoveToTarget: (
+    communityId: number,
+    moveId: number,
+    targetId: number,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-structure/move`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {
+      group_id: moveId,
+      target_outer_group_id: targetId,
+    },
+  }),
   getPermissionCategories: (): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}permissions/categories`,
     method: 'get',
@@ -404,7 +429,7 @@ const groupsDataHelper = {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getCommunityGroupsTree(id),
       );
-      if (response && response?.data?.data) {
+      if (response && response?.data) {
         return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);
@@ -417,6 +442,58 @@ const groupsDataHelper = {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.putGroupStructureReorder(communityId, data),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getCommunityStructureMoveTargets: async (
+    communityId: number,
+    groupId: number,
+    key?: string,
+  ) => {
+    try {
+      if (!communityId || !groupId) {
+        return Promise.reject(
+          'getCommunityStructureMoveTargets invalid params',
+        );
+      }
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getCommunityStructureMoveTargets(
+          communityId,
+          groupId,
+          key,
+        ),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  putGroupStructureMoveToTarget: async (
+    communityId: number,
+    moveId: number,
+    targetId: number,
+  ) => {
+    try {
+      if (!communityId || !moveId || !targetId) {
+        return Promise.reject('putGroupStructureMoveToTarget invalid params');
+      }
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.putGroupStructureMoveToTarget(
+          communityId,
+          moveId,
+          targetId,
+        ),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
