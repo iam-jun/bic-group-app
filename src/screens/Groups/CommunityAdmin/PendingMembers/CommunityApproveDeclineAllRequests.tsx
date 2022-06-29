@@ -1,4 +1,3 @@
-import {StyleProp, ViewStyle} from 'react-native';
 import React, {useRef} from 'react';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -20,11 +19,7 @@ import groupsKeySelector from '../../redux/keySelector';
 import {IToastMessage} from '~/interfaces/common';
 import {useBaseHook} from '~/hooks';
 
-interface ActionProps {
-  style?: StyleProp<ViewStyle>;
-}
-
-const ApproveDeclineAllRequests = ({style}: ActionProps) => {
+const CommunityApproveDeclineAllRequests = () => {
   const theme = useTheme() as ITheme;
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
@@ -122,11 +117,10 @@ const ApproveDeclineAllRequests = ({style}: ActionProps) => {
 
   return (
     <ButtonApproveDeclineAllRequests
-      style={style}
       onPressDeclineAll={onPressDeclineAll}
       onPressApproveAll={onPressApproveAll}
     />
   );
 };
 
-export default ApproveDeclineAllRequests;
+export default CommunityApproveDeclineAllRequests;

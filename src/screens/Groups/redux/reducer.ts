@@ -95,16 +95,22 @@ export const groupInitState = {
 
   loadingAvatar: false,
   loadingCover: false,
-
-  pendingMemberRequests: {
-    total: 0,
+  discoverGroups: {
     loading: false,
     data: [],
+    items: {},
+    canLoadMore: true,
+  },
+
+  groupMemberRequests: {
+    total: 0,
+    loading: false,
+    ids: [] as number[],
     items: {} as IObject<IJoiningMember>,
     canLoadMore: true,
   },
   // temporarily stores data for `undo` action
-  undoData: {
+  undoGroupMemberRequests: {
     total: 0,
     loading: null,
     canLoadMore: null,
@@ -127,8 +133,8 @@ export const groupInitState = {
     data: [] as number[],
     items: {},
   },
-  communityDetail: {} as ICommunity,
   isGettingInfoDetail: false,
+  communityDetail: {} as ICommunity,
   communityMembers: {
     loading: false,
     canLoadMore: true,
@@ -140,18 +146,12 @@ export const groupInitState = {
     canLoadMore: true,
     data: [] as ICommunityMembers[],
   },
-  discoverGroups: {
-    loading: false,
-    data: [],
-    items: {},
-    canLoadMore: true,
-  },
   communityMemberRequests: {
     total: 0,
     loading: false,
     canLoadMore: true,
     ids: [] as number[],
-    items: {},
+    items: {} as IObject<IJoiningMember>,
   },
   // temporarily stores data for `undo` action
   undoCommunityMemberRequests: {
@@ -174,7 +174,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
   const {type, payload} = action;
   const {
     selectedUsers,
-    pendingMemberRequests,
+    groupMemberRequests,
     discoverGroups,
     communityMembers,
     communitySearchMembers,
@@ -472,45 +472,45 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       };
 
     // PENDING MEMBER REQUESTS
-    case groupsTypes.SET_MEMBER_REQUESTS:
+    case groupsTypes.SET_GROUP_MEMBER_REQUESTS:
       return {
         ...state,
-        pendingMemberRequests: {
-          ...pendingMemberRequests,
+        groupMemberRequests: {
+          ...groupMemberRequests,
           ...payload,
         },
       };
-    case groupsTypes.RESET_MEMBER_REQUESTS:
+    case groupsTypes.RESET_GROUP_MEMBER_REQUESTS:
       return {
         ...state,
-        pendingMemberRequests: groupInitState.pendingMemberRequests,
+        groupMemberRequests: groupInitState.groupMemberRequests,
       };
-    case groupsTypes.DECLINE_ALL_MEMBER_REQUESTS:
+    case groupsTypes.DECLINE_ALL_GROUP_MEMBER_REQUESTS:
       return {
         ...state,
-        undoData: groupInitState.undoData,
+        undoGroupMemberRequests: groupInitState.undoGroupMemberRequests,
       };
-    case groupsTypes.UNDO_DECLINE_MEMBER_REQUESTS:
+    case groupsTypes.UNDO_DECLINED_GROUP_MEMBER_REQUESTS:
       return {
         ...state,
-        pendingMemberRequests: {...state.undoData},
-        undoData: groupInitState.undoData,
+        groupMemberRequests: {...state.undoGroupMemberRequests},
+        undoGroupMemberRequests: groupInitState.undoGroupMemberRequests,
       };
-    case groupsTypes.STORE_UNDO_DATA:
+    case groupsTypes.STORE_UNDO_GROUP_MEMBER_REQUESTS:
       return {
         ...state,
-        undoData: {...pendingMemberRequests},
+        undoGroupMemberRequests: {...groupMemberRequests},
       };
     case groupsTypes.EDIT_GROUP_MEMBER_REQUEST:
       return {
         ...state,
-        pendingMemberRequests: {
-          ...pendingMemberRequests,
+        groupMemberRequests: {
+          ...groupMemberRequests,
           items: {
-            ...pendingMemberRequests.items,
+            ...groupMemberRequests.items,
             [payload.id]: {
               // @ts-ignore
-              ...pendingMemberRequests.items[payload.id],
+              ...groupMemberRequests.items[payload.id],
               ...payload.data,
             },
           },

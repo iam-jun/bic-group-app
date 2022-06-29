@@ -297,24 +297,24 @@ const groupsActions = {
     isRefreshing?: boolean;
     params?: any;
   }) => ({
-    type: groupsTypes.GET_MEMBER_REQUESTS,
+    type: groupsTypes.GET_GROUP_MEMBER_REQUESTS,
     payload,
   }),
   setGroupMemberRequests: (payload: {
     total?: number;
     loading?: boolean;
     canLoadMore?: boolean;
-    data?: number[];
+    ids?: number[];
     items?: IObject<IJoiningMember>;
   }) => ({
-    type: groupsTypes.SET_MEMBER_REQUESTS,
+    type: groupsTypes.SET_GROUP_MEMBER_REQUESTS,
     payload,
   }),
-  resetMemberRequests: () => ({
-    type: groupsTypes.RESET_MEMBER_REQUESTS,
+  resetGroupMemberRequests: () => ({
+    type: groupsTypes.RESET_GROUP_MEMBER_REQUESTS,
   }),
-  undoDeclineMemberRequests: () => ({
-    type: groupsTypes.UNDO_DECLINE_MEMBER_REQUESTS,
+  undoDeclinedGroupMemberRequests: () => ({
+    type: groupsTypes.UNDO_DECLINED_GROUP_MEMBER_REQUESTS,
   }),
   approveSingleGroupMemberRequest: (payload: {
     groupId: number;
@@ -322,14 +322,14 @@ const groupsActions = {
     fullName: string;
     callback: () => void;
   }) => ({
-    type: groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST,
+    type: groupsTypes.APPROVE_SINGLE_GROUP_MEMBER_REQUEST,
     payload,
   }),
   approveAllGroupMemberRequests: (payload: {
     groupId: number;
     callback?: () => void;
   }) => ({
-    type: groupsTypes.APPROVE_ALL_MEMBER_REQUESTS,
+    type: groupsTypes.APPROVE_ALL_GROUP_MEMBER_REQUESTS,
     payload,
   }),
   declineSingleGroupMemberRequest: (payload: {
@@ -337,18 +337,18 @@ const groupsActions = {
     requestId: number;
     fullName: string;
   }) => ({
-    type: groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST,
+    type: groupsTypes.DECLINE_SINGLE_GROUP_MEMBER_REQUEST,
     payload,
   }),
   declineAllGroupMemberRequests: (payload: {
     groupId: number;
     callback?: () => void;
   }) => ({
-    type: groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
+    type: groupsTypes.DECLINE_ALL_GROUP_MEMBER_REQUESTS,
     payload,
   }),
-  storeUndoData: () => ({
-    type: groupsTypes.STORE_UNDO_DATA,
+  storeUndoGroupMemberRequests: () => ({
+    type: groupsTypes.STORE_UNDO_GROUP_MEMBER_REQUESTS,
   }),
   editGroupMemberRequest: (payload: {id: number; data: any}) => ({
     type: groupsTypes.EDIT_GROUP_MEMBER_REQUEST,

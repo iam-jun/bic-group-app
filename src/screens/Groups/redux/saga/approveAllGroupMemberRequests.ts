@@ -15,7 +15,7 @@ export default function* approveAllGroupMemberRequests({
 }) {
   const {groupId, callback} = payload;
   try {
-    yield put(groupsActions.resetMemberRequests());
+    yield put(groupsActions.resetGroupMemberRequests());
 
     yield call(groupsDataHelper.approveAllGroupMemberRequests, groupId);
 

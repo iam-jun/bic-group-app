@@ -1,33 +1,29 @@
 import {expectSaga} from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
-import i18next from 'i18next';
 
 import modalActions from '~/store/modal/actions';
-import approveAllCommunityMemberRequests from './approveAllCommunityMemberRequests';
+import approveAllGroupMemberRequests from './approveAllGroupMemberRequests';
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 
-describe('approveAllCommunityMemberRequests saga', () => {
-  const communityId = 1;
+describe('approveAllGroupMemberRequests saga', () => {
+  const groupId = 1;
   const callback = jest.fn();
   const action = {
     type: 'test',
-    payload: {communityId, callback},
+    payload: {groupId, callback},
   };
 
   it('should approve all member requests correctly with callback function', async () => {
-    return expectSaga(approveAllCommunityMemberRequests, action)
-      .put(groupsActions.resetCommunityMemberRequests())
+    return expectSaga(approveAllGroupMemberRequests, action)
+      .put(groupsActions.resetGroupMemberRequests())
       .provide([
-        [
-          matchers.call.fn(groupsDataHelper.approveAllCommunityMemberRequests),
-          {},
-        ],
+        [matchers.call.fn(groupsDataHelper.approveAllGroupMemberRequests), {}],
       ])
-      .put(groupsActions.getCommunityDetail({communityId}))
+      .put(groupsActions.getGroupDetail(groupId))
       .put(
         modalActions.showHideToastMessage({
-          content: `${i18next.t('groups:text_approved_all')}`,
+          content: 'Approved all joining requests',
           props: {
             textProps: {useI18n: true},
             type: 'success',
@@ -47,20 +43,18 @@ describe('approveAllCommunityMemberRequests saga', () => {
   it('should approve all member requests correctly without callback function', async () => {
     const action = {
       type: 'test',
-      payload: {communityId},
+      payload: {groupId},
     };
-    return expectSaga(approveAllCommunityMemberRequests, action)
-      .put(groupsActions.resetCommunityMemberRequests())
+
+    return expectSaga(approveAllGroupMemberRequests, action)
+      .put(groupsActions.resetGroupMemberRequests())
       .provide([
-        [
-          matchers.call.fn(groupsDataHelper.approveAllCommunityMemberRequests),
-          {},
-        ],
+        [matchers.call.fn(groupsDataHelper.approveAllGroupMemberRequests), {}],
       ])
-      .put(groupsActions.getCommunityDetail({communityId}))
+      .put(groupsActions.getGroupDetail(groupId))
       .put(
         modalActions.showHideToastMessage({
-          content: `${i18next.t('groups:text_approved_all')}`,
+          content: 'Approved all joining requests',
           props: {
             textProps: {useI18n: true},
             type: 'success',
@@ -76,11 +70,11 @@ describe('approveAllCommunityMemberRequests saga', () => {
 
   it('should call API and server throws an error', async () => {
     const error = {code: 'error'};
-    return expectSaga(approveAllCommunityMemberRequests, action)
-      .put(groupsActions.resetCommunityMemberRequests())
+    return expectSaga(approveAllGroupMemberRequests, action)
+      .put(groupsActions.resetGroupMemberRequests())
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.approveAllCommunityMemberRequests),
+          matchers.call.fn(groupsDataHelper.approveAllGroupMemberRequests),
           Promise.reject(error),
         ],
       ])
