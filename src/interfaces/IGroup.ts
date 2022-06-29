@@ -32,6 +32,21 @@ export interface IScheme {
   deletedAt?: string;
 }
 
+export interface IGroupScheme {
+  id: string;
+  description: string;
+  name: string;
+  isSystem: boolean;
+  applyingGroups: IApplyingGroups[];
+}
+
+export interface IApplyingGroups {
+  id: number | string;
+  name: string;
+  description: string | null;
+  icon: string;
+}
+
 export interface ICategory {
   key: string;
   name: string;
