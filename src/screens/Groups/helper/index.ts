@@ -1,6 +1,7 @@
 import modalActions from '~/store/modal/actions';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import {IGroup} from '~/interfaces/IGroup';
+import {isEmpty} from 'lodash';
 
 export const checkLastAdmin = async (
   groupId: string | number,
@@ -94,4 +95,21 @@ export const handleLeaveInnerGroups = async (
     );
   }
   return testingFlag;
+};
+
+export const getGroupFromTreeById = (tree: IGroup, groupId: number) => {
+  let group: IGroup;
+
+  const getGroupInChildren = (parent: IGroup, groupId: number) => {
+    if (parent?.id === groupId) {
+      group = parent;
+    } else if (!isEmpty(parent?.children)) {
+      parent.children?.map(g => getGroupInChildren(g, groupId));
+    }
+  };
+
+  getGroupInChildren(tree, groupId);
+
+  // @ts-ignore
+  return group;
 };

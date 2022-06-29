@@ -31,6 +31,62 @@ import {
 } from '~/interfaces/ICommunity';
 
 const groupsActions = {
+  //group structure settings
+  setGroupStructure: (payload?: any) => ({
+    type: groupsTypes.SET_GROUP_STRUCTURE,
+    payload,
+  }),
+  getGroupStructureCommunityTree: (payload: {
+    communityId: number;
+    showLoading?: boolean;
+  }) => ({
+    type: groupsTypes.GET_GROUP_STRUCTURE_COMMUNITY_TREE,
+    payload,
+  }),
+  setGroupStructureCommunityTree: (payload?: any) => ({
+    type: groupsTypes.SET_GROUP_STRUCTURE_COMMUNITY_TREE,
+    payload,
+  }),
+  setGroupStructureReorder: (payload?: any) => ({
+    type: groupsTypes.SET_GROUP_STRUCTURE_REORDER,
+    payload,
+  }),
+  putGroupStructureReorder: (payload: {
+    communityId: number;
+    newOrder: number[];
+  }) => ({
+    type: groupsTypes.PUT_GROUP_STRUCTURE_REORDER,
+    payload,
+  }),
+  setGroupStructureMove: (payload?: {
+    loading?: boolean;
+    targetGroups?: any[];
+    movingGroup?: any;
+    key?: string;
+  }) => ({
+    type: groupsTypes.SET_GROUP_STRUCTURE_MOVE,
+    payload,
+  }),
+  getGroupStructureMoveTargets: (payload?: {
+    communityId: number;
+    groupId: number;
+    key?: string;
+  }) => ({
+    type: groupsTypes.GET_GROUP_STRUCTURE_MOVE_TARGETS,
+    payload,
+  }),
+  putGroupStructureMoveToTarget: (payload: {
+    communityId: number;
+    moveId: number;
+    targetId: number;
+  }) => ({
+    type: groupsTypes.PUT_GROUP_STRUCTURE_MOVE_TO_TARGET,
+    payload,
+  }),
+  setGroupStructureMoveSelecting: (payload?: any) => ({
+    type: groupsTypes.SET_GROUP_STRUCTURE_MOVE_SELECTING,
+    payload,
+  }),
   // permission
   getPermissionCategories: () => ({
     type: groupsTypes.GET_PERMISSION_CATEGORIES,

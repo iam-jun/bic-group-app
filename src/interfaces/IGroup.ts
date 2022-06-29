@@ -44,6 +44,7 @@ export interface ICategory {
 
 export interface IGroup {
   id: number;
+  community_id?: number;
   name: string;
   user_count?: number;
   parent?: any;
