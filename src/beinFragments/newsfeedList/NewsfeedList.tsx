@@ -26,6 +26,7 @@ import images from '~/resources/images';
 import FloatingCreatePost from '~/beinFragments/FloatingCreatePost';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
+import NoticePanel from '~/screens/Home/Newsfeed/components/NoticePanel';
 
 export interface NewsfeedListProps {
   data?: any;
@@ -199,7 +200,12 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   const rowRenderer = (type: any, data: any) => {
     if (type === ViewTypes.HEADER && HeaderComponent) {
-      return <View style={styles.headerContainer}>{HeaderComponent}</View>;
+      return (
+        <View style={styles.headerContainer}>
+          {HeaderComponent}
+          <NoticePanel />
+        </View>
+      );
     }
     return (
       <PostView

@@ -443,11 +443,13 @@ export interface IParamGetDraftPosts {
   idLte?: string;
   idGt?: string;
   idLt?: string;
+  isProcessing?: boolean;
 }
 
 export interface IPayloadGetDraftPosts {
   isRefresh?: boolean;
   offset?: number;
+  isProcessing?: boolean;
 }
 
 export interface IPayloadPublishDraftPost {
