@@ -30,7 +30,7 @@ const GeneralInformation = (props: any) => {
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const {privacy} = useKeySelector(groupsKeySelector.groupDetail.group) || {};
-  const {total} = useKeySelector(groupsKeySelector.pendingMemberRequests);
+  const {total} = useKeySelector(groupsKeySelector.groupMemberRequests);
 
   const baseSheetRef: any = useRef();
 

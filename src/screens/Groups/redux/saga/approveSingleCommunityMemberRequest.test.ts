@@ -6,19 +6,20 @@ import approveSingleCommunityMemberRequest from './approveSingleCommunityMemberR
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
+import approveDeclineCode from '~/constants/approveDeclineCode';
 
 describe('approveSingleCommunityMemberRequest saga', () => {
   const communityId = 1;
-  const requestId = 1;
+  const requestId = 2;
   const fullName = 'Test User Name';
   const action = {type: 'string', payload: {communityId, requestId, fullName}};
 
   const state = {
     groups: {
       communityMemberRequests: {
-        total: 1,
-        ids: [1],
-        items: {1: {}},
+        total: 3,
+        ids: [1, 2, 3],
+        items: {1: {}, 2: {}, 3: {}},
       },
     },
   };
@@ -26,13 +27,6 @@ describe('approveSingleCommunityMemberRequest saga', () => {
   it('should approve selected member request correctly', async () => {
     return expectSaga(approveSingleCommunityMemberRequest, action)
       .withState(state)
-      .put(
-        groupsActions.setCommunityMemberRequests({
-          total: 0,
-          ids: [],
-          items: {},
-        }),
-      )
       .provide([
         [
           matchers.call.fn(
@@ -41,6 +35,13 @@ describe('approveSingleCommunityMemberRequest saga', () => {
           {},
         ],
       ])
+      .put(
+        groupsActions.setCommunityMemberRequests({
+          total: 2,
+          ids: [1, 3],
+          items: {1: {}, 3: {}} as any,
+        }),
+      )
       .put(
         modalActions.showHideToastMessage({
           content: `Approved user ${fullName}`,
@@ -58,17 +59,34 @@ describe('approveSingleCommunityMemberRequest saga', () => {
       });
   });
 
-  it('should call server and server throws error', async () => {
+  it('should call server and server throws Canceled join request error', async () => {
+    const error = {code: approveDeclineCode.CANCELED};
+    return expectSaga(approveSingleCommunityMemberRequest, action)
+      .withState(state)
+      .provide([
+        [
+          matchers.call.fn(
+            groupsDataHelper.approveSingleCommunityMemberRequest,
+          ),
+          Promise.reject(error),
+        ],
+      ])
+      .put(
+        groupsActions.editCommunityMemberRequest({
+          id: requestId,
+          data: {isCanceled: true},
+        }),
+      )
+      .run()
+      .then(({allEffects}: any) => {
+        expect(allEffects?.length).toEqual(2);
+      });
+  });
+
+  it('should call server and server throws some error', async () => {
     const error = {code: 'error'};
     return expectSaga(approveSingleCommunityMemberRequest, action)
       .withState(state)
-      .put(
-        groupsActions.setCommunityMemberRequests({
-          total: 0,
-          ids: [],
-          items: {},
-        }),
-      )
       .provide([
         [
           matchers.call.fn(
@@ -80,7 +98,7 @@ describe('approveSingleCommunityMemberRequest saga', () => {
       .call(showError, error)
       .run()
       .then(({allEffects}: any) => {
-        expect(allEffects?.length).toEqual(6);
+        expect(allEffects?.length).toEqual(4);
       });
   });
 });

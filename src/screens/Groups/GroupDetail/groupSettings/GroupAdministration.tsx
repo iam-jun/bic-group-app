@@ -27,6 +27,7 @@ const GroupAdministration = (props: any) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {name, icon} = useKeySelector(groupsKeySelector.groupDetail.group);
+  const {total} = useKeySelector(groupsKeySelector.groupMemberRequests);
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
   );
@@ -37,21 +38,19 @@ const GroupAdministration = (props: any) => {
     groupsKeySelector.groupDetail.can_edit_privacy,
   );
 
-  const {total} = useKeySelector(groupsKeySelector.pendingMemberRequests);
-
   useEffect(() => {
     can_manage_member &&
       dispatch(groupsActions.getGroupMemberRequests({groupId}));
 
     return () => {
-      dispatch(groupsActions.resetMemberRequests());
+      dispatch(groupsActions.resetGroupMemberRequests());
     };
   }, [groupId]);
 
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
 
   const goToPendingMembers = () => {
-    rootNavigation.navigate(groupStack.groupPendingMembers, {groupId});
+    rootNavigation.navigate(groupStack.groupPendingMembers);
   };
 
   const goToGeneralInfo = () => {
