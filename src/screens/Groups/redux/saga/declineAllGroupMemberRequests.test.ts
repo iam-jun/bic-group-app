@@ -1,25 +1,21 @@
 import {expectSaga} from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
-import declineAllCommunityMemberRequests from './declineAllCommunityMemberRequests';
+import declineAllGroupMemberRequests from './declineAllGroupMemberRequests';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
 
-describe('declineAllCommunityMemberRequests saga', () => {
-  const communityId = 1;
-  const total = 3;
+describe('declineAllGroupMemberRequests saga', () => {
+  const groupId = 1;
   const action = {
     type: 'test',
-    payload: {communityId, total},
+    payload: {groupId},
   };
 
   it('should decline all member requests correctly', async () => {
-    return expectSaga(declineAllCommunityMemberRequests, action)
+    return expectSaga(declineAllGroupMemberRequests, action)
       .provide([
-        [
-          matchers.call.fn(groupsDataHelper.declineAllCommunityMemberRequests),
-          {},
-        ],
+        [matchers.call.fn(groupsDataHelper.declineAllGroupMemberRequests), {}],
       ])
       .run()
       .then(({allEffects}: any) => {
@@ -29,10 +25,10 @@ describe('declineAllCommunityMemberRequests saga', () => {
 
   it('should call server and server throws an error', async () => {
     const error = {code: 'error'};
-    return expectSaga(declineAllCommunityMemberRequests, action)
+    return expectSaga(declineAllGroupMemberRequests, action)
       .provide([
         [
-          matchers.call.fn(groupsDataHelper.declineAllCommunityMemberRequests),
+          matchers.call.fn(groupsDataHelper.declineAllGroupMemberRequests),
           Promise.reject(error),
         ],
       ])
