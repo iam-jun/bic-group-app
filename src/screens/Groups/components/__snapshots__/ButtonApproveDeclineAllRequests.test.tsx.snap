@@ -47,7 +47,7 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": "#F8F5FF",
+          "backgroundColor": "#EAEDF2",
           "borderRadius": 6,
           "flex": 1,
           "marginRight": 8,
@@ -75,7 +75,7 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
                 "fontSize": 16,
               },
               Object {
-                "color": "#5D2C9A",
+                "color": "#2F3945",
               },
               Object {
                 "textAlign": "center",

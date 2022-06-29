@@ -75,6 +75,8 @@ const postKeySelector = {
   scrollToCommentsPosition: 'post.scrollToCommentsPosition',
   loadingGetPostDetail: 'post.loadingGetPostDetail',
   commentErrorCode: 'post.commentErrorCode',
+  allPostContainingVideoInProgress:
+    'post.allPostContainingVideoInProgress.total',
 };
 
 export default postKeySelector;
