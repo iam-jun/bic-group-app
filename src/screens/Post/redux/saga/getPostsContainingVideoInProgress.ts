@@ -8,11 +8,8 @@ function* getPostsContainingVideoInProgress(): any {
     const response = yield call(postDataHelper.getDraftPosts, {
       isProcessing: true,
     });
-    console.log('hihihi');
 
     if (response?.data?.length > 0) {
-      console.log('hihihi222222', response.data);
-
       yield put(postActions.setAllPostContainingVideoInProgress(response));
     }
   } catch (e: any) {

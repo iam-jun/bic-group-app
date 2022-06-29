@@ -22,8 +22,6 @@ function* updatePostsContainingVideoInProgress({
     if (!isEmpty(allPostContainingVideoInProgress) && postId) {
       const {total = 0, data = []} = allPostContainingVideoInProgress;
       const newList = data.filter?.((p: any) => p?.id !== postId);
-      console.log('DOOOOOOO', newList, data, postId);
-
       if (newList.length !== data.length) {
         yield put(
           postActions.setAllPostContainingVideoInProgress({
