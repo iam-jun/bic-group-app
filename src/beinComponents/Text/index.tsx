@@ -30,6 +30,7 @@ export interface TextProps extends RNTextProps {
   children?: React.ReactNode;
   color?: string;
   useI18n?: boolean;
+  maxLength?: number;
 }
 
 const TextComponent: React.FC<TextProps> = ({
@@ -38,6 +39,7 @@ const TextComponent: React.FC<TextProps> = ({
   children,
   color,
   useI18n,
+  maxLength,
   ...props
 }: TextProps) => {
   const theme: ITheme = useTheme() as ITheme;
@@ -45,12 +47,18 @@ const TextComponent: React.FC<TextProps> = ({
   const styles = createTextStyle(theme);
   const textStyle = styles[variant || 'body'];
 
+  let content = useI18n ? t(children) : children;
+
+  if (maxLength && !isNaN(maxLength) && typeof content === 'string') {
+    content = content.substring(0, maxLength) + '...';
+  }
+
   return (
     <TextRN
       // allowFontScaling={false} disable block font scaling because somewhere not set fontSize (markdown, input) still use scale size
       {...props}
       style={[textStyle, color ? {color} : {}, style]}>
-      {useI18n ? t(children) : children}
+      {content}
     </TextRN>
   );
 };
