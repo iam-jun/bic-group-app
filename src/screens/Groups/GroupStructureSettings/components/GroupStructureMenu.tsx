@@ -9,7 +9,7 @@ import {ITheme} from '~/theme/interfaces';
 import {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import modalActions from '~/store/modal/actions';
-import {IGroup} from "~/interfaces/IGroup";
+import {IGroup} from '~/interfaces/IGroup';
 
 export interface GroupStructureMenuProps {
   group?: IGroup;

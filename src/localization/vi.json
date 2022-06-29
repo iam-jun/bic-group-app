@@ -748,7 +748,10 @@
       "title_move_group": "Di chuyển nhóm",
       "text_reorder_success": "Sắp xếp nhóm thành công",
       "text_move_success": "Di chuyển nhóm thành công",
-      "text_info_reorder": "Kéo và thả để sắp xếp nhóm"
+      "text_info_reorder": "Kéo và thả để sắp xếp nhóm",
+      "text_no_group": "No group",
+      "text_will_be_move": "will be moved according to",
+      "text_move_to": "Di chuyển tới"
     },
     "text_search_communities": "Tìm kiếm Cộng đồng"
   },

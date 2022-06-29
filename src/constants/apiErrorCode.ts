@@ -1,4 +1,5 @@
 const COMMON = {
+  SUCCESS: 'OK',
   SYSTEM_ISSUE: 0,
 };
 

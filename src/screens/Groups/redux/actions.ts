@@ -83,6 +83,10 @@ const groupsActions = {
     type: groupsTypes.PUT_GROUP_STRUCTURE_MOVE_TO_TARGET,
     payload,
   }),
+  setGroupStructureMoveSelecting: (payload?: any) => ({
+    type: groupsTypes.SET_GROUP_STRUCTURE_MOVE_SELECTING,
+    payload,
+  }),
   // permission
   getPermissionCategories: () => ({
     type: groupsTypes.GET_PERMISSION_CATEGORIES,

@@ -1,5 +1,5 @@
 import React, {FC, useEffect} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -12,10 +12,12 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {useDispatch} from 'react-redux';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {IGroup} from '~/interfaces/IGroup';
+import MoveGroupHeaderInfo from '~/screens/Groups/MoveGroup/components/MoveGroupHeaderInfo';
+import MoveGroupTargets from '~/screens/Groups/MoveGroup/components/MoveGroupTargets';
 
 export interface MoveGroupProps {
-  route?: {
-    params?: {
+  route: {
+    params: {
       group: IGroup;
     };
   };
@@ -32,13 +34,9 @@ const MoveGroup: FC<MoveGroupProps> = ({route}: MoveGroupProps) => {
   const {id: groupId} = initGroup || {};
 
   const {id: communityId} = useKeySelector(groupsKeySelector.communityDetail);
-  const {loading, targetGroups, movingGroup} =
+  const {loading, targetGroups, movingGroup, selecting} =
     useKeySelector(groupsKeySelector.groupStructure.move) || {};
 
-  console.log(
-    `\x1b[34m🐣️ index MoveGroup`,
-    `${JSON.stringify(initGroup, undefined, 2)}\x1b[0m`,
-  );
   const {user_count} = movingGroup || {};
 
   const getMoveTargets = (key = '') => {
@@ -57,10 +55,37 @@ const MoveGroup: FC<MoveGroupProps> = ({route}: MoveGroupProps) => {
     };
   }, []);
 
+  const onPressSave = () => {
+    if (communityId && groupId && selecting?.id) {
+      dispatch(
+        groupsActions.putGroupStructureMoveToTarget({
+          communityId,
+          moveId: groupId,
+          targetId: selecting.id,
+        }),
+      );
+    }
+  };
+
   return (
     <View style={styles.container}>
-      <Header title={t('communities:group_structure:title_move_group')} />
-      <Text>New Component MoveGroup</Text>
+      <Header
+        title={t('communities:group_structure:title_move_group')}
+        onPressButton={onPressSave}
+        buttonText={'common:btn_save'}
+        buttonProps={{
+          loading: loading,
+          disabled: !selecting,
+          useI18n: true,
+          highEmphasis: true,
+          style: {borderWidth: 0},
+          testID: 'move_group.btn_save',
+        }}
+      />
+      <ScrollView>
+        <MoveGroupHeaderInfo group={initGroup} />
+        <MoveGroupTargets targets={targetGroups} selecting={selecting} />
+      </ScrollView>
     </View>
   );
 };

@@ -48,6 +48,7 @@ export const groupInitState = {
       searchKey: '',
       targetGroups: undefined,
       movingGroup: undefined,
+      selecting: undefined,
     },
   },
   isPrivacyModalOpen: false,
@@ -234,6 +235,17 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         groupStructure: {
           ...state.groupStructure,
           move: payload ? {...payload} : groupInitState.groupStructure.move,
+        },
+      };
+    case groupsTypes.SET_GROUP_STRUCTURE_MOVE_SELECTING:
+      return {
+        ...state,
+        groupStructure: {
+          ...state.groupStructure,
+          move: {
+            ...state.groupStructure.move,
+            selecting: payload,
+          },
         },
       };
     // Permission

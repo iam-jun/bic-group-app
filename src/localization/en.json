@@ -859,7 +859,10 @@
       "title_move_group": "Move Group",
       "text_reorder_success": "Reorder group successfully",
       "text_move_success": "Move group successfully",
-      "text_info_reorder": "Drag and drop reorder the group"
+      "text_info_reorder": "Drag and drop reorder the group",
+      "text_no_group": "No group",
+      "text_will_be_move": "will be moved according to",
+      "text_move_to": "Move to"
     },
     "text_search_communities": "Search Communities"
   },

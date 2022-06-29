@@ -9,6 +9,7 @@ import {IToastMessage} from '~/interfaces/common';
 import modalActions from '~/store/modal/actions';
 import {timeOut} from '~/utils/common';
 import groupsActions from '../actions';
+import API_ERROR_CODE from '~/constants/apiErrorCode';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -37,7 +38,11 @@ export default function* putGroupStructureMoveToTarget({
       moveId,
       targetId,
     );
-    if (response?.data) {
+    console.log(
+      `\x1b[34m🐣️ putGroupStructureMoveToTarget putGroupStructureMoveToTarget`,
+      `${JSON.stringify(response, undefined, 2)}\x1b[0m`,
+    );
+    if (response?.code === API_ERROR_CODE.COMMON.SUCCESS) {
       yield put(
         actions.getGroupStructureCommunityTree({
           communityId,
@@ -58,7 +63,7 @@ export default function* putGroupStructureMoveToTarget({
     } else {
       yield put(
         groupsActions.setGroupStructureMove({
-          loading: true,
+          loading: false,
           key,
           targetGroups,
           movingGroup,
