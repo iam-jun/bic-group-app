@@ -2,76 +2,77 @@ import {expectSaga} from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import modalActions from '~/store/modal/actions';
-import declineSingleCommunityMemberRequest from './declineSingleCommunityMemberRequest';
+import approveSingleGroupMemberRequest from './approveSingleGroupMemberRequest';
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 
-describe('declineSingleCommunityMemberRequest saga', () => {
-  const communityId = 1;
-  const requestId = 3;
+describe('approveSingleGroupMemberRequest saga', () => {
+  const groupId = 1;
+  const requestId = 1;
   const fullName = 'Test User Name';
-  const action = {type: 'string', payload: {communityId, requestId, fullName}};
+  const callback = jest.fn();
+  const action = {
+    type: 'string',
+    payload: {groupId, requestId, fullName, callback},
+  };
 
   const state = {
     groups: {
-      communityMemberRequests: {
-        total: 3,
-        ids: [1, 2, 3],
-        items: {1: {}, 2: {}, 3: {}},
+      groupMemberRequests: {
+        total: 2,
+        ids: [1, 2],
+        items: {1: {}, 2: {}},
       },
     },
   };
 
-  it('should decline selected member request correctly', async () => {
-    return expectSaga(declineSingleCommunityMemberRequest, action)
+  it('should approve selected member request correctly', async () => {
+    return expectSaga(approveSingleGroupMemberRequest, action)
       .withState(state)
       .provide([
         [
-          matchers.call.fn(
-            groupsDataHelper.declineSingleCommunityMemberRequest,
-          ),
+          matchers.call.fn(groupsDataHelper.approveSingleGroupMemberRequest),
           {},
         ],
       ])
       .put(
-        groupsActions.setCommunityMemberRequests({
-          total: 2,
-          ids: [1, 2],
-          items: {1: {}, 2: {}} as any,
+        groupsActions.setGroupMemberRequests({
+          total: 1,
+          ids: [2],
+          items: {2: {}} as any,
         }),
       )
       .put(
         modalActions.showHideToastMessage({
-          content: `Declined user ${fullName}`,
+          content: `Approved user ${fullName}`,
           props: {
             textProps: {useI18n: true},
             type: 'success',
+            rightIcon: 'UsersAlt',
+            rightText: 'Members',
+            onPressRight: callback,
           },
           toastType: 'normal',
         }),
       )
-      .run()
-      .then(({allEffects}: any) => {
-        expect(allEffects?.length).toEqual(4);
-      });
+      .put(groupsActions.getGroupDetail(groupId))
+      .run();
   });
 
   it('should call server and server throws Canceled join request error', async () => {
     const error = {code: approveDeclineCode.CANCELED};
-    return expectSaga(declineSingleCommunityMemberRequest, action)
+    return expectSaga(approveSingleGroupMemberRequest, action)
       .withState(state)
       .provide([
         [
-          matchers.call.fn(
-            groupsDataHelper.declineSingleCommunityMemberRequest,
-          ),
+          matchers.call.fn(groupsDataHelper.approveSingleGroupMemberRequest),
           Promise.reject(error),
         ],
       ])
       .put(
-        groupsActions.editCommunityMemberRequest({
+        groupsActions.editGroupMemberRequest({
           id: requestId,
           data: {isCanceled: true},
         }),
@@ -82,15 +83,13 @@ describe('declineSingleCommunityMemberRequest saga', () => {
       });
   });
 
-  it('should call server and server throws error', async () => {
+  it('should call server and server throws some error', async () => {
     const error = {code: 'error'};
-    return expectSaga(declineSingleCommunityMemberRequest, action)
+    return expectSaga(approveSingleGroupMemberRequest, action)
       .withState(state)
       .provide([
         [
-          matchers.call.fn(
-            groupsDataHelper.declineSingleCommunityMemberRequest,
-          ),
+          matchers.call.fn(groupsDataHelper.approveSingleGroupMemberRequest),
           Promise.reject(error),
         ],
       ])

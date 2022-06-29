@@ -2,21 +2,21 @@ import {expectSaga} from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 
 import modalActions from '~/store/modal/actions';
-import declineSingleCommunityMemberRequest from './declineSingleCommunityMemberRequest';
+import declineSingleGroupMemberRequest from './declineSingleGroupMemberRequest';
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
 import approveDeclineCode from '~/constants/approveDeclineCode';
 
-describe('declineSingleCommunityMemberRequest saga', () => {
-  const communityId = 1;
-  const requestId = 3;
+describe('declineSingleGroupMemberRequest saga', () => {
+  const groupId = 1;
+  const requestId = 2;
   const fullName = 'Test User Name';
-  const action = {type: 'string', payload: {communityId, requestId, fullName}};
+  const action = {type: 'string', payload: {groupId, requestId, fullName}};
 
   const state = {
     groups: {
-      communityMemberRequests: {
+      groupMemberRequests: {
         total: 3,
         ids: [1, 2, 3],
         items: {1: {}, 2: {}, 3: {}},
@@ -25,21 +25,19 @@ describe('declineSingleCommunityMemberRequest saga', () => {
   };
 
   it('should decline selected member request correctly', async () => {
-    return expectSaga(declineSingleCommunityMemberRequest, action)
+    return expectSaga(declineSingleGroupMemberRequest, action)
       .withState(state)
       .provide([
         [
-          matchers.call.fn(
-            groupsDataHelper.declineSingleCommunityMemberRequest,
-          ),
+          matchers.call.fn(groupsDataHelper.declineSingleGroupMemberRequest),
           {},
         ],
       ])
       .put(
-        groupsActions.setCommunityMemberRequests({
+        groupsActions.setGroupMemberRequests({
           total: 2,
-          ids: [1, 2],
-          items: {1: {}, 2: {}} as any,
+          ids: [1, 3],
+          items: {1: {}, 3: {}} as any,
         }),
       )
       .put(
@@ -60,18 +58,16 @@ describe('declineSingleCommunityMemberRequest saga', () => {
 
   it('should call server and server throws Canceled join request error', async () => {
     const error = {code: approveDeclineCode.CANCELED};
-    return expectSaga(declineSingleCommunityMemberRequest, action)
+    return expectSaga(declineSingleGroupMemberRequest, action)
       .withState(state)
       .provide([
         [
-          matchers.call.fn(
-            groupsDataHelper.declineSingleCommunityMemberRequest,
-          ),
+          matchers.call.fn(groupsDataHelper.declineSingleGroupMemberRequest),
           Promise.reject(error),
         ],
       ])
       .put(
-        groupsActions.editCommunityMemberRequest({
+        groupsActions.editGroupMemberRequest({
           id: requestId,
           data: {isCanceled: true},
         }),
@@ -84,13 +80,11 @@ describe('declineSingleCommunityMemberRequest saga', () => {
 
   it('should call server and server throws error', async () => {
     const error = {code: 'error'};
-    return expectSaga(declineSingleCommunityMemberRequest, action)
+    return expectSaga(declineSingleGroupMemberRequest, action)
       .withState(state)
       .provide([
         [
-          matchers.call.fn(
-            groupsDataHelper.declineSingleCommunityMemberRequest,
-          ),
+          matchers.call.fn(groupsDataHelper.declineSingleGroupMemberRequest),
           Promise.reject(error),
         ],
       ])
