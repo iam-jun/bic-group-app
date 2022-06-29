@@ -34,6 +34,9 @@ export const groupInitState = {
       memberRoleIndex: 0,
       creating: false,
     },
+    groupScheme: {
+      data: undefined,
+    },
   },
   isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
@@ -274,6 +277,14 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         permissionScheme: {
           ...state.permissionScheme,
           schemes: payload,
+        },
+      };
+    case groupsTypes.SET_GROUP_SCHEME:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          groupScheme: {...payload},
         },
       };
 

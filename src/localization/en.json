@@ -834,6 +834,8 @@
       "title_community_scheme": "General Scheme",
       "title_group_scheme": "Group Scheme",
       "title_create_community_scheme": "Create community scheme",
+      "title_edit_community_scheme": "Edit community scheme",
+      "title_edit_group_scheme": "Edit group scheme",
       "title_edit_roles": "Edit roles",
       "title_scheme_name": "Scheme name:",
       "title_scheme_description": "Scheme description:",

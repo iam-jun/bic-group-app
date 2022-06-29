@@ -20,6 +20,7 @@ export interface CreateSchemeHeaderProps {
   loadingData: boolean;
   loadDataFailed: boolean;
   isEdit?: boolean;
+  schemeId?: string;
 }
 
 const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
@@ -27,6 +28,7 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
   loadingData,
   loadDataFailed,
   isEdit,
+  schemeId,
 }: CreateSchemeHeaderProps) => {
   const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
@@ -44,6 +46,8 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
   const roles = useKeySelector(
     groupsKeySelector.permission.creatingScheme.roles,
   );
+  const groupScheme =
+    useKeySelector(groupsKeySelector.permission.groupScheme) || {};
   const {
     name: initName,
     description: initDesc,
@@ -54,14 +58,20 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
 
   const onPress = () => {
     if (isEdit) {
-      dispatch(groupsActions.updateCommunityScheme({communityId: id}));
+      if (schemeId) {
+        dispatch(groupsActions.updateGroupScheme({communityId: id, schemeId}));
+      } else dispatch(groupsActions.updateCommunityScheme({communityId: id}));
     } else {
       dispatch(groupsActions.postCreateSchemePermission({communityId: id}));
     }
   };
 
   const onPressBack = () => {
-    if (name !== initName || desc !== initDesc || !isEqual(roles, initRoles)) {
+    if (
+      name !== initName ||
+      desc !== initDesc ||
+      !isEqual(roles, initRoles || groupScheme?.roles) // initRoles = undefined for group
+    ) {
       dispatch(
         modalActions.showAlert({
           title: t('communities:permission:text_title_discard_create_scheme'),
@@ -80,7 +90,11 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
 
   return (
     <Header
-      title={t('communities:permission:title_create_community_scheme')}
+      title={t(
+        schemeId
+          ? 'communities:permission:title_edit_group_scheme'
+          : 'communities:permission:title_edit_community_scheme',
+      )}
       onPressButton={onPress}
       buttonText={'common:btn_save'}
       buttonProps={{

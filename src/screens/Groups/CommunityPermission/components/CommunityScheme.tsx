@@ -42,10 +42,6 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
   const {id: communityId} =
     useKeySelector(groupsKeySelector.communityDetail) || {};
 
-  const onPressCreate = () => {
-    rootNavigation.navigate(groupStack.createPermissionScheme);
-  };
-
   const onPressEdit = () => {
     rootNavigation.navigate(groupStack.createPermissionScheme, {
       isEdit: true,

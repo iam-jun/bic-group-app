@@ -723,6 +723,8 @@
       "title_community_scheme": "Quyền chung",
       "title_group_scheme": "Quyền nhóm",
       "title_create_community_scheme": "Tạo quyền cho cộng đồng",
+      "title_edit_community_scheme": "Cập nhật quyền cho cộng đồng",
+      "title_edit_group_scheme": "Cập nhật quyền cho nhóm",
       "title_edit_roles": "Sửa các quyền",
       "title_scheme_name": "Tên quyền:",
       "title_scheme_description": "Mô tả quyền:",

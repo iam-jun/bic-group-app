@@ -10,6 +10,8 @@ import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
 import modalActions from '~/store/modal/actions';
 import {IApplyingGroups, IGroupScheme} from '~/interfaces/IGroup';
+import {useRootNavigation} from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
 interface SchemeItemProps {
   item: IGroupScheme;
@@ -20,12 +22,17 @@ const SchemeItem = ({item}: SchemeItemProps) => {
   const styles = createStyle(theme);
   const {colors} = theme;
   const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
 
   const {name, applyingGroups} = item;
   const isActivated = applyingGroups?.length > 0;
 
   const onPressEdit = () => {
-    dispatch(modalActions.showAlertNewFeature());
+    rootNavigation.navigate(groupStack.createPermissionScheme, {
+      isEdit: true,
+      initScheme: item,
+      schemeId: item.id,
+    });
   };
 
   const onPressDelete = () => {

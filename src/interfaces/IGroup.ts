@@ -30,6 +30,7 @@ export interface IScheme {
   createdAt?: string;
   updatedAt?: string;
   deletedAt?: string;
+  applyingGroups?: IApplyingGroups[];
 }
 
 export interface IGroupScheme {

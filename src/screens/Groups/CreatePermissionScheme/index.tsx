@@ -28,6 +28,7 @@ export interface CreatePermissionSchemeProps {
     params?: {
       isEdit?: boolean;
       initScheme?: IScheme;
+      schemeId?: string;
     };
   };
 }
@@ -45,7 +46,9 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
 
   const isEdit = route?.params?.isEdit;
   const initScheme = route?.params?.initScheme;
+  const schemeId = route?.params?.schemeId;
 
+  const {id: communityId} = useKeySelector(groupsKeySelector.communityDetail);
   const permissionCategories = useKeySelector(
     groupsKeySelector.permission.categories,
   );
@@ -74,6 +77,10 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
           data: cloneDeep(initScheme),
         }),
       );
+
+      if (schemeId) {
+        dispatch(groupsActions.getGroupScheme({communityId, schemeId}));
+      }
     }
     if (!permissionCategories?.data && !permissionCategories?.loading) {
       dispatch(groupsActions.getPermissionCategories());
@@ -138,6 +145,7 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
         loadingData={loading}
         loadDataFailed={loadDataFailed}
         isEdit={isEdit}
+        schemeId={schemeId}
       />
       {renderContent()}
     </View>

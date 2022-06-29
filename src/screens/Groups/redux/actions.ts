@@ -85,12 +85,33 @@ const groupsActions = {
     type: groupsTypes.DELETE_COMMUNITY_SCHEME,
     payload,
   }),
-  getSchemes: (payload?: {communityId: number | string}) => ({
+  getSchemes: (payload?: {
+    communityId: number | string;
+    isRefreshing?: boolean;
+  }) => ({
     type: groupsTypes.GET_SCHEMES,
     payload,
   }),
   setSchemes: (payload?: {loading?: boolean; data?: any}) => ({
     type: groupsTypes.SET_SCHEMES,
+    payload,
+  }),
+  getGroupScheme: (payload: {
+    communityId: number | string;
+    schemeId: string;
+  }) => ({
+    type: groupsTypes.GET_GROUP_SCHEME,
+    payload,
+  }),
+  setGroupScheme: (payload?: {data?: IScheme}) => ({
+    type: groupsTypes.SET_GROUP_SCHEME,
+    payload,
+  }),
+  updateGroupScheme: (payload: {
+    communityId: number | string;
+    schemeId: string;
+  }) => ({
+    type: groupsTypes.UPDATE_GROUP_SCHEME,
     payload,
   }),
 
