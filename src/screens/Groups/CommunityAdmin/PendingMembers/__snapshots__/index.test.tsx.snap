@@ -344,7 +344,7 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
               <View
                 style={
                   Object {
-                    "borderRadius": 6,
+                    "borderRadius": 24,
                     "height": 48,
                     "width": 48,
                   }
@@ -378,7 +378,7 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
                         Object {
                           "alignItems": "center",
                           "backgroundColor": "#f9f9f9",
-                          "borderRadius": 6,
+                          "borderRadius": 24,
                           "height": 48,
                           "justifyContent": "center",
                           "width": 48,
@@ -394,7 +394,7 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
                           "overflow": "hidden",
                         },
                         Object {
-                          "borderRadius": 6,
+                          "borderRadius": 24,
                           "height": 48,
                           "width": 48,
                         },
@@ -428,6 +428,7 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
             <View
               style={
                 Object {
+                  "flex": 1,
                   "justifyContent": "center",
                   "marginLeft": 12,
                 }
@@ -465,276 +466,285 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
               >
                 Requested at Jun 06 at 03:12 PM
               </Text>
-            </View>
-          </View>
-          <View
-            style={
-              Object {
-                "marginTop": 16,
-              }
-            }
-          >
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "marginBottom": 8,
-                  "marginRight": 12,
-                }
-              }
-            >
               <View
-                accessibilityState={
-                  Object {
-                    "disabled": true,
-                  }
+                style={
+                  Array [
+                    Object {
+                      "alignSelf": "stretch",
+                      "backgroundColor": "#EAEDF2",
+                      "height": 1,
+                      "marginHorizontal": 0,
+                      "width": undefined,
+                    },
+                    Object {
+                      "marginVertical": 8,
+                    },
+                  ]
                 }
-                accessible={true}
-                collapsable={false}
-                focusable={false}
-                hitSlop={
-                  Object {
-                    "bottom": 10,
-                    "left": 10,
-                    "right": 10,
-                    "top": 10,
-                  }
-                }
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
+                testID="divider"
+              />
+              <View
                 style={
                   Object {
-                    "opacity": 1,
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "marginBottom": 8,
+                    "marginRight": 12,
                   }
                 }
               >
                 <View
+                  accessibilityState={
+                    Object {
+                      "disabled": true,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={false}
+                  hitSlop={
+                    Object {
+                      "bottom": 10,
+                      "left": 10,
+                      "right": 10,
+                      "top": 10,
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
                   style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                      },
-                      undefined,
-                      Object {
-                        "backgroundColor": undefined,
-                      },
-                    ]
+                    Object {
+                      "opacity": 1,
+                    }
                   }
                 >
                   <View
                     style={
                       Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                        },
                         undefined,
-                        undefined,
-                        undefined,
+                        Object {
+                          "backgroundColor": undefined,
+                        },
                       ]
                     }
                   >
-                    <View>
-                      <RNSVGSvgView
-                        align="xMidYMid"
-                        bbHeight={24}
-                        bbWidth={24}
-                        color={4288772850}
-                        focusable={false}
-                        height={24}
-                        meetOrSlice={0}
-                        minX={0}
-                        minY={0}
-                        style={
-                          Array [
-                            Object {
-                              "backgroundColor": "transparent",
-                              "borderWidth": 0,
-                            },
-                            Object {},
-                            Object {
-                              "flex": 0,
-                              "height": 24,
-                              "width": 24,
-                            },
-                          ]
-                        }
-                        tintColor={4288772850}
-                        vbHeight={24}
-                        vbWidth={24}
-                        width={24}
-                      >
-                        <RNSVGGroup>
-                          <RNSVGPath
-                            d="M18 4.48a8.45 8.45 0 00-12 12l5.27 5.28a1 1 0 001.42 0L18 16.43a8.45 8.45 0 000-11.95zM16.57 15L12 19.59 7.43 15a6.46 6.46 0 119.14 0zM9 7.41a4.32 4.32 0 000 6.1 4.31 4.31 0 007.36-3 4.24 4.24 0 00-1.26-3.05A4.3 4.3 0 009 7.41zm4.69 4.68a2.33 2.33 0 11.67-1.63 2.33 2.33 0 01-.72 1.63z"
-                            fill={
-                              Array [
-                                2,
-                              ]
-                            }
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          />
-                        </RNSVGGroup>
-                      </RNSVGSvgView>
+                    <View
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    >
+                      <View>
+                        <RNSVGSvgView
+                          align="xMidYMid"
+                          bbHeight={24}
+                          bbWidth={24}
+                          color={4286071773}
+                          focusable={false}
+                          height={24}
+                          meetOrSlice={0}
+                          minX={0}
+                          minY={0}
+                          style={
+                            Array [
+                              Object {
+                                "backgroundColor": "transparent",
+                                "borderWidth": 0,
+                              },
+                              Object {},
+                              Object {
+                                "flex": 0,
+                                "height": 24,
+                                "width": 24,
+                              },
+                            ]
+                          }
+                          tintColor={4286071773}
+                          vbHeight={24}
+                          vbWidth={24}
+                          width={24}
+                        >
+                          <RNSVGGroup>
+                            <RNSVGPath
+                              d="M18 4.48a8.45 8.45 0 00-12 12l5.27 5.28a1 1 0 001.42 0L18 16.43a8.45 8.45 0 000-11.95zM16.57 15L12 19.59 7.43 15a6.46 6.46 0 119.14 0zM9 7.41a4.32 4.32 0 000 6.1 4.31 4.31 0 007.36-3 4.24 4.24 0 00-1.26-3.05A4.3 4.3 0 009 7.41zm4.69 4.68a2.33 2.33 0 11.67-1.63 2.33 2.33 0 01-.72 1.63z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
+                            />
+                          </RNSVGGroup>
+                        </RNSVGSvgView>
+                      </View>
                     </View>
                   </View>
                 </View>
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-Regular",
+                        "fontSize": 16,
+                      },
+                      Object {},
+                      Object {
+                        "marginLeft": 16,
+                      },
+                    ]
+                  }
+                >
+                  Hồ Chí Minh
+                </Text>
               </View>
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-Regular",
-                      "fontSize": 16,
-                    },
-                    Object {},
-                    Object {
-                      "marginLeft": 16,
-                    },
-                  ]
-                }
-              >
-                Hồ Chí Minh, Việt Nam
-              </Text>
-            </View>
-            <View
-              style={
-                Object {
-                  "alignItems": "center",
-                  "flexDirection": "row",
-                  "marginBottom": 8,
-                  "marginRight": 12,
-                }
-              }
-            >
               <View
-                accessibilityState={
-                  Object {
-                    "disabled": true,
-                  }
-                }
-                accessible={true}
-                collapsable={false}
-                focusable={false}
-                hitSlop={
-                  Object {
-                    "bottom": 10,
-                    "left": 10,
-                    "right": 10,
-                    "top": 10,
-                  }
-                }
-                onClick={[Function]}
-                onResponderGrant={[Function]}
-                onResponderMove={[Function]}
-                onResponderRelease={[Function]}
-                onResponderTerminate={[Function]}
-                onResponderTerminationRequest={[Function]}
-                onStartShouldSetResponder={[Function]}
                 style={
                   Object {
-                    "opacity": 1,
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                    "marginBottom": 8,
+                    "marginRight": 12,
                   }
                 }
               >
                 <View
+                  accessibilityState={
+                    Object {
+                      "disabled": true,
+                    }
+                  }
+                  accessible={true}
+                  collapsable={false}
+                  focusable={false}
+                  hitSlop={
+                    Object {
+                      "bottom": 10,
+                      "left": 10,
+                      "right": 10,
+                      "top": 10,
+                    }
+                  }
+                  onClick={[Function]}
+                  onResponderGrant={[Function]}
+                  onResponderMove={[Function]}
+                  onResponderRelease={[Function]}
+                  onResponderTerminate={[Function]}
+                  onResponderTerminationRequest={[Function]}
+                  onStartShouldSetResponder={[Function]}
                   style={
-                    Array [
-                      Object {
-                        "alignItems": "center",
-                        "flexDirection": "row",
-                      },
-                      undefined,
-                      Object {
-                        "backgroundColor": undefined,
-                      },
-                    ]
+                    Object {
+                      "opacity": 1,
+                    }
                   }
                 >
                   <View
                     style={
                       Array [
+                        Object {
+                          "alignItems": "center",
+                          "flexDirection": "row",
+                        },
                         undefined,
-                        undefined,
-                        undefined,
+                        Object {
+                          "backgroundColor": undefined,
+                        },
                       ]
                     }
                   >
-                    <View>
-                      <RNSVGSvgView
-                        align="xMidYMid"
-                        bbHeight={24}
-                        bbWidth={24}
-                        color={4288772850}
-                        focusable={false}
-                        height={24}
-                        meetOrSlice={0}
-                        minX={0}
-                        minY={0}
-                        style={
-                          Array [
-                            Object {
-                              "backgroundColor": "transparent",
-                              "borderWidth": 0,
-                            },
-                            Object {},
-                            Object {
-                              "flex": 0,
-                              "height": 24,
-                              "width": 24,
-                            },
-                          ]
-                        }
-                        tintColor={4288772850}
-                        vbHeight={24}
-                        vbWidth={24}
-                        width={24}
-                      >
-                        <RNSVGGroup>
-                          <RNSVGPath
-                            d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm-.41 2l-5.88 5.88a1 1 0 01-1.42 0L5.41 6zM20 17a1 1 0 01-1 1H5a1 1 0 01-1-1V7.41l5.88 5.88a3 3 0 004.24 0L20 7.41z"
-                            fill={
-                              Array [
-                                2,
-                              ]
-                            }
-                            propList={
-                              Array [
-                                "fill",
-                              ]
-                            }
-                          />
-                        </RNSVGGroup>
-                      </RNSVGSvgView>
+                    <View
+                      style={
+                        Array [
+                          undefined,
+                          undefined,
+                          undefined,
+                        ]
+                      }
+                    >
+                      <View>
+                        <RNSVGSvgView
+                          align="xMidYMid"
+                          bbHeight={24}
+                          bbWidth={24}
+                          color={4286071773}
+                          focusable={false}
+                          height={24}
+                          meetOrSlice={0}
+                          minX={0}
+                          minY={0}
+                          style={
+                            Array [
+                              Object {
+                                "backgroundColor": "transparent",
+                                "borderWidth": 0,
+                              },
+                              Object {},
+                              Object {
+                                "flex": 0,
+                                "height": 24,
+                                "width": 24,
+                              },
+                            ]
+                          }
+                          tintColor={4286071773}
+                          vbHeight={24}
+                          vbWidth={24}
+                          width={24}
+                        >
+                          <RNSVGGroup>
+                            <RNSVGPath
+                              d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm-.41 2l-5.88 5.88a1 1 0 01-1.42 0L5.41 6zM20 17a1 1 0 01-1 1H5a1 1 0 01-1-1V7.41l5.88 5.88a3 3 0 004.24 0L20 7.41z"
+                              fill={
+                                Array [
+                                  2,
+                                ]
+                              }
+                              propList={
+                                Array [
+                                  "fill",
+                                ]
+                              }
+                            />
+                          </RNSVGGroup>
+                        </RNSVGSvgView>
+                      </View>
                     </View>
                   </View>
                 </View>
+                <Text
+                  style={
+                    Array [
+                      Object {
+                        "color": "#2F3945",
+                        "fontFamily": "OpenSans-Regular",
+                        "fontSize": 16,
+                      },
+                      Object {},
+                      Object {
+                        "marginLeft": 16,
+                      },
+                    ]
+                  }
+                >
+                  usernametest@mail.com
+                </Text>
               </View>
-              <Text
-                style={
-                  Array [
-                    Object {
-                      "color": "#2F3945",
-                      "fontFamily": "OpenSans-Regular",
-                      "fontSize": 16,
-                    },
-                    Object {},
-                    Object {
-                      "marginLeft": 16,
-                    },
-                  ]
-                }
-              >
-                usernametest@mail.com
-              </Text>
             </View>
           </View>
           <View
@@ -758,7 +768,7 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
               style={
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": "#F8F5FF",
+                  "backgroundColor": "#EAEDF2",
                   "borderRadius": 6,
                   "flex": 1,
                   "marginRight": 8,
@@ -786,7 +796,7 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
                         "fontSize": 16,
                       },
                       Object {
-                        "color": "#5D2C9A",
+                        "color": "#2F3945",
                       },
                       Object {
                         "textAlign": "center",
@@ -904,7 +914,7 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
         style={
           Object {
             "alignItems": "center",
-            "backgroundColor": "#F8F5FF",
+            "backgroundColor": "#EAEDF2",
             "borderRadius": 6,
             "flex": 1,
             "marginRight": 8,
@@ -932,7 +942,7 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
                   "fontSize": 16,
                 },
                 Object {
-                  "color": "#5D2C9A",
+                  "color": "#2F3945",
                 },
                 Object {
                   "textAlign": "center",
