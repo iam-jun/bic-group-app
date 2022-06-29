@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`CommunityPendingMembers should render data correctly 1`] = `
+exports[`GroupPendingMembers should render data correctly 1`] = `
 <View
   style={
     Object {
@@ -8,7 +8,7 @@ exports[`CommunityPendingMembers should render data correctly 1`] = `
       "flex": 1,
     }
   }
-  testID="CommunityPendingMembers"
+  testID="GroupPendingMembers"
 >
   <View
     testID="header"

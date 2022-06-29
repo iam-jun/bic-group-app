@@ -13,10 +13,10 @@ const GroupMemberRequest = ({requestId}: {requestId: number}) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
-  const pendingMemberRequests = useKeySelector(
-    groupsKeySelector.pendingMemberRequests,
+  const groupMemberRequests = useKeySelector(
+    groupsKeySelector.groupMemberRequests,
   );
-  const {items} = pendingMemberRequests;
+  const {items} = groupMemberRequests;
 
   const requestItem = items[requestId];
   const {group_id: groupId, user} = requestItem;
