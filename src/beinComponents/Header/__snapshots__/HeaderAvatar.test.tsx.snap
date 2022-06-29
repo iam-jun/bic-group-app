@@ -157,7 +157,7 @@ exports[`Header Avatar component renders correctly 1`] = `
           Object {
             "color": "#2F3945",
             "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 11,
+            "fontSize": 12,
           },
           Object {},
           undefined,
@@ -331,7 +331,7 @@ exports[`Header Avatar component renders correctly with props Avatar Props 1`] =
           Object {
             "color": "#2F3945",
             "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 11,
+            "fontSize": 12,
           },
           Object {},
           undefined,
@@ -504,7 +504,7 @@ exports[`Header Avatar component renders correctly with props Container Style 1`
           Object {
             "color": "#2F3945",
             "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 11,
+            "fontSize": 12,
           },
           Object {},
           undefined,
@@ -678,7 +678,7 @@ exports[`Header Avatar component renders correctly with props First Label Props 
           Object {
             "color": "#2F3945",
             "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 11,
+            "fontSize": 12,
           },
           Object {},
           undefined,
@@ -990,7 +990,7 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
           Object {
             "color": "#2F3945",
             "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 11,
+            "fontSize": 12,
           },
           Object {},
           undefined,
@@ -1268,7 +1268,7 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
           Object {
             "color": "#2F3945",
             "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 11,
+            "fontSize": 12,
           },
           Object {},
           undefined,
@@ -1546,7 +1546,7 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
           Object {
             "color": "#2F3945",
             "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 11,
+            "fontSize": 12,
           },
           Object {},
           undefined,
@@ -1717,7 +1717,7 @@ exports[`Header Avatar component renders correctly with props Second Label Props
           Object {
             "color": "#2F3945",
             "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 11,
+            "fontSize": 12,
           },
           Object {},
           Object {

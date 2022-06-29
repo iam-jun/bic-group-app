@@ -11,6 +11,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 export interface FlatGroupItemProps extends GroupItemProps {
   style?: StyleProp<ViewStyle>;
@@ -21,8 +22,11 @@ export interface FlatGroupItemProps extends GroupItemProps {
   toggleOnPress?: boolean;
   onPressGroup?: (group: IGroup) => void;
   onPressItem?: (group: IGroup) => void;
+  onPressMenu?: (item: GroupItemProps) => void;
   hidePath?: boolean;
   initShowTree?: boolean;
+  disableOnPressItem?: boolean;
+  disableHorizontal?: boolean;
 }
 
 type PathData = {
@@ -43,10 +47,14 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   toggleOnPress,
   onPressGroup,
   onPressItem,
+  onPressMenu,
   hidePath = false,
   initShowTree = true,
   showPrivacy,
   showPrivacyName,
+  showInfo,
+  disableOnPressItem,
+  disableHorizontal,
   ...props
 }: FlatGroupItemProps) => {
   const [showTree, setShowTree] = useState(initShowTree);
@@ -111,6 +119,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   };
 
   const _onPressGroup = (group: GroupItemProps) => {
+    console.log(`\x1b[35m🐣️ FlatGroupItem _onPressGroup `, group, `\x1b[0m`);
     if (onChangeCheckedGroups) {
       onCheckedGroup(group, !group.isChecked);
     } else if (onPressGroup) {
@@ -118,10 +127,16 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
     } else if (onPressItem) {
       onPressItem(group);
     } else {
-      rootNavigation.navigate(groupStack.groupDetail, {
-        groupId: group.id,
-        initial: true,
-      });
+      if (group.community_id) {
+        rootNavigation.navigate(mainStack.communityDetail, {
+          communityId: group.community_id,
+        });
+      } else {
+        rootNavigation.navigate(groupStack.groupDetail, {
+          groupId: group.id,
+          initial: true,
+        });
+      }
     }
   };
 
@@ -171,6 +186,10 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           onPressGroup={onPressGroup}
           showPrivacy={showPrivacy}
           showPrivacyName={showPrivacyName}
+          showInfo={showInfo}
+          onPressMenu={onPressMenu}
+          disableOnPressItem={disableOnPressItem}
+          disableHorizontal={disableHorizontal}
         />
       ) : (
         <GroupItem
@@ -181,6 +200,10 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           onCheckedItem={onChangeCheckedGroups ? onCheckedGroup : undefined}
           showPrivacy={showPrivacy}
           showPrivacyName={showPrivacyName}
+          showInfo={showInfo}
+          onPressMenu={onPressMenu}
+          disableOnPressItem={disableOnPressItem}
+          disableHorizontal={disableHorizontal}
         />
       )}
     </View>
