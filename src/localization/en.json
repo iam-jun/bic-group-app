@@ -402,6 +402,10 @@
       "filter_created_by_me": "Me",
       "filter_created_by_specific": "Specific person",
       "filter_date": "Date"
+    },
+    "notice_post_video_uploading": {
+      "title": "Processing video (count)",
+      "description": "The video of your post is being processed. We'll send you a notification when it's completed"
     }
   },
   "post": {

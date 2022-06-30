@@ -41,6 +41,7 @@ export const postApiConfig = {
       params: {
         offset: params?.offset || 0,
         limit: params?.limit || 10,
+        isProcessing: params?.isProcessing || false,
       },
     };
   },
@@ -506,6 +507,7 @@ const postDataHelper = {
           canLoadMore:
             (param?.offset || 0) + (param?.limit || DEFAULT_LIMIT) <=
             response?.data?.data?.meta?.total,
+          total: response?.data?.data?.meta?.total,
         });
       } else {
         return Promise.reject(response);

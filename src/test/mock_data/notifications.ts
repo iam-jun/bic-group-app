@@ -1,3 +1,5 @@
+import {POST_CONTAINING_VIDEO_PROCESS} from './draftPosts';
+
 export const CHILD_COMMENT = {
   id: 1335,
   actor: {
@@ -712,4 +714,22 @@ export const NOTIFICATIONS_RESPONSE = {
     hasNextPage: true,
     unSeen: 0,
   },
+};
+
+export const ATTACH_NOTIFICATION_PUBLISHED = {
+  ...NOTIFICATIONS_RESPONSE.data.list[2],
+  extra: {
+    ...NOTIFICATIONS_RESPONSE.data.list[2].extra,
+    type: 'post.video_published',
+  },
+  activities: [{...POST_CONTAINING_VIDEO_PROCESS}],
+};
+
+export const ATTACH_NOTIFICATION_FAILED = {
+  ...NOTIFICATIONS_RESPONSE.data.list[2],
+  extra: {
+    ...NOTIFICATIONS_RESPONSE.data.list[2].extra,
+    type: 'post.video_failed',
+  },
+  activities: [{...POST_CONTAINING_VIDEO_PROCESS}],
 };

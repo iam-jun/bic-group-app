@@ -341,6 +341,17 @@ const postActions = {
     type: postTypes.DELETE_POST_LOCAL,
     payload,
   }),
+  getAllPostContainingVideoInProgress: () => ({
+    type: postTypes.GET_POSTS_CONTAINING_VIDEO_IN_PROGRESS,
+  }),
+  setAllPostContainingVideoInProgress: (payload: any) => ({
+    type: postTypes.SET_POSTS_CONTAINING_VIDEO_IN_PROGRESS,
+    payload,
+  }),
+  updateAllPostContainingVideoInProgress: (payload: any) => ({
+    type: postTypes.UPDATE_POSTS_CONTAINING_VIDEO_IN_PROGRESS,
+    payload,
+  }),
 };
 
 export default postActions;

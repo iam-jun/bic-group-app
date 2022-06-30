@@ -150,3 +150,87 @@ export const LOAD_MORE_LIST_DRAFT_POST = [
     latest_reactions_extra: {},
   },
 ];
+export const POST_CONTAINING_VIDEO_PROCESS = {
+  id: '34a808ea-8c15-4516-a8d4-23a9dcd7053a',
+  content: 'Eeee',
+  media: {
+    files: [],
+    videos: [
+      {
+        thumbnails: [
+          {
+            width: 457,
+            height: 240,
+            url: 'https://bein-user-upload-videos-sandbox.s3.ap-southeast-1.amazonaws.com/post/thumbnails/bad3d8e3-8363-4781-af10-3e8ec2ac198a_457x240.jpg',
+          },
+          {
+            width: 686,
+            height: 360,
+            url: 'https://bein-user-upload-videos-sandbox.s3.ap-southeast-1.amazonaws.com/post/thumbnails/bad3d8e3-8363-4781-af10-3e8ec2ac198a_686x360.jpg',
+          },
+          {
+            width: 914,
+            height: 480,
+            url: 'https://bein-user-upload-videos-sandbox.s3.ap-southeast-1.amazonaws.com/post/thumbnails/bad3d8e3-8363-4781-af10-3e8ec2ac198a_914x480.jpg',
+          },
+          {
+            width: 1371,
+            height: 720,
+            url: 'https://bein-user-upload-videos-sandbox.s3.ap-southeast-1.amazonaws.com/post/thumbnails/bad3d8e3-8363-4781-af10-3e8ec2ac198a_1371x720.jpg',
+          },
+        ],
+        id: 'bad3d8e3-8363-4781-af10-3e8ec2ac198a',
+        status: 'processing',
+        name: '035318DB-73A8-42CD-9859-041E059E6610.mp4',
+        url: null,
+        size: 0,
+        mimeType: null,
+      },
+    ],
+    images: [],
+  },
+  setting: {
+    canReact: true,
+    canComment: true,
+    canShare: true,
+    isImportant: false,
+    importantExpiredAt: null,
+  },
+  isDraft: true,
+  isProcessing: true,
+  actor: {
+    id: 58,
+    username: 'thuquyen',
+    fullname: 'Nguyen Thi Thu Quyền',
+    avatar:
+      'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/6565aa5e-112d-4d6e-825d-bdea2166ad3d.jpg',
+    email: 'thuquyen@tgm.vn',
+  },
+  mentions: [],
+  totalUsersSeen: 0,
+  reactionsCount: null,
+  createdAt: '2022-06-29T07:54:18.729Z',
+  updatedAt: '2022-06-29T07:54:18.729Z',
+  createdBy: 58,
+  audience: {
+    groups: [
+      {
+        id: 1,
+        name: 'EVOL Community',
+        icon: 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/e55a5e2f-5f61-4a1b-ad3f-623f08eec1a1',
+        privacy: 'PUBLIC',
+      },
+    ],
+  },
+  isArticle: false,
+  privacy: 'PUBLIC',
+};
+
+export const LIST_POST_CONTAINING_VIDEO_PROCESS_1 = [
+  POST_CONTAINING_VIDEO_PROCESS,
+];
+
+export const LIST_POST_CONTAINING_VIDEO_PROCESS_2 = [
+  POST_CONTAINING_VIDEO_PROCESS,
+  {...POST_CONTAINING_VIDEO_PROCESS, id: '2'},
+];

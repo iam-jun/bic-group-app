@@ -348,6 +348,10 @@
       "filter_created_by_me": "Chính mình",
       "filter_created_by_specific": "Bài viết của",
       "filter_date": "Ngày đăng"
+    },
+    "notice_post_video_uploading": {
+      "title": "Bài viết có video đang xử lý (count)",
+      "description": "Bài viết có video của bạn đang được xử lý. Chúng tôi sẽ gửi cho bạn thông báo khi quá trình hoàn tất"
     }
   },
   "post": {

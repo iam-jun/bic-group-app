@@ -12,6 +12,7 @@ import {getEnv} from '~/utils/env';
 import {getMsgPackParser} from '~/utils/socket';
 import {useAuthToken, useUserIdAuth} from './auth';
 import {ConvertHelper} from '~/utils/convertHelper';
+import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 
 const useNotificationSocket = () => {
   const dispatch = useDispatch();
@@ -21,6 +22,12 @@ const useNotificationSocket = () => {
   const handleNotification = (data: any) => {
     switch (data.action) {
       case notificationActions.ATTACH:
+        if (
+          data?.extra?.type === NOTIFICATION_TYPE.POST.VIDEO.FAILED ||
+          data?.extra?.type === NOTIFICATION_TYPE.POST.VIDEO.PUBLISHED
+        ) {
+          dispatch(postActions.updateAllPostContainingVideoInProgress(data));
+        }
         return dispatch(actions.attachNotification(data));
       case notificationActions.DETACH:
         return dispatch(actions.detachNotification(data));
