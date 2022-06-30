@@ -866,7 +866,12 @@
       "text_info_reorder": "Drag and drop reorder the group",
       "text_no_group": "No group",
       "text_will_be_move": "will be moved according to",
-      "text_move_to": "Move to"
+      "text_move_to": "Move to",
+      "text_title_confirm_reorder_group": "You are changing the order of \"%NAME%\"",
+      "text_desc_confirm_reorder_group": "All members in this group will see these changes. Are you sure to do this?",
+      "text_title_confirm_move_group": "You are moving \"%MOVING_NAME%\" to \"%TARGET_NAME%\"",
+      "text_desc_confirm_move_group": "%COUNT% members of %MOVING_NAME% and inner groups will be added to %TARGET_NAME%. Are you sure to do this?",
+      "text_move_group_search_placeholder": "Search a group"
     },
     "text_search_communities": "Search Communities"
   },

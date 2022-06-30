@@ -4,7 +4,6 @@ import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 
-import {useBaseHook} from '~/hooks';
 import {IGroup} from '~/interfaces/IGroup';
 import ReorderList from '~/beinComponents/ReorderList';
 import ReorderGroupInfo from '~/screens/Groups/ReorderGroup/components/ReorderGroupInfo';
@@ -26,7 +25,6 @@ export interface ReorderGroupProps {
 
 const ReorderGroup: FC<ReorderGroupProps> = ({route}: ReorderGroupProps) => {
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
@@ -54,7 +52,7 @@ const ReorderGroup: FC<ReorderGroupProps> = ({route}: ReorderGroupProps) => {
 
   return (
     <View style={styles.container}>
-      <ReorderGroupHeader initOrder={initOrder} />
+      <ReorderGroupHeader initOrder={initOrder} groupName={initGroup?.name} />
       <ReorderGroupInfo group={initGroup as IGroup} />
       <ReorderList
         data={children}
@@ -69,7 +67,7 @@ const ReorderGroup: FC<ReorderGroupProps> = ({route}: ReorderGroupProps) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
