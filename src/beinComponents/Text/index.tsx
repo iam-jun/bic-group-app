@@ -49,7 +49,13 @@ const TextComponent: React.FC<TextProps> = ({
 
   let content = useI18n ? t(children) : children;
 
-  if (maxLength && !isNaN(maxLength) && typeof content === 'string') {
+  if (
+    maxLength &&
+    !isNaN(maxLength) &&
+    maxLength > 0 &&
+    maxLength < content.length &&
+    typeof content === 'string'
+  ) {
     content = content.substring(0, maxLength) + '...';
   }
 

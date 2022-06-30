@@ -52,9 +52,9 @@ const SchemeItem = ({item}: SchemeItemProps) => {
     );
   };
 
-  const renderItem = (item: IApplyingGroups, index: number) => {
+  const renderItem = (item: IApplyingGroups) => {
     return (
-      <View key={index} style={styles.nameTag}>
+      <View key={item.id} style={styles.nameTag}>
         <Text.BodyS maxLength={16}>{item.name}</Text.BodyS>
       </View>
     );
@@ -73,7 +73,7 @@ const SchemeItem = ({item}: SchemeItemProps) => {
             />
           )}
         </View>
-        <View style={styles.buttonContainer}>{renderButtons()}</View>
+        {renderButtons()}
       </View>
 
       {applyingGroups?.length > 0 && (
@@ -109,7 +109,6 @@ const createStyle = (theme: ITheme) => {
       borderRadius: spacing.borderRadius.tiny,
       marginLeft: spacing.margin.small,
     },
-    buttonContainer: {minHeight: 30, justifyContent: 'center'},
     activatedText: {
       marginHorizontal: spacing.margin.small,
     },

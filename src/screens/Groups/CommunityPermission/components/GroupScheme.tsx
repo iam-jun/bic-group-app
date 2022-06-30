@@ -68,6 +68,9 @@ const GroupScheme: FC<GroupSchemeProps> = ({style}: GroupSchemeProps) => {
           renderItem={renderItem}
           style={styles.groupSchemeList}
           scrollEnabled={false}
+          keyExtractor={(item, index) =>
+            `group_scheme_item_${item.id}_${index}`
+          }
           ItemSeparatorComponent={() => (
             <>
               <Divider />
