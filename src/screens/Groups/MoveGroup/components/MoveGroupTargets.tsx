@@ -11,9 +11,14 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 
 import Text from '~/beinComponents/Text';
-import Animated, {Layout, LightSpeedInLeft} from 'react-native-reanimated';
+import Animated, {
+  Layout,
+  LightSpeedInLeft,
+  ZoomIn,
+} from 'react-native-reanimated';
 import {useDispatch} from 'react-redux';
 import groupsActions from '~/screens/Groups/redux/actions';
+import Icon from '~/beinComponents/Icon';
 
 export interface MoveGroupTargetsProps {
   style?: StyleProp<ViewStyle>;
@@ -45,9 +50,19 @@ const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
             isActive ? styles.itemContainerActive : {},
           ]}
           onPress={() => onPressItem(item)}>
-          <Text variant={isActive ? 'bodySM' : 'bodyS'} numberOfLines={2}>
+          <Text
+            style={styles.textName}
+            variant={isActive ? 'bodySM' : 'bodyS'}
+            numberOfLines={2}>
             {item?.name}
           </Text>
+          <View style={{minWidth: 20, minHeight: 20}}>
+            {isActive && (
+              <Animated.View entering={ZoomIn}>
+                <Icon icon={'Check'} tintColor={colors.primary6} />
+              </Animated.View>
+            )}
+          </View>
         </TouchableOpacity>
       </Animated.View>
     );
@@ -73,11 +88,16 @@ const createStyle = (theme: ITheme) => {
   return StyleSheet.create({
     container: {},
     itemContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
       paddingHorizontal: spacing.padding.extraLarge,
       paddingVertical: spacing.padding.large,
     },
     itemContainerActive: {
       backgroundColor: colors.bgSecondary,
+    },
+    textName: {
+      flex: 1,
     },
   });
 };
