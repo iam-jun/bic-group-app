@@ -34,6 +34,23 @@ export const groupInitState = {
       creating: false,
     },
   },
+  groupStructure: {
+    communityTree: {
+      loading: false,
+      data: undefined,
+    },
+    reorder: {
+      newOrder: undefined,
+      loading: false,
+    },
+    move: {
+      loading: false,
+      searchKey: '',
+      targetGroups: undefined,
+      movingGroup: undefined,
+      selecting: undefined,
+    },
+  },
   isPrivacyModalOpen: false,
   loadingJoinedGroups: false,
   joinedGroups: [],
@@ -186,6 +203,51 @@ function groupsReducer(state = groupInitState, action: any = {}) {
   } = state;
 
   switch (type) {
+    //Group Structure Settings
+    case groupsTypes.SET_GROUP_STRUCTURE:
+      return {
+        ...state,
+        groupStructure: payload ? {...payload} : groupInitState.groupStructure,
+      };
+    case groupsTypes.SET_GROUP_STRUCTURE_COMMUNITY_TREE:
+      return {
+        ...state,
+        groupStructure: {
+          ...state.groupStructure,
+          communityTree: payload
+            ? {...payload}
+            : groupInitState.groupStructure.communityTree,
+        },
+      };
+    case groupsTypes.SET_GROUP_STRUCTURE_REORDER:
+      return {
+        ...state,
+        groupStructure: {
+          ...state.groupStructure,
+          reorder: payload
+            ? {...payload}
+            : groupInitState.groupStructure.reorder,
+        },
+      };
+    case groupsTypes.SET_GROUP_STRUCTURE_MOVE:
+      return {
+        ...state,
+        groupStructure: {
+          ...state.groupStructure,
+          move: payload ? {...payload} : groupInitState.groupStructure.move,
+        },
+      };
+    case groupsTypes.SET_GROUP_STRUCTURE_MOVE_SELECTING:
+      return {
+        ...state,
+        groupStructure: {
+          ...state.groupStructure,
+          move: {
+            ...state.groupStructure.move,
+            selecting: payload,
+          },
+        },
+      };
     // Permission
     case groupsTypes.SET_PERMISSION_CATEGORIES:
       return {

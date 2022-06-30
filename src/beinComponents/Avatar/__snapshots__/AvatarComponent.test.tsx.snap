@@ -270,70 +270,27 @@ exports[`Avatar component renders correctly badge 1`] = `
           >
             <View>
               <View
-                onLayout={[Function]}
                 style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "justifyContent": "center",
+                    },
+                    Object {
+                      "height": 14.040000000000001,
+                      "width": 14.040000000000001,
+                    },
+                  ]
                 }
               >
-                <View
-                  collapsable={false}
+                <Text
                   style={
                     Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
+                      "fontSize": 10.530000000000001,
+                      "textAlignVertical": "bottom",
                     }
                   }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 10.8,
-                        "justifyContent": "center",
-                        "width": 10.8,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 10.8,
-                        "width": 10.8,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={10.8}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
+                />
               </View>
             </View>
           </View>
@@ -517,70 +474,27 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
           >
             <View>
               <View
-                onLayout={[Function]}
                 style={
-                  Object {
-                    "backgroundColor": "transparent",
-                    "position": "relative",
-                  }
+                  Array [
+                    Object {
+                      "alignItems": "center",
+                      "justifyContent": "center",
+                    },
+                    Object {
+                      "height": 14.040000000000001,
+                      "width": 14.040000000000001,
+                    },
+                  ]
                 }
               >
-                <View
-                  collapsable={false}
+                <Text
                   style={
                     Object {
-                      "bottom": 0,
-                      "left": 0,
-                      "opacity": 1,
-                      "position": "absolute",
-                      "right": 0,
-                      "top": 0,
+                      "fontSize": 10.530000000000001,
+                      "textAlignVertical": "bottom",
                     }
                   }
-                >
-                  <View
-                    style={
-                      Object {
-                        "alignItems": "center",
-                        "backgroundColor": "#f9f9f9",
-                        "height": 10.8,
-                        "justifyContent": "center",
-                        "width": 10.8,
-                      }
-                    }
-                    testID="Image__placeholder"
-                  />
-                </View>
-                <View
-                  style={
-                    Array [
-                      Object {
-                        "overflow": "hidden",
-                      },
-                      Object {
-                        "height": 10.8,
-                        "width": 10.8,
-                      },
-                    ]
-                  }
-                >
-                  <FastImageView
-                    onFastImageError={[Function]}
-                    onFastImageLoadEnd={[Function]}
-                    resizeMode="cover"
-                    size={10.8}
-                    source={null}
-                    style={
-                      Object {
-                        "bottom": 0,
-                        "left": 0,
-                        "position": "absolute",
-                        "right": 0,
-                        "top": 0,
-                      }
-                    }
-                  />
-                </View>
+                />
               </View>
             </View>
           </View>
