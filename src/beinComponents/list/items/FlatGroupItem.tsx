@@ -12,6 +12,7 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import mainStack from '~/router/navigator/MainStack/stack';
+import {AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
 
 export interface FlatGroupItemProps extends GroupItemProps {
   style?: StyleProp<ViewStyle>;
@@ -27,6 +28,8 @@ export interface FlatGroupItemProps extends GroupItemProps {
   initShowTree?: boolean;
   disableOnPressItem?: boolean;
   disableHorizontal?: boolean;
+  iconVariant?: AvatarType;
+  nameLines?: number;
 }
 
 type PathData = {
@@ -55,6 +58,8 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   showInfo,
   disableOnPressItem,
   disableHorizontal,
+  iconVariant,
+  nameLines,
   ...props
 }: FlatGroupItemProps) => {
   const [showTree, setShowTree] = useState(initShowTree);
@@ -190,6 +195,8 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           onPressMenu={onPressMenu}
           disableOnPressItem={disableOnPressItem}
           disableHorizontal={disableHorizontal}
+          iconVariant={iconVariant}
+          nameLines={nameLines}
         />
       ) : (
         <GroupItem
@@ -204,6 +211,8 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           onPressMenu={onPressMenu}
           disableOnPressItem={disableOnPressItem}
           disableHorizontal={disableHorizontal}
+          iconVariant={iconVariant}
+          nameLines={nameLines}
         />
       )}
     </View>

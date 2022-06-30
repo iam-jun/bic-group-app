@@ -7,6 +7,7 @@ import GroupItem, {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
+import {AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
 
 export interface GroupTreeProps {
   data?: IGroup[] | IGroup;
@@ -20,6 +21,8 @@ export interface GroupTreeProps {
   showInfo?: boolean;
   disableOnPressItem?: boolean;
   disableHorizontal?: boolean;
+  iconVariant?: AvatarType;
+  nameLines?: number;
 }
 
 type TreeData = {[x: string]: IParsedGroup};
@@ -38,6 +41,8 @@ const GroupTree: React.FC<GroupTreeProps> = ({
   showInfo,
   disableOnPressItem,
   disableHorizontal,
+  iconVariant,
+  nameLines,
 }: GroupTreeProps) => {
   const [treeData, setTreeData] = useState<TreeData>({});
   const [renderedTree, setRenderedTree] = useState<React.ReactNode[]>([]);
@@ -209,6 +214,8 @@ const GroupTree: React.FC<GroupTreeProps> = ({
           onPressMenu={onPressMenu}
           disableOnPressItem={disableOnPressItem}
           disableHorizontal={disableHorizontal}
+          iconVariant={iconVariant}
+          nameLines={nameLines}
         />,
       ),
     );
