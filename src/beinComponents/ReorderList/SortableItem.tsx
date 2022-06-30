@@ -7,6 +7,7 @@ import Animated, {
   withSpring,
   useDerivedValue,
   runOnJS,
+  withTiming,
 } from 'react-native-reanimated';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 
@@ -55,30 +56,10 @@ export const SortableItem = ({
     onEnd: event => {
       gestureActive.value = false;
       gestureFinishing.value = true;
-      x.value = withSpring(0, {
-        stiffness: 100,
-        mass: 1,
-        damping: 10,
-        overshootClamping: false,
-        restSpeedThreshold: 0.001,
-        restDisplacementThreshold: 0.001,
-        velocity: event.velocityX,
+      x.value = withTiming(0);
+      y.value = withTiming(offset.y.value, {}, () => {
+        gestureFinishing.value = false;
       });
-      y.value = withSpring(
-        offset.y.value,
-        {
-          stiffness: 100,
-          mass: 1,
-          damping: 10,
-          overshootClamping: false,
-          restSpeedThreshold: 0.001,
-          restDisplacementThreshold: 0.001,
-          velocity: event.velocityY,
-        },
-        () => {
-          gestureFinishing.value = false;
-        },
-      );
       !!onEnd && runOnJS(onEnd)();
     },
   });
@@ -87,7 +68,7 @@ export const SortableItem = ({
     if (gestureActive.value) {
       return y.value;
     } else {
-      return withSpring(offset.y.value);
+      return withTiming(offset.y.value);
     }
   });
   const style = useAnimatedStyle(() => ({
