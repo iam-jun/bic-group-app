@@ -105,7 +105,12 @@ const MoveGroup: FC<MoveGroupProps> = ({route}: MoveGroupProps) => {
       />
       <ScrollView>
         <MoveGroupHeaderInfo group={initGroup} />
-        <MoveGroupTargets targets={targetGroups} selecting={selecting} />
+        <MoveGroupTargets
+          communityId={communityId}
+          groupId={groupId}
+          targets={targetGroups}
+          selecting={selecting}
+        />
       </ScrollView>
     </View>
   );
