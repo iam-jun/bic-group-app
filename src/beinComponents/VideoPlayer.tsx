@@ -11,7 +11,6 @@ import {
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {Video, ResizeMode} from 'expo-av';
-import {useFocusEffect} from '@react-navigation/native';
 
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
@@ -87,16 +86,6 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
       videoListener?.remove();
     };
   }, [isPlaying]);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      return () => {
-        if (isPlaying) {
-          video.current?.pauseAsync?.();
-        }
-      };
-    }, []),
-  );
 
   const handlePlaybackStatusUpdate = (status: any) => {
     if (status?.isPlaying) {

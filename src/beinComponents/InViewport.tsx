@@ -25,7 +25,9 @@ const InViewport: React.FC<InViewportProps> = ({
     setLastValue(false);
     startWatching();
     isInViewPort();
-    return stopWatching;
+    return () => {
+      stopWatching();
+    };
   }, [state.rectTop, state.rectBottom, state.rectWidth]);
 
   const startWatching = () => {
