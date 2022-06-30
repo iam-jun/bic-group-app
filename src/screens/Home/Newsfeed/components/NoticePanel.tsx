@@ -26,7 +26,6 @@ const NoticePanel = () => {
     dispatch(
       postActions.setAllPostContainingVideoInProgress({
         total: 0,
-        data: [],
       }),
     );
   };

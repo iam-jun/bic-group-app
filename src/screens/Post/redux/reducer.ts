@@ -493,10 +493,9 @@ function postReducer(state = postInitState, action: any = {}) {
     case postTypes.SET_POSTS_CONTAINING_VIDEO_IN_PROGRESS: {
       const newAllPostContainingVideoInProgress = {
         total: payload?.total || 0,
-        data: payload?.data || [],
+        data:
+          payload?.data || state.allPostContainingVideoInProgress?.data || [],
       };
-      console.log('postTypes.SET_POSTS_CONTAINING_VIDEO_IN_PROGRESS', payload);
-
       return {
         ...state,
         allPostContainingVideoInProgress: {
