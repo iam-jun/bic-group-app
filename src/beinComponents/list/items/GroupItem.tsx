@@ -17,6 +17,7 @@ import {generateUniqueId} from '~/utils/generator';
 import {useKeySelector} from '~/hooks/selector';
 import privacyTypes from '~/constants/privacyTypes';
 import mainStack from '~/router/navigator/MainStack/stack';
+import {AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
 
 export interface GroupItemProps extends IParsedGroup {
   testID?: string;
@@ -31,6 +32,8 @@ export interface GroupItemProps extends IParsedGroup {
   showPrivacyName?: boolean;
   disableHorizontal?: boolean;
   showInfo?: boolean;
+  iconVariant?: AvatarType;
+  nameLines?: number;
 }
 
 const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
@@ -58,6 +61,8 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     showPrivacyName = true,
     showInfo = true,
     disableHorizontal,
+    iconVariant = 'medium',
+    nameLines = 2,
   } = props;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
@@ -161,8 +166,8 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
         {renderUiLevelLines()}
         {renderToggle()}
         <View style={styles.itemContainer}>
-          <View style={styles.avatarContainer}>
-            <Avatar.Medium source={icon} />
+          <View>
+            <Avatar variant={iconVariant} source={icon} />
             {onCheckedItem && (
               <Checkbox
                 testID="group_item.check_box"
@@ -177,7 +182,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
               style={
                 disableHorizontal ? styles.textName : styles.textNameHorizontal
               }
-              numberOfLines={2}>
+              numberOfLines={nameLines}>
               {name}
             </Text.H6>
             {showInfo && (
@@ -246,13 +251,13 @@ const themeStyles = (theme: IObject<any>) => {
       marginHorizontal: spacing.margin.tiny,
     },
     line: {
-      width: 2,
+      width: 1,
       height: '100%',
       backgroundColor: colors.borderDivider,
       marginHorizontal: spacing?.margin.base,
     },
     toggleContainer: {
-      width: 2,
+      width: 1,
       height: '100%',
       backgroundColor: colors.borderDivider,
       marginHorizontal: spacing?.margin.base,

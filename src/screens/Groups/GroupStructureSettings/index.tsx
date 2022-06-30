@@ -79,6 +79,8 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = ({
             disableHorizontal
             showInfo={false}
             onPressMenu={onPressMenu}
+            iconVariant={'small'}
+            nameLines={1}
           />
         )}
       </ScrollView>

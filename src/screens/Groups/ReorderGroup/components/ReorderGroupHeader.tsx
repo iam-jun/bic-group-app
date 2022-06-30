@@ -1,33 +1,27 @@
 import React, {FC} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {StyleProp, ViewStyle} from 'react-native';
 
-import {ITheme} from '~/theme/interfaces';
-
-import Text from '~/beinComponents/Text';
 import Header from '~/beinComponents/Header';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {isEqual} from 'lodash';
-import {dispatch} from 'jest-circus/build/state';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useDispatch} from 'react-redux';
+import modalActions from '~/store/modal/actions';
 
 export interface ReorderGroupHeaderProps {
   style?: StyleProp<ViewStyle>;
   initOrder?: any;
+  groupName?: string;
 }
 
 const ReorderGroupHeader: FC<ReorderGroupHeaderProps> = ({
-  style,
   initOrder,
+  groupName,
 }: ReorderGroupHeaderProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
-  const styles = createStyle(theme);
 
   const {id: communityId} = useKeySelector(groupsKeySelector.communityDetail);
   const {loading, newOrder} = useKeySelector(
@@ -39,7 +33,26 @@ const ReorderGroupHeader: FC<ReorderGroupHeaderProps> = ({
 
   const onPressSave = () => {
     if (communityId && newOrder) {
-      dispatch(groupsActions.putGroupStructureReorder({communityId, newOrder}));
+      const title = t(
+        'communities:group_structure:text_title_confirm_reorder_group',
+      ).replaceAll('%NAME%', groupName);
+      const content = t(
+        'communities:group_structure:text_desc_confirm_reorder_group',
+      );
+      dispatch(
+        modalActions.showAlert({
+          title,
+          content,
+          cancelBtn: true,
+          cancelLabel: t('common:btn_cancel'),
+          confirmLabel: t('common:btn_confirm'),
+          onConfirm: () => {
+            dispatch(
+              groupsActions.putGroupStructureReorder({communityId, newOrder}),
+            );
+          },
+        }),
+      );
     }
   };
 
@@ -58,13 +71,6 @@ const ReorderGroupHeader: FC<ReorderGroupHeaderProps> = ({
       }}
     />
   );
-};
-
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
-  return StyleSheet.create({
-    container: {},
-  });
 };
 
 export default ReorderGroupHeader;
