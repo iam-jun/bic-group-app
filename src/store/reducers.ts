@@ -32,11 +32,17 @@ const notiPersistConfig = {
   whitelist: ['pushToken'],
 };
 
+const postPersistConfig = {
+  key: 'post',
+  storage: AsyncStorage,
+  whitelist: ['allPostContainingVideoInProgress'],
+};
+
 export const appReducer = combineReducers({
   app,
   modal,
   auth: persistReducer(authPersistConfig, auth),
-  post: postReducer,
+  post: persistReducer(postPersistConfig, postReducer),
   groups: groupsReducer,
   home: homeReducer,
   notifications: persistReducer(notiPersistConfig, notificationsReducer),
