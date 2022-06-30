@@ -77,7 +77,12 @@ const ScrollableTabBar = ({
   const onMomentumScrollEnd = (e: any) => {
     const contentOffset = e.nativeEvent.contentOffset;
     const viewSize = e.nativeEvent.layoutMeasurement;
-    const pageNum = parseInt(contentOffset.x / viewSize.width);
+    let pageNum = contentOffset.x / viewSize.width;
+    if ((pageNum - parseInt(pageNum)) * 10 >= 5) {
+      pageNum = parseInt(pageNum) + 1;
+    } else {
+      pageNum = parseInt(pageNum);
+    }
     if (activeIndex !== pageNum) {
       onChangeTab(pageNum);
     }
