@@ -53,6 +53,11 @@ const groupsKeySelector = {
     },
     groupScheme: 'groups.permissionScheme.groupScheme.data',
   },
+  groupStructure: {
+    communityTree: 'groups.groupStructure.communityTree',
+    reorder: 'groups.groupStructure.reorder',
+    move: 'groups.groupStructure.move',
+  },
   communitySearch: 'groups.communitySearch',
 };
 

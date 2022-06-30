@@ -29,13 +29,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
     Description
   </Text>
   <View
-    accessibilityState={
-      Object {
-        "disabled": true,
-      }
-    }
     accessible={true}
-    collapsable={false}
     focusable={true}
     onClick={[Function]}
     onResponderGrant={[Function]}
@@ -44,24 +38,9 @@ exports[`GroupAboutContent component should render group privacy item correctly 
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "opacity": 1,
-      }
-    }
   >
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
-            "fontSize": 16,
-          },
-          Object {},
-          undefined,
-        ]
-      }
+    <View
+      style={false}
     >
       <Text
         style={
@@ -75,19 +54,33 @@ exports[`GroupAboutContent component should render group privacy item correctly 
             undefined,
           ]
         }
-        testID="collapsible_text.content"
-        textProps={
-          Object {
-            "style": Object {
-              "paddingBottom": 8,
-            },
-            "variant": "h4",
-          }
-        }
       >
-        The greatest community ever
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-Regular",
+                "fontSize": 16,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+          testID="collapsible_text.content"
+          textProps={
+            Object {
+              "style": Object {
+                "paddingBottom": 8,
+              },
+              "variant": "h4",
+            }
+          }
+        >
+          The greatest community ever
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>
   <View>
     <View
@@ -594,13 +587,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
     Description
   </Text>
   <View
-    accessibilityState={
-      Object {
-        "disabled": true,
-      }
-    }
     accessible={true}
-    collapsable={false}
     focusable={true}
     onClick={[Function]}
     onResponderGrant={[Function]}
@@ -609,24 +596,9 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
-    style={
-      Object {
-        "opacity": 1,
-      }
-    }
   >
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
-            "fontSize": 16,
-          },
-          Object {},
-          undefined,
-        ]
-      }
+    <View
+      style={false}
     >
       <Text
         style={
@@ -640,19 +612,33 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
             undefined,
           ]
         }
-        testID="collapsible_text.content"
-        textProps={
-          Object {
-            "style": Object {
-              "paddingBottom": 8,
-            },
-            "variant": "h4",
-          }
-        }
       >
-        The greatest community ever
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-Regular",
+                "fontSize": 16,
+              },
+              Object {},
+              undefined,
+            ]
+          }
+          testID="collapsible_text.content"
+          textProps={
+            Object {
+              "style": Object {
+                "paddingBottom": 8,
+              },
+              "variant": "h4",
+            }
+          }
+        >
+          The greatest community ever
+        </Text>
       </Text>
-    </Text>
+    </View>
   </View>
   <View>
     <View

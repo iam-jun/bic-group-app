@@ -16,6 +16,7 @@ import commonActions, {IAction} from '~/constants/commonActions';
 import {generateUniqueId} from '~/utils/generator';
 import {useKeySelector} from '~/hooks/selector';
 import privacyTypes from '~/constants/privacyTypes';
+import mainStack from '~/router/navigator/MainStack/stack';
 
 export interface GroupItemProps extends IParsedGroup {
   testID?: string;
@@ -23,15 +24,19 @@ export interface GroupItemProps extends IParsedGroup {
   isCollapsing: boolean;
   onPressItem?: (item: GroupItemProps) => void;
   onToggleItem?: (item: GroupItemProps) => void;
+  onPressMenu?: (item: GroupItemProps) => void;
   onCheckedItem?: (item: GroupItemProps, isChecked: boolean) => void;
   disableOnPressItem?: boolean;
   showPrivacy?: boolean;
   showPrivacyName?: boolean;
+  disableHorizontal?: boolean;
+  showInfo?: boolean;
 }
 
 const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   const {
     id,
+    community_id,
     name,
     user_count,
     icon,
@@ -45,11 +50,14 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     isCollapsing = false,
     onPressItem,
     onToggleItem,
+    onPressMenu,
     onCheckedItem,
     disableOnPressItem,
     privacy,
     showPrivacy = false,
     showPrivacyName = true,
+    showInfo = true,
+    disableHorizontal,
   } = props;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
@@ -70,11 +78,21 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     if (onPressItem) {
       onPressItem(props);
     } else {
-      rootNavigation.navigate(groupStack.groupDetail, {
-        groupId: id,
-        initial: true,
-      });
+      if (community_id) {
+        rootNavigation.navigate(mainStack.communityDetail, {
+          communityId: community_id,
+        });
+      } else {
+        rootNavigation.navigate(groupStack.groupDetail, {
+          groupId: id,
+          initial: true,
+        });
+      }
     }
+  };
+
+  const _onPressMenu = () => {
+    onPressMenu?.(props);
   };
 
   const _onToggleItem = () => {
@@ -155,32 +173,50 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
             )}
           </View>
           <View style={styles.textContainer}>
-            <Text.H6 style={styles.textName} numberOfLines={2}>
+            <Text.H6
+              style={
+                disableHorizontal ? styles.textName : styles.textNameHorizontal
+              }
+              numberOfLines={2}>
               {name}
             </Text.H6>
-            <View style={styles.row}>
-              {showPrivacy && (
-                <>
-                  <Icon
-                    style={styles.iconSmall}
-                    icon={privacyIcon}
-                    size={16}
-                    tintColor={theme.colors.textSecondary}
-                  />
-                  {showPrivacyName && (
-                    <Text.Subtitle style={styles.privacyTitle} useI18n>
-                      {privacyTitle}
-                    </Text.Subtitle>
-                  )}
-                  <Text.Subtitle> ⬩ </Text.Subtitle>
-                </>
-              )}
-              <Icon icon="users" size={16} tintColor={colors.textSecondary} />
-              <Text.BodyS color={colors.textSecondary} style={styles.textInfo}>
-                {user_count}
-              </Text.BodyS>
-            </View>
+            {showInfo && (
+              <View style={styles.row}>
+                {showPrivacy && (
+                  <>
+                    <Icon
+                      style={styles.iconSmall}
+                      icon={privacyIcon}
+                      size={16}
+                      tintColor={theme.colors.textSecondary}
+                    />
+                    {showPrivacyName && (
+                      <Text.Subtitle style={styles.privacyTitle} useI18n>
+                        {privacyTitle}
+                      </Text.Subtitle>
+                    )}
+                    <Text.Subtitle> ⬩ </Text.Subtitle>
+                  </>
+                )}
+                <Icon icon="users" size={16} tintColor={colors.textSecondary} />
+                <Text.BodyS
+                  color={colors.textSecondary}
+                  style={styles.textInfo}>
+                  {user_count}
+                </Text.BodyS>
+              </View>
+            )}
           </View>
+          {!!onPressMenu && (
+            <View style={styles.btnMenu}>
+              <Icon
+                style={{alignSelf: 'auto'}}
+                icon={'EllipsisH'}
+                testID={'group_item.button_menu'}
+                onPress={_onPressMenu}
+              />
+            </View>
+          )}
         </View>
       </View>
     </TouchableOpacity>
@@ -199,6 +235,10 @@ const themeStyles = (theme: IObject<any>) => {
       alignItems: 'center',
     },
     textName: {
+      flex: 1,
+      paddingTop: 2,
+    },
+    textNameHorizontal: {
       maxWidth: 200,
       paddingTop: 2,
     },
@@ -240,6 +280,7 @@ const themeStyles = (theme: IObject<any>) => {
     privacyTitle: {
       marginLeft: spacing.margin.tiny,
     },
+    btnMenu: {marginRight: 8},
   });
 };
 

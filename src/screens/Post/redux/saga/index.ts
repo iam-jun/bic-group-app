@@ -49,6 +49,8 @@ import putMarkAsRead from '~/screens/Post/redux/saga/putMarkAsRead';
 import getSeenPost from './getSeenPost';
 import putMarkSeenPost from './putMarKSeenPost';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
+import getPostsContainingVideoInProgress from './getPostsContainingVideoInProgress';
+import updatePostsContainingVideoInProgress from './updatePostsContainingVideoInProgress';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -98,6 +100,14 @@ export default function* postSaga() {
   );
   yield takeLatest(postTypes.GET_USERS_SEEN_POST, getSeenPost);
   yield takeLatest(postTypes.DELETE_POST_LOCAL, deletePostLocal);
+  yield takeLatest(
+    postTypes.GET_POSTS_CONTAINING_VIDEO_IN_PROGRESS,
+    getPostsContainingVideoInProgress,
+  );
+  yield takeLatest(
+    postTypes.UPDATE_POSTS_CONTAINING_VIDEO_IN_PROGRESS,
+    updatePostsContainingVideoInProgress,
+  );
 }
 
 function* postCreateNewPost({
@@ -379,6 +389,7 @@ function* postPublishDraftPost({
           }),
         );
         navigation.goBack();
+        yield put(postActions.getAllPostContainingVideoInProgress());
       } else if (replaceWithDetail) {
         navigation.replace(homeStack.postDetail, {post_id: postData?.id});
       }

@@ -29,59 +29,6 @@ exports[`CoverImage component renders correctly 1`] = `
     >
       Cover
     </Text>
-    <View
-      accessibilityState={
-        Object {
-          "disabled": false,
-        }
-      }
-      accessible={true}
-      collapsable={false}
-      focusable={true}
-      onClick={[Function]}
-      onResponderGrant={[Function]}
-      onResponderMove={[Function]}
-      onResponderRelease={[Function]}
-      onResponderTerminate={[Function]}
-      onResponderTerminationRequest={[Function]}
-      onStartShouldSetResponder={[Function]}
-      style={
-        Object {
-          "opacity": 1,
-        }
-      }
-      testID="cover.button_edit"
-    >
-      <View
-        style={
-          Object {
-            "alignItems": "center",
-            "flexDirection": "row",
-            "justifyContent": "center",
-          }
-        }
-        testID="button_wrapper.content"
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
-              },
-              Object {
-                "color": "#421187",
-              },
-              undefined,
-            ]
-          }
-          testID="cover.text_edit"
-        >
-          Edit
-        </Text>
-      </View>
-    </View>
   </View>
   <View
     onLayout={[Function]}
