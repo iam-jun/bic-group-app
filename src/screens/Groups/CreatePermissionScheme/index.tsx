@@ -79,6 +79,10 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
       );
 
       if (schemeId) {
+        /**
+         * init group scheme doesn't have field `roles`
+         * need to get full detail to edit roles
+         */
         dispatch(groupsActions.getGroupScheme({communityId, schemeId}));
       }
     }
@@ -90,6 +94,7 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     }
     return () => {
       dispatch(groupsActions.setCreatingScheme());
+      dispatch(groupsActions.setGroupScheme());
     };
   }, []);
 

@@ -35,6 +35,7 @@ export const groupInitState = {
       creating: false,
     },
     groupScheme: {
+      // storing this data for comparing original group scheme and editing scheme
       data: undefined,
     },
   },

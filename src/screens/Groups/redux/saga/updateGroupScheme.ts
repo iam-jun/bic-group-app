@@ -34,6 +34,8 @@ export default function* updateGroupScheme({
     yield put(groupsActions.setCreatingScheme({creating: false}));
 
     if (response?.data) {
+      // reload schemes when updating successfully
+      yield put(groupsActions.getSchemes({communityId, isRefreshing: true}));
       navigation.goBack();
       const toastMessage: IToastMessage = {
         content: 'communities:permission:text_update_scheme_success',
@@ -42,7 +44,6 @@ export default function* updateGroupScheme({
           type: 'success',
         },
       };
-      yield put(groupsActions.getSchemes({communityId, isRefreshing: true}));
       yield put(modalActions.showHideToastMessage(toastMessage));
     }
   } catch (err: any) {

@@ -21,7 +21,10 @@ export default function* getGroupScheme({
       schemeId,
     );
 
-    yield put(actions.setGroupScheme({data: response.data}));
+    // storing this data for comparing original group scheme and editing scheme
+    yield put(actions.setGroupScheme({data: cloneDeep(response.data)}));
+
+    // provide full groupScheme detail for updating group scheme
     yield put(actions.setCreatingScheme({data: cloneDeep(response.data)}));
   } catch (err: any) {
     console.log('getGroupScheme error:', err);
