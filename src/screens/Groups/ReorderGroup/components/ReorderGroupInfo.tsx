@@ -37,9 +37,9 @@ const ReorderGroupInfo: FC<ReorderGroupHeaderProps> = ({
       <View style={styles.groupInfo}>
         <View style={styles.grayDot} />
         <View>
-          <Avatar.Small source={icon} />
+          <Avatar.Medium source={icon} />
           <View style={styles.iconPrivacy}>
-            <Icon size={spacing.margin.base} icon={privacyIcon} />
+            <Icon size={spacing.margin.large} icon={privacyIcon} />
           </View>
         </View>
         <Text.H6 numberOfLines={1} style={styles.textName}>
@@ -64,8 +64,8 @@ const createStyle = (theme: ITheme) => {
       marginLeft: spacing.margin.small,
     },
     iconPrivacy: {
-      width: spacing.margin.base,
-      height: spacing.margin.base,
+      width: spacing.margin.large,
+      height: spacing.margin.large,
       position: 'absolute',
       bottom: 0,
       right: 0,
