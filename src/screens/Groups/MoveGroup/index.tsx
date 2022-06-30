@@ -4,7 +4,6 @@ import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
 
-import Text from '~/beinComponents/Text';
 import Header from '~/beinComponents/Header';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
@@ -14,6 +13,7 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import {IGroup} from '~/interfaces/IGroup';
 import MoveGroupHeaderInfo from '~/screens/Groups/MoveGroup/components/MoveGroupHeaderInfo';
 import MoveGroupTargets from '~/screens/Groups/MoveGroup/components/MoveGroupTargets';
+import modalActions from '~/store/modal/actions';
 
 export interface MoveGroupProps {
   route: {
@@ -27,7 +27,6 @@ const MoveGroup: FC<MoveGroupProps> = ({route}: MoveGroupProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
   const styles = createStyle(theme);
 
   const initGroup = route?.params?.group;
@@ -57,11 +56,33 @@ const MoveGroup: FC<MoveGroupProps> = ({route}: MoveGroupProps) => {
 
   const onPressSave = () => {
     if (communityId && groupId && selecting?.id) {
+      const title = t(
+        'communities:group_structure:text_title_confirm_move_group',
+      )
+        .replaceAll('%MOVING_NAME%', initGroup?.name)
+        .replaceAll('%TARGET_NAME%', selecting?.name);
+      const content = t(
+        'communities:group_structure:text_desc_confirm_move_group',
+      )
+        .replaceAll('%COUNT%', user_count || 0)
+        .replaceAll('%MOVING_NAME%', initGroup?.name)
+        .replaceAll('%TARGET_NAME%', selecting?.name);
       dispatch(
-        groupsActions.putGroupStructureMoveToTarget({
-          communityId,
-          moveId: groupId,
-          targetId: selecting.id,
+        modalActions.showAlert({
+          title,
+          content,
+          cancelBtn: true,
+          cancelLabel: t('common:btn_cancel'),
+          confirmLabel: t('common:btn_confirm'),
+          onConfirm: () => {
+            dispatch(
+              groupsActions.putGroupStructureMoveToTarget({
+                communityId,
+                moveId: groupId,
+                targetId: selecting.id,
+              }),
+            );
+          },
         }),
       );
     }
@@ -91,7 +112,7 @@ const MoveGroup: FC<MoveGroupProps> = ({route}: MoveGroupProps) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
