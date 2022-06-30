@@ -60,7 +60,7 @@ const FilterComponent: React.FC<FilterProps> = ({
     [onPress],
   );
 
-  const x = useSharedValue(0);
+  const panGestureValue = useSharedValue(0);
   const offsetValue = useSharedValue(0);
   const clampedTranslateX = useDerivedValue(() => {
     const lastMeasurements = measurements[measurements.length - 1];
@@ -117,18 +117,18 @@ const FilterComponent: React.FC<FilterProps> = ({
 
   const panGestureEvent = useAnimatedGestureHandler({
     onStart(event: any) {
-      console.log('>>>>>>START>>>>>>>', x.value, clampedTranslateX.value);
+      console.log('>>>>>>START>>>>>>>', panGestureValue.value);
     },
     onActive(event: any) {
-      if (x.value > 0) {
+      if (panGestureValue.value > 0) {
         offsetValue.value = 0;
-        x.value = event.translationX;
+        panGestureValue.value = event.translationX;
       } else {
-        x.value = event.translationX + offsetValue.value;
+        panGestureValue.value = event.translationX + offsetValue.value;
       }
     },
     onFinish(event: any) {
-      offsetValue.value = x.value;
+      offsetValue.value = panGestureValue.value;
     },
   });
 
