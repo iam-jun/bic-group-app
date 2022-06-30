@@ -728,7 +728,11 @@
       "title_community_scheme": "Quyền chung",
       "title_group_scheme": "Quyền nhóm",
       "title_create_community_scheme": "Tạo quyền cho cộng đồng",
+      "title_edit_community_scheme": "Cập nhật quyền cho cộng đồng",
+      "title_edit_group_scheme": "Cập nhật quyền cho nhóm",
       "title_edit_roles": "Sửa các quyền",
+      "title_scheme_name": "Tên quyền:",
+      "title_scheme_description": "Mô tả quyền:",
       "text_desc_system_scheme": "Sử dụng quyền mặc định của hệ thống. Nếu không có bất cứ quyền tự tạo nào, quyền hệ thống sẽ tự động được chọn.",
       "text_desc_community_scheme": "Quyền tự tạo mặc định được áp dụng cho cộng đồng và tất cả các nhóm bên.",
       "text_desc_group_scheme": "Quyền tự tạo riêng để áp dụng cho nhóm cụ thể.",
@@ -737,6 +741,8 @@
       "btn_view_permission": "Xem quyền",
       "btn_apply": "Áp dụng",
       "btn_keep_selecting": "Tiếp tục chọn",
+      "btn_continue": "Tiếp tục",
+      "btn_assign": "Áp dụng",
       "text_title_discard_create_scheme": "Huỷ thay đổi",
       "text_desc_discard_create_scheme": "Những thay đổi của bạn sẽ không được lưu. Tiếp tục huỷ?",
       "text_title_apply_system_scheme": "Sử dụng quyền hệ thống?",
@@ -744,6 +750,7 @@
       "text_title_delete_community_scheme": "Xoá quyền này",
       "text_desc_delete_community_scheme": "Hành động này không thể hoàn tác. Bạn có chắc muốn thực hiện?",
       "text_create_scheme_success": "Đã tạo thành công",
+      "text_update_scheme_success": "Đã cập nhật thành công",
       "text_set_by": "Đặt bởi"
     },
     "group_structure": {

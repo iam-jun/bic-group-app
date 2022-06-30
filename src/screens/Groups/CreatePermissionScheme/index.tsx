@@ -5,6 +5,7 @@ import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
+import {cloneDeep} from 'lodash';
 
 import {ITheme} from '~/theme/interfaces';
 
@@ -27,6 +28,7 @@ export interface CreatePermissionSchemeProps {
     params?: {
       isEdit?: boolean;
       initScheme?: IScheme;
+      schemeId?: string;
     };
   };
 }
@@ -44,7 +46,9 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
 
   const isEdit = route?.params?.isEdit;
   const initScheme = route?.params?.initScheme;
+  const schemeId = route?.params?.schemeId;
 
+  const {id: communityId} = useKeySelector(groupsKeySelector.communityDetail);
   const permissionCategories = useKeySelector(
     groupsKeySelector.permission.categories,
   );
@@ -70,9 +74,17 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     if (isEdit && initScheme) {
       dispatch(
         groupsActions.setCreatingScheme({
-          data: initScheme,
+          data: cloneDeep(initScheme),
         }),
       );
+
+      if (schemeId) {
+        /**
+         * init group scheme doesn't have field `roles`
+         * need to get full detail to edit roles
+         */
+        dispatch(groupsActions.getGroupScheme({communityId, schemeId}));
+      }
     }
     if (!permissionCategories?.data && !permissionCategories?.loading) {
       dispatch(groupsActions.getPermissionCategories());
@@ -82,6 +94,7 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     }
     return () => {
       dispatch(groupsActions.setCreatingScheme());
+      dispatch(groupsActions.setGroupScheme());
     };
   }, []);
 
@@ -133,9 +146,11 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
   return (
     <View style={styles.container}>
       <CreateSchemeHeader
+        initScheme={initScheme}
         loadingData={loading}
         loadDataFailed={loadDataFailed}
         isEdit={isEdit}
+        schemeId={schemeId}
       />
       {renderContent()}
     </View>

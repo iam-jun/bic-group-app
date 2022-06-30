@@ -5,6 +5,7 @@ import {IUser} from '~/interfaces/IAuth';
 import {IGroupDetail, IGroupMembers, IJoiningMember} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
 import {getNewSchemeRolesOnUpdatePermission} from '~/screens/Groups/CreatePermissionScheme/helper';
+import {cloneDeep} from 'lodash';
 
 export const groupInitState = {
   permissionScheme: {
@@ -32,6 +33,10 @@ export const groupInitState = {
       data: undefined,
       memberRoleIndex: undefined,
       creating: false,
+    },
+    groupScheme: {
+      // storing this data for comparing original group scheme and editing scheme
+      data: undefined,
     },
   },
   groupStructure: {
@@ -287,7 +292,8 @@ function groupsReducer(state = groupInitState, action: any = {}) {
             ...state.permissionScheme.creatingScheme,
             data: payload
               ? Object.assign(
-                  state.permissionScheme.creatingScheme.data,
+                  // @ts-ignore
+                  cloneDeep(state.permissionScheme.creatingScheme.data),
                   payload,
                 )
               : groupInitState.permissionScheme.creatingScheme.data,
@@ -296,8 +302,9 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       };
     case groupsTypes.UPDATE_CREATING_SCHEME_PERMISSION: {
       const {permission, roleIndex} = payload || {};
-      // @ts-ignore
-      const roles = state.permissionScheme.creatingScheme?.data?.roles || [];
+      const roles =
+        // @ts-ignore
+        [...state.permissionScheme.creatingScheme?.data?.roles] || [];
       const newRoles = getNewSchemeRolesOnUpdatePermission(
         permission,
         roleIndex,
@@ -305,7 +312,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       );
       const newData = Object.assign(
         // @ts-ignore
-        state.permissionScheme.creatingScheme.data,
+        cloneDeep(state.permissionScheme.creatingScheme.data),
         {roles: newRoles},
       );
       return {
@@ -324,7 +331,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         ...state,
         permissionScheme: {
           ...state.permissionScheme,
-          communityScheme: payload,
+          communityScheme: {...payload},
         },
       };
     case groupsTypes.SET_SCHEMES:
@@ -333,6 +340,14 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         permissionScheme: {
           ...state.permissionScheme,
           schemes: payload,
+        },
+      };
+    case groupsTypes.SET_GROUP_SCHEME:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          groupScheme: {...payload},
         },
       };
 
