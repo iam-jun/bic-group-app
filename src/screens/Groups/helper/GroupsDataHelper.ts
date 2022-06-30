@@ -15,7 +15,7 @@ import appConfig from '~/configs/appConfig';
 
 export const groupsApiConfig = {
   getCommunityGroupsTree: (id: number | string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}admin/groups/${id}/tree`,
+    url: `${ApiConfig.providers.bein.url}communities/${id}/group-structure`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
