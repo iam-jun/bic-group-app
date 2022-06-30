@@ -94,7 +94,7 @@ const YourGroups: FC<YourGroupsProps> = ({route}: YourGroupsProps) => {
           itemTestID={'your_groups.menu.item'}
           style={{paddingVertical: spacing.padding.small}}
           data={menuData}
-          selectedIndex={selectedIndex}
+          activeIndex={selectedIndex}
           onPress={onPress}
         />
         {renderContent()}

@@ -21,7 +21,7 @@ const Notification = () => {
   const {rootNavigation} = useRootNavigation();
   const isFocused = useIsFocused();
 
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [activeIndex, setActiveIndex] = useState<number>(0);
   const [selectedNotification, setSelectedNotification] = useState({});
 
   useEffect(() => {
@@ -31,7 +31,7 @@ const Notification = () => {
   }, [isFocused]);
 
   const onPressFilterItem = (index: number) => {
-    setSelectedIndex(index);
+    setActiveIndex(index);
   };
 
   const onPressItemOption = ({item, e}: {item: any; e: any}) => {
@@ -140,11 +140,11 @@ const Notification = () => {
       dispatch(
         notificationsActions.markAsRead({
           id: item.id,
-          keyValue: notificationMenuData[selectedIndex]?.key || 'tabAll',
+          keyValue: notificationMenuData[activeIndex]?.key || 'tabAll',
         }),
       );
     },
-    [selectedIndex],
+    [activeIndex],
   );
 
   return (
@@ -161,15 +161,16 @@ const Notification = () => {
         onItemPress={onItemPress}
         onPressItemOption={onPressItemOption}
         onChangeTab={onPressFilterItem}
+        activeIndex={activeIndex}
       />
       <NotificationBottomSheet
         modalizeRef={menuSheetRef}
-        flag={notificationMenuData[selectedIndex]?.type || 'ALL'}
+        flag={notificationMenuData[activeIndex]?.type || 'ALL'}
       />
       <NotificationOptionBottomSheet
         modalizeRef={notificationOptionRef}
         data={selectedNotification}
-        keyValue={notificationMenuData[selectedIndex]?.type || 'tabAll'}
+        keyValue={notificationMenuData[activeIndex]?.type || 'tabAll'}
       />
     </ScreenWrapper>
   );
