@@ -51,6 +51,7 @@ const groupsKeySelector = {
       memberRoleIndex: 'groups.permissionScheme.creatingScheme.memberRoleIndex',
       creating: 'groups.permissionScheme.creatingScheme.creating',
     },
+    groupScheme: 'groups.permissionScheme.groupScheme.data',
   },
   groupStructure: {
     communityTree: 'groups.groupStructure.communityTree',

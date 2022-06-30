@@ -42,10 +42,6 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
   const {id: communityId} =
     useKeySelector(groupsKeySelector.communityDetail) || {};
 
-  const onPressCreate = () => {
-    rootNavigation.navigate(groupStack.createPermissionScheme);
-  };
-
   const onPressEdit = () => {
     rootNavigation.navigate(groupStack.createPermissionScheme, {
       isEdit: true,
@@ -88,15 +84,8 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
         </View>
       );
     }
-    return (
-      <Button.Primary
-        onPress={onPressCreate}
-        useI18n
-        style={styles.buttonCreate}
-        leftIcon={'Plus'}>
-        common:btn_create
-      </Button.Primary>
-    );
+
+    return null;
   };
 
   return (
@@ -107,14 +96,20 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
             communities:permission:title_community_scheme
           </Text.H5>
           {!loading && communityScheme && (
-            <TextBadge useI18n value={'common:text_activated'} />
+            <TextBadge
+              useI18n
+              value={'common:text_activated'}
+              style={styles.activatedText}
+            />
           )}
         </View>
         <View style={styles.buttonContainer}>{renderButtons()}</View>
       </View>
-      <Text.Subtitle useI18n>
-        communities:permission:text_desc_community_scheme
-      </Text.Subtitle>
+      <View style={styles.descScheme}>
+        <Text.Subtitle useI18n>
+          communities:permission:text_desc_community_scheme
+        </Text.Subtitle>
+      </View>
       {!!name && (
         <Text.HeadingSB style={styles.textName}>{name}</Text.HeadingSB>
       )}
@@ -163,6 +158,12 @@ const createStyle = (theme: ITheme) => {
       marginLeft: spacing.margin.small,
     },
     buttonContainer: {minHeight: 30, justifyContent: 'center'},
+    activatedText: {
+      marginHorizontal: spacing.margin.small,
+    },
+    descScheme: {
+      marginTop: spacing.margin.tiny,
+    },
   });
 };
 

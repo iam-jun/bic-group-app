@@ -8,11 +8,16 @@ export default function* getSchemes({
   payload,
 }: {
   type: string;
-  payload: {communityId: number | string};
+  payload: {communityId: number | string; isRefreshing?: boolean};
 }): any {
   try {
-    const {communityId} = payload || {};
-    yield put(actions.setSchemes({loading: true, data: undefined}));
+    const {communityId, isRefreshing} = payload || {};
+
+    // avoid appearing Loading when updating group scheme successfully and navigating back
+    if (!isRefreshing) {
+      yield put(actions.setSchemes({loading: true, data: undefined}));
+    }
+
     const response = yield call(groupsDataHelper.getSchemes, communityId);
     if (response?.data) {
       yield put(actions.setSchemes({loading: false, data: response?.data}));

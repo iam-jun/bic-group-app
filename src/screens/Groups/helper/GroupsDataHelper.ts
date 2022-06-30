@@ -73,6 +73,18 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
+  updateCommunityScheme: (
+    communityId: string | number,
+    schemeData: IScheme,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/scheme`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {
+      ...schemeData,
+    },
+  }),
   deleteCommunityScheme: (
     communityId: number | string,
   ): HttpApiRequestConfig => ({
@@ -86,6 +98,28 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
+  }),
+  getGroupScheme: (
+    communityId: number | string,
+    schemeId: string,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-schemes/${schemeId}`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
+  updateGroupScheme: (
+    communityId: number | string,
+    schemeId: string,
+    schemeData: IScheme,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-schemes/${schemeId}`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {
+      ...schemeData,
+    },
   }),
   postCreateSchemePermission: (
     communityId: string | number,
@@ -549,6 +583,26 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
+  updateCommunityScheme: async (
+    communityId: number | string,
+    scheme: IScheme,
+  ) => {
+    if (!communityId || !scheme) {
+      return Promise.reject('updateCommunityScheme invalid data');
+    }
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.updateCommunityScheme(communityId, scheme),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
   deleteCommunityScheme: async (communityId: number | string) => {
     try {
       if (!communityId) {
@@ -573,6 +627,44 @@ const groupsDataHelper = {
       }
       const response: any = await makeHttpRequest(
         groupsApiConfig.getSchemes(communityId),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getGroupScheme: async (communityId: number | string, schemeId: string) => {
+    try {
+      if (!communityId || !schemeId) {
+        return Promise.reject('getGroupScheme invalid communityId or schemeId');
+      }
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getGroupScheme(communityId, schemeId),
+      );
+      if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  updateGroupScheme: async (
+    communityId: number | string,
+    schemeId: string,
+    schemeData: IScheme,
+  ) => {
+    try {
+      if (!communityId || !schemeId || !schemeData) {
+        return Promise.reject('updateGroupScheme invalid inputs');
+      }
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.updateGroupScheme(communityId, schemeId, schemeData),
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);

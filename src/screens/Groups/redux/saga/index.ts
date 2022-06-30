@@ -59,8 +59,11 @@ import getSystemScheme from '~/screens/Groups/redux/saga/getSystemScheme';
 import postCreateSchemePermission from '~/screens/Groups/redux/saga/postCreateSchemePermission';
 import getSchemes from '~/screens/Groups/redux/saga/getSchemes';
 import getCommunityScheme from '~/screens/Groups/redux/saga/getCommunityScheme';
+import updateCommunityScheme from './updateCommunityScheme';
 import deleteCommunityScheme from '~/screens/Groups/redux/saga/deleteCommunityScheme';
 import getCommunitySearch from './getCommunitySearch';
+import getGroupScheme from './getGroupScheme';
+import updateGroupScheme from './updateGroupScheme';
 import getGroupStructureCommunityTree from '~/screens/Groups/redux/saga/getGroupStructureCommunityTree';
 import putGroupStructureReorder from '~/screens/Groups/redux/saga/putGroupStructureReorder';
 import getGroupStructureMoveTargets from '~/screens/Groups/redux/saga/getGroupStructureMoveTargets';
@@ -92,11 +95,14 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.GET_SYSTEM_SCHEME, getSystemScheme);
   yield takeLatest(groupsTypes.GET_SCHEMES, getSchemes);
   yield takeLatest(groupsTypes.GET_COMMUNITY_SCHEME, getCommunityScheme);
+  yield takeLatest(groupsTypes.UPDATE_COMMUNITY_SCHEME, updateCommunityScheme);
   yield takeLatest(groupsTypes.DELETE_COMMUNITY_SCHEME, deleteCommunityScheme);
   yield takeLatest(
     groupsTypes.POST_CREATE_SCHEME_PERMISSION,
     postCreateSchemePermission,
   );
+  yield takeLatest(groupsTypes.GET_GROUP_SCHEME, getGroupScheme);
+  yield takeLatest(groupsTypes.UPDATE_GROUP_SCHEME, updateGroupScheme);
   yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
   yield takeLatest(groupsTypes.GET_GROUP_MEMBER, getGroupMembers);
   yield takeLatest(groupsTypes.GET_GROUP_SEARCH_MEMBERS, getGroupSearchMembers);
