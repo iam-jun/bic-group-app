@@ -32,7 +32,7 @@ export default function* updateCommunityScheme({
 
     yield put(groupsActions.setCreatingScheme({creating: false}));
 
-    if (response && response.data) {
+    if (response?.data) {
       navigation.goBack();
       const toastMessage: IToastMessage = {
         content: 'communities:permission:text_update_scheme_success',

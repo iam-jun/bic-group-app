@@ -42,10 +42,16 @@ const SchemeItem = ({item}: SchemeItemProps) => {
   const renderButtons = () => {
     return (
       <View style={styles.row}>
-        <Button style={styles.buttonEdit} onPress={onPressEdit}>
+        <Button
+          style={styles.buttonEdit}
+          onPress={onPressEdit}
+          testID="scheme_item.btn_edit">
           <Icon size={16} icon={'EditAlt'} />
         </Button>
-        <Button style={styles.buttonDelete} onPress={onPressDelete}>
+        <Button
+          style={styles.buttonDelete}
+          onPress={onPressDelete}
+          testID="scheme_item.btn_delete">
           <Icon size={16} tintColor={colors.badgeError} icon={'TrashAlt'} />
         </Button>
       </View>
@@ -54,7 +60,7 @@ const SchemeItem = ({item}: SchemeItemProps) => {
 
   const renderItem = (item: IApplyingGroups) => {
     return (
-      <View key={item.id} style={styles.nameTag}>
+      <View key={item.id} style={styles.nameTag} testID="scheme_item.group_tag">
         <Text.BodyS maxLength={16}>{item.name}</Text.BodyS>
       </View>
     );
@@ -64,7 +70,7 @@ const SchemeItem = ({item}: SchemeItemProps) => {
     <View>
       <View style={styles.titleContainer}>
         <View style={[styles.flex1, styles.row]}>
-          <Text.BodyM>{name}</Text.BodyM>
+          <Text.BodyM testID="scheme_item.name">{name}</Text.BodyM>
           {isActivated && (
             <TextBadge
               useI18n
@@ -77,7 +83,7 @@ const SchemeItem = ({item}: SchemeItemProps) => {
       </View>
 
       {applyingGroups?.length > 0 && (
-        <View style={styles.groupListView}>
+        <View testID="scheme_item.group_list" style={styles.groupListView}>
           {applyingGroups?.map?.(renderItem)}
         </View>
       )}
