@@ -1,6 +1,7 @@
 import React, {useRef, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useSharedValue} from 'react-native-reanimated';
 
 import Header from '~/beinComponents/Header';
 
@@ -15,6 +16,8 @@ import ManagedCommunities from './ManagedCommunities';
 import SearchCommunityView from './SearchCommunityView';
 import {useBaseHook} from '~/hooks';
 
+const {width: screenWidth} = Dimensions.get('window');
+
 const Communities: React.FC = () => {
   const headerRef = useRef<any>();
 
@@ -25,6 +28,7 @@ const Communities: React.FC = () => {
 
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
+  const translateX = useSharedValue(0);
 
   const handleBackPress = () => {
     headerRef?.current?.goBack?.();
@@ -42,10 +46,12 @@ const Communities: React.FC = () => {
 
   const onPress = (item: any, index: number) => {
     setSelectedIndex(index);
+    translateX.value = index * screenWidth;
   };
 
   const onPressDiscover = () => {
     setSelectedIndex(2);
+    translateX.value = 2 * screenWidth;
   };
 
   const onPressCommunities = (communityId: number) => {
@@ -85,6 +91,7 @@ const Communities: React.FC = () => {
           onPress={onPress}
           testID="community_menu"
           itemTestID="item_community_data"
+          translateX={translateX}
         />
         {renderContent()}
       </View>

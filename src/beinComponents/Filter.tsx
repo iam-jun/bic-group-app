@@ -70,8 +70,9 @@ const FilterComponent: React.FC<FilterProps> = ({
         lastMeasurements?.width +
         spacing.margin.small -
         screenWidth
-      ) || -50;
-    return Math.max(Math.min(x.value, 0), MAX_TRANSLATE_X);
+      ) || 0;
+    if (MAX_TRANSLATE_X > 0) return 0;
+    return Math.max(Math.min(panGestureValue.value, 0), MAX_TRANSLATE_X);
   });
 
   const renderItem = (item: any, index: number) => {
