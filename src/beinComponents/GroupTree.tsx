@@ -8,6 +8,7 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
+import {useDispatch} from 'react-redux';
 
 export interface GroupTreeProps {
   data?: IGroup[] | IGroup;
@@ -98,19 +99,25 @@ const GroupTree: React.FC<GroupTreeProps> = ({
 
   /**
    * Logic toggle collapse/expand
-   *  - Expand: expand and show all children and below
-   *  - Collapse: hide all children and below
+   *  - Expand: show all children, but check to show/hide children of each child depend on its isCollapsing flag
+   *  - Collapse: hide all children and children of each child
+   *  Always keep state collapse/expand of children
    */
   const onToggleGroupChild = (
     newTree: TreeData,
     item: IParsedGroup,
-    hide: boolean,
+    parentCollapsing = false,
+    hideChildren = false,
   ) => {
     const uiId = item.uiId;
-    newTree[uiId].hide = hide;
-    newTree[uiId].isCollapsing = hide;
+    newTree[uiId].hide = parentCollapsing || hideChildren;
     item.childrenUiIds.map((childUiId: string) => {
-      onToggleGroupChild(newTree, newTree[childUiId], hide);
+      onToggleGroupChild(
+        newTree,
+        newTree[childUiId],
+        newTree[uiId].isCollapsing,
+        hideChildren || newTree[uiId].isCollapsing,
+      );
     });
   };
 
@@ -123,7 +130,12 @@ const GroupTree: React.FC<GroupTreeProps> = ({
 
     newTreeData[uiId].isCollapsing = newCollapsing;
     newTreeData[uiId].childrenUiIds.map(childUiId => {
-      onToggleGroupChild(newTreeData, newTreeData[childUiId], newCollapsing);
+      onToggleGroupChild(
+        newTreeData,
+        newTreeData[childUiId],
+        newCollapsing,
+        newCollapsing,
+      );
     });
     setTreeData(newTreeData);
   };
@@ -178,8 +190,12 @@ const GroupTree: React.FC<GroupTreeProps> = ({
     uiLevel: number,
     parentUiId: string,
     index: number,
+    parentCollapsing = false,
+    parentHide = false,
   ) => {
     const childrenUiIds: any = [];
+    const collapsed = !!group?.collapsed;
+    const hide = parentHide || parentCollapsing;
     const uiId = `${parentUiId}_${index}`;
     group.children?.map((child, childIndex) =>
       childrenUiIds.push(`${uiId}_${childIndex}`),
@@ -188,16 +204,16 @@ const GroupTree: React.FC<GroupTreeProps> = ({
       ...group,
       uiId,
       parentUiId,
-      hide: false,
+      hide,
       uiLevel: uiLevel,
-      isCollapsing: false,
+      isCollapsing: collapsed,
       isChecked: !!selectingData?.[group.id],
       childrenUiIds,
       children: [],
     };
     if (group.children) {
       group.children.map((child, index) =>
-        getItem(child, treeData, uiLevel + 1, uiId, index),
+        getItem(child, treeData, uiLevel + 1, uiId, index, collapsed, hide),
       );
     }
   };
