@@ -55,6 +55,17 @@ export const groupsApiConfig = {
       target_outer_group_id: targetId,
     },
   }),
+  putGroupStructureCollapseStatus: (
+    communityId: number,
+    groupId: number,
+    status: boolean,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-structure/collapse/${groupId}`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {status},
+  }),
   getPermissionCategories: (): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}permissions/categories`,
     method: 'get',
@@ -527,6 +538,31 @@ const groupsDataHelper = {
           communityId,
           moveId,
           targetId,
+        ),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  putGroupStructureCollapseStatus: async (
+    communityId: number,
+    groupId: number,
+    status: boolean,
+  ) => {
+    try {
+      if (!communityId || !groupId) {
+        return Promise.reject('putGroupStructureCollapseStatus invalid params');
+      }
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.putGroupStructureCollapseStatus(
+          communityId,
+          groupId,
+          status,
         ),
       );
       if (response && response?.data) {
