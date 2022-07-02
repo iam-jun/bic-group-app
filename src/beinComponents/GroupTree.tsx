@@ -15,6 +15,7 @@ export interface GroupTreeProps {
   onChangeCheckedGroups?: (data: OnChangeCheckedGroupsData) => void;
   toggleOnPress?: boolean;
   onPressGroup?: (group: IGroup) => void;
+  onToggle?: (group: IGroup, isCollapse: boolean) => void;
   onPressMenu?: (item: GroupItemProps) => void;
   showPrivacy?: boolean;
   showPrivacyName?: boolean;
@@ -34,6 +35,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
   selectingData,
   onChangeCheckedGroups,
   onPressGroup,
+  onToggle,
   onPressMenu,
   toggleOnPress,
   showPrivacy,
@@ -116,6 +118,8 @@ const GroupTree: React.FC<GroupTreeProps> = ({
     const newTreeData = {...treeData};
     const newCollapsing = !group.isCollapsing;
     const uiId = group.uiId;
+
+    onToggle?.(group, newCollapsing);
 
     newTreeData[uiId].isCollapsing = newCollapsing;
     newTreeData[uiId].childrenUiIds.map(childUiId => {
