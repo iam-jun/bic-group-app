@@ -12,6 +12,7 @@ import ListView from '~/beinComponents/list/ListView';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import {IGroup} from '~/interfaces/IGroup';
+import {debounce} from 'lodash';
 
 export interface GroupJoinedTreeProps {
   communityId: number;
@@ -48,16 +49,15 @@ const GroupJoinedTree: FC<GroupJoinedTreeProps> = ({
     );
   };
 
-  const onToggle = (group: IGroup, isCollapse: boolean) => {
-    console.log(
-      `\x1b[34m🐣️ GroupJoinedTree onToggle`,
-      `${JSON.stringify(
-        {communityId, groupId: group.id, status: isCollapse},
-        undefined,
-        2,
-      )}\x1b[0m`,
+  const onToggle = debounce((group: IGroup, isCollapse: boolean) => {
+    dispatch(
+      groupsActions.putGroupStructureCollapseStatus({
+        communityId,
+        groupId: group.id,
+        isCollapse,
+      }),
     );
-  };
+  }, 200);
 
   const renderItem = ({item}: any) => {
     return (

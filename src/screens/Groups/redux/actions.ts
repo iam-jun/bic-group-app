@@ -87,6 +87,14 @@ const groupsActions = {
     type: groupsTypes.SET_GROUP_STRUCTURE_MOVE_SELECTING,
     payload,
   }),
+  putGroupStructureCollapseStatus: (payload: {
+    communityId: number;
+    groupId: number;
+    isCollapse: boolean;
+  }) => ({
+    type: groupsTypes.PUT_GROUP_STRUCTURE_COLLAPSE_STATUS,
+    payload,
+  }),
   // permission
   getPermissionCategories: () => ({
     type: groupsTypes.GET_PERMISSION_CATEGORIES,
