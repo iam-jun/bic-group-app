@@ -11,6 +11,8 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import ListView from '~/beinComponents/list/ListView';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
+import {IGroup} from '~/interfaces/IGroup';
+import {debounce} from 'lodash';
 
 export interface GroupJoinedTreeProps {
   communityId: number;
@@ -47,8 +49,25 @@ const GroupJoinedTree: FC<GroupJoinedTreeProps> = ({
     );
   };
 
+  const onToggle = debounce((group: IGroup, isCollapse: boolean) => {
+    dispatch(
+      groupsActions.putGroupStructureCollapseStatus({
+        communityId,
+        groupId: group.id,
+        isCollapse,
+      }),
+    );
+  }, 200);
+
   const renderItem = ({item}: any) => {
-    return <FlatGroupItem showPrivacy showPrivacyName={false} {...item} />;
+    return (
+      <FlatGroupItem
+        showPrivacy
+        showPrivacyName={false}
+        onToggle={onToggle}
+        {...item}
+      />
+    );
   };
 
   return (
