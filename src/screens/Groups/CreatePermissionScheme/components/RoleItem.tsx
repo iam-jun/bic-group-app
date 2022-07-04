@@ -9,6 +9,7 @@ import Icon from '~/beinComponents/Icon';
 import PermissionItem from '~/screens/Groups/CreatePermissionScheme/components/PermissionItem';
 import {ICategory, IPermission, IRole} from '~/interfaces/IGroup';
 import {permissionRoleSectionHeaderHeight} from '~/theme/dimension';
+import {ROLE_TYPE} from '~/constants/permissionScheme';
 
 export interface RoleItemProps {
   categories: ICategory[];
@@ -61,7 +62,18 @@ const RoleItem: FC<RoleItemProps> = ({
                   const isInherited = inheritedRole?.permissions?.includes(
                     per?.key,
                   );
-                  if (selectedRolesOnly && !isChecked && !isInherited) {
+                  const {fixedForRoles = []} = per;
+                  const isFixed = fixedForRoles?.includes?.(role.type);
+                  const isFixedForCreator = fixedForRoles?.includes?.(
+                    ROLE_TYPE.CREATOR,
+                  );
+                  if (
+                    selectedRolesOnly &&
+                    !isChecked &&
+                    !isInherited &&
+                    !isFixed &&
+                    !isFixedForCreator
+                  ) {
                     return null;
                   }
                   return (
@@ -74,6 +86,8 @@ const RoleItem: FC<RoleItemProps> = ({
                       isChecked={isChecked}
                       isInherited={isInherited}
                       inheritedRoleName={inheritedRole?.name}
+                      isFixed={isFixed}
+                      isFixedForCreator={isFixedForCreator}
                     />
                   );
                 })}
