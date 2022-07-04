@@ -68,11 +68,6 @@ const PermissionItem: FC<PermissionItemProps> = ({
             ? ` (${t('communities:permission:text_fixed_for_creator')})`
             : ''
         }`}</Text>
-        {!!isInherited && !!inheritedRoleName && (
-          <Text.Subtitle style={styles.permissionName}>
-            {t('communities:permission:text_set_by')} {inheritedRoleName}
-          </Text.Subtitle>
-        )}
       </View>
       {onPress && (
         <Button disabled={isRestricted || isInherited} onPress={_onPress}>

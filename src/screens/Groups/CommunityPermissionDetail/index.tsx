@@ -73,6 +73,7 @@ const CommunityPermissionDetail: FC<CommunityPermissionDetailProps> = ({
               roles={roles || []}
               onAnchorRole={onAnchorRole}
               selectedRolesOnly
+              useRoleInherited={false}
             />
           </Animated.ScrollView>
           <RoleHeaderAnimated
