@@ -113,3 +113,19 @@ export const getGroupFromTreeById = (tree: IGroup, groupId: number) => {
   // @ts-ignore
   return group;
 };
+
+export const getAllChildrenName = (group: IGroup) => {
+  const result: string[] = [];
+  const getName = (g: IGroup) => {
+    result.push(g.name);
+    if (!isEmpty(g.children)) {
+      g.children?.map(child => {
+        getName(child);
+      });
+    }
+  };
+  group.children?.map(child => {
+    getName(child);
+  });
+  return result;
+};

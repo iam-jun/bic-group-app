@@ -1,7 +1,9 @@
 import {cleanup} from '@testing-library/react-native';
-import {checkLastAdmin} from '.';
+import {checkLastAdmin, getAllChildrenName} from '.';
 import groupsDataHelper from './GroupsDataHelper';
 import {handleLeaveInnerGroups} from '.';
+import {IGroup} from '~/interfaces/IGroup';
+import {GROUP_TREE} from '~/test/mock_data/group';
 
 afterEach(cleanup);
 
@@ -101,5 +103,20 @@ describe('Group functions helper', () => {
       mainCallback,
     );
     expect(result).toBeFalsy();
+  });
+
+  it('getAllChildrenName should return name of 3 level', () => {
+    const group: any = GROUP_TREE;
+    const result = getAllChildrenName(group);
+    expect(result).toStrictEqual([
+      GROUP_TREE.children[0].name,
+      GROUP_TREE.children[0].children[0].name,
+    ]);
+  });
+
+  it('getAllChildrenName should return name of group has no child', () => {
+    const group: any = {...GROUP_TREE, children: []};
+    const result = getAllChildrenName(group);
+    expect(result).toStrictEqual([]);
   });
 });

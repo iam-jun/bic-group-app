@@ -33,8 +33,15 @@ function* updatePostsContainingVideoInProgress({
           const homePosts = yield select(state =>
             get(state, homeKeySelector.homePosts),
           ) || [];
-          const newHomePosts = [payload.activities[0], ...homePosts] as any;
+          const newHomePosts = [
+            {...payload.activities[0]},
+            ...homePosts,
+          ] as any;
+
           yield put(homeActions.setHomePosts(newHomePosts));
+          yield put(
+            postActions.addToAllPosts({data: {...payload.activities[0]}}),
+          );
         }
       }
     }

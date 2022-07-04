@@ -1,0 +1,407 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SchemeItem component should render data correctly 1`] = `
+<View>
+  <View
+    style={
+      Object {
+        "alignItems": "center",
+        "flexDirection": "row",
+        "marginBottom": 8,
+      }
+    }
+  >
+    <View
+      style={
+        Array [
+          Object {
+            "flex": 1,
+          },
+          Object {
+            "alignItems": "center",
+            "flexDirection": "row",
+          },
+        ]
+      }
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-SemiBold",
+              "fontSize": 16,
+            },
+            Object {},
+            undefined,
+          ]
+        }
+        testID="scheme_item.name"
+      >
+        Scheme 2
+      </Text>
+      <View
+        style={
+          Array [
+            Object {
+              "backgroundColor": "rgba(10, 196, 88, 0.12)",
+              "borderRadius": 4,
+              "marginHorizontal": 4,
+              "padding": 4,
+            },
+            Object {
+              "marginHorizontal": 8,
+            },
+          ]
+        }
+        testID="text_badge"
+      >
+        <Text
+          style={
+            Array [
+              Object {
+                "color": "#2F3945",
+                "fontFamily": "OpenSans-SemiBold",
+                "fontSize": 12,
+              },
+              Object {},
+              Array [
+                Object {
+                  "color": "#0AC458",
+                },
+                undefined,
+              ],
+            ]
+          }
+        >
+          Activated
+        </Text>
+      </View>
+    </View>
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "flexDirection": "row",
+        }
+      }
+    >
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#EAEDF2",
+            "borderRadius": 4,
+            "opacity": 1,
+            "padding": 8,
+          }
+        }
+        testID="scheme_item.btn_edit"
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            }
+          }
+          testID="button_wrapper.content"
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  undefined,
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View>
+                  <RNSVGSvgView
+                    align="xMidYMid"
+                    bbHeight={16}
+                    bbWidth={16}
+                    color={4281284933}
+                    focusable={false}
+                    height={16}
+                    meetOrSlice={0}
+                    minX={0}
+                    minY={0}
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "transparent",
+                          "borderWidth": 0,
+                        },
+                        Object {},
+                        Object {
+                          "flex": 0,
+                          "height": 16,
+                          "width": 16,
+                        },
+                      ]
+                    }
+                    tintColor={4281284933}
+                    vbHeight={24}
+                    vbWidth={24}
+                    width={16}
+                  >
+                    <RNSVGGroup>
+                      <RNSVGPath
+                        d="M5 18h4.24a1 1 0 00.71-.29l6.92-6.93L19.71 8a1 1 0 000-1.42l-4.24-4.29a1 1 0 00-1.42 0l-2.82 2.83-6.94 6.93a1 1 0 00-.29.71V17a1 1 0 001 1zm9.76-13.59l2.83 2.83-1.42 1.42-2.83-2.83zM6 13.17l5.93-5.93 2.83 2.83L8.83 16H6zM21 20H3a1 1 0 000 2h18a1 1 0 000-2z"
+                        fill={
+                          Array [
+                            2,
+                          ]
+                        }
+                        propList={
+                          Array [
+                            "fill",
+                          ]
+                        }
+                      />
+                    </RNSVGGroup>
+                  </RNSVGSvgView>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+      <View
+        accessible={true}
+        collapsable={false}
+        focusable={true}
+        onClick={[Function]}
+        onResponderGrant={[Function]}
+        onResponderMove={[Function]}
+        onResponderRelease={[Function]}
+        onResponderTerminate={[Function]}
+        onResponderTerminationRequest={[Function]}
+        onStartShouldSetResponder={[Function]}
+        style={
+          Object {
+            "backgroundColor": "#FFF2F7",
+            "borderRadius": 4,
+            "marginLeft": 8,
+            "opacity": 1,
+            "padding": 8,
+          }
+        }
+        testID="scheme_item.btn_delete"
+      >
+        <View
+          style={
+            Object {
+              "alignItems": "center",
+              "flexDirection": "row",
+              "justifyContent": "center",
+            }
+          }
+          testID="button_wrapper.content"
+        >
+          <View
+            accessibilityState={
+              Object {
+                "disabled": true,
+              }
+            }
+            accessible={true}
+            collapsable={false}
+            focusable={false}
+            hitSlop={
+              Object {
+                "bottom": 10,
+                "left": 10,
+                "right": 10,
+                "top": 10,
+              }
+            }
+            onClick={[Function]}
+            onResponderGrant={[Function]}
+            onResponderMove={[Function]}
+            onResponderRelease={[Function]}
+            onResponderTerminate={[Function]}
+            onResponderTerminationRequest={[Function]}
+            onStartShouldSetResponder={[Function]}
+            style={
+              Object {
+                "opacity": 1,
+              }
+            }
+          >
+            <View
+              style={
+                Array [
+                  Object {
+                    "alignItems": "center",
+                    "flexDirection": "row",
+                  },
+                  undefined,
+                  Object {
+                    "backgroundColor": undefined,
+                  },
+                ]
+              }
+            >
+              <View
+                style={
+                  Array [
+                    undefined,
+                    undefined,
+                    undefined,
+                  ]
+                }
+              >
+                <View>
+                  <RNSVGSvgView
+                    align="xMidYMid"
+                    bbHeight={16}
+                    bbWidth={16}
+                    color={4293412191}
+                    focusable={false}
+                    height={16}
+                    meetOrSlice={0}
+                    minX={0}
+                    minY={0}
+                    style={
+                      Array [
+                        Object {
+                          "backgroundColor": "transparent",
+                          "borderWidth": 0,
+                        },
+                        Object {},
+                        Object {
+                          "flex": 0,
+                          "height": 16,
+                          "width": 16,
+                        },
+                      ]
+                    }
+                    tintColor={4293412191}
+                    vbHeight={24}
+                    vbWidth={24}
+                    width={16}
+                  >
+                    <RNSVGGroup>
+                      <RNSVGPath
+                        d="M10 18a1 1 0 001-1v-6a1 1 0 00-2 0v6a1 1 0 001 1zM20 6h-4V5a3 3 0 00-3-3h-2a3 3 0 00-3 3v1H4a1 1 0 000 2h1v11a3 3 0 003 3h8a3 3 0 003-3V8h1a1 1 0 000-2zM10 5a1 1 0 011-1h2a1 1 0 011 1v1h-4zm7 14a1 1 0 01-1 1H8a1 1 0 01-1-1V8h10zm-3-1a1 1 0 001-1v-6a1 1 0 00-2 0v6a1 1 0 001 1z"
+                        fill={
+                          Array [
+                            2,
+                          ]
+                        }
+                        propList={
+                          Array [
+                            "fill",
+                          ]
+                        }
+                      />
+                    </RNSVGGroup>
+                  </RNSVGSvgView>
+                </View>
+              </View>
+            </View>
+          </View>
+        </View>
+      </View>
+    </View>
+  </View>
+  <View
+    style={
+      Object {
+        "flexDirection": "row",
+        "flexWrap": "wrap",
+        "marginBottom": 4,
+      }
+    }
+    testID="scheme_item.group_list"
+  >
+    <View
+      style={
+        Object {
+          "alignItems": "center",
+          "alignSelf": "baseline",
+          "backgroundColor": "#EAEDF2",
+          "borderRadius": 50,
+          "marginBottom": 8,
+          "marginRight": 4,
+          "paddingHorizontal": 4,
+          "paddingVertical": 2,
+        }
+      }
+      testID="scheme_item.group_tag"
+    >
+      <Text
+        style={
+          Array [
+            Object {
+              "color": "#2F3945",
+              "fontFamily": "OpenSans-Regular",
+              "fontSize": 14,
+            },
+            Object {},
+            undefined,
+          ]
+        }
+      >
+        Green grass
+      </Text>
+    </View>
+  </View>
+</View>
+`;

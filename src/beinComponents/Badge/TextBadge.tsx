@@ -51,7 +51,7 @@ const TextBadge: FC<TextBadgeProps> = ({
   };
 
   return (
-    <View style={[containerStyle, style]}>
+    <View style={[containerStyle, style]} testID="text_badge">
       <Text.HeadingSB useI18n={useI18n} style={[_textStyle, textStyle]}>
         {value}
       </Text.HeadingSB>

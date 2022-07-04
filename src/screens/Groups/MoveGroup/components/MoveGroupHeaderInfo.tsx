@@ -11,6 +11,7 @@ import Divider from '~/beinComponents/Divider';
 import {useBaseHook} from '~/hooks';
 import MoveLine from '../../../../../assets/images/img_move_line.svg';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
+import {getAllChildrenName} from '~/screens/Groups/helper';
 
 export interface MoveGroupHeaderInfoProps {
   style?: StyleProp<ViewStyle>;
@@ -29,7 +30,7 @@ const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
   const {icon, name, children} = group || {};
 
   const childrenName =
-    children?.map?.(child => child.name)?.join?.(', ') ||
+    getAllChildrenName(group).join?.(', ') ||
     t('communities:group_structure:text_no_group');
 
   return (
@@ -50,16 +51,7 @@ const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
             marginRight: spacing.margin.tiny,
           }}
         />
-        <View
-          style={{
-            width: 4,
-            height: 4,
-            borderRadius: 2,
-            backgroundColor: colors.textInfo,
-            marginTop: spacing.margin.extraLarge,
-            marginRight: spacing.margin.small,
-          }}
-        />
+        <View style={styles.blueDot} />
       </View>
       <View style={styles.infoContainer}>
         <View style={styles.groupNameContainer}>
@@ -94,6 +86,7 @@ const createStyle = (theme: ITheme) => {
       borderWidth: 1,
       borderColor: colors.borderFocus,
       alignSelf: 'flex-start',
+      marginBottom: spacing.margin.extraLarge,
     },
     childrenInfo: {
       padding: spacing.padding.small,
@@ -110,6 +103,14 @@ const createStyle = (theme: ITheme) => {
     iconGroup: {
       marginHorizontal: spacing.margin.small,
       marginVertical: spacing.margin.tiny,
+    },
+    blueDot: {
+      width: 4,
+      height: 4,
+      borderRadius: 2,
+      backgroundColor: colors.textInfo,
+      marginTop: spacing.margin.extraLarge,
+      marginRight: spacing.margin.small,
     },
   });
 };
