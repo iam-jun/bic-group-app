@@ -9,3 +9,9 @@ export const ROLE_TYPE = {
   MEMBER: 'MEMBER',
   CREATOR: 'CREATOR',
 };
+
+export const CATEGORY_KEY = {
+  COMMUNITY: 'permission.category.community',
+  GROUP: 'permission.category.group',
+  CHAT: 'permission.category.chat',
+};
