@@ -110,6 +110,7 @@ const PostViewContent: FC<PostViewContentProps> = ({
         shortLength={400}
         useMarkdown
         toggleOnPress
+        copyEnabled
         selector={`${postKeySelector.allPosts}.${postId}.mentions`}
         onPressAudience={onPressMentionAudience}
       />
