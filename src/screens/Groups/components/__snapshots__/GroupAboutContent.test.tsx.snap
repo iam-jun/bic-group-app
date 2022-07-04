@@ -28,7 +28,12 @@ exports[`GroupAboutContent component should render group privacy item correctly 
   >
     Description
   </Text>
-  <View
+  <Text
+    accessibilityState={
+      Object {
+        "disabled": true,
+      }
+    }
     accessible={true}
     focusable={true}
     onClick={[Function]}
@@ -38,50 +43,43 @@ exports[`GroupAboutContent component should render group privacy item correctly 
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 16,
+        },
+        Object {},
+        undefined,
+      ]
+    }
   >
-    <View
-      style={false}
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
-            },
-            Object {},
-            undefined,
-          ]
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 16,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="collapsible_text.content"
+      textProps={
+        Object {
+          "style": Object {
+            "paddingBottom": 8,
+          },
+          "variant": "h4",
         }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 16,
-              },
-              Object {},
-              undefined,
-            ]
-          }
-          testID="collapsible_text.content"
-          textProps={
-            Object {
-              "style": Object {
-                "paddingBottom": 8,
-              },
-              "variant": "h4",
-            }
-          }
-        >
-          The greatest community ever
-        </Text>
-      </Text>
-    </View>
-  </View>
+      }
+    >
+      The greatest community ever
+    </Text>
+  </Text>
   <View>
     <View
       accessibilityState={
@@ -586,7 +584,12 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
   >
     Description
   </Text>
-  <View
+  <Text
+    accessibilityState={
+      Object {
+        "disabled": true,
+      }
+    }
     accessible={true}
     focusable={true}
     onClick={[Function]}
@@ -596,50 +599,43 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
     onResponderTerminate={[Function]}
     onResponderTerminationRequest={[Function]}
     onStartShouldSetResponder={[Function]}
+    style={
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 16,
+        },
+        Object {},
+        undefined,
+      ]
+    }
   >
-    <View
-      style={false}
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
-            },
-            Object {},
-            undefined,
-          ]
+    <Text
+      style={
+        Array [
+          Object {
+            "color": "#2F3945",
+            "fontFamily": "OpenSans-Regular",
+            "fontSize": 16,
+          },
+          Object {},
+          undefined,
+        ]
+      }
+      testID="collapsible_text.content"
+      textProps={
+        Object {
+          "style": Object {
+            "paddingBottom": 8,
+          },
+          "variant": "h4",
         }
-      >
-        <Text
-          style={
-            Array [
-              Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 16,
-              },
-              Object {},
-              undefined,
-            ]
-          }
-          testID="collapsible_text.content"
-          textProps={
-            Object {
-              "style": Object {
-                "paddingBottom": 8,
-              },
-              "variant": "h4",
-            }
-          }
-        >
-          The greatest community ever
-        </Text>
-      </Text>
-    </View>
-  </View>
+      }
+    >
+      The greatest community ever
+    </Text>
+  </Text>
   <View>
     <View
       accessibilityState={

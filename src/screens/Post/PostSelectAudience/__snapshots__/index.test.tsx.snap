@@ -823,14 +823,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                     }
                   }
                 >
-                  <View
-                    style={
-                      Object {
-                        "height": 40,
-                        "width": 40,
-                      }
-                    }
-                  >
+                  <View>
                     <View
                       style={
                         Object {
@@ -2085,14 +2078,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                     }
                   }
                 >
-                  <View
-                    style={
-                      Object {
-                        "height": 40,
-                        "width": 40,
-                      }
-                    }
-                  >
+                  <View>
                     <View
                       style={
                         Object {
