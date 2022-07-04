@@ -9,6 +9,8 @@ import {
   View,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
+import {showHideToastMessage} from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import ButtonWrapper from '../Button/ButtonWrapper';
 import Text from '../Text';
@@ -31,6 +33,7 @@ const CopyableView = ({
 }: Props) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
+  const dispatch = useDispatch();
 
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const [tooltopPosition, setTooltipPosition] = useState({left: 0, top: 0});
@@ -44,6 +47,15 @@ const CopyableView = ({
 
   const copyContent = () => {
     Clipboard.setString(content);
+    dispatch(
+      showHideToastMessage({
+        content: 'common:text_copied_to_clipboard',
+        props: {
+          textProps: {useI18n: true},
+          type: 'success',
+        },
+      }),
+    );
     hideTooltip();
   };
 

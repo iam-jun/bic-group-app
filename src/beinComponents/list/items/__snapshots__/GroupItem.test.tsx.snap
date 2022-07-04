@@ -58,7 +58,7 @@ exports[`Group Item component renders correctly 1`] = `
           "height": "100%",
           "marginHorizontal": 12,
           "opacity": 1,
-          "width": 2,
+          "width": 1,
         }
       }
       testID="group_item.button_wrapper"
@@ -200,14 +200,7 @@ exports[`Group Item component renders correctly 1`] = `
         }
       }
     >
-      <View
-        style={
-          Object {
-            "height": 40,
-            "width": 40,
-          }
-        }
-      >
+      <View>
         <View
           style={
             Object {
@@ -497,7 +490,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
           "backgroundColor": "#EAEDF2",
           "height": "100%",
           "marginHorizontal": 12,
-          "width": 2,
+          "width": 1,
         }
       }
       testID="group_item.ui_level"
@@ -533,7 +526,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
           "height": "100%",
           "marginHorizontal": 12,
           "opacity": 1,
-          "width": 2,
+          "width": 1,
         }
       }
       testID="group_item.button_wrapper"
@@ -675,14 +668,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
         }
       }
     >
-      <View
-        style={
-          Object {
-            "height": 40,
-            "width": 40,
-          }
-        }
-      >
+      <View>
         <View
           style={
             Object {
@@ -975,14 +961,7 @@ exports[`Group Item component should render default prop 1`] = `
         }
       }
     >
-      <View
-        style={
-          Object {
-            "height": 40,
-            "width": 40,
-          }
-        }
-      >
+      <View>
         <View
           style={
             Object {
@@ -1297,7 +1276,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
           "height": "100%",
           "marginHorizontal": 12,
           "opacity": 1,
-          "width": 2,
+          "width": 1,
         }
       }
       testID="group_item.button_wrapper"
@@ -1439,14 +1418,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
         }
       }
     >
-      <View
-        style={
-          Object {
-            "height": 40,
-            "width": 40,
-          }
-        }
-      >
+      <View>
         <View
           style={
             Object {

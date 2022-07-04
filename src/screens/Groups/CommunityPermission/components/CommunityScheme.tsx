@@ -92,7 +92,7 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <View style={[styles.flex1, styles.row]}>
-          <Text.H5 useI18n>
+          <Text.H5 style={styles.flex1} useI18n>
             communities:permission:title_community_scheme
           </Text.H5>
           {!loading && communityScheme && (

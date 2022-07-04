@@ -1,7 +1,12 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Collapsible Text component renders correctly 1`] = `
-<View
+<Text
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -11,65 +16,63 @@ exports[`Collapsible Text component renders correctly 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "color": "#2F3945",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 16,
+      },
+      Object {},
+      undefined,
+    ]
+  }
 >
-  <View
-    style={false}
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 16,
+        },
+        Object {},
+        undefined,
+      ]
+    }
+    testID="collapsible_text.content"
   >
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
-            "fontSize": 16,
-          },
-          Object {},
-          undefined,
-        ]
-      }
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
-            },
-            Object {},
-            undefined,
-          ]
-        }
-        testID="collapsible_text.content"
-      >
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard d...
-      </Text>
-      <Text
-        onPress={[Function]}
-        style={
-          Array [
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 16,
-            },
-            Object {
-              "color": "#627286",
-            },
-            undefined,
-          ]
-        }
-        testID="collapsible_text.show_text"
-      >
-        See more
-      </Text>
-    </Text>
-  </View>
-</View>
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard d...
+  </Text>
+  <Text
+    onPress={[Function]}
+    style={
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 16,
+        },
+        Object {
+          "color": "#627286",
+        },
+        undefined,
+      ]
+    }
+    testID="collapsible_text.show_text"
+  >
+    See more
+  </Text>
+</Text>
 `;
 
 exports[`Collapsible Text component renders correctly testID 1`] = `
-<View
+<Text
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -79,66 +82,64 @@ exports[`Collapsible Text component renders correctly testID 1`] = `
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "color": "#2F3945",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 16,
+      },
+      Object {},
+      undefined,
+    ]
+  }
   testID="collapsible_text"
 >
-  <View
-    style={false}
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 16,
+        },
+        Object {},
+        undefined,
+      ]
+    }
+    testID="collapsible_text.content"
   >
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
-            "fontSize": 16,
-          },
-          Object {},
-          undefined,
-        ]
-      }
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
-            },
-            Object {},
-            undefined,
-          ]
-        }
-        testID="collapsible_text.content"
-      >
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard d...
-      </Text>
-      <Text
-        onPress={[Function]}
-        style={
-          Array [
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 16,
-            },
-            Object {
-              "color": "#627286",
-            },
-            undefined,
-          ]
-        }
-        testID="collapsible_text.show_text"
-      >
-        See more
-      </Text>
-    </Text>
-  </View>
-</View>
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard d...
+  </Text>
+  <Text
+    onPress={[Function]}
+    style={
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 16,
+        },
+        Object {
+          "color": "#627286",
+        },
+        undefined,
+      ]
+    }
+    testID="collapsible_text.show_text"
+  >
+    See more
+  </Text>
+</Text>
 `;
 
 exports[`Collapsible Text component renders correctly with markdown 1`] = `
 <View
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -150,44 +151,43 @@ exports[`Collapsible Text component renders correctly with markdown 1`] = `
   onStartShouldSetResponder={[Function]}
 >
   <View
-    style={false}
+    style={
+      Array [
+        Object {
+          "alignItems": "flex-start",
+          "flexDirection": "row",
+          "flexWrap": "wrap",
+        },
+      ]
+    }
   >
-    <View>
-      <View
+    <Text>
+      <Text
+        onPress={[Function]}
         style={
           Array [
             Object {
-              "alignItems": "flex-start",
-              "flexDirection": "row",
-              "flexWrap": "wrap",
+              "color": "#386fe5",
+              "fontFamily": "OpenSans-SemiBold",
             },
           ]
         }
+        testID="text_mention"
       >
-        <Text>
-          <Text
-            onPress={[Function]}
-            style={
-              Array [
-                Object {
-                  "color": "#386fe5",
-                  "fontFamily": "OpenSans-SemiBold",
-                },
-              ]
-            }
-            testID="text_mention"
-          >
-            @vantest1
-          </Text>
-        </Text>
-      </View>
-    </View>
+        @vantest1
+      </Text>
+    </Text>
   </View>
 </View>
 `;
 
 exports[`Collapsible Text component should render full text when click read more button text  1`] = `
-<View
+<Text
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -197,66 +197,64 @@ exports[`Collapsible Text component should render full text when click read more
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "color": "#2F3945",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 16,
+      },
+      Object {},
+      undefined,
+    ]
+  }
 >
-  <View
-    style={false}
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 16,
+        },
+        Object {},
+        undefined,
+      ]
+    }
+    testID="collapsible_text.content"
   >
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
-            "fontSize": 16,
-          },
-          Object {},
-          undefined,
-        ]
-      }
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
-            },
-            Object {},
-            undefined,
-          ]
-        }
-        testID="collapsible_text.content"
-      >
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s. When an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting. Remaining essentially unchanged. It was popularised in the 1960s simply dummy text printing standard dummy text.
+    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s. When an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting. Remaining essentially unchanged. It was popularised in the 1960s simply dummy text printing standard dummy text.
 Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-      </Text>
-      <Text
-        onPress={[Function]}
-        style={
-          Array [
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 16,
-            },
-            Object {
-              "color": "#627286",
-            },
-            undefined,
-          ]
-        }
-        testID="collapsible_text.show_text"
-      >
-        See less
-      </Text>
-    </Text>
-  </View>
-</View>
+  </Text>
+  <Text
+    onPress={[Function]}
+    style={
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 16,
+        },
+        Object {
+          "color": "#627286",
+        },
+        undefined,
+      ]
+    }
+    testID="collapsible_text.show_text"
+  >
+    See less
+  </Text>
+</Text>
 `;
 
 exports[`Collapsible Text component should render short text with a short length and limit the length 1`] = `
-<View
+<Text
+  accessibilityState={
+    Object {
+      "disabled": true,
+    }
+  }
   accessible={true}
   focusable={true}
   onClick={[Function]}
@@ -266,59 +264,52 @@ exports[`Collapsible Text component should render short text with a short length
   onResponderTerminate={[Function]}
   onResponderTerminationRequest={[Function]}
   onStartShouldSetResponder={[Function]}
+  style={
+    Array [
+      Object {
+        "color": "#2F3945",
+        "fontFamily": "OpenSans-Regular",
+        "fontSize": 16,
+      },
+      Object {},
+      undefined,
+    ]
+  }
 >
-  <View
-    style={false}
+  <Text
+    style={
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-Regular",
+          "fontSize": 16,
+        },
+        Object {},
+        undefined,
+      ]
+    }
+    testID="collapsible_text.content"
   >
-    <Text
-      style={
-        Array [
-          Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
-            "fontSize": 16,
-          },
-          Object {},
-          undefined,
-        ]
-      }
-    >
-      <Text
-        style={
-          Array [
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
-            },
-            Object {},
-            undefined,
-          ]
-        }
-        testID="collapsible_text.content"
-      >
-        Lorem Ipsum is simply dummy text of the printing a...
-      </Text>
-      <Text
-        onPress={[Function]}
-        style={
-          Array [
-            Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 16,
-            },
-            Object {
-              "color": "#627286",
-            },
-            undefined,
-          ]
-        }
-        testID="collapsible_text.show_text"
-      >
-        See more
-      </Text>
-    </Text>
-  </View>
-</View>
+    Lorem Ipsum is simply dummy text of the printing a...
+  </Text>
+  <Text
+    onPress={[Function]}
+    style={
+      Array [
+        Object {
+          "color": "#2F3945",
+          "fontFamily": "OpenSans-SemiBold",
+          "fontSize": 16,
+        },
+        Object {
+          "color": "#627286",
+        },
+        undefined,
+      ]
+    }
+    testID="collapsible_text.show_text"
+  >
+    See more
+  </Text>
+</Text>
 `;

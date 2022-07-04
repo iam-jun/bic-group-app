@@ -5,6 +5,10 @@ import actions from '../actions';
 import showError from '~/store/commonSaga/showError';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
+import {withNavigation} from '~/router/helper';
+import {rootNavigationRef} from '~/router/navigator/refs';
+
+const navigation = withNavigation(rootNavigationRef);
 
 export default function* getGroupScheme({
   payload,
@@ -12,9 +16,8 @@ export default function* getGroupScheme({
   type: string;
   payload: {communityId: number | string; schemeId: string};
 }): any {
+  const {communityId, schemeId} = payload || {};
   try {
-    const {communityId, schemeId} = payload || {};
-
     const response = yield call(
       groupsDataHelper.getGroupScheme,
       communityId,
@@ -28,8 +31,12 @@ export default function* getGroupScheme({
     yield put(actions.setCreatingScheme({data: cloneDeep(response.data)}));
   } catch (err: any) {
     console.log('getGroupScheme error:', err);
-    if (err?.code !== API_ERROR_CODE.GROUP.SCHEME_NOT_FOUND) {
-      yield call(showError, err);
+
+    if (err?.code === API_ERROR_CODE.GROUP.SCHEME_NOT_FOUND) {
+      yield put(actions.getSchemes({communityId, isRefreshing: true}));
+      navigation.goBack();
     }
+
+    yield call(showError, err);
   }
 }
