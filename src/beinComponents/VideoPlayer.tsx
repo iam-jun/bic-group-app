@@ -17,7 +17,6 @@ import {scaleSize} from '~/theme/dimension';
 import {orderBy} from 'lodash';
 import Icon from './Icon';
 import LoadingIndicator from './LoadingIndicator';
-import InViewport from './InViewport';
 
 export interface VideoPlayerProps {
   style?: StyleProp<ViewStyle>;
@@ -82,8 +81,24 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         }
       },
     );
+
+    const stopVideoListener = DeviceEventEmitter.addListener(
+      'stopAllVideo',
+      async () => {
+        if (!!video.current) {
+          const currentStatus = await video.current.getStatusAsync();
+          if (!currentStatus?.isPlaying) return;
+          try {
+            video.current.pauseAsync();
+          } catch (error) {
+            console.log('STOP VIDEO FAILED>>>>>>>>>>', error);
+          }
+        }
+      },
+    );
     return () => {
-      videoListener?.remove();
+      videoListener?.remove?.();
+      stopVideoListener?.remove?.();
     };
   }, [isPlaying]);
 

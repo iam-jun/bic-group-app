@@ -457,6 +457,10 @@ const _PostDetailContent = (props: any) => {
     }
   };
 
+  const onscroll = () => {
+    DeviceEventEmitter.emit('stopAllVideo');
+  };
+
   const renderContent = () => {
     if (!createdAt) return <PostViewPlaceholder />;
 
@@ -496,6 +500,7 @@ const _PostDetailContent = (props: any) => {
               onLayout={onLayout}
               onContentSizeChange={onLayout}
               onScrollToIndexFailed={onScrollToIndexFailed}
+              onScroll={onscroll}
               refreshControl={
                 Platform.OS === 'ios' ? (
                   <RefreshControl
