@@ -4,7 +4,7 @@ import * as navigationHook from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import initialState from '~/store/initialState';
 import {configureStore, fireEvent, renderWithRedux} from '~/test/testUtils';
-import GroupInfoView from './GroupInfoView';
+import GroupInfoView from './InfoView';
 
 describe('GroupInfoView component', () => {
   const baseProps = {

@@ -30,7 +30,7 @@ const groupStack = {
   draftPost: 'draft-post',
   groupAdmin: 'group-admin',
   generalInfo: 'general-info',
-  editGroupDescription: 'edit-group-description',
+  editDescription: 'edit-description',
   inviteMembers: 'invite-members',
   userProfile: 'user-profile',
   commentDetail: 'comment-detail',

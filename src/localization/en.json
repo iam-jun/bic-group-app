@@ -367,7 +367,9 @@
     "privacy_public": "Public",
     "privacy_private": "Private",
     "privacy_secret": "Secret",
-    "privacy_open": "Open"
+    "privacy_open": "Open",
+    "title_community_name": "Community Name",
+    "title_community_description": "Community Description"
   },
   "languages": {
     "title_en": "English",

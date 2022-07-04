@@ -18,24 +18,40 @@ import {ITheme} from '~/theme/interfaces';
 import AvatarImage from './components/AvatarImage';
 import PrivacyItem from './components/PrivacyItem';
 import CoverImage from './components/CoverImage';
-import GroupInfoView from './components/GroupInfoView';
+import InfoView from './components/InfoView';
 import {alertAction, _openImagePicker} from './helper';
 
 const GeneralInformation = (props: any) => {
   const params = props.route.params;
-  const {groupId: id} = params || {};
+  const {id, type = 'GROUP'} = params || {};
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
-  const {privacy} = useKeySelector(groupsKeySelector.groupDetail.group) || {};
+  const {privacy} = useKeySelector(groupsKeySelector.group) || {};
   const {total} = useKeySelector(groupsKeySelector.groupMemberRequests);
 
   const baseSheetRef: any = useRef();
+  let _icon = '',
+    backgroundUrl = '',
+    canEditInfo = false,
+    organizationName = '',
+    _description;
+  const {
+    icon,
+    background_img_url,
+    can_edit_info,
+    name,
+    description,
+    privacy,
+    can_edit_privacy,
+  } = useKeySelector(groupsKeySelector.communityDetail) || {};
 
   useEffect(() => {
-    dispatch(groupsActions.getGroupDetail(id));
+    if (type === 'group') {
+      dispatch(groupsActions.getGroupDetail(id));
+    }
   }, [id]);
 
   const helpMessage = () => {
@@ -135,7 +151,7 @@ const GeneralInformation = (props: any) => {
           testID="general_information.cover"
           onEditCover={onEditCover}
         />
-        <GroupInfoView id={id} onPressPrivacy={openGroupPrivacyModal} />
+        <InfoView id={id} onPressPrivacy={openGroupPrivacyModal} type={type} />
         <BottomSheet
           modalizeRef={baseSheetRef}
           ContentComponent={

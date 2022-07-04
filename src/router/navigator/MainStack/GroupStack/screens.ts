@@ -8,8 +8,8 @@ import PostSelectAudience from '~/screens/Post/PostSelectAudience';
 import PostSelectImage from '~/screens/Post/PostSelectImage';
 import PostDetail from '~/screens/Post/PostDetail';
 import GroupAdministration from '~/screens/Groups/GroupDetail/groupSettings/GroupAdministration';
-import GeneralInformation from '~/screens/Groups/GroupDetail/groupSettings/GeneralInformation';
-import EditGroupDescription from '~/screens/Groups/GroupDetail/groupSettings/EditGroupDescription';
+import GeneralInformation from '~/screens/Groups/GeneralInformation';
+import EditDescription from '~/screens/Groups/GeneralInformation/EditDescription';
 import AddMembersToGroup from '~/screens/Groups/AddMembersToGroup';
 import NewFeature from '~/screens/NewFeature';
 import DraftPost from '~/screens/Post/DraftPost';
@@ -65,7 +65,7 @@ export default {
   'draft-post': DraftPost,
   'group-admin': GroupAdministration,
   'general-info': GeneralInformation,
-  'edit-group-description': EditGroupDescription,
+  'edit-description': EditDescription,
   'invite-members': AddMembersToGroup,
   'user-profile': UserProfile,
   'comment-detail': CommentDetail,

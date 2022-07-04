@@ -11,10 +11,10 @@ import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
-import groupsActions from '../../redux/actions';
-import groupsKeySelector from '../../redux/keySelector';
+import groupsActions from '../redux/actions';
+import groupsKeySelector from '../redux/keySelector';
 
-const EditGroupDescription = () => {
+const EditDescription = () => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
@@ -83,7 +83,7 @@ const EditGroupDescription = () => {
   );
 };
 
-export default EditGroupDescription;
+export default EditDescription;
 
 const themeStyles = (theme: ITheme) => {
   const {spacing, colors, dimension} = theme;

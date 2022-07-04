@@ -13,6 +13,7 @@ import images from '~/resources/images';
 interface Props {
   testID?: string;
   onEditAvatar: () => void;
+  avatar: string;
 }
 
 const AvatarImage = ({testID, onEditAvatar}: Props) => {
