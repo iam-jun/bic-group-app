@@ -109,7 +109,6 @@ describe('Group functions helper', () => {
     const group: any = GROUP_TREE;
     const result = getAllChildrenName(group);
     expect(result).toStrictEqual([
-      GROUP_TREE.name,
       GROUP_TREE.children[0].name,
       GROUP_TREE.children[0].children[0].name,
     ]);
@@ -118,6 +117,6 @@ describe('Group functions helper', () => {
   it('getAllChildrenName should return name of group has no child', () => {
     const group: any = {...GROUP_TREE, children: []};
     const result = getAllChildrenName(group);
-    expect(result).toStrictEqual([GROUP_TREE.name]);
+    expect(result).toStrictEqual([]);
   });
 });
