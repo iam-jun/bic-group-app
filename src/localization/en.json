@@ -849,7 +849,7 @@
       "text_desc_group_scheme": "The specific custom scheme to apply to a particular inner group.",
       "text_create_scheme_name": "Enter scheme name",
       "text_create_scheme_desc": "Write your description here (maximum 255 characters)",
-      "btn_view_permission": "View permission",
+      "btn_view_permission": "View",
       "btn_apply": "Apply",
       "btn_keep_selecting": "Keep selecting",
       "btn_continue": "Continue",

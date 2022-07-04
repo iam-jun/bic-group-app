@@ -1,5 +1,10 @@
 import React, {FC, memo, useEffect, useState} from 'react';
-import {View, StyleProp, ViewStyle} from 'react-native';
+import {
+  View,
+  StyleProp,
+  ViewStyle,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {useBaseHook} from '~/hooks';
@@ -11,34 +16,36 @@ import CopyableView from '../CopyableView';
 import {escapeMarkDown} from '~/utils/formatData';
 
 export interface CollapsibleTextProps extends TextProps {
+  testID?: string;
   style?: StyleProp<ViewStyle>;
   content: string;
   limitLength?: number;
   shortLength?: number;
-  onPress?: () => void;
   toggleOnPress?: boolean;
   useMarkdown?: boolean;
   useMarkdownIt?: boolean;
-  onPressAudience?: (audience: any, e?: any) => any;
   limitMarkdownTypes?: boolean;
   parentCommentId?: string;
-  testID?: string;
+  copyEnabled?: boolean;
+  onPress?: () => void;
+  onPressAudience?: (audience: any, e?: any) => any;
   [x: string]: any;
 }
 
 const _CollapsibleText: FC<CollapsibleTextProps> = ({
+  testID,
   style,
   content,
   limitLength = 120,
   shortLength = 120,
-  onPress,
   toggleOnPress,
   useMarkdown,
   useMarkdownIt,
-  onPressAudience,
   limitMarkdownTypes,
   parentCommentId,
-  testID,
+  copyEnabled,
+  onPress,
+  onPressAudience,
   ...textProps
 }: CollapsibleTextProps) => {
   const getShortContent = (c?: string) => {
@@ -133,15 +140,19 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
     );
   };
 
+  const WrapperComponent = copyEnabled
+    ? CopyableView
+    : TouchableWithoutFeedback;
+
   return (
-    <CopyableView
+    <WrapperComponent
       testID={testID}
       activeOpacity={0.6}
       content={escapeMarkDown(content)}
       disabled={!(onPress || (toggleOnPress && shortContent))}
       onPress={_onPress}>
       {useMarkdown ? renderContentWithMarkdown() : renderContent()}
-    </CopyableView>
+    </WrapperComponent>
   );
 };
 

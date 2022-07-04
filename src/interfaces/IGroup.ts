@@ -82,6 +82,7 @@ export interface IGroup {
   updated_at?: string;
   deleted_at?: string | null;
   chat_id?: string;
+  collapsed?: boolean;
 
   path?: string;
   treeData?: IGroup;

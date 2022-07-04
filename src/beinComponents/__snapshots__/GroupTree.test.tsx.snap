@@ -104,7 +104,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 "height": "100%",
                 "marginHorizontal": 12,
                 "opacity": 1,
-                "width": 2,
+                "width": 1,
               }
             }
             testID="group_item.button_wrapper"
@@ -246,14 +246,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
               }
             }
           >
-            <View
-              style={
-                Object {
-                  "height": 40,
-                  "width": 40,
-                }
-              }
-            >
+            <View>
               <View
                 style={
                   Object {
@@ -700,7 +693,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 "backgroundColor": "#EAEDF2",
                 "height": "100%",
                 "marginHorizontal": 12,
-                "width": 2,
+                "width": 1,
               }
             }
             testID="group_item.ui_level"
@@ -736,7 +729,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 "height": "100%",
                 "marginHorizontal": 12,
                 "opacity": 1,
-                "width": 2,
+                "width": 1,
               }
             }
             testID="group_item.button_wrapper"
@@ -878,14 +871,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
               }
             }
           >
-            <View
-              style={
-                Object {
-                  "height": 40,
-                  "width": 40,
-                }
-              }
-            >
+            <View>
               <View
                 style={
                   Object {
@@ -1332,7 +1318,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 "backgroundColor": "#EAEDF2",
                 "height": "100%",
                 "marginHorizontal": 12,
-                "width": 2,
+                "width": 1,
               }
             }
             testID="group_item.ui_level"
@@ -1343,7 +1329,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 "backgroundColor": "#EAEDF2",
                 "height": "100%",
                 "marginHorizontal": 12,
-                "width": 2,
+                "width": 1,
               }
             }
             testID="group_item.ui_level"
@@ -1379,7 +1365,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
                 "height": "100%",
                 "marginHorizontal": 12,
                 "opacity": 1,
-                "width": 2,
+                "width": 1,
               }
             }
             testID="group_item.button_wrapper"
@@ -1404,14 +1390,7 @@ exports[`GroupTree component should render correctly uncheck item 1`] = `
               }
             }
           >
-            <View
-              style={
-                Object {
-                  "height": 40,
-                  "width": 40,
-                }
-              }
-            >
+            <View>
               <View
                 style={
                   Object {
@@ -1901,7 +1880,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                 "height": "100%",
                 "marginHorizontal": 12,
                 "opacity": 1,
-                "width": 2,
+                "width": 1,
               }
             }
             testID="group_item.button_wrapper"
@@ -2043,14 +2022,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
               }
             }
           >
-            <View
-              style={
-                Object {
-                  "height": 40,
-                  "width": 40,
-                }
-              }
-            >
+            <View>
               <View
                 style={
                   Object {
@@ -2497,7 +2469,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                 "backgroundColor": "#EAEDF2",
                 "height": "100%",
                 "marginHorizontal": 12,
-                "width": 2,
+                "width": 1,
               }
             }
             testID="group_item.ui_level"
@@ -2533,7 +2505,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                 "height": "100%",
                 "marginHorizontal": 12,
                 "opacity": 1,
-                "width": 2,
+                "width": 1,
               }
             }
             testID="group_item.button_wrapper"
@@ -2675,14 +2647,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
               }
             }
           >
-            <View
-              style={
-                Object {
-                  "height": 40,
-                  "width": 40,
-                }
-              }
-            >
+            <View>
               <View
                 style={
                   Object {
@@ -3129,7 +3094,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                 "backgroundColor": "#EAEDF2",
                 "height": "100%",
                 "marginHorizontal": 12,
-                "width": 2,
+                "width": 1,
               }
             }
             testID="group_item.ui_level"
@@ -3140,7 +3105,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                 "backgroundColor": "#EAEDF2",
                 "height": "100%",
                 "marginHorizontal": 12,
-                "width": 2,
+                "width": 1,
               }
             }
             testID="group_item.ui_level"
@@ -3176,7 +3141,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
                 "height": "100%",
                 "marginHorizontal": 12,
                 "opacity": 1,
-                "width": 2,
+                "width": 1,
               }
             }
             testID="group_item.button_wrapper"
@@ -3201,14 +3166,7 @@ exports[`GroupTree component should render correctly uncheck item 2`] = `
               }
             }
           >
-            <View
-              style={
-                Object {
-                  "height": 40,
-                  "width": 40,
-                }
-              }
-            >
+            <View>
               <View
                 style={
                   Object {
@@ -3698,7 +3656,7 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
                 "height": "100%",
                 "marginHorizontal": 12,
                 "opacity": 1,
-                "width": 2,
+                "width": 1,
               }
             }
             testID="group_item.button_wrapper"
@@ -3840,14 +3798,7 @@ exports[`GroupTree component should renders correctly toggle group 1`] = `
               }
             }
           >
-            <View
-              style={
-                Object {
-                  "height": 40,
-                  "width": 40,
-                }
-              }
-            >
+            <View>
               <View
                 style={
                   Object {
