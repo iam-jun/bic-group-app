@@ -126,7 +126,6 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   };
 
   const _onPressGroup = (group: GroupItemProps) => {
-    console.log(`\x1b[35m🐣️ FlatGroupItem _onPressGroup `, group, `\x1b[0m`);
     if (onChangeCheckedGroups) {
       onCheckedGroup(group, !group.isChecked);
     } else if (onPressGroup) {
