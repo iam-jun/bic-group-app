@@ -16,6 +16,7 @@ export interface SchemeRolesProps {
   onPressPermission?: (permission: IPermission, roleIndex: number) => void;
   selectedRolesOnly?: boolean;
   onAnchorRole?: (index: number, role: any, anchor: number) => void;
+  useRoleInherited?: boolean;
 }
 
 const SchemeRoles: FC<SchemeRolesProps> = ({
@@ -24,6 +25,7 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
   onPressPermission,
   selectedRolesOnly,
   onAnchorRole,
+  useRoleInherited = true,
 }: SchemeRolesProps) => {
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
@@ -54,7 +56,13 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
           role={role}
           roleIndex={roleIndex}
           selectedRolesOnly={selectedRolesOnly}
-          inheritedRole={roleIndex !== memberRoleIndex ? memberRole : undefined}
+          inheritedRole={
+            !useRoleInherited
+              ? undefined
+              : roleIndex !== memberRoleIndex
+              ? memberRole
+              : undefined
+          }
           onLayout={({
             nativeEvent: {
               layout: {y: anchor},

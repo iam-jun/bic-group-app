@@ -111,6 +111,7 @@ const ScrollableTabBar = ({
         style={{flex: 1}}
         horizontal
         pagingEnabled
+        scrollEnabled={false}
         showsHorizontalScrollIndicator={false}
         onScroll={scrollHandler}
         onMomentumScrollEnd={onMomentumScrollEnd}
