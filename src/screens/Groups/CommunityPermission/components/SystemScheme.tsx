@@ -1,6 +1,7 @@
 import React, {FC, useEffect} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {cloneDeep} from 'lodash';
 
 import {ITheme} from '~/theme/interfaces';
 
@@ -15,6 +16,7 @@ import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsActions from '~/screens/Groups/redux/actions';
+import {getOrderedPermissionRoles} from '../../redux/selectors';
 
 export interface SystemSchemeProps {
   style?: StyleProp<ViewStyle>;
@@ -33,6 +35,7 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
     useKeySelector(groupsKeySelector.permission.communityScheme) || {};
   const systemScheme =
     useKeySelector(groupsKeySelector.permission.systemScheme) || {};
+  const roles = getOrderedPermissionRoles('system');
 
   useEffect(() => {
     if (!systemScheme?.data && !systemScheme?.loading) {
@@ -43,7 +46,7 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
   const onPressView = () => {
     if (systemScheme?.data) {
       rootNavigation.navigate(groupStack.communityPermissionDetail, {
-        scheme: systemScheme.data,
+        scheme: {...cloneDeep(systemScheme.data), roles},
       });
     }
   };
