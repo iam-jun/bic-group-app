@@ -13,6 +13,7 @@ import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
+import {IconType} from '~/resources/icons';
 
 export interface FlatGroupItemProps extends GroupItemProps {
   style?: StyleProp<ViewStyle>;
@@ -31,6 +32,7 @@ export interface FlatGroupItemProps extends GroupItemProps {
   disableHorizontal?: boolean;
   iconVariant?: AvatarType;
   nameLines?: number;
+  menuIcon?: IconType;
 }
 
 type PathData = {
@@ -62,6 +64,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   disableHorizontal,
   iconVariant,
   nameLines,
+  menuIcon,
   ...props
 }: FlatGroupItemProps) => {
   const [showTree, setShowTree] = useState(initShowTree);
@@ -199,6 +202,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           disableHorizontal={disableHorizontal}
           iconVariant={iconVariant}
           nameLines={nameLines}
+          menuIcon={menuIcon}
         />
       ) : (
         <GroupItem
@@ -215,6 +219,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           disableHorizontal={disableHorizontal}
           iconVariant={iconVariant}
           nameLines={nameLines}
+          menuIcon={menuIcon}
         />
       )}
     </View>

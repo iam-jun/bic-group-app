@@ -745,6 +745,8 @@
       "btn_keep_selecting": "Tiếp tục chọn",
       "btn_continue": "Tiếp tục",
       "btn_assign": "Áp dụng",
+      "text_list_group": "Danh sách nhóm",
+      "text_data_not_found": "Không tìm thấy dữ liệu",
       "text_title_discard_create_scheme": "Huỷ thay đổi",
       "text_desc_discard_create_scheme": "Những thay đổi của bạn sẽ không được lưu. Tiếp tục huỷ?",
       "text_title_apply_system_scheme": "Sử dụng quyền hệ thống?",

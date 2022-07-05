@@ -69,6 +69,8 @@ import putGroupStructureReorder from '~/screens/Groups/redux/saga/putGroupStruct
 import getGroupStructureMoveTargets from '~/screens/Groups/redux/saga/getGroupStructureMoveTargets';
 import putGroupStructureMoveToTarget from '~/screens/Groups/redux/saga/putGroupStructureMoveToTarget';
 import putGroupStructureCollapseStatus from '~/screens/Groups/redux/saga/putGroupStructureCollapseStatus';
+import getGroupSchemeAssignments from '~/screens/Groups/redux/saga/getGroupSchemeAssignments';
+import putGroupSchemeAssignments from '~/screens/Groups/redux/saga/putGroupSchemeAssignments';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -107,6 +109,14 @@ export default function* groupsSaga() {
     postCreateSchemePermission,
   );
   yield takeLatest(groupsTypes.GET_GROUP_SCHEME, getGroupScheme);
+  yield takeLatest(
+    groupsTypes.GET_GROUP_SCHEME_ASSIGNMENTS,
+    getGroupSchemeAssignments,
+  );
+  yield takeLatest(
+    groupsTypes.PUT_GROUP_SCHEME_ASSIGNMENTS,
+    putGroupSchemeAssignments,
+  );
   yield takeLatest(groupsTypes.UPDATE_GROUP_SCHEME, updateGroupScheme);
   yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
   yield takeLatest(groupsTypes.GET_GROUP_MEMBER, getGroupMembers);

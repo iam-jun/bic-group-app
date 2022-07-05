@@ -856,6 +856,8 @@
       "btn_keep_selecting": "Keep selecting",
       "btn_continue": "Continue",
       "btn_assign": "Assign",
+      "text_list_group": "List group",
+      "text_data_not_found": "Data not found",
       "text_title_discard_create_scheme": "Discard changes",
       "text_desc_discard_create_scheme": "Your changes won't be saved. Discard anyway?",
       "text_title_apply_system_scheme": "Apply system scheme?",

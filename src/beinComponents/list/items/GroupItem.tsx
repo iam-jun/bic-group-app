@@ -18,6 +18,7 @@ import {useKeySelector} from '~/hooks/selector';
 import privacyTypes from '~/constants/privacyTypes';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
+import {IconType} from '~/resources/icons';
 
 export interface GroupItemProps extends IParsedGroup {
   testID?: string;
@@ -34,6 +35,7 @@ export interface GroupItemProps extends IParsedGroup {
   showInfo?: boolean;
   iconVariant?: AvatarType;
   nameLines?: number;
+  menuIcon?: IconType;
 }
 
 const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
@@ -63,6 +65,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     disableHorizontal,
     iconVariant = 'medium',
     nameLines = 2,
+    menuIcon = 'EllipsisH',
   } = props;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
@@ -216,7 +219,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
             <View style={styles.btnMenu}>
               <Icon
                 style={{alignSelf: 'auto'}}
-                icon={'EllipsisH'}
+                icon={menuIcon}
                 testID={'group_item.button_menu'}
                 onPress={_onPressMenu}
               />
