@@ -18,6 +18,8 @@ export interface PermissionItemProps {
   isChecked?: boolean;
   isInherited?: boolean;
   inheritedRoleName?: string;
+  isFixed?: boolean;
+  isFixedForCreator?: boolean;
 }
 
 const PermissionItem: FC<PermissionItemProps> = ({
@@ -28,6 +30,8 @@ const PermissionItem: FC<PermissionItemProps> = ({
   isChecked,
   isInherited,
   inheritedRoleName,
+  isFixed,
+  isFixedForCreator,
 }: PermissionItemProps) => {
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
@@ -57,12 +61,13 @@ const PermissionItem: FC<PermissionItemProps> = ({
   return (
     <View style={styles.permissionItem}>
       <View style={{flex: 1}}>
-        <Text style={styles.permissionName}>{name}</Text>
-        {!!isInherited && !!inheritedRoleName && (
-          <Text.Subtitle style={styles.permissionName}>
-            {t('communities:permission:text_set_by')} {inheritedRoleName}
-          </Text.Subtitle>
-        )}
+        <Text style={styles.permissionName}>{`${name}${
+          isFixed
+            ? ` (${t('communities:permission:text_fixed_role')})`
+            : isFixedForCreator
+            ? ` (${t('communities:permission:text_fixed_for_creator')})`
+            : ''
+        }`}</Text>
       </View>
       {onPress && (
         <Button disabled={isRestricted || isInherited} onPress={_onPress}>
