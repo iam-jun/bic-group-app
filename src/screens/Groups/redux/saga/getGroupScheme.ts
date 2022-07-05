@@ -7,6 +7,7 @@ import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import {withNavigation} from '~/router/helper';
 import {rootNavigationRef} from '~/router/navigator/refs';
+import {sortFixedRoles} from '../../helper';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -24,11 +25,17 @@ export default function* getGroupScheme({
       schemeId,
     );
 
+    const dataWithOrderedFixRole = sortFixedRoles(response.data);
+
     // storing this data for comparing original group scheme and editing scheme
-    yield put(actions.setGroupScheme({data: cloneDeep(response.data)}));
+    yield put(
+      actions.setGroupScheme({data: cloneDeep(dataWithOrderedFixRole)}),
+    );
 
     // provide full groupScheme detail for updating group scheme
-    yield put(actions.setCreatingScheme({data: cloneDeep(response.data)}));
+    yield put(
+      actions.setCreatingScheme({data: cloneDeep(dataWithOrderedFixRole)}),
+    );
   } catch (err: any) {
     console.log('getGroupScheme error:', err);
 

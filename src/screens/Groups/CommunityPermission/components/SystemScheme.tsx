@@ -16,7 +16,6 @@ import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsActions from '~/screens/Groups/redux/actions';
-import {getOrderedPermissionRoles} from '../../redux/selectors';
 
 export interface SystemSchemeProps {
   style?: StyleProp<ViewStyle>;
@@ -35,7 +34,6 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
     useKeySelector(groupsKeySelector.permission.communityScheme) || {};
   const systemScheme =
     useKeySelector(groupsKeySelector.permission.systemScheme) || {};
-  const roles = getOrderedPermissionRoles('system');
 
   useEffect(() => {
     if (!systemScheme?.data && !systemScheme?.loading) {
@@ -46,7 +44,7 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
   const onPressView = () => {
     if (systemScheme?.data) {
       rootNavigation.navigate(groupStack.communityPermissionDetail, {
-        scheme: {...cloneDeep(systemScheme.data), roles},
+        scheme: cloneDeep(systemScheme.data),
       });
     }
   };
