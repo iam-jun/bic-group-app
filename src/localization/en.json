@@ -838,6 +838,8 @@
       "title_system_scheme": "System Scheme",
       "title_community_scheme": "General Scheme",
       "title_group_scheme": "Group Scheme",
+      "title_group_scheme_assignment": "Assign",
+      "title_group_scheme_assign_selection": "Select scheme",
       "title_create_community_scheme": "Create general scheme",
       "title_edit_community_scheme": "Edit general scheme",
       "title_edit_group_scheme": "Edit group scheme",

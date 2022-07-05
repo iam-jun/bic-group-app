@@ -727,6 +727,8 @@
       "title_system_scheme": "Quyền hệ thống",
       "title_community_scheme": "Quyền chung",
       "title_group_scheme": "Quyền nhóm",
+      "title_group_scheme_assignment": "Phân quyền",
+      "title_group_scheme_assign_selection": "Chọn quyền",
       "title_create_community_scheme": "Tạo quyền cho cộng đồng",
       "title_edit_community_scheme": "Cập nhật quyền cho cộng đồng",
       "title_edit_group_scheme": "Cập nhật quyền cho nhóm",
