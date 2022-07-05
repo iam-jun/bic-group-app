@@ -20,6 +20,8 @@ const getFileIcons = (extension: string) => {
     case 'mov':
     case 'mp4':
       return 'ic_video';
+    case 'zip':
+      return 'ic_zip';
     default:
       return 'ic_default';
   }
