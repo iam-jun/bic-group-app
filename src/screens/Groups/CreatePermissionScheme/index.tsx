@@ -86,8 +86,10 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
         dispatch(groupsActions.getGroupScheme({communityId, schemeId}));
       }
     }
-    if (!permissionCategories?.data && !permissionCategories?.loading) {
-      dispatch(groupsActions.getPermissionCategories());
+    if (!permissionCategories?.loading) {
+      dispatch(
+        groupsActions.getPermissionCategories(schemeId ? 'GROUP' : 'COMMUNITY'),
+      );
     }
     if (!systemScheme?.data && !systemScheme?.loading) {
       dispatch(groupsActions.getSystemScheme());
