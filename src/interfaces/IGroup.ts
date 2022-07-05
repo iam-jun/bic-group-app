@@ -16,6 +16,7 @@ export interface IPermission {
   description: string;
   scope: string;
   restrictedRoles: string[];
+  fixedForRoles?: string[];
 }
 
 export interface IScheme {
