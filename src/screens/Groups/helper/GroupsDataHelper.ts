@@ -3,6 +3,7 @@ import {
   IGetCommunityGroup,
   IGroupDetailEdit,
   IParamGetGroupPosts,
+  IPayloadGroupSchemeAssignments,
   IScheme,
 } from '~/interfaces/IGroup';
 import {
@@ -83,6 +84,22 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
+  }),
+  getGroupSchemeAssignments: (communityId: number): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-scheme-assignments`,
+    method: 'get',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+  }),
+  putGroupSchemeAssignments: (
+    communityId: number,
+    data: any[],
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-scheme-assignments`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {data},
   }),
   updateCommunityScheme: (
     communityId: string | number,
@@ -682,6 +699,35 @@ const groupsDataHelper = {
         groupsApiConfig.getGroupScheme(communityId, schemeId),
       );
       if (response && response?.data?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  getGroupSchemeAssignments: async (communityId: number) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.getGroupSchemeAssignments(communityId),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  putGroupSchemeAssignments: async (params: IPayloadGroupSchemeAssignments) => {
+    try {
+      const {communityId, data} = params || {};
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.putGroupSchemeAssignments(communityId, data),
+      );
+      if (response && response?.data) {
         return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);

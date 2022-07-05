@@ -246,3 +246,8 @@ export interface IGetCommunityGroup {
   key?: string;
   list_by?: 'tree' | 'flat';
 }
+
+export interface IPayloadGroupSchemeAssignments {
+  communityId: number;
+  data: {groupId: number; schemeId: string}[];
+}

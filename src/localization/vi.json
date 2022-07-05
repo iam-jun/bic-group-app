@@ -753,6 +753,8 @@
       "text_desc_delete_community_scheme": "Hành động này không thể hoàn tác. Bạn có chắc muốn thực hiện?",
       "text_create_scheme_success": "Đã tạo thành công",
       "text_update_scheme_success": "Đã cập nhật thành công",
+      "text_update_group_scheme_success": "Đã cập nhật thành công",
+      "text_unknown_scheme": "Unknown scheme",
       "text_set_by": "Đặt bởi",
       "text_fixed_role": "Cố định",
       "text_fixed_for_creator": "Cố định cho Người tạo"

@@ -864,6 +864,8 @@
       "text_desc_delete_community_scheme": "This action cannot be undone. Are you sure to do this?",
       "text_create_scheme_success": "Create scheme successfully",
       "text_update_scheme_success": "Updated scheme successfully",
+      "text_update_group_scheme_success": "Updated group scheme successfully",
+      "text_unknown_scheme": "Unknown scheme",
       "text_set_by": "Set by",
       "text_fixed_role": "Fixed",
       "text_fixed_for_creator": "Fixed for Creator"
