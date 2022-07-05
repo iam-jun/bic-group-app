@@ -1,6 +1,7 @@
 import React, {FC, useRef, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useSharedValue} from 'react-native-reanimated';
 
 import {ITheme} from '~/theme/interfaces';
 
@@ -46,6 +47,7 @@ const YourGroups: FC<YourGroupsProps> = ({route}: YourGroupsProps) => {
   const theme = useTheme() as ITheme;
   const {spacing} = theme;
   const styles = createStyle(theme);
+  const translateX = useSharedValue(0);
 
   const communityId = route?.params?.communityId as number;
 
@@ -94,8 +96,9 @@ const YourGroups: FC<YourGroupsProps> = ({route}: YourGroupsProps) => {
           itemTestID={'your_groups.menu.item'}
           style={{paddingVertical: spacing.padding.small}}
           data={menuData}
-          selectedIndex={selectedIndex}
+          activeIndex={selectedIndex}
           onPress={onPress}
+          translateX={translateX}
         />
         {renderContent()}
         <YourGroupsSearch />

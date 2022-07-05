@@ -32,7 +32,9 @@ const CommunityAdmin = () => {
   const {total} = useKeySelector(groupsKeySelector.communityMemberRequests);
 
   useEffect(() => {
-    dispatch(groupsActions.getCommunityMemberRequests({communityId}));
+    can_manage_member &&
+      dispatch(groupsActions.getCommunityMemberRequests({communityId}));
+
     return () => {
       dispatch(groupsActions.resetCommunityMemberRequests());
     };
@@ -50,6 +52,10 @@ const CommunityAdmin = () => {
 
   const onPressPermission = () => {
     rootNavigation.navigate(groupStack.communityPermission);
+  };
+
+  const onPressGroupStructure = () => {
+    rootNavigation.navigate(groupStack.groupStructureSettings);
   };
 
   const renderModerating = () => (
@@ -109,6 +115,16 @@ const CommunityAdmin = () => {
           iconProps={{icon: 'Cog', tintColor: theme.colors.primary6}}
           rightSubIcon="AngleRightB"
           onPress={onPressGeneralInfo}
+        />
+      )}
+      {!!can_edit_info && ( //todo temp use can edit info, should use correct permission when BE update
+        <MenuItem
+          testID="community_admin.group_structure_settings"
+          title="settings:title_group_structure"
+          icon="CodeBranch"
+          iconProps={{icon: 'CodeBranch', tintColor: theme.colors.primary6}}
+          rightSubIcon="AngleRightB"
+          onPress={onPressGroupStructure}
         />
       )}
       {!!can_manage_scheme && (

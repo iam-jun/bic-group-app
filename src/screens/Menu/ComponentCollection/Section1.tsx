@@ -15,6 +15,8 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {IToastMessage} from '~/interfaces/common';
 import {showHideToastMessage} from '~/store/modal/actions';
 import BannerMessage from '~/beinComponents/ToastMessage/BannerMessage';
+import Clipboard from '@react-native-clipboard/clipboard';
+import {getEnv} from '~/utils/env';
 
 const Section1 = () => {
   const {spacing, colors}: ITheme = useTheme() as ITheme;
@@ -27,6 +29,14 @@ const Section1 = () => {
   // const copyToken = async () => {
   //   dispatch(copyDeviceToken());
   // };
+
+  const onPressDanger = () => {
+    alert('onPress Danger!');
+    const content = `pool:${getEnv('BEIN_AWS_USER_POOLS_ID')}|client:${getEnv(
+      'BEIN_AWS_USER_POOLS_WEB_CLIENT_ID',
+    )}|resource:${getEnv('BEIN_RESOURCE')}`;
+    Clipboard.setString(content);
+  };
 
   const renderSection = (title: string, child: React.ReactNode) => {
     return (
@@ -362,7 +372,7 @@ const Section1 = () => {
             justifyContent: 'space-around',
           }}>
           <Button.Danger
-            onPress={() => alert('onPress')}
+            onPress={onPressDanger}
             onLongPress={() => alert('onLongPress')}>
             Default
           </Button.Danger>

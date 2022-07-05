@@ -11,6 +11,9 @@ const groupStack = {
   communityPermissionDetail: 'community-permission-detail',
   communityPendingMembers: 'community-pending-members',
   createPermissionScheme: 'create-permission-scheme',
+  groupStructureSettings: 'group-structure-settings',
+  moveGroup: 'move-group',
+  reorderGroup: 'reorder-group',
 
   // group
   groups: 'group-list',

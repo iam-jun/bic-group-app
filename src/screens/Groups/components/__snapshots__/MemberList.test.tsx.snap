@@ -101,7 +101,7 @@ exports[`MemberList component should render data correctly 1`] = `
             "username": "testmember",
           },
         ],
-        "title": "COMMUNITY_ADMIN",
+        "title": "COMMUNITY_ADMINs",
         "user_count": 1,
       },
       Object {
@@ -137,7 +137,7 @@ exports[`MemberList component should render data correctly 1`] = `
             "username": "testmember",
           },
         ],
-        "title": "COMMUNITY_MEMBER",
+        "title": "COMMUNITY_MEMBERs",
         "user_count": 3,
       },
     ]
@@ -203,7 +203,7 @@ exports[`MemberList component should render data correctly 1`] = `
             ]
           }
         >
-          COMMUNITY_ADMIN • 1
+          COMMUNITY_ADMINs • 1
         </Text>
       </View>
     </View>
@@ -628,7 +628,7 @@ exports[`MemberList component should render data correctly 1`] = `
             ]
           }
         >
-          COMMUNITY_MEMBER • 3
+          COMMUNITY_MEMBERs • 3
         </Text>
       </View>
     </View>

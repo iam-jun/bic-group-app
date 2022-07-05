@@ -18,6 +18,10 @@ interface Props {
 const AvatarImage = ({testID, onEditAvatar}: Props) => {
   const loadingAvatar = useKeySelector(groupsKeySelector.loadingAvatar);
   const {icon} = useKeySelector(groupsKeySelector.groupDetail.group) || {};
+  const can_edit_info = useKeySelector(
+    groupsKeySelector.groupDetail.can_edit_info,
+  );
+
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = themeStyles(theme);
@@ -30,14 +34,16 @@ const AvatarImage = ({testID, onEditAvatar}: Props) => {
         <Text.H5 color={colors.iconTint} useI18n>
           settings:title_avatar
         </Text.H5>
-        <ButtonWrapper
-          testID="avatar.button_edit"
-          onPress={onEditAvatar}
-          disabled={loadingAvatar}>
-          <Text.H6 testID="avatar.text_edit" color={textColor} useI18n>
-            settings:title_edit
-          </Text.H6>
-        </ButtonWrapper>
+        {!!can_edit_info && (
+          <ButtonWrapper
+            testID="avatar.button_edit"
+            onPress={onEditAvatar}
+            disabled={loadingAvatar}>
+            <Text.H6 testID="avatar.text_edit" color={textColor} useI18n>
+              settings:title_edit
+            </Text.H6>
+          </ButtonWrapper>
+        )}
       </View>
       <View style={styles.imageButton}>
         {!loadingAvatar ? (

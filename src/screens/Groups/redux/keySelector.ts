@@ -26,7 +26,7 @@ const groupsKeySelector = {
   loadingJoinedGroups: 'groups.loadingJoinedGroups',
   loadingGroupDetail: 'groups.loadingGroupDetail',
   loadingPage: 'groups.loadingPage',
-  pendingMemberRequests: 'groups.pendingMemberRequests',
+  groupMemberRequests: 'groups.groupMemberRequests',
   loadingAvatar: 'groups.loadingAvatar',
   loadingCover: 'groups.loadingCover',
   joinedCommunities: 'groups.joinedCommunities.data',
@@ -51,6 +51,12 @@ const groupsKeySelector = {
       memberRoleIndex: 'groups.permissionScheme.creatingScheme.memberRoleIndex',
       creating: 'groups.permissionScheme.creatingScheme.creating',
     },
+    groupScheme: 'groups.permissionScheme.groupScheme.data',
+  },
+  groupStructure: {
+    communityTree: 'groups.groupStructure.communityTree',
+    reorder: 'groups.groupStructure.reorder',
+    move: 'groups.groupStructure.move',
   },
   communitySearch: 'groups.communitySearch',
 };

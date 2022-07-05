@@ -315,6 +315,7 @@ export default class FileUploader {
   cancel(file: any) {
     console.log(`\x1b[36m🐣️ fileUploader cancel\x1b[0m`);
     const filename = file?.name || file?.filename || file?.fileName;
+    this.fileUploading[filename] = false;
     this.fileAbortController?.[filename]?.abort?.();
   }
 

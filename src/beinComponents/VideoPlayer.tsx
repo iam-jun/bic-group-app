@@ -17,6 +17,7 @@ import {scaleSize} from '~/theme/dimension';
 import {orderBy} from 'lodash';
 import Icon from './Icon';
 import LoadingIndicator from './LoadingIndicator';
+import InViewport from './InViewport';
 
 export interface VideoPlayerProps {
   style?: StyleProp<ViewStyle>;
@@ -38,6 +39,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   const video = React.useRef();
   const [isPlaying, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
+
   const {url, id, thumbnails} = data || {};
 
   const getThumbnailImageLink = () => {
@@ -83,12 +85,18 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
     return () => {
       videoListener?.remove();
     };
-  }, []);
+  }, [isPlaying]);
 
   const handlePlaybackStatusUpdate = (status: any) => {
     if (status?.isPlaying) {
       setLoading(false);
       DeviceEventEmitter.emit('playVideo', id);
+    }
+  };
+
+  const handlePlaying = (isVisible: boolean) => {
+    if (!isVisible) {
+      video.current?.pauseAsync?.();
     }
   };
 
@@ -100,34 +108,36 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
 
   return (
     <View style={[styles.container]}>
-      <Video
-        ref={video}
-        key={`video_item_${postId}`}
-        style={styles.player}
-        useNativeControls
-        resizeMode={ResizeMode.CONTAIN}
-        isLooping={false}
-        onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
-        onError={(error: string) => {
-          console.warn('video failed', error);
-        }}
-      />
-      {!isPlaying && (
-        <Image style={styles.thumbnail} source={{uri: posterUrl}} />
-      )}
-
-      {loading ? (
-        <LoadingIndicator size={60} color={colors.bgDisable} />
-      ) : !isPlaying ? (
-        <TouchableOpacity
-          activeOpacity={!!url ? 0.85 : 1}
-          onPress={() => {
-            loadAsyncVideo();
+      <InViewport style={styles.container} onChange={handlePlaying}>
+        <Video
+          ref={video}
+          key={`video_item_${postId}`}
+          style={styles.player}
+          useNativeControls
+          resizeMode={ResizeMode.CONTAIN}
+          isLooping={false}
+          onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+          onError={(error: string) => {
+            console.warn('video failed', error);
           }}
-          style={styles.buttonPlay}>
-          <Icon size={60} tintColor={colors.bgDisable} icon="PlayCircle" />
-        </TouchableOpacity>
-      ) : null}
+        />
+        {!isPlaying && (
+          <Image style={styles.thumbnail} source={{uri: posterUrl}} />
+        )}
+
+        {loading ? (
+          <LoadingIndicator size={60} color={colors.bgDisable} />
+        ) : !isPlaying ? (
+          <TouchableOpacity
+            activeOpacity={!!url ? 0.85 : 1}
+            onPress={() => {
+              loadAsyncVideo();
+            }}
+            style={styles.buttonPlay}>
+            <Icon size={60} tintColor={colors.bgDisable} icon="PlayCircle" />
+          </TouchableOpacity>
+        ) : null}
+      </InViewport>
     </View>
   );
 };

@@ -27,26 +27,30 @@ const GroupAdministration = (props: any) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {name, icon} = useKeySelector(groupsKeySelector.groupDetail.group);
+  const {total} = useKeySelector(groupsKeySelector.groupMemberRequests);
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
   );
   const can_edit_info = useKeySelector(
     groupsKeySelector.groupDetail.can_edit_info,
   );
-
-  const {total} = useKeySelector(groupsKeySelector.pendingMemberRequests);
+  const can_edit_privacy = useKeySelector(
+    groupsKeySelector.groupDetail.can_edit_privacy,
+  );
 
   useEffect(() => {
-    dispatch(groupsActions.getGroupMemberRequests({groupId}));
+    can_manage_member &&
+      dispatch(groupsActions.getGroupMemberRequests({groupId}));
+
     return () => {
-      dispatch(groupsActions.resetMemberRequests());
+      dispatch(groupsActions.resetGroupMemberRequests());
     };
   }, [groupId]);
 
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
 
   const goToPendingMembers = () => {
-    rootNavigation.navigate(groupStack.groupPendingMembers, {groupId});
+    rootNavigation.navigate(groupStack.groupPendingMembers);
   };
 
   const goToGeneralInfo = () => {
@@ -110,7 +114,7 @@ const GroupAdministration = (props: any) => {
         useI18n>
         settings:title_group_settings
       </Text.H5>
-      {!!can_edit_info &&
+      {(!!can_edit_info || !!can_edit_privacy) &&
         renderItem(
           'Cog',
           'settings:title_profile_info',

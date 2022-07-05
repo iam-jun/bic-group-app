@@ -51,7 +51,7 @@ import approveAllCommunityMemberRequests from './approveAllCommunityMemberReques
 import declineAllCommunityMemberRequests from './declineAllCommunityMemberRequests';
 import approveAllGroupMemberRequests from './approveAllGroupMemberRequests';
 import declineAllGroupMemberRequests from './declineAllGroupMemberRequests';
-import approveSingleGroupMemberRequest from './approveSingleGroupMemberRequests';
+import approveSingleGroupMemberRequest from './approveSingleGroupMemberRequest';
 import declineSingleGroupMemberRequest from './declineSingleGroupMemberRequest';
 import getGroupMemberRequests from './getGroupMemberRequests';
 import getPermissionCategories from '~/screens/Groups/redux/saga/getPermissionCategories';
@@ -59,24 +59,55 @@ import getSystemScheme from '~/screens/Groups/redux/saga/getSystemScheme';
 import postCreateSchemePermission from '~/screens/Groups/redux/saga/postCreateSchemePermission';
 import getSchemes from '~/screens/Groups/redux/saga/getSchemes';
 import getCommunityScheme from '~/screens/Groups/redux/saga/getCommunityScheme';
+import updateCommunityScheme from './updateCommunityScheme';
 import deleteCommunityScheme from '~/screens/Groups/redux/saga/deleteCommunityScheme';
 import getCommunitySearch from './getCommunitySearch';
+import getGroupScheme from './getGroupScheme';
+import updateGroupScheme from './updateGroupScheme';
+import getGroupStructureCommunityTree from '~/screens/Groups/redux/saga/getGroupStructureCommunityTree';
+import putGroupStructureReorder from '~/screens/Groups/redux/saga/putGroupStructureReorder';
+import getGroupStructureMoveTargets from '~/screens/Groups/redux/saga/getGroupStructureMoveTargets';
+import putGroupStructureMoveToTarget from '~/screens/Groups/redux/saga/putGroupStructureMoveToTarget';
+import putGroupStructureCollapseStatus from '~/screens/Groups/redux/saga/putGroupStructureCollapseStatus';
 
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* groupsSaga() {
   yield takeLatest(
+    groupsTypes.GET_GROUP_STRUCTURE_COMMUNITY_TREE,
+    getGroupStructureCommunityTree,
+  );
+  yield takeLatest(
     groupsTypes.GET_PERMISSION_CATEGORIES,
     getPermissionCategories,
+  );
+  yield takeLatest(
+    groupsTypes.PUT_GROUP_STRUCTURE_REORDER,
+    putGroupStructureReorder,
+  );
+  yield takeLatest(
+    groupsTypes.GET_GROUP_STRUCTURE_MOVE_TARGETS,
+    getGroupStructureMoveTargets,
+  );
+  yield takeLatest(
+    groupsTypes.PUT_GROUP_STRUCTURE_MOVE_TO_TARGET,
+    putGroupStructureMoveToTarget,
+  );
+  yield takeLatest(
+    groupsTypes.PUT_GROUP_STRUCTURE_COLLAPSE_STATUS,
+    putGroupStructureCollapseStatus,
   );
   yield takeLatest(groupsTypes.GET_SYSTEM_SCHEME, getSystemScheme);
   yield takeLatest(groupsTypes.GET_SCHEMES, getSchemes);
   yield takeLatest(groupsTypes.GET_COMMUNITY_SCHEME, getCommunityScheme);
+  yield takeLatest(groupsTypes.UPDATE_COMMUNITY_SCHEME, updateCommunityScheme);
   yield takeLatest(groupsTypes.DELETE_COMMUNITY_SCHEME, deleteCommunityScheme);
   yield takeLatest(
     groupsTypes.POST_CREATE_SCHEME_PERMISSION,
     postCreateSchemePermission,
   );
+  yield takeLatest(groupsTypes.GET_GROUP_SCHEME, getGroupScheme);
+  yield takeLatest(groupsTypes.UPDATE_GROUP_SCHEME, updateGroupScheme);
   yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
   yield takeLatest(groupsTypes.GET_GROUP_MEMBER, getGroupMembers);
   yield takeLatest(groupsTypes.GET_GROUP_SEARCH_MEMBERS, getGroupSearchMembers);
@@ -98,21 +129,24 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.SET_GROUP_ADMIN, setGroupAdmin);
   yield takeLatest(groupsTypes.REMOVE_GROUP_ADMIN, removeGroupAdmin);
 
-  yield takeLatest(groupsTypes.GET_MEMBER_REQUESTS, getGroupMemberRequests);
   yield takeLatest(
-    groupsTypes.APPROVE_SINGLE_MEMBER_REQUEST,
+    groupsTypes.GET_GROUP_MEMBER_REQUESTS,
+    getGroupMemberRequests,
+  );
+  yield takeLatest(
+    groupsTypes.APPROVE_SINGLE_GROUP_MEMBER_REQUEST,
     approveSingleGroupMemberRequest,
   );
   yield takeLatest(
-    groupsTypes.APPROVE_ALL_MEMBER_REQUESTS,
+    groupsTypes.APPROVE_ALL_GROUP_MEMBER_REQUESTS,
     approveAllGroupMemberRequests,
   );
   yield takeLatest(
-    groupsTypes.DECLINE_SINGLE_MEMBER_REQUEST,
+    groupsTypes.DECLINE_SINGLE_GROUP_MEMBER_REQUEST,
     declineSingleGroupMemberRequest,
   );
   yield takeLatest(
-    groupsTypes.DECLINE_ALL_MEMBER_REQUESTS,
+    groupsTypes.DECLINE_ALL_GROUP_MEMBER_REQUESTS,
     declineAllGroupMemberRequests,
   );
   yield takeLatest(groupsTypes.GET_YOUR_GROUPS_SEARCH, getYourGroupsSearch);

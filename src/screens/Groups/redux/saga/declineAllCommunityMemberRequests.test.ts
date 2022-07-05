@@ -8,13 +8,12 @@ import showError from '~/store/commonSaga/showError';
 describe('declineAllCommunityMemberRequests saga', () => {
   const communityId = 1;
   const total = 3;
-  const callback = jest.fn();
   const action = {
     type: 'test',
-    payload: {communityId, total, callback},
+    payload: {communityId, total},
   };
 
-  it('should decline all member requests correctly with callback function', async () => {
+  it('should decline all member requests correctly', async () => {
     return expectSaga(declineAllCommunityMemberRequests, action)
       .provide([
         [
@@ -22,14 +21,13 @@ describe('declineAllCommunityMemberRequests saga', () => {
           {},
         ],
       ])
-      .call(callback)
       .run()
       .then(({allEffects}: any) => {
-        expect(allEffects?.length).toEqual(2);
+        expect(allEffects?.length).toEqual(1);
       });
   });
 
-  it('should call server and server throws an error', () => {
+  it('should call server and server throws an error', async () => {
     const error = {code: 'error'};
     return expectSaga(declineAllCommunityMemberRequests, action)
       .provide([

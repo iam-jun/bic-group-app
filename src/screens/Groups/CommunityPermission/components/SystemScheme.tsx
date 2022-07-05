@@ -29,7 +29,7 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
 
   const {rootNavigation} = useRootNavigation();
 
-  const {data: communityScheme, loadingCommunityScheme} =
+  const {data: communityScheme, loading: loadingCommunityScheme} =
     useKeySelector(groupsKeySelector.permission.communityScheme) || {};
   const systemScheme =
     useKeySelector(groupsKeySelector.permission.systemScheme) || {};
@@ -62,9 +62,15 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
     <View style={styles.container}>
       <View style={styles.titleContainer}>
         <View style={[styles.flex1, styles.row]}>
-          <Text.H5 useI18n>communities:permission:title_system_scheme</Text.H5>
+          <Text.H5 style={styles.flex1} useI18n>
+            communities:permission:title_system_scheme
+          </Text.H5>
           {!loadingCommunityScheme && !communityScheme && (
-            <TextBadge useI18n value={'common:text_activated'} />
+            <TextBadge
+              useI18n
+              value={'common:text_activated'}
+              style={styles.activatedText}
+            />
           )}
         </View>
         <Button.Primary
@@ -86,9 +92,11 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
           </Button.Primary>
         )}
       </View>
-      <Text.Subtitle useI18n>
-        communities:permission:text_desc_system_scheme
-      </Text.Subtitle>
+      <View style={styles.descScheme}>
+        <Text.Subtitle useI18n>
+          communities:permission:text_desc_system_scheme
+        </Text.Subtitle>
+      </View>
     </View>
   );
 };
@@ -117,6 +125,12 @@ const createStyle = (theme: ITheme) => {
       paddingHorizontal: spacing.padding.tiny,
       marginLeft: spacing.margin.small,
       backgroundColor: colors.bgHover,
+    },
+    activatedText: {
+      marginHorizontal: spacing.margin.small,
+    },
+    descScheme: {
+      marginTop: spacing.margin.tiny,
     },
   });
 };

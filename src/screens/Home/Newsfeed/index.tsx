@@ -23,6 +23,7 @@ import NewsfeedSearch from '~/screens/Home/Newsfeed/NewsfeedSearch';
 import homeActions from '~/screens/Home/redux/actions';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 import menuActions from '~/screens/Menu/redux/actions';
+import postActions from '~/screens/Post/redux/actions';
 import appActions from '~/store/app/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
@@ -87,6 +88,7 @@ const Newsfeed = () => {
       !refreshing
     ) {
       getData(true);
+      dispatch(postActions.getAllPostContainingVideoInProgress());
     }
   }, [token, isInternetReachable, homePosts]);
 

@@ -49,7 +49,9 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
 
   return (
     <View style={[styles.container, style]}>
-      <Text.H5 style={styles.textTitle}>Scheme name:</Text.H5>
+      <Text.H5 style={styles.textTitle} useI18n>
+        communities:permission:title_scheme_name
+      </Text.H5>
       <TextInput
         value={name}
         testID="input_scheme_info.input_name"
@@ -64,7 +66,9 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
         outlineColor={theme.colors.borderCard}
         maxLength={64}
       />
-      <Text.H5 style={styles.textTitle}>Scheme description:</Text.H5>
+      <Text.H5 style={styles.textTitle} useI18n>
+        communities:permission:title_scheme_description
+      </Text.H5>
       <View
         style={[
           styles.textInput,

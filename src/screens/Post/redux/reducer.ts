@@ -80,6 +80,10 @@ export const postInitState = {
     canLoadMore: true,
     total: 0,
   },
+  allPostContainingVideoInProgress: {
+    total: 0,
+    data: [],
+  },
 };
 
 function postReducer(state = postInitState, action: any = {}) {
@@ -484,6 +488,19 @@ function postReducer(state = postInitState, action: any = {}) {
         ...state,
         allCommentsByParentIds: allCommentsByPost,
         allPosts: newAllPosts,
+      };
+    }
+    case postTypes.SET_POSTS_CONTAINING_VIDEO_IN_PROGRESS: {
+      const newAllPostContainingVideoInProgress = {
+        total: payload?.total || 0,
+        data:
+          payload?.data || state.allPostContainingVideoInProgress?.data || [],
+      };
+      return {
+        ...state,
+        allPostContainingVideoInProgress: {
+          ...newAllPostContainingVideoInProgress,
+        },
       };
     }
 

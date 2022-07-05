@@ -23,6 +23,9 @@ const CoverImage = ({testID, onEditCover}: Props) => {
   const loadingCover = useKeySelector(groupsKeySelector.loadingCover);
   const {background_img_url} =
     useKeySelector(groupsKeySelector.groupDetail.group) || {};
+  const can_edit_info = useKeySelector(
+    groupsKeySelector.groupDetail.can_edit_info,
+  );
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -38,14 +41,16 @@ const CoverImage = ({testID, onEditCover}: Props) => {
         <Text.H5 color={colors.iconTint} useI18n>
           settings:title_cover
         </Text.H5>
-        <ButtonWrapper
-          testID="cover.button_edit"
-          onPress={onEditCover}
-          disabled={loadingCover}>
-          <Text.H6 testID="cover.text_edit" color={textColor} useI18n>
-            settings:title_edit
-          </Text.H6>
-        </ButtonWrapper>
+        {!!can_edit_info && (
+          <ButtonWrapper
+            testID="cover.button_edit"
+            onPress={onEditCover}
+            disabled={loadingCover}>
+            <Text.H6 testID="cover.text_edit" color={textColor} useI18n>
+              settings:title_edit
+            </Text.H6>
+          </ButtonWrapper>
+        )}
       </View>
       <View onLayout={onCoverLayout}>
         {!loadingCover ? (

@@ -30,7 +30,7 @@ const GeneralInformation = (props: any) => {
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const {privacy} = useKeySelector(groupsKeySelector.groupDetail.group) || {};
-  const {total} = useKeySelector(groupsKeySelector.pendingMemberRequests);
+  const {total} = useKeySelector(groupsKeySelector.groupMemberRequests);
 
   const baseSheetRef: any = useRef();
 
@@ -50,8 +50,7 @@ const GeneralInformation = (props: any) => {
     );
   };
 
-  const openGroupPrivacyModal = (e: any) =>
-    baseSheetRef?.current?.open?.(e?.pageX, e?.pageY);
+  const openGroupPrivacyModal = () => baseSheetRef?.current?.open?.();
 
   const editGroupPrivacy = (item: any) => {
     dispatch(

@@ -9,11 +9,10 @@ import groupsDataHelper from '../../helper/GroupsDataHelper';
 
 describe('approveAllCommunityMemberRequests saga', () => {
   const communityId = 1;
-  const total = 3;
   const callback = jest.fn();
   const action = {
     type: 'test',
-    payload: {communityId, total, callback},
+    payload: {communityId, callback},
   };
 
   it('should approve all member requests correctly with callback function', async () => {
@@ -48,7 +47,7 @@ describe('approveAllCommunityMemberRequests saga', () => {
   it('should approve all member requests correctly without callback function', async () => {
     const action = {
       type: 'test',
-      payload: {communityId, total},
+      payload: {communityId},
     };
     return expectSaga(approveAllCommunityMemberRequests, action)
       .put(groupsActions.resetCommunityMemberRequests())

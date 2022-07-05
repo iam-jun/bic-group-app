@@ -29,6 +29,9 @@ import CommunityPermission from '~/screens/Groups/CommunityPermission';
 import CommunityPendingMembers from '~/screens/Groups/CommunityAdmin/PendingMembers';
 import CreatePermissionScheme from '~/screens/Groups/CreatePermissionScheme';
 import CommunityPermissionDetail from '~/screens/Groups/CommunityPermissionDetail';
+import GroupStructureSettings from '~/screens/Groups/GroupStructureSettings';
+import MoveGroup from '~/screens/Groups/MoveGroup';
+import ReorderGroup from '~/screens/Groups/ReorderGroup';
 
 export default {
   // community
@@ -43,6 +46,9 @@ export default {
   'community-permission-detail': CommunityPermissionDetail,
   'community-pending-members': CommunityPendingMembers,
   'create-permission-scheme': CreatePermissionScheme,
+  'group-structure-settings': GroupStructureSettings,
+  'move-group': MoveGroup,
+  'reorder-group': ReorderGroup,
 
   // group
   'group-list': Groups,

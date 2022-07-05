@@ -73,6 +73,7 @@ const CommunityPermissionDetail: FC<CommunityPermissionDetailProps> = ({
               roles={roles || []}
               onAnchorRole={onAnchorRole}
               selectedRolesOnly
+              useRoleInherited={false}
             />
           </Animated.ScrollView>
           <RoleHeaderAnimated
@@ -86,11 +87,12 @@ const CommunityPermissionDetail: FC<CommunityPermissionDetailProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {spacing, colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
       zIndex: 1,
+      backgroundColor: colors.bgHover,
     },
     contentContainer: {
       paddingBottom: spacing.padding.small,

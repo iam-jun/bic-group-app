@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -38,16 +38,22 @@ const CommunityPermission = () => {
   return (
     <View style={styles.container}>
       <Header title={t('communities:permission:title_permission')} />
-      <SystemScheme />
-      <CommunityScheme />
-      <GroupScheme />
+      <ScrollView>
+        <SystemScheme />
+        <CommunityScheme />
+        <GroupScheme />
+      </ScrollView>
     </View>
   );
 };
 
 const createStyle = (theme: ITheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
-    container: {},
+    container: {
+      flex: 1,
+      backgroundColor: colors.bgHover,
+    },
   });
 };
 

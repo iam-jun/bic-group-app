@@ -5,6 +5,7 @@ import {IUser} from '~/interfaces/IAuth';
 import {IGroupDetail, IGroupMembers, IJoiningMember} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
 import {getNewSchemeRolesOnUpdatePermission} from '~/screens/Groups/CreatePermissionScheme/helper';
+import {cloneDeep} from 'lodash';
 
 export const groupInitState = {
   permissionScheme: {
@@ -30,8 +31,29 @@ export const groupInitState = {
     },
     creatingScheme: {
       data: undefined,
-      memberRoleIndex: 0,
+      memberRoleIndex: undefined,
       creating: false,
+    },
+    groupScheme: {
+      // storing this data for comparing original group scheme and editing scheme
+      data: undefined,
+    },
+  },
+  groupStructure: {
+    communityTree: {
+      loading: false,
+      data: undefined,
+    },
+    reorder: {
+      newOrder: undefined,
+      loading: false,
+    },
+    move: {
+      loading: false,
+      searchKey: '',
+      targetGroups: undefined,
+      movingGroup: undefined,
+      selecting: undefined,
     },
   },
   isPrivacyModalOpen: false,
@@ -95,16 +117,22 @@ export const groupInitState = {
 
   loadingAvatar: false,
   loadingCover: false,
-
-  pendingMemberRequests: {
-    total: 0,
+  discoverGroups: {
     loading: false,
     data: [],
+    items: {},
+    canLoadMore: true,
+  },
+
+  groupMemberRequests: {
+    total: 0,
+    loading: false,
+    ids: [] as number[],
     items: {} as IObject<IJoiningMember>,
     canLoadMore: true,
   },
   // temporarily stores data for `undo` action
-  undoData: {
+  undoGroupMemberRequests: {
     total: 0,
     loading: null,
     canLoadMore: null,
@@ -127,8 +155,8 @@ export const groupInitState = {
     data: [] as number[],
     items: {},
   },
-  communityDetail: {} as ICommunity,
   isGettingInfoDetail: false,
+  communityDetail: {} as ICommunity,
   communityMembers: {
     loading: false,
     canLoadMore: true,
@@ -140,18 +168,12 @@ export const groupInitState = {
     canLoadMore: true,
     data: [] as ICommunityMembers[],
   },
-  discoverGroups: {
-    loading: false,
-    data: [],
-    items: {},
-    canLoadMore: true,
-  },
   communityMemberRequests: {
     total: 0,
     loading: false,
     canLoadMore: true,
     ids: [] as number[],
-    items: {},
+    items: {} as IObject<IJoiningMember>,
   },
   // temporarily stores data for `undo` action
   undoCommunityMemberRequests: {
@@ -174,7 +196,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
   const {type, payload} = action;
   const {
     selectedUsers,
-    pendingMemberRequests,
+    groupMemberRequests,
     discoverGroups,
     communityMembers,
     communitySearchMembers,
@@ -186,6 +208,51 @@ function groupsReducer(state = groupInitState, action: any = {}) {
   } = state;
 
   switch (type) {
+    //Group Structure Settings
+    case groupsTypes.SET_GROUP_STRUCTURE:
+      return {
+        ...state,
+        groupStructure: payload ? {...payload} : groupInitState.groupStructure,
+      };
+    case groupsTypes.SET_GROUP_STRUCTURE_COMMUNITY_TREE:
+      return {
+        ...state,
+        groupStructure: {
+          ...state.groupStructure,
+          communityTree: payload
+            ? {...payload}
+            : groupInitState.groupStructure.communityTree,
+        },
+      };
+    case groupsTypes.SET_GROUP_STRUCTURE_REORDER:
+      return {
+        ...state,
+        groupStructure: {
+          ...state.groupStructure,
+          reorder: payload
+            ? {...payload}
+            : groupInitState.groupStructure.reorder,
+        },
+      };
+    case groupsTypes.SET_GROUP_STRUCTURE_MOVE:
+      return {
+        ...state,
+        groupStructure: {
+          ...state.groupStructure,
+          move: payload ? {...payload} : groupInitState.groupStructure.move,
+        },
+      };
+    case groupsTypes.SET_GROUP_STRUCTURE_MOVE_SELECTING:
+      return {
+        ...state,
+        groupStructure: {
+          ...state.groupStructure,
+          move: {
+            ...state.groupStructure.move,
+            selecting: payload,
+          },
+        },
+      };
     // Permission
     case groupsTypes.SET_PERMISSION_CATEGORIES:
       return {
@@ -213,7 +280,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
                 ...state.permissionScheme.creatingScheme,
                 ...payload,
               }
-            : {},
+            : groupInitState.permissionScheme.creatingScheme,
         },
       };
     case groupsTypes.SET_CREATING_SCHEME_DATA:
@@ -225,17 +292,19 @@ function groupsReducer(state = groupInitState, action: any = {}) {
             ...state.permissionScheme.creatingScheme,
             data: payload
               ? Object.assign(
-                  state.permissionScheme.creatingScheme.data,
+                  // @ts-ignore
+                  cloneDeep(state.permissionScheme.creatingScheme.data),
                   payload,
                 )
-              : {},
+              : groupInitState.permissionScheme.creatingScheme.data,
           },
         },
       };
     case groupsTypes.UPDATE_CREATING_SCHEME_PERMISSION: {
       const {permission, roleIndex} = payload || {};
-      // @ts-ignore
-      const roles = state.permissionScheme.creatingScheme?.data?.roles || [];
+      const roles =
+        // @ts-ignore
+        [...state.permissionScheme.creatingScheme?.data?.roles] || [];
       const newRoles = getNewSchemeRolesOnUpdatePermission(
         permission,
         roleIndex,
@@ -243,7 +312,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       );
       const newData = Object.assign(
         // @ts-ignore
-        state.permissionScheme.creatingScheme.data,
+        cloneDeep(state.permissionScheme.creatingScheme.data),
         {roles: newRoles},
       );
       return {
@@ -262,7 +331,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         ...state,
         permissionScheme: {
           ...state.permissionScheme,
-          communityScheme: payload,
+          communityScheme: {...payload},
         },
       };
     case groupsTypes.SET_SCHEMES:
@@ -271,6 +340,14 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         permissionScheme: {
           ...state.permissionScheme,
           schemes: payload,
+        },
+      };
+    case groupsTypes.SET_GROUP_SCHEME:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          groupScheme: {...payload},
         },
       };
 
@@ -472,45 +549,45 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       };
 
     // PENDING MEMBER REQUESTS
-    case groupsTypes.SET_MEMBER_REQUESTS:
+    case groupsTypes.SET_GROUP_MEMBER_REQUESTS:
       return {
         ...state,
-        pendingMemberRequests: {
-          ...pendingMemberRequests,
+        groupMemberRequests: {
+          ...groupMemberRequests,
           ...payload,
         },
       };
-    case groupsTypes.RESET_MEMBER_REQUESTS:
+    case groupsTypes.RESET_GROUP_MEMBER_REQUESTS:
       return {
         ...state,
-        pendingMemberRequests: groupInitState.pendingMemberRequests,
+        groupMemberRequests: groupInitState.groupMemberRequests,
       };
-    case groupsTypes.DECLINE_ALL_MEMBER_REQUESTS:
+    case groupsTypes.DECLINE_ALL_GROUP_MEMBER_REQUESTS:
       return {
         ...state,
-        undoData: groupInitState.undoData,
+        undoGroupMemberRequests: groupInitState.undoGroupMemberRequests,
       };
-    case groupsTypes.UNDO_DECLINE_MEMBER_REQUESTS:
+    case groupsTypes.UNDO_DECLINED_GROUP_MEMBER_REQUESTS:
       return {
         ...state,
-        pendingMemberRequests: {...state.undoData},
-        undoData: groupInitState.undoData,
+        groupMemberRequests: {...state.undoGroupMemberRequests},
+        undoGroupMemberRequests: groupInitState.undoGroupMemberRequests,
       };
-    case groupsTypes.STORE_UNDO_DATA:
+    case groupsTypes.STORE_UNDO_GROUP_MEMBER_REQUESTS:
       return {
         ...state,
-        undoData: {...pendingMemberRequests},
+        undoGroupMemberRequests: {...groupMemberRequests},
       };
     case groupsTypes.EDIT_GROUP_MEMBER_REQUEST:
       return {
         ...state,
-        pendingMemberRequests: {
-          ...pendingMemberRequests,
+        groupMemberRequests: {
+          ...groupMemberRequests,
           items: {
-            ...pendingMemberRequests.items,
+            ...groupMemberRequests.items,
             [payload.id]: {
               // @ts-ignore
-              ...pendingMemberRequests.items[payload.id],
+              ...groupMemberRequests.items[payload.id],
               ...payload.data,
             },
           },

@@ -9,11 +9,9 @@ export default function* declineAllCommunityMemberRequests({
   type: string;
   payload: {communityId: number; callback?: () => void};
 }) {
-  const {communityId, callback} = payload;
+  const {communityId} = payload;
   try {
     yield call(groupsDataHelper.declineAllCommunityMemberRequests, communityId);
-
-    if (callback) yield call(callback);
   } catch (err: any) {
     console.log('declineAllCommunityMemberRequests: ', err);
 

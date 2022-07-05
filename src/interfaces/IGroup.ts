@@ -16,6 +16,7 @@ export interface IPermission {
   description: string;
   scope: string;
   restrictedRoles: string[];
+  fixedForRoles?: string[];
 }
 
 export interface IScheme {
@@ -30,6 +31,22 @@ export interface IScheme {
   createdAt?: string;
   updatedAt?: string;
   deletedAt?: string;
+  applyingGroups?: IApplyingGroups[];
+}
+
+export interface IGroupScheme {
+  id: string;
+  description: string;
+  name: string;
+  isSystem: boolean;
+  applyingGroups: IApplyingGroups[];
+}
+
+export interface IApplyingGroups {
+  id: number | string;
+  name: string;
+  description: string | null;
+  icon: string;
 }
 
 export interface ICategory {
@@ -44,6 +61,7 @@ export interface ICategory {
 
 export interface IGroup {
   id: number;
+  community_id?: number;
   name: string;
   user_count?: number;
   parent?: any;
@@ -64,6 +82,7 @@ export interface IGroup {
   updated_at?: string;
   deleted_at?: string | null;
   chat_id?: string;
+  collapsed?: boolean;
 
   path?: string;
   treeData?: IGroup;
