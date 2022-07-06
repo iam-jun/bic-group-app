@@ -139,8 +139,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
                 {_cancelLabel}
               </_CancelBtnComponent>
             )}
-
-            {onConfirm && (
+            {!!visible && onConfirm && (
               <_ConfirmBtnComponent
                 highEmphasis
                 testID="alert_modal.confirm"
