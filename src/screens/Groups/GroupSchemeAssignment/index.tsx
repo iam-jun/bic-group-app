@@ -8,25 +8,19 @@ import Text from '~/beinComponents/Text';
 import Header from '~/beinComponents/Header';
 import {useBaseHook} from '~/hooks';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import Button from '~/beinComponents/Button';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import {cloneDeep, isEmpty} from 'lodash';
+import {cloneDeep, debounce, isEmpty} from 'lodash';
 import {useDispatch} from 'react-redux';
 import groupsActions from '~/screens/Groups/redux/actions';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import {IGroup} from '~/interfaces/IGroup';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Animated, {FadeIn, LightSpeedInLeft} from 'react-native-reanimated';
+import modalActions from '~/store/modal/actions';
 
-export interface GroupSchemeAssignmentProps {
-  style?: StyleProp<ViewStyle>;
-}
-
-const GroupSchemeAssignment: FC<GroupSchemeAssignmentProps> = ({
-  style,
-}: GroupSchemeAssignmentProps) => {
+const GroupSchemeAssignment = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
@@ -79,8 +73,35 @@ const GroupSchemeAssignment: FC<GroupSchemeAssignmentProps> = ({
     }
   }, [initAssignments]);
 
+  const putGroupSchemeAssignments = debounce(() => {
+    dispatch(
+      groupsActions.putGroupSchemeAssignments({
+        communityId,
+        data: dataAssigning,
+        currentAssignments,
+      }),
+    );
+  });
+
   const onPressAssign = () => {
-    alert('ok');
+    if (communityId && !isEmpty(dataAssigning)) {
+      const title = t(
+        'communities:group_structure:text_title_confirm_move_group',
+      );
+      const content = t(
+        'communities:group_structure:text_desc_confirm_move_group',
+      );
+      dispatch(
+        modalActions.showAlert({
+          title,
+          content,
+          cancelBtn: true,
+          cancelLabel: t('common:btn_cancel'),
+          confirmLabel: t('common:btn_confirm'),
+          onConfirm: putGroupSchemeAssignments,
+        }),
+      );
+    }
   };
 
   const onPressGroup = (group: IGroup) => {
@@ -118,26 +139,28 @@ const GroupSchemeAssignment: FC<GroupSchemeAssignmentProps> = ({
       {loadingAssignments || loadingSchemes ? (
         <LoadingIndicator style={{marginTop: spacing.margin.large}} />
       ) : !!initAssignments ? (
-        <ScrollView>
-          <Text.H5 style={styles.textHeader} useI18n>
-            communities:permission:text_list_group
-          </Text.H5>
-          <Animated.View style={styles.contentContainer} entering={FadeIn}>
-            <FlatGroupItem
-              style={{backgroundColor: colors.background}}
-              {...currentAssignments}
-              onPressGroup={onPressGroup}
-              disableHorizontal
-              showInfo={false}
-              onPressMenu={onPressGroup}
-              iconVariant={'small'}
-              nameLines={1}
-              menuIcon={'AngleRight'}
-              entering={LightSpeedInLeft}
-              renderExtraInfo={renderItemExtraInfo}
-            />
-          </Animated.View>
-        </ScrollView>
+        currentAssignments && (
+          <ScrollView>
+            <Text.H5 style={styles.textHeader} useI18n>
+              communities:permission:text_list_group
+            </Text.H5>
+            <Animated.View style={styles.contentContainer} entering={FadeIn}>
+              <FlatGroupItem
+                style={{backgroundColor: colors.background}}
+                {...currentAssignments}
+                onPressGroup={onPressGroup}
+                disableHorizontal
+                showInfo={false}
+                onPressMenu={onPressGroup}
+                iconVariant={'small'}
+                nameLines={1}
+                menuIcon={'AngleRight'}
+                entering={LightSpeedInLeft}
+                renderExtraInfo={renderItemExtraInfo}
+              />
+            </Animated.View>
+          </ScrollView>
+        )
       ) : (
         <Text style={styles.textEmpty} useI18n>
           communities:permission:text_data_not_found

@@ -31,7 +31,7 @@ describe('group scheme assign selection helper', () => {
     const schemeId = 'abcd';
     expect(
       handleSelectNewGroupScheme(groupId, schemeId, data, assignments),
-    ).toEqual([{groupId, schemeId}]);
+    ).toEqual([{group_id: groupId, scheme_id: schemeId}]);
   });
 
   it('handleSelectNewGroupScheme should not add new item if not has change with current assignments', () => {

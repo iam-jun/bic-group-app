@@ -13,7 +13,7 @@ export default function* putGroupSchemeAssignments({
   type: string;
   payload: IPayloadGroupSchemeAssignments;
 }): any {
-  const {communityId, data} = payload || {};
+  const {communityId, data, currentAssignments} = payload || {};
   try {
     if (!communityId || !data) {
       console.log(
@@ -21,20 +21,28 @@ export default function* putGroupSchemeAssignments({
       );
       return;
     }
-    yield put(actions.setGroupSchemeAssigning({loading: true, data}));
+    yield put(
+      actions.setGroupSchemeAssigning({
+        loading: true,
+        data,
+        currentAssignments,
+      }),
+    );
     const response = yield call(
       groupsDataHelper.putGroupSchemeAssignments,
       payload,
     );
     if (response?.data) {
-      yield put(actions.setGroupSchemeAssigning({loading: false}));
+      yield put(
+        actions.setGroupSchemeAssigning({loading: false, currentAssignments}),
+      );
 
       yield put(
         actions.getGroupSchemeAssignments({communityId, showLoading: false}),
       );
 
       const toastMessage: IToastMessage = {
-        content: 'communities:group_structure:text_update_group_scheme_success',
+        content: 'communities:permission:text_update_group_scheme_success',
         props: {
           textProps: {useI18n: true},
           type: 'success',
@@ -42,11 +50,23 @@ export default function* putGroupSchemeAssignments({
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
     } else {
-      yield put(actions.setGroupSchemeAssigning({loading: false, data}));
+      yield put(
+        actions.setGroupSchemeAssigning({
+          loading: false,
+          data,
+          currentAssignments,
+        }),
+      );
       yield call(showError, response);
     }
   } catch (err: any) {
-    yield put(actions.setGroupSchemeAssigning({loading: false, data}));
+    yield put(
+      actions.setGroupSchemeAssigning({
+        loading: false,
+        data,
+        currentAssignments,
+      }),
+    );
     console.log('putGroupSchemeAssignments error:', err);
     yield call(showError, err);
   }

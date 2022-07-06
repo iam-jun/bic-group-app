@@ -250,4 +250,5 @@ export interface IGetCommunityGroup {
 export interface IPayloadGroupSchemeAssignments {
   communityId: number;
   data: {groupId: number; schemeId: string}[];
+  currentAssignments?: any;
 }
