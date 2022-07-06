@@ -6,21 +6,21 @@ import {ITheme} from '~/theme/interfaces';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import modalActions from '~/store/modal/actions';
-import {useDispatch} from 'react-redux';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import SchemeItem from './SchemeItem';
 import {IGroupScheme} from '~/interfaces/IGroup';
 import Divider from '~/beinComponents/Divider';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import {useRootNavigation} from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
 export interface GroupSchemeProps {
   style?: StyleProp<ViewStyle>;
 }
 
 const GroupScheme: FC<GroupSchemeProps> = ({style}: GroupSchemeProps) => {
-  const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
@@ -28,7 +28,7 @@ const GroupScheme: FC<GroupSchemeProps> = ({style}: GroupSchemeProps) => {
   const {groupSchemes} = data || {};
 
   const onPressAssign = () => {
-    dispatch(modalActions.showAlertNewFeature());
+    rootNavigation.navigate(groupStack.groupSchemeAssignment);
   };
 
   const renderItem = ({item}: {item: IGroupScheme}) => {

@@ -47,7 +47,10 @@ const CommunityAdmin = () => {
   };
 
   const onPressGeneralInfo = () => {
-    displayNewFeature();
+    rootNavigation.navigate(groupStack.generalInfo, {
+      id: communityId,
+      type: 'community',
+    });
   };
 
   const onPressPermission = () => {

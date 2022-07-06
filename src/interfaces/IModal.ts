@@ -21,6 +21,7 @@ export interface IShowAlert {
   style?: StyleProp<ViewStyle>;
   confirmBtnProps?: ButtonSecondaryProps;
   cancelBtnProps?: ButtonSecondaryProps;
+  children?: any;
 }
 
 export interface IPayloadReactionDetailBottomSheet {
