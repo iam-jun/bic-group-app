@@ -66,11 +66,14 @@ export const groupsApiConfig = {
     useRetry: true,
     data: {status},
   }),
-  getPermissionCategories: (): HttpApiRequestConfig => ({
+  getPermissionCategories: (
+    scope?: 'SYSTEM' | 'COMMUNITY' | 'GROUP',
+  ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}permissions/categories`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
+    params: {scope},
   }),
   getSystemScheme: (): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}system-scheme`,
@@ -574,10 +577,10 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getPermissionCategories: async () => {
+  getPermissionCategories: async (scope?: 'SYSTEM' | 'COMMUNITY' | 'GROUP') => {
     try {
       const response: any = await makeHttpRequest(
-        groupsApiConfig.getPermissionCategories(),
+        groupsApiConfig.getPermissionCategories(scope),
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);

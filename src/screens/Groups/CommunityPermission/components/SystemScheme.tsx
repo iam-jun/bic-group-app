@@ -1,6 +1,7 @@
 import React, {FC, useEffect} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {cloneDeep} from 'lodash';
 
 import {ITheme} from '~/theme/interfaces';
 
@@ -43,7 +44,7 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
   const onPressView = () => {
     if (systemScheme?.data) {
       rootNavigation.navigate(groupStack.communityPermissionDetail, {
-        scheme: systemScheme.data,
+        scheme: cloneDeep(systemScheme.data),
       });
     }
   };
