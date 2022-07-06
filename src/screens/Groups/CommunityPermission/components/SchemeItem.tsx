@@ -70,7 +70,12 @@ const SchemeItem = ({item}: SchemeItemProps) => {
     <View>
       <View style={styles.titleContainer}>
         <View style={[styles.flex1, styles.row]}>
-          <Text.BodyM testID="scheme_item.name">{name}</Text.BodyM>
+          <Text.BodyM
+            numberOfLines={3}
+            style={styles.flex1}
+            testID="scheme_item.name">
+            {name}
+          </Text.BodyM>
           {isActivated && (
             <TextBadge
               useI18n
@@ -97,12 +102,11 @@ const createStyle = (theme: ITheme) => {
     flex1: {flex: 1},
     titleContainer: {
       flexDirection: 'row',
-      alignItems: 'center',
       marginBottom: spacing.margin.small,
     },
     row: {
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'flex-start',
     },
     buttonEdit: {
       backgroundColor: colors.bgHover,
@@ -116,7 +120,8 @@ const createStyle = (theme: ITheme) => {
       marginLeft: spacing.margin.small,
     },
     activatedText: {
-      marginHorizontal: spacing.margin.small,
+      marginLeft: spacing.margin.base,
+      marginRight: spacing.margin.small,
     },
     nameTag: {
       backgroundColor: colors.bgHover,
