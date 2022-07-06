@@ -114,11 +114,10 @@ const createStyle = (theme: ITheme) => {
     },
     row: {
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'flex-start',
     },
     titleContainer: {
       flexDirection: 'row',
-      alignItems: 'center',
       marginBottom: spacing.margin.small,
     },
     buttonView: {
@@ -128,7 +127,7 @@ const createStyle = (theme: ITheme) => {
       backgroundColor: colors.bgHover,
     },
     activatedText: {
-      marginHorizontal: spacing.margin.small,
+      marginLeft: spacing.margin.base,
     },
     descScheme: {
       marginTop: spacing.margin.tiny,
