@@ -8,18 +8,20 @@ import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
-import {useKeySelector} from '~/hooks/selector';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
-import groupsActions from '../../redux/actions';
-import groupsKeySelector from '../../redux/keySelector';
+import groupsActions from '../redux/actions';
 
-const EditGroupDescription = () => {
+const EditDescription = (props: any) => {
+  const {
+    type = 'group',
+    id = '',
+    description = '',
+  } = props?.route?.params || {};
+
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
-  const {id, description} =
-    useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const navigation = useNavigation();
 
   const [text, setText] = useState<string>(description);
@@ -32,16 +34,26 @@ const EditGroupDescription = () => {
   }, [description]);
 
   const onSave = () => {
-    dispatch(
-      groupsActions.editGroupDetail({
-        data: {
-          id,
-          description: text?.trim() ? text?.trim() : null,
-        },
-        editFieldName: i18next.t('common:text_description'),
-        callback: onNavigateBack,
-      }),
-    );
+    if (type === 'group') {
+      dispatch(
+        groupsActions.editGroupDetail({
+          data: {
+            id,
+            description: text?.trim() ? text?.trim() : null,
+          },
+          editFieldName: i18next.t('common:text_description'),
+          callback: onNavigateBack,
+        }),
+      );
+    } else {
+      dispatch(
+        groupsActions.editCommunityDetail({
+          data: {id, description: text?.trim() ? text.trim() : null},
+          editFieldName: i18next.t('common:text_description'),
+          callback: onNavigateBack,
+        }),
+      );
+    }
   };
 
   const onNavigateBack = () => navigation.goBack();
@@ -52,7 +64,7 @@ const EditGroupDescription = () => {
       style={styles.container}
       isFullView>
       <Header
-        title={'settings:title_group_description'}
+        title={`settings:title_${type}_description`}
         titleTextProps={{useI18n: true}}
         buttonText={'common:btn_save'}
         buttonProps={{
@@ -70,20 +82,20 @@ const EditGroupDescription = () => {
             style={styles.textEdit}
             value={text}
             onChangeText={_onChangeText}
-            maxLength={500}
+            maxLength={255}
             multiline
-            testID="edit_group_description.text"
+            testID={`edit_${type}_description.text`}
           />
         </View>
         <Text.BodyS color={theme.colors.textSecondary} useI18n>
-          settings:text_maximum_character
+          settings:text_description_maximum_character
         </Text.BodyS>
       </View>
     </ScreenWrapper>
   );
 };
 
-export default EditGroupDescription;
+export default EditDescription;
 
 const themeStyles = (theme: ITheme) => {
   const {spacing, colors, dimension} = theme;

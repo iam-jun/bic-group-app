@@ -9,9 +9,8 @@ import {IGroup} from '~/interfaces/IGroup';
 import Avatar from '~/beinComponents/Avatar';
 import Divider from '~/beinComponents/Divider';
 import {useBaseHook} from '~/hooks';
-import MoveLine from '../../../../../assets/images/img_move_line.svg';
-import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 import {getAllChildrenName} from '~/screens/Groups/helper';
+import MoveLine from '~/screens/Groups/MoveGroup/components/MoveLine';
 
 export interface MoveGroupHeaderInfoProps {
   style?: StyleProp<ViewStyle>;
@@ -19,40 +18,20 @@ export interface MoveGroupHeaderInfoProps {
 }
 
 const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
-  style,
   group,
 }: MoveGroupHeaderInfoProps) => {
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
-  const {icon, name, children} = group || {};
+  const {icon, name} = group || {};
 
-  const childrenName =
-    getAllChildrenName(group).join?.(', ') ||
-    t('communities:group_structure:text_no_group');
+  const childrenName = getAllChildrenName(group).join?.(', ');
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          marginTop: spacing.margin.large,
-          flexDirection: 'row',
-        }}>
-        <SvgIcon
-          // @ts-ignore
-          source={MoveLine}
-          width={24}
-          height={172}
-          tintColor="none"
-          style={{
-            marginTop: 2,
-            marginRight: spacing.margin.tiny,
-          }}
-        />
-        <View style={styles.blueDot} />
-      </View>
+      <MoveLine />
       <View style={styles.infoContainer}>
         <View style={styles.groupNameContainer}>
           <Avatar.Small style={styles.iconGroup} source={icon} />
@@ -60,14 +39,18 @@ const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
             {name}
           </Text.H6>
         </View>
-        <Divider color={colors.borderFocus} />
-        <View style={styles.childrenInfo}>
-          <Text.BodyS>
-            <Text.BodySM>{childrenName}</Text.BodySM>{' '}
-            {t('communities:group_structure:text_will_be_move')}{' '}
-            <Text.BodySM>{name}</Text.BodySM>
-          </Text.BodyS>
-        </View>
+        {!!childrenName && (
+          <>
+            <Divider color={colors.borderFocus} />
+            <View style={styles.childrenInfo}>
+              <Text.BodyS>
+                <Text.BodySM>{childrenName}</Text.BodySM>{' '}
+                {t('communities:group_structure:text_will_be_move')}{' '}
+                <Text.BodySM>{name}</Text.BodySM>
+              </Text.BodyS>
+            </View>
+          </>
+        )}
       </View>
     </View>
   );
@@ -79,8 +62,10 @@ const createStyle = (theme: ITheme) => {
     container: {
       flexDirection: 'row',
       marginHorizontal: spacing.margin.extraLarge,
+      marginBottom: spacing.margin.large,
     },
     infoContainer: {
+      marginLeft: 0,
       flex: 1,
       marginTop: spacing.margin.extraLarge,
       borderWidth: 1,

@@ -1,32 +1,41 @@
-import {put, call} from 'redux-saga/effects';
+import {put, call, select} from 'redux-saga/effects';
 
-import {IGroupDetailEdit} from '~/interfaces/IGroup';
+import {IToastMessage} from '~/interfaces/common';
+import * as modalActions from '~/store/modal/actions';
+import {ICommunityDetailEdit} from '~/interfaces/IGroup';
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
 import showToastEditSuccess from './showToastEditSuccess';
 
-export default function* editGroupDetail({
+export default function* editCommunityDetail({
   payload,
 }: {
   type: string;
   payload: {
-    data: IGroupDetailEdit;
+    data: ICommunityDetailEdit;
     editFieldName?: string;
     callback?: () => void;
   };
 }) {
   const {data, editFieldName, callback} = payload;
   try {
-    const groupId = data.id;
-    delete data.id; // edit data should not contain group's id
-
     // @ts-ignore
-    const resp = yield call(groupsDataHelper.editGroupDetail, groupId, data);
+    const resp = yield call(
+      groupsDataHelper.editCommunityDetail,
+      data.id,
+      data,
+    );
+
+    if (!!resp?.data) {
+      const {communityDetail} = yield select(state => state?.groups) || {};
+      yield put(
+        groupsActions.setCommunityDetail({...communityDetail, ...resp.data}),
+      );
+    }
 
     if (!!editFieldName) yield showToastEditSuccess(editFieldName);
 
-    yield put(groupsActions.setGroupDetail(resp?.data));
     if (callback) callback();
   } catch (err) {
     console.log('\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m');
