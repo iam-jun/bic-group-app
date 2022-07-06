@@ -123,7 +123,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
   }));
 
   return (
-    <View style={styles.container}>
+    <View testID="sticker_view" style={styles.container}>
       <Animated.View style={animatedStyle} />
       <Portal>
         <Modalize
