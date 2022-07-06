@@ -43,6 +43,7 @@ export const groupInitState = {
       assigning: {
         loading: false,
         data: [],
+        currentAssignments: undefined,
       },
     },
     groupScheme: {
@@ -362,7 +363,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
             ...state.permissionScheme.assignGroupScheme,
             assignments: payload
               ? payload
-              : state.permissionScheme.assignGroupScheme.assignments,
+              : groupInitState.permissionScheme.assignGroupScheme.assignments,
           },
         },
       };
@@ -375,7 +376,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
             ...state.permissionScheme.assignGroupScheme,
             assigning: payload
               ? payload
-              : state.permissionScheme.assignGroupScheme.assigning,
+              : groupInitState.permissionScheme.assignGroupScheme.assigning,
           },
         },
       };

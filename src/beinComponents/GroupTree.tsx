@@ -26,6 +26,7 @@ export interface GroupTreeProps {
   iconVariant?: AvatarType;
   nameLines?: number;
   menuIcon?: IconType;
+  renderExtraInfo?: (group: IGroup) => any;
 }
 
 type TreeData = {[x: string]: IParsedGroup};
@@ -48,6 +49,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
   iconVariant,
   nameLines,
   menuIcon,
+  renderExtraInfo,
 }: GroupTreeProps) => {
   const [treeData, setTreeData] = useState<TreeData>({});
   const [renderedTree, setRenderedTree] = useState<React.ReactNode[]>([]);
@@ -239,6 +241,7 @@ const GroupTree: React.FC<GroupTreeProps> = ({
           iconVariant={iconVariant}
           nameLines={nameLines}
           menuIcon={menuIcon}
+          renderExtraInfo={renderExtraInfo}
         />,
       ),
     );

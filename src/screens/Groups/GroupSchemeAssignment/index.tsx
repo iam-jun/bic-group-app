@@ -1,11 +1,5 @@
 import React, {FC, useEffect} from 'react';
-import {
-  View,
-  StyleSheet,
-  StyleProp,
-  ViewStyle,
-  ScrollView,
-} from 'react-native';
+import {View, StyleSheet, StyleProp, ViewStyle, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -18,12 +12,13 @@ import Button from '~/beinComponents/Button';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import {isEmpty} from 'lodash';
+import {cloneDeep, isEmpty} from 'lodash';
 import {useDispatch} from 'react-redux';
 import groupsActions from '~/screens/Groups/redux/actions';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import {IGroup} from '~/interfaces/IGroup';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import Animated, {FadeIn, LightSpeedInLeft} from 'react-native-reanimated';
 
 export interface GroupSchemeAssignmentProps {
   style?: StyleProp<ViewStyle>;
@@ -42,25 +37,47 @@ const GroupSchemeAssignment: FC<GroupSchemeAssignmentProps> = ({
   const {id: communityId} = useKeySelector(groupsKeySelector.communityDetail);
   const {loadingSchemes, allSchemes} =
     useKeySelector(groupsKeySelector.permission.schemes) || {};
-  const {loading: loadingAssignments, data: dataAssignments} =
+  const {loading: loadingAssignments, data: initAssignments} =
     useKeySelector(
       groupsKeySelector.permission.assignGroupScheme.assignments,
     ) || {};
-  const {loading: loadingAssigning, data: dataAssigning} =
-    useKeySelector(groupsKeySelector.permission.assignGroupScheme.assigning) ||
-    {};
+  const {
+    loading: loadingAssigning,
+    data: dataAssigning,
+    currentAssignments,
+  } = useKeySelector(
+    groupsKeySelector.permission.assignGroupScheme.assigning,
+  ) || {};
 
   const disableAssign =
-    loadingSchemes || loadingAssignments || loadingAssigning;
+    loadingSchemes ||
+    loadingAssignments ||
+    loadingAssigning ||
+    isEmpty(dataAssigning);
 
   useEffect(() => {
-    if (!loadingSchemes && isEmpty(allSchemes)) {
+    if (!loadingSchemes) {
       dispatch(groupsActions.getSchemes({communityId}));
     }
-    if (!loadingAssignments && isEmpty(dataAssignments)) {
+    if (!loadingAssignments) {
       dispatch(groupsActions.getGroupSchemeAssignments({communityId}));
     }
+    return () => {
+      dispatch(groupsActions.setGroupSchemeAssignments());
+      dispatch(groupsActions.setGroupSchemeAssigning());
+    };
   }, []);
+
+  useEffect(() => {
+    if (initAssignments) {
+      dispatch(
+        groupsActions.setGroupSchemeAssigning({
+          data: [],
+          currentAssignments: cloneDeep(initAssignments),
+        }),
+      );
+    }
+  }, [initAssignments]);
 
   const onPressAssign = () => {
     alert('ok');
@@ -68,6 +85,19 @@ const GroupSchemeAssignment: FC<GroupSchemeAssignmentProps> = ({
 
   const onPressGroup = (group: IGroup) => {
     rootNavigation.navigate(groupStack.groupSchemeAssignSelection, {group});
+  };
+
+  const renderItemExtraInfo = (group: any) => {
+    const {scheme_id} = group || {};
+    if (!scheme_id) {
+      return null;
+    }
+    const schemeName = allSchemes?.[scheme_id]?.name;
+    return (
+      <View style={styles.schemeNameContainer}>
+        <Text.BodyS numberOfLines={1}>{schemeName}</Text.BodyS>
+      </View>
+    );
   };
 
   return (
@@ -87,15 +117,15 @@ const GroupSchemeAssignment: FC<GroupSchemeAssignmentProps> = ({
       />
       {loadingAssignments || loadingSchemes ? (
         <LoadingIndicator style={{marginTop: spacing.margin.large}} />
-      ) : !!dataAssignments ? (
+      ) : !!initAssignments ? (
         <ScrollView>
           <Text.H5 style={styles.textHeader} useI18n>
             communities:permission:text_list_group
           </Text.H5>
-
-          <View style={styles.contentContainer}>
+          <Animated.View style={styles.contentContainer} entering={FadeIn}>
             <FlatGroupItem
-              {...dataAssignments}
+              style={{backgroundColor: colors.background}}
+              {...currentAssignments}
               onPressGroup={onPressGroup}
               disableHorizontal
               showInfo={false}
@@ -103,8 +133,10 @@ const GroupSchemeAssignment: FC<GroupSchemeAssignmentProps> = ({
               iconVariant={'small'}
               nameLines={1}
               menuIcon={'AngleRight'}
+              entering={LightSpeedInLeft}
+              renderExtraInfo={renderItemExtraInfo}
             />
-          </View>
+          </Animated.View>
         </ScrollView>
       ) : (
         <Text style={styles.textEmpty} useI18n>
@@ -134,6 +166,14 @@ const createStyle = (theme: ITheme) => {
       margin: spacing.padding.large,
       textAlign: 'center',
       color: colors.textSecondary,
+    },
+    schemeNameContainer: {
+      backgroundColor: colors.bgSecondary,
+      alignSelf: 'flex-start',
+      marginVertical: 2,
+      paddingHorizontal: spacing.padding.small,
+      paddingVertical: spacing.padding.tiny,
+      borderRadius: spacing.borderRadius.large,
     },
   });
 };

@@ -33,6 +33,7 @@ export interface FlatGroupItemProps extends GroupItemProps {
   iconVariant?: AvatarType;
   nameLines?: number;
   menuIcon?: IconType;
+  renderExtraInfo?: (group: IGroup) => any;
 }
 
 type PathData = {
@@ -65,6 +66,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   iconVariant,
   nameLines,
   menuIcon,
+  renderExtraInfo,
   ...props
 }: FlatGroupItemProps) => {
   const [showTree, setShowTree] = useState(initShowTree);
@@ -203,6 +205,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           iconVariant={iconVariant}
           nameLines={nameLines}
           menuIcon={menuIcon}
+          renderExtraInfo={renderExtraInfo}
         />
       ) : (
         <GroupItem
@@ -220,6 +223,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           iconVariant={iconVariant}
           nameLines={nameLines}
           menuIcon={menuIcon}
+          renderExtraInfo={renderExtraInfo}
         />
       )}
     </View>

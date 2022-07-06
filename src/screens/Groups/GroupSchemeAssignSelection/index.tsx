@@ -1,10 +1,5 @@
-import React, {FC, useState} from 'react';
-import {
-  View,
-  StyleSheet,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import React, {FC, useEffect, useState} from 'react';
+import {View, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -17,12 +12,19 @@ import {IGroup} from '~/interfaces/IGroup';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import Icon from '~/beinComponents/Icon';
-import {isEmpty, isNumber} from 'lodash';
+import {isNumber} from 'lodash';
+import {useDispatch} from 'react-redux';
+import groupsActions from '~/screens/Groups/redux/actions';
+import Animated, {ZoomIn} from 'react-native-reanimated';
+import {
+  changeSchemeIdOfGroup,
+  handleSelectNewGroupScheme,
+} from '~/screens/Groups/GroupSchemeAssignSelection/helper';
 
 export interface GroupSchemeManagementProps {
   route?: {
     params?: {
-      group: IGroup;
+      group: IGroup | any;
     };
   };
 }
@@ -33,6 +35,16 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
   const initGroup = route?.params?.group;
   const [selectingIndex, setSelectingIndex] = useState<number>();
 
+  const {data = [], currentAssignments} =
+    useKeySelector(groupsKeySelector.permission.assignGroupScheme.assigning) ||
+    {};
+  const {data: groupAssignments} =
+    useKeySelector(
+      groupsKeySelector.permission.assignGroupScheme.assignments,
+    ) || {};
+
+  const dispatch = useDispatch();
+  const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const {colors} = theme;
@@ -42,8 +54,43 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
     useKeySelector(groupsKeySelector.permission.schemes) || {};
   const {groupSchemes = []} = schemes || {};
 
+  const disableSave =
+    !isNumber(selectingIndex) ||
+    initGroup?.scheme_id === groupSchemes?.[selectingIndex]?.id;
+
+  useEffect(() => {
+    const index = groupSchemes?.findIndex(
+      (item: any) => item?.id === initGroup?.scheme_id,
+    );
+    if (index !== -1) {
+      setSelectingIndex(index);
+    }
+  }, [groupSchemes]);
+
   const onPressSave = () => {
-    console.log(`\x1b[36m🐣️ index onPressSave\x1b[0m`);
+    // @ts-ignore
+    const schemeId = groupSchemes?.[selectingIndex]?.id;
+    const groupId = initGroup?.group_id;
+    if (groupId && schemeId) {
+      const newData = handleSelectNewGroupScheme(
+        groupId,
+        schemeId,
+        data,
+        groupAssignments,
+      );
+      const newAssignments = changeSchemeIdOfGroup(
+        groupId,
+        schemeId,
+        currentAssignments,
+      );
+      dispatch(
+        groupsActions.setGroupSchemeAssigning({
+          data: newData,
+          currentAssignments: newAssignments,
+        }),
+      );
+      rootNavigation.goBack();
+    }
   };
 
   const renderItem = ({item, index}: {item: IGroup; index: number}) => {
@@ -56,7 +103,13 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
         ]}
         onPress={() => setSelectingIndex(index)}>
         <Text style={styles.flex1}>{item?.name}</Text>
-        {isActive && <Icon icon={'Check'} tintColor={colors.primary6} />}
+        <View style={{minWidth: 20, minHeight: 20}}>
+          {isActive && (
+            <Animated.View entering={ZoomIn}>
+              <Icon icon={'Check'} tintColor={colors.primary6} />
+            </Animated.View>
+          )}
+        </View>
       </TouchableOpacity>
     );
   };
@@ -72,7 +125,7 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
         onPressButton={onPressSave}
         buttonText={'common:btn_save'}
         buttonProps={{
-          disabled: !isNumber(selectingIndex),
+          disabled: disableSave,
           useI18n: true,
           highEmphasis: true,
           style: {borderWidth: 0},

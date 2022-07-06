@@ -2,7 +2,7 @@ import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import {IParsedGroup} from '~/interfaces/IGroup';
+import {IGroup, IParsedGroup} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
 import Icon from '~/beinComponents/Icon';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
@@ -36,6 +36,7 @@ export interface GroupItemProps extends IParsedGroup {
   iconVariant?: AvatarType;
   nameLines?: number;
   menuIcon?: IconType;
+  renderExtraInfo?: (group: IGroup) => any;
 }
 
 const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
@@ -66,6 +67,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     iconVariant = 'medium',
     nameLines = 2,
     menuIcon = 'EllipsisH',
+    renderExtraInfo,
   } = props;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
@@ -113,6 +115,10 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
       newChecked = true;
     }
     onCheckedItem?.(props, newChecked);
+  };
+
+  const _renderExtraInfo = () => {
+    return renderExtraInfo?.(props);
   };
 
   const renderLine = (uiLevel: number) => {
@@ -214,6 +220,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                 </Text.BodyS>
               </View>
             )}
+            {_renderExtraInfo?.()}
           </View>
           {!!onPressMenu && (
             <View style={styles.btnMenu}>

@@ -184,11 +184,15 @@ const groupsActions = {
     type: groupsTypes.GET_GROUP_SCHEME_ASSIGNMENTS,
     payload,
   }),
-  setGroupSchemeAssignments: (payload: any) => ({
+  setGroupSchemeAssignments: (payload?: any) => ({
     type: groupsTypes.SET_GROUP_SCHEME_ASSIGNMENTS,
     payload,
   }),
-  setGroupSchemeAssigning: (payload: any) => ({
+  setGroupSchemeAssigning: (payload?: {
+    data?: any;
+    loading?: boolean;
+    currentAssignments?: any;
+  }) => ({
     type: groupsTypes.SET_GROUP_SCHEME_ASSIGNING,
     payload,
   }),
