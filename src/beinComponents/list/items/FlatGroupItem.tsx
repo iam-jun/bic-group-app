@@ -13,6 +13,7 @@ import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
+import {IconType} from '~/resources/icons';
 
 export interface FlatGroupItemProps extends GroupItemProps {
   style?: StyleProp<ViewStyle>;
@@ -31,6 +32,8 @@ export interface FlatGroupItemProps extends GroupItemProps {
   disableHorizontal?: boolean;
   iconVariant?: AvatarType;
   nameLines?: number;
+  menuIcon?: IconType;
+  renderExtraInfo?: (group: IGroup) => any;
 }
 
 type PathData = {
@@ -62,6 +65,8 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   disableHorizontal,
   iconVariant,
   nameLines,
+  menuIcon,
+  renderExtraInfo,
   ...props
 }: FlatGroupItemProps) => {
   const [showTree, setShowTree] = useState(initShowTree);
@@ -126,7 +131,6 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   };
 
   const _onPressGroup = (group: GroupItemProps) => {
-    console.log(`\x1b[35m🐣️ FlatGroupItem _onPressGroup `, group, `\x1b[0m`);
     if (onChangeCheckedGroups) {
       onCheckedGroup(group, !group.isChecked);
     } else if (onPressGroup) {
@@ -200,6 +204,8 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           disableHorizontal={disableHorizontal}
           iconVariant={iconVariant}
           nameLines={nameLines}
+          menuIcon={menuIcon}
+          renderExtraInfo={renderExtraInfo}
         />
       ) : (
         <GroupItem
@@ -216,6 +222,8 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           disableHorizontal={disableHorizontal}
           iconVariant={iconVariant}
           nameLines={nameLines}
+          menuIcon={menuIcon}
+          renderExtraInfo={renderExtraInfo}
         />
       )}
     </View>

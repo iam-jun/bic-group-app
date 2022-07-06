@@ -28,11 +28,23 @@ export const groupInitState = {
         communityScheme: undefined,
         groupSchemes: undefined,
       },
+      allSchemes: undefined,
     },
     creatingScheme: {
       data: undefined,
       memberRoleIndex: 2,
       creating: false,
+    },
+    assignGroupScheme: {
+      assignments: {
+        loading: false,
+        data: undefined,
+      },
+      assigning: {
+        loading: false,
+        data: [],
+        currentAssignments: undefined,
+      },
     },
     groupScheme: {
       // storing this data for comparing original group scheme and editing scheme
@@ -340,6 +352,32 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         permissionScheme: {
           ...state.permissionScheme,
           schemes: payload,
+        },
+      };
+    case groupsTypes.SET_GROUP_SCHEME_ASSIGNMENTS:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          assignGroupScheme: {
+            ...state.permissionScheme.assignGroupScheme,
+            assignments: payload
+              ? payload
+              : groupInitState.permissionScheme.assignGroupScheme.assignments,
+          },
+        },
+      };
+    case groupsTypes.SET_GROUP_SCHEME_ASSIGNING:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          assignGroupScheme: {
+            ...state.permissionScheme.assignGroupScheme,
+            assigning: payload
+              ? payload
+              : groupInitState.permissionScheme.assignGroupScheme.assigning,
+          },
         },
       };
     case groupsTypes.SET_GROUP_SCHEME:

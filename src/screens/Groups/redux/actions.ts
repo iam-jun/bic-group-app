@@ -18,6 +18,7 @@ import {
   IGroupMembers,
   IPermission,
   IScheme,
+  IPayloadGroupSchemeAssignments,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 import {IObject} from '~/interfaces/common';
@@ -157,7 +158,11 @@ const groupsActions = {
     type: groupsTypes.GET_SCHEMES,
     payload,
   }),
-  setSchemes: (payload?: {loading?: boolean; data?: any}) => ({
+  setSchemes: (payload?: {
+    loading?: boolean;
+    data?: any;
+    allSchemes?: any;
+  }) => ({
     type: groupsTypes.SET_SCHEMES,
     payload,
   }),
@@ -170,6 +175,29 @@ const groupsActions = {
   }),
   setGroupScheme: (payload?: {data?: IScheme}) => ({
     type: groupsTypes.SET_GROUP_SCHEME,
+    payload,
+  }),
+  getGroupSchemeAssignments: (payload: {
+    communityId: number;
+    showLoading?: boolean;
+  }) => ({
+    type: groupsTypes.GET_GROUP_SCHEME_ASSIGNMENTS,
+    payload,
+  }),
+  setGroupSchemeAssignments: (payload?: any) => ({
+    type: groupsTypes.SET_GROUP_SCHEME_ASSIGNMENTS,
+    payload,
+  }),
+  setGroupSchemeAssigning: (payload?: {
+    data?: any;
+    loading?: boolean;
+    currentAssignments?: any;
+  }) => ({
+    type: groupsTypes.SET_GROUP_SCHEME_ASSIGNING,
+    payload,
+  }),
+  putGroupSchemeAssignments: (payload: IPayloadGroupSchemeAssignments) => ({
+    type: groupsTypes.PUT_GROUP_SCHEME_ASSIGNMENTS,
     payload,
   }),
   updateGroupScheme: (payload: {
