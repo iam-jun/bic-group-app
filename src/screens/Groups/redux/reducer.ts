@@ -701,6 +701,8 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     case groupsTypes.SET_COMMUNITY_DETAIL:
       return {
         ...state,
+        loadingCover: false,
+        loadingAvatar: false,
         isGettingInfoDetail: false,
         communityDetail: payload,
       };

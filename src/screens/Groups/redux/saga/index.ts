@@ -69,6 +69,7 @@ import putGroupStructureReorder from '~/screens/Groups/redux/saga/putGroupStruct
 import getGroupStructureMoveTargets from '~/screens/Groups/redux/saga/getGroupStructureMoveTargets';
 import putGroupStructureMoveToTarget from '~/screens/Groups/redux/saga/putGroupStructureMoveToTarget';
 import putGroupStructureCollapseStatus from '~/screens/Groups/redux/saga/putGroupStructureCollapseStatus';
+import editCommunityDetail from './editCommunityDetail';
 import getGroupSchemeAssignments from '~/screens/Groups/redux/saga/getGroupSchemeAssignments';
 import putGroupSchemeAssignments from '~/screens/Groups/redux/saga/putGroupSchemeAssignments';
 
@@ -199,6 +200,7 @@ export default function* groupsSaga() {
     declineAllCommunityMemberRequests,
   );
   yield takeLatest(groupsTypes.GET_COMMUNITY_SEARCH, getCommunitySearch);
+  yield takeLatest(groupsTypes.EDIT_COMMUNITY_DETAIL, editCommunityDetail);
 }
 
 function* getGroupSearch({payload}: {type: string; payload: string}) {
@@ -226,7 +228,7 @@ function* getGroupSearch({payload}: {type: string; payload: string}) {
 
 function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
   try {
-    const {file, id, fieldName, uploadType} = payload;
+    const {file, id, fieldName, uploadType, destination} = payload;
     yield updateLoadingImageState(fieldName, true);
 
     const data: IGetFile = yield ImageUploader.getInstance().upload({
@@ -234,15 +236,27 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
       uploadType,
     });
 
-    yield put(
-      groupsActions.editGroupDetail({
-        data: {id, [fieldName]: data.url},
-        editFieldName:
-          fieldName === 'icon'
-            ? i18next.t('common:text_avatar')
-            : i18next.t('common:text_cover'),
-      }),
-    );
+    if (destination === 'group') {
+      yield put(
+        groupsActions.editGroupDetail({
+          data: {id, [fieldName]: data.url},
+          editFieldName:
+            fieldName === 'icon'
+              ? i18next.t('common:text_avatar')
+              : i18next.t('common:text_cover'),
+        }),
+      );
+    } else {
+      yield put(
+        groupsActions.editCommunityDetail({
+          data: {id, [fieldName]: data.url},
+          editFieldName:
+            fieldName === 'icon'
+              ? i18next.t('common:text_avatar')
+              : i18next.t('common:text_cover'),
+        }),
+      );
+    }
   } catch (err) {
     console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
     yield updateLoadingImageState(payload.fieldName, false);

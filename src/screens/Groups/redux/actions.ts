@@ -18,6 +18,7 @@ import {
   IGroupMembers,
   IPermission,
   IScheme,
+  ICommunityDetailEdit,
   IPayloadGroupSchemeAssignments,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
@@ -696,6 +697,16 @@ const groupsActions = {
   resetCommunitySearch: () => ({
     type: groupsTypes.RESET_COMMUNITY_SEARCH,
   }),
+  editCommunityDetail: function (payload: {
+    data: ICommunityDetailEdit;
+    editFieldName?: string;
+    callback?: () => void;
+  }) {
+    return {
+      type: groupsTypes.EDIT_COMMUNITY_DETAIL,
+      payload,
+    };
+  },
 };
 
 export default groupsActions;
