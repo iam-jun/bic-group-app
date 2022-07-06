@@ -100,6 +100,24 @@ const GroupSchemeAssignment = () => {
     }
   };
 
+  const onPressBack = () => {
+    if (!isEmpty(dataAssigning)) {
+      dispatch(
+        modalActions.showAlert({
+          title: t('communities:permission:text_title_discard_create_scheme'),
+          content: t('communities:permission:text_desc_discard_create_scheme'),
+          cancelBtn: true,
+          cancelLabel: t('common:btn_discard'),
+          confirmLabel: t('communities:permission:btn_continue'),
+          cancelBtnProps: {textColor: theme.colors.textPrimary},
+          onDismiss: () => rootNavigation.goBack(),
+        }),
+      );
+    } else {
+      rootNavigation.goBack();
+    }
+  };
+
   const onPressGroup = (group: IGroup) => {
     rootNavigation.navigate(groupStack.groupSchemeAssignSelection, {group});
   };
@@ -122,6 +140,7 @@ const GroupSchemeAssignment = () => {
       <Header
         title={t('communities:permission:title_group_scheme_assignment')}
         onPressButton={onPressAssign}
+        onPressBack={onPressBack}
         buttonText={'communities:permission:btn_assign'}
         buttonProps={{
           loading: loadingAssigning,
