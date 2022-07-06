@@ -1,5 +1,5 @@
-import React, {FC, useEffect} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle, ScrollView} from 'react-native';
+import React, {useEffect} from 'react';
+import {View, StyleSheet, ScrollView} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -19,6 +19,7 @@ import {IGroup} from '~/interfaces/IGroup';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Animated, {FadeIn, LightSpeedInLeft} from 'react-native-reanimated';
 import modalActions from '~/store/modal/actions';
+import AlertAssignGroupConfirmContent from '~/screens/Groups/GroupSchemeAssignment/components/AlertAssignGroupConfirmContent';
 
 const GroupSchemeAssignment = () => {
   const {t} = useBaseHook();
@@ -85,20 +86,15 @@ const GroupSchemeAssignment = () => {
 
   const onPressAssign = () => {
     if (communityId && !isEmpty(dataAssigning)) {
-      const title = t(
-        'communities:group_structure:text_title_confirm_move_group',
-      );
-      const content = t(
-        'communities:group_structure:text_desc_confirm_move_group',
-      );
       dispatch(
         modalActions.showAlert({
-          title,
-          content,
+          title: t('communities:permission:text_title_assign_group_confirm'),
           cancelBtn: true,
           cancelLabel: t('common:btn_cancel'),
-          confirmLabel: t('common:btn_confirm'),
+          confirmLabel: t('communities:permission:btn_assign'),
           onConfirm: putGroupSchemeAssignments,
+          style: {width: '90%'},
+          children: <AlertAssignGroupConfirmContent />,
         }),
       );
     }

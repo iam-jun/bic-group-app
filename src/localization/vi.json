@@ -753,10 +753,12 @@
       "text_desc_apply_system_scheme": "Bạn cần xoá quyền đã tạo",
       "text_title_delete_community_scheme": "Xoá quyền này",
       "text_desc_delete_community_scheme": "Hành động này không thể hoàn tác. Bạn có chắc muốn thực hiện?",
+      "text_title_assign_group_confirm": "Xác nhận phân quyền nhóm",
+      "text_desc_assign_group_confirm": "Bạn có chắc muốn thực hiện phân quyền?",
       "text_create_scheme_success": "Đã tạo thành công",
       "text_update_scheme_success": "Đã cập nhật thành công",
       "text_update_group_scheme_success": "Đã cập nhật thành công",
-      "text_unknown_scheme": "Unknown scheme",
+      "text_unknown_scheme": "Quyền nào đó",
       "text_set_by": "Đặt bởi",
       "text_fixed_role": "Cố định",
       "text_fixed_for_creator": "Cố định cho Người tạo"
