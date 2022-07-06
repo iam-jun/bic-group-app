@@ -4,6 +4,7 @@ import actions from '../actions';
 import showError from '~/store/commonSaga/showError';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
+import {sortFixedRoles} from '../../helper';
 
 export default function* getCommunityScheme({
   payload,
@@ -19,8 +20,12 @@ export default function* getCommunityScheme({
       communityId,
     );
     if (response?.data) {
+      const dataWithOrderedFixRole = sortFixedRoles(response?.data);
       yield put(
-        actions.setCommunityScheme({loading: false, data: response?.data}),
+        actions.setCommunityScheme({
+          loading: false,
+          data: dataWithOrderedFixRole,
+        }),
       );
     } else {
       yield put(actions.setCommunityScheme({loading: false}));

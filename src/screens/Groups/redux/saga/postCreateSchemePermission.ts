@@ -45,7 +45,7 @@ export default function* postCreateSchemePermission({
       yield put(modalActions.showHideToastMessage(toastMessage));
     }
   } catch (err) {
-    console.log('getPermissionCategories error:', err);
+    console.log('postCreateSchemePermission error:', err);
     yield put(groupsActions.setCreatingScheme({creating: false}));
     yield call(showError, err);
   }

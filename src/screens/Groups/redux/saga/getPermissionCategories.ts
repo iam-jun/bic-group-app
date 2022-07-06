@@ -4,12 +4,20 @@ import actions from '../actions';
 import showError from '~/store/commonSaga/showError';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 
-export default function* getPermissionCategories(): any {
+export default function* getPermissionCategories({
+  payload,
+}: {
+  type: string;
+  payload?: 'SYSTEM' | 'COMMUNITY' | 'GROUP';
+}): any {
   try {
     yield put(
       actions.setPermissionCategories({loading: true, data: undefined}),
     );
-    const response = yield call(groupsDataHelper.getPermissionCategories);
+    const response = yield call(
+      groupsDataHelper.getPermissionCategories,
+      payload,
+    );
     if (response?.data) {
       yield put(
         actions.setPermissionCategories({loading: false, data: response?.data}),

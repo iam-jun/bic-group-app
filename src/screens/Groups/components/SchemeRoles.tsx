@@ -1,5 +1,5 @@
 import React, {FC} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';

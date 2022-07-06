@@ -45,7 +45,7 @@ const CommunityPermissionDetail: FC<CommunityPermissionDetailProps> = ({
   const {name, roles} = initScheme || {};
 
   useEffect(() => {
-    if (!permissionCategories?.data && !permissionCategories?.loading) {
+    if (!permissionCategories?.loading) {
       dispatch(groupsActions.getPermissionCategories());
     }
   }, []);

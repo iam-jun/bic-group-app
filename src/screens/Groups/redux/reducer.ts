@@ -31,7 +31,7 @@ export const groupInitState = {
     },
     creatingScheme: {
       data: undefined,
-      memberRoleIndex: undefined,
+      memberRoleIndex: 2,
       creating: false,
     },
     groupScheme: {

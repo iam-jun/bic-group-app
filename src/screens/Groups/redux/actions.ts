@@ -96,8 +96,9 @@ const groupsActions = {
     payload,
   }),
   // permission
-  getPermissionCategories: () => ({
+  getPermissionCategories: (payload?: 'SYSTEM' | 'COMMUNITY' | 'GROUP') => ({
     type: groupsTypes.GET_PERMISSION_CATEGORIES,
+    payload,
   }),
   setPermissionCategories: (payload: any) => ({
     type: groupsTypes.SET_PERMISSION_CATEGORIES,
