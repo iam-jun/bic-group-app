@@ -2,7 +2,7 @@ import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
-import {IParsedGroup} from '~/interfaces/IGroup';
+import {IGroup, IParsedGroup} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
 import Icon from '~/beinComponents/Icon';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
@@ -18,6 +18,7 @@ import {useKeySelector} from '~/hooks/selector';
 import privacyTypes from '~/constants/privacyTypes';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
+import {IconType} from '~/resources/icons';
 
 export interface GroupItemProps extends IParsedGroup {
   testID?: string;
@@ -34,6 +35,8 @@ export interface GroupItemProps extends IParsedGroup {
   showInfo?: boolean;
   iconVariant?: AvatarType;
   nameLines?: number;
+  menuIcon?: IconType;
+  renderExtraInfo?: (group: IGroup) => any;
 }
 
 const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
@@ -63,6 +66,8 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     disableHorizontal,
     iconVariant = 'medium',
     nameLines = 2,
+    menuIcon = 'EllipsisH',
+    renderExtraInfo,
   } = props;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
@@ -110,6 +115,10 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
       newChecked = true;
     }
     onCheckedItem?.(props, newChecked);
+  };
+
+  const _renderExtraInfo = () => {
+    return renderExtraInfo?.(props);
   };
 
   const renderLine = (uiLevel: number) => {
@@ -211,12 +220,13 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                 </Text.BodyS>
               </View>
             )}
+            {_renderExtraInfo?.()}
           </View>
           {!!onPressMenu && (
             <View style={styles.btnMenu}>
               <Icon
                 style={{alignSelf: 'auto'}}
-                icon={'EllipsisH'}
+                icon={menuIcon}
                 testID={'group_item.button_menu'}
                 onPress={_onPressMenu}
               />

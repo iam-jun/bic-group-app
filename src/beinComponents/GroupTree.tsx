@@ -8,7 +8,7 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
-import {useDispatch} from 'react-redux';
+import {IconType} from '~/resources/icons';
 
 export interface GroupTreeProps {
   data?: IGroup[] | IGroup;
@@ -25,6 +25,8 @@ export interface GroupTreeProps {
   disableHorizontal?: boolean;
   iconVariant?: AvatarType;
   nameLines?: number;
+  menuIcon?: IconType;
+  renderExtraInfo?: (group: IGroup) => any;
 }
 
 type TreeData = {[x: string]: IParsedGroup};
@@ -46,6 +48,8 @@ const GroupTree: React.FC<GroupTreeProps> = ({
   disableHorizontal,
   iconVariant,
   nameLines,
+  menuIcon,
+  renderExtraInfo,
 }: GroupTreeProps) => {
   const [treeData, setTreeData] = useState<TreeData>({});
   const [renderedTree, setRenderedTree] = useState<React.ReactNode[]>([]);
@@ -236,6 +240,8 @@ const GroupTree: React.FC<GroupTreeProps> = ({
           disableHorizontal={disableHorizontal}
           iconVariant={iconVariant}
           nameLines={nameLines}
+          menuIcon={menuIcon}
+          renderExtraInfo={renderExtraInfo}
         />,
       ),
     );
