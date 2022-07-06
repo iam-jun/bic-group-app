@@ -38,3 +38,16 @@ export const getNewSchemeRolesOnUpdatePermission = (
   }
   return [...roles];
 };
+
+export const getMemberRoleIndex = (schemeData: IScheme) => {
+  let memberRoleIndex = 1;
+
+  schemeData.roles?.map((role: IRole, i: number) => {
+    if (role?.type === ROLE_TYPE.MEMBER) {
+      memberRoleIndex = i;
+      return;
+    }
+  });
+
+  return memberRoleIndex;
+};

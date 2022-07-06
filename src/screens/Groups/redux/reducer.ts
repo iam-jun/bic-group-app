@@ -32,7 +32,7 @@ export const groupInitState = {
     },
     creatingScheme: {
       data: undefined,
-      memberRoleIndex: 0,
+      memberRoleIndex: 2,
       creating: false,
     },
     assignGroupScheme: {

@@ -130,11 +130,10 @@ const createStyle = (theme: ITheme) => {
     },
     row: {
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'flex-start',
     },
     titleContainer: {
       flexDirection: 'row',
-      alignItems: 'center',
       marginBottom: spacing.margin.small,
     },
     buttonCreate: {
@@ -159,7 +158,8 @@ const createStyle = (theme: ITheme) => {
     },
     buttonContainer: {minHeight: 30, justifyContent: 'center'},
     activatedText: {
-      marginHorizontal: spacing.margin.small,
+      marginLeft: spacing.margin.base,
+      marginRight: spacing.margin.small,
     },
     descScheme: {
       marginTop: spacing.margin.tiny,
