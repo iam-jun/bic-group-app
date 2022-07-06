@@ -240,7 +240,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const _onFocus = () => {
-    stickerViewRef?.current?.hideImmediately?.();
+    stickerViewRef?.current?.hide?.();
   };
 
   const _onChangeText = (value: string) => {
@@ -306,10 +306,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
     stickerViewRef?.current?.onBackPress?.();
   };
 
-  const getStickerBoardVisible = () => {
-    return stickerViewRef?.current?.getVisible?.();
-  };
-
   useImperativeHandle(commentInputRef, () => ({
     setText,
     getText,
@@ -319,7 +315,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
     isFocused,
     send,
     onBackPress,
-    getStickerBoardVisible,
   }));
 
   const _onKeyPress = (e: any) => {
