@@ -20,7 +20,15 @@ export default function* getSchemes({
 
     const response = yield call(groupsDataHelper.getSchemes, communityId);
     if (response?.data) {
-      yield put(actions.setSchemes({loading: false, data: response?.data}));
+      const {communityScheme, groupSchemes} = response.data || {};
+      const allSchemes: any = {};
+      if (communityScheme?.id) {
+        allSchemes[communityScheme.id] = communityScheme;
+      }
+      groupSchemes?.map?.((scheme: any) => (allSchemes[scheme?.id] = scheme));
+      yield put(
+        actions.setSchemes({loading: false, data: response?.data, allSchemes}),
+      );
     } else {
       yield put(actions.setSchemes({loading: false}));
     }

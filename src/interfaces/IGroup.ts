@@ -260,3 +260,8 @@ export interface ICommunityDetailEdit {
   background_img_url?: string;
   privacy?: COMMUNITY_PRIVACY_TYPE;
 }
+export interface IPayloadGroupSchemeAssignments {
+  communityId: number;
+  data: {groupId: number; schemeId: string}[];
+  currentAssignments?: any;
+}

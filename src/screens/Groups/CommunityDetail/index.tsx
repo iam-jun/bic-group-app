@@ -65,8 +65,8 @@ const CommunityDetail = (props: any) => {
   };
 
   const getPosts = useCallback(() => {
-    /* Avoid getting group posts of the nonexisting group, 
-    which will lead to endless fetching group posts in 
+    /* Avoid getting group posts of the nonexisting group,
+    which will lead to endless fetching group posts in
     httpApiRequest > makeGetStreamRequest */
     const privilegeToFetchPost =
       isMember ||

@@ -33,6 +33,8 @@ import GroupStructureSettings from '~/screens/Groups/GroupStructureSettings';
 import MoveGroup from '~/screens/Groups/MoveGroup';
 import ReorderGroup from '~/screens/Groups/ReorderGroup';
 import EditName from '~/screens/Groups/GeneralInformation/EditName';
+import GroupSchemeAssignment from '~/screens/Groups/GroupSchemeAssignment';
+import GroupSchemeAssignSelection from '~/screens/Groups/GroupSchemeAssignSelection';
 
 export default {
   // community
@@ -45,6 +47,8 @@ export default {
   'community-admin': CommunityAdmin,
   'community-permission': CommunityPermission,
   'community-permission-detail': CommunityPermissionDetail,
+  'group-scheme-assignment': GroupSchemeAssignment,
+  'group-scheme-assign-selection': GroupSchemeAssignSelection,
   'community-pending-members': CommunityPendingMembers,
   'create-permission-scheme': CreatePermissionScheme,
   'group-structure-settings': GroupStructureSettings,

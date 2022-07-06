@@ -52,6 +52,10 @@ const groupsKeySelector = {
       creating: 'groups.permissionScheme.creatingScheme.creating',
     },
     groupScheme: 'groups.permissionScheme.groupScheme.data',
+    assignGroupScheme: {
+      assignments: 'groups.permissionScheme.assignGroupScheme.assignments',
+      assigning: 'groups.permissionScheme.assignGroupScheme.assigning',
+    },
   },
   groupStructure: {
     communityTree: 'groups.groupStructure.communityTree',
