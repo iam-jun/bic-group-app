@@ -313,6 +313,8 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
     case groupsTypes.UPDATE_CREATING_SCHEME_PERMISSION: {
+      const memberRoleIndex =
+        state.permissionScheme.creatingScheme?.memberRoleIndex;
       const {permission, roleIndex} = payload || {};
       const roles =
         // @ts-ignore
@@ -321,6 +323,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         permission,
         roleIndex,
         roles,
+        memberRoleIndex,
       );
       const newData = Object.assign(
         // @ts-ignore
