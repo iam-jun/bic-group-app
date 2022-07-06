@@ -1,6 +1,7 @@
 import React, {FC, useEffect} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {cloneDeep} from 'lodash';
 
 import {ITheme} from '~/theme/interfaces';
 
@@ -43,7 +44,7 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
   const onPressView = () => {
     if (systemScheme?.data) {
       rootNavigation.navigate(groupStack.communityPermissionDetail, {
-        scheme: systemScheme.data,
+        scheme: cloneDeep(systemScheme.data),
       });
     }
   };
@@ -113,11 +114,10 @@ const createStyle = (theme: ITheme) => {
     },
     row: {
       flexDirection: 'row',
-      alignItems: 'center',
+      alignItems: 'flex-start',
     },
     titleContainer: {
       flexDirection: 'row',
-      alignItems: 'center',
       marginBottom: spacing.margin.small,
     },
     buttonView: {
@@ -127,7 +127,7 @@ const createStyle = (theme: ITheme) => {
       backgroundColor: colors.bgHover,
     },
     activatedText: {
-      marginHorizontal: spacing.margin.small,
+      marginLeft: spacing.margin.base,
     },
     descScheme: {
       marginTop: spacing.margin.tiny,

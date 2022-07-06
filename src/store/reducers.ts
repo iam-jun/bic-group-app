@@ -73,6 +73,7 @@ const rootReducers = (state, action) => {
       'persist:root',
       'persist:auth',
       'persist:notifications',
+      'persist:post',
     ]).catch(e => console.log('error when logout', e));
     return appReducer(undefined, action);
   }

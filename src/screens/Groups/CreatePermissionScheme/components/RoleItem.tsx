@@ -9,6 +9,7 @@ import Icon from '~/beinComponents/Icon';
 import PermissionItem from '~/screens/Groups/CreatePermissionScheme/components/PermissionItem';
 import {ICategory, IPermission, IRole} from '~/interfaces/IGroup';
 import {permissionRoleSectionHeaderHeight} from '~/theme/dimension';
+import {CATEGORY_KEY, ROLE_TYPE} from '~/constants/permissionScheme';
 
 export interface RoleItemProps {
   categories: ICategory[];
@@ -47,40 +48,61 @@ const RoleItem: FC<RoleItemProps> = ({
         <Icon icon={isExpand ? 'AngleDown' : 'AngleRight'} />
       </TouchableOpacity>
       {isExpand &&
-        categories?.map?.((cat: ICategory) => (
-          <View key={`role_${keyRoleId}_cat_${cat?.key}`}>
-            <Text.ButtonSmall style={styles.catName}>
-              {cat?.name}
-            </Text.ButtonSmall>
-            {cat?.subCategories?.map((subCat: any) => (
-              <View
-                key={`role_${keyRoleId}_cat_${cat?.key}_subCat_${subCat?.key}`}>
-                <Text.H5 style={styles.subCatName}>{subCat?.name}</Text.H5>
-                {subCat?.permissions?.map((per: IPermission) => {
-                  const isChecked = role?.permissions?.includes(per?.key);
-                  const isInherited = inheritedRole?.permissions?.includes(
-                    per?.key,
-                  );
-                  if (selectedRolesOnly && !isChecked && !isInherited) {
-                    return null;
-                  }
-                  return (
-                    <PermissionItem
-                      key={`role_${keyRoleId}_cat_${cat?.key}_subCat_${subCat?.key}_per_${per?.key}`}
-                      permission={per}
-                      role={role}
-                      roleIndex={roleIndex}
-                      onPress={onPressPermission}
-                      isChecked={isChecked}
-                      isInherited={isInherited}
-                      inheritedRoleName={inheritedRole?.name}
-                    />
-                  );
-                })}
-              </View>
-            ))}
-          </View>
-        ))}
+        categories?.map?.((cat: ICategory) => {
+          if (
+            role?.type === ROLE_TYPE.GROUP_ADMIN &&
+            cat?.key === CATEGORY_KEY.COMMUNITY
+          )
+            return null;
+
+          return (
+            <View key={`role_${keyRoleId}_cat_${cat?.key}`}>
+              <Text.ButtonSmall style={styles.catName}>
+                {cat?.name}
+              </Text.ButtonSmall>
+              {cat?.subCategories?.map((subCat: any) => (
+                <View
+                  key={`role_${keyRoleId}_cat_${cat?.key}_subCat_${subCat?.key}`}>
+                  <Text.H5 style={styles.subCatName}>{subCat?.name}</Text.H5>
+                  {subCat?.permissions?.map((per: IPermission) => {
+                    const isChecked = role?.permissions?.includes(per?.key);
+                    const isInherited = inheritedRole?.permissions?.includes(
+                      per?.key,
+                    );
+                    const {fixedForRoles = []} = per;
+                    const isFixed = fixedForRoles?.includes?.(role.type);
+                    const isFixedForCreator = fixedForRoles?.includes?.(
+                      ROLE_TYPE.CREATOR,
+                    );
+                    if (
+                      selectedRolesOnly &&
+                      !isChecked &&
+                      !isInherited &&
+                      !isFixed &&
+                      !isFixedForCreator
+                    ) {
+                      return null;
+                    }
+                    return (
+                      <PermissionItem
+                        key={`role_${keyRoleId}_cat_${cat?.key}_subCat_${subCat?.key}_per_${per?.key}`}
+                        permission={per}
+                        role={role}
+                        roleIndex={roleIndex}
+                        onPress={onPressPermission}
+                        isChecked={isChecked}
+                        isInherited={isInherited}
+                        inheritedRoleName={inheritedRole?.name}
+                        isFixed={isFixed}
+                        isFixedForCreator={isFixedForCreator}
+                      />
+                    );
+                  })}
+                </View>
+              ))}
+            </View>
+          );
+        })}
     </View>
   );
 };

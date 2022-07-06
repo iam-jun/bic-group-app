@@ -736,7 +736,7 @@
       "title_scheme_name": "Tên quyền:",
       "title_scheme_description": "Mô tả quyền:",
       "text_desc_system_scheme": "Sử dụng quyền mặc định của hệ thống. Nếu không có bất cứ quyền tự tạo nào, quyền hệ thống sẽ tự động được chọn.",
-      "text_desc_community_scheme": "Quyền tự tạo mặc định được áp dụng cho cộng đồng và tất cả các nhóm bên.",
+      "text_desc_community_scheme": "Quyền tự tạo mặc định được áp dụng cho cộng đồng và tất cả các nhóm bên trong.",
       "text_desc_group_scheme": "Quyền tự tạo riêng để áp dụng cho nhóm cụ thể.",
       "text_create_scheme_name": "Nhập tên",
       "text_create_scheme_desc": "Viết mô tả của bạn (tối đa 255 ký tự)",
@@ -753,7 +753,9 @@
       "text_desc_delete_community_scheme": "Hành động này không thể hoàn tác. Bạn có chắc muốn thực hiện?",
       "text_create_scheme_success": "Đã tạo thành công",
       "text_update_scheme_success": "Đã cập nhật thành công",
-      "text_set_by": "Đặt bởi"
+      "text_set_by": "Đặt bởi",
+      "text_fixed_role": "Cố định",
+      "text_fixed_for_creator": "Cố định cho Người tạo"
     },
     "group_structure": {
       "title_group_structure_settings": "Cài đặt cấu trúc nhóm",
