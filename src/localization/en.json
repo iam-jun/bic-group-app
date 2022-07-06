@@ -291,7 +291,7 @@
     "title_module_settings": "Module Settings",
     "title_group_name": "Group Name",
     "title_group_description": "Group Description",
-    "text_maximum_character": "Maximum 500 characters",
+    "text_description_maximum_character": "Maximum 255 characters",
     "title_group_type": "Group Type",
     "title_avatar": "Avatar",
     "title_cover": "Cover",
@@ -369,7 +369,9 @@
     "privacy_secret": "Secret",
     "privacy_open": "Open",
     "title_community_name": "Community Name",
-    "title_community_description": "Community Description"
+    "title_community_description": "Community Description",
+    "text_name_maximum_character": "Maximum 64 characters",
+    "title_edit_organization_name": "Edit Name"
   },
   "languages": {
     "title_en": "English",

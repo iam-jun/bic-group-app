@@ -13,19 +13,21 @@ import images from '~/resources/images';
 interface Props {
   testID?: string;
   onEditCover: () => void;
+  backgroundUrl: string;
+  canEditInfo: boolean;
 }
 
-const CoverImage = ({testID, onEditCover}: Props) => {
+const CoverImage = ({
+  testID,
+  onEditCover,
+  backgroundUrl,
+  canEditInfo,
+}: Props) => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = themeStyles(theme, coverHeight);
   const loadingCover = useKeySelector(groupsKeySelector.loadingCover);
-  const {background_img_url} =
-    useKeySelector(groupsKeySelector.groupDetail.group) || {};
-  const can_edit_info = useKeySelector(
-    groupsKeySelector.groupDetail.can_edit_info,
-  );
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -41,7 +43,7 @@ const CoverImage = ({testID, onEditCover}: Props) => {
         <Text.H5 color={colors.iconTint} useI18n>
           settings:title_cover
         </Text.H5>
-        {!!can_edit_info && (
+        {!!canEditInfo && (
           <ButtonWrapper
             testID="cover.button_edit"
             onPress={onEditCover}
@@ -57,7 +59,7 @@ const CoverImage = ({testID, onEditCover}: Props) => {
           <Image
             testID="cover.image"
             style={styles.cover}
-            source={background_img_url || images.img_cover_default}
+            source={backgroundUrl || images.img_cover_default}
           />
         ) : (
           <View

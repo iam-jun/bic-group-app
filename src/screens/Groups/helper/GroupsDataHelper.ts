@@ -1,5 +1,6 @@
 import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
 import {
+  ICommunityDetailEdit,
   IGetCommunityGroup,
   IGroupDetailEdit,
   IParamGetGroupPosts,
@@ -467,6 +468,18 @@ export const groupsApiConfig = {
     params: {
       ...params,
       key: !!params?.key?.trim?.() ? params.key : undefined,
+    },
+  }),
+  editCommunityDetail: (
+    communityId: number,
+    data: ICommunityDetailEdit,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {
+      ...data,
     },
   }),
 };
@@ -1252,6 +1265,23 @@ const groupsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response.data.data);
+      } else {
+        return Promise.reject(response);
+      }
+    } catch (e) {
+      return Promise.reject(e);
+    }
+  },
+  editCommunityDetail: async (
+    communityId: number,
+    data: ICommunityDetailEdit,
+  ) => {
+    try {
+      const response: any = await makeHttpRequest(
+        groupsApiConfig.editCommunityDetail(communityId, data),
+      );
+      if (response && response?.data) {
+        return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);
       }

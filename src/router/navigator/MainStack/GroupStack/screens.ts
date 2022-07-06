@@ -32,6 +32,7 @@ import CommunityPermissionDetail from '~/screens/Groups/CommunityPermissionDetai
 import GroupStructureSettings from '~/screens/Groups/GroupStructureSettings';
 import MoveGroup from '~/screens/Groups/MoveGroup';
 import ReorderGroup from '~/screens/Groups/ReorderGroup';
+import EditName from '~/screens/Groups/GeneralInformation/EditName';
 
 export default {
   // community
@@ -65,6 +66,7 @@ export default {
   'draft-post': DraftPost,
   'group-admin': GroupAdministration,
   'general-info': GeneralInformation,
+  'edit-name': EditName,
   'edit-description': EditDescription,
   'invite-members': AddMembersToGroup,
   'user-profile': UserProfile,

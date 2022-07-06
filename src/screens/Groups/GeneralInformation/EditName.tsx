@@ -12,44 +12,41 @@ import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
 import groupsActions from '../redux/actions';
 
-const EditDescription = (props: any) => {
-  const {
-    type = 'group',
-    id = '',
-    description = '',
-  } = props?.route?.params || {};
+const EditName = (props: any) => {
+  const {type = 'group', id = '', name = ''} = props?.route?.params || {};
 
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const [text, setText] = useState<string>(description);
+  const [text, setText] = useState<string>(name);
   const _onChangeText = (value: string) => {
     setText(value);
   };
 
   useEffect(() => {
-    !text && setText(description);
-  }, [description]);
+    !text && setText(name);
+  }, [name]);
 
   const onSave = () => {
+    if (!text?.trim?.()) return;
     if (type === 'group') {
       dispatch(
         groupsActions.editGroupDetail({
           data: {
             id,
-            description: text?.trim() ? text?.trim() : null,
+            name: text.trim(),
           },
-          editFieldName: i18next.t('common:text_description'),
+          editFieldName: i18next.t('settings:Name'),
           callback: onNavigateBack,
         }),
       );
     } else {
       dispatch(
         groupsActions.editCommunityDetail({
-          data: {id, description: text?.trim() ? text.trim() : null},
-          editFieldName: i18next.t('common:text_description'),
+          data: {id, name: text.trim()},
+          editFieldName: i18next.t('settings:Name'),
           callback: onNavigateBack,
         }),
       );
@@ -64,7 +61,7 @@ const EditDescription = (props: any) => {
       style={styles.container}
       isFullView>
       <Header
-        title={`settings:title_${type}_description`}
+        title={`settings:title_${type}_name`}
         titleTextProps={{useI18n: true}}
         buttonText={'common:btn_save'}
         buttonProps={{
@@ -75,27 +72,27 @@ const EditDescription = (props: any) => {
 
       <View style={styles.content}>
         <Text.H6 color={theme.colors.textPrimary} useI18n>
-          settings:title_edit_description
+          settings:title_edit_name
         </Text.H6>
         <View style={styles.inputView}>
           <TextInput
             style={styles.textEdit}
             value={text}
             onChangeText={_onChangeText}
-            maxLength={255}
+            maxLength={64}
             multiline
-            testID={`edit_${type}_description.text`}
+            testID={`edit_${type}_name.text`}
           />
         </View>
         <Text.BodyS color={theme.colors.textSecondary} useI18n>
-          settings:text_description_maximum_character
+          settings:text_name_maximum_character
         </Text.BodyS>
       </View>
     </ScreenWrapper>
   );
 };
 
-export default EditDescription;
+export default EditName;
 
 const themeStyles = (theme: ITheme) => {
   const {spacing, colors, dimension} = theme;
@@ -109,7 +106,7 @@ const themeStyles = (theme: ITheme) => {
       marginHorizontal: spacing.margin.large,
     },
     textEdit: {
-      minHeight: 224,
+      minHeight: 60,
       fontFamily: fontFamilies.OpenSans,
       fontSize: dimension.sizes.body,
       color: colors.textPrimary,
@@ -121,7 +118,7 @@ const themeStyles = (theme: ITheme) => {
       borderWidth: 1,
       borderBottomColor: colors.textPrimary,
       padding: spacing.margin.base,
-      minHeight: 224,
+      minHeight: 60,
     },
   });
 };

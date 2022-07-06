@@ -9,7 +9,10 @@ import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import {uploadTypes} from '~/configs/resourceConfig';
-import privacyTypes, {groupPrivacy} from '~/constants/privacyTypes';
+import privacyTypes, {
+  communityPrivacyListDetail,
+  groupPrivacy,
+} from '~/constants/privacyTypes';
 import {useKeySelector} from '~/hooks/selector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
@@ -23,30 +26,48 @@ import {alertAction, _openImagePicker} from './helper';
 
 const GeneralInformation = (props: any) => {
   const params = props.route.params;
-  const {id, type = 'GROUP'} = params || {};
+  const {id, type = 'group'} = params || {};
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
-  const {privacy} = useKeySelector(groupsKeySelector.group) || {};
-  const {total} = useKeySelector(groupsKeySelector.groupMemberRequests);
 
   const baseSheetRef: any = useRef();
-  let _icon = '',
-    backgroundUrl = '',
-    canEditInfo = false,
-    organizationName = '',
-    _description;
-  const {
-    icon,
-    background_img_url,
-    can_edit_info,
-    name,
-    description,
-    privacy,
-    can_edit_privacy,
-  } = useKeySelector(groupsKeySelector.communityDetail) || {};
+  let avatar: string,
+    backgroundUrl: string,
+    canEditInfo: boolean,
+    organizationName: string,
+    organizationDescription: string,
+    organizationPrivacy: any,
+    canEditPrivacy: boolean,
+    total: number;
+  if (type === 'group') {
+    canEditInfo =
+      useKeySelector(groupsKeySelector.groupDetail.can_edit_info) || {};
+    canEditPrivacy =
+      useKeySelector(groupsKeySelector.groupDetail.can_edit_privacy) || {};
+    const groupDetail =
+      useKeySelector(groupsKeySelector.groupDetail.group) || {};
+    avatar = groupDetail?.icon || '';
+    backgroundUrl = groupDetail?.background_img_url || '';
+    organizationName = groupDetail?.name || '';
+    organizationDescription = groupDetail?.description || '';
+    organizationPrivacy = groupDetail?.privacy || {};
+    total = useKeySelector(groupsKeySelector.groupMemberRequests)?.total || 0;
+  } else {
+    const communityDetail =
+      useKeySelector(groupsKeySelector.communityDetail) || {};
+    avatar = communityDetail?.icon || '';
+    backgroundUrl = communityDetail?.background_img_url || '';
+    canEditInfo = communityDetail?.can_edit_info || false;
+    organizationName = communityDetail?.name || '';
+    organizationDescription = communityDetail?.description || '';
+    organizationPrivacy = communityDetail?.privacy || {};
+    canEditPrivacy = communityDetail?.can_edit_privacy || false;
+    total =
+      useKeySelector(groupsKeySelector.communityMemberRequests)?.total || 0;
+  }
 
   useEffect(() => {
     if (type === 'group') {
@@ -68,29 +89,50 @@ const GeneralInformation = (props: any) => {
 
   const openGroupPrivacyModal = () => baseSheetRef?.current?.open?.();
 
-  const editGroupPrivacy = (item: any) => {
-    dispatch(
-      groupsActions.editGroupDetail({
-        data: {id, privacy: item.type},
-        editFieldName: i18next.t('common:text_privacy'),
-      }),
-    );
+  const editPrivacy = (item: any) => {
+    if (type === 'group') {
+      dispatch(
+        groupsActions.editGroupDetail({
+          data: {id, privacy: item.type},
+          editFieldName: i18next.t('common:text_privacy'),
+        }),
+      );
+    } else {
+      dispatch(
+        groupsActions.editCommunityDetail({
+          data: {id, privacy: item.type},
+          editFieldName: i18next.t('common:text_privacy'),
+        }),
+      );
+    }
   };
 
   const approveAllGroupMemberRequests = () => {
-    dispatch(groupsActions.approveAllGroupMemberRequests({groupId: id}));
-    editGroupPrivacy({type: groupPrivacy.public});
+    if (type === 'group') {
+      dispatch(groupsActions.approveAllGroupMemberRequests({groupId: id}));
+    } else {
+      dispatch(
+        groupsActions.approveAllCommunityMemberRequests({communityId: id}),
+      );
+    }
+    editPrivacy({type: groupPrivacy.public});
   };
 
   const declineAllGroupMemberRequests = () => {
-    dispatch(groupsActions.declineAllGroupMemberRequests({groupId: id}));
-    editGroupPrivacy({type: groupPrivacy.secret});
+    if (type === 'group') {
+      dispatch(groupsActions.declineAllGroupMemberRequests({groupId: id}));
+    } else {
+      dispatch(
+        groupsActions.declineAllCommunityMemberRequests({communityId: id}),
+      );
+    }
+    editPrivacy({type: groupPrivacy.secret});
   };
 
   const onPrivacyMenuPress = (item: any) => {
     baseSheetRef.current?.close();
 
-    if (privacy === groupPrivacy.private && total > 0) {
+    if (organizationPrivacy === groupPrivacy.private && total > 0) {
       if (item.type === groupPrivacy.public) {
         alertAction(
           dispatch,
@@ -111,12 +153,12 @@ const GeneralInformation = (props: any) => {
         );
       }
     } else {
-      editGroupPrivacy(item);
+      editPrivacy(item);
     }
   };
 
   const onEditAvatar = () =>
-    _openImagePicker(dispatch, id, 'icon', uploadTypes.groupAvatar);
+    _openImagePicker(dispatch, id, 'icon', uploadTypes.groupAvatar, type);
 
   const onEditCover = () =>
     _openImagePicker(
@@ -124,6 +166,7 @@ const GeneralInformation = (props: any) => {
       id,
       'background_img_url',
       uploadTypes.groupCover,
+      type,
     );
 
   const renderPrivacyItem = ({item}: {item: any}) => {
@@ -144,14 +187,29 @@ const GeneralInformation = (props: any) => {
       <Header title={i18next.t('settings:title_general_information')} />
       <ScrollView>
         <AvatarImage
+          avatar={avatar}
           testID="general_information.avatar"
           onEditAvatar={onEditAvatar}
+          canEditInfo={canEditInfo}
+          type={type}
         />
         <CoverImage
+          backgroundUrl={backgroundUrl}
           testID="general_information.cover"
           onEditCover={onEditCover}
+          canEditInfo={canEditInfo}
+          type={type}
         />
-        <InfoView id={id} onPressPrivacy={openGroupPrivacyModal} type={type} />
+        <InfoView
+          id={id}
+          onPressPrivacy={openGroupPrivacyModal}
+          type={type}
+          canEditInfo={canEditInfo}
+          canEditPrivacy={canEditPrivacy}
+          name={organizationName}
+          privacy={organizationPrivacy}
+          description={organizationDescription}
+        />
         <BottomSheet
           modalizeRef={baseSheetRef}
           ContentComponent={
@@ -162,7 +220,12 @@ const GeneralInformation = (props: any) => {
                 useI18n>
                 settings:title_privacy_type
               </Text.H5>
-              <ListView data={privacyTypes} renderItem={renderPrivacyItem} />
+              <ListView
+                data={
+                  type === 'group' ? privacyTypes : communityPrivacyListDetail
+                }
+                renderItem={renderPrivacyItem}
+              />
             </View>
           }
         />
