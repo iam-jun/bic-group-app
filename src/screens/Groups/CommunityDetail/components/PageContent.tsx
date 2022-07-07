@@ -1,4 +1,4 @@
-import {View, ScrollView, StyleSheet} from 'react-native';
+import {View, ScrollView, StyleSheet, DeviceEventEmitter} from 'react-native';
 import React from 'react';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
@@ -65,6 +65,11 @@ const _PageContent = ({
 
   const onPressYourGroups = () => {
     rootNavigation.navigate(groupStack.yourGroups, {communityId});
+  };
+
+  const _onScroll = (e: any) => {
+    onScroll && onScroll(e);
+    DeviceEventEmitter.emit('stopAllVideo');
   };
 
   const renderItem = ({item}: any) => {
@@ -150,7 +155,7 @@ const _PageContent = ({
       style={styles.listContainer}
       data={posts.data}
       renderItem={renderItem}
-      onScroll={onScroll}
+      onScroll={_onScroll}
       scrollEventThrottle={16}
       refreshing={refreshingGroupPosts}
       onRefresh={_onRefresh}
