@@ -5,6 +5,7 @@ import ic_xls from '../../assets/icons/files/ic_xls.svg';
 import ic_ppt from '../../assets/icons/files/ic_ppt.svg';
 import ic_default from '../../assets/icons/files/ic_default.svg';
 import ic_video from '../../assets/icons/files/ic_video.svg';
+import ic_zip from '../../assets/icons/files/ic_zip.svg';
 
 export default {
   ic_html,
@@ -14,4 +15,5 @@ export default {
   ic_ppt,
   ic_default,
   ic_video,
+  ic_zip,
 };

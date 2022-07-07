@@ -17,7 +17,10 @@ import {useBaseHook} from '~/hooks';
 import InputSchemeInfo from '~/screens/Groups/CreatePermissionScheme/InputSchemeInfo';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Text from '~/beinComponents/Text';
-import {getNewSchemeFromSystemScheme} from '~/screens/Groups/CreatePermissionScheme/helper';
+import {
+  getMemberRoleIndex,
+  getNewSchemeFromSystemScheme,
+} from '~/screens/Groups/CreatePermissionScheme/helper';
 import {IPermission, IScheme} from '~/interfaces/IGroup';
 import CreateSchemeHeader from '~/screens/Groups/CreatePermissionScheme/components/CreateSchemeHeader';
 import SelectSchemeRolesView from '~/screens/Groups/CreatePermissionScheme/SelectSchemeRolesView';
@@ -72,9 +75,11 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
 
   useEffect(() => {
     if (isEdit && initScheme) {
+      const memberRoleIndex = getMemberRoleIndex(cloneDeep(initScheme));
       dispatch(
         groupsActions.setCreatingScheme({
           data: cloneDeep(initScheme),
+          memberRoleIndex,
         }),
       );
 
@@ -86,8 +91,10 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
         dispatch(groupsActions.getGroupScheme({communityId, schemeId}));
       }
     }
-    if (!permissionCategories?.data && !permissionCategories?.loading) {
-      dispatch(groupsActions.getPermissionCategories());
+    if (!permissionCategories?.loading) {
+      dispatch(
+        groupsActions.getPermissionCategories(schemeId ? 'GROUP' : 'COMMUNITY'),
+      );
     }
     if (!systemScheme?.data && !systemScheme?.loading) {
       dispatch(groupsActions.getSystemScheme());

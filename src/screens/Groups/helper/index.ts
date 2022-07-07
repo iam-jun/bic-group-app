@@ -1,7 +1,8 @@
 import modalActions from '~/store/modal/actions';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
-import {IGroup} from '~/interfaces/IGroup';
-import {isEmpty} from 'lodash';
+import {IGroup, IRole, IScheme} from '~/interfaces/IGroup';
+import {cloneDeep, isEmpty} from 'lodash';
+import {ROLE_TYPE} from '~/constants/permissionScheme';
 
 export const checkLastAdmin = async (
   groupId: string | number,
@@ -116,14 +117,47 @@ export const getGroupFromTreeById = (tree: IGroup, groupId: number) => {
 
 export const getAllChildrenName = (group: IGroup) => {
   const result: string[] = [];
-  const getName = (group: IGroup) => {
-    result.push(group.name);
-    if (!isEmpty(group.children)) {
-      group.children?.map(child => {
+  const getName = (g: IGroup) => {
+    result.push(g.name);
+    if (!isEmpty(g.children)) {
+      g.children?.map(child => {
         getName(child);
       });
     }
   };
-  getName(group);
+  group.children?.map(child => {
+    getName(child);
+  });
   return result;
+};
+
+export const sortFixedRoles = (data: IScheme) => {
+  const roles = cloneDeep(data)?.roles;
+
+  const fixedRoles: IRole[] = [];
+  const customRoles: IRole[] = [];
+
+  const desiredFixedOrder = [
+    ROLE_TYPE.COMMUNITY_ADMIN,
+    ROLE_TYPE.GROUP_ADMIN,
+    ROLE_TYPE.MEMBER,
+  ];
+
+  roles?.forEach((role: IRole) => {
+    if (desiredFixedOrder.includes(role?.type)) {
+      fixedRoles.push(role);
+    } else {
+      customRoles.push(role);
+    }
+  });
+
+  // sorting fixedRoles based on the order of desiredFixedOrder array
+  fixedRoles.sort(
+    (a, b) =>
+      desiredFixedOrder.indexOf(a.type) - desiredFixedOrder.indexOf(b.type),
+  );
+
+  const newOrderedRoles = [...fixedRoles, ...customRoles];
+
+  return {...cloneDeep(data), roles: newOrderedRoles};
 };

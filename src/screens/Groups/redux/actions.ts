@@ -18,6 +18,8 @@ import {
   IGroupMembers,
   IPermission,
   IScheme,
+  ICommunityDetailEdit,
+  IPayloadGroupSchemeAssignments,
 } from '~/interfaces/IGroup';
 import {IUser} from '~/interfaces/IAuth';
 import {IObject} from '~/interfaces/common';
@@ -96,8 +98,9 @@ const groupsActions = {
     payload,
   }),
   // permission
-  getPermissionCategories: () => ({
+  getPermissionCategories: (payload?: 'SYSTEM' | 'COMMUNITY' | 'GROUP') => ({
     type: groupsTypes.GET_PERMISSION_CATEGORIES,
+    payload,
   }),
   setPermissionCategories: (payload: any) => ({
     type: groupsTypes.SET_PERMISSION_CATEGORIES,
@@ -156,7 +159,11 @@ const groupsActions = {
     type: groupsTypes.GET_SCHEMES,
     payload,
   }),
-  setSchemes: (payload?: {loading?: boolean; data?: any}) => ({
+  setSchemes: (payload?: {
+    loading?: boolean;
+    data?: any;
+    allSchemes?: any;
+  }) => ({
     type: groupsTypes.SET_SCHEMES,
     payload,
   }),
@@ -169,6 +176,29 @@ const groupsActions = {
   }),
   setGroupScheme: (payload?: {data?: IScheme}) => ({
     type: groupsTypes.SET_GROUP_SCHEME,
+    payload,
+  }),
+  getGroupSchemeAssignments: (payload: {
+    communityId: number;
+    showLoading?: boolean;
+  }) => ({
+    type: groupsTypes.GET_GROUP_SCHEME_ASSIGNMENTS,
+    payload,
+  }),
+  setGroupSchemeAssignments: (payload?: any) => ({
+    type: groupsTypes.SET_GROUP_SCHEME_ASSIGNMENTS,
+    payload,
+  }),
+  setGroupSchemeAssigning: (payload?: {
+    data?: any;
+    loading?: boolean;
+    currentAssignments?: any;
+  }) => ({
+    type: groupsTypes.SET_GROUP_SCHEME_ASSIGNING,
+    payload,
+  }),
+  putGroupSchemeAssignments: (payload: IPayloadGroupSchemeAssignments) => ({
+    type: groupsTypes.PUT_GROUP_SCHEME_ASSIGNMENTS,
     payload,
   }),
   updateGroupScheme: (payload: {
@@ -667,6 +697,16 @@ const groupsActions = {
   resetCommunitySearch: () => ({
     type: groupsTypes.RESET_COMMUNITY_SEARCH,
   }),
+  editCommunityDetail: function (payload: {
+    data: ICommunityDetailEdit;
+    editFieldName?: string;
+    callback?: () => void;
+  }) {
+    return {
+      type: groupsTypes.EDIT_COMMUNITY_DETAIL,
+      payload,
+    };
+  },
 };
 
 export default groupsActions;

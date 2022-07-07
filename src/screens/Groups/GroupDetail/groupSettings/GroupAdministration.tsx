@@ -54,7 +54,7 @@ const GroupAdministration = (props: any) => {
   };
 
   const goToGeneralInfo = () => {
-    rootNavigation.navigate(groupStack.generalInfo, {groupId});
+    rootNavigation.navigate(groupStack.generalInfo, {id: groupId});
   };
 
   const renderItem = (

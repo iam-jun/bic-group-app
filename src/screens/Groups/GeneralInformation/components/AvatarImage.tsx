@@ -13,14 +13,12 @@ import images from '~/resources/images';
 interface Props {
   testID?: string;
   onEditAvatar: () => void;
+  avatar: string;
+  canEditInfo: boolean;
 }
 
-const AvatarImage = ({testID, onEditAvatar}: Props) => {
+const AvatarImage = ({testID, onEditAvatar, avatar, canEditInfo}: Props) => {
   const loadingAvatar = useKeySelector(groupsKeySelector.loadingAvatar);
-  const {icon} = useKeySelector(groupsKeySelector.groupDetail.group) || {};
-  const can_edit_info = useKeySelector(
-    groupsKeySelector.groupDetail.can_edit_info,
-  );
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
@@ -34,7 +32,7 @@ const AvatarImage = ({testID, onEditAvatar}: Props) => {
         <Text.H5 color={colors.iconTint} useI18n>
           settings:title_avatar
         </Text.H5>
-        {!!can_edit_info && (
+        {!!canEditInfo && (
           <ButtonWrapper
             testID="avatar.button_edit"
             onPress={onEditAvatar}
@@ -50,7 +48,7 @@ const AvatarImage = ({testID, onEditAvatar}: Props) => {
           <Image
             testID="avatar.image"
             style={styles.avatar}
-            source={icon || images.img_user_avatar_default}
+            source={avatar || images.img_user_avatar_default}
           />
         ) : (
           <View

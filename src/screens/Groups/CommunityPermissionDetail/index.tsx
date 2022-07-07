@@ -45,7 +45,7 @@ const CommunityPermissionDetail: FC<CommunityPermissionDetailProps> = ({
   const {name, roles} = initScheme || {};
 
   useEffect(() => {
-    if (!permissionCategories?.data && !permissionCategories?.loading) {
+    if (!permissionCategories?.loading) {
       dispatch(groupsActions.getPermissionCategories());
     }
   }, []);
@@ -73,6 +73,7 @@ const CommunityPermissionDetail: FC<CommunityPermissionDetailProps> = ({
               roles={roles || []}
               onAnchorRole={onAnchorRole}
               selectedRolesOnly
+              useRoleInherited={false}
             />
           </Animated.ScrollView>
           <RoleHeaderAnimated

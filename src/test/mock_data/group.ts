@@ -323,3 +323,24 @@ export const groupPostData = [
   POST_DETAIL,
   POST_DETAIL,
 ];
+
+export const GROUP_ASSIGNMENTS = {
+  group_id: 1,
+  scheme_id: 'efgh',
+  name: 'Town Square',
+  level: 0,
+  privacy: 'PUBLIC',
+  icon: 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/e55a5e2f-5f61-4a1b-ad3f-623f08eec1a1',
+  description: 'The greatest community ever yeahhhhhhhhhh 123',
+  children: [
+    {
+      group_id: 2,
+      scheme_id: null,
+      name: 'Crypto Inner Circle',
+      level: 1,
+      privacy: 'PUBLIC',
+      icon: 'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/group/avatar/images/original/a6d32c52-c622-4600-bb89-f28b1510047b',
+      description: 'https://fe.sbx.beincomm.com/groups/2',
+    },
+  ],
+};

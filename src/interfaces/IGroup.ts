@@ -1,4 +1,8 @@
-import {GROUP_TYPE, PRIVACY_TYPE} from '~/constants/privacyTypes';
+import {
+  GROUP_TYPE,
+  GROUP_PRIVACY_TYPE,
+  COMMUNITY_PRIVACY_TYPE,
+} from '~/constants/privacyTypes';
 import {IFilePicked, IObject} from './common';
 import {IUploadType} from '~/configs/resourceConfig';
 
@@ -16,6 +20,7 @@ export interface IPermission {
   description: string;
   scope: string;
   restrictedRoles: string[];
+  fixedForRoles?: string[];
 }
 
 export interface IScheme {
@@ -107,7 +112,7 @@ export interface IGroupDetailEdit {
   icon?: string;
   background_img_url?: string;
   group_type?: GROUP_TYPE;
-  privacy?: PRIVACY_TYPE;
+  privacy?: GROUP_PRIVACY_TYPE;
 }
 
 export interface IGroupDetail {
@@ -146,6 +151,7 @@ export interface IGroupImageUpload {
   fieldName: 'icon' | 'background_img_url';
   file: IFilePicked;
   uploadType: IUploadType;
+  destination: 'group' | 'community';
 }
 
 export interface IGroupGetJoinableMembers {
@@ -244,4 +250,18 @@ export interface IGetCommunityGroup {
   preview_members?: boolean;
   key?: string;
   list_by?: 'tree' | 'flat';
+}
+
+export interface ICommunityDetailEdit {
+  id: number;
+  name?: string | null;
+  description?: string | null;
+  icon?: string;
+  background_img_url?: string;
+  privacy?: COMMUNITY_PRIVACY_TYPE;
+}
+export interface IPayloadGroupSchemeAssignments {
+  communityId: number;
+  data: {groupId: number; schemeId: string}[];
+  currentAssignments?: any;
 }

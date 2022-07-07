@@ -18,6 +18,7 @@ export const uploadFile = (
   file: IFilePicked,
   fieldName: 'icon' | 'background_img_url',
   uploadType: IUploadType,
+  destination: 'group' | 'community',
 ) => {
   dispatch(
     groupsActions.uploadImage({
@@ -25,6 +26,7 @@ export const uploadFile = (
       file,
       fieldName,
       uploadType,
+      destination,
     }),
   );
 };
@@ -35,6 +37,7 @@ export const _openImagePicker = async (
   id: number,
   fieldName: 'icon' | 'background_img_url',
   uploadType: IUploadType,
+  destination: 'group' | 'community',
 ) => {
   await checkPermission('photo', dispatch, canOpenPicker => {
     if (canOpenPicker) {
@@ -43,7 +46,7 @@ export const _openImagePicker = async (
         cropping: true,
         mediaType: 'photo',
       }).then(file => {
-        uploadFile(dispatch, id, file, fieldName, uploadType);
+        uploadFile(dispatch, id, file, fieldName, uploadType, destination);
       });
       return true;
     }
