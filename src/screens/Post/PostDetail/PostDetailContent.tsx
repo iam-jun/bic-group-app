@@ -7,7 +7,13 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {RefreshControl, SectionList, StyleSheet, View} from 'react-native';
+import {
+  DeviceEventEmitter,
+  RefreshControl,
+  SectionList,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Divider from '~/beinComponents/Divider';
