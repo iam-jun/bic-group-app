@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
+import {DeviceEventEmitter, ScrollView, StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
@@ -65,6 +65,10 @@ const GroupContent = ({
     if (posts.extra.length !== 0) {
       dispatch(groupsActions.mergeExtraGroupPosts(groupId));
     }
+  };
+
+  const onScroll = () => {
+    DeviceEventEmitter.emit('stopAllVideo');
   };
 
   const renderItem = ({item}: any) => {
@@ -160,6 +164,7 @@ const GroupContent = ({
       style={styles.listContainer}
       data={posts.data}
       refreshing={refreshingGroupPosts}
+      onScroll={onScroll}
       onRefresh={_onRefresh}
       onEndReached={loadMoreData}
       onEndReachedThreshold={0.5}

@@ -2,37 +2,32 @@
 
 exports[`StickerView component renders correctly 1`] = `
 <View
-  collapsable={false}
-  onGestureHandlerEvent={[Function]}
-  onGestureHandlerStateChange={[Function]}
   style={
-    Array [
-      Object {
-        "height": 1274,
-      },
-      false,
-    ]
+    Object {
+      "backgroundColor": "#FFFFFF",
+    }
   }
   testID="sticker_view"
 >
   <View
-    style={[Function]}
-    testID="sticker_view.animated_view"
-  >
+    style={
+      Object {
+        "height": 0,
+      }
+    }
+  />
+  <View>
     <View
       style={
-        Object {
-          "backgroundColor": "#FFFFFF",
-          "borderTopColor": "#EAEDF2",
-          "borderTopWidth": 1,
-          "height": "100%",
-        }
+        Array [
+          Object {
+            "height": "100%",
+            "marginTop": 8,
+          },
+        ]
       }
     >
       <View
-        collapsable={false}
-        onGestureHandlerEvent={[Function]}
-        onGestureHandlerStateChange={[Function]}
         style={
           Object {
             "marginHorizontal": 12,
@@ -40,18 +35,6 @@ exports[`StickerView component renders correctly 1`] = `
           }
         }
       >
-        <View
-          style={
-            Object {
-              "alignSelf": "center",
-              "backgroundColor": "#EAEDF2",
-              "borderRadius": 4,
-              "height": 4,
-              "marginBottom": 12,
-              "width": 48,
-            }
-          }
-        />
         <View
           style={
             Object {
@@ -88,7 +71,6 @@ exports[`StickerView component renders correctly 1`] = `
                   "top": 10,
                 }
               }
-              nativeID="animatedComponent"
               onClick={[Function]}
               onResponderGrant={[Function]}
               onResponderMove={[Function]}
@@ -127,14 +109,12 @@ exports[`StickerView component renders correctly 1`] = `
                     ]
                   }
                 >
-                  <View
-                    className="icon-wrapper"
-                  >
+                  <View>
                     <RNSVGSvgView
                       align="xMidYMid"
                       bbHeight={20}
                       bbWidth={20}
-                      fill="#627286"
+                      color={4284641926}
                       focusable={false}
                       height={20}
                       meetOrSlice={0}
@@ -154,20 +134,24 @@ exports[`StickerView component renders correctly 1`] = `
                           },
                         ]
                       }
+                      tintColor={4284641926}
                       vbHeight={24}
                       vbWidth={24}
                       width={20}
                     >
-                      <RNSVGGroup
-                        fill={4284641926}
-                        propList={
-                          Array [
-                            "fill",
-                          ]
-                        }
-                      >
+                      <RNSVGGroup>
                         <RNSVGPath
-                          d="M21.71,20.29,18,16.61A9,9,0,1,0,16.61,18l3.68,3.68a1,1,0,0,0,1.42,0A1,1,0,0,0,21.71,20.29ZM11,18a7,7,0,1,1,7-7A7,7,0,0,1,11,18Z"
+                          d="M21.71 20.29L18 16.61A9 9 0 1016.61 18l3.68 3.68a1 1 0 001.42 0 1 1 0 000-1.39zM11 18a7 7 0 117-7 7 7 0 01-7 7z"
+                          fill={
+                            Array [
+                              2,
+                            ]
+                          }
+                          propList={
+                            Array [
+                              "fill",
+                            ]
+                          }
                         />
                       </RNSVGGroup>
                     </RNSVGSvgView>
@@ -199,26 +183,30 @@ exports[`StickerView component renders correctly 1`] = `
           </View>
         </View>
       </View>
-      <GiphyReactNativeGridView
-        cellPadding={4}
-        content={
-          Object {
-            "mediaType": undefined,
-            "requestType": "trending",
-            "searchQuery": "",
+      <View>
+        <GiphyReactNativeGridView
+          cellPadding={4}
+          content={
+            Object {
+              "mediaType": undefined,
+              "requestType": "trending",
+              "searchQuery": "",
+            }
           }
-        }
-        onMediaSelect={[Function]}
-        style={
-          Object {
-            "height": "100%",
+          onContentUpdate={[Function]}
+          onMediaSelect={[Function]}
+          style={
+            Array [
+              Object {
+                "height": "100%",
+              },
+              false,
+            ]
           }
-        }
-        testID="sticker_view.grid_view"
-      />
+          testID="sticker_view.grid_view"
+        />
+      </View>
     </View>
   </View>
 </View>
 `;
-
-exports[`StickerView component renders null 1`] = `null`;

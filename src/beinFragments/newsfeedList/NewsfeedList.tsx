@@ -173,7 +173,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
       const createPostHeaderHeight = 50;
       const showFloating = offsetY > createPostHeaderHeight;
-
+      DeviceEventEmitter.emit('stopAllVideo');
       if (isDown5Percent) {
         DeviceEventEmitter.emit('showHeader', false);
         DeviceEventEmitter.emit('showBottomBar', false);
