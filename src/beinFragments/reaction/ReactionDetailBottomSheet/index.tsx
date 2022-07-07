@@ -61,7 +61,6 @@ const ReactionDetailBottomSheet = () => {
     <BottomSheet
       modalizeRef={reactionSheetRef}
       isOpen={isOpen}
-      side="center"
       isContextMenu={false}
       onClose={_onClose}
       ContentComponent={
