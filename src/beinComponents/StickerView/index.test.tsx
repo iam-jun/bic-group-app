@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import * as RNCommunityHooks from '@react-native-community/hooks';
 import * as React from 'react';
+import {StyleSheet} from 'react-native';
 import * as Animated from 'react-native-reanimated';
 import {render, setHookTestState} from '~/test/testUtils';
 import StickerView from '.';
@@ -40,82 +41,32 @@ describe('StickerView component', () => {
 
   it('renders correctly', async () => {
     reactMock.useState = setHookTestState({
-      visible: true,
-      isExpanded: false,
-      keyboardHeight: 0,
+      keyboardHeight: 336,
       searchQuery: '',
+      loading: false,
+      modalTopOffset: 0,
     });
+
     const rendered = render(<StickerView {...baseProps} />);
 
     expect(rendered).toMatchSnapshot();
   });
 
-  it('renders null', async () => {
+  it('renders loading', async () => {
     reactMock.useState = setHookTestState({
-      visible: false,
-      isExpanded: false,
-      keyboardHeight: 0,
+      keyboardHeight: 336,
       searchQuery: '',
-    });
-    const rendered = render(<StickerView {...baseProps} />);
-
-    expect(rendered).toMatchSnapshot();
-  });
-
-  it(`animated_view should be showed`, () => {
-    reactMock.useState = setHookTestState({
-      visible: true,
-      isExpanded: false,
-      keyboardHeight: 0,
-      searchQuery: '',
-    });
-
-    jest.spyOn(Animated, 'useAnimatedStyle').mockImplementation(() => {
-      return {
-        height: 336,
-      };
+      loading: true,
+      modalTopOffset: 0,
     });
 
     const rendered = render(<StickerView {...baseProps} />);
 
-    const animated_view = rendered.getByTestId('sticker_view.animated_view');
+    const loading_indicator = rendered.getByTestId('loading_indicator');
+    expect(loading_indicator).toBeDefined();
 
-    expect(animated_view).toBeDefined();
-    expect(animated_view.props.style.height).toBe(336);
-  });
-
-  it(`animated_view should be expanded`, () => {
-    reactMock.useState = setHookTestState({
-      visible: true,
-      isExpanded: true,
-      keyboardHeight: 0,
-      searchQuery: '',
-    });
-
-    const rendered = render(<StickerView {...baseProps} />);
-
-    const animated_view = rendered.getByTestId('sticker_view.animated_view');
-
-    expect(animated_view).toBeDefined();
-    expect(animated_view.props.style.height).toBe('100%');
-  });
-
-  it('should show KeyboardSpacer if platform is android', () => {
-    reactMock.useState = setHookTestState({
-      visible: true,
-      isExpanded: false,
-      keyboardHeight: 0,
-      searchQuery: '',
-    });
-
-    Platform.OS = 'android';
-
-    const rendered = render(<StickerView {...baseProps} />);
-
-    const keyboard_spacer = rendered.getByTestId(
-      'sticker_view.keyboard_spacer',
-    );
-
-    expect(keyboard_spacer).toBeDefined();
+    const grid_view = rendered.getByTestId('sticker_view.grid_view');
+    const flattenedStyle = StyleSheet.flatten(grid_view.props.style);
+    expect(flattenedStyle.height).toBe(0);
   });
 });
