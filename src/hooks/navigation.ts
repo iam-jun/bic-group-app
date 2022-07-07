@@ -31,7 +31,10 @@ export const useTabPressListener = (
     };
   }, deps);
 };
-
+/**
+ * SHOULD ADD SCREEN TO `customBackHandlerRoutes` FOR USE THIS HOOK
+ * @param callback
+ */
 export const useBackPressListener = (callback: () => void) => {
   useFocusEffect(
     useCallback(() => {
@@ -43,6 +46,6 @@ export const useBackPressListener = (callback: () => void) => {
       return () => {
         backEventListener?.remove?.();
       };
-    }, []),
+    }, [callback]),
   );
 };

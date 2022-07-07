@@ -8,7 +8,7 @@ import Text from '~/beinComponents/Text';
 import Header from '~/beinComponents/Header';
 import {useBaseHook} from '~/hooks';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {useRootNavigation} from '~/hooks/navigation';
+import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {cloneDeep, debounce, isEmpty} from 'lodash';
@@ -43,6 +43,28 @@ const GroupSchemeAssignment = () => {
   } = useKeySelector(
     groupsKeySelector.permission.assignGroupScheme.assigning,
   ) || {};
+
+  const onPressBack = () => {
+    if (!isEmpty(dataAssigning)) {
+      dispatch(
+        modalActions.showAlert({
+          title: t('communities:permission:text_title_discard_create_scheme'),
+          content: t('communities:permission:text_desc_discard_create_scheme'),
+          cancelBtn: true,
+          cancelLabel: t('common:btn_discard'),
+          confirmLabel: t('communities:permission:btn_continue'),
+          cancelBtnProps: {
+            textColor: theme.colors.textPrimary,
+          },
+          onCancel: rootNavigation.goBack,
+        }),
+      );
+    } else {
+      rootNavigation.goBack();
+    }
+  };
+
+  useBackPressListener(onPressBack);
 
   const disableAssign =
     loadingSchemes ||
@@ -97,24 +119,6 @@ const GroupSchemeAssignment = () => {
           children: <AlertAssignGroupConfirmContent />,
         }),
       );
-    }
-  };
-
-  const onPressBack = () => {
-    if (!isEmpty(dataAssigning)) {
-      dispatch(
-        modalActions.showAlert({
-          title: t('communities:permission:text_title_discard_create_scheme'),
-          content: t('communities:permission:text_desc_discard_create_scheme'),
-          cancelBtn: true,
-          cancelLabel: t('common:btn_discard'),
-          confirmLabel: t('communities:permission:btn_continue'),
-          cancelBtnProps: {textColor: theme.colors.textPrimary},
-          onDismiss: () => rootNavigation.goBack(),
-        }),
-      );
-    } else {
-      rootNavigation.goBack();
     }
   };
 
