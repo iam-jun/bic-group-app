@@ -7,7 +7,13 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {RefreshControl, SectionList, StyleSheet, View} from 'react-native';
+import {
+  DeviceEventEmitter,
+  RefreshControl,
+  SectionList,
+  StyleSheet,
+  View,
+} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Divider from '~/beinComponents/Divider';
@@ -412,6 +418,10 @@ const _PostDetailContent = (props: any) => {
     }
   }, [layoutSet, sectionData.length, focus_comment, listComment?.length]);
 
+  const onscroll = () => {
+    DeviceEventEmitter.emit('stopAllVideo');
+  };
+
   const renderContent = () => {
     if (!createdAt) return <PostViewPlaceholder />;
 
@@ -440,6 +450,7 @@ const _PostDetailContent = (props: any) => {
             keyboardShouldPersistTaps={'handled'}
             onLayout={onLayout}
             onContentSizeChange={onLayout}
+            onScroll={onscroll}
             onScrollToIndexFailed={onScrollToIndexFailed}
             refreshControl={
               <RefreshControl
