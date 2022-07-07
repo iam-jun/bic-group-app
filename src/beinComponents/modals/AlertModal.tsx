@@ -41,6 +41,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
     input,
     inputProps,
     iconName,
+    onCancel,
     onConfirm,
     onDismiss,
     confirmLabel,
@@ -77,6 +78,15 @@ const AlertModal: React.FC<AlertModalProps> = ({
   const _onDismiss = () => {
     onDismiss && onDismiss();
     dispatch(actions.hideAlert());
+  };
+
+  const _onCancel = () => {
+    if (onCancel) {
+      onCancel();
+      dispatch(actions.hideAlert());
+    } else {
+      _onDismiss();
+    }
   };
 
   return (
@@ -134,7 +144,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
               <_CancelBtnComponent
                 testID="alert_modal.cancel"
                 style={{marginEnd: theme.spacing?.margin.base}}
-                onPress={_onDismiss}
+                onPress={_onCancel}
                 {...cancelBtnProps}>
                 {_cancelLabel}
               </_CancelBtnComponent>

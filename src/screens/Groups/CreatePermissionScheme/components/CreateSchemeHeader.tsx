@@ -10,7 +10,7 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import modalActions from '~/store/modal/actions';
-import {useRootNavigation} from '~/hooks/navigation';
+import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
 import {ITheme} from '~/theme/interfaces';
 import {IScheme} from '~/interfaces/IGroup';
 
@@ -80,13 +80,15 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
           cancelLabel: t('common:btn_discard'),
           confirmLabel: t('communities:permission:btn_continue'),
           cancelBtnProps: {textColor: theme.colors.textPrimary},
-          onDismiss: () => rootNavigation.goBack(),
+          onCancel: () => rootNavigation.goBack(),
         }),
       );
     } else {
       rootNavigation.goBack();
     }
   };
+
+  useBackPressListener(onPressBack);
 
   return (
     <Header
