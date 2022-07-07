@@ -123,36 +123,34 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
 
   return (
     <View style={[styles.container]}>
-      <InViewport style={styles.container} onChange={handlePlaying}>
-        <Video
-          ref={video}
-          key={`video_item_${postId}`}
-          style={styles.player}
-          useNativeControls
-          resizeMode={ResizeMode.CONTAIN}
-          isLooping={false}
-          onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
-          onError={(error: string) => {
-            console.warn('video failed', error);
-          }}
-        />
-        {!isPlaying && (
-          <Image style={styles.thumbnail} source={{uri: posterUrl}} />
-        )}
+      <Video
+        ref={video}
+        key={`video_item_${postId}`}
+        style={styles.player}
+        useNativeControls
+        resizeMode={ResizeMode.CONTAIN}
+        isLooping={false}
+        onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+        onError={(error: string) => {
+          console.warn('video failed', error);
+        }}
+      />
+      {!isPlaying && (
+        <Image style={styles.thumbnail} source={{uri: posterUrl}} />
+      )}
 
-        {loading ? (
-          <LoadingIndicator size={60} color={colors.bgDisable} />
-        ) : !isPlaying ? (
-          <TouchableOpacity
-            activeOpacity={!!url ? 0.85 : 1}
-            onPress={() => {
-              loadAsyncVideo();
-            }}
-            style={styles.buttonPlay}>
-            <Icon size={60} tintColor={colors.bgDisable} icon="PlayCircle" />
-          </TouchableOpacity>
-        ) : null}
-      </InViewport>
+      {loading ? (
+        <LoadingIndicator size={60} color={colors.bgDisable} />
+      ) : !isPlaying ? (
+        <TouchableOpacity
+          activeOpacity={!!url ? 0.85 : 1}
+          onPress={() => {
+            loadAsyncVideo();
+          }}
+          style={styles.buttonPlay}>
+          <Icon size={60} tintColor={colors.bgDisable} icon="PlayCircle" />
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };
