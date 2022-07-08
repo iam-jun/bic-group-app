@@ -36,7 +36,7 @@ export default function* putGroupSchemeAssignments({
       yield put(
         actions.setGroupSchemeAssigning({loading: false, currentAssignments}),
       );
-
+      yield put(actions.getSchemes({communityId, isRefreshing: true}));
       yield put(
         actions.getGroupSchemeAssignments({communityId, showLoading: false}),
       );

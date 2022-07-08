@@ -69,4 +69,38 @@ describe('AlertAssignGroupConfirmContent', () => {
       },
     ]);
   });
+
+  it('prepareData should return correct result with new none group', () => {
+    const initAssignments = {...GROUP_ASSIGNMENTS};
+    const assigningData = [{group_id: 1, scheme_id: null}];
+    const allSchemes = {
+      abcd: {id: 'abcd', name: 'Scheme ABCD'},
+      efgh: {id: 'efgh', name: 'Scheme EFGH'},
+    };
+    expect(prepareData(initAssignments, assigningData, allSchemes)).toEqual([
+      {
+        groupName: GROUP_ASSIGNMENTS.name,
+        oldSchemeName: allSchemes.efgh.name,
+        newSchemeName: languages.communities.permission.text_none_scheme,
+      },
+    ]);
+  });
+
+  it('prepareData should return correct result with old none scheme', () => {
+    const initAssignments = {...GROUP_ASSIGNMENTS};
+    // @ts-ignore
+    initAssignments.scheme_id = null;
+    const assigningData = [{group_id: 1, scheme_id: 'efgh'}];
+    const allSchemes = {
+      abcd: {id: 'abcd', name: 'Scheme ABCD'},
+      efgh: {id: 'efgh', name: 'Scheme EFGH'},
+    };
+    expect(prepareData(initAssignments, assigningData, allSchemes)).toEqual([
+      {
+        groupName: GROUP_ASSIGNMENTS.name,
+        oldSchemeName: languages.communities.permission.text_none_scheme,
+        newSchemeName: allSchemes.efgh.name,
+      },
+    ]);
+  });
 });
