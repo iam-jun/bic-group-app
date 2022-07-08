@@ -66,9 +66,9 @@ const AlertAssignGroupConfirmContent = () => {
       <Text.BodyS style={styles.textTitle}>
         {t('communities:permission:text_desc_assign_group_confirm')}
       </Text.BodyS>
-      <ScrollView contentContainerStyle={styles.contentContainer}>
-        {data?.map?.(renderItem)}
-      </ScrollView>
+      <View style={styles.contentContainer}>
+        <ScrollView>{data?.map?.(renderItem)}</ScrollView>
+      </View>
     </View>
   );
 };
