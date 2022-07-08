@@ -101,10 +101,14 @@ export const prepareData = (
     const groupName = group?.name;
     const oldSchemeName =
       allSchemes?.[group?.scheme_id]?.name ||
-      i18n.t('communities:permission:text_unknown_scheme');
+      (group?.scheme_id
+        ? i18n.t('communities:permission:text_unknown_scheme')
+        : i18n.t('communities:permission:text_none_scheme'));
     const newSchemeName =
       allSchemes?.[scheme_id]?.name ||
-      i18n.t('communities:permission:text_unknown_scheme');
+      (scheme_id
+        ? i18n.t('communities:permission:text_unknown_scheme')
+        : i18n.t('communities:permission:text_none_scheme'));
     if (group) {
       result.push({groupName, oldSchemeName, newSchemeName});
     }
