@@ -764,6 +764,7 @@
       "text_update_scheme_success": "Đã cập nhật thành công",
       "text_update_group_scheme_success": "Đã cập nhật thành công",
       "text_unknown_scheme": "Quyền nào đó",
+      "text_none_scheme": "Không có quyền",
       "text_set_by": "Đặt bởi",
       "text_fixed_role": "Cố định",
       "text_fixed_for_creator": "Cố định cho Người tạo"

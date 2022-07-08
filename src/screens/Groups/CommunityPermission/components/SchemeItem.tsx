@@ -24,7 +24,7 @@ const SchemeItem = ({item}: SchemeItemProps) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
-  const {name, applyingGroups} = item;
+  const {name, description, applyingGroups} = item;
   const isActivated = applyingGroups?.length > 0;
 
   const onPressEdit = () => {
@@ -61,7 +61,7 @@ const SchemeItem = ({item}: SchemeItemProps) => {
   const renderItem = (item: IApplyingGroups) => {
     return (
       <View key={item.id} style={styles.nameTag} testID="scheme_item.group_tag">
-        <Text.BodyS maxLength={16}>{item.name}</Text.BodyS>
+        <Text.Subtitle>{item.name}</Text.Subtitle>
       </View>
     );
   };
@@ -70,12 +70,12 @@ const SchemeItem = ({item}: SchemeItemProps) => {
     <View>
       <View style={styles.titleContainer}>
         <View style={[styles.flex1, styles.row]}>
-          <Text.BodyM
+          <Text.BodySM
             numberOfLines={3}
             style={styles.flex1}
             testID="scheme_item.name">
             {name}
-          </Text.BodyM>
+          </Text.BodySM>
           {isActivated && (
             <TextBadge
               useI18n
@@ -86,7 +86,9 @@ const SchemeItem = ({item}: SchemeItemProps) => {
         </View>
         {renderButtons()}
       </View>
-
+      {!!description && (
+        <Text.Subtitle style={styles.textDesc}>{description}</Text.Subtitle>
+      )}
       {applyingGroups?.length > 0 && (
         <View testID="scheme_item.group_list" style={styles.groupListView}>
           {applyingGroups?.map?.(renderItem)}
@@ -103,6 +105,7 @@ const createStyle = (theme: ITheme) => {
     titleContainer: {
       flexDirection: 'row',
       marginBottom: spacing.margin.small,
+      // alignItems: 'center',
     },
     row: {
       flexDirection: 'row',
@@ -137,6 +140,9 @@ const createStyle = (theme: ITheme) => {
       marginBottom: spacing.margin.tiny,
       flexDirection: 'row',
       flexWrap: 'wrap',
+    },
+    textDesc: {
+      marginBottom: spacing.margin.small,
     },
   });
 };
