@@ -21,6 +21,7 @@ import {ITabTypes} from '~/interfaces/IRouter';
 import i18n from '~/localization';
 import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import notificationsActions from './redux/actions';
 import notificationSelector from './redux/selector';
 
@@ -141,7 +142,7 @@ const _NotificationList = ({
       return (
         <View style={styles.unReadNotifications}>
           <Icon icon="CheckCircle" size={40} tintColor={theme.colors.success} />
-          <Text.Subtitle useI18n style={{marginTop: theme.spacing.margin.base}}>
+          <Text.Subtitle useI18n style={{marginTop: spacing.margin.base}}>
             notification:seen_all_notifications
           </Text.Subtitle>
         </View>
@@ -194,7 +195,7 @@ const _NotificationList = ({
 
 const themeStyles = (theme: ITheme) => {
   const insets = useSafeAreaInsets();
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     screenContainer: {
       paddingTop: insets.top,

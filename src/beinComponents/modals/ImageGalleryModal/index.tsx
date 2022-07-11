@@ -21,6 +21,8 @@ import {ImageGalleryModalProps} from '~/beinComponents/modals/ImageGalleryModal/
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   visible,
@@ -37,7 +39,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
 
   const insets = useSafeAreaInsets();
   const theme = useTheme() as ITheme;
-  const {colors, spacing, dimension} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme, insets);
 
   const imageUrls = getImageUrls(source);
@@ -268,7 +270,7 @@ const getImageUrls = (source: any) => {
 };
 
 const createStyle = (theme: ITheme, insets: EdgeInsets) => {
-  const {spacing, dimension, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

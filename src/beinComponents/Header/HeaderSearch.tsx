@@ -7,12 +7,6 @@ import React, {
 } from 'react';
 import {StyleSheet, View} from 'react-native';
 import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
-
-import SearchInput from '~/beinComponents/inputs/SearchInput';
-import i18next from 'i18next';
-import Icon from '~/beinComponents/Icon';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -21,6 +15,13 @@ import Animated, {
   runOnJS,
   withTiming,
 } from 'react-native-reanimated';
+import i18next from 'i18next';
+
+import {ITheme} from '~/theme/interfaces';
+import SearchInput from '~/beinComponents/inputs/SearchInput';
+import Icon from '~/beinComponents/Icon';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 export interface HeaderSearchProps {
   testID?: string;
@@ -136,7 +137,7 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, dimension, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       height: dimension?.headerHeight || 44,

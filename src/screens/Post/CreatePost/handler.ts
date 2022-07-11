@@ -3,6 +3,7 @@ import {Keyboard} from 'react-native';
 import FileUploader from '~/services/fileUploader';
 import modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import postActions from '../redux/actions';
 
 export const handleBack = (
@@ -15,7 +16,7 @@ export const handleBack = (
   isNewsfeed: boolean | undefined,
   onPressDraftPost: () => void,
 ) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   Keyboard.dismiss();
   if (isEditPost) {
     if (isEditPostHasChange) {

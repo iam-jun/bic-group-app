@@ -10,6 +10,7 @@ import {IObject} from '~/interfaces/common';
 import actions from '~/screens/Auth/redux/actions';
 import authProviders from '~/constants/authProviders';
 import Text from '~/beinComponents/Text';
+import spacing from '~/theme/spacing';
 
 const SignInOAuth = () => {
   const dispatch = useDispatch();
@@ -55,7 +56,7 @@ const SignInOAuth = () => {
 };
 
 const themeStyles = (theme: IObject<any>) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       padding: spacing.padding.large,

@@ -9,6 +9,7 @@ import NewFeatureImg from '~/../assets/images/new_feeature_grey.svg';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import {deviceDimensions} from '~/theme/dimension';
+import spacing from '~/theme/spacing';
 
 const NewFeature = () => {
   const theme = useTheme() as ITheme;
@@ -96,7 +97,7 @@ const NewFeature = () => {
 };
 
 const themeStyle = (theme: ITheme, isLaptop: boolean) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     screenContainer: {

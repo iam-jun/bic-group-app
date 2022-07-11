@@ -14,6 +14,7 @@ import Text, {TextProps} from '~/beinComponents/Text';
 import {IconType} from '~/resources/icons';
 import {useDispatch} from 'react-redux';
 import {clearToastMessage} from '~/store/modal/actions';
+import spacing from '~/theme/spacing';
 
 interface SimpleToastMessageProps {
   children?: React.ReactNode;
@@ -67,7 +68,7 @@ const SimpleToastMessage: React.FC<SimpleToastMessageProps> = ({
 };
 
 const createStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

@@ -4,10 +4,6 @@ import {useTheme} from 'react-native-paper';
 import TimeView from '~/beinComponents/TimeView';
 import Icon from '~/beinComponents/Icon';
 
-import {
-  IGetStreamNotificationActivity,
-  INotiExtraData,
-} from '~/interfaces/INotification';
 import {ITheme} from '~/theme/interfaces';
 import NotificationAvatar from './NotificationAvatar';
 import NotificationContent from './NotificationContent';
@@ -15,6 +11,7 @@ import {useKeySelector} from '~/hooks/selector';
 import notificationSelector from '~/screens/Notification/redux/selector';
 import {isEmpty, isEqual} from 'lodash';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
+import spacing from '~/theme/spacing';
 
 const {width: screenWidth, height} = Dimensions.get('window');
 
@@ -191,14 +188,14 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 };
 
 const createStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {
       flex: 1,
       flexDirection: 'row',
       alignItems: 'flex-start',
-      padding: theme.spacing.padding.large,
+      padding: spacing.padding.large,
       width: screenWidth,
     },
     row: {

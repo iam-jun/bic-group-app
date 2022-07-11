@@ -40,6 +40,7 @@ import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
 import homeActions from '~/screens/Home/redux/actions';
 import {checkPermission} from '~/utils/permission';
+import spacing from '~/theme/spacing';
 
 const UserEditProfile = (props: any) => {
   const {userId} = props?.route?.params || {};
@@ -241,7 +242,7 @@ const UserEditProfile = (props: any) => {
           </ButtonWrapper>
         </View>
         <View
-          style={{paddingHorizontal: theme.spacing.padding.large}}
+          style={{paddingHorizontal: spacing.padding.large}}
           onLayout={onCoverLayout}
           testID="user_edit_profile.cover_image">
           {!loadingCover ? (
@@ -264,7 +265,7 @@ const UserEditProfile = (props: any) => {
       return null;
     }
     return (
-      <View style={{paddingTop: theme.spacing.padding.base}}>
+      <View style={{paddingTop: spacing.padding.base}}>
         <View style={styles.headerItem}>
           <Text.H5 color={colors.iconTint} variant="body" useI18n>
             settings:text_description
@@ -523,7 +524,7 @@ const UserEditProfile = (props: any) => {
 export default UserEditProfile;
 
 const themeStyles = (theme: ITheme, coverHeight: number) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

@@ -17,6 +17,7 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import GroupMemberRequest from '../GroupDetail/groupModerating/components/GroupMemberRequest';
 import CommunityMemberRequest from '../CommunityAdmin/PendingMembers/CommunityMemberRequest';
+import spacing from '~/theme/spacing';
 
 interface MemberRequestListProps {
   type: 'community' | 'group';
@@ -30,7 +31,6 @@ const MemberRequestList = ({
   onRefresh,
 }: MemberRequestListProps) => {
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
   const {t} = useBaseHook();
 
   const {loading, total, ids, canLoadMore} = useKeySelector(
@@ -108,25 +108,21 @@ const MemberRequestList = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    flatList: {
-      marginHorizontal: spacing.margin.large,
-    },
-    requestHeader: {
-      marginVertical: spacing.margin.base,
-    },
-    divider: {
-      marginBottom: spacing.margin.small,
-    },
-    listFooter: {
-      height: 100,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  });
-};
+const styles = StyleSheet.create({
+  flatList: {
+    marginHorizontal: spacing.margin.large,
+  },
+  requestHeader: {
+    marginVertical: spacing.margin.base,
+  },
+  divider: {
+    marginBottom: spacing.margin.small,
+  },
+  listFooter: {
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default MemberRequestList;

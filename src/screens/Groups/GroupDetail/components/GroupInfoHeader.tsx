@@ -18,6 +18,7 @@ import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import Button from '~/beinComponents/Button';
+import spacing from '~/theme/spacing';
 
 const GroupInfoHeader = () => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
@@ -150,7 +151,7 @@ const GroupInfoHeader = () => {
 export default GroupInfoHeader;
 
 const themeStyles = (theme: ITheme, coverHeight: number) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     infoContainer: {
       paddingHorizontal: spacing.padding.large,

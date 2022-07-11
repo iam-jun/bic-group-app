@@ -31,6 +31,7 @@ import modalActions from '~/store/modal/actions';
 import HeaderMenu from '../components/HeaderMenu';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import spacing from '~/theme/spacing';
 
 const CommunityDetail = (props: any) => {
   const params = props.route.params;
@@ -219,7 +220,7 @@ const CommunityDetail = (props: any) => {
 export default CommunityDetail;
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     screenContainer: {
       backgroundColor: colors.borderDivider,

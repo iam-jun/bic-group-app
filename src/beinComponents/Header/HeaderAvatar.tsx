@@ -14,6 +14,7 @@ import {AvatarProps} from '~/beinComponents/Avatar/AvatarComponent';
 import Icon, {IconProps} from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
+import spacing from '~/theme/spacing';
 
 interface HeaderAvatarProps {
   firstLabel: string;
@@ -97,7 +98,7 @@ const HeaderAvatar = ({
 export default HeaderAvatar;
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

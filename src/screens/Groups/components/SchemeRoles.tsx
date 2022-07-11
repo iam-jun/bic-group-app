@@ -9,6 +9,7 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import RoleItem from '~/screens/Groups/CreatePermissionScheme/components/RoleItem';
 import {IPermission, IRole} from '~/interfaces/IGroup';
+import spacing from '~/theme/spacing';
 
 export interface SchemeRolesProps {
   roles: IRole[];
@@ -78,7 +79,7 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     title: {
       paddingHorizontal: spacing.padding.large,

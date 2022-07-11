@@ -8,6 +8,8 @@ import Text, {TextVariant} from '~/beinComponents/Text';
 import commonActions, {IAction} from '~/constants/commonActions';
 import Avatar from '~/beinComponents/Avatar';
 import {fontFamilies} from '~/theme/fonts';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 export type TagVariants = 'small' | 'medium';
 
@@ -86,7 +88,7 @@ const createStyles = (
   isSelected: boolean,
   disabled: boolean,
 ) => {
-  const {colors, spacing, dimension} = theme;
+  const {colors} = theme;
 
   const tagVariants = {
     small: {

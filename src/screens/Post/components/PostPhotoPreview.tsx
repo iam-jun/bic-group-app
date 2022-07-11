@@ -191,7 +191,6 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {},
     image: {borderRadius: 0},

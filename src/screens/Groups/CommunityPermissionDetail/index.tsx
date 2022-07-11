@@ -17,6 +17,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useDispatch} from 'react-redux';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import spacing from '~/theme/spacing';
 
 export interface CommunityPermissionDetailProps {
   route?: {
@@ -87,7 +88,7 @@ const CommunityPermissionDetail: FC<CommunityPermissionDetailProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

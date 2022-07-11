@@ -14,7 +14,9 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 import {IUser} from '~/interfaces/IAuth';
 import images from '~/resources/images';
+import dimension from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import NoSearchResult from './NoSearchResult';
 
 export interface MembersSelectionProps {
@@ -47,8 +49,6 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   onSelectUser,
 }: MembersSelectionProps): React.ReactElement => {
   const theme: ITheme = useTheme() as ITheme;
-  const styles = createStyles(theme);
-  const {spacing} = theme;
 
   const renderItemUser = ({item}: {item: IUser; index: number}) => {
     const selected = selectedUsers.find((user: IUser) => user.id === item.id);
@@ -148,29 +148,26 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {dimension, spacing} = theme;
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    searchInput: {
-      marginHorizontal: spacing?.margin.base,
-    },
-    title: {
-      marginVertical: spacing.margin.small,
-      marginHorizontal: spacing.margin.base,
-    },
-    marginRight: {
-      marginRight: spacing?.margin.base,
-    },
-    selectedUsers: {
-      marginHorizontal: spacing.margin.base,
-    },
-    itemSelectedUser: {
-      width: dimension?.avatarSizes.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  searchInput: {
+    marginHorizontal: spacing?.margin.base,
+  },
+  title: {
+    marginVertical: spacing.margin.small,
+    marginHorizontal: spacing.margin.base,
+  },
+  marginRight: {
+    marginRight: spacing?.margin.base,
+  },
+  selectedUsers: {
+    marginHorizontal: spacing.margin.base,
+  },
+  itemSelectedUser: {
+    width: dimension?.avatarSizes.large,
+  },
+});
 
 export default MembersSelection;

@@ -14,6 +14,7 @@ import Text from '~/beinComponents/Text';
 import MemberItem from './MemberItem';
 import {getMembersSection} from '../redux/selectors';
 import appConfig from '~/configs/appConfig';
+import spacing from '~/theme/spacing';
 
 interface MemberListProps {
   type: 'group' | 'community';
@@ -107,7 +108,7 @@ const MemberList = ({
 };
 
 const createStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     content: {
       backgroundColor: colors.background,

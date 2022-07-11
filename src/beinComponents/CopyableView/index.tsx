@@ -12,6 +12,7 @@ import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import {showHideToastMessage} from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import ButtonWrapper from '../Button/ButtonWrapper';
 import Text from '../Text';
 
@@ -114,7 +115,7 @@ const CopyableView = ({
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     contentSelected: {
       backgroundColor: '#ACCEF7',

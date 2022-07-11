@@ -13,7 +13,7 @@ import {useTheme} from 'react-native-paper';
 import {DataProvider, LayoutProvider, RecyclerListView} from 'recyclerlistview';
 
 import {ITheme} from '~/theme/interfaces';
-import {scaleSize} from '~/theme/dimension';
+import dimension, {scaleSize} from '~/theme/dimension';
 
 import Text from '~/beinComponents/Text';
 import PostView from '~/screens/Post/components/PostView';
@@ -27,6 +27,7 @@ import FloatingCreatePost from '~/beinFragments/FloatingCreatePost';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
 import NoticePanel from '~/screens/Home/Newsfeed/components/NoticePanel';
+import spacing from '~/theme/spacing';
 
 export interface NewsfeedListProps {
   data?: any;
@@ -60,7 +61,6 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   const prevOffsetYRef = useRef(0);
 
   const theme = useTheme() as ITheme;
-  const {spacing, dimension} = theme;
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
 
@@ -347,7 +347,7 @@ const NewsfeedListEmpty = ({styles, HeaderComponent, theme}: any) => {
 };
 
 const createStyle = (theme: ITheme, insets: any) => {
-  const {colors, spacing, dimension} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

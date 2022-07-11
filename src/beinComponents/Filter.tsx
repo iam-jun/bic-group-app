@@ -21,6 +21,7 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import Icon from './Icon';
 import Text from './Text';
 
@@ -47,7 +48,6 @@ const FilterComponent: React.FC<FilterProps> = ({
 }: FilterProps) => {
   const theme = useTheme() as ITheme;
   const styles = useMemo(() => createStyle(theme), [theme, style]);
-  const {spacing} = theme;
 
   const [measurements, setMeasurements] = useState<any[]>(
     new Array(data?.length).fill({}),
@@ -193,7 +193,7 @@ const FilterComponent: React.FC<FilterProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingVertical: spacing.padding.base,

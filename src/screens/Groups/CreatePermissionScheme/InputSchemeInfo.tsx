@@ -11,6 +11,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useDispatch} from 'react-redux';
 import {useBaseHook} from '~/hooks';
+import spacing from '~/theme/spacing';
 
 export interface InputSchemeInfoProps {
   style?: StyleProp<ViewStyle>;
@@ -96,7 +97,7 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       backgroundColor: colors.background,

@@ -1,6 +1,5 @@
 import React, {FC, useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
 
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -10,7 +9,6 @@ import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import Image from '~/beinComponents/Image';
 import {getResourceUrl, uploadTypes} from '~/configs/resourceConfig';
 
-import {ITheme} from '~/theme/interfaces';
 import Markdown from '~/beinComponents/Markdown';
 import postKeySelector from '../../redux/keySelector';
 import VideoPlayer from '~/beinComponents/VideoPlayer';
@@ -19,6 +17,7 @@ import FilesView from '../FilesView';
 import CopyableView from '~/beinComponents/CopyableView';
 import {escapeMarkDown} from '~/utils/formatData';
 import {isEmpty} from 'lodash';
+import spacing from '~/theme/spacing';
 
 export interface PostViewContentProps {
   postId: string;
@@ -42,8 +41,6 @@ const PostViewContent: FC<PostViewContentProps> = ({
   isDraft,
 }: PostViewContentProps) => {
   const {rootNavigation} = useRootNavigation();
-  const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
 
   const onPressMentionAudience = useRef((audience: IMarkdownAudience) => {
     if (audience) {
@@ -149,21 +146,18 @@ const PostViewContent: FC<PostViewContentProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    flex1: {flex: 1},
-    row: {flexDirection: 'row'},
-    contentContainer: {
-      marginVertical: spacing?.margin.small,
-      marginHorizontal: spacing?.margin.large,
-    },
-    imageLite: {
-      width: 120,
-      height: 120,
-      borderRadius: spacing.borderRadius.small,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  flex1: {flex: 1},
+  row: {flexDirection: 'row'},
+  contentContainer: {
+    marginVertical: spacing?.margin.small,
+    marginHorizontal: spacing?.margin.large,
+  },
+  imageLite: {
+    width: 120,
+    height: 120,
+    borderRadius: spacing.borderRadius.small,
+  },
+});
 
 export default PostViewContent;

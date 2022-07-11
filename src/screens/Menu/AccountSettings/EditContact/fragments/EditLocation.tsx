@@ -26,6 +26,7 @@ import BottomSheet from '~/beinComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import spacing from '~/theme/spacing';
 
 interface EditLocationProps {
   modalizeRef: any;
@@ -118,8 +119,6 @@ const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
 export default EditLocation;
 
 const createStyles = (theme: ITheme, screenHeight: number) => {
-  const {spacing} = theme;
-
   return StyleSheet.create({
     searchInput: {
       margin: spacing.margin.base,

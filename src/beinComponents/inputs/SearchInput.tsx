@@ -12,6 +12,8 @@ import {ITheme} from '~/theme/interfaces';
 import Icon from '../Icon';
 import {fontFamilies} from '~/theme/fonts';
 import {TextInputProps} from './TextInput';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 export interface SearchInputProps extends TextInputProps {
   searchInputRef?: Ref<TextInput>;
@@ -106,7 +108,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
 };
 
 const createStyles = (theme: ITheme) => {
-  const {colors, spacing, dimension} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

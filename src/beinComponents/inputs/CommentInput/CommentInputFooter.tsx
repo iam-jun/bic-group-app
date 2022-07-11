@@ -11,6 +11,7 @@ import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface CommentInputFooterProps {
   useTestID?: boolean;
@@ -128,7 +129,7 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       borderTopWidth: 1,

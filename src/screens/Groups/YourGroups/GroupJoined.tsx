@@ -19,6 +19,7 @@ import modalActions from '~/store/modal/actions';
 import Divider from '~/beinComponents/Divider';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {useBaseHook} from '~/hooks';
+import spacing from '~/theme/spacing';
 
 export interface GroupJoinedProps {
   style?: StyleProp<ViewStyle>;
@@ -48,7 +49,7 @@ const GroupJoined: FC<GroupJoinedProps> = ({
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const onChangeType = (item: any) => {
@@ -145,7 +146,7 @@ const GroupJoined: FC<GroupJoinedProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

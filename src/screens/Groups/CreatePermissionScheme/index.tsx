@@ -25,6 +25,7 @@ import {IPermission, IScheme} from '~/interfaces/IGroup';
 import CreateSchemeHeader from '~/screens/Groups/CreatePermissionScheme/components/CreateSchemeHeader';
 import SelectSchemeRolesView from '~/screens/Groups/CreatePermissionScheme/SelectSchemeRolesView';
 import RoleHeaderAnimated from '~/screens/Groups/components/RoleHeaderAnimated';
+import spacing from '~/theme/spacing';
 
 export interface CreatePermissionSchemeProps {
   route?: {
@@ -165,7 +166,7 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

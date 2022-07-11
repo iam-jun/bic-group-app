@@ -19,6 +19,8 @@ import privacyTypes from '~/constants/privacyTypes';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
 import {IconType} from '~/resources/icons';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 export interface GroupItemProps extends IParsedGroup {
   testID?: string;
@@ -239,7 +241,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 };
 
 const themeStyles = (theme: IObject<any>) => {
-  const {spacing, colors, dimension} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     textContainer: {
       paddingHorizontal: spacing.padding.base,

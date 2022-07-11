@@ -46,6 +46,7 @@ import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
 import Text from '~/beinComponents/Text';
 import {IPayloadPutMarkAsRead} from '~/interfaces/IPost';
+import spacing from '~/theme/spacing';
 const defaultList = [{title: '', type: 'empty', data: []}];
 
 const _PostDetailContent = (props: any) => {
@@ -537,7 +538,7 @@ const getSectionData = (listComment: ICommentData[]) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     flex1: {
       flex: 1,

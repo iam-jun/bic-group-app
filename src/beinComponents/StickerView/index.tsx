@@ -14,6 +14,7 @@ import Animated, {
 import {AppConfig} from '~/configs';
 import {dimension} from '~/theme';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {EmojiBoardProps} from '../emoji/EmojiBoard';
 import SearchInput from '../inputs/SearchInput';
 import LoadingIndicator from '../LoadingIndicator';
@@ -177,7 +178,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

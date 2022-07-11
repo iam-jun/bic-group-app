@@ -18,6 +18,7 @@ import GroupItemPlaceholder from '~/screens/Groups/components/GroupItemPlacehold
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 const GroupSearch = () => {
   const [_isShow, _setIsShow] = useState(false);
@@ -25,7 +26,6 @@ const GroupSearch = () => {
 
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
-  const {spacing} = theme;
   const styles = createStyle(theme);
 
   const {isShow, loading, searchKey, result} =
@@ -126,7 +126,7 @@ const GroupSearch = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       position: 'absolute',

@@ -8,8 +8,10 @@ import AvatarComponent, {
 import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import images from '~/resources/images';
+import dimension from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface AvatarGroupProps extends AvatarProps {
   variant?: AvatarType;
@@ -26,7 +28,7 @@ const AvatarGroup = ({
   ...props
 }: AvatarGroupProps) => {
   const theme = useTheme() as ITheme;
-  const {colors, spacing, dimension} = theme;
+  const {colors} = theme;
 
   const containerSize = dimension?.avatarSizes?.[variant] || 36;
   const border = 2;
@@ -55,7 +57,7 @@ const AvatarGroup = ({
             height: itemContainerSize,
             borderWidth: border,
             borderColor: colors.background,
-            borderRadius: spacing?.borderRadius.small,
+            borderRadius: spacing.borderRadius.small,
             backgroundColor: colors.background,
             overflow: 'hidden',
           },
@@ -181,7 +183,7 @@ const AvatarGroup = ({
           width: containerSize,
           height: containerSize,
           backgroundColor: colors.primary1,
-          borderRadius: spacing?.borderRadius.small,
+          borderRadius: spacing.borderRadius.small,
           justifyContent: 'center',
           alignItems: 'center',
           padding: 1,

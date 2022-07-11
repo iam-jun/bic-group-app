@@ -11,13 +11,14 @@ import {useKeySelector} from '~/hooks/selector';
 import {useDispatch} from 'react-redux';
 import * as modalActions from '~/store/modal/actions';
 import commonKeySelector from '~/store/modal/keySelector';
+import spacing from '~/theme/spacing';
 
 const ReactionBottomSheet = () => {
   const reactionSheetRef: any = useRef();
 
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
-  const {spacing, colors} = theme;
+  const {colors} = theme;
 
   const data = useKeySelector(commonKeySelector.reactionBottomSheet);
   const {title, show, position, callback, side} = data || {};

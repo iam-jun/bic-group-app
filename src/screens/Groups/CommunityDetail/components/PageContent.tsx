@@ -17,6 +17,7 @@ import groupJoinStatus from '~/constants/groupJoinStatus';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import PostItem from '~/beinComponents/list/items/PostItem';
 import actions from '~/screens/Groups/redux/actions';
+import spacing from '~/theme/spacing';
 
 interface PageContentProps {
   communityId: number;
@@ -33,7 +34,7 @@ const _PageContent = ({
 }: PageContentProps) => {
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme || {};
+  const {colors} = theme || {};
   const styles = createStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);

@@ -13,6 +13,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import TextAnimated from '~/beinComponents/Text/TextAnimated';
 import Icon from '~/beinComponents/Icon';
+import spacing from '~/theme/spacing';
 
 export interface RoleHeaderAnimatedProps {
   anchorRole?: any;
@@ -25,7 +26,7 @@ const RoleHeaderAnimated: FC<RoleHeaderAnimatedProps> = ({
   sharedValue,
 }: RoleHeaderAnimatedProps) => {
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const anchorRoles = Object.values(anchorRole) || [];
@@ -98,7 +99,7 @@ const RoleHeaderAnimated: FC<RoleHeaderAnimatedProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',

@@ -19,6 +19,7 @@ import appActions from '~/store/app/actions';
 import {debounce} from 'lodash';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import images from '~/resources/images';
+import spacing from '~/theme/spacing';
 
 const Groups: React.FC = (props: any) => {
   const {communityId} = props?.route?.params || {};
@@ -126,7 +127,7 @@ const Groups: React.FC = (props: any) => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     containerScreen: {

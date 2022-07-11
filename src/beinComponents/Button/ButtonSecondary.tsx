@@ -9,6 +9,7 @@ import {useTheme} from 'react-native-paper';
 
 import {ButtonPrimaryProps} from '~/beinComponents/Button/ButtonPrimary';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import ButtonWrapper from './ButtonWrapper';
 
 export interface ButtonSecondaryProps extends ButtonPrimaryProps {
@@ -29,7 +30,7 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   highEmphasis = false,
   ...props
 }: ButtonSecondaryProps) => {
-  const {colors, spacing}: ITheme = useTheme() as ITheme;
+  const {colors}: ITheme = useTheme() as ITheme;
 
   let _colorHover = colorHover || colors.primary2;
   let _backgroundColor = color || colors.bgButtonSecondary;
@@ -50,8 +51,8 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
     {
       backgroundColor: _backgroundColor,
-      padding: spacing?.padding.small,
-      borderRadius: borderRadius || spacing?.borderRadius.small,
+      padding: spacing.padding.small,
+      borderRadius: borderRadius || spacing.borderRadius.small,
       alignItems: 'center',
     },
     style,

@@ -19,6 +19,7 @@ import NFSFilterCreatedBy from './NFSFilterCreatedBy';
 import NFSFilterDate from './NFSFilterDate';
 import homeActions from '../../redux/actions';
 import modalActions from '~/store/modal/actions';
+import spacing from '~/theme/spacing';
 
 export interface NFSFilterOptionMenuProps {
   filterCreatedBy?: any;
@@ -179,7 +180,7 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.padding.extraLarge,

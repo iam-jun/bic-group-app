@@ -10,6 +10,7 @@ import completeSvg from '../../../../../../assets/images/settings_change_passwor
 import {authStack} from '~/configs/navigator';
 import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
+import spacing from '~/theme/spacing';
 
 const CompleteChangePassword = () => {
   const {t, navigation} = useBaseHook();
@@ -49,7 +50,7 @@ const CompleteChangePassword = () => {
 export default CompleteChangePassword;
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

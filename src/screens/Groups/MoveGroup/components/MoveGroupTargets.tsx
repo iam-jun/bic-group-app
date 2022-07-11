@@ -16,6 +16,7 @@ import Icon from '~/beinComponents/Icon';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import {debounce} from 'lodash';
 import {useBaseHook} from '~/hooks';
+import spacing from '~/theme/spacing';
 
 export interface MoveGroupTargetsProps {
   communityId: number;
@@ -33,7 +34,7 @@ const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const onPressItem = (item: any) => {
@@ -97,7 +98,7 @@ const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {},
     itemContainer: {

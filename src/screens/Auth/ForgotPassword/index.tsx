@@ -29,6 +29,7 @@ import ForgotInputId from '~/screens/Auth/ForgotPassword/components/ForgotInputI
 import actions from '~/screens/Auth/redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -127,7 +128,7 @@ const ForgotPassword = () => {
 
 const themeStyles = (theme: ITheme, isPhone: boolean) => {
   const insets = useSafeAreaInsets();
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     root: {
       flex: 1,

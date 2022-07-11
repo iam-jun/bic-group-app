@@ -15,6 +15,7 @@ import {communityMenuData} from '~/constants/communityMenuData';
 import ManagedCommunities from './ManagedCommunities';
 import SearchCommunityView from './SearchCommunityView';
 import {useBaseHook} from '~/hooks';
+import spacing from '~/theme/spacing';
 
 const {width: screenWidth} = Dimensions.get('window');
 
@@ -106,7 +107,7 @@ const Communities: React.FC = () => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     containerScreen: {

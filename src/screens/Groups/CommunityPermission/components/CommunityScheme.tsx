@@ -17,6 +17,7 @@ import modalActions from '~/store/modal/actions';
 import {useDispatch} from 'react-redux';
 import {useBaseHook} from '~/hooks';
 import groupsActions from '~/screens/Groups/redux/actions';
+import spacing from '~/theme/spacing';
 
 export interface CommunitySchemeProps {
   style?: StyleProp<ViewStyle>;
@@ -119,7 +120,7 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {

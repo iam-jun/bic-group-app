@@ -15,6 +15,8 @@ import menuActions from '../../redux/actions';
 import menuKeySelector from '../../redux/keySelector';
 import {useKeySelector} from '~/hooks/selector';
 import {fontFamilies} from '~/theme/fonts';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 const EditDescription = () => {
   const theme = useTheme() as ITheme;
@@ -83,7 +85,7 @@ const EditDescription = () => {
           useI18n: true,
           color: theme.colors.primary6,
           textColor: theme.colors.background,
-          borderRadius: theme.spacing.borderRadius.small,
+          borderRadius: spacing.borderRadius.small,
           disabled: !isValid,
           testID: 'edit_description.save',
         }}
@@ -118,7 +120,7 @@ const EditDescription = () => {
 export default EditDescription;
 
 const createStyles = (theme: ITheme) => {
-  const {spacing, colors, dimension} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

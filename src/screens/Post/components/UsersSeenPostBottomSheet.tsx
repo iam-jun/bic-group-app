@@ -14,6 +14,8 @@ import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {useBaseHook} from '~/hooks';
 import modalActions from '~/store/modal/actions';
+import dimension from '~/theme/dimension';
+import spacing from '~/theme/spacing';
 
 const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
   const dispatch = useDispatch();
@@ -21,7 +23,7 @@ const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
   const insets = useSafeAreaInsets();
   const theme: ITheme = useTheme() as ITheme;
   const styles = createStyle(theme, insets);
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const {t} = useBaseHook();
 
   React.useEffect(() => {
@@ -101,7 +103,7 @@ const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
 };
 
 const createStyle = (theme: ITheme, insets: any) => {
-  const {spacing, dimension, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       height: dimension?.deviceHeight * 0.6,

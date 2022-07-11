@@ -11,6 +11,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {useBaseHook} from '~/hooks';
 import * as modalActions from '~/store/modal/actions';
 import {IRightMenu} from '~/interfaces/common';
+import spacing from '~/theme/spacing';
 
 const RightCol = () => {
   const {t} = useBaseHook();
@@ -77,7 +78,7 @@ const RightCol = () => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const menuItemMinWidth = '15%';
 
   return StyleSheet.create({

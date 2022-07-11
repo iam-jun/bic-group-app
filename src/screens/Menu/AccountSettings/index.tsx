@@ -26,10 +26,10 @@ import appActions from '~/store/app/actions';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '../redux/keySelector';
+import spacing from '~/theme/spacing';
 
 const GeneralSettings = () => {
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
@@ -127,21 +127,17 @@ const GeneralSettings = () => {
 
 export default GeneralSettings;
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    container: {},
-    menuList: {
-      marginTop: spacing.margin.base,
-    },
-    chooseLanguageText: {
-      margin: spacing.margin.base,
-      marginHorizontal: spacing.margin.extraLarge,
-    },
-    languageOption: {
-      height: 48,
-      paddingHorizontal: spacing.padding.extraLarge,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {},
+  menuList: {
+    marginTop: spacing.margin.base,
+  },
+  chooseLanguageText: {
+    margin: spacing.margin.base,
+    marginHorizontal: spacing.margin.extraLarge,
+  },
+  languageOption: {
+    height: 48,
+    paddingHorizontal: spacing.padding.extraLarge,
+  },
+});

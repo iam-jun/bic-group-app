@@ -36,6 +36,7 @@ import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {formatLargeNumber} from '~/utils/formatData';
 import SeenCountsView from './SeenCountsView';
 import UsersSeenPostBottomSheet from './UsersSeenPostBottomSheet';
@@ -335,7 +336,7 @@ const _PostView: FC<PostViewProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     rowCenter: {flexDirection: 'row', alignItems: 'center'},
     container: {

@@ -6,6 +6,7 @@ import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import {IconType} from '~/resources/icons';
+import spacing from '~/theme/spacing';
 
 interface EmptyScreenProps {
   source?: IconType;
@@ -23,7 +24,6 @@ const EmptyScreen = ({
   ButtonComponent,
 }: EmptyScreenProps) => {
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
 
   return (
     <View testID="empty_screen" style={styles.container}>
@@ -46,20 +46,16 @@ const EmptyScreen = ({
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    container: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 30,
-    },
-    text: {
-      textAlign: 'center',
-      marginVertical: spacing.margin.tiny,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 30,
+  },
+  text: {
+    textAlign: 'center',
+    marginVertical: spacing.margin.tiny,
+  },
+});
 
 export default EmptyScreen;

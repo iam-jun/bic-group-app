@@ -13,6 +13,7 @@ import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import AtMention from './AtMention';
 import {isEmpty} from 'lodash';
+import spacing from '~/theme/spacing';
 
 export type IModalPosition = 'top' | 'bottom' | 'above-keyboard';
 
@@ -85,7 +86,7 @@ const createStyles = (
   screenHeight: number,
   isListEmpty: boolean,
 ) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   const maxTopPosition = measuredHeight / 2;
 

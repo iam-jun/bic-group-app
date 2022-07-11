@@ -11,6 +11,7 @@ import ButtonWrapper, {
   ButtonWrapperProps,
 } from '~/beinComponents/Button/ButtonWrapper';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface ButtonPrimaryProps extends ButtonWrapperProps {
   color?: string;
@@ -35,7 +36,7 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   disabled,
   ...props
 }: ButtonPrimaryProps) => {
-  const {colors, spacing}: ITheme = useTheme() as ITheme;
+  const {colors}: ITheme = useTheme() as ITheme;
 
   const _colorHover = colorHover || colors.iconTint;
   let _backgroundColor = color || colors.bgButtonPrimary;
@@ -48,9 +49,9 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
     {
       backgroundColor: _backgroundColor,
-      paddingHorizontal: spacing?.padding.base,
-      paddingVertical: spacing?.padding.small,
-      borderRadius: borderRadius || spacing?.borderRadius.small,
+      paddingHorizontal: spacing.padding.base,
+      paddingVertical: spacing.padding.small,
+      borderRadius: borderRadius || spacing.borderRadius.small,
       alignItems: 'center',
     },
     style,

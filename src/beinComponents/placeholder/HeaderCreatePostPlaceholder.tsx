@@ -7,8 +7,10 @@ import {
   PlaceholderLine,
   ShineOverlay,
 } from 'rn-placeholder';
+import dimension from '~/theme/dimension';
 
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface CreatePostHeaderPlaceholderProps {
   style?: StyleProp<ViewStyle>;
@@ -31,7 +33,7 @@ const HeaderCreatePostPlaceholder: FC<CreatePostHeaderPlaceholderProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing, dimension} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',

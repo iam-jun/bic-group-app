@@ -15,6 +15,7 @@ import Text from '~/beinComponents/Text';
 import useModal from '~/hooks/modal';
 import * as actions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import Icon from '../Icon';
 import TextInput from '../inputs/TextInput';
 
@@ -143,7 +144,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
             {!!cancelBtn && (
               <_CancelBtnComponent
                 testID="alert_modal.cancel"
-                style={{marginEnd: theme.spacing?.margin.base}}
+                style={{marginEnd: spacing?.margin.base}}
                 onPress={_onCancel}
                 {...cancelBtnProps}>
                 {_cancelLabel}
@@ -170,7 +171,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const defaultAlertWidth = 320;
 
   return StyleSheet.create({

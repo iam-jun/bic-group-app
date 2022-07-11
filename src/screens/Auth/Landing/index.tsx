@@ -7,7 +7,6 @@ import {useIsFocused} from '@react-navigation/native';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {spacing} from '~/theme';
 import {useBaseHook} from '~/hooks';
 import {authStack} from '~/configs/navigator';
 import {ITheme} from '~/theme/interfaces';
@@ -18,6 +17,7 @@ import useAuth from '~/hooks/auth';
 import {rootSwitch} from '~/router/stack';
 import images from '~/resources/images';
 import Image from '~/beinComponents/Image';
+import spacing from '~/theme/spacing';
 
 const LOGO_SIZE = 72;
 

@@ -11,6 +11,7 @@ import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
 import groupsKeySelector from '../../redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
+import spacing from '~/theme/spacing';
 
 interface JoinCancelButtonProps {
   style?: ViewStyle;
@@ -87,7 +88,7 @@ const JoinCancelButton = ({style}: JoinCancelButtonProps) => {
 export default JoinCancelButton;
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     btnAction: {
       marginHorizontal: spacing.margin.large,

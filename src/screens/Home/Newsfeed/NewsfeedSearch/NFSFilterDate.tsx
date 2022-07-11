@@ -12,6 +12,7 @@ import {AppContext} from '~/contexts/AppContext';
 import {useBaseHook} from '~/hooks';
 import modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import DatePicker from './component/DatePicker';
 import {getDefaultEndDate, getDefaultStartDate, isValidDate} from './helper';
 
@@ -132,7 +133,7 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.padding.extraLarge,

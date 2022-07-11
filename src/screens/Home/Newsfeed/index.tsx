@@ -27,6 +27,7 @@ import postActions from '~/screens/Post/redux/actions';
 import appActions from '~/store/app/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {openLink} from '~/utils/common';
 import {getEnv} from '~/utils/env';
 
@@ -195,7 +196,7 @@ const Newsfeed = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     flex1: {flex: 1},

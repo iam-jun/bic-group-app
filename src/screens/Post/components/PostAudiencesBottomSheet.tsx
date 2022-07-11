@@ -18,13 +18,15 @@ import {useRootNavigation} from '~/hooks/navigation';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import mainStack from '~/router/navigator/MainStack/stack';
+import dimension from '~/theme/dimension';
+import spacing from '~/theme/spacing';
 
 const PostAudiencesBottomSheet = () => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const insets = useSafeAreaInsets();
   const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme, insets);
 
   const postAudienceSheetRef = useRef<any>();
@@ -152,7 +154,7 @@ const PostAudiencesBottomSheet = () => {
 };
 
 const createStyle = (theme: ITheme, insets: any) => {
-  const {spacing, dimension, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       height: dimension?.deviceHeight * 0.7,

@@ -11,6 +11,7 @@ import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 const NoUserFound = () => {
   const theme = useTheme() as ITheme;
@@ -44,7 +45,7 @@ const NoUserFound = () => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     root: {
       backgroundColor: colors.placeholder,

@@ -46,7 +46,6 @@ const GifView = ({style, giphy}: Props) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

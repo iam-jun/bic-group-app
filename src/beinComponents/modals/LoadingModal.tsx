@@ -8,6 +8,7 @@ import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
 import useModal from '~/hooks/modal';
+import spacing from '~/theme/spacing';
 
 const LoadingModal = () => {
   const theme: ITheme = useTheme() as ITheme;
@@ -41,7 +42,7 @@ const LoadingModal = () => {
 
 const themeStyles = (theme: ITheme) => {
   const insets = useSafeAreaInsets();
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     root: {

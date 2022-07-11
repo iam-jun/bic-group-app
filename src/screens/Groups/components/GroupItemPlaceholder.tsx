@@ -11,6 +11,7 @@ import {
   PlaceholderMedia,
 } from 'rn-placeholder';
 import {getRandomInt} from '~/utils/generator';
+import spacing from '~/theme/spacing';
 
 export interface GroupItemPlaceholderProps {
   style?: StyleProp<ViewStyle>;
@@ -50,7 +51,7 @@ const GroupItemPlaceholder: FC<GroupItemPlaceholderProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
     margin0: {marginTop: 0, marginBottom: 0},

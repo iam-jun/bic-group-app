@@ -21,6 +21,7 @@ import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import {scaleSize} from '~/theme/dimension';
 import DiscoverItem from '../components/DiscoverItem';
+import spacing from '~/theme/spacing';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -38,7 +39,6 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
 
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
 
   useEffect(() => {
     getData();
@@ -130,29 +130,26 @@ const DiscoverHeader = ({list}: any) => {
   return null;
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
-  return StyleSheet.create({
-    container: {},
-    item: {
-      height: '100%',
-      flex: 1,
-      paddingVertical: spacing.padding.small,
-    },
-    iconSmall: {
-      marginRight: spacing.margin.tiny,
-      height: 16,
-    },
-    groupInfo: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginTop: 2,
-    },
-    divider: {
-      marginVertical: spacing.margin.tiny,
-      marginHorizontal: spacing.margin.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {},
+  item: {
+    height: '100%',
+    flex: 1,
+    paddingVertical: spacing.padding.small,
+  },
+  iconSmall: {
+    marginRight: spacing.margin.tiny,
+    height: 16,
+  },
+  groupInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 2,
+  },
+  divider: {
+    marginVertical: spacing.margin.tiny,
+    marginHorizontal: spacing.margin.large,
+  },
+});
 
 export default DiscoverCommunities;

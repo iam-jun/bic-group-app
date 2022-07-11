@@ -8,6 +8,7 @@ import Text from '~/beinComponents/Text';
 import privacyTypes from '~/constants/privacyTypes';
 import {ICommunity} from '~/interfaces/ICommunity';
 import {useBaseHook} from '~/hooks';
+import spacing from '~/theme/spacing';
 
 interface CommunityItemProps {
   item: ICommunity;
@@ -71,7 +72,6 @@ const CommunityItem = ({
 export default CommunityItem;
 
 const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
   return StyleSheet.create({
     item: {
       height: '100%',

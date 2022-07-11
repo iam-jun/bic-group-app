@@ -20,6 +20,7 @@ import GroupContent from '~/screens/Groups/GroupDetail/components/GroupContent';
 import NoGroupFound from '~/screens/Groups/GroupDetail/components/NoGroupFound';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import groupsKeySelector from '../redux/keySelector';
 import GroupPrivateWelcome from './components/GroupPrivateWelcome';
 import GroupTopBar from './components/GroupTopBar';
@@ -130,7 +131,7 @@ const GroupDetail = (props: any) => {
 
 const themeStyles = (theme: ITheme) => {
   const insets = useSafeAreaInsets();
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     screenContainer: {
       paddingTop: insets.top,

@@ -22,6 +22,7 @@ import {usePostSettings} from '~/screens/Post/PostSettings/usePostSettings';
 import useCreatePost from '~/screens/Post/CreatePost/hooks/useCreatePost';
 import {IPostSettingsParams} from '~/interfaces/IPost';
 import postActions from '~/screens/Post/redux/actions';
+import spacing from '~/theme/spacing';
 
 export interface PostSettingsProps {
   route?: {
@@ -219,7 +220,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {backgroundColor: colors.background, flex: 1},
     row: {flexDirection: 'row', alignItems: 'center'},

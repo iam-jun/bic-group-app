@@ -4,6 +4,7 @@ import {StyleSheet, View} from 'react-native';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
+import spacing from '~/theme/spacing';
 
 export interface PostViewImportantProps {
   isImportant: boolean;
@@ -49,7 +50,7 @@ const PostViewImportant: FC<PostViewImportantProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     liteContainer: {
       position: 'absolute',

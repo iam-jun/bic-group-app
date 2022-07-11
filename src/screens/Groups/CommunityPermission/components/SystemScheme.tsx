@@ -16,6 +16,7 @@ import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsActions from '~/screens/Groups/redux/actions';
+import spacing from '~/theme/spacing';
 
 export interface SystemSchemeProps {
   style?: StyleProp<ViewStyle>;
@@ -103,7 +104,7 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {

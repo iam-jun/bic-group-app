@@ -16,6 +16,7 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
 import {ISelectAudienceParams} from '~/screens/Post/PostSelectAudience/SelectAudienceHelper';
+import spacing from '~/theme/spacing';
 
 export interface FloatingCreatePostProps {
   audience?: any;
@@ -29,7 +30,7 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
   const showValue = useSharedValue(0);
 
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
   const {rootNavigation} = useRootNavigation();
 
@@ -90,7 +91,7 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {},
     button: {

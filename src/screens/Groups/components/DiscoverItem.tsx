@@ -9,6 +9,7 @@ import Icon from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import {useBaseHook} from '~/hooks';
+import spacing from '~/theme/spacing';
 
 interface DiscoverItemProps {
   item: any;
@@ -98,7 +99,6 @@ const DiscoverItem = ({
 export default DiscoverItem;
 
 const createStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
   return StyleSheet.create({
     item: {
       height: '100%',

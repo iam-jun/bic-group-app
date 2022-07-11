@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import {Modalize, ModalizeProps} from 'react-native-modalize';
-import {Portal, useTheme} from 'react-native-paper';
+import {Portal} from 'react-native-paper';
 import {StyleSheet, ViewStyle, StyleProp, Keyboard} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface BaseBottomSheetProps extends ModalizeProps {
   modalizeRef: any;
@@ -52,7 +52,6 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
   ...props
 }: BaseBottomSheetProps) => {
   const renderModalize = () => {
-    const {spacing}: ITheme = useTheme() as ITheme;
     const insets = useSafeAreaInsets();
 
     useEffect(() => {
@@ -68,14 +67,14 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
       {
         borderTopRightRadius: 0,
         borderTopLeftRadius: 0,
-        paddingTop: spacing?.padding.extraLarge,
+        paddingTop: spacing.padding.extraLarge,
       },
       modalStyle,
     ]);
 
     const _childrenStyle = [
       {
-        paddingBottom: insets.bottom + (spacing?.padding.large || 16),
+        paddingBottom: insets.bottom + (spacing.padding.large || 16),
       },
       childrenStyle,
     ];

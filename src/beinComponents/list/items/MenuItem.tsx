@@ -9,6 +9,7 @@ import {useKeySelector} from '~/hooks/selector';
 import {IOption} from '~/interfaces/IOption';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 interface MenuItemProps extends IOption {
   RightComponent?: React.ReactNode | React.ReactElement;
@@ -120,7 +121,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

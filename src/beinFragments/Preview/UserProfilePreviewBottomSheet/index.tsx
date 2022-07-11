@@ -25,6 +25,7 @@ import modalActions from '~/store/modal/actions';
 import commonKeySelector from '~/store/modal/keySelector';
 import {scaleCoverHeight} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 const UserProfilePreviewBottomSheet = () => {
   const theme = useTheme() as ITheme;
@@ -196,7 +197,7 @@ const UserProfilePreviewBottomSheet = () => {
 };
 
 const themeStyles = (theme: ITheme, coverHeight: number) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const containerMinHeight = 330;
 
   return StyleSheet.create({

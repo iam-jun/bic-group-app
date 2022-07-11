@@ -19,6 +19,7 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import * as modalActions from '~/store/modal/actions';
 import {showHideToastMessage} from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {checkPermission} from '~/utils/permission';
 
 const PostSelectImage = () => {
@@ -174,7 +175,7 @@ const PostSelectImage = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {backgroundColor: colors.background},
     item: {marginBottom: spacing.margin.large, alignSelf: 'center'},

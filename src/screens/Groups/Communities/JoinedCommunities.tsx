@@ -20,6 +20,7 @@ import {useDispatch} from 'react-redux';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import CommunityItem from '../components/CommunityItem';
 import {ICommunity} from '~/interfaces/ICommunity';
+import spacing from '~/theme/spacing';
 
 export interface JoinedCommunitiesProps {
   style?: StyleProp<ViewStyle>;
@@ -36,7 +37,6 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
 
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
 
   useEffect(() => {
     getData();
@@ -93,8 +93,8 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
       ItemSeparatorComponent={() => (
         <Divider
           style={{
-            marginVertical: theme.spacing?.margin.tiny,
-            marginHorizontal: theme.spacing.margin.large,
+            marginVertical: spacing.margin.tiny,
+            marginHorizontal: spacing.margin.large,
           }}
         />
       )}
@@ -109,13 +109,10 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    buttonWrapper: {
-      marginTop: spacing.margin.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  buttonWrapper: {
+    marginTop: spacing.margin.large,
+  },
+});
 
 export default JoinedCommunities;

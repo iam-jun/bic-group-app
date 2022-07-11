@@ -9,6 +9,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import images from '~/resources/images';
+import spacing from '~/theme/spacing';
 
 interface Props {
   testID?: string;
@@ -74,7 +75,7 @@ const CoverImage = ({
 };
 
 const themeStyles = (theme: ITheme, coverHeight: number) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     coverHeader: {

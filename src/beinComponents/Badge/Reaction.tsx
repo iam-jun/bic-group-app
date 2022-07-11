@@ -12,6 +12,7 @@ import Text from '~/beinComponents/Text';
 import commonActions, {IAction} from '~/constants/commonActions';
 import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 interface ReactionProps {
   testId?: string;
@@ -100,7 +101,7 @@ const createStyles = (
   isSelected: boolean,
   loading?: boolean,
 ) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

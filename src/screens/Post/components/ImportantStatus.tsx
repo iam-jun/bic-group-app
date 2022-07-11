@@ -6,6 +6,7 @@ import i18next from 'i18next';
 import Icon from '~/beinComponents/Icon';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface ImportantStatusProps {
   notExpired: boolean;
@@ -19,8 +20,7 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
   style,
 }: ImportantStatusProps) => {
   const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
-  const styles = createStyle(theme);
+  const {colors} = theme;
 
   const ImportantStatusStyle = {
     active: {
@@ -78,19 +78,16 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {},
-    textContainer: {
-      flex: 1,
-      justifyContent: 'center',
-    },
-    leftIcon: {
-      marginRight: spacing.margin.small,
-    },
-    iconStyle: {padding: 3, borderRadius: 6},
-  });
-};
+const styles = StyleSheet.create({
+  container: {},
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  leftIcon: {
+    marginRight: spacing.margin.small,
+  },
+  iconStyle: {padding: 3, borderRadius: 6},
+});
 
 export default ImportantStatus;

@@ -19,6 +19,7 @@ import {useUserIdAuth} from '~/hooks/auth';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import {ISelectAudienceParams} from '~/screens/Post/PostSelectAudience/SelectAudienceHelper';
+import spacing from '~/theme/spacing';
 
 export interface HeaderCreatePostProps {
   audience?: any;
@@ -87,7 +88,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingVertical: spacing?.padding.small,

@@ -21,6 +21,7 @@ import Header from '~/beinComponents/Header';
 import MemberOptionsMenu from './components/MemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
 import MembersContent from './components/MembersContent';
+import spacing from '~/theme/spacing';
 
 const _GroupMembers = (props: any) => {
   const params = props.route.params;
@@ -149,7 +150,7 @@ const _GroupMembers = (props: any) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     searchBtn: {
       flex: 1,

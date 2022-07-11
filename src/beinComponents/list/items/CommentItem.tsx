@@ -9,6 +9,7 @@ import CommentView from '~/screens/Post/components/CommentView';
 import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
 import postActions from '~/screens/Post/redux/actions';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface CommentItemProps {
   postId: string;
@@ -90,7 +91,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingTop: spacing?.padding.small,

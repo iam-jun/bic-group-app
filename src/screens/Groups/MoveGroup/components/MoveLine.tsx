@@ -5,6 +5,7 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 
 import Icon from '~/beinComponents/Icon';
+import spacing from '~/theme/spacing';
 
 export interface MoveLineProps {
   style?: StyleProp<ViewStyle>;
@@ -12,7 +13,7 @@ export interface MoveLineProps {
 
 const MoveLine: FC<MoveLineProps> = ({style}: MoveLineProps) => {
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   return (
@@ -38,7 +39,7 @@ const MoveLine: FC<MoveLineProps> = ({style}: MoveLineProps) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {},
     blueDot: {

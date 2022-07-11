@@ -13,8 +13,10 @@ import {
 import {useTheme} from 'react-native-paper';
 import AutoGrowingTextInput from '~/beinComponents/inputs/AutoGrowingTextInput';
 import {useBaseHook} from '~/hooks';
+import dimension from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface PostInputProps extends TextInputProps {
   style?: StyleProp<ViewStyle>;
@@ -105,10 +107,10 @@ const PostInput: React.FC<PostInputProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing, dimension} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
-      margin: spacing?.padding.base,
+      margin: spacing.padding.base,
       padding: 0,
       fontSize: dimension?.sizes.body,
       fontFamily: fontFamilies.OpenSans,

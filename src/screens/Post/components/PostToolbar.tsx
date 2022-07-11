@@ -29,6 +29,7 @@ import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {showHideToastMessage} from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {getChatDomain} from '~/utils/link';
 import {checkPermission} from '~/utils/permission';
 import {clearExistingFiles, validateFilesPicker} from '../CreatePost/helper';
@@ -283,7 +284,7 @@ const PostToolbar = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     row: {flexDirection: 'row'},
     flex1: {flex: 1},
@@ -292,7 +293,7 @@ const createStyle = (theme: ITheme) => {
       backgroundColor: colors.background,
       borderWidth: 1,
       borderColor: colors.borderDivider,
-      paddingHorizontal: spacing?.padding.large,
+      paddingHorizontal: spacing.padding.large,
       alignItems: 'center',
       flexDirection: 'row',
     },
@@ -302,8 +303,8 @@ const createStyle = (theme: ITheme) => {
       justifyContent: 'center',
     },
     contentContainer: {
-      paddingHorizontal: spacing?.padding.base,
-      paddingBottom: spacing?.padding.base,
+      paddingHorizontal: spacing.padding.base,
+      paddingBottom: spacing.padding.base,
     },
     markdownView: {
       flexDirection: 'row',

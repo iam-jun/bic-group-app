@@ -20,7 +20,9 @@ import PostViewDraft from '~/screens/Post/components/PostViewDraft';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import appActions from '~/store/app/actions';
+import dimension from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 const DraftPost = () => {
   const [lossInternet, setLossInternet] = useState(false);
@@ -28,7 +30,6 @@ const DraftPost = () => {
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const {colors} = theme;
-  const {spacing} = theme;
   const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
@@ -113,7 +114,7 @@ const DraftPost = () => {
         data={draftPosts}
         renderItem={renderItem}
         renderItemSeparator={() => (
-          <ViewSpacing height={theme.spacing.margin.large} />
+          <ViewSpacing height={spacing.margin.large} />
         )}
         ListHeaderComponent={() => <ViewSpacing height={spacing.margin.base} />}
         ListFooterComponent={renderFooter}
@@ -127,7 +128,7 @@ const DraftPost = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, dimension} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

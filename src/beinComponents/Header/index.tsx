@@ -29,6 +29,8 @@ import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
 import IconChat from '../IconChat';
 import {ImageProps} from '../Image';
 import {debounce} from 'lodash';
+import dimension from '~/theme/dimension';
+import spacing from '~/theme/spacing';
 
 export interface HeaderProps {
   headerRef?: any;
@@ -114,7 +116,7 @@ const Header: React.FC<HeaderProps> = ({
   const _headerRef = headerRef || useRef();
 
   const theme: ITheme = useTheme() as ITheme;
-  const {spacing, dimension, colors} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
   const insets = useSafeAreaInsets();
 
@@ -410,7 +412,7 @@ const Header: React.FC<HeaderProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     bottomBorderAndShadow: {
       borderBottomWidth: Platform.OS === 'android' ? 0 : 0.5,

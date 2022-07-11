@@ -13,6 +13,7 @@ import Text, {TextProps} from '~/beinComponents/Text';
 import {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
 import Button from '~/beinComponents/Button';
+import spacing from '~/theme/spacing';
 
 export interface BannerMessageProps {
   type?: 'error' | 'success' | 'informative';
@@ -86,7 +87,7 @@ const createStyle = (
   theme: ITheme,
   type: 'success' | 'error' | 'informative',
 ) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

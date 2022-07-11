@@ -16,8 +16,8 @@ import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import actions from '~/screens/Auth/redux/actions';
-import {spacing} from '~/theme';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {getEnv} from '~/utils/env';
 
 const SignUp = () => {

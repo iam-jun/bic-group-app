@@ -12,6 +12,7 @@ import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import spacing from '~/theme/spacing';
 
 export interface NFSRecentSearchKeywordProps {
   onSelectKeyword?: (keyword: string) => void;
@@ -92,7 +93,7 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {

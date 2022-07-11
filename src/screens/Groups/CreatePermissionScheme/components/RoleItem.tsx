@@ -10,6 +10,7 @@ import PermissionItem from '~/screens/Groups/CreatePermissionScheme/components/P
 import {ICategory, IPermission, IRole} from '~/interfaces/IGroup';
 import {permissionRoleSectionHeaderHeight} from '~/theme/dimension';
 import {CATEGORY_KEY, ROLE_TYPE} from '~/constants/permissionScheme';
+import spacing from '~/theme/spacing';
 
 export interface RoleItemProps {
   categories: ICategory[];
@@ -108,7 +109,7 @@ const RoleItem: FC<RoleItemProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.margin.small,

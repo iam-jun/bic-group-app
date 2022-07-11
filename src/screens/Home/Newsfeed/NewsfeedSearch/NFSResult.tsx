@@ -15,11 +15,12 @@ import images from '~/resources/images';
 import Text from '~/beinComponents/Text';
 import {scaleSize} from '~/theme/dimension';
 import NFSFilterToolbar from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterToolbar';
+import spacing from '~/theme/spacing';
 
 const NFSResult = () => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const {
@@ -117,7 +118,7 @@ const NFSResult = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {

@@ -10,6 +10,7 @@ import {ITheme} from '~/theme/interfaces';
 
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import spacing from '~/theme/spacing';
 
 export interface CreatePostExitOptionsProps {
   onPressSaveDraft?: () => void;
@@ -23,7 +24,6 @@ const CreatePostExitOptions: FC<CreatePostExitOptionsProps> = ({
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const {colors} = theme;
-  const styles = createStyle(theme);
 
   const onPressSaveAsDraft = () => {
     dispatch(modalActions.hideModal());
@@ -72,14 +72,11 @@ const CreatePostExitOptions: FC<CreatePostExitOptionsProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {},
-    header: {
-      padding: spacing.padding.base,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {},
+  header: {
+    padding: spacing.padding.base,
+  },
+});
 
 export default CreatePostExitOptions;

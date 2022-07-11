@@ -18,6 +18,7 @@ import {IChangePasswordError} from '~/interfaces/IAuth';
 import useAuth from '~/hooks/auth';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 import {getEnv} from '~/utils/env';
+import spacing from '~/theme/spacing';
 
 const ChangePassword = () => {
   const {t} = useBaseHook();
@@ -238,7 +239,7 @@ const ChangePassword = () => {
 export default ChangePassword;
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

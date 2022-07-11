@@ -11,6 +11,7 @@ import Text from '~/beinComponents/Text';
 import i18next from 'i18next';
 import postActions from '../../redux/actions';
 import {useUserIdAuth} from '~/hooks/auth';
+import spacing from '~/theme/spacing';
 
 const ReplyingView = () => {
   const dispatch = useDispatch();
@@ -63,7 +64,7 @@ const ReplyingView = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {},

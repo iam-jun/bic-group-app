@@ -35,8 +35,10 @@ import {IFilePicked, IGiphy} from '~/interfaces/common';
 import {IActivityDataImage} from '~/interfaces/IPost';
 import ImageUploader, {IGetFile} from '~/services/imageUploader';
 import modalActions from '~/store/modal/actions';
+import dimension from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {checkPermission} from '~/utils/permission';
 
 export interface ICommentInputSendParam {
@@ -439,7 +441,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 };
 
 const createStyle = (theme: ITheme, insets: any, loading: boolean) => {
-  const {colors, spacing, dimension} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     root: {
       borderTopWidth: 1,

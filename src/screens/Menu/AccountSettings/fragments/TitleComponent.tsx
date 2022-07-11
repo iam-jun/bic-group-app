@@ -5,6 +5,7 @@ import {ITheme} from '~/theme/interfaces';
 
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
+import spacing from '~/theme/spacing';
 
 interface TitleComponentProps {
   icon: any;
@@ -13,7 +14,6 @@ interface TitleComponentProps {
 
 const TitleComponent = ({icon, title}: TitleComponentProps) => {
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
 
   return (
     <View style={styles.container}>
@@ -32,15 +32,12 @@ const TitleComponent = ({icon, title}: TitleComponentProps) => {
 
 export default TitleComponent;
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      paddingTop: spacing.padding.small,
-    },
-    iconStyle: {
-      marginRight: spacing.margin.small,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    paddingTop: spacing.padding.small,
+  },
+  iconStyle: {
+    marginRight: spacing.margin.small,
+  },
+});

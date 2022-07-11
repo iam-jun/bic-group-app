@@ -23,6 +23,7 @@ import PrivacyItem from './components/PrivacyItem';
 import CoverImage from './components/CoverImage';
 import InfoView from './components/InfoView';
 import {alertAction, _openImagePicker} from './helper';
+import spacing from '~/theme/spacing';
 
 const GeneralInformation = (props: any) => {
   const params = props.route.params;
@@ -30,7 +31,6 @@ const GeneralInformation = (props: any) => {
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
-  const styles = themeStyles(theme);
   const dispatch = useDispatch();
 
   const baseSheetRef: any = useRef();
@@ -236,21 +236,17 @@ const GeneralInformation = (props: any) => {
 
 export default GeneralInformation;
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    contentBottomSheet: {
-      marginHorizontal: spacing.margin.base,
-      marginTop: spacing.margin.large,
-    },
-    privacyTypeText: {
-      marginLeft: spacing.margin.base,
-      marginBottom: spacing.margin.small,
-      fontSize: 18,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  contentBottomSheet: {
+    marginHorizontal: spacing.margin.base,
+    marginTop: spacing.margin.large,
+  },
+  privacyTypeText: {
+    marginLeft: spacing.margin.base,
+    marginBottom: spacing.margin.small,
+    fontSize: 18,
+  },
+});

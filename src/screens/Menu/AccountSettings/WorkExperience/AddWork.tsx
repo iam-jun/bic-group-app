@@ -25,6 +25,8 @@ import {showHideToastMessage} from '~/store/modal/actions';
 import {IToastMessage} from '~/interfaces/common';
 import {isEmpty} from 'lodash';
 import Button from '~/beinComponents/Button';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 const AddWork = () => {
   const theme = useTheme() as ITheme;
@@ -346,7 +348,7 @@ const AddWork = () => {
           textColor: theme.colors.background,
           disabled:
             companyValue?.trim?.() && positionValue?.trim?.() ? false : true,
-          borderRadius: theme.spacing.borderRadius.small,
+          borderRadius: spacing.borderRadius.small,
           testID: 'add_work.save',
         }}
         onPressButton={onSave}
@@ -399,7 +401,7 @@ const AddWork = () => {
 export default AddWork;
 
 const createStyles = (theme: ITheme) => {
-  const {spacing, colors, dimension} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

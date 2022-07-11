@@ -11,6 +11,7 @@ import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import i18next from 'i18next';
 import Icon from '~/beinComponents/Icon';
+import spacing from '~/theme/spacing';
 
 interface OptionMenuProps {
   data: IOptionItem[];
@@ -30,7 +31,6 @@ const OptionMenu = ({
   testID,
 }: OptionMenuProps) => {
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
 
   const renderItem = ({item}: {item: IOptionItem}) => {
     return (
@@ -79,13 +79,9 @@ const OptionMenu = ({
 
 export default OptionMenu;
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    contentComponent: {},
-    chooseText: {
-      margin: spacing.margin.base,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  contentComponent: {},
+  chooseText: {
+    margin: spacing.margin.base,
+  },
+});

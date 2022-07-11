@@ -9,6 +9,7 @@ import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 import {IPermission, IRole} from '~/interfaces/IGroup';
 import {useBaseHook} from '~/hooks';
+import spacing from '~/theme/spacing';
 
 export interface PermissionItemProps {
   permission: IPermission;
@@ -79,7 +80,7 @@ const PermissionItem: FC<PermissionItemProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {},
     permissionName: {

@@ -18,6 +18,7 @@ import {AppContext} from '~/contexts/AppContext';
 import {formatDateTime} from '~/beinComponents/TimeView';
 import {ISelectedFilterUser} from '~/interfaces/IHome';
 import NFSFilterOptionMenu from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterOptionMenu';
+import spacing from '~/theme/spacing';
 
 const NFSFilterToolbar = () => {
   const scrollRef = useRef<any>();
@@ -25,7 +26,7 @@ const NFSFilterToolbar = () => {
   const {language} = useContext(AppContext);
   const theme = useTheme() as ITheme;
   const {t} = useBaseHook();
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
   const userId = useUserIdAuth();
 
@@ -173,7 +174,7 @@ const NFSFilterToolbar = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     scrollContainer: {
       backgroundColor: colors.background,

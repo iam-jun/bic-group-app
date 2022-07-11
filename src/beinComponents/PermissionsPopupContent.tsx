@@ -14,6 +14,7 @@ import PrimaryItem, {
 import ViewSpacing from './ViewSpacing';
 import {openSettings} from 'react-native-permissions';
 import modalActions from '~/store/modal/actions';
+import spacing from '~/theme/spacing';
 
 export interface PermissionsPopupContentProps {
   style?: StyleProp<ViewStyle>;
@@ -38,7 +39,7 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
 }: PermissionsPopupContentProps) => {
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const dispatch = useDispatch();
@@ -92,7 +93,7 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       backgroundColor: colors.background,

@@ -4,6 +4,7 @@ import {useTheme} from 'react-native-paper';
 import {useSelector} from 'react-redux';
 import {getUnreadChannelCount} from '~/selectors/chat';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import NotificationsBadge from '../Badge/NotificationsBadge';
 import Icon from '../Icon';
 
@@ -13,7 +14,6 @@ interface Props {
 
 const IconChat = ({onPress}: Props) => {
   const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
   const count = useSelector(state => getUnreadChannelCount(state));
 
   return (
@@ -36,24 +36,21 @@ const IconChat = ({onPress}: Props) => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    icon: {
-      height: 40,
-      width: 40,
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: spacing.padding.small,
-      borderRadius: 20,
-      marginRight: spacing.margin.tiny,
-    },
-    badge: {
-      position: 'absolute',
-      top: 0,
-      right: 0,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  icon: {
+    height: 40,
+    width: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: spacing.padding.small,
+    borderRadius: 20,
+    marginRight: spacing.margin.tiny,
+  },
+  badge: {
+    position: 'absolute',
+    top: 0,
+    right: 0,
+  },
+});
 
 export default IconChat;

@@ -16,6 +16,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import CommunityItem from '../components/CommunityItem';
 import {ITheme} from '~/theme/interfaces';
 import actions from '~/screens/Groups/redux/actions';
+import spacing from '~/theme/spacing';
 
 interface ManagedCommunitiesProps {
   onPressCommunities?: (communityId: number) => void;
@@ -27,7 +28,6 @@ const ManagedCommunities = ({
   onPressMenu,
 }: ManagedCommunitiesProps) => {
   const theme = useTheme() as ITheme;
-  const {spacing} = theme;
   const styles = createStyles(theme);
   const dispatch = useDispatch();
 

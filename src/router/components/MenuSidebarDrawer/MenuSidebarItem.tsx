@@ -12,6 +12,7 @@ import Text, {TextProps, TextVariant} from '~/beinComponents/Text';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
 import {useTheme} from 'react-native-paper';
 import {useKeySelector} from '~/hooks/selector';
+import spacing from '~/theme/spacing';
 
 interface DrawerItemProps {
   disabled?: boolean;
@@ -66,7 +67,6 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
 
   const theme = useTheme() as ITheme;
   const {colors} = theme;
-  const styles = themeStyles(theme);
 
   return (
     <TouchableOpacity
@@ -123,32 +123,28 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      paddingVertical: spacing.padding.base,
-      paddingLeft: spacing.padding.large,
-      paddingRight: spacing.padding.base,
-      alignItems: 'center',
-    },
-    titleContainer: {
-      flex: 1,
-      marginLeft: spacing.margin.base,
-    },
-    right: {
-      flexDirection: 'row',
-    },
-    rightIcon: {
-      height: 36,
-      width: 36,
-      padding: spacing.padding.small,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    paddingVertical: spacing.padding.base,
+    paddingLeft: spacing.padding.large,
+    paddingRight: spacing.padding.base,
+    alignItems: 'center',
+  },
+  titleContainer: {
+    flex: 1,
+    marginLeft: spacing.margin.base,
+  },
+  right: {
+    flexDirection: 'row',
+  },
+  rightIcon: {
+    height: 36,
+    width: 36,
+    padding: spacing.padding.small,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default MenuSidebarItem;

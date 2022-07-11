@@ -11,6 +11,7 @@ import {blacklistReactions, ReactionType} from '~/constants/reactions';
 import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
 import commonActions, {IAction} from '~/constants/commonActions';
 import appConfig from '~/configs/appConfig';
+import spacing from '~/theme/spacing';
 
 export interface ReactionViewProps {
   style?: StyleProp<ViewStyle>;
@@ -126,7 +127,7 @@ const ReactionView: FC<ReactionViewProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     containerButtonOnly: {
       flex: 1,

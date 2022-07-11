@@ -5,6 +5,7 @@ import {useTheme} from 'react-native-paper';
 import Divider from '~/beinComponents/Divider';
 import Button from '~/beinComponents/Button';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 interface ButtonProps {
   style?: StyleProp<ViewStyle>;
@@ -48,7 +49,7 @@ const ButtonApproveDeclineAllRequests = ({
 };
 
 const createStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

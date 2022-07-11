@@ -7,6 +7,7 @@ import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import NotFoundImg from '../../../assets/images/error_404.svg';
 
 const NotFound = () => {
@@ -15,7 +16,7 @@ const NotFound = () => {
   const dimensions = useWindowDimensions();
 
   const imgMaxWidth = 328;
-  const imgPadding = theme.spacing.margin.base || 12;
+  const imgPadding = spacing.margin.base || 12;
   let imgSize = dimensions.width - 2 * imgPadding;
   if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
 
@@ -44,7 +45,7 @@ const NotFound = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

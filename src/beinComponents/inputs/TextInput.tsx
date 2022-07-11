@@ -14,6 +14,7 @@ import {ITheme} from '~/theme/interfaces';
 import {fontFamilies} from '~/theme/fonts';
 import Text, {TextProps} from '~/beinComponents/Text';
 import Icon from '../Icon';
+import spacing from '~/theme/spacing';
 
 export type HelperType =
   | 'error'
@@ -66,7 +67,7 @@ const TextInput: React.FC<TextInputProps> = ({
   ...props
 }: TextInputProps) => {
   const theme: ITheme = useTheme() as ITheme;
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   const [text, setText] = useState<string>(value || '');
 
   useEffect(() => {
@@ -80,7 +81,7 @@ const TextInput: React.FC<TextInputProps> = ({
       placeholder: colors.textSecondary,
       background: disabled ? colors.bgDisable : colors.background,
     },
-    roundness: spacing?.borderRadius.small,
+    roundness: spacing.borderRadius.small,
     fonts: {
       regular: {
         fontFamily: fontFamilies.OpenSans,
@@ -95,8 +96,6 @@ const TextInput: React.FC<TextInputProps> = ({
     getTextHelperProps(theme, helperType),
     helperTextProps,
   );
-
-  const styles = createStyles(theme);
 
   const renderHelperAction = () => {
     if (!helperAction) {
@@ -169,22 +168,18 @@ const TextInput: React.FC<TextInputProps> = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    container: {
-      marginVertical: spacing?.margin.tiny,
-    },
-    input: {},
-    iconClear: {
-      position: 'absolute',
-      right: spacing.margin.large,
-      // @ts-ignore
-      top: spacing.margin.base + spacing.margin.small || 13,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: spacing?.margin.tiny,
+  },
+  input: {},
+  iconClear: {
+    position: 'absolute',
+    right: spacing.margin.large,
+    // @ts-ignore
+    top: spacing.margin.base + spacing.margin.small || 13,
+  },
+});
 
 const getTextHelperProps = (theme: ITheme, type: HelperType) => {
   const {colors} = theme;

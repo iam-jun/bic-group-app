@@ -17,6 +17,7 @@ import Header from '~/beinComponents/Header';
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
+import spacing from '~/theme/spacing';
 
 const GroupAdministration = (props: any) => {
   const params = props.route.params;
@@ -158,7 +159,7 @@ const GroupAdministration = (props: any) => {
 export default GroupAdministration;
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

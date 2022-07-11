@@ -15,9 +15,10 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {IToastMessage} from '~/interfaces/common';
 import {showHideToastMessage} from '~/store/modal/actions';
 import BannerMessage from '~/beinComponents/ToastMessage/BannerMessage';
+import spacing from '~/theme/spacing';
 
 const Section1 = () => {
-  const {spacing, colors}: ITheme = useTheme() as ITheme;
+  const {colors}: ITheme = useTheme() as ITheme;
 
   const [showError, setShowError] = useState(true);
   const [showWarning, setShowWarning] = useState(true);

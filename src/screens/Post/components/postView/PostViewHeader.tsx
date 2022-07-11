@@ -13,6 +13,7 @@ import {useDispatch} from 'react-redux';
 import modalActions from '~/store/modal/actions';
 import TimeView from '~/beinComponents/TimeView';
 import {useKeySelector} from '~/hooks/selector';
+import spacing from '~/theme/spacing';
 
 export interface PostViewHeaderProps {
   audience?: IPostAudience;
@@ -34,8 +35,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
-  const styles = createStyle(theme);
+  const {colors} = theme;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
@@ -124,23 +124,20 @@ const getAudiencesText = (aud?: IPostAudience, t?: any) => {
   return result;
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    headerContainer: {
-      flexDirection: 'row',
-      paddingTop: spacing?.margin.small,
-    },
-    rowCenter: {flexDirection: 'row', alignItems: 'center'},
-    textTo: {
-      marginRight: spacing?.margin.tiny,
-    },
-    avatar: {
-      marginTop: spacing?.margin.tiny,
-      marginLeft: spacing?.margin.large,
-      marginRight: spacing?.margin.base,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  headerContainer: {
+    flexDirection: 'row',
+    paddingTop: spacing?.margin.small,
+  },
+  rowCenter: {flexDirection: 'row', alignItems: 'center'},
+  textTo: {
+    marginRight: spacing?.margin.tiny,
+  },
+  avatar: {
+    marginTop: spacing?.margin.tiny,
+    marginLeft: spacing?.margin.large,
+    marginRight: spacing?.margin.base,
+  },
+});
 
 export default PostViewHeader;

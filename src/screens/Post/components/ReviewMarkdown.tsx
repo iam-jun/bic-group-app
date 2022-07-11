@@ -12,6 +12,7 @@ import Markdown from '~/beinComponents/Markdown';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import Avatar from '~/beinComponents/Avatar';
 import {IAudience} from '~/interfaces/IPost';
+import spacing from '~/theme/spacing';
 
 const ReviewMarkdown = ({onPressDone}: {onPressDone: () => void}) => {
   const windowDimension = useWindowDimensions();
@@ -98,7 +99,7 @@ const getAudiences = (aud: IAudience[]) => {
 };
 
 const createStyles = (theme: ITheme, screenHeight: number) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       height: 0.8 * screenHeight,

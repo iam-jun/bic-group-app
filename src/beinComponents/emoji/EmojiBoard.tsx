@@ -15,6 +15,7 @@ import Icon from '~/beinComponents/Icon';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface EmojiBoardProps {
   style?: StyleProp<ViewStyle>;
@@ -92,7 +93,7 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       width: '100%',

@@ -48,6 +48,7 @@ import PasswordInputController from '~/beinComponents/inputs/PasswordInputContro
 import TextInputController from '~/beinComponents/inputs/TextInputController';
 import {getEnv} from '~/utils/env';
 import BackgroundComponent from './BackgroundComponent';
+import spacing from '~/theme/spacing';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -435,7 +436,7 @@ const SignIn = () => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   const textStyle = createTextStyle(theme);
 
   return StyleSheet.create({

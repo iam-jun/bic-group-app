@@ -8,11 +8,12 @@ import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {useTheme} from 'react-native-paper';
 import images from '~/resources/images';
-import {scaleCoverHeight} from '~/theme/dimension';
+import dimension, {scaleCoverHeight} from '~/theme/dimension';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import privacyTypes from '~/constants/privacyTypes';
 import i18next from 'i18next';
+import spacing from '~/theme/spacing';
 
 const InfoHeader = () => {
   const theme = useTheme() as ITheme;
@@ -83,7 +84,7 @@ const InfoHeader = () => {
 export default InfoHeader;
 
 const themeStyles = (theme: ITheme) => {
-  const {dimension, spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     cover: {
       width: dimension.deviceWidth,

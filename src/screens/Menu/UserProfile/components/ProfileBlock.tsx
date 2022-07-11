@@ -13,6 +13,7 @@ import {formatDate} from '~/utils/formatData';
 import genders from '~/constants/genders';
 import relationshipStatus from '~/constants/relationshipStatus';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import spacing from '~/theme/spacing';
 
 interface ProfileBlockProps {
   profileData: IUserProfile;
@@ -39,7 +40,6 @@ const ProfileBlock = ({
   } = profileData;
 
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
 
   const userLanguageList = language?.map(
     // @ts-ignore
@@ -151,28 +151,24 @@ const ProfileBlock = ({
 
 export default ProfileBlock;
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    container: {
-      marginHorizontal: spacing.margin.large,
-      marginTop: spacing.margin.small,
-    },
-    itemComponent: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginVertical: spacing.margin.small,
-      marginRight: spacing.margin.base,
-    },
-    icon: {},
-    text: {marginLeft: spacing.margin.base},
-    title: {
-      marginTop: spacing.margin.base,
-    },
-    buttonWrapper: {
-      alignItems: 'flex-start',
-      paddingVertical: spacing.padding.small,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: spacing.margin.large,
+    marginTop: spacing.margin.small,
+  },
+  itemComponent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: spacing.margin.small,
+    marginRight: spacing.margin.base,
+  },
+  icon: {},
+  text: {marginLeft: spacing.margin.base},
+  title: {
+    marginTop: spacing.margin.base,
+  },
+  buttonWrapper: {
+    alignItems: 'flex-start',
+    paddingVertical: spacing.padding.small,
+  },
+});

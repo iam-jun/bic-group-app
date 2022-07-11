@@ -14,12 +14,12 @@ import SvgIcon, {SVGIconProps} from './SvgIcon';
 import {useTheme} from 'react-native-paper';
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
-import {spacing} from '~/theme';
 import icons, {IconType} from '~/resources/icons';
 import {ITheme} from '~/theme/interfaces';
 import {View} from 'react-native';
 import TextEmojiIcon from '~/beinComponents/Icon/TextEmojiIcon';
 import {useNetInfo} from '@react-native-community/netinfo';
+import spacing from '~/theme/spacing';
 
 export interface IconProps extends SVGIconProps, UniconsProps {
   icon: IconType | number;

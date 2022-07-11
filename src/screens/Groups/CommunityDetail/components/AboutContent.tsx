@@ -12,6 +12,7 @@ import groupsKeySelector from '../../redux/keySelector';
 import privacyTypes, {groupPrivacy} from '~/constants/privacyTypes';
 import PreviewMembers from '../../components/PreviewMembers';
 import groupJoinStatus from '~/constants/groupJoinStatus';
+import spacing from '~/theme/spacing';
 
 const AboutContent = () => {
   const theme = useTheme() as ITheme;
@@ -63,7 +64,7 @@ const AboutContent = () => {
 export default AboutContent;
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

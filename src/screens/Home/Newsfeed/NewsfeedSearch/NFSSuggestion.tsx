@@ -13,6 +13,7 @@ import {useDispatch} from 'react-redux';
 import homeActions from '~/screens/Home/redux/actions';
 import NFSRecentSearchKeyword from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSRecentSearchKeyword';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
+import spacing from '~/theme/spacing';
 
 export interface NFSSuggestionProps {
   onSelectKeyword?: (keyword: string) => void;
@@ -26,7 +27,7 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
@@ -115,7 +116,7 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

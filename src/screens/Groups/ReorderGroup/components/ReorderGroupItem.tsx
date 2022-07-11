@@ -9,6 +9,7 @@ import {IGroup} from '~/interfaces/IGroup';
 import Avatar from '~/beinComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
 import privacyTypes from '~/constants/privacyTypes';
+import spacing from '~/theme/spacing';
 
 export interface ReorderGroupItemProps {
   style?: StyleProp<ViewStyle>;
@@ -27,7 +28,7 @@ const ReorderGroupItem: FC<ReorderGroupItemProps> = ({
   group,
 }: ReorderGroupItemProps) => {
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const {privacy, icon, name} = group || {};
@@ -57,7 +58,7 @@ const ReorderGroupItem: FC<ReorderGroupItemProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       width: ITEM_WIDTH,

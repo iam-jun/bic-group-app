@@ -19,6 +19,7 @@ import EditPhoneNumber from './fragments/EditPhoneNumber';
 import EditLocation from './fragments/EditLocation';
 import {ILocation} from '~/interfaces/common';
 import menuActions from '../../redux/actions';
+import spacing from '~/theme/spacing';
 
 const EditContact = () => {
   const theme = useTheme() as ITheme;
@@ -160,7 +161,7 @@ const EditContact = () => {
           useI18n: true,
           color: theme.colors.primary6,
           textColor: theme.colors.background,
-          borderRadius: theme.spacing.borderRadius.small,
+          borderRadius: spacing.borderRadius.small,
           disabled: !isValid,
           testID: 'edit_contact.save',
         }}
@@ -214,7 +215,7 @@ const EditContact = () => {
 export default EditContact;
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     infoItem: {

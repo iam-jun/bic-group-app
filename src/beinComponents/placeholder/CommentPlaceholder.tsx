@@ -7,8 +7,10 @@ import {
   PlaceholderLine,
   PlaceholderMedia,
 } from 'rn-placeholder';
+import dimension from '~/theme/dimension';
 
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {getRandomInt} from '~/utils/generator';
 
 export interface CommentPlaceholderProps {
@@ -44,7 +46,7 @@ const CommentPlaceholder: React.FC<CommentPlaceholderProps> = ({
 export default CommentPlaceholder;
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing, dimension} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       backgroundColor: colors.background,

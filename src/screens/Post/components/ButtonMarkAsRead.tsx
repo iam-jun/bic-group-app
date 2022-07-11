@@ -12,6 +12,7 @@ import icons from '~/resources/icons';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import spacing from '~/theme/spacing';
 
 export interface ButtonMarkAsReadProps {
   style?: StyleProp<ViewStyle>;
@@ -89,7 +90,7 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingVertical: spacing.padding.small,

@@ -7,6 +7,7 @@ import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Tag from '~/beinComponents/Tag';
 import {IAudience} from '~/interfaces/IPost';
 import Divider from '~/beinComponents/Divider';
+import spacing from '~/theme/spacing';
 
 export interface SelectingAudiencesProps {
   list: IAudience[];
@@ -121,18 +122,18 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
-      paddingHorizontal: spacing?.padding.large,
+      paddingHorizontal: spacing.padding.large,
     },
     headerContainer: {
       flexDirection: 'row',
-      paddingVertical: spacing?.padding.small,
+      paddingVertical: spacing.padding.small,
     },
     item: {
-      marginRight: spacing?.margin.small,
-      marginBottom: spacing?.margin.small,
+      marginRight: spacing.margin.small,
+      marginBottom: spacing.margin.small,
     },
     divider: {
       marginTop: spacing.margin.tiny,

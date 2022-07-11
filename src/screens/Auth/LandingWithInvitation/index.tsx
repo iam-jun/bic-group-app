@@ -9,13 +9,13 @@ import {useTheme} from 'react-native-paper';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import {spacing} from '~/theme';
 import {useBaseHook} from '~/hooks';
 import {authStack} from '~/configs/navigator';
 import images from '~/resources/images';
 import LandingImg from '../../../../assets/images/landing_page.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 const LandingWithInvitation = () => {
   const theme: ITheme = useTheme() as ITheme;

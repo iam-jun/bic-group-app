@@ -15,6 +15,7 @@ import modalActions, {showHideToastMessage} from '~/store/modal/actions';
 import YourGroupsSearch from '~/screens/Groups/YourGroups/YourGroupsSearch';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useBaseHook} from '~/hooks';
+import spacing from '~/theme/spacing';
 
 export interface YourGroupsProps {
   route?: {
@@ -45,7 +46,6 @@ const YourGroups: FC<YourGroupsProps> = ({route}: YourGroupsProps) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
-  const {spacing} = theme;
   const styles = createStyle(theme);
   const translateX = useSharedValue(0);
 

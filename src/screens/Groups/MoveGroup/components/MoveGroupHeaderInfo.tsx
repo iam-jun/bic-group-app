@@ -11,6 +11,7 @@ import Divider from '~/beinComponents/Divider';
 import {useBaseHook} from '~/hooks';
 import {getAllChildrenName} from '~/screens/Groups/helper';
 import MoveLine from '~/screens/Groups/MoveGroup/components/MoveLine';
+import spacing from '~/theme/spacing';
 
 export interface MoveGroupHeaderInfoProps {
   style?: StyleProp<ViewStyle>;
@@ -57,7 +58,7 @@ const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',

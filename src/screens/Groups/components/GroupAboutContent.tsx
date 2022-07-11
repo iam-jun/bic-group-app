@@ -14,6 +14,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import groupsKeySelector from '../redux/keySelector';
 
 const GroupAboutContent = () => {
@@ -80,7 +81,7 @@ const GroupAboutContent = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

@@ -6,6 +6,7 @@ import {ITheme} from '~/theme/interfaces';
 import {ShineOverlay, Placeholder, PlaceholderLine} from 'rn-placeholder';
 import {getRandomInt} from '~/utils/generator';
 import CommentPlaceholder from './CommentPlaceholder';
+import spacing from '~/theme/spacing';
 
 const sectionData = [{title: '', data: [{id: 1}, {id: 2}]}];
 
@@ -46,7 +47,7 @@ const CommentViewPlaceholder = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       backgroundColor: colors.background,

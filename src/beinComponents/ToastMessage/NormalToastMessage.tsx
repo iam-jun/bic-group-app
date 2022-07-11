@@ -16,6 +16,7 @@ import {ITheme} from '~/theme/interfaces';
 import {useDispatch} from 'react-redux';
 import {clearToastMessage} from '~/store/modal/actions';
 import ButtonWrapper from '../Button/ButtonWrapper';
+import spacing from '~/theme/spacing';
 
 export interface ToastMessageProps {
   type?: 'error' | 'success' | 'informative';
@@ -54,8 +55,7 @@ const ToastMessage: FC<ToastMessageProps> = ({
 }: ToastMessageProps) => {
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
-  const styles = createStyle(theme);
+  const {colors} = theme;
 
   const _onPress = () => {
     onActionPress?.();
@@ -153,28 +153,25 @@ const ToastMessage: FC<ToastMessageProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    textContainer: {
-      flex: 1,
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    },
-    childrenStyle: {
-      flex: 1,
-    },
-    leftIcon: {
-      marginRight: spacing.margin.base,
-    },
-    leftIconStyle: {padding: 2, borderRadius: 6},
-    marginRightIcon: {marginRight: spacing.margin.tiny},
-    button: {
-      marginLeft: spacing.margin.base,
-    },
-    rightText: {textDecorationLine: 'underline'},
-  });
-};
+const styles = StyleSheet.create({
+  textContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  childrenStyle: {
+    flex: 1,
+  },
+  leftIcon: {
+    marginRight: spacing.margin.base,
+  },
+  leftIconStyle: {padding: 2, borderRadius: 6},
+  marginRightIcon: {marginRight: spacing.margin.tiny},
+  button: {
+    marginLeft: spacing.margin.base,
+  },
+  rightText: {textDecorationLine: 'underline'},
+});
 
 export default ToastMessage;

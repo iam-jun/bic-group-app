@@ -11,6 +11,7 @@ import Icon from '~/beinComponents/Icon';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import spacing from '~/theme/spacing';
 
 interface CreatePostChosenAudiencesProps {
   disabled?: boolean;
@@ -23,7 +24,6 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
   const {rootNavigation} = useRootNavigation();
 
   const theme: ITheme = useTheme() as ITheme;
-  const styles = createStyle(theme);
 
   const chosenAudiences = useKeySelector(
     postKeySelector.createPost.chosenAudiences,
@@ -55,7 +55,7 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
               useI18n: true,
               color: theme.colors.primary7,
             }}
-            borderRadius={theme.spacing?.borderRadius.large}
+            borderRadius={spacing?.borderRadius.large}
             style={styles.buttonChoose}
             onPress={onPressSelectAudience}
             testID="create_post_chosen_audiences.choose_group">
@@ -82,26 +82,23 @@ const getNames = (chosenAudiences: IAudience[], t: any) => {
   return result;
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      paddingHorizontal: spacing?.padding.extraLarge,
-      paddingVertical: spacing?.padding.small,
-      alignItems: 'center',
-    },
-    contentContainer: {flex: 1, flexDirection: 'row', alignItems: 'center'},
-    textSendTo: {
-      marginRight: spacing?.margin.tiny,
-      marginVertical: spacing.margin.small,
-    },
-    buttonChoose: {
-      paddingHorizontal: theme.spacing?.padding.large,
-      alignSelf: 'center',
-      paddingVertical: theme.spacing?.padding.tiny,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    paddingHorizontal: spacing?.padding.extraLarge,
+    paddingVertical: spacing?.padding.small,
+    alignItems: 'center',
+  },
+  contentContainer: {flex: 1, flexDirection: 'row', alignItems: 'center'},
+  textSendTo: {
+    marginRight: spacing?.margin.tiny,
+    marginVertical: spacing.margin.small,
+  },
+  buttonChoose: {
+    paddingHorizontal: spacing?.padding.large,
+    alignSelf: 'center',
+    paddingVertical: spacing?.padding.tiny,
+  },
+});
 
 export default CreatePostChosenAudiences;

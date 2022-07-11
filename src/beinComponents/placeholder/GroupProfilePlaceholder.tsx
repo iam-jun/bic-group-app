@@ -9,6 +9,7 @@ import {
 } from 'rn-placeholder';
 
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {getRandomInt} from '~/utils/generator';
 
 export interface GroupProfilePlaceholderProps {
@@ -73,7 +74,7 @@ const GroupProfilePlaceholder: React.FC<GroupProfilePlaceholderProps> = ({
 export default GroupProfilePlaceholder;
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       backgroundColor: colors.background,

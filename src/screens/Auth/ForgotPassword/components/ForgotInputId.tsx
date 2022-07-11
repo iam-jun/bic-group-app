@@ -15,6 +15,7 @@ import actions from '~/screens/Auth/redux/actions';
 import useAuth from '~/hooks/auth';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 interface Props {
   useFormData: IObject<any>;
@@ -115,7 +116,7 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
         }}
         helperType={errors?.email?.message ? 'error' : undefined}
         helperContent={errors?.email?.message}
-        style={{marginTop: 0, marginBottom: theme.spacing.margin.small}}
+        style={{marginTop: 0, marginBottom: spacing.margin.small}}
         onSubmitEditing={() => onRequestForgotPassword()}
       />
       <Button.Primary
@@ -131,7 +132,7 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingTop: spacing.padding.big,

@@ -35,6 +35,7 @@ import {formatDMLink} from '~/utils/link';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {isEmpty} from 'lodash';
 import groupsActions from '~/screens/Groups/redux/actions';
+import spacing from '~/theme/spacing';
 
 const UserProfile = (props: any) => {
   const {userId, params} = props?.route?.params || {};
@@ -243,7 +244,7 @@ const UserProfile = (props: any) => {
         style={styles.buttonEdit}
         leftIcon={'EditAlt'}
         onPress={onEditProfileButton}
-        borderRadius={theme.spacing.borderRadius.small}>
+        borderRadius={spacing.borderRadius.small}>
         {i18next.t('profile:title_edit_profile')}
       </Button.Secondary>
     ) : (
@@ -254,7 +255,7 @@ const UserProfile = (props: any) => {
         color={theme.colors.primary6}
         colorHover={theme.colors.primary5}
         rightIcon={'Message'}
-        borderRadius={theme.spacing.borderRadius.small}
+        borderRadius={spacing.borderRadius.small}
         onPress={onPressChat}>
         {i18next.t('profile:title_direct_message')}
       </Button.Secondary>
@@ -299,7 +300,7 @@ const UserProfile = (props: any) => {
 export default UserProfile;
 
 const themeStyles = (theme: ITheme, coverHeight: number) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

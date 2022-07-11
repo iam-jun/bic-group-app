@@ -5,6 +5,7 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 
 import Text from '~/beinComponents/Text';
+import spacing from '~/theme/spacing';
 
 export interface TextBadgeProps {
   style?: StyleProp<ViewStyle>;
@@ -26,7 +27,7 @@ const TextBadge: FC<TextBadgeProps> = ({
   useI18n = true,
 }: TextBadgeProps) => {
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   if (!value) {
     return null;

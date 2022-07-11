@@ -30,6 +30,7 @@ import DateTimePicker from '~/beinComponents/DateTimePicker';
 import TitleComponent from '../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
 import {dataMapping, maxBirthday} from './helper';
+import spacing from '~/theme/spacing';
 
 const EditBasicInfo = () => {
   const theme = useTheme() as ITheme;
@@ -177,7 +178,7 @@ const EditBasicInfo = () => {
           useI18n: true,
           color: theme.colors.primary6,
           textColor: theme.colors.background,
-          borderRadius: theme.spacing.borderRadius.small,
+          borderRadius: spacing.borderRadius.small,
           disabled: !isValid,
           testID: 'edit_basic_info.save',
         }}
@@ -271,7 +272,7 @@ const EditBasicInfo = () => {
 export default EditBasicInfo;
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

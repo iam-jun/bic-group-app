@@ -6,6 +6,7 @@ import Icon from '~/beinComponents/Icon';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import {IconType} from '~/resources/icons';
+import spacing from '~/theme/spacing';
 
 export interface FlashMessageProps {
   type?: 'error' | 'success' | 'warning';
@@ -25,8 +26,7 @@ const FlashMessage: FC<FlashMessageProps> = ({
   onClose,
 }: FlashMessageProps) => {
   const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
-  const styles = createStyle(theme);
+  const {colors} = theme;
 
   const flashMessageStyle = {
     success: {
@@ -53,7 +53,7 @@ const FlashMessage: FC<FlashMessageProps> = ({
     {
       flexDirection: 'row',
       backgroundColor: backgroundColor,
-      padding: spacing?.padding.base,
+      padding: spacing.padding.base,
     },
     style,
   ]);
@@ -80,19 +80,16 @@ const FlashMessage: FC<FlashMessageProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {},
-    textContainer: {
-      flex: 1,
-      justifyContent: 'center',
-    },
-    leftIcon: {
-      marginLeft: spacing?.margin.base,
-      marginRight: spacing?.margin.base,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {},
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  leftIcon: {
+    marginLeft: spacing.margin.base,
+    marginRight: spacing.margin.base,
+  },
+});
 
 export default FlashMessage;

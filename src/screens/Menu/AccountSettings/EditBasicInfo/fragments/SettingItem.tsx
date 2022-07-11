@@ -9,6 +9,7 @@ import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import spacing from '~/theme/spacing';
 
 interface SettingItemProps {
   title: string;
@@ -30,7 +31,6 @@ const SettingItem = ({
   onPress,
 }: SettingItemProps) => {
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
 
   return (
     <TouchableOpacity
@@ -70,15 +70,11 @@ const SettingItem = ({
 
 export default SettingItem;
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    rightIcon: {
-      marginLeft: spacing.margin.small,
-    },
-    leftIcon: {
-      marginRight: spacing.margin.base,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  rightIcon: {
+    marginLeft: spacing.margin.small,
+  },
+  leftIcon: {
+    marginRight: spacing.margin.base,
+  },
+});

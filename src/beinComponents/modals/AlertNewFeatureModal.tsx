@@ -1,13 +1,8 @@
 import React from 'react';
-import {
-  StyleProp,
-  StyleSheet,
-  useWindowDimensions,
-  View,
-  ViewStyle,
-} from 'react-native';
+import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
 import {Modal, useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+
 import Text from '~/beinComponents/Text';
 import useModal from '~/hooks/modal';
 import * as actions from '~/store/modal/actions';
@@ -16,7 +11,7 @@ import NewFeatureImg from '~/../assets/images/new_feeature_purple.svg';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
-import {deviceDimensions} from '~/theme/dimension';
+import spacing from '~/theme/spacing';
 
 export interface NewFeatureModalProps {
   style?: StyleProp<ViewStyle>;
@@ -28,9 +23,6 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
 }: NewFeatureModalProps) => {
   const theme = useTheme() as ITheme;
   const styles = themeStyles(theme);
-
-  const dimensions = useWindowDimensions();
-  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const {alertNewFeature} = useModal();
   const {visible} = alertNewFeature;
@@ -51,14 +43,6 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
       <View style={styles.container}>
         <View style={styles.header}>
           <Text.H6>Upcoming Features</Text.H6>
-          {isLaptop && (
-            <Icon
-              style={styles.closeIcon}
-              icon={'iconClose'}
-              size={14}
-              onPress={onDismiss}
-            />
-          )}
         </View>
         <View style={styles.body}>
           <SvgIcon
@@ -76,8 +60,8 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
           {/* Temporary button */}
           <Button.Secondary
             style={{
-              marginTop: theme.spacing.margin.large,
-              paddingHorizontal: theme.spacing.padding.large,
+              marginTop: spacing.margin.large,
+              paddingHorizontal: spacing.padding.large,
             }}
             onPress={onDismiss}
             useI18n
@@ -91,7 +75,7 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     modal: {

@@ -18,6 +18,7 @@ import Text from '~/beinComponents/Text';
 import NodeEmoji from 'node-emoji';
 import {quickReactions} from '~/configs/reactionConfig';
 import {getLink, LINK_COMMENT} from '~/utils/link';
+import spacing from '~/theme/spacing';
 
 export interface CommentViewMenuProps {
   commentId: string;
@@ -204,7 +205,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
 };
 
 const createStyle = (theme: ITheme, insets: any) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing.padding.large,

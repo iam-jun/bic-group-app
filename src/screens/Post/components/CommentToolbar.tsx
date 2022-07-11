@@ -5,6 +5,7 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
+import spacing from '~/theme/spacing';
 
 interface CommentToolbarProps {
   style?: StyleProp<ViewStyle>;
@@ -67,7 +68,7 @@ const CommentToolbar: FC<CommentToolbarProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       height: 56,

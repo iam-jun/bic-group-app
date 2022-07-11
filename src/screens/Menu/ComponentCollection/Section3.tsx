@@ -7,9 +7,10 @@ import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Avatar from '~/beinComponents/Avatar';
+import spacing from '~/theme/spacing';
 
 const Section3 = () => {
-  const {spacing, colors}: ITheme = useTheme();
+  const {colors}: ITheme = useTheme();
 
   const renderSection = (title: string, child: React.ReactNode) => {
     return (

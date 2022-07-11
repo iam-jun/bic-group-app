@@ -15,6 +15,7 @@ import MenuItem from '~/beinComponents/list/items/MenuItem';
 import modalActions from '~/store/modal/actions';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsActions from '../redux/actions';
+import spacing from '~/theme/spacing';
 
 const CommunityAdmin = () => {
   const theme = useTheme() as ITheme;
@@ -168,8 +169,6 @@ const CommunityAdmin = () => {
 };
 
 const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
   return StyleSheet.create({
     container: {
       paddingTop: spacing.padding.large,

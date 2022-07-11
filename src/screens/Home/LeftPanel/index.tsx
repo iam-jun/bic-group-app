@@ -10,6 +10,7 @@ import {ITheme} from '~/theme/interfaces';
 import {IconType} from '~/resources/icons';
 import {appScreens} from '~/configs/navigator';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
+import spacing from '~/theme/spacing';
 
 const LeftPanel = () => {
   const dispatch = useDispatch();
@@ -83,7 +84,7 @@ const LeftPanel = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     root: {
       paddingTop: spacing.padding.base,

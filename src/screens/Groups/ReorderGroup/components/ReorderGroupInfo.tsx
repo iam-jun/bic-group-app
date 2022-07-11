@@ -9,6 +9,7 @@ import {IGroup} from '~/interfaces/IGroup';
 import Icon from '~/beinComponents/Icon';
 import privacyTypes from '~/constants/privacyTypes';
 import Avatar from '~/beinComponents/Avatar';
+import spacing from '~/theme/spacing';
 
 export interface ReorderGroupHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -19,7 +20,6 @@ const ReorderGroupInfo: FC<ReorderGroupHeaderProps> = ({
   group,
 }: ReorderGroupHeaderProps) => {
   const theme = useTheme() as ITheme;
-  const {spacing} = theme;
   const styles = createStyle(theme);
 
   const {privacy, icon, name} = group || {};
@@ -51,7 +51,7 @@ const ReorderGroupInfo: FC<ReorderGroupHeaderProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       marginHorizontal: spacing.margin.large,

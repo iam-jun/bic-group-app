@@ -23,6 +23,7 @@ import modalActions, {showHideToastMessage} from '~/store/modal/actions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import Text from '~/beinComponents/Text';
+import spacing from '~/theme/spacing';
 
 export interface PostViewDraftProps {
   style?: StyleProp<ViewStyle>;
@@ -232,7 +233,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       backgroundColor: colors.background,

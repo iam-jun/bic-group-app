@@ -16,6 +16,7 @@ import {useBaseHook} from '~/hooks';
 import {IActivityDataFile} from '~/interfaces/IPost';
 import {IGetFile} from '~/services/fileUploader';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {formatBytes} from '~/utils/formatData';
 
 interface Props extends Partial<UploadingFileProps> {
@@ -55,7 +56,7 @@ const FilesView = ({
           {...props}
         />
         {index < files.length - 1 && (
-          <ViewSpacing height={theme.spacing.margin.small} />
+          <ViewSpacing height={spacing.margin.small} />
         )}
       </View>
     ));
@@ -93,16 +94,16 @@ const FilesView = ({
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     remainingText: {
       marginHorizontal: spacing.margin.large,
       marginTop: spacing.margin.small,
-      color: theme.colors.textSecondary,
+      color: colors.textSecondary,
     },
     collapsibleText: {
       marginVertical: spacing.margin.small,
-      color: theme.colors.textSecondary,
+      color: colors.textSecondary,
     },
   });
 };

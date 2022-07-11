@@ -14,6 +14,7 @@ import Divider from '~/beinComponents/Divider';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import spacing from '~/theme/spacing';
 
 export interface GroupSchemeProps {
   style?: StyleProp<ViewStyle>;
@@ -84,7 +85,7 @@ const GroupScheme: FC<GroupSchemeProps> = ({style}: GroupSchemeProps) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {

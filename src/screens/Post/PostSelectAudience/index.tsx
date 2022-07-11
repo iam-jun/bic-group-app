@@ -40,6 +40,7 @@ import {
 import {ICreatePostParams} from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import spacing from '~/theme/spacing';
 
 export interface PostSelectAudienceProps {
   route?: {
@@ -81,7 +82,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme: ITheme = useTheme() as ITheme;
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const insets = useSafeAreaInsets();
@@ -457,7 +458,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {},
     searchInput: {

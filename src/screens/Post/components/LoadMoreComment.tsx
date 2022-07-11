@@ -21,6 +21,7 @@ import Button from '~/beinComponents/Button';
 import postActions from '~/screens/Post/redux/actions';
 import {useDispatch} from 'react-redux';
 import CommentPlaceholder from '~/beinComponents/placeholder/CommentPlaceholder';
+import spacing from '~/theme/spacing';
 
 export interface LoadMoreCommentProps {
   style?: StyleProp<ViewStyle>;
@@ -112,7 +113,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
 };
 
 const createStyle = (theme: ITheme, commentId?: string) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',

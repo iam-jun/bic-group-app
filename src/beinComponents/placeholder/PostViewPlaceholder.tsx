@@ -14,6 +14,7 @@ import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import {getRandomInt} from '~/utils/generator';
 import Divider from '~/beinComponents/Divider';
+import spacing from '~/theme/spacing';
 
 export interface PostViewPlaceholderProps {
   style?: StyleProp<ViewStyle>;
@@ -95,7 +96,7 @@ const PostViewPlaceholder: FC<PostViewPlaceholderProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
     margin0: {marginTop: 0, marginBottom: 0},

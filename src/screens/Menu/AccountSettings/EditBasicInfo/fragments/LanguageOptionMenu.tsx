@@ -20,6 +20,7 @@ import {ILanguageItem} from '~/interfaces/IEditUser';
 import {ITheme} from '~/theme/interfaces';
 import TitleComponent from '../../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
+import spacing from '~/theme/spacing';
 
 interface LanguageOptionMenuProps {
   title: string;
@@ -174,7 +175,7 @@ const LanguageOptionMenu = ({
 export default LanguageOptionMenu;
 
 const themeStyles = (theme: ITheme, screenHeight: number) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     contentComponent: {

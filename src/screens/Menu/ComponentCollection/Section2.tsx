@@ -18,9 +18,10 @@ import MentionInput from '~/beinComponents/inputs/MentionInput';
 import {IUser} from '~/interfaces/IAuth';
 import {useBaseHook} from '~/hooks';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
+import spacing from '~/theme/spacing';
 
 const Section2 = () => {
-  const {spacing, colors}: ITheme = useTheme();
+  const {colors}: ITheme = useTheme();
   const dispatch = useDispatch();
   const {t} = useBaseHook();
 

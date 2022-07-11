@@ -14,6 +14,7 @@ import Text from '~/beinComponents/Text';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
 import {IconType} from '~/resources/icons';
+import spacing from '~/theme/spacing';
 
 export interface FlatGroupItemProps extends GroupItemProps {
   style?: StyleProp<ViewStyle>;
@@ -231,7 +232,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {},
     iconArrowRight: {

@@ -39,7 +39,6 @@ const BackgroundComponent = ({children}: {children: React.ReactNode}) => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
   const insets = useSafeAreaInsets();
   return StyleSheet.create({
     background: {

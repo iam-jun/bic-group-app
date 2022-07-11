@@ -3,6 +3,7 @@ import {StyleProp, StyleSheet, View, ViewStyle, TextStyle} from 'react-native';
 import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
+import spacing from '~/theme/spacing';
 
 export type NotificationsBadgeType = 'default' | 'info' | 'warning' | 'alert';
 
@@ -40,7 +41,7 @@ const NotificationsBadgeComponent: React.FC<NotificationsBadgeComponentProps> =
   };
 
 const themeStyles = (theme: ITheme, variant: NotificationsBadgeType) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const defaultWidth = 20;
 
   const dotColors = {

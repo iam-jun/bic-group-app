@@ -1,13 +1,12 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
-import {useTheme} from 'react-native-paper';
 
-import {ITheme} from '~/theme/interfaces';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {titleCase} from '~/utils/common';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
+import spacing from '~/theme/spacing';
 
 interface Props {
   id: string;
@@ -30,9 +29,6 @@ const InfoView = ({
   canEditPrivacy,
   type,
 }: Props) => {
-  const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
-
   const {rootNavigation} = useRootNavigation();
 
   const editDescription = () => {
@@ -89,16 +85,13 @@ const InfoView = ({
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {
-      marginHorizontal: spacing.margin.tiny,
-    },
-    rightIcon: {
-      marginLeft: spacing.margin.extraLarge,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    marginHorizontal: spacing.margin.tiny,
+  },
+  rightIcon: {
+    marginLeft: spacing.margin.extraLarge,
+  },
+});
 
 export default InfoView;

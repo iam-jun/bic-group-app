@@ -1,5 +1,5 @@
 import React, {FC, useState, useEffect, useRef} from 'react';
-import {FlatList, View, StyleSheet, Platform} from 'react-native';
+import {FlatList, View, StyleSheet} from 'react-native';
 import {useTheme} from 'react-native-paper';
 
 import {ITheme} from '~/theme/interfaces';
@@ -139,7 +139,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       borderBottomWidth: 1,

@@ -4,6 +4,7 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
 import Text from '~/beinComponents/Text';
+import spacing from '~/theme/spacing';
 
 export interface SeenCountsViewProps {
   onPress?: () => void;
@@ -17,7 +18,7 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   const _onPress = () => {
     onPress?.();
@@ -41,7 +42,7 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       alignItems: 'flex-end',

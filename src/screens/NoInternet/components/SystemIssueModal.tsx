@@ -9,6 +9,7 @@ import SystemIssueImg from '~/../assets/images/SystemIssue.svg';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import noInternetKeySelector from '../redux/keySelector';
 import {useKeySelector} from '~/hooks/selector';
+import spacing from '~/theme/spacing';
 
 const SystemIssueModal = () => {
   const theme: ITheme = useTheme() as ITheme;
@@ -38,7 +39,7 @@ const SystemIssueModal = () => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     modal: {

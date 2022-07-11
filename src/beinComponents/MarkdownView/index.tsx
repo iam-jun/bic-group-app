@@ -22,6 +22,7 @@ import {IMarkdownAudience} from '~/interfaces/IPost';
 import {sizes} from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface MarkdownViewProps {
   testID?: string;
@@ -114,7 +115,7 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
 
 const createStyle = (theme: ITheme) => {
   const textStyles = createTextStyle(theme);
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     // Emoji
     emojiText: {},

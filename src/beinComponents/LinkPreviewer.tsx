@@ -8,6 +8,7 @@ import {useKeySelector} from '~/hooks/selector';
 import appActions from '~/store/app/actions';
 import {scaleSize} from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {getUrlFromText, openLink} from '~/utils/common';
 import ButtonWrapper from './Button/ButtonWrapper';
 
@@ -64,7 +65,7 @@ const LinkPreviewer = ({text}: Props) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'column',

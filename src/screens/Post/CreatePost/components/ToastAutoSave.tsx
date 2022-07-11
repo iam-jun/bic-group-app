@@ -5,6 +5,7 @@ import Icon from '~/beinComponents/Icon';
 import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import {isAndroidAnimated} from '../helper';
+import spacing from '~/theme/spacing';
 
 interface Props {
   viewRef: any;
@@ -56,7 +57,7 @@ const ToastAutoSave = ({viewRef, visible}: Props) => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     toastAutoSave: {

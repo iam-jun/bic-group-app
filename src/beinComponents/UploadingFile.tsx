@@ -20,6 +20,7 @@ import {openLink} from '~/utils/common';
 import {uploadTypes} from '~/configs/resourceConfig';
 import {getFileIcons} from '~/configs';
 import {IconType} from '~/resources/icons';
+import spacing from '~/theme/spacing';
 
 export interface UploadingFileProps {
   style?: StyleProp<ViewStyle>;
@@ -49,7 +50,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const fileName = file?.name || file?.filename || file?.fileName;
@@ -203,7 +204,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',

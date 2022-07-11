@@ -20,11 +20,11 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
+import spacing from '~/theme/spacing';
 
 const DiscoverGroups = ({route}: any) => {
   const {communityId} = route.params;
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
@@ -135,17 +135,13 @@ const DiscoverGroups = ({route}: any) => {
 
 export default DiscoverGroups;
 
-const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    listFooter: {
-      height: 100,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    divider: {
-      marginVertical: spacing.margin.tiny,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  listFooter: {
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  divider: {
+    marginVertical: spacing.margin.tiny,
+  },
+});

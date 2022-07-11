@@ -24,6 +24,8 @@ import {ISelectedFilterUser} from '~/interfaces/IHome';
 
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 export interface NFSFilterCreateBySpecificProps {
   onSelect?: (selected?: ISelectedFilterUser) => void;
@@ -37,8 +39,6 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
-  const {spacing} = theme;
-  const styles = createStyle(theme);
 
   const {data, canLoadMore} =
     useKeySelector(homeKeySelector.newsfeedSearchUsers) || {};
@@ -114,25 +114,22 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing, dimension} = theme;
-  return StyleSheet.create({
-    container: {
-      height: dimension?.deviceHeight * 0.5,
-      paddingHorizontal: 0,
-      paddingBottom: 0,
-    },
-    searchInput: {
-      marginHorizontal: 24,
-    },
-    divider: {
-      marginTop: spacing.margin.base,
-      marginHorizontal: spacing.margin.extraLarge,
-    },
-    item: {
-      paddingHorizontal: spacing.padding.extraLarge,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    height: dimension.deviceHeight * 0.5,
+    paddingHorizontal: 0,
+    paddingBottom: 0,
+  },
+  searchInput: {
+    marginHorizontal: 24,
+  },
+  divider: {
+    marginTop: spacing.margin.base,
+    marginHorizontal: spacing.margin.extraLarge,
+  },
+  item: {
+    paddingHorizontal: spacing.padding.extraLarge,
+  },
+});
 
 export default NFSFilterCreateBySpecific;

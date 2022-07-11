@@ -20,13 +20,14 @@ import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Animated, {FadeIn, LightSpeedInLeft} from 'react-native-reanimated';
 import modalActions from '~/store/modal/actions';
 import AlertAssignGroupConfirmContent from '~/screens/Groups/GroupSchemeAssignment/components/AlertAssignGroupConfirmContent';
+import spacing from '~/theme/spacing';
 
 const GroupSchemeAssignment = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const {id: communityId} = useKeySelector(groupsKeySelector.communityDetail);
@@ -190,7 +191,7 @@ const GroupSchemeAssignment = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

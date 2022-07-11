@@ -32,6 +32,8 @@ import VideoPlayer from '~/beinComponents/VideoPlayer';
 import {getTotalFileSize} from '../../redux/selectors';
 import appConfig from '~/configs/appConfig';
 import Button from '~/beinComponents/Button';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 interface Props {
   groupIds: any[];
@@ -234,7 +236,7 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, dimension, colors} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     flex1: {flex: 1},

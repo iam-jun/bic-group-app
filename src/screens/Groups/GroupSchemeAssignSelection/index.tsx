@@ -1,6 +1,8 @@
 import React, {FC, useEffect, useState} from 'react';
 import {View, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
 import {useTheme} from 'react-native-paper';
+import {useDispatch} from 'react-redux';
+import Animated, {ZoomIn} from 'react-native-reanimated';
 
 import {ITheme} from '~/theme/interfaces';
 
@@ -12,14 +14,12 @@ import {IGroup} from '~/interfaces/IGroup';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import Icon from '~/beinComponents/Icon';
-import {isNumber} from 'lodash';
-import {useDispatch} from 'react-redux';
 import groupsActions from '~/screens/Groups/redux/actions';
-import Animated, {ZoomIn} from 'react-native-reanimated';
 import {
   changeSchemeIdOfGroup,
   handleSelectNewGroupScheme,
 } from '~/screens/Groups/GroupSchemeAssignSelection/helper';
+import spacing from '~/theme/spacing';
 
 export interface GroupSchemeManagementProps {
   route?: {
@@ -151,7 +151,7 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {

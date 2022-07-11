@@ -23,6 +23,7 @@ import settings, {
   infoMenu,
   postFeatureMenu,
 } from '~/constants/settings';
+import spacing from '~/theme/spacing';
 
 interface MenuSidebarContentProps {
   onCloseSidebar?: () => void;
@@ -145,7 +146,7 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

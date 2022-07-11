@@ -11,6 +11,7 @@ import SearchMemberView from './SearchMemberView';
 import MembersContent from './MembersContent';
 import {ICommunityMembers} from '~/interfaces/ICommunity';
 import {useBaseHook} from '~/hooks';
+import spacing from '~/theme/spacing';
 
 const CommunityMembers = ({route}: any) => {
   const {communityId} = route.params;
@@ -64,7 +65,7 @@ const CommunityMembers = ({route}: any) => {
 export default CommunityMembers;
 
 const createStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     searchBar: {

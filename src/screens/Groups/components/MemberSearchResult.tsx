@@ -29,7 +29,6 @@ const MemberSearchResult = ({
   onPressMenu,
 }: MemberSearchResultProps) => {
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
 
   const {loading, canLoadMore, data} = memberSearchData;
 
@@ -102,24 +101,20 @@ const MemberSearchResult = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    textSearchResults: {
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.base,
-    },
-    textNoResults: {
-      alignItems: 'center',
-      marginVertical: 100,
-    },
-    listFooter: {
-      height: 100,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  });
-};
+const styles = StyleSheet.create({
+  textSearchResults: {
+    marginHorizontal: spacing.margin.large,
+    marginVertical: spacing.margin.base,
+  },
+  textNoResults: {
+    alignItems: 'center',
+    marginVertical: 100,
+  },
+  listFooter: {
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default MemberSearchResult;

@@ -1,17 +1,15 @@
 import React, {useRef} from 'react';
 import {View} from 'react-native';
 import Text from '~/beinComponents/Text';
-import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
 import Divider from '~/beinComponents/Divider';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import TextInput from '~/beinComponents/inputs/TextInput';
 import PostToolbar from '~/screens/Post/components/PostToolbar';
+import spacing from '~/theme/spacing';
 
 const Section4 = () => {
-  const {spacing} = useTheme() as ITheme;
   const baseSheetRef: any = useRef();
   const postToolbarRef: any = useRef();
 

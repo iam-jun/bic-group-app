@@ -14,6 +14,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
+import spacing from '~/theme/spacing';
 
 interface MemberItemProps {
   item: any;
@@ -82,8 +83,6 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
 };
 
 const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
   return StyleSheet.create({
     itemContainer: {
       height: undefined,

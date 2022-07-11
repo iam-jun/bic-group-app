@@ -22,6 +22,7 @@ import {
 import MentionBarItem from '~/beinComponents/inputs/MentionInput/MentionBar/MentionBarItem';
 import Divider from '~/beinComponents/Divider';
 import {debounce} from 'lodash';
+import spacing from '~/theme/spacing';
 
 interface MentionBarProps {
   testID?: string;
@@ -43,7 +44,7 @@ const MentionBar: FC<MentionBarProps> = ({
   const {data} = useKeySelector(type);
 
   const theme: ITheme = useTheme() as ITheme;
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const isShow = !!data?.length;

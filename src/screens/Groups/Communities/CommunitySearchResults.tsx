@@ -14,6 +14,7 @@ import Text from '~/beinComponents/Text';
 import groupsKeySelector from '../redux/keySelector';
 import {useKeySelector} from '~/hooks/selector';
 import CommunityItem from '../components/CommunityItem';
+import spacing from '~/theme/spacing';
 
 interface CommunitySearchResultsProps {
   onLoadMore?: () => void;
@@ -27,7 +28,6 @@ const CommunitySearchResults = ({
   onRefresh,
 }: CommunitySearchResultsProps) => {
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
 
   const {loading, canLoadMore, ids, items} = useKeySelector(
     groupsKeySelector.communitySearch,
@@ -100,26 +100,22 @@ const CommunitySearchResults = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    textSearchResults: {
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.base,
-    },
-    textNoResults: {
-      alignItems: 'center',
-      marginVertical: 60,
-      marginHorizontal: 60,
-    },
-    listFooter: {
-      height: 100,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    noResultText: {textAlign: 'center'},
-  });
-};
+const styles = StyleSheet.create({
+  textSearchResults: {
+    marginHorizontal: spacing.margin.large,
+    marginVertical: spacing.margin.base,
+  },
+  textNoResults: {
+    alignItems: 'center',
+    marginVertical: 60,
+    marginHorizontal: 60,
+  },
+  listFooter: {
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noResultText: {textAlign: 'center'},
+});
 
 export default CommunitySearchResults;

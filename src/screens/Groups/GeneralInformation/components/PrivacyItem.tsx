@@ -8,6 +8,7 @@ import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 interface Props {
   item: any;
@@ -18,7 +19,6 @@ const PrivacyItem = ({item, onPressHelpMessage}: Props) => {
   const {privacy} = useKeySelector(groupsKeySelector.groupDetail.group) || {};
   const theme = useTheme() as ITheme;
   const {colors} = theme;
-  const styles = themeStyles(theme);
 
   return (
     <PrimaryItem
@@ -44,13 +44,10 @@ const PrivacyItem = ({item, onPressHelpMessage}: Props) => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    bottomSheetLeftIcon: {
-      marginRight: spacing.margin.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  bottomSheetLeftIcon: {
+    marginRight: spacing.margin.large,
+  },
+});
 
 export default PrivacyItem;

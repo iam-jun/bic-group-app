@@ -1,7 +1,6 @@
 import Clipboard from '@react-native-clipboard/clipboard';
 import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {useBaseHook} from '~/hooks';
@@ -10,7 +9,7 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {showHideToastMessage} from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {getLink, LINK_POST} from '~/utils/link';
 
 export interface PostViewMenuProps {
@@ -29,8 +28,6 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
-  const theme: ITheme = useTheme() as ITheme;
-  const styles = createStyle(theme);
 
   const onPress = () => {
     dispatch(modalActions.hideModal());
@@ -165,15 +162,12 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {},
-    item: {
-      height: 44,
-      paddingHorizontal: spacing.padding.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {},
+  item: {
+    height: 44,
+    paddingHorizontal: spacing.padding.large,
+  },
+});
 
 export default PostViewMenu;

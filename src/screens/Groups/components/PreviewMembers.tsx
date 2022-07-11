@@ -11,10 +11,10 @@ import ListView from '~/beinComponents/list/ListView';
 import {ITheme} from '~/theme/interfaces';
 import {IPreviewMember} from '~/interfaces/ICommunity';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import spacing from '~/theme/spacing';
 
 const PreviewMembers = () => {
   const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {user_count, members} = infoDetail;
@@ -64,15 +64,11 @@ const PreviewMembers = () => {
 
 export default PreviewMembers;
 
-const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    listStyle: {
-      margin: spacing.margin.large,
-    },
-    memberDescriptionText: {
-      marginHorizontal: spacing.margin.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  listStyle: {
+    margin: spacing.margin.large,
+  },
+  memberDescriptionText: {
+    marginHorizontal: spacing.margin.large,
+  },
+});

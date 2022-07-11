@@ -17,8 +17,8 @@ import loadings from '~/beinComponents/list/loadings';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {useKeySelector} from '~/hooks/selector';
-import {spacing} from '~/theme';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface ListViewProps {
   data?: Array<any>;

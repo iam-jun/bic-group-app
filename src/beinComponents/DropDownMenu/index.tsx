@@ -21,6 +21,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import Divider from '~/beinComponents/Divider';
+import spacing from '~/theme/spacing';
 
 export interface DropDownMenuProps {
   style?: StyleProp<ViewStyle>;
@@ -47,7 +48,7 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
 
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const selectingItem = data?.[selectingIndex] || {};
@@ -142,7 +143,7 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       zIndex: 10,

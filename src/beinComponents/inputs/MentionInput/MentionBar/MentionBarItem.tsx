@@ -7,6 +7,7 @@ import {IMentionUser} from '~/interfaces/IPost';
 
 import Text from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
+import spacing from '~/theme/spacing';
 
 export interface MentionbarItemProps {
   testID?: string;
@@ -40,7 +41,7 @@ const MentionBarItem: FC<MentionbarItemProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',

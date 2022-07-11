@@ -18,6 +18,7 @@ import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import {isEmpty} from 'lodash';
 import {getGroupFromTreeById} from '~/screens/Groups/helper';
 import {IGroup} from '~/interfaces/IGroup';
+import spacing from '~/theme/spacing';
 
 export interface GroupStructureSettingsProps {
   style?: StyleProp<ViewStyle>;
@@ -98,7 +99,7 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

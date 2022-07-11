@@ -12,6 +12,7 @@ import {useDispatch} from 'react-redux';
 import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {AutocompleteProps} from '..';
 import {
   checkRunSearch,
@@ -104,7 +105,7 @@ const AtMention = ({
 };
 
 const createStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     textEmpty: {

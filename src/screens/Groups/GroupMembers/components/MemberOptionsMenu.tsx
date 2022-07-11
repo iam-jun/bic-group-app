@@ -20,6 +20,7 @@ import {checkLastAdmin, handleLeaveInnerGroups} from '../../helper';
 import useRemoveMember from './useRemoveMember';
 import useRemoveAdmin from './useRemoveAdmin';
 import useLeaveGroup from './useLeaveGroup';
+import spacing from '~/theme/spacing';
 
 interface MemberOptionsMenuProps {
   groupId: number;
@@ -35,7 +36,6 @@ const MemberOptionsMenu = ({
   onOptionsClosed,
 }: MemberOptionsMenuProps) => {
   const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
   const dispatch = useDispatch();
   const {user} = useAuth();
 
@@ -251,23 +251,20 @@ const MemberOptionsMenu = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    bottomSheet: {
-      paddingVertical: spacing.padding.tiny,
-    },
-    menuOption: {
-      height: 44,
-      paddingHorizontal: spacing.padding.large,
-    },
-    alertRemoveGroupsList: {
-      marginBottom: spacing.margin.small,
-    },
-    alertRemoveGroupsListItem: {
-      marginLeft: spacing.margin.small,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  bottomSheet: {
+    paddingVertical: spacing.padding.tiny,
+  },
+  menuOption: {
+    height: 44,
+    paddingHorizontal: spacing.padding.large,
+  },
+  alertRemoveGroupsList: {
+    marginBottom: spacing.margin.small,
+  },
+  alertRemoveGroupsListItem: {
+    marginLeft: spacing.margin.small,
+  },
+});
 
 export default MemberOptionsMenu;

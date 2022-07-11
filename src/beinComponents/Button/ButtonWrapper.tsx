@@ -7,12 +7,14 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
+import {ActivityIndicator, useTheme} from 'react-native-paper';
+
 import Text, {TextProps, TextVariant} from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
-import {ActivityIndicator, useTheme} from 'react-native-paper';
 import Icon, {IconProps} from '~/beinComponents/Icon';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
 import {useKeySelector} from '~/hooks/selector';
+import spacing from '~/theme/spacing';
 
 export interface ButtonWrapperProps {
   nativeID?: string;
@@ -63,7 +65,6 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
 }: ButtonWrapperProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme;
-  const styles = themeStyles(theme);
   const textStyles = createTextStyle(theme);
   textVariant = textVariant || 'buttonBase';
 
@@ -144,20 +145,16 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    icon: {
-      marginHorizontal: spacing?.margin.small,
-    },
-    loading: {
-      marginRight: spacing?.margin.tiny,
-    },
-    text: {
-      textAlign: 'center',
-    },
-  });
-};
+const styles = StyleSheet.create({
+  icon: {
+    marginHorizontal: spacing.margin.small,
+  },
+  loading: {
+    marginRight: spacing.margin.tiny,
+  },
+  text: {
+    textAlign: 'center',
+  },
+});
 
 export default ButtonWrapper;

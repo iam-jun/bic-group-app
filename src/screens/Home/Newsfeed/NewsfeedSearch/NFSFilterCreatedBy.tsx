@@ -14,6 +14,7 @@ import {ISelectedFilterUser} from '~/interfaces/IHome';
 import NFSFilterCreateBySpecific from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterCreateBySpecific';
 import modalActions from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface NFSFilterCreatedByProps {
   selectedCreatedBy?: any;
@@ -110,7 +111,7 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.padding.extraLarge,

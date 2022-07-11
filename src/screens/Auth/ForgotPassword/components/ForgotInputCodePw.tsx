@@ -16,6 +16,7 @@ import {ITheme} from '~/theme/interfaces';
 import TextInputController from '~/beinComponents/inputs/TextInputController';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 import {getEnv} from '~/utils/env';
+import spacing from '~/theme/spacing';
 
 interface Props {
   useFormData: IObject<any>;
@@ -229,7 +230,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

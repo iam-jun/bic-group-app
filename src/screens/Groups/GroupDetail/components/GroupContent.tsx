@@ -17,6 +17,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import {showAlertNewFeature} from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 const GroupContent = ({
   getGroupPosts,
@@ -27,7 +28,7 @@ const GroupContent = ({
 }) => {
   const theme = useTheme() as ITheme;
   const {rootNavigation} = useRootNavigation();
-  const {spacing, colors} = theme || {};
+  const {colors} = theme || {};
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
 
@@ -180,7 +181,7 @@ const GroupContent = ({
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     groupInfo: {

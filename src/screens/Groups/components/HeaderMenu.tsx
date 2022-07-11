@@ -8,6 +8,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import modalActions from '~/store/modal/actions';
+import spacing from '~/theme/spacing';
 
 interface HeaderMenuProps {
   type: 'community' | 'group';
@@ -155,7 +156,6 @@ const HeaderMenu = ({
 };
 
 const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
   return StyleSheet.create({
     iconLeftStyle: {marginRight: spacing.margin.base},
   });

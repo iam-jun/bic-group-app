@@ -11,6 +11,7 @@ import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
+import spacing from '~/theme/spacing';
 
 const NoticePanel = () => {
   const theme = useTheme() as ITheme;
@@ -61,7 +62,7 @@ const NoticePanel = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     description: {

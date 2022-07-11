@@ -16,6 +16,7 @@ import modalActions, {
   showHideToastMessage,
 } from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {openLink} from '~/utils/common';
 import {formatChannelLink, getLink, LINK_GROUP} from '~/utils/link';
 import HeaderMenu from '../../components/HeaderMenu';
@@ -26,7 +27,6 @@ import groupsKeySelector from '../../redux/keySelector';
 const GroupTopBar = () => {
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
 
   const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
@@ -207,33 +207,29 @@ const GroupTopBar = () => {
 
 export default GroupTopBar;
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.small,
-    },
-    leftComponent: {
-      flexDirection: 'row',
-    },
-    rightComponent: {
-      flexDirection: 'row',
-    },
-    iconShieldStar: {
-      marginRight: spacing.margin.extraLarge,
-    },
-    iconSearch: {
-      marginRight: spacing.margin.extraLarge,
-    },
-    badge: {
-      position: 'absolute',
-      top: -6,
-      right: 10,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: spacing.margin.large,
+    marginVertical: spacing.margin.small,
+  },
+  leftComponent: {
+    flexDirection: 'row',
+  },
+  rightComponent: {
+    flexDirection: 'row',
+  },
+  iconShieldStar: {
+    marginRight: spacing.margin.extraLarge,
+  },
+  iconSearch: {
+    marginRight: spacing.margin.extraLarge,
+  },
+  badge: {
+    position: 'absolute',
+    top: -6,
+    right: 10,
+  },
+});

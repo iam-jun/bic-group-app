@@ -17,6 +17,7 @@ import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 import useCreatePost from '~/screens/Post/CreatePost/hooks/useCreatePost';
 import postActions from '~/screens/Post/redux/actions';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
 import {getTotalFileSize} from '../redux/selectors';
 import CreatePostContent from './components/CreatePostContent';
@@ -225,7 +226,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     flex1: {flex: 1},
@@ -233,7 +234,7 @@ const themeStyles = (theme: ITheme) => {
       flex: 1,
     },
     setting: {
-      padding: spacing?.padding.large,
+      padding: spacing.padding.large,
       flexDirection: 'row',
       alignItems: 'center',
       justifyContent: 'flex-end',

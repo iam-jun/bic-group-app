@@ -9,6 +9,7 @@ import {useTheme} from 'react-native-paper';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import images from '~/resources/images';
+import spacing from '~/theme/spacing';
 
 interface Props {
   testID?: string;
@@ -63,7 +64,7 @@ const AvatarImage = ({testID, onEditAvatar, avatar, canEditInfo}: Props) => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     avatarHeader: {
       flexDirection: 'row',

@@ -11,6 +11,7 @@ import ButtonWrapper, {
   ButtonWrapperProps,
 } from '~/beinComponents/Button/ButtonWrapper';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface ButtonDangerProps extends ButtonWrapperProps {
   useI18n?: boolean;
@@ -23,7 +24,7 @@ const ButtonDanger: React.FC<ButtonDangerProps> = ({
   disabled,
   ...props
 }: ButtonDangerProps) => {
-  const {colors, spacing}: ITheme = useTheme() as ITheme;
+  const {colors}: ITheme = useTheme() as ITheme;
 
   const underlayColor = colors.placeholder;
   let backgroundColor = colors.bgError;
@@ -38,8 +39,8 @@ const ButtonDanger: React.FC<ButtonDangerProps> = ({
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
     {
       backgroundColor: backgroundColor,
-      padding: spacing?.padding.small,
-      borderRadius: spacing?.borderRadius.small,
+      padding: spacing.padding.small,
+      borderRadius: spacing.borderRadius.small,
       alignItems: 'center',
     },
     style,

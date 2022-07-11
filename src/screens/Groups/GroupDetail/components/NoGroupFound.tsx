@@ -12,6 +12,7 @@ import Text from '~/beinComponents/Text';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 const NoGroupFound = () => {
   const theme = useTheme() as ITheme;
@@ -44,7 +45,7 @@ const NoGroupFound = () => {
 };
 
 const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     root: {
       backgroundColor: colors.placeholder,

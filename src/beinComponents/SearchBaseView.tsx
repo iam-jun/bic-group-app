@@ -6,6 +6,8 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {ITheme} from '~/theme/interfaces';
 import Icon from './Icon';
 import {fontFamilies} from '~/theme/fonts';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 interface SearchBaseViewProps {
   isOpen: boolean;
@@ -87,7 +89,7 @@ const SearchBaseView = ({
 };
 
 const createStyles = (theme: ITheme) => {
-  const {spacing, colors, dimension} = theme;
+  const {colors} = theme;
   const insets = useSafeAreaInsets();
 
   return StyleSheet.create({

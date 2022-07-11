@@ -5,8 +5,8 @@ import {useTheme} from 'react-native-paper';
 import {ITheme} from '~/theme/interfaces';
 
 import Text from '~/beinComponents/Text';
-import {IReactionCounts} from '~/interfaces/IPost';
 import {useBaseHook} from '~/hooks';
+import spacing from '~/theme/spacing';
 
 export interface PostViewFooterLiteProps {
   style?: StyleProp<ViewStyle>;
@@ -20,7 +20,6 @@ const PostViewFooterLite: FC<PostViewFooterLiteProps> = ({
   const {t} = useBaseHook();
   const theme = useTheme() as ITheme;
   const {colors} = theme;
-  const styles = createStyle(theme);
 
   if (commentsCount <= 0) {
     return null;
@@ -37,14 +36,11 @@ const PostViewFooterLite: FC<PostViewFooterLiteProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {
-      paddingBottom: spacing.padding.base,
-      paddingHorizontal: spacing.padding.base,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    paddingBottom: spacing.padding.base,
+    paddingHorizontal: spacing.padding.base,
+  },
+});
 
 export default PostViewFooterLite;

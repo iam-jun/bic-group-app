@@ -4,7 +4,9 @@ import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import Image, {ImageProps} from '~/beinComponents/Image';
 import {IconType} from '~/resources/icons';
+import dimension from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import Text from '../Text';
 
 export type AvatarType =
@@ -53,7 +55,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   ...props
 }: AvatarProps) => {
   const theme: ITheme = useTheme() as ITheme;
-  const {spacing, dimension, colors} = theme;
+  const {colors} = theme;
   const styles = creatStyle(theme);
 
   const avatarSize = dimension?.avatarSizes[variant] || 24;
@@ -232,7 +234,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
 };
 
 const creatStyle = (theme: ITheme) => {
-  const {spacing, dimension, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {},
     tiny: {

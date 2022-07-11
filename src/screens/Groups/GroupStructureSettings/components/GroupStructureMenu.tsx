@@ -10,6 +10,7 @@ import {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import modalActions from '~/store/modal/actions';
 import {IGroup} from '~/interfaces/IGroup';
+import spacing from '~/theme/spacing';
 
 export interface GroupStructureMenuProps {
   group?: IGroup;
@@ -27,7 +28,6 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
   const {t} = useBaseHook();
   const theme: ITheme = useTheme() as ITheme;
   const {colors} = theme || {};
-  const styles = createStyle(theme);
 
   const onPressReorderGroup = () => {
     rootNavigation.navigate(groupStack.reorderGroup, {group});
@@ -75,15 +75,12 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {},
-    item: {
-      height: 44,
-      paddingHorizontal: spacing.padding.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {},
+  item: {
+    height: 44,
+    paddingHorizontal: spacing.padding.large,
+  },
+});
 
 export default GroupStructureMenu;

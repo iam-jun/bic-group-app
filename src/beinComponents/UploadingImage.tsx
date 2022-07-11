@@ -11,6 +11,7 @@ import {useBaseHook} from '~/hooks';
 import {IFilePicked} from '~/interfaces/common';
 import ImageUploader, {IGetFile, IUploadParam} from '~/services/imageUploader';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface UploadingImageProps {
   style?: StyleProp<ViewStyle>;
@@ -140,7 +141,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       backgroundColor: colors.surface,

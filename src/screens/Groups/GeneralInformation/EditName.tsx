@@ -8,8 +8,10 @@ import {useDispatch} from 'react-redux';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
+import dimension from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import groupsActions from '../redux/actions';
 
 const EditName = (props: any) => {
@@ -95,7 +97,7 @@ const EditName = (props: any) => {
 export default EditName;
 
 const themeStyles = (theme: ITheme) => {
-  const {spacing, colors, dimension} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {

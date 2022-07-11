@@ -21,6 +21,7 @@ import API_ERROR_CODE from '~/constants/apiErrorCode';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import LoadMoreComment from '../components/LoadMoreComment';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import spacing from '~/theme/spacing';
 
 const CommentDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
@@ -411,7 +412,7 @@ const getListChildComment = (
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingLeft: spacing.padding.large,

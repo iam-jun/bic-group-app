@@ -6,6 +6,7 @@ import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import images from '~/resources/images';
 import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 interface Props {
   testID?: string;
@@ -58,7 +59,7 @@ const AtMentionItem = ({item, onPress}: Props) => {
 };
 
 const createStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',

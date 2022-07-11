@@ -39,6 +39,8 @@ import {showReactionDetailBottomSheet} from '~/store/modal/actions';
 import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
 import actions from '~/beinComponents/inputs/MentionInput/redux/actions';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 export interface CommentViewProps {
   postId: string;
@@ -61,7 +63,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing, dimension} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const currentUserId = useUserIdAuth();
@@ -399,15 +401,15 @@ const _CommentView: React.FC<CommentViewProps> = ({
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing, dimension} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
     },
     contentContainer: {
       flex: 1,
-      paddingVertical: spacing?.padding.small,
-      paddingHorizontal: spacing?.padding.small,
+      paddingVertical: spacing.padding.small,
+      paddingHorizontal: spacing.padding.small,
       backgroundColor: colors.placeholder,
       borderRadius: spacing?.borderRadius.small,
     },

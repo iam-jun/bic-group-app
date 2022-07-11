@@ -11,6 +11,7 @@ import ListView from '~/beinComponents/list/ListView';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import GroupItem from '~/beinComponents/list/items/GroupItem';
 import Text from '~/beinComponents/Text';
+import spacing from '~/theme/spacing';
 
 const YourGroupsSearch = () => {
   const theme = useTheme() as ITheme;
@@ -65,7 +66,7 @@ const YourGroupsSearch = () => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       position: 'absolute',
