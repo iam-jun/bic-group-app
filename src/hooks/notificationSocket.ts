@@ -23,8 +23,10 @@ const useNotificationSocket = () => {
     switch (data.action) {
       case notificationActions.ATTACH:
         if (
-          data?.extra?.type === NOTIFICATION_TYPE.POST.VIDEO.FAILED ||
-          data?.extra?.type === NOTIFICATION_TYPE.POST.VIDEO.PUBLISHED
+          data?.extra?.type ===
+            NOTIFICATION_TYPE.POST_VIDEO_TO_USER_SUCCESSFUL ||
+          data?.extra?.type ===
+            NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL
         ) {
           dispatch(postActions.updateAllPostContainingVideoInProgress(data));
         }
