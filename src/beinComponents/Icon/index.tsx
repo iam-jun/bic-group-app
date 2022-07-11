@@ -20,6 +20,8 @@ import {ITheme} from '~/theme/interfaces';
 import {View} from 'react-native';
 import TextEmojiIcon from '~/beinComponents/Icon/TextEmojiIcon';
 import {useNetInfo} from '@react-native-community/netinfo';
+import {fontAwesomeIcons} from '~/services/fontAwesomeIcon';
+import FontAwesomeIcon from '~/beinComponents/Icon/FontAwesomeIcon';
 
 export interface IconProps extends SVGIconProps, UniconsProps {
   icon: IconType | number;
@@ -77,7 +79,10 @@ const Icon: React.FC<IconProps> = ({
   let IconComponent, type, name, source;
 
   // @ts-ignore
-  if (Unicons[`${_icon || icon}`]) {
+  if (fontAwesomeIcons[`${icon || _icon}`]) {
+    IconComponent = FontAwesomeIcon;
+    name = _icon || icon;
+  } else if (Unicons[`${_icon || icon}`]) {
     IconComponent = Unicons;
     name = _icon || icon;
   } else if (typeof _icon === 'function') {
