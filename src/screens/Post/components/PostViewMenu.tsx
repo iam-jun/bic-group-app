@@ -95,8 +95,8 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         <PrimaryItem
           testID={'post_view_menu.edit_settings'}
           style={styles.item}
-          leftIcon={'SlidersAlt'}
-          leftIconProps={{icon: 'SlidersAlt', size: 24}}
+          leftIcon={'SlidersUp'}
+          leftIconProps={{icon: 'SlidersUp', size: 24}}
           title={t('post:post_menu_edit_settings')}
           onPress={onPressEditSettings}
         />
@@ -145,8 +145,8 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         <PrimaryItem
           testID={'post_view_menu.delete'}
           style={styles.item}
-          leftIcon={'TrashAlt'}
-          leftIconProps={{icon: 'TrashAlt', size: 24}}
+          leftIcon={'TrashCan'}
+          leftIconProps={{icon: 'TrashCan', size: 24}}
           title={t('post:post_menu_delete')}
           onPress={onPressDelete}
         />
@@ -155,8 +155,8 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         <PrimaryItem
           testID={'post_view_menu.report'}
           style={styles.item}
-          leftIcon={'InfoCircle'}
-          leftIconProps={{icon: 'InfoCircle', size: 24}}
+          leftIcon={'CircleInfo'}
+          leftIconProps={{icon: 'CircleInfo', size: 24}}
           title={t('post:post_menu_report')}
           onPress={onPress}
         />

@@ -82,6 +82,7 @@ import iconPlayGif from '../../assets/icons/ic_play_gif.svg';
 import fileIcons from './fileIcons';
 import iconBeinChat from '../../assets/icons/icon_bein_chat.svg';
 import {fontAwesomeIcons} from '~/services/fontAwesomeIcon';
+import {faMagnifyingGlass} from '@fortawesome/pro-regular-svg-icons/faMagnifyingGlass';
 
 const icons = {
   ...fileIcons,
@@ -168,7 +169,6 @@ const icons = {
   Video: 'Video',
   Star: 'Star',
   CommentAltCheck: 'CommentAltCheck',
-  iconUserPlus: 'UserPlus',
   ArrowDown: 'ArrowDown',
   CreateThread: 'CommentAltPlus',
   Smile: 'Smile',
@@ -180,7 +180,6 @@ const icons = {
   ExclamationTriangle: 'ExclamationTriangle',
   FileTimesAlt: 'FileTimesAlt',
   WifiSlash: 'WifiSlash',
-  SignOutAlt: 'SignOutAlt',
   Bug: 'Bug',
   Bars: 'Bars',
   Channel: 'Channel',
@@ -217,7 +216,6 @@ const icons = {
   Edit: 'Edit',
   Redo: 'Redo',
   ImageV: 'ImageV',
-  Paperclip: 'Paperclip',
   ImagePlus: 'ImagePlus',
   Sync: 'Sync',
   Link: 'Link',
@@ -226,31 +224,8 @@ const icons = {
   EllipsisH: 'EllipsisH',
   TachometerFastAlt: 'TachometerFastAlt',
   Bookmark: 'Bookmark',
-  Bell: 'Bell',
-  BellSlash: 'BellSlash',
-  TrashAlt: 'TrashAlt',
-  ShareAlt: 'ShareAlt',
-  InfoCircle: 'InfoCircle',
-  CalendarAlt: 'CalendarAlt',
-  Clock: 'Clock',
-  CommentAltDots: 'CommentAltDots',
-  search: 'Search',
-  addUser: 'UserPlus',
-  bell: 'Bell',
-  attachment: 'Paperclip',
-  Image: 'Image',
-  images: 'Images',
-  leavesGroup: 'SignOutAlt',
-  BriefcaseAlt: 'BriefcaseAlt',
-  LocationPoint: 'LocationPoint',
-  CommentsAlt: 'CommentsAlt',
-  CommentSlash: 'CommentSlash',
-  Phone: 'Phone',
-  CodeBranch: 'CodeBranch',
-  Envelope: 'Envelope',
-  EnvelopeAlt: 'EnvelopeAlt',
 
-  EditAlt: 'EditAlt',
+  search: fontAwesomeIcons.MagnifyingGlass, // IF YOU WANT TO RENAME ICON, ADD TO fontAwesomeIcons FIRST
 
   ...fontAwesomeIcons,
   // FOR AWESOME ICONS NOT ADD YET, PLEASE ADD IN FILE `fontAwesomeIcon.ts`

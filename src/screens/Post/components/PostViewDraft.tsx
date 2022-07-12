@@ -162,15 +162,15 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
           <View>
             <PrimaryItem
               height={48}
-              leftIconProps={{icon: 'CalendarAlt', size: 20}}
-              leftIcon={'CalendarAlt'}
+              leftIconProps={{icon: 'Calendar', size: 20}}
+              leftIcon={'Calendar'}
               title={t('post:draft:btn_menu_schedule')}
               onPress={onPressCalendar}
             />
             <PrimaryItem
               height={48}
-              leftIconProps={{icon: 'TrashAlt', size: 20}}
-              leftIcon={'TrashAlt'}
+              leftIconProps={{icon: 'TrashCan', size: 20}}
+              leftIcon={'TrashCan'}
               title={t('post:draft:btn_menu_delete')}
               onPress={onPressDelete}
             />

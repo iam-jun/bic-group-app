@@ -60,7 +60,7 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
         <>
           {user?.username !== username && (
             <Icon
-              icon={'CommentAltDots'}
+              icon={'MessageDots'}
               backgroundColor={colors.bgSecondary}
               style={styles.iconChat}
               onPress={onPressChat}

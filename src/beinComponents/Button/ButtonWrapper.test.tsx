@@ -123,7 +123,7 @@ describe('Button Wrapper component', () => {
 
   it(`should render leftIcon`, () => {
     const rendered = renderWithRedux(
-      <ButtonWrapper leftIcon={'CalendarAlt'}></ButtonWrapper>,
+      <ButtonWrapper leftIcon={'Calendar'}></ButtonWrapper>,
     );
     const leftIcon = rendered.getByTestId('button_wrapper.icon');
     expect(leftIcon).toBeDefined();
@@ -133,7 +133,7 @@ describe('Button Wrapper component', () => {
   it(`should render leftIcon with leftIconProps`, () => {
     const rendered = renderWithRedux(
       <ButtonWrapper
-        leftIcon={'CalendarAlt'}
+        leftIcon={'Calendar'}
         leftIconProps={{
           icon: 'AngleRightB',
           testID: 'LEFT_ICON',
@@ -146,7 +146,7 @@ describe('Button Wrapper component', () => {
 
   it(`should render rightIcon`, () => {
     const rendered = renderWithRedux(
-      <ButtonWrapper rightIcon={'CalendarAlt'}></ButtonWrapper>,
+      <ButtonWrapper rightIcon={'Calendar'}></ButtonWrapper>,
     );
     const rightIcon = rendered.getByTestId('button_wrapper.icon');
     expect(rightIcon).toBeDefined();
@@ -156,7 +156,7 @@ describe('Button Wrapper component', () => {
   it(`should render rightIcon with rightIconProps`, () => {
     const rendered = renderWithRedux(
       <ButtonWrapper
-        rightIcon={'CalendarAlt'}
+        rightIcon={'Calendar'}
         rightIconProps={{
           icon: 'AngleRightB',
           testID: 'RIGHT_ICON',

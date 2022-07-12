@@ -115,7 +115,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
       />
       <View style={{flex: 1}} />
       <Icon
-        icon="ShareAlt"
+        icon="ShareNodes"
         onPress={onPressShare}
         size={20}
         tintColor={colors.iconTintReversed}

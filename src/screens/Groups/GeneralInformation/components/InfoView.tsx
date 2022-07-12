@@ -82,7 +82,7 @@ const InfoView = ({
         subTitle={titleCase(privacy) || ''}
         onPress={canEditPrivacy ? onPressPrivacy : undefined}
         RightComponent={
-          canEditPrivacy && <Icon icon={'EditAlt'} style={styles.rightIcon} />
+          canEditPrivacy && <Icon icon={'PenLine'} style={styles.rightIcon} />
         }
       />
     </View>

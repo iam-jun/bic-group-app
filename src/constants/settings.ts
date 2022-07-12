@@ -83,7 +83,7 @@ export const accountSettingsMenu = [
   {
     type: 'notification',
     title: 'settings:title_notification',
-    icon: 'bell',
+    icon: 'Bell',
   },
   {
     type: 'appearance',
@@ -149,7 +149,7 @@ export const infoMenu = [
   {
     type: 'aboutBein',
     title: 'settings:title_about_bein',
-    icon: 'InfoCircle',
+    icon: 'CircleInfo',
     rightTitle: getEnv('APP_VERSION')
       ? i18n.t('settings:text_version') + ' ' + getEnv('APP_VERSION')
       : undefined,

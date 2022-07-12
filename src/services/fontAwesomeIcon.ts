@@ -20,6 +20,24 @@ import {faSquareUser} from '@fortawesome/pro-regular-svg-icons/faSquareUser';
 import {faUserCheck} from '@fortawesome/pro-regular-svg-icons/faUserCheck';
 import {faTextSize} from '@fortawesome/pro-regular-svg-icons/faTextSize';
 import {faSlidersUp} from '@fortawesome/pro-regular-svg-icons/faSlidersUp';
+import {faEnvelope} from '@fortawesome/pro-regular-svg-icons/faEnvelope';
+import {faCodeBranch} from '@fortawesome/pro-regular-svg-icons/faCodeBranch';
+import {faPhone} from '@fortawesome/pro-regular-svg-icons/faPhone';
+import {faComments} from '@fortawesome/pro-regular-svg-icons/faComments';
+import {faLocationDot} from '@fortawesome/pro-regular-svg-icons/faLocationDot';
+import {faArrowRightFromArc} from '@fortawesome/pro-regular-svg-icons/faArrowRightFromArc';
+import {faImages} from '@fortawesome/pro-regular-svg-icons/faImages';
+import {faPenLine} from '@fortawesome/pro-regular-svg-icons/faPenLine';
+import {faPaperclip} from '@fortawesome/pro-regular-svg-icons/faPaperclip';
+import {faBell} from '@fortawesome/pro-regular-svg-icons/faBell';
+import {faBellSlash} from '@fortawesome/pro-regular-svg-icons/faBellSlash';
+import {faUserPlus} from '@fortawesome/pro-regular-svg-icons/faUserPlus';
+import {faMagnifyingGlass} from '@fortawesome/pro-regular-svg-icons/faMagnifyingGlass';
+import {faMessageDots} from '@fortawesome/pro-regular-svg-icons/faMessageDots';
+import {faClock} from '@fortawesome/pro-regular-svg-icons/faClock';
+import {faCircleInfo} from '@fortawesome/pro-regular-svg-icons/faCircleInfo';
+import {faShareNodes} from '@fortawesome/pro-regular-svg-icons/faShareNodes';
+import {faTrashCan} from '@fortawesome/pro-regular-svg-icons/faTrashCan';
 
 export const initFontAwesomeIcon = () => {
   library.add(
@@ -44,6 +62,24 @@ export const initFontAwesomeIcon = () => {
     faUserCheck,
     faTextSize,
     faSlidersUp,
+    faEnvelope,
+    faCodeBranch,
+    faPhone,
+    faComments,
+    faLocationDot,
+    faArrowRightFromArc,
+    faImages,
+    faPenLine,
+    faPaperclip,
+    faBell,
+    faBellSlash,
+    faUserPlus,
+    faMagnifyingGlass,
+    faMessageDots,
+    faClock,
+    faCircleInfo,
+    faShareNodes,
+    faTrashCan,
   );
 };
 
@@ -70,6 +106,24 @@ export const fontAwesomeIcons = {
   UserCheck: 'fa-regular fa-user-check',
   TextSize: 'fa-regular fa-text-size',
   SlidersUp: 'fa-regular fa-sliders-up',
+  Envelope: 'fa-regular fa-envelope',
+  CodeBranch: 'fa-regular fa-code-branch',
+  Phone: 'fa-regular fa-phone',
+  Comments: 'fa-regular fa-comments',
+  LocationDot: 'fa-regular fa-location-dot',
+  ArrowRightFromArc: 'fa-regular fa-arrow-right-from-arc',
+  Images: 'fa-regular fa-images',
+  PenLine: 'fa-regular fa-pen-line',
+  Paperclip: 'fa-regular fa-paperclip',
+  Bell: 'fa-regular fa-bell',
+  BellSlash: 'fa-regular fa-bell-slash',
+  UserPlus: 'fa-regular fa-user-plus',
+  MagnifyingGlass: 'fa-regular fa-magnifying-glass',
+  MessageDots: 'fa-regular fa-message-dots',
+  Clock: 'fa-regular fa-clock',
+  CircleInfo: 'fa-regular fa-circle-info',
+  ShareNodes: 'fa-regular fa-share-nodes',
+  TrashCan: 'fa-regular fa-trash-can',
 };
 
 /**
@@ -83,3 +137,8 @@ export const fontAwesomeIcons = {
  *   - key: with regular icon, just use name, with solid icon, add `Solid` after name
  *   - value: copy class || react icon as value
  */
+
+export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(
+  (acc, cur) => ({...acc, [cur]: cur}),
+  {},
+);

@@ -164,7 +164,7 @@ const UserProfilePreviewBottomSheet = () => {
   const renderBasicInfo = () => {
     return (
       <View style={styles.basicInfoContainer}>
-        {renderInfoItem('CommentsAlt', userLanguages)}
+        {renderInfoItem('Comments', userLanguages)}
         {renderInfoItem('Phone', phone)}
       </View>
     );

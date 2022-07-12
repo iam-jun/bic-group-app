@@ -83,7 +83,7 @@ const ProfileBlock = ({
               icon: 'Calendar',
               title: formatDate(birthday, 'MMM Do, YYYY'),
             })}
-          {renderItem({icon: 'CommentsAlt', title: userLanguages})}
+          {renderItem({icon: 'Comments', title: userLanguages})}
           {relationship_status &&
             renderItem({
               icon: 'Heart',
@@ -120,7 +120,7 @@ const ProfileBlock = ({
               ) : null,
           })}
           {renderItem({
-            icon: 'LocationPoint',
+            icon: 'LocationDot',
             title: city && country ? `${city}, ${country}` : undefined,
           })}
         </>

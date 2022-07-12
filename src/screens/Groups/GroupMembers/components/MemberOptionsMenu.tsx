@@ -239,8 +239,8 @@ const MemberOptionsMenu = ({
             <PrimaryItem
               testID="member_options_menu.leave_group"
               style={styles.menuOption}
-              leftIcon={'SignOutAlt'}
-              leftIconProps={{icon: 'SignOutAlt', size: 24}}
+              leftIcon={'ArrowRightFromArc'}
+              leftIconProps={{icon: 'ArrowRightFromArc', size: 24}}
               title={i18next.t('groups:member_menu:label_leave_group')}
               onPress={() => onPressMenuOption('leave-group')}
             />

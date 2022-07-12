@@ -241,7 +241,7 @@ const PostToolbar = ({
               !videoDisabled ? _onPressSelectVideo : undefined,
             )}
             {renderToolbarButton(
-              'attachment',
+              'Paperclip',
               'post_toolbar.add_file',
               !fileDisabled ? onPressAddFile : undefined,
             )}

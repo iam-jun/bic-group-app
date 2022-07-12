@@ -186,7 +186,7 @@ const Section1 = () => {
           <NormalToastMessage
             type={'informative'}
             style={{margin: spacing.margin.base}}
-            leftIcon={'TrashAlt'}>
+            leftIcon={'TrashCan'}>
             You are the last admin of the group. Set another admin before
             leaving
           </NormalToastMessage>
@@ -200,7 +200,7 @@ const Section1 = () => {
       'Icon',
       <View>
         <Icon
-          icon={'bell'}
+          icon={'Bell'}
           size={36}
           label={'Unicons Icon (Ship)'}
           style={{marginBottom: spacing?.margin.small}}
@@ -262,7 +262,7 @@ const Section1 = () => {
         <Button onPress={() => alert('onPress View')}>
           <View style={{flexDirection: 'row', alignSelf: 'center'}}>
             <Text>Button Wrap Views </Text>
-            <Icon icon={'bell'} />
+            <Icon icon={'Bell'} />
           </View>
         </Button>
         <Divider
@@ -327,8 +327,8 @@ const Section1 = () => {
         </View>
         <Button.Secondary
           color={colors.primary3}
-          leftIcon={'bell'}
-          leftIconProps={{icon: 'bell', tintColor: colors.primary6}}
+          leftIcon={'Bell'}
+          leftIconProps={{icon: 'Bell', tintColor: colors.primary6}}
           rightIcon={'ArrowRight'}
           onPress={() => alert('onPress')}
           onLongPress={() => alert('onLongPress')}>

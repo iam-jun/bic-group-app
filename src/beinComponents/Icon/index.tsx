@@ -20,7 +20,10 @@ import {ITheme} from '~/theme/interfaces';
 import {View} from 'react-native';
 import TextEmojiIcon from '~/beinComponents/Icon/TextEmojiIcon';
 import {useNetInfo} from '@react-native-community/netinfo';
-import {fontAwesomeIcons} from '~/services/fontAwesomeIcon';
+import {
+  fontAwesomeIcons,
+  fontAwesomeIconValues,
+} from '~/services/fontAwesomeIcon';
 import FontAwesomeIcon from '~/beinComponents/Icon/FontAwesomeIcon';
 
 export interface IconProps extends SVGIconProps, UniconsProps {
@@ -79,7 +82,10 @@ const Icon: React.FC<IconProps> = ({
   let IconComponent, type, name, source;
 
   // @ts-ignore
-  if (fontAwesomeIcons[`${icon || _icon}`]) {
+  if (
+    fontAwesomeIcons[`${icon || _icon}`] ||
+    fontAwesomeIconValues[icons[icon]]
+  ) {
     IconComponent = FontAwesomeIcon;
     name = _icon || icon;
   } else if (Unicons[`${_icon || icon}`]) {
