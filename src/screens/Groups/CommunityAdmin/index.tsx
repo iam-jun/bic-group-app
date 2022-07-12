@@ -74,9 +74,9 @@ const CommunityAdmin = () => {
         <MenuItem
           testID={'community_admin.pending_members'}
           title={'settings:title_pending_members'}
-          icon={'UserExclamation'}
+          icon={'UserCheck'}
           iconProps={{
-            icon: 'UserExclamation',
+            icon: 'UserCheck',
             tintColor: theme.colors.primary6,
           }}
           notificationsBadgeNumber={total}
@@ -143,8 +143,8 @@ const CommunityAdmin = () => {
       <MenuItem
         testID="community_admin.post_settings"
         title="settings:title_post_settings"
-        icon="FileCopyAlt"
-        iconProps={{icon: 'FileCopyAlt', tintColor: theme.colors.primary6}}
+        icon="Copy"
+        iconProps={{icon: 'Copy', tintColor: theme.colors.primary6}}
         rightSubIcon="AngleRightB"
         onPress={displayNewFeature}
       />

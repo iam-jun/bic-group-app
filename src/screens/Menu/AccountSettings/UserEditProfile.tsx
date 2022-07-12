@@ -311,7 +311,7 @@ const UserEditProfile = (props: any) => {
           <SettingItem
             title={'settings:title_name'}
             subtitle={fullname || i18next.t('common:text_not_set')}
-            leftIcon={'TextFields'}
+            leftIcon={'TextSize'}
             isTouchDisabled
           />
           <SettingItem
@@ -320,7 +320,7 @@ const UserEditProfile = (props: any) => {
               // @ts-ignore
               i18next.t(genders[gender]) || i18next.t('common:text_not_set')
             }
-            leftIcon={'UserSquare'}
+            leftIcon={'SquareUser'}
             isTouchDisabled
           />
           <SettingItem
@@ -329,7 +329,7 @@ const UserEditProfile = (props: any) => {
               formatDate(birthday, 'MMMM DD, YYYY') ||
               i18next.t('common:text_not_set')
             }
-            leftIcon={'Calender'}
+            leftIcon={'Calendar'}
             isTouchDisabled
           />
           <SettingItem

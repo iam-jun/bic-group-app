@@ -77,10 +77,10 @@ const ProfileBlock = ({
             {i18next.t('settings:title_about')}
           </Text.Subtitle>
           {/* @ts-ignore */}
-          {gender && renderItem({icon: 'UserSquare', title: genders[gender]})}
+          {gender && renderItem({icon: 'SquareUser', title: genders[gender]})}
           {birthday &&
             renderItem({
-              icon: 'Calender',
+              icon: 'Calendar',
               title: formatDate(birthday, 'MMM Do, YYYY'),
             })}
           {renderItem({icon: 'CommentsAlt', title: userLanguages})}

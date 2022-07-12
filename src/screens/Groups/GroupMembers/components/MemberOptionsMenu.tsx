@@ -224,9 +224,9 @@ const MemberOptionsMenu = ({
             <PrimaryItem
               testID="member_options_menu.remove_member"
               style={styles.menuOption}
-              leftIcon={'UserTimes'}
+              leftIcon={'UserXmark'}
               leftIconProps={{
-                icon: 'UserTimes',
+                icon: 'UserXmark',
                 size: 24,
                 tintColor: theme.colors.error,
               }}

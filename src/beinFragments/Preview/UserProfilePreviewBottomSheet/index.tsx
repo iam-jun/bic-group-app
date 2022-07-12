@@ -135,8 +135,8 @@ const UserProfilePreviewBottomSheet = () => {
         <Button.Secondary
           onPress={navigateToUserProfile}
           style={styles.button}
-          leftIcon={'UserSquare'}
-          leftIconProps={{icon: 'UserSquare', size: 17}}>
+          leftIcon={'SquareUser'}
+          leftIconProps={{icon: 'SquareUser', size: 17}}>
           {i18next.t('profile:title_view_profile')}
         </Button.Secondary>
       </View>

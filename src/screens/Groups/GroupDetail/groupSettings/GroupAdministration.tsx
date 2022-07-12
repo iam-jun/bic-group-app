@@ -89,7 +89,7 @@ const GroupAdministration = (props: any) => {
       </Text.H5>
       {!!can_manage_member &&
         renderItem(
-          'UserExclamation',
+          'UserCheck',
           'settings:title_pending_members',
           goToPendingMembers,
           total,
@@ -123,14 +123,14 @@ const GroupAdministration = (props: any) => {
           'group_administration.profile_info',
         )}
       {renderItem(
-        'FileCopyAlt',
+        'Copy',
         'settings:title_post_settings',
         displayNewFeature,
         undefined,
         'group_administration.post_settings',
       )}
       {renderItem(
-        'UserCircle',
+        'CircleUser',
         'settings:title_membership_settings',
         displayNewFeature,
         undefined,

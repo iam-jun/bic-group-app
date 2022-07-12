@@ -212,7 +212,11 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                     <Text.Subtitle> ⬩ </Text.Subtitle>
                   </>
                 )}
-                <Icon icon="users" size={16} tintColor={colors.textSecondary} />
+                <Icon
+                  icon={'UserGroup'}
+                  size={16}
+                  tintColor={colors.textSecondary}
+                />
                 <Text.BodyS
                   color={colors.textSecondary}
                   style={styles.textInfo}>
