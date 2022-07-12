@@ -7,6 +7,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import notificationsActions from '../redux/actions';
 import i18n from 'i18next';
 import * as modalActions from '~/store/modal/actions';
+import spacing from '~/theme/spacing';
 
 export interface NotificationBottomSheetProps {
   modalizeRef: any;

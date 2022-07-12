@@ -12,6 +12,7 @@ import Text from '~/beinComponents/Text';
 import {ITheme} from '~/theme/interfaces';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import MemberItem from './MemberItem';
+import spacing from '~/theme/spacing';
 
 interface MemberSearchResultProps {
   canManageMember: boolean;

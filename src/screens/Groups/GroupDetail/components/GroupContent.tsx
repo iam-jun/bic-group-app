@@ -172,10 +172,8 @@ const GroupContent = ({
       renderItem={renderItem}
       ListHeaderComponent={renderHeader}
       ListHeaderComponentStyle={styles.listHeaderComponentStyle}
-      ListFooterComponent={<ViewSpacing height={theme.spacing.padding.base} />}
-      renderItemSeparator={() => (
-        <ViewSpacing height={theme.spacing.margin.base} />
-      )}
+      ListFooterComponent={<ViewSpacing height={spacing.padding.base} />}
+      renderItemSeparator={() => <ViewSpacing height={spacing.margin.base} />}
     />
   );
 };
