@@ -72,7 +72,7 @@ const GroupAdministration = (props: any) => {
         iconProps={{icon: icon, tintColor: theme.colors.primary6}}
         notificationsBadgeNumber={notificationsBadgeNumber}
         notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
-        rightSubIcon="AngleRightB"
+        rightSubIcon="AngleRightSolid"
         onPress={onPress}
       />
     );

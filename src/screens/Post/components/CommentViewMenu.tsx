@@ -150,8 +150,8 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
       <PrimaryItem
         testID={'comment_view_menu.reply'}
         style={styles.item}
-        leftIcon={'CornerDownRight'}
-        leftIconProps={{icon: 'CornerDownRight', size: 24}}
+        leftIcon={'ArrowTurnDownRight'}
+        leftIconProps={{icon: 'ArrowTurnDownRight', size: 24}}
         title={t('post:comment_menu_reply')}
         onPress={_onPressReply}
       />
@@ -175,8 +175,8 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
         <PrimaryItem
           testID={'comment_view_menu.edit'}
           style={styles.item}
-          leftIcon={'Edit'}
-          leftIconProps={{icon: 'Edit', size: 24}}
+          leftIcon={'edit'}
+          leftIconProps={{icon: 'edit', size: 24}}
           title={t('post:comment_menu_edit')}
           onPress={_onPressEdit}
         />
@@ -184,8 +184,8 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
       <PrimaryItem
         testID={'comment_view_menu.history'}
         style={styles.item}
-        leftIcon={'Redo'}
-        leftIconProps={{icon: 'Redo', size: 24}}
+        leftIcon={'RotateRight'}
+        leftIconProps={{icon: 'RotateRight', size: 24}}
         title={t('post:comment_menu_history')}
         onPress={_onPress}
       />
@@ -193,8 +193,8 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
         <PrimaryItem
           testID={'comment_view_menu.delete'}
           style={styles.item}
-          leftIcon={'Trash'}
-          leftIconProps={{icon: 'Trash', size: 24}}
+          leftIcon={'TrashCan'}
+          leftIconProps={{icon: 'TrashCan', size: 24}}
           title={t('post:comment_menu_delete')}
           onPress={_onPressDelete}
         />

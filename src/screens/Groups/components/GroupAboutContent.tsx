@@ -59,7 +59,7 @@ const GroupAboutContent = () => {
         title={`${user_count} ${i18next.t('groups:text_members', {
           count: user_count,
         })}`}
-        rightSubIcon={isMember ? 'AngleRightB' : undefined}
+        rightSubIcon={isMember ? 'AngleRightSolid' : undefined}
       />
       <MenuItem
         testID="group_about_content.privacy"

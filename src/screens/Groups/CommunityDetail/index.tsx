@@ -194,7 +194,7 @@ const CommunityDetail = (props: any) => {
           title={name}
           avatar={icon}
           useAnimationTitle
-          rightIcon={can_setting ? 'iconShieldStar' : 'EllipsisV'}
+          rightIcon={can_setting ? 'iconShieldStar' : 'EllipsisVertical'}
           rightIconProps={{backgroundColor: theme.colors.background}}
           onPressChat={isMember ? onPressChat : undefined}
           onRightPress={onRightPress}

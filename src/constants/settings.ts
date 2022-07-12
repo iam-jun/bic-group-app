@@ -6,8 +6,8 @@ export const postFeatureMenu = [
   {
     type: 'draftPost',
     title: 'settings:title_post_feature_draft',
-    icon: 'FileEditAlt',
-    rightIcon: 'AngleRightB',
+    icon: 'FilePen',
+    rightIcon: 'AngleRightSolid',
   },
 ];
 
@@ -90,21 +90,21 @@ export const accountSettingsMenu = [
     title: 'settings:title_appearance',
     icon: 'Monitor',
     rightSubTitle: 'Dark',
-    rightSubIcon: 'AngleRightB',
+    rightSubIcon: 'AngleRightSolid',
   },
   {
     type: 'language',
     title: 'settings:title_language',
     icon: 'Globe',
     rightSubTitle: 'settings:app_language',
-    rightSubIcon: 'AngleRightB',
+    rightSubIcon: 'AngleRightSolid',
   },
   {
     type: 'currency',
     title: 'settings:title_currency',
     icon: 'Coins',
     rightSubTitle: 'BIC',
-    rightSubIcon: 'AngleRightB',
+    rightSubIcon: 'AngleRightSolid',
   },
 ];
 
@@ -114,7 +114,7 @@ export const securityLoginMenu = {
       type: 'changePassword',
       title: 'settings:title_change_password',
       subTitle: 'settings:subtitle_change_password',
-      rightSubIcon: 'AngleRightB',
+      rightSubIcon: 'AngleRightSolid',
       icon: 'KeySkeleton',
     },
   ],
@@ -123,14 +123,14 @@ export const securityLoginMenu = {
       type: 'twoFactorAuthentication',
       title: 'settings:title_two_factor_authentication',
       subTitle: 'settings:subtitle_two_factor_authentication',
-      rightSubIcon: 'AngleRightB',
+      rightSubIcon: 'AngleRightSolid',
       icon: 'ShieldCheck',
     },
     {
       type: 'loginLogs',
       title: 'settings:title_login_logs',
       subTitle: 'settings:subtitle_login_logs',
-      rightSubIcon: 'AngleRightB',
+      rightSubIcon: 'AngleRightSolid',
       icon: 'KeySkeleton',
     },
   ],
@@ -141,7 +141,7 @@ export const settingsMenu = [
     type: 'accountSettings',
     title: 'settings:title_account_settings',
     icon: 'Gear',
-    rightIcon: 'AngleRightB',
+    rightIcon: 'AngleRightSolid',
   },
 ];
 

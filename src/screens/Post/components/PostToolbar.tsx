@@ -231,7 +231,7 @@ const PostToolbar = ({
               content && onPressMarkdownPreview,
             )}
             {renderToolbarButton(
-              'ImagePlus',
+              'Image',
               'post_toolbar.add_photo',
               !imageDisabled ? _onPressSelectImage : undefined,
             )}

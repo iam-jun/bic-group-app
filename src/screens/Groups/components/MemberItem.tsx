@@ -69,7 +69,7 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
           )}
           {canManageMember && (
             <Icon
-              icon={'EllipsisV'}
+              icon={'EllipsisVertical'}
               style={styles.iconOption}
               onPress={() => onPressMenu(item)}
               buttonTestID="member_item.icon_option.button"

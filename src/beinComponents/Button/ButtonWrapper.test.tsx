@@ -19,7 +19,7 @@ describe('Button Wrapper component', () => {
   it(`renders correctly children`, () => {
     const rendered = renderWithRedux(
       <ButtonWrapper>
-        <Icon testID="button_wrapper.children" icon={'EllipsisH'} />
+        <Icon testID="button_wrapper.children" icon={'Ellipsis'} />
       </ButtonWrapper>,
     );
     const {getByTestId} = rendered;
@@ -135,7 +135,7 @@ describe('Button Wrapper component', () => {
       <ButtonWrapper
         leftIcon={'Calendar'}
         leftIconProps={{
-          icon: 'AngleRightB',
+          icon: 'AngleRightSolid',
           testID: 'LEFT_ICON',
         }}></ButtonWrapper>,
     );
@@ -156,9 +156,9 @@ describe('Button Wrapper component', () => {
   it(`should render rightIcon with rightIconProps`, () => {
     const rendered = renderWithRedux(
       <ButtonWrapper
-        rightIcon={'Calendar'}
+        rightIcon={'AngleRightSolid'}
         rightIconProps={{
-          icon: 'AngleRightB',
+          icon: 'AngleRightSolid',
           testID: 'RIGHT_ICON',
         }}></ButtonWrapper>,
     );

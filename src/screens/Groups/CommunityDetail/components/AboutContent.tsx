@@ -51,7 +51,7 @@ const AboutContent = () => {
         disabled
         rightSubIcon={
           isMember || privacy !== groupPrivacy.private
-            ? 'AngleRightB'
+            ? 'AngleRightSolid'
             : undefined
         }
       />
