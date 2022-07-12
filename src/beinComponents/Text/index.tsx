@@ -12,14 +12,42 @@ export type TextVariant =
   | 'h4'
   | 'h5'
   | 'h6'
+  | 'subtitleL'
+  | 'subtitleM'
+  | 'subtitleS'
+  | 'subtitleXS'
+  | 'bodyM'
+  | 'bodyMM'
+  | 'bodyS'
+  | 'bodySBM'
+  | 'paragraphL'
+  | 'paragraphM'
+  | 'paragraphS'
+  | 'buttonL'
+  | 'buttonM'
+  | 'buttonS'
+  | 'tabL'
+  | 'tabM'
+  | 'tabS'
+  | 'link'
+  | 'linkSmall'
+  | 'badgeL'
+  | 'badgeM'
+  | 'badgeS'
+  | 'badgeXS'
+  | 'labelL'
+  | 'labelM'
+  | 'dropdownM'
+  | 'dropdownS'
+  | 'numberM'
+  | 'numberS'
+  | 'captionS'
   | 'h6s'
   | 'buttonBase'
   | 'buttonSmall'
-  | 'bodyM'
   | 'bodyI'
   | 'body'
   | 'bodySM'
-  | 'bodyS'
   | 'subtitle'
   | 'heading'
   | 'headingSB'
@@ -45,7 +73,7 @@ const TextComponent: React.FC<TextProps> = ({
   const theme: ITheme = useTheme() as ITheme;
   const {t} = useBaseHook();
   const styles = createTextStyle(theme);
-  const textStyle = styles[variant || 'body'];
+  const textStyle = styles[variant || 'bodyM'];
 
   let content = useI18n ? t(children) : children;
 
@@ -87,6 +115,96 @@ const H5 = ({...props}: TextProps) => (
 const H6 = ({...props}: TextProps) => (
   <TextComponent variant={'h6'} {...props} />
 );
+const SubtitleL = ({...props}: TextProps) => (
+  <TextComponent variant={'subtitleL'} {...props} />
+);
+const SubtitleM = ({...props}: TextProps) => (
+  <TextComponent variant={'subtitleM'} {...props} />
+);
+const SubtitleS = ({...props}: TextProps) => (
+  <TextComponent variant={'subtitleS'} {...props} />
+);
+const SubtitleXS = ({...props}: TextProps) => (
+  <TextComponent variant={'subtitleXS'} {...props} />
+);
+const BodyM = ({...props}: TextProps) => (
+  <TextComponent variant={'bodyM'} {...props} />
+);
+const BodyMM = ({...props}: TextProps) => (
+  <TextComponent variant={'bodyMM'} {...props} />
+);
+const BodyS = ({...props}: TextProps) => (
+  <TextComponent variant={'bodyS'} {...props} />
+);
+const BodySBM = ({...props}: TextProps) => (
+  <TextComponent variant={'bodySBM'} {...props} />
+);
+const ParagraphL = ({...props}: TextProps) => (
+  <TextComponent variant={'paragraphL'} {...props} />
+);
+const ParagraphM = ({...props}: TextProps) => (
+  <TextComponent variant={'paragraphM'} {...props} />
+);
+const ParagraphS = ({...props}: TextProps) => (
+  <TextComponent variant={'paragraphS'} {...props} />
+);
+const ButtonL = ({...props}: TextProps) => (
+  <TextComponent variant={'buttonL'} {...props} />
+);
+const ButtonM = ({...props}: TextProps) => (
+  <TextComponent variant={'buttonM'} {...props} />
+);
+const ButtonS = ({...props}: TextProps) => (
+  <TextComponent variant={'buttonS'} {...props} />
+);
+const TabL = ({...props}: TextProps) => (
+  <TextComponent variant={'tabL'} {...props} />
+);
+const TabM = ({...props}: TextProps) => (
+  <TextComponent variant={'tabM'} {...props} />
+);
+const TabS = ({...props}: TextProps) => (
+  <TextComponent variant={'tabS'} {...props} />
+);
+const Link = ({...props}: TextProps) => (
+  <TextComponent variant={'link'} {...props} />
+);
+const LinkSmall = ({...props}: TextProps) => (
+  <TextComponent variant={'linkSmall'} {...props} />
+);
+const BadgeL = ({...props}: TextProps) => (
+  <TextComponent variant={'badgeL'} {...props} />
+);
+const BadgeM = ({...props}: TextProps) => (
+  <TextComponent variant={'badgeM'} {...props} />
+);
+const BadgeS = ({...props}: TextProps) => (
+  <TextComponent variant={'badgeS'} {...props} />
+);
+const BadgeXS = ({...props}: TextProps) => (
+  <TextComponent variant={'badgeXS'} {...props} />
+);
+const LabelL = ({...props}: TextProps) => (
+  <TextComponent variant={'labelL'} {...props} />
+);
+const LabelM = ({...props}: TextProps) => (
+  <TextComponent variant={'labelM'} {...props} />
+);
+const DropdownM = ({...props}: TextProps) => (
+  <TextComponent variant={'dropdownM'} {...props} />
+);
+const DropdownS = ({...props}: TextProps) => (
+  <TextComponent variant={'dropdownS'} {...props} />
+);
+const NumberM = ({...props}: TextProps) => (
+  <TextComponent variant={'numberM'} {...props} />
+);
+const NumberS = ({...props}: TextProps) => (
+  <TextComponent variant={'numberS'} {...props} />
+);
+const CaptionS = ({...props}: TextProps) => (
+  <TextComponent variant={'captionS'} {...props} />
+);
 const H6S = ({...props}: TextProps) => (
   <TextComponent variant={'h6s'} {...props} />
 );
@@ -96,17 +214,11 @@ const ButtonBase = ({...props}: TextProps) => (
 const ButtonSmall = ({...props}: TextProps) => (
   <TextComponent variant={'buttonSmall'} {...props} />
 );
-const BodyM = ({...props}: TextProps) => (
-  <TextComponent variant={'bodyM'} {...props} />
-);
 const Body = ({...props}: TextProps) => (
   <TextComponent variant={'body'} {...props} />
 );
 const BodySM = ({...props}: TextProps) => (
   <TextComponent variant={'bodySM'} {...props} />
-);
-const BodyS = ({...props}: TextProps) => (
-  <TextComponent variant={'bodyS'} {...props} />
 );
 const Subtitle = ({...props}: TextProps) => (
   <TextComponent variant={'subtitle'} {...props} />
@@ -127,13 +239,41 @@ const Text = Object.assign(TextComponent, {
   H4,
   H5,
   H6,
+  SubtitleL,
+  SubtitleM,
+  SubtitleS,
+  SubtitleXS,
+  BodyM,
+  BodyMM,
+  BodyS,
+  BodySBM,
+  ParagraphL,
+  ParagraphM,
+  ParagraphS,
+  ButtonL,
+  ButtonM,
+  ButtonS,
+  TabL,
+  TabM,
+  TabS,
+  Link,
+  LinkSmall,
+  BadgeL,
+  BadgeM,
+  BadgeS,
+  BadgeXS,
+  LabelL,
+  LabelM,
+  DropdownM,
+  DropdownS,
+  NumberM,
+  NumberS,
+  CaptionS,
   H6S,
   ButtonBase,
   ButtonSmall,
-  BodyM,
   Body,
   BodySM,
-  BodyS,
   Subtitle,
   Heading,
   HeadingSB,
