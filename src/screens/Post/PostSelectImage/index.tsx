@@ -18,6 +18,7 @@ import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import * as modalActions from '~/store/modal/actions';
 import {showHideToastMessage} from '~/store/modal/actions';
+import dimension from '~/theme/dimension';
 import {ITheme} from '~/theme/interfaces';
 import spacing from '~/theme/spacing';
 import {checkPermission} from '~/utils/permission';
@@ -28,7 +29,7 @@ const PostSelectImage = () => {
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
-  const {colors, dimension} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const selectedImages: ICreatePostImage[] =

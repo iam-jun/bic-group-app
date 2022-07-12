@@ -150,8 +150,8 @@ const styles = StyleSheet.create({
   flex1: {flex: 1},
   row: {flexDirection: 'row'},
   contentContainer: {
-    marginVertical: spacing?.margin.small,
-    marginHorizontal: spacing?.margin.large,
+    marginVertical: spacing.margin.small,
+    marginHorizontal: spacing.margin.large,
   },
   imageLite: {
     width: 120,

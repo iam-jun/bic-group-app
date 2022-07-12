@@ -38,6 +38,7 @@ import UploadingImage from '~/beinComponents/UploadingImage';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import {checkPermission} from '~/utils/permission';
+import dimension from '~/theme/dimension';
 
 const inputMinHeight = 66;
 const isAndroid8 =
@@ -67,7 +68,6 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
   const theme = useTheme() as ITheme;
-  const {dimension} = theme;
   const {colors} = theme;
   const styles = createStyle(theme);
 

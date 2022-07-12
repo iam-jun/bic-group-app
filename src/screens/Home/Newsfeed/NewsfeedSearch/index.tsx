@@ -11,6 +11,7 @@ import NFSResult from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSResult';
 import {useDispatch} from 'react-redux';
 import homeActions from '~/screens/Home/redux/actions';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import dimension from '~/theme/dimension';
 
 export interface NewsfeedSearchProps {
   headerRef?: any;
@@ -57,7 +58,7 @@ const NewsfeedSearch: FC<NewsfeedSearchProps> = ({
 };
 
 const createStyle = (theme: ITheme, insets: any) => {
-  const {colors, dimension} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       position: 'absolute',

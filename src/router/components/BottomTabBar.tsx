@@ -28,7 +28,7 @@ import {
 import {useBaseHook} from '~/hooks';
 import useTabBadge from '~/hooks/tabBadge';
 import appActions from '~/store/app/actions';
-import {deviceDimensions, sizes} from '~/theme/dimension';
+import dimension, {deviceDimensions, sizes} from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
 import {ITheme} from '~/theme/interfaces';
 import Image from '~/beinComponents/Image';
@@ -54,8 +54,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
 
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
   const tabBadge: any = useTabBadge();
-
-  const bottomBarHeight = theme.dimension.bottomBarHeight + insets.bottom;
+  const bottomBarHeight = dimension.bottomBarHeight + insets.bottom;
 
   const heightStyle = useAnimatedStyle(() => ({
     height: interpolate(showValue.value, [0, 1], [0, bottomBarHeight]),
@@ -239,7 +238,7 @@ const tabBarIconStyles = (
 };
 
 const createStyle = (theme: ITheme, insets: EdgeInsets) => {
-  const {colors, dimension} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',

@@ -13,7 +13,7 @@ import {useTheme} from 'react-native-paper';
 import {Video, ResizeMode} from 'expo-av';
 
 import {ITheme} from '~/theme/interfaces';
-import {scaleSize} from '~/theme/dimension';
+import dimension, {scaleSize} from '~/theme/dimension';
 import {orderBy} from 'lodash';
 import Icon from './Icon';
 import LoadingIndicator from './LoadingIndicator';
@@ -32,7 +32,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   postId,
 }: VideoPlayerProps) => {
   const theme = useTheme() as ITheme;
-  const {dimension, colors} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const video = React.useRef();

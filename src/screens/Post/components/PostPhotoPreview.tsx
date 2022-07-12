@@ -11,6 +11,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Button from '~/beinComponents/Button';
 import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
 import {getResourceUrl, IUploadType} from '~/configs/resourceConfig';
+import dimension from '~/theme/dimension';
 
 const DeviceWidth = Dimensions.get('window').width;
 
@@ -38,7 +39,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   const [galleryVisible, setGalleryVisible] = useState(false);
 
   const theme = useTheme() as ITheme;
-  const {colors, dimension} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   if (data?.length === 0) {
