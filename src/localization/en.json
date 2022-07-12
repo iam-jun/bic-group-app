@@ -655,7 +655,7 @@
       "label_view_profile": "View profile",
       "label_send_message": "Send message",
       "label_set_as_admin": "Set as admin",
-      "label_remove_as_admin": "Remove as admin",
+      "label_revoke_admin_role": "Revoke admin role",
       "label_remove_member": "Remove member",
       "label_leave_group": "Leave Group"
     },
@@ -670,9 +670,9 @@
       "success_message": "Member Role Saved"
     },
     "modal_confirm_remove_admin": {
-      "title": "Remove as Admin",
-      "description": "Do you want to remove {0} as admin of this group?",
-      "button_confirm": "Remove",
+      "title": "Revoke admin role",
+      "description": "Do you want to revoke {0} as admin of this group?",
+      "button_confirm": "Revoke",
       "success_message": "Member Role Saved"
     },
     "modal_confirm_remove_member": {

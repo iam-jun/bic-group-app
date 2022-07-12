@@ -601,7 +601,8 @@
     "member_menu": {
       "label_view_profile": "View profile",
       "label_direct_message": "Direct message",
-      "label_set_as_admin": "Set as admin",
+      "label_set_as_admin": "Đặt làm quản trị viên",
+      "label_revoke_admin_role": "Thu hồi vai trò quản trị viên",
       "label_remove_from_group": "Remove from this group"
     },
     "private_group_welcome_message": {
