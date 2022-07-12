@@ -117,7 +117,7 @@ const MemberOptionsMenu = ({
             props: {
               type: 'error',
               textProps: {useI18n: true},
-              rightIcon: 'userGroup',
+              rightIcon: 'UserGroup',
               rightText: 'Members',
               onPressRight: onPressMemberButton,
             },

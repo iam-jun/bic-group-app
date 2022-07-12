@@ -139,7 +139,7 @@ describe('NormalToastMessage component', () => {
       <NormalToastMessage
         type={'success'}
         rightText={rightText}
-        rightIcon={'userGroup'}>
+        rightIcon={'UserGroup'}>
         {children}
       </NormalToastMessage>,
     );

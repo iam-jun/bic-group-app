@@ -80,7 +80,7 @@ const PostAudiencesBottomSheet = () => {
         <Icon
           size={16}
           style={styles.iconUser}
-          icon={'userGroup'}
+          icon={'UserGroup'}
           tintColor={colors.textSecondary}
         />
         <Text.BodyS color={colors.textSecondary}>{user_count}</Text.BodyS>

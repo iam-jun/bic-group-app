@@ -47,8 +47,8 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
         <PrimaryItem
           testID="notifications.notification_settings"
           style={styles.item}
-          leftIcon={'gear'}
-          leftIconProps={{icon: 'gear', size: 24}}
+          leftIcon={'Gear'}
+          leftIconProps={{icon: 'Gear', size: 24}}
           title={i18n.t('notification:notification_settings')}
           onPress={showUpcommingFeature}
         />

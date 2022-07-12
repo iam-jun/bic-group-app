@@ -11,12 +11,12 @@ export const initFontAwesomeIcon = () => {
 };
 
 export const fontAwesomeIcons = {
-  gear: 'fa-regular fa-gear',
-  gearSolid: 'fa-solid fa-gear',
-  heart: 'fa-regular fa-heart',
-  heartSolid: 'fa-solid fa-heart',
-  userGroup: 'fa-regular fa-user-group',
-  userGroupSolid: 'fa-solid fa-user-group',
+  Gear: 'fa-regular fa-gear',
+  GearSolid: 'fa-solid fa-gear',
+  Heart: 'fa-regular fa-heart',
+  HeartSolid: 'fa-solid fa-heart',
+  UserGroup: 'fa-regular fa-user-group',
+  UserGroupSolid: 'fa-solid fa-user-group',
 };
 
 /**

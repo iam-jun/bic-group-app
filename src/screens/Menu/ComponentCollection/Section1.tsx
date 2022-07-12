@@ -163,7 +163,7 @@ const Section1 = () => {
           <NormalToastMessage
             type={'error'}
             style={{margin: spacing.margin.base}}
-            rightIcon={'userGroup'}
+            rightIcon={'UserGroup'}
             rightText={'Members'}
             onPressRight={() => alert('Press')}>
             You are the last admin of the group. Set another admin before
@@ -175,7 +175,7 @@ const Section1 = () => {
             type={'success'}
             style={{margin: spacing.margin.base}}
             leftIcon={'Check'}
-            rightIcon={'userGroup'}
+            rightIcon={'UserGroup'}
             rightText={'Members'}
             onPressRight={() => alert('Press')}>
             You are the last admin of the group. Set another admin before

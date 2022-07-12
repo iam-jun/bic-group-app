@@ -27,7 +27,7 @@ describe('approveAllGroupMemberRequests saga', () => {
           props: {
             textProps: {useI18n: true},
             type: 'success',
-            rightIcon: 'userGroup',
+            rightIcon: 'UserGroup',
             rightText: 'Members',
             onPressRight: callback,
           },

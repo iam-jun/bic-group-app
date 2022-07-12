@@ -45,7 +45,7 @@ export default function* approveSingleGroupMemberRequest({
       props: {
         textProps: {useI18n: true},
         type: 'success',
-        rightIcon: 'userGroup',
+        rightIcon: 'UserGroup',
         rightText: 'Members',
         onPressRight: callback,
       },

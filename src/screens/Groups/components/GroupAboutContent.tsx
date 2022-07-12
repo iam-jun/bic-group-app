@@ -53,7 +53,7 @@ const GroupAboutContent = () => {
       <MenuItem
         testID="group_about_content.members"
         style={styles.memberItem}
-        icon={'userGroup'}
+        icon={'UserGroup'}
         onPress={isMember ? onPressMembers : undefined}
         disabled={!isMember}
         title={`${user_count} ${i18next.t('groups:text_members', {

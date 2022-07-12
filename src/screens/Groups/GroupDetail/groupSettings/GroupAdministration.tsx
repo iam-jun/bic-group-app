@@ -116,7 +116,7 @@ const GroupAdministration = (props: any) => {
       </Text.H5>
       {(!!can_edit_info || !!can_edit_privacy) &&
         renderItem(
-          'gear',
+          'Gear',
           'settings:title_profile_info',
           goToGeneralInfo,
           undefined,

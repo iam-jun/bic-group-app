@@ -44,7 +44,7 @@ const AboutContent = () => {
       />
       <MenuItem
         testID="about_content.members"
-        icon={'userGroup'}
+        icon={'UserGroup'}
         title={`${user_count} ${i18next.t('groups:text_members', {
           count: user_count,
         })}`}
