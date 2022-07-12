@@ -148,7 +148,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
             loadAsyncVideo();
           }}
           style={styles.buttonPlay}>
-          <Icon size={60} tintColor={colors.bgDisable} icon="PlayCircle" />
+          <Icon size={60} tintColor={colors.bgDisable} icon="CirclePlay" />
         </TouchableOpacity>
       ) : null}
     </View>

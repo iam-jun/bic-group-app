@@ -96,7 +96,7 @@ const GroupAdministration = (props: any) => {
           'group_administration.pending_members',
         )}
       {renderItem(
-        'FileExclamationAlt',
+        'FileExclamation',
         'settings:title_pending_posts',
         displayNewFeature,
         23,

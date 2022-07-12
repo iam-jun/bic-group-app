@@ -57,8 +57,8 @@ const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
         <PrimaryItem
           testID="notification.off_notification_from_group"
           style={styles.item}
-          leftIcon={'VolumeMute'}
-          leftIconProps={{icon: 'VolumeMute', size: 24}}
+          leftIcon={'VolumeXmark'}
+          leftIconProps={{icon: 'VolumeXmark', size: 24}}
           title={i18n.t('notification:off_notification_from_group')}
           onPress={showUpcommingFeature}
         />

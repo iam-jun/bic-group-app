@@ -236,7 +236,7 @@ const PostToolbar = ({
               !imageDisabled ? _onPressSelectImage : undefined,
             )}
             {renderToolbarButton(
-              'PlayCircle',
+              'CirclePlay',
               'post_toolbar.add_video',
               !videoDisabled ? _onPressSelectVideo : undefined,
             )}

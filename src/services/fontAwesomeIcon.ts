@@ -1,4 +1,6 @@
 import {library} from '@fortawesome/fontawesome-svg-core';
+import {faPlus} from '@fortawesome/pro-regular-svg-icons/faPlus';
+import {faPlus as faPlusSolid} from '@fortawesome/pro-solid-svg-icons/faPlus';
 import {faXmark} from '@fortawesome/pro-regular-svg-icons/faXmark';
 import {faXmark as faXmarkSolid} from '@fortawesome/pro-solid-svg-icons/faXmark';
 import {faXmarkLarge} from '@fortawesome/pro-regular-svg-icons/faXmarkLarge';
@@ -7,6 +9,10 @@ import {faAngleUp} from '@fortawesome/pro-regular-svg-icons/faAngleUp';
 import {faAngleDown} from '@fortawesome/pro-regular-svg-icons/faAngleDown';
 import {faAngleRight} from '@fortawesome/pro-regular-svg-icons/faAngleRight';
 import {faAngleRight as faAngleRightSolid} from '@fortawesome/pro-solid-svg-icons/faAngleRight';
+import {faAngleLeft} from '@fortawesome/pro-regular-svg-icons/faAngleLeft';
+import {faAngleLeft as faAngleLeftSolid} from '@fortawesome/pro-solid-svg-icons/faAngleLeft';
+import {faArrowLeft} from '@fortawesome/pro-regular-svg-icons/faArrowLeft';
+import {faArrowRight} from '@fortawesome/pro-regular-svg-icons/faArrowRight';
 import {faGear} from '@fortawesome/pro-regular-svg-icons/faGear';
 import {faGear as faGearSolid} from '@fortawesome/pro-solid-svg-icons/faGear';
 import {faHeart} from '@fortawesome/pro-regular-svg-icons/faHeart';
@@ -51,6 +57,7 @@ import {faShareNodes} from '@fortawesome/pro-regular-svg-icons/faShareNodes';
 import {faTrashCan} from '@fortawesome/pro-regular-svg-icons/faTrashCan';
 import {faBookmark} from '@fortawesome/pro-regular-svg-icons/faBookmark';
 import {faGaugeHigh} from '@fortawesome/pro-regular-svg-icons/faGaugeHigh';
+import {faGauge} from '@fortawesome/pro-regular-svg-icons/faGauge';
 import {faEllipsis} from '@fortawesome/pro-regular-svg-icons/faEllipsis';
 import {faEllipsisVertical} from '@fortawesome/pro-regular-svg-icons/faEllipsisVertical';
 import {faLink} from '@fortawesome/pro-regular-svg-icons/faLink';
@@ -60,9 +67,22 @@ import {faFileLock} from '@fortawesome/pro-regular-svg-icons/faFileLock';
 import {faFilePen} from '@fortawesome/pro-regular-svg-icons/faFilePen';
 import {faDeleteLeft} from '@fortawesome/pro-regular-svg-icons/faDeleteLeft';
 import {faArrowTurnDownRight} from '@fortawesome/pro-regular-svg-icons/faArrowTurnDownRight';
+import {faCloudArrowDown} from '@fortawesome/pro-regular-svg-icons/faCloudArrowDown';
+import {faCircleCheck} from '@fortawesome/pro-regular-svg-icons/faCircleCheck';
+import {faVolumeXmark} from '@fortawesome/pro-regular-svg-icons/faVolumeXmark';
+import {faSitemap} from '@fortawesome/pro-regular-svg-icons/faSitemap';
+import {faCirclePlay} from '@fortawesome/pro-regular-svg-icons/faCirclePlay';
+import {faBars} from '@fortawesome/pro-regular-svg-icons/faBars';
+import {faBug} from '@fortawesome/pro-regular-svg-icons/faBug';
+import {faWifiSlash} from '@fortawesome/pro-regular-svg-icons/faWifiSlash';
+import {faFileXmark} from '@fortawesome/pro-regular-svg-icons/faFileXmark';
+import {faFileExclamation} from '@fortawesome/pro-regular-svg-icons/faFileExclamation';
+import {faSuitcase} from '@fortawesome/pro-regular-svg-icons/faSuitcase';
 
 export const initFontAwesomeIcon = () => {
   library.add(
+    faPlus,
+    faPlusSolid,
     faXmark,
     faXmarkSolid,
     faXmarkLarge,
@@ -71,6 +91,10 @@ export const initFontAwesomeIcon = () => {
     faAngleDown,
     faAngleRight,
     faAngleRightSolid,
+    faAngleLeft,
+    faAngleLeftSolid,
+    faArrowLeft,
+    faArrowRight,
     faGear,
     faGearSolid,
     faHeart,
@@ -115,6 +139,7 @@ export const initFontAwesomeIcon = () => {
     faTrashCan,
     faBookmark,
     faGaugeHigh,
+    faGauge,
     faEllipsis,
     faEllipsisVertical,
     faLink,
@@ -124,10 +149,23 @@ export const initFontAwesomeIcon = () => {
     faFilePen,
     faDeleteLeft,
     faArrowTurnDownRight,
+    faCloudArrowDown,
+    faCircleCheck,
+    faVolumeXmark,
+    faSitemap,
+    faCirclePlay,
+    faBars,
+    faBug,
+    faWifiSlash,
+    faFileXmark,
+    faFileExclamation,
+    faSuitcase,
   );
 };
 
 export const fontAwesomeIcons = {
+  Plus: 'fa-regular fa-plus',
+  PlusSolid: 'fa-solid fa-plus',
   Xmark: 'fa-regular fa-xmark',
   XmarkSolid: 'fa-solid fa-xmark',
   XmarkLarge: 'fa-regular fa-xmark-large',
@@ -136,6 +174,10 @@ export const fontAwesomeIcons = {
   AngleDown: 'fa-regular fa-angle-down',
   AngleRight: 'fa-regular fa-angle-right',
   AngleRightSolid: 'fa-solid fa-angle-right',
+  AngleLeft: 'fa-regular fa-angle-left',
+  AngleLeftSolid: 'fa-solid fa-angle-left',
+  ArrowLeft: 'fa-regular fa-arrow-left',
+  ArrowRight: 'fa-regular fa-arrow-right',
   Gear: 'fa-regular fa-gear',
   GearSolid: 'fa-solid fa-gear',
   Heart: 'fa-regular fa-heart',
@@ -180,6 +222,7 @@ export const fontAwesomeIcons = {
   TrashCan: 'fa-regular fa-trash-can',
   Bookmark: 'fa-regular fa-bookmark',
   GaugeHigh: 'fa-regular fa-gauge-high',
+  Gauge: 'fa-regular fa-gauge',
   Ellipsis: 'fa-regular fa-ellipsis',
   EllipsisVertical: 'fa-regular fa-ellipsis-vertical',
   Link: 'fa-regular fa-link',
@@ -190,6 +233,17 @@ export const fontAwesomeIcons = {
   DeleteLeft: 'fa-regular fa-delete-left',
   Keyboard: 'fa-regular fa-keyboard',
   ArrowTurnDownRight: 'fa-regular fa-arrow-turn-down-right',
+  CloudArrowDown: 'fa-regular fa-cloud-arrow-down',
+  CircleCheck: 'fa-regular fa-circle-check',
+  VolumeXmark: 'fa-regular fa-volume-xmark',
+  Sitemap: 'fa-regular fa-sitemap',
+  CirclePlay: 'fa-regular fa-circle-play',
+  Bars: 'fa-regular fa-bars',
+  Bug: 'fa-regular fa-bug',
+  WifiSlash: 'fa-regular fa-wifi-slash',
+  FileXmark: 'fa-regular fa-file-xmark',
+  FileExclamation: 'fa-regular fa-file-exclamation',
+  Suitcase: 'fa-regular fa-suitcase',
 };
 
 /**

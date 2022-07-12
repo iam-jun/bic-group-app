@@ -140,7 +140,7 @@ const _NotificationList = ({
     if (type === 'UNREAD' && noMoreNotification) {
       return (
         <View style={styles.unReadNotifications}>
-          <Icon icon="CheckCircle" size={40} tintColor={theme.colors.success} />
+          <Icon icon="CircleCheck" size={40} tintColor={theme.colors.success} />
           <Text.Subtitle useI18n style={{marginTop: theme.spacing.margin.base}}>
             notification:seen_all_notifications
           </Text.Subtitle>

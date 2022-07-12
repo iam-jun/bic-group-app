@@ -82,7 +82,6 @@ import iconPlayGif from '../../assets/icons/ic_play_gif.svg';
 import fileIcons from './fileIcons';
 import iconBeinChat from '../../assets/icons/icon_bein_chat.svg';
 import {fontAwesomeIcons} from '~/services/fontAwesomeIcon';
-import {faMagnifyingGlass} from '@fortawesome/pro-regular-svg-icons/faMagnifyingGlass';
 
 const icons = {
   ...fileIcons,
@@ -170,27 +169,9 @@ const icons = {
   Star: 'Star',
   CommentAltCheck: 'CommentAltCheck',
   ArrowDown: 'ArrowDown',
-  CreateThread: 'CommentAltPlus',
-  Smile: 'Smile',
-  ArrowRight: 'ArrowRight',
-  ArrowLeft: 'ArrowLeft',
-  Plus: 'Plus',
-  iconSuitcase: 'Suitcase',
-  FileExclamationAlt: 'FileExclamationAlt',
-  ExclamationTriangle: 'ExclamationTriangle',
-  FileTimesAlt: 'FileTimesAlt',
-  WifiSlash: 'WifiSlash',
-  Bug: 'Bug',
-  Bars: 'Bars',
-  Channel: 'Channel',
-  Compass: 'Compass',
-  Dashboard: 'Dashboard',
-  PlayCircle: 'PlayCircle',
-  Sitemap: 'Sitemap',
-  VolumeMute: 'VolumeMute',
-  CheckCircle: 'CheckCircle',
-  download: 'CloudDownload',
-  iconBack: 'AngleLeftB',
+  iconSuitcase: fontAwesomeIcons.Suitcase,
+  download: fontAwesomeIcons.CloudArrowDown,
+  iconBack: fontAwesomeIcons.AngleLeftSolid,
   iconEye: fontAwesomeIcons.Eye,
   iconEyeOff: fontAwesomeIcons.EyeSlash,
   iconClose: fontAwesomeIcons.XmarkLarge,

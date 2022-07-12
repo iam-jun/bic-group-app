@@ -60,7 +60,9 @@ const InfoView = ({
         subTitle={name}
         onPress={canEditInfo ? editName : undefined}
         RightComponent={
-          canEditInfo && <Icon icon={'AngleRightSolid'} style={styles.rightIcon} />
+          canEditInfo && (
+            <Icon icon={'AngleRightSolid'} style={styles.rightIcon} />
+          )
         }
       />
 
@@ -71,7 +73,9 @@ const InfoView = ({
         subTitle={description}
         onPress={canEditInfo ? editDescription : undefined}
         RightComponent={
-          canEditInfo && <Icon icon={'AngleRightSolid'} style={styles.rightIcon} />
+          canEditInfo && (
+            <Icon icon={'AngleRightSolid'} style={styles.rightIcon} />
+          )
         }
       />
 

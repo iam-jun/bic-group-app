@@ -88,9 +88,9 @@ const CommunityAdmin = () => {
       <MenuItem
         testID={'community_admin.pending_posts'}
         title={'settings:title_pending_posts'}
-        icon={'FileExclamationAlt'}
+        icon={'FileExclamation'}
         iconProps={{
-          icon: 'FileExclamationAlt',
+          icon: 'FileExclamation',
           tintColor: theme.colors.primary6,
         }}
         notificationsBadgeNumber={999}
