@@ -3,7 +3,7 @@ export const groupSettings = [
     type: 'generalInfo',
     title: 'settings:title_profile_info',
     rightSubIcon: 'AngleRightB',
-    icon: 'Cog',
+    icon: 'gear',
   },
   {
     type: 'postSettings',

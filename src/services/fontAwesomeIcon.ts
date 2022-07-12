@@ -1,11 +1,13 @@
 import {library} from '@fortawesome/fontawesome-svg-core';
-import {faGear as fasGear} from '@fortawesome/pro-solid-svg-icons/faGear';
 import {faGear as farGear} from '@fortawesome/pro-regular-svg-icons/faGear';
-import {faHeart as fasHeart} from '@fortawesome/pro-solid-svg-icons/faHeart';
+import {faGear as fasGear} from '@fortawesome/pro-solid-svg-icons/faGear';
 import {faHeart as farHeart} from '@fortawesome/pro-regular-svg-icons/faHeart';
+import {faHeart as fasHeart} from '@fortawesome/pro-solid-svg-icons/faHeart';
+import {faUserGroup as farUserGroup} from '@fortawesome/pro-regular-svg-icons/faUserGroup';
+import {faUserGroup as fasUserGroup} from '@fortawesome/pro-solid-svg-icons/faUserGroup';
 
 export const initFontAwesomeIcon = () => {
-  library.add(fasGear, farGear, fasHeart, farHeart);
+  library.add(fasGear, farGear, fasHeart, farHeart, farUserGroup, fasUserGroup);
 };
 
 export const fontAwesomeIcons = {
@@ -13,6 +15,8 @@ export const fontAwesomeIcons = {
   gearSolid: 'fa-solid fa-gear',
   heart: 'fa-regular fa-heart',
   heartSolid: 'fa-solid fa-heart',
+  userGroup: 'fa-regular fa-user-group',
+  userGroupSolid: 'fa-solid fa-user-group',
 };
 
 /**

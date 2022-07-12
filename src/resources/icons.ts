@@ -236,7 +236,6 @@ const icons = {
   CalendarAlt: 'CalendarAlt',
   Clock: 'Clock',
   CommentAltDots: 'CommentAltDots',
-  users: 'UsersAlt',
   search: 'Search',
   addUser: 'UserPlus',
   bell: 'Bell',
@@ -271,7 +270,6 @@ const icons = {
   Layers: 'Layers',
   Exclude: 'Exclude',
   Check: 'Check',
-  UsersAlt: 'UsersAlt',
 
   ...fontAwesomeIcons,
   // FOR AWESOME ICONS NOT ADD YET, PLEASE ADD IN FILE `fontAwesomeIcon.ts`

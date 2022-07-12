@@ -30,7 +30,7 @@ export const checkLastAdmin = async (
           props: {
             type: 'error',
             textProps: {useI18n: true},
-            rightIcon: 'UsersAlt',
+            rightIcon: 'userGroup',
             rightText: 'Members',
             onPressRight: onPressRight,
           },

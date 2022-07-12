@@ -27,7 +27,7 @@ export default function* approveAllCommunityMemberRequests({
       toastProps = {
         textProps: {useI18n: true},
         type: 'success',
-        rightIcon: 'UsersAlt',
+        rightIcon: 'userGroup',
         rightText: 'Members',
         onPressRight: callback,
       };

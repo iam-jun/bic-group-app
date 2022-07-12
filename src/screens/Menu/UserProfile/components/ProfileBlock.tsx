@@ -86,7 +86,7 @@ const ProfileBlock = ({
           {renderItem({icon: 'CommentsAlt', title: userLanguages})}
           {relationship_status &&
             renderItem({
-              icon: 'Heart',
+              icon: 'heart',
               // @ts-ignore
               title: relationshipStatus[relationship_status],
             })}

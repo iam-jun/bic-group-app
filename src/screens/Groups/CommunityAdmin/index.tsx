@@ -114,8 +114,8 @@ const CommunityAdmin = () => {
         <MenuItem
           testID="community_admin.profile_info"
           title="settings:title_profile_info"
-          icon="Cog"
-          iconProps={{icon: 'Cog', tintColor: theme.colors.primary6}}
+          icon="gear"
+          iconProps={{icon: 'gear', tintColor: theme.colors.primary6}}
           rightSubIcon="AngleRightB"
           onPress={onPressGeneralInfo}
         />

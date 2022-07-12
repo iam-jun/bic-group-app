@@ -140,7 +140,7 @@ export const settingsMenu = [
   {
     type: 'accountSettings',
     title: 'settings:title_account_settings',
-    icon: 'Cog',
+    icon: 'gear',
     rightIcon: 'AngleRightB',
   },
 ];

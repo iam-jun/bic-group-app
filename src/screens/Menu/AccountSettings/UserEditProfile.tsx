@@ -345,7 +345,7 @@ const UserEditProfile = (props: any) => {
               i18next.t(relationshipStatus[relationship_status]) ||
               i18next.t('common:text_not_set')
             }
-            leftIcon={'Heart'}
+            leftIcon={'heart'}
             isTouchDisabled
           />
         </View>

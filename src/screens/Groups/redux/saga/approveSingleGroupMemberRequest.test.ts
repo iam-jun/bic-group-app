@@ -50,7 +50,7 @@ describe('approveSingleGroupMemberRequest saga', () => {
           props: {
             textProps: {useI18n: true},
             type: 'success',
-            rightIcon: 'UsersAlt',
+            rightIcon: 'userGroup',
             rightText: 'Members',
             onPressRight: callback,
           },
