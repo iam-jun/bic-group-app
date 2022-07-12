@@ -31,6 +31,8 @@ export const customBackHandlerRoutes = [
   'post-detail',
   'create-post',
   'MainStack',
+  'group-scheme-assignment',
+  'create-permission-scheme',
 ];
 
 export const NAVIGATION_BACK_PRESSED = 'navigation-back-pressed';

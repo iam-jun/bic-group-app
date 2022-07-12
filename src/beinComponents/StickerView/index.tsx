@@ -1,29 +1,17 @@
 import {GiphyContent, GiphyGridView, GiphyMedia} from '@giphy/react-native-sdk';
-import i18next from 'i18next';
 import {useKeyboard} from '@react-native-community/hooks';
-import React, {useEffect, useImperativeHandle, useMemo, useRef} from 'react';
-import {
-  DeviceEventEmitter,
-  Keyboard,
-  NativeSyntheticEvent,
-  Platform,
-  StyleSheet,
-  View,
-} from 'react-native';
-import {
-  Directions,
-  FlingGestureHandler,
-  FlingGestureHandlerStateChangeEvent,
-  State,
-} from 'react-native-gesture-handler';
-import {useTheme} from 'react-native-paper';
+import i18next from 'i18next';
+import {debounce} from 'lodash';
+import React, {useEffect, useImperativeHandle, useRef} from 'react';
+import {Keyboard, NativeSyntheticEvent, StyleSheet, View} from 'react-native';
+import {Modalize} from 'react-native-modalize';
+import {Portal, useTheme} from 'react-native-paper';
 import Animated, {
-  runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {AppConfig} from '~/configs';
 import {dimension} from '~/theme';
 import {ITheme} from '~/theme/interfaces';
 import {EmojiBoardProps} from '../emoji/EmojiBoard';
@@ -35,17 +23,16 @@ export interface Props extends Partial<EmojiBoardProps> {
   onMediaSelect: (media: GiphyMedia) => void;
 }
 
-const SEARCH_BAR_HEIGHT = 80;
-
 const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
   const INITIAL_KEYBOARD_HEIGHT = 336;
-  const [visible, setVisible] = React.useState(false);
-  const [isExpanded, setIsExpanded] = React.useState(false);
+  const modalizeRef = useRef<Modalize>();
+
   const [keyboardHeight, setKeyboardHeight] = React.useState(
     INITIAL_KEYBOARD_HEIGHT,
   );
   const [searchQuery, setSearchQuery] = React.useState('');
   const [loading, setLoading] = React.useState(true);
+  const [modalTopOffset, setModalTopOffset] = React.useState(0);
   const _stickerViewRef = stickerViewRef || useRef();
 
   const request = searchQuery
@@ -56,33 +43,8 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
 
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
-  const insets = useSafeAreaInsets();
 
   const keyboard = useKeyboard();
-
-  const calculateContentHeight = useMemo(() => {
-    const offset = dimension.headerHeight + insets.top + keyboardHeight;
-
-    return dimension.deviceHeight - offset;
-  }, [keyboardHeight]);
-
-  const calculateFullHeight = useMemo(() => {
-    const offset = dimension.headerHeight + insets.top;
-
-    return dimension.deviceHeight - offset;
-  }, [dimension.deviceHeight]);
-
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      // height: interpolate(
-      //   height.value,
-      //   [0, keyboardHeight + SEARCH_BAR_HEIGHT],
-      //   [0, keyboardHeight + SEARCH_BAR_HEIGHT],
-      // ),
-      height: height.value,
-    };
-  });
-
   useEffect(() => {
     if (
       keyboard?.keyboardHeight &&
@@ -90,125 +52,29 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
     ) {
       setKeyboardHeight(keyboard?.keyboardHeight);
     }
-    onKeyboardVisibleChanged(keyboard?.keyboardShown);
-  }, [keyboard?.keyboardShown]);
+  }, [keyboard?.keyboardHeight]);
 
-  useEffect(() => {
-    DeviceEventEmitter.emit('sticker-board-visible-change', visible);
-  }, [visible]);
+  const animatedStyle = useAnimatedStyle(() => {
+    return {
+      height: height.value,
+    };
+  });
 
   const show = () => {
-    if (visible) return;
-
-    setVisible(true);
-
+    modalizeRef.current?.open('default');
     Keyboard.dismiss();
-
-    height.value = withTiming(keyboardHeight, {
-      duration: 200,
-    });
-  };
-
-  const expand = () => {
-    const onDone = () => {
-      setIsExpanded(true);
-    };
-
-    const expandHeight = keyboard.keyboardShown
-      ? calculateContentHeight
-      : calculateFullHeight;
-
-    height.value = withTiming(expandHeight, {duration: 200}, () => {
-      runOnJS(onDone)();
-    });
-  };
-
-  const collapse = () => {
-    setIsExpanded(false);
-
-    const onDone = () => {
-      Keyboard.dismiss();
-    };
-    height.value = withTiming(
-      keyboardHeight + SEARCH_BAR_HEIGHT,
-      {
-        duration: 200,
-      },
-      () => {
-        runOnJS(onDone)();
-      },
-    );
   };
 
   const hide = () => {
-    const onHideDone = () => {
-      setSearchQuery('');
-      setIsExpanded(false);
-      setVisible(false);
-    };
-    height.value = withTiming(0, {duration: 200}, () => {
-      runOnJS(onHideDone)();
-    });
+    modalizeRef.current?.close();
   };
 
-  const hideImmediately = () => {
-    setVisible(false);
-    runOnJS(hide)();
-  };
-
-  const handleDown = () => {
-    if (isExpanded) runOnJS(collapse)();
-    else runOnJS(hide)();
-  };
-
-  const handleUp = () => {
-    runOnJS(expand)();
-  };
-
-  const getVisible = () => {
-    return visible;
-  };
-
-  const onKeyboardVisibleChanged = (keyboardShown: boolean) => {
-    if (visible && !keyboardShown) {
-      //Wait for keyboard to be invisible
-      setTimeout(() => {
-        runOnJS(collapse)();
-      }, 100);
-    } else if (keyboardShown) {
-      if (visible) handleUp();
-    }
-  };
-
-  useImperativeHandle(_stickerViewRef, () => ({
-    show,
-    hide,
-    hideImmediately,
-    onBackPress: handleDown,
-    getVisible,
-  }));
-
-  const onDownFlingHandlerStateChange = ({
-    nativeEvent,
-  }: FlingGestureHandlerStateChangeEvent) => {
-    if (nativeEvent.oldState === State.ACTIVE) {
-      runOnJS(handleDown)();
-    }
-  };
-
-  const onUpFlingHandlerStateChange = ({
-    nativeEvent,
-  }: FlingGestureHandlerStateChangeEvent) => {
-    if (nativeEvent.oldState === State.ACTIVE) {
-      runOnJS(handleUp)();
-    }
-  };
-
-  const onChangeText = (value: string) => {
+  const onChangeText = debounce((value: string) => {
     setLoading(true);
     setSearchQuery(value);
-  };
+  }, AppConfig.searchTriggerTime);
 
+  // When content is updated, it means request has been done
   const onContentUpdate = () => {
     setLoading(false);
   };
@@ -221,57 +87,92 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
     onMediaSelect(e.nativeEvent.media);
   };
 
-  if (!visible) return null;
+  // Only trigger when opend, closed event is not triggered
+  const onPositionChange = (position: 'top' | 'initial') => {
+    setModalTopOffset(position === 'top' ? dimension.headerHeight : 0);
+  };
 
-  const bottomPosition = keyboard.keyboardShown
-    ? keyboardHeight + SEARCH_BAR_HEIGHT
-    : 0;
+  const onOpen = () => {
+    setTimeout(() => {
+      height.value = withTiming(keyboardHeight, {duration: 400});
+    }, 200);
+  };
+
+  const onClose = () => {
+    // reset position
+    onPositionChange('initial');
+
+    height.value = withTiming(0, {duration: 200});
+  };
+
+  const onSearchFocus = () => {
+    // trigger before modal reach the top to make app looks smooth
+    onPositionChange('top');
+    modalizeRef.current?.open('top');
+  };
+
+  const onBackPress = () => {
+    hide();
+    return true;
+  };
+
+  useImperativeHandle(_stickerViewRef, () => ({
+    show,
+    hide,
+    onBackPress: hide,
+  }));
 
   return (
-    <FlingGestureHandler
-      direction={Directions.DOWN}
-      // onEnded={handleDown}
-      onHandlerStateChange={onDownFlingHandlerStateChange}>
-      <Animated.View
-        testID="sticker_view"
-        style={[
-          styles.container,
-          animatedStyle,
-          isExpanded && {
-            ...styles.expanded,
-            // height: calculateContentHeight,
-            bottom: Platform.OS === 'android' ? 0 : bottomPosition,
-          },
-        ]}>
-        <View style={styles.stickerView}>
-          <FlingGestureHandler
-            direction={Directions.UP}
-            // onEnded={handleUp}
-            onHandlerStateChange={onUpFlingHandlerStateChange}>
+    <View testID="sticker_view" style={styles.container}>
+      <Animated.View style={animatedStyle} />
+      <Portal>
+        <Modalize
+          ref={modalizeRef}
+          withOverlay={modalTopOffset !== 0}
+          handlePosition="inside"
+          snapPoint={keyboardHeight}
+          closeSnapPointStraightEnabled={false}
+          // alwaysOpen={keyboardHeight}
+          modalTopOffset={modalTopOffset}
+          // keyboardAvoidingBehavior={'position'}
+          // avoidKeyboardLikeIOS
+          scrollViewProps={{
+            keyboardShouldPersistTaps: 'handled',
+            keyboardDismissMode: 'interactive',
+            contentContainerStyle: {
+              height: '100%',
+            },
+          }}
+          onOpen={onOpen}
+          onClose={onClose}
+          onBackButtonPress={onBackPress}
+          onPositionChange={onPositionChange}>
+          <View style={[styles.stickerView]}>
             <View style={styles.header}>
-              <View style={styles.indicator} />
               <SearchInput
                 testID="sticker_view.search_input"
                 placeholder={i18next.t('post:comment:search_giphy')}
                 value={searchQuery}
+                onFocus={onSearchFocus}
                 onChangeText={onChangeText}
               />
             </View>
-          </FlingGestureHandler>
-          <View>
-            {loading && <LoadingIndicator style={styles.loading} />}
-            <GiphyGridView
-              testID="sticker_view.grid_view"
-              content={request}
-              cellPadding={4}
-              style={styles.gridView}
-              onContentUpdate={onContentUpdate}
-              onMediaSelect={_onMediaSelect}
-            />
+            <View>
+              {loading && <LoadingIndicator style={styles.loading} />}
+              <GiphyGridView
+                testID="sticker_view.grid_view"
+                content={request}
+                cellPadding={4}
+                //Must render GiphyGridView to trigger onContentUpdate but make it invisible
+                style={[styles.gridView, loading && {height: 0}]}
+                onContentUpdate={onContentUpdate}
+                onMediaSelect={_onMediaSelect}
+              />
+            </View>
           </View>
-        </View>
-      </Animated.View>
-    </FlingGestureHandler>
+        </Modalize>
+      </Portal>
+    </View>
   );
 };
 
@@ -282,29 +183,13 @@ const createStyle = (theme: ITheme) => {
     container: {
       backgroundColor: colors.background,
     },
-    expanded: {
-      position: 'absolute',
-      left: 0,
-      right: 0,
-      zIndex: 99,
+    stickerView: {
+      marginTop: spacing.margin.small,
+      height: '100%',
     },
     header: {
       paddingVertical: spacing.margin.base,
       marginHorizontal: spacing.margin.base,
-      height: SEARCH_BAR_HEIGHT,
-    },
-    indicator: {
-      backgroundColor: colors.borderDivider,
-      width: 48,
-      height: 4,
-      borderRadius: 4,
-      alignSelf: 'center',
-      marginBottom: spacing.margin.base,
-    },
-    stickerView: {
-      borderTopWidth: 1,
-      borderTopColor: colors.borderDivider,
-      height: '100%',
     },
     gridView: {
       height: '100%',

@@ -122,7 +122,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
       ref={flatListRef}
       horizontal
       data={data}
-      snapToAlignment={'center'}
+      // snapToAlignment={'center'}
       showsHorizontalScrollIndicator={false}
       getItemLayout={(data, index) => ({
         length: itemWidth,
@@ -144,7 +144,6 @@ const createStyle = (theme: ITheme) => {
     container: {
       borderBottomWidth: 1,
       borderColor: colors.borderDisable,
-      maxWidth: 500,
     },
     tabItem: {
       width: itemWidth,
