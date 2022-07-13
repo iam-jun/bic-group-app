@@ -152,7 +152,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
           <Icon
             style={styles.iconMarginLeft}
             onPress={onPressMenu}
-            icon={'EllipsisVertical'}
+            icon={'menu'}
             testID={menuIconTestID}
           />
         )}

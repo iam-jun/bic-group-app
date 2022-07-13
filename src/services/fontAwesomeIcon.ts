@@ -11,6 +11,8 @@ import {faAngleRight} from '@fortawesome/pro-regular-svg-icons/faAngleRight';
 import {faAngleRight as faAngleRightSolid} from '@fortawesome/pro-solid-svg-icons/faAngleRight';
 import {faAngleLeft} from '@fortawesome/pro-regular-svg-icons/faAngleLeft';
 import {faAngleLeft as faAngleLeftSolid} from '@fortawesome/pro-solid-svg-icons/faAngleLeft';
+import {faArrowUp} from '@fortawesome/pro-regular-svg-icons/faArrowUp';
+import {faArrowDown} from '@fortawesome/pro-regular-svg-icons/faArrowDown';
 import {faArrowLeft} from '@fortawesome/pro-regular-svg-icons/faArrowLeft';
 import {faArrowRight} from '@fortawesome/pro-regular-svg-icons/faArrowRight';
 import {faGear} from '@fortawesome/pro-regular-svg-icons/faGear';
@@ -51,6 +53,7 @@ import {faBellSlash} from '@fortawesome/pro-regular-svg-icons/faBellSlash';
 import {faUserPlus} from '@fortawesome/pro-regular-svg-icons/faUserPlus';
 import {faMagnifyingGlass} from '@fortawesome/pro-regular-svg-icons/faMagnifyingGlass';
 import {faMessageDots} from '@fortawesome/pro-regular-svg-icons/faMessageDots';
+import {faMessageCheck} from '@fortawesome/pro-regular-svg-icons/faMessageCheck';
 import {faClock} from '@fortawesome/pro-regular-svg-icons/faClock';
 import {faCircleInfo} from '@fortawesome/pro-regular-svg-icons/faCircleInfo';
 import {faShareNodes} from '@fortawesome/pro-regular-svg-icons/faShareNodes';
@@ -78,6 +81,9 @@ import {faWifiSlash} from '@fortawesome/pro-regular-svg-icons/faWifiSlash';
 import {faFileXmark} from '@fortawesome/pro-regular-svg-icons/faFileXmark';
 import {faFileExclamation} from '@fortawesome/pro-regular-svg-icons/faFileExclamation';
 import {faSuitcase} from '@fortawesome/pro-regular-svg-icons/faSuitcase';
+import {faStar} from '@fortawesome/pro-regular-svg-icons/faStar';
+import {faVideo} from '@fortawesome/pro-regular-svg-icons/faVideo';
+import {faPaperPlaneTop} from '@fortawesome/pro-regular-svg-icons/faPaperPlaneTop';
 
 export const initFontAwesomeIcon = () => {
   library.add(
@@ -93,6 +99,8 @@ export const initFontAwesomeIcon = () => {
     faAngleRightSolid,
     faAngleLeft,
     faAngleLeftSolid,
+    faArrowUp,
+    faArrowDown,
     faArrowLeft,
     faArrowRight,
     faGear,
@@ -133,6 +141,7 @@ export const initFontAwesomeIcon = () => {
     faUserPlus,
     faMagnifyingGlass,
     faMessageDots,
+    faMessageCheck,
     faClock,
     faCircleInfo,
     faShareNodes,
@@ -160,6 +169,9 @@ export const initFontAwesomeIcon = () => {
     faFileXmark,
     faFileExclamation,
     faSuitcase,
+    faStar,
+    faVideo,
+    faPaperPlaneTop,
   );
 };
 
@@ -176,6 +188,8 @@ export const fontAwesomeIcons = {
   AngleRightSolid: 'fa-solid fa-angle-right',
   AngleLeft: 'fa-regular fa-angle-left',
   AngleLeftSolid: 'fa-solid fa-angle-left',
+  ArrowUp: 'fa-regular fa-arrow-up',
+  ArrowDown: 'fa-regular fa-arrow-down',
   ArrowLeft: 'fa-regular fa-arrow-left',
   ArrowRight: 'fa-regular fa-arrow-right',
   Gear: 'fa-regular fa-gear',
@@ -216,6 +230,7 @@ export const fontAwesomeIcons = {
   UserPlus: 'fa-regular fa-user-plus',
   MagnifyingGlass: 'fa-regular fa-magnifying-glass',
   MessageDots: 'fa-regular fa-message-dots',
+  MessageCheck: 'fa-regular fa-message-check',
   Clock: 'fa-regular fa-clock',
   CircleInfo: 'fa-regular fa-circle-info',
   ShareNodes: 'fa-regular fa-share-nodes',
@@ -244,6 +259,9 @@ export const fontAwesomeIcons = {
   FileXmark: 'fa-regular fa-file-xmark',
   FileExclamation: 'fa-regular fa-file-exclamation',
   Suitcase: 'fa-regular fa-suitcase',
+  Star: 'fa-regular fa-star',
+  Video: 'fa-regular fa-video',
+  PaperPlaneTop: 'fa-regular fa-paper-plane-top',
 };
 
 /**

@@ -162,7 +162,7 @@ const GroupTopBar = () => {
   const renderGroupOption = () => {
     return (
       <ButtonWrapper onPress={onPressMenu} testID="group_top_bar.option_menu">
-        <Icon icon={'Ellipsis'} tintColor={theme.colors.iconTint} />
+        <Icon icon={'menu'} tintColor={theme.colors.iconTint} />
       </ButtonWrapper>
     );
   };

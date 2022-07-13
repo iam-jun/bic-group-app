@@ -19,7 +19,7 @@ describe('Button Wrapper component', () => {
   it(`renders correctly children`, () => {
     const rendered = renderWithRedux(
       <ButtonWrapper>
-        <Icon testID="button_wrapper.children" icon={'Ellipsis'} />
+        <Icon testID="button_wrapper.children" icon={'menu'} />
       </ButtonWrapper>,
     );
     const {getByTestId} = rendered;

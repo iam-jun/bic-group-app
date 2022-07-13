@@ -66,7 +66,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     disableHorizontal,
     iconVariant = 'medium',
     nameLines = 2,
-    menuIcon = 'Ellipsis',
+    menuIcon = 'menu',
     renderExtraInfo,
   } = props;
 

@@ -45,8 +45,8 @@ const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
         <PrimaryItem
           testID="notification.mark_notification_read_or_unread"
           style={styles.item}
-          leftIcon={'CommentAltCheck'}
-          leftIconProps={{icon: 'CommentAltCheck', size: 24}}
+          leftIcon={'MessageCheck'}
+          leftIconProps={{icon: 'MessageCheck', size: 24}}
           title={i18n.t(
             !data?.isRead
               ? 'notification:mark_as_read'
