@@ -54,9 +54,9 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
     useKeySelector(groupsKeySelector.permission.schemes) || {};
   const {groupSchemes = []} = schemes || {};
 
-  const disableSave =
-    !isNumber(selectingIndex) ||
-    initGroup?.scheme_id === groupSchemes?.[selectingIndex]?.id;
+  // @ts-ignore
+  const selectingSchemeId = groupSchemes?.[selectingIndex]?.id;
+  const disableSave = initGroup?.scheme_id === selectingSchemeId;
 
   useEffect(() => {
     const index = groupSchemes?.findIndex(
@@ -69,9 +69,9 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
 
   const onPressSave = () => {
     // @ts-ignore
-    const schemeId = groupSchemes?.[selectingIndex]?.id;
+    const schemeId = groupSchemes?.[selectingIndex]?.id || null;
     const groupId = initGroup?.group_id;
-    if (groupId && schemeId) {
+    if (groupId) {
       const newData = handleSelectNewGroupScheme(
         groupId,
         schemeId,
@@ -93,6 +93,14 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
     }
   };
 
+  const onPressItem = (item: IGroup, index: number) => {
+    if (selectingIndex !== index) {
+      setSelectingIndex(index);
+    } else {
+      setSelectingIndex(undefined);
+    }
+  };
+
   const renderItem = ({item, index}: {item: IGroup; index: number}) => {
     const isActive = selectingIndex === index;
     return (
@@ -101,7 +109,7 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
           styles.itemContainer,
           isActive ? styles.itemContainerActive : {},
         ]}
-        onPress={() => setSelectingIndex(index)}>
+        onPress={() => onPressItem(item, index)}>
         <Text style={styles.flex1}>{item?.name}</Text>
         <View style={{minWidth: 20, minHeight: 20}}>
           {isActive && (
