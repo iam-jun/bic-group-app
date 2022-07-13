@@ -497,16 +497,13 @@ const groupsActions = {
   resetManagedCommunities: () => ({
     type: groupsTypes.RESET_MANAGED_COMMUNITIES,
   }),
-  getDiscoverCommunities: (payload?: any) => ({
+  getDiscoverCommunities: (payload: {isRefreshing?: boolean}) => ({
     type: groupsTypes.GET_DISCOVER_COMMUNITIES,
     payload,
   }),
   setDiscoverCommunities: (payload: any) => ({
     type: groupsTypes.SET_DISCOVER_COMMUNITIES,
     payload,
-  }),
-  resetDiscoverCommunities: () => ({
-    type: groupsTypes.RESET_DISCOVER_COMMUNITIES,
   }),
   getYourGroupsSearch: (payload: IGetYourGroupsSearch) => ({
     type: groupsTypes.GET_YOUR_GROUPS_SEARCH,
