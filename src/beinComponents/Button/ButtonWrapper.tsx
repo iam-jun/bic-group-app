@@ -7,10 +7,10 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {ActivityIndicator, useTheme} from 'react-native-paper';
+import {ActivityIndicator} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text, {TextProps, TextVariant} from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
 import Icon, {IconProps} from '~/beinComponents/Icon';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
 import {useKeySelector} from '~/hooks/selector';
@@ -63,7 +63,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   onLongPress,
   onLayout,
 }: ButtonWrapperProps) => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const textStyles = createTextStyle(theme);
   textVariant = textVariant || 'buttonBase';
@@ -93,7 +93,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
     if (loading) {
       return (
         <ActivityIndicator
-          color={colors.textDisabled}
+          color={colors.gray40}
           style={styles.loading}
           size={12}
           testID="button_wrapper.loading"
@@ -131,7 +131,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
           <Text
             variant={textVariant}
             style={styles.text}
-            color={disabled ? colors.textDisabled : undefined}
+            color={disabled ? colors.gray40 : undefined}
             useI18n={useI18n}
             {...textProps}>
             {children}

@@ -7,14 +7,14 @@ import {
   KeyboardTypeOptions,
   TextInput as RNTextInput,
 } from 'react-native';
-import {TextInput as TextInputPaper, useTheme} from 'react-native-paper';
+import {TextInput as TextInputPaper} from 'react-native-paper';
 import {TextInputProps as TextInputPaperProps} from 'react-native-paper/lib/typescript/components/TextInput/TextInput';
 
-import {ITheme} from '~/theme/interfaces';
 import {fontFamilies} from '~/theme/fonts';
 import Text, {TextProps} from '~/beinComponents/Text';
 import Icon from '../Icon';
 import spacing from '~/theme/spacing';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 export type HelperType =
   | 'error'
@@ -66,7 +66,7 @@ const TextInput: React.FC<TextInputProps> = ({
   textColor,
   ...props
 }: TextInputProps) => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const [text, setText] = useState<string>(value || '');
 
@@ -76,10 +76,10 @@ const TextInput: React.FC<TextInputProps> = ({
 
   const customTheme = {
     colors: {
-      primary: colors.borderFocus,
-      text: error ? colors.error : textColor || colors.textPrimary,
-      placeholder: colors.textSecondary,
-      background: disabled ? colors.bgDisable : colors.background,
+      primary: colors.gray40,
+      text: error ? colors.red60 : textColor || colors.neutral80,
+      placeholder: colors.gray50,
+      background: disabled ? colors.gray20 : colors.white,
     },
     roundness: spacing.borderRadius.small,
     fonts: {
@@ -128,7 +128,7 @@ const TextInput: React.FC<TextInputProps> = ({
         testID="text_input.input"
         label={label}
         placeholder={placeholder}
-        selectionColor={colors.textSecondary}
+        selectionColor={colors.gray50}
         // @ts-ignore
         outlineColor={colors.textInput}
         mode={'outlined'}
@@ -136,7 +136,7 @@ const TextInput: React.FC<TextInputProps> = ({
         dense
         error={error}
         disabled={disabled}
-        placeholderTextColor={colors.textSecondary}
+        placeholderTextColor={colors.gray50}
         value={text}
         style={[styles.input, inputStyle]}
         onChangeText={_onChangeText}
@@ -181,11 +181,11 @@ const styles = StyleSheet.create({
   },
 });
 
-const getTextHelperProps = (theme: ITheme, type: HelperType) => {
+const getTextHelperProps = (theme: ExtendedTheme, type: HelperType) => {
   const {colors} = theme;
   const props = {
     error: {
-      color: colors.error,
+      color: colors.red60,
     },
     warning: {
       color: colors.warning,
@@ -194,7 +194,7 @@ const getTextHelperProps = (theme: ITheme, type: HelperType) => {
       color: colors.success,
     },
     secondary: {
-      color: colors.textSecondary,
+      color: colors.gray50,
     },
   };
   return props[type || 'secondary'] || props.secondary;

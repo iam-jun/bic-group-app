@@ -9,8 +9,8 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {Video, ResizeMode} from 'expo-av';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {ITheme} from '~/theme/interfaces';
 import dimension, {scaleSize} from '~/theme/dimension';
@@ -31,7 +31,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   data,
   postId,
 }: VideoPlayerProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -140,7 +140,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
       )}
 
       {loading ? (
-        <LoadingIndicator size={60} color={colors.bgDisable} />
+        <LoadingIndicator size={60} color={colors.gray20} />
       ) : !isPlaying ? (
         <TouchableOpacity
           activeOpacity={!!url ? 0.85 : 1}
@@ -148,14 +148,14 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
             loadAsyncVideo();
           }}
           style={styles.buttonPlay}>
-          <Icon size={60} tintColor={colors.bgDisable} icon="PlayCircle" />
+          <Icon size={60} tintColor={colors.gray20} icon="PlayCircle" />
         </TouchableOpacity>
       ) : null}
     </View>
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -163,7 +163,7 @@ const createStyle = (theme: ITheme) => {
       height: PLAYER_HEIGHT,
       flex: 1,
       justifyContent: 'center',
-      backgroundColor: colors.onSurface,
+      backgroundColor: colors.black,
     },
     player: {
       position: 'absolute',
@@ -177,7 +177,7 @@ const createStyle = (theme: ITheme) => {
       right: 0,
       bottom: 0,
       resizeMode: 'contain',
-      backgroundColor: colors.onSurface,
+      backgroundColor: colors.black,
     },
     buttonPlay: {
       position: 'absolute',

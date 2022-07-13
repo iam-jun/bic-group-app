@@ -4,6 +4,7 @@ export const light: ExtendedTheme = {
   dark: false,
   colors: {
     ...DefaultTheme.colors,
+    black: '#000000',
     white: '#FFFFFF',
     danger: '#F64E60',
     success: '#13B055',
@@ -105,6 +106,7 @@ export const dark: ExtendedTheme = {
   dark: true,
   colors: {
     ...DarkTheme.colors,
+    black: '#000000',
     white: '#FFFFFF',
     danger: '#F64E60',
     success: '#13B055',

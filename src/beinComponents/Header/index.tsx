@@ -16,6 +16,8 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
@@ -23,14 +25,12 @@ import Icon, {IconProps} from '~/beinComponents/Icon';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IconType} from '~/resources/icons';
-import {ITheme} from '~/theme/interfaces';
 import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
 import IconChat from '../IconChat';
 import {ImageProps} from '../Image';
 import {debounce} from 'lodash';
 import dimension from '~/theme/dimension';
 import spacing from '~/theme/spacing';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 export interface HeaderProps {
   headerRef?: any;

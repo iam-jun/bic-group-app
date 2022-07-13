@@ -1,3 +1,4 @@
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import React from 'react';
 import {
   StyleProp,
@@ -5,10 +6,8 @@ import {
   TouchableHighlight,
   ViewStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
 
 import {ButtonPrimaryProps} from '~/beinComponents/Button/ButtonPrimary';
-import {ITheme} from '~/theme/interfaces';
 import spacing from '~/theme/spacing';
 import ButtonWrapper from './ButtonWrapper';
 
@@ -30,22 +29,22 @@ const ButtonSecondary: React.FC<ButtonSecondaryProps> = ({
   highEmphasis = false,
   ...props
 }: ButtonSecondaryProps) => {
-  const {colors}: ITheme = useTheme() as ITheme;
+  const {colors}: ExtendedTheme = useTheme() as ExtendedTheme;
 
-  let _colorHover = colorHover || colors.primary2;
-  let _backgroundColor = color || colors.bgButtonSecondary;
-  let _textColor = textColor || colors.primary;
+  let _colorHover = colorHover || colors.purple5;
+  let _backgroundColor = color || colors.white;
+  let _textColor = textColor || colors.purple50;
 
   if (highEmphasis) {
-    _backgroundColor = colors.primary5;
-    _textColor = colors.background;
-    _colorHover = colors.primary6;
+    _backgroundColor = colors.purple30;
+    _textColor = colors.white;
+    _colorHover = colors.purple50;
   }
 
   if (disabled) {
-    _backgroundColor = colorDisabled || colors.bgDisable;
+    _backgroundColor = colorDisabled || colors.gray20;
     // @ts-ignore
-    _textColor = textColorDisabled || colors.textDisabled;
+    _textColor = textColorDisabled || colors.gray40;
   }
 
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([

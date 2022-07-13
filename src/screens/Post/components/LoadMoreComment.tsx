@@ -6,15 +6,13 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
   Easing,
 } from 'react-native-reanimated';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
@@ -45,7 +43,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   const [loadingMore, setLoadingMore] = useState(false);
 
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme, commentId);
 
@@ -102,7 +100,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
             {title}
           </Text.H6>
         </Button>
-        <ActivityIndicator color={colors.disabled} animating={loadingMore} />
+        <ActivityIndicator color={colors.gray30} animating={loadingMore} />
       </View>
       <Animated.View style={[styles.placeholder, animatedStyle]}>
         <CommentPlaceholder />
@@ -112,17 +110,17 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme, commentId?: string) => {
+const createStyle = (theme: ExtendedTheme, commentId?: string) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     textLoadMoreComment: {
       margin: spacing.margin.small,
-      color: colors.textPrimary,
+      color: colors.neutral80,
     },
     placeholder: {
       marginLeft: commentId ? 36 : 0,

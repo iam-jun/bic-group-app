@@ -1,4 +1,4 @@
-import {useIsFocused} from '@react-navigation/native';
+import {ExtendedTheme, useIsFocused, useTheme} from '@react-navigation/native';
 import React, {
   memo,
   useCallback,
@@ -14,7 +14,6 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
@@ -41,7 +40,6 @@ import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import Store from '~/store';
 import modalActions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
 import Text from '~/beinComponents/Text';
@@ -68,7 +66,7 @@ const _PostDetailContent = (props: any) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = useMemo(() => createStyle(theme), [theme]);
 
@@ -458,7 +456,7 @@ const _PostDetailContent = (props: any) => {
                 testID={'post_detail_content.refresh_control'}
                 refreshing={refreshing}
                 onRefresh={onRefresh}
-                tintColor={colors.borderDisable}
+                tintColor={colors.gray40}
               />
             }
           />
@@ -537,7 +535,7 @@ const getSectionData = (listComment: ICommentData[]) => {
   return result?.length > 0 ? result : defaultList;
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     flex1: {
@@ -552,7 +550,7 @@ const createStyle = (theme: ITheme) => {
     postDetailContainer: {
       flex: 1,
     },
-    footer: {height: spacing.margin.base, backgroundColor: colors.background},
+    footer: {height: spacing.margin.base, backgroundColor: colors.white},
   });
 };
 

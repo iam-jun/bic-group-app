@@ -5,6 +5,7 @@ declare module '@react-navigation/native' {
   export type ExtendedTheme = {
     dark: boolean;
     colors: {
+      black: string;
       white: string;
       danger: string;
       success: string;

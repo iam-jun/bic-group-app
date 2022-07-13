@@ -12,8 +12,8 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import {Modal, useTheme} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native';
+import {Modal} from 'react-native-paper';
+import {ExtendedTheme, useNavigation, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import Animated, {
   Extrapolate,
@@ -38,7 +38,6 @@ import useAuthAmplifyHub from '~/hooks/authAmplifyHub';
 import images from '~/resources/images';
 import * as modalActions from '~/store/modal/actions';
 // import SignInOAuth from '../components/SignInOAuth';
-import {ITheme} from '~/theme/interfaces';
 import actions from '../redux/actions';
 import {
   getUserFromSharedPreferences,
@@ -71,7 +70,7 @@ const SignIn = () => {
   const keyboardHeightValue = useSharedValue(0);
   const keyboard = useKeyboard();
 
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
 
   const useFormData = useForm();
@@ -274,7 +273,7 @@ const SignIn = () => {
   const renderLoading = () => {
     return (
       <Modal visible={loading} contentContainerStyle={styles.loading}>
-        <LoadingIndicator size={'large'} color={theme.colors.primary6} />
+        <LoadingIndicator size={'large'} color={theme.colors.purple50} />
       </Modal>
     );
   };
@@ -330,10 +329,10 @@ const SignIn = () => {
                 helperContent={signingInError}
                 disabled={!!authSessions || loading}
                 onSubmitEditing={onSubmitEmail}
-                placeholderTextColor={theme.colors.bgFocus}
-                textColor={theme.colors.background}
-                outlineColor={theme.colors.background}
-                activeOutlineColor={theme.colors.background}
+                placeholderTextColor={theme.colors.gray40}
+                textColor={theme.colors.neutral80}
+                outlineColor={theme.colors.white}
+                activeOutlineColor={theme.colors.white}
                 helperTextProps={{
                   style: styles.errorText,
                 }}
@@ -386,11 +385,11 @@ const SignIn = () => {
                 onSubmitEditing={onSignIn}
                 inputStyle={styles.input}
                 style={styles.inputPassword}
-                placeholderTextColor={theme.colors.bgFocus}
-                iconColor={theme.colors.background}
-                textColor={theme.colors.background}
-                outlineColor={theme.colors.background}
-                activeOutlineColor={theme.colors.background}
+                placeholderTextColor={theme.colors.gray40}
+                iconColor={theme.colors.white}
+                textColor={theme.colors.neutral80}
+                outlineColor={theme.colors.white}
+                activeOutlineColor={theme.colors.white}
                 helperTextProps={{
                   style: styles.errorText,
                 }}
@@ -408,13 +407,13 @@ const SignIn = () => {
                 disabled={disableSignIn}
                 onPress={onSignIn}
                 useI18n
-                color={theme.colors.background}
-                textColor={theme.colors.primary6}>
+                color={theme.colors.white}
+                textColor={theme.colors.purple50}>
                 {'auth:btn_sign_in'}
               </Button.Primary>
 
               <View style={styles.signUpContainer}>
-                <Text.Body color={theme.colors.background} useI18n>
+                <Text.Body color={theme.colors.white} useI18n>
                   auth:text_sign_up_desc
                 </Text.Body>
                 <TouchableOpacity
@@ -435,7 +434,7 @@ const SignIn = () => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
   const textStyle = createTextStyle(theme);
 
@@ -466,27 +465,27 @@ const themeStyles = (theme: ITheme) => {
     title: {
       marginTop: spacing.margin.extraLarge,
       marginBottom: spacing.margin.large,
-      color: colors.background,
+      color: colors.white,
     },
     label: {
-      color: colors.background,
+      color: colors.white,
     },
     inputEmailContainer: {
       marginTop: 0,
       marginBottom: spacing.margin.large,
     },
     input: {
-      backgroundColor: colors.transparent,
+      whiteColor: colors.transparent,
     },
     inputPassword: {
       marginVertical: spacing.margin.small,
     },
     forgotButton: {
-      color: colors.background,
+      color: colors.white,
     },
     transparentButton: {
-      color: colors.background,
-      fontWeight: '400',
+      color: colors.white,
+      fontWeight: '600',
     },
     btnSignIn: {
       marginTop: spacing.margin.large,
@@ -499,11 +498,11 @@ const themeStyles = (theme: ITheme) => {
     },
     buttonSignupText: {
       ...textStyle.h6,
-      color: colors.primary,
+      color: colors.purple60,
       fontWeight: '500',
     },
     errorText: {
-      backgroundColor: theme.colors.background,
+      backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.small,
       paddingVertical: spacing.padding.tiny,
       marginTop: spacing.margin.tiny,

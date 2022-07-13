@@ -1,7 +1,7 @@
 import React from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 export interface ScreenWrapperProps extends ViewStyle {
   backgroundColor?: string;
   isFullView?: boolean;
@@ -15,13 +15,13 @@ const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
   style,
   ...props
 }: ScreenWrapperProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
 
   return (
     <View
       {...props}
       style={StyleSheet.flatten([
-        {backgroundColor: backgroundColor || theme.colors.background},
+        {backgroundColor: backgroundColor || theme.colors.white},
         isFullView && {flex: 1},
         style && style,
       ])}

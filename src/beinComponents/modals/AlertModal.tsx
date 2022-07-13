@@ -8,13 +8,14 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {Modal, useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import {Modal} from 'react-native-paper';
+
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import useModal from '~/hooks/modal';
 import * as actions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
 import spacing from '~/theme/spacing';
 import Icon from '../Icon';
 import TextInput from '../inputs/TextInput';
@@ -28,7 +29,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
   style,
   ...props
 }: AlertModalProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
 
   const {alert} = useModal();
@@ -109,7 +110,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
               <Icon
                 icon={iconName}
                 size={20}
-                tintColor={theme.colors.iconTint}
+                tintColor={theme.colors.neutral80}
               />
             )}
             {showCloseButton && (
@@ -117,7 +118,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
                 <Icon
                   icon={'iconClose'}
                   size={14}
-                  tintColor={theme.colors.iconTint}
+                  tintColor={theme.colors.neutral80}
                   onPress={_onDismiss}
                 />
               </View>
@@ -170,7 +171,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
   const defaultAlertWidth = 320;
 
@@ -180,9 +181,9 @@ const themeStyles = (theme: ITheme) => {
     },
     modal: {
       width: defaultAlertWidth,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       borderWidth: 1,
-      borderColor: colors.borderCard,
+      borderColor: colors.gray20,
       borderRadius: 6,
       alignSelf: 'center',
     },
@@ -206,7 +207,7 @@ const themeStyles = (theme: ITheme) => {
       height: 24,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: colors.placeholder,
+      backgroundColor: colors.neutral5,
       borderRadius: 6,
     },
     content: {},

@@ -1,14 +1,14 @@
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import React, {useCallback} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {useBaseHook} from '~/hooks';
 import {ICommentData, IReaction} from '~/interfaces/IPost';
 import CommentView from '~/screens/Post/components/CommentView';
 import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';
 import postActions from '~/screens/Post/redux/actions';
-import {ITheme} from '~/theme/interfaces';
 import spacing from '~/theme/spacing';
 
 export interface CommentItemProps {
@@ -38,7 +38,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
 }: CommentItemProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const styles = React.useMemo(() => createStyle(theme), [theme]);
 
   const _onPressReply = useCallback(() => {
@@ -90,19 +90,19 @@ const CommentItem: React.FC<CommentItemProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingTop: spacing?.padding.small,
       paddingHorizontal: spacing?.padding.large,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     containerChild: {
       paddingTop: spacing?.padding.small,
       paddingRight: spacing?.padding.large,
       paddingLeft: 68,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     childLoadMore: {marginLeft: 40},
   });
