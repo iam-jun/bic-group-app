@@ -1,8 +1,8 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
+
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useBaseHook} from '~/hooks';
 import Button from '~/beinComponents/Button';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
@@ -23,7 +23,7 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
 
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
 
   const chosenAudiences = useKeySelector(
     postKeySelector.createPost.chosenAudiences,
@@ -42,9 +42,7 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
       onPress={onPressSelectAudience}
       testID="create_post_chosen_audiences">
       <View style={styles.contentContainer}>
-        <Text.BodyS
-          color={theme.colors.textSecondary}
-          style={styles.textSendTo}>
+        <Text.BodyS color={theme.colors.gray50} style={styles.textSendTo}>
           {`${t('post:send_to')} `}
           <Text.H6 testID="create_post_chosen_audiences.names">{names}</Text.H6>
         </Text.BodyS>
@@ -53,7 +51,7 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
             textProps={{
               variant: 'body',
               useI18n: true,
-              color: theme.colors.primary7,
+              color: theme.colors.purple60,
             }}
             borderRadius={spacing?.borderRadius.large}
             style={styles.buttonChoose}

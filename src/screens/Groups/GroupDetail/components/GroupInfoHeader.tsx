@@ -1,9 +1,8 @@
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import images from '~/resources/images';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
@@ -23,7 +22,7 @@ import spacing from '~/theme/spacing';
 const GroupInfoHeader = () => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
   const {t} = useBaseHook();
@@ -73,7 +72,7 @@ const GroupInfoHeader = () => {
             style={styles.iconSmall}
             icon={iconPrivacy}
             size={16}
-            tintColor={theme.colors.iconTint}
+            tintColor={theme.colors.neutral80}
           />
           <Text.Subtitle testID="group_info_header.privacy" useI18n>
             {privacyTitle}
@@ -108,9 +107,9 @@ const GroupInfoHeader = () => {
         rightIconProps={{icon: 'Plus', size: 20}}
         style={styles.btnGroupAction}
         onPress={onPressJoin}
-        color={theme.colors.primary7}
-        textColor={theme.colors.background}
-        colorHover={theme.colors.primary6}
+        color={theme.colors.purple60}
+        textColor={theme.colors.white}
+        colorHover={theme.colors.purple50}
         useI18n>
         common:btn_join
       </Button.Secondary>
@@ -123,7 +122,7 @@ const GroupInfoHeader = () => {
         testID="group_info_header.cancel"
         style={styles.btnGroupAction}
         onPress={onPressCancelRequest}
-        textColor={theme.colors.primary}
+        textColor={theme.colors.purple60}
         useI18n>
         common:btn_cancel_request
       </Button.Secondary>
@@ -150,7 +149,7 @@ const GroupInfoHeader = () => {
 
 export default GroupInfoHeader;
 
-const themeStyles = (theme: ITheme, coverHeight: number) => {
+const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
   const {colors} = theme;
   return StyleSheet.create({
     infoContainer: {
@@ -176,7 +175,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       height: 16,
     },
     coverAndInfoHeader: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     headerIcons: {
       flexDirection: 'row',

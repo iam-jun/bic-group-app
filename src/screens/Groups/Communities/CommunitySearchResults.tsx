@@ -6,9 +6,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import React from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Text from '~/beinComponents/Text';
 import groupsKeySelector from '../redux/keySelector';
@@ -27,7 +26,7 @@ const CommunitySearchResults = ({
   onPressCommunity,
   onRefresh,
 }: CommunitySearchResultsProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
 
   const {loading, canLoadMore, ids, items} = useKeySelector(
     groupsKeySelector.communitySearch,
@@ -46,7 +45,7 @@ const CommunitySearchResults = ({
       <View style={styles.textNoResults}>
         <Text.BodyS
           style={styles.noResultText}
-          color={theme.colors.textSecondary}
+          color={theme.colors.gray50}
           useI18n
           testID="community_search_results.no_results">
           common:text_search_no_results
@@ -91,7 +90,7 @@ const CommunitySearchResults = ({
           <RefreshControl
             refreshing={loading}
             onRefresh={onRefresh}
-            tintColor={theme.colors.borderDisable}
+            tintColor={theme.colors.gray40}
           />
         ) : undefined
       }

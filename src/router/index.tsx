@@ -4,13 +4,15 @@ import {
   DarkTheme,
   DefaultTheme,
   NavigationContainer,
+  useTheme,
 } from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Auth} from 'aws-amplify';
 import React, {useEffect} from 'react';
 import {Linking, StyleSheet, View} from 'react-native';
 /*Theme*/
-import {useTheme} from 'react-native-paper';
+import {Host} from 'react-native-portalize';
+
 import {useDispatch} from 'react-redux';
 import {put} from 'redux-saga/effects';
 import AlertModal from '~/beinComponents/modals/AlertModal';
@@ -126,31 +128,35 @@ const StackNavigator = (): React.ReactElement => {
         documentTitle={{
           enabled: false,
         }}>
-        <Stack.Navigator
-          //@ts-ignore
-          initialRouteName={user ? rootSwitch.mainStack : rootSwitch.authStack}
-          screenOptions={{cardStyle: cardStyleConfig}}>
-          <Stack.Screen
-            options={AppConfig.defaultScreenOptions}
+        <Host>
+          <Stack.Navigator
             //@ts-ignore
-            name={rootSwitch.authStack}
-            component={screens.AuthStack}
-          />
-          <Stack.Screen
-            options={AppConfig.defaultScreenOptions}
-            //@ts-ignore
-            name={rootSwitch.mainStack}
-            component={screens.MainStack}
-          />
-          <Stack.Screen
-            // @ts-ignore
-            name={rootSwitch.notFound}
-            component={screens.NotFound}
-          />
-        </Stack.Navigator>
+            initialRouteName={
+              user ? rootSwitch.mainStack : rootSwitch.authStack
+            }
+            screenOptions={{cardStyle: cardStyleConfig}}>
+            <Stack.Screen
+              options={AppConfig.defaultScreenOptions}
+              //@ts-ignore
+              name={rootSwitch.authStack}
+              component={screens.AuthStack}
+            />
+            <Stack.Screen
+              options={AppConfig.defaultScreenOptions}
+              //@ts-ignore
+              name={rootSwitch.mainStack}
+              component={screens.MainStack}
+            />
+            <Stack.Screen
+              // @ts-ignore
+              name={rootSwitch.notFound}
+              component={screens.NotFound}
+            />
+          </Stack.Navigator>
+          <AlertNewFeatureModal />
+        </Host>
       </NavigationContainer>
       <AlertModal />
-      <AlertNewFeatureModal />
       <SystemIssueModal />
       <LoadingModal />
       <ToastMessage />

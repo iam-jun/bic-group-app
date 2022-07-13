@@ -1,9 +1,8 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import i18next from 'i18next';
 
-import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
 import {IconType} from '~/resources/icons';
@@ -39,7 +38,7 @@ const ProfileBlock = ({
     latest_work,
   } = profileData;
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
 
   const userLanguageList = language?.map(
     // @ts-ignore
@@ -59,7 +58,7 @@ const ProfileBlock = ({
     return (
       (!!title || !!TitleComponent) && (
         <View style={styles.itemComponent}>
-          <Icon icon={icon} tintColor={theme.colors.iconTintLight} size={20} />
+          <Icon icon={icon} tintColor={theme.colors.neutral80Light} size={20} />
           <Text style={styles.text} useI18n>
             {title}
           </Text>
@@ -73,7 +72,7 @@ const ProfileBlock = ({
     <View style={styles.container}>
       {!!gender || !!birthday || !!relationship_status || !!userLanguages ? (
         <>
-          <Text.Subtitle color={theme.colors.textSecondary}>
+          <Text.Subtitle color={theme.colors.gray50}>
             {i18next.t('settings:title_about')}
           </Text.Subtitle>
           {/* @ts-ignore */}
@@ -98,16 +97,14 @@ const ProfileBlock = ({
           onPress={onSeeMore}
           activeOpacity={1}
           style={styles.buttonWrapper}>
-          <Text.H6 testID="add_work.start_date" color={theme.colors.primary6}>
+          <Text.H6 testID="add_work.start_date" color={theme.colors.purple50}>
             {i18next.t('settings:text_view_more_info')}
           </Text.H6>
         </ButtonWrapper>
       ) : null}
       {(!!email || !!phone || !!city) && hideSeeMore ? (
         <>
-          <Text.Subtitle
-            style={styles.title}
-            color={theme.colors.textSecondary}>
+          <Text.Subtitle style={styles.title} color={theme.colors.gray50}>
             {i18next.t('settings:title_contact')}
           </Text.Subtitle>
 
@@ -128,9 +125,7 @@ const ProfileBlock = ({
 
       {!!latest_work && hideSeeMore ? (
         <>
-          <Text.Subtitle
-            style={styles.title}
-            color={theme.colors.textSecondary}>
+          <Text.Subtitle style={styles.title} color={theme.colors.gray50}>
             {i18next.t('settings:text_work')}
           </Text.Subtitle>
           {renderItem({

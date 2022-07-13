@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useRef, Fragment, useCallback} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Animated, {
   useAnimatedStyle,
@@ -8,10 +7,10 @@ import Animated, {
   interpolate,
 } from 'react-native-reanimated';
 import {isEmpty} from 'lodash';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {ITheme} from '~/theme/interfaces';
 import PrivateWelcome from './components/PrivateWelcome';
 import actions from '~/screens/Groups/redux/actions';
 import PageContent from './components/PageContent';
@@ -42,7 +41,7 @@ const CommunityDetail = (props: any) => {
   const headerRef = useRef<any>();
   const [buttonHeight, setButtonHeight] = useState(250);
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
@@ -196,7 +195,7 @@ const CommunityDetail = (props: any) => {
           avatar={icon}
           useAnimationTitle
           rightIcon={can_setting ? 'iconShieldStar' : 'EllipsisV'}
-          rightIconProps={{backgroundColor: theme.colors.background}}
+          rightIconProps={{backgroundColor: theme.colors.white}}
           onPressChat={isMember ? onPressChat : undefined}
           onRightPress={onRightPress}
         />
@@ -219,11 +218,11 @@ const CommunityDetail = (props: any) => {
 
 export default CommunityDetail;
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     screenContainer: {
-      backgroundColor: colors.borderDivider,
+      backgroundColor: colors.neutral5,
     },
     contentContainer: {
       flex: 1,

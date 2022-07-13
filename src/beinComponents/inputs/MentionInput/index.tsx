@@ -11,14 +11,14 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {
   default as actions,
   default as actionsMention,
 } from '~/beinComponents/inputs/MentionInput/redux/actions';
 import {useKeyboardStatus} from '~/hooks/keyboard';
-import {ITheme} from '~/theme/interfaces';
+
 import Autocomplete from './Autocomplete';
 import {ICursorPositionChange, switchKeyboardForCodeBlocks} from './helper';
 
@@ -60,7 +60,7 @@ const _MentionInput = ({
   const [measuredHeight, setMeasuredHeight] = useState(0);
   const cursorPosition = useRef(0);
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyles();
 
@@ -166,10 +166,7 @@ const _MentionInput = ({
           keyboardType={keyboardType}
           textInputRef={inputRef}
           editable={!disabled}
-          style={[
-            textInputStyle,
-            disabled ? {color: colors.textSecondary} : {},
-          ]}
+          style={[textInputStyle, disabled ? {color: colors.gray50} : {}]}
           onContentSizeChange={_onContentSizeChange}
           onSelectionChange={onSelectionChange}
           onKeyPress={_onKeyPress}

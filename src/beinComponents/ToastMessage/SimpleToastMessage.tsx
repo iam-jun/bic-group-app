@@ -6,10 +6,10 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Icon from '~/beinComponents/Icon';
-import {ITheme} from '~/theme/interfaces';
+
 import Text, {TextProps} from '~/beinComponents/Text';
 import {IconType} from '~/resources/icons';
 import {useDispatch} from 'react-redux';
@@ -34,7 +34,7 @@ const SimpleToastMessage: React.FC<SimpleToastMessageProps> = ({
   disabled,
 }: SimpleToastMessageProps) => {
   const dispatch = useDispatch();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const styles = createStyles(theme);
 
   const _onPress = () => {
@@ -50,7 +50,7 @@ const SimpleToastMessage: React.FC<SimpleToastMessageProps> = ({
       <View style={StyleSheet.flatten([styles.container, style])}>
         <Text.BodyS
           {...textProps}
-          color={theme.colors.primary7}
+          color={theme.colors.purple60}
           testID="simple_toast_message.children">
           {children}
         </Text.BodyS>
@@ -58,7 +58,7 @@ const SimpleToastMessage: React.FC<SimpleToastMessageProps> = ({
           <Icon
             icon={icon}
             size={24}
-            tintColor={theme.colors.primary7}
+            tintColor={theme.colors.purple60}
             testID="simple_toast_message.icon"
           />
         )}
@@ -67,7 +67,7 @@ const SimpleToastMessage: React.FC<SimpleToastMessageProps> = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
+const createStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -78,7 +78,7 @@ const createStyles = (theme: ITheme) => {
       backgroundColor: 'rgba(255, 255, 255, 0.92)',
       borderWidth: 1,
       borderRadius: 22,
-      borderColor: colors.primary3,
+      borderColor: colors.purple10,
       alignSelf: 'baseline',
       paddingHorizontal: spacing.padding.base,
       paddingVertical: spacing.padding.tiny,

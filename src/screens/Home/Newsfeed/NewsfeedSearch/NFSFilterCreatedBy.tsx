@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import Button from '~/beinComponents/Button';
@@ -13,7 +13,7 @@ import {useUserIdAuth} from '~/hooks/auth';
 import {ISelectedFilterUser} from '~/interfaces/IHome';
 import NFSFilterCreateBySpecific from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterCreateBySpecific';
 import modalActions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+
 import spacing from '~/theme/spacing';
 
 export interface NFSFilterCreatedByProps {
@@ -31,7 +31,7 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
 }: NFSFilterCreatedByProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
   const userId = useUserIdAuth();
@@ -65,7 +65,7 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
       <Button.Secondary
         onPress={_onPressSelectSpecific}
         style={styles.buttonSpecificRight}
-        textColor={colors.primary6}
+        textColor={colors.purple50}
         rightIcon={selectedCreatedBy?.name && 'EditAlt'}>
         {selectedCreatedBy?.name || t('home:newsfeed_search:choose_creator')}
       </Button.Secondary>
@@ -85,7 +85,7 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
         title={t('home:newsfeed_search:filter_created_by_all')}
         RightComponent={
           !selectedCreatedBy && (
-            <Icon icon={'Check'} size={20} tintColor={colors.primary7} />
+            <Icon icon={'Check'} size={20} tintColor={colors.purple60} />
           )
         }
       />
@@ -96,7 +96,7 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
         title={t('home:newsfeed_search:filter_created_by_me')}
         RightComponent={
           selectedCreatedBy?.id === userId ? (
-            <Icon icon={'Check'} size={20} tintColor={colors.primary7} />
+            <Icon icon={'Check'} size={20} tintColor={colors.purple60} />
           ) : undefined
         }
       />
@@ -110,7 +110,7 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -123,7 +123,7 @@ const createStyle = (theme: ITheme) => {
       marginVertical: spacing.margin.small,
     },
     textHeader: {
-      color: colors.textSecondary,
+      color: colors.gray50,
       marginTop: spacing.margin.tiny,
       marginBottom: spacing.margin.tiny,
       marginHorizontal: spacing.margin.extraLarge,

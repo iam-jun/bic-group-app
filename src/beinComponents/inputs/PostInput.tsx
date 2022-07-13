@@ -10,12 +10,12 @@ import {
   TextInputSelectionChangeEventData,
   ViewStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import AutoGrowingTextInput from '~/beinComponents/inputs/AutoGrowingTextInput';
 import {useBaseHook} from '~/hooks';
 import dimension from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
-import {ITheme} from '~/theme/interfaces';
+
 import spacing from '~/theme/spacing';
 
 export interface PostInputProps extends TextInputProps {
@@ -50,7 +50,7 @@ const PostInput: React.FC<PostInputProps> = ({
   inputRef,
   ...props
 }: PostInputProps) => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {t} = useBaseHook();
   const {colors} = theme;
   const styles = createStyle(theme);
@@ -91,9 +91,9 @@ const PostInput: React.FC<PostInputProps> = ({
       testID="post_input"
       textAlignVertical={textAlignVertical}
       style={inputStyle}
-      selectionColor={colors.textSecondary}
+      selectionColor={colors.gray50}
       placeholder={placeholder || t('post:placeholder_create_post')}
-      placeholderTextColor={colors.textSecondary}
+      placeholderTextColor={colors.gray50}
       multiline={multiline}
       onChangeText={onChangeText}
       keyboardType={keyboardType}
@@ -106,7 +106,7 @@ const PostInput: React.FC<PostInputProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -114,7 +114,7 @@ const createStyle = (theme: ITheme) => {
       padding: 0,
       fontSize: dimension?.sizes.body,
       fontFamily: fontFamilies.OpenSans,
-      color: colors.textPrimary,
+      color: colors.neutral80,
     },
   });
 };

@@ -103,7 +103,7 @@ describe('MentionInput component', () => {
 
     const commentInput = wrapper.getByTestId('_mention_input.input');
     const flattenedStyle = StyleSheet.flatten(commentInput.props.style);
-    expect(flattenedStyle.color).toBe(colors.light.colors.textSecondary);
+    expect(flattenedStyle.color).toBe(colors.light.colors.gray50);
   });
 
   it(`should call onChangeText`, async () => {

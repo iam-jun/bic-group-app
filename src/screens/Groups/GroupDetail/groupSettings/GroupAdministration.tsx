@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
-import {ITheme} from '~/theme/interfaces';
 import * as modalActions from '~/store/modal/actions';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IconType} from '~/resources/icons';
@@ -23,7 +22,7 @@ const GroupAdministration = (props: any) => {
   const params = props.route.params;
   const {groupId} = params || {};
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
@@ -70,7 +69,7 @@ const GroupAdministration = (props: any) => {
         testID={testID}
         title={title}
         icon={icon}
-        iconProps={{icon: icon, tintColor: theme.colors.primary6}}
+        iconProps={{icon: icon, tintColor: theme.colors.purple50}}
         notificationsBadgeNumber={notificationsBadgeNumber}
         notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
         rightSubIcon="AngleRightB"
@@ -83,7 +82,7 @@ const GroupAdministration = (props: any) => {
     <>
       <Text.H5
         style={styles.headerTitle}
-        color={theme.colors.textPrimary}
+        color={theme.colors.neutral80}
         variant="body"
         useI18n>
         settings:title_group_moderating
@@ -110,7 +109,7 @@ const GroupAdministration = (props: any) => {
     <>
       <Text.H5
         style={styles.headerTitle}
-        color={theme.colors.textPrimary}
+        color={theme.colors.neutral80}
         variant="body"
         useI18n>
         settings:title_group_settings
@@ -144,7 +143,7 @@ const GroupAdministration = (props: any) => {
     <ScreenWrapper testID="GroupAdministration" isFullView>
       <Header
         title={name}
-        titleTextProps={{color: theme.colors.textPrimary}}
+        titleTextProps={{color: theme.colors.neutral80}}
         avatar={icon}
       />
       <Divider style={styles.divider} />
@@ -158,7 +157,7 @@ const GroupAdministration = (props: any) => {
 
 export default GroupAdministration;
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -167,7 +166,7 @@ const themeStyles = (theme: ITheme) => {
     },
     itemContainer: {
       flexDirection: 'row',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       borderRadius: spacing.borderRadius.base,
     },
     settingsContainer: {

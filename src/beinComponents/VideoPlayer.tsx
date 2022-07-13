@@ -12,7 +12,6 @@ import {
 import {Video, ResizeMode} from 'expo-av';
 import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import dimension, {scaleSize} from '~/theme/dimension';
 import {orderBy} from 'lodash';
 import Icon from './Icon';

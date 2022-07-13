@@ -8,7 +8,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import i18next from 'i18next';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {debounce} from 'lodash';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -16,7 +16,6 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
-import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '../../../redux/keySelector';
 import menuActions from '../../../redux/actions';
@@ -36,7 +35,7 @@ interface EditLocationProps {
 const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const styles = createStyles(theme, screenHeight);
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
@@ -118,7 +117,7 @@ const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
 
 export default EditLocation;
 
-const createStyles = (theme: ITheme, screenHeight: number) => {
+const createStyles = (theme: ExtendedTheme, screenHeight: number) => {
   return StyleSheet.create({
     searchInput: {
       margin: spacing.margin.base,

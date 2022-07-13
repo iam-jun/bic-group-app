@@ -2,7 +2,7 @@ import isEmpty from 'lodash/isEmpty';
 import React from 'react';
 import {useForm} from 'react-hook-form';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
@@ -16,7 +16,7 @@ import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import actions from '~/screens/Auth/redux/actions';
-import {ITheme} from '~/theme/interfaces';
+
 import spacing from '~/theme/spacing';
 import {getEnv} from '~/utils/env';
 
@@ -31,7 +31,7 @@ const SignUp = () => {
     clearErrors,
     getValues,
   } = useFormData;
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
   const {loading} = useAuth();
@@ -170,7 +170,7 @@ const SignUp = () => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const insets = useSafeAreaInsets();
   const {colors} = theme;
 
@@ -180,7 +180,7 @@ const themeStyles = (theme: ITheme) => {
       paddingTop: insets.top,
       paddingHorizontal: spacing.padding.big,
       alignContent: 'center',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     button: {
       marginTop: spacing.margin.big,

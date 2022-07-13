@@ -1,9 +1,8 @@
 import React from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
-import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
 
 import Button from '~/beinComponents/Button';
@@ -38,7 +37,7 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
   goToSetting,
 }: PermissionsPopupContentProps) => {
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -82,8 +81,8 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
         </Button.Primary>
         <ViewSpacing height={spacing.margin.small} />
         <Button.Secondary
-          color={colors.primary1}
-          textColor={colors.primary6}
+          color={colors.violet1}
+          textColor={colors.purple50}
           onPress={_onClose}>
           {t('common:text_not_now')}
         </Button.Secondary>
@@ -92,11 +91,11 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       borderRadius: spacing.borderRadius.small,
       marginHorizontal: spacing.margin.extraLarge,
     },

@@ -1,15 +1,14 @@
 import React from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {Modal, useTheme} from 'react-native-paper';
+import {StyleProp, StyleSheet, View, ViewStyle, Modal} from 'react-native';
 import {useDispatch} from 'react-redux';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import {Portal} from 'react-native-portalize';
 
 import Text from '~/beinComponents/Text';
 import useModal from '~/hooks/modal';
 import * as actions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
 import NewFeatureImg from '~/../assets/images/new_feeature_purple.svg';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
-import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
 
@@ -21,7 +20,7 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
   style,
   ...props
 }: NewFeatureModalProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
 
   const {alertNewFeature} = useModal();
@@ -34,11 +33,16 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
   };
 
   return (
+    // <Portal>
     <Modal
       visible={visible}
-      dismissable
+      // dismissable
+      animationType="fade"
+      // transparent
       onDismiss={onDismiss}
-      contentContainerStyle={StyleSheet.flatten([styles.modal, style])}
+      style={StyleSheet.flatten([styles.modal])}
+      // presentationStyle="overFullScreen"
+      // contentContainerStyle={StyleSheet.flatten([styles.modal, style])}
       {...props}>
       <View style={styles.container}>
         <View style={styles.header}>
@@ -65,29 +69,34 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
             }}
             onPress={onDismiss}
             useI18n
-            color={theme.colors.primary3}>
+            color={theme.colors.purple10}>
             common:text_got_it
           </Button.Secondary>
         </View>
       </View>
     </Modal>
+    // </Portal>
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
     modal: {
-      width: 320,
-      backgroundColor: colors.background,
-      borderWidth: 1,
-      borderColor: colors.borderCard,
-      borderRadius: 6,
-      alignSelf: 'center',
+      backgroundColor: colors.red1,
+      // flex: 1,
+      // alignContent: 'center',
+      // justifyContent: 'center',
     },
     container: {
+      width: 320,
+      borderColor: colors.gray40,
       padding: spacing.padding.small,
+      backgroundColor: colors.white,
+      // alignSelf: 'center',
+      borderWidth: 1,
+      borderRadius: 6,
     },
     header: {
       width: '100%',

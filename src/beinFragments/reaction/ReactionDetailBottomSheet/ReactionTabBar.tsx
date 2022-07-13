@@ -1,8 +1,7 @@
 import React, {FC, useState, useEffect, useRef} from 'react';
 import {FlatList, View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import {blacklistReactions, ReactionType} from '~/constants/reactions';
 
 import Text from '~/beinComponents/Text';
@@ -26,7 +25,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
   const [activeIndex, setActiveIndex] = useState(-1);
   const flatListRef = useRef<any>();
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -100,10 +99,10 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
           testID={`reaction_detail_bottomSheet.${reactionType}`}
           style={styles.tabItem}
           onPress={() => _onPressTab(index)}>
-          <Text.H5 color={isActive ? colors.primary7 : colors.textPrimary}>
+          <Text.H5 color={isActive ? colors.purple60 : colors.neutral80}>
             {emoji}
           </Text.H5>
-          <Text.H6 color={isActive ? colors.primary7 : colors.textPrimary}>
+          <Text.H6 color={isActive ? colors.purple60 : colors.neutral80}>
             {` ${count}`}
           </Text.H6>
         </Button>
@@ -138,12 +137,12 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
       borderBottomWidth: 1,
-      borderColor: colors.borderDisable,
+      borderColor: colors.gray40,
     },
     tabItem: {
       width: itemWidth,
@@ -157,7 +156,7 @@ const createStyle = (theme: ITheme) => {
       bottom: 0,
       width: itemWidth,
       height: 2,
-      backgroundColor: colors.primary7,
+      backgroundColor: colors.purple60,
     },
   });
 };

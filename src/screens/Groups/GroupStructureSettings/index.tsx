@@ -1,8 +1,6 @@
 import React, {FC, useEffect} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle, ScrollView} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
 import {useBaseHook} from '~/hooks';
@@ -29,7 +27,7 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = ({
 }: GroupStructureSettingsProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
 
   const {id: communityId} =
@@ -98,12 +96,12 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     contentContainer: {
       padding: spacing.padding.large,

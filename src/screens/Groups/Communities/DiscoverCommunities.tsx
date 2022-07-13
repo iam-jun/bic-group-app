@@ -7,9 +7,7 @@ import {
   FlatList,
   Dimensions,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Divider from '~/beinComponents/Divider';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
@@ -38,7 +36,7 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   const {ids, items, loading} = data || {};
 
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
 
   useEffect(() => {
     getData();
@@ -108,7 +106,7 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
         <RefreshControl
           refreshing={loading}
           onRefresh={onRefresh}
-          tintColor={theme.colors.borderDisable}
+          tintColor={theme.colors.gray40}
         />
       }
     />

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View, ScrollView, ActivityIndicator} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
 import {useIsFocused} from '@react-navigation/native';
@@ -12,7 +12,6 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Avatar from '~/beinComponents/Avatar';
 
-import {ITheme} from '~/theme/interfaces';
 import {scaleCoverHeight, userProfileImageCropRatio} from '~/theme/dimension';
 import images from '~/resources/images';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -55,7 +54,7 @@ const UserProfile = (props: any) => {
   const [bgImgState, setBgImgState] = useState<string>(background_img_url);
   const [isChangeImg, setIsChangeImg] = useState<string>('');
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
@@ -180,7 +179,7 @@ const UserProfile = (props: any) => {
         style={[styles.editButton, style]}
         activeOpacity={0.9}
         onPress={onPress}>
-        <Icon size={16} tintColor={theme.colors.primary7} icon={'Camera'} />
+        <Icon size={16} tintColor={theme.colors.purple60} icon={'Camera'} />
       </ButtonWrapper>
     ) : null;
   };
@@ -240,7 +239,7 @@ const UserProfile = (props: any) => {
     return userId == currentUserId || userId == currentUsername ? (
       <Button.Secondary
         testID="user_profile.edit"
-        textColor={theme.colors.primary6}
+        textColor={theme.colors.purple50}
         style={styles.buttonEdit}
         leftIcon={'EditAlt'}
         onPress={onEditProfileButton}
@@ -251,9 +250,9 @@ const UserProfile = (props: any) => {
       <Button.Secondary
         testID="user_profile.message"
         style={styles.button}
-        textColor={theme.colors.bgSecondary}
-        color={theme.colors.primary6}
-        colorHover={theme.colors.primary5}
+        textColor={theme.colors.neutral1}
+        color={theme.colors.purple50}
+        colorHover={theme.colors.purple30}
         rightIcon={'Message'}
         borderRadius={spacing.borderRadius.small}
         onPress={onPressChat}>
@@ -299,12 +298,12 @@ const UserProfile = (props: any) => {
 
 export default UserProfile;
 
-const themeStyles = (theme: ITheme, coverHeight: number) => {
+const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
   const {colors} = theme;
 
   return StyleSheet.create({
     container: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     cover: {
       width: '100%',
@@ -329,7 +328,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       marginTop: spacing.margin.extraLarge,
     },
     editButton: {
-      backgroundColor: colors.primary1,
+      backgroundColor: colors.violet1,
       width: 24,
       height: 24,
       justifyContent: 'center',
@@ -350,7 +349,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
     buttonEdit: {
       marginHorizontal: spacing.margin.large,
       borderWidth: 1,
-      borderColor: colors.primary6,
+      borderColor: colors.purple50,
     },
   });
 };

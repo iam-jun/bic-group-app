@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
 import {PanGestureHandler} from 'react-native-gesture-handler';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import Animated, {
   interpolate,
   runOnJS,
@@ -16,7 +16,6 @@ import {useDispatch} from 'react-redux';
 import {useKeySelector} from '~/hooks/selector';
 import MenuSidebarContent from '~/router/components/MenuSidebarDrawer/MenuSidebarContent';
 import appActions from '~/store/app/actions';
-import {ITheme} from '~/theme/interfaces';
 
 const DeviceWidth = Dimensions.get('window').width;
 
@@ -27,7 +26,7 @@ const MenuSidebarDrawer = () => {
   const xValue = useSharedValue(0);
 
   const insets = useSafeAreaInsets();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme, insets);
 
   const drawerVisible = useKeySelector('app.drawerVisible');
@@ -122,19 +121,19 @@ const MenuSidebarDrawer = () => {
   );
 };
 
-const themeStyles = (theme: ITheme, insets: any) => {
+const themeStyles = (theme: ExtendedTheme, insets: any) => {
   const {colors} = theme;
 
   return StyleSheet.create({
     status: {
       height: insets.top,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     contentContainer: {
       width: '86%',
       height: '100%',
       alignSelf: 'flex-end',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
   });
 };

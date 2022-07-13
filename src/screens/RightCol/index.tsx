@@ -1,9 +1,8 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import {Image, View, StyleSheet, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import {rightColMenu} from '~/constants/rightCol';
 import images from '~/resources/images';
 import Text from '~/beinComponents/Text';
@@ -16,7 +15,7 @@ import spacing from '~/theme/spacing';
 const RightCol = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
 
   const onItemPress = (item: IRightMenu) => {
@@ -77,7 +76,7 @@ const RightCol = () => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
   const menuItemMinWidth = '15%';
 
@@ -85,7 +84,7 @@ const themeStyles = (theme: ITheme) => {
     container: {
       paddingHorizontal: spacing.margin.large,
       paddingVertical: spacing.padding.base,
-      backgroundColor: colors.surface,
+      backgroundColor: colors.neutral1,
     },
     img: {
       width: '100%',
@@ -94,7 +93,7 @@ const themeStyles = (theme: ITheme) => {
     mainContainer: {
       marginVertical: spacing.margin.large,
       padding: spacing.padding.small,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
       borderTopWidth: 1,
       borderBottomWidth: 1,
     },
@@ -116,7 +115,7 @@ const themeStyles = (theme: ITheme) => {
       marginHorizontal: spacing.margin.small,
     },
     menuText: {
-      color: colors.textSecondary,
+      color: colors.gray50,
     },
     footerContainer: {
       flexDirection: 'row',

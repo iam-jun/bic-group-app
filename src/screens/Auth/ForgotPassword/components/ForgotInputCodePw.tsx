@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 
@@ -12,7 +12,7 @@ import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
 import {IObject} from '~/interfaces/common';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
-import {ITheme} from '~/theme/interfaces';
+
 import TextInputController from '~/beinComponents/inputs/TextInputController';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 import {getEnv} from '~/utils/env';
@@ -24,7 +24,7 @@ interface Props {
 
 const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
   const dispatch = useDispatch();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
 
@@ -229,7 +229,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -247,7 +247,7 @@ const themeStyles = (theme: ITheme) => {
       marginBottom: spacing.margin.small,
     },
     highlightText: {
-      color: colors.textTertiary,
+      color: colors.gray60,
     },
   });
 };

@@ -2,7 +2,6 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Modal, useTheme} from 'react-native-paper';
 
-import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 import SystemIssueImg from '~/../assets/images/SystemIssue.svg';
@@ -12,7 +11,7 @@ import {useKeySelector} from '~/hooks/selector';
 import spacing from '~/theme/spacing';
 
 const SystemIssueModal = () => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
 
   const systemIssue = useKeySelector(noInternetKeySelector.systemIssue);
@@ -32,22 +31,22 @@ const SystemIssueModal = () => {
       <Text.H4 useI18n>internet_connection:system_issue:title</Text.H4>
       <Text.Body useI18n>internet_connection:system_issue:desc</Text.Body>
       <View style={styles.loadingContainer}>
-        <LoadingIndicator color={theme.colors.primary5} size={24} />
+        <LoadingIndicator color={theme.colors.purple30} size={24} />
       </View>
     </Modal>
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
     modal: {
       width: 320,
       paddingTop: spacing.padding.large,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       borderWidth: 1,
-      borderColor: colors.borderCard,
+      borderColor: colors.gray40,
       borderRadius: 6,
       alignSelf: 'center',
       alignItems: 'center',
@@ -60,7 +59,7 @@ const themeStyles = (theme: ITheme) => {
       alignItems: 'center',
       justifyContent: 'center',
       padding: 0,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       marginVertical: spacing.margin.extraLarge,
       shadowColor: '#000',
       shadowOffset: {

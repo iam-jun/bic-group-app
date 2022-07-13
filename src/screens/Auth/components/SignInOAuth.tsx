@@ -67,13 +67,13 @@ const themeStyles = (theme: IObject<any>) => {
       marginVertical: spacing.margin.tiny,
     },
     buttonFacebook: {
-      backgroundColor: colors.facebook,
+      backgroundColor: colors.blue40,
     },
     buttonGoogle: {
-      backgroundColor: colors.google,
+      backgroundColor: colors.red50,
     },
     buttonApple: {
-      backgroundColor: colors.apple,
+      backgroundColor: colors.white,
     },
   });
 };

@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {IGroup} from '~/interfaces/IGroup';
 import Icon from '~/beinComponents/Icon';
-import {ITheme} from '~/theme/interfaces';
 import GroupItem, {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
 import GroupTree, {OnChangeCheckedGroupsData} from '~/beinComponents/GroupTree';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -75,7 +74,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   const [path, setPath] = useState<PathData>({path: '', total: 0, more: 0});
 
   const {rootNavigation} = useRootNavigation();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
 
   const getSmallestChild = (smallestGroup: IGroup, path: PathData) => {
@@ -174,12 +173,12 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
             <Icon
               icon={'AngleRightB'}
               size={12}
-              tintColor={theme.colors.iconTint}
+              tintColor={theme.colors.neutral80}
             />
           </View>
           <Text style={{paddingRight: 20}}>
             {showTree ? '' : path.path}{' '}
-            <Text color={theme.colors.primary7}>{buttonText}</Text>
+            <Text color={theme.colors.purple60}>{buttonText}</Text>
           </Text>
         </Button>
       </View>
@@ -231,14 +230,14 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {},
     iconArrowRight: {
       width: 16,
       height: 16,
-      backgroundColor: colors.borderDivider,
+      backgroundColor: colors.neutral5,
       marginRight: spacing.margin.tiny,
       borderRadius: 8,
       justifyContent: 'center',

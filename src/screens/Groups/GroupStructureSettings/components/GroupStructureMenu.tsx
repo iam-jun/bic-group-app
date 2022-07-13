@@ -1,11 +1,11 @@
 import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
-import {ITheme} from '~/theme/interfaces';
+
 import {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import modalActions from '~/store/modal/actions';
@@ -26,7 +26,7 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme || {};
 
   const onPressReorderGroup = () => {
@@ -48,10 +48,10 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
         leftIconProps={{
           icon: 'Layers',
           size: 24,
-          tintColor: disableReorder ? colors.textDisabled : colors.textPrimary,
+          tintColor: disableReorder ? colors.gray40 : colors.neutral80,
         }}
         titleProps={{
-          color: disableReorder ? colors.textDisabled : colors.textPrimary,
+          color: disableReorder ? colors.gray40 : colors.neutral80,
         }}
         title={t('communities:group_structure:title_reorder_group')}
         onPress={disableReorder || !group ? undefined : onPressReorderGroup}
@@ -63,10 +63,10 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
         leftIconProps={{
           icon: 'Exclude',
           size: 24,
-          tintColor: disableMove ? colors.textDisabled : colors.textPrimary,
+          tintColor: disableMove ? colors.gray40 : colors.neutral80,
         }}
         titleProps={{
-          color: disableMove ? colors.textDisabled : colors.textPrimary,
+          color: disableMove ? colors.gray40 : colors.neutral80,
         }}
         title={t('communities:group_structure:title_move_group')}
         onPress={disableMove || !group ? undefined : onPressMoveGroup}

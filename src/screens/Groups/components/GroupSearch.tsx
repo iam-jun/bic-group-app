@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import Animated, {
   runOnJS,
   useAnimatedStyle,
@@ -17,7 +17,7 @@ import {useKeySelector} from '~/hooks/selector';
 import GroupItemPlaceholder from '~/screens/Groups/components/GroupItemPlaceholder';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import {ITheme} from '~/theme/interfaces';
+
 import spacing from '~/theme/spacing';
 
 const GroupSearch = () => {
@@ -25,7 +25,7 @@ const GroupSearch = () => {
   const showValue = useSharedValue(0);
 
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
 
   const {isShow, loading, searchKey, result} =
@@ -125,7 +125,7 @@ const GroupSearch = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -134,11 +134,11 @@ const createStyle = (theme: ITheme) => {
       bottom: 0,
       left: 0,
       right: 0,
-      backgroundColor: colors.bgSecondary,
+      backgroundColor: colors.neutral1,
     },
     list: {},
     item: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingHorizontal: spacing?.padding.large,
     },
     labelHeader: {

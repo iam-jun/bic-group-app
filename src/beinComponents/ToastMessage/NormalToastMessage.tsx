@@ -7,12 +7,12 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Icon from '~/beinComponents/Icon';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {IconType} from '~/resources/icons';
-import {ITheme} from '~/theme/interfaces';
+
 import {useDispatch} from 'react-redux';
 import {clearToastMessage} from '~/store/modal/actions';
 import ButtonWrapper from '../Button/ButtonWrapper';
@@ -54,7 +54,7 @@ const ToastMessage: FC<ToastMessageProps> = ({
   onPressRight,
 }: ToastMessageProps) => {
   const dispatch = useDispatch();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme;
 
   const _onPress = () => {
@@ -65,18 +65,18 @@ const ToastMessage: FC<ToastMessageProps> = ({
   const ToastMessageStyle = {
     success: {
       iconColor: colors.success,
-      textColor: colors.iconTintReversed,
+      textColor: colors.neutral80Reversed,
       backgroundColor: colors.success,
     },
     error: {
-      iconColor: colors.error,
-      textColor: colors.iconTintReversed,
-      backgroundColor: colors.error,
+      iconColor: colors.red60,
+      textColor: colors.neutral80Reversed,
+      backgroundColor: colors.red60,
     },
     informative: {
-      iconColor: colors.iconTint,
-      textColor: colors.iconTintReversed,
-      backgroundColor: colors.borderFocus,
+      iconColor: colors.neutral80,
+      textColor: colors.neutral80Reversed,
+      backgroundColor: colors.gray40,
     },
   };
 
@@ -107,7 +107,7 @@ const ToastMessage: FC<ToastMessageProps> = ({
           testID="normal_toast_message.left_icon"
           iconStyle={[
             styles.leftIconStyle,
-            {backgroundColor: colors.iconTintReversed},
+            {backgroundColor: colors.neutral80Reversed},
             leftIconStyle,
           ]}
           style={[styles.leftIcon, leftStyle]}
@@ -135,7 +135,7 @@ const ToastMessage: FC<ToastMessageProps> = ({
               <Icon
                 testID="normal_toast_message.right_icon"
                 icon={rightIcon}
-                tintColor={theme.colors.background}
+                tintColor={theme.colors.white}
                 style={styles.marginRightIcon}
               />
             )}
@@ -143,7 +143,7 @@ const ToastMessage: FC<ToastMessageProps> = ({
               {...rightTextProps}
               testID="normal_toast_message.right_text"
               style={[styles.rightText, rightTextStyle]}
-              color={rightTextColor || theme.colors.background}>
+              color={rightTextColor || theme.colors.white}>
               {rightText}
             </Text.ButtonBase>
           </ButtonWrapper>

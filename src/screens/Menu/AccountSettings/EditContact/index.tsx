@@ -1,6 +1,6 @@
 import React, {useRef, useState, useEffect} from 'react';
 import {StyleSheet, View, Keyboard, ScrollView} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import i18next from 'i18next';
 import {useDispatch} from 'react-redux';
 import {useForm} from 'react-hook-form';
@@ -8,7 +8,6 @@ import {useForm} from 'react-hook-form';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 
-import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '../../redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -22,7 +21,7 @@ import menuActions from '../../redux/actions';
 import spacing from '~/theme/spacing';
 
 const EditContact = () => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
 
@@ -159,8 +158,8 @@ const EditContact = () => {
         buttonText={'common:text_save'}
         buttonProps={{
           useI18n: true,
-          color: theme.colors.primary6,
-          textColor: theme.colors.background,
+          color: theme.colors.purple50,
+          textColor: theme.colors.white,
           borderRadius: spacing.borderRadius.small,
           disabled: !isValid,
           testID: 'edit_contact.save',
@@ -180,10 +179,10 @@ const EditContact = () => {
           <TitleComponent icon="EnvelopeAlt" title="settings:title_email" />
           <Button
             testID="edit_contact.email"
-            textProps={{color: theme.colors.borderCard, variant: 'body'}}
+            textProps={{color: theme.colors.gray40, variant: 'body'}}
             style={[
               styles.buttonDropDown,
-              {backgroundColor: theme.colors.bgHover},
+              {backgroundColor: theme.colors.gray40},
             ]}
             contentStyle={styles.buttonDropDownContent}
             activeOpacity={1}
@@ -194,7 +193,7 @@ const EditContact = () => {
           <TitleComponent icon="LocationPoint" title="settings:title_address" />
           <Button
             testID="edit_contact.location"
-            textProps={{color: theme.colors.textInput, variant: 'body'}}
+            textProps={{color: theme.colors.neutral80, variant: 'body'}}
             style={styles.buttonDropDown}
             contentStyle={styles.buttonDropDownContent}
             onPress={e => onEditLocationOpen(e)}>
@@ -214,7 +213,7 @@ const EditContact = () => {
 
 export default EditContact;
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -224,7 +223,7 @@ const themeStyles = (theme: ITheme) => {
     buttonDropDown: {
       borderRadius: spacing.borderRadius.small,
       borderWidth: 1,
-      borderColor: colors.borderCard,
+      borderColor: colors.gray40,
       minHeight: 44,
       alignItems: 'stretch',
       justifyContent: 'center',

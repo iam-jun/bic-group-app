@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Icon from '~/beinComponents/Icon';
 import spacing from '~/theme/spacing';
@@ -12,7 +10,7 @@ export interface MoveLineProps {
 }
 
 const MoveLine: FC<MoveLineProps> = ({style}: MoveLineProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -28,7 +26,7 @@ const MoveLine: FC<MoveLineProps> = ({style}: MoveLineProps) => {
         <Icon
           style={{position: 'absolute', top: -8, left: -1}}
           icon={'AngleDown'}
-          tintColor={colors.textInfo}
+          tintColor={colors.blue50}
         />
       </View>
       <View style={{marginLeft: 28, marginTop: 18}}>
@@ -38,7 +36,7 @@ const MoveLine: FC<MoveLineProps> = ({style}: MoveLineProps) => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {},
@@ -46,7 +44,7 @@ const createStyle = (theme: ITheme) => {
       width: 4,
       height: 4,
       borderRadius: 2,
-      backgroundColor: colors.textInfo,
+      backgroundColor: colors.blue50,
       marginTop: spacing.margin.extraLarge,
       marginRight: spacing.margin.small,
     },
@@ -56,7 +54,7 @@ const createStyle = (theme: ITheme) => {
       marginLeft: 8,
       borderRadius: 1,
       borderWidth: 1.5,
-      borderColor: colors.textInfo,
+      borderColor: colors.blue50,
       borderStyle: 'dashed',
       zIndex: 0,
     },
@@ -75,7 +73,7 @@ const createStyle = (theme: ITheme) => {
       marginLeft: 8,
       borderRadius: 1,
       borderWidth: 1.5,
-      borderColor: colors.textInfo,
+      borderColor: colors.blue50,
       borderStyle: 'dashed',
       zIndex: 0,
     },

@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
@@ -13,7 +12,7 @@ interface TitleComponentProps {
 }
 
 const TitleComponent = ({icon, title}: TitleComponentProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
 
   return (
     <View style={styles.container}>
@@ -21,7 +20,7 @@ const TitleComponent = ({icon, title}: TitleComponentProps) => {
         <Icon
           size={24}
           icon={icon}
-          tintColor={theme.colors.primary6}
+          tintColor={theme.colors.purple50}
           style={styles.iconStyle}
         />
       )}

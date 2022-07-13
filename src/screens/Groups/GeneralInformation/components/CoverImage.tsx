@@ -1,8 +1,8 @@
 import {View, ActivityIndicator, StyleSheet} from 'react-native';
 import React, {useState} from 'react';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import {scaleCoverHeight} from '~/theme/dimension';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
@@ -25,7 +25,7 @@ const CoverImage = ({
   canEditInfo,
 }: Props) => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = themeStyles(theme, coverHeight);
   const loadingCover = useKeySelector(groupsKeySelector.loadingCover);
@@ -36,12 +36,12 @@ const CoverImage = ({
     const coverHeight = scaleCoverHeight(coverWidth);
     setCoverHeight(coverHeight);
   };
-  const textColor = !loadingCover ? colors.primary7 : colors.textDisabled;
+  const textColor = !loadingCover ? colors.purple60 : colors.gray40;
 
   return (
     <View testID={testID}>
       <View style={styles.coverHeader}>
-        <Text.H5 color={colors.iconTint} useI18n>
+        <Text.H5 color={colors.neutral80} useI18n>
           settings:title_cover
         </Text.H5>
         {!!canEditInfo && (
@@ -74,7 +74,7 @@ const CoverImage = ({
   );
 };
 
-const themeStyles = (theme: ITheme, coverHeight: number) => {
+const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -85,7 +85,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       marginVertical: spacing.margin.small,
     },
     imageLoading: {
-      backgroundColor: colors.bgDisable,
+      backgroundColor: colors.gray20,
       justifyContent: 'center',
     },
     cover: {

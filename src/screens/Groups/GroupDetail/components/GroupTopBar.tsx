@@ -1,8 +1,9 @@
 import Clipboard from '@react-native-clipboard/clipboard';
 import React from 'react';
 import {Share, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
+
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
@@ -15,7 +16,6 @@ import modalActions, {
   clearToastMessage,
   showHideToastMessage,
 } from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
 import spacing from '~/theme/spacing';
 import {openLink} from '~/utils/common';
 import {formatChannelLink, getLink, LINK_GROUP} from '~/utils/link';
@@ -26,7 +26,7 @@ import groupsKeySelector from '../../redux/keySelector';
 
 const GroupTopBar = () => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {rootNavigation} = useRootNavigation();
 
   const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
@@ -138,7 +138,7 @@ const GroupTopBar = () => {
     // only admin can see this button
     return (
       <ButtonWrapper onPress={onPressMenu} testID="group_top_bar.admin_button">
-        <Icon icon={'iconShieldStar'} fill={theme.colors.iconTint} size={24} />
+        <Icon icon={'iconShieldStar'} fill={theme.colors.neutral80} size={24} />
       </ButtonWrapper>
     );
   };
@@ -152,7 +152,7 @@ const GroupTopBar = () => {
             icon={'iconSearch'}
             size={22}
             style={styles.iconSearch}
-            tintColor={theme.colors.iconTint}
+            tintColor={theme.colors.neutral80}
           />
         </ButtonWrapper>
       )
@@ -162,7 +162,7 @@ const GroupTopBar = () => {
   const renderGroupOption = () => {
     return (
       <ButtonWrapper onPress={onPressMenu} testID="group_top_bar.option_menu">
-        <Icon icon={'EllipsisH'} tintColor={theme.colors.iconTint} />
+        <Icon icon={'EllipsisH'} tintColor={theme.colors.neutral80} />
       </ButtonWrapper>
     );
   };
@@ -173,7 +173,7 @@ const GroupTopBar = () => {
         <Icon
           icon={'iconChat'}
           size={24}
-          tintColor={theme.colors.iconTint}
+          tintColor={theme.colors.neutral80}
           style={styles.iconShieldStar}
         />
         <NotificationsBadge.Alert

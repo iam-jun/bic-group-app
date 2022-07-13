@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {FlatList, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
 import Header from '~/beinComponents/Header';
@@ -19,7 +19,7 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import * as modalActions from '~/store/modal/actions';
 import {showHideToastMessage} from '~/store/modal/actions';
 import dimension from '~/theme/dimension';
-import {ITheme} from '~/theme/interfaces';
+
 import spacing from '~/theme/spacing';
 import {checkPermission} from '~/utils/permission';
 
@@ -28,7 +28,7 @@ const PostSelectImage = () => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -153,7 +153,7 @@ const PostSelectImage = () => {
   };
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.surface}>
+    <ScreenWrapper isFullView backgroundColor={colors.neutral1}>
       <Header
         titleTextProps={{useI18n: true}}
         title={'post:title_edit_images'}
@@ -175,10 +175,10 @@ const PostSelectImage = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
-    container: {backgroundColor: colors.background},
+    container: {backgroundColor: colors.white},
     item: {marginBottom: spacing.margin.large, alignSelf: 'center'},
   });
 };

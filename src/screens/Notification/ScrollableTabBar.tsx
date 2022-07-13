@@ -4,10 +4,8 @@ import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
-import {useTheme} from 'react-native-paper';
 
 import Filter from '~/beinComponents/Filter';
-import {ITheme} from '~/theme/interfaces';
 import NotificationList from './NotificationList';
 import spacing from '~/theme/spacing';
 
@@ -38,8 +36,6 @@ const ScrollableTabBar = ({
   onChangeTab,
   activeIndex = 0,
 }: Props) => {
-  const theme: ITheme = useTheme() as ITheme;
-
   const scrollViewRef = useRef<any>();
   const filterRef = useRef<any>();
   const translateX = useSharedValue(0);

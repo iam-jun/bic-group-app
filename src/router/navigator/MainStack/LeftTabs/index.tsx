@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {DeviceEventEmitter, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 
@@ -9,7 +9,7 @@ import Image from '~/beinComponents/Image';
 import {bottomTabIcons, bottomTabIconsFocused} from '~/configs/navigator';
 import useTabBadge from '~/hooks/tabBadge';
 import images from '~/resources/images';
-import {ITheme} from '~/theme/interfaces';
+
 import notificationsActions from '../../../../screens/Notification/redux/actions';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens} from './screens';
@@ -21,7 +21,7 @@ interface Props {
 }
 
 const LeftTabs: React.FC<Props> = (): React.ReactElement => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = CreateStyle(theme);
 
@@ -63,7 +63,7 @@ const LeftTabs: React.FC<Props> = (): React.ReactElement => {
   return (
     // @ts-ignore
     <Tab.Navigator
-      activeBackgroundColor={colors.bgButtonSecondary}
+      activeBackgroundColor={colors.white}
       backBehavior={'history'}
       tabBarStyle={styles.navigatorContainer}>
       {Object.entries(screens).map(([name, component]) => {
@@ -101,12 +101,12 @@ const LeftTabs: React.FC<Props> = (): React.ReactElement => {
   );
 };
 
-const CreateStyle = (theme: ITheme) => {
+const CreateStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
     navigatorContainer: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       width: 48,
     },
     logoBein: {

@@ -6,12 +6,12 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
-import {ITheme} from '~/theme/interfaces';
+
 import useModal from '~/hooks/modal';
 import spacing from '~/theme/spacing';
 
 const LoadingModal = () => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
 
   const {loading} = useModal();
@@ -29,7 +29,7 @@ const LoadingModal = () => {
           <ActivityIndicator
             size={72}
             style={styles.loadingIndicator}
-            color={theme.colors.background}
+            color={theme.colors.white}
           />
         </View>
         <Text.ButtonSmall style={styles.textLoading}>
@@ -40,7 +40,7 @@ const LoadingModal = () => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const insets = useSafeAreaInsets();
   const {colors} = theme;
 
@@ -64,7 +64,7 @@ const themeStyles = (theme: ITheme) => {
       borderRadius: 50,
     },
     textLoading: {
-      color: colors.background,
+      color: colors.white,
     },
     loadingIndicator: {
       position: 'absolute',

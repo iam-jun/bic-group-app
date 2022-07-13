@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Avatar from '~/beinComponents/Avatar';
 import SearchInput, {
@@ -15,7 +15,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {IUser} from '~/interfaces/IAuth';
 import images from '~/resources/images';
 import dimension from '~/theme/dimension';
-import {ITheme} from '~/theme/interfaces';
+
 import spacing from '~/theme/spacing';
 import NoSearchResult from './NoSearchResult';
 
@@ -48,7 +48,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   selectedUsers,
   onSelectUser,
 }: MembersSelectionProps): React.ReactElement => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
 
   const renderItemUser = ({item}: {item: IUser; index: number}) => {
     const selected = selectedUsers.find((user: IUser) => user.id === item.id);
@@ -59,9 +59,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
           <Text.H6 numberOfLines={2}>
             {item.name}
             <Text.Subtitle
-              color={
-                theme.colors.textSecondary
-              }>{` @${item.username}`}</Text.Subtitle>
+              color={theme.colors.gray50}>{` @${item.username}`}</Text.Subtitle>
           </Text.H6>
         }
         isChecked={!!selected}

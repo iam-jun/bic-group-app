@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle, Dimensions} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import {IGroup} from '~/interfaces/IGroup';
@@ -27,7 +25,7 @@ const ReorderGroupItem: FC<ReorderGroupItemProps> = ({
   style,
   group,
 }: ReorderGroupItemProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -39,7 +37,7 @@ const ReorderGroupItem: FC<ReorderGroupItemProps> = ({
     <View style={[styles.container, style]}>
       <View style={styles.groupInfo}>
         <View style={styles.drag}>
-          <Icon size={16} icon={'Bars'} tintColor={colors.background} />
+          <Icon size={16} icon={'Bars'} tintColor={colors.white} />
         </View>
         <View>
           <Avatar.Small source={icon} />
@@ -57,7 +55,7 @@ const ReorderGroupItem: FC<ReorderGroupItemProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -72,8 +70,8 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       borderWidth: 1,
-      borderColor: colors.borderDivider,
-      backgroundColor: colors.background,
+      borderColor: colors.neutral5,
+      backgroundColor: colors.white,
     },
     iconPrivacy: {
       width: spacing.margin.base,
@@ -81,14 +79,14 @@ const createStyle = (theme: ITheme) => {
       position: 'absolute',
       bottom: 0,
       right: 0,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       borderRadius: 2,
     },
     textName: {flex: 1, marginLeft: spacing.margin.small},
     drag: {
       width: 25,
       height: '100%',
-      backgroundColor: colors.bgFocus,
+      backgroundColor: colors.gray20,
       marginRight: spacing.margin.small,
       justifyContent: 'center',
       alignItems: 'center',

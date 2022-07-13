@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
@@ -9,7 +9,7 @@ import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import NormalToastMessage from '~/beinComponents/ToastMessage/NormalToastMessage';
 // import {copyDeviceToken} from '~/store/app/actions';
-import {ITheme} from '~/theme/interfaces';
+
 import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {IToastMessage} from '~/interfaces/common';
@@ -18,7 +18,7 @@ import BannerMessage from '~/beinComponents/ToastMessage/BannerMessage';
 import spacing from '~/theme/spacing';
 
 const Section1 = () => {
-  const {colors}: ITheme = useTheme() as ITheme;
+  const {colors}: ExtendedTheme = useTheme() as ExtendedTheme;
 
   const [showError, setShowError] = useState(true);
   const [showWarning, setShowWarning] = useState(true);
@@ -286,7 +286,7 @@ const Section1 = () => {
             Default
           </Button.Primary>
           <Button.Primary
-            color={colors.iconTint}
+            color={colors.neutral80}
             onPress={() => alert('onPress')}>
             Hover
           </Button.Primary>
@@ -327,9 +327,9 @@ const Section1 = () => {
           </Button.Secondary>
         </View>
         <Button.Secondary
-          color={colors.primary3}
+          color={colors.purple10}
           leftIcon={'bell'}
-          leftIconProps={{icon: 'bell', tintColor: colors.primary6}}
+          leftIconProps={{icon: 'bell', tintColor: colors.purple50}}
           rightIcon={'ArrowRight'}
           onPress={() => alert('onPress')}
           onLongPress={() => alert('onLongPress')}>
@@ -337,7 +337,7 @@ const Section1 = () => {
         </Button.Secondary>
         <Button.Secondary
           disabled
-          color={colors.primary3}
+          color={colors.purple10}
           style={{marginTop: spacing?.margin.small}}
           leftIcon={'Emoji'}
           rightIcon={'ArrowRight'}
@@ -388,7 +388,7 @@ const Section1 = () => {
         />
         <View
           style={{
-            backgroundColor: colors.bgButtonPrimary,
+            backgroundColor: colors.purple50,
             marginHorizontal: -12,
             paddingTop: spacing?.padding.base,
             paddingBottom: spacing?.padding.large,

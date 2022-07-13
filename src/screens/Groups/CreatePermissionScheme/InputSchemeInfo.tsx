@@ -1,8 +1,6 @@
 import React, {FC, useEffect, useRef, useState} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import TextInput from '~/beinComponents/inputs/TextInput';
@@ -24,7 +22,7 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
 
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
 
   const name = useKeySelector(groupsKeySelector.permission.creatingScheme.name);
@@ -63,8 +61,8 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
         //   error ? i18next.t('profile:text_name_must_not_be_empty') : undefined
         // }
         placeholder={t('communities:permission:text_create_scheme_name')}
-        activeOutlineColor={theme.colors.primary6}
-        outlineColor={theme.colors.borderCard}
+        activeOutlineColor={theme.colors.purple50}
+        outlineColor={theme.colors.gray40}
         maxLength={64}
       />
       <Text.H5 style={styles.textTitle} useI18n>
@@ -82,8 +80,8 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
           multiline
           style={{marginTop: 0}}
           placeholder={t('communities:permission:text_create_scheme_desc')}
-          activeOutlineColor={theme.colors.background}
-          outlineColor={theme.colors.background}
+          activeOutlineColor={theme.colors.white}
+          outlineColor={theme.colors.white}
           maxLength={255}
           onFocus={onFocusDesc}
           onBlur={onBlurDesc}
@@ -96,11 +94,11 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       marginTop: spacing.margin.base,
       paddingVertical: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
@@ -115,17 +113,17 @@ const createStyle = (theme: ITheme) => {
     },
     textInputActive: {
       borderWidth: 2,
-      borderColor: colors.primary6,
+      borderColor: colors.purple50,
     },
     textInputInactive: {
       borderWidth: 1,
       paddingHorizontal: 1,
       paddingTop: 1,
       paddingBottom: spacing.padding.extraLarge || 24 + 1,
-      borderColor: colors.borderCard,
+      borderColor: colors.gray40,
     },
     textCount: {
-      color: colors.textSecondary,
+      color: colors.gray50,
       marginRight: spacing.margin.large,
       position: 'absolute',
       right: 0,

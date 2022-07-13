@@ -1,8 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import {IOptionItem} from '~/interfaces/IEditUser';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
@@ -30,7 +29,7 @@ const OptionMenu = ({
   onItemPress,
   testID,
 }: OptionMenuProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
 
   const renderItem = ({item}: {item: IOptionItem}) => {
     return (
@@ -45,7 +44,7 @@ const OptionMenu = ({
               <Icon
                 icon={'Check'}
                 size={24}
-                tintColor={theme.colors.primary7}
+                tintColor={theme.colors.purple60}
               />
             ) : undefined
           }
@@ -61,7 +60,7 @@ const OptionMenu = ({
         ContentComponent={
           <View style={styles.contentComponent}>
             <Text.ButtonSmall
-              color={theme.colors.textSecondary}
+              color={theme.colors.gray50}
               style={styles.chooseText}
               useI18n>
               {title}

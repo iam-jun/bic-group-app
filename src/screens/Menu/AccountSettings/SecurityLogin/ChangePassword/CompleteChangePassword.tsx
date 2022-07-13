@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, useWindowDimensions, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
@@ -8,14 +8,14 @@ import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import completeSvg from '../../../../../../assets/images/settings_change_password_complete.svg';
 import {authStack} from '~/configs/navigator';
-import {ITheme} from '~/theme/interfaces';
+
 import {useBaseHook} from '~/hooks';
 import spacing from '~/theme/spacing';
 
 const CompleteChangePassword = () => {
   const {t, navigation} = useBaseHook();
   const dimensions = useWindowDimensions();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
 
   const imgMaxWidth = 500;
@@ -49,7 +49,7 @@ const CompleteChangePassword = () => {
 
 export default CompleteChangePassword;
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -58,7 +58,7 @@ const themeStyles = (theme: ITheme) => {
       paddingTop: spacing.padding.big,
       paddingBottom: spacing.padding.big,
       paddingHorizontal: spacing.padding.big,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     svg: {
       marginVertical: spacing.margin.big || 24,

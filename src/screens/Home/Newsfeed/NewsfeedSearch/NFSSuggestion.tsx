@@ -1,8 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
 import {View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
@@ -26,7 +24,7 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -99,7 +97,7 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
           <TouchableOpacity
             style={styles.ctaContainer}
             onPress={onPressCtaSearch}>
-            <Icon icon={'search'} tintColor={colors.primary6} />
+            <Icon icon={'search'} tintColor={colors.purple50} />
             <Text style={styles.ctaText}>{ctaText}</Text>
           </TouchableOpacity>
         ) : (
@@ -115,7 +113,7 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -130,7 +128,7 @@ const createStyle = (theme: ITheme) => {
     ctaText: {
       flex: 1,
       marginLeft: spacing.margin.large,
-      color: colors.primary6,
+      color: colors.purple50,
     },
   });
 };

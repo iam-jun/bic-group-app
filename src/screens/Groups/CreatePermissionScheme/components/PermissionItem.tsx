@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
@@ -35,7 +33,7 @@ const PermissionItem: FC<PermissionItemProps> = ({
   isFixedForCreator,
 }: PermissionItemProps) => {
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
 
   const {restrictedRoles = [], name = ''} = permission;
@@ -79,7 +77,7 @@ const PermissionItem: FC<PermissionItemProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {},
@@ -89,7 +87,7 @@ const createStyle = (theme: ITheme) => {
     permissionItem: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.base,
     },

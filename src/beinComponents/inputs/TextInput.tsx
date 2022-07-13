@@ -33,7 +33,7 @@ export interface TextInputProps extends TextInputPaperProps {
   helperTextProps?: TextProps;
   helperAction?: string;
   helperActionOnPress?: () => void;
-  theme?: ITheme;
+  theme?: ExtendedTheme;
   placeholder?: string;
   label?: string;
   error?: boolean;
@@ -130,7 +130,7 @@ const TextInput: React.FC<TextInputProps> = ({
         placeholder={placeholder}
         selectionColor={colors.gray50}
         // @ts-ignore
-        outlineColor={colors.textInput}
+        outlineColor={colors.neutral80}
         mode={'outlined'}
         theme={customTheme}
         dense

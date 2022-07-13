@@ -1,11 +1,10 @@
 import {StyleSheet, View, Pressable} from 'react-native';
 import React, {useState} from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import {ITheme} from '~/theme/interfaces';
 
 import SearchMemberView from './SearchMemberView';
 import MembersContent from './MembersContent';
@@ -16,7 +15,7 @@ import spacing from '~/theme/spacing';
 const CommunityMembers = ({route}: any) => {
   const {communityId} = route.params;
 
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyles(theme);
   const {t} = useBaseHook();
@@ -36,7 +35,7 @@ const CommunityMembers = ({route}: any) => {
   }, []);
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.background}>
+    <ScreenWrapper isFullView backgroundColor={colors.white}>
       <Header titleTextProps={{useI18n: true}} title={'groups:title_members'} />
       <View style={styles.searchBar}>
         <Pressable
@@ -64,7 +63,7 @@ const CommunityMembers = ({route}: any) => {
 
 export default CommunityMembers;
 
-const createStyles = (theme: ITheme) => {
+const createStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -74,7 +73,7 @@ const createStyles = (theme: ITheme) => {
     },
     searchAndInvite: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       justifyContent: 'space-between',
       marginHorizontal: spacing.margin.base,
       marginVertical: spacing.margin.base,

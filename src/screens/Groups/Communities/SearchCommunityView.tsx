@@ -1,10 +1,9 @@
 import {View, StyleSheet} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {debounce} from 'lodash';
 
-import {ITheme} from '~/theme/interfaces';
 import SearchBaseView from '~/beinComponents/SearchBaseView';
 import Text from '~/beinComponents/Text';
 import actions from '~/screens/Groups/redux/actions';
@@ -29,7 +28,7 @@ const SearchCommunityView = ({
   onPressCommunity,
 }: SearchCommunityViewProps) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles();
 
@@ -72,7 +71,7 @@ const SearchCommunityView = ({
       ) : (
         <View style={styles.text}>
           <Text.BodyS
-            color={theme.colors.textSecondary}
+            color={theme.colors.gray50}
             testID="search_community_view.type_search"
             useI18n>
             common:text_type_search_keyword

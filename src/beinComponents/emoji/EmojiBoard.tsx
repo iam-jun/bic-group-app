@@ -7,14 +7,14 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import Button from '~/beinComponents/Button';
 import EmojiNameToast from '~/beinComponents/emoji/EmojiNameToast';
 import EmojiSelector, {Categories} from '~/beinComponents/emoji/EmojiSelector';
 import Icon from '~/beinComponents/Icon';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
-import {ITheme} from '~/theme/interfaces';
+
 import spacing from '~/theme/spacing';
 
 export interface EmojiBoardProps {
@@ -39,7 +39,7 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
 
   const emojiRef = useRef<any>();
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {t} = useBaseHook();
   const {colors} = theme;
   const styles = createStyle(theme);
@@ -59,12 +59,12 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
       activeOpacity={1}
       style={[styles.container, {width, height}]}>
       <EmojiSelector
-        theme={colors.primary}
+        theme={colors.purple60}
         showHistory={true}
         showSearchBar={true}
         category={Categories.emotion}
         placeholder={t('common:text_search_emoji')}
-        inactiveTab={colors.borderDivider}
+        inactiveTab={colors.neutral5}
         showSectionTitles={false}
         columns={7}
         onEmojiSelected={_onEmojiSelected}
@@ -92,27 +92,27 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
       width: '100%',
       height: 100,
       paddingTop: spacing.padding.base,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       overflow: 'hidden',
       borderTopWidth: 1,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
     },
     buttonContainer: {
       height: 52,
       borderTopWidth: 1,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
       flexDirection: 'row',
       alignItems: 'center',
     },
     buttonSide: {
-      backgroundColor: colors.placeholder,
+      backgroundColor: colors.neutral5,
       padding: spacing.padding.small,
       borderRadius: spacing.borderRadius.small,
       marginHorizontal: spacing.margin.large,
@@ -120,7 +120,7 @@ const createStyle = (theme: ITheme) => {
     buttonSpace: {
       flex: 1,
       height: 36,
-      backgroundColor: colors.placeholder,
+      backgroundColor: colors.neutral5,
       padding: spacing.padding.small,
       borderRadius: spacing.borderRadius.small,
       marginHorizontal: spacing.margin.extraLarge,

@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {FlatList, RefreshControl, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import CommentItem from '~/beinComponents/list/items/CommentItem';
@@ -10,7 +10,7 @@ import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
 import {IAudienceGroup, ICommentData} from '~/interfaces/IPost';
 import modalActions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+
 import CommentInputView from '../components/CommentInputView';
 import postActions from '../redux/actions';
 import postKeySelector from '../redux/keySelector';
@@ -30,7 +30,7 @@ const CommentDetailContent = (props: any) => {
   const [isEmpty, setIsEmpty] = useState(false);
   const [isScrollFirst, setIsScrollFirst] = useState(false);
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
 
   const {t} = useBaseHook();
   const dispatch = useDispatch();
@@ -338,7 +338,7 @@ const CommentDetailContent = (props: any) => {
           <RefreshControl
             refreshing={refreshing}
             onRefresh={onRefresh}
-            tintColor={theme.colors.borderDisable}
+            tintColor={theme.colors.gray40}
           />
         }
       />
@@ -367,7 +367,7 @@ const CommentLevel1 = ({
     return null;
   }
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
 
   return (
@@ -411,7 +411,7 @@ const getListChildComment = (
   };
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -420,13 +420,13 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
     },
     highlightText: {
-      color: colors.link,
+      color: colors.blue50,
     },
     headerText: {
       fontSize: 14,
     },
     footer: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.large,
       paddingBottom: spacing.padding.extraLarge,
       paddingTop: spacing.padding.large,

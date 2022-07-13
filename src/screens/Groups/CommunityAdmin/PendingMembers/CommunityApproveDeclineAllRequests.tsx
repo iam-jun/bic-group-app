@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import ButtonApproveDeclineAllRequests from '~/screens/Groups/components/ButtonApproveDeclineAllRequests';
@@ -11,7 +11,7 @@ import {
 } from '~/store/modal/actions';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
-import {ITheme} from '~/theme/interfaces';
+
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import {useKeySelector} from '~/hooks/selector';
@@ -20,7 +20,7 @@ import {IToastMessage} from '~/interfaces/common';
 import {useBaseHook} from '~/hooks';
 
 const CommunityApproveDeclineAllRequests = () => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const timeOutRef = useRef<any>();
@@ -42,7 +42,7 @@ const CommunityApproveDeclineAllRequests = () => {
       ContentComponent: Text.BodyS,
       cancelBtn: true,
       cancelBtnProps: {
-        textColor: theme.colors.primary7,
+        textColor: theme.colors.purple60,
       },
       onConfirm: doAction,
       confirmLabel: t('common:btn_confirm'),

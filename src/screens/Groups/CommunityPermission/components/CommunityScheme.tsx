@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
@@ -29,7 +27,7 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
   const {colors} = theme || {};
 
@@ -79,7 +77,7 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
             {deleting ? (
               <LoadingIndicator size={16} />
             ) : (
-              <Icon size={16} tintColor={colors.badgeError} icon={'TrashAlt'} />
+              <Icon size={16} tintColor={colors.red40} icon={'TrashAlt'} />
             )}
           </Button>
         </View>
@@ -119,13 +117,13 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {
       padding: spacing.padding.large,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       marginTop: spacing.margin.base,
       borderRadius: spacing.borderRadius.small,
     },
@@ -147,12 +145,12 @@ const createStyle = (theme: ITheme) => {
       marginBottom: spacing.margin.tiny,
     },
     buttonEdit: {
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray40,
       padding: spacing.padding.small,
       borderRadius: spacing.borderRadius.tiny,
     },
     buttonDelete: {
-      backgroundColor: colors.bgError,
+      backgroundColor: colors.red1,
       padding: spacing.padding.small,
       borderRadius: spacing.borderRadius.tiny,
       marginLeft: spacing.margin.small,

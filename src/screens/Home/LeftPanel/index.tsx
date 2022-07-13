@@ -1,12 +1,12 @@
 import React from 'react';
 import {DeviceEventEmitter, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {useRootNavigation} from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import * as modalActions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+
 import {IconType} from '~/resources/icons';
 import {appScreens} from '~/configs/navigator';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
@@ -15,7 +15,7 @@ import spacing from '~/theme/spacing';
 const LeftPanel = () => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -70,7 +70,7 @@ const LeftPanel = () => {
         path: appScreens.draftPost,
         onPress: onPressDraftPost,
         type: 'draftPost',
-        badgeColor: colors.textSecondary,
+        badgeColor: colors.gray50,
         testID: 'left_panel.draft',
       })}
       {renderItem({
@@ -83,7 +83,7 @@ const LeftPanel = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     root: {
@@ -97,7 +97,7 @@ const createStyle = (theme: ITheme) => {
       height: 32,
       position: 'absolute',
       marginTop: 10,
-      backgroundColor: colors.primary5,
+      backgroundColor: colors.purple30,
       borderTopRightRadius: 6,
       borderBottomRightRadius: 6,
     },
@@ -108,13 +108,13 @@ const createStyle = (theme: ITheme) => {
     badgeNumberContainer: {
       minWidth: 20,
       minHeight: 20,
-      backgroundColor: colors.error,
+      backgroundColor: colors.red60,
       borderRadius: 20,
       justifyContent: 'center',
       alignItems: 'center',
     },
     badgeNumber: {
-      color: colors.textReversed,
+      color: colors.white,
       marginTop: -2,
     },
   });

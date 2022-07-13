@@ -6,10 +6,10 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import MemberItem from './MemberItem';
 import spacing from '~/theme/spacing';
@@ -29,7 +29,7 @@ const MemberSearchResult = ({
   onRefresh,
   onPressMenu,
 }: MemberSearchResultProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
 
   const {loading, canLoadMore, data} = memberSearchData;
 
@@ -48,7 +48,7 @@ const MemberSearchResult = ({
     return (
       <View style={styles.textNoResults}>
         <Text.Body
-          color={theme.colors.textSecondary}
+          color={theme.colors.gray50}
           useI18n
           testID="member_search_result.no_results">
           common:text_no_results_found
@@ -93,7 +93,7 @@ const MemberSearchResult = ({
           <RefreshControl
             refreshing={loading}
             onRefresh={onRefresh}
-            tintColor={theme.colors.borderDisable}
+            tintColor={theme.colors.gray40}
           />
         ) : undefined
       }

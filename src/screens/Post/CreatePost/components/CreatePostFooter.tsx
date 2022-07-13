@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import PostToolbar from '~/screens/Post/components/PostToolbar';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
@@ -31,7 +29,7 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
 }: CreatePostFooterProps) => {
   const showMentionValue = useSharedValue(0);
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
 
   const mentionContainerStyle = useAnimatedStyle(() => ({
@@ -72,11 +70,11 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     mentionBar: {
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
     },
   });
 };

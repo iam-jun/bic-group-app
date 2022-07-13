@@ -7,7 +7,7 @@ import {
   Text as RNText,
   View,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
@@ -20,7 +20,7 @@ import {IFilePicked} from '~/interfaces/common';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import modalActions from '~/store/modal/actions';
 import {fontFamilies} from '~/theme/fonts';
-import {ITheme} from '~/theme/interfaces';
+
 import PostPhotoPreview from '../../components/PostPhotoPreview';
 import postActions from '../../redux/actions';
 import {CONTENT_MIN_HEIGHT, MIN_INPUT_HEIGHT} from '../constanst';
@@ -43,7 +43,7 @@ interface Props {
 
 const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
   const mentionInputRef = useRef<any>();
   const {rootNavigation} = useRootNavigation();
@@ -235,7 +235,7 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -252,7 +252,7 @@ const themeStyles = (theme: ITheme) => {
     },
     textCloneContainer: {height: 0, overflow: 'hidden'},
     buttonSettings: {
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray40,
       borderRadius: spacing.borderRadius.small,
     },
   });

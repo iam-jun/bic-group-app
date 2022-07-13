@@ -1,13 +1,13 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Avatar from '~/beinComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import {IconType} from '~/resources/icons';
-import {ITheme} from '~/theme/interfaces';
+
 import {formatFullTime} from '~/beinComponents/TimeView';
 import {AppContext} from '~/contexts/AppContext';
 import {IJoiningMember} from '~/interfaces/IGroup';
@@ -26,7 +26,7 @@ const PendingUserItem = ({
   onPressApprove,
   onPressDecline,
 }: PendingUserItemProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {t} = useBaseHook();
   const {language} = useContext(AppContext);
 
@@ -53,7 +53,7 @@ const PendingUserItem = ({
     return (
       (!!title || !!TitleComponent) && (
         <View style={styles.itemComponent}>
-          <Icon icon={icon} tintColor={theme.colors.primary6} size={24} />
+          <Icon icon={icon} tintColor={theme.colors.purple50} size={24} />
           <Text.Body style={styles.text}>{title}</Text.Body>
           {TitleComponent}
         </View>
@@ -68,7 +68,7 @@ const PendingUserItem = ({
 
         <View style={styles.textHeader}>
           <Text.ButtonBase>{fullName}</Text.ButtonBase>
-          <Text.Body color={theme.colors.textSecondary}>
+          <Text.Body color={theme.colors.gray50}>
             {`${t('groups:text_requested_at')} ${formatFullTime(
               updatedAt,
               language,
@@ -110,8 +110,8 @@ const PendingUserItem = ({
           <Button.Secondary
             testID="pending_user_item.btn_decline"
             style={styles.buttonDecline}
-            color={theme.colors.bgHover}
-            textColor={theme.colors.textPrimary}
+            color={theme.colors.gray40}
+            textColor={theme.colors.neutral80}
             onPress={onPressDecline}
             useI18n>
             common:btn_decline
@@ -120,7 +120,7 @@ const PendingUserItem = ({
             highEmphasis
             testID="pending_user_item.btn_approve"
             style={styles.buttonApprove}
-            color={theme.colors.primary6}
+            color={theme.colors.purple50}
             onPress={onPressApprove}
             useI18n>
             common:btn_approve

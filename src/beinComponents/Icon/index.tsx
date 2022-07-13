@@ -14,7 +14,7 @@ import SvgIcon, {SVGIconProps} from './SvgIcon';
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import icons, {IconType} from '~/resources/icons';
-import {ITheme} from '~/theme/interfaces';
+
 import {View} from 'react-native';
 import TextEmojiIcon from '~/beinComponents/Icon/TextEmojiIcon';
 import {useNetInfo} from '@react-native-community/netinfo';

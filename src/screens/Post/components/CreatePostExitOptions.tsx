@@ -1,12 +1,11 @@
 import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
 import modalActions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
 
 import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -22,7 +21,7 @@ const CreatePostExitOptions: FC<CreatePostExitOptionsProps> = ({
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
 
   const onPressSaveAsDraft = () => {
@@ -43,7 +42,7 @@ const CreatePostExitOptions: FC<CreatePostExitOptionsProps> = ({
     <View style={styles.container}>
       <View style={styles.header}>
         <Text.H6 useI18n>post:post_exit_title</Text.H6>
-        <Text.Subtitle color={colors.textSecondary} useI18n>
+        <Text.Subtitle color={colors.gray50} useI18n>
           post:post_exit_desc
         </Text.Subtitle>
       </View>

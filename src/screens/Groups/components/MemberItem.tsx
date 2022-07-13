@@ -2,10 +2,10 @@ import {StyleSheet} from 'react-native';
 import React from 'react';
 
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import images from '~/resources/images';
 import useAuth from '~/hooks/auth';
 import {formatDMLink} from '~/utils/link';
@@ -23,7 +23,7 @@ interface MemberItemProps {
 }
 
 const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyles(theme);
   const {colors} = theme;
   const {user} = useAuth();
@@ -53,8 +53,7 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
       ContentComponent={
         <Text.Body numberOfLines={1}>
           {fullname}
-          <Text.BodyS
-            color={colors.textSecondary}>{` @${username}`}</Text.BodyS>
+          <Text.BodyS color={colors.gray50}>{` @${username}`}</Text.BodyS>
         </Text.Body>
       }
       RightComponent={
@@ -62,7 +61,7 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
           {user?.username !== username && (
             <Icon
               icon={'CommentAltDots'}
-              backgroundColor={colors.bgSecondary}
+              backgroundColor={colors.neutral1}
               style={styles.iconChat}
               onPress={onPressChat}
               buttonTestID="member_item.icon_chat.button"
@@ -82,7 +81,7 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
   );
 };
 
-const createStyles = (theme: ITheme) => {
+const createStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     itemContainer: {
       height: undefined,

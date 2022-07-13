@@ -1,8 +1,6 @@
 import React, {useEffect} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
 import {useBaseHook} from '~/hooks';
@@ -17,7 +15,7 @@ import groupsActions from '~/screens/Groups/redux/actions';
 const CommunityPermission = () => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
 
   const {id: communityId} =
@@ -47,12 +45,12 @@ const CommunityPermission = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray40,
     },
   });
 };

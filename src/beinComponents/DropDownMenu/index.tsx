@@ -6,9 +6,7 @@ import {
   ViewStyle,
   TouchableOpacity,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
@@ -47,7 +45,7 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
   const showOptionsValue = useSharedValue(0);
 
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -88,12 +86,12 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
         style={styles.row}>
         {!!icon && (
           <Icon
-            tintColor={colors.textSecondary}
+            tintColor={colors.gray50}
             icon={icon}
             style={{marginRight: spacing.margin.tiny}}
           />
         )}
-        <Text useI18n color={colors.textSecondary}>
+        <Text useI18n color={colors.gray50}>
           {title}
         </Text>
         <Icon icon={'AngleDown'} style={{marginLeft: spacing.margin.tiny}} />
@@ -110,12 +108,12 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
         <View style={styles.row}>
           {!!item?.icon && (
             <Icon
-              tintColor={colors.textSecondary}
+              tintColor={colors.gray50}
               icon={item?.icon}
               style={{marginRight: spacing.margin.tiny}}
             />
           )}
-          <Text useI18n color={colors.textSecondary}>
+          <Text useI18n color={colors.gray50}>
             {item?.title}
           </Text>
         </View>
@@ -142,7 +140,7 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -156,9 +154,9 @@ const createStyle = (theme: ITheme) => {
     optionStyle: {
       position: 'absolute',
       borderRadius: spacing.borderRadius.small,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
       borderWidth: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       zIndex: 10,
       shadowColor: '#000',
       shadowOffset: {
@@ -171,9 +169,9 @@ const createStyle = (theme: ITheme) => {
     },
     activeItemContainer: {
       borderRadius: spacing.borderRadius.small,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
       borderWidth: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
   });
 };

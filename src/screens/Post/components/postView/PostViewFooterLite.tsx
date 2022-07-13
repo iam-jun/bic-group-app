@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
@@ -18,7 +16,7 @@ const PostViewFooterLite: FC<PostViewFooterLiteProps> = ({
   commentsCount,
 }: PostViewFooterLiteProps) => {
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
 
   if (commentsCount <= 0) {
@@ -27,7 +25,7 @@ const PostViewFooterLite: FC<PostViewFooterLiteProps> = ({
 
   return (
     <View testID={'post_view_footer_lite'} style={styles.container}>
-      <Text.Subtitle color={colors.textSecondary}>
+      <Text.Subtitle color={colors.gray50}>
         {`${commentsCount} ${t(
           commentsCount > 1 ? 'post:label_comments' : 'post:label_comment',
         )}`}

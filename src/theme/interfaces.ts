@@ -1,6 +1,6 @@
-export interface ITheme extends ReactNativePaper.Theme {
+export interface ExtendedTheme extends ReactNativePaper.Theme {
   dark: boolean;
-  colors: IThemeColors;
+  colors: ExtendedThemeColors;
   spacing: ISpacing;
   dimension: IDimension;
   shadow?: any;
@@ -9,7 +9,7 @@ export interface ITheme extends ReactNativePaper.Theme {
   animation: any;
 }
 
-export interface IThemeColors extends ReactNativePaper.ThemeColors {
+export interface ExtendedThemeColors extends ReactNativePaper.ThemeColors {
   transparent?: string;
   transparent1?: string;
   primary: string;

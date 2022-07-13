@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, Keyboard} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {useKeySelector} from '~/hooks/selector';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
@@ -21,7 +19,7 @@ const NewsfeedSearch: FC<NewsfeedSearchProps> = ({
   headerRef,
 }: NewsfeedSearchProps) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
 
@@ -57,7 +55,7 @@ const NewsfeedSearch: FC<NewsfeedSearchProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme, insets: any) => {
+const createStyle = (theme: ExtendedTheme, insets: any) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -66,7 +64,7 @@ const createStyle = (theme: ITheme, insets: any) => {
       bottom: 0,
       left: 0,
       right: 0,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
   });
 };

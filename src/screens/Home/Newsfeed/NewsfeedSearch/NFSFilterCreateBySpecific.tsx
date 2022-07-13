@@ -7,12 +7,10 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {debounce} from 'lodash';
 import {useDispatch} from 'react-redux';
 import {TouchableOpacity as TouchableGestureHandler} from 'react-native-gesture-handler';
-
-import {ITheme} from '~/theme/interfaces';
 
 import {useKeySelector} from '~/hooks/selector';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
@@ -38,7 +36,7 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
 }: NFSFilterCreateBySpecificProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
 
   const {data, canLoadMore} =
     useKeySelector(homeKeySelector.newsfeedSearchUsers) || {};
@@ -86,7 +84,7 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
       return (
         <ActivityIndicator
           style={{marginVertical: spacing.margin.base}}
-          color={theme.colors.bgFocus}
+          color={theme.colors.gray20}
         />
       );
     }

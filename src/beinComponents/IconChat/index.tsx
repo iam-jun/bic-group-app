@@ -1,9 +1,9 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useSelector} from 'react-redux';
 import {getUnreadChannelCount} from '~/selectors/chat';
-import {ITheme} from '~/theme/interfaces';
+
 import spacing from '~/theme/spacing';
 import NotificationsBadge from '../Badge/NotificationsBadge';
 import Icon from '../Icon';
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const IconChat = ({onPress}: Props) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const count = useSelector(state => getUnreadChannelCount(state));
 
   return (
@@ -23,7 +23,7 @@ const IconChat = ({onPress}: Props) => {
         size={24}
         style={styles.icon}
         onPress={onPress}
-        backgroundColor={theme.colors.bgSecondary}
+        backgroundColor={theme.colors.neutral1}
         buttonTestID="header.iconChat.button"
         testID="header.iconChat"
       />

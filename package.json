@@ -104,6 +104,7 @@
     "react-native-paper": "4.11.2",
     "react-native-parsed-text": "0.0.22",
     "react-native-permissions": "3.3.0",
+    "react-native-portalize": "^1.0.7",
     "react-native-reanimated": "^2.6.0",
     "react-native-safe-area-context": "3.3.2",
     "react-native-screens": "3.2.0",

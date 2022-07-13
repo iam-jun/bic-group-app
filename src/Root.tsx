@@ -15,14 +15,14 @@ import {
 } from 'react-native';
 
 /* Theme */
-import {
-  configureFonts,
-  DarkTheme,
-  DefaultTheme,
-  Portal,
-  Provider as PaperProvider,
-  Provider as ThemeProvider,
-} from 'react-native-paper';
+// import {
+//   configureFonts,
+//   DarkTheme,
+//   DefaultTheme,
+//   Portal,
+//   Provider as PaperProvider,
+//   Provider as ThemeProvider,
+// } from 'react-native-paper';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 /* State Redux */
@@ -43,6 +43,8 @@ import {rootSwitch} from './router/stack';
 import Store from '~/store';
 import {IUserResponse} from './interfaces/IAuth';
 import {isNavigationRefReady, getScreenAndParams} from '~/router/helper';
+import colorsTest from './theme/theme';
+import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
 
 moment.updateLocale('en', moments.en);
 moment.updateLocale('vi', moments.vi);
@@ -214,18 +216,18 @@ export default (): React.ReactElement => {
       theme === 'light'
         ? {
             ...DefaultTheme,
-            colors: {...DefaultTheme.colors, ...colors.light.colors},
+            colors: {...colorsTest.light.colors},
           }
         : {
             ...DarkTheme,
-            colors: {...DarkTheme.colors, ...colors.dark.colors},
+            colors: {...colorsTest.dark.colors},
           };
-    result.fontFamily = stateCurrent.loaded ? fonts : DefaultTheme.fonts;
-    result.spacing = {...spacing};
-    result.dimension = {...dimension};
-    result.shadow = {...shadow};
+    // result.fontFamily = stateCurrent.loaded ? fonts : DefaultTheme.fonts;
+    // result.spacing = {...spacing};
+    // result.dimension = {...dimension};
+    // result.shadow = {...shadow};
     /*Config font*/
-    result.fonts = configureFonts(fontConfig);
+    // result.fonts = configureFonts(fontConfig);
     return result;
   }, [theme, stateCurrent.loaded]);
 
@@ -238,24 +240,25 @@ export default (): React.ReactElement => {
 
   return (
     <SafeAreaProvider>
-      <ThemeProvider>
-        <StatusBar
-          // Dark mode has not ready yet
-          // barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
-          barStyle="dark-content"
-          translucent
-          backgroundColor="transparent"
-        />
-        <PreferencesContext.Provider value={preferences}>
-          <PaperProvider theme={themeConfig}>
-            <AppContext.Provider value={providerValue}>
-              <Portal.Host>
-                <RootNavigator />
-              </Portal.Host>
-            </AppContext.Provider>
-          </PaperProvider>
-        </PreferencesContext.Provider>
-      </ThemeProvider>
+      {/* <ThemeProvider
+        value={{dark: false, colors: {...customTheme.light.colors}}}> */}
+      <StatusBar
+        // Dark mode has not ready yet
+        // barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
+        barStyle="dark-content"
+        translucent
+        backgroundColor="transparent"
+      />
+      <PreferencesContext.Provider value={preferences}>
+        {/* <PaperProvider theme={themeConfig}> */}
+        <AppContext.Provider value={providerValue}>
+          {/* <Portal.Host> */}
+          <RootNavigator />
+          {/* </Portal.Host> */}
+        </AppContext.Provider>
+        {/* </PaperProvider> */}
+      </PreferencesContext.Provider>
+      {/* </ThemeProvider> */}
     </SafeAreaProvider>
   );
 };

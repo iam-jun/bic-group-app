@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {ITheme} from '~/theme/interfaces';
+
 import BottomSheet from '~/beinComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import notificationsActions from '../redux/actions';
@@ -21,7 +21,7 @@ const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
   data,
   keyValue,
 }: NotificationOptionBottomSheetProps) => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
 
   const dispatch = useDispatch();
 

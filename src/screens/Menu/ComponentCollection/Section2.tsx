@@ -3,8 +3,7 @@ import {TouchableOpacity, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 
 import Text from '~/beinComponents/Text';
-import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {IAction} from '~/constants/commonActions';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
@@ -21,7 +20,7 @@ import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import spacing from '~/theme/spacing';
 
 const Section2 = () => {
-  const {colors}: ITheme = useTheme();
+  const {colors}: ExtendedTheme = useTheme();
   const dispatch = useDispatch();
   const {t} = useBaseHook();
 

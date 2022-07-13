@@ -6,9 +6,7 @@ import React, {
   useEffect,
 } from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -23,7 +21,7 @@ const EmojiNameToast: FC<EmojiNameToastProps> = ({
   const [name, setName] = useState('');
   const timeOutRef = useRef<any>();
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
 
@@ -56,7 +54,7 @@ const EmojiNameToast: FC<EmojiNameToastProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme, insets: any) => {
+const createStyle = (theme: ExtendedTheme, insets: any) => {
   return StyleSheet.create({
     container: {
       position: 'absolute',

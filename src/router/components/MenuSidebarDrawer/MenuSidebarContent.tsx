@@ -6,8 +6,8 @@ import Divider from '~/beinComponents/Divider';
 
 import {useKeySelector} from '~/hooks/selector';
 import {useRootNavigation} from '~/hooks/navigation';
-import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import images from '~/resources/images';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import mainStack from '~/router/navigator/MainStack/stack';
@@ -37,7 +37,7 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
 
   const {t} = useBaseHook();
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme || {};
   const styles = themeStyles(theme);
 
@@ -132,9 +132,9 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
       {renderDivider()}
       <MenuSidebarItem
         icon="SignOutAlt"
-        tintColor={colors.error}
+        tintColor={colors.red60}
         title="auth:text_sign_out"
-        titleProps={{style: {color: colors.error}}}
+        titleProps={{style: {color: colors.red60}}}
         onPress={onPressItem('logOut')}
         testID="menu.logout.item.0"
       />
@@ -145,16 +145,16 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
     container: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     divider: {
       marginVertical: spacing.margin.small,
-      backgroundColor: colors.bgFocus,
+      backgroundColor: colors.gray20,
     },
   });
 };

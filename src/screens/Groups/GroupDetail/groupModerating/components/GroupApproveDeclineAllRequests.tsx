@@ -1,10 +1,10 @@
 import React, {useRef} from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+
 import modalActions, {clearToastMessage} from '~/store/modal/actions';
 import groupsActions from '~/screens/Groups/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
@@ -16,7 +16,7 @@ import ButtonApproveDeclineAllRequests from '~/screens/Groups/components/ButtonA
 import {useBaseHook} from '~/hooks';
 
 const GroupApproveDeclineAllRequests = () => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const timeOutRef = useRef<any>();
@@ -42,7 +42,7 @@ const GroupApproveDeclineAllRequests = () => {
       ContentComponent: Text.BodyS,
       cancelBtn: true,
       cancelBtnProps: {
-        textColor: theme.colors.primary7,
+        textColor: theme.colors.purple60,
       },
       onConfirm: () => doAction(),
       confirmLabel: t('common:btn_confirm'),

@@ -18,7 +18,7 @@ const Markdown = ({value, ...rest}) => {
   const dispatch = useDispatch();
   const theme = mmTheme;
   const baseTextStyle = {
-    color: colors.light.colors.textPrimary,
+    color: colors.light.colors.neutral80,
     fontFamily: fontFamilies.OpenSans,
   };
   const textStyles = {

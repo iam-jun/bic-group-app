@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {StyleProp, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {permissionRoleSectionHeaderHeight} from '~/theme/dimension';
 import Animated, {
@@ -25,7 +23,7 @@ const RoleHeaderAnimated: FC<RoleHeaderAnimatedProps> = ({
   anchorRole,
   sharedValue,
 }: RoleHeaderAnimatedProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -83,7 +81,7 @@ const RoleHeaderAnimated: FC<RoleHeaderAnimatedProps> = ({
       left: 0,
       right: 0,
       top: interpolate(sharedValue.value, inputRange, outputRange),
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     }),
     [inputRange, outputRange],
   );
@@ -98,18 +96,18 @@ const RoleHeaderAnimated: FC<RoleHeaderAnimatedProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
       alignItems: 'center',
       minHeight: permissionRoleSectionHeaderHeight,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.base,
       borderTopWidth: 1,
       borderBottomWidth: 1,
-      borderColor: colors.bgFocus,
+      borderColor: colors.gray20,
     },
   });
 };

@@ -1,9 +1,8 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import {IconType} from '~/resources/icons';
 import spacing from '~/theme/spacing';
@@ -23,7 +22,7 @@ const EmptyScreen = ({
   size = 150,
   ButtonComponent,
 }: EmptyScreenProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
 
   return (
     <View testID="empty_screen" style={styles.container}>
@@ -34,10 +33,7 @@ const EmptyScreen = ({
         </Text.ButtonBase>
       )}
       {!!description && (
-        <Text.Subtitle
-          color={theme.colors.textSecondary}
-          style={styles.text}
-          useI18n>
+        <Text.Subtitle color={theme.colors.gray50} style={styles.text} useI18n>
           {description}
         </Text.Subtitle>
       )}

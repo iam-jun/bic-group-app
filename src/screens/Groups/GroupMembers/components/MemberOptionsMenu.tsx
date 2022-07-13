@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import i18next from 'i18next';
 import {useDispatch} from 'react-redux';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import BottomSheet from '~/beinComponents/BottomSheet';
@@ -12,7 +12,7 @@ import Button from '~/beinComponents/Button';
 import {IGroupMembers} from '~/interfaces/IGroup';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
-import {ITheme} from '~/theme/interfaces';
+
 import useAuth from '~/hooks/auth';
 import modalActions from '~/store/modal/actions';
 import groupsActions from '../../redux/actions';
@@ -35,7 +35,7 @@ const MemberOptionsMenu = ({
   selectedMember,
   onOptionsClosed,
 }: MemberOptionsMenuProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const dispatch = useDispatch();
   const {user} = useAuth();
 
@@ -82,7 +82,7 @@ const MemberOptionsMenu = ({
       ContentComponent: Text.BodyS,
       cancelBtn: true,
       cancelBtnProps: {
-        textColor: theme.colors.primary7,
+        textColor: theme.colors.purple60,
       },
       onConfirm: doSetAdmin,
       confirmLabel: i18next.t('groups:modal_confirm_set_admin:button_confirm'),
@@ -228,10 +228,10 @@ const MemberOptionsMenu = ({
               leftIconProps={{
                 icon: 'UserTimes',
                 size: 24,
-                tintColor: theme.colors.error,
+                tintColor: theme.colors.red60,
               }}
               title={i18next.t('groups:member_menu:label_remove_member')}
-              titleProps={{color: theme.colors.error}}
+              titleProps={{color: theme.colors.red60}}
               onPress={() => onPressMenuOption('remove-member')}
             />
           )}

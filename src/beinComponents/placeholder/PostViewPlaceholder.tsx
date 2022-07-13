@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {
   ShineOverlay,
@@ -27,7 +25,7 @@ const PostViewPlaceholder: FC<PostViewPlaceholderProps> = ({
   disableRandom,
   testID = 'post_view_placeholder',
 }: PostViewPlaceholderProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
 
   return (
@@ -95,18 +93,18 @@ const PostViewPlaceholder: FC<PostViewPlaceholderProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
     margin0: {marginTop: 0, marginBottom: 0},
     marginBottomSmall: {marginBottom: spacing.margin.small},
     container: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       marginBottom: spacing.margin.base,
     },
     importantContainer: {
-      backgroundColor: colors.borderDivider,
+      backgroundColor: colors.neutral5,
       flexDirection: 'row',
       alignItems: 'center',
       paddingVertical: spacing.padding.tiny,

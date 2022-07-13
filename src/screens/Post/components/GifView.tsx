@@ -5,10 +5,9 @@ import {
 } from '@giphy/react-native-sdk';
 import React, {useRef, useState} from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
-import {ITheme} from '~/theme/interfaces';
 
 interface Props {
   style?: StyleProp<ViewStyle>;
@@ -17,7 +16,7 @@ interface Props {
 
 const GifView = ({style, giphy}: Props) => {
   const mediaRef = useRef<GiphyMediaView | null>(null);
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
 
   const [playing, setPlaying] = useState(false);
@@ -45,7 +44,7 @@ const GifView = ({style, giphy}: Props) => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,

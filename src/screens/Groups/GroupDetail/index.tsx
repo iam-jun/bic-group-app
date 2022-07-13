@@ -2,9 +2,10 @@ import {useFocusEffect} from '@react-navigation/native';
 import {isEmpty} from 'lodash';
 import React, {Fragment, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import Header from '~/beinComponents/Header';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
@@ -19,7 +20,6 @@ import {rootSwitch} from '~/router/stack';
 import GroupContent from '~/screens/Groups/GroupDetail/components/GroupContent';
 import NoGroupFound from '~/screens/Groups/GroupDetail/components/NoGroupFound';
 import groupsActions from '~/screens/Groups/redux/actions';
-import {ITheme} from '~/theme/interfaces';
 import spacing from '~/theme/spacing';
 import groupsKeySelector from '../redux/keySelector';
 import GroupPrivateWelcome from './components/GroupPrivateWelcome';
@@ -29,7 +29,7 @@ const GroupDetail = (props: any) => {
   const params = props.route.params;
   const groupId = params?.groupId;
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
 
   const userId = useUserIdAuth();
@@ -129,17 +129,17 @@ const GroupDetail = (props: any) => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const insets = useSafeAreaInsets();
   const {colors} = theme;
   return StyleSheet.create({
     screenContainer: {
       paddingTop: insets.top,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     contentContainer: {
       flex: 1,
-      backgroundColor: colors.bgSecondary,
+      backgroundColor: colors.neutral1,
     },
     headerCreatePost: {
       marginTop: spacing.margin.small,

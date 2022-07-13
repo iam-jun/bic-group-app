@@ -1,6 +1,6 @@
 import React, {FC, useContext, useState} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import Button from '~/beinComponents/Button';
@@ -11,7 +11,7 @@ import {formatDateTime} from '~/beinComponents/TimeView';
 import {AppContext} from '~/contexts/AppContext';
 import {useBaseHook} from '~/hooks';
 import modalActions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+
 import spacing from '~/theme/spacing';
 import DatePicker from './component/DatePicker';
 import {getDefaultEndDate, getDefaultStartDate, isValidDate} from './helper';
@@ -43,7 +43,7 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
   const dispatch = useDispatch();
   const {language} = useContext(AppContext);
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -87,12 +87,12 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
         subTitle={
           startDateErr ? t('home:newsfeed_search:text_error_date') : undefined
         }
-        subTitleProps={{variant: 'subtitle', color: colors.error}}
+        subTitleProps={{variant: 'subtitle', color: colors.red60}}
         RightComponent={
           <Button.Secondary
             onPress={() => setSelectingStartDate(true)}
             style={startDateErr ? styles.buttonRightErr : styles.buttonRight}
-            textColor={startDateErr ? colors.error : colors.primary6}>
+            textColor={startDateErr ? colors.red60 : colors.purple50}>
             {formatDateTime(selectedStartDate, language)}
           </Button.Secondary>
         }
@@ -104,12 +104,12 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
         subTitle={
           endDateErr ? t('home:newsfeed_search:text_error_date') : undefined
         }
-        subTitleProps={{variant: 'subtitle', color: colors.error}}
+        subTitleProps={{variant: 'subtitle', color: colors.red60}}
         RightComponent={
           <Button.Secondary
             onPress={() => setSelectingEndDate(true)}
             style={endDateErr ? styles.buttonRightErr : styles.buttonRight}
-            textColor={endDateErr ? colors.error : colors.primary6}>
+            textColor={endDateErr ? colors.red60 : colors.purple50}>
             {formatDateTime(selectedEndDate, language)}
           </Button.Secondary>
         }
@@ -118,7 +118,7 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
         onPress={onPressApply}
         style={styles.buttonApply}
         disabled={startDateErr || endDateErr}
-        color={colors.primary6}>
+        color={colors.purple50}>
         {t('home:newsfeed_search:apply')}
       </Button.Primary>
       <DatePicker
@@ -132,7 +132,7 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -145,7 +145,7 @@ const createStyle = (theme: ITheme) => {
       marginVertical: spacing.margin.small,
     },
     textHeader: {
-      color: colors.textSecondary,
+      color: colors.gray50,
       marginTop: spacing.margin.tiny,
       marginBottom: spacing.margin.tiny,
       marginHorizontal: spacing.margin.extraLarge,
@@ -153,14 +153,14 @@ const createStyle = (theme: ITheme) => {
     buttonRight: {
       marginLeft: spacing.margin.tiny,
       borderWidth: 1,
-      borderColor: colors.primary1,
-      backgroundColor: colors.primary1,
+      borderColor: colors.violet1,
+      backgroundColor: colors.violet1,
     },
     buttonRightErr: {
       marginLeft: spacing.margin.tiny,
       borderWidth: 1,
-      borderColor: colors.error,
-      backgroundColor: colors.background,
+      borderColor: colors.red60,
+      backgroundColor: colors.white,
     },
     buttonApply: {
       marginHorizontal: spacing.margin.extraLarge,

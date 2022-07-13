@@ -1,7 +1,8 @@
 import React from 'react';
 import {DeviceEventEmitter, ScrollView, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
+
 import Button from '~/beinComponents/Button';
 import PostItem from '~/beinComponents/list/items/PostItem';
 import ListView from '~/beinComponents/list/ListView';
@@ -16,7 +17,6 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import {showAlertNewFeature} from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
 import spacing from '~/theme/spacing';
 
 const GroupContent = ({
@@ -26,7 +26,7 @@ const GroupContent = ({
   getGroupPosts: () => void;
   parentWidth?: number;
 }) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {rootNavigation} = useRootNavigation();
   const {colors} = theme || {};
   const styles = themeStyles(theme);
@@ -89,15 +89,15 @@ const GroupContent = ({
             horizontal
             showsHorizontalScrollIndicator={false}
             alwaysBounceHorizontal={false}
-            style={{backgroundColor: colors.background}}
+            style={{backgroundColor: colors.white}}
             contentContainerStyle={styles.buttonContainer}>
             {isMember && (
               <>
                 <Button.Secondary
                   useI18n
                   onPress={onPressChat}
-                  color={colors.bgHover}
-                  textColor={colors.textPrimary}
+                  color={colors.neutral5}
+                  textColor={colors.neutral80}
                   borderRadius={spacing.borderRadius.small}
                   testID="group_content.post">
                   groups:group_content:btn_post
@@ -108,8 +108,8 @@ const GroupContent = ({
             <Button.Secondary
               useI18n
               onPress={onPressChannel}
-              color={colors.bgHover}
-              textColor={colors.textPrimary}
+              color={colors.neutral5}
+              textColor={colors.neutral80}
               borderRadius={spacing.borderRadius.small}
               testID="group_content.channel">
               groups:group_content:btn_channel
@@ -118,8 +118,8 @@ const GroupContent = ({
             <Button.Secondary
               useI18n
               onPress={onPressAbout}
-              color={colors.bgHover}
-              textColor={colors.textPrimary}
+              color={colors.neutral5}
+              textColor={colors.neutral80}
               borderRadius={spacing.borderRadius.small}
               testID="group_content.about">
               groups:group_content:btn_about
@@ -129,8 +129,8 @@ const GroupContent = ({
               <Button.Secondary
                 useI18n
                 onPress={onPressMembers}
-                color={colors.bgHover}
-                textColor={colors.textPrimary}
+                color={colors.neutral5}
+                textColor={colors.neutral80}
                 borderRadius={spacing.borderRadius.small}
                 testID="group_content.members">
                 groups:group_content:btn_members
@@ -140,8 +140,8 @@ const GroupContent = ({
             <Button.Secondary
               useI18n
               onPress={onPressFiles}
-              color={colors.bgHover}
-              textColor={colors.textPrimary}
+              color={colors.neutral5}
+              textColor={colors.neutral80}
               borderRadius={spacing.borderRadius.small}
               testID="group_content.files">
               groups:group_content:btn_files
@@ -178,7 +178,7 @@ const GroupContent = ({
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -196,7 +196,7 @@ const themeStyles = (theme: ITheme) => {
       paddingTop: spacing.padding.small,
       paddingBottom: spacing.padding.base,
       paddingHorizontal: spacing.padding.base,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     createPost: {
       marginTop: spacing.margin.small,

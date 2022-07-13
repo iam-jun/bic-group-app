@@ -6,9 +6,8 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import {useBaseHook} from '~/hooks';
@@ -30,7 +29,7 @@ const MemberRequestList = ({
   onLoadMore,
   onRefresh,
 }: MemberRequestListProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {t} = useBaseHook();
 
   const {loading, total, ids, canLoadMore} = useKeySelector(
@@ -101,7 +100,7 @@ const MemberRequestList = ({
         <RefreshControl
           refreshing={loading}
           onRefresh={onRefresh}
-          tintColor={theme.colors.borderDisable}
+          tintColor={theme.colors.gray40}
         />
       }
     />

@@ -11,6 +11,8 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import {Portal} from 'react-native-portalize';
+
 import {AppConfig} from '~/configs';
 import {dimension} from '~/theme';
 import spacing from '~/theme/spacing';
@@ -125,53 +127,53 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
   return (
     <View testID="sticker_view" style={styles.container}>
       <Animated.View style={animatedStyle} />
-      {/* <Portal> */}
-      <Modalize
-        ref={modalizeRef}
-        withOverlay={modalTopOffset !== 0}
-        handlePosition="inside"
-        snapPoint={keyboardHeight}
-        closeSnapPointStraightEnabled={false}
-        // alwaysOpen={keyboardHeight}
-        modalTopOffset={modalTopOffset}
-        // keyboardAvoidingBehavior={'position'}
-        // avoidKeyboardLikeIOS
-        scrollViewProps={{
-          keyboardShouldPersistTaps: 'handled',
-          keyboardDismissMode: 'interactive',
-          contentContainerStyle: {
-            height: '100%',
-          },
-        }}
-        onOpen={onOpen}
-        onClose={onClose}
-        onBackButtonPress={onBackPress}
-        onPositionChange={onPositionChange}>
-        <View style={[styles.stickerView]}>
-          <View style={styles.header}>
-            <SearchInput
-              testID="sticker_view.search_input"
-              placeholder={i18next.t('post:comment:search_giphy')}
-              value={searchQuery}
-              onFocus={onSearchFocus}
-              onChangeText={onChangeText}
-            />
+      <Portal>
+        <Modalize
+          ref={modalizeRef}
+          withOverlay={modalTopOffset !== 0}
+          handlePosition="inside"
+          snapPoint={keyboardHeight}
+          closeSnapPointStraightEnabled={false}
+          // alwaysOpen={keyboardHeight}
+          modalTopOffset={modalTopOffset}
+          // keyboardAvoidingBehavior={'position'}
+          // avoidKeyboardLikeIOS
+          scrollViewProps={{
+            keyboardShouldPersistTaps: 'handled',
+            keyboardDismissMode: 'interactive',
+            contentContainerStyle: {
+              height: '100%',
+            },
+          }}
+          onOpen={onOpen}
+          onClose={onClose}
+          onBackButtonPress={onBackPress}
+          onPositionChange={onPositionChange}>
+          <View style={[styles.stickerView]}>
+            <View style={styles.header}>
+              <SearchInput
+                testID="sticker_view.search_input"
+                placeholder={i18next.t('post:comment:search_giphy')}
+                value={searchQuery}
+                onFocus={onSearchFocus}
+                onChangeText={onChangeText}
+              />
+            </View>
+            <View>
+              {loading && <LoadingIndicator style={styles.loading} />}
+              <GiphyGridView
+                testID="sticker_view.grid_view"
+                content={request}
+                cellPadding={4}
+                //Must render GiphyGridView to trigger onContentUpdate but make it invisible
+                style={[styles.gridView, loading && {height: 0}]}
+                onContentUpdate={onContentUpdate}
+                onMediaSelect={_onMediaSelect}
+              />
+            </View>
           </View>
-          <View>
-            {loading && <LoadingIndicator style={styles.loading} />}
-            <GiphyGridView
-              testID="sticker_view.grid_view"
-              content={request}
-              cellPadding={4}
-              //Must render GiphyGridView to trigger onContentUpdate but make it invisible
-              style={[styles.gridView, loading && {height: 0}]}
-              onContentUpdate={onContentUpdate}
-              onMediaSelect={_onMediaSelect}
-            />
-          </View>
-        </View>
-      </Modalize>
-      {/* </Portal> */}
+        </Modalize>
+      </Portal>
     </View>
   );
 };

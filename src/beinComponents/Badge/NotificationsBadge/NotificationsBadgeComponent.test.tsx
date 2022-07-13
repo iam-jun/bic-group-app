@@ -28,12 +28,12 @@ describe('NotificationsBadgeComponent', () => {
     );
     const viewComponent = getByTestId('notifications_badge_component');
     expect(viewComponent.props.style[0].backgroundColor).toBe(
-      colors.light.colors.error,
+      colors.light.colors.red60,
     );
 
     const targetTextComponent = viewComponent.props.children;
     expect(targetTextComponent.props.style[0].color).toBe(
-      colors.light.colors.textReversed,
+      colors.light.colors.white,
     );
   });
 

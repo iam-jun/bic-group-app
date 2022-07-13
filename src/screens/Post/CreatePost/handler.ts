@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import {Keyboard} from 'react-native';
 import FileUploader from '~/services/fileUploader';
 import modalActions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+
 import spacing from '~/theme/spacing';
 import postActions from '../redux/actions';
 
@@ -10,7 +10,7 @@ export const handleBack = (
   isEditPost: boolean | undefined,
   isEditPostHasChange: boolean | undefined,
   hasPostId: boolean | undefined,
-  theme: ITheme,
+  theme: ExtendedTheme,
   rootNavigation: any,
   dispatch: any,
   isNewsfeed: boolean | undefined,
@@ -61,30 +61,30 @@ export const handleBack = (
           textProps: {
             useI18n: true,
             variant: 'bodyS',
-            style: {color: colors.textPrimary},
+            style: {color: colors.neutral80},
           },
           type: 'informative',
           leftIcon: 'InfoCircle',
-          leftIconColor: colors.iconTintReversed,
+          leftIconColor: colors.neutral80Reversed,
           leftIconStyle: {
-            backgroundColor: colors.iconTintLight,
+            backgroundColor: colors.neutral80Light,
             padding: spacing.padding.tiny,
           },
           leftStyle: {
             marginRight: spacing.margin.small,
           },
           style: {
-            backgroundColor: colors.background,
+            backgroundColor: colors.white,
             borderLeftWidth: 4,
-            borderLeftColor: colors.iconTintLight,
+            borderLeftColor: colors.neutral80Light,
             paddingHorizontal: spacing.padding.large,
             marginHorizontal: spacing.margin.base,
             marginBottom: spacing.margin.small,
             borderWidth: 1,
-            borderColor: colors.bgFocus,
+            borderColor: colors.gray20,
           },
           rightText: isNewsfeed ? i18next.t('home:draft_post') : '',
-          rightTextColor: colors.textPrimary,
+          rightTextColor: colors.neutral80,
           rightTextProps: {
             variant: 'bodySM',
           },

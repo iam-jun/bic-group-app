@@ -8,12 +8,10 @@ import {
   Share,
   Platform,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import PagerView from 'react-native-pager-view';
 import ImageZoom from 'react-native-image-pan-zoom';
 import {debounce} from 'lodash';
-
-import {ITheme} from '~/theme/interfaces';
 
 import Icon from '~/beinComponents/Icon';
 import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -38,7 +36,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   const footerListRef = useRef<any>();
 
   const insets = useSafeAreaInsets();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme, insets);
 
@@ -112,7 +110,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
         icon="iconBack"
         onPress={onPressClose}
         size={28}
-        tintColor={colors.iconTintReversed}
+        tintColor={colors.neutral80Reversed}
         hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
       />
       <View style={{flex: 1}} />
@@ -120,7 +118,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
         icon="ShareAlt"
         onPress={onPressShare}
         size={20}
-        tintColor={colors.iconTintReversed}
+        tintColor={colors.neutral80Reversed}
         hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
       />
     </View>
@@ -157,7 +155,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
       <View style={styles.footerContainer}>
         <View style={styles.fileNameContainer}>
           {!!fileName && (
-            <Text.H6 color={colors.textReversed} numberOfLines={1}>
+            <Text.H6 color={colors.white} numberOfLines={1}>
               {fileName}
             </Text.H6>
           )}
@@ -196,14 +194,14 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
         <View>
           {activeIndex > 0 && (
             <Button style={styles.buttonControl} onPress={onPressBack}>
-              <Icon icon={'iconBack'} tintColor={colors.iconTintReversed} />
+              <Icon icon={'iconBack'} tintColor={colors.neutral80Reversed} />
             </Button>
           )}
         </View>
         <View>
           {activeIndex < imageUrls.length - 1 && (
             <Button style={styles.buttonControl} onPress={onPressNext}>
-              <Icon icon={'iconNext'} tintColor={colors.iconTintReversed} />
+              <Icon icon={'iconNext'} tintColor={colors.neutral80Reversed} />
             </Button>
           )}
         </View>
@@ -269,7 +267,7 @@ const getImageUrls = (source: any) => {
   return result;
 };
 
-const createStyle = (theme: ITheme, insets: EdgeInsets) => {
+const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -306,7 +304,7 @@ const createStyle = (theme: ITheme, insets: EdgeInsets) => {
     footerItem: {
       width: 48,
       height: 48,
-      borderColor: colors.background,
+      borderColor: colors.white,
       borderRadius: spacing.borderRadius.small,
     },
     buttonControlContainer: {
@@ -330,7 +328,7 @@ const createStyle = (theme: ITheme, insets: EdgeInsets) => {
       position: 'absolute',
       width: '100%',
       height: '100%',
-      backgroundColor: colors.borderFocus,
+      backgroundColor: colors.gray40,
     },
   });
 };

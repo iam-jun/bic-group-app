@@ -68,8 +68,6 @@ describe('MentionBar component', () => {
     const flattenedStyle = StyleSheet.flatten(component.props.style);
 
     expect(flattenedStyle.height).toBe(undefined);
-    expect(flattenedStyle.backgroundColor).toBe(
-      colors.light.colors.borderFocus,
-    );
+    expect(flattenedStyle.backgroundColor).toBe(colors.light.colors.gray40);
   });
 });

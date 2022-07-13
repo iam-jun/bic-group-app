@@ -1,9 +1,9 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {useBaseHook} from '~/hooks';
-import {ITheme} from '~/theme/interfaces';
+
 import {useKeySelector} from '~/hooks/selector';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
 
@@ -26,7 +26,7 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
   onClearAllKeyword,
 }: NFSRecentSearchKeywordProps) => {
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
 
   const {loading, data} =
@@ -92,7 +92,7 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
@@ -105,7 +105,7 @@ const createStyle = (theme: ITheme) => {
       alignItems: 'center',
     },
     btnClear: {
-      color: colors.primary6,
+      color: colors.purple50,
       marginRight: spacing.margin.tiny,
     },
     loading: {
@@ -120,7 +120,7 @@ const createStyle = (theme: ITheme) => {
     textEmpty: {
       textAlign: 'center',
       margin: spacing.margin.extraLarge,
-      color: colors.textSecondary,
+      color: colors.gray50,
     },
   });
 };

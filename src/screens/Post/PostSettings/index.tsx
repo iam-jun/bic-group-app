@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {fontFamilies} from '~/theme/fonts';
-import {ITheme} from '~/theme/interfaces';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -34,7 +33,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme;
 
   const styles = createStyle(theme);
@@ -108,8 +107,8 @@ const PostSettings = ({route}: PostSettingsProps) => {
           leftIconProps={{icon: 'CalendarAlt', size: 20}}
           style={styles.buttonDate}
           onPress={() => setSelectingDate(true)}
-          color={colors.bgHover}
-          textProps={{color: colors.textPrimary}}>
+          color={colors.gray40}
+          textProps={{color: colors.neutral80}}>
           {date}
         </Button.Secondary>
         <Button.Secondary
@@ -118,8 +117,8 @@ const PostSettings = ({route}: PostSettingsProps) => {
           leftIconProps={{icon: 'Clock', size: 20}}
           style={styles.buttonTime}
           onPress={() => setSelectingTime(true)}
-          color={colors.bgHover}
-          textProps={{color: colors.textPrimary}}>
+          color={colors.gray40}
+          textProps={{color: colors.neutral80}}>
           {time}
         </Button.Secondary>
       </View>
@@ -144,7 +143,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
               <Text.Subtitle
                 useI18n
                 testID="post_settings.expire_time_desc"
-                color={colors.textSecondary}
+                color={colors.gray50}
                 style={{fontFamily: fontFamilies.OpenSansSemiBold}}>
                 post:expire_time_desc
               </Text.Subtitle>
@@ -162,7 +161,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
   };
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.surface}>
+    <ScreenWrapper isFullView backgroundColor={colors.neutral1}>
       <Header
         titleTextProps={{useI18n: true}}
         title="post:settings"
@@ -219,10 +218,10 @@ const PostSettings = ({route}: PostSettingsProps) => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
-    container: {backgroundColor: colors.background, flex: 1},
+    container: {backgroundColor: colors.white, flex: 1},
     row: {flexDirection: 'row', alignItems: 'center'},
     flex1: {flex: 1},
     content: {
@@ -241,12 +240,12 @@ const createStyle = (theme: ITheme) => {
     buttonDate: {
       flex: 1,
       marginRight: spacing.margin.base,
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray40,
       padding: spacing.padding.base,
     },
     buttonTime: {
       flex: 1,
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray40,
       padding: spacing.padding.base,
     },
   });

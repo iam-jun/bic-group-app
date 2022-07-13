@@ -6,7 +6,7 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
@@ -17,7 +17,6 @@ import Animated, {
 } from 'react-native-reanimated';
 import i18next from 'i18next';
 
-import {ITheme} from '~/theme/interfaces';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import Icon from '~/beinComponents/Icon';
 import spacing from '~/theme/spacing';
@@ -54,7 +53,7 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
   const _inputRef = inputRef || useRef();
   const showValue = useSharedValue(0);
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
 
   const iconStyle = useAnimatedStyle(() => ({
@@ -136,7 +135,7 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -147,7 +146,7 @@ const createStyle = (theme: ITheme) => {
       right: 0,
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingLeft: spacing.padding.small,
       paddingRight: spacing.padding.base,
     },
@@ -159,7 +158,7 @@ const createStyle = (theme: ITheme) => {
     searchContainer: {
       height: 40,
       overflow: 'hidden',
-      backgroundColor: colors.placeholder,
+      backgroundColor: colors.neutral5,
       borderRadius: spacing.borderRadius.large,
     },
     icon: {

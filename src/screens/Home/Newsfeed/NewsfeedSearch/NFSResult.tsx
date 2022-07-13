@@ -1,9 +1,8 @@
 import React, {useEffect} from 'react';
 import {View, StyleSheet, FlatList, RefreshControl} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
-import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import {IPayloadGetSearchPosts} from '~/interfaces/IHome';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
@@ -19,7 +18,7 @@ import spacing from '~/theme/spacing';
 
 const NFSResult = () => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -108,8 +107,8 @@ const NFSResult = () => {
           <RefreshControl
             refreshing={loadingResult}
             onRefresh={onRefresh}
-            tintColor={colors.primary6}
-            colors={[colors.primary6 || 'grey']}
+            tintColor={colors.purple50}
+            colors={[colors.purple50 || 'grey']}
           />
         }
       />
@@ -117,13 +116,13 @@ const NFSResult = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {
       flex: 1,
-      backgroundColor: colors.bgSecondary,
+      backgroundColor: colors.neutral1,
     },
     itemContainer: {
       marginTop: spacing.margin.small,
@@ -139,7 +138,7 @@ const createStyle = (theme: ITheme) => {
       marginTop: spacing.margin.extraLarge,
     },
     textEmpty: {
-      color: colors.textSecondary,
+      color: colors.gray50,
       textAlign: 'center',
     },
     footer: {

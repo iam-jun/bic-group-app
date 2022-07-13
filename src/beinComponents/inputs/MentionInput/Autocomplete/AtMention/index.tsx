@@ -7,11 +7,11 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
-import {ITheme} from '~/theme/interfaces';
+
 import spacing from '~/theme/spacing';
 import {AutocompleteProps} from '..';
 import {
@@ -36,7 +36,7 @@ const AtMention = ({
 
   const listRef = useRef<any>();
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
 
   const styles = createStyles(theme);
@@ -69,7 +69,7 @@ const AtMention = ({
         {loading ? (
           <ActivityIndicator
             testID="at_mention.loading"
-            color={colors.disabled}
+            color={colors.gray30}
           />
         ) : (
           <Text.H6 testID="at_mention.empty_content" style={styles.textEmpty}>
@@ -104,12 +104,12 @@ const AtMention = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
+const createStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
     textEmpty: {
-      color: colors.textDisabled,
+      color: colors.gray40,
       padding: spacing.padding.tiny,
       margin: spacing.margin.small,
     },

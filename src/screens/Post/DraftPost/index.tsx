@@ -1,7 +1,7 @@
 import {useIsFocused} from '@react-navigation/native';
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import Header from '~/beinComponents/Header';
@@ -21,14 +21,14 @@ import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import appActions from '~/store/app/actions';
 import dimension from '~/theme/dimension';
-import {ITheme} from '~/theme/interfaces';
+
 import spacing from '~/theme/spacing';
 
 const DraftPost = () => {
   const [lossInternet, setLossInternet] = useState(false);
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -75,7 +75,7 @@ const DraftPost = () => {
       <View>
         {canLoadMore && !refreshing && (
           <View testID="draft_post.load_more_view" style={styles.listFooter}>
-            <ActivityIndicator color={theme.colors.bgFocus} />
+            <ActivityIndicator color={theme.colors.gray20} />
           </View>
         )}
         {!refreshing && !canLoadMore && (
@@ -89,10 +89,10 @@ const DraftPost = () => {
     return (
       <View testID="draft_post.empty_view" style={styles.emptyContainer}>
         <Image source={images.img_empty_draft} style={styles.imgEmpty} />
-        <Text.H6 useI18n color={colors.textSecondary}>
+        <Text.H6 useI18n color={colors.gray50}>
           post:draft:title_no_draft_posts
         </Text.H6>
-        <Text useI18n color={colors.textSecondary}>
+        <Text useI18n color={colors.gray50}>
           post:draft:text_no_draft_posts
         </Text>
       </View>
@@ -127,12 +127,12 @@ const DraftPost = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.bgSecondary,
+      backgroundColor: colors.neutral1,
     },
     listContainer: {
       flex: 1,

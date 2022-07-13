@@ -1,8 +1,6 @@
 import React, {useEffect} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Header from '~/beinComponents/Header';
@@ -26,7 +24,7 @@ const GroupSchemeAssignment = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -55,7 +53,7 @@ const GroupSchemeAssignment = () => {
           cancelLabel: t('common:btn_discard'),
           confirmLabel: t('communities:permission:btn_continue'),
           cancelBtnProps: {
-            textColor: theme.colors.textPrimary,
+            textColor: theme.colors.neutral80,
           },
           onCancel: rootNavigation.goBack,
         }),
@@ -166,7 +164,7 @@ const GroupSchemeAssignment = () => {
             </Text.H5>
             <Animated.View style={styles.contentContainer} entering={FadeIn}>
               <FlatGroupItem
-                style={{backgroundColor: colors.background}}
+                style={{backgroundColor: colors.white}}
                 {...currentAssignments}
                 onPressGroup={onPressGroup}
                 disableHorizontal
@@ -190,28 +188,28 @@ const GroupSchemeAssignment = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray40,
     },
     textHeader: {
       margin: spacing.margin.large,
     },
     contentContainer: {
       paddingHorizontal: spacing.margin.base,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingBottom: spacing.margin.large,
     },
     textEmpty: {
       margin: spacing.padding.large,
       textAlign: 'center',
-      color: colors.textSecondary,
+      color: colors.gray50,
     },
     schemeNameContainer: {
-      backgroundColor: colors.bgSecondary,
+      backgroundColor: colors.neutral1,
       alignSelf: 'flex-start',
       marginVertical: 2,
       paddingHorizontal: spacing.padding.small,

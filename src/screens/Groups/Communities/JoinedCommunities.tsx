@@ -6,9 +6,7 @@ import {
   RefreshControl,
   FlatList,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
@@ -36,7 +34,7 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
   const myCommunities = useKeySelector(groupsKeySelector.joinedCommunities);
 
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
 
   useEffect(() => {
     getData();
@@ -68,7 +66,7 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
             testID="empty_screen.button"
             onPress={onPressDiscover}
             style={styles.buttonWrapper}>
-            <Text.ButtonBase useI18n color={theme.colors.bgButtonPrimary}>
+            <Text.ButtonBase useI18n color={theme.colors.purple50}>
               communities:empty_communities:button_text
             </Text.ButtonBase>
           </ButtonWrapper>
@@ -102,7 +100,7 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
         <RefreshControl
           refreshing={refreshing}
           onRefresh={onRefresh}
-          tintColor={theme.colors.borderDisable}
+          tintColor={theme.colors.gray40}
         />
       }
     />

@@ -1,8 +1,8 @@
 import {View, Animated, StyleSheet, Easing} from 'react-native';
 import React, {useImperativeHandle, useRef} from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import Icon from '~/beinComponents/Icon';
-import {ITheme} from '~/theme/interfaces';
+
 import Text from '~/beinComponents/Text';
 import {isAndroidAnimated} from '../helper';
 import spacing from '~/theme/spacing';
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const ToastAutoSave = ({viewRef, visible}: Props) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
   const toastHeightAnimated = useRef(new Animated.Value(0)).current;
   const isAnimated = isAndroidAnimated();
@@ -45,7 +45,7 @@ const ToastAutoSave = ({viewRef, visible}: Props) => {
             style={styles.iconToastAutoSaveContainer}
             size={18}
             icon="Save"
-            tintColor={theme.colors.textSecondary}
+            tintColor={theme.colors.gray50}
           />
           <Text.BodyS useI18n style={styles.textToastAutoSave}>
             post:auto_saved
@@ -56,14 +56,14 @@ const ToastAutoSave = ({viewRef, visible}: Props) => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
     toastAutoSave: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.large,
       marginBottom: spacing.margin.base,
     },
@@ -71,9 +71,9 @@ const themeStyles = (theme: ITheme) => {
     iconToastAutoSave: {
       padding: 2,
       borderRadius: 6,
-      backgroundColor: colors.iconTintReversed,
+      backgroundColor: colors.neutral80Reversed,
     },
-    textToastAutoSave: {color: colors.textSecondary},
+    textToastAutoSave: {color: colors.gray50},
   });
 };
 

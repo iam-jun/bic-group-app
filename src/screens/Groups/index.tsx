@@ -1,6 +1,6 @@
 import React, {useEffect, useRef} from 'react';
 import {StyleSheet, View, useWindowDimensions, Platform} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useIsFocused} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
@@ -8,7 +8,6 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import ListView from '~/beinComponents/list/ListView';
 import Header from '~/beinComponents/Header';
 
-import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from './redux/keySelector';
 import {deviceDimensions} from '~/theme/dimension';
@@ -28,7 +27,7 @@ const Groups: React.FC = (props: any) => {
   const headerRef = useRef<any>();
 
   const dispatch = useDispatch();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
 
   const loadingJoinedGroups = useKeySelector(
@@ -126,13 +125,13 @@ const Groups: React.FC = (props: any) => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
     containerScreen: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     groupContainer: {
       flex: 1,

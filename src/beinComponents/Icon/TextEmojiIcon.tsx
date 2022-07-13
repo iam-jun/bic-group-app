@@ -1,9 +1,7 @@
 import React, {FC} from 'react';
 import {View, Text, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import NodeEmoji from 'node-emoji';
-
-import {ITheme} from '~/theme/interfaces';
 
 export interface TextEmojiIconProps {
   style?: StyleProp<ViewStyle>;
@@ -14,7 +12,7 @@ const TextEmojiIcon: FC<TextEmojiIconProps> = ({
   name,
   style,
 }: TextEmojiIconProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
 
   const emoji = NodeEmoji.find(name || '')?.emoji;
@@ -29,7 +27,7 @@ const TextEmojiIcon: FC<TextEmojiIconProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       justifyContent: 'center',

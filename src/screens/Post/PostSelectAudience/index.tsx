@@ -8,12 +8,12 @@ import {
   KeyboardAvoidingView,
   DeviceEventEmitter,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import debounce from 'lodash/debounce';
 
 import {useBaseHook} from '~/hooks';
-import {ITheme} from '~/theme/interfaces';
+
 import postActions from '~/screens/Post/redux/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -81,7 +81,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -392,7 +392,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     return (
       <View>
         {loading && (
-          <ActivityIndicator size={'large'} color={colors.borderDivider} />
+          <ActivityIndicator size={'large'} color={colors.neutral5} />
         )}
       </View>
     );
@@ -457,7 +457,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {},
@@ -469,7 +469,7 @@ const createStyle = (theme: ITheme) => {
       paddingHorizontal: undefined,
     },
     sectionHeaderContainer: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     sectionHeaderText: {
       marginVertical: spacing?.margin.small,

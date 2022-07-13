@@ -1,8 +1,7 @@
 import React, {FC} from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
@@ -22,7 +21,7 @@ const CommentToolbar: FC<CommentToolbarProps> = ({
   onSelectGif,
   onSelectVideo,
 }: CommentToolbarProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
 
   if (!onSelectImage && !onSelectFile && !onSelectGif && !onSelectVideo) {
@@ -67,7 +66,7 @@ const CommentToolbar: FC<CommentToolbarProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -76,9 +75,9 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       paddingHorizontal: spacing.padding.large,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       borderTopWidth: 1,
-      borderColor: colors.borderFocus,
+      borderColor: colors.gray40,
     },
     button: {
       padding: 2,

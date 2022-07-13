@@ -6,7 +6,7 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect} from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import Divider from '~/beinComponents/Divider';
@@ -14,7 +14,7 @@ import EmptyScreen from '~/beinFragments/EmptyScreen';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import CommunityItem from '../components/CommunityItem';
-import {ITheme} from '~/theme/interfaces';
+
 import actions from '~/screens/Groups/redux/actions';
 import spacing from '~/theme/spacing';
 
@@ -27,7 +27,7 @@ const ManagedCommunities = ({
   onPressCommunities,
   onPressMenu,
 }: ManagedCommunitiesProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyles(theme);
   const dispatch = useDispatch();
 
@@ -103,7 +103,7 @@ const ManagedCommunities = ({
         <RefreshControl
           refreshing={loading}
           onRefresh={onRefresh}
-          tintColor={theme.colors.borderDisable}
+          tintColor={theme.colors.gray40}
         />
       }
       ItemSeparatorComponent={() => (
@@ -118,7 +118,7 @@ const ManagedCommunities = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
+const createStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     listFooter: {
       height: 100,

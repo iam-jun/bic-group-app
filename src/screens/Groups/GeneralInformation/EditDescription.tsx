@@ -2,7 +2,7 @@ import {useNavigation} from '@react-navigation/core';
 import i18next from 'i18next';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, TextInput, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import Header from '~/beinComponents/Header';
@@ -10,7 +10,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import dimension from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
-import {ITheme} from '~/theme/interfaces';
+
 import spacing from '~/theme/spacing';
 import groupsActions from '../redux/actions';
 
@@ -21,7 +21,7 @@ const EditDescription = (props: any) => {
     description = '',
   } = props?.route?.params || {};
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -76,7 +76,7 @@ const EditDescription = (props: any) => {
       />
 
       <View style={styles.content}>
-        <Text.H6 color={theme.colors.textPrimary} useI18n>
+        <Text.H6 color={theme.colors.neutral80} useI18n>
           settings:title_edit_description
         </Text.H6>
         <View style={styles.inputView}>
@@ -89,7 +89,7 @@ const EditDescription = (props: any) => {
             testID={`edit_${type}_description.text`}
           />
         </View>
-        <Text.BodyS color={theme.colors.textSecondary} useI18n>
+        <Text.BodyS color={theme.colors.gray50} useI18n>
           settings:text_description_maximum_character
         </Text.BodyS>
       </View>
@@ -99,7 +99,7 @@ const EditDescription = (props: any) => {
 
 export default EditDescription;
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -114,14 +114,14 @@ const themeStyles = (theme: ITheme) => {
       minHeight: 224,
       fontFamily: fontFamilies.OpenSans,
       fontSize: dimension.sizes.body,
-      color: colors.textPrimary,
+      color: colors.neutral80,
     },
     inputView: {
       marginTop: spacing.margin.large,
       marginBottom: spacing.margin.tiny,
       borderRadius: 6,
       borderWidth: 1,
-      borderBottomColor: colors.textPrimary,
+      borderBottomColor: colors.neutral80,
       padding: spacing.margin.base,
       minHeight: 224,
     },

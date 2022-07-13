@@ -1,13 +1,12 @@
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {IGroup, IParsedGroup} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
 import Icon from '~/beinComponents/Icon';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
-import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
@@ -74,7 +73,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
@@ -204,7 +203,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                       style={styles.iconSmall}
                       icon={privacyIcon}
                       size={16}
-                      tintColor={theme.colors.textSecondary}
+                      tintColor={theme.colors.gray50}
                     />
                     {showPrivacyName && (
                       <Text.Subtitle style={styles.privacyTitle} useI18n>
@@ -214,10 +213,8 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                     <Text.Subtitle> ⬩ </Text.Subtitle>
                   </>
                 )}
-                <Icon icon="users" size={16} tintColor={colors.textSecondary} />
-                <Text.BodyS
-                  color={colors.textSecondary}
-                  style={styles.textInfo}>
+                <Icon icon="users" size={16} tintColor={colors.gray50} />
+                <Text.BodyS color={colors.gray50} style={styles.textInfo}>
                   {user_count}
                 </Text.BodyS>
               </View>
@@ -265,20 +262,20 @@ const themeStyles = (theme: IObject<any>) => {
     line: {
       width: 1,
       height: '100%',
-      backgroundColor: colors.borderDivider,
+      backgroundColor: colors.neutral5,
       marginHorizontal: spacing?.margin.base,
     },
     toggleContainer: {
       width: 1,
       height: '100%',
-      backgroundColor: colors.borderDivider,
+      backgroundColor: colors.neutral5,
       marginHorizontal: spacing?.margin.base,
       flexDirection: 'row',
     },
     toggleContent: {
       marginLeft: -7,
       alignSelf: 'center',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingVertical: spacing?.padding.tiny,
     },
     itemContainer: {

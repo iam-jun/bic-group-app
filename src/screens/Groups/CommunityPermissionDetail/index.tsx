@@ -1,12 +1,10 @@
 import React, {FC, useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
-
-import {ITheme} from '~/theme/interfaces';
 
 import Header from '~/beinComponents/Header';
 import {IScheme} from '~/interfaces/IGroup';
@@ -34,7 +32,7 @@ const CommunityPermissionDetail: FC<CommunityPermissionDetailProps> = ({
   const translationY = useSharedValue(0);
 
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
 
   const permissionCategories = useKeySelector(
@@ -87,13 +85,13 @@ const CommunityPermissionDetail: FC<CommunityPermissionDetailProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
       zIndex: 1,
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray40,
     },
     contentContainer: {
       paddingBottom: spacing.padding.small,

@@ -1,17 +1,17 @@
 import i18next from 'i18next';
 import React from 'react';
 import {StyleSheet, useWindowDimensions, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import Button from '~/beinComponents/Button';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+
 import spacing from '~/theme/spacing';
 import NotFoundImg from '../../../assets/images/error_404.svg';
 
 const NotFound = () => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
   const dimensions = useWindowDimensions();
 
@@ -44,14 +44,14 @@ const NotFound = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
     container: {
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: colors.bgSecondary,
+      backgroundColor: colors.neutral1,
     },
     contentContainer: {
       maxWidth: 328,

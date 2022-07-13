@@ -9,11 +9,10 @@ import {
   Easing,
   TouchableOpacity,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import DeviceInfo from 'react-native-device-info';
 
-import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
@@ -67,7 +66,7 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -235,7 +234,7 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   };
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.background}>
+    <ScreenWrapper isFullView backgroundColor={colors.white}>
       <Header
         titleTextProps={{useI18n: true}}
         title={'post:title_edit_comment'}
@@ -303,7 +302,7 @@ const CreateComment: FC<CreateCommentProps> = ({route}: CreateCommentProps) => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {dimension, colors} = theme;
   return StyleSheet.create({
     container: {},

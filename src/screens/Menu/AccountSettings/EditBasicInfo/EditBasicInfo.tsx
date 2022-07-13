@@ -1,11 +1,10 @@
 import React, {useState, useRef} from 'react';
 import {StyleSheet, Keyboard, ScrollView, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
 import {isEqual} from 'lodash';
 
-import {ITheme} from '~/theme/interfaces';
 import genders from '~/constants/genders';
 import {formatDate} from '~/utils/formatData';
 import relationshipStatus from '~/constants/relationshipStatus';
@@ -33,7 +32,7 @@ import {dataMapping, maxBirthday} from './helper';
 import spacing from '~/theme/spacing';
 
 const EditBasicInfo = () => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
 
   const styles = themeStyles(theme);
@@ -176,8 +175,8 @@ const EditBasicInfo = () => {
         buttonText={'common:text_save'}
         buttonProps={{
           useI18n: true,
-          color: theme.colors.primary6,
-          textColor: theme.colors.background,
+          color: theme.colors.purple50,
+          textColor: theme.colors.white,
           borderRadius: spacing.borderRadius.small,
           disabled: !isValid,
           testID: 'edit_basic_info.save',
@@ -197,7 +196,7 @@ const EditBasicInfo = () => {
         <TitleComponent icon="UserSquare" title="settings:title_gender" />
         <Button
           testID="edit_basic_info.gender"
-          textProps={{color: colors.textInput, variant: 'body'}}
+          textProps={{color: colors.neutral80, variant: 'body'}}
           style={styles.buttonDropDown}
           contentStyle={styles.buttonDropDownContent}
           rightIcon={'AngleDown'}
@@ -209,7 +208,7 @@ const EditBasicInfo = () => {
         <TitleComponent icon="Calender" title="settings:title_birthday" />
         <Button
           testID="edit_basic_info.birthday"
-          textProps={{color: colors.textInput, variant: 'body'}}
+          textProps={{color: colors.neutral80, variant: 'body'}}
           style={styles.buttonDropDown}
           contentStyle={styles.buttonDropDownContent}
           onPress={() => onDateEditOpen()}>
@@ -240,7 +239,7 @@ const EditBasicInfo = () => {
         />
         <Button
           testID="edit_basic_info.relationship"
-          textProps={{color: colors.textInput, variant: 'body'}}
+          textProps={{color: colors.neutral80, variant: 'body'}}
           style={styles.buttonDropDown}
           contentStyle={styles.buttonDropDownContent}
           rightIcon={'AngleDown'}
@@ -271,7 +270,7 @@ const EditBasicInfo = () => {
 
 export default EditBasicInfo;
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -292,7 +291,7 @@ const themeStyles = (theme: ITheme) => {
     buttonDropDown: {
       borderRadius: spacing.borderRadius.small,
       borderWidth: 1,
-      borderColor: colors.borderCard,
+      borderColor: colors.gray40,
       minHeight: 44,
       alignItems: 'stretch',
       justifyContent: 'center',

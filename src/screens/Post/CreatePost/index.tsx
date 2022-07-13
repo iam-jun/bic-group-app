@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useRef} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import Button from '~/beinComponents/Button';
@@ -16,7 +16,7 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 import useCreatePost from '~/screens/Post/CreatePost/hooks/useCreatePost';
 import postActions from '~/screens/Post/redux/actions';
-import {ITheme} from '~/theme/interfaces';
+
 import spacing from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
 import {getTotalFileSize} from '../redux/selectors';
@@ -38,7 +38,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = themeStyles(theme);
   const refTextInput = useRef<any>();
@@ -204,11 +204,11 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         <View style={styles.setting}>
           <Button.Secondary
             testID="create_post.btn_post_settings"
-            color={colors.bgHover}
+            color={colors.gray40}
             leftIcon="SlidersVAlt"
             style={styles.buttonSettings}
             onPress={onPressSettings}
-            textProps={{color: colors.textPrimary, style: {fontSize: 14}}}>
+            textProps={{color: colors.neutral80, style: {fontSize: 14}}}>
             {t('post:settings') + (count > 0 ? ` (${count})` : '')}
           </Button.Secondary>
         </View>
@@ -225,7 +225,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -241,7 +241,7 @@ const themeStyles = (theme: ITheme) => {
       flexWrap: 'wrap',
     },
     buttonSettings: {
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray40,
       borderRadius: spacing.borderRadius.small,
     },
   });

@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
+
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Tag from '~/beinComponents/Tag';
 import {IAudience} from '~/interfaces/IPost';
@@ -41,7 +41,7 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
     }
   }, [list]);
 
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -89,7 +89,7 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
         <Text.H6 style={{flex: 1}}>Chosen Audiences</Text.H6>
         {showBtnShowAll && (
           <ButtonWrapper
-            textProps={{color: colors.primary7, variant: 'buttonSmall'}}
+            textProps={{color: colors.purple60, variant: 'buttonSmall'}}
             onPress={onPressShowAll}
             testID="selecting_audiences.show">
             {showAll ? 'Show less' : `Show all(${list?.length})`}
@@ -121,7 +121,7 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -141,7 +141,7 @@ const createStyle = (theme: ITheme) => {
     contentContainer: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
   });
 };

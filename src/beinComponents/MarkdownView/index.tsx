@@ -2,7 +2,7 @@
 import mark from 'markdown-it-mark';
 import React, {FC, memo} from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import Icon from '~/beinComponents/Icon';
 import {
   blacklistDefault,
@@ -21,7 +21,7 @@ import {audienceRegex} from '~/constants/commonRegex';
 import {IMarkdownAudience} from '~/interfaces/IPost';
 import {sizes} from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
-import {ITheme} from '~/theme/interfaces';
+
 import spacing from '~/theme/spacing';
 
 export interface MarkdownViewProps {
@@ -43,7 +43,7 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
   limitMarkdownTypes,
   onLinkPress,
 }: MarkdownViewProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
 
   if (typeof children !== 'string') {
@@ -113,7 +113,7 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const textStyles = createTextStyle(theme);
   const {colors} = theme;
   return StyleSheet.create({
@@ -192,14 +192,14 @@ const createStyle = (theme: ITheme) => {
     // Code
     code_inline: {
       ...textStyles.code,
-      backgroundColor: colors.borderDivider,
+      backgroundColor: colors.neutral5,
     },
     code_block: {
       ...textStyles.code,
       marginTop: spacing.margin.tiny,
       marginBottom: spacing.margin.tiny,
-      borderColor: colors.borderDisable,
-      backgroundColor: colors.borderDivider,
+      borderColor: colors.gray40,
+      backgroundColor: colors.neutral5,
       padding: spacing.padding.base,
       borderRadius: spacing.borderRadius.small,
       borderWidth: 1,
@@ -208,8 +208,8 @@ const createStyle = (theme: ITheme) => {
       ...textStyles.code,
       marginTop: spacing.margin.tiny,
       marginBottom: spacing.margin.tiny,
-      borderColor: colors.borderDisable,
-      backgroundColor: colors.borderDivider,
+      borderColor: colors.gray40,
+      backgroundColor: colors.neutral5,
       padding: spacing.padding.base,
       borderRadius: spacing.borderRadius.small,
       borderWidth: 1,
@@ -224,7 +224,7 @@ const createStyle = (theme: ITheme) => {
     td: {},
 
     // Links
-    link: {color: colors.link},
+    link: {color: colors.blue50},
     blocklink: {},
 
     // Images

@@ -6,13 +6,13 @@ import {
   ViewStyle,
   TouchableOpacity,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text, {TextProps} from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
 import {AvatarProps} from '~/beinComponents/Avatar/AvatarComponent';
 import Icon, {IconProps} from '~/beinComponents/Icon';
-import {ITheme} from '~/theme/interfaces';
+
 import {useKeySelector} from '~/hooks/selector';
 import spacing from '~/theme/spacing';
 
@@ -45,7 +45,7 @@ const HeaderAvatar = ({
 }: HeaderAvatarProps) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -97,14 +97,14 @@ const HeaderAvatar = ({
 
 export default HeaderAvatar;
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray40,
       borderRadius: spacing.borderRadius.small,
       marginTop: spacing.margin.large,
       marginBottom: spacing.margin.extraLarge,

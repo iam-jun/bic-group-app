@@ -1,8 +1,6 @@
 import React, {FC, useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
@@ -33,7 +31,7 @@ const RoleItem: FC<RoleItemProps> = ({
 }: RoleItemProps) => {
   const [isExpand, setIsExpand] = useState(false);
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = createStyle(theme);
 
   const onPress = () => {
@@ -108,7 +106,7 @@ const RoleItem: FC<RoleItemProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -118,30 +116,30 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       minHeight: permissionRoleSectionHeaderHeight,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.large,
       borderTopWidth: 1,
       borderBottomWidth: 1,
-      borderColor: colors.bgFocus,
+      borderColor: colors.gray20,
     },
     roleName: {
       flex: 1,
     },
     catName: {
       textTransform: 'uppercase',
-      color: colors.textSecondary,
+      color: colors.gray50,
       paddingVertical: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
-      backgroundColor: colors.surface,
+      backgroundColor: colors.neutral1,
       borderBottomWidth: 1,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
     },
     subCatName: {
-      color: colors.textSecondary,
+      color: colors.gray50,
       paddingTop: spacing.padding.base,
       paddingBottom: spacing.padding.tiny,
       paddingHorizontal: spacing.padding.large,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
   });
 };

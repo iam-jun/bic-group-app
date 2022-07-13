@@ -1,3 +1,4 @@
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import React, {useCallback, useMemo, useState} from 'react';
 import {
   View,
@@ -9,7 +10,6 @@ import {
   Dimensions,
 } from 'react-native';
 import {PanGestureHandler} from 'react-native-gesture-handler';
-import {useTheme} from 'react-native-paper';
 import Animated, {
   Easing,
   interpolate,
@@ -20,7 +20,6 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import {ITheme} from '~/theme/interfaces';
 import spacing from '~/theme/spacing';
 import Icon from './Icon';
 import Text from './Text';
@@ -46,7 +45,7 @@ const FilterComponent: React.FC<FilterProps> = ({
   activeIndex = 0,
   translateX,
 }: FilterProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const styles = useMemo(() => createStyle(theme), [theme, style]);
 
   const [measurements, setMeasurements] = useState<any[]>(
@@ -103,7 +102,7 @@ const FilterComponent: React.FC<FilterProps> = ({
               icon={item.icon}
               size={24}
               tintColor={
-                isSelected ? theme.colors.primary : theme.colors.iconTintLight
+                isSelected ? theme.colors.purple60 : theme.colors.gray50
               }
               style={styles.icon}
             />
@@ -192,15 +191,15 @@ const FilterComponent: React.FC<FilterProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingVertical: spacing.padding.base,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       borderTopWidth: 1,
       borderBottomWidth: 1,
-      borderColor: colors.placeholder,
+      borderColor: colors.neutral5,
     },
     itemView: {
       padding: 0,
@@ -214,11 +213,11 @@ const createStyle = (theme: ITheme) => {
       paddingHorizontal: spacing.padding.large,
       borderRadius: 100,
       borderWidth: 1,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
     },
     itemSelectedContainer: {
-      borderColor: colors.borderFocus,
-      backgroundColor: colors.borderFocus,
+      borderColor: colors.gray40,
+      backgroundColor: colors.gray40,
       borderRadius: 100,
       zIndex: -1,
     },

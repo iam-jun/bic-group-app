@@ -6,11 +6,11 @@ import {
   ViewStyle,
   TouchableOpacity,
 } from 'react-native';
-import {ITheme} from '~/theme/interfaces';
+
 import Icon, {IconProps} from '~/beinComponents/Icon';
 import Text, {TextProps, TextVariant} from '~/beinComponents/Text';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useKeySelector} from '~/hooks/selector';
 import spacing from '~/theme/spacing';
 
@@ -65,7 +65,7 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
 }: DrawerItemProps) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
 
   return (
@@ -78,7 +78,7 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
           <Icon
             icon={icon}
             size={24}
-            tintColor={tintColor || colors.primary6}
+            tintColor={tintColor || colors.purple50}
             {...iconProps}
           />
         )}
@@ -102,7 +102,7 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
             <Text
               variant={textVariantRightTitle || 'subtitle'}
               useI18n
-              style={{color: colors.textSecondary}}
+              style={{color: colors.gray50}}
               {...rightTitleProps}>
               {rightTitle}
             </Text>
@@ -112,7 +112,7 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
               icon={rightIcon}
               size={20}
               style={styles.rightIcon}
-              tintColor={rightTintColor || colors.textSecondary}
+              tintColor={rightTintColor || colors.gray50}
               {...rightIconProps}
             />
           )}

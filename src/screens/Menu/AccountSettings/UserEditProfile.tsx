@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import React, {useEffect, useState} from 'react';
 import {ActivityIndicator, ScrollView, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
@@ -29,7 +29,6 @@ import {
 import {useUserIdAuth} from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 
-import {ITheme} from '~/theme/interfaces';
 import {formatDate} from '~/utils/formatData';
 import menuActions from '../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
@@ -49,7 +48,7 @@ const UserEditProfile = (props: any) => {
   const [userData, setUserData] = useState<any>({});
   const [showEditButton, setShowEditButton] = useState<boolean>(false);
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
@@ -190,13 +189,13 @@ const UserEditProfile = (props: any) => {
     return (
       <View>
         <View style={styles.headerItem}>
-          <Text.H5 color={colors.iconTint} variant="body" useI18n>
+          <Text.H5 color={colors.neutral80} variant="body" useI18n>
             settings:title_avatar
           </Text.H5>
           <ButtonWrapper onPress={onEditAvatar} disabled={loadingAvatar}>
             <Text.H6
               testID="user_edit_profile.avatar.edit"
-              color={!loadingAvatar ? colors.textPrimary : colors.textDisabled}
+              color={!loadingAvatar ? colors.neutral80 : colors.gray40}
               style={styles.editBtn}
               useI18n>
               settings:title_edit
@@ -228,13 +227,13 @@ const UserEditProfile = (props: any) => {
     return (
       <View>
         <View style={styles.headerItem}>
-          <Text.H5 color={colors.iconTint} variant="body" useI18n>
+          <Text.H5 color={colors.neutral80} variant="body" useI18n>
             settings:title_cover
           </Text.H5>
           <ButtonWrapper onPress={onEditCover} disabled={loadingCover}>
             <Text.H6
               testID="user_edit_profile.cover.edit"
-              color={!loadingCover ? colors.textPrimary : colors.textDisabled}
+              color={!loadingCover ? colors.neutral80 : colors.gray40}
               style={styles.editBtn}
               useI18n>
               settings:title_edit
@@ -267,13 +266,13 @@ const UserEditProfile = (props: any) => {
     return (
       <View style={{paddingTop: spacing.padding.base}}>
         <View style={styles.headerItem}>
-          <Text.H5 color={colors.iconTint} variant="body" useI18n>
+          <Text.H5 color={colors.neutral80} variant="body" useI18n>
             settings:text_description
           </Text.H5>
           <ButtonWrapper onPress={goToEditDescription}>
             <Text.H6
               testID="user_edit_profile.description.edit"
-              color={colors.textPrimary}
+              color={colors.neutral80}
               style={styles.editBtn}
               useI18n>
               settings:title_edit
@@ -294,14 +293,14 @@ const UserEditProfile = (props: any) => {
     return (
       <View>
         <View style={styles.headerItem}>
-          <Text.H5 color={colors.iconTint} variant="body" useI18n>
+          <Text.H5 color={colors.neutral80} variant="body" useI18n>
             settings:title_basic_info
           </Text.H5>
           {showEditButton ? (
             <ButtonWrapper style={styles.editBtn} onPress={goToEditInfo}>
               <Text.H6
                 testID="user_edit_profile.basic_info.edit"
-                color={colors.textPrimary}
+                color={colors.neutral80}
                 useI18n>
                 settings:title_edit
               </Text.H6>
@@ -359,14 +358,14 @@ const UserEditProfile = (props: any) => {
       <View>
         <Divider style={styles.divider} />
         <View style={styles.headerItem}>
-          <Text.H5 color={colors.iconTint} variant="body" useI18n>
+          <Text.H5 color={colors.neutral80} variant="body" useI18n>
             settings:title_contact
           </Text.H5>
           {showEditButton ? (
             <ButtonWrapper onPress={goToEditContact}>
               <Text.H6
                 testID="user_edit_profile.contact.edit"
-                color={colors.textPrimary}
+                color={colors.neutral80}
                 style={styles.editBtn}
                 useI18n>
                 settings:title_edit
@@ -441,12 +440,12 @@ const UserEditProfile = (props: any) => {
               </Text>
             )}
             {!!item?.location && (
-              <Text.Subtitle color={colors.textSecondary}>
+              <Text.Subtitle color={colors.gray50}>
                 {item.location}
               </Text.Subtitle>
             )}
             {!!item?.description && (
-              <Text.Subtitle numberOfLines={3} color={colors.textSecondary}>
+              <Text.Subtitle numberOfLines={3} color={colors.gray50}>
                 {item.description}
               </Text.Subtitle>
             )}
@@ -465,7 +464,7 @@ const UserEditProfile = (props: any) => {
         <View style={styles.paddingBottom}>
           <Divider style={styles.divider} />
           <View style={styles.headerItem}>
-            <Text.H5 color={colors.iconTint} variant="body" useI18n>
+            <Text.H5 color={colors.neutral80} variant="body" useI18n>
               settings:text_work
             </Text.H5>
           </View>
@@ -483,7 +482,7 @@ const UserEditProfile = (props: any) => {
       <View>
         <Divider style={styles.divider} />
         <View style={styles.headerItem}>
-          <Text.H5 color={colors.iconTint} variant="body" useI18n>
+          <Text.H5 color={colors.neutral80} variant="body" useI18n>
             settings:text_work
           </Text.H5>
         </View>
@@ -495,8 +494,8 @@ const UserEditProfile = (props: any) => {
           ))}
         </View>
         <Button.Secondary
-          color={colors.primary1}
-          textColor={colors.primary6}
+          color={colors.violet1}
+          textColor={colors.purple50}
           onPress={goToAddWork}
           style={styles.buttonAddWork}
           testID="user_edit_profile.work.add_work">
@@ -523,7 +522,7 @@ const UserEditProfile = (props: any) => {
 
 export default UserEditProfile;
 
-const themeStyles = (theme: ITheme, coverHeight: number) => {
+const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -550,7 +549,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       borderRadius: 8,
     },
     imageLoading: {
-      backgroundColor: colors.bgDisable,
+      backgroundColor: colors.gray20,
       justifyContent: 'center',
     },
     cover: {

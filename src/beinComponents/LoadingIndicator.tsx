@@ -1,7 +1,7 @@
 import React from 'react';
 import {ActivityIndicator, StyleProp, ViewStyle} from 'react-native';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
+
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 export interface LoadingIndicatorProps {
   testID?: string;
@@ -16,7 +16,7 @@ const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
   size,
   color,
 }: LoadingIndicatorProps) => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme;
 
   return (
@@ -24,7 +24,7 @@ const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
       testID={testID || 'loading_indicator'}
       style={style}
       size={size}
-      color={color || colors.borderDisable}
+      color={color || colors.gray40}
     />
   );
 };
