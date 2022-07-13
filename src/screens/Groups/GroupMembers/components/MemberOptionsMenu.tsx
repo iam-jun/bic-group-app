@@ -1,6 +1,5 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import i18next from 'i18next';
 import {useDispatch} from 'react-redux';
 import {useTheme} from 'react-native-paper';
 
@@ -20,6 +19,7 @@ import {checkLastAdmin, handleLeaveInnerGroups} from '../../helper';
 import useRemoveMember from './useRemoveMember';
 import useRemoveAdmin from './useRemoveAdmin';
 import useLeaveGroup from './useLeaveGroup';
+import {useBaseHook} from '~/hooks';
 
 interface MemberOptionsMenuProps {
   groupId: number;
@@ -38,11 +38,11 @@ const MemberOptionsMenu = ({
   const styles = createStyle(theme);
   const dispatch = useDispatch();
   const {user} = useAuth();
+  const {t} = useBaseHook();
 
   const can_manage_member = useKeySelector(
     groupsKeySelector.groupDetail.can_manage_member,
   );
-  const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
   const groupMembers = useKeySelector(groupsKeySelector.groupMembers);
   const {getInnerGroupsNames} = useRemoveMember({
     groupId,
@@ -77,15 +77,15 @@ const MemberOptionsMenu = ({
   const alertSettingAdmin = () => {
     const alertPayload = {
       iconName: 'Star',
-      title: i18next.t('groups:modal_confirm_set_admin:title'),
-      content: i18next.t('groups:modal_confirm_set_admin:description'),
+      title: t('groups:modal_confirm_set_admin:title'),
+      content: t('groups:modal_confirm_set_admin:description'),
       ContentComponent: Text.BodyS,
       cancelBtn: true,
       cancelBtnProps: {
         textColor: theme.colors.primary7,
       },
       onConfirm: doSetAdmin,
-      confirmLabel: i18next.t('groups:modal_confirm_set_admin:button_confirm'),
+      confirmLabel: t('groups:modal_confirm_set_admin:button_confirm'),
       ConfirmBtnComponent: Button.Secondary,
       confirmBtnProps: {
         highEmphasis: true,
@@ -200,14 +200,14 @@ const MemberOptionsMenu = ({
       onClose={onOptionsClosed}
       ContentComponent={
         <View style={styles.bottomSheet}>
-          {can_setting &&
+          {can_manage_member &&
             (selectedMember?.is_admin ? (
               <PrimaryItem
                 testID="member_options_menu.remove_admin"
                 style={styles.menuOption}
                 leftIcon={'Star'}
                 leftIconProps={{icon: 'Star', size: 24}}
-                title={i18next.t('groups:member_menu:label_remove_as_admin')}
+                title={t('groups:member_menu:label_revoke_admin_role')}
                 onPress={() => onPressMenuOption('remove-admin')}
               />
             ) : (
@@ -216,7 +216,7 @@ const MemberOptionsMenu = ({
                 style={styles.menuOption}
                 leftIcon={'Star'}
                 leftIconProps={{icon: 'Star', size: 24}}
-                title={i18next.t('groups:member_menu:label_set_as_admin')}
+                title={t('groups:member_menu:label_set_as_admin')}
                 onPress={() => onPressMenuOption('set-admin')}
               />
             ))}
@@ -230,7 +230,7 @@ const MemberOptionsMenu = ({
                 size: 24,
                 tintColor: theme.colors.error,
               }}
-              title={i18next.t('groups:member_menu:label_remove_member')}
+              title={t('groups:member_menu:label_remove_member')}
               titleProps={{color: theme.colors.error}}
               onPress={() => onPressMenuOption('remove-member')}
             />
@@ -241,7 +241,7 @@ const MemberOptionsMenu = ({
               style={styles.menuOption}
               leftIcon={'SignOutAlt'}
               leftIconProps={{icon: 'SignOutAlt', size: 24}}
-              title={i18next.t('groups:member_menu:label_leave_group')}
+              title={t('groups:member_menu:label_leave_group')}
               onPress={() => onPressMenuOption('leave-group')}
             />
           )}
