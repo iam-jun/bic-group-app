@@ -73,10 +73,10 @@ export const createTextStyle = (theme: ITheme) => {
       // lineHeight: lineHeights.bodyM,
       color: colors.textPrimary,
     },
-    bodyMM: {
+    bodyMMedium: {
       fontFamily: fontFamilies.BeVietnamProMedium,
-      fontSize: sizes.bodyMM,
-      // lineHeight: lineHeights.bodyMM,
+      fontSize: sizes.bodyMMedium,
+      // lineHeight: lineHeights.bodyMMedium,
       color: colors.textPrimary,
     },
     bodyS: {
@@ -85,10 +85,10 @@ export const createTextStyle = (theme: ITheme) => {
       // lineHeight: lineHeights.bodyS,
       color: colors.textPrimary,
     },
-    bodySBM: {
+    bodySMedium: {
       fontFamily: fontFamilies.BeVietnamProMedium,
-      fontSize: sizes.bodySBM,
-      // lineHeight: lineHeights.bodySBM,
+      fontSize: sizes.bodySMedium,
+      // lineHeight: lineHeights.bodySMedium,
       color: colors.textPrimary,
     },
     paragraphL: {
@@ -139,14 +139,14 @@ export const createTextStyle = (theme: ITheme) => {
       fontSize: sizes.tabS,
       color: colors.textPrimary,
     },
-    link: {
+    linkM: {
       fontFamily: fontFamilies.BeVietnamProMedium,
-      fontSize: sizes.link,
+      fontSize: sizes.linkM,
       color: colors.link,
     },
-    linkSmall: {
+    linkS: {
       fontFamily: fontFamilies.BeVietnamProMedium,
-      fontSize: sizes.linkSmall,
+      fontSize: sizes.linkS,
       color: colors.link,
     },
     badgeL: {

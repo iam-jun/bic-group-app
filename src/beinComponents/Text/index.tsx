@@ -17,9 +17,9 @@ export type TextVariant =
   | 'subtitleS'
   | 'subtitleXS'
   | 'bodyM'
-  | 'bodyMM'
+  | 'bodyMMedium'
   | 'bodyS'
-  | 'bodySBM'
+  | 'bodySMedium'
   | 'paragraphL'
   | 'paragraphM'
   | 'paragraphS'
@@ -29,8 +29,8 @@ export type TextVariant =
   | 'tabL'
   | 'tabM'
   | 'tabS'
-  | 'link'
-  | 'linkSmall'
+  | 'linkM'
+  | 'linkS'
   | 'badgeL'
   | 'badgeM'
   | 'badgeS'
@@ -130,14 +130,14 @@ const SubtitleXS = ({...props}: TextProps) => (
 const BodyM = ({...props}: TextProps) => (
   <TextComponent variant={'bodyM'} {...props} />
 );
-const BodyMM = ({...props}: TextProps) => (
-  <TextComponent variant={'bodyMM'} {...props} />
+const BodyMMedium = ({...props}: TextProps) => (
+  <TextComponent variant={'bodyMMedium'} {...props} />
 );
 const BodyS = ({...props}: TextProps) => (
   <TextComponent variant={'bodyS'} {...props} />
 );
-const BodySBM = ({...props}: TextProps) => (
-  <TextComponent variant={'bodySBM'} {...props} />
+const BodySMedium = ({...props}: TextProps) => (
+  <TextComponent variant={'bodySMedium'} {...props} />
 );
 const ParagraphL = ({...props}: TextProps) => (
   <TextComponent variant={'paragraphL'} {...props} />
@@ -166,11 +166,11 @@ const TabM = ({...props}: TextProps) => (
 const TabS = ({...props}: TextProps) => (
   <TextComponent variant={'tabS'} {...props} />
 );
-const Link = ({...props}: TextProps) => (
-  <TextComponent variant={'link'} {...props} />
+const LinkM = ({...props}: TextProps) => (
+  <TextComponent variant={'linkM'} {...props} />
 );
-const LinkSmall = ({...props}: TextProps) => (
-  <TextComponent variant={'linkSmall'} {...props} />
+const LinkS = ({...props}: TextProps) => (
+  <TextComponent variant={'linkS'} {...props} />
 );
 const BadgeL = ({...props}: TextProps) => (
   <TextComponent variant={'badgeL'} {...props} />
@@ -244,9 +244,9 @@ const Text = Object.assign(TextComponent, {
   SubtitleS,
   SubtitleXS,
   BodyM,
-  BodyMM,
+  BodyMMedium,
   BodyS,
-  BodySBM,
+  BodySMedium,
   ParagraphL,
   ParagraphM,
   ParagraphS,
@@ -256,8 +256,8 @@ const Text = Object.assign(TextComponent, {
   TabL,
   TabM,
   TabS,
-  Link,
-  LinkSmall,
+  LinkM,
+  LinkS,
   BadgeL,
   BadgeM,
   BadgeS,
