@@ -1,40 +1,105 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 module.exports = {
-  "env": {
-    "browser": true,
-    "es2021": true,
-    "node": true,
-    "jest": true
+  root: true,
+  env: {
+    browser: true,
+    es2022: true,
+    node: true,
+    jest: true,
   },
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:@typescript-eslint/recommended',
+    '@react-native-community/eslint-config',
+    'airbnb',
+    'airbnb/hooks',
+    // 'prettier',
+    // 'prettier/react',
+    // 'plugin:prettier/recommended',
   ],
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
+  parser: '@typescript-eslint/parser',
+  parserOptions: {
+    ecmaFeatures: {
+      jsx: true,
     },
-    "ecmaVersion": 12,
-    "sourceType": "module"
+    ecmaVersion: 12,
+    sourceType: 'module',
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint",
-    "prettier"
+  plugins: [
+    'react',
+    '@typescript-eslint',
+    'prettier',
   ],
-  "settings": {
-    "react": {
-      "version": "detect"
-    }
+  settings: {
+    react: {
+      version: 'detect',
+    },
   },
-  "rules": {
-    "react/display-name": "off",
-    "@typescript-eslint/ban-ts-comment": "off",
-    "@typescript-eslint/no-explicit-any": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "prettier/prettier": 1,
-    "no-extra-boolean-cast": 0,
-  }
-}
+  rules: {
+    'prettier/prettier': 1,
+    'no-extra-boolean-cast': 0,
+    'arrow-body-style': 'warn',
+    'prefer-object-spread': 'warn',
+    'prefer-destructuring': 'warn',
+    'object-curly-spacing': 'error',
+    'no-new-object': 'error',
+    'object-shorthand': 'error',
+    'no-prototype-builtins': 'error',
+    'no-array-constructor': 'error',
+    'array-callback-return': 'error',
+    quotes: ['error', 'single'],
+    camelcase: [
+      0,
+      {
+        properties: 'never',
+      },
+    ],
+    'react/display-name': 'off',
+    'react-native/no-unused-styles': 'warn',
+    'react-native/no-inline-styles': 'error',
+    'react-native/no-single-element-style-arrays': 'warn',
+
+    '@typescript-eslint/ban-ts-comment': 'off',
+    // "@typescript-eslint/no-explicit-any": "off",
+    '@typescript-eslint/explicit-function-return-type': 0,
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    '@typescript-eslint/no-explicit-any': 'warn',
+    '@typescript-eslint/member-delimiter-style': 2,
+    '@typescript-eslint/no-var-requires': 0,
+    // "@typescript-eslint/naming-convention": [
+    //         "warn",
+    //         { "selector": "variable", "format": ["camelCase", "PascalCase", "UPPER_CASE"] },
+    //         // { "selector": "property", "format": ["camelCase","snake_case"] }
+    //     ]
+    '@typescript-eslint/naming-convention': [
+      'error',
+      {
+        selector: 'default',
+        format: ['camelCase'],
+      },
+
+      {
+        selector: 'variable',
+        format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
+      },
+      {
+        selector: 'parameter',
+        format: ['camelCase'],
+        leadingUnderscore: 'allow',
+      },
+
+      {
+        selector: 'memberLike',
+        modifiers: ['private'],
+        format: ['camelCase'],
+        leadingUnderscore: 'require',
+      },
+
+      {
+        selector: 'typeLike',
+        format: ['PascalCase'],
+      },
+    ],
+  },
+};
