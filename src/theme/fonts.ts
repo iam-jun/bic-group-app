@@ -14,27 +14,30 @@ export const fontFamilies = {
   OpenSansSemiBold: 'OpenSans-SemiBold',
   OpenSansSemiBoldItalic: 'OpenSans-SemiBoldItalic',
   JetBrainsMono: 'JetBrainsMono-Regular',
+  BeVietnamProLight: 'BeVietnamPro-Light',
+  BeVietnamProMedium: 'BeVietnamPro-Medium',
+  BeVietnamProSemiBold: 'BeVietnamPro-SemiBold',
 };
 
 export default {
   light: {
-    fontFamily: fontFamilies.OpenSans,
+    fontFamily: fontFamilies.BeVietnamProLight,
     fontWeight: 'normal',
   },
   medium: {
-    fontFamily: fontFamilies.OpenSansSemiBold,
+    fontFamily: fontFamilies.BeVietnamProMedium,
     fontWeight: 'normal',
   },
   regular: {
-    fontFamily: fontFamilies.OpenSans,
+    fontFamily: fontFamilies.BeVietnamProLight,
     fontWeight: 'normal',
   },
   bold: {
-    fontFamily: fontFamilies.OpenSansSemiBold,
+    fontFamily: fontFamilies.BeVietnamProSemiBold,
     fontWeight: 'normal',
   },
   maxBold: {
-    fontFamily: fontFamilies.OpenSansSemiBold,
+    fontFamily: fontFamilies.BeVietnamProSemiBold,
     fontWeight: 'normal',
   },
 };

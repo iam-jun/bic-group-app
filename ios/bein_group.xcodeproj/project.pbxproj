@@ -31,6 +31,9 @@
 		E3A0403E2784264F0092D778 /* OpenSans-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E3A0403A2784264F0092D778 /* OpenSans-SemiBoldItalic.ttf */; };
 		E3BF04F62844E7290011A794 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = E3BF04F52844E7290011A794 /* AppDelegate.mm */; };
 		F74BE7EE4B611DCED9C541F1 /* libPods-bein_group-bein_groupTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 03B78A72093EB517E903A9BD /* libPods-bein_group-bein_groupTests.a */; };
+		19C0B6991BE241B28E053EFD /* BeVietnamPro-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = F96F01FE0B934B49A3451F34 /* BeVietnamPro-Light.ttf */; };
+		5246BAE9093C492094C9787C /* BeVietnamPro-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1694AC6B30394FCBA7CFE5BF /* BeVietnamPro-Medium.ttf */; };
+		850EEB29D09244CEA21D0BE5 /* BeVietnamPro-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C0F89AD9EDCD46149CE6908E /* BeVietnamPro-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -90,6 +93,9 @@
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		EF9FB8E4149A4EC198CDD8D1 /* SVN-PoppinsSemiBold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SVN-PoppinsSemiBold.otf"; path = "../assets/fonts/SVN-PoppinsSemiBold.otf"; sourceTree = "<group>"; };
 		F75B3B9A54F552F1948432DA /* Pods-bein_group-bein_groupTests.debugstaging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-bein_group-bein_groupTests.debugstaging.xcconfig"; path = "Target Support Files/Pods-bein_group-bein_groupTests/Pods-bein_group-bein_groupTests.debugstaging.xcconfig"; sourceTree = "<group>"; };
+		F96F01FE0B934B49A3451F34 /* BeVietnamPro-Light.ttf */ = {isa = PBXFileReference; name = "BeVietnamPro-Light.ttf"; path = "../assets/fonts/BeVietnamPro-Light.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1694AC6B30394FCBA7CFE5BF /* BeVietnamPro-Medium.ttf */ = {isa = PBXFileReference; name = "BeVietnamPro-Medium.ttf"; path = "../assets/fonts/BeVietnamPro-Medium.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C0F89AD9EDCD46149CE6908E /* BeVietnamPro-SemiBold.ttf */ = {isa = PBXFileReference; name = "BeVietnamPro-SemiBold.ttf"; path = "../assets/fonts/BeVietnamPro-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,6 +257,9 @@
 				69166FDA80424E02B9F2BD79 /* SVN-PoppinsMediumItalic.otf */,
 				EF9FB8E4149A4EC198CDD8D1 /* SVN-PoppinsSemiBold.otf */,
 				C8FC3B75F2D94B5993703EBE /* SVN-PoppinsSemiBoldItalic.otf */,
+				F96F01FE0B934B49A3451F34 /* BeVietnamPro-Light.ttf */,
+				1694AC6B30394FCBA7CFE5BF /* BeVietnamPro-Medium.ttf */,
+				C0F89AD9EDCD46149CE6908E /* BeVietnamPro-SemiBold.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -368,6 +377,9 @@
 				0166DCB514994F4287DC1AFB /* SVN-PoppinsMediumItalic.otf in Resources */,
 				9202D98FA56148D88E4E08DF /* SVN-PoppinsSemiBold.otf in Resources */,
 				D7214A9E725B40C3A710DAA6 /* SVN-PoppinsSemiBoldItalic.otf in Resources */,
+				19C0B6991BE241B28E053EFD /* BeVietnamPro-Light.ttf in Resources */,
+				5246BAE9093C492094C9787C /* BeVietnamPro-Medium.ttf in Resources */,
+				850EEB29D09244CEA21D0BE5 /* BeVietnamPro-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
