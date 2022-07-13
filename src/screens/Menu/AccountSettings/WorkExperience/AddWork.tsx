@@ -279,7 +279,7 @@ const AddWork = () => {
           style={styles.buttonDate}
           onPress={onStartDateEditOpen}>
           <Icon
-            icon="CalendarAlt"
+            icon="Calendar"
             tintColor={colors.textSecondary}
             style={styles.calendarIcon}
           />
@@ -302,7 +302,7 @@ const AddWork = () => {
           style={styles.buttonDate}
           onPress={onEndDateEditOpen}>
           <Icon
-            icon="CalendarAlt"
+            icon="Calendar"
             tintColor={colors.textSecondary}
             style={styles.calendarIcon}
           />

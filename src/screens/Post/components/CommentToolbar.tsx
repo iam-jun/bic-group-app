@@ -35,7 +35,7 @@ const CommentToolbar: FC<CommentToolbarProps> = ({
           testID={'comment_toolbar.btn_image'}
           style={styles.button}
           onPress={onSelectImage}>
-          <Icon icon={'iconAddImage'} />
+          <Icon icon={'Image'} />
         </Button>
       )}
       {!!onSelectFile && (

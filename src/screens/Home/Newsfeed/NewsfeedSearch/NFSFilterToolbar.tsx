@@ -125,9 +125,9 @@ const NFSFilterToolbar = () => {
         <View style={styles.container}>
           <Button.Secondary
             onPress={onPressFilterOptions}
-            leftIcon={'SlidersAlt'}
+            leftIcon={'SlidersUp'}
             leftIconProps={{
-              icon: 'SlidersAlt',
+              icon: 'SlidersUp',
               style: {
                 marginRight: spacing.margin.small,
                 marginLeft: spacing.margin.tiny,

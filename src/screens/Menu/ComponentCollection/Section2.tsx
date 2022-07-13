@@ -172,7 +172,7 @@ const Section2 = () => {
               modalActions.showAlert({
                 title: 'Log Out',
                 content: 'Do you want to log out?',
-                iconName: 'SignOutAlt',
+                iconName: 'ArrowRightFromArc',
                 cancelBtn: true,
                 onConfirm: () => alert('Confirm button'),
                 confirmLabel: 'Log Out',

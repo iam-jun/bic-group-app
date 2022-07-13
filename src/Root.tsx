@@ -43,9 +43,12 @@ import {rootSwitch} from './router/stack';
 import Store from '~/store';
 import {IUserResponse} from './interfaces/IAuth';
 import {isNavigationRefReady, getScreenAndParams} from '~/router/helper';
+import {initFontAwesomeIcon} from '~/services/fontAwesomeIcon';
 
 moment.updateLocale('en', moments.en);
 moment.updateLocale('vi', moments.vi);
+
+initFontAwesomeIcon();
 
 export default (): React.ReactElement => {
   LogBox.ignoreAllLogs();

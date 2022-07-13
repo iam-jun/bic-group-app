@@ -115,7 +115,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
       />
       <View style={{flex: 1}} />
       <Icon
-        icon="ShareAlt"
+        icon="ShareNodes"
         onPress={onPressShare}
         size={20}
         tintColor={colors.iconTintReversed}
@@ -201,7 +201,10 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
         <View>
           {activeIndex < imageUrls.length - 1 && (
             <Button style={styles.buttonControl} onPress={onPressNext}>
-              <Icon icon={'iconNext'} tintColor={colors.iconTintReversed} />
+              <Icon
+                icon={'AngleRightSolid'}
+                tintColor={colors.iconTintReversed}
+              />
             </Button>
           )}
         </View>

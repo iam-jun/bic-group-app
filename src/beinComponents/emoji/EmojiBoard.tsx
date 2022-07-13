@@ -73,7 +73,7 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
         <View style={styles.buttonContainer}>
           {!!onPressKeyboard && (
             <Button onPress={onPressKeyboard} style={styles.buttonSide}>
-              <Icon size={18} icon={'KeyboardShow'} />
+              <Icon size={18} icon={'Keyboard'} />
             </Button>
           )}
           {!!onPressSpace && (
@@ -81,7 +81,7 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
           )}
           {!!onPressBackSpace && (
             <Button onPress={onPressBackSpace} style={styles.buttonSide}>
-              <Icon size={18} icon={'Backspace'} />
+              <Icon size={18} icon={'DeleteLeft'} />
             </Button>
           )}
         </View>

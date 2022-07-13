@@ -8,7 +8,7 @@ module.exports = {
   clearMocks: true,
   testPathIgnorePatterns: ['/node_modules/'],
   transformIgnorePatterns: [
-    'node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|rollbar-react-native|@fortawesome|@react-native|@react-navigation|@iconscout/react-unicons|@iconscout/react-native-unicons)',
+    'node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|rollbar-react-native|@fortawesome|@react-native|@react-navigation)',
   ],
   collectCoverageFrom: [
     'src/**/*.{js,jsx,ts,tsx}',

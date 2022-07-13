@@ -117,7 +117,7 @@ const MemberOptionsMenu = ({
             props: {
               type: 'error',
               textProps: {useI18n: true},
-              rightIcon: 'UsersAlt',
+              rightIcon: 'UserGroup',
               rightText: 'Members',
               onPressRight: onPressMemberButton,
             },
@@ -224,9 +224,9 @@ const MemberOptionsMenu = ({
             <PrimaryItem
               testID="member_options_menu.remove_member"
               style={styles.menuOption}
-              leftIcon={'UserTimes'}
+              leftIcon={'UserXmark'}
               leftIconProps={{
-                icon: 'UserTimes',
+                icon: 'UserXmark',
                 size: 24,
                 tintColor: theme.colors.error,
               }}
@@ -239,8 +239,8 @@ const MemberOptionsMenu = ({
             <PrimaryItem
               testID="member_options_menu.leave_group"
               style={styles.menuOption}
-              leftIcon={'SignOutAlt'}
-              leftIconProps={{icon: 'SignOutAlt', size: 24}}
+              leftIcon={'ArrowRightFromArc'}
+              leftIconProps={{icon: 'ArrowRightFromArc', size: 24}}
               title={t('groups:member_menu:label_leave_group')}
               onPress={() => onPressMenuOption('leave-group')}
             />
