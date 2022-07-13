@@ -28,13 +28,12 @@ import {SafeAreaProvider} from 'react-native-safe-area-context';
 /* State Redux */
 import {useDispatch} from 'react-redux';
 import {fontConfig} from '~/configs/fonts';
-import notificationsActions from '~/constants/notificationActions';
 import {PreferencesContext} from '~/contexts/PreferencesContext';
 import RootNavigator from '~/router';
 import localStorage from '~/services/localStorage';
 import {fetchSetting} from '~/store/modal/actions';
 
-import {colors, dimension, fonts, shadow, spacing} from '~/theme';
+import { colors, dimension, fonts, shadow, spacing } from '~/theme';
 import {AppConfig, languages} from './configs';
 import moments from './configs/moments';
 import {AppContext} from './contexts/AppContext';
@@ -50,14 +49,14 @@ moment.updateLocale('vi', moments.vi);
 
 initFontAwesomeIcon();
 
-export default (): React.ReactElement => {
+const Root = (): React.ReactElement => {
   LogBox.ignoreAllLogs();
 
-  const [stateCurrent, setState] = useState({isUpdate: false, loaded: false});
+  const [stateCurrent, setState] = useState({ isUpdate: false, loaded: false });
   /* Localization */
-  const {i18n} = useTranslation();
+  const { i18n } = useTranslation();
 
-  /*Declare redux and sagas*/
+  /* Declare redux and sagas */
   const dispatch = useDispatch();
   // const language = useSelector(state => languageSelector(state));
 
@@ -67,10 +66,12 @@ export default (): React.ReactElement => {
     colorScheme === 'dark' ? 'dark' : 'light',
   );
 
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
   useEffect(() => {
-    if (colorScheme !== theme) toggleTheme();
+    if (colorScheme !== theme) {
+      toggleTheme();
+    }
   }, [colorScheme]);
 
   useEffect(() => {
@@ -93,8 +94,8 @@ export default (): React.ReactElement => {
     listenFCMEvents();
 
     // TODO:
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      console.log('foreground', {remoteMessage});
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      console.log('foreground', { remoteMessage });
       // Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
     });
 
@@ -102,13 +103,13 @@ export default (): React.ReactElement => {
   }, []);
 
   const listenFCMEvents = () => {
-    messaging().onNotificationOpenedApp(remoteMessage => {
+    messaging().onNotificationOpenedApp((remoteMessage) => {
       handleInitialNotification(remoteMessage);
     });
 
     messaging()
       .getInitialNotification()
-      .then(remoteMessage => {
+      .then((remoteMessage) => {
         handleInitialNotification(remoteMessage);
       });
   };
@@ -127,11 +128,13 @@ export default (): React.ReactElement => {
       return;
     }
 
-    if (!user) return;
+    if (!user) {
+      return;
+    }
 
     const data = handleMessageData(remoteMessage);
 
-    if (data)
+    if (data) {
       rootNavigation.navigate(data.screen || rootSwitch.mainStack, {
         screen: data?.params?.screen || 'main',
         params: {
@@ -139,20 +142,21 @@ export default (): React.ReactElement => {
           initial: false,
         },
       });
+    }
   };
 
   const handleMessageData = (
     remoteMessage: FirebaseMessagingTypes.RemoteMessage | null,
   ): {screen: any; params: any} | undefined => {
-    if (!remoteMessage) return;
+    if (!remoteMessage) {
+      return;
+    }
 
     try {
       const screenData = getScreenAndParams(remoteMessage?.data?.extraData);
-      //@ts-ignore
+      // @ts-ignore
       return screenData;
-    } catch (err) {
-      return;
-    }
+    } catch (err) {}
   };
 
   /* Change language */
@@ -163,15 +167,15 @@ export default (): React.ReactElement => {
       i18n.language !== language && i18n.changeLanguage(language);
       moment.locale(language);
     } else {
-      let systemLocale =
-        Platform.OS === 'ios'
+      let systemLocale =        Platform.OS === 'ios'
           ? NativeModules.SettingsManager.settings.AppleLocale
           : NativeModules.I18nManager.localeIdentifier;
 
-      if (systemLocale && systemLocale.includes('_'))
+      if (systemLocale && systemLocale.includes('_')) {
         systemLocale = systemLocale.split('_')[0];
-      else if (systemLocale && systemLocale.includes('-'))
+      } else if (systemLocale && systemLocale.includes('-')) {
         systemLocale = systemLocale.split('-')[0];
+      }
 
       const isSupportLanguage = Object.keys(languages).find(
         (item: string) => item === systemLocale,
@@ -196,10 +200,10 @@ export default (): React.ReactElement => {
       loaded: false,
     };
     try {
-      /*Fetch setting*/
+      /* Fetch setting */
       dispatch(fetchSetting());
 
-      /*Set loading success*/
+      /* Set loading success */
       stateNew.loaded = true;
       setState(stateNew);
     } catch (error) {
@@ -211,33 +215,33 @@ export default (): React.ReactElement => {
     switchTheme((theme: string) => (theme === 'light' ? 'dark' : 'light'));
   };
 
-  //Set config theme
+  // Set config theme
   const themeConfig: any = useMemo(() => {
-    const result: any =
-      theme === 'light'
+    const result: any =      theme === 'light'
         ? {
             ...DefaultTheme,
-            colors: {...DefaultTheme.colors, ...colors.light.colors},
+          colors: { ...DefaultTheme.colors, ...colors.light.colors },
           }
         : {
             ...DarkTheme,
-            colors: {...DarkTheme.colors, ...colors.dark.colors},
+          colors: { ...DarkTheme.colors, ...colors.dark.colors },
           };
     result.fontFamily = stateCurrent.loaded ? fonts : DefaultTheme.fonts;
-    result.spacing = {...spacing};
-    result.dimension = {...dimension};
-    result.shadow = {...shadow};
-    /*Config font*/
+    result.spacing = { ...spacing };
+    result.dimension = { ...dimension };
+    result.shadow = { ...shadow };
+    /* Config font */
     result.fonts = configureFonts(fontConfig);
     return result;
   }, [theme, stateCurrent.loaded]);
 
-  const providerValue = useMemo(() => {
-    return {
+  const providerValue = useMemo(
+    () => ({
       language: i18n.language,
       changeLanguage,
-    };
-  }, [i18n.language]);
+    }),
+    [i18n.language],
+  );
 
   return (
     <SafeAreaProvider>
@@ -262,3 +266,5 @@ export default (): React.ReactElement => {
     </SafeAreaProvider>
   );
 };
+
+export default Root;

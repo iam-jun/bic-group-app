@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, View, useWindowDimensions} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useTheme} from 'react-native-paper';
 import {useIsFocused} from '@react-navigation/native';
 
@@ -28,8 +28,10 @@ const Landing = () => {
   const theme: ITheme = useTheme() as ITheme;
   const {t, navigation} = useBaseHook();
   const dimensions = useWindowDimensions();
+  const insets = useSafeAreaInsets();
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
-  const styles = createStyle(theme, isPhone);
+
+  const styles = createStyle(theme, isPhone, insets);
 
   const IMAGE_WIDTH = (dimensions.width * 26) / 39;
   const IMAGE_HEIGHT = (IMAGE_WIDTH * 277) / 260;
@@ -76,8 +78,7 @@ const Landing = () => {
   );
 };
 
-const createStyle = (theme: ITheme, isPhone: boolean) => {
-  const insets = useSafeAreaInsets();
+const createStyle = (theme: ITheme, isPhone: boolean, insets: EdgeInsets) => {
   const {colors} = theme;
 
   return StyleSheet.create({

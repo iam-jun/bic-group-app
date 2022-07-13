@@ -30,6 +30,7 @@ module.exports = {
     'react',
     '@typescript-eslint',
     'prettier',
+    'react-hooks',
   ],
   settings: {
     react: {
@@ -41,13 +42,27 @@ module.exports = {
     'no-extra-boolean-cast': 0,
     'arrow-body-style': 'warn',
     'prefer-object-spread': 'warn',
-    'prefer-destructuring': 'warn',
+    'prefer-destructuring': [
+      'error', {
+        VariableDeclarator: {
+          array: false,
+          object: true,
+        },
+        AssignmentExpression: {
+          array: true,
+          object: true,
+        },
+      }, {
+        enforceForRenamedProperties: false,
+      },
+    ],
     'object-curly-spacing': 'error',
     'no-new-object': 'error',
     'object-shorthand': 'error',
     'no-prototype-builtins': 'error',
     'no-array-constructor': 'error',
     'array-callback-return': 'error',
+    'no-shadow': 'off',
     quotes: ['error', 'single'],
     camelcase: [
       0,
@@ -56,10 +71,11 @@ module.exports = {
       },
     ],
     'react/display-name': 'off',
-    'react-native/no-unused-styles': 'warn',
+    'react-hooks/exhaustive-deps': 'off',
+    // 'react-native/no-unused-styles': 'warn',
     'react-native/no-inline-styles': 'error',
     'react-native/no-single-element-style-arrays': 'warn',
-
+    'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
     '@typescript-eslint/ban-ts-comment': 'off',
     // "@typescript-eslint/no-explicit-any": "off",
     '@typescript-eslint/explicit-function-return-type': 0,
@@ -67,11 +83,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'warn',
     '@typescript-eslint/member-delimiter-style': 2,
     '@typescript-eslint/no-var-requires': 0,
-    // "@typescript-eslint/naming-convention": [
-    //         "warn",
-    //         { "selector": "variable", "format": ["camelCase", "PascalCase", "UPPER_CASE"] },
-    //         // { "selector": "property", "format": ["camelCase","snake_case"] }
-    //     ]
+    '@typescript-eslint/no-unused-vars': 0,
     '@typescript-eslint/naming-convention': [
       'error',
       {
