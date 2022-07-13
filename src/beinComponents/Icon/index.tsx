@@ -8,7 +8,6 @@ import {
   StyleSheet,
 } from 'react-native';
 
-import Unicons, {UniconsProps} from './Unicons';
 import SvgIcon, {SVGIconProps} from './SvgIcon';
 
 import {useTheme} from 'react-native-paper';
@@ -26,7 +25,7 @@ import {
 } from '~/services/fontAwesomeIcon';
 import FontAwesomeIcon from '~/beinComponents/Icon/FontAwesomeIcon';
 
-export interface IconProps extends SVGIconProps, UniconsProps {
+export interface IconProps extends SVGIconProps {
   icon: IconType | number;
   testID?: string;
   size?: number;
@@ -82,14 +81,12 @@ const Icon: React.FC<IconProps> = ({
   let IconComponent, type, name, source;
 
   // @ts-ignore
-  if (
-    fontAwesomeIcons[`${icon || _icon}`] ||
-    fontAwesomeIconValues[icons[icon]]
-  ) {
+  const hasFontAwesomeIcon = !!fontAwesomeIcons[`${icon || _icon}`];
+  // @ts-ignore
+  const hasFontAwesomeIconValue = !!fontAwesomeIconValues[icons[icon]];
+
+  if (hasFontAwesomeIcon || hasFontAwesomeIconValue) {
     IconComponent = FontAwesomeIcon;
-    name = _icon || icon;
-  } else if (Unicons[`${_icon || icon}`]) {
-    IconComponent = Unicons;
     name = _icon || icon;
   } else if (typeof _icon === 'function') {
     IconComponent = SvgIcon;

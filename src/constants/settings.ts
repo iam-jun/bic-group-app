@@ -162,7 +162,7 @@ export const infoMenu = [
   {
     type: 'help_and_support',
     title: 'settings:title_help_and_support',
-    icon: 'QuestionCircle',
+    icon: 'CircleQuestion',
   },
   {
     type: 'feedback',
