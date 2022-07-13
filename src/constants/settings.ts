@@ -167,6 +167,6 @@ export const infoMenu = [
   {
     type: 'feedback',
     title: 'settings:title_feedback',
-    icon: 'CommentHeart',
+    icon: 'CommentSmile',
   },
 ];

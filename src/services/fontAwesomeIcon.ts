@@ -84,6 +84,9 @@ import {faSuitcase} from '@fortawesome/pro-regular-svg-icons/faSuitcase';
 import {faStar} from '@fortawesome/pro-regular-svg-icons/faStar';
 import {faVideo} from '@fortawesome/pro-regular-svg-icons/faVideo';
 import {faPaperPlaneTop} from '@fortawesome/pro-regular-svg-icons/faPaperPlaneTop';
+import {faBookOpen} from '@fortawesome/pro-regular-svg-icons/faBookOpen';
+import {faCircleQuestion} from '@fortawesome/pro-regular-svg-icons/faCircleQuestion';
+import {faCommentSmile} from '@fortawesome/pro-regular-svg-icons/faCommentSmile';
 
 export const initFontAwesomeIcon = () => {
   library.add(
@@ -172,6 +175,9 @@ export const initFontAwesomeIcon = () => {
     faStar,
     faVideo,
     faPaperPlaneTop,
+    faBookOpen,
+    faCircleQuestion,
+    faCommentSmile,
   );
 };
 
@@ -262,6 +268,9 @@ export const fontAwesomeIcons = {
   Star: 'fa-regular fa-star',
   Video: 'fa-regular fa-video',
   PaperPlaneTop: 'fa-regular fa-paper-plane-top',
+  BookOpen: 'fa-regular fa-book-open',
+  CircleQuestion: 'fa-regular fa-circle-question',
+  CommentSmile: 'fa-regular fa-comment-smile',
 };
 
 /**
