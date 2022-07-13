@@ -114,12 +114,12 @@ const createStyle = (theme: ITheme) => {
     buttonEdit: {
       backgroundColor: colors.bgHover,
       padding: spacing.padding.small,
-      borderRadius: spacing.borderRadius.tiny,
+      borderRadius: spacing.borderRadius.small,
     },
     buttonDelete: {
       backgroundColor: colors.bgError,
       padding: spacing.padding.small,
-      borderRadius: spacing.borderRadius.tiny,
+      borderRadius: spacing.borderRadius.small,
       marginLeft: spacing.margin.small,
     },
     activatedText: {

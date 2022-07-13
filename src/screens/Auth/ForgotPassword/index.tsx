@@ -150,7 +150,7 @@ const themeStyles = (theme: ITheme, isPhone: boolean) => {
       marginTop: spacing.margin.small,
       padding: spacing.padding.small,
       backgroundColor: colors.primary1,
-      borderRadius: spacing.borderRadius.tiny,
+      borderRadius: spacing.borderRadius.small,
     },
     contentContainer: {
       flex: 1,
