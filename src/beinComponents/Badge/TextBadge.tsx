@@ -42,7 +42,7 @@ const TextBadge: FC<TextBadgeProps> = ({
   const containerStyle = {
     backgroundColor: backgroundColor || _backgroundColor,
     padding: spacing.padding.tiny,
-    borderRadius: spacing.borderRadius.tiny,
+    borderRadius: spacing.borderRadius.small,
     marginHorizontal: spacing.margin.tiny,
   };
 
