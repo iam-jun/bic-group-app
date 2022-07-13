@@ -44,9 +44,9 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
       <PrimaryItem
         testID={'group_structure_menu.reorder'}
         style={styles.item}
-        leftIcon={'Layers'}
+        leftIcon={'LayerGroup'}
         leftIconProps={{
-          icon: 'Layers',
+          icon: 'LayerGroup',
           size: 24,
           tintColor: disableReorder ? colors.textDisabled : colors.textPrimary,
         }}
@@ -59,9 +59,9 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
       <PrimaryItem
         testID={'group_structure_menu.reorder'}
         style={styles.item}
-        leftIcon={'Exclude'}
+        leftIcon={'ObjectExclude'}
         leftIconProps={{
-          icon: 'Exclude',
+          icon: 'ObjectExclude',
           size: 24,
           tintColor: disableMove ? colors.textDisabled : colors.textPrimary,
         }}

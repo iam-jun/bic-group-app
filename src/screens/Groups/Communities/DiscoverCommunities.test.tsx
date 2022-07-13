@@ -13,7 +13,7 @@ describe('DiscoverCommunities Screen', () => {
         discoverCommunities: {
           loading: false,
           canLoadMore: true,
-          list: [],
+          ids: [],
           items: {},
         },
       },
@@ -39,7 +39,7 @@ describe('DiscoverCommunities Screen', () => {
         discoverCommunities: {
           loading: false,
           canLoadMore: true,
-          list: [communityDetailData.id],
+          ids: [communityDetailData.id],
           items: {[communityDetailData.id]: communityDetailData},
         },
       },
@@ -57,7 +57,7 @@ describe('DiscoverCommunities Screen', () => {
         discoverCommunities: {
           loading: false,
           canLoadMore: true,
-          list: [communityDetailData.id],
+          ids: [communityDetailData.id],
           items: {[communityDetailData.id]: communityDetailData},
         },
       },
@@ -75,7 +75,7 @@ describe('DiscoverCommunities Screen', () => {
         discoverCommunities: {
           loading: false,
           canLoadMore: true,
-          list: [],
+          ids: [],
           items: {},
         },
       },
@@ -84,5 +84,25 @@ describe('DiscoverCommunities Screen', () => {
     const wrapper = renderWithRedux(<DiscoverCommunities />, store);
     const header = wrapper.queryByTestId('discover_communities.header');
     expect(header).toBeNull();
+  });
+
+  it('renders loading indicator at the end of the list', async () => {
+    const storeData: any = {
+      ...initialState,
+      groups: {
+        discoverCommunities: {
+          loading: false,
+          canLoadMore: true,
+          ids: [communityDetailData.id],
+          items: {[communityDetailData.id]: communityDetailData},
+        },
+      },
+    };
+    const store = createTestStore(storeData);
+    const wrapper = renderWithRedux(<DiscoverCommunities />, store);
+    const loadingInd = wrapper.queryByTestId(
+      'discover_communities.loading_more_indicator',
+    );
+    expect(loadingInd).toBeDefined();
   });
 });

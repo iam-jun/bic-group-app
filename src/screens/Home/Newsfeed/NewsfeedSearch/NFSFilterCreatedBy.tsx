@@ -65,7 +65,7 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
         onPress={_onPressSelectSpecific}
         style={styles.buttonSpecificRight}
         textColor={colors.primary6}
-        rightIcon={selectedCreatedBy?.name && 'EditAlt'}>
+        rightIcon={selectedCreatedBy?.name && 'PenLine'}>
         {selectedCreatedBy?.name || t('home:newsfeed_search:choose_creator')}
       </Button.Secondary>
     );

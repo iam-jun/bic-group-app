@@ -12,7 +12,7 @@ describe('SettingItem conponent', () => {
   const baseProps = {
     title: 'settings:title_name',
     subtitle: i18next.t('common:text_not_set'),
-    leftIcon: 'TextFields',
+    leftIcon: 'TextSize',
   };
 
   it('renders correctly', () => {

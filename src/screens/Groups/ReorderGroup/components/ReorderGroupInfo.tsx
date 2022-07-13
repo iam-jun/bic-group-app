@@ -29,7 +29,7 @@ const ReorderGroupInfo: FC<ReorderGroupHeaderProps> = ({
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <Icon icon={'InfoCircle'} />
+        <Icon icon={'CircleInfo'} />
         <Text.BodyS useI18n>
           communities:group_structure:text_info_reorder
         </Text.BodyS>

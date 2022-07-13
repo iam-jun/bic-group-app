@@ -49,13 +49,13 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Upload photos and video to Bein or save them to your device. Open Settings to grant Bein Read and Write access to your photo and video library</string>
 	<key>NSCameraUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to use the camera</string>
+	<string>Allow $(PRODUCT_NAME) to use the camera</string>
 	<key>NSMicrophoneUsageDescription</key>
-    <string>Allow $(PRODUCT_NAME) to access your microphone</string>
+	<string>Allow $(PRODUCT_NAME) to access your microphone</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -84,7 +84,6 @@
 		<string>Lato-Regular.ttf</string>
 		<string>Lato-Thin.ttf</string>
 		<string>Lato-ThinItalic.ttf</string>
-		<string>SimpleLineIcons.ttf</string>
 		<string>OpenSans-Bold.ttf</string>
 		<string>OpenSans-BoldItalic.ttf</string>
 		<string>OpenSans-ExtraBold.ttf</string>
@@ -118,6 +117,9 @@
 		<string>SVN-PoppinsSemiBold.otf</string>
 		<string>SVN-PoppinsSemiBoldItalic.otf</string>
 		<string>JetBrainsMono-Regular.ttf</string>
+		<string>BeVietnamPro-Light.ttf</string>
+		<string>BeVietnamPro-Medium.ttf</string>
+		<string>BeVietnamPro-SemiBold.ttf</string>
 	</array>
 	<key>UIBackgroundModes</key>
 	<array>

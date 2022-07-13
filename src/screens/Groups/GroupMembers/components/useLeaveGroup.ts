@@ -23,7 +23,7 @@ const useLeaveGroup = ({groupId, username}: IUseLeaveGroup) => {
   };
 
   const alertPayload = {
-    iconName: 'SignOutAlt',
+    iconName: 'ArrowRightFromArc',
     title: i18next.t('groups:modal_confirm_leave_group:title'),
     content: i18next.t('groups:modal_confirm_leave_group:description'),
     ContentComponent: Text.BodyS,

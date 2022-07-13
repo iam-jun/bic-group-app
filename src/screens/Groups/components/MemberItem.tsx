@@ -60,7 +60,7 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
         <>
           {user?.username !== username && (
             <Icon
-              icon={'CommentAltDots'}
+              icon={'MessageDots'}
               backgroundColor={colors.bgSecondary}
               style={styles.iconChat}
               onPress={onPressChat}
@@ -69,7 +69,7 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
           )}
           {canManageMember && (
             <Icon
-              icon={'EllipsisV'}
+              icon={'menu'}
               style={styles.iconOption}
               onPress={() => onPressMenu(item)}
               buttonTestID="member_item.icon_option.button"

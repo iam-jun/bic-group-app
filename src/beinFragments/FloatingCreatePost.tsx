@@ -82,7 +82,7 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
           tintColor={colors.iconTintReversed}
           width={20}
           height={20}
-          icon={'Edit'}
+          icon={'edit'}
         />
       </Button>
     </Animated.View>

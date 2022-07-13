@@ -112,7 +112,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
   if (error) {
     return (
       <View style={styles.errorContainer}>
-        <Icon icon={'iconUploadImage'} tintColor={colors.error} />
+        <Icon icon={'Image'} tintColor={colors.error} />
         <Text.H6S style={styles.textError}>{error}</Text.H6S>
         <Button onPress={() => upload()}>
           <Text.H6 style={styles.textRetry} useI18n>
