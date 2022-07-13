@@ -584,17 +584,20 @@ const groupsActions = {
   }),
   getDiscoverGroups: (payload: {
     communityId: number;
+    isRefreshing?: boolean;
     params?: IParamGetDiscoverGroups;
   }) => ({
     type: groupsTypes.GET_DISCOVER_GROUPS,
     payload,
   }),
-  setDiscoverGroups: (payload: {ids: number[]; items: any}) => ({
+  setDiscoverGroups: (payload: {
+    loading?: boolean;
+    canLoadMore?: boolean;
+    ids?: number[];
+    items?: IObject<any>;
+  }) => ({
     type: groupsTypes.SET_DISCOVER_GROUPS,
     payload,
-  }),
-  resetDiscoverGroups: () => ({
-    type: groupsTypes.RESET_DISCOVER_GROUPS,
   }),
   editDiscoverGroupItem: (payload: {id: number; data: any}) => ({
     type: groupsTypes.EDIT_DISCOVER_GROUP_ITEM,
