@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
@@ -34,8 +32,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
 }: PostViewHeaderProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
-  const {colors} = theme;
+  const {colors} = useTheme();
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
@@ -74,10 +71,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
           <Text.BodySM testID="post_view_header.actor">{actorName}</Text.BodySM>
         </TouchableOpacity>
         <View style={{flexDirection: 'row'}}>
-          <Text.BodySM
-            useI18n
-            color={colors.textSecondary}
-            style={styles.textTo}>
+          <Text.BodySM useI18n color={colors.gray50} style={styles.textTo}>
             post:to
           </Text.BodySM>
           <Text.BodySM
@@ -94,7 +88,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
           />
         </View>
       </View>
-      <View style={{marginRight: spacing?.margin.small}}>
+      <View style={{marginRight: spacing.margin.small}}>
         <Icon
           style={{alignSelf: 'auto'}}
           icon={'EllipsisH'}
@@ -134,9 +128,9 @@ const styles = StyleSheet.create({
     marginRight: spacing?.margin.tiny,
   },
   avatar: {
-    marginTop: spacing?.margin.tiny,
-    marginLeft: spacing?.margin.large,
-    marginRight: spacing?.margin.base,
+    marginTop: spacing.margin.tiny,
+    marginLeft: spacing.margin.large,
+    marginRight: spacing.margin.base,
   },
 });
 

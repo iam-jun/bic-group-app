@@ -5,12 +5,11 @@ import {
   TouchableHighlight,
   ViewStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import ButtonWrapper, {
   ButtonWrapperProps,
 } from '~/beinComponents/Button/ButtonWrapper';
-import {ITheme} from '~/theme/interfaces';
 import spacing from '~/theme/spacing';
 
 export interface ButtonPrimaryProps extends ButtonWrapperProps {
@@ -36,14 +35,14 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   disabled,
   ...props
 }: ButtonPrimaryProps) => {
-  const {colors}: ITheme = useTheme() as ITheme;
+  const {colors}: ExtendedTheme = useTheme() as ExtendedTheme;
 
-  const _colorHover = colorHover || colors.iconTint;
-  let _backgroundColor = color || colors.bgButtonPrimary;
-  let _textColor = textColor || colors.textReversed;
+  const _colorHover = colorHover || colors.neutral80;
+  let _backgroundColor = color || colors.purple50;
+  let _textColor = textColor || colors.white;
   if (disabled) {
-    _backgroundColor = colorDisabled || colors.bgDisable;
-    _textColor = textColorDisabled || colors.textDisabled;
+    _backgroundColor = colorDisabled || colors.gray20;
+    _textColor = textColorDisabled || colors.gray40;
   }
 
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([

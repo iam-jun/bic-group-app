@@ -69,10 +69,10 @@ const Section2 = () => {
               style={{margin: spacing?.margin.small}}
               number={10}
             />
-            <NotificationsBadge.Warning
+            {/* <NotificationsBadge.Warning
               style={{margin: spacing?.margin.small}}
               number={10}
-            />
+            /> */}
             <NotificationsBadge.Alert
               style={{margin: spacing?.margin.small}}
               number={10}

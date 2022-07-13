@@ -40,6 +40,7 @@ import {isNavigationRefReady} from './helper';
 import * as screens from './navigator';
 import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
+import * as appTheme from '~/theme/theme';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -103,7 +104,7 @@ const StackNavigator = (): React.ReactElement => {
 
   const cardStyleConfig = navigationSetting.defaultNavigationOption.cardStyle;
 
-  const navigationTheme = theme.dark ? DarkTheme : DefaultTheme;
+  const navigationTheme = theme.dark ? appTheme.dark : appTheme.light;
 
   const onReady = () => {
     //@ts-ignore

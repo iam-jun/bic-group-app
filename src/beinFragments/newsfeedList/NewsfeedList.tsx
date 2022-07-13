@@ -9,10 +9,13 @@ import {
   FlatList,
 } from 'react-native';
 import {debounce, throttle} from 'lodash';
-import {useTheme} from 'react-native-paper';
 import {DataProvider, LayoutProvider, RecyclerListView} from 'recyclerlistview';
+import {
+  ExtendedTheme,
+  useFocusEffect,
+  useTheme,
+} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import dimension, {scaleSize} from '~/theme/dimension';
 
 import Text from '~/beinComponents/Text';
@@ -25,7 +28,6 @@ import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import FloatingCreatePost from '~/beinFragments/FloatingCreatePost';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useFocusEffect} from '@react-navigation/native';
 import NoticePanel from '~/screens/Home/Newsfeed/components/NoticePanel';
 import spacing from '~/theme/spacing';
 
@@ -60,7 +62,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   const prevOffsetYRef = useRef(0);
 
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
 
@@ -266,7 +268,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
         {canLoadMore && !refreshing && (
           <ActivityIndicator
             testID={'newsfeed_list.activity_indicator'}
-            color={theme.colors.bgFocus}
+            color={theme.colors.gray20}
           />
         )}
         {!refreshing && !canLoadMore && (
@@ -279,7 +281,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
             <Text.H6 useI18n>post:newsfeed:title_empty_cant_load_more</Text.H6>
             <Text.Subtitle
               useI18n
-              color={theme.colors.textSecondary}
+              color={theme.colors.gray50}
               style={{marginBottom: spacing.margin.large}}>
               post:newsfeed:text_empty_cant_load_more
             </Text.Subtitle>
@@ -338,7 +340,7 @@ const NewsfeedListEmpty = ({styles, HeaderComponent, theme}: any) => {
           source={images.img_empty_no_post}
         />
         <Text.H6 useI18n>post:newsfeed:title_empty_no_post</Text.H6>
-        <Text.Subtitle useI18n color={theme.colors.textSecondary}>
+        <Text.Subtitle useI18n color={theme.colors.gray50}>
           post:newsfeed:text_empty_no_post
         </Text.Subtitle>
       </View>
@@ -346,7 +348,7 @@ const NewsfeedListEmpty = ({styles, HeaderComponent, theme}: any) => {
   );
 };
 
-const createStyle = (theme: ITheme, insets: any) => {
+const createStyle = (theme: ExtendedTheme, insets: any) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -369,7 +371,7 @@ const createStyle = (theme: ITheme, insets: any) => {
       bottom: 0,
       left: 0,
       right: 0,
-      backgroundColor: colors.bgSecondary,
+      backgroundColor: colors.neutral1,
     },
     imgEmpty: {
       width: scaleSize(240),

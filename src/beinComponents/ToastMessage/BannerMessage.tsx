@@ -6,12 +6,11 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Icon from '~/beinComponents/Icon';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {IconType} from '~/resources/icons';
-import {ITheme} from '~/theme/interfaces';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
 
@@ -38,7 +37,7 @@ const BannerMessage: FC<BannerMessageProps> = ({
   onActionPress,
   onPressRight,
 }: BannerMessageProps) => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = createStyle(theme, type);
 
@@ -57,7 +56,7 @@ const BannerMessage: FC<BannerMessageProps> = ({
           iconStyle={[styles.leftIconStyle]}
           style={styles.leftIcon}
           icon={leftIcon}
-          tintColor={colors.iconTintReversed}
+          tintColor={colors.white}
         />
       )}
 
@@ -84,7 +83,7 @@ const BannerMessage: FC<BannerMessageProps> = ({
 };
 
 const createStyle = (
-  theme: ITheme,
+  theme: ExtendedTheme,
   type: 'success' | 'error' | 'informative',
 ) => {
   const {colors} = theme;
@@ -92,16 +91,16 @@ const createStyle = (
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.base,
       alignSelf: 'baseline',
       alignItems: 'center',
       borderWidth: 1,
-      borderColor: '#D0D5DD',
+      borderColor: colors.gray5,
       borderRadius: 2,
 
-      shadowColor: '#000',
+      shadowColor: colors.neutral90,
       shadowOffset: {
         width: 0,
         height: 12,
@@ -132,8 +131,8 @@ const createStyle = (
         type === 'success'
           ? colors.success
           : type === 'error'
-          ? colors.error
-          : colors.background,
+          ? colors.red60
+          : colors.white,
     },
     marginRightIcon: {marginRight: spacing.margin.tiny},
     button: {

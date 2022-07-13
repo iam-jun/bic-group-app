@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 import {StyleSheet, View} from 'react-native';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import Icon from '~/beinComponents/Icon';
 import spacing from '~/theme/spacing';
 
@@ -19,7 +19,7 @@ const PostViewImportant: FC<PostViewImportantProps> = ({
   markedReadPost,
   isLite,
 }: PostViewImportantProps) => {
-  const theme = useTheme() as ITheme;
+  const theme = useTheme() as ExtendedTheme;
   const {colors} = theme || {};
   const styles = createStyle(theme);
 
@@ -40,7 +40,7 @@ const PostViewImportant: FC<PostViewImportantProps> = ({
           size={12}
           icon={'iconStar'}
           iconStyle={styles.iconStar}
-          tintColor={colors.primary6}
+          tintColor={colors.purple50}
         />
       </View>
     );
@@ -49,7 +49,7 @@ const PostViewImportant: FC<PostViewImportantProps> = ({
   return <ImportantStatus notExpired={notExpired} />;
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     liteContainer: {
@@ -57,7 +57,7 @@ const createStyle = (theme: ITheme) => {
       left: 0,
       top: 0,
       zIndex: 1,
-      backgroundColor: colors.primary6,
+      backgroundColor: colors.purple50,
       paddingHorizontal: spacing.padding.tiny,
       paddingTop: spacing.padding.small,
       paddingBottom: spacing.padding.tiny,
@@ -65,7 +65,7 @@ const createStyle = (theme: ITheme) => {
       borderBottomLeftRadius: 8,
     },
     iconStar: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       borderRadius: spacing.borderRadius.small,
       padding: 2,
     },
