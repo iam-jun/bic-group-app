@@ -102,15 +102,15 @@ const createStyles = (
 
   let _textColor;
   let _backgroundColor = colors.violet1;
-  let _fontFamily = fontFamilies.OpenSans;
+  let _fontFamily = fontFamilies.BeVietnamProLight;
   if (disabled) {
     _backgroundColor = colors.gray20;
     _textColor = colors.gray40;
   } else {
     _textColor = isSelected ? colors.purple60 : colors.purple60;
     _fontFamily = isSelected
-      ? fontFamilies.OpenSansSemiBold
-      : fontFamilies.OpenSans;
+      ? fontFamilies.BeVietnamProSemiBold
+      : fontFamilies.BeVietnamProLight;
   }
 
   return StyleSheet.create({

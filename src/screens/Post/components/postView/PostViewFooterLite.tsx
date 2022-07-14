@@ -25,11 +25,11 @@ const PostViewFooterLite: FC<PostViewFooterLiteProps> = ({
 
   return (
     <View testID={'post_view_footer_lite'} style={styles.container}>
-      <Text.Subtitle color={colors.gray50}>
+      <Text.BodyS color={colors.gray50}>
         {`${commentsCount} ${t(
           commentsCount > 1 ? 'post:label_comments' : 'post:label_comment',
         )}`}
-      </Text.Subtitle>
+      </Text.BodyS>
     </View>
   );
 };

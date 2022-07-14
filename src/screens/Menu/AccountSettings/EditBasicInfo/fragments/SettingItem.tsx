@@ -40,7 +40,7 @@ const SettingItem = ({
         testID={testID}
         title={i18next.t(title)}
         subTitle={subtitle}
-        subTitleProps={{variant: 'subtitle'}}
+        subTitleProps={{variant: 'bodyS'}}
         LeftComponent={
           leftIcon ? (
             <Icon

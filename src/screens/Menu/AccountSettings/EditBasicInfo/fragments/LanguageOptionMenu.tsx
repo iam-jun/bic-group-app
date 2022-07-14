@@ -122,7 +122,7 @@ const LanguageOptionMenu = ({
         testID="edit_basic_info.language"
         textProps={{
           color: colors.neutral80,
-          variant: 'body',
+          variant: 'bodyM',
           numberOfLines: 1,
           style: {flex: 1},
         }}
@@ -141,12 +141,12 @@ const LanguageOptionMenu = ({
         onClose={resetData}
         ContentComponent={
           <View style={styles.contentComponent}>
-            <Text.ButtonSmall
+            <Text.ButtonS
               color={theme.colors.gray50}
               style={styles.chooseText}
               useI18n>
               {title}
-            </Text.ButtonSmall>
+            </Text.ButtonS>
             <Divider />
             <ScrollView
               keyboardShouldPersistTaps="always"

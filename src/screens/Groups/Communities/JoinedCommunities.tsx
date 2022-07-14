@@ -66,9 +66,9 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
             testID="empty_screen.button"
             onPress={onPressDiscover}
             style={styles.buttonWrapper}>
-            <Text.ButtonBase useI18n color={theme.colors.purple50}>
+            <Text.ButtonM useI18n color={theme.colors.purple50}>
               communities:empty_communities:button_text
-            </Text.ButtonBase>
+            </Text.ButtonM>
           </ButtonWrapper>
         }
       />

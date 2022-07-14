@@ -50,7 +50,7 @@ const createStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     baseStyle: {
       color: colors.neutral80,
-      fontFamily: fontFamilies.OpenSans,
+      fontFamily: fontFamilies.BeVietnamProLight,
     },
   });
 };

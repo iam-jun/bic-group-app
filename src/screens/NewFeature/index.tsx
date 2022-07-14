@@ -52,7 +52,7 @@ const NewFeature = () => {
   //   return (
   //     <>
   //       <Text.H6 useI18n>{header}</Text.H6>
-  //       <Text.Body useI18n>{body}</Text.Body>
+  //       <Text.BodyM useI18n>{body}</Text.BodyM>
   //     </>
   //   );
   // };
@@ -71,7 +71,7 @@ const NewFeature = () => {
         <Text.H6 useI18n>
           new_feature:text_we_are_developing_this_feature
         </Text.H6>
-        <Text.Body useI18n>new_feature:text_we_will_notify_you</Text.Body>
+        <Text.BodyM useI18n>new_feature:text_we_will_notify_you</Text.BodyM>
       </View>
     </ScreenWrapper>
   );

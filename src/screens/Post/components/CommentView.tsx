@@ -289,9 +289,9 @@ const _CommentView: React.FC<CommentViewProps> = ({
             onLongPressReaction={onLongPressReaction}
           />
           <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
-            <Text.ButtonSmall style={styles.buttonReply} color={colors.gray50}>
+            <Text.ButtonS style={styles.buttonReply} color={colors.gray50}>
               Reply
-            </Text.ButtonSmall>
+            </Text.ButtonS>
           </ButtonWrapper>
         </View>
       )
@@ -310,16 +310,16 @@ const _CommentView: React.FC<CommentViewProps> = ({
     return (
       commentStatus === 'failed' && (
         <View style={styles.errorLine}>
-          <Text.BodySM color={colors.red60} useI18n>
+          <Text.BodySMedium color={colors.red60} useI18n>
             common:text_failed_to_upload
-          </Text.BodySM>
-          <Text.BodySM>{`  • `}</Text.BodySM>
+          </Text.BodySMedium>
+          <Text.BodySMedium>{`  • `}</Text.BodySMedium>
           <Button onPress={onPressRetry}>
-            <Text.BodySM useI18n>common:text_retry</Text.BodySM>
+            <Text.BodySMedium useI18n>common:text_retry</Text.BodySMedium>
           </Button>
-          <Text.BodySM>{`  • `}</Text.BodySM>
+          <Text.BodySMedium>{`  • `}</Text.BodySMedium>
           <Button onPress={onPressCancel}>
-            <Text.BodySM useI18n>common:btn_cancel</Text.BodySM>
+            <Text.BodySMedium useI18n>common:btn_cancel</Text.BodySMedium>
           </Button>
         </View>
       )

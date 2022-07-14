@@ -59,12 +59,12 @@ const OptionMenu = ({
         modalizeRef={menuRef}
         ContentComponent={
           <View style={styles.contentComponent}>
-            <Text.ButtonSmall
+            <Text.ButtonS
               color={theme.colors.gray50}
               style={styles.chooseText}
               useI18n>
               {title}
-            </Text.ButtonSmall>
+            </Text.ButtonS>
             <Divider />
             {data.map((item: IOptionItem) => (
               <View key={item?.title + item?.type}>{renderItem({item})}</View>

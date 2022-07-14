@@ -373,7 +373,7 @@ const CommentLevel1 = ({
   return (
     <View>
       <View style={styles.container}>
-        <Text.BodySM>
+        <Text.BodySMedium>
           {t('post:text_comment_from')}
           <Text.BodyM
             onPress={onPress}
@@ -381,7 +381,7 @@ const CommentLevel1 = ({
             style={styles.highlightText}>
             {headerTitle}
           </Text.BodyM>
-        </Text.BodySM>
+        </Text.BodySMedium>
       </View>
       <CommentItem
         postId={id}

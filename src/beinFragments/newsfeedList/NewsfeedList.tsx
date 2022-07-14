@@ -245,12 +245,12 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
               source={images.img_empty_cant_load_more}
             />
             <Text.H6 useI18n>post:newsfeed:title_empty_cant_load_more</Text.H6>
-            <Text.Subtitle
+            <Text.BodyS
               useI18n
               color={theme.colors.gray50}
               style={{marginBottom: spacing.margin.large}}>
               post:newsfeed:text_empty_cant_load_more
-            </Text.Subtitle>
+            </Text.BodyS>
           </>
         )}
       </View>
@@ -317,9 +317,9 @@ const NewsfeedListEmpty = ({styles, HeaderComponent, theme}: any) => {
           source={images.img_empty_no_post}
         />
         <Text.H6 useI18n>post:newsfeed:title_empty_no_post</Text.H6>
-        <Text.Subtitle useI18n color={theme.colors.gray50}>
+        <Text.BodyS useI18n color={theme.colors.gray50}>
           post:newsfeed:text_empty_no_post
-        </Text.Subtitle>
+        </Text.BodyS>
       </View>
     </View>
   );

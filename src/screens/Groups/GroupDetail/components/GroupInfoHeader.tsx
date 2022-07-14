@@ -74,16 +74,16 @@ const GroupInfoHeader = () => {
             size={16}
             tintColor={theme.colors.neutral80}
           />
-          <Text.Subtitle testID="group_info_header.privacy" useI18n>
+          <Text.BodyS testID="group_info_header.privacy" useI18n>
             {privacyTitle}
-          </Text.Subtitle>
-          <Text.Subtitle> • </Text.Subtitle>
-          <Text.BodySM testID="group_info_header.member_count">
+          </Text.BodyS>
+          <Text.BodyS> • </Text.BodyS>
+          <Text.BodySMedium testID="group_info_header.member_count">
             {user_count}
-          </Text.BodySM>
-          <Text.Subtitle>{` ${t('groups:text_members', {
+          </Text.BodySMedium>
+          <Text.BodyS>{` ${t('groups:text_members', {
             count: user_count,
-          })}`}</Text.Subtitle>
+          })}`}</Text.BodyS>
         </View>
       </View>
     );

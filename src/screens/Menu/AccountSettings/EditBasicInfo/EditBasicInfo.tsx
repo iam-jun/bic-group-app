@@ -196,7 +196,7 @@ const EditBasicInfo = () => {
         <TitleComponent icon="SquareUser" title="settings:title_gender" />
         <Button
           testID="edit_basic_info.gender"
-          textProps={{color: colors.neutral80, variant: 'body'}}
+          textProps={{color: colors.neutral80, variant: 'bodyM'}}
           style={styles.buttonDropDown}
           contentStyle={styles.buttonDropDownContent}
           rightIcon={'AngleDown'}
@@ -208,7 +208,7 @@ const EditBasicInfo = () => {
         <TitleComponent icon="Calendar" title="settings:title_birthday" />
         <Button
           testID="edit_basic_info.birthday"
-          textProps={{color: colors.neutral80, variant: 'body'}}
+          textProps={{color: colors.neutral80, variant: 'bodyM'}}
           style={styles.buttonDropDown}
           contentStyle={styles.buttonDropDownContent}
           onPress={() => onDateEditOpen()}>
@@ -239,7 +239,7 @@ const EditBasicInfo = () => {
         />
         <Button
           testID="edit_basic_info.relationship"
-          textProps={{color: colors.neutral80, variant: 'body'}}
+          textProps={{color: colors.neutral80, variant: 'bodyM'}}
           style={styles.buttonDropDown}
           contentStyle={styles.buttonDropDownContent}
           rightIcon={'AngleDown'}

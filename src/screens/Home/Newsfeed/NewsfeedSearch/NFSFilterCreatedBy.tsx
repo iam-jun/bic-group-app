@@ -74,9 +74,9 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
 
   return (
     <TouchableOpacity activeOpacity={1} style={styles.container}>
-      <Text.ButtonSmall style={styles.textHeader}>
+      <Text.ButtonS style={styles.textHeader}>
         {t('home:newsfeed_search:choose_creator')}
-      </Text.ButtonSmall>
+      </Text.ButtonS>
       <Divider style={styles.divider} />
       <PrimaryItem
         height={40}

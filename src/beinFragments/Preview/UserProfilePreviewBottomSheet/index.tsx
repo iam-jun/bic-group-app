@@ -125,7 +125,7 @@ const UserProfilePreviewBottomSheet = () => {
         <TouchableOpacity onPress={navigateToUserProfile}>
           <Text.H5>{fullname}</Text.H5>
         </TouchableOpacity>
-        {!!description && <Text.Body>{description}</Text.Body>}
+        {!!description && <Text.BodyM>{description}</Text.BodyM>}
       </View>
     );
   };
@@ -155,9 +155,9 @@ const UserProfilePreviewBottomSheet = () => {
           size={24}
           style={styles.infoItemIcon}
         />
-        <Text.Body style={styles.infoItemContent} useI18n>
+        <Text.BodyM style={styles.infoItemContent} useI18n>
           {content}
-        </Text.Body>
+        </Text.BodyM>
       </View>
     );
   };

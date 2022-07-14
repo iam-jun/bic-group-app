@@ -64,13 +64,13 @@ const CommunityAdmin = () => {
 
   const renderModerating = () => (
     <>
-      <Text.Body
+      <Text.BodyM
         style={styles.headerTitle}
         color={theme.colors.neutral80}
-        variant="body"
+        variant="bodyM"
         useI18n>
         settings:title_community_moderating
-      </Text.Body>
+      </Text.BodyM>
       {!!can_manage_member && (
         <MenuItem
           testID={'community_admin.pending_members'}
@@ -104,13 +104,13 @@ const CommunityAdmin = () => {
 
   const renderSettings = () => (
     <>
-      <Text.Body
+      <Text.BodyM
         style={styles.headerTitle}
         color={theme.colors.neutral80}
-        variant="body"
+        variant="bodyM"
         useI18n>
         settings:title_community_settings
-      </Text.Body>
+      </Text.BodyM>
       {!!can_edit_info && (
         <MenuItem
           testID="community_admin.profile_info"

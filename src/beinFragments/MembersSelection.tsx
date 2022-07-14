@@ -58,8 +58,8 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
         ContentComponent={
           <Text.H6 numberOfLines={2}>
             {item.name}
-            <Text.Subtitle
-              color={theme.colors.gray50}>{` @${item.username}`}</Text.Subtitle>
+            <Text.BodyS
+              color={theme.colors.gray50}>{` @${item.username}`}</Text.BodyS>
           </Text.H6>
         }
         isChecked={!!selected}
@@ -104,9 +104,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
         />
       )}
       {data.length > 0 && (
-        <Text.ButtonBase style={styles.title}>
-          {i18next.t(title)}
-        </Text.ButtonBase>
+        <Text.ButtonM style={styles.title}>{i18next.t(title)}</Text.ButtonM>
       )}
     </View>
   );

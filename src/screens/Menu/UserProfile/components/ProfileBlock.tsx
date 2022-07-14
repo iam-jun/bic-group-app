@@ -58,7 +58,7 @@ const ProfileBlock = ({
     return (
       (!!title || !!TitleComponent) && (
         <View style={styles.itemComponent}>
-          <Icon icon={icon} tintColor={theme.colors.neutral80Light} size={20} />
+          <Icon icon={icon} tintColor={theme.colors.neutral80} size={20} />
           <Text style={styles.text} useI18n>
             {title}
           </Text>
@@ -72,9 +72,9 @@ const ProfileBlock = ({
     <View style={styles.container}>
       {!!gender || !!birthday || !!relationship_status || !!userLanguages ? (
         <>
-          <Text.Subtitle color={theme.colors.gray50}>
+          <Text.BodyS color={theme.colors.gray50}>
             {i18next.t('settings:title_about')}
-          </Text.Subtitle>
+          </Text.BodyS>
           {/* @ts-ignore */}
           {gender && renderItem({icon: 'SquareUser', title: genders[gender]})}
           {birthday &&
@@ -104,9 +104,9 @@ const ProfileBlock = ({
       ) : null}
       {(!!email || !!phone || !!city) && hideSeeMore ? (
         <>
-          <Text.Subtitle style={styles.title} color={theme.colors.gray50}>
+          <Text.BodyS style={styles.title} color={theme.colors.gray50}>
             {i18next.t('settings:title_contact')}
-          </Text.Subtitle>
+          </Text.BodyS>
 
           {renderItem({icon: 'Envelope', title: email})}
           {renderItem({
@@ -125,9 +125,9 @@ const ProfileBlock = ({
 
       {!!latest_work && hideSeeMore ? (
         <>
-          <Text.Subtitle style={styles.title} color={theme.colors.gray50}>
+          <Text.BodyS style={styles.title} color={theme.colors.gray50}>
             {i18next.t('settings:text_work')}
-          </Text.Subtitle>
+          </Text.BodyS>
           {renderItem({
             icon: 'iconSuitcase',
             TitleComponent: (

@@ -194,14 +194,14 @@ const ListView: React.FC<ListViewProps> = ({
       style={StyleSheet.flatten([isFullView && {flex: 1}, containerStyle])}
       testID="list_view">
       {title && (
-        <Text.ButtonBase
+        <Text.ButtonM
           testID="list_view.title"
           style={{
             marginVertical: spacing.margin.small,
             marginHorizontal: spacing.margin.base,
           }}>
           {title}
-        </Text.ButtonBase>
+        </Text.ButtonM>
       )}
       {_renderLoading()}
       <FlatList

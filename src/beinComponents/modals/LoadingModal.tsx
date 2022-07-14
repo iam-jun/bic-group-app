@@ -39,9 +39,7 @@ const LoadingModal = () => {
             source={images.logo_beincomm}
           />
         </View>
-        <Text.ButtonSmall style={styles.textLoading}>
-          Loading...
-        </Text.ButtonSmall>
+        <Text.ButtonS style={styles.textLoading}>Loading...</Text.ButtonS>
       </ImageBackground>
     </Modal>
   );

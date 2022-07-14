@@ -57,7 +57,7 @@ const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
           onPress={() => onPressItem(item)}>
           <Text
             style={styles.textName}
-            variant={isActive ? 'bodySM' : 'bodyS'}
+            variant={isActive ? 'bodySMedium' : 'bodyS'}
             numberOfLines={2}>
             {item?.name}
           </Text>

@@ -49,7 +49,7 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
         {chosenAudiences?.length === 0 && (
           <Button.Secondary
             textProps={{
-              variant: 'body',
+              variant: 'bodyM',
               useI18n: true,
               color: theme.colors.purple60,
             }}

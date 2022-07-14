@@ -71,12 +71,12 @@ const JoinCancelButton = ({style}: JoinCancelButtonProps) => {
 
         {isPrivate && (
           <View style={styles.shortDesc}>
-            <Text.Subtitle
+            <Text.BodyS
               color={theme.colors.gray50}
               useI18n
               testID="join_cancel_button.description">
               communities:text_join_community_description
-            </Text.Subtitle>
+            </Text.BodyS>
           </View>
         )}
       </View>

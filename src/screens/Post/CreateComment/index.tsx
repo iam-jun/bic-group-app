@@ -320,8 +320,8 @@ const createStyle = (theme: ExtendedTheme) => {
       left: 12,
       right: 12,
       opacity: 1,
-      fontSize: dimension?.sizes.body,
-      fontFamily: fontFamilies.OpenSans,
+      fontSize: dimension?.sizes.bodyM,
+      fontFamily: fontFamilies.BeVietnamProLight,
       color: colors.success,
     },
     textCloneContainer: {

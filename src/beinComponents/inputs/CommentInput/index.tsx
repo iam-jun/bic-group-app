@@ -469,9 +469,9 @@ const createStyle = (theme: ExtendedTheme, insets: any, loading: boolean) => {
       paddingTop: spacing?.padding.small,
       paddingBottom: spacing?.padding.small,
       paddingHorizontal: spacing?.padding.large,
-      color: loading ? colors.gray50 : colors.neutral80,
-      fontFamily: fontFamilies.OpenSans,
-      fontSize: dimension?.sizes.body,
+      color: loading ? colors.textSecondary : colors.neutral80,
+      fontFamily: fontFamilies.BeVietnamProLight,
+      fontSize: dimension?.sizes.bodyM,
     },
     iconSend: {
       marginBottom: spacing?.margin.base,

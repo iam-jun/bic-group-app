@@ -34,7 +34,7 @@ const NoUserFound = () => {
         />
         <View style={styles.description}>
           <Text.H6 useI18n>error:no_profile_found_desc</Text.H6>
-          <Text.Body useI18n>error:no_profile_found_second_desc</Text.Body>
+          <Text.BodyM useI18n>error:no_profile_found_second_desc</Text.BodyM>
         </View>
         <Button.Primary onPress={() => navigation.goBack()} useI18n>
           error:button_back_to_safety

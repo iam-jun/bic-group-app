@@ -82,15 +82,15 @@ const Reaction: React.FC<ReactionProps> = ({
           style={styles.indicator}
         />
       ) : (
-        <Text.BodySM
+        <Text.BodySMedium
           color={isSelected ? colors.purple60 : colors.neutral80}
           style={styles.text}
           testID="reaction.children">
-          <Text.BodySM style={styles.emoji} testID={`reaction.${icon}`}>
+          <Text.BodySMedium style={styles.emoji} testID={`reaction.${icon}`}>
             {emoji}
-          </Text.BodySM>
+          </Text.BodySMedium>
           {` ${value}`}
-        </Text.BodySM>
+        </Text.BodySMedium>
       )}
     </TouchableOpacity>
   );

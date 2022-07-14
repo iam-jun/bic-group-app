@@ -28,14 +28,14 @@ const EmptyScreen = ({
     <View testID="empty_screen" style={styles.container}>
       {!!source && <Icon icon={source} size={size} />}
       {!!title && (
-        <Text.ButtonBase style={styles.text} useI18n>
+        <Text.ButtonM style={styles.text} useI18n>
           {title}
-        </Text.ButtonBase>
+        </Text.ButtonM>
       )}
       {!!description && (
-        <Text.Subtitle color={theme.colors.gray50} style={styles.text} useI18n>
+        <Text.BodyS color={theme.colors.gray50} style={styles.text} useI18n>
           {description}
-        </Text.Subtitle>
+        </Text.BodyS>
       )}
       {ButtonComponent}
     </View>

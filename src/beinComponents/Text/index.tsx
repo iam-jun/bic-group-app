@@ -42,15 +42,6 @@ export type TextVariant =
   | 'numberM'
   | 'numberS'
   | 'captionS'
-  | 'h6s'
-  | 'buttonBase'
-  | 'buttonSmall'
-  | 'bodyI'
-  | 'body'
-  | 'bodySM'
-  | 'subtitle'
-  | 'heading'
-  | 'headingSB'
   | undefined;
 
 export interface TextProps extends RNTextProps {
@@ -205,32 +196,6 @@ const NumberS = ({...props}: TextProps) => (
 const CaptionS = ({...props}: TextProps) => (
   <TextComponent variant={'captionS'} {...props} />
 );
-const H6S = ({...props}: TextProps) => (
-  <TextComponent variant={'h6s'} {...props} />
-);
-const ButtonBase = ({...props}: TextProps) => (
-  <TextComponent variant={'buttonBase'} {...props} />
-);
-const ButtonSmall = ({...props}: TextProps) => (
-  <TextComponent variant={'buttonSmall'} {...props} />
-);
-const Body = ({...props}: TextProps) => (
-  <TextComponent variant={'body'} {...props} />
-);
-const BodySM = ({...props}: TextProps) => (
-  <TextComponent variant={'bodySM'} {...props} />
-);
-const Subtitle = ({...props}: TextProps) => (
-  <TextComponent variant={'subtitle'} {...props} />
-);
-
-const Heading = ({...props}: TextProps) => (
-  <TextComponent variant={'heading'} {...props} />
-);
-
-const HeadingSB = ({...props}: TextProps) => (
-  <TextComponent variant={'headingSB'} {...props} />
-);
 
 const Text = Object.assign(TextComponent, {
   H1,
@@ -269,14 +234,6 @@ const Text = Object.assign(TextComponent, {
   NumberM,
   NumberS,
   CaptionS,
-  H6S,
-  ButtonBase,
-  ButtonSmall,
-  Body,
-  BodySM,
-  Subtitle,
-  Heading,
-  HeadingSB,
 });
 
 export default Text;

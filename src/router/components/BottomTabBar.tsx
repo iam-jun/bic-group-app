@@ -228,7 +228,7 @@ const tabBarIconStyles = (
       top: isPhone ? '6%' : '18%',
       left: '54%',
     },
-    textBadge: {fontFamily: fontFamilies.Segoe},
+    textBadge: {fontFamily: fontFamilies.BeVietnamProLight},
     avatarStyle: {
       width: 20,
       height: 20,

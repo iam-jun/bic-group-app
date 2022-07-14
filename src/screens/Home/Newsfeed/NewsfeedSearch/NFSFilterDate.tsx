@@ -76,9 +76,9 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
 
   return (
     <TouchableOpacity activeOpacity={1} style={styles.container}>
-      <Text.ButtonSmall style={styles.textHeader}>
+      <Text.ButtonS style={styles.textHeader}>
         {t('home:newsfeed_search:choose_date')}
-      </Text.ButtonSmall>
+      </Text.ButtonS>
       <Divider style={styles.divider} />
       <PrimaryItem
         height={52}
@@ -87,7 +87,7 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
         subTitle={
           startDateErr ? t('home:newsfeed_search:text_error_date') : undefined
         }
-        subTitleProps={{variant: 'subtitle', color: colors.red60}}
+        subTitleProps={{variant: 'bodyS', color: colors.red60}}
         RightComponent={
           <Button.Secondary
             onPress={() => setSelectingStartDate(true)}
@@ -104,7 +104,7 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
         subTitle={
           endDateErr ? t('home:newsfeed_search:text_error_date') : undefined
         }
-        subTitleProps={{variant: 'subtitle', color: colors.red60}}
+        subTitleProps={{variant: 'bodyS', color: colors.red60}}
         RightComponent={
           <Button.Secondary
             onPress={() => setSelectingEndDate(true)}

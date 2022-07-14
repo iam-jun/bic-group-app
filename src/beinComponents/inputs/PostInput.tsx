@@ -112,8 +112,8 @@ const createStyle = (theme: ExtendedTheme) => {
     container: {
       margin: spacing.padding.base,
       padding: 0,
-      fontSize: dimension?.sizes.body,
-      fontFamily: fontFamilies.OpenSans,
+      fontSize: dimension?.sizes.bodyM,
+      fontFamily: fontFamilies.BeVietnamProLight,
       color: colors.neutral80,
     },
   });

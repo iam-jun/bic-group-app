@@ -84,9 +84,9 @@ const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
           keyboardVerticalOffset={
             Platform.OS === 'ios' ? 0 : Platform.OS === 'android' ? 60 : 0
           }>
-          <Text.Subtitle useI18n style={styles.titleSearch}>
+          <Text.BodyS useI18n style={styles.titleSearch}>
             settings:title_choose_location
-          </Text.Subtitle>
+          </Text.BodyS>
           <SearchInput
             testID="edit_location.search"
             style={styles.searchInput}

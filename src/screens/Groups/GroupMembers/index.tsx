@@ -100,9 +100,9 @@ const _GroupMembers = (props: any) => {
             size={22}
             tintColor={theme.colors.purple60}
           />
-          <Text.ButtonBase color={theme.colors.purple60} useI18n>
+          <Text.ButtonM color={theme.colors.purple60} useI18n>
             common:text_invite
-          </Text.ButtonBase>
+          </Text.ButtonM>
         </ButtonWrapper>
       )
     );

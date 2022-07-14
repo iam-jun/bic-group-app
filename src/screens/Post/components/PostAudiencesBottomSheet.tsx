@@ -113,9 +113,9 @@ const PostAudiencesBottomSheet = () => {
         <Text.H6 style={styles.header} useI18n>
           post:label_post_audiences
         </Text.H6>
-        <Text.Subtitle useI18n color={colors.gray50}>
+        <Text.BodyS useI18n color={colors.gray50}>
           post:label_desc_post_audiences
-        </Text.Subtitle>
+        </Text.BodyS>
       </View>
     );
   };

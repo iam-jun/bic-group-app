@@ -47,7 +47,7 @@ const LandingWithInvitation = () => {
         {/*@ts-ignore*/}
         <SVGIcon source={LandingImg} size={imgSize} />
         <Text.H5 style={styles.title}>{title}</Text.H5>
-        {!!desc && <Text.Subtitle style={styles.desc}>{desc}</Text.Subtitle>}
+        {!!desc && <Text.BodyS style={styles.desc}>{desc}</Text.BodyS>}
       </View>
       <Button.Primary
         style={styles.button}

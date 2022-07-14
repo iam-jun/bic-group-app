@@ -57,19 +57,8 @@ const Section1 = () => {
         <Text.H4>H4. Lorem Ipsum is simply dummy text</Text.H4>
         <Text.H5>H5. Lorem Ipsum is simply dummy text</Text.H5>
         <Text.H6>H6. Lorem Ipsum is simply dummy text</Text.H6>
-        <Text.ButtonBase>
-          ButtonBase. Lorem Ipsum is simply dummy text
-        </Text.ButtonBase>
-        <Text.ButtonSmall>
-          ButtonSmall. Lorem Ipsum is simply dummy text
-        </Text.ButtonSmall>
         <Text.BodyM>BodyM. Lorem Ipsum is simply dummy text</Text.BodyM>
-        <Text.Body>Body. Lorem Ipsum is simply dummy text</Text.Body>
-        <Text.BodySM>BodySM. Lorem Ipsum is simply dummy text</Text.BodySM>
         <Text.BodyS>BodyS. Lorem Ipsum is simply dummy text</Text.BodyS>
-        <Text.Subtitle>
-          Subtitle. Lorem Ipsum is simply dummy text
-        </Text.Subtitle>
         {/* <Text
           useParseText
           onPressAudience={audience =>
@@ -247,14 +236,14 @@ const Section1 = () => {
             justifyContent: 'space-around',
           }}>
           <Button
-            textVariant={'buttonSmall'}
+            textVariant={'buttonS'}
             onPress={() => alert('onPress')}
             onLongPress={() => alert('onLongPress')}>
             ButtonSmall
           </Button>
           <Button
             disabled
-            textVariant={'buttonSmall'}
+            textVariant={'buttonS'}
             onPress={() => alert('onPress')}
             onLongPress={() => alert('onLongPress')}>
             ButtonSmall Disable
@@ -345,9 +334,9 @@ const Section1 = () => {
           onLongPress={() => alert('onLongPress')}>
           Custom color, left, right icon
         </Button.Secondary>
-        <Text.Subtitle>
+        <Text.BodyS>
           text not centered because of font, designer confirmed...
-        </Text.Subtitle>
+        </Text.BodyS>
         <Divider
           style={{
             margin: spacing?.margin.base,

@@ -67,7 +67,7 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
         <View key={`${index}_${item.title}`} style={styles.itemContainer}>
           <PrimaryItem
             title={item.title}
-            titleProps={{variant: 'subtitle'}}
+            titleProps={{variant: 'bodyS'}}
             leftIcon={item.leftIcon}
             leftIconProps={{style: styles.iconStyle, ...item.leftIconProps}}
             height={28}

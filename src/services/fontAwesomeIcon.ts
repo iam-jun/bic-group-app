@@ -87,6 +87,7 @@ import {faPaperPlaneTop} from '@fortawesome/pro-regular-svg-icons/faPaperPlaneTo
 import {faBookOpen} from '@fortawesome/pro-regular-svg-icons/faBookOpen';
 import {faCircleQuestion} from '@fortawesome/pro-regular-svg-icons/faCircleQuestion';
 import {faCommentSmile} from '@fortawesome/pro-regular-svg-icons/faCommentSmile';
+import {faCreditCard} from '@fortawesome/pro-regular-svg-icons/faCreditCard';
 
 export const initFontAwesomeIcon = () => {
   library.add(
@@ -178,6 +179,7 @@ export const initFontAwesomeIcon = () => {
     faBookOpen,
     faCircleQuestion,
     faCommentSmile,
+    faCreditCard,
   );
 };
 
@@ -271,6 +273,7 @@ export const fontAwesomeIcons = {
   BookOpen: 'fa-regular fa-book-open',
   CircleQuestion: 'fa-regular fa-circle-question',
   CommentSmile: 'fa-regular fa-comment-smile',
+  CreditCard: 'fa-regular fa-credit-card',
 };
 
 /**

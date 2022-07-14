@@ -112,9 +112,9 @@ const _NotificationList = ({
             <ActivityIndicator color={theme.colors.gray20} />
           )}
           {noMoreNotification && (
-            <Text.Subtitle color={theme.colors.gray50}>
+            <Text.BodyS color={theme.colors.gray50}>
               {i18n.t('notification:no_more_notification')}
-            </Text.Subtitle>
+            </Text.BodyS>
           )}
         </View>
       );
@@ -142,9 +142,9 @@ const _NotificationList = ({
       return (
         <View style={styles.unReadNotifications}>
           <Icon icon="CircleCheck" size={40} tintColor={theme.colors.success} />
-          <Text.Subtitle useI18n style={{marginTop: spacing.margin.base}}>
+          <Text.BodyS useI18n style={{marginTop: spacing.margin.base}}>
             notification:seen_all_notifications
-          </Text.Subtitle>
+          </Text.BodyS>
         </View>
       );
     } else {

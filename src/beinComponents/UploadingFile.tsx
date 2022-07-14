@@ -160,11 +160,11 @@ const UploadingFile: FC<UploadingFileProps> = ({
           {fileName}
         </Text.BodyS>
         {!!error ? (
-          <Text.Subtitle useI18n color={colors.red60}>
+          <Text.BodyS useI18n color={colors.red60}>
             {error}
-          </Text.Subtitle>
+          </Text.BodyS>
         ) : (
-          <Text.Subtitle
+          <Text.BodyS
             style={{justifyContent: 'center'}}
             color={colors.gray50}
             numberOfLines={1}>
@@ -172,7 +172,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
             {uploading
               ? t('common:text_uploading')
               : formatBytes(file?.size || 0)}
-          </Text.Subtitle>
+          </Text.BodyS>
         )}
       </View>
       {!!error && (

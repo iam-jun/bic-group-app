@@ -75,9 +75,9 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
             testID={'recent_search_keyword.btn_clear'}
             onPress={onPressClear}
             style={{justifyContent: 'center', alignSelf: 'center'}}>
-            <Text.ButtonSmall style={styles.btnClear}>
+            <Text.ButtonS style={styles.btnClear}>
               {t('home:newsfeed_search:clear').toUpperCase()}
-            </Text.ButtonSmall>
+            </Text.ButtonS>
           </Button>
         )}
       </View>

@@ -66,7 +66,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const textStyles = createTextStyle(theme);
-  textVariant = textVariant || 'buttonBase';
+  textVariant = textVariant || 'buttonM';
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 

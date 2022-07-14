@@ -78,12 +78,12 @@ const ForgotPassword = () => {
     return (
       <View style={styles.completeContainer}>
         <View style={styles.textContainer}>
-          <Text.BodySM>
+          <Text.BodySMedium>
             {t('auth:text_forgot_password_complete_title')}
-          </Text.BodySM>
-          <Text.Body style={styles.completeDescription}>
+          </Text.BodySMedium>
+          <Text.BodyM style={styles.completeDescription}>
             {t('auth:text_forgot_password_complete_desc')}
-          </Text.Body>
+          </Text.BodyM>
         </View>
         <Button.Primary
           testID="btnComplete"

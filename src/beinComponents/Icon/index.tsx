@@ -133,7 +133,7 @@ const Icon: React.FC<IconProps> = ({
           </View>
         </View>
         {label && (
-          <Text.ButtonBase
+          <Text.ButtonM
             useI18n
             style={[
               styles.label,
@@ -141,7 +141,7 @@ const Icon: React.FC<IconProps> = ({
               labelStyle,
             ]}>
             {label}
-          </Text.ButtonBase>
+          </Text.ButtonM>
         )}
       </View>
     </TouchableOpacity>

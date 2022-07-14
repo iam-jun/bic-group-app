@@ -34,7 +34,7 @@ const SystemIssueModal = () => {
             tintColor="none"
           />
           <Text.H4 useI18n>internet_connection:system_issue:title</Text.H4>
-          <Text.Body useI18n>internet_connection:system_issue:desc</Text.Body>
+          <Text.BodyM useI18n>internet_connection:system_issue:desc</Text.BodyM>
           <View style={styles.loadingContainer}>
             <LoadingIndicator color={theme.colors.purple30} size={24} />
           </View>

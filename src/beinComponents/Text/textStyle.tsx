@@ -205,68 +205,10 @@ export const createTextStyle = (theme: ExtendedTheme) => {
       fontSize: sizes.captionS,
       color: colors.neutral80,
     },
-    h6s: {
-      fontFamily: fontFamilies.OpenSansSemiBold,
-      fontSize: sizes.h6s,
-      // lineHeight: lineHeights.h6s,
-      color: colors.neutral80,
-    },
-    buttonBase: {
-      fontFamily: fontFamilies.OpenSansSemiBold,
-      fontSize: sizes.buttonBase,
-      // lineHeight: lineHeights.buttonBase,
-      color: colors.neutral80,
-    },
-    buttonSmall: {
-      fontFamily: fontFamilies.OpenSansSemiBold,
-      fontSize: sizes.buttonSmall,
-      // lineHeight: lineHeights.buttonSmall,
-      color: colors.neutral80,
-    },
-    bodyMI: {
-      fontFamily: fontFamilies.OpenSansSemiBoldItalic,
-      fontSize: sizes.body,
-      // lineHeight: lineHeights.body,
-      color: colors.neutral80,
-    },
-    bodyI: {
-      fontFamily: fontFamilies.OpenSansItalic,
-      fontSize: sizes.body,
-      // lineHeight: lineHeights.body,
-      color: colors.neutral80,
-    },
-    body: {
-      fontFamily: fontFamilies.OpenSans,
-      fontSize: sizes.body,
-      // lineHeight: lineHeights.body,
-      color: colors.neutral80,
-    },
-    bodySM: {
-      fontFamily: fontFamilies.OpenSansSemiBold,
-      fontSize: sizes.bodySM,
-      // lineHeight: lineHeights.bodySM,
-      color: colors.neutral80,
-    },
-    subtitle: {
-      fontFamily: fontFamilies.OpenSans,
-      fontSize: sizes.subtitle,
-      // lineHeight: lineHeights.subtitle,
-      color: colors.neutral80,
-    },
     code: {
       fontFamily: fontFamilies.JetBrainsMono,
       fontSize: sizes.code,
       // lineHeight: lineHeights.code,
-      color: colors.neutral80,
-    },
-    heading: {
-      fontFamily: fontFamilies.OpenSans,
-      fontSize: sizes.heading,
-      color: colors.neutral80,
-    },
-    headingSB: {
-      fontFamily: fontFamilies.OpenSansSemiBold,
-      fontSize: sizes.heading,
       color: colors.neutral80,
     },
   };

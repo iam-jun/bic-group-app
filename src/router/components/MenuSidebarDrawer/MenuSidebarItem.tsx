@@ -84,12 +84,12 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
         )}
         <View
           style={StyleSheet.flatten([styles.titleContainer, titleContainer])}>
-          <Text variant={textVariant || 'body'} useI18n {...titleProps}>
+          <Text variant={textVariant || 'bodyM'} useI18n {...titleProps}>
             {title}
           </Text>
           {!!subTitle && (
             <Text
-              variant={textVariantSubTitle || 'subtitle'}
+              variant={textVariantSubTitle || 'bodyS'}
               useI18n
               numberOfLines={2}
               {...subTitleProps}>
@@ -100,7 +100,7 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
         <View style={StyleSheet.flatten([styles.right, rightStyle])}>
           {!!rightTitle && (
             <Text
-              variant={textVariantRightTitle || 'subtitle'}
+              variant={textVariantRightTitle || 'bodyS'}
               useI18n
               style={{color: colors.gray50}}
               {...rightTitleProps}>

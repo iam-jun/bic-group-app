@@ -304,9 +304,9 @@ const SignIn = () => {
               <Text.H4 testID="sign_in.title" style={styles.title} useI18n>
                 auth:text_sign_in_desc
               </Text.H4>
-              <Text.Body style={styles.label} useI18n>
+              <Text.BodyM style={styles.label} useI18n>
                 auth:input_label_email
-              </Text.Body>
+              </Text.BodyM>
               <TextInputController
                 ref={inputEmailRef}
                 testID="sign_in.input_email"
@@ -338,9 +338,9 @@ const SignIn = () => {
                   style: styles.errorText,
                 }}
               />
-              <Text.Body style={styles.label} useI18n>
+              <Text.BodyM style={styles.label} useI18n>
                 auth:input_label_password
-              </Text.Body>
+              </Text.BodyM>
               <PasswordInputController
                 ref={inputPasswordRef}
                 useFormData={useFormData}
@@ -413,9 +413,9 @@ const SignIn = () => {
               </Button.Primary>
 
               <View style={styles.signUpContainer}>
-                <Text.Body color={theme.colors.white} useI18n>
+                <Text.BodyM color={theme.colors.white} useI18n>
                   auth:text_sign_up_desc
-                </Text.Body>
+                </Text.BodyM>
                 <TouchableOpacity
                   testID="btnSignInForgotPassword"
                   // onPress={() => navigation.navigate(authStack.signup)}

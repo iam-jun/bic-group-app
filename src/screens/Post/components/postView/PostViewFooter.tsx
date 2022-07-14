@@ -80,7 +80,7 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
             tintColor: colors.gray50,
           }}
           textProps={{
-            variant: 'bodySM',
+            variant: 'bodySMedium',
             color: colors.gray50,
           }}
           style={styles.buttonReact}>

@@ -33,7 +33,9 @@ const NoGroupFound = () => {
         />
         <View style={styles.description}>
           <Text.H6>{i18next.t('error:no_group_found_desc')}</Text.H6>
-          <Text.Body>{i18next.t('error:no_group_found_second_desc')}</Text.Body>
+          <Text.BodyM>
+            {i18next.t('error:no_group_found_second_desc')}
+          </Text.BodyM>
         </View>
         <Button.Primary testID="no_group_found.back" onPress={onPressBack}>
           {i18next.t('error:button_back_to_safety')}

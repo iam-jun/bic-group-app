@@ -68,9 +68,9 @@ const Autocomplete = ({
         isEmpty(data) ? styles.hidden : {},
       ]}>
       {!!title && key === '' && data?.length === 0 && (
-        <Text.Subtitle testID="autocomplete.title" style={styles.textTitle}>
+        <Text.BodyS testID="autocomplete.title" style={styles.textTitle}>
           {title}
-        </Text.Subtitle>
+        </Text.BodyS>
       )}
       <AtMention {...props} />
     </View>

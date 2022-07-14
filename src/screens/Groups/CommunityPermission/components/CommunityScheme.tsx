@@ -105,14 +105,14 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
         <View style={styles.buttonContainer}>{renderButtons()}</View>
       </View>
       <View style={styles.descScheme}>
-        <Text.Subtitle useI18n>
+        <Text.BodyS useI18n>
           communities:permission:text_desc_community_scheme
-        </Text.Subtitle>
+        </Text.BodyS>
       </View>
       {!!name && (
-        <Text.HeadingSB style={styles.textName}>{name}</Text.HeadingSB>
+        <Text.BodySMedium style={styles.textName}>{name}</Text.BodySMedium>
       )}
-      {!!description && <Text.Heading>{description}</Text.Heading>}
+      {!!description && <Text.BodyS>{description}</Text.BodyS>}
     </View>
   );
 };

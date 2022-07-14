@@ -312,12 +312,12 @@ const Header: React.FC<HeaderProps> = ({
               <TouchableOpacity
                 onPress={onPressHeader}
                 disabled={!onPressHeader}>
-                <Text.Subtitle
+                <Text.BodyS
                   style={styles.subtitle}
                   {...subTitleTextProps}
                   testID="header.subTitle">
                   {subTitle}
-                </Text.Subtitle>
+                </Text.BodyS>
               </TouchableOpacity>
             )}
           </Animated.View>

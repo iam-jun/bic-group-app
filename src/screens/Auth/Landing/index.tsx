@@ -48,7 +48,7 @@ const Landing = () => {
           <Text.H4 style={styles.logoTitle}>
             {t('auth:text_landing_logo_title')}
           </Text.H4>
-          <Text.Body>{t('auth:text_landing_logo_description')}</Text.Body>
+          <Text.BodyM>{t('auth:text_landing_logo_description')}</Text.BodyM>
         </View>
         <View style={styles.contentContainer}>
           {/* @ts-ignore */}
@@ -58,9 +58,9 @@ const Landing = () => {
             height={IMAGE_HEIGHT}
             tintColor="none"
           />
-          <Text variant="subtitle" style={styles.title}>
+          <Text.BodyS style={styles.title}>
             {t('auth:text_landing_title')}
-          </Text>
+          </Text.BodyS>
         </View>
         <Button.Primary
           testID="landing.start"

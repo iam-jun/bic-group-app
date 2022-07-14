@@ -50,10 +50,10 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
       avatarProps={{isRounded: true, variant: 'medium'}}
       onPress={goToUserProfile}
       ContentComponent={
-        <Text.Body numberOfLines={1}>
+        <Text.BodyM numberOfLines={1}>
           {fullname}
           <Text.BodyS color={colors.gray50}>{` @${username}`}</Text.BodyS>
-        </Text.Body>
+        </Text.BodyM>
       }
       RightComponent={
         <>

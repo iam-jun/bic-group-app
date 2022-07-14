@@ -42,9 +42,9 @@ const CreatePostExitOptions: FC<CreatePostExitOptionsProps> = ({
     <View style={styles.container}>
       <View style={styles.header}>
         <Text.H6 useI18n>post:post_exit_title</Text.H6>
-        <Text.Subtitle color={colors.gray50} useI18n>
+        <Text.BodyS color={colors.gray50} useI18n>
           post:post_exit_desc
-        </Text.Subtitle>
+        </Text.BodyS>
       </View>
       <PrimaryItem
         height={48}

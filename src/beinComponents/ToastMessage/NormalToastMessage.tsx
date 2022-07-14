@@ -119,12 +119,12 @@ const ToastMessage: FC<ToastMessageProps> = ({
 
       <View style={styles.textContainer}>
         <View style={styles.childrenStyle}>
-          <Text.Body
+          <Text.BodyM
             {...textProps}
             color={textColor}
             testID="normal_toast_message.children">
             {children}
-          </Text.Body>
+          </Text.BodyM>
         </View>
         {!!rightText && (
           <ButtonWrapper
@@ -139,13 +139,13 @@ const ToastMessage: FC<ToastMessageProps> = ({
                 style={styles.marginRightIcon}
               />
             )}
-            <Text.ButtonBase
+            <Text.ButtonM
               {...rightTextProps}
               testID="normal_toast_message.right_text"
               style={[styles.rightText, rightTextStyle]}
               color={rightTextColor || theme.colors.white}>
               {rightText}
-            </Text.ButtonBase>
+            </Text.ButtonM>
           </ButtonWrapper>
         )}
       </View>

@@ -225,7 +225,7 @@ const UserProfile = (props: any) => {
         <Text>
           <Text.H4>{fullname}</Text.H4>
         </Text>
-        {!!username && <Text.Subtitle>{`@${username}`}</Text.Subtitle>}
+        {!!username && <Text.BodyS>{`@${username}`}</Text.BodyS>}
         {!!description && (
           <Text>
             <Text style={styles.subtitleText}>{description}</Text>
