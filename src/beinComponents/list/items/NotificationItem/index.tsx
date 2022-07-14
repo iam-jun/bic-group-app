@@ -93,9 +93,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   };
 
   const notShowAvatar =
-    extra?.type === NOTIFICATION_TYPE.POST.VIDEO.PROCESSING ||
-    extra?.type === NOTIFICATION_TYPE.POST.VIDEO.FAILED ||
-    extra?.type === NOTIFICATION_TYPE.POST.VIDEO.PUBLISHED;
+    extra?.type === NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL ||
+    extra?.type === NOTIFICATION_TYPE.POST_VIDEO_TO_USER_SUCCESSFUL;
 
   // render notification item
   return (

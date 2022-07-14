@@ -50,12 +50,12 @@ const ReviewMarkdown = ({onPressDone}: {onPressDone: () => void}) => {
           <View>
             <Text.H6>{fullname}</Text.H6>
             <View style={styles.audienceLine}>
-              <Text.BodySM
+              <Text.BodySMedium
                 useI18n
                 color={theme.colors.textSecondary}
                 style={styles.textTo}>
                 post:to
-              </Text.BodySM>
+              </Text.BodySMedium>
               <Text.H6>{getAudiences(chosenAudiences)}</Text.H6>
             </View>
           </View>

@@ -205,11 +205,11 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                       tintColor={theme.colors.textSecondary}
                     />
                     {showPrivacyName && (
-                      <Text.Subtitle style={styles.privacyTitle} useI18n>
+                      <Text.BodyS style={styles.privacyTitle} useI18n>
                         {privacyTitle}
-                      </Text.Subtitle>
+                      </Text.BodyS>
                     )}
-                    <Text.Subtitle> ⬩ </Text.Subtitle>
+                    <Text.BodyS> ⬩ </Text.BodyS>
                   </>
                 )}
                 <Icon

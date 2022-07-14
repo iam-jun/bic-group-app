@@ -133,31 +133,31 @@ const createStyle = (theme: ITheme) => {
     },
 
     // The main container
-    body: {...textStyles.body},
+    body: {...textStyles.bodyM},
 
     // Headings
     heading1: {
-      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontFamily: fontFamilies.BeVietnamProSemiBold,
       fontSize: sizes.h3,
     },
     heading2: {
-      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontFamily: fontFamilies.BeVietnamProSemiBold,
       fontSize: sizes.h4,
     },
     heading3: {
-      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontFamily: fontFamilies.BeVietnamProSemiBold,
       fontSize: sizes.h5,
     },
     heading4: {
-      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontFamily: fontFamilies.BeVietnamProSemiBold,
       fontSize: sizes.h5,
     },
     heading5: {
-      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontFamily: fontFamilies.BeVietnamProSemiBold,
       fontSize: sizes.h5,
     },
     heading6: {
-      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontFamily: fontFamilies.BeVietnamProSemiBold,
       fontSize: sizes.h5,
     },
 
@@ -168,11 +168,9 @@ const createStyle = (theme: ITheme) => {
     strong: {
       ...textStyles.bodyM,
     },
-    em: {
-      ...textStyles.bodyI,
-    },
+    em: {},
     s: {
-      ...textStyles.body,
+      ...textStyles.bodyM,
     },
 
     // Blockquotes

@@ -71,7 +71,7 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
           <Text.H6 useI18n>
             new_feature:text_we_are_developing_this_feature
           </Text.H6>
-          <Text.Body useI18n>new_feature:text_we_will_notify_you</Text.Body>
+          <Text.BodyM useI18n>new_feature:text_we_will_notify_you</Text.BodyM>
 
           {/* Temporary button */}
           <Button.Secondary

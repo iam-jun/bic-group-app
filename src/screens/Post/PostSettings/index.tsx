@@ -140,13 +140,13 @@ const PostSettings = ({route}: PostSettingsProps) => {
               post:mark_as_important
             </Text>
             {sImportant?.active ? (
-              <Text.Subtitle
+              <Text.BodyS
                 useI18n
                 testID="post_settings.expire_time_desc"
                 color={colors.textSecondary}
-                style={{fontFamily: fontFamilies.OpenSansSemiBold}}>
+                style={{fontFamily: fontFamilies.BeVietnamProSemiBold}}>
                 post:expire_time_desc
-              </Text.Subtitle>
+              </Text.BodyS>
             ) : null}
           </View>
           <Toggle

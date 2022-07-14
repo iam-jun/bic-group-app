@@ -50,7 +50,7 @@ const createStyles = (theme: ITheme) => {
   return StyleSheet.create({
     baseStyle: {
       color: colors.textPrimary,
-      fontFamily: fontFamilies.OpenSans,
+      fontFamily: fontFamilies.BeVietnamProLight,
     },
   });
 };

@@ -69,9 +69,9 @@ const FlashMessage: FC<FlashMessageProps> = ({
         />
       )}
       <View style={styles.textContainer}>
-        <Text.Body {...textProps} color={textColor}>
+        <Text.BodyM {...textProps} color={textColor}>
           {children}
-        </Text.Body>
+        </Text.BodyM>
       </View>
       {onClose && (
         <Icon icon={'iconClose'} tintColor={iconColor} onPress={onClose} />

@@ -63,16 +63,16 @@ const MenuItem: React.FC<MenuItemProps> = ({
         <View style={[styles.container, style]}>
           {icon && <Icon icon={icon} size={24} {...iconProps} />}
           <View style={styles.titleContainer}>
-            <Text.ButtonBase testID="menu_item.title" useI18n>
+            <Text.ButtonM testID="menu_item.title" useI18n>
               {title}
-            </Text.ButtonBase>
+            </Text.ButtonM>
             {!!subTitle && (
-              <Text.Subtitle
+              <Text.BodyS
                 testID="menu_item.sub_title"
                 numberOfLines={2}
                 useI18n>
                 {subTitle}
-              </Text.Subtitle>
+              </Text.BodyS>
             )}
           </View>
           {(notificationsBadgeNumber || notificationsBadgeProps) && (
@@ -105,11 +105,11 @@ const MenuItem: React.FC<MenuItemProps> = ({
                 styles.badgeNumberContainer,
                 badgeColor ? {backgroundColor: badgeColor} : {},
               ]}>
-              <Text.Subtitle
+              <Text.BodyS
                 testID="menu_item.badge_number.number"
                 style={styles.badgeNumber}>
                 {badgeNumber}
-              </Text.Subtitle>
+              </Text.BodyS>
             </View>
           )}
           {RightComponent}

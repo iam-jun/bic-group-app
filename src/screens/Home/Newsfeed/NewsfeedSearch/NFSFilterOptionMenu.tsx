@@ -120,15 +120,15 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
   return (
     <TouchableOpacity activeOpacity={1} style={styles.container}>
       <View style={styles.header}>
-        <Text.ButtonSmall style={styles.textHeader}>
+        <Text.ButtonS style={styles.textHeader}>
           {t('home:newsfeed_search:label_all_filters')}
-        </Text.ButtonSmall>
+        </Text.ButtonS>
         <Button
           onPress={_onPressReset}
           style={{justifyContent: 'center', alignSelf: 'center'}}>
-          <Text.ButtonSmall style={styles.btnReset}>
+          <Text.ButtonS style={styles.btnReset}>
             {t('home:newsfeed_search:btn_reset').toUpperCase()}
-          </Text.ButtonSmall>
+          </Text.ButtonS>
         </Button>
       </View>
       <Divider style={styles.divider} />

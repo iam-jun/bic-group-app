@@ -57,9 +57,7 @@ const RoleItem: FC<RoleItemProps> = ({
 
           return (
             <View key={`role_${keyRoleId}_cat_${cat?.key}`}>
-              <Text.ButtonSmall style={styles.catName}>
-                {cat?.name}
-              </Text.ButtonSmall>
+              <Text.ButtonS style={styles.catName}>{cat?.name}</Text.ButtonS>
               {cat?.subCategories?.map((subCat: any) => (
                 <View
                   key={`role_${keyRoleId}_cat_${cat?.key}_subCat_${subCat?.key}`}>

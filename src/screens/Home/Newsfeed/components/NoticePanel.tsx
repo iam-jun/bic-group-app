@@ -40,10 +40,10 @@ const NoticePanel = () => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text.BodySM testID="notice_panel.title">{title}</Text.BodySM>
-        <Text.Subtitle useI18n style={styles.description}>
+        <Text.BodySMedium testID="notice_panel.title">{title}</Text.BodySMedium>
+        <Text.BodyS useI18n style={styles.description}>
           home:notice_post_video_uploading:description
-        </Text.Subtitle>
+        </Text.BodyS>
       </View>
       <ButtonWrapper
         testID="notice_panel.button_close"

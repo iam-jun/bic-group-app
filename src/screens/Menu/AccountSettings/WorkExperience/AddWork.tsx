@@ -414,8 +414,8 @@ const createStyles = (theme: ITheme) => {
       height: 88,
     },
     textInput: {
-      fontFamily: fontFamilies.OpenSans,
-      fontSize: dimension.sizes.body,
+      fontFamily: fontFamilies.BeVietnamProLight,
+      fontSize: dimension.sizes.bodyM,
       color: colors.textPrimary,
       flex: 1,
     },

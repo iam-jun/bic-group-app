@@ -85,7 +85,7 @@ export const handleBack = (
           rightText: isNewsfeed ? i18next.t('home:draft_post') : '',
           rightTextColor: colors.textPrimary,
           rightTextProps: {
-            variant: 'bodySM',
+            variant: 'bodySMedium',
           },
           rightTextStyle: {textDecorationLine: 'none'},
           onPressRight: onPressDraftPost,

@@ -44,16 +44,18 @@ const RightCol = () => {
                 <TouchableOpacity
                   style={styles.menuItemLeft}
                   onPress={() => onItemPress(item)}>
-                  <Text.Body style={styles.menuText}>{t(item.title)}</Text.Body>
+                  <Text.BodyM style={styles.menuText}>
+                    {t(item.title)}
+                  </Text.BodyM>
                 </TouchableOpacity>
               )}
               {nextItem && (
                 <TouchableOpacity
                   style={styles.menuItemRight}
                   onPress={() => onItemPress(nextItem)}>
-                  <Text.Body style={styles.menuText}>
+                  <Text.BodyM style={styles.menuText}>
                     {t(nextItem.title)}
-                  </Text.Body>
+                  </Text.BodyM>
                 </TouchableOpacity>
               )}
             </View>

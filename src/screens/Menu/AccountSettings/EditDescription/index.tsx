@@ -91,7 +91,7 @@ const EditDescription = () => {
         onPressBack={navigateBack}
       />
       <ScrollView keyboardShouldPersistTaps="handled" style={styles.container}>
-        <Text.H5 color={colors.iconTint} variant="body" useI18n>
+        <Text.H5 color={colors.iconTint} variant="bodyM" useI18n>
           settings:text_description
         </Text.H5>
         <View
@@ -125,8 +125,8 @@ const createStyles = (theme: ITheme) => {
       padding: spacing.margin.large,
     },
     textInput: {
-      fontFamily: fontFamilies.OpenSans,
-      fontSize: dimension.sizes.body,
+      fontFamily: fontFamilies.BeVietnamProLight,
+      fontSize: dimension.sizes.bodyM,
       color: colors.textPrimary,
       flex: 1,
     },

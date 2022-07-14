@@ -120,7 +120,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
             </Text>
           )}
           {!!subTitle && (
-            <Text variant="body" numberOfLines={2} {...subTitleProps}>
+            <Text variant="bodyM" numberOfLines={2} {...subTitleProps}>
               {subTitle}
             </Text>
           )}

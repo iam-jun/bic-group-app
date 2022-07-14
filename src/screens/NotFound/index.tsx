@@ -28,9 +28,9 @@ const NotFound = () => {
       <View style={styles.contentContainer}>
         {/* @ts-ignore */}
         <SVGIcon source={NotFoundImg} size={imgSize} />
-        <Text.Body style={styles.desc}>
+        <Text.BodyM style={styles.desc}>
           {i18next.t('error:not_found_desc')}
-        </Text.Body>
+        </Text.BodyM>
         <Button.Secondary
           style={styles.button}
           highEmphasis
