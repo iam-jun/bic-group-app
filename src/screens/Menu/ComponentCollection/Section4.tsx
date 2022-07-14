@@ -35,16 +35,8 @@ const Section4 = () => {
     return renderSection(
       'TextInput',
       <View style={{paddingHorizontal: spacing?.margin.base}}>
+        <TextInput helperContent={'Input your password'} />
         <TextInput
-          label={'Example text'}
-          helperContent={'Input your password'}
-        />
-        <TextInput
-          label={'Example text'}
-          helperContent={'Input your password'}
-        />
-        <TextInput
-          label={'Example text'}
           placeholder={'Example text'}
           value={'123456789'}
           helperContent={'Wrong email or password! '}
@@ -52,11 +44,7 @@ const Section4 = () => {
           helperActionOnPress={() => alert('onPress forgot password')}
           error
         />
-        <TextInput
-          disabled
-          label={'Disabled'}
-          helperContent={'Input your password'}
-        />
+        <TextInput editable helperContent={'Input your password'} />
       </View>,
     );
   };

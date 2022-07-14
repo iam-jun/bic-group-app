@@ -5,8 +5,8 @@ import {
   ImageBackground,
   ActivityIndicator,
   Platform,
+  Modal,
 } from 'react-native';
-import {Modal} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import Text from '~/beinComponents/Text';
@@ -25,18 +25,18 @@ const LoadingModal = () => {
   const {visible} = loading;
 
   return (
-    <Modal visible={visible} contentContainerStyle={styles.root}>
+    <Modal animationType="fade" visible={visible} style={styles.root}>
       <ImageBackground source={images.img_bg_sign_in} style={styles.background}>
         <View style={styles.logoContainer}>
-          <Image
-            resizeMode="contain"
-            style={styles.logo}
-            source={images.logo_beincomm}
-          />
           <ActivityIndicator
             size={Platform.OS === 'android' ? 72 : 'large'}
             style={styles.loadingIndicator}
             color={theme.colors.white}
+          />
+          <Image
+            resizeMode="contain"
+            style={styles.logo}
+            source={images.logo_beincomm}
           />
         </View>
         <Text.ButtonSmall style={styles.textLoading}>
@@ -75,8 +75,8 @@ const themeStyles = (theme: ExtendedTheme) => {
     },
     loadingIndicator: {
       position: 'absolute',
-      top: -12, // = -IndicatorSize / 6, to make it center
-      left: -12,
+      top: -50, // = -IndicatorSize / 6, to make it center
+      left: 5,
     },
   });
 };

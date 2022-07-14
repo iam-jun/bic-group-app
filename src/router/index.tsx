@@ -154,13 +154,13 @@ const StackNavigator = (): React.ReactElement => {
             />
           </Stack.Navigator>
           <AlertNewFeatureModal />
+          <AlertModal />
+          <SystemIssueModal />
+          <LoadingModal />
+          <ToastMessage />
+          <InternetConnectionStatus />
         </Host>
       </NavigationContainer>
-      <AlertModal />
-      <SystemIssueModal />
-      <LoadingModal />
-      <ToastMessage />
-      <InternetConnectionStatus />
     </View>
   );
 };

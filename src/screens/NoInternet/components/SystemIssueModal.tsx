@@ -1,6 +1,5 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {Modal} from 'react-native-paper';
+import {Modal, StyleSheet, TouchableOpacity, View} from 'react-native';
 
 import Text from '~/beinComponents/Text';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
@@ -10,31 +9,38 @@ import noInternetKeySelector from '../redux/keySelector';
 import {useKeySelector} from '~/hooks/selector';
 import spacing from '~/theme/spacing';
 import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 
 const SystemIssueModal = () => {
   const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const styles = themeStyles(theme);
 
   const systemIssue = useKeySelector(noInternetKeySelector.systemIssue);
+  const optionsStyle = useAnimatedStyle(() => ({
+    opacity: withTiming(systemIssue, {duration: 500}),
+  }));
+
+  if (!systemIssue) return null;
 
   return (
-    <Modal
-      visible={systemIssue}
-      dismissable={false}
-      contentContainerStyle={styles.modal}>
-      <SvgIcon
-        // @ts-ignore
-        source={SystemIssueImg}
-        width={200}
-        height={200}
-        tintColor="none"
-      />
-      <Text.H4 useI18n>internet_connection:system_issue:title</Text.H4>
-      <Text.Body useI18n>internet_connection:system_issue:desc</Text.Body>
-      <View style={styles.loadingContainer}>
-        <LoadingIndicator color={theme.colors.purple30} size={24} />
-      </View>
-    </Modal>
+    <Animated.View style={[styles.root, optionsStyle]}>
+      <TouchableOpacity style={styles.root} activeOpacity={1}>
+        <View style={styles.modal}>
+          <SvgIcon
+            // @ts-ignore
+            source={SystemIssueImg}
+            width={200}
+            height={200}
+            tintColor="none"
+          />
+          <Text.H4 useI18n>internet_connection:system_issue:title</Text.H4>
+          <Text.Body useI18n>internet_connection:system_issue:desc</Text.Body>
+          <View style={styles.loadingContainer}>
+            <LoadingIndicator color={theme.colors.purple30} size={24} />
+          </View>
+        </View>
+      </TouchableOpacity>
+    </Animated.View>
   );
 };
 
@@ -42,6 +48,17 @@ const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
+    root: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: theme.colors.transparent1,
+      width: '100%',
+      height: '100%',
+      justifyContent: 'center',
+    },
     modal: {
       width: 320,
       paddingTop: spacing.padding.large,

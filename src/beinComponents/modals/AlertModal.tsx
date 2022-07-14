@@ -5,11 +5,11 @@ import {
   Platform,
   StyleProp,
   StyleSheet,
+  TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
 import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {Modal} from 'react-native-paper';
 
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
@@ -19,6 +19,7 @@ import * as actions from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
 import Icon from '../Icon';
 import TextInput from '../inputs/TextInput';
+import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 
 export interface AlertModalProps {
   style?: StyleProp<ViewStyle>;
@@ -91,83 +92,88 @@ const AlertModal: React.FC<AlertModalProps> = ({
     }
   };
 
+  const optionsStyle = useAnimatedStyle(() => ({
+    opacity: withTiming(visible, {duration: 500}),
+  }));
+
+  if (!visible) return null;
   return (
-    <Modal
-      visible={visible}
-      dismissable={isDismissible}
-      onDismiss={_onDismiss}
-      contentContainerStyle={[styles.modal, style, alertModalStyle]}
-      {...props}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <View style={styles.modalContainer}>
-          {!!HeaderImageComponent ? HeaderImageComponent : null}
-          <View style={[styles.header, !!headerStyle ? headerStyle : {}]}>
-            {!!title && (
-              <Text.ButtonBase {...titleProps}>{title}</Text.ButtonBase>
+    <Animated.View style={[styles.root, optionsStyle]}>
+      <TouchableOpacity
+        style={styles.root}
+        activeOpacity={1}
+        onPress={_onDismiss}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <View style={[styles.modalContainer]}>
+            {!!HeaderImageComponent ? HeaderImageComponent : null}
+            <View style={[styles.header, !!headerStyle ? headerStyle : {}]}>
+              {!!title && (
+                <Text.ButtonBase {...titleProps}>{title}</Text.ButtonBase>
+              )}
+              {!!iconName && (
+                <Icon
+                  icon={iconName}
+                  size={20}
+                  tintColor={theme.colors.neutral80}
+                />
+              )}
+              {showCloseButton && (
+                <View style={styles.closeButton}>
+                  <Icon
+                    icon={'iconClose'}
+                    size={14}
+                    tintColor={theme.colors.neutral80}
+                    onPress={_onDismiss}
+                  />
+                </View>
+              )}
+            </View>
+            {children}
+            {!!content && (
+              <_ContentComponent style={styles.content} {...contentProps}>
+                {content}
+              </_ContentComponent>
             )}
-            {!!iconName && (
-              <Icon
-                icon={iconName}
-                size={20}
-                tintColor={theme.colors.neutral80}
+            {input && (
+              <TextInput
+                onChangeText={(value: string) => setText(value)}
+                autoFocus
+                {...inputProps}
               />
             )}
-            {showCloseButton && (
-              <View style={styles.closeButton}>
-                <Icon
-                  icon={'iconClose'}
-                  size={14}
-                  tintColor={theme.colors.neutral80}
-                  onPress={_onDismiss}
-                />
-              </View>
-            )}
+            <View
+              style={[
+                styles.displayBtn,
+                !!buttonViewStyle ? buttonViewStyle : {},
+              ]}>
+              {!!cancelBtn && (
+                <_CancelBtnComponent
+                  testID="alert_modal.cancel"
+                  style={{marginEnd: spacing?.margin.base}}
+                  onPress={_onCancel}
+                  {...cancelBtnProps}>
+                  {_cancelLabel}
+                </_CancelBtnComponent>
+              )}
+              {!!visible && onConfirm && (
+                <_ConfirmBtnComponent
+                  highEmphasis
+                  testID="alert_modal.confirm"
+                  disabled={input && !text}
+                  onPress={() => {
+                    dispatch(actions.hideAlert());
+                    onConfirm(text);
+                  }}
+                  {...confirmBtnProps}>
+                  {confirmLabel || i18next.t('common:btn_confirm')}
+                </_ConfirmBtnComponent>
+              )}
+            </View>
           </View>
-          {children}
-          {!!content && (
-            <_ContentComponent style={styles.content} {...contentProps}>
-              {content}
-            </_ContentComponent>
-          )}
-          {input && (
-            <TextInput
-              onChangeText={(value: string) => setText(value)}
-              autoFocus
-              {...inputProps}
-            />
-          )}
-          <View
-            style={[
-              styles.displayBtn,
-              !!buttonViewStyle ? buttonViewStyle : {},
-            ]}>
-            {!!cancelBtn && (
-              <_CancelBtnComponent
-                testID="alert_modal.cancel"
-                style={{marginEnd: spacing?.margin.base}}
-                onPress={_onCancel}
-                {...cancelBtnProps}>
-                {_cancelLabel}
-              </_CancelBtnComponent>
-            )}
-            {!!visible && onConfirm && (
-              <_ConfirmBtnComponent
-                highEmphasis
-                testID="alert_modal.confirm"
-                disabled={input && !text}
-                onPress={() => {
-                  dispatch(actions.hideAlert());
-                  onConfirm(text);
-                }}
-                {...confirmBtnProps}>
-                {confirmLabel || i18next.t('common:btn_confirm')}
-              </_ConfirmBtnComponent>
-            )}
-          </View>
-        </View>
-      </KeyboardAvoidingView>
-    </Modal>
+        </KeyboardAvoidingView>
+      </TouchableOpacity>
+    </Animated.View>
   );
 };
 
@@ -177,19 +183,28 @@ const themeStyles = (theme: ExtendedTheme) => {
 
   return StyleSheet.create({
     root: {
-      flex: 1,
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: theme.colors.transparent1,
+      width: '100%',
+      height: '100%',
+      justifyContent: 'center',
     },
     modal: {
-      width: defaultAlertWidth,
       backgroundColor: colors.white,
-      borderWidth: 1,
-      borderColor: colors.gray20,
-      borderRadius: 6,
-      alignSelf: 'center',
     },
     modalContainer: {
+      borderColor: colors.gray20,
+      borderRadius: 6,
+      borderWidth: 1,
       paddingHorizontal: spacing?.padding.extraLarge,
       paddingVertical: spacing?.padding.large,
+      width: defaultAlertWidth,
+      backgroundColor: colors.white,
+      alignSelf: 'center',
     },
     displayBtn: {
       flexDirection: 'row',

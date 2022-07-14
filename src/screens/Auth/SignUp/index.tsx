@@ -91,7 +91,7 @@ const SignUp = () => {
           rules={{required: t('auth:text_err_username_blank')}}
           name="username"
           validateValue={validateUsername}
-          disabled={loading}
+          editable={loading}
         />
 
         <TextInputController
@@ -110,7 +110,7 @@ const SignUp = () => {
             },
           }}
           validateValue={validateEmail}
-          disabled={loading}
+          editable={loading}
         />
         <PasswordInputController
           useFormData={useFormData}

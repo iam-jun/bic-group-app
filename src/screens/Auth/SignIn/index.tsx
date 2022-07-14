@@ -12,7 +12,6 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import {Modal} from 'react-native-paper';
 import {ExtendedTheme, useNavigation, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import Animated, {
@@ -270,11 +269,15 @@ const SignIn = () => {
     ),
   }));
 
+  const optionsStyle = useAnimatedStyle(() => ({
+    opacity: withTiming(loading, {duration: 500}),
+  }));
   const renderLoading = () => {
+    if (!loading) return null;
     return (
-      <Modal visible={loading} contentContainerStyle={styles.loading}>
+      <Animated.View style={[styles.loading, optionsStyle]}>
         <LoadingIndicator size={'large'} color={theme.colors.purple50} />
-      </Modal>
+      </Animated.View>
     );
   };
 
@@ -327,12 +330,10 @@ const SignIn = () => {
                 style={styles.inputEmailContainer}
                 inputStyle={styles.input}
                 helperContent={signingInError}
-                disabled={!!authSessions || loading}
+                editable={!authSessions || !loading}
                 onSubmitEditing={onSubmitEmail}
                 placeholderTextColor={theme.colors.gray40}
                 textColor={theme.colors.white}
-                outlineColor={theme.colors.white}
-                activeOutlineColor={theme.colors.white}
                 helperTextProps={{
                   style: styles.errorText,
                 }}
@@ -340,7 +341,7 @@ const SignIn = () => {
               <Text.Body style={styles.label} useI18n>
                 auth:input_label_password
               </Text.Body>
-              {/* <PasswordInputController
+              <PasswordInputController
                 ref={inputPasswordRef}
                 useFormData={useFormData}
                 testID="sign_in.input_password"
@@ -376,7 +377,7 @@ const SignIn = () => {
                     }
                   },
                 }}
-                disableInput={loading}
+                // editable={!loading}
                 placeholder={t('auth:input_label_password_placeholder')}
                 validateValue={() => {
                   clearFieldError('password');
@@ -387,13 +388,12 @@ const SignIn = () => {
                 style={styles.inputPassword}
                 placeholderTextColor={theme.colors.gray40}
                 iconColor={theme.colors.white}
-                textColor={theme.colors.neutral80}
-                outlineColor={theme.colors.white}
-                activeOutlineColor={theme.colors.white}
+                textColor={theme.colors.white}
                 helperTextProps={{
                   style: styles.errorText,
                 }}
-              /> */}
+                editable={!loading}
+              />
               <TouchableOpacity
                 testID="sign_in.btn_forgot_password"
                 onPress={goToForgotPassword}>
@@ -471,11 +471,10 @@ const themeStyles = (theme: ExtendedTheme) => {
       color: colors.white,
     },
     inputEmailContainer: {
-      marginTop: 0,
-      marginBottom: spacing.margin.large,
+      marginVertical: spacing.margin.small,
     },
     input: {
-      whiteColor: colors.transparent,
+      borderColor: colors.white,
     },
     inputPassword: {
       marginVertical: spacing.margin.small,

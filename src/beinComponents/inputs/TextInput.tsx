@@ -32,10 +32,8 @@ export interface TextInputProps extends RNTextInputProps {
   helperTextProps?: TextProps;
   helperAction?: string;
   helperActionOnPress?: () => void;
-  theme?: ExtendedTheme;
   placeholder?: string;
   error?: boolean;
-  disabled?: boolean;
   keyboardType?: KeyboardTypeOptions | undefined;
   editable?: boolean;
   value?: string;
@@ -44,6 +42,10 @@ export interface TextInputProps extends RNTextInputProps {
   textInputRef?: React.Ref<RNTextInput>;
   textColor?: string;
   RightComponent?: React.ReactNode | React.ReactElement;
+  activeOutlineColor?: string;
+  outlineColor?: string;
+  onFocus?: () => void;
+  onBlur?: () => void;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -56,38 +58,27 @@ const TextInput: React.FC<TextInputProps> = ({
   helperActionOnPress,
   placeholder,
   error,
-  disabled,
   value,
   onChangeText,
   clearText,
   textInputRef,
   textColor,
   RightComponent,
+  activeOutlineColor,
+  outlineColor,
+  onFocus,
+  onBlur,
   ...props
 }: TextInputProps) => {
   const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme;
   const styles = themeStyles(theme, textColor);
   const [text, setText] = useState<string>(value || '');
+  const [isFocus, setIsFocus] = useState<boolean>(false);
 
   useEffect(() => {
     setText(value || '');
   }, [value]);
-
-  const customTheme = {
-    colors: {
-      primary: colors.gray40,
-      text: error ? colors.red60 : textColor || colors.neutral80,
-      placeholder: colors.gray50,
-      background: disabled ? colors.gray20 : colors.white,
-    },
-    roundness: spacing.borderRadius.small,
-    fonts: {
-      regular: {
-        fontFamily: fontFamilies.OpenSans,
-      },
-    },
-  };
 
   if (error) {
     helperType = 'error';
@@ -122,29 +113,42 @@ const TextInput: React.FC<TextInputProps> = ({
     _onChangeText('');
   };
 
+  const _onFocus = () => {
+    onFocus?.();
+    setIsFocus(true);
+  };
+
+  const _onBlur = () => {
+    onBlur?.();
+    setIsFocus(false);
+  };
+
   return (
     <View testID="text_input" style={[styles.container, style]}>
-      <View style={styles.row}>
+      <View
+        style={[
+          styles.row,
+          {
+            borderColor: isFocus
+              ? activeOutlineColor || colors.gray40
+              : outlineColor || colors.gray40,
+          },
+          inputStyle,
+        ]}>
         <RNTextInput
           testID="text_input.input"
           placeholder={placeholder}
           selectionColor={colors.gray50}
-          // // @ts-ignore
-          // outlineColor={colors.neutral80}
-          // mode={'outlined'}
-          // theme={customTheme}
-          // dense
-          // error={error}
-          editable={!disabled}
           placeholderTextColor={colors.gray50}
           value={text}
           style={[
             styles.input,
             !!error ? styles.errorStyle : styles.defaultStyle,
-            inputStyle,
           ]}
           onChangeText={_onChangeText}
           ref={textInputRef}
+          onFocus={_onFocus}
+          onBlur={_onBlur}
           {...props}
         />
         {RightComponent}
@@ -175,13 +179,17 @@ const themeStyles = (theme: ExtendedTheme, textColor?: string) => {
       marginVertical: spacing?.margin.tiny,
     },
     row: {
-      flexDirection: 'row',
-    },
-    input: {
       minHeight: 44,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
       borderRadius: spacing.borderRadius.small,
       borderWidth: 1,
       borderColor: colors.gray40,
+      paddingRight: spacing.padding.base,
+    },
+    input: {
+      minHeight: 44,
       paddingHorizontal: spacing.padding.base,
       fontFamily: fontFamilies.OpenSans,
       flex: 1,

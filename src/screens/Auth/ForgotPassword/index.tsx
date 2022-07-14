@@ -22,7 +22,6 @@ import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
-import icons from '~/resources/icons';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import ForgotInputCodePw from '~/screens/Auth/ForgotPassword/components/ForgotInputCodePw';
 import ForgotInputId from '~/screens/Auth/ForgotPassword/components/ForgotInputId';
@@ -66,11 +65,11 @@ const ForgotPassword = () => {
   const renderBtnBack = () => {
     return (
       <Icon
-        // @ts-ignore
-        icon={icons.iconBack}
-        size={20}
+        icon={'iconBack'}
+        size={16}
         onPress={goBack}
         testID="forgot_button.back"
+        tintColor={theme.colors.neutral60}
       />
     );
   };

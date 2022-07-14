@@ -27,7 +27,6 @@ module.exports = function (api) {
 
   if (api.env('production')) {
     plugins.push(['transform-remove-console']);
-    plugins.push(['react-native-paper/babel']);
   }
 
   //Reanimated plugin has to be listed last

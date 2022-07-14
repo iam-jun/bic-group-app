@@ -33,8 +33,8 @@ import {rootSwitch} from './router/stack';
 import Store from '~/store';
 import {IUserResponse} from './interfaces/IAuth';
 import {isNavigationRefReady, getScreenAndParams} from '~/router/helper';
-import colorsTest from './theme/theme';
-import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
+import appTheme from './theme/theme';
+import {DarkTheme, DefaultTheme} from '@react-navigation/native';
 import {initFontAwesomeIcon} from '~/services/fontAwesomeIcon';
 
 moment.updateLocale('en', moments.en);
@@ -209,11 +209,11 @@ export default (): React.ReactElement => {
       theme === 'light'
         ? {
             ...DefaultTheme,
-            colors: {...colorsTest.light.colors},
+            colors: {...appTheme.light.colors},
           }
         : {
             ...DarkTheme,
-            colors: {...colorsTest.dark.colors},
+            colors: {...appTheme.dark.colors},
           };
     // result.fontFamily = stateCurrent.loaded ? fonts : DefaultTheme.fonts;
     // result.spacing = {...spacing};
