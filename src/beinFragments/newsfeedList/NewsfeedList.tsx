@@ -1,4 +1,4 @@
-import React, {FC, memo, useEffect, useMemo, useRef, useState} from 'react';
+import React, {FC, memo, useEffect, useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import {debounce, throttle} from 'lodash';
 import {useTheme} from 'react-native-paper';
-import {DataProvider, LayoutProvider, RecyclerListView} from 'recyclerlistview';
 
 import {ITheme} from '~/theme/interfaces';
 import {scaleSize} from '~/theme/dimension';
@@ -27,7 +26,10 @@ import FloatingCreatePost from '~/beinFragments/FloatingCreatePost';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useFocusEffect} from '@react-navigation/native';
 import NoticePanel from '~/screens/Home/Newsfeed/components/NoticePanel';
-
+import {FlashList} from '@shopify/flash-list';
+import Animated, {useSharedValue} from 'react-native-reanimated';
+import {FlashListProps} from '@shopify/flash-list/src/FlashListProps';
+import {IPostActivity} from '~/interfaces/IPost';
 export interface NewsfeedListProps {
   data?: any;
   refreshing?: boolean;
@@ -37,13 +39,14 @@ export interface NewsfeedListProps {
   HeaderComponent?: any;
 }
 
-const screenWidth = Dimensions.get('window').width;
+const AnimatedFlashList = Animated.createAnimatedComponent<
+  React.ComponentType<FlashListProps<any>>
+>(FlashList as any);
+
 const screenHeight = Dimensions.get('window').height;
 
-const ViewTypes = {
-  HEADER: 0,
-  ITEM: 1,
-};
+const ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT = 180;
+const CREATE_POST_HEADER_HEIGHT = 50;
 
 const _NewsfeedList: FC<NewsfeedListProps> = ({
   data,
@@ -55,9 +58,9 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 }: NewsfeedListProps) => {
   const [initializing, setInitializing] = useState(true);
   const listView = useRef<any>();
-  const lockHeaderRef = useRef(true);
+  const lockHeaderRef = useRef(false);
 
-  const prevOffsetYRef = useRef(0);
+  const prevOffsetYShared = useSharedValue(0);
 
   const theme = useTheme() as ITheme;
   const {spacing, dimension} = theme;
@@ -66,28 +69,54 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   const refreshControlOffset = insets.top + dimension.headerHeight;
 
-  const itemStyle = useRef({
-    width: screenWidth,
-    marginBottom: spacing.margin.small,
-  }).current;
+  const emit = (event: string, params?: any) => {
+    DeviceEventEmitter.emit(event, params);
+  };
 
-  const layoutProvider = useRef(
-    new LayoutProvider(
-      index =>
-        index === 0 && HeaderComponent ? ViewTypes.HEADER : ViewTypes.ITEM,
-      (type, dim) => {
-        dim.width = screenWidth;
-        dim.height = 0;
-      },
-    ),
-  ).current;
-  const dataProvider = useMemo(
-    () =>
-      new DataProvider((r1, r2) => r1 !== r2).cloneWithRows(
-        HeaderComponent ? [{header: true}, ...data] : data,
-      ),
-    [data, HeaderComponent],
-  );
+  const handleScrollY = throttle((offsetY: number) => {
+    // on iOS, pull to refresh will fire onScroll with negative offsetY, ignore to avoid hide header
+    if (offsetY < 0) {
+      return;
+    }
+
+    const isDown = offsetY - prevOffsetYShared.value > 2;
+    const isDown5Percent =
+      ((offsetY - prevOffsetYShared.value) * 100) / screenHeight >= 5;
+    const isUp = prevOffsetYShared.value - offsetY > 2;
+    const isUp5Percent =
+      ((prevOffsetYShared.value - offsetY) * 100) / screenHeight >= 5;
+
+    const showFloating = offsetY > CREATE_POST_HEADER_HEIGHT;
+    emit('stopAllVideo');
+    if (isDown5Percent) {
+      emit('showHeader', false);
+      emit('showBottomBar', false);
+      emit('showFloatingCreatePost', false);
+    } else if (isDown && offsetY > 20) {
+      emit('showHeader', false);
+    }
+    if (isUp5Percent) {
+      emit('showHeader', true);
+      emit('showBottomBar', true);
+      emit('showFloatingCreatePost', showFloating);
+    } else if (isUp) {
+      emit('showBottomBar', true);
+      emit('showFloatingCreatePost', showFloating);
+      if (offsetY < 50) {
+        emit('showHeader', true);
+      }
+    }
+
+    prevOffsetYShared.value = offsetY;
+  }, 300);
+
+  const onScroll = (e: any) => {
+    // for smooth handle scrollEvent, i want to use useAnimatedScrollHander
+    // this callback run on UI thread, so i have to use runOnJs for function handler and shared value
+    // but flash list v1.1.0 has problem, when update state data, scroll stop working
+    // so for now, i used normal function onScroll, maybe refactor in the future
+    handleScrollY(e?.nativeEvent?.contentOffset?.y);
+  };
 
   useFocusEffect(
     React.useCallback(() => {
@@ -125,13 +154,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     }
   }, [canLoadMore, refreshing]);
 
-  const _onItemLayout = debounce(() => {
-    if (initializing) {
-      setInitializing(false);
-    }
-  }, 500);
-
-  const _onEndReached = () => {
+  const _onEndReached = debounce(() => {
     if (!initializing) {
       onEndReach?.();
     }
@@ -141,76 +164,19 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
         lockHeaderRef.current = false;
       }
     }, 1000);
+  }, 300);
+
+  const onLoaded = (info: {elapsedTimeInMs: number}) => {
+    console.log(`\x1b[36m🐣️Newsfeed loaded ${info?.elapsedTimeInMs}ms\x1b[0m`);
+    if (initializing) {
+      setInitializing(false);
+    }
   };
 
-  const onVisibleIndicesChanged = debounce((indexes: any) => {
-    if (
-      indexes?.length > 0 &&
-      data?.length === indexes?.[indexes?.length - 1]
-    ) {
-      onEndReach?.();
-    }
-  }, 1000);
-
-  const onScroll = throttle(
-    (rawEvent: any, offsetX: number, offsetY: number) => {
-      //on iOS, when add more item, callback scroll fired as scroll up
-      //so need lock 1 second to avoid header and bottom bar blink when load more
-      if (lockHeaderRef.current) {
-        return;
-      }
-      // on iOS, pull to refresh will fire onScroll with negative offsetY, ignore to avoid hide header
-      if (offsetY < 0) {
-        return;
-      }
-
-      const isDown = offsetY - prevOffsetYRef.current > 2;
-      const isDown5Percent =
-        ((offsetY - prevOffsetYRef.current) * 100) / screenHeight >= 5;
-      const isUp = prevOffsetYRef.current - offsetY > 2;
-      const isUp5Percent =
-        ((prevOffsetYRef.current - offsetY) * 100) / screenHeight >= 5;
-
-      const createPostHeaderHeight = 50;
-      const showFloating = offsetY > createPostHeaderHeight;
-      DeviceEventEmitter.emit('stopAllVideo');
-      if (isDown5Percent) {
-        DeviceEventEmitter.emit('showHeader', false);
-        DeviceEventEmitter.emit('showBottomBar', false);
-        DeviceEventEmitter.emit('showFloatingCreatePost', false);
-      } else if (isDown && offsetY > 20) {
-        DeviceEventEmitter.emit('showHeader', false);
-      }
-      if (isUp5Percent) {
-        DeviceEventEmitter.emit('showHeader', true);
-        DeviceEventEmitter.emit('showBottomBar', true);
-        DeviceEventEmitter.emit('showFloatingCreatePost', showFloating);
-      } else if (isUp) {
-        DeviceEventEmitter.emit('showBottomBar', true);
-        DeviceEventEmitter.emit('showFloatingCreatePost', showFloating);
-        if (offsetY < 50) {
-          DeviceEventEmitter.emit('showHeader', true);
-        }
-      }
-
-      prevOffsetYRef.current = offsetY;
-    },
-    300,
-  );
-
-  const rowRenderer = (type: any, data: any) => {
-    if (type === ViewTypes.HEADER && HeaderComponent) {
-      return (
-        <View style={styles.headerContainer}>
-          {HeaderComponent}
-          <NoticePanel />
-        </View>
-      );
-    }
+  const renderItem = ({item}: any) => {
     return (
       <PostView
-        style={itemStyle}
-        postId={data.id}
+        postId={item.id}
         testID="newsfeed_list.post.item"
         btnReactTestID="newsfeed_list.post.btn_react"
         btnCommentTestID="newsfeed_list.post.btn_comment"
@@ -292,37 +258,48 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   return (
     <View testID="newsfeed_list" style={styles.container}>
       {data && data.length > 0 && (
-        <RecyclerListView
-          testID="newsfeed_list.list"
-          ref={listView}
-          layoutProvider={layoutProvider}
-          dataProvider={dataProvider}
-          rowRenderer={rowRenderer}
-          // bounces={false}
-          forceNonDeterministicRendering={true}
+        <AnimatedFlashList
+          data={data}
+          renderItem={renderItem}
+          keyExtractor={(item: IPostActivity) => `newsfeed-list-${item?.id}`}
+          estimatedItemSize={ESTIMATE_HEIGHT_POST_SINGLE_LINE_TEXT}
           onScroll={onScroll}
+          onLoad={onLoaded}
+          refreshing
+          refreshControl={
+            <RefreshControl
+              testID={'newsfeed_list.refresh_control'}
+              progressViewOffset={refreshControlOffset}
+              refreshing={!!refreshing}
+              onRefresh={() => onRefresh?.()}
+            />
+          }
+          showsHorizontalScrollIndicator={false}
+          onRefresh={onRefresh}
           onEndReached={_onEndReached}
-          onEndReachedThreshold={2 * screenHeight}
-          onVisibleIndicesChanged={onVisibleIndicesChanged}
-          onItemLayout={_onItemLayout}
-          renderFooter={renderFooter}
-          renderAheadOffset={screenHeight} //pixels in advance to be rendered
-          disableRecycling={false} //if enable, list > 100 item will drop UI frame
-          scrollViewProps={{
-            refreshControl: (
-              <RefreshControl
-                testID={'newsfeed_list.refresh_control'}
-                progressViewOffset={refreshControlOffset}
-                refreshing={refreshing}
-                onRefresh={() => onRefresh?.()}
-              />
-            ),
-          }}
+          onEndReachedThreshold={0.5}
+          ListHeaderComponent={
+            <NewsfeedListHeader HeaderComponent={HeaderComponent} />
+          }
+          ListFooterComponent={renderFooter}
         />
       )}
       {renderEmpty()}
       {renderPlaceholder()}
       <FloatingCreatePost />
+    </View>
+  );
+};
+
+const NewsfeedListHeader = ({HeaderComponent}: any) => {
+  const insets = useSafeAreaInsets();
+  const theme = useTheme() as any;
+  const styles = createStyle(theme, insets);
+
+  return (
+    <View style={styles.headerContainer}>
+      {!!HeaderComponent && HeaderComponent}
+      <NoticePanel />
     </View>
   );
 };
