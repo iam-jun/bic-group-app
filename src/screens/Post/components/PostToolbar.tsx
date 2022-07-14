@@ -226,7 +226,7 @@ const PostToolbar = ({
             style={StyleSheet.flatten([styles.toolbarStyle, style])}
             testID="post_toolbar">
             {renderToolbarButton(
-              'CreditCardSearch',
+              'CreditCard',
               'post_toolbar.markdown_preview',
               content && onPressMarkdownPreview,
             )}
