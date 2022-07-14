@@ -144,7 +144,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
                 useI18n
                 testID="post_settings.expire_time_desc"
                 color={colors.textSecondary}
-                style={{fontFamily: fontFamilies.OpenSansSemiBold}}>
+                style={{fontFamily: fontFamilies.BeVietnamProSemiBold}}>
                 post:expire_time_desc
               </Text.Subtitle>
             ) : null}

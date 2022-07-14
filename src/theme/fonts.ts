@@ -15,6 +15,7 @@ export const fontFamilies = {
   OpenSansSemiBoldItalic: 'OpenSans-SemiBoldItalic',
   JetBrainsMono: 'JetBrainsMono-Regular',
   BeVietnamProLight: 'BeVietnamPro-Light',
+  BeVietnamProLightItalic: 'BeVietnamPro-LightItalic',
   BeVietnamProMedium: 'BeVietnamPro-Medium',
   BeVietnamProSemiBold: 'BeVietnamPro-SemiBold',
 };

@@ -83,7 +83,7 @@ const TextInput: React.FC<TextInputProps> = ({
     roundness: spacing?.borderRadius.small,
     fonts: {
       regular: {
-        fontFamily: fontFamilies.OpenSans,
+        fontFamily: fontFamilies.BeVietnamProLight,
       },
     },
   };

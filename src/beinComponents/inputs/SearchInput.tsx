@@ -126,8 +126,8 @@ const createStyles = (theme: ITheme) => {
     textInput: {
       flex: 1,
       height: '100%',
-      fontFamily: fontFamilies.OpenSans,
-      fontSize: dimension?.sizes.body,
+      fontFamily: fontFamilies.BeVietnamProLight,
+      fontSize: dimension?.sizes.bodyM,
       color: colors.textPrimary,
     },
   });
