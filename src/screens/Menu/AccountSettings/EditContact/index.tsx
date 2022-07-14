@@ -176,7 +176,7 @@ const EditContact = () => {
             errorsState={errors}
             clearAllErrors={clearAllErrors}
           />
-          <TitleComponent icon="EnvelopeAlt" title="settings:title_email" />
+          <TitleComponent icon="Envelope" title="settings:title_email" />
           <Button
             testID="edit_contact.email"
             textProps={{color: theme.colors.gray40, variant: 'body'}}

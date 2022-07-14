@@ -1,6 +1,12 @@
 import React from 'react';
-import {StyleSheet, View, ImageBackground} from 'react-native';
-import {ActivityIndicator, Modal, useTheme} from 'react-native-paper';
+import {
+  StyleSheet,
+  View,
+  ImageBackground,
+  ActivityIndicator,
+  Platform,
+} from 'react-native';
+import {Modal} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import Text from '~/beinComponents/Text';
@@ -9,6 +15,7 @@ import images from '~/resources/images';
 
 import useModal from '~/hooks/modal';
 import spacing from '~/theme/spacing';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 const LoadingModal = () => {
   const theme: ExtendedTheme = useTheme() as ExtendedTheme;
@@ -27,7 +34,7 @@ const LoadingModal = () => {
             source={images.logo_beincomm}
           />
           <ActivityIndicator
-            size={72}
+            size={Platform.OS === 'android' ? 72 : 'large'}
             style={styles.loadingIndicator}
             color={theme.colors.white}
           />

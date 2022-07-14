@@ -23,7 +23,7 @@ const EditName = ({onChangeName, fullname, error}: EditNameProps) => {
 
   return (
     <View>
-      <TitleComponent icon="TextFields" title="settings:title_name" />
+      <TitleComponent icon="TextSize" title="settings:title_name" />
       <TextInput
         value={fullname}
         style={styles.textinput}

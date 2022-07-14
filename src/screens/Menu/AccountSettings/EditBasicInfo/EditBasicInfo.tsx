@@ -205,7 +205,7 @@ const EditBasicInfo = () => {
             ? i18next.t(genders[genderState])
             : i18next.t('common:text_not_set')}
         </Button>
-        <TitleComponent icon="Calender" title="settings:title_birthday" />
+        <TitleComponent icon="Calendar" title="settings:title_birthday" />
         <Button
           testID="edit_basic_info.birthday"
           textProps={{color: colors.neutral80, variant: 'body'}}

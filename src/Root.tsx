@@ -13,16 +13,6 @@ import {
   StatusBar,
   useColorScheme,
 } from 'react-native';
-
-/* Theme */
-// import {
-//   configureFonts,
-//   DarkTheme,
-//   DefaultTheme,
-//   Portal,
-//   Provider as PaperProvider,
-//   Provider as ThemeProvider,
-// } from 'react-native-paper';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 /* State Redux */
@@ -243,8 +233,6 @@ export default (): React.ReactElement => {
 
   return (
     <SafeAreaProvider>
-      {/* <ThemeProvider
-        value={{dark: false, colors: {...customTheme.light.colors}}}> */}
       <StatusBar
         // Dark mode has not ready yet
         // barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
@@ -253,15 +241,10 @@ export default (): React.ReactElement => {
         backgroundColor="transparent"
       />
       <PreferencesContext.Provider value={preferences}>
-        {/* <PaperProvider theme={themeConfig}> */}
         <AppContext.Provider value={providerValue}>
-          {/* <Portal.Host> */}
           <RootNavigator />
-          {/* </Portal.Host> */}
         </AppContext.Provider>
-        {/* </PaperProvider> */}
       </PreferencesContext.Provider>
-      {/* </ThemeProvider> */}
     </SafeAreaProvider>
   );
 };

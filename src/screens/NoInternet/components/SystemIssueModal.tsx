@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {Modal, useTheme} from 'react-native-paper';
+import {Modal} from 'react-native-paper';
 
 import Text from '~/beinComponents/Text';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
@@ -9,6 +9,7 @@ import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import noInternetKeySelector from '../redux/keySelector';
 import {useKeySelector} from '~/hooks/selector';
 import spacing from '~/theme/spacing';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 const SystemIssueModal = () => {
   const theme: ExtendedTheme = useTheme() as ExtendedTheme;

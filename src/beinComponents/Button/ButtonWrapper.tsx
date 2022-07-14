@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ActivityIndicator,
   LayoutChangeEvent,
   StyleProp,
   StyleSheet,
@@ -7,7 +8,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {ActivityIndicator} from 'react-native-paper';
 import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text, {TextProps, TextVariant} from '~/beinComponents/Text';

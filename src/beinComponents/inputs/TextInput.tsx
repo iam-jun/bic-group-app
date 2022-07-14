@@ -6,9 +6,8 @@ import {
   ViewStyle,
   KeyboardTypeOptions,
   TextInput as RNTextInput,
+  TextInputProps as RNTextInputProps,
 } from 'react-native';
-import {TextInput as TextInputPaper} from 'react-native-paper';
-import {TextInputProps as TextInputPaperProps} from 'react-native-paper/lib/typescript/components/TextInput/TextInput';
 
 import {fontFamilies} from '~/theme/fonts';
 import Text, {TextProps} from '~/beinComponents/Text';
@@ -24,7 +23,7 @@ export type HelperType =
   | undefined;
 
 // @ts-ignore
-export interface TextInputProps extends TextInputPaperProps {
+export interface TextInputProps extends RNTextInputProps {
   style?: StyleProp<ViewStyle>;
   inputStyle?: StyleProp<ViewStyle>;
   helperContent?: string;
@@ -35,7 +34,6 @@ export interface TextInputProps extends TextInputPaperProps {
   helperActionOnPress?: () => void;
   theme?: ExtendedTheme;
   placeholder?: string;
-  label?: string;
   error?: boolean;
   disabled?: boolean;
   keyboardType?: KeyboardTypeOptions | undefined;
@@ -45,6 +43,7 @@ export interface TextInputProps extends TextInputPaperProps {
   clearText?: boolean;
   textInputRef?: React.Ref<RNTextInput>;
   textColor?: string;
+  RightComponent?: React.ReactNode | React.ReactElement;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -55,7 +54,6 @@ const TextInput: React.FC<TextInputProps> = ({
   helperTextProps,
   helperAction,
   helperActionOnPress,
-  label,
   placeholder,
   error,
   disabled,
@@ -64,10 +62,12 @@ const TextInput: React.FC<TextInputProps> = ({
   clearText,
   textInputRef,
   textColor,
+  RightComponent,
   ...props
 }: TextInputProps) => {
   const theme: ExtendedTheme = useTheme() as ExtendedTheme;
   const {colors} = theme;
+  const styles = themeStyles(theme, textColor);
   const [text, setText] = useState<string>(value || '');
 
   useEffect(() => {
@@ -124,40 +124,39 @@ const TextInput: React.FC<TextInputProps> = ({
 
   return (
     <View testID="text_input" style={[styles.container, style]}>
-      <TextInputPaper
-        testID="text_input.input"
-        label={label}
-        placeholder={placeholder}
-        selectionColor={colors.gray50}
-        // @ts-ignore
-        outlineColor={colors.neutral80}
-        mode={'outlined'}
-        theme={customTheme}
-        dense
-        error={error}
-        disabled={disabled}
-        placeholderTextColor={colors.gray50}
-        value={text}
-        style={[styles.input, inputStyle]}
-        onChangeText={_onChangeText}
-        right={
-          clearText &&
-          !!text && (
-            <TextInputPaper.Icon
-              name={() => (
-                <Icon
-                  testID="text_input.clear_icon"
-                  icon="iconClose"
-                  size={14}
-                  onPress={_onClearText}
-                />
-              )}
-            />
-          )
-        }
-        ref={textInputRef}
-        {...props}
-      />
+      <View style={styles.row}>
+        <RNTextInput
+          testID="text_input.input"
+          placeholder={placeholder}
+          selectionColor={colors.gray50}
+          // // @ts-ignore
+          // outlineColor={colors.neutral80}
+          // mode={'outlined'}
+          // theme={customTheme}
+          // dense
+          // error={error}
+          editable={!disabled}
+          placeholderTextColor={colors.gray50}
+          value={text}
+          style={[
+            styles.input,
+            !!error ? styles.errorStyle : styles.defaultStyle,
+            inputStyle,
+          ]}
+          onChangeText={_onChangeText}
+          ref={textInputRef}
+          {...props}
+        />
+        {RightComponent}
+        {clearText && !!text && (
+          <Icon
+            testID="text_input.clear_icon"
+            icon="iconClose"
+            size={14}
+            onPress={_onClearText}
+          />
+        )}
+      </View>
       {!!helperContent && (
         <Text.Subtitle testID="text_input.text_helper" {..._textHelperProps}>
           {helperContent}
@@ -168,18 +167,39 @@ const TextInput: React.FC<TextInputProps> = ({
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    marginVertical: spacing?.margin.tiny,
-  },
-  input: {},
-  iconClear: {
-    position: 'absolute',
-    right: spacing.margin.large,
-    // @ts-ignore
-    top: spacing.margin.base + spacing.margin.small || 13,
-  },
-});
+const themeStyles = (theme: ExtendedTheme, textColor?: string) => {
+  const {colors} = theme;
+
+  return StyleSheet.create({
+    container: {
+      marginVertical: spacing?.margin.tiny,
+    },
+    row: {
+      flexDirection: 'row',
+    },
+    input: {
+      minHeight: 44,
+      borderRadius: spacing.borderRadius.small,
+      borderWidth: 1,
+      borderColor: colors.gray40,
+      paddingHorizontal: spacing.padding.base,
+      fontFamily: fontFamilies.OpenSans,
+      flex: 1,
+    },
+    defaultStyle: {
+      color: textColor || colors.neutral80,
+    },
+    errorStyle: {
+      color: colors.red60,
+    },
+    iconClear: {
+      position: 'absolute',
+      right: spacing.margin.large,
+      // @ts-ignore
+      top: spacing.margin.base + spacing.margin.small || 13,
+    },
+  });
+};
 
 const getTextHelperProps = (theme: ExtendedTheme, type: HelperType) => {
   const {colors} = theme;

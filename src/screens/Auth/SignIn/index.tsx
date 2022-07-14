@@ -330,7 +330,7 @@ const SignIn = () => {
                 disabled={!!authSessions || loading}
                 onSubmitEditing={onSubmitEmail}
                 placeholderTextColor={theme.colors.gray40}
-                textColor={theme.colors.neutral80}
+                textColor={theme.colors.white}
                 outlineColor={theme.colors.white}
                 activeOutlineColor={theme.colors.white}
                 helperTextProps={{
@@ -340,7 +340,7 @@ const SignIn = () => {
               <Text.Body style={styles.label} useI18n>
                 auth:input_label_password
               </Text.Body>
-              <PasswordInputController
+              {/* <PasswordInputController
                 ref={inputPasswordRef}
                 useFormData={useFormData}
                 testID="sign_in.input_password"
@@ -393,7 +393,7 @@ const SignIn = () => {
                 helperTextProps={{
                   style: styles.errorText,
                 }}
-              />
+              /> */}
               <TouchableOpacity
                 testID="sign_in.btn_forgot_password"
                 onPress={goToForgotPassword}>

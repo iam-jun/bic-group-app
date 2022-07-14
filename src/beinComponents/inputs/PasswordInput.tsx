@@ -1,8 +1,8 @@
 import React from 'react';
 import {TextInput as RNTextInput} from 'react-native';
-import {TextInput as TextInputPaper, useTheme} from 'react-native-paper';
 import TextInput, {TextInputProps} from './TextInput';
 import Icon from '~/beinComponents/Icon';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 interface Props extends TextInputProps {
   hideEyeIcon?: boolean;
@@ -21,23 +21,18 @@ const PasswordInput: React.FC<Props> = ({
 
   const [hidePassword, setHidePassword] = React.useState(true);
   const EyeIcon = (
-    <TextInputPaper.Icon
-      testID={'password_input.eye_icon'}
-      name={() => (
-        <Icon
-          icon={hidePassword ? 'iconEye' : 'iconEyeOff'}
-          size={20}
-          onPress={() => setHidePassword(!hidePassword)}
-          tintColor={iconColor || colors.neutral80}
-        />
-      )}
+    <Icon
+      icon={hidePassword ? 'iconEye' : 'iconEyeOff'}
+      size={20}
+      onPress={() => setHidePassword(!hidePassword)}
+      tintColor={iconColor || colors.neutral80}
     />
   );
 
   return (
     <TextInput
       secureTextEntry={hidePassword}
-      right={!hideEyeIcon && EyeIcon}
+      RightComponent={!hideEyeIcon && EyeIcon}
       ref={passwordInputRef}
       testID={'password_input'}
       {...props}

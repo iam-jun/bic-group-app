@@ -1,7 +1,6 @@
 import React from 'react';
-import {StyleSheet, Platform, View} from 'react-native';
+import {StyleSheet, Platform, View, Button} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {Button, useTheme} from 'react-native-paper';
 import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
 
 import {useBaseHook} from '~/hooks';
@@ -11,6 +10,7 @@ import actions from '~/screens/Auth/redux/actions';
 import authProviders from '~/constants/authProviders';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
+import {useTheme} from '@react-navigation/native';
 
 const SignInOAuth = () => {
   const dispatch = useDispatch();
@@ -27,7 +27,7 @@ const SignInOAuth = () => {
     <View style={styles.container}>
       <Button
         testID="btnLoginFB"
-        uppercase={false}
+        // uppercase={false}
         style={[styles.button, styles.buttonFacebook]}
         onPress={() => onPress(authProviders.FACEBOOK)}
         disabled={loading}>
@@ -35,7 +35,7 @@ const SignInOAuth = () => {
       </Button>
       <Button
         testID="btnLoginGG"
-        uppercase={false}
+        // uppercase={false}
         style={[styles.button, styles.buttonGoogle]}
         onPress={() => onPress(authProviders.GOOGLE)}
         disabled={loading}>
@@ -44,7 +44,7 @@ const SignInOAuth = () => {
       {Platform.OS !== 'android' && (
         <Button
           testID="btnLoginApple"
-          uppercase={false}
+          // uppercase={false}
           style={[styles.button, styles.buttonApple]}
           onPress={() => onPress(authProviders.APPLE)}
           disabled={loading}>
