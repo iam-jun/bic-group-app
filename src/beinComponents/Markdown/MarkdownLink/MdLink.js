@@ -23,7 +23,7 @@ export default class MdLink extends PureComponent {
     actions: PropTypes.shape({
       handleSelectChannelByName: PropTypes.func.isRequired,
       showPermalink: PropTypes.func.isRequired,
-    }).isRequired,
+    }),
     children: PropTypes.oneOfType([
       PropTypes.node,
       PropTypes.arrayOf([PropTypes.node]),

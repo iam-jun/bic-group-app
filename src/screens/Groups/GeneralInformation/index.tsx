@@ -53,7 +53,7 @@ const GeneralInformation = (props: any) => {
     backgroundUrl = groupDetail?.background_img_url || '';
     organizationName = groupDetail?.name || '';
     organizationDescription = groupDetail?.description || '';
-    organizationPrivacy = groupDetail?.privacy || {};
+    organizationPrivacy = groupDetail?.privacy || '';
     total = useKeySelector(groupsKeySelector.groupMemberRequests)?.total || 0;
   } else {
     const communityDetail =
@@ -63,7 +63,7 @@ const GeneralInformation = (props: any) => {
     canEditInfo = communityDetail?.can_edit_info || false;
     organizationName = communityDetail?.name || '';
     organizationDescription = communityDetail?.description || '';
-    organizationPrivacy = communityDetail?.privacy || {};
+    organizationPrivacy = communityDetail?.privacy || '';
     canEditPrivacy = communityDetail?.can_edit_privacy || false;
     total =
       useKeySelector(groupsKeySelector.communityMemberRequests)?.total || 0;
@@ -72,6 +72,8 @@ const GeneralInformation = (props: any) => {
   useEffect(() => {
     if (type === 'group') {
       dispatch(groupsActions.getGroupDetail(id));
+    } else {
+      dispatch(groupsActions.getCommunityDetail({communityId: id}));
     }
   }, [id]);
 
