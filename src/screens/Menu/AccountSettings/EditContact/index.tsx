@@ -190,7 +190,7 @@ const EditContact = () => {
             {email || i18next.t('common:text_not_set')}
           </Button>
 
-          <TitleComponent icon="LocationPoint" title="settings:title_address" />
+          <TitleComponent icon="LocationDot" title="settings:title_address" />
           <Button
             testID="edit_contact.location"
             textProps={{color: theme.colors.textInput, variant: 'body'}}

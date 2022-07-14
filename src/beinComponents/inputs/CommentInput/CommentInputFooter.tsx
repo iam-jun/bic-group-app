@@ -76,7 +76,7 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
               size={18}
               style={styles.icon}
               tintColor={colors.iconTintLight}
-              icon={'ImageV'}
+              icon={'Image'}
             />
           </Button>
           <Button

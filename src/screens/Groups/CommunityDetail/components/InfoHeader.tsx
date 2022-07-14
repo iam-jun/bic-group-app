@@ -55,7 +55,7 @@ const InfoHeader = () => {
             </Text.BodyS>
             <Text.BodyS color={theme.colors.textSecondary}> • </Text.BodyS>
             <Icon
-              icon={'UsersAlt'}
+              icon={'UserGroup'}
               size={16}
               tintColor={theme.colors.iconTint}
             />

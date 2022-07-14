@@ -204,7 +204,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
           <Button.Secondary
             testID="create_post.btn_post_settings"
             color={colors.bgHover}
-            leftIcon="SlidersVAlt"
+            leftIcon="SlidersUp"
             style={styles.buttonSettings}
             onPress={onPressSettings}
             textProps={{color: colors.textPrimary, style: {fontSize: 14}}}>

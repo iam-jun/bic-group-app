@@ -46,13 +46,13 @@ const SchemeItem = ({item}: SchemeItemProps) => {
           style={styles.buttonEdit}
           onPress={onPressEdit}
           testID="scheme_item.btn_edit">
-          <Icon size={16} icon={'EditAlt'} />
+          <Icon size={16} icon={'PenLine'} />
         </Button>
         <Button
           style={styles.buttonDelete}
           onPress={onPressDelete}
           testID="scheme_item.btn_delete">
-          <Icon size={16} tintColor={colors.badgeError} icon={'TrashAlt'} />
+          <Icon size={16} tintColor={colors.badgeError} icon={'TrashCan'} />
         </Button>
       </View>
     );
@@ -114,12 +114,12 @@ const createStyle = (theme: ITheme) => {
     buttonEdit: {
       backgroundColor: colors.bgHover,
       padding: spacing.padding.small,
-      borderRadius: spacing.borderRadius.tiny,
+      borderRadius: spacing.borderRadius.small,
     },
     buttonDelete: {
       backgroundColor: colors.bgError,
       padding: spacing.padding.small,
-      borderRadius: spacing.borderRadius.tiny,
+      borderRadius: spacing.borderRadius.small,
       marginLeft: spacing.margin.small,
     },
     activatedText: {

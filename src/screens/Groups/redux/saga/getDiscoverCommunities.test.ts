@@ -8,14 +8,15 @@ import groupsActions from '../actions';
 import {communityDetailData} from '~/test/mock_data/communities';
 
 describe('getDiscoverCommunities saga', () => {
-  const action = {type: 'test'};
-  it('should get data correctly', () => {
+  const action = {type: 'test', payload: {}};
+
+  it('should get data correctly', async () => {
     const state = {
       groups: {
         discoverCommunities: {
           loading: false,
           canLoadMore: true,
-          list: [],
+          ids: [],
           items: {},
         },
       },
@@ -32,7 +33,7 @@ describe('getDiscoverCommunities saga', () => {
         groupsActions.setDiscoverCommunities({
           loading: false,
           canLoadMore: false,
-          list: [communityDetailData.id],
+          ids: [communityDetailData.id],
           items: {[communityDetailData.id]: communityDetailData},
         }),
       )
@@ -42,13 +43,13 @@ describe('getDiscoverCommunities saga', () => {
       });
   });
 
-  it('should not get data when canLoadMore = false', () => {
+  it('should not get data when canLoadMore = false', async () => {
     const state = {
       groups: {
         discoverCommunities: {
           loading: false,
           canLoadMore: false,
-          list: [],
+          ids: [],
           items: {},
         },
       },
@@ -57,22 +58,23 @@ describe('getDiscoverCommunities saga', () => {
       .withState(state)
       .run()
       .then(({allEffects}: any) => {
-        expect(allEffects?.length).toEqual(1);
+        expect(allEffects?.length).toEqual(2);
       });
   });
 
-  it('should do nothing when no data is return', () => {
+  it('should refresh data when isRefreshing = true', async () => {
+    const action = {type: 'test', payload: {isRefreshing: true}};
     const state = {
       groups: {
         discoverCommunities: {
           loading: false,
-          canLoadMore: true,
-          list: [],
+          canLoadMore: false,
+          ids: [],
           items: {},
         },
       },
     };
-    const resp = {};
+    const resp = {data: [communityDetailData]};
 
     return expectSaga(getDiscoverCommunities, action)
       .withState(state)
@@ -82,18 +84,18 @@ describe('getDiscoverCommunities saga', () => {
       ])
       .run()
       .then(({allEffects}: any) => {
-        expect(allEffects?.length).toEqual(3);
+        expect(allEffects?.length).toEqual(4);
       });
   });
 
-  it('should call API and throws error', () => {
+  it('should call API and throws error', async () => {
     const error = {code: 'error'};
     const state = {
       groups: {
         discoverCommunities: {
           loading: false,
           canLoadMore: true,
-          list: [],
+          ids: [],
           items: {},
         },
       },

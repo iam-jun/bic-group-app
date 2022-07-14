@@ -181,7 +181,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
           style={{marginRight: spacing.margin.large}}
           hitSlop={{top: 10, left: 10, right: 10, bottom: 10}}
           onPress={onPressRetry}>
-          <Icon icon={'Redo'} />
+          <Icon icon={'RotateRight'} />
         </Button>
       )}
       {!disableClose && (

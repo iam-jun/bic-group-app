@@ -248,7 +248,7 @@ const creatStyle = (theme: ITheme) => {
     smallAlt: {
       width: dimension?.avatarSizes?.smallAlt,
       height: dimension?.avatarSizes?.smallAlt,
-      borderRadius: spacing?.borderRadius.big,
+      borderRadius: spacing?.borderRadius.large,
     },
     medium: {
       width: dimension?.avatarSizes?.medium,

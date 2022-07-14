@@ -11,7 +11,7 @@ afterEach(cleanup);
 describe('Menu Item component', () => {
   const title = 'Menu Item Title';
   const testID = 'menu_item.test';
-  const icon = 'CalendarAlt';
+  const icon = 'Calendar';
   const mockStore = configureStore([]);
 
   it(`renders correctly`, () => {

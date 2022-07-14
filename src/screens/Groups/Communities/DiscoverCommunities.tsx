@@ -6,6 +6,8 @@ import {
   RefreshControl,
   FlatList,
   Dimensions,
+  View,
+  ActivityIndicator,
 } from 'react-native';
 import {useTheme} from 'react-native-paper';
 
@@ -34,30 +36,26 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   onPressCommunities,
 }: DiscoverCommunitiesProps) => {
   const data = useKeySelector(groupsKeySelector.discoverCommunitiesData);
-  const {ids, items, loading} = data || {};
+  const {ids, items, loading, canLoadMore} = data || {};
 
   const dispatch = useDispatch();
   const theme = useTheme() as ITheme;
   const styles = createStyle(theme);
 
   useEffect(() => {
-    getData();
-    return () => {
-      resetData();
-    };
+    getData(true); // refreshing whenever open
   }, []);
 
-  const getData = () => {
-    dispatch(groupsActions.getDiscoverCommunities());
+  const getData = (isRefreshing?: boolean) => {
+    dispatch(groupsActions.getDiscoverCommunities({isRefreshing}));
   };
 
-  const resetData = () => {
-    dispatch(groupsActions.resetDiscoverCommunities());
+  const onLoadMore = () => {
+    canLoadMore && getData();
   };
 
   const onRefresh = () => {
-    resetData();
-    getData();
+    getData(true);
   };
 
   const onPressJoin = (communityId: number, communityName: string) => {
@@ -94,6 +92,21 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
     );
   };
 
+  const renderListFooter = () => {
+    if (loading) return null;
+
+    return (
+      canLoadMore &&
+      ids.length > 0 && (
+        <View
+          style={styles.listFooter}
+          testID="discover_communities.loading_more_indicator">
+          <ActivityIndicator />
+        </View>
+      )
+    );
+  };
+
   return (
     <FlatList
       testID="flatlist"
@@ -102,7 +115,8 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
       keyExtractor={(item, index) => `community_${item}_${index}`}
       ListEmptyComponent={renderEmptyComponent}
       ListHeaderComponent={<DiscoverHeader list={ids} />}
-      onEndReached={() => getData()}
+      ListFooterComponent={renderListFooter}
+      onEndReached={onLoadMore}
       ItemSeparatorComponent={() => <Divider style={styles.divider} />}
       refreshControl={
         <RefreshControl
@@ -131,7 +145,8 @@ const DiscoverHeader = ({list}: any) => {
 };
 
 const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+  const {spacing} = theme;
+
   return StyleSheet.create({
     container: {},
     item: {
@@ -151,6 +166,11 @@ const createStyle = (theme: ITheme) => {
     divider: {
       marginVertical: spacing.margin.tiny,
       marginHorizontal: spacing.margin.large,
+    },
+    listFooter: {
+      height: 100,
+      justifyContent: 'center',
+      alignItems: 'center',
     },
   });
 };

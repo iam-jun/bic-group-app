@@ -63,7 +63,7 @@ export const handleBack = (
             style: {color: colors.textPrimary},
           },
           type: 'informative',
-          leftIcon: 'InfoCircle',
+          leftIcon: 'CircleInfo',
           leftIconColor: colors.iconTintReversed,
           leftIconStyle: {
             backgroundColor: colors.iconTintLight,

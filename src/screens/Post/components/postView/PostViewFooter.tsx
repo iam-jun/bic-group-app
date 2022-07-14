@@ -107,7 +107,7 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
       )}
       {renderReactButtonItem(
         labelButtonComment,
-        'CommentAltDots',
+        'MessageDots',
         onPressComment,
         onPressComment,
         !onPressComment,

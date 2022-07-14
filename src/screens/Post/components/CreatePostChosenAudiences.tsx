@@ -63,7 +63,7 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
           </Button.Secondary>
         )}
       </View>
-      <Icon icon={'AngleRightB'} />
+      <Icon icon={'AngleRightSolid'} />
     </TouchableOpacity>
   );
 };

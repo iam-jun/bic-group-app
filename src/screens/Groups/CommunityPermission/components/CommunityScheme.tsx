@@ -72,13 +72,13 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
       return (
         <View style={styles.row}>
           <Button style={styles.buttonEdit} onPress={onPressEdit}>
-            <Icon size={16} icon={'EditAlt'} />
+            <Icon size={16} icon={'PenLine'} />
           </Button>
           <Button style={styles.buttonDelete} onPress={onPressDelete}>
             {deleting ? (
               <LoadingIndicator size={16} />
             ) : (
-              <Icon size={16} tintColor={colors.badgeError} icon={'TrashAlt'} />
+              <Icon size={16} tintColor={colors.badgeError} icon={'TrashCan'} />
             )}
           </Button>
         </View>
@@ -148,12 +148,12 @@ const createStyle = (theme: ITheme) => {
     buttonEdit: {
       backgroundColor: colors.bgHover,
       padding: spacing.padding.small,
-      borderRadius: spacing.borderRadius.tiny,
+      borderRadius: spacing.borderRadius.small,
     },
     buttonDelete: {
       backgroundColor: colors.bgError,
       padding: spacing.padding.small,
-      borderRadius: spacing.borderRadius.tiny,
+      borderRadius: spacing.borderRadius.small,
       marginLeft: spacing.margin.small,
     },
     buttonContainer: {minHeight: 30, justifyContent: 'center'},

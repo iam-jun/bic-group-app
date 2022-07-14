@@ -144,7 +144,7 @@ const PostSelectImage = () => {
       return null;
     }
     return (
-      <Button.Secondary leftIcon={'ImagePlus'} onPress={onPressAddImage}>
+      <Button.Secondary leftIcon={'Image'} onPress={onPressAddImage}>
         {t('post:add_photo')}
       </Button.Secondary>
     );
