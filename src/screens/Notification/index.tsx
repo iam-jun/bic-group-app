@@ -7,6 +7,7 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {notificationMenuData} from '~/constants/notificationMenuData';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 import {useRootNavigation} from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import NotificationBottomSheet from './components/NotificationBottomSheet';
 import NotificationOptionBottomSheet from './components/NotificationOptionBottomSheet';
@@ -111,10 +112,24 @@ const Notification = () => {
               break;
             }
             // case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
-            //go to Member list
-            //case NOTIFICATION_TYPE.GROUP_ASSIGNED_ROLE_TO_USER:
-            // go to Community/group profile
-            // case NOTIFICATION_TYPE.GROUP_CHANGED_PRIVACY_TO_GROUP:
+            case NOTIFICATION_TYPE.GROUP_ASSIGNED_ROLE_TO_USER:
+              if (!!act?.community?.id) {
+                rootNavigation.navigate(groupStack.communityMembers, {
+                  communityId: act.community.id,
+                });
+              }
+              if (!!act?.group?.id) {
+                rootNavigation.navigate(groupStack.groupMembers, {
+                  groupId: act.group.id,
+                });
+              }
+              break;
+            case NOTIFICATION_TYPE.GROUP_CHANGED_PRIVACY_TO_GROUP:
+              rootNavigation.navigate(groupStack.generalInfo, {
+                id: !!act?.group?.id ? act.group.id : act?.community?.id || '',
+                type: !!act?.group?.id ? 'group' : 'community',
+              });
+              break;
             default:
               console.log(`Notification type ${type} have not implemented yet`);
               break;

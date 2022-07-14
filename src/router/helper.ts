@@ -102,7 +102,14 @@ export const getActiveRouteState = function (
 export const getScreenAndParams = (data: any) => {
   const newData = typeof data === 'string' ? JSON.parse(data) : {};
   if (!isEmpty(newData)) {
-    const {type, postId = 0, commentId = 0, child = {}} = newData;
+    const {
+      type,
+      postId = 0,
+      commentId = 0,
+      child = {},
+      community = {},
+      group = {},
+    } = newData;
     if (type !== undefined) {
       switch (type) {
         case NOTIFICATION_TYPE.POST_TO_USER_IN_ONE_GROUP:
@@ -165,6 +172,42 @@ export const getScreenAndParams = (data: any) => {
                 postId: postId,
                 commentId: child?.commentId,
                 parentId: commentId,
+              },
+            },
+          };
+        case NOTIFICATION_TYPE.GROUP_ASSIGNED_ROLE_TO_USER:
+          if (!!community?.id) {
+            return {
+              screen: 'communities',
+              params: {
+                screen: 'community-members',
+                params: {
+                  communityId: community.id,
+                },
+              },
+            };
+          }
+          if (!!group?.id) {
+            return {
+              screen: 'communities',
+              params: {
+                screen: 'group-members',
+                params: {
+                  groupId: group.id,
+                },
+              },
+            };
+          }
+
+          break;
+        case NOTIFICATION_TYPE.GROUP_CHANGED_PRIVACY_TO_GROUP:
+          return {
+            screen: 'communities',
+            params: {
+              screen: 'general-info',
+              params: {
+                id: !!group?.id ? group.id : community?.id || '',
+                type: !!group?.id ? 'group' : 'community',
               },
             },
           };
