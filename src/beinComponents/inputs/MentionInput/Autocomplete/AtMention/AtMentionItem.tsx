@@ -28,10 +28,8 @@ const AtMentionItem = ({item, onPress}: Props) => {
           testID="at_mention_item.item_all"
           onPress={_onPressItem}>
           <View style={styles.mentionAll}>
-            <Text.ButtonBase style={styles.textMentionAll}>
-              @all
-            </Text.ButtonBase>
-            <Text.Subtitle useI18n>common:title_mention_all</Text.Subtitle>
+            <Text.ButtonM style={styles.textMentionAll}>@all</Text.ButtonM>
+            <Text.BodyS useI18n>common:title_mention_all</Text.BodyS>
           </View>
         </TouchableOpacity>
       </View>

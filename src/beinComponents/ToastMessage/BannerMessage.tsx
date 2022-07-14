@@ -62,9 +62,9 @@ const BannerMessage: FC<BannerMessageProps> = ({
 
       <View style={styles.textContainer}>
         <View style={styles.childrenStyle}>
-          <Text.Body {...textProps} style={styles.descriptionText}>
+          <Text.BodyM {...textProps} style={styles.descriptionText}>
             {children}
-          </Text.Body>
+          </Text.BodyM>
         </View>
 
         {!!onPressRight && !!rightText && (
@@ -72,9 +72,7 @@ const BannerMessage: FC<BannerMessageProps> = ({
             {!!rightIcon && (
               <Icon icon={rightIcon} style={styles.marginRightIcon} />
             )}
-            <Text.ButtonBase style={styles.rightText}>
-              {rightText}
-            </Text.ButtonBase>
+            <Text.ButtonM style={styles.rightText}>{rightText}</Text.ButtonM>
           </Button.Secondary>
         )}
       </View>

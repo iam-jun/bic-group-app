@@ -44,9 +44,9 @@ const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
             <Divider color={colors.borderFocus} />
             <View style={styles.childrenInfo}>
               <Text.BodyS>
-                <Text.BodySM>{childrenName}</Text.BodySM>{' '}
+                <Text.BodySMedium>{childrenName}</Text.BodySMedium>{' '}
                 {t('communities:group_structure:text_will_be_move')}{' '}
-                <Text.BodySM>{name}</Text.BodySM>
+                <Text.BodySMedium>{name}</Text.BodySMedium>
               </Text.BodyS>
             </View>
           </>

@@ -54,7 +54,7 @@ const PendingUserItem = ({
       (!!title || !!TitleComponent) && (
         <View style={styles.itemComponent}>
           <Icon icon={icon} tintColor={theme.colors.primary6} size={24} />
-          <Text.Body style={styles.text}>{title}</Text.Body>
+          <Text.BodyM style={styles.text}>{title}</Text.BodyM>
           {TitleComponent}
         </View>
       )
@@ -67,13 +67,13 @@ const PendingUserItem = ({
         <Avatar.Large source={avatar} isRounded />
 
         <View style={styles.textHeader}>
-          <Text.ButtonBase>{fullName}</Text.ButtonBase>
-          <Text.Body color={theme.colors.textSecondary}>
+          <Text.ButtonM>{fullName}</Text.ButtonM>
+          <Text.BodyM color={theme.colors.textSecondary}>
             {`${t('groups:text_requested_at')} ${formatFullTime(
               updatedAt,
               language,
             )}`}
-          </Text.Body>
+          </Text.BodyM>
 
           <Divider style={{marginVertical: 8}} />
 
@@ -101,9 +101,7 @@ const PendingUserItem = ({
       {isCanceled ? (
         <View style={styles.hintMessage}>
           <Icon style={{marginRight: 4}} icon={'CircleInfo'} size={18} />
-          <Text.Subtitle useI18n>
-            groups:text_request_been_canceled
-          </Text.Subtitle>
+          <Text.BodyS useI18n>groups:text_request_been_canceled</Text.BodyS>
         </View>
       ) : (
         <View style={styles.buttons}>

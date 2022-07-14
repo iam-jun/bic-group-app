@@ -96,7 +96,7 @@ const EditPhoneNumber = ({
         height={34}
         title={`${item.name} (+${item.code})`}
         leftIcon={item.flag}
-        titleProps={{variant: 'body'}}
+        titleProps={{variant: 'bodyM'}}
         onPress={() => onSelectCountryCode(item)}
       />
     );
@@ -140,7 +140,7 @@ const EditPhoneNumber = ({
     return (
       <Button
         testID="edit_phone_number.country_code"
-        textProps={{color: theme.colors.textInput, variant: 'body'}}
+        textProps={{color: theme.colors.textInput, variant: 'bodyM'}}
         style={styles.buttonDropDown}
         contentStyle={styles.buttonDropDownContent}
         rightIcon={'AngleDown'}

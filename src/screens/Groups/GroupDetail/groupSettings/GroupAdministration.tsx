@@ -83,7 +83,7 @@ const GroupAdministration = (props: any) => {
       <Text.H5
         style={styles.headerTitle}
         color={theme.colors.textPrimary}
-        variant="body"
+        variant="bodyM"
         useI18n>
         settings:title_group_moderating
       </Text.H5>
@@ -110,7 +110,7 @@ const GroupAdministration = (props: any) => {
       <Text.H5
         style={styles.headerTitle}
         color={theme.colors.textPrimary}
-        variant="body"
+        variant="bodyM"
         useI18n>
         settings:title_group_settings
       </Text.H5>

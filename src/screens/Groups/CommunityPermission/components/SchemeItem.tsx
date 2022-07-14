@@ -61,7 +61,7 @@ const SchemeItem = ({item}: SchemeItemProps) => {
   const renderItem = (item: IApplyingGroups) => {
     return (
       <View key={item.id} style={styles.nameTag} testID="scheme_item.group_tag">
-        <Text.Subtitle>{item.name}</Text.Subtitle>
+        <Text.BodyS>{item.name}</Text.BodyS>
       </View>
     );
   };
@@ -70,12 +70,12 @@ const SchemeItem = ({item}: SchemeItemProps) => {
     <View>
       <View style={styles.titleContainer}>
         <View style={[styles.flex1, styles.row]}>
-          <Text.BodySM
+          <Text.BodySMedium
             numberOfLines={3}
             style={styles.flex1}
             testID="scheme_item.name">
             {name}
-          </Text.BodySM>
+          </Text.BodySMedium>
           {isActivated && (
             <TextBadge
               useI18n
@@ -87,7 +87,7 @@ const SchemeItem = ({item}: SchemeItemProps) => {
         {renderButtons()}
       </View>
       {!!description && (
-        <Text.Subtitle style={styles.textDesc}>{description}</Text.Subtitle>
+        <Text.BodyS style={styles.textDesc}>{description}</Text.BodyS>
       )}
       {applyingGroups?.length > 0 && (
         <View testID="scheme_item.group_list" style={styles.groupListView}>

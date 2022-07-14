@@ -32,9 +32,7 @@ const NotificationsBadgeComponent: React.FC<NotificationsBadgeComponentProps> =
 
     return (
       <View style={[styles.dot, style]} testID={testID}>
-        <Text variant="subtitle" style={[styles.text, textStyle]}>
-          {numberInText}
-        </Text>
+        <Text.BodyS style={[styles.text, textStyle]}>{numberInText}</Text.BodyS>
       </View>
     );
   };

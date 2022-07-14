@@ -50,13 +50,13 @@ const LinkPreviewer = ({text}: Props) => {
         />
       )}
       <View style={styles.metadata}>
-        <Text.ButtonBase style={styles.title}>
+        <Text.ButtonM style={styles.title}>
           {linkPreviews?.[link].title}
-        </Text.ButtonBase>
+        </Text.ButtonM>
         {!!linkPreviews?.[link].description && (
-          <Text.Subtitle style={styles.description}>
+          <Text.BodyS style={styles.description}>
             {linkPreviews?.[link].description}
-          </Text.Subtitle>
+          </Text.BodyS>
         )}
       </View>
     </ButtonWrapper>

@@ -160,10 +160,10 @@ const TextInput: React.FC<TextInputProps> = ({
         {...props}
       />
       {!!helperContent && (
-        <Text.Subtitle testID="text_input.text_helper" {..._textHelperProps}>
+        <Text.BodyS testID="text_input.text_helper" {..._textHelperProps}>
           {helperContent}
           {renderHelperAction()}
-        </Text.Subtitle>
+        </Text.BodyS>
       )}
     </View>
   );

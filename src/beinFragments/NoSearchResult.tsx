@@ -21,9 +21,9 @@ const NoSearchResult: FC<NoSearchResultProps> = ({
     <View style={styles.container}>
       {/* @ts-ignore */}
       <SvgIcon source={NoSearchResultImg} width={250} height={200} />
-      <Text.Body style={styles.text} useI18n>
+      <Text.BodyM style={styles.text} useI18n>
         {title || 'common:text_search_no_results'}
-      </Text.Body>
+      </Text.BodyM>
     </View>
   );
 };

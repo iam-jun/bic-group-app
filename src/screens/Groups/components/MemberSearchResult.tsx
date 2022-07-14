@@ -47,12 +47,12 @@ const MemberSearchResult = ({
     if (loading) return null;
     return (
       <View style={styles.textNoResults}>
-        <Text.Body
+        <Text.BodyM
           color={theme.colors.textSecondary}
           useI18n
           testID="member_search_result.no_results">
           common:text_no_results_found
-        </Text.Body>
+        </Text.BodyM>
       </View>
     );
   };

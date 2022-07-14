@@ -87,9 +87,9 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
           onFocus={onFocusDesc}
           onBlur={onBlurDesc}
         />
-        <Text.Subtitle style={styles.textCount}>
+        <Text.BodyS style={styles.textCount}>
           {description?.length || 0}/255
-        </Text.Subtitle>
+        </Text.BodyS>
       </View>
     </View>
   );

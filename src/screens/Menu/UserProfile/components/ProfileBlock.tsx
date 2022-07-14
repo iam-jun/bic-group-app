@@ -73,9 +73,9 @@ const ProfileBlock = ({
     <View style={styles.container}>
       {!!gender || !!birthday || !!relationship_status || !!userLanguages ? (
         <>
-          <Text.Subtitle color={theme.colors.textSecondary}>
+          <Text.BodyS color={theme.colors.textSecondary}>
             {i18next.t('settings:title_about')}
-          </Text.Subtitle>
+          </Text.BodyS>
           {/* @ts-ignore */}
           {gender && renderItem({icon: 'SquareUser', title: genders[gender]})}
           {birthday &&
@@ -105,11 +105,9 @@ const ProfileBlock = ({
       ) : null}
       {(!!email || !!phone || !!city) && hideSeeMore ? (
         <>
-          <Text.Subtitle
-            style={styles.title}
-            color={theme.colors.textSecondary}>
+          <Text.BodyS style={styles.title} color={theme.colors.textSecondary}>
             {i18next.t('settings:title_contact')}
-          </Text.Subtitle>
+          </Text.BodyS>
 
           {renderItem({icon: 'Envelope', title: email})}
           {renderItem({
@@ -128,11 +126,9 @@ const ProfileBlock = ({
 
       {!!latest_work && hideSeeMore ? (
         <>
-          <Text.Subtitle
-            style={styles.title}
-            color={theme.colors.textSecondary}>
+          <Text.BodyS style={styles.title} color={theme.colors.textSecondary}>
             {i18next.t('settings:text_work')}
-          </Text.Subtitle>
+          </Text.BodyS>
           {renderItem({
             icon: 'iconSuitcase',
             TitleComponent: (

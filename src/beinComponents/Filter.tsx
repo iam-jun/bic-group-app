@@ -108,7 +108,7 @@ const FilterComponent: React.FC<FilterProps> = ({
               style={styles.icon}
             />
           )}
-          <Text variant={isSelected ? 'bodyM' : 'body'} useI18n>
+          <Text variant={isSelected ? 'bodyMMedium' : 'bodyM'} useI18n>
             {item.text}
           </Text>
         </TouchableOpacity>

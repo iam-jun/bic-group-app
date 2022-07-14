@@ -133,7 +133,7 @@ const createStyle = (theme: ITheme) => {
     },
 
     // The main container
-    body: {...textStyles.body},
+    body: {...textStyles.bodyM},
 
     // Headings
     heading1: {
@@ -168,11 +168,9 @@ const createStyle = (theme: ITheme) => {
     strong: {
       ...textStyles.bodyM,
     },
-    em: {
-      ...textStyles.bodyI,
-    },
+    em: {},
     s: {
-      ...textStyles.body,
+      ...textStyles.bodyM,
     },
 
     // Blockquotes

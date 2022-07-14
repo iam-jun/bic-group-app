@@ -111,14 +111,4 @@ describe('Text component', () => {
     expect(flattenedStyle.fontSize).toBe(styles.h6.fontSize);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
-
-  it(`renders correctly variant H6s`, () => {
-    const rendered = render(
-      <Text.H6S testID="text.h6s">renders correctly children</Text.H6S>,
-    );
-    const renderedComponent = rendered.getByTestId('text.h6s');
-    const flattenedStyle = StyleSheet.flatten(renderedComponent.props.style);
-    expect(flattenedStyle.fontSize).toBe(styles.h6s.fontSize);
-    expect(rendered.toJSON()).toMatchSnapshot();
-  });
 });

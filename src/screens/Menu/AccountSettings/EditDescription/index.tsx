@@ -91,7 +91,7 @@ const EditDescription = () => {
         onPressBack={navigateBack}
       />
       <ScrollView keyboardShouldPersistTaps="handled" style={styles.container}>
-        <Text.H5 color={colors.iconTint} variant="body" useI18n>
+        <Text.H5 color={colors.iconTint} variant="bodyM" useI18n>
           settings:text_description
         </Text.H5>
         <View

@@ -179,7 +179,7 @@ const EditContact = () => {
           <TitleComponent icon="EnvelopeAlt" title="settings:title_email" />
           <Button
             testID="edit_contact.email"
-            textProps={{color: theme.colors.borderCard, variant: 'body'}}
+            textProps={{color: theme.colors.borderCard, variant: 'bodyM'}}
             style={[
               styles.buttonDropDown,
               {backgroundColor: theme.colors.bgHover},
@@ -193,7 +193,7 @@ const EditContact = () => {
           <TitleComponent icon="LocationDot" title="settings:title_address" />
           <Button
             testID="edit_contact.location"
-            textProps={{color: theme.colors.textInput, variant: 'body'}}
+            textProps={{color: theme.colors.textInput, variant: 'bodyM'}}
             style={styles.buttonDropDown}
             contentStyle={styles.buttonDropDownContent}
             onPress={e => onEditLocationOpen(e)}>

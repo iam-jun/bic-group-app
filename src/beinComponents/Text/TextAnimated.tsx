@@ -18,7 +18,7 @@ interface TextProps {
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
-const TextAnimated = ({variant = 'body', color, ...props}: TextProps) => {
+const TextAnimated = ({variant = 'bodyM', color, ...props}: TextProps) => {
   const theme: ITheme = useTheme() as ITheme;
   const textStyles = createTextStyle(theme);
 
