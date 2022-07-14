@@ -151,12 +151,12 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
         />
         <Text.BodyS>
           {t('auth:text_request_new_code')}{' '}
-          <Text.BodySM
+          <Text.BodySMedium
             onPress={onRequestForgotPassword}
             suppressHighlighting
             style={styles.highlightText}>
             {t('auth:btn_resend_code')}
-          </Text.BodySM>
+          </Text.BodySMedium>
         </Text.BodyS>
       </View>
       <View style={styles.inputSectionContainer}>

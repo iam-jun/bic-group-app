@@ -73,20 +73,20 @@ const FilesView = ({
           </Collapsible>
 
           <ButtonWrapper onPress={toggleCollapse}>
-            <Text.Subtitle style={styles.collapsibleText}>
+            <Text.BodyS style={styles.collapsibleText}>
               {t(`common:${collapsed ? 'text_show_all' : 'text_show_less'}`)}
-            </Text.Subtitle>
+            </Text.BodyS>
           </ButtonWrapper>
         </View>
       )}
 
       {isNumber(remainingSize) && (
-        <Text.Subtitle style={styles.remainingText}>
+        <Text.BodyS style={styles.remainingText}>
           {t('upload:text_file_remainning', {
             max_files: appConfig.maxFiles,
             remaining_size: formatBytes(remainingSize),
           })}
-        </Text.Subtitle>
+        </Text.BodyS>
       )}
     </View>
   );

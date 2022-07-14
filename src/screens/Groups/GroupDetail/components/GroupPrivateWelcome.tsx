@@ -28,9 +28,9 @@ const GroupPrivateWelcome = () => {
           {/* @ts-ignore */}
           <SVGIcon source={LockImg} size={160} tintColor="none" />
           <Text.H6 useI18n>groups:private_group_welcome_message:title</Text.H6>
-          <Text.Subtitle useI18n>
+          <Text.BodyS useI18n>
             groups:private_group_welcome_message:subtitle
-          </Text.Subtitle>
+          </Text.BodyS>
         </View>
       </View>
     </ScrollView>

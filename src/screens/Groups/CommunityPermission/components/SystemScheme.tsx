@@ -94,9 +94,9 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
         )}
       </View>
       <View style={styles.descScheme}>
-        <Text.Subtitle useI18n>
+        <Text.BodyS useI18n>
           communities:permission:text_desc_system_scheme
-        </Text.Subtitle>
+        </Text.BodyS>
       </View>
     </View>
   );

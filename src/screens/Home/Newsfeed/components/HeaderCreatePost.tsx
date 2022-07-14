@@ -103,10 +103,6 @@ const createStyle = (theme: ITheme) => {
       marginLeft: spacing?.margin.large,
       justifyContent: 'center',
     },
-    buttonSmall: {
-      flex: 1,
-      padding: spacing.padding.small,
-    },
     buttonRow: {
       marginTop: spacing.margin.large,
       flexDirection: 'row',

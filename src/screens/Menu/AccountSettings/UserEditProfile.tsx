@@ -189,9 +189,9 @@ const UserEditProfile = (props: any) => {
     return (
       <View>
         <View style={styles.headerItem}>
-          <Text.H5 color={colors.iconTint} variant="body" useI18n>
+          <Text.BodyM color={colors.iconTint} useI18n>
             settings:title_avatar
-          </Text.H5>
+          </Text.BodyM>
           <ButtonWrapper onPress={onEditAvatar} disabled={loadingAvatar}>
             <Text.H6
               testID="user_edit_profile.avatar.edit"
@@ -227,9 +227,9 @@ const UserEditProfile = (props: any) => {
     return (
       <View>
         <View style={styles.headerItem}>
-          <Text.H5 color={colors.iconTint} variant="body" useI18n>
+          <Text.BodyM color={colors.iconTint} useI18n>
             settings:title_cover
-          </Text.H5>
+          </Text.BodyM>
           <ButtonWrapper onPress={onEditCover} disabled={loadingCover}>
             <Text.H6
               testID="user_edit_profile.cover.edit"
@@ -266,9 +266,9 @@ const UserEditProfile = (props: any) => {
     return (
       <View style={{paddingTop: theme.spacing.padding.base}}>
         <View style={styles.headerItem}>
-          <Text.H5 color={colors.iconTint} variant="body" useI18n>
+          <Text.BodyM color={colors.iconTint} useI18n>
             settings:text_description
-          </Text.H5>
+          </Text.BodyM>
           <ButtonWrapper onPress={goToEditDescription}>
             <Text.H6
               testID="user_edit_profile.description.edit"
@@ -293,9 +293,9 @@ const UserEditProfile = (props: any) => {
     return (
       <View>
         <View style={styles.headerItem}>
-          <Text.H5 color={colors.iconTint} variant="body" useI18n>
+          <Text.BodyM color={colors.iconTint} useI18n>
             settings:title_basic_info
-          </Text.H5>
+          </Text.BodyM>
           {showEditButton ? (
             <ButtonWrapper style={styles.editBtn} onPress={goToEditInfo}>
               <Text.H6
@@ -358,9 +358,9 @@ const UserEditProfile = (props: any) => {
       <View>
         <Divider style={styles.divider} />
         <View style={styles.headerItem}>
-          <Text.H5 color={colors.iconTint} variant="body" useI18n>
+          <Text.BodyM color={colors.iconTint} useI18n>
             settings:title_contact
-          </Text.H5>
+          </Text.BodyM>
           {showEditButton ? (
             <ButtonWrapper onPress={goToEditContact}>
               <Text.H6
@@ -420,9 +420,9 @@ const UserEditProfile = (props: any) => {
         }
         ContentComponent={
           <View>
-            <Text.ButtonBase>{`${item?.titlePosition} ${i18next.t(
+            <Text.ButtonM>{`${item?.titlePosition} ${i18next.t(
               'common:text_at',
-            )} ${item?.company}`}</Text.ButtonBase>
+            )} ${item?.company}`}</Text.ButtonM>
             {item?.startDate && (
               <Text>
                 {`${formatDate(item.startDate, 'MMM Do, YYYY')} ${
@@ -440,14 +440,14 @@ const UserEditProfile = (props: any) => {
               </Text>
             )}
             {!!item?.location && (
-              <Text.Subtitle color={colors.textSecondary}>
+              <Text.BodyS color={colors.textSecondary}>
                 {item.location}
-              </Text.Subtitle>
+              </Text.BodyS>
             )}
             {!!item?.description && (
-              <Text.Subtitle numberOfLines={3} color={colors.textSecondary}>
+              <Text.BodyS numberOfLines={3} color={colors.textSecondary}>
                 {item.description}
-              </Text.Subtitle>
+              </Text.BodyS>
             )}
           </View>
         }
@@ -464,9 +464,9 @@ const UserEditProfile = (props: any) => {
         <View style={styles.paddingBottom}>
           <Divider style={styles.divider} />
           <View style={styles.headerItem}>
-            <Text.H5 color={colors.iconTint} variant="body" useI18n>
+            <Text.BodyM color={colors.iconTint} useI18n>
               settings:text_work
-            </Text.H5>
+            </Text.BodyM>
           </View>
           <View style={styles.infoItem}>
             {userWorkExperience.map((item: IUserWorkExperience) => (
@@ -482,9 +482,9 @@ const UserEditProfile = (props: any) => {
       <View>
         <Divider style={styles.divider} />
         <View style={styles.headerItem}>
-          <Text.H5 color={colors.iconTint} variant="body" useI18n>
+          <Text.BodyM color={colors.iconTint} useI18n>
             settings:text_work
-          </Text.H5>
+          </Text.BodyM>
         </View>
         <View style={styles.infoItem}>
           {(myWorkExperience || [])?.map((item: IUserWorkExperience) => (

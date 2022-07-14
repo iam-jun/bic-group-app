@@ -63,7 +63,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
     ? cancelLabel
     : i18next.t('common:btn_cancel');
 
-  const _ContentComponent = ContentComponent || Text.Subtitle;
+  const _ContentComponent = ContentComponent || Text.BodyS;
 
   const _ConfirmBtnComponent = ConfirmBtnComponent || Button.Secondary;
   const _CancelBtnComponent = CancelBtnComponent || Button.Secondary;
@@ -101,9 +101,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
         <View style={styles.modalContainer}>
           {!!HeaderImageComponent ? HeaderImageComponent : null}
           <View style={[styles.header, !!headerStyle ? headerStyle : {}]}>
-            {!!title && (
-              <Text.ButtonBase {...titleProps}>{title}</Text.ButtonBase>
-            )}
+            {!!title && <Text.ButtonM {...titleProps}>{title}</Text.ButtonM>}
             {!!iconName && (
               <Icon
                 icon={iconName}

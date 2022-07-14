@@ -157,7 +157,7 @@ const AvatarGroup = ({
                   <Text
                     testID="avatar_group.total_member"
                     style={{
-                      fontFamily: fontFamilies.OpenSans,
+                      fontFamily: fontFamilies.BeVietnamProLight,
                       marginTop: 2,
                       fontSize: totalMemberFontSize,
                     }}>

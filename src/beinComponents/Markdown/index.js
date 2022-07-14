@@ -19,7 +19,7 @@ const Markdown = ({value, ...rest}) => {
   const theme = mmTheme;
   const baseTextStyle = {
     color: colors.light.colors.textPrimary,
-    fontFamily: fontFamilies.OpenSans,
+    fontFamily: fontFamilies.BeVietnamProLight,
   };
   const textStyles = {
     code: {
@@ -34,49 +34,49 @@ const Markdown = ({value, ...rest}) => {
       textDecorationLine: 'line-through',
     },
     emph: {
-      fontFamily: fontFamilies.OpenSansItalic,
+      fontFamily: fontFamilies.BeVietnamProLightItalic,
     },
     error: {
       color: '#d24b4e',
     },
     heading1: {
       fontSize: sizes.h3,
-      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontFamily: fontFamilies.BeVietnamProSemiBold,
     },
     heading1Text: {
       paddingBottom: 8,
     },
     heading2: {
       fontSize: sizes.h4,
-      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontFamily: fontFamilies.BeVietnamProSemiBold,
     },
     heading2Text: {
       paddingBottom: 8,
     },
     heading3: {
       fontSize: sizes.h5,
-      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontFamily: fontFamilies.BeVietnamProSemiBold,
     },
     heading3Text: {
       paddingBottom: 8,
     },
     heading4: {
       fontSize: sizes.h5,
-      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontFamily: fontFamilies.BeVietnamProSemiBold,
     },
     heading4Text: {
       paddingBottom: 8,
     },
     heading5: {
       fontSize: sizes.h5,
-      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontFamily: fontFamilies.BeVietnamProSemiBold,
     },
     heading5Text: {
       paddingBottom: 8,
     },
     heading6: {
       fontSize: sizes.h5,
-      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontFamily: fontFamilies.BeVietnamProSemiBold,
     },
     heading6Text: {
       paddingBottom: 8,
@@ -86,7 +86,7 @@ const Markdown = ({value, ...rest}) => {
     },
     mention: {
       color: '#386fe5',
-      fontFamily: fontFamilies.OpenSansSemiBold,
+      fontFamily: fontFamilies.BeVietnamProSemiBold,
     },
     mention_highlight: {
       backgroundColor: '#ffd470',

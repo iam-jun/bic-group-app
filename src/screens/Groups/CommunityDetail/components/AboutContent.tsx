@@ -30,7 +30,7 @@ const AboutContent = () => {
             common:text_description
           </Text.BodyM>
           <CollapsibleText
-            textProps={{variant: 'body'}}
+            textProps={{variant: 'bodyM'}}
             content={description}
           />
         </View>

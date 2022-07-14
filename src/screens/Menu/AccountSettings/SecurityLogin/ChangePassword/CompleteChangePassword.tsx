@@ -33,7 +33,9 @@ const CompleteChangePassword = () => {
         />
         <View style={styles.textContainer}>
           <Text.H6>{t('auth:text_change_password_complete_title')}</Text.H6>
-          <Text.Body>{t('auth:text_change_password_complete_desc')}</Text.Body>
+          <Text.BodyM>
+            {t('auth:text_change_password_complete_desc')}
+          </Text.BodyM>
         </View>
         <Button.Primary
           testID="btnComplete"

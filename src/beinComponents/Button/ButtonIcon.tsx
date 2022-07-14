@@ -35,12 +35,9 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
         {...props}
       />
       {label && (
-        <Text
-          testID="button_icon.label"
-          variant="buttonSmall"
-          style={styles.label}>
+        <Text.ButtonS testID="button_icon.label" style={styles.label}>
           {label}
-        </Text>
+        </Text.ButtonS>
       )}
     </View>
   );

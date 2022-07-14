@@ -110,8 +110,8 @@ const themeStyles = (theme: ITheme) => {
     },
     textEdit: {
       minHeight: 224,
-      fontFamily: fontFamilies.OpenSans,
-      fontSize: dimension.sizes.body,
+      fontFamily: fontFamilies.BeVietnamProLight,
+      fontSize: dimension.sizes.bodyM,
       color: colors.textPrimary,
     },
     inputView: {

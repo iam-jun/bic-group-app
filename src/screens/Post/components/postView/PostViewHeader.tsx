@@ -71,20 +71,22 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
           disabled={!isInternetReachable}
           onPress={onPressActor}
           style={{alignSelf: 'flex-start'}}>
-          <Text.BodySM testID="post_view_header.actor">{actorName}</Text.BodySM>
+          <Text.BodySMedium testID="post_view_header.actor">
+            {actorName}
+          </Text.BodySMedium>
         </TouchableOpacity>
         <View style={{flexDirection: 'row'}}>
-          <Text.BodySM
+          <Text.BodySMedium
             useI18n
             color={colors.textSecondary}
             style={styles.textTo}>
             post:to
-          </Text.BodySM>
-          <Text.BodySM
+          </Text.BodySMedium>
+          <Text.BodySMedium
             testID={'post_view_header.audiences'}
             onPress={!isInternetReachable ? undefined : onPressShowAudiences}>
             {textAudiences}
-          </Text.BodySM>
+          </Text.BodySMedium>
         </View>
         <View style={styles.rowCenter}>
           <TimeView

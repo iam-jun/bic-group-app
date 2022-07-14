@@ -57,9 +57,9 @@ const GroupScheme: FC<GroupSchemeProps> = ({style}: GroupSchemeProps) => {
       </View>
 
       <View style={styles.descScheme}>
-        <Text.Subtitle useI18n>
+        <Text.BodyS useI18n>
           communities:permission:text_desc_group_scheme
-        </Text.Subtitle>
+        </Text.BodyS>
       </View>
 
       {groupSchemes?.length > 0 && (

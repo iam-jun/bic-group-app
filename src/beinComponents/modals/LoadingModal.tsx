@@ -31,9 +31,7 @@ const LoadingModal = () => {
             color={theme.colors.background}
           />
         </View>
-        <Text.ButtonSmall style={styles.textLoading}>
-          Loading...
-        </Text.ButtonSmall>
+        <Text.ButtonS style={styles.textLoading}>Loading...</Text.ButtonS>
       </ImageBackground>
     </Modal>
   );

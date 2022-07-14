@@ -226,7 +226,7 @@ const PostToolbar = ({
             style={StyleSheet.flatten([styles.toolbarStyle, style])}
             testID="post_toolbar">
             {renderToolbarButton(
-              'CreditCardSearch',
+              'CreditCard',
               'post_toolbar.markdown_preview',
               content && onPressMarkdownPreview,
             )}
@@ -256,16 +256,16 @@ const PostToolbar = ({
   const renderMarkdownHelp = () => {
     return (
       <View style={styles.markdownView}>
-        <Text.Subtitle style={styles.markdownText} numberOfLines={1}>
+        <Text.BodyS style={styles.markdownText} numberOfLines={1}>
           **bold**, *italic*, ~~strike~~, # Heading 1, ## Heading 2,...
-        </Text.Subtitle>
-        <Text.Subtitle
+        </Text.BodyS>
+        <Text.BodyS
           style={{fontFamily: 'OpenSans-SemiBold'}}
           color={theme.colors.link}
           onPress={onPressHelp}
           useI18n>
           common:text_help
-        </Text.Subtitle>
+        </Text.BodyS>
       </View>
     );
   };

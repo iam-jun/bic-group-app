@@ -204,68 +204,10 @@ export const createTextStyle = (theme: ITheme) => {
       fontSize: sizes.captionS,
       color: colors.textPrimary,
     },
-    h6s: {
-      fontFamily: fontFamilies.OpenSansSemiBold,
-      fontSize: sizes.h6s,
-      // lineHeight: lineHeights.h6s,
-      color: colors.textPrimary,
-    },
-    buttonBase: {
-      fontFamily: fontFamilies.OpenSansSemiBold,
-      fontSize: sizes.buttonBase,
-      // lineHeight: lineHeights.buttonBase,
-      color: colors.textPrimary,
-    },
-    buttonSmall: {
-      fontFamily: fontFamilies.OpenSansSemiBold,
-      fontSize: sizes.buttonSmall,
-      // lineHeight: lineHeights.buttonSmall,
-      color: colors.textPrimary,
-    },
-    bodyMI: {
-      fontFamily: fontFamilies.OpenSansSemiBoldItalic,
-      fontSize: sizes.body,
-      // lineHeight: lineHeights.body,
-      color: colors.textPrimary,
-    },
-    bodyI: {
-      fontFamily: fontFamilies.OpenSansItalic,
-      fontSize: sizes.body,
-      // lineHeight: lineHeights.body,
-      color: colors.textPrimary,
-    },
-    body: {
-      fontFamily: fontFamilies.OpenSans,
-      fontSize: sizes.body,
-      // lineHeight: lineHeights.body,
-      color: colors.textPrimary,
-    },
-    bodySM: {
-      fontFamily: fontFamilies.OpenSansSemiBold,
-      fontSize: sizes.bodySM,
-      // lineHeight: lineHeights.bodySM,
-      color: colors.textPrimary,
-    },
-    subtitle: {
-      fontFamily: fontFamilies.OpenSans,
-      fontSize: sizes.subtitle,
-      // lineHeight: lineHeights.subtitle,
-      color: colors.textPrimary,
-    },
     code: {
       fontFamily: fontFamilies.JetBrainsMono,
       fontSize: sizes.code,
       // lineHeight: lineHeights.code,
-      color: colors.textPrimary,
-    },
-    heading: {
-      fontFamily: fontFamilies.OpenSans,
-      fontSize: sizes.heading,
-      color: colors.textPrimary,
-    },
-    headingSB: {
-      fontFamily: fontFamilies.OpenSansSemiBold,
-      fontSize: sizes.heading,
       color: colors.textPrimary,
     },
   };

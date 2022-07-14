@@ -105,12 +105,12 @@ const GeneralSettings = () => {
         modalizeRef={baseSheetRef}
         ContentComponent={
           <View>
-            <Text.ButtonSmall
+            <Text.ButtonS
               color={theme.colors.textSecondary}
               style={styles.chooseLanguageText}
               useI18n>
               settings:title_choose_language
-            </Text.ButtonSmall>
+            </Text.ButtonS>
             <Divider />
             <ListView
               type="primary"
