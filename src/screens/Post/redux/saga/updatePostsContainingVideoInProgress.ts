@@ -29,7 +29,10 @@ function* updatePostsContainingVideoInProgress({
             data: newList,
           }),
         );
-        if (payload?.extra?.type === NOTIFICATION_TYPE.POST.VIDEO.PUBLISHED) {
+        if (
+          payload?.extra?.type ===
+          NOTIFICATION_TYPE.POST_VIDEO_TO_USER_SUCCESSFUL
+        ) {
           const homePosts = yield select(state =>
             get(state, homeKeySelector.homePosts),
           ) || [];

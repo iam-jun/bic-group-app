@@ -72,7 +72,7 @@ const GroupAdministration = (props: any) => {
         iconProps={{icon: icon, tintColor: theme.colors.purple50}}
         notificationsBadgeNumber={notificationsBadgeNumber}
         notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
-        rightSubIcon="AngleRightB"
+        rightSubIcon="AngleRightSolid"
         onPress={onPress}
       />
     );
@@ -89,14 +89,14 @@ const GroupAdministration = (props: any) => {
       </Text.H5>
       {!!can_manage_member &&
         renderItem(
-          'UserExclamation',
+          'UserCheck',
           'settings:title_pending_members',
           goToPendingMembers,
           total,
           'group_administration.pending_members',
         )}
       {renderItem(
-        'FileExclamationAlt',
+        'FileExclamation',
         'settings:title_pending_posts',
         displayNewFeature,
         23,
@@ -116,21 +116,21 @@ const GroupAdministration = (props: any) => {
       </Text.H5>
       {(!!can_edit_info || !!can_edit_privacy) &&
         renderItem(
-          'Cog',
+          'Gear',
           'settings:title_profile_info',
           goToGeneralInfo,
           undefined,
           'group_administration.profile_info',
         )}
       {renderItem(
-        'FileCopyAlt',
+        'Copy',
         'settings:title_post_settings',
         displayNewFeature,
         undefined,
         'group_administration.post_settings',
       )}
       {renderItem(
-        'UserCircle',
+        'CircleUser',
         'settings:title_membership_settings',
         displayNewFeature,
         undefined,

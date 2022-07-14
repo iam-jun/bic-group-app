@@ -102,34 +102,42 @@ export const getActiveRouteState = function (
 export const getScreenAndParams = (data: any) => {
   const newData = typeof data === 'string' ? JSON.parse(data) : {};
   if (!isEmpty(newData)) {
-    const {type, postId = 0, commentId = 0, child = {}} = newData;
+    const {
+      type,
+      postId = 0,
+      commentId = 0,
+      child = {},
+      community = {},
+      group = {},
+    } = newData;
     if (type !== undefined) {
       switch (type) {
-        case NOTIFICATION_TYPE.POST.CREATED_IN_ONE_GROUP:
-        case NOTIFICATION_TYPE.POST.CREATED_IN_MULTIPLE_GROUPS:
-        case NOTIFICATION_TYPE.POST.IMPORTANT.CREATED_IN_ONE_GROUP:
-        case NOTIFICATION_TYPE.POST.IMPORTANT.CREATED_IN_MULTIPLE_GROUPS:
-        case NOTIFICATION_TYPE.POST.MENTION_IN_ONE_GROUP:
-        case NOTIFICATION_TYPE.POST.MENTION_IN_MULTIPLE_GROUPS:
-        case NOTIFICATION_TYPE.POST.VIDEO.PROCESSING:
-        case NOTIFICATION_TYPE.POST.VIDEO.PUBLISHED:
-        case NOTIFICATION_TYPE.REACT.POST_CREATOR:
-        case NOTIFICATION_TYPE.REACT.POST_CREATOR_AGGREGATED:
+        case NOTIFICATION_TYPE.POST_TO_USER_IN_ONE_GROUP:
+        case NOTIFICATION_TYPE.POST_TO_USER_IN_MULTIPLE_GROUPS:
+        case NOTIFICATION_TYPE.POST_IMPORTANT_TO_USER_IN_ONE_GROUP:
+        case NOTIFICATION_TYPE.POST_IMPORTANT_TO_USER_IN_MULTIPLE_GROUPS:
+        case NOTIFICATION_TYPE.POST_TO_MENTIONED_USER_IN_POST_IN_ONE_GROUP:
+        case NOTIFICATION_TYPE.POST_TO_MENTIONED_USER_IN_POST_IN_MULTIPLE_GROUPS:
+        case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_SUCCESSFUL:
+        case NOTIFICATION_TYPE.POST_IMPORTANT_TO_MENTIONED_USER_IN_POST_IN_ONE_GROUP:
+        case NOTIFICATION_TYPE.POST_IMPORTANT_TO_MENTIONED_USER_IN_POST_IN_MULTIPLE_GROUPS:
+        case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR:
+        case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR_AGGREGATED:
           return {
             screen: 'home',
             params: {screen: 'post-detail', params: {post_id: postId}},
           };
-        case NOTIFICATION_TYPE.POST.VIDEO.FAILED:
+        case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL:
           return {
             screen: 'home',
             params: {screen: 'draft-post'},
           };
-        case NOTIFICATION_TYPE.COMMENT.POST_CREATOR:
-        case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_POST:
-        case NOTIFICATION_TYPE.COMMENT.USER_COMMENTED_ON_POST:
-        case NOTIFICATION_TYPE.COMMENT.POST_CREATOR_AGGREGATED:
-        case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_POST_AGGREGATED:
-        case NOTIFICATION_TYPE.COMMENT.USER_COMMENTED_ON_POST_AGGREGATED:
+        case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR:
+        case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR_AGGREGATED:
+        case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_POST:
+        case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_POST_AGGREGATED:
+        case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST:
+        case NOTIFICATION_TYPE.COMMENT_TO_COMMENTED_USER_ON_POST_AGGREGATED:
           return {
             screen: 'home',
             params: {
@@ -138,10 +146,13 @@ export const getScreenAndParams = (data: any) => {
             },
           };
 
-        case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_PREV_COMMENT:
-        case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_COMMENT:
-        case NOTIFICATION_TYPE.REACT.COMMENT_CREATOR:
-        case NOTIFICATION_TYPE.REACT.COMMENT_CREATOR_AGGREGATED:
+        case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_COMMENT:
+        case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_PARENT_COMMENT:
+        case NOTIFICATION_TYPE.COMMENT_TO_MENTIONED_USER_IN_PARENT_COMMENT_AGGREGATED:
+        case NOTIFICATION_TYPE.COMMENT_TO_PARENT_COMMENT_CREATOR:
+        case NOTIFICATION_TYPE.COMMENT_TO_PARENT_COMMENT_CREATOR_AGGREGATED:
+        case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR:
+        case NOTIFICATION_TYPE.REACTION_TO_COMMENT_CREATOR_AGGREGATED:
           return {
             screen: 'home',
             params: {
@@ -150,16 +161,9 @@ export const getScreenAndParams = (data: any) => {
             },
           };
 
-        case NOTIFICATION_TYPE.COMMENT.CREATOR_OF_THE_PARENT_COMMENT:
-        case NOTIFICATION_TYPE.COMMENT.CREATOR_OF_THE_PARENT_COMMENT_AGGREGATED:
-        case NOTIFICATION_TYPE.COMMENT.USER_REPLIED_TO_THE_SAME_PARENT_COMMENT:
-        case NOTIFICATION_TYPE.COMMENT
-          .USER_REPLIED_TO_THE_SAME_PARENT_COMMENT_AGGREGATED:
-        case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_REPLIED_COMMENT:
-        case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_PREV_REPLIED_COMMENT:
-        case NOTIFICATION_TYPE.COMMENT.USER_MENTIONED_IN_PARENT_COMMENT:
-        case NOTIFICATION_TYPE.COMMENT
-          .USER_MENTIONED_IN_PARENT_COMMENT_AGGREGATED:
+        case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT:
+        case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_PUSH:
+        case NOTIFICATION_TYPE.COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_AGGREGATED:
           return {
             screen: 'home',
             params: {
@@ -168,6 +172,42 @@ export const getScreenAndParams = (data: any) => {
                 postId: postId,
                 commentId: child?.commentId,
                 parentId: commentId,
+              },
+            },
+          };
+        case NOTIFICATION_TYPE.GROUP_ASSIGNED_ROLE_TO_USER:
+          if (!!community?.id) {
+            return {
+              screen: 'communities',
+              params: {
+                screen: 'community-members',
+                params: {
+                  communityId: community.id,
+                },
+              },
+            };
+          }
+          if (!!group?.id) {
+            return {
+              screen: 'communities',
+              params: {
+                screen: 'group-members',
+                params: {
+                  groupId: group.id,
+                },
+              },
+            };
+          }
+
+          break;
+        case NOTIFICATION_TYPE.GROUP_CHANGED_PRIVACY_TO_GROUP:
+          return {
+            screen: 'communities',
+            params: {
+              screen: 'general-info',
+              params: {
+                id: !!group?.id ? group.id : community?.id || '',
+                type: !!group?.id ? 'group' : 'community',
               },
             },
           };

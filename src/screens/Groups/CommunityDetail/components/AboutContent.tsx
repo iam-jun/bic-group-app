@@ -44,14 +44,14 @@ const AboutContent = () => {
       />
       <MenuItem
         testID="about_content.members"
-        icon={'UsersAlt'}
+        icon={'UserGroup'}
         title={`${user_count} ${i18next.t('groups:text_members', {
           count: user_count,
         })}`}
         disabled
         rightSubIcon={
           isMember || privacy !== groupPrivacy.private
-            ? 'AngleRightB'
+            ? 'AngleRightSolid'
             : undefined
         }
       />

@@ -24,7 +24,6 @@ interface MemberItemProps {
 
 const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
   const theme = useTheme() as ExtendedTheme;
-  const styles = createStyles(theme);
   const {colors} = theme;
   const {user} = useAuth();
   const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
@@ -60,7 +59,7 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
         <>
           {user?.username !== username && (
             <Icon
-              icon={'CommentAltDots'}
+              icon={'MessageDots'}
               backgroundColor={colors.neutral1}
               style={styles.iconChat}
               onPress={onPressChat}
@@ -69,7 +68,7 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
           )}
           {canManageMember && (
             <Icon
-              icon={'EllipsisV'}
+              icon={'menu'}
               style={styles.iconOption}
               onPress={() => onPressMenu(item)}
               buttonTestID="member_item.icon_option.button"
@@ -81,25 +80,23 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
   );
 };
 
-const createStyles = (theme: ExtendedTheme) => {
-  return StyleSheet.create({
-    itemContainer: {
-      height: undefined,
-      paddingHorizontal: spacing.padding.large,
-      paddingVertical: spacing.padding.tiny,
-    },
-    iconChat: {
-      height: 36,
-      width: 36,
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: spacing.padding.small,
-      marginLeft: spacing.margin.tiny,
-    },
-    iconOption: {
-      marginLeft: spacing.margin.small,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  itemContainer: {
+    height: undefined,
+    paddingHorizontal: spacing.padding.large,
+    paddingVertical: spacing.padding.tiny,
+  },
+  iconChat: {
+    height: 36,
+    width: 36,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: spacing.padding.small,
+    marginLeft: spacing.margin.tiny,
+  },
+  iconOption: {
+    marginLeft: spacing.margin.small,
+  },
+});
 
 export default MemberItem;

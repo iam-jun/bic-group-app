@@ -171,7 +171,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
         <Button onPress={_onPressPath} disabled={!hasTree}>
           <View style={styles.iconArrowRight}>
             <Icon
-              icon={'AngleRightB'}
+              icon={'AngleRightSolid'}
               size={12}
               tintColor={theme.colors.neutral80}
             />

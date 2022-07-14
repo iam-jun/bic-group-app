@@ -62,7 +62,7 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
         const alertPayload = {
           title: t('auth:text_sign_out'),
           content: 'Do you want to Log Out?',
-          iconName: 'SignOutAlt',
+          iconName: 'ArrowRightFromArc',
           cancelBtn: true,
           onConfirm: () => {
             //waiting for close alert success before clear data
@@ -131,7 +131,7 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
       })}
       {renderDivider()}
       <MenuSidebarItem
-        icon="SignOutAlt"
+        icon="ArrowRightFromArc"
         tintColor={colors.red60}
         title="auth:text_sign_out"
         titleProps={{style: {color: colors.red60}}}

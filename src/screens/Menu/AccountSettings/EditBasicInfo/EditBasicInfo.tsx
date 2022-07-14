@@ -193,7 +193,7 @@ const EditBasicInfo = () => {
           fullname={nameState}
           onChangeName={onChangeName}
         />
-        <TitleComponent icon="UserSquare" title="settings:title_gender" />
+        <TitleComponent icon="SquareUser" title="settings:title_gender" />
         <Button
           testID="edit_basic_info.gender"
           textProps={{color: colors.neutral80, variant: 'body'}}

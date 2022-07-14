@@ -96,7 +96,7 @@ const _GroupMembers = (props: any) => {
           onPress={goInviteMembers}>
           <Icon
             style={styles.iconSmall}
-            icon={'iconUserPlus'}
+            icon={'UserPlus'}
             size={22}
             tintColor={theme.colors.purple60}
           />

@@ -58,7 +58,7 @@ const Menu = (): React.ReactElement => {
         const alertPayload = {
           title: i18next.t('auth:text_sign_out'),
           content: 'Do you want to Log Out?',
-          iconName: 'SignOutAlt',
+          iconName: 'ArrowRightFromArc',
           cancelBtn: true,
           onConfirm: () => dispatch(authActions.signOut()),
           confirmLabel: i18next.t('auth:text_sign_out'),

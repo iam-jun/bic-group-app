@@ -75,28 +75,28 @@ const CommunityAdmin = () => {
         <MenuItem
           testID={'community_admin.pending_members'}
           title={'settings:title_pending_members'}
-          icon={'UserExclamation'}
+          icon={'UserCheck'}
           iconProps={{
-            icon: 'UserExclamation',
+            icon: 'UserCheck',
             tintColor: theme.colors.purple50,
           }}
           notificationsBadgeNumber={total}
           notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
-          rightSubIcon="AngleRightB"
+          rightSubIcon="AngleRightSolid"
           onPress={onPressPendingMembers}
         />
       )}
       <MenuItem
         testID={'community_admin.pending_posts'}
         title={'settings:title_pending_posts'}
-        icon={'FileExclamationAlt'}
+        icon={'FileExclamation'}
         iconProps={{
-          icon: 'FileExclamationAlt',
+          icon: 'FileExclamation',
           tintColor: theme.colors.purple50,
         }}
         notificationsBadgeNumber={999}
         notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
-        rightSubIcon="AngleRightB"
+        rightSubIcon="AngleRightSolid"
         onPress={displayNewFeature}
       />
     </>
@@ -115,9 +115,9 @@ const CommunityAdmin = () => {
         <MenuItem
           testID="community_admin.profile_info"
           title="settings:title_profile_info"
-          icon="Cog"
-          iconProps={{icon: 'Cog', tintColor: theme.colors.purple50}}
-          rightSubIcon="AngleRightB"
+          icon="Gear"
+          iconProps={{icon: 'Gear', tintColor: theme.colors.purple50}}
+          rightSubIcon="AngleRightSolid"
           onPress={onPressGeneralInfo}
         />
       )}
@@ -127,7 +127,7 @@ const CommunityAdmin = () => {
           title="settings:title_group_structure"
           icon="CodeBranch"
           iconProps={{icon: 'CodeBranch', tintColor: theme.colors.purple50}}
-          rightSubIcon="AngleRightB"
+          rightSubIcon="AngleRightSolid"
           onPress={onPressGroupStructure}
         />
       )}
@@ -135,18 +135,18 @@ const CommunityAdmin = () => {
         <MenuItem
           testID="community_admin.permission_settings"
           title="settings:title_permission_settings"
-          icon="FileLockAlt"
-          iconProps={{icon: 'FileLockAlt', tintColor: theme.colors.purple50}}
-          rightSubIcon="AngleRightB"
+          icon="FileLock"
+          iconProps={{icon: 'FileLock', tintColor: theme.colors.purple50}}
+          rightSubIcon="AngleRightSolid"
           onPress={onPressPermission}
         />
       )}
       <MenuItem
         testID="community_admin.post_settings"
         title="settings:title_post_settings"
-        icon="FileCopyAlt"
-        iconProps={{icon: 'FileCopyAlt', tintColor: theme.colors.purple50}}
-        rightSubIcon="AngleRightB"
+        icon="Copy"
+        iconProps={{icon: 'Copy', tintColor: theme.colors.purple50}}
+        rightSubIcon="AngleRightSolid"
         onPress={displayNewFeature}
       />
     </>

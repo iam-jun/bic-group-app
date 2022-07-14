@@ -25,7 +25,7 @@ const useRemoveMember = ({groupId, selectedMember}: IUseRemoveMember) => {
   };
 
   const alertPayload = {
-    iconName: 'RemoveUser',
+    iconName: 'UserXmark',
     title: i18next.t('groups:modal_confirm_remove_member:title'),
     content: i18next
       .t(`groups:modal_confirm_remove_member:final_alert`)

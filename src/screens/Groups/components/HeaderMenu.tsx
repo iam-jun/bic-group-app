@@ -85,12 +85,12 @@ const HeaderMenu = ({
         testID={`header_menu.share_${type}`}
         height={48}
         leftIconProps={{
-          icon: 'ShareAlt',
+          icon: 'ShareNodes',
           size: 24,
           tintColor: theme.colors.purple50,
           style: styles.iconLeftStyle,
         }}
-        leftIcon={'ShareAlt'}
+        leftIcon={'ShareNodes'}
         title={i18next.t('groups:group_menu:label_share_group')}
         onPress={onPressShare || onPressNewFeature}
       />
@@ -138,12 +138,12 @@ const HeaderMenu = ({
           testID={`header_menu.leave_${type}`}
           height={48}
           leftIconProps={{
-            icon: 'SignOutAlt',
+            icon: 'ArrowRightFromArc',
             size: 24,
             tintColor: theme.colors.red60,
             style: styles.iconLeftStyle,
           }}
-          leftIcon={'SignOutAlt'}
+          leftIcon={'ArrowRightFromArc'}
           title={i18next.t(`groups:group_menu:label_leave_${type}`)}
           titleProps={{color: theme.colors.red60}}
           onPress={onPressLeave || onPressNewFeature}

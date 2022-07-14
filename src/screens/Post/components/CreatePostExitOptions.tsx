@@ -48,22 +48,22 @@ const CreatePostExitOptions: FC<CreatePostExitOptionsProps> = ({
       </View>
       <PrimaryItem
         height={48}
-        leftIconProps={{icon: 'FileEditAlt', size: 20}}
-        leftIcon={'FileEditAlt'}
+        leftIconProps={{icon: 'FilePen', size: 20}}
+        leftIcon={'FilePen'}
         title={t('post:post_exit_option_save')}
         onPress={onPressSaveAsDraft}
       />
       <PrimaryItem
         height={48}
-        leftIconProps={{icon: 'TrashAlt', size: 20}}
-        leftIcon={'TrashAlt'}
+        leftIconProps={{icon: 'TrashCan', size: 20}}
+        leftIcon={'TrashCan'}
         title={t('post:post_exit_option_discard')}
         onPress={onPressDiscard}
       />
       <PrimaryItem
         height={48}
-        leftIconProps={{icon: 'EditAlt', size: 20}}
-        leftIcon={'EditAlt'}
+        leftIconProps={{icon: 'PenLine', size: 20}}
+        leftIcon={'PenLine'}
         title={t('post:post_exit_option_continue')}
         onPress={onPressContinue}
       />

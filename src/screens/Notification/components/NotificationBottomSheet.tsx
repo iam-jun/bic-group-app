@@ -36,16 +36,16 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
         <PrimaryItem
           testID="notifications.mark_all_as_read"
           style={styles.item}
-          leftIcon={'CommentAltCheck'}
-          leftIconProps={{icon: 'CommentAltCheck', size: 24}}
+          leftIcon={'MessageCheck'}
+          leftIconProps={{icon: 'MessageCheck', size: 24}}
           title={i18n.t('notification:mark_all_as_read')}
           onPress={markReadAllNotifications}
         />
         <PrimaryItem
           testID="notifications.notification_settings"
           style={styles.item}
-          leftIcon={'Cog'}
-          leftIconProps={{icon: 'Cog', size: 24}}
+          leftIcon={'Gear'}
+          leftIconProps={{icon: 'Gear', size: 24}}
           title={i18n.t('notification:notification_settings')}
           onPress={showUpcommingFeature}
         />

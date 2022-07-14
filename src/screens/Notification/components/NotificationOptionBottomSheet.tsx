@@ -45,8 +45,8 @@ const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
         <PrimaryItem
           testID="notification.mark_notification_read_or_unread"
           style={styles.item}
-          leftIcon={'CommentAltCheck'}
-          leftIconProps={{icon: 'CommentAltCheck', size: 24}}
+          leftIcon={'MessageCheck'}
+          leftIconProps={{icon: 'MessageCheck', size: 24}}
           title={i18n.t(
             !data?.isRead
               ? 'notification:mark_as_read'
@@ -57,8 +57,8 @@ const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
         <PrimaryItem
           testID="notification.off_notification_from_group"
           style={styles.item}
-          leftIcon={'VolumeMute'}
-          leftIconProps={{icon: 'VolumeMute', size: 24}}
+          leftIcon={'VolumeXmark'}
+          leftIconProps={{icon: 'VolumeXmark', size: 24}}
           title={i18n.t('notification:off_notification_from_group')}
           onPress={showUpcommingFeature}
         />

@@ -241,7 +241,7 @@ const UserProfile = (props: any) => {
         testID="user_profile.edit"
         textColor={theme.colors.purple50}
         style={styles.buttonEdit}
-        leftIcon={'EditAlt'}
+        leftIcon={'PenLine'}
         onPress={onEditProfileButton}
         borderRadius={spacing.borderRadius.small}>
         {i18next.t('profile:title_edit_profile')}

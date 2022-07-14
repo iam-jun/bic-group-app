@@ -69,7 +69,7 @@ const DiscoverItem = ({
           <Text.BodyS color={colors.gray50}>{`  •  `}</Text.BodyS>
           <Icon
             style={styles.iconSmall}
-            icon={'UsersAlt'}
+            icon={'UserGroup'}
             size={16}
             tintColor={colors.gray50}
           />

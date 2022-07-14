@@ -106,7 +106,7 @@ export default function* deleteComment({
       props: {
         textProps: {useI18n: true},
         type: 'informative',
-        leftIcon: 'TrashAlt',
+        leftIcon: 'TrashCan',
       },
       toastType: 'normal',
     };

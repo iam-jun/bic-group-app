@@ -311,7 +311,7 @@ const UserEditProfile = (props: any) => {
           <SettingItem
             title={'settings:title_name'}
             subtitle={fullname || i18next.t('common:text_not_set')}
-            leftIcon={'TextFields'}
+            leftIcon={'TextSize'}
             isTouchDisabled
           />
           <SettingItem
@@ -320,7 +320,7 @@ const UserEditProfile = (props: any) => {
               // @ts-ignore
               i18next.t(genders[gender]) || i18next.t('common:text_not_set')
             }
-            leftIcon={'UserSquare'}
+            leftIcon={'SquareUser'}
             isTouchDisabled
           />
           <SettingItem
@@ -329,13 +329,13 @@ const UserEditProfile = (props: any) => {
               formatDate(birthday, 'MMMM DD, YYYY') ||
               i18next.t('common:text_not_set')
             }
-            leftIcon={'Calender'}
+            leftIcon={'Calendar'}
             isTouchDisabled
           />
           <SettingItem
             title={'settings:title_speaking_languages'}
             subtitle={userLanguages || i18next.t('common:text_not_set')}
-            leftIcon={'CommentsAlt'}
+            leftIcon={'Comments'}
             isTouchDisabled
           />
           <SettingItem
@@ -377,7 +377,7 @@ const UserEditProfile = (props: any) => {
           <SettingItem
             title={'settings:title_email'}
             subtitle={email || i18next.t('common:text_not_set')}
-            leftIcon={'EnvelopeAlt'}
+            leftIcon={'Envelope'}
             isTouchDisabled
           />
           <SettingItem
@@ -397,7 +397,7 @@ const UserEditProfile = (props: any) => {
                 ? `${city}, ${country}`
                 : i18next.t('common:text_not_set')
             }
-            leftIcon={'LocationPoint'}
+            leftIcon={'LocationDot'}
             isTouchDisabled
           />
         </View>
@@ -416,7 +416,7 @@ const UserEditProfile = (props: any) => {
           size: 24,
         }}
         RightComponent={
-          showEditButton ? <Icon icon={'EditAlt'} size={20} /> : null
+          showEditButton ? <Icon icon={'PenLine'} size={20} /> : null
         }
         ContentComponent={
           <View>

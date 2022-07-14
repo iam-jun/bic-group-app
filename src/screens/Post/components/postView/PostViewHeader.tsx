@@ -91,7 +91,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
       <View style={{marginRight: spacing.margin.small}}>
         <Icon
           style={{alignSelf: 'auto'}}
-          icon={'EllipsisH'}
+          icon={'menu'}
           testID={'post_view_header.menu'}
           onPress={onPressMenu}
         />

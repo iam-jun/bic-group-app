@@ -1,3 +1,4 @@
+import {ExtendedTheme} from '@react-navigation/native';
 import i18next from 'i18next';
 import {Keyboard} from 'react-native';
 import FileUploader from '~/services/fileUploader';
@@ -64,10 +65,10 @@ export const handleBack = (
             style: {color: colors.neutral80},
           },
           type: 'informative',
-          leftIcon: 'InfoCircle',
-          leftIconColor: colors.neutral80Reversed,
+          leftIcon: 'CircleInfo',
+          leftIconColor: colors.white,
           leftIconStyle: {
-            backgroundColor: colors.neutral80Light,
+            backgroundColor: colors.neutral80,
             padding: spacing.padding.tiny,
           },
           leftStyle: {
@@ -76,7 +77,7 @@ export const handleBack = (
           style: {
             backgroundColor: colors.white,
             borderLeftWidth: 4,
-            borderLeftColor: colors.neutral80Light,
+            borderLeftColor: colors.neutral80,
             paddingHorizontal: spacing.padding.large,
             marginHorizontal: spacing.margin.base,
             marginBottom: spacing.margin.small,

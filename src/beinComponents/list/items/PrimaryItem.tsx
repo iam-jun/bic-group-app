@@ -139,7 +139,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
         {onPressEdit && (
           <Icon
             style={styles.iconMarginLeft}
-            icon={'Edit'}
+            icon={'edit'}
             onPress={onPressEdit}
           />
         )}
@@ -147,7 +147,7 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
           <Icon
             style={styles.iconMarginLeft}
             onPress={onPressMenu}
-            icon={'EllipsisV'}
+            icon={'menu'}
             testID={menuIconTestID}
           />
         )}

@@ -232,17 +232,17 @@ const PostToolbar = ({
               content && onPressMarkdownPreview,
             )}
             {renderToolbarButton(
-              'ImagePlus',
+              'Image',
               'post_toolbar.add_photo',
               !imageDisabled ? _onPressSelectImage : undefined,
             )}
             {renderToolbarButton(
-              'PlayCircle',
+              'CirclePlay',
               'post_toolbar.add_video',
               !videoDisabled ? _onPressSelectVideo : undefined,
             )}
             {renderToolbarButton(
-              'attachment',
+              'Paperclip',
               'post_toolbar.add_file',
               !fileDisabled ? onPressAddFile : undefined,
             )}

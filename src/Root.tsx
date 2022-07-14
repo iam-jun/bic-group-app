@@ -45,9 +45,12 @@ import {IUserResponse} from './interfaces/IAuth';
 import {isNavigationRefReady, getScreenAndParams} from '~/router/helper';
 import colorsTest from './theme/theme';
 import {DarkTheme, DefaultTheme, ThemeProvider} from '@react-navigation/native';
+import {initFontAwesomeIcon} from '~/services/fontAwesomeIcon';
 
 moment.updateLocale('en', moments.en);
 moment.updateLocale('vi', moments.vi);
+
+initFontAwesomeIcon();
 
 export default (): React.ReactElement => {
   LogBox.ignoreAllLogs();

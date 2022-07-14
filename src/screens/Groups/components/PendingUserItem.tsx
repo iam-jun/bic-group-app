@@ -86,7 +86,7 @@ const PendingUserItem = ({
               }`,
           })}
           {renderItem({
-            icon: 'LocationPoint',
+            icon: 'LocationDot',
             title: city,
           })}
           {renderItem({icon: 'Envelope', title: email})}
@@ -100,7 +100,7 @@ const PendingUserItem = ({
 
       {isCanceled ? (
         <View style={styles.hintMessage}>
-          <Icon style={{marginRight: 4}} icon={'InfoCircle'} size={18} />
+          <Icon style={{marginRight: 4}} icon={'CircleInfo'} size={18} />
           <Text.Subtitle useI18n>
             groups:text_request_been_canceled
           </Text.Subtitle>

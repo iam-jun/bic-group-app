@@ -67,7 +67,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     disableHorizontal,
     iconVariant = 'medium',
     nameLines = 2,
-    menuIcon = 'EllipsisH',
+    menuIcon = 'menu',
     renderExtraInfo,
   } = props;
 
@@ -213,7 +213,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                     <Text.Subtitle> ⬩ </Text.Subtitle>
                   </>
                 )}
-                <Icon icon="users" size={16} tintColor={colors.gray50} />
+                <Icon icon={'UserGroup'} size={16} tintColor={colors.gray50} />
                 <Text.BodyS color={colors.gray50} style={styles.textInfo}>
                   {user_count}
                 </Text.BodyS>

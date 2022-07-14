@@ -40,7 +40,7 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
       modalActions.showAlert({
         title: t('post:title_delete_post'),
         content: t('post:content_delete_post'),
-        iconName: 'Trash',
+        iconName: 'TrashCan',
         cancelBtn: true,
         confirmLabel: t('common:btn_delete'),
         onConfirm: () =>
@@ -82,8 +82,8 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         <PrimaryItem
           testID={'post_view_menu.edit'}
           style={styles.item}
-          leftIcon={'Edit'}
-          leftIconProps={{icon: 'Edit', size: 24}}
+          leftIcon={'edit'}
+          leftIconProps={{icon: 'edit', size: 24}}
           title={t('post:post_menu_edit')}
           onPress={onPressEdit}
         />
@@ -92,8 +92,8 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         <PrimaryItem
           testID={'post_view_menu.edit_settings'}
           style={styles.item}
-          leftIcon={'SlidersAlt'}
-          leftIconProps={{icon: 'SlidersAlt', size: 24}}
+          leftIcon={'SlidersUp'}
+          leftIconProps={{icon: 'SlidersUp', size: 24}}
           title={t('post:post_menu_edit_settings')}
           onPress={onPressEditSettings}
         />
@@ -117,8 +117,8 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
       <PrimaryItem
         testID={'post_view_menu.insights'}
         style={styles.item}
-        leftIcon={'TachometerFastAlt'}
-        leftIconProps={{icon: 'TachometerFastAlt', size: 24}}
+        leftIcon={'GaugeHigh'}
+        leftIconProps={{icon: 'GaugeHigh', size: 24}}
         title={t('post:post_menu_view_insights')}
         onPress={onPress}
       />
@@ -133,8 +133,8 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
       <PrimaryItem
         testID={'post_view_menu.history'}
         style={styles.item}
-        leftIcon={'Redo'}
-        leftIconProps={{icon: 'Redo', size: 24}}
+        leftIcon={'RotateRight'}
+        leftIconProps={{icon: 'RotateRight', size: 24}}
         title={t('post:post_menu_history')}
         onPress={onPress}
       />
@@ -142,8 +142,8 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         <PrimaryItem
           testID={'post_view_menu.delete'}
           style={styles.item}
-          leftIcon={'TrashAlt'}
-          leftIconProps={{icon: 'TrashAlt', size: 24}}
+          leftIcon={'TrashCan'}
+          leftIconProps={{icon: 'TrashCan', size: 24}}
           title={t('post:post_menu_delete')}
           onPress={onPressDelete}
         />
@@ -152,8 +152,8 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         <PrimaryItem
           testID={'post_view_menu.report'}
           style={styles.item}
-          leftIcon={'InfoCircle'}
-          leftIconProps={{icon: 'InfoCircle', size: 24}}
+          leftIcon={'CircleInfo'}
+          leftIconProps={{icon: 'CircleInfo', size: 24}}
           title={t('post:post_menu_report')}
           onPress={onPress}
         />

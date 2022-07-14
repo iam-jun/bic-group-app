@@ -117,7 +117,7 @@ const LanguageOptionMenu = ({
 
   return (
     <View>
-      <TitleComponent icon="CommentsAlt" title="settings:title_language" />
+      <TitleComponent icon="Comments" title="settings:title_language" />
       <Button
         testID="edit_basic_info.language"
         textProps={{

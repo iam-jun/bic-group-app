@@ -103,8 +103,8 @@ const PostSettings = ({route}: PostSettingsProps) => {
       <View style={styles.importantButtons}>
         <Button.Secondary
           testID={'post_settings.important.btn_date'}
-          leftIcon={'CalendarAlt'}
-          leftIconProps={{icon: 'CalendarAlt', size: 20}}
+          leftIcon={'Calendar'}
+          leftIconProps={{icon: 'Calendar', size: 20}}
           style={styles.buttonDate}
           onPress={() => setSelectingDate(true)}
           color={colors.gray40}

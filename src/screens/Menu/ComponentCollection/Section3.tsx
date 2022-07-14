@@ -40,7 +40,7 @@ const Section3 = () => {
           title={'Notifications'}
           subTitle={'New Group Chat'}
           avatar={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
-          icon={'Search'}
+          icon={'search'}
           onPressIcon={() => alert('onPress search')}
           onPressMenu={() => alert('onPress menu')}
           buttonText={'Post'}
@@ -52,7 +52,7 @@ const Section3 = () => {
           hideBack
           title={'Notifications'}
           avatar={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
-          icon={'Search'}
+          icon={'search'}
           onPressIcon={() => alert('onPress search')}
           onPressMenu={() => alert('onPress menu')}
         />
