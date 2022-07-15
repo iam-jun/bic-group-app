@@ -28,28 +28,24 @@ const DiscoverGroups = ({route}: any) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
-  const {data, items, loading, canLoadMore} = useKeySelector(
+  const {ids, items, loading, canLoadMore} = useKeySelector(
     groupsKeySelector.discoverGroups,
   );
 
-  const getDiscoverGroups = () => {
-    dispatch(actions.getDiscoverGroups({communityId}));
+  const getDiscoverGroups = (isRefreshing?: boolean) => {
+    dispatch(actions.getDiscoverGroups({communityId, isRefreshing}));
   };
 
   useEffect(() => {
-    getDiscoverGroups();
-    return () => {
-      dispatch(actions.resetDiscoverGroups());
-    };
+    getDiscoverGroups(true); // refreshing whenever open
   }, [communityId]);
 
   const onLoadMore = () => {
-    getDiscoverGroups();
+    canLoadMore && getDiscoverGroups();
   };
 
   const onRefresh = () => {
-    dispatch(actions.resetDiscoverGroups());
-    getDiscoverGroups();
+    getDiscoverGroups(true);
   };
 
   const onPressGroup = (groupId: number) => {
@@ -96,7 +92,7 @@ const DiscoverGroups = ({route}: any) => {
     return (
       !loading &&
       canLoadMore &&
-      data.length > 0 && (
+      ids.length > 0 && (
         <View style={styles.listFooter}>
           <ActivityIndicator />
         </View>
@@ -113,7 +109,7 @@ const DiscoverGroups = ({route}: any) => {
       />
       <FlatList
         testID="flatlist"
-        data={data}
+        data={ids}
         renderItem={renderItem}
         keyExtractor={(item, index) => `groups_${item}_${index}`}
         onEndReached={onLoadMore}
