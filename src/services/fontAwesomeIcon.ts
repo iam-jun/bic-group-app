@@ -88,6 +88,10 @@ import {faBookOpen} from '@fortawesome/pro-regular-svg-icons/faBookOpen';
 import {faCircleQuestion} from '@fortawesome/pro-regular-svg-icons/faCircleQuestion';
 import {faCommentSmile} from '@fortawesome/pro-regular-svg-icons/faCommentSmile';
 import {faCreditCard} from '@fortawesome/pro-regular-svg-icons/faCreditCard';
+import {faUser} from '@fortawesome/pro-regular-svg-icons/faUser';
+import {faShieldCheck} from '@fortawesome/pro-regular-svg-icons/faShieldCheck';
+import {faDesktop} from '@fortawesome/pro-regular-svg-icons/faDesktop';
+import {faCoins} from '@fortawesome/pro-regular-svg-icons/faCoins';
 
 export const initFontAwesomeIcon = () => {
   library.add(
@@ -180,6 +184,10 @@ export const initFontAwesomeIcon = () => {
     faCircleQuestion,
     faCommentSmile,
     faCreditCard,
+    faUser,
+    faShieldCheck,
+    faDesktop,
+    faCoins,
   );
 };
 
@@ -274,6 +282,10 @@ export const fontAwesomeIcons = {
   CircleQuestion: 'fa-regular fa-circle-question',
   CommentSmile: 'fa-regular fa-comment-smile',
   CreditCard: 'fa-regular fa-credit-card',
+  User: 'fa-regular fa-user',
+  ShieldCheck: 'fa-regular fa-shield-check',
+  Monitor: 'fa-regular fa-desktop',
+  Coins: 'fa-regular fa-coins',
 };
 
 /**

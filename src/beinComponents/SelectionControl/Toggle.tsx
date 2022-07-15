@@ -63,14 +63,14 @@ const createStyles = (theme: ExtendedTheme, isChecked: boolean) => {
       borderRadius: 12,
       alignItems: isChecked ? 'flex-end' : 'flex-start',
       justifyContent: 'center',
-      backgroundColor: isChecked ? colors.success : colors.gray40,
+      backgroundColor: isChecked ? colors.success : colors.gray10,
     },
     insideCircle: {
       width: 24,
       height: 24,
       right: 0,
       borderRadius: 12,
-      backgroundColor: colors.gray40,
+      backgroundColor: colors.gray10,
     },
   });
 };

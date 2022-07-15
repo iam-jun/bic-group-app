@@ -82,6 +82,8 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   };
 
   const renderContentWithMarkdown = () => {
+    console.log('renderContentWithMarkdown', textProps);
+
     return (
       <View style={style}>
         {useMarkdownIt ? (
@@ -110,7 +112,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
           <Text.BodyM
             testID="collapsible_text.markdown.short_content"
             onPress={onToggleShowLess}
-            color={colors.gray50}>
+            color={colors.neutral50}>
             {contentShowAll
               ? t('common:text_see_less')
               : t('common:text_see_more')}
@@ -121,6 +123,8 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   };
 
   const renderContent = () => {
+    console.log('aloooo', textProps);
+
     return (
       <Text style={style}>
         <Text testID="collapsible_text.content" {...textProps}>
@@ -130,7 +134,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
           <Text.BodyM
             testID="collapsible_text.show_text"
             onPress={onToggleShowLess}
-            color={colors.gray50}>
+            color={colors.neutral50}>
             {contentShowAll
               ? t('common:text_see_less')
               : t('common:text_see_more')}

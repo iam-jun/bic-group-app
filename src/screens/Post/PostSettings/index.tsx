@@ -240,12 +240,12 @@ const createStyle = (theme: ExtendedTheme) => {
     buttonDate: {
       flex: 1,
       marginRight: spacing.margin.base,
-      backgroundColor: colors.gray40,
+      backgroundColor: colors.gray10,
       padding: spacing.padding.base,
     },
     buttonTime: {
       flex: 1,
-      backgroundColor: colors.gray40,
+      backgroundColor: colors.gray10,
       padding: spacing.padding.base,
     },
   });

@@ -15,7 +15,6 @@ const PostDetail = (props: any) => {
   const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
-  console.log('POST DETAIL>>>>>>>>>>>>>>>');
 
   useEffect(() => {
     const taskId = requestAnimationFrame(() => {

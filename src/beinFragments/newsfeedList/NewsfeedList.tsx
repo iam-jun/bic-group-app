@@ -179,6 +179,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     return (
       <PostView
         postId={item.id}
+        style={styles.itemStyle}
         testID="newsfeed_list.post.item"
         btnReactTestID="newsfeed_list.post.btn_react"
         btnCommentTestID="newsfeed_list.post.btn_comment"
@@ -363,6 +364,9 @@ const createStyle = (theme: ExtendedTheme, insets: any) => {
     },
     emptyContainer: {
       marginTop: insets.top + dimension.headerHeight,
+    },
+    itemStyle: {
+      marginBottom: spacing.margin.small,
     },
   });
 };
