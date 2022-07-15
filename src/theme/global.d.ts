@@ -1,4 +1,9 @@
 // Override the theme in react native navigation to accept our custom theme props.
+import {
+  DarkTheme as _DarkTheme,
+  DefaultTheme as _DefaultTheme,
+} from '@react-navigation/native/lib/typescript/src';
+
 declare module '@react-navigation/native' {
   export type ExtendedTheme = {
     dark: boolean;
@@ -101,4 +106,6 @@ declare module '@react-navigation/native' {
     };
   };
   export function useTheme(): ExtendedTheme;
+  export type DarkTheme = typeof _DarkTheme;
+  export type DefaultTheme = typeof _DefaultTheme;
 }

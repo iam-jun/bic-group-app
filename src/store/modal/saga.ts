@@ -31,7 +31,12 @@ export default function* commonSaga() {
   );
 }
 
-function* showModal({payload}: {type: string; payload: IPayloadShowModal}) {
+function* showModal({
+  payload,
+}: {
+  type: string;
+  payload: IPayloadShowModal;
+}): any {
   const modal = yield select(state => get(state, modalKeySelector.modal));
   const {isOpen} = modal || {};
   if (isOpen) {

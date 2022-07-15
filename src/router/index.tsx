@@ -1,16 +1,10 @@
 /* @react-navigation v5 */
 import NetInfo from '@react-native-community/netinfo';
-import {
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer,
-  useTheme,
-} from '@react-navigation/native';
+import {NavigationContainer, useTheme} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Auth} from 'aws-amplify';
 import React, {useEffect} from 'react';
-import {Linking, StyleSheet, View} from 'react-native';
-/*Theme*/
+import {Linking, StatusBar, StyleSheet, View} from 'react-native';
 import {Host} from 'react-native-portalize';
 
 import {useDispatch} from 'react-redux';
@@ -120,36 +114,35 @@ const StackNavigator = (): React.ReactElement => {
 
   return (
     <View style={styles.container}>
+      <StatusBar
+        barStyle="dark-content"
+        translucent
+        backgroundColor="transparent"
+      />
       <NavigationContainer
         linking={linking}
         ref={rootNavigationRef}
         onReady={onReady}
-        theme={navigationTheme}
-        documentTitle={{
-          enabled: false,
-        }}>
+        theme={navigationTheme as any}
+        documentTitle={{enabled: false}}>
         <Host>
           <Stack.Navigator
-            //@ts-ignore
             initialRouteName={
-              user ? rootSwitch.mainStack : rootSwitch.authStack
+              (user ? rootSwitch.mainStack : rootSwitch.authStack) as any
             }
             screenOptions={{cardStyle: cardStyleConfig}}>
             <Stack.Screen
               options={AppConfig.defaultScreenOptions}
-              //@ts-ignore
-              name={rootSwitch.authStack}
+              name={rootSwitch.authStack as any}
               component={screens.AuthStack}
             />
             <Stack.Screen
               options={AppConfig.defaultScreenOptions}
-              //@ts-ignore
-              name={rootSwitch.mainStack}
+              name={rootSwitch.mainStack as any}
               component={screens.MainStack}
             />
             <Stack.Screen
-              // @ts-ignore
-              name={rootSwitch.notFound}
+              name={rootSwitch.notFound as any}
               component={screens.NotFound}
             />
           </Stack.Navigator>
@@ -199,10 +192,10 @@ const getLinkingCustomConfig = (config: any, navigation: any) => {
           listener(url);
         }
       };
-      Linking.addEventListener('url', onReceiveURL);
+      const linkingListener = Linking.addEventListener('url', onReceiveURL);
 
       return () => {
-        Linking.removeEventListener('url', onReceiveURL);
+        linkingListener?.remove?.();
       };
     },
   };
