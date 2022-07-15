@@ -29,7 +29,7 @@ export const handleBack = (
           cancelBtn: true,
           cancelLabel: i18next.t('common:btn_discard'),
           confirmLabel: i18next.t('post:create_post:btn_keep_edit'),
-          onDismiss: () => rootNavigation.goBack(),
+          onCancel: () => rootNavigation.goBack(),
         }),
       );
       return;
@@ -46,7 +46,7 @@ export const handleBack = (
           cancelBtn: true,
           cancelLabel: i18next.t('common:btn_leave'),
           confirmLabel: i18next.t('common:btn_stay_on_this_page'),
-          onDismiss: () => {
+          onCancel: () => {
             FileUploader.getInstance().cancelAllFiles();
             rootNavigation.goBack();
           },

@@ -21,7 +21,7 @@ export default [
   {
     type: 'PRIVATE',
     title: 'settings:title_private',
-    icon: 'Lock',
+    icon: 'iconPrivate',
     subtitle: 'settings:title_private_subtitle',
     privacyTitle: 'settings:privacy_private',
   },
@@ -52,7 +52,7 @@ export const communityPrivacyListDetail = [
   {
     type: 'PRIVATE',
     title: 'settings:title_private',
-    icon: 'Lock',
+    icon: 'iconPrivate',
     subtitle: 'settings:title_private_subtitle',
     privacyTitle: 'settings:privacy_private',
   },
