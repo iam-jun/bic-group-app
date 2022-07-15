@@ -93,6 +93,22 @@ import {faShieldCheck} from '@fortawesome/pro-regular-svg-icons/faShieldCheck';
 import {faDesktop} from '@fortawesome/pro-regular-svg-icons/faDesktop';
 import {faCoins} from '@fortawesome/pro-regular-svg-icons/faCoins';
 
+/**
+ * We add single icon from package to reduce bundle size
+ * 1. Find icon on https://fontawesome.com/search?s=regular%2Csolid
+ *   - Press on icon, we will have html tag like this: <i class="fa-regular fa-360-degrees"></i>
+ *   - The NEW_ICON_NAME will be `360Degrees`
+ * 2. Add to `fontAwesomeIcons`
+ *   - key: NEW_ICON_NAME (360Degrees)
+ *   - value: class name (fa-regular fa-360-degrees)
+ * 3. Import from lib:
+ *   FILE_NAME: `fa${NEW_ICON_NAME}` (fa360Degrees)
+ *   - with regular icon: '@fortawesome/pro-regular-svg-icons/FILE_NAME'
+ *   - with solid icon: '@fortawesome/pro-solid-svg-icons/FILE_NAME'
+ * 4. Keep FILE_NAME with font regular, with font solid, add `Solid` at the bottom: `${FILE_NAME}Solid`
+ * 5. Add file imported to library in `initFontAwesomeIcon`
+ */
+
 export const initFontAwesomeIcon = () => {
   library.add(
     faPlus,
@@ -287,18 +303,6 @@ export const fontAwesomeIcons = {
   Monitor: 'fa-regular fa-desktop',
   Coins: 'fa-regular fa-coins',
 };
-
-/**
- * We add single icon from package to reduce bundle size
- * 1. Find icon on https://fontawesome.com/search?s=regular%2Csolid
- * 2. Import from lib:
- *   - with regular icon: '@fortawesome/pro-regular-svg-icons/NEW_ICON_NAME'
- *   - with solid icon: '@fortawesome/pro-solid-svg-icons/NEW_ICON_NAME'
- * 3. Add to library in `initFontAwesomeIcon`
- * 4. Add to `fontAwesomeIcons`
- *   - key: with regular icon, just use name, with solid icon, add `Solid` after name
- *   - value: copy class || react icon as value
- */
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(
   (acc, cur) => ({...acc, [cur]: cur}),
