@@ -1,16 +1,16 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Reaction from '~/beinComponents/Badge/Reaction';
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 
-import {ITheme} from '~/theme/interfaces';
 import {blacklistReactions, ReactionType} from '~/constants/reactions';
 import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
 import commonActions, {IAction} from '~/constants/commonActions';
 import appConfig from '~/configs/appConfig';
+import spacing from '~/theme/spacing';
 
 export interface ReactionViewProps {
   style?: StyleProp<ViewStyle>;
@@ -33,7 +33,7 @@ const ReactionView: FC<ReactionViewProps> = ({
   onLongPressReaction,
   showSelectReactionWhenEmpty = true,
 }: ReactionViewProps) => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const onActionReaction = (reactionId: ReactionType, action: IAction) => {
@@ -125,8 +125,8 @@ const ReactionView: FC<ReactionViewProps> = ({
   }
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     containerButtonOnly: {
       flex: 1,
@@ -143,7 +143,7 @@ const createStyle = (theme: ITheme) => {
     buttonReact: {
       marginVertical: 2,
       borderWidth: 1,
-      borderColor: colors.borderCard,
+      borderColor: colors.gray20,
       borderRadius: spacing?.borderRadius.small,
       paddingHorizontal: spacing.padding.tiny,
       paddingVertical: 4,

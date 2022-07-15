@@ -1,7 +1,7 @@
 import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
@@ -9,8 +9,8 @@ import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import {IReactionCounts} from '~/interfaces/IPost';
 import {IconType} from '~/resources/icons';
 import * as modalActions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
 import {validateReactionCount} from './helper';
+import dimension from '~/theme/dimension';
 
 export interface PostViewFooterProps {
   labelButtonComment: string;
@@ -30,8 +30,8 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
   reactionCounts,
 }: PostViewFooterProps) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
-  const {colors, dimension} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const validReactionCount = validateReactionCount(reactionCounts);
@@ -77,11 +77,11 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
           leftIconProps={{
             icon: icon,
             size: 14,
-            tintColor: colors.textSecondary,
+            tintColor: colors.gray50,
           }}
           textProps={{
-            variant: 'bodySM',
-            color: colors.textSecondary,
+            variant: 'bodySMedium',
+            color: colors.gray50,
           }}
           style={styles.buttonReact}>
           {title}
@@ -117,15 +117,15 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, dimension} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {},
     reactButtons: {
       flexDirection: 'row',
       height: dimension?.commentBarHeight,
       borderTopWidth: 1,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
       alignItems: 'center',
     },
     buttonReactContainer: {

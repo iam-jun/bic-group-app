@@ -10,9 +10,7 @@ interface Props extends TextInputProps {
   name: string;
   rules: any;
   loading?: boolean;
-  disableInput?: boolean;
   testID: string;
-  label?: string;
   placeholder: string;
   validateValue?: () => void;
   ref?: any;
@@ -24,9 +22,7 @@ const PasswordInputController: React.FC<Props> = ({
   name,
   rules,
   loading,
-  disableInput,
   testID,
-  label,
   placeholder,
   validateValue,
   ref,
@@ -51,7 +47,6 @@ const PasswordInputController: React.FC<Props> = ({
     <PasswordInput
       ref={ref}
       testID={testID}
-      label={label}
       placeholder={placeholder}
       error={errors?.[name]}
       autoCapitalize="none"
@@ -63,7 +58,6 @@ const PasswordInputController: React.FC<Props> = ({
       }}
       helperType={errors?.[name]?.message ? 'error' : undefined}
       helperContent={errors?.[name]?.message}
-      disabled={disableInput}
       iconColor={iconColor}
       {...props}
     />

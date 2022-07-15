@@ -32,12 +32,6 @@ export function hideModal() {
   };
 }
 
-export function fetchSetting() {
-  return {
-    type: Actions.FETCH_SETTING,
-  };
-}
-
 export function showAlert(payload: IShowAlert) {
   return {
     type: Actions.SHOW_ALERT,
@@ -142,7 +136,6 @@ const modalActions = {
   setModal,
   showModal,
   hideModal,
-  fetchSetting,
   showAlert,
   hideAlert,
   showAlertNewFeature,

@@ -131,7 +131,7 @@ export const groupInitState = {
   loadingCover: false,
   discoverGroups: {
     loading: false,
-    data: [],
+    ids: [],
     items: {},
     canLoadMore: true,
   },
@@ -732,32 +732,13 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       };
     }
 
-    case groupsTypes.GET_DISCOVER_GROUPS:
-      return {
-        ...state,
-        discoverGroups: {
-          ...discoverGroups,
-          loading: discoverGroups.data.length === 0,
-        },
-      };
     case groupsTypes.SET_DISCOVER_GROUPS:
       return {
         ...state,
         discoverGroups: {
           ...discoverGroups,
-          loading: false,
-          data: [...discoverGroups.data, ...payload.ids],
-          items: {
-            ...discoverGroups.items,
-            ...payload.items,
-          },
-          canLoadMore: payload.ids.length === appConfig.recordsPerPage,
+          ...payload,
         },
-      };
-    case groupsTypes.RESET_DISCOVER_GROUPS:
-      return {
-        ...state,
-        discoverGroups: groupInitState.discoverGroups,
       };
     case groupsTypes.EDIT_DISCOVER_GROUP_ITEM:
       return {

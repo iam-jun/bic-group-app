@@ -6,9 +6,8 @@ import {
   ViewStyle,
   TouchableOpacity,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {useTheme, ExtendedTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
@@ -19,6 +18,7 @@ import {useUserIdAuth} from '~/hooks/auth';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {useRootNavigation} from '~/hooks/navigation';
 import {ISelectAudienceParams} from '~/screens/Post/PostSelectAudience/SelectAudienceHelper';
+import spacing from '~/theme/spacing';
 
 export interface HeaderCreatePostProps {
   audience?: any;
@@ -33,7 +33,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
 }: HeaderCreatePostProps) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -77,7 +77,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
           testID={'header_create_post'}
           onPress={onPressCreate}
           style={styles.buttonContainer}>
-          <Text.BodyS color={colors.textTertiary} useI18n>
+          <Text.BodyS color={colors.gray60} useI18n>
             {'post:create_new_post'}
           </Text.BodyS>
         </TouchableOpacity>
@@ -86,13 +86,13 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingVertical: spacing?.padding.small,
       paddingHorizontal: spacing?.padding.large,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     contentContainer: {
       flexDirection: 'row',
@@ -102,23 +102,6 @@ const createStyle = (theme: ITheme) => {
       flex: 1,
       marginLeft: spacing?.margin.large,
       justifyContent: 'center',
-    },
-    buttonSmall: {
-      flex: 1,
-      padding: spacing.padding.small,
-    },
-    buttonRow: {
-      marginTop: spacing.margin.large,
-      flexDirection: 'row',
-    },
-    draftContainer: {
-      minWidth: 20,
-      height: 18,
-      marginLeft: spacing.margin.small,
-      borderRadius: spacing.borderRadius.large,
-      backgroundColor: colors.borderCard,
-      justifyContent: 'center',
-      alignItems: 'center',
     },
   });
 };

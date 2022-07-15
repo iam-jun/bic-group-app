@@ -6,9 +6,7 @@ import {
   RefreshControl,
   FlatList,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
@@ -20,6 +18,7 @@ import {useDispatch} from 'react-redux';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import CommunityItem from '../components/CommunityItem';
 import {ICommunity} from '~/interfaces/ICommunity';
+import spacing from '~/theme/spacing';
 
 export interface JoinedCommunitiesProps {
   style?: StyleProp<ViewStyle>;
@@ -35,8 +34,7 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
   const myCommunities = useKeySelector(groupsKeySelector.joinedCommunities);
 
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
+  const theme: ExtendedTheme = useTheme();
 
   useEffect(() => {
     getData();
@@ -68,9 +66,9 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
             testID="empty_screen.button"
             onPress={onPressDiscover}
             style={styles.buttonWrapper}>
-            <Text.ButtonBase useI18n color={theme.colors.bgButtonPrimary}>
+            <Text.ButtonM useI18n color={theme.colors.purple50}>
               communities:empty_communities:button_text
-            </Text.ButtonBase>
+            </Text.ButtonM>
           </ButtonWrapper>
         }
       />
@@ -93,8 +91,8 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
       ItemSeparatorComponent={() => (
         <Divider
           style={{
-            marginVertical: theme.spacing?.margin.tiny,
-            marginHorizontal: theme.spacing.margin.large,
+            marginVertical: spacing.margin.tiny,
+            marginHorizontal: spacing.margin.large,
           }}
         />
       )}
@@ -102,20 +100,17 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
         <RefreshControl
           refreshing={refreshing}
           onRefresh={onRefresh}
-          tintColor={theme.colors.borderDisable}
+          tintColor={theme.colors.gray40}
         />
       }
     />
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    buttonWrapper: {
-      marginTop: spacing.margin.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  buttonWrapper: {
+    marginTop: spacing.margin.large,
+  },
+});
 
 export default JoinedCommunities;

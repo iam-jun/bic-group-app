@@ -5,11 +5,11 @@ import {
   ViewStyle,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {useBaseHook} from '~/hooks';
 import Text, {TextProps} from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+
 import MarkdownView from '~/beinComponents/MarkdownView';
 import Markdown from '~/beinComponents/Markdown';
 import CopyableView from '../CopyableView';
@@ -59,7 +59,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   const [contentShowAll, setContentShowAll] = useState(false);
   const [shortContent, setShortContent] = useState(getShortContent(content));
 
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   const {t} = useBaseHook();
@@ -82,6 +82,8 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   };
 
   const renderContentWithMarkdown = () => {
+    console.log('renderContentWithMarkdown', textProps);
+
     return (
       <View style={style}>
         {useMarkdownIt ? (
@@ -110,7 +112,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
           <Text.BodyM
             testID="collapsible_text.markdown.short_content"
             onPress={onToggleShowLess}
-            color={colors.textSecondary}>
+            color={colors.neutral50}>
             {contentShowAll
               ? t('common:text_see_less')
               : t('common:text_see_more')}
@@ -121,6 +123,8 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   };
 
   const renderContent = () => {
+    console.log('aloooo', textProps);
+
     return (
       <Text style={style}>
         <Text testID="collapsible_text.content" {...textProps}>
@@ -130,7 +134,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
           <Text.BodyM
             testID="collapsible_text.show_text"
             onPress={onToggleShowLess}
-            color={colors.textSecondary}>
+            color={colors.neutral50}>
             {contentShowAll
               ? t('common:text_see_less')
               : t('common:text_see_more')}

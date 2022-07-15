@@ -54,7 +54,7 @@ describe('AvatarImage component', () => {
     const buttonComponent = rendered.getByTestId('avatar.button_edit');
     const textComponent = rendered.getByTestId('avatar.text_edit');
     const flattenedStyle = StyleSheet.flatten(textComponent.props.style);
-    expect(flattenedStyle.color).toBe(colors.light.colors.textDisabled);
+    expect(flattenedStyle.color).toBe(colors.light.colors.gray40);
     expect(buttonComponent.props.accessibilityState.disabled).toBe(true);
   });
 

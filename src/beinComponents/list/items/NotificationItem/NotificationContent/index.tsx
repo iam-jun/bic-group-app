@@ -1,9 +1,9 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
 import {IGetStreamNotificationActivity} from '~/interfaces/INotification';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
 import MarkdownView from '~/beinComponents/MarkdownView';
 
 interface Props {
@@ -23,7 +23,7 @@ const NotificationContent = ({
   actorCount,
   defaultContent,
 }: Props) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const getContent = () => {
@@ -72,8 +72,8 @@ const NotificationContent = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -82,7 +82,7 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
     },
     subContent: {
-      color: colors.textSecondary,
+      color: colors.gray50,
     },
   });
 };

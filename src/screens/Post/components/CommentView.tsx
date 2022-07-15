@@ -1,12 +1,12 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button';
@@ -36,9 +36,10 @@ import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import * as modalActions from '~/store/modal/actions';
 import {showReactionDetailBottomSheet} from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
 import {useBaseHook} from '~/hooks';
 import actions from '~/beinComponents/inputs/MentionInput/redux/actions';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 export interface CommentViewProps {
   postId: string;
@@ -60,8 +61,8 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing, dimension} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const currentUserId = useUserIdAuth();
@@ -206,7 +207,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
       ContentComponent: Text.BodyS,
       cancelBtn: true,
       cancelBtnProps: {
-        textColor: theme.colors.primary7,
+        textColor: theme.colors.purple60,
       },
       onConfirm: () => {
         const payload: IPayloadDeleteComment = {
@@ -288,11 +289,9 @@ const _CommentView: React.FC<CommentViewProps> = ({
             onLongPressReaction={onLongPressReaction}
           />
           <ButtonWrapper onPress={_onPressReply} testID="comment_view.reply">
-            <Text.ButtonSmall
-              style={styles.buttonReply}
-              color={colors.textSecondary}>
+            <Text.ButtonS style={styles.buttonReply} color={colors.gray50}>
               Reply
-            </Text.ButtonSmall>
+            </Text.ButtonS>
           </ButtonWrapper>
         </View>
       )
@@ -311,16 +310,16 @@ const _CommentView: React.FC<CommentViewProps> = ({
     return (
       commentStatus === 'failed' && (
         <View style={styles.errorLine}>
-          <Text.BodySM color={colors.error} useI18n>
+          <Text.BodySMedium color={colors.red60} useI18n>
             common:text_failed_to_upload
-          </Text.BodySM>
-          <Text.BodySM>{`  • `}</Text.BodySM>
+          </Text.BodySMedium>
+          <Text.BodySMedium>{`  • `}</Text.BodySMedium>
           <Button onPress={onPressRetry}>
-            <Text.BodySM useI18n>common:text_retry</Text.BodySM>
+            <Text.BodySMedium useI18n>common:text_retry</Text.BodySMedium>
           </Button>
-          <Text.BodySM>{`  • `}</Text.BodySM>
+          <Text.BodySMedium>{`  • `}</Text.BodySMedium>
           <Button onPress={onPressCancel}>
-            <Text.BodySM useI18n>common:btn_cancel</Text.BodySM>
+            <Text.BodySMedium useI18n>common:btn_cancel</Text.BodySMedium>
           </Button>
         </View>
       )
@@ -360,7 +359,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
                   </View>
                   <View style={{flexDirection: 'row'}}>
                     {edited && (
-                      <Text.H6 color={colors.textSecondary}>
+                      <Text.H6 color={colors.gray50}>
                         {t('post:comment:text_edited')} •{' '}
                       </Text.H6>
                     )}
@@ -398,17 +397,17 @@ const _CommentView: React.FC<CommentViewProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing, dimension} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
     },
     contentContainer: {
       flex: 1,
-      paddingVertical: spacing?.padding.small,
-      paddingHorizontal: spacing?.padding.small,
-      backgroundColor: colors.placeholder,
+      paddingVertical: spacing.padding.small,
+      paddingHorizontal: spacing.padding.small,
+      backgroundColor: colors.neutral5,
       borderRadius: spacing?.borderRadius.small,
     },
     buttonContainer: {
@@ -426,7 +425,7 @@ const createStyle = (theme: ITheme) => {
     },
     textTime: {
       marginLeft: 2,
-      color: colors.textSecondary,
+      color: colors.gray50,
     },
     userName: {
       flex: 1,

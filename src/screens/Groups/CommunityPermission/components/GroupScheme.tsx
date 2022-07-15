@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle, FlatList} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
@@ -14,6 +12,7 @@ import Divider from '~/beinComponents/Divider';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import spacing from '~/theme/spacing';
 
 export interface GroupSchemeProps {
   style?: StyleProp<ViewStyle>;
@@ -21,7 +20,7 @@ export interface GroupSchemeProps {
 
 const GroupScheme: FC<GroupSchemeProps> = ({style}: GroupSchemeProps) => {
   const {rootNavigation} = useRootNavigation();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const {data} = useKeySelector(groupsKeySelector.permission.schemes) || {};
@@ -57,9 +56,9 @@ const GroupScheme: FC<GroupSchemeProps> = ({style}: GroupSchemeProps) => {
       </View>
 
       <View style={styles.descScheme}>
-        <Text.Subtitle useI18n>
+        <Text.BodyS useI18n>
           communities:permission:text_desc_group_scheme
-        </Text.Subtitle>
+        </Text.BodyS>
       </View>
 
       {groupSchemes?.length > 0 && (
@@ -83,13 +82,13 @@ const GroupScheme: FC<GroupSchemeProps> = ({style}: GroupSchemeProps) => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {
       padding: spacing.padding.large,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       marginTop: spacing.margin.base,
       borderRadius: spacing.borderRadius.small,
     },

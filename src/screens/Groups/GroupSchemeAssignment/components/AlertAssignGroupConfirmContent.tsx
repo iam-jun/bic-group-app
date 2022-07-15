@@ -1,8 +1,5 @@
 import React, {useMemo} from 'react';
 import {View, StyleSheet, ScrollView, Dimensions} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
 
 import Text from '~/beinComponents/Text';
 import {useBaseHook} from '~/hooks';
@@ -11,14 +8,13 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import Icon from '~/beinComponents/Icon';
 import i18n from 'i18next';
 import Divider from '~/beinComponents/Divider';
+import spacing from '~/theme/spacing';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 const contentHeight = SCREEN_HEIGHT * 0.4;
 
 const AlertAssignGroupConfirmContent = () => {
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
 
   const {allSchemes} =
     useKeySelector(groupsKeySelector.permission.schemes) || {};
@@ -116,34 +112,31 @@ export const prepareData = (
   return result;
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
-  return StyleSheet.create({
-    container: {},
-    itemContainer: {
-      marginTop: spacing.margin.base,
-    },
-    contentContainer: {
-      height: contentHeight,
-    },
-    itemContent: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginTop: spacing.margin.base,
-    },
-    textName: {
-      flex: 1,
-    },
-    iconArrow: {
-      marginHorizontal: spacing.margin.small,
-    },
-    divider: {
-      marginTop: spacing.margin.base,
-    },
-    textTitle: {
-      marginBottom: spacing.margin.small,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {},
+  itemContainer: {
+    marginTop: spacing.margin.base,
+  },
+  contentContainer: {
+    height: contentHeight,
+  },
+  itemContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: spacing.margin.base,
+  },
+  textName: {
+    flex: 1,
+  },
+  iconArrow: {
+    marginHorizontal: spacing.margin.small,
+  },
+  divider: {
+    marginTop: spacing.margin.base,
+  },
+  textTitle: {
+    marginBottom: spacing.margin.small,
+  },
+});
 
 export default AlertAssignGroupConfirmContent;

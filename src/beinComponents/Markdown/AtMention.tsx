@@ -1,11 +1,11 @@
 import React from 'react';
 import {StyleProp, Text, TextStyle, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import isEmpty from 'lodash/isEmpty';
 
 import {useKeySelector} from '~/hooks/selector';
 import {IMarkdownAudience} from '~/interfaces/IPost';
-import {ITheme} from '~/theme/interfaces';
+
 import {fontFamilies} from '~/theme/fonts';
 
 interface Props {
@@ -16,7 +16,7 @@ interface Props {
 }
 
 const AtMention = ({mentionName, selector, style, onPress}: Props) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   let audience = useKeySelector(`${selector}.${mentionName}`);
@@ -45,12 +45,12 @@ const AtMention = ({mentionName, selector, style, onPress}: Props) => {
 
 export default AtMention;
 
-const createStyles = (theme: ITheme) => {
+const createStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     baseStyle: {
-      color: colors.textPrimary,
-      fontFamily: fontFamilies.OpenSans,
+      color: colors.neutral80,
+      fontFamily: fontFamilies.BeVietnamProLight,
     },
   });
 };

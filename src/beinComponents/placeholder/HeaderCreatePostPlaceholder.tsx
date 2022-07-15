@@ -1,14 +1,15 @@
 import React, {FC} from 'react';
 import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {
   Placeholder,
   PlaceholderMedia,
   PlaceholderLine,
   ShineOverlay,
 } from 'rn-placeholder';
+import dimension from '~/theme/dimension';
 
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface CreatePostHeaderPlaceholderProps {
   style?: StyleProp<ViewStyle>;
@@ -17,7 +18,7 @@ export interface CreatePostHeaderPlaceholderProps {
 const HeaderCreatePostPlaceholder: FC<CreatePostHeaderPlaceholderProps> = ({
   style,
 }: CreatePostHeaderPlaceholderProps) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   return (
@@ -30,21 +31,21 @@ const HeaderCreatePostPlaceholder: FC<CreatePostHeaderPlaceholderProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing, dimension} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
       alignItems: 'center',
       paddingVertical: spacing?.padding.base,
       paddingHorizontal: spacing?.padding.large,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     left: {
       width: dimension.avatarSizes.medium,
       height: dimension.avatarSizes.medium,
       borderRadius: 50,
-      backgroundColor: colors.borderDivider,
+      backgroundColor: colors.neutral5,
     },
     content: {
       width: '100%',

@@ -10,15 +10,15 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import items, {IListViewItem} from '~/beinComponents/list/items';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import loadings from '~/beinComponents/list/loadings';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import {useKeySelector} from '~/hooks/selector';
-import {spacing} from '~/theme';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 
 export interface ListViewProps {
   data?: Array<any>;
@@ -104,7 +104,7 @@ const ListView: React.FC<ListViewProps> = ({
 }: ListViewProps) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const {colors} = useTheme() as ITheme;
+  const {colors} = useTheme() as ExtendedTheme;
 
   const ItemComponent = items[type] || PrimaryItem;
   const LoadingPlaceholder = loadings[type];
@@ -181,7 +181,7 @@ const ListView: React.FC<ListViewProps> = ({
       return (
         <View style={{marginTop: spacing.margin.large}}>
           <ActivityIndicator
-            color={colors.borderDisable}
+            color={colors.gray40}
             testID="list_view.indicator.loading"
           />
         </View>
@@ -194,14 +194,14 @@ const ListView: React.FC<ListViewProps> = ({
       style={StyleSheet.flatten([isFullView && {flex: 1}, containerStyle])}
       testID="list_view">
       {title && (
-        <Text.ButtonBase
+        <Text.ButtonM
           testID="list_view.title"
           style={{
             marginVertical: spacing.margin.small,
             marginHorizontal: spacing.margin.base,
           }}>
           {title}
-        </Text.ButtonBase>
+        </Text.ButtonM>
       )}
       {_renderLoading()}
       <FlatList
@@ -228,7 +228,7 @@ const ListView: React.FC<ListViewProps> = ({
             <RefreshControl
               refreshing={!!refreshing}
               onRefresh={onRefresh}
-              tintColor={colors.borderDisable}
+              tintColor={colors.gray40}
             />
           ) : undefined
         }

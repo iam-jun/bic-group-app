@@ -2,11 +2,10 @@ import {GiphyMedia} from '@giphy/react-native-sdk';
 import {isEmpty} from 'lodash';
 import React, {FC, useState} from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {uploadTypes} from '~/configs/resourceConfig';
 import {IPostMedia} from '~/interfaces/IPost';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import GifView from './GifView';
 
 export interface CommentMediaViewProps {
@@ -23,8 +22,6 @@ const CommentMediaView: FC<CommentMediaViewProps> = ({
   onLongPress,
 }: CommentMediaViewProps) => {
   const [width, setWidth] = useState();
-  const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
 
   const {images} = media || {};
 
@@ -65,15 +62,12 @@ const CommentMediaView: FC<CommentMediaViewProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {
-      marginTop: spacing.margin.tiny,
-      borderRadius: spacing.borderRadius.small,
-      overflow: 'hidden',
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    marginTop: spacing.margin.tiny,
+    borderRadius: spacing.borderRadius.small,
+    overflow: 'hidden',
+  },
+});
 
 export default CommentMediaView;

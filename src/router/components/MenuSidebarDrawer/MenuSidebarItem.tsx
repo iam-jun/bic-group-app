@@ -6,12 +6,13 @@ import {
   ViewStyle,
   TouchableOpacity,
 } from 'react-native';
-import {ITheme} from '~/theme/interfaces';
+
 import Icon, {IconProps} from '~/beinComponents/Icon';
 import Text, {TextProps, TextVariant} from '~/beinComponents/Text';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useKeySelector} from '~/hooks/selector';
+import spacing from '~/theme/spacing';
 
 interface DrawerItemProps {
   disabled?: boolean;
@@ -64,9 +65,8 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
 }: DrawerItemProps) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
-  const styles = themeStyles(theme);
 
   return (
     <TouchableOpacity
@@ -78,18 +78,18 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
           <Icon
             icon={icon}
             size={24}
-            tintColor={tintColor || colors.primary6}
+            tintColor={tintColor || colors.purple50}
             {...iconProps}
           />
         )}
         <View
           style={StyleSheet.flatten([styles.titleContainer, titleContainer])}>
-          <Text variant={textVariant || 'body'} useI18n {...titleProps}>
+          <Text variant={textVariant || 'bodyM'} useI18n {...titleProps}>
             {title}
           </Text>
           {!!subTitle && (
             <Text
-              variant={textVariantSubTitle || 'subtitle'}
+              variant={textVariantSubTitle || 'bodyS'}
               useI18n
               numberOfLines={2}
               {...subTitleProps}>
@@ -100,9 +100,9 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
         <View style={StyleSheet.flatten([styles.right, rightStyle])}>
           {!!rightTitle && (
             <Text
-              variant={textVariantRightTitle || 'subtitle'}
+              variant={textVariantRightTitle || 'bodyS'}
               useI18n
-              style={{color: colors.textSecondary}}
+              style={{color: colors.gray50}}
               {...rightTitleProps}>
               {rightTitle}
             </Text>
@@ -112,7 +112,7 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
               icon={rightIcon}
               size={20}
               style={styles.rightIcon}
-              tintColor={rightTintColor || colors.textSecondary}
+              tintColor={rightTintColor || colors.gray50}
               {...rightIconProps}
             />
           )}
@@ -123,32 +123,28 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      paddingVertical: spacing.padding.base,
-      paddingLeft: spacing.padding.large,
-      paddingRight: spacing.padding.base,
-      alignItems: 'center',
-    },
-    titleContainer: {
-      flex: 1,
-      marginLeft: spacing.margin.base,
-    },
-    right: {
-      flexDirection: 'row',
-    },
-    rightIcon: {
-      height: 36,
-      width: 36,
-      padding: spacing.padding.small,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    paddingVertical: spacing.padding.base,
+    paddingLeft: spacing.padding.large,
+    paddingRight: spacing.padding.base,
+    alignItems: 'center',
+  },
+  titleContainer: {
+    flex: 1,
+    marginLeft: spacing.margin.base,
+  },
+  right: {
+    flexDirection: 'row',
+  },
+  rightIcon: {
+    height: 36,
+    width: 36,
+    padding: spacing.padding.small,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default MenuSidebarItem;

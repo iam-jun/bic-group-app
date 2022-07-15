@@ -6,10 +6,9 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import commonActions, {IAction} from '~/constants/commonActions';
-import {ITheme} from '~/theme/interfaces';
 
 interface ToggleProps {
   style?: StyleProp<ViewStyle>;
@@ -25,7 +24,7 @@ const Toggle: React.FC<ToggleProps> = ({
   onActionPress,
 }: ToggleProps) => {
   const [checked, setChecked] = useState<boolean>(isChecked);
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme, checked);
 
   useEffect(() => {
@@ -54,7 +53,7 @@ const Toggle: React.FC<ToggleProps> = ({
   );
 };
 
-const createStyles = (theme: ITheme, isChecked: boolean) => {
+const createStyles = (theme: ExtendedTheme, isChecked: boolean) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -64,14 +63,14 @@ const createStyles = (theme: ITheme, isChecked: boolean) => {
       borderRadius: 12,
       alignItems: isChecked ? 'flex-end' : 'flex-start',
       justifyContent: 'center',
-      backgroundColor: isChecked ? colors.success : colors.borderCard,
+      backgroundColor: isChecked ? colors.success : colors.gray10,
     },
     insideCircle: {
       width: 24,
       height: 24,
       right: 0,
       borderRadius: 12,
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray10,
     },
   });
 };

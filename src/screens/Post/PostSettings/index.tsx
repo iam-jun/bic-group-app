@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {fontFamilies} from '~/theme/fonts';
-import {ITheme} from '~/theme/interfaces';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -22,6 +21,7 @@ import {usePostSettings} from '~/screens/Post/PostSettings/usePostSettings';
 import useCreatePost from '~/screens/Post/CreatePost/hooks/useCreatePost';
 import {IPostSettingsParams} from '~/interfaces/IPost';
 import postActions from '~/screens/Post/redux/actions';
+import spacing from '~/theme/spacing';
 
 export interface PostSettingsProps {
   route?: {
@@ -33,7 +33,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   const styles = createStyle(theme);
@@ -107,8 +107,8 @@ const PostSettings = ({route}: PostSettingsProps) => {
           leftIconProps={{icon: 'Calendar', size: 20}}
           style={styles.buttonDate}
           onPress={() => setSelectingDate(true)}
-          color={colors.bgHover}
-          textProps={{color: colors.textPrimary}}>
+          color={colors.gray40}
+          textProps={{color: colors.neutral80}}>
           {date}
         </Button.Secondary>
         <Button.Secondary
@@ -117,8 +117,8 @@ const PostSettings = ({route}: PostSettingsProps) => {
           leftIconProps={{icon: 'Clock', size: 20}}
           style={styles.buttonTime}
           onPress={() => setSelectingTime(true)}
-          color={colors.bgHover}
-          textProps={{color: colors.textPrimary}}>
+          color={colors.gray40}
+          textProps={{color: colors.neutral80}}>
           {time}
         </Button.Secondary>
       </View>
@@ -140,13 +140,13 @@ const PostSettings = ({route}: PostSettingsProps) => {
               post:mark_as_important
             </Text>
             {sImportant?.active ? (
-              <Text.Subtitle
+              <Text.BodyS
                 useI18n
                 testID="post_settings.expire_time_desc"
-                color={colors.textSecondary}
-                style={{fontFamily: fontFamilies.OpenSansSemiBold}}>
+                color={colors.gray50}
+                style={{fontFamily: fontFamilies.BeVietnamProSemiBold}}>
                 post:expire_time_desc
-              </Text.Subtitle>
+              </Text.BodyS>
             ) : null}
           </View>
           <Toggle
@@ -161,7 +161,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
   };
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.surface}>
+    <ScreenWrapper isFullView backgroundColor={colors.neutral1}>
       <Header
         titleTextProps={{useI18n: true}}
         title="post:settings"
@@ -218,10 +218,10 @@ const PostSettings = ({route}: PostSettingsProps) => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
-    container: {backgroundColor: colors.background, flex: 1},
+    container: {backgroundColor: colors.white, flex: 1},
     row: {flexDirection: 'row', alignItems: 'center'},
     flex1: {flex: 1},
     content: {
@@ -240,12 +240,12 @@ const createStyle = (theme: ITheme) => {
     buttonDate: {
       flex: 1,
       marginRight: spacing.margin.base,
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray10,
       padding: spacing.padding.base,
     },
     buttonTime: {
       flex: 1,
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray10,
       padding: spacing.padding.base,
     },
   });

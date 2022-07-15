@@ -48,7 +48,7 @@ describe('ButtonSecondary conponent', () => {
     );
     const component = getByTestId(testID);
     expect(component.props.style.backgroundColor).toBe(
-      colors.light.colors.primary5,
+      colors.light.colors.purple30,
     );
   });
 
@@ -60,7 +60,7 @@ describe('ButtonSecondary conponent', () => {
     );
     const component = getByTestId(testID);
     expect(component.props.style.backgroundColor).toBe(
-      colors.light.colors.bgDisable,
+      colors.light.colors.gray20,
     );
   });
 });

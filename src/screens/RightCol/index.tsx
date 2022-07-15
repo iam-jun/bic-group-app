@@ -1,9 +1,8 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import {Image, View, StyleSheet, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import {rightColMenu} from '~/constants/rightCol';
 import images from '~/resources/images';
 import Text from '~/beinComponents/Text';
@@ -11,11 +10,12 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {useBaseHook} from '~/hooks';
 import * as modalActions from '~/store/modal/actions';
 import {IRightMenu} from '~/interfaces/common';
+import spacing from '~/theme/spacing';
 
 const RightCol = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const onItemPress = (item: IRightMenu) => {
@@ -44,16 +44,18 @@ const RightCol = () => {
                 <TouchableOpacity
                   style={styles.menuItemLeft}
                   onPress={() => onItemPress(item)}>
-                  <Text.Body style={styles.menuText}>{t(item.title)}</Text.Body>
+                  <Text.BodyM style={styles.menuText}>
+                    {t(item.title)}
+                  </Text.BodyM>
                 </TouchableOpacity>
               )}
               {nextItem && (
                 <TouchableOpacity
                   style={styles.menuItemRight}
                   onPress={() => onItemPress(nextItem)}>
-                  <Text.Body style={styles.menuText}>
+                  <Text.BodyM style={styles.menuText}>
                     {t(nextItem.title)}
-                  </Text.Body>
+                  </Text.BodyM>
                 </TouchableOpacity>
               )}
             </View>
@@ -76,15 +78,15 @@ const RightCol = () => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   const menuItemMinWidth = '15%';
 
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing.margin.large,
       paddingVertical: spacing.padding.base,
-      backgroundColor: colors.surface,
+      backgroundColor: colors.neutral1,
     },
     img: {
       width: '100%',
@@ -93,7 +95,7 @@ const themeStyles = (theme: ITheme) => {
     mainContainer: {
       marginVertical: spacing.margin.large,
       padding: spacing.padding.small,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
       borderTopWidth: 1,
       borderBottomWidth: 1,
     },
@@ -115,7 +117,7 @@ const themeStyles = (theme: ITheme) => {
       marginHorizontal: spacing.margin.small,
     },
     menuText: {
-      color: colors.textSecondary,
+      color: colors.gray50,
     },
     footerContainer: {
       flexDirection: 'row',

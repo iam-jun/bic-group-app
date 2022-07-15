@@ -8,7 +8,6 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -17,6 +16,8 @@ import Animated, {
 } from 'react-native-reanimated';
 import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
@@ -28,9 +29,8 @@ import {
 import {useBaseHook} from '~/hooks';
 import useTabBadge from '~/hooks/tabBadge';
 import appActions from '~/store/app/actions';
-import {deviceDimensions, sizes} from '~/theme/dimension';
+import dimension, {deviceDimensions, sizes} from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
-import {ITheme} from '~/theme/interfaces';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import {useKeySelector} from '~/hooks/selector';
@@ -45,7 +45,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   const showValue = useSharedValue(1);
   const avatar = useKeySelector('menu.myProfile.avatar');
 
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
   const {t} = useBaseHook();
   const {colors} = theme;
@@ -54,8 +54,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
 
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
   const tabBadge: any = useTabBadge();
-
-  const bottomBarHeight = theme.dimension.bottomBarHeight + insets.bottom;
+  const bottomBarHeight = dimension.bottomBarHeight + insets.bottom;
 
   const heightStyle = useAnimatedStyle(() => ({
     height: interpolate(showValue.value, [0, 1], [0, bottomBarHeight]),
@@ -136,7 +135,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     const icon = isFocused ? bottomTabIconsFocused : bottomTabIcons;
     // @ts-ignore
     const iconName = icon[name];
-    const textColor = isFocused ? colors.primary6 : colors.textSecondary;
+    const textColor = isFocused ? colors.purple50 : colors.gray50;
     const styles = tabBarIconStyles(theme, isFocused, isPhone, textColor);
 
     const onPress = () => {
@@ -177,9 +176,9 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
           flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: colors.background,
+          backgroundColor: colors.white,
           borderTopWidth: isFocused ? 2 : 0,
-          borderTopColor: colors.primary6,
+          borderTopColor: colors.purple50,
         }}>
         {!!name && t(`tabs:${name}`) !== t(`tabs:menus`) ? (
           <Icon icon={iconName} size={20} tintColor="none" />
@@ -190,7 +189,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
           />
         )}
         {isPhone && (
-          <Text variant="heading" style={styles.label}>
+          <Text variant="bodyS" style={styles.label}>
             {t(`tabs:${name}`)}
           </Text>
         )}
@@ -213,7 +212,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
 };
 
 const tabBarIconStyles = (
-  theme: ITheme,
+  theme: ExtendedTheme,
   focused: boolean,
   isPhone: boolean,
   color?: string,
@@ -229,7 +228,7 @@ const tabBarIconStyles = (
       top: isPhone ? '6%' : '18%',
       left: '54%',
     },
-    textBadge: {fontFamily: fontFamilies.Segoe},
+    textBadge: {fontFamily: fontFamilies.BeVietnamProLight},
     avatarStyle: {
       width: 20,
       height: 20,
@@ -238,15 +237,15 @@ const tabBarIconStyles = (
   });
 };
 
-const createStyle = (theme: ITheme, insets: EdgeInsets) => {
-  const {colors, dimension} = theme;
+const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
       height: dimension.bottomBarHeight + insets.bottom,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       borderTopWidth: 0.5,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
       shadowOffset: {width: 0, height: 1},
       shadowColor: '#000',
       shadowOpacity: 0.1,

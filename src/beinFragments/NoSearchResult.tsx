@@ -4,8 +4,8 @@ import {StyleSheet, View} from 'react-native';
 import Text from '~/beinComponents/Text';
 import NoSearchResultImg from '~/../assets/images/no_search_result_grey.svg';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
+
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 export interface NoSearchResultProps {
   title?: string;
@@ -14,21 +14,21 @@ export interface NoSearchResultProps {
 const NoSearchResult: FC<NoSearchResultProps> = ({
   title,
 }: NoSearchResultProps) => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   return (
     <View style={styles.container}>
       {/* @ts-ignore */}
       <SvgIcon source={NoSearchResultImg} width={250} height={200} />
-      <Text.Body style={styles.text} useI18n>
+      <Text.BodyM style={styles.text} useI18n>
         {title || 'common:text_search_no_results'}
-      </Text.Body>
+      </Text.BodyM>
     </View>
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -38,7 +38,7 @@ const themeStyles = (theme: ITheme) => {
     },
     text: {
       marginHorizontal: 55,
-      color: colors.textSecondary,
+      color: colors.gray50,
       textAlign: 'center',
     },
   });

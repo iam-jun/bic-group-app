@@ -1,8 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Animated, {useAnimatedStyle} from 'react-native-reanimated';
 import {useKeySelector} from '~/hooks/selector';
@@ -11,9 +9,10 @@ import ListView from '~/beinComponents/list/ListView';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import GroupItem from '~/beinComponents/list/items/GroupItem';
 import Text from '~/beinComponents/Text';
+import spacing from '~/theme/spacing';
 
 const YourGroupsSearch = () => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const {showSearch, loading, key, list} = useKeySelector(
@@ -64,19 +63,19 @@ const YourGroupsSearch = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       position: 'absolute',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       top: 0,
       left: 0,
       right: 0,
       bottom: 0,
       zIndex: 10,
       borderTopWidth: 1,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
     },
     dataList: {
       flex: 1,

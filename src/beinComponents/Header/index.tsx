@@ -9,7 +9,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -17,6 +16,8 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import Avatar from '~/beinComponents/Avatar';
 import Button from '~/beinComponents/Button';
 import HeaderSearch from '~/beinComponents/Header/HeaderSearch';
@@ -24,11 +25,12 @@ import Icon, {IconProps} from '~/beinComponents/Icon';
 import Text, {TextProps} from '~/beinComponents/Text';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IconType} from '~/resources/icons';
-import {ITheme} from '~/theme/interfaces';
 import {ButtonSecondaryProps} from '../Button/ButtonSecondary';
 import IconChat from '../IconChat';
 import {ImageProps} from '../Image';
 import {debounce} from 'lodash';
+import dimension from '~/theme/dimension';
+import spacing from '~/theme/spacing';
 
 export interface HeaderProps {
   headerRef?: any;
@@ -113,8 +115,8 @@ const Header: React.FC<HeaderProps> = ({
   const headerSearchRef = useRef<any>();
   const _headerRef = headerRef || useRef();
 
-  const theme: ITheme = useTheme() as ITheme;
-  const {spacing, dimension, colors} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
   const styles = createStyle(theme);
   const insets = useSafeAreaInsets();
 
@@ -239,7 +241,7 @@ const Header: React.FC<HeaderProps> = ({
             overflow: 'hidden',
             alignItems: 'flex-end',
             flexDirection: 'row',
-            backgroundColor: colors.background,
+            backgroundColor: colors.white,
           },
           removeBorderAndShadow ? {} : styles.bottomBorderAndShadow,
           style,
@@ -250,7 +252,7 @@ const Header: React.FC<HeaderProps> = ({
             height: contentHeight,
             flex: 1,
             flexDirection: 'row',
-            backgroundColor: colors.background,
+            backgroundColor: colors.white,
             overflow: 'hidden',
             alignItems: 'center',
             paddingRight: spacing.padding.small,
@@ -310,12 +312,12 @@ const Header: React.FC<HeaderProps> = ({
               <TouchableOpacity
                 onPress={onPressHeader}
                 disabled={!onPressHeader}>
-                <Text.Subtitle
+                <Text.BodyS
                   style={styles.subtitle}
                   {...subTitleTextProps}
                   testID="header.subTitle">
                   {subTitle}
-                </Text.Subtitle>
+                </Text.BodyS>
               </TouchableOpacity>
             )}
           </Animated.View>
@@ -325,7 +327,7 @@ const Header: React.FC<HeaderProps> = ({
               size={24}
               style={styles.icon}
               onPress={onPressIcon}
-              backgroundColor={colors.bgSecondary}
+              backgroundColor={colors.neutral1}
               testID="header.icon"
               buttonTestID="header.icon.button"
             />
@@ -337,7 +339,7 @@ const Header: React.FC<HeaderProps> = ({
               size={24}
               style={styles.icon}
               onPress={_onPressSearch}
-              backgroundColor={colors.bgSecondary}
+              backgroundColor={colors.neutral1}
               buttonTestID="header.searchIcon.button"
             />
           )}
@@ -357,11 +359,11 @@ const Header: React.FC<HeaderProps> = ({
               testID="header.button"
               style={{
                 borderWidth: buttonProps?.disabled ? 0 : 1,
-                borderColor: colors.primary6,
+                borderColor: colors.purple50,
                 height: 40,
                 marginRight: spacing.margin.tiny,
               }}
-              textColor={colors.primary6}
+              textColor={colors.purple50}
               onPress={_onPressButton}
               textProps={{testID: 'header.button.text'}}
               {...buttonProps}>
@@ -374,7 +376,7 @@ const Header: React.FC<HeaderProps> = ({
               icon={rightIcon}
               style={styles.icon}
               onPress={onRightPress}
-              backgroundColor={colors.bgSecondary}
+              backgroundColor={colors.neutral1}
               {...rightIconProps}
               testID="header.rightIcon"
               buttonTestID="header.rightIcon.button"
@@ -399,7 +401,7 @@ const Header: React.FC<HeaderProps> = ({
             top: 0,
             width: '100%',
             height: insetTop,
-            backgroundColor: colors.background,
+            backgroundColor: colors.white,
           }}
         />
       </Animated.View>
@@ -409,12 +411,12 @@ const Header: React.FC<HeaderProps> = ({
   return <View testID="header">{children ? children : renderContent()}</View>;
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     bottomBorderAndShadow: {
       borderBottomWidth: Platform.OS === 'android' ? 0 : 0.5,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
       shadowOffset: {width: 0, height: 1},
       shadowColor: '#000',
       shadowOpacity: 0.1,

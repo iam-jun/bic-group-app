@@ -6,12 +6,13 @@ import React, {
   useImperativeHandle,
 } from 'react';
 import {StyleSheet, View, TextInput, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import Icon from '../Icon';
 import {fontFamilies} from '~/theme/fonts';
 import {TextInputProps} from './TextInput';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 export interface SearchInputProps extends TextInputProps {
   searchInputRef?: Ref<TextInput>;
@@ -40,7 +41,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
 }: SearchInputProps) => {
   const _searchInputRef = searchInputRef || useRef<any>();
 
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   const [text, setText] = useState<string>('');
@@ -75,7 +76,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
           style={styles.searchIcon}
           icon="search"
           size={20}
-          tintColor={theme.colors.textSecondary}
+          tintColor={theme.colors.gray50}
         />
         <TextInput
           ref={inputRef}
@@ -86,8 +87,8 @@ const SearchInput: React.FC<SearchInputProps> = ({
           autoComplete={'off'}
           onChangeText={_onChangeText}
           placeholder={placeholder}
-          placeholderTextColor={theme.colors.textSecondary}
-          selectionColor={theme.colors.textSecondary}
+          placeholderTextColor={theme.colors.gray50}
+          selectionColor={theme.colors.gray50}
           onFocus={_onFocus}
           returnKeyType={'search'}
           onSubmitEditing={_onSubmitEditing}
@@ -96,7 +97,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
           <Icon
             icon="iconClose"
             size={20}
-            tintColor={theme.colors.iconTint}
+            tintColor={theme.colors.neutral80}
             onPress={() => _onChangeText('')}
           />
         )}
@@ -105,14 +106,14 @@ const SearchInput: React.FC<SearchInputProps> = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {colors, spacing, dimension} = theme;
+const createStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {
       height: 40,
       borderRadius: 20,
-      backgroundColor: colors.placeholder,
+      backgroundColor: colors.neutral5,
       justifyContent: 'center',
       paddingHorizontal: 16,
     },
@@ -126,9 +127,9 @@ const createStyles = (theme: ITheme) => {
     textInput: {
       flex: 1,
       height: '100%',
-      fontFamily: fontFamilies.OpenSans,
-      fontSize: dimension?.sizes.body,
-      color: colors.textPrimary,
+      fontFamily: fontFamilies.BeVietnamProLight,
+      fontSize: dimension?.sizes.bodyM,
+      color: colors.neutral80,
     },
   });
 };

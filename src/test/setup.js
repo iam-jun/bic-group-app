@@ -99,20 +99,6 @@ jest.doMock('i18next', () => ({
   },
 }));
 
-jest.doMock('react-native-paper', () => ({
-  // eslint-disable-next-line react/prop-types
-  Portal: ({children}) => children,
-  useTheme: () => ({
-    colors: colors.light.colors,
-    spacing: spacing,
-    dimension: dimension,
-  }),
-  TextInput: {
-    ...ReactNative.TextInput,
-    Icon: ReactNative.View,
-  },
-}));
-
 jest.doMock('react-native-autogrow-textinput', () => ({
   // eslint-disable-next-line react/prop-types
   AutoGrowingTextInput: ({children, ...props}) => (

@@ -3,37 +3,37 @@ import {IObject} from '~/interfaces/common';
 export const fontConfig: IObject<any> = {
   ios: {
     regular: {
-      fontFamily: 'SVN-Poppins',
+      fontFamily: 'BeVietnamPro-Light',
       fontWeight: 'normal',
     },
     medium: {
-      fontFamily: 'SVN-PoppinsMedium',
+      fontFamily: 'BeVietnamPro-Medium',
       fontWeight: 'normal',
     },
     light: {
-      fontFamily: 'SegoeUI',
+      fontFamily: 'BeVietnamPro-Light',
       fontWeight: 'normal',
     },
     thin: {
-      fontFamily: 'SegoeUI',
+      fontFamily: 'BeVietnamPro-Light',
       fontWeight: 'normal',
     },
   },
   android: {
     regular: {
-      fontFamily: 'SVN-Poppins',
+      fontFamily: 'BeVietnamPro-Light',
       fontWeight: 'normal',
     },
     medium: {
-      fontFamily: 'SVN-PoppinsMedium',
+      fontFamily: 'BeVietnamPro-Medium',
       fontWeight: 'normal',
     },
     light: {
-      fontFamily: 'SegoeUI',
+      fontFamily: 'BeVietnamPro-Light',
       fontWeight: 'normal',
     },
     thin: {
-      fontFamily: 'SegoeUI',
+      fontFamily: 'BeVietnamPro-Light',
       fontWeight: 'normal',
     },
   },

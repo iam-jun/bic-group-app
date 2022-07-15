@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Avatar from '~/beinComponents/Avatar';
 import SearchInput, {
@@ -14,7 +14,9 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 
 import {IUser} from '~/interfaces/IAuth';
 import images from '~/resources/images';
-import {ITheme} from '~/theme/interfaces';
+import dimension from '~/theme/dimension';
+
+import spacing from '~/theme/spacing';
 import NoSearchResult from './NoSearchResult';
 
 export interface MembersSelectionProps {
@@ -46,9 +48,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   selectedUsers,
   onSelectUser,
 }: MembersSelectionProps): React.ReactElement => {
-  const theme: ITheme = useTheme() as ITheme;
-  const styles = createStyles(theme);
-  const {spacing} = theme;
+  const theme: ExtendedTheme = useTheme();
 
   const renderItemUser = ({item}: {item: IUser; index: number}) => {
     const selected = selectedUsers.find((user: IUser) => user.id === item.id);
@@ -58,10 +58,8 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
         ContentComponent={
           <Text.H6 numberOfLines={2}>
             {item.name}
-            <Text.Subtitle
-              color={
-                theme.colors.textSecondary
-              }>{` @${item.username}`}</Text.Subtitle>
+            <Text.BodyS
+              color={theme.colors.gray50}>{` @${item.username}`}</Text.BodyS>
           </Text.H6>
         }
         isChecked={!!selected}
@@ -106,9 +104,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
         />
       )}
       {data.length > 0 && (
-        <Text.ButtonBase style={styles.title}>
-          {i18next.t(title)}
-        </Text.ButtonBase>
+        <Text.ButtonM style={styles.title}>{i18next.t(title)}</Text.ButtonM>
       )}
     </View>
   );
@@ -148,29 +144,26 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {dimension, spacing} = theme;
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    searchInput: {
-      marginHorizontal: spacing?.margin.base,
-    },
-    title: {
-      marginVertical: spacing.margin.small,
-      marginHorizontal: spacing.margin.base,
-    },
-    marginRight: {
-      marginRight: spacing?.margin.base,
-    },
-    selectedUsers: {
-      marginHorizontal: spacing.margin.base,
-    },
-    itemSelectedUser: {
-      width: dimension?.avatarSizes.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  searchInput: {
+    marginHorizontal: spacing?.margin.base,
+  },
+  title: {
+    marginVertical: spacing.margin.small,
+    marginHorizontal: spacing.margin.base,
+  },
+  marginRight: {
+    marginRight: spacing?.margin.base,
+  },
+  selectedUsers: {
+    marginHorizontal: spacing.margin.base,
+  },
+  itemSelectedUser: {
+    width: dimension?.avatarSizes.large,
+  },
+});
 
 export default MembersSelection;

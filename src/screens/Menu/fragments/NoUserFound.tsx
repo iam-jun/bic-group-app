@@ -2,7 +2,7 @@ import {useNavigation} from '@react-navigation/native';
 import i18next from 'i18next';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import NoUserFoundImg from '~/../assets/images/no_user_found.svg';
 import Button from '~/beinComponents/Button';
@@ -10,10 +10,11 @@ import Header from '~/beinComponents/Header';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 
 const NoUserFound = () => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const navigation = useNavigation();
 
@@ -33,7 +34,7 @@ const NoUserFound = () => {
         />
         <View style={styles.description}>
           <Text.H6 useI18n>error:no_profile_found_desc</Text.H6>
-          <Text.Body useI18n>error:no_profile_found_second_desc</Text.Body>
+          <Text.BodyM useI18n>error:no_profile_found_second_desc</Text.BodyM>
         </View>
         <Button.Primary onPress={() => navigation.goBack()} useI18n>
           error:button_back_to_safety
@@ -43,11 +44,11 @@ const NoUserFound = () => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     root: {
-      backgroundColor: colors.placeholder,
+      backgroundColor: colors.neutral5,
     },
     mainContainer: {
       flex: 1,

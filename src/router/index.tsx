@@ -1,16 +1,12 @@
 /* @react-navigation v5 */
 import NetInfo from '@react-native-community/netinfo';
-import {
-  DarkTheme,
-  DefaultTheme,
-  NavigationContainer,
-} from '@react-navigation/native';
+import {NavigationContainer, useTheme} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Auth} from 'aws-amplify';
 import React, {useEffect} from 'react';
-import {Linking, StyleSheet, View} from 'react-native';
-/*Theme*/
-import {useTheme} from 'react-native-paper';
+import {Linking, StatusBar, StyleSheet, View} from 'react-native';
+import {Host} from 'react-native-portalize';
+
 import {useDispatch} from 'react-redux';
 import {put} from 'redux-saga/effects';
 import AlertModal from '~/beinComponents/modals/AlertModal';
@@ -40,6 +36,7 @@ import {isNavigationRefReady} from './helper';
 import * as screens from './navigator';
 import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
+import * as appTheme from '~/theme/theme';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -103,7 +100,7 @@ const StackNavigator = (): React.ReactElement => {
 
   const cardStyleConfig = navigationSetting.defaultNavigationOption.cardStyle;
 
-  const navigationTheme = theme.dark ? DarkTheme : DefaultTheme;
+  const navigationTheme = theme.dark ? appTheme.dark : appTheme.light;
 
   const onReady = () => {
     //@ts-ignore
@@ -117,43 +114,46 @@ const StackNavigator = (): React.ReactElement => {
 
   return (
     <View style={styles.container}>
+      <StatusBar
+        barStyle="dark-content"
+        translucent
+        backgroundColor="transparent"
+      />
       <NavigationContainer
         linking={linking}
         ref={rootNavigationRef}
         onReady={onReady}
-        theme={navigationTheme}
-        documentTitle={{
-          enabled: false,
-        }}>
-        <Stack.Navigator
-          //@ts-ignore
-          initialRouteName={user ? rootSwitch.mainStack : rootSwitch.authStack}
-          screenOptions={{cardStyle: cardStyleConfig}}>
-          <Stack.Screen
-            options={AppConfig.defaultScreenOptions}
-            //@ts-ignore
-            name={rootSwitch.authStack}
-            component={screens.AuthStack}
-          />
-          <Stack.Screen
-            options={AppConfig.defaultScreenOptions}
-            //@ts-ignore
-            name={rootSwitch.mainStack}
-            component={screens.MainStack}
-          />
-          <Stack.Screen
-            // @ts-ignore
-            name={rootSwitch.notFound}
-            component={screens.NotFound}
-          />
-        </Stack.Navigator>
+        theme={navigationTheme as any}
+        documentTitle={{enabled: false}}>
+        <Host>
+          <Stack.Navigator
+            initialRouteName={
+              (user ? rootSwitch.mainStack : rootSwitch.authStack) as any
+            }
+            screenOptions={{cardStyle: cardStyleConfig}}>
+            <Stack.Screen
+              options={AppConfig.defaultScreenOptions}
+              name={rootSwitch.authStack as any}
+              component={screens.AuthStack}
+            />
+            <Stack.Screen
+              options={AppConfig.defaultScreenOptions}
+              name={rootSwitch.mainStack as any}
+              component={screens.MainStack}
+            />
+            <Stack.Screen
+              name={rootSwitch.notFound as any}
+              component={screens.NotFound}
+            />
+          </Stack.Navigator>
+          <AlertNewFeatureModal />
+          <AlertModal />
+          <SystemIssueModal />
+          <LoadingModal />
+          <ToastMessage />
+          <InternetConnectionStatus />
+        </Host>
       </NavigationContainer>
-      <AlertModal />
-      <AlertNewFeatureModal />
-      <SystemIssueModal />
-      <LoadingModal />
-      <ToastMessage />
-      <InternetConnectionStatus />
     </View>
   );
 };
@@ -192,10 +192,10 @@ const getLinkingCustomConfig = (config: any, navigation: any) => {
           listener(url);
         }
       };
-      Linking.addEventListener('url', onReceiveURL);
+      const linkingListener = Linking.addEventListener('url', onReceiveURL);
 
       return () => {
-        Linking.removeEventListener('url', onReceiveURL);
+        linkingListener?.remove?.();
       };
     },
   };

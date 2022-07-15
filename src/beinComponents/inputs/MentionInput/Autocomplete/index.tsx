@@ -6,13 +6,14 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useKeyboardStatus} from '~/hooks/keyboard';
 import {useKeySelector} from '~/hooks/selector';
-import {ITheme} from '~/theme/interfaces';
+
 import Text from '~/beinComponents/Text';
 import AtMention from './AtMention';
 import {isEmpty} from 'lodash';
+import spacing from '~/theme/spacing';
 
 export type IModalPosition = 'top' | 'bottom' | 'above-keyboard';
 
@@ -45,7 +46,7 @@ const Autocomplete = ({
   const windowDimension = useWindowDimensions();
   const {data, key} = useKeySelector(type);
 
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(
     theme,
     modalPosition,
@@ -67,9 +68,9 @@ const Autocomplete = ({
         isEmpty(data) ? styles.hidden : {},
       ]}>
       {!!title && key === '' && data?.length === 0 && (
-        <Text.Subtitle testID="autocomplete.title" style={styles.textTitle}>
+        <Text.BodyS testID="autocomplete.title" style={styles.textTitle}>
           {title}
-        </Text.Subtitle>
+        </Text.BodyS>
       )}
       <AtMention {...props} />
     </View>
@@ -77,7 +78,7 @@ const Autocomplete = ({
 };
 
 const createStyles = (
-  theme: ITheme,
+  theme: ExtendedTheme,
   position: string,
   topPosition: number,
   measuredHeight: number,
@@ -85,7 +86,7 @@ const createStyles = (
   screenHeight: number,
   isListEmpty: boolean,
 ) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   const maxTopPosition = measuredHeight / 2;
 
@@ -130,7 +131,7 @@ const createStyles = (
       maxWidth: 355,
       maxHeight: maxModalHeight,
       borderRadius: 6,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       justifyContent: 'center',
       alignSelf: 'center',
       zIndex: 2,
@@ -139,7 +140,7 @@ const createStyles = (
       width: '100%',
       maxWidth: undefined,
       borderWidth: 1,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
       borderBottomLeftRadius: 0,
       borderBottomRightRadius: 0,
     },
@@ -165,7 +166,7 @@ const createStyles = (
     textTitle: {
       marginVertical: spacing.margin.small,
       marginHorizontal: spacing.margin.base,
-      color: colors.textSecondary,
+      color: colors.gray50,
     },
   });
 };

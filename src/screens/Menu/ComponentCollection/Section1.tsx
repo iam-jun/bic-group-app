@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
@@ -9,17 +9,16 @@ import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import NormalToastMessage from '~/beinComponents/ToastMessage/NormalToastMessage';
 // import {copyDeviceToken} from '~/store/app/actions';
-import {ITheme} from '~/theme/interfaces';
+
 import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {IToastMessage} from '~/interfaces/common';
 import {showHideToastMessage} from '~/store/modal/actions';
 import BannerMessage from '~/beinComponents/ToastMessage/BannerMessage';
-import Clipboard from '@react-native-clipboard/clipboard';
-import {getEnv} from '~/utils/env';
+import spacing from '~/theme/spacing';
 
 const Section1 = () => {
-  const {spacing, colors}: ITheme = useTheme() as ITheme;
+  const {colors}: ExtendedTheme = useTheme() as ExtendedTheme;
 
   const [showError, setShowError] = useState(true);
   const [showWarning, setShowWarning] = useState(true);
@@ -29,14 +28,6 @@ const Section1 = () => {
   // const copyToken = async () => {
   //   dispatch(copyDeviceToken());
   // };
-
-  const onPressDanger = () => {
-    alert('onPress Danger!');
-    const content = `pool:${getEnv('BEIN_AWS_USER_POOLS_ID')}|client:${getEnv(
-      'BEIN_AWS_USER_POOLS_WEB_CLIENT_ID',
-    )}|resource:${getEnv('BEIN_RESOURCE')}`;
-    Clipboard.setString(content);
-  };
 
   const renderSection = (title: string, child: React.ReactNode) => {
     return (
@@ -66,19 +57,8 @@ const Section1 = () => {
         <Text.H4>H4. Lorem Ipsum is simply dummy text</Text.H4>
         <Text.H5>H5. Lorem Ipsum is simply dummy text</Text.H5>
         <Text.H6>H6. Lorem Ipsum is simply dummy text</Text.H6>
-        <Text.ButtonBase>
-          ButtonBase. Lorem Ipsum is simply dummy text
-        </Text.ButtonBase>
-        <Text.ButtonSmall>
-          ButtonSmall. Lorem Ipsum is simply dummy text
-        </Text.ButtonSmall>
         <Text.BodyM>BodyM. Lorem Ipsum is simply dummy text</Text.BodyM>
-        <Text.Body>Body. Lorem Ipsum is simply dummy text</Text.Body>
-        <Text.BodySM>BodySM. Lorem Ipsum is simply dummy text</Text.BodySM>
         <Text.BodyS>BodyS. Lorem Ipsum is simply dummy text</Text.BodyS>
-        <Text.Subtitle>
-          Subtitle. Lorem Ipsum is simply dummy text
-        </Text.Subtitle>
         {/* <Text
           useParseText
           onPressAudience={audience =>
@@ -256,14 +236,14 @@ const Section1 = () => {
             justifyContent: 'space-around',
           }}>
           <Button
-            textVariant={'buttonSmall'}
+            textVariant={'buttonS'}
             onPress={() => alert('onPress')}
             onLongPress={() => alert('onLongPress')}>
             ButtonSmall
           </Button>
           <Button
             disabled
-            textVariant={'buttonSmall'}
+            textVariant={'buttonS'}
             onPress={() => alert('onPress')}
             onLongPress={() => alert('onLongPress')}>
             ButtonSmall Disable
@@ -295,7 +275,7 @@ const Section1 = () => {
             Default
           </Button.Primary>
           <Button.Primary
-            color={colors.iconTint}
+            color={colors.neutral80}
             onPress={() => alert('onPress')}>
             Hover
           </Button.Primary>
@@ -336,9 +316,9 @@ const Section1 = () => {
           </Button.Secondary>
         </View>
         <Button.Secondary
-          color={colors.primary3}
+          color={colors.purple10}
           leftIcon={'Bell'}
-          leftIconProps={{icon: 'Bell', tintColor: colors.primary6}}
+          leftIconProps={{icon: 'Bell', tintColor: colors.purple50}}
           rightIcon={'ArrowRight'}
           onPress={() => alert('onPress')}
           onLongPress={() => alert('onLongPress')}>
@@ -346,7 +326,7 @@ const Section1 = () => {
         </Button.Secondary>
         <Button.Secondary
           disabled
-          color={colors.primary3}
+          color={colors.purple10}
           style={{marginTop: spacing?.margin.small}}
           leftIcon={'Emoji'}
           rightIcon={'ArrowRight'}
@@ -354,9 +334,9 @@ const Section1 = () => {
           onLongPress={() => alert('onLongPress')}>
           Custom color, left, right icon
         </Button.Secondary>
-        <Text.Subtitle>
+        <Text.BodyS>
           text not centered because of font, designer confirmed...
-        </Text.Subtitle>
+        </Text.BodyS>
         <Divider
           style={{
             margin: spacing?.margin.base,
@@ -372,7 +352,7 @@ const Section1 = () => {
             justifyContent: 'space-around',
           }}>
           <Button.Danger
-            onPress={onPressDanger}
+            onPress={() => alert('onPress')}
             onLongPress={() => alert('onLongPress')}>
             Default
           </Button.Danger>
@@ -397,7 +377,7 @@ const Section1 = () => {
         />
         <View
           style={{
-            backgroundColor: colors.bgButtonPrimary,
+            backgroundColor: colors.purple50,
             marginHorizontal: -12,
             paddingTop: spacing?.padding.base,
             paddingBottom: spacing?.padding.large,

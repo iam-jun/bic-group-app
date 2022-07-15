@@ -2,7 +2,7 @@ import {isEmpty, isNumber} from 'lodash';
 import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import Collapsible from 'react-native-collapsible';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Text from '~/beinComponents/Text';
@@ -15,7 +15,8 @@ import appConfig from '~/configs/appConfig';
 import {useBaseHook} from '~/hooks';
 import {IActivityDataFile} from '~/interfaces/IPost';
 import {IGetFile} from '~/services/fileUploader';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 import {formatBytes} from '~/utils/formatData';
 
 interface Props extends Partial<UploadingFileProps> {
@@ -34,7 +35,7 @@ const FilesView = ({
 }: Props) => {
   if (isEmpty(files)) return null;
 
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
   const [collapsed, setCollaped] = useState(true);
@@ -55,7 +56,7 @@ const FilesView = ({
           {...props}
         />
         {index < files.length - 1 && (
-          <ViewSpacing height={theme.spacing.margin.small} />
+          <ViewSpacing height={spacing.margin.small} />
         )}
       </View>
     ));
@@ -73,36 +74,36 @@ const FilesView = ({
           </Collapsible>
 
           <ButtonWrapper onPress={toggleCollapse}>
-            <Text.Subtitle style={styles.collapsibleText}>
+            <Text.BodyS style={styles.collapsibleText}>
               {t(`common:${collapsed ? 'text_show_all' : 'text_show_less'}`)}
-            </Text.Subtitle>
+            </Text.BodyS>
           </ButtonWrapper>
         </View>
       )}
 
       {isNumber(remainingSize) && (
-        <Text.Subtitle style={styles.remainingText}>
+        <Text.BodyS style={styles.remainingText}>
           {t('upload:text_file_remainning', {
             max_files: appConfig.maxFiles,
             remaining_size: formatBytes(remainingSize),
           })}
-        </Text.Subtitle>
+        </Text.BodyS>
       )}
     </View>
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     remainingText: {
       marginHorizontal: spacing.margin.large,
       marginTop: spacing.margin.small,
-      color: theme.colors.textSecondary,
+      color: colors.gray50,
     },
     collapsibleText: {
       marginVertical: spacing.margin.small,
-      color: theme.colors.textSecondary,
+      color: colors.gray50,
     },
   });
 };

@@ -1,7 +1,5 @@
 import React, {FC} from 'react';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Button from '~/beinComponents/Button';
 import icons from '~/resources/icons';
@@ -22,7 +20,7 @@ const ButtonDiscoverItemAction: FC<ButtonDiscoverItemActionProps> = ({
   onJoin,
   joinStatus,
 }: ButtonDiscoverItemActionProps) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   let icon, text;
@@ -34,7 +32,7 @@ const ButtonDiscoverItemAction: FC<ButtonDiscoverItemActionProps> = ({
       text = 'common:btn_cancel';
       break;
     case groupJoinStatus.visitor:
-      icon = icons.Plus;
+      icon = 'Plus';
       text = 'common:btn_join';
       break;
     case groupJoinStatus.member:
@@ -69,10 +67,10 @@ const ButtonDiscoverItemAction: FC<ButtonDiscoverItemActionProps> = ({
   return (
     <Button.Secondary
       textVariant={'h5'}
-      textColor={colors.textPrimary}
+      textColor={colors.neutral80}
       leftIcon={icon}
       useI18n
-      color={colors.bgHover}
+      color={colors.neutral5}
       onPress={onPress}>
       {text}
     </Button.Secondary>

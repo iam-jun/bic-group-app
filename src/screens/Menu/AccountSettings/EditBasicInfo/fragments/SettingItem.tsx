@@ -1,14 +1,14 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import i18next from 'i18next';
 
 import {IconType} from '~/resources/icons';
-import {ITheme} from '~/theme/interfaces';
 
 import Icon from '~/beinComponents/Icon';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
+import spacing from '~/theme/spacing';
 
 interface SettingItemProps {
   title: string;
@@ -29,8 +29,7 @@ const SettingItem = ({
   testID,
   onPress,
 }: SettingItemProps) => {
-  const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
+  const theme: ExtendedTheme = useTheme();
 
   return (
     <TouchableOpacity
@@ -41,14 +40,14 @@ const SettingItem = ({
         testID={testID}
         title={i18next.t(title)}
         subTitle={subtitle}
-        subTitleProps={{variant: 'subtitle'}}
+        subTitleProps={{variant: 'bodyS'}}
         LeftComponent={
           leftIcon ? (
             <Icon
               testID="edit_user_info.setting_item.left_component"
               icon={leftIcon}
               size={24}
-              tintColor={theme.colors.primary6}
+              tintColor={theme.colors.purple50}
               style={styles.leftIcon}
             />
           ) : null
@@ -70,15 +69,11 @@ const SettingItem = ({
 
 export default SettingItem;
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    rightIcon: {
-      marginLeft: spacing.margin.small,
-    },
-    leftIcon: {
-      marginRight: spacing.margin.base,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  rightIcon: {
+    marginLeft: spacing.margin.small,
+  },
+  leftIcon: {
+    marginRight: spacing.margin.base,
+  },
+});

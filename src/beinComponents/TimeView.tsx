@@ -1,12 +1,11 @@
 import React, {FC, useCallback, useContext, useEffect, useState} from 'react';
 import {StyleProp, TextStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import i18next from 'i18next';
 
 import moment from 'moment';
 import 'moment/locale/vi';
 
-import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import {AppContext} from '~/contexts/AppContext';
 
@@ -31,7 +30,7 @@ const TimeView: FC<TimeViewProps> = ({
   const [displayTime, setDisplayTime] = useState('');
 
   const {language} = useContext(AppContext);
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   useEffect(() => {
@@ -73,7 +72,7 @@ const TimeView: FC<TimeViewProps> = ({
   return (
     <Text.BodyS
       testID={testID || 'time_view'}
-      color={colors.textSecondary}
+      color={colors.gray50}
       style={style}
       {...textProps}>
       {displayTime}

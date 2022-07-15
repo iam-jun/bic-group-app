@@ -31,7 +31,6 @@ export const userProfileImageCropRatio = {
 
 /* Size config used for Text */
 export const sizes = {
-  base: 14,
   h1: 32,
   h2: 28,
   h3: 24,
@@ -68,20 +67,12 @@ export const sizes = {
   numberM: 15,
   numberS: 13,
   captionS: 11,
-  h6s: 14,
-  buttonBase: 16,
-  buttonSmall: 12,
-  body: 16,
-  bodySM: 14,
-  subtitle: 12,
-  error: 16,
   code: 16,
-  heading: 12,
+  error: 16,
 };
 
 /* Line Height used for Text */
 export const lineHeights = {
-  base: 24,
   h1: 48,
   h2: 42,
   h3: 36,
@@ -118,15 +109,8 @@ export const lineHeights = {
   numberM: 22,
   numberS: 20,
   captionS: 16,
-  h6s: 20,
-  buttonBase: 24,
-  buttonSmall: 16,
-  body: 24,
-  bodySM: 20,
-  subtitle: 16,
-  error: 24,
   code: 24,
-  heading: 16,
+  error: 24,
 };
 
 export const letterSpacing = {
@@ -137,14 +121,8 @@ export const letterSpacing = {
   h4: 0,
   h5: 0,
   h6: 0,
-  h6s: 0,
-  buttonBase: 0,
-  buttonSmall: 0,
   bodyM: 0,
-  body: 0,
-  bodySM: 0,
   bodyS: 0,
-  subtitle: 0,
   error: 0,
   code: 0,
 };

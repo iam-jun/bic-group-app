@@ -1,10 +1,9 @@
 import React, {FC} from 'react';
 import {View, StyleProp, ViewStyle, TextStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
+import spacing from '~/theme/spacing';
 
 export interface TextBadgeProps {
   style?: StyleProp<ViewStyle>;
@@ -25,18 +24,18 @@ const TextBadge: FC<TextBadgeProps> = ({
   variant,
   useI18n = true,
 }: TextBadgeProps) => {
-  const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
 
   if (!value) {
     return null;
   }
 
-  let _textColor = colors.badgeActive;
-  let _backgroundColor = colors.badgeBackgroundActive;
+  let _textColor = colors.blue50;
+  let _backgroundColor = colors.green20;
   if (variant === 'blue') {
-    _textColor = colors.badgeInfo;
-    _backgroundColor = colors.badgeBackgroundInfo;
+    _textColor = colors.blue50;
+    _backgroundColor = colors.blue20;
   }
 
   const containerStyle = {
@@ -52,9 +51,9 @@ const TextBadge: FC<TextBadgeProps> = ({
 
   return (
     <View style={[containerStyle, style]} testID="text_badge">
-      <Text.HeadingSB useI18n={useI18n} style={[_textStyle, textStyle]}>
+      <Text.BodySMedium useI18n={useI18n} style={[_textStyle, textStyle]}>
         {value}
-      </Text.HeadingSB>
+      </Text.BodySMedium>
     </View>
   );
 };

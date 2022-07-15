@@ -1,14 +1,13 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import {IGroup} from '~/interfaces/IGroup';
 import Icon from '~/beinComponents/Icon';
 import privacyTypes from '~/constants/privacyTypes';
 import Avatar from '~/beinComponents/Avatar';
+import spacing from '~/theme/spacing';
 
 export interface ReorderGroupHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -18,8 +17,7 @@ export interface ReorderGroupHeaderProps {
 const ReorderGroupInfo: FC<ReorderGroupHeaderProps> = ({
   group,
 }: ReorderGroupHeaderProps) => {
-  const theme = useTheme() as ITheme;
-  const {spacing} = theme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const {privacy, icon, name} = group || {};
@@ -50,8 +48,8 @@ const ReorderGroupInfo: FC<ReorderGroupHeaderProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       marginHorizontal: spacing.margin.large,
@@ -69,7 +67,7 @@ const createStyle = (theme: ITheme) => {
       position: 'absolute',
       bottom: 0,
       right: 0,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       borderRadius: 2,
     },
     groupInfo: {
@@ -85,7 +83,7 @@ const createStyle = (theme: ITheme) => {
       width: 6,
       height: 6,
       borderRadius: 3,
-      backgroundColor: colors.bgFocus,
+      backgroundColor: colors.gray20,
     },
   });
 };

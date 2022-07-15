@@ -2,8 +2,8 @@ import React from 'react';
 import type {TextProps as RNTextProps} from 'react-native';
 import {TextInput} from 'react-native';
 import Animated, {useAnimatedProps} from 'react-native-reanimated';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
+
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
 import {TextVariant} from '~/beinComponents/Text/index';
 
@@ -18,12 +18,12 @@ interface TextProps {
 
 const AnimatedTextInput = Animated.createAnimatedComponent(TextInput);
 
-const TextAnimated = ({variant = 'body', color, ...props}: TextProps) => {
-  const theme: ITheme = useTheme() as ITheme;
+const TextAnimated = ({variant = 'bodyM', color, ...props}: TextProps) => {
+  const theme: ExtendedTheme = useTheme();
   const textStyles = createTextStyle(theme);
 
   const _style = textStyles[variant];
-  const colorStyle = {color: color || theme.colors.textPrimary};
+  const colorStyle = {color: color || theme.colors.neutral80};
 
   const {sharedValue, style} = {style: {}, ...props};
   const animatedProps = useAnimatedProps(() => {
