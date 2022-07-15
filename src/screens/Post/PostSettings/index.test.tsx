@@ -43,7 +43,7 @@ describe('Post Setting Screen', () => {
       'post_settings.toggle_important.out_side_view',
     );
     expect(toggleImportant?.props?.style?.backgroundColor).toEqual(
-      colors.light.colors.borderCard,
+      colors.light.colors.gray40,
     );
   });
 
@@ -58,7 +58,7 @@ describe('Post Setting Screen', () => {
       'post_settings.toggle_important.out_side_view',
     );
     expect(toggleImportantView?.props?.style?.backgroundColor).toEqual(
-      colors.light.colors.borderCard,
+      colors.light.colors.gray40,
     );
 
     //active important
@@ -105,7 +105,7 @@ describe('Post Setting Screen', () => {
 
     expect(btnSave?.props?.accessibilityState?.disabled).toBe(false);
     expect(toggleImportantView?.props?.style?.backgroundColor).toEqual(
-      colors.light.colors.borderCard,
+      colors.light.colors.gray40,
     );
   });
 

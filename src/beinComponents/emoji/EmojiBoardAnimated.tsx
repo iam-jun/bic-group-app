@@ -12,12 +12,10 @@ import {
   Animated,
   Keyboard,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useKeyboard} from '@react-native-community/hooks';
 
-import {ITheme} from '~/theme/interfaces';
-
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
+import dimension from '~/theme/dimension';
 
 export interface EmojiBoardAnimatedProps {
   emojiBoardRef?: any;
@@ -40,10 +38,6 @@ const EmojiBoardAnimated: FC<EmojiBoardAnimatedProps> = ({
   const _emojiBoardRef = emojiBoardRef || useRef();
 
   const visibleAnim = useRef(new Animated.Value(0)).current;
-
-  const theme = useTheme() as ITheme;
-  const {dimension} = theme;
-  const styles = createStyle(theme);
 
   const keyboard = useKeyboard();
 
@@ -105,13 +99,10 @@ const EmojiBoardAnimated: FC<EmojiBoardAnimatedProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
-  return StyleSheet.create({
-    container: {
-      overflow: 'hidden',
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    overflow: 'hidden',
+  },
+});
 
 export default EmojiBoardAnimated;

@@ -8,12 +8,12 @@ import {
   KeyboardAvoidingView,
   DeviceEventEmitter,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import debounce from 'lodash/debounce';
 
 import {useBaseHook} from '~/hooks';
-import {ITheme} from '~/theme/interfaces';
+
 import postActions from '~/screens/Post/redux/actions';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -40,6 +40,7 @@ import {
 import {ICreatePostParams} from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import spacing from '~/theme/spacing';
 
 export interface PostSelectAudienceProps {
   route?: {
@@ -80,8 +81,8 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
-  const theme: ITheme = useTheme() as ITheme;
-  const {spacing, colors} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const insets = useSafeAreaInsets();
@@ -236,7 +237,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
             cancelBtn: true,
             cancelLabel: t('common:btn_discard'),
             confirmLabel: t('post:create_post:btn_keep_selecting'),
-            onDismiss: () => rootNavigation.goBack(),
+            onCancel: () => rootNavigation.goBack(),
           }),
         );
       } else {
@@ -252,7 +253,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
             cancelBtn: true,
             cancelLabel: t('common:btn_discard'),
             confirmLabel: t('post:create_post:btn_keep_edit'),
-            onDismiss: () => rootNavigation.goBack(),
+            onCancel: () => rootNavigation.goBack(),
           }),
         );
       } else {
@@ -391,7 +392,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     return (
       <View>
         {loading && (
-          <ActivityIndicator size={'large'} color={colors.borderDivider} />
+          <ActivityIndicator size={'large'} color={colors.neutral5} />
         )}
       </View>
     );
@@ -456,8 +457,8 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {},
     searchInput: {
@@ -468,7 +469,7 @@ const createStyle = (theme: ITheme) => {
       paddingHorizontal: undefined,
     },
     sectionHeaderContainer: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     sectionHeaderText: {
       marginVertical: spacing?.margin.small,

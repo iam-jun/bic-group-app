@@ -56,11 +56,11 @@ describe('ButtonDanger conponent', () => {
     expect(onPress).not.toBeCalled();
 
     expect(component.props.style.backgroundColor).toBe(
-      colors.light.colors.bgDisable,
+      colors.light.colors.gray20,
     );
 
     expect(component.props.children[0].props.children[2].props.color).toBe(
-      colors.light.colors.textDisabled,
+      colors.light.colors.gray40,
     );
   });
 });

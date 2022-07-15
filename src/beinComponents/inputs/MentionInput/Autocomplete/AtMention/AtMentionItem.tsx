@@ -1,11 +1,12 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import images from '~/resources/images';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 
 interface Props {
   testID?: string;
@@ -14,7 +15,7 @@ interface Props {
 }
 
 const AtMentionItem = ({item, onPress}: Props) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   const _onPressItem = () => {
@@ -55,8 +56,8 @@ const AtMentionItem = ({item, onPress}: Props) => {
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -67,7 +68,7 @@ const createStyles = (theme: ITheme) => {
       marginVertical: spacing.margin.small,
     },
     mentionContainer: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     mentionAll: {
       flexDirection: 'row',

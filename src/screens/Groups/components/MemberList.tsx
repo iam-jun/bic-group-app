@@ -6,14 +6,14 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import React from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
 import Text from '~/beinComponents/Text';
 import MemberItem from './MemberItem';
 import {getMembersSection} from '../redux/selectors';
 import appConfig from '~/configs/appConfig';
+import spacing from '~/theme/spacing';
 
 interface MemberListProps {
   type: 'group' | 'community';
@@ -30,7 +30,7 @@ const MemberList = ({
   onPressMenu,
   onRefresh,
 }: MemberListProps) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyles(theme);
 
@@ -45,7 +45,7 @@ const MemberList = ({
     return (
       <View style={styles.sectionHeader}>
         <Text.BodyM
-          color={colors.textPrimary}>{`${title} • ${user_count}`}</Text.BodyM>
+          color={colors.neutral80}>{`${title} • ${user_count}`}</Text.BodyM>
       </View>
     );
   };
@@ -98,7 +98,7 @@ const MemberList = ({
           <RefreshControl
             refreshing={loading}
             onRefresh={onRefresh}
-            tintColor={colors.borderDisable}
+            tintColor={colors.gray40}
           />
         ) : undefined
       }
@@ -106,11 +106,11 @@ const MemberList = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     content: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     itemContainer: {
       height: undefined,

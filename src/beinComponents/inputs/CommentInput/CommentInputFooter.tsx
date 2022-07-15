@@ -1,16 +1,17 @@
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import Animated, {
   interpolate,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
 import MentionBar from '~/beinComponents/inputs/MentionInput/MentionBar';
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface CommentInputFooterProps {
   useTestID?: boolean;
@@ -35,7 +36,7 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
 }: CommentInputFooterProps) => {
   const showMentionValue = useSharedValue(0);
 
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -64,7 +65,7 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
             onPress={onPressFile}>
             <Icon
               style={styles.icon}
-              tintColor={colors.iconTintLight}
+              tintColor={colors.gray50}
               icon={'Paperclip'}
             />
           </Button>
@@ -75,7 +76,7 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
             <Icon
               size={18}
               style={styles.icon}
-              tintColor={colors.iconTintLight}
+              tintColor={colors.gray50}
               icon={'Image'}
             />
           </Button>
@@ -85,7 +86,7 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
             onPress={onPressCamera}>
             <Icon
               style={styles.icon}
-              tintColor={colors.iconTintLight}
+              tintColor={colors.gray50}
               icon={'Camera'}
             />
           </Button>
@@ -95,7 +96,7 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
             onPress={onPressEmoji}>
             <Icon
               style={styles.icon}
-              tintColor={colors.iconTintLight}
+              tintColor={colors.gray50}
               icon="iconAddGif"
             />
           </Button>
@@ -127,17 +128,17 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       borderTopWidth: 1,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
     },
     buttonsContainer: {
       minHeight: 48,
       flexDirection: 'row',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingTop: spacing.padding.small,
       paddingLeft: spacing.padding.large,
       paddingRight: spacing.padding.small,
@@ -146,7 +147,7 @@ const createStyle = (theme: ITheme) => {
       borderTopWidth: 0,
       minHeight: 48,
       justifyContent: 'center',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     icon: {marginRight: spacing.margin.large},
     buttonSend: {paddingLeft: spacing.padding.large},

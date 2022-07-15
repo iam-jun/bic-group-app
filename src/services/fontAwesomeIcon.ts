@@ -31,6 +31,7 @@ import {faCopy} from '@fortawesome/pro-regular-svg-icons/faCopy';
 import {faCircleUser} from '@fortawesome/pro-regular-svg-icons/faCircleUser';
 import {faCamera} from '@fortawesome/pro-regular-svg-icons/faCamera';
 import {faLock} from '@fortawesome/pro-regular-svg-icons/faLock';
+import {faLockKeyhole} from '@fortawesome/pro-regular-svg-icons/faLockKeyhole';
 import {faGlobe} from '@fortawesome/pro-regular-svg-icons/faGlobe';
 import {faCalendar} from '@fortawesome/pro-regular-svg-icons/faCalendar';
 import {faUserXmark} from '@fortawesome/pro-regular-svg-icons/faUserXmark';
@@ -88,6 +89,28 @@ import {faBookOpen} from '@fortawesome/pro-regular-svg-icons/faBookOpen';
 import {faCircleQuestion} from '@fortawesome/pro-regular-svg-icons/faCircleQuestion';
 import {faCommentSmile} from '@fortawesome/pro-regular-svg-icons/faCommentSmile';
 import {faCreditCard} from '@fortawesome/pro-regular-svg-icons/faCreditCard';
+import {faUser} from '@fortawesome/pro-regular-svg-icons/faUser';
+import {faShieldCheck} from '@fortawesome/pro-regular-svg-icons/faShieldCheck';
+import {faDesktop} from '@fortawesome/pro-regular-svg-icons/faDesktop';
+import {faCoins} from '@fortawesome/pro-regular-svg-icons/faCoins';
+import {faShieldHalved} from '@fortawesome/pro-regular-svg-icons/faShieldHalved';
+import {faFloppyDisk} from '@fortawesome/pro-regular-svg-icons/faFloppyDisk';
+
+/**
+ * We add single icon from package to reduce bundle size
+ * 1. Find icon on https://fontawesome.com/search?s=regular%2Csolid
+ *   - Press on icon, we will have html tag like this: <i class="fa-regular fa-360-degrees"></i>
+ *   - The NEW_ICON_NAME will be `360Degrees`
+ * 2. Add to `fontAwesomeIcons`
+ *   - key: NEW_ICON_NAME (360Degrees)
+ *   - value: class name (fa-regular fa-360-degrees)
+ * 3. Import from lib:
+ *   FILE_NAME: `fa${NEW_ICON_NAME}` (fa360Degrees)
+ *   - with regular icon: '@fortawesome/pro-regular-svg-icons/FILE_NAME'
+ *   - with solid icon: '@fortawesome/pro-solid-svg-icons/FILE_NAME'
+ * 4. Keep FILE_NAME with font regular, with font solid, add `Solid` at the bottom: `${FILE_NAME}Solid`
+ * 5. Add file imported to library in `initFontAwesomeIcon`
+ */
 
 export const initFontAwesomeIcon = () => {
   library.add(
@@ -123,6 +146,7 @@ export const initFontAwesomeIcon = () => {
     faCircleUser,
     faCamera,
     faLock,
+    faLockKeyhole,
     faGlobe,
     faCalendar,
     faUserXmark,
@@ -180,6 +204,12 @@ export const initFontAwesomeIcon = () => {
     faCircleQuestion,
     faCommentSmile,
     faCreditCard,
+    faUser,
+    faShieldCheck,
+    faDesktop,
+    faCoins,
+    faShieldHalved,
+    faFloppyDisk,
   );
 };
 
@@ -216,6 +246,7 @@ export const fontAwesomeIcons = {
   CircleUser: 'fa-regular fa-circle-user',
   Camera: 'fa-regular fa-camera',
   Lock: 'fa-regular fa-lock',
+  LockKeyhole: 'fa-regular fa-lock-keyhole',
   Globe: 'fa-regular fa-globe',
   Calendar: 'fa-regular fa-calendar',
   UserXmark: 'fa-regular fa-user-xmark',
@@ -274,19 +305,13 @@ export const fontAwesomeIcons = {
   CircleQuestion: 'fa-regular fa-circle-question',
   CommentSmile: 'fa-regular fa-comment-smile',
   CreditCard: 'fa-regular fa-credit-card',
+  User: 'fa-regular fa-user',
+  ShieldCheck: 'fa-regular fa-shield-check',
+  Monitor: 'fa-regular fa-desktop',
+  Coins: 'fa-regular fa-coins',
+  ShieldHalved: 'fa-regular fa-shield-halved',
+  FloppyDisk: 'fa-regular fa-floppy-disk',
 };
-
-/**
- * We add single icon from package to reduce bundle size
- * 1. Find icon on https://fontawesome.com/search?s=regular%2Csolid
- * 2. Import from lib:
- *   - with regular icon: '@fortawesome/pro-regular-svg-icons/NEW_ICON_NAME'
- *   - with solid icon: '@fortawesome/pro-solid-svg-icons/NEW_ICON_NAME'
- * 3. Add to library in `initFontAwesomeIcon`
- * 4. Add to `fontAwesomeIcons`
- *   - key: with regular icon, just use name, with solid icon, add `Solid` after name
- *   - value: copy class || react icon as value
- */
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(
   (acc, cur) => ({...acc, [cur]: cur}),

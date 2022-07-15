@@ -1,16 +1,16 @@
 import * as React from 'react';
 import {render, cleanup} from '@testing-library/react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+
 import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);
 
 describe('Text component', () => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createTextStyle(theme);
   it(`renders correctly`, () => {
     const rendered = render(<Text />).toJSON();

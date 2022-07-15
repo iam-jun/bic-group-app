@@ -9,7 +9,7 @@ import {
   useWindowDimensions,
   View,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
@@ -23,7 +23,8 @@ import appConfig from '~/configs/appConfig';
 import * as validation from '~/constants/commonRegex';
 import {useKeySelector} from '~/hooks/selector';
 import {ICountryCodeList} from '~/interfaces/common';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 import {formatTextRemoveSpace} from '~/utils/formatData';
 import menuActions from '../../../redux/actions';
 import menuKeySelector from '../../../redux/keySelector';
@@ -48,7 +49,7 @@ const EditPhoneNumber = ({
 }: EditPhoneNumberProps) => {
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme, screenHeight);
   const dispatch = useDispatch();
 
@@ -140,7 +141,7 @@ const EditPhoneNumber = ({
     return (
       <Button
         testID="edit_phone_number.country_code"
-        textProps={{color: theme.colors.textInput, variant: 'bodyM'}}
+        textProps={{color: theme.colors.neutral80, variant: 'bodyM'}}
         style={styles.buttonDropDown}
         contentStyle={styles.buttonDropDownContent}
         rightIcon={'AngleDown'}
@@ -171,8 +172,8 @@ const EditPhoneNumber = ({
               helperContent={errorsState?.phoneNumber?.message}
               keyboardType="numeric"
               autoCapitalize="none"
-              activeOutlineColor={theme.colors.primary6}
-              outlineColor={theme.colors.borderCard}
+              activeOutlineColor={theme.colors.purple50}
+              outlineColor={theme.colors.gray40}
             />
           )}
           rules={{
@@ -209,8 +210,8 @@ const EditPhoneNumber = ({
 
 export default EditPhoneNumber;
 
-const createStyles = (theme: ITheme, screenHeight: number) => {
-  const {spacing, colors} = theme;
+const createStyles = (theme: ExtendedTheme, screenHeight: number) => {
+  const {colors} = theme;
 
   return StyleSheet.create({
     inputsView: {
@@ -227,7 +228,7 @@ const createStyles = (theme: ITheme, screenHeight: number) => {
     buttonDropDown: {
       borderRadius: spacing.borderRadius.small,
       borderWidth: 1,
-      borderColor: colors.borderCard,
+      borderColor: colors.gray40,
       minHeight: 40,
       alignItems: 'stretch',
       justifyContent: 'center',

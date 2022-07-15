@@ -1,11 +1,9 @@
 import i18next from 'i18next';
 import {debounce} from 'lodash';
 import React, {useCallback, useEffect, useState} from 'react';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import {IUser} from '~/interfaces/IAuth';
-import {ITheme} from '~/theme/interfaces';
 import groupsActions from '../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
@@ -15,13 +13,11 @@ import MembersSelection from '~/beinFragments/MembersSelection';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import spacing from '~/theme/spacing';
 
 const AddMembersToGroup = (props: any) => {
   const params = props.route.params;
   const {groupId} = params || {};
-
-  const theme: ITheme = useTheme() as ITheme;
-  const {spacing} = theme;
 
   const dispatch = useDispatch();
   const selectedUsers = useKeySelector(groupsKeySelector.selectedUsers);
@@ -79,7 +75,7 @@ const AddMembersToGroup = (props: any) => {
         }}
         onPressButton={onInvitePress}
       />
-      <ViewSpacing height={spacing?.margin.base} />
+      <ViewSpacing height={spacing.margin.base} />
       <MembersSelection
         selectable
         selectedUsers={selectedUsers}

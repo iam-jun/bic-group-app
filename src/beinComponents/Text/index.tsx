@@ -1,9 +1,9 @@
 import React from 'react';
 import {Text as TextRN, TextProps as RNTextProps} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
 import {useBaseHook} from '~/hooks';
-import {ITheme} from '~/theme/interfaces';
 
 export type TextVariant =
   | 'h1'
@@ -61,7 +61,7 @@ const TextComponent: React.FC<TextProps> = ({
   maxLength,
   ...props
 }: TextProps) => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const styles = createTextStyle(theme);
   const textStyle = styles[variant || 'bodyM'];

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {useIsFocused} from '@react-navigation/native';
 
@@ -17,7 +17,7 @@ import {accountSettingsMenu} from '~/constants/settings';
 import {AppContext} from '~/contexts/AppContext';
 import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
-import {ITheme} from '~/theme/interfaces';
+
 import {ILanguage, ISetting} from '~/interfaces/common';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import * as modalActions from '~/store/modal/actions';
@@ -26,10 +26,10 @@ import appActions from '~/store/app/actions';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import {useKeySelector} from '~/hooks/selector';
 import menuKeySelector from '../redux/keySelector';
+import spacing from '~/theme/spacing';
 
 const GeneralSettings = () => {
-  const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
@@ -80,7 +80,7 @@ const GeneralSettings = () => {
               <Icon
                 icon={'Check'}
                 size={24}
-                tintColor={theme.colors.primary7}
+                tintColor={theme.colors.purple60}
               />
             ) : null
           }
@@ -106,7 +106,7 @@ const GeneralSettings = () => {
         ContentComponent={
           <View>
             <Text.ButtonS
-              color={theme.colors.textSecondary}
+              color={theme.colors.gray50}
               style={styles.chooseLanguageText}
               useI18n>
               settings:title_choose_language
@@ -127,21 +127,17 @@ const GeneralSettings = () => {
 
 export default GeneralSettings;
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    container: {},
-    menuList: {
-      marginTop: spacing.margin.base,
-    },
-    chooseLanguageText: {
-      margin: spacing.margin.base,
-      marginHorizontal: spacing.margin.extraLarge,
-    },
-    languageOption: {
-      height: 48,
-      paddingHorizontal: spacing.padding.extraLarge,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {},
+  menuList: {
+    marginTop: spacing.margin.base,
+  },
+  chooseLanguageText: {
+    margin: spacing.margin.base,
+    marginHorizontal: spacing.margin.extraLarge,
+  },
+  languageOption: {
+    height: 48,
+    paddingHorizontal: spacing.padding.extraLarge,
+  },
+});

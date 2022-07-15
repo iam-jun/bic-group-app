@@ -305,7 +305,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
                 ...state.permissionScheme.creatingScheme,
                 ...payload,
               }
-            : {},
+            : groupInitState.permissionScheme.creatingScheme,
         },
       };
     case groupsTypes.SET_CREATING_SCHEME_DATA:
@@ -321,7 +321,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
                   cloneDeep(state.permissionScheme.creatingScheme.data),
                   payload,
                 )
-              : {},
+              : groupInitState.permissionScheme.creatingScheme.data,
           },
         },
       };

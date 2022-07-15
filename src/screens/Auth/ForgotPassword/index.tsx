@@ -8,7 +8,7 @@ import {
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
@@ -22,17 +22,17 @@ import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
-import icons from '~/resources/icons';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import ForgotInputCodePw from '~/screens/Auth/ForgotPassword/components/ForgotInputCodePw';
 import ForgotInputId from '~/screens/Auth/ForgotPassword/components/ForgotInputId';
 import actions from '~/screens/Auth/redux/actions';
 import {deviceDimensions} from '~/theme/dimension';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 
 const ForgotPassword = () => {
   const dispatch = useDispatch();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
 
@@ -65,11 +65,11 @@ const ForgotPassword = () => {
   const renderBtnBack = () => {
     return (
       <Icon
-        // @ts-ignore
-        icon={icons.iconBack}
-        size={20}
+        icon={'iconBack'}
+        size={16}
         onPress={goBack}
         testID="forgot_button.back"
+        tintColor={theme.colors.neutral60}
       />
     );
   };
@@ -125,9 +125,9 @@ const ForgotPassword = () => {
   );
 };
 
-const themeStyles = (theme: ITheme, isPhone: boolean) => {
+const themeStyles = (theme: ExtendedTheme, isPhone: boolean) => {
   const insets = useSafeAreaInsets();
-  const {spacing, colors} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     root: {
       flex: 1,
@@ -136,7 +136,7 @@ const themeStyles = (theme: ITheme, isPhone: boolean) => {
       paddingTop: insets.top,
       paddingBottom: insets.bottom,
       paddingHorizontal: spacing.padding.big,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     container: {
       flex: 1,
@@ -149,7 +149,7 @@ const themeStyles = (theme: ITheme, isPhone: boolean) => {
       alignSelf: 'flex-start',
       marginTop: spacing.margin.small,
       padding: spacing.padding.small,
-      backgroundColor: colors.primary1,
+      backgroundColor: colors.violet1,
       borderRadius: spacing.borderRadius.small,
     },
     contentContainer: {

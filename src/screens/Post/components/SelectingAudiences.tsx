@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
+
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Tag from '~/beinComponents/Tag';
 import {IAudience} from '~/interfaces/IPost';
 import Divider from '~/beinComponents/Divider';
+import spacing from '~/theme/spacing';
 
 export interface SelectingAudiencesProps {
   list: IAudience[];
@@ -40,7 +41,7 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
     }
   }, [list]);
 
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -88,7 +89,7 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
         <Text.H6 style={{flex: 1}}>Chosen Audiences</Text.H6>
         {showBtnShowAll && (
           <ButtonWrapper
-            textProps={{color: colors.primary7, variant: 'buttonS'}}
+            textProps={{color: colors.purple60, variant: 'buttonS'}}
             onPress={onPressShowAll}
             testID="selecting_audiences.show">
             {showAll ? 'Show less' : `Show all(${list?.length})`}
@@ -120,19 +121,19 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
-      paddingHorizontal: spacing?.padding.large,
+      paddingHorizontal: spacing.padding.large,
     },
     headerContainer: {
       flexDirection: 'row',
-      paddingVertical: spacing?.padding.small,
+      paddingVertical: spacing.padding.small,
     },
     item: {
-      marginRight: spacing?.margin.small,
-      marginBottom: spacing?.margin.small,
+      marginRight: spacing.margin.small,
+      marginBottom: spacing.margin.small,
     },
     divider: {
       marginTop: spacing.margin.tiny,
@@ -140,7 +141,7 @@ const createStyle = (theme: ITheme) => {
     contentContainer: {
       flexDirection: 'row',
       flexWrap: 'wrap',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
   });
 };

@@ -9,7 +9,7 @@ import {IFilePicked} from '~/interfaces/common';
 import groupsActions from '~/screens/Groups/redux/actions';
 import modalActions from '~/store/modal/actions';
 import {groupProfileImageCropRatio} from '~/theme/dimension';
-import {ITheme} from '~/theme/interfaces';
+
 import {checkPermission} from '~/utils/permission';
 
 export const uploadFile = (
@@ -58,7 +58,7 @@ export const _openImagePicker = async (
 
 export const alertAction = (
   dispatch: any,
-  theme: ITheme,
+  theme: ExtendedTheme,
   title: string,
   content: string,
   doAction: () => void,
@@ -72,7 +72,7 @@ export const alertAction = (
     },
     cancelBtn: true,
     cancelBtnProps: {
-      textColor: theme.colors.primary7,
+      textColor: theme.colors.purple60,
     },
     onConfirm: () => doAction(),
     confirmLabel: i18next.t('common:btn_confirm'),

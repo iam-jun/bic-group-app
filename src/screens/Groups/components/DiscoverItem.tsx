@@ -1,14 +1,14 @@
 import {StyleSheet, View} from 'react-native';
 import React from 'react';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import ButtonDiscoverItemAction from './ButtonDiscoverItemAction';
 import privacyTypes from '~/constants/privacyTypes';
 import Icon from '~/beinComponents/Icon';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
 import {useBaseHook} from '~/hooks';
+import spacing from '~/theme/spacing';
 
 interface DiscoverItemProps {
   item: any;
@@ -25,9 +25,8 @@ const DiscoverItem = ({
   onPressJoin,
   onPressCancel,
 }: DiscoverItemProps) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
-  const styles = createStyles(theme);
   const {t} = useBaseHook();
 
   const {id, name, icon, user_count, privacy, join_status} = item || {};
@@ -62,20 +61,20 @@ const DiscoverItem = ({
             style={styles.iconSmall}
             icon={privacyIcon}
             size={16}
-            tintColor={colors.textSecondary}
+            tintColor={colors.gray50}
           />
-          <Text.BodyS color={colors.textSecondary} useI18n>
+          <Text.BodyS color={colors.gray50} useI18n>
             {privacyTitle}
           </Text.BodyS>
-          <Text.BodyS color={colors.textSecondary}>{`  •  `}</Text.BodyS>
+          <Text.BodyS color={colors.gray50}>{`  •  `}</Text.BodyS>
           <Icon
             style={styles.iconSmall}
             icon={'UserGroup'}
             size={16}
-            tintColor={colors.textSecondary}
+            tintColor={colors.gray50}
           />
-          <Text.BodyS color={colors.textSecondary}>{user_count}</Text.BodyS>
-          <Text.BodyS color={colors.textSecondary}>
+          <Text.BodyS color={colors.gray50}>{user_count}</Text.BodyS>
+          <Text.BodyS color={colors.gray50}>
             {` ${t('groups:text_members', {
               count: user_count,
             })}`}
@@ -97,22 +96,19 @@ const DiscoverItem = ({
 
 export default DiscoverItem;
 
-const createStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
-  return StyleSheet.create({
-    item: {
-      height: '100%',
-      flex: 1,
-      paddingVertical: spacing.padding.small,
-    },
-    iconSmall: {
-      marginRight: spacing.margin.tiny,
-      height: 16,
-    },
-    groupInfo: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginTop: 2,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  item: {
+    height: '100%',
+    flex: 1,
+    paddingVertical: spacing.padding.small,
+  },
+  iconSmall: {
+    marginRight: spacing.margin.tiny,
+    height: 16,
+  },
+  groupInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 2,
+  },
+});

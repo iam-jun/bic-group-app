@@ -1,6 +1,6 @@
 import React, {FC, useEffect, useState} from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
 import Image from '~/beinComponents/Image';
@@ -10,7 +10,8 @@ import {getResourceUrl, IUploadType} from '~/configs/resourceConfig';
 import {useBaseHook} from '~/hooks';
 import {IFilePicked} from '~/interfaces/common';
 import ImageUploader, {IGetFile, IUploadParam} from '~/services/imageUploader';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 
 export interface UploadingImageProps {
   style?: StyleProp<ViewStyle>;
@@ -39,7 +40,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
   const [error, setError] = useState('');
 
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -112,7 +113,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
   if (error) {
     return (
       <View style={styles.errorContainer}>
-        <Icon icon={'Image'} tintColor={colors.error} />
+        <Icon icon={'Image'} tintColor={colors.red60} />
         <Text.H6 style={styles.textError}>{error}</Text.H6>
         <Button onPress={() => upload()}>
           <Text.H6 style={styles.textRetry} useI18n>
@@ -139,11 +140,11 @@ const UploadingImage: FC<UploadingImageProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
-      backgroundColor: colors.surface,
+      backgroundColor: colors.neutral1,
       borderRadius: spacing.borderRadius.small,
       overflow: 'hidden',
     },
@@ -157,7 +158,7 @@ const createStyle = (theme: ITheme) => {
       height: 134,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: colors.surface,
+      backgroundColor: colors.neutral1,
       marginBottom: spacing.margin.large,
     },
     image: {width: '100%', height: '100%'},
@@ -168,10 +169,10 @@ const createStyle = (theme: ITheme) => {
       width: 16,
       height: 16,
       borderRadius: 8,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       justifyContent: 'center',
       alignItems: 'center',
-      shadowColor: colors.iconTint,
+      shadowColor: colors.neutral80,
       shadowOffset: {width: 0, height: 4},
       shadowOpacity: 0.3,
       shadowRadius: 4.65,
@@ -180,10 +181,10 @@ const createStyle = (theme: ITheme) => {
     textError: {
       marginHorizontal: spacing.margin.extraLarge,
       marginTop: spacing.margin.small,
-      color: colors.error,
+      color: colors.red60,
     },
     textRetry: {
-      color: colors.primary7,
+      color: colors.purple60,
       marginTop: spacing.margin.small,
     },
   });

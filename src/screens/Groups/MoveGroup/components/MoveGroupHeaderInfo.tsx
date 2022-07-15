@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import {IGroup} from '~/interfaces/IGroup';
@@ -11,6 +9,7 @@ import Divider from '~/beinComponents/Divider';
 import {useBaseHook} from '~/hooks';
 import {getAllChildrenName} from '~/screens/Groups/helper';
 import MoveLine from '~/screens/Groups/MoveGroup/components/MoveLine';
+import spacing from '~/theme/spacing';
 
 export interface MoveGroupHeaderInfoProps {
   style?: StyleProp<ViewStyle>;
@@ -21,7 +20,7 @@ const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
   group,
 }: MoveGroupHeaderInfoProps) => {
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -41,7 +40,7 @@ const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
         </View>
         {!!childrenName && (
           <>
-            <Divider color={colors.borderFocus} />
+            <Divider color={colors.gray40} />
             <View style={styles.childrenInfo}>
               <Text.BodyS>
                 <Text.BodySMedium>{childrenName}</Text.BodySMedium>{' '}
@@ -56,8 +55,8 @@ const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -69,7 +68,7 @@ const createStyle = (theme: ITheme) => {
       flex: 1,
       marginTop: spacing.margin.extraLarge,
       borderWidth: 1,
-      borderColor: colors.borderFocus,
+      borderColor: colors.gray40,
       alignSelf: 'flex-start',
       marginBottom: spacing.margin.extraLarge,
     },
@@ -79,7 +78,7 @@ const createStyle = (theme: ITheme) => {
     groupNameContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.bgSecondary,
+      backgroundColor: colors.neutral1,
       paddingVertical: 2,
     },
     groupName: {
@@ -93,7 +92,7 @@ const createStyle = (theme: ITheme) => {
       width: 4,
       height: 4,
       borderRadius: 2,
-      backgroundColor: colors.textInfo,
+      backgroundColor: colors.blue50,
       marginTop: spacing.margin.extraLarge,
       marginRight: spacing.margin.small,
     },

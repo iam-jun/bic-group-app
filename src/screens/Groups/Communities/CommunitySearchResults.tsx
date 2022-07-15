@@ -6,14 +6,14 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import React from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Text from '~/beinComponents/Text';
 import groupsKeySelector from '../redux/keySelector';
 import {useKeySelector} from '~/hooks/selector';
 import CommunityItem from '../components/CommunityItem';
+import spacing from '~/theme/spacing';
 
 interface CommunitySearchResultsProps {
   onLoadMore?: () => void;
@@ -26,8 +26,7 @@ const CommunitySearchResults = ({
   onPressCommunity,
   onRefresh,
 }: CommunitySearchResultsProps) => {
-  const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
+  const theme: ExtendedTheme = useTheme();
 
   const {loading, canLoadMore, ids, items} = useKeySelector(
     groupsKeySelector.communitySearch,
@@ -46,7 +45,7 @@ const CommunitySearchResults = ({
       <View style={styles.textNoResults}>
         <Text.BodyS
           style={styles.noResultText}
-          color={theme.colors.textSecondary}
+          color={theme.colors.gray50}
           useI18n
           testID="community_search_results.no_results">
           common:text_search_no_results
@@ -91,7 +90,7 @@ const CommunitySearchResults = ({
           <RefreshControl
             refreshing={loading}
             onRefresh={onRefresh}
-            tintColor={theme.colors.borderDisable}
+            tintColor={theme.colors.gray40}
           />
         ) : undefined
       }
@@ -100,26 +99,22 @@ const CommunitySearchResults = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    textSearchResults: {
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.base,
-    },
-    textNoResults: {
-      alignItems: 'center',
-      marginVertical: 60,
-      marginHorizontal: 60,
-    },
-    listFooter: {
-      height: 100,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    noResultText: {textAlign: 'center'},
-  });
-};
+const styles = StyleSheet.create({
+  textSearchResults: {
+    marginHorizontal: spacing.margin.large,
+    marginVertical: spacing.margin.base,
+  },
+  textNoResults: {
+    alignItems: 'center',
+    marginVertical: 60,
+    marginHorizontal: 60,
+  },
+  listFooter: {
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  noResultText: {textAlign: 'center'},
+});
 
 export default CommunitySearchResults;

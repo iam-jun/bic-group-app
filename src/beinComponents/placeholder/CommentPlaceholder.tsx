@@ -1,14 +1,15 @@
 import React from 'react';
 import {StyleSheet, View, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {
   ShineOverlay,
   Placeholder,
   PlaceholderLine,
   PlaceholderMedia,
 } from 'rn-placeholder';
+import dimension from '~/theme/dimension';
 
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {getRandomInt} from '~/utils/generator';
 
 export interface CommentPlaceholderProps {
@@ -20,7 +21,7 @@ const CommentPlaceholder: React.FC<CommentPlaceholderProps> = ({
   style,
   disableRandom,
 }: CommentPlaceholderProps) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   return (
@@ -43,11 +44,11 @@ const CommentPlaceholder: React.FC<CommentPlaceholderProps> = ({
 
 export default CommentPlaceholder;
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing, dimension} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.tiny,
     },
     avatar: {

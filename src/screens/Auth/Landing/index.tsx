@@ -1,16 +1,13 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, View, useWindowDimensions} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useTheme} from 'react-native-paper';
-import {useIsFocused} from '@react-navigation/native';
+import {ExtendedTheme, useIsFocused, useTheme} from '@react-navigation/native';
 
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {spacing} from '~/theme';
 import {useBaseHook} from '~/hooks';
 import {authStack} from '~/configs/navigator';
-import {ITheme} from '~/theme/interfaces';
 import {deviceDimensions} from '~/theme/dimension';
 import LandingImg from '../../../../assets/images/landing_page.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
@@ -18,6 +15,7 @@ import useAuth from '~/hooks/auth';
 import {rootSwitch} from '~/router/stack';
 import images from '~/resources/images';
 import Image from '~/beinComponents/Image';
+import spacing from '~/theme/spacing';
 
 const LOGO_SIZE = 72;
 
@@ -25,7 +23,7 @@ const Landing = () => {
   const {user} = useAuth();
   const isFocused = useIsFocused();
 
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {t, navigation} = useBaseHook();
   const dimensions = useWindowDimensions();
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
@@ -76,7 +74,7 @@ const Landing = () => {
   );
 };
 
-const createStyle = (theme: ITheme, isPhone: boolean) => {
+const createStyle = (theme: ExtendedTheme, isPhone: boolean) => {
   const insets = useSafeAreaInsets();
   const {colors} = theme;
 
@@ -85,7 +83,7 @@ const createStyle = (theme: ITheme, isPhone: boolean) => {
       flex: 1,
       paddingTop: insets.top,
       paddingHorizontal: spacing.padding.big,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       alignItems: 'center',
       justifyContent: 'center',
     },
@@ -103,7 +101,7 @@ const createStyle = (theme: ITheme, isPhone: boolean) => {
     },
     title: {
       textAlign: 'center',
-      color: colors.text,
+      color: colors.neutral80,
       marginTop: -spacing.margin.extraLarge,
     },
     desc: {

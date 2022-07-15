@@ -2,7 +2,7 @@ import {useBackHandler} from '@react-native-community/hooks';
 import {useNavigationState} from '@react-navigation/native';
 import React from 'react';
 import {DeviceEventEmitter, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import CommonModal from '~/beinFragments/CommonModal';
 import UserProfilePreviewBottomSheet from '~/beinFragments/Preview/UserProfilePreviewBottomSheet';
@@ -18,14 +18,14 @@ import MenuSidebarDrawer from '~/router/components/MenuSidebarDrawer';
 import {getActiveRouteState} from '~/router/helper';
 import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 import appActions from '~/store/app/actions';
-import {ITheme} from '~/theme/interfaces';
+
 import screens from './screens';
 import stack from './stack';
 
 const MainStack = (): React.ReactElement => {
   const dispatch = useDispatch();
 
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   const navState = useNavigationState((state: any) => state);
@@ -60,12 +60,12 @@ const MainStack = (): React.ReactElement => {
   );
 };
 
-const createStyles = (theme: ITheme) => {
+const createStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       alignItems: 'center',
     },
     content: {

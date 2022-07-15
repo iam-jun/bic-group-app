@@ -6,8 +6,9 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import Header from '~/beinComponents/Header';
 import NewsfeedList from '~/beinFragments/newsfeedList/NewsfeedList';
 import {appScreens} from '~/configs/navigator';
@@ -26,7 +27,7 @@ import menuActions from '~/screens/Menu/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
 import appActions from '~/store/app/actions';
 import {deviceDimensions} from '~/theme/dimension';
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {openLink} from '~/utils/common';
 import {getEnv} from '~/utils/env';
 
@@ -35,7 +36,7 @@ const Newsfeed = () => {
   const listRef = useRef<any>();
   const headerRef = useRef<any>();
 
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const [newsfeedWidth, setNewsfeedWidth] = useState<number>(
     deviceDimensions.phone,
   );
@@ -194,17 +195,17 @@ const Newsfeed = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
 
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {
       flex: 1,
-      backgroundColor: colors.bgSecondary,
+      backgroundColor: colors.neutral1,
     },
     headerOnLaptop: {
-      backgroundColor: colors.surface,
+      backgroundColor: colors.neutral1,
     },
     placeholder: {
       flex: 1,

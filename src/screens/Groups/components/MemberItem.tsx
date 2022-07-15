@@ -2,10 +2,10 @@ import {StyleSheet} from 'react-native';
 import React from 'react';
 
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import images from '~/resources/images';
 import useAuth from '~/hooks/auth';
 import {formatDMLink} from '~/utils/link';
@@ -14,6 +14,7 @@ import {useRootNavigation} from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
+import spacing from '~/theme/spacing';
 
 interface MemberItemProps {
   item: any;
@@ -22,8 +23,7 @@ interface MemberItemProps {
 }
 
 const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
-  const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const {user} = useAuth();
   const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
@@ -52,8 +52,7 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
       ContentComponent={
         <Text.BodyM numberOfLines={1}>
           {fullname}
-          <Text.BodyS
-            color={colors.textSecondary}>{` @${username}`}</Text.BodyS>
+          <Text.BodyS color={colors.gray50}>{` @${username}`}</Text.BodyS>
         </Text.BodyM>
       }
       RightComponent={
@@ -61,7 +60,7 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
           {user?.username !== username && (
             <Icon
               icon={'MessageDots'}
-              backgroundColor={colors.bgSecondary}
+              backgroundColor={colors.neutral1}
               style={styles.iconChat}
               onPress={onPressChat}
               buttonTestID="member_item.icon_chat.button"
@@ -81,27 +80,23 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    itemContainer: {
-      height: undefined,
-      paddingHorizontal: spacing.padding.large,
-      paddingVertical: spacing.padding.tiny,
-    },
-    iconChat: {
-      height: 36,
-      width: 36,
-      justifyContent: 'center',
-      alignItems: 'center',
-      padding: spacing.padding.small,
-      marginLeft: spacing.margin.tiny,
-    },
-    iconOption: {
-      marginLeft: spacing.margin.small,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  itemContainer: {
+    height: undefined,
+    paddingHorizontal: spacing.padding.large,
+    paddingVertical: spacing.padding.tiny,
+  },
+  iconChat: {
+    height: 36,
+    width: 36,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: spacing.padding.small,
+    marginLeft: spacing.margin.tiny,
+  },
+  iconOption: {
+    marginLeft: spacing.margin.small,
+  },
+});
 
 export default MemberItem;

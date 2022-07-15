@@ -2,21 +2,22 @@ import React from 'react';
 import {
   StyleProp,
   StyleSheet,
-  useWindowDimensions,
   View,
   ViewStyle,
+  Modal,
+  TouchableOpacity,
 } from 'react-native';
-import {Modal, useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import Text from '~/beinComponents/Text';
 import useModal from '~/hooks/modal';
 import * as actions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
 import NewFeatureImg from '~/../assets/images/new_feeature_purple.svg';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
-import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
-import {deviceDimensions} from '~/theme/dimension';
+import spacing from '~/theme/spacing';
+import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 
 export interface NewFeatureModalProps {
   style?: StyleProp<ViewStyle>;
@@ -26,11 +27,8 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
   style,
   ...props
 }: NewFeatureModalProps) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-
-  const dimensions = useWindowDimensions();
-  const isLaptop = dimensions.width >= deviceDimensions.laptop;
 
   const {alertNewFeature} = useModal();
   const {visible} = alertNewFeature;
@@ -40,70 +38,75 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
   const onDismiss = () => {
     dispatch(actions.hideAlertNewFeature());
   };
+  const optionsStyle = useAnimatedStyle(() => ({
+    opacity: withTiming(visible ? 1 : 0, {duration: 500}),
+  }));
 
+  if (!visible) return null;
   return (
-    <Modal
-      visible={visible}
-      dismissable
-      onDismiss={onDismiss}
-      contentContainerStyle={StyleSheet.flatten([styles.modal, style])}
-      {...props}>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <Text.H6>Upcoming Features</Text.H6>
-          {isLaptop && (
-            <Icon
-              style={styles.closeIcon}
-              icon={'iconClose'}
-              size={14}
-              onPress={onDismiss}
+    <Animated.View style={[styles.root, optionsStyle]}>
+      <TouchableOpacity
+        style={styles.root}
+        activeOpacity={1}
+        onPress={onDismiss}>
+        <View style={styles.container}>
+          <View style={styles.header}>
+            <Text.H6>Upcoming Features</Text.H6>
+          </View>
+          <View style={styles.body}>
+            <SvgIcon
+              // @ts-ignore
+              source={NewFeatureImg}
+              width={250}
+              height={200}
+              tintColor="none"
             />
-          )}
-        </View>
-        <View style={styles.body}>
-          <SvgIcon
-            // @ts-ignore
-            source={NewFeatureImg}
-            width={250}
-            height={200}
-            tintColor="none"
-          />
-          <Text.H6 useI18n>
-            new_feature:text_we_are_developing_this_feature
-          </Text.H6>
-          <Text.BodyM useI18n>new_feature:text_we_will_notify_you</Text.BodyM>
+            <Text.H6 useI18n>
+              new_feature:text_we_are_developing_this_feature
+            </Text.H6>
+            <Text.BodyM useI18n>new_feature:text_we_will_notify_you</Text.BodyM>
 
-          {/* Temporary button */}
-          <Button.Secondary
-            style={{
-              marginTop: theme.spacing.margin.large,
-              paddingHorizontal: theme.spacing.padding.large,
-            }}
-            onPress={onDismiss}
-            useI18n
-            color={theme.colors.primary3}>
-            common:text_got_it
-          </Button.Secondary>
+            {/* Temporary button */}
+            <Button.Secondary
+              style={{
+                marginTop: spacing.margin.large,
+                paddingHorizontal: spacing.padding.large,
+              }}
+              onPress={onDismiss}
+              useI18n
+              color={theme.colors.purple10}>
+              common:text_got_it
+            </Button.Secondary>
+          </View>
         </View>
-      </View>
-    </Modal>
+      </TouchableOpacity>
+    </Animated.View>
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
 
   return StyleSheet.create({
-    modal: {
-      width: 320,
-      backgroundColor: colors.background,
-      borderWidth: 1,
-      borderColor: colors.borderCard,
-      borderRadius: 6,
-      alignSelf: 'center',
+    root: {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: theme.colors.transparent1,
+      width: '100%',
+      height: '100%',
+      justifyContent: 'center',
     },
     container: {
+      width: 320,
+      borderColor: colors.gray40,
       padding: spacing.padding.small,
+      backgroundColor: colors.white,
+      alignSelf: 'center',
+      borderWidth: 1,
+      borderRadius: 6,
     },
     header: {
       width: '100%',

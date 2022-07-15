@@ -1,12 +1,12 @@
 import React, {FC} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import {IMentionUser} from '~/interfaces/IPost';
 
 import Text from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
+import spacing from '~/theme/spacing';
 
 export interface MentionbarItemProps {
   testID?: string;
@@ -18,7 +18,7 @@ const MentionBarItem: FC<MentionbarItemProps> = ({
   data,
   onPress,
 }: MentionbarItemProps) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   return (
@@ -39,8 +39,8 @@ const MentionBarItem: FC<MentionbarItemProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -48,7 +48,7 @@ const createStyle = (theme: ITheme) => {
       marginHorizontal: spacing.margin.small,
       marginVertical: spacing.margin.small,
       borderRadius: spacing.margin.large,
-      backgroundColor: colors.bgSecondary,
+      backgroundColor: colors.neutral1,
     },
     text: {
       marginRight: spacing.margin.small,

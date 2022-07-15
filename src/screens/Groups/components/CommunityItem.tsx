@@ -1,13 +1,14 @@
 import {View, StyleSheet} from 'react-native';
 import React from 'react';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
+
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import privacyTypes from '~/constants/privacyTypes';
 import {ICommunity} from '~/interfaces/ICommunity';
 import {useBaseHook} from '~/hooks';
+import spacing from '~/theme/spacing';
 
 interface CommunityItemProps {
   item: ICommunity;
@@ -20,7 +21,7 @@ const CommunityItem = ({
   onPressCommunities,
   onPressMenu,
 }: CommunityItemProps) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyles(theme);
   const {t} = useBaseHook();
@@ -35,14 +36,14 @@ const CommunityItem = ({
         <Icon
           style={styles.iconSmall}
           icon={privacyIcon}
-          size={20}
-          tintColor={colors.textSecondary}
+          size={16}
+          tintColor={colors.gray50}
         />
-        <Text.BodyS color={colors.textSecondary} useI18n>
+        <Text.BodyS color={colors.gray50} useI18n>
           {privacyTitle}
         </Text.BodyS>
-        <Text.BodyS color={colors.textSecondary}>{`  •  `}</Text.BodyS>
-        <Text.BodyS color={colors.textSecondary}>{`${user_count} ${t(
+        <Text.BodyS color={colors.gray50}>{`  •  `}</Text.BodyS>
+        <Text.BodyS color={colors.gray50}>{`${user_count} ${t(
           'groups:text_members',
           {
             count: user_count,
@@ -70,8 +71,7 @@ const CommunityItem = ({
 
 export default CommunityItem;
 
-const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
+const createStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     item: {
       height: '100%',

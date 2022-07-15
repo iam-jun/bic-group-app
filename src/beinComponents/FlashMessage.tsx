@@ -1,11 +1,12 @@
 import React, {FC} from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Icon from '~/beinComponents/Icon';
 import Text, {TextProps} from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+
 import {IconType} from '~/resources/icons';
+import spacing from '~/theme/spacing';
 
 export interface FlashMessageProps {
   type?: 'error' | 'success' | 'warning';
@@ -24,25 +25,24 @@ const FlashMessage: FC<FlashMessageProps> = ({
   style,
   onClose,
 }: FlashMessageProps) => {
-  const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
-  const styles = createStyle(theme);
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
 
   const flashMessageStyle = {
     success: {
-      iconColor: colors.iconTint,
-      textColor: colors.textSuccess,
+      iconColor: colors.neutral80,
+      textColor: colors.neutral80,
       backgroundColor: colors.success,
     },
     warning: {
-      iconColor: colors.iconTint,
-      textColor: colors.textWarning,
+      iconColor: colors.neutral80,
+      textColor: colors.neutral80,
       backgroundColor: colors.warning,
     },
     error: {
-      iconColor: colors.iconTintReversed,
-      textColor: colors.textDanger,
-      backgroundColor: colors.error,
+      iconColor: colors.neutral80,
+      textColor: colors.white,
+      backgroundColor: colors.red60,
     },
   };
 
@@ -53,7 +53,7 @@ const FlashMessage: FC<FlashMessageProps> = ({
     {
       flexDirection: 'row',
       backgroundColor: backgroundColor,
-      padding: spacing?.padding.base,
+      padding: spacing.padding.base,
     },
     style,
   ]);
@@ -80,19 +80,16 @@ const FlashMessage: FC<FlashMessageProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {},
-    textContainer: {
-      flex: 1,
-      justifyContent: 'center',
-    },
-    leftIcon: {
-      marginLeft: spacing?.margin.base,
-      marginRight: spacing?.margin.base,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {},
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  leftIcon: {
+    marginLeft: spacing.margin.base,
+    marginRight: spacing.margin.base,
+  },
+});
 
 export default FlashMessage;

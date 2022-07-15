@@ -7,12 +7,10 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {debounce} from 'lodash';
 import {useDispatch} from 'react-redux';
 import {TouchableOpacity as TouchableGestureHandler} from 'react-native-gesture-handler';
-
-import {ITheme} from '~/theme/interfaces';
 
 import {useKeySelector} from '~/hooks/selector';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
@@ -24,6 +22,8 @@ import {ISelectedFilterUser} from '~/interfaces/IHome';
 
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 export interface NFSFilterCreateBySpecificProps {
   onSelect?: (selected?: ISelectedFilterUser) => void;
@@ -36,9 +36,7 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
 }: NFSFilterCreateBySpecificProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
-  const {spacing} = theme;
-  const styles = createStyle(theme);
+  const theme: ExtendedTheme = useTheme();
 
   const {data, canLoadMore} =
     useKeySelector(homeKeySelector.newsfeedSearchUsers) || {};
@@ -86,7 +84,7 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
       return (
         <ActivityIndicator
           style={{marginVertical: spacing.margin.base}}
-          color={theme.colors.bgFocus}
+          color={theme.colors.gray20}
         />
       );
     }
@@ -114,25 +112,22 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing, dimension} = theme;
-  return StyleSheet.create({
-    container: {
-      height: dimension?.deviceHeight * 0.5,
-      paddingHorizontal: 0,
-      paddingBottom: 0,
-    },
-    searchInput: {
-      marginHorizontal: 24,
-    },
-    divider: {
-      marginTop: spacing.margin.base,
-      marginHorizontal: spacing.margin.extraLarge,
-    },
-    item: {
-      paddingHorizontal: spacing.padding.extraLarge,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    height: dimension.deviceHeight * 0.5,
+    paddingHorizontal: 0,
+    paddingBottom: 0,
+  },
+  searchInput: {
+    marginHorizontal: 24,
+  },
+  divider: {
+    marginTop: spacing.margin.base,
+    marginHorizontal: spacing.margin.extraLarge,
+  },
+  item: {
+    paddingHorizontal: spacing.padding.extraLarge,
+  },
+});
 
 export default NFSFilterCreateBySpecific;

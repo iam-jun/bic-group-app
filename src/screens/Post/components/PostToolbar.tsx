@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import {GestureEvent} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import BottomSheet from '~/beinComponents/BottomSheet/index';
 import DocumentPicker from '~/beinComponents/DocumentPicker';
@@ -28,7 +28,8 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import {showHideToastMessage} from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 import {getChatDomain} from '~/utils/link';
 import {checkPermission} from '~/utils/permission';
 import {clearExistingFiles, validateFilesPicker} from '../CreatePost/helper';
@@ -61,7 +62,7 @@ const PostToolbar = ({
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
   const modalizeRef = useRef<any>();
@@ -203,7 +204,7 @@ const PostToolbar = ({
     testID: string,
     onPressIcon?: (e: any) => void,
   ) => {
-    const tintColor = onPressIcon ? colors.iconTint : colors.textDisabled;
+    const tintColor = onPressIcon ? colors.neutral80 : colors.gray40;
 
     return (
       <View style={styles.toolbarButton}>
@@ -261,7 +262,7 @@ const PostToolbar = ({
         </Text.BodyS>
         <Text.BodyS
           style={{fontFamily: 'OpenSans-SemiBold'}}
-          color={theme.colors.link}
+          color={theme.colors.blue50}
           onPress={onPressHelp}
           useI18n>
           common:text_help
@@ -282,17 +283,17 @@ const PostToolbar = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     row: {flexDirection: 'row'},
     flex1: {flex: 1},
     toolbarStyle: {
       height: 52,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       borderWidth: 1,
-      borderColor: colors.borderDivider,
-      paddingHorizontal: spacing?.padding.large,
+      borderColor: colors.neutral5,
+      paddingHorizontal: spacing.padding.large,
       alignItems: 'center',
       flexDirection: 'row',
     },
@@ -302,8 +303,8 @@ const createStyle = (theme: ITheme) => {
       justifyContent: 'center',
     },
     contentContainer: {
-      paddingHorizontal: spacing?.padding.base,
-      paddingBottom: spacing?.padding.base,
+      paddingHorizontal: spacing.padding.base,
+      paddingBottom: spacing.padding.base,
     },
     markdownView: {
       flexDirection: 'row',

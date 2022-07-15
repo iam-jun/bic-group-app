@@ -1,16 +1,16 @@
 import React from 'react';
 import {View, StyleSheet, SectionList} from 'react-native';
-import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {ShineOverlay, Placeholder, PlaceholderLine} from 'rn-placeholder';
 import {getRandomInt} from '~/utils/generator';
 import CommentPlaceholder from './CommentPlaceholder';
+import spacing from '~/theme/spacing';
 
 const sectionData = [{title: '', data: [{id: 1}, {id: 2}]}];
 
 const CommentViewPlaceholder = () => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const renderHeaderText = () => {
@@ -45,11 +45,11 @@ const CommentViewPlaceholder = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.tiny,
     },
     contentContainer: {
@@ -61,7 +61,7 @@ const createStyle = (theme: ITheme) => {
     containerChild: {
       paddingTop: spacing?.padding.small,
       paddingRight: spacing?.padding.large,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     row: {
       paddingHorizontal: spacing.margin.large,

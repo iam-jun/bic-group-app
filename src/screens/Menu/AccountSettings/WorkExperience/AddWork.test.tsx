@@ -203,7 +203,7 @@ describe('AddWork screen', () => {
     expect(buttonSaveComponent.props.accessibilityState.disabled).toBeFalsy();
 
     expect(toggleComponent.props.style.backgroundColor).toBe(
-      colors.light.colors.borderCard,
+      colors.light.colors.gray40,
     );
     expect(endDateComponent).toBeDefined();
     expect(endDateValueComponent?.props?.children).toBe(
@@ -273,7 +273,7 @@ describe('AddWork screen', () => {
     fireEvent.press(toggleComponent);
     const buttonEndDate = wrapper.getByTestId('add_work.end_date.button');
     expect(toggleComponent.props.style.backgroundColor).toBe(
-      colors.light.colors.borderCard,
+      colors.light.colors.gray40,
     );
     expect(buttonEndDate).toBeDefined();
 
@@ -428,33 +428,33 @@ describe('AddWork screen', () => {
     );
 
     expect(textInputCompany.props.outlineColor).toBe(
-      colors.light.colors.borderCard,
+      colors.light.colors.gray40,
     );
     expect(textInputCompany.props.activeOutlineColor).toBe(
-      colors.light.colors.primary6,
+      colors.light.colors.purple50,
     );
     expect(textInputPosition.props.outlineColor).toBe(
-      colors.light.colors.borderCard,
+      colors.light.colors.gray40,
     );
     expect(textInputPosition.props.activeOutlineColor).toBe(
-      colors.light.colors.primary6,
+      colors.light.colors.purple50,
     );
     expect(textInputLocation.props.outlineColor).toBe(
-      colors.light.colors.borderCard,
+      colors.light.colors.gray40,
     );
     expect(textInputLocation.props.activeOutlineColor).toBe(
-      colors.light.colors.primary6,
+      colors.light.colors.purple50,
     );
 
     fireEvent.changeText(textInputLocation);
 
     expect(textInputDescriptionView.props.style[0].borderColor).toBe(
-      colors.light.colors.borderCard,
+      colors.light.colors.gray40,
     );
     fireEvent.changeText(textInputDescription, 'abc');
     //can't
     // expect(textInputDescriptionView.props.style[0].borderColor).toBe(
-    //   colors.light.colors.primary6,
+    //   colors.light.colors.purple50,
     // );
   });
 

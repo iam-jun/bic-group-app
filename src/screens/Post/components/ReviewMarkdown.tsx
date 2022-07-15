@@ -1,10 +1,10 @@
 import React from 'react';
 import {StyleSheet, View, useWindowDimensions, ScrollView} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import i18next from 'i18next';
 
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+
 import Button from '~/beinComponents/Button';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
@@ -12,12 +12,13 @@ import Markdown from '~/beinComponents/Markdown';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import Avatar from '~/beinComponents/Avatar';
 import {IAudience} from '~/interfaces/IPost';
+import spacing from '~/theme/spacing';
 
 const ReviewMarkdown = ({onPressDone}: {onPressDone: () => void}) => {
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
 
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme, screenHeight);
   const content = useKeySelector(postKeySelector.createPost.content);
   const {fullname, avatar} = useKeySelector(menuKeySelector.myProfile) || {};
@@ -32,7 +33,7 @@ const ReviewMarkdown = ({onPressDone}: {onPressDone: () => void}) => {
         <Button.Secondary
           testID="header.button"
           style={styles.buttonDone}
-          textColor={theme.colors.primary6}
+          textColor={theme.colors.purple50}
           textProps={{useI18n: true}}
           onPress={onPressDone}>
           common:btn_done
@@ -52,7 +53,7 @@ const ReviewMarkdown = ({onPressDone}: {onPressDone: () => void}) => {
             <View style={styles.audienceLine}>
               <Text.BodySMedium
                 useI18n
-                color={theme.colors.textSecondary}
+                color={theme.colors.gray50}
                 style={styles.textTo}>
                 post:to
               </Text.BodySMedium>
@@ -97,8 +98,8 @@ const getAudiences = (aud: IAudience[]) => {
   return result;
 };
 
-const createStyles = (theme: ITheme, screenHeight: number) => {
-  const {colors, spacing} = theme;
+const createStyles = (theme: ExtendedTheme, screenHeight: number) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       height: 0.8 * screenHeight,
@@ -111,14 +112,14 @@ const createStyles = (theme: ITheme, screenHeight: number) => {
     },
     buttonDone: {
       borderWidth: 1,
-      borderColor: colors.primary6,
+      borderColor: colors.purple50,
       marginRight: spacing.margin.tiny,
     },
     post: {
       flex: 1,
       marginHorizontal: spacing.margin.base,
       marginTop: spacing.margin.large,
-      backgroundColor: colors.bgSecondary,
+      backgroundColor: colors.neutral1,
       paddingHorizontal: spacing.padding.small,
       paddingVertical: spacing.padding.base,
     },

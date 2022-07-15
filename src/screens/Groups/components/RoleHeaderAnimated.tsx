@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {StyleProp, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {permissionRoleSectionHeaderHeight} from '~/theme/dimension';
 import Animated, {
@@ -13,6 +11,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import TextAnimated from '~/beinComponents/Text/TextAnimated';
 import Icon from '~/beinComponents/Icon';
+import spacing from '~/theme/spacing';
 
 export interface RoleHeaderAnimatedProps {
   anchorRole?: any;
@@ -24,8 +23,8 @@ const RoleHeaderAnimated: FC<RoleHeaderAnimatedProps> = ({
   anchorRole,
   sharedValue,
 }: RoleHeaderAnimatedProps) => {
-  const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const anchorRoles = Object.values(anchorRole) || [];
@@ -82,7 +81,7 @@ const RoleHeaderAnimated: FC<RoleHeaderAnimatedProps> = ({
       left: 0,
       right: 0,
       top: interpolate(sharedValue.value, inputRange, outputRange),
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     }),
     [inputRange, outputRange],
   );
@@ -97,18 +96,18 @@ const RoleHeaderAnimated: FC<RoleHeaderAnimatedProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
       alignItems: 'center',
       minHeight: permissionRoleSectionHeaderHeight,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.base,
       borderTopWidth: 1,
       borderBottomWidth: 1,
-      borderColor: colors.bgFocus,
+      borderColor: colors.gray20,
     },
   });
 };

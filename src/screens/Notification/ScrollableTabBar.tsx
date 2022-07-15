@@ -1,29 +1,25 @@
-import React, {useCallback, useMemo, useRef} from 'react';
+import React, {useCallback, useRef} from 'react';
 import {StyleSheet, View, Dimensions} from 'react-native';
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
-import {useTheme} from 'react-native-paper';
 
 import Filter from '~/beinComponents/Filter';
-import {ITheme} from '~/theme/interfaces';
 import NotificationList from './NotificationList';
+import spacing from '~/theme/spacing';
 
 const {width: screenWidth} = Dimensions.get('window');
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    filterStyle: {
-      paddingVertical: spacing.padding.small,
-      borderBottomWidth: 0,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  filterStyle: {
+    paddingVertical: spacing.padding.small,
+    borderBottomWidth: 0,
+  },
+});
 
 export interface Props {
   onPressItemOption: (item: any) => void;
@@ -40,9 +36,6 @@ const ScrollableTabBar = ({
   onChangeTab,
   activeIndex = 0,
 }: Props) => {
-  const theme: ITheme = useTheme() as ITheme;
-  const styles = useMemo(() => themeStyles(theme), [theme]);
-
   const scrollViewRef = useRef<any>();
   const filterRef = useRef<any>();
   const translateX = useSharedValue(0);

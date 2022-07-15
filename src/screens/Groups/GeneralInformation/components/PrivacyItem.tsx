@@ -1,13 +1,14 @@
 import i18next from 'i18next';
 import React from 'react';
 import {StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import Icon from '~/beinComponents/Icon';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 
 interface Props {
   item: any;
@@ -16,9 +17,8 @@ interface Props {
 
 const PrivacyItem = ({item, onPressHelpMessage}: Props) => {
   const {privacy} = useKeySelector(groupsKeySelector.groupDetail.group) || {};
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
-  const styles = themeStyles(theme);
 
   return (
     <PrimaryItem
@@ -27,7 +27,7 @@ const PrivacyItem = ({item, onPressHelpMessage}: Props) => {
       subTitle={
         <Text>
           {`${i18next.t(item.subtitle)} `}
-          <Text onPress={onPressHelpMessage} color={colors.link} useI18n>
+          <Text onPress={onPressHelpMessage} color={colors.blue50} useI18n>
             settings:text_learn_more
           </Text>
         </Text>
@@ -37,20 +37,17 @@ const PrivacyItem = ({item, onPressHelpMessage}: Props) => {
       }
       RightComponent={
         privacy === item.type ? (
-          <Icon icon={'Check'} size={24} tintColor={colors.primary7} />
+          <Icon icon={'Check'} size={24} tintColor={colors.purple60} />
         ) : undefined
       }
     />
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    bottomSheetLeftIcon: {
-      marginRight: spacing.margin.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  bottomSheetLeftIcon: {
+    marginRight: spacing.margin.large,
+  },
+});
 
 export default PrivacyItem;

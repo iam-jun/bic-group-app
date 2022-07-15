@@ -1,8 +1,8 @@
 import React, {FC, useEffect, useState} from 'react';
 import {View, StyleSheet, FlatList, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import {useDispatch} from 'react-redux';
+import Animated, {ZoomIn} from 'react-native-reanimated';
 
 import Text from '~/beinComponents/Text';
 import Header from '~/beinComponents/Header';
@@ -12,14 +12,12 @@ import {IGroup} from '~/interfaces/IGroup';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import Icon from '~/beinComponents/Icon';
-import {isNumber} from 'lodash';
-import {useDispatch} from 'react-redux';
 import groupsActions from '~/screens/Groups/redux/actions';
-import Animated, {ZoomIn} from 'react-native-reanimated';
 import {
   changeSchemeIdOfGroup,
   handleSelectNewGroupScheme,
 } from '~/screens/Groups/GroupSchemeAssignSelection/helper';
+import spacing from '~/theme/spacing';
 
 export interface GroupSchemeManagementProps {
   route?: {
@@ -46,7 +44,7 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -114,7 +112,7 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
         <View style={{minWidth: 20, minHeight: 20}}>
           {isActive && (
             <Animated.View entering={ZoomIn}>
-              <Icon icon={'Check'} tintColor={colors.primary6} />
+              <Icon icon={'Check'} tintColor={colors.purple50} />
             </Animated.View>
           )}
         </View>
@@ -150,22 +148,22 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {
       flex: 1,
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray40,
     },
     itemContainer: {
       flexDirection: 'row',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       padding: spacing.padding.large,
       alignItems: 'center',
     },
     itemContainerActive: {
-      backgroundColor: colors.bgSecondary,
+      backgroundColor: colors.neutral1,
     },
     textHeader: {
       margin: spacing.margin.large,

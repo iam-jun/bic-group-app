@@ -1,13 +1,15 @@
 import React, {useState} from 'react';
 import {StyleProp, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Icon from '../Icon';
-import {ITheme} from '~/theme/interfaces';
+
 import Text, {TextVariant} from '~/beinComponents/Text';
 import commonActions, {IAction} from '~/constants/commonActions';
 import Avatar from '~/beinComponents/Avatar';
 import {fontFamilies} from '~/theme/fonts';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 export type TagVariants = 'small' | 'medium';
 
@@ -36,7 +38,7 @@ const TagComponent: React.FC<TagProps> = ({
   style,
 }: TagProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(selected);
-  const theme: ITheme = useTheme();
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme, variant, isSelected, disabled);
 
   const _onChangeValue = () => {
@@ -69,9 +71,7 @@ const TagComponent: React.FC<TagProps> = ({
           style={styles.icon}
           icon={icon}
           size={12}
-          tintColor={
-            disabled ? theme.colors.textDisabled : theme.colors.iconTint
-          }
+          tintColor={disabled ? theme.colors.gray40 : theme.colors.neutral80}
           disabled={disabled}
           onPress={onPressIcon}
         />
@@ -81,12 +81,12 @@ const TagComponent: React.FC<TagProps> = ({
 };
 
 const createStyles = (
-  theme: ITheme,
+  theme: ExtendedTheme,
   variant: TagVariants,
   isSelected: boolean,
   disabled: boolean,
 ) => {
-  const {colors, spacing, dimension} = theme;
+  const {colors} = theme;
 
   const tagVariants = {
     small: {
@@ -101,13 +101,13 @@ const createStyles = (
   const {fontSize, paddingHorizontal} = tagVariants[variant];
 
   let _textColor;
-  let _backgroundColor = colors.primary1;
+  let _backgroundColor = colors.violet1;
   let _fontFamily = fontFamilies.BeVietnamProLight;
   if (disabled) {
-    _backgroundColor = colors.bgDisable;
-    _textColor = colors.textDisabled;
+    _backgroundColor = colors.gray20;
+    _textColor = colors.gray40;
   } else {
-    _textColor = isSelected ? colors.primary : colors.primary7;
+    _textColor = isSelected ? colors.purple60 : colors.purple60;
     _fontFamily = isSelected
       ? fontFamilies.BeVietnamProSemiBold
       : fontFamilies.BeVietnamProLight;

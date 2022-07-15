@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Animated, {
@@ -16,6 +14,7 @@ import Icon from '~/beinComponents/Icon';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import {debounce} from 'lodash';
 import {useBaseHook} from '~/hooks';
+import spacing from '~/theme/spacing';
 
 export interface MoveGroupTargetsProps {
   communityId: number;
@@ -32,8 +31,8 @@ const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
 }: MoveGroupTargetsProps) => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const onPressItem = (item: any) => {
@@ -65,7 +64,7 @@ const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
           <View style={{minWidth: 20, minHeight: 20}}>
             {isActive && (
               <Animated.View entering={ZoomIn}>
-                <Icon icon={'Check'} tintColor={colors.primary6} />
+                <Icon icon={'Check'} tintColor={colors.purple50} />
               </Animated.View>
             )}
           </View>
@@ -96,8 +95,8 @@ const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {},
     itemContainer: {
@@ -107,7 +106,7 @@ const createStyle = (theme: ITheme) => {
       paddingVertical: spacing.padding.large,
     },
     itemContainerActive: {
-      backgroundColor: colors.bgSecondary,
+      backgroundColor: colors.neutral1,
     },
     textName: {
       flex: 1,
@@ -115,8 +114,8 @@ const createStyle = (theme: ITheme) => {
     searchInput: {
       marginBottom: spacing.margin.base,
       marginHorizontal: spacing.margin.base,
-      backgroundColor: colors.background,
-      borderColor: colors.primary6,
+      backgroundColor: colors.white,
+      borderColor: colors.purple50,
       borderWidth: 1,
     },
   });
