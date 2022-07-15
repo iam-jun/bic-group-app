@@ -71,7 +71,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     iconToastAutoSave: {
       padding: 2,
       borderRadius: 6,
-      backgroundColor: colors.neutral80Reversed,
+      backgroundColor: colors.neutral80,
     },
     textToastAutoSave: {color: colors.gray50},
   });

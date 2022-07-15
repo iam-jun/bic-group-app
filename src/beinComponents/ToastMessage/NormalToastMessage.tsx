@@ -65,17 +65,17 @@ const ToastMessage: FC<ToastMessageProps> = ({
   const ToastMessageStyle = {
     success: {
       iconColor: colors.success,
-      textColor: colors.neutral80Reversed,
+      textColor: colors.neutral80,
       backgroundColor: colors.success,
     },
     error: {
       iconColor: colors.red60,
-      textColor: colors.neutral80Reversed,
+      textColor: colors.neutral80,
       backgroundColor: colors.red60,
     },
     informative: {
       iconColor: colors.neutral80,
-      textColor: colors.neutral80Reversed,
+      textColor: colors.neutral80,
       backgroundColor: colors.gray40,
     },
   };
@@ -107,7 +107,7 @@ const ToastMessage: FC<ToastMessageProps> = ({
           testID="normal_toast_message.left_icon"
           iconStyle={[
             styles.leftIconStyle,
-            {backgroundColor: colors.neutral80Reversed},
+            {backgroundColor: colors.neutral1},
             leftIconStyle,
           ]}
           style={[styles.leftIcon, leftStyle]}

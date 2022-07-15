@@ -84,7 +84,7 @@ const HeaderAvatar = ({
         </Text>
         {secondLabel && (
           <Text
-            variant="headingSB"
+            variant="bodySMedium"
             testID="header_avatar.second_label"
             {...secondLabelProps}>
             {secondLabel}
@@ -104,7 +104,7 @@ const createStyle = (theme: ExtendedTheme) => {
     container: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.gray40,
+      backgroundColor: colors.gray5,
       borderRadius: spacing.borderRadius.small,
       marginTop: spacing.margin.large,
       marginBottom: spacing.margin.extraLarge,

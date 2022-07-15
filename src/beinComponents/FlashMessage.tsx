@@ -31,7 +31,7 @@ const FlashMessage: FC<FlashMessageProps> = ({
   const flashMessageStyle = {
     success: {
       iconColor: colors.neutral80,
-      textColor: colors.neutral80Success,
+      textColor: colors.neutral80,
       backgroundColor: colors.success,
     },
     warning: {
@@ -40,7 +40,7 @@ const FlashMessage: FC<FlashMessageProps> = ({
       backgroundColor: colors.warning,
     },
     error: {
-      iconColor: colors.neutral80Reversed,
+      iconColor: colors.neutral80,
       textColor: colors.white,
       backgroundColor: colors.red60,
     },

@@ -270,7 +270,7 @@ const SignIn = () => {
   }));
 
   const optionsStyle = useAnimatedStyle(() => ({
-    opacity: withTiming(loading, {duration: 500}),
+    opacity: withTiming(loading ? 1 : 0, {duration: 500}),
   }));
   const renderLoading = () => {
     if (!loading) return null;

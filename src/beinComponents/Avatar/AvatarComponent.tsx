@@ -194,11 +194,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
           shadowRadius: 1,
           elevation: 2,
         }}>
-        <Icon
-          size={iconCheckSize}
-          icon="Check"
-          tintColor={colors.neutral80Reversed}
-        />
+        <Icon size={iconCheckSize} icon="Check" tintColor={colors.neutral80} />
       </View>
     );
   };

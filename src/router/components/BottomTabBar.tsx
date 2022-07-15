@@ -189,7 +189,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
           />
         )}
         {isPhone && (
-          <Text variant="heading" style={styles.label}>
+          <Text variant="bodyS" style={styles.label}>
             {t(`tabs:${name}`)}
           </Text>
         )}

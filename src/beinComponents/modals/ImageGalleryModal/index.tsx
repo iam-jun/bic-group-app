@@ -110,7 +110,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
         icon="iconBack"
         onPress={onPressClose}
         size={28}
-        tintColor={colors.neutral80Reversed}
+        tintColor={colors.neutral80}
         hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
       />
       <View style={{flex: 1}} />
@@ -118,7 +118,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
         icon="ShareNodes"
         onPress={onPressShare}
         size={20}
-        tintColor={colors.neutral80Reversed}
+        tintColor={colors.neutral80}
         hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
       />
     </View>

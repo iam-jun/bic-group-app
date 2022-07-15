@@ -79,7 +79,7 @@ const DraftPost = () => {
           </View>
         )}
         {!refreshing && !canLoadMore && (
-          <ViewSpacing height={theme.spacing.margin.large} />
+          <ViewSpacing height={spacing.margin.large} />
         )}
       </View>
     );
@@ -132,7 +132,7 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.neutral1,
+      backgroundColor: colors.gray1,
     },
     listContainer: {
       flex: 1,
