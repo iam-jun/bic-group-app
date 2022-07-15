@@ -1,6 +1,6 @@
 import {StyleSheet} from 'react-native';
 import React from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import i18next from 'i18next';
 
 import {useKeySelector} from '~/hooks/selector';
@@ -8,13 +8,13 @@ import groupsKeySelector from '../redux/keySelector';
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import ListView from '~/beinComponents/list/ListView';
-import {ITheme} from '~/theme/interfaces';
+
 import {IPreviewMember} from '~/interfaces/ICommunity';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
+import spacing from '~/theme/spacing';
 
 const PreviewMembers = () => {
-  const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
+  const theme: ExtendedTheme = useTheme();
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {user_count, members} = infoDetail;
@@ -40,7 +40,7 @@ const PreviewMembers = () => {
     return (
       <Text.BodyS
         testID="preview_members.description"
-        color={theme.colors.textSecondary}
+        color={theme.colors.gray50}
         style={styles.memberDescriptionText}>
         {memberText}
       </Text.BodyS>
@@ -64,15 +64,11 @@ const PreviewMembers = () => {
 
 export default PreviewMembers;
 
-const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    listStyle: {
-      margin: spacing.margin.large,
-    },
-    memberDescriptionText: {
-      marginHorizontal: spacing.margin.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  listStyle: {
+    margin: spacing.margin.large,
+  },
+  memberDescriptionText: {
+    marginHorizontal: spacing.margin.large,
+  },
+});

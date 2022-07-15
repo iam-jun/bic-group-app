@@ -6,12 +6,13 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import MemberItem from './MemberItem';
+import spacing from '~/theme/spacing';
 
 interface MemberSearchResultProps {
   canManageMember: boolean;
@@ -28,8 +29,7 @@ const MemberSearchResult = ({
   onRefresh,
   onPressMenu,
 }: MemberSearchResultProps) => {
-  const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
+  const theme: ExtendedTheme = useTheme();
 
   const {loading, canLoadMore, data} = memberSearchData;
 
@@ -48,7 +48,7 @@ const MemberSearchResult = ({
     return (
       <View style={styles.textNoResults}>
         <Text.BodyM
-          color={theme.colors.textSecondary}
+          color={theme.colors.gray50}
           useI18n
           testID="member_search_result.no_results">
           common:text_no_results_found
@@ -93,7 +93,7 @@ const MemberSearchResult = ({
           <RefreshControl
             refreshing={loading}
             onRefresh={onRefresh}
-            tintColor={theme.colors.borderDisable}
+            tintColor={theme.colors.gray40}
           />
         ) : undefined
       }
@@ -102,24 +102,20 @@ const MemberSearchResult = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    textSearchResults: {
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.base,
-    },
-    textNoResults: {
-      alignItems: 'center',
-      marginVertical: 100,
-    },
-    listFooter: {
-      height: 100,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  });
-};
+const styles = StyleSheet.create({
+  textSearchResults: {
+    marginHorizontal: spacing.margin.large,
+    marginVertical: spacing.margin.base,
+  },
+  textNoResults: {
+    alignItems: 'center',
+    marginVertical: 100,
+  },
+  listFooter: {
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default MemberSearchResult;

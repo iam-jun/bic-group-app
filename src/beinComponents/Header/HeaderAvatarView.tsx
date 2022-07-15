@@ -6,12 +6,11 @@ import {
   ViewStyle,
   TouchableOpacity,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
 
 import Text from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
-import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
+import spacing from '~/theme/spacing';
 
 interface HeaderAvatarViewProps {
   firstLabel: string;
@@ -29,9 +28,6 @@ const HeaderAvatarView = ({
   onPress,
 }: HeaderAvatarViewProps) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
-
-  const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
 
   return (
     <TouchableOpacity
@@ -52,18 +48,14 @@ const HeaderAvatarView = ({
 
 export default HeaderAvatarView;
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      marginTop: spacing.margin.small,
-      alignItems: 'center',
-      paddingHorizontal: spacing.padding.large,
-    },
-    avatar: {
-      marginRight: spacing.margin.base,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    marginTop: spacing.margin.small,
+    alignItems: 'center',
+    paddingHorizontal: spacing.padding.large,
+  },
+  avatar: {
+    marginRight: spacing.margin.base,
+  },
+});

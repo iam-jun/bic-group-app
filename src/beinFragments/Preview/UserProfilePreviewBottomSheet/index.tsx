@@ -3,7 +3,7 @@ import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import Avatar from '~/beinComponents/Avatar';
@@ -24,10 +24,11 @@ import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import modalActions from '~/store/modal/actions';
 import commonKeySelector from '~/store/modal/keySelector';
 import {scaleCoverHeight} from '~/theme/dimension';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 
 const UserProfilePreviewBottomSheet = () => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const styles = themeStyles(theme, coverHeight);
   const userPreviewRef: any = useRef();
@@ -150,7 +151,7 @@ const UserProfilePreviewBottomSheet = () => {
       <View style={styles.infoItem}>
         <Icon
           icon={icon}
-          tintColor={theme.colors.primary5}
+          tintColor={theme.colors.purple30}
           size={24}
           style={styles.infoItemIcon}
         />
@@ -195,8 +196,8 @@ const UserProfilePreviewBottomSheet = () => {
   );
 };
 
-const themeStyles = (theme: ITheme, coverHeight: number) => {
-  const {colors, spacing} = theme;
+const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
+  const {colors} = theme;
   const containerMinHeight = 330;
 
   return StyleSheet.create({
@@ -232,7 +233,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       marginBottom: spacing.margin.tiny,
       paddingTop: spacing.padding.base,
       paddingHorizontal: spacing.padding.large,
-      borderTopColor: colors.borderDivider,
+      borderTopColor: colors.neutral5,
       borderTopWidth: 1,
     },
     infoItem: {

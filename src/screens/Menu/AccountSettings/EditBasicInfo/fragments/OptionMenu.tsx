@@ -1,8 +1,7 @@
 import React from 'react';
 import {StyleSheet, View, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import {IOptionItem} from '~/interfaces/IEditUser';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
@@ -11,6 +10,7 @@ import Text from '~/beinComponents/Text';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import i18next from 'i18next';
 import Icon from '~/beinComponents/Icon';
+import spacing from '~/theme/spacing';
 
 interface OptionMenuProps {
   data: IOptionItem[];
@@ -29,8 +29,7 @@ const OptionMenu = ({
   onItemPress,
   testID,
 }: OptionMenuProps) => {
-  const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
+  const theme: ExtendedTheme = useTheme();
 
   const renderItem = ({item}: {item: IOptionItem}) => {
     return (
@@ -45,7 +44,7 @@ const OptionMenu = ({
               <Icon
                 icon={'Check'}
                 size={24}
-                tintColor={theme.colors.primary7}
+                tintColor={theme.colors.purple60}
               />
             ) : undefined
           }
@@ -61,7 +60,7 @@ const OptionMenu = ({
         ContentComponent={
           <View style={styles.contentComponent}>
             <Text.ButtonS
-              color={theme.colors.textSecondary}
+              color={theme.colors.gray50}
               style={styles.chooseText}
               useI18n>
               {title}
@@ -79,13 +78,9 @@ const OptionMenu = ({
 
 export default OptionMenu;
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    contentComponent: {},
-    chooseText: {
-      margin: spacing.margin.base,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  contentComponent: {},
+  chooseText: {
+    margin: spacing.margin.base,
+  },
+});

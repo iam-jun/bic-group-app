@@ -1,9 +1,10 @@
 import React, {FC} from 'react';
 import {StyleSheet, Text as RNText, View, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import {useBaseHook} from '~/hooks';
 import Text from '~/beinComponents/Text';
+import spacing from '~/theme/spacing';
 
 export interface SeenCountsViewProps {
   onPress?: () => void;
@@ -15,9 +16,8 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
   onPress,
 }: SeenCountsViewProps) => {
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
-  const {colors, spacing} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
 
   const _onPress = () => {
     onPress?.();
@@ -29,7 +29,7 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
         activeOpacity={1}
         testID={'seen_counts_view.touchable_opacity'}>
         <Text.H6
-          color={colors.iconTintLight}
+          color={colors.gray50}
           numberOfLines={1}
           testID={'seen_counts_view.show_text'}>
           {t('post:label_seen_by')}
@@ -40,28 +40,25 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
-  return StyleSheet.create({
-    container: {
-      alignItems: 'flex-end',
-      marginTop: 16,
-      marginEnd: 16,
-    },
-    footerButtonContainer: {
-      flexDirection: 'row',
-      paddingHorizontal: spacing.padding.tiny,
-    },
-    footerButton: {
-      flex: 1,
-      marginVertical: spacing.margin.small,
-      marginHorizontal: spacing.margin.tiny,
-    },
-    draftText: {
-      marginVertical: spacing.margin.small,
-      marginHorizontal: spacing.margin.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    alignItems: 'flex-end',
+    marginTop: 16,
+    marginEnd: 16,
+  },
+  footerButtonContainer: {
+    flexDirection: 'row',
+    paddingHorizontal: spacing.padding.tiny,
+  },
+  footerButton: {
+    flex: 1,
+    marginVertical: spacing.margin.small,
+    marginHorizontal: spacing.margin.tiny,
+  },
+  draftText: {
+    marginVertical: spacing.margin.small,
+    marginHorizontal: spacing.margin.large,
+  },
+});
 
 export default SeenCountsView;

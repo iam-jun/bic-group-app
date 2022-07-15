@@ -1,11 +1,11 @@
 import React, {FC} from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import i18next from 'i18next';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Icon from '~/beinComponents/Icon';
 import Text, {TextProps} from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 export interface ImportantStatusProps {
   notExpired: boolean;
@@ -18,22 +18,21 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
   textProps,
   style,
 }: ImportantStatusProps) => {
-  const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
-  const styles = createStyle(theme);
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
 
   const ImportantStatusStyle = {
     active: {
-      iconColor: colors.background,
-      iconBackgroundColor: colors.primary6,
-      textColor: colors.primary6,
-      backgroundColor: colors.primary2,
+      iconColor: colors.white,
+      iconBackgroundColor: colors.purple50,
+      textColor: colors.purple50,
+      backgroundColor: colors.purple5,
     },
     inactive: {
-      iconColor: colors.iconTintReversed,
-      iconBackgroundColor: colors.primary6,
-      textColor: colors.primary6,
-      backgroundColor: colors.background,
+      iconColor: colors.white,
+      iconBackgroundColor: colors.purple50,
+      textColor: colors.purple50,
+      backgroundColor: colors.white,
     },
   };
 
@@ -49,7 +48,7 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
       paddingVertical: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
       borderBottomWidth: 1,
-      borderBottomColor: theme.colors.placeholder,
+      borderBottomColor: theme.colors.neutral5,
     },
     style,
   ]);
@@ -78,19 +77,16 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {},
-    textContainer: {
-      flex: 1,
-      justifyContent: 'center',
-    },
-    leftIcon: {
-      marginRight: spacing.margin.small,
-    },
-    iconStyle: {padding: 3, borderRadius: 6},
-  });
-};
+const styles = StyleSheet.create({
+  container: {},
+  textContainer: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  leftIcon: {
+    marginRight: spacing.margin.small,
+  },
+  iconStyle: {padding: 3, borderRadius: 6},
+});
 
 export default ImportantStatus;

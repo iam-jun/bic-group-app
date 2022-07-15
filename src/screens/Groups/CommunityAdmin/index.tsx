@@ -1,12 +1,12 @@
 import {StyleSheet, View} from 'react-native';
 import React, {useEffect} from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Divider from '~/beinComponents/Divider';
-import {ITheme} from '~/theme/interfaces';
+
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
@@ -15,9 +15,10 @@ import MenuItem from '~/beinComponents/list/items/MenuItem';
 import modalActions from '~/store/modal/actions';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsActions from '../redux/actions';
+import spacing from '~/theme/spacing';
 
 const CommunityAdmin = () => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
@@ -65,7 +66,7 @@ const CommunityAdmin = () => {
     <>
       <Text.BodyM
         style={styles.headerTitle}
-        color={theme.colors.textPrimary}
+        color={theme.colors.neutral80}
         variant="bodyM"
         useI18n>
         settings:title_community_moderating
@@ -77,7 +78,7 @@ const CommunityAdmin = () => {
           icon={'UserCheck'}
           iconProps={{
             icon: 'UserCheck',
-            tintColor: theme.colors.primary6,
+            tintColor: theme.colors.purple50,
           }}
           notificationsBadgeNumber={total}
           notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
@@ -91,7 +92,7 @@ const CommunityAdmin = () => {
         icon={'FileExclamation'}
         iconProps={{
           icon: 'FileExclamation',
-          tintColor: theme.colors.primary6,
+          tintColor: theme.colors.purple50,
         }}
         notificationsBadgeNumber={999}
         notificationsBadgeProps={{maxNumber: 99, variant: 'alert'}}
@@ -105,7 +106,7 @@ const CommunityAdmin = () => {
     <>
       <Text.BodyM
         style={styles.headerTitle}
-        color={theme.colors.textPrimary}
+        color={theme.colors.neutral80}
         variant="bodyM"
         useI18n>
         settings:title_community_settings
@@ -115,7 +116,7 @@ const CommunityAdmin = () => {
           testID="community_admin.profile_info"
           title="settings:title_profile_info"
           icon="Gear"
-          iconProps={{icon: 'Gear', tintColor: theme.colors.primary6}}
+          iconProps={{icon: 'Gear', tintColor: theme.colors.purple50}}
           rightSubIcon="AngleRightSolid"
           onPress={onPressGeneralInfo}
         />
@@ -125,7 +126,7 @@ const CommunityAdmin = () => {
           testID="community_admin.group_structure_settings"
           title="settings:title_group_structure"
           icon="CodeBranch"
-          iconProps={{icon: 'CodeBranch', tintColor: theme.colors.primary6}}
+          iconProps={{icon: 'CodeBranch', tintColor: theme.colors.purple50}}
           rightSubIcon="AngleRightSolid"
           onPress={onPressGroupStructure}
         />
@@ -135,7 +136,7 @@ const CommunityAdmin = () => {
           testID="community_admin.permission_settings"
           title="settings:title_permission_settings"
           icon="FileLock"
-          iconProps={{icon: 'FileLock', tintColor: theme.colors.primary6}}
+          iconProps={{icon: 'FileLock', tintColor: theme.colors.purple50}}
           rightSubIcon="AngleRightSolid"
           onPress={onPressPermission}
         />
@@ -144,7 +145,7 @@ const CommunityAdmin = () => {
         testID="community_admin.post_settings"
         title="settings:title_post_settings"
         icon="Copy"
-        iconProps={{icon: 'Copy', tintColor: theme.colors.primary6}}
+        iconProps={{icon: 'Copy', tintColor: theme.colors.purple50}}
         rightSubIcon="AngleRightSolid"
         onPress={displayNewFeature}
       />
@@ -155,7 +156,7 @@ const CommunityAdmin = () => {
     <ScreenWrapper testID="CommunityAdmin" isFullView>
       <Header
         title={name}
-        titleTextProps={{color: theme.colors.textPrimary}}
+        titleTextProps={{color: theme.colors.neutral80}}
         avatar={icon}
       />
       <Divider size={4} />
@@ -167,9 +168,7 @@ const CommunityAdmin = () => {
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
+const createStyles = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       paddingTop: spacing.padding.large,

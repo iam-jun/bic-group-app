@@ -8,8 +8,6 @@ import {
 } from 'react-native';
 import Text, {TextProps} from '~/beinComponents/Text';
 import Icon, {IconProps} from '~/beinComponents/Icon';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
 import Checkbox, {
   CheckboxProps,
 } from '~/beinComponents/SelectionControl/Checkbox';
@@ -19,6 +17,7 @@ import {IconType} from '~/resources/icons';
 import Avatar from '~/beinComponents/Avatar';
 import {AvatarProps} from '~/beinComponents/Avatar/AvatarComponent';
 import {primaryItemHeight} from '~/theme/dimension';
+import spacing from '~/theme/spacing';
 
 export interface PrimaryItemProps {
   style?: StyleProp<ViewStyle>;
@@ -74,10 +73,6 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   RightComponent,
   ContentComponent,
 }: PrimaryItemProps) => {
-  const theme = useTheme() as ITheme;
-  const {spacing} = theme;
-  const styles = createStyle(theme);
-
   const containerStyle: ViewStyle = StyleSheet.flatten([
     {
       flexDirection: 'row',
@@ -162,20 +157,17 @@ const PrimaryItem: React.FC<PrimaryItemProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    contentContainer: {flex: 1},
-    iconMarginRight: {
-      marginRight: spacing?.margin.extraLarge,
-    },
-    iconMarginLeft: {
-      marginLeft: spacing?.margin.extraLarge,
-    },
-    avatar: {
-      marginRight: spacing?.margin.base,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  contentContainer: {flex: 1},
+  iconMarginRight: {
+    marginRight: spacing?.margin.extraLarge,
+  },
+  iconMarginLeft: {
+    marginLeft: spacing?.margin.extraLarge,
+  },
+  avatar: {
+    marginRight: spacing?.margin.base,
+  },
+});
 
 export default PrimaryItem;

@@ -10,15 +10,15 @@ import {
 
 import SvgIcon, {SVGIconProps} from './SvgIcon';
 
-import {useTheme} from 'react-native-paper';
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
-import {spacing} from '~/theme';
 import icons, {IconType} from '~/resources/icons';
-import {ITheme} from '~/theme/interfaces';
+
 import {View} from 'react-native';
 import TextEmojiIcon from '~/beinComponents/Icon/TextEmojiIcon';
 import {useNetInfo} from '@react-native-community/netinfo';
+import spacing from '~/theme/spacing';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {
   fontAwesomeIcons,
   fontAwesomeIconValues,
@@ -62,17 +62,17 @@ const Icon: React.FC<IconProps> = ({
   const NetInfo = useNetInfo();
   const noInternet = NetInfo.isInternetReachable === false;
 
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   if (isLoading) return <ActivityIndicator size="small" />;
 
   const {colors} = theme;
   const styles = StyleSheet.create(createStyles(theme));
-  tintColor = tintColor || colors.iconTint;
+  tintColor = tintColor || colors.neutral80;
 
   let _tintColor = disabled
     ? isButton
-      ? colors.primary7
-      : colors.disabled
+      ? colors.purple60
+      : colors.gray30
     : tintColor;
 
   const _icon = typeof icon === 'string' ? icons[icon] : icon;
@@ -137,7 +137,7 @@ const Icon: React.FC<IconProps> = ({
             useI18n
             style={[
               styles.label,
-              {color: labelColor || theme.colors.textPrimary},
+              {color: labelColor || theme.colors.neutral80},
               labelStyle,
             ]}>
             {label}
@@ -148,7 +148,7 @@ const Icon: React.FC<IconProps> = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
+const createStyles = (theme: ExtendedTheme) => {
   const {colors} = theme;
 
   return StyleSheet.create({
@@ -159,10 +159,10 @@ const createStyles = (theme: ITheme) => {
     button: {
       padding: spacing.padding.small,
       borderRadius: spacing.borderRadius.small,
-      backgroundColor: colors.primary1,
+      backgroundColor: colors.violet1,
     },
     disabled: {
-      backgroundColor: colors.disabled,
+      backgroundColor: colors.gray30,
     },
     label: {
       marginStart: spacing.margin.base,

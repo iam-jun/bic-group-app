@@ -35,7 +35,7 @@ describe('NormalToastMessage component', () => {
     );
     const buttonComponent = getByTestId('normal_toast_message');
     expect(buttonComponent.props.style.backgroundColor).toBe(
-      colors.light.colors.error,
+      colors.light.colors.red60,
     );
   });
 

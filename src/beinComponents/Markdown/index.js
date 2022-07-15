@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import {useDispatch} from 'react-redux';
 
 import Md from './Md';
-import colors from '~/theme/colors';
+import colors from '~/theme/theme';
 import {mmTheme} from './utils/config';
 
 import Header from '~/beinComponents/Header';
@@ -18,7 +18,7 @@ const Markdown = ({value, ...rest}) => {
   const dispatch = useDispatch();
   const theme = mmTheme;
   const baseTextStyle = {
-    color: colors.light.colors.textPrimary,
+    color: '#282E53',
     fontFamily: fontFamilies.BeVietnamProLight,
   };
   const textStyles = {

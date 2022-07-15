@@ -1,8 +1,6 @@
 import React, {FC, useEffect, useMemo} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {IGroup} from '~/interfaces/IGroup';
 import ReorderList from '~/beinComponents/ReorderList';
@@ -25,7 +23,7 @@ export interface ReorderGroupProps {
 
 const ReorderGroup: FC<ReorderGroupProps> = ({route}: ReorderGroupProps) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const initGroup = route?.params?.group;
@@ -66,12 +64,12 @@ const ReorderGroup: FC<ReorderGroupProps> = ({route}: ReorderGroupProps) => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     verticalLine: {
       width: 1,
@@ -79,7 +77,7 @@ const createStyle = (theme: ITheme) => {
       top: 8,
       bottom: 8,
       left: 30,
-      backgroundColor: colors.bgFocus,
+      backgroundColor: colors.gray20,
     },
   });
 };

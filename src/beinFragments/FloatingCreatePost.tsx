@@ -1,6 +1,6 @@
 import React, {FC, useEffect} from 'react';
 import {DeviceEventEmitter, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useRootNavigation} from '~/hooks/navigation';
 
 import Animated, {
@@ -10,12 +10,12 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import {ITheme} from '~/theme/interfaces';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
 import {ISelectAudienceParams} from '~/screens/Post/PostSelectAudience/SelectAudienceHelper';
+import spacing from '~/theme/spacing';
 
 export interface FloatingCreatePostProps {
   audience?: any;
@@ -28,8 +28,8 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
 }: FloatingCreatePostProps) => {
   const showValue = useSharedValue(0);
 
-  const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
   const styles = createStyle(theme);
   const {rootNavigation} = useRootNavigation();
 
@@ -78,26 +78,21 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
   return (
     <Animated.View style={containerStyle}>
       <Button onPress={onPress} style={styles.button}>
-        <Icon
-          tintColor={colors.iconTintReversed}
-          width={20}
-          height={20}
-          icon={'edit'}
-        />
+        <Icon tintColor={colors.white} width={20} height={20} icon={'edit'} />
       </Button>
     </Animated.View>
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {},
     button: {
       width: 44,
       height: 44,
       borderRadius: 4,
-      backgroundColor: colors.primary7,
+      backgroundColor: colors.purple60,
       justifyContent: 'center',
       alignItems: 'center',
     },

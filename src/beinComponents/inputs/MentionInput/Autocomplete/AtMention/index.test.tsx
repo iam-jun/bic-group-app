@@ -37,7 +37,7 @@ describe('AtMention component', () => {
     expect(component).not.toBeNull();
 
     const flattenedStyle = StyleSheet.flatten(component.props.style);
-    expect(flattenedStyle.color).toBe(colors.light.colors.textDisabled);
+    expect(flattenedStyle.color).toBe(colors.light.colors.gray40);
   });
 
   it(`should show "AtMention" with loading`, async () => {
@@ -50,7 +50,7 @@ describe('AtMention component', () => {
 
     expect(component).not.toBeNull();
 
-    expect(component.props.color).toBe(colors.light.colors.disabled);
+    expect(component.props.color).toBe(colors.light.colors.gray30);
   });
 
   it(`should hide loading`, async () => {

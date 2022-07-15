@@ -1,11 +1,11 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import {IconType} from '~/resources/icons';
+import spacing from '~/theme/spacing';
 
 interface EmptyScreenProps {
   source?: IconType;
@@ -22,8 +22,7 @@ const EmptyScreen = ({
   size = 150,
   ButtonComponent,
 }: EmptyScreenProps) => {
-  const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
+  const theme: ExtendedTheme = useTheme();
 
   return (
     <View testID="empty_screen" style={styles.container}>
@@ -34,10 +33,7 @@ const EmptyScreen = ({
         </Text.ButtonM>
       )}
       {!!description && (
-        <Text.BodyS
-          color={theme.colors.textSecondary}
-          style={styles.text}
-          useI18n>
+        <Text.BodyS color={theme.colors.gray50} style={styles.text} useI18n>
           {description}
         </Text.BodyS>
       )}
@@ -46,20 +42,16 @@ const EmptyScreen = ({
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    container: {
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 30,
-    },
-    text: {
-      textAlign: 'center',
-      marginVertical: spacing.margin.tiny,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginTop: 30,
+  },
+  text: {
+    textAlign: 'center',
+    marginVertical: spacing.margin.tiny,
+  },
+});
 
 export default EmptyScreen;

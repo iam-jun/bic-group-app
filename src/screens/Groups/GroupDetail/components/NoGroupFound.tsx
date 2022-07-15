@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import NoGroupFoundImg from '~/../assets/images/no_group_found.svg';
 import Button from '~/beinComponents/Button';
@@ -11,10 +11,10 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 const NoGroupFound = () => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
 
@@ -45,11 +45,11 @@ const NoGroupFound = () => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     root: {
-      backgroundColor: colors.placeholder,
+      backgroundColor: colors.neutral5,
     },
     mainContainer: {
       flex: 1,

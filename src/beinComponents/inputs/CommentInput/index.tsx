@@ -1,4 +1,5 @@
 import {GiphyMedia, GiphyMediaView} from '@giphy/react-native-sdk';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import React, {
   useCallback,
   useEffect,
@@ -17,7 +18,6 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
@@ -35,8 +35,9 @@ import {IFilePicked, IGiphy} from '~/interfaces/common';
 import {IActivityDataImage} from '~/interfaces/IPost';
 import ImageUploader, {IGetFile} from '~/services/imageUploader';
 import modalActions from '~/store/modal/actions';
+import dimension from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {checkPermission} from '~/utils/permission';
 
 export interface ICommentInputSendParam {
@@ -133,7 +134,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets, _loading);
@@ -326,7 +327,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
       if (!text) return null;
 
       return (
-        <View style={{backgroundColor: colors.background}}>
+        <View style={{backgroundColor: colors.white}}>
           <View style={styles.selectedImageWrapper}>
             <View style={styles.selectedImageContainer}>
               <GiphyMediaView
@@ -347,14 +348,14 @@ const CommentInput: React.FC<CommentInputProps> = ({
       return null;
     }
     return (
-      <View style={{backgroundColor: colors.background}}>
+      <View style={{backgroundColor: colors.white}}>
         {!!uploadError && (
           <View style={styles.selectedImageErrorContainer}>
-            <Text color={colors.error}>
-              <Text color={colors.error}>{uploadError}</Text>
-              <Text color={colors.error}>
+            <Text color={colors.red60}>
+              <Text color={colors.red60}>{uploadError}</Text>
+              <Text color={colors.red60}>
                 {' • '}
-                <Text.BodyM useI18n color={colors.error} onPress={handleUpload}>
+                <Text.BodyM useI18n color={colors.red60} onPress={handleUpload}>
                   common:text_retry
                 </Text.BodyM>
               </Text>
@@ -403,11 +404,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
               onContentSizeChange={_onContentSizeChange}
               ref={_textInputRef}
               style={styles.textInput}
-              selectionColor={colors.textSecondary}
+              selectionColor={colors.gray50}
               multiline={true}
               autoFocus={autoFocus}
               placeholder={placeholder}
-              placeholderTextColor={colors.textSecondary}
+              placeholderTextColor={colors.gray50}
               editable={!_loading}
               onFocus={_onFocus}
               onChangeText={_onChangeText}
@@ -438,13 +439,13 @@ const CommentInput: React.FC<CommentInputProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme, insets: any, loading: boolean) => {
-  const {colors, spacing, dimension} = theme;
+const createStyle = (theme: ExtendedTheme, insets: any, loading: boolean) => {
+  const {colors} = theme;
   return StyleSheet.create({
     root: {
       borderTopWidth: 1,
-      borderColor: colors.borderDivider,
-      backgroundColor: colors.background,
+      borderColor: colors.neutral5,
+      backgroundColor: colors.white,
       paddingTop: spacing.padding.small,
       paddingBottom: spacing.padding.small,
     },
@@ -458,7 +459,7 @@ const createStyle = (theme: ITheme, insets: any, loading: boolean) => {
       height: 24,
       marginRight: spacing?.margin.small,
       borderRadius: 12,
-      backgroundColor: theme.colors.primary7,
+      backgroundColor: theme.colors.purple60,
       justifyContent: 'center',
       alignItems: 'center',
     },
@@ -468,7 +469,7 @@ const createStyle = (theme: ITheme, insets: any, loading: boolean) => {
       paddingTop: spacing?.padding.small,
       paddingBottom: spacing?.padding.small,
       paddingHorizontal: spacing?.padding.large,
-      color: loading ? colors.textSecondary : colors.textPrimary,
+      color: loading ? colors.textSecondary : colors.neutral80,
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: dimension?.sizes.bodyM,
     },
@@ -500,10 +501,10 @@ const createStyle = (theme: ITheme, insets: any, loading: boolean) => {
       width: 16,
       height: 16,
       borderRadius: 8,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       justifyContent: 'center',
       alignItems: 'center',
-      shadowColor: colors.iconTint,
+      shadowColor: colors.neutral80,
       shadowOffset: {width: 0, height: 4},
       shadowOpacity: 0.3,
       shadowRadius: 4.65,
@@ -516,7 +517,7 @@ const createStyle = (theme: ITheme, insets: any, loading: boolean) => {
       backgroundColor: 'rgba(255,255,255,0.7)',
       borderRadius: spacing.borderRadius.small,
       borderWidth: 1,
-      borderColor: colors.error,
+      borderColor: colors.red60,
       justifyContent: 'center',
       alignItems: 'center',
     },

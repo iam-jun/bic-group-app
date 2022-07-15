@@ -1,13 +1,13 @@
 import {View, StyleProp, ViewStyle, StyleSheet} from 'react-native';
 import React from 'react';
 import i18next from 'i18next';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import modalActions from '~/store/modal/actions';
+import spacing from '~/theme/spacing';
 
 interface HeaderMenuProps {
   type: 'community' | 'group';
@@ -36,8 +36,7 @@ const HeaderMenu = ({
   onPressNotification,
   onPressLeave,
 }: HeaderMenuProps) => {
-  const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
+  const theme: ExtendedTheme = useTheme();
   const dispatch = useDispatch();
 
   const onPressNewFeature = () => {
@@ -54,7 +53,7 @@ const HeaderMenu = ({
           leftIconProps={{
             icon: 'iconShieldStar',
             size: 24,
-            tintColor: theme.colors.primary6,
+            tintColor: theme.colors.purple50,
             style: styles.iconLeftStyle,
           }}
           leftIcon={'iconShieldStar'}
@@ -64,7 +63,7 @@ const HeaderMenu = ({
             <Icon
               icon={'RightArrow'}
               size={12}
-              tintColor={theme.colors.textSecondary}
+              tintColor={theme.colors.gray50}
             />
           }
         />
@@ -75,7 +74,7 @@ const HeaderMenu = ({
         leftIconProps={{
           icon: 'Copy',
           size: 24,
-          tintColor: theme.colors.primary6,
+          tintColor: theme.colors.purple50,
           style: styles.iconLeftStyle,
         }}
         leftIcon={'Link'}
@@ -88,7 +87,7 @@ const HeaderMenu = ({
         leftIconProps={{
           icon: 'ShareNodes',
           size: 24,
-          tintColor: theme.colors.primary6,
+          tintColor: theme.colors.purple50,
           style: styles.iconLeftStyle,
         }}
         leftIcon={'ShareNodes'}
@@ -101,7 +100,7 @@ const HeaderMenu = ({
         leftIconProps={{
           icon: 'iconAddSquareDone',
           size: 24,
-          tintColor: theme.colors.primary6,
+          tintColor: theme.colors.purple50,
           style: styles.iconLeftStyle,
         }}
         leftIcon={'iconAddSquareDone'}
@@ -114,7 +113,7 @@ const HeaderMenu = ({
         leftIconProps={{
           icon: 'iconMapPin',
           size: 24,
-          tintColor: theme.colors.primary6,
+          tintColor: theme.colors.purple50,
           style: styles.iconLeftStyle,
         }}
         leftIcon={'iconMapPin'}
@@ -127,7 +126,7 @@ const HeaderMenu = ({
         leftIconProps={{
           icon: 'Bell',
           size: 24,
-          tintColor: theme.colors.primary6,
+          tintColor: theme.colors.purple50,
           style: styles.iconLeftStyle,
         }}
         leftIcon={'Bell'}
@@ -141,12 +140,12 @@ const HeaderMenu = ({
           leftIconProps={{
             icon: 'ArrowRightFromArc',
             size: 24,
-            tintColor: theme.colors.error,
+            tintColor: theme.colors.red60,
             style: styles.iconLeftStyle,
           }}
           leftIcon={'ArrowRightFromArc'}
           title={i18next.t(`groups:group_menu:label_leave_${type}`)}
-          titleProps={{color: theme.colors.error}}
+          titleProps={{color: theme.colors.red60}}
           onPress={onPressLeave || onPressNewFeature}
         />
       )}
@@ -154,11 +153,8 @@ const HeaderMenu = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    iconLeftStyle: {marginRight: spacing.margin.base},
-  });
-};
+const styles = StyleSheet.create({
+  iconLeftStyle: {marginRight: spacing.margin.base},
+});
 
 export default HeaderMenu;

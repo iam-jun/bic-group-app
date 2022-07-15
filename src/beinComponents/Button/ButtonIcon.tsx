@@ -1,11 +1,13 @@
 import React from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import {IconType} from '~/resources/icons';
-import {ITheme} from '~/theme/interfaces';
+
 import ButtonWrapper, {ButtonWrapperProps} from './ButtonWrapper';
 import Text from '~/beinComponents/Text';
+import spacing from '~/theme/spacing';
 
 export interface ButtonIconProps extends ButtonWrapperProps {
   style?: StyleProp<ViewStyle>;
@@ -23,7 +25,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   iconWrapperStyle,
   ...props
 }: ButtonIconProps) => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   return (
@@ -43,22 +45,22 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       alignItems: 'center',
     },
     icon: {
-      backgroundColor: colors.primary1,
+      backgroundColor: colors.violet1,
       justifyContent: 'center',
       alignItems: 'center',
-      borderRadius: spacing?.borderRadius.small,
+      borderRadius: spacing.borderRadius.small,
       width: 36,
       height: 36,
     },
     label: {
-      marginTop: spacing?.margin.small,
+      marginTop: spacing.margin.small,
       textAlign: 'center',
     },
   });

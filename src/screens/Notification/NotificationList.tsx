@@ -7,7 +7,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import Divider from '~/beinComponents/Divider';
@@ -20,7 +20,8 @@ import {useKeySelector} from '~/hooks/selector';
 import {ITabTypes} from '~/interfaces/IRouter';
 import i18n from '~/localization';
 import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 import notificationsActions from './redux/actions';
 import notificationSelector from './redux/selector';
 
@@ -100,7 +101,7 @@ const _NotificationList = ({
     [onPressItemOption],
   );
 
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const renderListFooter = () => {
@@ -108,10 +109,10 @@ const _NotificationList = ({
       return (
         <View style={styles.listFooter}>
           {!noMoreNotification && isLoadingMore && (
-            <ActivityIndicator color={theme.colors.bgFocus} />
+            <ActivityIndicator color={theme.colors.gray20} />
           )}
           {noMoreNotification && (
-            <Text.BodyS color={theme.colors.textSecondary}>
+            <Text.BodyS color={theme.colors.gray50}>
               {i18n.t('notification:no_more_notification')}
             </Text.BodyS>
           )}
@@ -141,7 +142,7 @@ const _NotificationList = ({
       return (
         <View style={styles.unReadNotifications}>
           <Icon icon="CircleCheck" size={40} tintColor={theme.colors.success} />
-          <Text.BodyS useI18n style={{marginTop: theme.spacing.margin.base}}>
+          <Text.BodyS useI18n style={{marginTop: spacing.margin.base}}>
             notification:seen_all_notifications
           </Text.BodyS>
         </View>
@@ -176,7 +177,7 @@ const _NotificationList = ({
           keyExtractor={keyExtractor}
           renderItem={renderItem}
           renderItemSeparator={() => (
-            <Divider size={1} color={theme.colors.borderDivider} />
+            <Divider size={1} color={theme.colors.neutral5} />
           )}
           data={_notificationList}
           onRefresh={refreshListNotification}
@@ -186,20 +187,20 @@ const _NotificationList = ({
           ListFooterComponent={renderListFooter}
         />
       ) : (
-        <ActivityIndicator color={theme.colors.bgFocus} />
+        <ActivityIndicator color={theme.colors.gray20} />
       )}
     </View>
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const insets = useSafeAreaInsets();
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     screenContainer: {
       paddingTop: insets.top,
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     list: {},
     listContainer: {

@@ -1,8 +1,6 @@
 import React, {FC, useState} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle, Dimensions} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import {IActivityDataImage} from '~/interfaces/IPost';
@@ -11,6 +9,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Button from '~/beinComponents/Button';
 import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
 import {getResourceUrl, IUploadType} from '~/configs/resourceConfig';
+import dimension from '~/theme/dimension';
 
 const DeviceWidth = Dimensions.get('window').width;
 
@@ -37,8 +36,8 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
 }: PostPhotoPreviewProps) => {
   const [galleryVisible, setGalleryVisible] = useState(false);
 
-  const theme = useTheme() as ITheme;
-  const {colors, dimension} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   if (data?.length === 0) {
@@ -59,8 +58,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   const wrapperStyle: any = {
     width: dfSize,
     alignItems: 'center',
-    backgroundColor:
-      data?.length === 1 ? colors.borderFocus : colors.background,
+    backgroundColor: data?.length === 1 ? colors.gray40 : colors.white,
   };
 
   const _onPress = (e: any) => {
@@ -98,9 +96,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   const renderMore = () => {
     return (
       <View style={styles.moreContainer}>
-        <Text.H4
-          color={colors.background}
-          testID="post_photo_preview.more_photos">
+        <Text.H4 color={colors.white} testID="post_photo_preview.more_photos">
           + {data.length - 4}
         </Text.H4>
       </View>
@@ -190,8 +186,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {},
     image: {borderRadius: 0},

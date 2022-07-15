@@ -6,9 +6,8 @@ import {
   View,
 } from 'react-native';
 import React from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import {useBaseHook} from '~/hooks';
@@ -17,6 +16,7 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import GroupMemberRequest from '../GroupDetail/groupModerating/components/GroupMemberRequest';
 import CommunityMemberRequest from '../CommunityAdmin/PendingMembers/CommunityMemberRequest';
+import spacing from '~/theme/spacing';
 
 interface MemberRequestListProps {
   type: 'community' | 'group';
@@ -29,8 +29,7 @@ const MemberRequestList = ({
   onLoadMore,
   onRefresh,
 }: MemberRequestListProps) => {
-  const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
 
   const {loading, total, ids, canLoadMore} = useKeySelector(
@@ -101,32 +100,28 @@ const MemberRequestList = ({
         <RefreshControl
           refreshing={loading}
           onRefresh={onRefresh}
-          tintColor={theme.colors.borderDisable}
+          tintColor={theme.colors.gray40}
         />
       }
     />
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    flatList: {
-      marginHorizontal: spacing.margin.large,
-    },
-    requestHeader: {
-      marginVertical: spacing.margin.base,
-    },
-    divider: {
-      marginBottom: spacing.margin.small,
-    },
-    listFooter: {
-      height: 100,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  });
-};
+const styles = StyleSheet.create({
+  flatList: {
+    marginHorizontal: spacing.margin.large,
+  },
+  requestHeader: {
+    marginVertical: spacing.margin.base,
+  },
+  divider: {
+    marginBottom: spacing.margin.small,
+  },
+  listFooter: {
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default MemberRequestList;

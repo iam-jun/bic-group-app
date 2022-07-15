@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
@@ -13,6 +11,7 @@ import {useDispatch} from 'react-redux';
 import modalActions from '~/store/modal/actions';
 import TimeView from '~/beinComponents/TimeView';
 import {useKeySelector} from '~/hooks/selector';
+import spacing from '~/theme/spacing';
 
 export interface PostViewHeaderProps {
   audience?: IPostAudience;
@@ -33,9 +32,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
 }: PostViewHeaderProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
-  const styles = createStyle(theme);
+  const {colors} = useTheme();
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
@@ -76,10 +73,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
           </Text.BodySMedium>
         </TouchableOpacity>
         <View style={{flexDirection: 'row'}}>
-          <Text.BodySMedium
-            useI18n
-            color={colors.textSecondary}
-            style={styles.textTo}>
+          <Text.BodySMedium useI18n color={colors.gray50} style={styles.textTo}>
             post:to
           </Text.BodySMedium>
           <Text.BodySMedium
@@ -96,7 +90,7 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
           />
         </View>
       </View>
-      <View style={{marginRight: spacing?.margin.small}}>
+      <View style={{marginRight: spacing.margin.small}}>
         <Icon
           style={{alignSelf: 'auto'}}
           icon={'menu'}
@@ -126,23 +120,20 @@ const getAudiencesText = (aud?: IPostAudience, t?: any) => {
   return result;
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    headerContainer: {
-      flexDirection: 'row',
-      paddingTop: spacing?.margin.small,
-    },
-    rowCenter: {flexDirection: 'row', alignItems: 'center'},
-    textTo: {
-      marginRight: spacing?.margin.tiny,
-    },
-    avatar: {
-      marginTop: spacing?.margin.tiny,
-      marginLeft: spacing?.margin.large,
-      marginRight: spacing?.margin.base,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  headerContainer: {
+    flexDirection: 'row',
+    paddingTop: spacing?.margin.small,
+  },
+  rowCenter: {flexDirection: 'row', alignItems: 'center'},
+  textTo: {
+    marginRight: spacing?.margin.tiny,
+  },
+  avatar: {
+    marginTop: spacing.margin.tiny,
+    marginLeft: spacing.margin.large,
+    marginRight: spacing.margin.base,
+  },
+});
 
 export default PostViewHeader;

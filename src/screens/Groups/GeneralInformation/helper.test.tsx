@@ -1,7 +1,7 @@
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import modalActions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+
 import {_openImagePicker, alertAction} from './helper';
 
 describe('GeneralInformation helper', () => {
@@ -21,7 +21,7 @@ describe('GeneralInformation helper', () => {
   });
 
   it('should alertAction', () => {
-    const theme = useTheme() as ITheme;
+    const theme: ExtendedTheme = useTheme();
     const spy = jest.spyOn(modalActions, 'showAlert');
 
     alertAction(jest.fn(), theme, 'test title', 'test content', jest.fn());

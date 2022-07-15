@@ -1,11 +1,12 @@
 import {StyleSheet, View, Platform, TextInput} from 'react-native';
 import React, {useState} from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {ITheme} from '~/theme/interfaces';
 import Icon from './Icon';
 import {fontFamilies} from '~/theme/fonts';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 interface SearchBaseViewProps {
   isOpen: boolean;
@@ -24,7 +25,7 @@ const SearchBaseView = ({
   onClose,
   onChangeText,
 }: SearchBaseViewProps) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   const [searchText, setSearchText] = useState(initSearch || '');
@@ -59,8 +60,8 @@ const SearchBaseView = ({
             value={searchText}
             autoComplete={'off'}
             placeholder={placeholder}
-            placeholderTextColor={theme.colors.textDisabled}
-            selectionColor={theme.colors.textSecondary}
+            placeholderTextColor={theme.colors.gray40}
+            selectionColor={theme.colors.gray50}
             onChangeText={_onChangeText}
           />
           {!!searchText && (
@@ -68,7 +69,7 @@ const SearchBaseView = ({
               style={styles.iconClose}
               icon="iconClose"
               size={20}
-              tintColor={theme.colors.iconTint}
+              tintColor={theme.colors.neutral80}
               onPress={() => _onChangeText('')}
               buttonTestID="search_base_view.reset_button"
             />
@@ -86,8 +87,8 @@ const SearchBaseView = ({
   ) : null;
 };
 
-const createStyles = (theme: ITheme) => {
-  const {spacing, colors, dimension} = theme;
+const createStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   const insets = useSafeAreaInsets();
 
   return StyleSheet.create({
@@ -95,18 +96,18 @@ const createStyles = (theme: ITheme) => {
       position: 'absolute',
       width: '100%',
       height: '100%',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     headerContainer: {
       paddingTop: insets.top,
       overflow: 'hidden',
       alignItems: 'flex-end',
       flexDirection: 'row',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     bottomBorderAndShadow: {
       borderBottomWidth: Platform.OS === 'android' ? 0 : 0.5,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
       shadowOffset: {width: 0, height: 1},
       shadowColor: '#000',
       shadowOpacity: 0.1,
@@ -125,14 +126,14 @@ const createStyles = (theme: ITheme) => {
       height: '100%',
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: dimension.sizes.bodyM,
-      color: colors.textPrimary,
+      color: colors.neutral80,
       marginHorizontal: spacing.margin.base,
     },
     inputIconContainer: {
       height: dimension.headerHeight,
       flex: 1,
       flexDirection: 'row',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       overflow: 'hidden',
       alignItems: 'center',
       paddingRight: spacing.padding.small,

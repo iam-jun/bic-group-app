@@ -1,10 +1,10 @@
 import React, {useState, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {ITheme} from '~/theme/interfaces';
+
 import Header from '~/beinComponents/Header';
 import CommentDetailContent from './CommentDetailContent';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
@@ -15,14 +15,14 @@ import postActions from '../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import postKeySelector from '../redux/keySelector';
+import spacing from '~/theme/spacing';
 
 const CommentDetail = (props: any) => {
   const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
 
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
-  const styles = themeStyles(theme);
 
   const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);
   const [showPrivacyPost, setShowPrivacyPost] = useState(false);
@@ -59,7 +59,7 @@ const CommentDetail = (props: any) => {
   };
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.background}>
+    <ScreenWrapper isFullView backgroundColor={colors.white}>
       <Header
         titleTextProps={{useI18n: true}}
         title={'post:label_comment'}
@@ -94,14 +94,10 @@ const CommentDetail = (props: any) => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    button: {
-      marginTop: spacing.margin.extraLarge,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  button: {
+    marginTop: spacing.margin.extraLarge,
+  },
+});
 
 export default CommentDetail;

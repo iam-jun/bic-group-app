@@ -1,8 +1,6 @@
 import React, {FC, useState} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {useTheme, ExtendedTheme} from '@react-navigation/native';
 
 import Button from '~/beinComponents/Button';
 import {IPayloadPutMarkAsRead} from '~/interfaces/IPost';
@@ -12,6 +10,7 @@ import icons from '~/resources/icons';
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
+import spacing from '~/theme/spacing';
 
 export interface ButtonMarkAsReadProps {
   style?: StyleProp<ViewStyle>;
@@ -38,7 +37,7 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
 
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -75,11 +74,11 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
       <Button.Secondary
         testID={'button_mark_as_read.button'}
         loading={loading}
-        color={colors.bgSecondary}
-        textColor={colors.textPrimary}
+        color={colors.neutral1}
+        textColor={colors.neutral80}
         disabled={markedReadPost}
-        colorDisabled={colors.background}
-        textColorDisabled={colors.textSecondary}
+        colorDisabled={colors.white}
+        textColorDisabled={colors.gray50}
         leftIcon={markedReadPost && icons.Check}
         onPress={onPressMarkAsRead}>
         {markedReadPost ? t('post:marked_as_read') : t('post:mark_as_read')}
@@ -88,14 +87,14 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingVertical: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
       borderTopWidth: 1,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
     },
   });
 };

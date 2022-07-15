@@ -173,10 +173,11 @@ const icons = {
   iconSettings: fontAwesomeIcons.Ellipsis,
   edit: fontAwesomeIcons.PenToSquare,
   menu: fontAwesomeIcons.Ellipsis,
-  search: fontAwesomeIcons.MagnifyingGlass, // IF YOU WANT TO RENAME ICON, ADD TO fontAwesomeIcons FIRST
-
+  search: fontAwesomeIcons.MagnifyingGlass,
+  // ^ ADD RENAMED ICON HERE
+  // IF YOU WANT TO RENAME ICON, ADD TO fontAwesomeIcons FIRST
   ...fontAwesomeIcons,
-  // FOR AWESOME ICONS NOT ADD YET, PLEASE ADD IN FILE `fontAwesomeIcon.ts`
+  // FOR AWESOME ICONS NOT ADD YET, PLEASE ADD IN FILE `fontAwesomeIcon.ts`, READ NOTE CAREFULLY
 };
 
 export default icons;

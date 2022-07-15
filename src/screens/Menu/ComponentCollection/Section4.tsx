@@ -1,17 +1,15 @@
 import React, {useRef} from 'react';
 import {View} from 'react-native';
 import Text from '~/beinComponents/Text';
-import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
 import Divider from '~/beinComponents/Divider';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Button from '~/beinComponents/Button';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import TextInput from '~/beinComponents/inputs/TextInput';
 import PostToolbar from '~/screens/Post/components/PostToolbar';
+import spacing from '~/theme/spacing';
 
 const Section4 = () => {
-  const {spacing} = useTheme() as ITheme;
   const baseSheetRef: any = useRef();
   const postToolbarRef: any = useRef();
 
@@ -37,16 +35,8 @@ const Section4 = () => {
     return renderSection(
       'TextInput',
       <View style={{paddingHorizontal: spacing?.margin.base}}>
+        <TextInput helperContent={'Input your password'} />
         <TextInput
-          label={'Example text'}
-          helperContent={'Input your password'}
-        />
-        <TextInput
-          label={'Example text'}
-          helperContent={'Input your password'}
-        />
-        <TextInput
-          label={'Example text'}
           placeholder={'Example text'}
           value={'123456789'}
           helperContent={'Wrong email or password! '}
@@ -54,11 +44,7 @@ const Section4 = () => {
           helperActionOnPress={() => alert('onPress forgot password')}
           error
         />
-        <TextInput
-          disabled
-          label={'Disabled'}
-          helperContent={'Input your password'}
-        />
+        <TextInput editable helperContent={'Input your password'} />
       </View>,
     );
   };
