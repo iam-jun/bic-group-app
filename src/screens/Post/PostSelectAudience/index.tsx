@@ -237,7 +237,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
             cancelBtn: true,
             cancelLabel: t('common:btn_discard'),
             confirmLabel: t('post:create_post:btn_keep_selecting'),
-            onDismiss: () => rootNavigation.goBack(),
+            onCancel: () => rootNavigation.goBack(),
           }),
         );
       } else {
@@ -253,7 +253,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
             cancelBtn: true,
             cancelLabel: t('common:btn_discard'),
             confirmLabel: t('post:create_post:btn_keep_edit'),
-            onDismiss: () => rootNavigation.goBack(),
+            onCancel: () => rootNavigation.goBack(),
           }),
         );
       } else {

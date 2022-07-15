@@ -72,7 +72,7 @@ const Section4 = () => {
               />
               <PrimaryItem
                 title={'Private'}
-                leftIcon={'Lock'}
+                leftIcon={'iconPrivate'}
                 subTitle={'Group’s content show to only members'}
                 onPressToggle={action => alert('onPress Toggle: ' + action)}
               />

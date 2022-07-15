@@ -40,11 +40,10 @@ const ToastAutoSave = ({viewRef, visible}: Props) => {
       {visible && (
         <View style={styles.toastAutoSave}>
           <Icon
-            isButton
             iconStyle={styles.iconToastAutoSave}
             style={styles.iconToastAutoSaveContainer}
-            size={18}
-            icon="Save"
+            size={16}
+            icon={'iconSave'}
             tintColor={theme.colors.gray50}
           />
           <Text.BodyS useI18n style={styles.textToastAutoSave}>
@@ -71,7 +70,6 @@ const themeStyles = (theme: ExtendedTheme) => {
     iconToastAutoSave: {
       padding: 2,
       borderRadius: 6,
-      backgroundColor: colors.neutral80,
     },
     textToastAutoSave: {color: colors.gray50},
   });

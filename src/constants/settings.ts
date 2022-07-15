@@ -73,7 +73,7 @@ export const accountSettingsMenu = [
   {
     type: 'securityLogin',
     title: 'settings:title_security_login',
-    icon: 'Lock',
+    icon: 'iconPrivate',
   },
   {
     type: 'privacy',

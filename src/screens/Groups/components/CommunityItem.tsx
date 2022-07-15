@@ -36,7 +36,7 @@ const CommunityItem = ({
         <Icon
           style={styles.iconSmall}
           icon={privacyIcon}
-          size={20}
+          size={16}
           tintColor={colors.gray50}
         />
         <Text.BodyS color={colors.gray50} useI18n>
