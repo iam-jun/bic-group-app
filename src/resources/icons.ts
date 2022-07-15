@@ -103,6 +103,7 @@ const icons = {
   iconLock,
   iconPlayGif,
   iconStar: iconStar,
+  iconSave: fontAwesomeIcons.FloppyDisk,
   iconSecret: fontAwesomeIcons.ShieldHalved,
   iconPrivate: fontAwesomeIcons.LockKeyhole,
   iconSend: fontAwesomeIcons.PaperPlaneTop,
