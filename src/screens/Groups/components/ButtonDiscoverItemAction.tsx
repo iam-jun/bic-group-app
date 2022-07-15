@@ -34,7 +34,7 @@ const ButtonDiscoverItemAction: FC<ButtonDiscoverItemActionProps> = ({
       text = 'common:btn_cancel';
       break;
     case groupJoinStatus.visitor:
-      icon = icons.Plus;
+      icon = 'Plus';
       text = 'common:btn_join';
       break;
     case groupJoinStatus.member:

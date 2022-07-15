@@ -594,7 +594,7 @@ const groupsActions = {
     loading?: boolean;
     canLoadMore?: boolean;
     ids?: number[];
-    items?: IObject<any>;
+    items?: IObject<IGroup>;
   }) => ({
     type: groupsTypes.SET_DISCOVER_GROUPS,
     payload,
