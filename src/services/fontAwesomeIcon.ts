@@ -31,6 +31,7 @@ import {faCopy} from '@fortawesome/pro-regular-svg-icons/faCopy';
 import {faCircleUser} from '@fortawesome/pro-regular-svg-icons/faCircleUser';
 import {faCamera} from '@fortawesome/pro-regular-svg-icons/faCamera';
 import {faLock} from '@fortawesome/pro-regular-svg-icons/faLock';
+import {faLockKeyhole} from '@fortawesome/pro-regular-svg-icons/faLockKeyhole';
 import {faGlobe} from '@fortawesome/pro-regular-svg-icons/faGlobe';
 import {faCalendar} from '@fortawesome/pro-regular-svg-icons/faCalendar';
 import {faUserXmark} from '@fortawesome/pro-regular-svg-icons/faUserXmark';
@@ -92,6 +93,7 @@ import {faUser} from '@fortawesome/pro-regular-svg-icons/faUser';
 import {faShieldCheck} from '@fortawesome/pro-regular-svg-icons/faShieldCheck';
 import {faDesktop} from '@fortawesome/pro-regular-svg-icons/faDesktop';
 import {faCoins} from '@fortawesome/pro-regular-svg-icons/faCoins';
+import {faShieldHalved} from '@fortawesome/pro-regular-svg-icons/faShieldHalved';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -143,6 +145,7 @@ export const initFontAwesomeIcon = () => {
     faCircleUser,
     faCamera,
     faLock,
+    faLockKeyhole,
     faGlobe,
     faCalendar,
     faUserXmark,
@@ -204,6 +207,7 @@ export const initFontAwesomeIcon = () => {
     faShieldCheck,
     faDesktop,
     faCoins,
+    faShieldHalved,
   );
 };
 
@@ -240,6 +244,7 @@ export const fontAwesomeIcons = {
   CircleUser: 'fa-regular fa-circle-user',
   Camera: 'fa-regular fa-camera',
   Lock: 'fa-regular fa-lock',
+  LockKeyhole: 'fa-regular fa-lock-keyhole',
   Globe: 'fa-regular fa-globe',
   Calendar: 'fa-regular fa-calendar',
   UserXmark: 'fa-regular fa-user-xmark',
@@ -302,6 +307,7 @@ export const fontAwesomeIcons = {
   ShieldCheck: 'fa-regular fa-shield-check',
   Monitor: 'fa-regular fa-desktop',
   Coins: 'fa-regular fa-coins',
+  ShieldHalved: 'fa-regular fa-shield-halved',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

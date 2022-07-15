@@ -61,7 +61,7 @@ const HeaderMenu = ({
           onPress={onPressAdminTools || onPressNewFeature}
           RightComponent={
             <Icon
-              icon={'RightArrow'}
+              icon={'ArrowRight'}
               size={12}
               tintColor={theme.colors.gray50}
             />
