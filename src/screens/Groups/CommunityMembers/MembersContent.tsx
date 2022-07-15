@@ -6,6 +6,8 @@ import groupsKeySelector from '../redux/keySelector';
 import {ICommunityMembers} from '~/interfaces/ICommunity';
 import MemberList from '../components/MemberList';
 import actions from '~/screens/Groups/redux/actions';
+import {hasPermission} from '~/utils/checkPermissionScheme';
+import {PERMISSION_KEY} from '~/constants/permissionScheme';
 
 interface MembersContentProps {
   communityId: number;
@@ -14,7 +16,16 @@ interface MembersContentProps {
 
 const MembersContent = ({communityId, onPressMenu}: MembersContentProps) => {
   const dispatch = useDispatch();
-  const {can_manage_member} = useKeySelector(groupsKeySelector.communityDetail);
+  const currentPermissions = useKeySelector(
+    groupsKeySelector.currentCommunityPermissions(communityId),
+  );
+  const canManageMember = hasPermission(
+    [
+      PERMISSION_KEY.COMMUNITY.ADD_REMOVE_MEMBERS,
+      PERMISSION_KEY.COMMUNITY.ASSIGN_UNASSIGN_ROLE,
+    ],
+    currentPermissions,
+  );
 
   useEffect(() => {
     getCommunityDetail();
@@ -50,7 +61,7 @@ const MembersContent = ({communityId, onPressMenu}: MembersContentProps) => {
   return (
     <MemberList
       type="community"
-      canManageMember={can_manage_member}
+      canManageMember={canManageMember}
       onLoadMore={onLoadMore}
       onPressMenu={onPressMenu}
       onRefresh={onRefresh}

@@ -15,14 +15,15 @@ export const useGetMyPermissions = () => {
   const {loading} = useKeySelector(groupsKeySelector.myPermissions);
 
   useEffect(() => {
-    const getMyPermissions = setInterval(() => {
+    const getMyPermissions = () => {
       if (token && userId && !loading) {
         dispatch(groupsActions.getMyPermissions());
       }
-    }, EXPIRED_TIME);
-
-    return () => {
-      clearInterval(getMyPermissions);
     };
+    getMyPermissions();
+
+    setInterval(() => {
+      getMyPermissions();
+    }, EXPIRED_TIME);
   }, [token, userId]);
 };

@@ -6,7 +6,7 @@ import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 
 export default function* getMyPermissions(): any {
   try {
-    yield put(actions.setMyPermissions({loading: true, data: undefined}));
+    yield put(actions.setMyPermissions({loading: true}));
 
     const response = yield call(groupsDataHelper.getMyPermissions);
 
