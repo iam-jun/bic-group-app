@@ -36,7 +36,7 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
 }: NFSFilterCreateBySpecificProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   const {data, canLoadMore} =
     useKeySelector(homeKeySelector.newsfeedSearchUsers) || {};

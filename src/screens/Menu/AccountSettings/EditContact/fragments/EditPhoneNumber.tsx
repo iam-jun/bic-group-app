@@ -49,7 +49,7 @@ const EditPhoneNumber = ({
 }: EditPhoneNumberProps) => {
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme, screenHeight);
   const dispatch = useDispatch();
 

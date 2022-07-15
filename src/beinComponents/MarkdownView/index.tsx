@@ -43,7 +43,7 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
   limitMarkdownTypes,
   onLinkPress,
 }: MarkdownViewProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   if (typeof children !== 'string') {

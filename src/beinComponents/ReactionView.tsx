@@ -33,7 +33,7 @@ const ReactionView: FC<ReactionViewProps> = ({
   onLongPressReaction,
   showSelectReactionWhenEmpty = true,
 }: ReactionViewProps) => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const onActionReaction = (reactionId: ReactionType, action: IAction) => {

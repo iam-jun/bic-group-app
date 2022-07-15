@@ -24,7 +24,7 @@ import spacing from '~/theme/spacing';
 
 const DiscoverGroups = ({route}: any) => {
   const {communityId} = route.params;
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 

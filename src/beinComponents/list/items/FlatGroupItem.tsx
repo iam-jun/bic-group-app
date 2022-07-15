@@ -74,7 +74,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   const [path, setPath] = useState<PathData>({path: '', total: 0, more: 0});
 
   const {rootNavigation} = useRootNavigation();
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const getSmallestChild = (smallestGroup: IGroup, path: PathData) => {

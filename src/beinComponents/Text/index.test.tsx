@@ -10,7 +10,7 @@ import {StyleSheet} from 'react-native';
 afterEach(cleanup);
 
 describe('Text component', () => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createTextStyle(theme);
   it(`renders correctly`, () => {
     const rendered = render(<Text />).toJSON();

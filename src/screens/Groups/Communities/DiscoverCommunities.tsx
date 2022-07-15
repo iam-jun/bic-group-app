@@ -38,7 +38,7 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   const {ids, items, loading, canLoadMore} = data || {};
 
   const dispatch = useDispatch();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   useEffect(() => {
     getData(true); // refreshing whenever open

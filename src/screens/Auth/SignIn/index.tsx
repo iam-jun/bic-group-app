@@ -69,7 +69,7 @@ const SignIn = () => {
   const keyboardHeightValue = useSharedValue(0);
   const keyboard = useKeyboard();
 
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const useFormData = useForm();

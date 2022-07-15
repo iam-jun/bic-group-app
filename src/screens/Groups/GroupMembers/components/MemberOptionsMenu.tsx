@@ -35,7 +35,7 @@ const MemberOptionsMenu = ({
   selectedMember,
   onOptionsClosed,
 }: MemberOptionsMenuProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const dispatch = useDispatch();
   const {user} = useAuth();
   const {t} = useBaseHook();

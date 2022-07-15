@@ -28,7 +28,7 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
 }: FloatingCreatePostProps) => {
   const showValue = useSharedValue(0);
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
   const {rootNavigation} = useRootNavigation();

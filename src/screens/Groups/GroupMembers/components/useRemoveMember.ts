@@ -16,7 +16,7 @@ interface IUseRemoveMember {
 
 const useRemoveMember = ({groupId, selectedMember}: IUseRemoveMember) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   const {id: userId, fullname} = selectedMember;
 

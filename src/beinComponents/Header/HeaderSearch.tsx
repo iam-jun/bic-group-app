@@ -53,7 +53,7 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
   const _inputRef = inputRef || useRef();
   const showValue = useSharedValue(0);
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const iconStyle = useAnimatedStyle(() => ({

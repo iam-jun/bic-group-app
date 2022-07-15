@@ -31,7 +31,7 @@ const SearchMemberView = ({
   onPressMenu,
 }: SearchMemberViewProps) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles(theme);
   const can_manage_member = useKeySelector(

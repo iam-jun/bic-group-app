@@ -31,7 +31,7 @@ const RoleItem: FC<RoleItemProps> = ({
 }: RoleItemProps) => {
   const [isExpand, setIsExpand] = useState(false);
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const onPress = () => {

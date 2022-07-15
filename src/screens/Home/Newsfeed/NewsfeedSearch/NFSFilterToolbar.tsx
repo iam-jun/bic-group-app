@@ -22,7 +22,7 @@ const NFSFilterToolbar = () => {
   const scrollRef = useRef<any>();
   const dispatch = useDispatch();
   const {language} = useContext(AppContext);
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const {colors} = theme;
   const styles = createStyle(theme);

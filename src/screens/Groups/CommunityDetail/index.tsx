@@ -41,7 +41,7 @@ const CommunityDetail = (props: any) => {
   const headerRef = useRef<any>();
   const [buttonHeight, setButtonHeight] = useState(250);
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);

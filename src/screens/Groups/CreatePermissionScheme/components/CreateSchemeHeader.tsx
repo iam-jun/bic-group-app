@@ -33,7 +33,7 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
   const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   const {id} = useKeySelector(groupsKeySelector.communityDetail) || {};
   const name = useKeySelector(groupsKeySelector.permission.creatingScheme.name);

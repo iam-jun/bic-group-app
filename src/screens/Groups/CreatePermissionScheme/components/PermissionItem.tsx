@@ -33,7 +33,7 @@ const PermissionItem: FC<PermissionItemProps> = ({
   isFixedForCreator,
 }: PermissionItemProps) => {
   const {t} = useBaseHook();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const {restrictedRoles = [], name = ''} = permission;

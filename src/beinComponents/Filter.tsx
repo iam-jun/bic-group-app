@@ -45,7 +45,7 @@ const FilterComponent: React.FC<FilterProps> = ({
   activeIndex = 0,
   translateX,
 }: FilterProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = useMemo(() => createStyle(theme), [theme, style]);
 
   const [measurements, setMeasurements] = useState<any[]>(

@@ -27,7 +27,7 @@ const Groups: React.FC = (props: any) => {
   const headerRef = useRef<any>();
 
   const dispatch = useDispatch();
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const loadingJoinedGroups = useKeySelector(

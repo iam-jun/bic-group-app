@@ -18,7 +18,7 @@ const ReviewMarkdown = ({onPressDone}: {onPressDone: () => void}) => {
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
 
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme, screenHeight);
   const content = useKeySelector(postKeySelector.createPost.content);
   const {fullname, avatar} = useKeySelector(menuKeySelector.myProfile) || {};

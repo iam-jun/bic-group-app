@@ -12,7 +12,7 @@ interface TitleComponentProps {
 }
 
 const TitleComponent = ({icon, title}: TitleComponentProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   return (
     <View style={styles.container}>

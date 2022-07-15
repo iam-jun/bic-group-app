@@ -37,7 +37,7 @@ const BannerMessage: FC<BannerMessageProps> = ({
   onActionPress,
   onPressRight,
 }: BannerMessageProps) => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme, type);
 

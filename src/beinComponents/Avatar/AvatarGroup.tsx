@@ -27,7 +27,7 @@ const AvatarGroup = ({
   totalMember,
   ...props
 }: AvatarGroupProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   const containerSize = dimension?.avatarSizes?.[variant] || 36;

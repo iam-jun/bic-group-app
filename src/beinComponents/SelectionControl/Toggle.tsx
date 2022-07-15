@@ -24,7 +24,7 @@ const Toggle: React.FC<ToggleProps> = ({
   onActionPress,
 }: ToggleProps) => {
   const [checked, setChecked] = useState<boolean>(isChecked);
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme, checked);
 
   useEffect(() => {

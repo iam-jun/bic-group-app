@@ -35,7 +35,7 @@ interface EditLocationProps {
 const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme, screenHeight);
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();

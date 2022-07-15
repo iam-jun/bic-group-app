@@ -43,7 +43,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   const [loadingMore, setLoadingMore] = useState(false);
 
   const dispatch = useDispatch();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme, commentId);
 

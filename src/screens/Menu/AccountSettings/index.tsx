@@ -29,7 +29,7 @@ import menuKeySelector from '../redux/keySelector';
 import spacing from '~/theme/spacing';
 
 const GeneralSettings = () => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();

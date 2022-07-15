@@ -18,7 +18,7 @@ export interface CreatePostHeaderPlaceholderProps {
 const HeaderCreatePostPlaceholder: FC<CreatePostHeaderPlaceholderProps> = ({
   style,
 }: CreatePostHeaderPlaceholderProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   return (

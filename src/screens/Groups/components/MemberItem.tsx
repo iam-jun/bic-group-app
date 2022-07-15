@@ -23,7 +23,7 @@ interface MemberItemProps {
 }
 
 const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const {user} = useAuth();
   const communityDetail = useKeySelector(groupsKeySelector.communityDetail);

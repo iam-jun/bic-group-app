@@ -30,7 +30,7 @@ const CommentDetailContent = (props: any) => {
   const [isEmpty, setIsEmpty] = useState(false);
   const [isScrollFirst, setIsScrollFirst] = useState(false);
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   const {t} = useBaseHook();
   const dispatch = useDispatch();
@@ -367,7 +367,7 @@ const CommentLevel1 = ({
     return null;
   }
   const {t} = useBaseHook();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   return (

@@ -29,7 +29,7 @@ const CreatePostFooter: FC<CreatePostFooterProps> = ({
 }: CreatePostFooterProps) => {
   const showMentionValue = useSharedValue(0);
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const mentionContainerStyle = useAnimatedStyle(() => ({

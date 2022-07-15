@@ -21,7 +21,7 @@ describe('GeneralInformation helper', () => {
   });
 
   it('should alertAction', () => {
-    const theme = useTheme() as ExtendedTheme;
+    const theme: ExtendedTheme = useTheme();
     const spy = jest.spyOn(modalActions, 'showAlert');
 
     alertAction(jest.fn(), theme, 'test title', 'test content', jest.fn());

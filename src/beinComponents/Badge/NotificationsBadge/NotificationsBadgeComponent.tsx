@@ -27,7 +27,7 @@ const NotificationsBadgeComponent: React.FC<NotificationsBadgeComponentProps> =
   }: NotificationsBadgeComponentProps) => {
     if (!number) return null;
 
-    const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+    const theme: ExtendedTheme = useTheme();
     const styles = themeStyles(theme, variant);
     const numberInText = number > maxNumber ? `${maxNumber}+` : `${number}`;
 

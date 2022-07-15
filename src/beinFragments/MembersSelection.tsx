@@ -48,7 +48,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
   selectedUsers,
   onSelectUser,
 }: MembersSelectionProps): React.ReactElement => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   const renderItemUser = ({item}: {item: IUser; index: number}) => {
     const selected = selectedUsers.find((user: IUser) => user.id === item.id);

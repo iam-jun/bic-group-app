@@ -17,7 +17,7 @@ import groupsActions from '../redux/actions';
 const EditName = (props: any) => {
   const {type = 'group', id = '', name = ''} = props?.route?.params || {};
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const navigation = useNavigation();

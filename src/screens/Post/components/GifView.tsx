@@ -16,7 +16,7 @@ interface Props {
 
 const GifView = ({style, giphy}: Props) => {
   const mediaRef = useRef<GiphyMediaView | null>(null);
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const [playing, setPlaying] = useState(false);

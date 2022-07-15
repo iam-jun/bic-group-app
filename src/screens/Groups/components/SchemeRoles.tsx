@@ -26,7 +26,7 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
   onAnchorRole,
   useRoleInherited = true,
 }: SchemeRolesProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const permissionCategories = useKeySelector(

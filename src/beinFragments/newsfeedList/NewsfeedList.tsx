@@ -65,7 +65,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   const prevOffsetYShared = useSharedValue(0);
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
 

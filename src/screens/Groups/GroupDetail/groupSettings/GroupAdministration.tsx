@@ -22,7 +22,7 @@ const GroupAdministration = (props: any) => {
   const params = props.route.params;
   const {groupId} = params || {};
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();

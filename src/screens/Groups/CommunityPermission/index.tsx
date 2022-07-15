@@ -15,7 +15,7 @@ import groupsActions from '~/screens/Groups/redux/actions';
 const CommunityPermission = () => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const {id: communityId} =

@@ -17,7 +17,7 @@ interface Props {
 
 const PrivacyItem = ({item, onPressHelpMessage}: Props) => {
   const {privacy} = useKeySelector(groupsKeySelector.groupDetail.group) || {};
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   return (

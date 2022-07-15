@@ -18,7 +18,7 @@ import spacing from '~/theme/spacing';
 import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 const LoadingModal = () => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const {loading} = useModal();

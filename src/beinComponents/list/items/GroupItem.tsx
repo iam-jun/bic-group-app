@@ -73,7 +73,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();

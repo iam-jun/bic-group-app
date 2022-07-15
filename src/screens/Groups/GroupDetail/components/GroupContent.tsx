@@ -26,7 +26,7 @@ const GroupContent = ({
   getGroupPosts: () => void;
   parentWidth?: number;
 }) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {rootNavigation} = useRootNavigation();
   const {colors} = theme || {};
   const styles = themeStyles(theme);

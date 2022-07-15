@@ -20,7 +20,7 @@ import {IToastMessage} from '~/interfaces/common';
 import {useBaseHook} from '~/hooks';
 
 const CommunityApproveDeclineAllRequests = () => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const timeOutRef = useRef<any>();

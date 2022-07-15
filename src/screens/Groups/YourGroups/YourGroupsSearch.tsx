@@ -12,7 +12,7 @@ import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
 
 const YourGroupsSearch = () => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const {showSearch, loading, key, list} = useKeySelector(

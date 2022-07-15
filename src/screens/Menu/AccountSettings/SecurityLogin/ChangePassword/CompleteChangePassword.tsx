@@ -15,7 +15,7 @@ import spacing from '~/theme/spacing';
 const CompleteChangePassword = () => {
   const {t, navigation} = useBaseHook();
   const dimensions = useWindowDimensions();
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const imgMaxWidth = 500;

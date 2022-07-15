@@ -36,7 +36,7 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
 }: CommentInputFooterProps) => {
   const showMentionValue = useSharedValue(0);
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 

@@ -23,7 +23,7 @@ const Landing = () => {
   const {user} = useAuth();
   const isFocused = useIsFocused();
 
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {t, navigation} = useBaseHook();
   const dimensions = useWindowDimensions();
   const isPhone = dimensions.width < deviceDimensions.smallTablet;

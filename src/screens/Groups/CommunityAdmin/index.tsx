@@ -18,7 +18,7 @@ import groupsActions from '../redux/actions';
 import spacing from '~/theme/spacing';
 
 const CommunityAdmin = () => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();

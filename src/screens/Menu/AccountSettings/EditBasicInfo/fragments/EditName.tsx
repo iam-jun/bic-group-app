@@ -13,7 +13,7 @@ interface EditNameProps {
 }
 
 const EditName = ({onChangeName, fullname, error}: EditNameProps) => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   const _onChangeName = (text: string) => {

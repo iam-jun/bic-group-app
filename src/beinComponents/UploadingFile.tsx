@@ -47,7 +47,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 

@@ -13,7 +13,7 @@ interface Props {
 }
 
 const ToastAutoSave = ({viewRef, visible}: Props) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const toastHeightAnimated = useRef(new Animated.Value(0)).current;
   const isAnimated = isAndroidAnimated();

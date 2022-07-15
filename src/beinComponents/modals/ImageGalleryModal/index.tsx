@@ -36,7 +36,7 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   const footerListRef = useRef<any>();
 
   const insets = useSafeAreaInsets();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme, insets);
 

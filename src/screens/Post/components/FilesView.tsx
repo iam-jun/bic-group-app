@@ -35,7 +35,7 @@ const FilesView = ({
 }: Props) => {
   if (isEmpty(files)) return null;
 
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
   const [collapsed, setCollaped] = useState(true);

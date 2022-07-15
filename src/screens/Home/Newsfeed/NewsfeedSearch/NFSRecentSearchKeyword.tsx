@@ -26,7 +26,7 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
   onClearAllKeyword,
 }: NFSRecentSearchKeywordProps) => {
   const {t} = useBaseHook();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const {loading, data} =

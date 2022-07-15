@@ -20,7 +20,7 @@ const GroupItemPlaceholder: FC<GroupItemPlaceholderProps> = ({
   style,
   disableRandom,
 }: GroupItemPlaceholderProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   return (

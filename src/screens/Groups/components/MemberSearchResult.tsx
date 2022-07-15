@@ -29,7 +29,7 @@ const MemberSearchResult = ({
   onRefresh,
   onPressMenu,
 }: MemberSearchResultProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   const {loading, canLoadMore, data} = memberSearchData;
 

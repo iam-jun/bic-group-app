@@ -23,7 +23,7 @@ import spacing from '~/theme/spacing';
 const ChangePassword = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const {changePasswordError, changePasswordLoading} = useAuth();

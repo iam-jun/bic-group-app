@@ -14,7 +14,7 @@ export interface NoSearchResultProps {
 const NoSearchResult: FC<NoSearchResultProps> = ({
   title,
 }: NoSearchResultProps) => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   return (

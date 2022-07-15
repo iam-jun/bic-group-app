@@ -15,7 +15,7 @@ const ScreenWrapper: React.FC<ScreenWrapperProps> = ({
   style,
   ...props
 }: ScreenWrapperProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   return (
     <View

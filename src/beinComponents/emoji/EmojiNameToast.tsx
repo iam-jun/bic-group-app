@@ -21,7 +21,7 @@ const EmojiNameToast: FC<EmojiNameToastProps> = ({
   const [name, setName] = useState('');
   const timeOutRef = useRef<any>();
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
 

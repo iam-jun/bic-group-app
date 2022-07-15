@@ -36,7 +36,7 @@ const Newsfeed = () => {
   const listRef = useRef<any>();
   const headerRef = useRef<any>();
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const [newsfeedWidth, setNewsfeedWidth] = useState<number>(
     deviceDimensions.phone,
   );

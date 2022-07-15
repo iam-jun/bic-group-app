@@ -62,7 +62,7 @@ const Icon: React.FC<IconProps> = ({
   const NetInfo = useNetInfo();
   const noInternet = NetInfo.isInternetReachable === false;
 
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   if (isLoading) return <ActivityIndicator size="small" />;
 
   const {colors} = theme;

@@ -25,7 +25,7 @@ import stack from './stack';
 const MainStack = (): React.ReactElement => {
   const dispatch = useDispatch();
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   const navState = useNavigationState((state: any) => state);

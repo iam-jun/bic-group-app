@@ -41,7 +41,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
 }: SearchInputProps) => {
   const _searchInputRef = searchInputRef || useRef<any>();
 
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   const [text, setText] = useState<string>('');

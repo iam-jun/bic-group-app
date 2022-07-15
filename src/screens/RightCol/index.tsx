@@ -15,7 +15,7 @@ import spacing from '~/theme/spacing';
 const RightCol = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const onItemPress = (item: IRightMenu) => {

@@ -65,7 +65,7 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
 }: DrawerItemProps) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   return (

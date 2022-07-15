@@ -26,7 +26,7 @@ const CommunitySearchResults = ({
   onPressCommunity,
   onRefresh,
 }: CommunitySearchResultsProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   const {loading, canLoadMore, ids, items} = useKeySelector(
     groupsKeySelector.communitySearch,

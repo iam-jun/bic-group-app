@@ -25,7 +25,7 @@ const SearchBaseView = ({
   onClose,
   onChangeText,
 }: SearchBaseViewProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   const [searchText, setSearchText] = useState(initSearch || '');

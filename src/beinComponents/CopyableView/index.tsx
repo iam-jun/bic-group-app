@@ -32,7 +32,7 @@ const CopyableView = ({
   onPress,
   ...props
 }: Props) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
 

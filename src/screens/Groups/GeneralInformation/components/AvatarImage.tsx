@@ -21,7 +21,7 @@ interface Props {
 const AvatarImage = ({testID, onEditAvatar, avatar, canEditInfo}: Props) => {
   const loadingAvatar = useKeySelector(groupsKeySelector.loadingAvatar);
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = themeStyles(theme);
 

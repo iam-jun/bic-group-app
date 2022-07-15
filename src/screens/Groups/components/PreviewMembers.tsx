@@ -14,7 +14,7 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import spacing from '~/theme/spacing';
 
 const PreviewMembers = () => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {user_count, members} = infoDetail;

@@ -12,7 +12,7 @@ const TextEmojiIcon: FC<TextEmojiIconProps> = ({
   name,
   style,
 }: TextEmojiIconProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const emoji = NodeEmoji.find(name || '')?.emoji;

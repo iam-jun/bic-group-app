@@ -10,7 +10,7 @@ import Header from '~/beinComponents/Header';
 import spacing from '~/theme/spacing';
 
 const NewFeature = () => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyle(theme);
   // const [showRating, setShowRating] = useState<boolean>(true);
   //

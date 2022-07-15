@@ -134,7 +134,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets, _loading);

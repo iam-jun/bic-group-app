@@ -25,7 +25,7 @@ const PostViewPlaceholder: FC<PostViewPlaceholderProps> = ({
   disableRandom,
   testID = 'post_view_placeholder',
 }: PostViewPlaceholderProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   return (

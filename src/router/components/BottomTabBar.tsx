@@ -45,7 +45,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   const showValue = useSharedValue(1);
   const avatar = useKeySelector('menu.myProfile.avatar');
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
   const {t} = useBaseHook();
   const {colors} = theme;

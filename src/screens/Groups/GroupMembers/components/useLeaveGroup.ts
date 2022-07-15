@@ -16,7 +16,7 @@ interface IUseLeaveGroup {
 
 const useLeaveGroup = ({groupId, username}: IUseLeaveGroup) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   const doLeaveGroup = () => {
     dispatch(groupsActions.leaveGroup(groupId));

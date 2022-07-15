@@ -29,7 +29,7 @@ const MemberRequestList = ({
   onLoadMore,
   onRefresh,
 }: MemberRequestListProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
 
   const {loading, total, ids, canLoadMore} = useKeySelector(

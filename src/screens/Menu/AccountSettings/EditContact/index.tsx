@@ -21,7 +21,7 @@ import menuActions from '../../redux/actions';
 import spacing from '~/theme/spacing';
 
 const EditContact = () => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
 

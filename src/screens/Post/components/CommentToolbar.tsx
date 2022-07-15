@@ -21,7 +21,7 @@ const CommentToolbar: FC<CommentToolbarProps> = ({
   onSelectGif,
   onSelectVideo,
 }: CommentToolbarProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   if (!onSelectImage && !onSelectFile && !onSelectGif && !onSelectVideo) {

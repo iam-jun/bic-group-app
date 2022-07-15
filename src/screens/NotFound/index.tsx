@@ -11,7 +11,7 @@ import spacing from '~/theme/spacing';
 import NotFoundImg from '../../../assets/images/error_404.svg';
 
 const NotFound = () => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const dimensions = useWindowDimensions();
 

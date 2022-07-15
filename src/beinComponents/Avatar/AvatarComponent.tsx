@@ -54,7 +54,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   onPressAction,
   ...props
 }: AvatarProps) => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = creatStyle(theme);
 

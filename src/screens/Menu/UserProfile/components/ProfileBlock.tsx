@@ -38,7 +38,7 @@ const ProfileBlock = ({
     latest_work,
   } = profileData;
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   const userLanguageList = language?.map(
     // @ts-ignore

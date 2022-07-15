@@ -43,7 +43,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
 
   const height = useSharedValue(0);
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const keyboard = useKeyboard();

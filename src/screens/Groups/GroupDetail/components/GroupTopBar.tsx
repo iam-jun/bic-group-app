@@ -26,7 +26,7 @@ import groupsKeySelector from '../../redux/keySelector';
 
 const GroupTopBar = () => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {rootNavigation} = useRootNavigation();
 
   const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);

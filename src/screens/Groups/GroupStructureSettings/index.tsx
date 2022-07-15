@@ -27,7 +27,7 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = ({
 }: GroupStructureSettingsProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const {id: communityId} =

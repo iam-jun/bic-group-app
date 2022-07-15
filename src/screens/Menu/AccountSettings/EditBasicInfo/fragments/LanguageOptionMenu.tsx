@@ -34,7 +34,7 @@ const LanguageOptionMenu = ({
 }: LanguageOptionMenuProps) => {
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   const styles = themeStyles(theme, screenHeight);

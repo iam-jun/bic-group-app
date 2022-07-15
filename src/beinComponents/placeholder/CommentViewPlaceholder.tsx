@@ -10,7 +10,7 @@ import spacing from '~/theme/spacing';
 const sectionData = [{title: '', data: [{id: 1}, {id: 2}]}];
 
 const CommentViewPlaceholder = () => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const renderHeaderText = () => {

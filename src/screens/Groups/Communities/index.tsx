@@ -21,7 +21,7 @@ const {width: screenWidth} = Dimensions.get('window');
 const Communities: React.FC = () => {
   const headerRef = useRef<any>();
 
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();

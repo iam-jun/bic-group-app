@@ -28,7 +28,7 @@ import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 
 const AddWork = () => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   const styles = createStyles(theme);

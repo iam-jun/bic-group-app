@@ -25,7 +25,7 @@ const CoverImage = ({
   canEditInfo,
 }: Props) => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = themeStyles(theme, coverHeight);
   const loadingCover = useKeySelector(groupsKeySelector.loadingCover);

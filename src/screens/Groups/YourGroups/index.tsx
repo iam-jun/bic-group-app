@@ -43,7 +43,7 @@ const YourGroups: FC<YourGroupsProps> = ({route}: YourGroupsProps) => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const translateX = useSharedValue(0);
 

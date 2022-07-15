@@ -39,7 +39,7 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
 
   const emojiRef = useRef<any>();
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const {colors} = theme;
   const styles = createStyle(theme);

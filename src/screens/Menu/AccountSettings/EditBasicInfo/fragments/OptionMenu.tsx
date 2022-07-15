@@ -29,7 +29,7 @@ const OptionMenu = ({
   onItemPress,
   testID,
 }: OptionMenuProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   const renderItem = ({item}: {item: IOptionItem}) => {
     return (

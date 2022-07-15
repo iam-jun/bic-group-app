@@ -12,7 +12,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 const screenWidth = Dimensions.get('window').width;
 
 const BackgroundComponent = ({children}: {children: React.ReactNode}) => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   return (

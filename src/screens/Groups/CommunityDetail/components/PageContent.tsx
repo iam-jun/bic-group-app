@@ -32,7 +32,7 @@ const _PageContent = ({
   onButtonLayout,
 }: PageContentProps) => {
   const {rootNavigation} = useRootNavigation();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme || {};
   const styles = createStyles(theme);
 

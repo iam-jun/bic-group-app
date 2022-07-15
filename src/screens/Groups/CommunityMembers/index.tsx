@@ -15,7 +15,7 @@ import spacing from '~/theme/spacing';
 const CommunityMembers = ({route}: any) => {
   const {communityId} = route.params;
 
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyles(theme);
   const {t} = useBaseHook();

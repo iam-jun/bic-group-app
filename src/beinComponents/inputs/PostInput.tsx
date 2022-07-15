@@ -50,7 +50,7 @@ const PostInput: React.FC<PostInputProps> = ({
   inputRef,
   ...props
 }: PostInputProps) => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const {colors} = theme;
   const styles = createStyle(theme);

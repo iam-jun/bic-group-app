@@ -70,7 +70,7 @@ const TextInput: React.FC<TextInputProps> = ({
   onBlur,
   ...props
 }: TextInputProps) => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = themeStyles(theme, textColor);
   const [text, setText] = useState<string>(value || '');
@@ -191,7 +191,7 @@ const themeStyles = (theme: ExtendedTheme, textColor?: string) => {
     input: {
       minHeight: 44,
       paddingHorizontal: spacing.padding.base,
-      fontFamily: fontFamilies.OpenSans,
+      fontFamily: fontFamilies.BeVietnamProLight,
       flex: 1,
     },
     defaultStyle: {

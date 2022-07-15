@@ -19,7 +19,7 @@ const NewsfeedSearch: FC<NewsfeedSearchProps> = ({
   headerRef,
 }: NewsfeedSearchProps) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
 

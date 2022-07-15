@@ -38,7 +38,7 @@ const CommentItem: React.FC<CommentItemProps> = ({
 }: CommentItemProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = React.useMemo(() => createStyle(theme), [theme]);
 
   const _onPressReply = useCallback(() => {

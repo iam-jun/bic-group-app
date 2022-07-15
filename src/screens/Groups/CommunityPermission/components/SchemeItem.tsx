@@ -19,7 +19,7 @@ interface SchemeItemProps {
 }
 
 const SchemeItem = ({item}: SchemeItemProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const {colors} = theme;
   const dispatch = useDispatch();

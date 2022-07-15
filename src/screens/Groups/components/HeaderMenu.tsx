@@ -36,7 +36,7 @@ const HeaderMenu = ({
   onPressNotification,
   onPressLeave,
 }: HeaderMenuProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const dispatch = useDispatch();
 
   const onPressNewFeature = () => {

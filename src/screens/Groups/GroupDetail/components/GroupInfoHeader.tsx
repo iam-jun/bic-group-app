@@ -22,7 +22,7 @@ import spacing from '~/theme/spacing';
 const GroupInfoHeader = () => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
   const {t} = useBaseHook();

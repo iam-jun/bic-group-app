@@ -14,7 +14,7 @@ import postActions from '~/screens/Post/redux/actions';
 import spacing from '~/theme/spacing';
 
 const NoticePanel = () => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const {t} = useBaseHook();
   const dispatch = useDispatch();

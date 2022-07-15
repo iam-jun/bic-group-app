@@ -34,7 +34,7 @@ const _GroupMembers = (props: any) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const dispatch = useDispatch();
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
   const {rootNavigation} = useRootNavigation();

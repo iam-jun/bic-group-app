@@ -43,7 +43,7 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
   const dispatch = useDispatch();
   const {language} = useContext(AppContext);
   const {t} = useBaseHook();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 

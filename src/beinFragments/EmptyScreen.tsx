@@ -22,7 +22,7 @@ const EmptyScreen = ({
   size = 150,
   ButtonComponent,
 }: EmptyScreenProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   return (
     <View testID="empty_screen" style={styles.container}>

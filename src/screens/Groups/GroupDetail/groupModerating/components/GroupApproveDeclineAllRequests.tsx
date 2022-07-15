@@ -16,7 +16,7 @@ import ButtonApproveDeclineAllRequests from '~/screens/Groups/components/ButtonA
 import {useBaseHook} from '~/hooks';
 
 const GroupApproveDeclineAllRequests = () => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const timeOutRef = useRef<any>();

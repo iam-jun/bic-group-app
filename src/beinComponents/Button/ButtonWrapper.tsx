@@ -63,7 +63,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   onLongPress,
   onLayout,
 }: ButtonWrapperProps) => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const textStyles = createTextStyle(theme);
   textVariant = textVariant || 'buttonM';

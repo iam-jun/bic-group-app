@@ -25,7 +25,7 @@ const DiscoverItem = ({
   onPressJoin,
   onPressCancel,
 }: DiscoverItemProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const {t} = useBaseHook();
 

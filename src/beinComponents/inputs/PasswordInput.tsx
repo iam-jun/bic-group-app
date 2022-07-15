@@ -16,7 +16,7 @@ const PasswordInput: React.FC<Props> = ({
   iconColor,
   ...props
 }) => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   const [hidePassword, setHidePassword] = React.useState(true);

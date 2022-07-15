@@ -16,7 +16,7 @@ const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
   size,
   color,
 }: LoadingIndicatorProps) => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   return (

@@ -31,7 +31,7 @@ const SignUp = () => {
     clearErrors,
     getValues,
   } = useFormData;
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
   const {loading} = useAuth();

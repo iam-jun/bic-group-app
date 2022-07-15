@@ -34,7 +34,7 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
   const myCommunities = useKeySelector(groupsKeySelector.joinedCommunities);
 
   const dispatch = useDispatch();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   useEffect(() => {
     getData();

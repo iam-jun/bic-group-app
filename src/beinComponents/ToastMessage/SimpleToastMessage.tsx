@@ -34,7 +34,7 @@ const SimpleToastMessage: React.FC<SimpleToastMessageProps> = ({
   disabled,
 }: SimpleToastMessageProps) => {
   const dispatch = useDispatch();
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   const _onPress = () => {

@@ -26,7 +26,7 @@ const MenuSidebarDrawer = () => {
   const xValue = useSharedValue(0);
 
   const insets = useSafeAreaInsets();
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme, insets);
 
   const drawerVisible = useKeySelector('app.drawerVisible');

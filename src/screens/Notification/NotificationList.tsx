@@ -101,7 +101,7 @@ const _NotificationList = ({
     [onPressItemOption],
   );
 
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const renderListFooter = () => {

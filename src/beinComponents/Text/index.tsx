@@ -61,7 +61,7 @@ const TextComponent: React.FC<TextProps> = ({
   maxLength,
   ...props
 }: TextProps) => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const styles = createTextStyle(theme);
   const textStyle = styles[variant || 'bodyM'];

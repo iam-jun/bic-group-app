@@ -14,7 +14,7 @@ import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import spacing from '~/theme/spacing';
 
 const NoGroupFound = () => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
 

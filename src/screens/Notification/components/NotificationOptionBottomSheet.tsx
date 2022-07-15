@@ -21,7 +21,7 @@ const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
   data,
   keyValue,
 }: NotificationOptionBottomSheetProps) => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   const dispatch = useDispatch();
 

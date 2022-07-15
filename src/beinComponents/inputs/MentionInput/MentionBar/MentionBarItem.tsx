@@ -18,7 +18,7 @@ const MentionBarItem: FC<MentionbarItemProps> = ({
   data,
   onPress,
 }: MentionbarItemProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   return (

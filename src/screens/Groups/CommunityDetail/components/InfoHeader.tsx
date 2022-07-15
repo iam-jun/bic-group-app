@@ -15,7 +15,7 @@ import i18next from 'i18next';
 import spacing from '~/theme/spacing';
 
 const InfoHeader = () => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {name, user_count, background_img_url, icon, privacy} = infoDetail;

@@ -16,7 +16,7 @@ const PostViewFooterLite: FC<PostViewFooterLiteProps> = ({
   commentsCount,
 }: PostViewFooterLiteProps) => {
   const {t} = useBaseHook();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   if (commentsCount <= 0) {

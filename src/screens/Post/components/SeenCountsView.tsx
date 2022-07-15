@@ -16,7 +16,7 @@ const SeenCountsView: FC<SeenCountsViewProps> = ({
   onPress,
 }: SeenCountsViewProps) => {
   const {t} = useBaseHook();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   const _onPress = () => {

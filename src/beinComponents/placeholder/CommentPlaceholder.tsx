@@ -21,7 +21,7 @@ const CommentPlaceholder: React.FC<CommentPlaceholderProps> = ({
   style,
   disableRandom,
 }: CommentPlaceholderProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   return (

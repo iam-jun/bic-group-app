@@ -29,7 +29,7 @@ const SettingItem = ({
   testID,
   onPress,
 }: SettingItemProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   return (
     <TouchableOpacity

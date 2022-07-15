@@ -20,7 +20,7 @@ export interface GroupSchemeProps {
 
 const GroupScheme: FC<GroupSchemeProps> = ({style}: GroupSchemeProps) => {
   const {rootNavigation} = useRootNavigation();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const {data} = useKeySelector(groupsKeySelector.permission.schemes) || {};

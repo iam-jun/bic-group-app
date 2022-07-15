@@ -28,7 +28,7 @@ const SearchCommunityView = ({
   onPressCommunity,
 }: SearchCommunityViewProps) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles();
 

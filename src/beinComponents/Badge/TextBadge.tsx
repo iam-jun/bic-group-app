@@ -24,7 +24,7 @@ const TextBadge: FC<TextBadgeProps> = ({
   variant,
   useI18n = true,
 }: TextBadgeProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   if (!value) {

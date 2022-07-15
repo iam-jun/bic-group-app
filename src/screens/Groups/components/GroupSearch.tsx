@@ -25,7 +25,7 @@ const GroupSearch = () => {
   const showValue = useSharedValue(0);
 
   const dispatch = useDispatch();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const {isShow, loading, searchKey, result} =

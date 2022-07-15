@@ -43,7 +43,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   testID,
   id,
 }: NotificationItemProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
   const {colors} = theme;
 

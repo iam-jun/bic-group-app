@@ -46,7 +46,7 @@ const Autocomplete = ({
   const windowDimension = useWindowDimensions();
   const {data, key} = useKeySelector(type);
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(
     theme,
     modalPosition,

@@ -16,7 +16,7 @@ interface Props {
 }
 
 const AtMention = ({mentionName, selector, style, onPress}: Props) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   let audience = useKeySelector(`${selector}.${mentionName}`);

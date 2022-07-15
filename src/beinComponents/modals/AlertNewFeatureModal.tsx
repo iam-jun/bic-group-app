@@ -27,7 +27,7 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
   style,
   ...props
 }: NewFeatureModalProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const {alertNewFeature} = useModal();

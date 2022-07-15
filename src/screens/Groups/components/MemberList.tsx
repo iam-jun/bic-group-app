@@ -30,7 +30,7 @@ const MemberList = ({
   onPressMenu,
   onRefresh,
 }: MemberListProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyles(theme);
 

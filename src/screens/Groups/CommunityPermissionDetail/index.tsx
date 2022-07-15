@@ -32,7 +32,7 @@ const CommunityPermissionDetail: FC<CommunityPermissionDetailProps> = ({
   const translationY = useSharedValue(0);
 
   const dispatch = useDispatch();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const permissionCategories = useKeySelector(

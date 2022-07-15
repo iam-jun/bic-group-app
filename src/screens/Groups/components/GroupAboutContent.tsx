@@ -18,7 +18,7 @@ import groupsKeySelector from '../redux/keySelector';
 
 const GroupAboutContent = () => {
   const {rootNavigation} = useRootNavigation();
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};

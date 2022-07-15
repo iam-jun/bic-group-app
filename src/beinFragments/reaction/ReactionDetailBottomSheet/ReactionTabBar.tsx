@@ -25,7 +25,7 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
   const [activeIndex, setActiveIndex] = useState(-1);
   const flatListRef = useRef<any>();
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 

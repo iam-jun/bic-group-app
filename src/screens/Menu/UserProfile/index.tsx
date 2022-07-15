@@ -54,7 +54,7 @@ const UserProfile = (props: any) => {
   const [bgImgState, setBgImgState] = useState<string>(background_img_url);
   const [isChangeImg, setIsChangeImg] = useState<string>('');
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();

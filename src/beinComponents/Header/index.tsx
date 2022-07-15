@@ -115,7 +115,7 @@ const Header: React.FC<HeaderProps> = ({
   const headerSearchRef = useRef<any>();
   const _headerRef = headerRef || useRef();
 
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
   const insets = useSafeAreaInsets();

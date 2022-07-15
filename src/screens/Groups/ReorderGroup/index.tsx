@@ -23,7 +23,7 @@ export interface ReorderGroupProps {
 
 const ReorderGroup: FC<ReorderGroupProps> = ({route}: ReorderGroupProps) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const initGroup = route?.params?.group;

@@ -27,7 +27,7 @@ const ManagedCommunities = ({
   onPressCommunities,
   onPressMenu,
 }: ManagedCommunitiesProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
   const dispatch = useDispatch();
 

@@ -59,7 +59,7 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   const [contentShowAll, setContentShowAll] = useState(false);
   const [shortContent, setShortContent] = useState(getShortContent(content));
 
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   const {t} = useBaseHook();

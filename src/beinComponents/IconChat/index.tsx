@@ -13,7 +13,7 @@ interface Props {
 }
 
 const IconChat = ({onPress}: Props) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const count = useSelector(state => getUnreadChannelCount(state));
 
   return (

@@ -28,7 +28,7 @@ import {scaleCoverHeight} from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 
 const UserProfilePreviewBottomSheet = () => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const styles = themeStyles(theme, coverHeight);
   const userPreviewRef: any = useRef();

@@ -18,7 +18,7 @@ import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import spacing from '~/theme/spacing';
 
 const LandingWithInvitation = () => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {t, navigation} = useBaseHook();
   const styles = themeStyles(theme);
   const dimensions = useWindowDimensions();

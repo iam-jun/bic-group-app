@@ -25,7 +25,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
   iconWrapperStyle,
   ...props
 }: ButtonIconProps) => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   return (

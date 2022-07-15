@@ -23,7 +23,7 @@ export interface SystemSchemeProps {
 const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const {colors} = theme || {};
 

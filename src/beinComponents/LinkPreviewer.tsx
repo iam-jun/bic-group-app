@@ -18,7 +18,7 @@ interface Props {
 
 const LinkPreviewer = ({text}: Props) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const [link, setLink] = useState<string | null | undefined>('');
   const linkPreviews = useKeySelector(`app.linkPreviews`);

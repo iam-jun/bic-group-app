@@ -48,7 +48,7 @@ const UserEditProfile = (props: any) => {
   const [userData, setUserData] = useState<any>({});
   const [showEditButton, setShowEditButton] = useState<boolean>(false);
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();

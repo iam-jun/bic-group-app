@@ -25,7 +25,7 @@ const ReorderGroupItem: FC<ReorderGroupItemProps> = ({
   style,
   group,
 }: ReorderGroupItemProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 

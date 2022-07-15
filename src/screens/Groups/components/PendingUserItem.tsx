@@ -26,7 +26,7 @@ const PendingUserItem = ({
   onPressApprove,
   onPressDecline,
 }: PendingUserItemProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const {language} = useContext(AppContext);
 

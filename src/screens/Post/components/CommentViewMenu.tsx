@@ -49,7 +49,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
   const insets = useSafeAreaInsets();
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme, insets);
 
   const _onPressReaction = (emoji: any) => {

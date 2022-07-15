@@ -14,7 +14,7 @@ import groupJoinStatus from '~/constants/groupJoinStatus';
 import spacing from '~/theme/spacing';
 
 const AboutContent = () => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {description, user_count, privacy, join_status} = infoDetail;

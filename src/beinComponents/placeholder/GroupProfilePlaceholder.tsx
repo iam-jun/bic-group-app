@@ -20,7 +20,7 @@ const GroupProfilePlaceholder: React.FC<GroupProfilePlaceholderProps> = ({
   style,
   disableRandom,
 }: GroupProfilePlaceholderProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   return (

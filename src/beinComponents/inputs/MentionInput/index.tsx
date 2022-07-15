@@ -60,7 +60,7 @@ const _MentionInput = ({
   const [measuredHeight, setMeasuredHeight] = useState(0);
   const cursorPosition = useRef(0);
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyles();
 

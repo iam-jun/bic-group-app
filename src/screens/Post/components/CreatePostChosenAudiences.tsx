@@ -23,7 +23,7 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
 
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
 
   const chosenAudiences = useKeySelector(
     postKeySelector.createPost.chosenAudiences,

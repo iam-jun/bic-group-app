@@ -17,7 +17,7 @@ export interface ReorderGroupHeaderProps {
 const ReorderGroupInfo: FC<ReorderGroupHeaderProps> = ({
   group,
 }: ReorderGroupHeaderProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const {privacy, icon, name} = group || {};

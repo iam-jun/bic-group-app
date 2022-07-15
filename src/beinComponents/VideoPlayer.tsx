@@ -30,7 +30,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   data,
   postId,
 }: VideoPlayerProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 

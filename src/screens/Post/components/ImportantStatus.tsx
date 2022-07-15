@@ -18,7 +18,7 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
   textProps,
   style,
 }: ImportantStatusProps) => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   const ImportantStatusStyle = {

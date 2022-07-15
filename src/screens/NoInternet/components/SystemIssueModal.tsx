@@ -12,7 +12,7 @@ import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 
 const SystemIssueModal = () => {
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const systemIssue = useKeySelector(noInternetKeySelector.systemIssue);

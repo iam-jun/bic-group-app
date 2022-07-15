@@ -12,7 +12,7 @@ const PostDetail = (props: any) => {
   const [showContent, setShowContent] = useState(false);
   const [showLoading, setShowLoading] = useState(true);
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
   console.log('POST DETAIL>>>>>>>>>>>>>>>');

@@ -41,7 +41,7 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
     }
   }, [list]);
 
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 

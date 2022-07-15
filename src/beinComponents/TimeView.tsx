@@ -30,7 +30,7 @@ const TimeView: FC<TimeViewProps> = ({
   const [displayTime, setDisplayTime] = useState('');
 
   const {language} = useContext(AppContext);
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   useEffect(() => {

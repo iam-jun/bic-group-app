@@ -29,7 +29,7 @@ const GeneralInformation = (props: any) => {
   const params = props.route.params;
   const {id, type = 'group'} = params || {};
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const dispatch = useDispatch();
 

@@ -21,7 +21,7 @@ const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const insets = useSafeAreaInsets();
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme, insets);
   const {colors} = theme;
   const {t} = useBaseHook();

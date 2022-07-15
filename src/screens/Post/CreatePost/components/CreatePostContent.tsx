@@ -43,7 +43,7 @@ interface Props {
 
 const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const mentionInputRef = useRef<any>();
   const {rootNavigation} = useRootNavigation();

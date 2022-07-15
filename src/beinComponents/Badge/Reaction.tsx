@@ -40,7 +40,7 @@ const Reaction: React.FC<ReactionProps> = ({
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const [isSelected, setIsSelected] = useState<boolean>(selected);
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyles(theme, isSelected, loading);
 

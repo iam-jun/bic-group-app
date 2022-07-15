@@ -21,7 +21,7 @@ const CommentDetail = (props: any) => {
   const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
 
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   const copyCommentError = useKeySelector(postKeySelector.commentErrorCode);

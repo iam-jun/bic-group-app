@@ -17,7 +17,7 @@ interface JoinCancelButtonProps {
 }
 
 const JoinCancelButton = ({style}: JoinCancelButtonProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);

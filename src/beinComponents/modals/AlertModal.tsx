@@ -30,7 +30,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
   style,
   ...props
 }: AlertModalProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const {alert} = useModal();
@@ -93,7 +93,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
   };
 
   const optionsStyle = useAnimatedStyle(() => ({
-    opacity: withTiming(visible, {duration: 500}),
+    opacity: withTiming(visible ? 1 : 0, {duration: 500}),
   }));
 
   if (!visible) return null;
@@ -108,9 +108,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
           <View style={[styles.modalContainer, style, alertModalStyle]}>
             {!!HeaderImageComponent ? HeaderImageComponent : null}
             <View style={[styles.header, !!headerStyle ? headerStyle : {}]}>
-              {!!title && (
-                <Text.ButtonBase {...titleProps}>{title}</Text.ButtonBase>
-              )}
+              {!!title && <Text.ButtonM {...titleProps}>{title}</Text.ButtonM>}
               {!!iconName && (
                 <Icon
                   icon={iconName}

@@ -20,7 +20,7 @@ const ButtonDiscoverItemAction: FC<ButtonDiscoverItemActionProps> = ({
   onJoin,
   joinStatus,
 }: ButtonDiscoverItemActionProps) => {
-  const theme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   let icon, text;

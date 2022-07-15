@@ -54,7 +54,7 @@ const ToastMessage: FC<ToastMessageProps> = ({
   onPressRight,
 }: ToastMessageProps) => {
   const dispatch = useDispatch();
-  const theme: ExtendedTheme = useTheme() as ExtendedTheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   const _onPress = () => {
