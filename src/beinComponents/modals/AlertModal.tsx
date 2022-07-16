@@ -92,6 +92,9 @@ const AlertModal: React.FC<AlertModalProps> = ({
     }
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const _onPressContent = () => {};
+
   const optionsStyle = useAnimatedStyle(() => ({
     opacity: withTiming(visible ? 1 : 0, {duration: 500}),
   }));
@@ -102,10 +105,13 @@ const AlertModal: React.FC<AlertModalProps> = ({
       <TouchableOpacity
         style={styles.root}
         activeOpacity={1}
-        onPress={_onDismiss}>
+        onPress={isDismissible ? _onDismiss : undefined}>
         <KeyboardAvoidingView
           behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-          <View style={[styles.modalContainer, style, alertModalStyle]}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={_onPressContent}
+            style={[styles.modalContainer, style, alertModalStyle]}>
             {!!HeaderImageComponent ? HeaderImageComponent : null}
             <View style={[styles.header, !!headerStyle ? headerStyle : {}]}>
               {!!title && <Text.ButtonM {...titleProps}>{title}</Text.ButtonM>}
@@ -168,7 +174,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
                 </_ConfirmBtnComponent>
               )}
             </View>
-          </View>
+          </TouchableOpacity>
         </KeyboardAvoidingView>
       </TouchableOpacity>
     </Animated.View>

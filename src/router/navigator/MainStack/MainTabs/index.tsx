@@ -11,11 +11,11 @@ import BottomTabBar from '~/router/components/BottomTabBar';
 import groupsActions from '~/screens/Groups/redux/actions';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
-import {initPushTokenMessage} from '~/services/helper';
 import giphyActions from '~/store/giphy/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens} from './screens';
+import {initPushTokenMessage} from '~/services/firebase';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
