@@ -1,13 +1,10 @@
 import React, {useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 
-import {useKeySelector} from '~/hooks/selector';
-import groupsKeySelector from '../redux/keySelector';
 import {ICommunityMembers} from '~/interfaces/ICommunity';
 import MemberList from '../components/MemberList';
 import actions from '~/screens/Groups/redux/actions';
-import {hasPermission} from '~/utils/checkPermissionScheme';
-import {PERMISSION_KEY} from '~/constants/permissionScheme';
+import {useMyPermissions} from '~/hooks/permissions';
 
 interface MembersContentProps {
   communityId: number;
@@ -16,16 +13,14 @@ interface MembersContentProps {
 
 const MembersContent = ({communityId, onPressMenu}: MembersContentProps) => {
   const dispatch = useDispatch();
-  const currentPermissions = useKeySelector(
-    groupsKeySelector.currentCommunityPermissions(communityId),
+  const {hasPermissions, PERMISSION_KEY} = useMyPermissions(
+    'communities',
+    communityId,
   );
-  const canManageMember = hasPermission(
-    [
-      PERMISSION_KEY.COMMUNITY.ADD_REMOVE_MEMBERS,
-      PERMISSION_KEY.COMMUNITY.ASSIGN_UNASSIGN_ROLE,
-    ],
-    currentPermissions,
-  );
+  const canManageMember = hasPermissions([
+    PERMISSION_KEY.COMMUNITY.ADD_REMOVE_MEMBERS,
+    PERMISSION_KEY.COMMUNITY.ASSIGN_UNASSIGN_ROLE,
+  ]);
 
   useEffect(() => {
     getCommunityDetail();

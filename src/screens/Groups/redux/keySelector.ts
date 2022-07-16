@@ -64,10 +64,6 @@ const groupsKeySelector = {
   },
   communitySearch: 'groups.communitySearch',
   myPermissions: 'groups.myPermissions',
-  currentCommunityPermissions: (id: number) =>
-    `groups.myPermissions.data.communities.${id}`,
-  currentGroupPermissions: (id: number) =>
-    `groups.myPermissions.data.groups.${id}`,
 };
 
 export default groupsKeySelector;

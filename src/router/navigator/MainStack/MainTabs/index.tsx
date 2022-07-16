@@ -6,7 +6,7 @@ import {useDispatch} from 'react-redux';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useChatSocket} from '~/hooks/chat';
 import useNotificationSocket from '~/hooks/notificationSocket';
-import {useGetMyPermissions} from '~/hooks/permissions';
+import {useMyPermissions} from '~/hooks/permissions';
 import {useKeySelector} from '~/hooks/selector';
 import BottomTabBar from '~/router/components/BottomTabBar';
 import groupsActions from '~/screens/Groups/redux/actions';
@@ -26,7 +26,7 @@ const MainTabs = () => {
 
   useChatSocket();
   useNotificationSocket();
-  useGetMyPermissions();
+  useMyPermissions();
 
   const dimensions = useWindowDimensions();
   const isPhone = dimensions.width < deviceDimensions.smallTablet;

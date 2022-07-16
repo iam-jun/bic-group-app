@@ -16,8 +16,7 @@ import modalActions from '~/store/modal/actions';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsActions from '../redux/actions';
 import spacing from '~/theme/spacing';
-import {hasPermission} from '~/utils/checkPermissionScheme';
-import {PERMISSION_KEY} from '~/constants/permissionScheme';
+import {useMyPermissions} from '~/hooks/permissions';
 
 const CommunityAdmin = () => {
   const theme: ExtendedTheme = useTheme();
@@ -32,20 +31,18 @@ const CommunityAdmin = () => {
     can_edit_info,
   } = useKeySelector(groupsKeySelector.communityDetail);
   const {total} = useKeySelector(groupsKeySelector.communityMemberRequests);
-  const currentPermissions = useKeySelector(
-    groupsKeySelector.currentCommunityPermissions(communityId),
+
+  const {hasPermissions, PERMISSION_KEY} = useMyPermissions(
+    'communities',
+    communityId,
   );
-  const canManageJoiningRequests = hasPermission(
-    [PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS],
-    currentPermissions,
-  );
-  const canEditCommunityInfo = hasPermission(
-    [
-      PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
-      PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
-    ],
-    currentPermissions,
-  );
+  const canManageJoiningRequests = hasPermissions([
+    PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
+  ]);
+  const canEditCommunityInfo = hasPermissions([
+    PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
+    PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
+  ]);
 
   useEffect(() => {
     canManageJoiningRequests &&
