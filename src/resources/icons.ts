@@ -51,12 +51,14 @@ import iconTabCommunities from '../../assets/icons/icon_communities.svg';
 import iconTabCommunitiesBein from '../../assets/icons/icon_communities_bein.svg';
 import iconLock from '../../assets/icons/icon_lock.svg';
 import iconPlayGif from '../../assets/icons/ic_play_gif.svg';
+import iconBeinChat from '../../assets/icons/icon_bein_chat.svg';
 import fileIcons from './fileIcons';
 import {fontAwesomeIcons} from '~/services/fontAwesomeIcon';
 
 const icons = {
   ...fileIcons,
   ...reactionIcons,
+  iconBeinChat,
   iconTabHome,
   iconTabHomeBein,
   iconTabNotification,
