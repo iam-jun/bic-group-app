@@ -1,10 +1,14 @@
-import {Alert} from 'react-native';
+import React from 'react';
+import {ScrollView, View} from 'react-native';
 import RNRestart from 'react-native-restart';
 import {
   setJSExceptionHandler,
   setNativeExceptionHandler,
 } from 'react-native-exception-handler';
 import Clipboard from '@react-native-clipboard/clipboard';
+import Store from '~/store';
+import modalActions from '~/store/modal/actions';
+import Text from '~/beinComponents/Text';
 
 export const initFatalErrorHandler = () => {
   /**
@@ -17,19 +21,24 @@ export const initFatalErrorHandler = () => {
 const errorHandler = (e: any, isFatal: boolean) => {
   if (isFatal) {
     Clipboard.setString(e.message);
-    Alert.alert(
-      '(×﹏×)',
-      `Copied error, please send to BIC Devs...
-        
-Error: ${isFatal ? 'Fatal:' : ''} ${e.name} ${e.message}`,
-      [
-        {
-          text: 'Restart',
-          onPress: () => {
-            RNRestart.Restart();
-          },
-        },
-      ],
+    const content = `Copied error, please send to BIC Devs...
+
+Error: ${isFatal ? 'Fatal:' : ''} ${e.name} ${e.message}`;
+    Store.store.dispatch(
+      modalActions.showAlert({
+        title: '(×﹏×)',
+        isDismissible: false,
+        onConfirm: () => RNRestart.Restart(),
+        confirmLabel: 'Restart',
+        style: {width: '90%'},
+        children: (
+          <View style={{height: 200}}>
+            <ScrollView>
+              <Text.SubtitleXS>{content}</Text.SubtitleXS>
+            </ScrollView>
+          </View>
+        ),
+      }),
     );
   } else {
     console.log(e); // So that we can see it in the ADB logs in case of Android if needed

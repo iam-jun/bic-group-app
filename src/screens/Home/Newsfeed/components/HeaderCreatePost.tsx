@@ -66,9 +66,7 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
   };
 
   const onPressCreate = () => {
-    const error = audience.try.crash;
-    console.log(`\x1b[36m🐣️ HeaderCreatePost onPressCreate: ${error}\x1b[0m`);
-    // navigateToCreatePost();
+    navigateToCreatePost();
   };
 
   return (
