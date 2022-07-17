@@ -38,6 +38,7 @@ const NotificationContent = ({
           ''
         );
       case 'POST':
+      case 'CHANGE':
         return defaultContent;
       case 'REACT':
         if (actorCount === 1) {

@@ -43,7 +43,9 @@ const CommunityAdmin = () => {
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
 
   const onPressPendingMembers = () => {
-    rootNavigation.navigate(groupStack.communityPendingMembers);
+    rootNavigation.navigate(groupStack.communityPendingMembers, {
+      id: communityId,
+    });
   };
 
   const onPressGeneralInfo = () => {
