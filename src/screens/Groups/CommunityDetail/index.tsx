@@ -114,7 +114,7 @@ const CommunityDetail = (props: any) => {
           <HeaderMenu
             type="community"
             isMember={isMember}
-            can_setting={canSetting}
+            canSetting={canSetting}
             onPressAdminTools={onPressAdminTools}
           />
         ),

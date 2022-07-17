@@ -12,7 +12,7 @@ import spacing from '~/theme/spacing';
 interface HeaderMenuProps {
   type: 'community' | 'group';
   isMember: boolean;
-  can_setting: boolean;
+  canSetting: boolean;
   containerStyle?: StyleProp<ViewStyle>;
   onPressAdminTools?: () => void;
   onPressCopyLink?: () => void;
@@ -26,7 +26,7 @@ interface HeaderMenuProps {
 const HeaderMenu = ({
   type,
   isMember,
-  can_setting,
+  canSetting,
   containerStyle,
   onPressAdminTools,
   onPressCopyLink,
@@ -46,7 +46,7 @@ const HeaderMenu = ({
 
   return (
     <View style={containerStyle}>
-      {can_setting && (
+      {canSetting && (
         <PrimaryItem
           testID="header_menu.admin_tools"
           height={48}

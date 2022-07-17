@@ -23,19 +23,26 @@ import HeaderMenu from '../../components/HeaderMenu';
 import useLeaveGroup from '../../GroupMembers/components/useLeaveGroup';
 import {checkLastAdmin} from '../../helper';
 import groupsKeySelector from '../../redux/keySelector';
+import {useMyPermissions} from '~/hooks/permissions';
 
 const GroupTopBar = () => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const {rootNavigation} = useRootNavigation();
 
-  const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
   const isMember = join_status === groupJoinStatus.member;
   const {id: groupId, chat_id: chatId} = groupInfo || {};
   const {user} = useAuth();
   const userId = useUserIdAuth();
+
+  const {hasPermissions, PERMISSION_KEY} = useMyPermissions('groups', groupId);
+  const canSetting = hasPermissions([
+    PERMISSION_KEY.GROUP.APPROVE_REJECT_JOINING_REQUESTS,
+    PERMISSION_KEY.GROUP.EDIT_INFORMATION,
+    PERMISSION_KEY.GROUP.EDIT_PRIVACY,
+  ]);
 
   const count = useKeySelector(
     `chat.unreadChannels.${chatId}.mention_count_root`,
@@ -109,7 +116,7 @@ const GroupTopBar = () => {
           <HeaderMenu
             type="group"
             isMember={isMember}
-            can_setting={can_setting}
+            canSetting={canSetting}
             onPressAdminTools={onPressAdminTools}
             onPressCopyLink={onPressCopyLink}
             onPressShare={onPressShare}
@@ -199,7 +206,7 @@ const GroupTopBar = () => {
       <View style={styles.rightComponent}>
         {renderSearchIcon()}
         {renderChatIcon()}
-        {can_setting ? renderAdminButton() : renderGroupOption()}
+        {canSetting ? renderAdminButton() : renderGroupOption()}
       </View>
     </View>
   );

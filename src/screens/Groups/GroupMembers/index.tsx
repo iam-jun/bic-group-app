@@ -21,6 +21,7 @@ import MemberOptionsMenu from './components/MemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
 import MembersContent from './components/MembersContent';
 import spacing from '~/theme/spacing';
+import {useMyPermissions} from '~/hooks/permissions';
 
 const _GroupMembers = (props: any) => {
   const params = props.route.params;
@@ -41,9 +42,10 @@ const _GroupMembers = (props: any) => {
   const baseSheetRef: any = useRef();
 
   const {offset} = useKeySelector(groupsKeySelector.groupMembers);
-  const can_manage_member = useKeySelector(
-    groupsKeySelector.groupDetail.can_manage_member,
-  );
+  const {hasPermissions, PERMISSION_KEY} = useMyPermissions('groups', groupId);
+  const canAddMember = hasPermissions([
+    PERMISSION_KEY.GROUP.ADD_REMOVE_MEMBERS,
+  ]);
 
   const getGroupProfile = () => {
     dispatch(groupsActions.getGroupDetail(groupId));
@@ -89,7 +91,7 @@ const _GroupMembers = (props: any) => {
   const renderInviteMemberButton = () => {
     // only admin or moderator can see this button
     return (
-      can_manage_member && (
+      canAddMember && (
         <ButtonWrapper
           testID="group_members.invite"
           style={styles.inviteButton}

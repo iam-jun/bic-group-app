@@ -39,7 +39,7 @@ const CommunityAdmin = () => {
   const canManageJoiningRequests = hasPermissions([
     PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
   ]);
-  const canEditCommunityInfo = hasPermissions([
+  const canEditProfileInfo = hasPermissions([
     PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
     PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
   ]);
@@ -123,7 +123,7 @@ const CommunityAdmin = () => {
         useI18n>
         settings:title_community_settings
       </Text.BodyM>
-      {!!canEditCommunityInfo && (
+      {!!canEditProfileInfo && (
         <MenuItem
           testID="community_admin.profile_info"
           title="settings:title_profile_info"

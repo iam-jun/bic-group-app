@@ -21,6 +21,7 @@ import useRemoveAdmin from './useRemoveAdmin';
 import useLeaveGroup from './useLeaveGroup';
 import spacing from '~/theme/spacing';
 import {useBaseHook} from '~/hooks';
+import {useMyPermissions} from '~/hooks/permissions';
 
 interface MemberOptionsMenuProps {
   groupId: number;
@@ -39,10 +40,14 @@ const MemberOptionsMenu = ({
   const dispatch = useDispatch();
   const {user} = useAuth();
   const {t} = useBaseHook();
+  const {hasPermissions, PERMISSION_KEY} = useMyPermissions('groups', groupId);
 
-  const can_manage_member = useKeySelector(
-    groupsKeySelector.groupDetail.can_manage_member,
-  );
+  const canRemoveMember = hasPermissions([
+    PERMISSION_KEY.GROUP.ADD_REMOVE_MEMBERS,
+  ]);
+  const canManageRole = hasPermissions([
+    PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE,
+  ]);
   const groupMembers = useKeySelector(groupsKeySelector.groupMembers);
   const {getInnerGroupsNames} = useRemoveMember({
     groupId,
@@ -200,7 +205,7 @@ const MemberOptionsMenu = ({
       onClose={onOptionsClosed}
       ContentComponent={
         <View style={styles.bottomSheet}>
-          {can_manage_member &&
+          {canManageRole &&
             (selectedMember?.is_admin ? (
               <PrimaryItem
                 testID="member_options_menu.remove_admin"
@@ -220,7 +225,7 @@ const MemberOptionsMenu = ({
                 onPress={() => onPressMenuOption('set-admin')}
               />
             ))}
-          {can_manage_member && selectedMember?.username !== user?.username && (
+          {canRemoveMember && selectedMember?.username !== user?.username && (
             <PrimaryItem
               testID="member_options_menu.remove_member"
               style={styles.menuOption}
