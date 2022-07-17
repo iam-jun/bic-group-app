@@ -683,7 +683,7 @@ const groupsDataHelper = {
       const response: any = await makeHttpRequest(
         groupsApiConfig.updateCommunityScheme(communityId, scheme),
       );
-      if (response && response?.data) {
+      if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
       } else {
         return Promise.reject(response);

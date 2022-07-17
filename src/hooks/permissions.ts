@@ -17,6 +17,9 @@ export const useMyPermissions = (
   const token = useAuthToken();
   const userId = useUserIdAuth();
   const {loading} = useKeySelector(groupsKeySelector.myPermissions);
+  const currentPermissions: string[] | undefined = useKeySelector(
+    `groups.myPermissions.data.${scope}.${id}`,
+  );
 
   const getMyPermissions = () => {
     if (token && userId && !loading) {
@@ -34,10 +37,6 @@ export const useMyPermissions = (
       }, EXPIRED_TIME);
     }
   }, [token, userId]);
-
-  const currentPermissions: string[] | undefined = useKeySelector(
-    `groups.myPermissions.data.${scope}.${id}`,
-  );
 
   const hasPermissions = (requiredPermissions: string[]) => {
     return [PERMISSION_KEY.FULL_PERMISSION, ...requiredPermissions].some(
