@@ -82,8 +82,6 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   };
 
   const renderContentWithMarkdown = () => {
-    console.log('renderContentWithMarkdown', textProps);
-
     return (
       <View style={style}>
         {useMarkdownIt ? (
