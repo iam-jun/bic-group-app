@@ -16,6 +16,7 @@ import modalActions from '~/store/modal/actions';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsActions from '../redux/actions';
 import spacing from '~/theme/spacing';
+import {useMyPermissions} from '~/hooks/permissions';
 
 const CommunityAdmin = () => {
   const theme: ExtendedTheme = useTheme();
@@ -28,12 +29,23 @@ const CommunityAdmin = () => {
     icon,
     can_manage_scheme,
     can_edit_info,
-    can_manage_member,
   } = useKeySelector(groupsKeySelector.communityDetail);
   const {total} = useKeySelector(groupsKeySelector.communityMemberRequests);
 
+  const {hasPermissions, PERMISSION_KEY} = useMyPermissions(
+    'communities',
+    communityId,
+  );
+  const canManageJoiningRequests = hasPermissions(
+    PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
+  );
+  const canEditCommunityInfo = hasPermissions([
+    PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
+    PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
+  ]);
+
   useEffect(() => {
-    can_manage_member &&
+    canManageJoiningRequests &&
       dispatch(groupsActions.getCommunityMemberRequests({communityId}));
 
     return () => {
@@ -73,7 +85,7 @@ const CommunityAdmin = () => {
         useI18n>
         settings:title_community_moderating
       </Text.BodyM>
-      {!!can_manage_member && (
+      {!!canManageJoiningRequests && (
         <MenuItem
           testID={'community_admin.pending_members'}
           title={'settings:title_pending_members'}
@@ -113,7 +125,7 @@ const CommunityAdmin = () => {
         useI18n>
         settings:title_community_settings
       </Text.BodyM>
-      {!!can_edit_info && (
+      {!!canEditCommunityInfo && (
         <MenuItem
           testID="community_admin.profile_info"
           title="settings:title_profile_info"

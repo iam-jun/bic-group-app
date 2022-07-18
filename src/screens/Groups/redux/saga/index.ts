@@ -72,10 +72,12 @@ import putGroupStructureCollapseStatus from '~/screens/Groups/redux/saga/putGrou
 import editCommunityDetail from './editCommunityDetail';
 import getGroupSchemeAssignments from '~/screens/Groups/redux/saga/getGroupSchemeAssignments';
 import putGroupSchemeAssignments from '~/screens/Groups/redux/saga/putGroupSchemeAssignments';
+import getMyPermissions from './getMyPermissions';
 
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* groupsSaga() {
+  yield takeLatest(groupsTypes.GET_MY_PERMISSIONS, getMyPermissions);
   yield takeLatest(
     groupsTypes.GET_GROUP_STRUCTURE_COMMUNITY_TREE,
     getGroupStructureCommunityTree,
