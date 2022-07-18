@@ -31,6 +31,7 @@ import HeaderMenu from '../components/HeaderMenu';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import spacing from '~/theme/spacing';
+import {useMyPermissions} from '~/hooks/permissions';
 
 const CommunityDetail = (props: any) => {
   const params = props.route.params;
@@ -45,12 +46,21 @@ const CommunityDetail = (props: any) => {
   const styles = themeStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const {name, icon, join_status, privacy, group_id, can_setting} = infoDetail;
+  const {name, icon, join_status, privacy, group_id} = infoDetail;
   const isMember = join_status === groupJoinStatus.member;
   const isGettingInfoDetail = useKeySelector(
     groupsKeySelector.isGettingInfoDetail,
   );
   const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
+  const {hasPermissions, PERMISSION_KEY} = useMyPermissions(
+    'communities',
+    communityId,
+  );
+  const canSetting = hasPermissions([
+    PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
+    PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
+    PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
+  ]);
 
   const buttonShow = useSharedValue(0);
 
@@ -104,7 +114,7 @@ const CommunityDetail = (props: any) => {
           <HeaderMenu
             type="community"
             isMember={isMember}
-            can_setting={can_setting}
+            can_setting={canSetting}
             onPressAdminTools={onPressAdminTools}
           />
         ),
@@ -194,7 +204,7 @@ const CommunityDetail = (props: any) => {
           title={name}
           avatar={icon}
           useAnimationTitle
-          rightIcon={can_setting ? 'iconShieldStar' : 'menu'}
+          rightIcon={canSetting ? 'iconShieldStar' : 'menu'}
           rightIconProps={{backgroundColor: theme.colors.white}}
           onPressChat={isMember ? onPressChat : undefined}
           onRightPress={onRightPress}

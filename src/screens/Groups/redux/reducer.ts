@@ -8,6 +8,11 @@ import {getNewSchemeRolesOnUpdatePermission} from '~/screens/Groups/CreatePermis
 import {cloneDeep} from 'lodash';
 
 export const groupInitState = {
+  myPermissions: {
+    loading: false,
+    data: undefined,
+    timeGetMyPermissions: null,
+  },
   permissionScheme: {
     categories: {
       data: undefined,
@@ -220,6 +225,15 @@ function groupsReducer(state = groupInitState, action: any = {}) {
   } = state;
 
   switch (type) {
+    case groupsTypes.SET_MY_PERMISSIONS:
+      return {
+        ...state,
+        myPermissions: {
+          ...cloneDeep(state.myPermissions),
+          ...payload,
+        },
+      };
+
     //Group Structure Settings
     case groupsTypes.SET_GROUP_STRUCTURE:
       return {

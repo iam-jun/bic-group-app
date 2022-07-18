@@ -33,6 +33,14 @@ import {
 } from '~/interfaces/ICommunity';
 
 const groupsActions = {
+  getMyPermissions: () => ({
+    type: groupsTypes.GET_MY_PERMISSIONS,
+  }),
+  setMyPermissions: (payload: any) => ({
+    type: groupsTypes.SET_MY_PERMISSIONS,
+    payload,
+  }),
+
   //group structure settings
   setGroupStructure: (payload?: any) => ({
     type: groupsTypes.SET_GROUP_STRUCTURE,

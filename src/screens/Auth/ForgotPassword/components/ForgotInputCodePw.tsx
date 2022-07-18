@@ -126,9 +126,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
   return (
     <View style={styles.container}>
       <View style={styles.inputSectionContainer}>
-        <Text.BodyM>
-          {t('auth:text_forgot_password_input_code_title')}
-        </Text.BodyM>
+        <Text.H6>{t('auth:text_forgot_password_input_code_title')}</Text.H6>
         <Text.BodyS style={styles.desc}>
           {t('auth:text_forgot_password_input_code_desc')?.replace?.(
             '(email)',
@@ -161,9 +159,9 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
         </Text.BodyS>
       </View>
       <View style={styles.inputSectionContainer}>
-        <Text.BodyM style={styles.newPasswordTitle}>
+        <Text.H6 style={styles.newPasswordTitle}>
           {t('auth:text_forgot_password_input_pw_title')}
-        </Text.BodyM>
+        </Text.H6>
         <PasswordInputController
           useFormData={useFormData}
           name={'newPassword'}
@@ -247,7 +245,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       marginBottom: spacing.margin.small,
     },
     highlightText: {
-      color: colors.gray60,
+      color: colors.gray70,
     },
   });
 };

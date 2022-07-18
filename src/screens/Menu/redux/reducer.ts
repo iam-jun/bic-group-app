@@ -110,13 +110,11 @@ const menuReducer = (state = menuInitState, action: any = {}) => {
         ...state,
         locationList: {
           ...locationList,
-          searchResult: locationList.data
-            .filter(
-              (item: ILocation) =>
-                searchText(payload, item.name) ||
-                searchText(payload, item.country),
-            )
-            .slice(0, 8),
+          searchResult: locationList.data.filter(
+            (item: ILocation) =>
+              searchText(payload, item.name) ||
+              searchText(payload, item.country),
+          ),
         },
       };
 

@@ -1,17 +1,11 @@
 import React, {useState, useCallback} from 'react';
-import {
-  StyleSheet,
-  View,
-  ScrollView,
-  Platform,
-  useWindowDimensions,
-  KeyboardAvoidingView,
-} from 'react-native';
+import {StyleSheet, View, ScrollView, useWindowDimensions} from 'react-native';
 import i18next from 'i18next';
 import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {debounce} from 'lodash';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useKeyboard} from '@react-native-community/hooks';
 
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -59,6 +53,10 @@ const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
     searchHandler(text);
   };
 
+  const resetSearchText = () => {
+    setSearchQuery('');
+  };
+
   const renderItem = ({item}: {item: ILocation}) => {
     return (
       <PrimaryItem
@@ -69,21 +67,25 @@ const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
       />
     );
   };
+  const keyboard = useKeyboard();
 
   return (
     <BottomSheet
       modalizeRef={modalizeRef}
       modalStyle={styles.modalStyle}
       childrenStyle={styles.childrenStyle}
+      onClosed={resetSearchText}
+      handlePosition="inside"
+      closeSnapPointStraightEnabled={false}
+      scrollViewProps={{
+        keyboardShouldPersistTaps: 'handled',
+        keyboardDismissMode: 'interactive',
+        contentContainerStyle: {
+          height: '100%',
+        },
+      }}
       ContentComponent={
-        <KeyboardAvoidingView
-          testID="edit_location.keyboard_avoiding_view"
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-          enabled={true}
-          style={styles.contentComponent}
-          keyboardVerticalOffset={
-            Platform.OS === 'ios' ? 0 : Platform.OS === 'android' ? 60 : 0
-          }>
+        <View style={styles.contentComponent}>
           <Text.BodyS useI18n style={styles.titleSearch}>
             settings:title_choose_location
           </Text.BodyS>
@@ -96,7 +98,7 @@ const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
           />
           <Divider style={styles.divider} />
           <ScrollView
-            keyboardShouldPersistTaps="always"
+            keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
             style={styles.listView}
             scrollEventThrottle={16}>
@@ -107,9 +109,10 @@ const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
                 </View>
               ),
             )}
-            <ViewSpacing height={insets?.bottom || 0} />
+            <ViewSpacing height={insets?.bottom + 100} />
+            <View style={{height: keyboard?.keyboardHeight || 0}} />
           </ScrollView>
-        </KeyboardAvoidingView>
+        </View>
       }
     />
   );
@@ -127,9 +130,10 @@ const createStyles = (theme: ExtendedTheme, screenHeight: number) => {
       paddingBottom: spacing.margin.large,
     },
     contentComponent: {
-      maxHeight: 0.8 * screenHeight,
+      height: 0.8 * screenHeight,
       borderTopRightRadius: spacing.borderRadius.small,
       borderTopLeftRadius: spacing.borderRadius.small,
+      paddingBottom: spacing.margin.large,
     },
     divider: {
       marginTop: spacing.margin.small,
@@ -137,7 +141,7 @@ const createStyles = (theme: ExtendedTheme, screenHeight: number) => {
     modalStyle: {
       borderTopRightRadius: spacing.borderRadius.small,
       borderTopLeftRadius: spacing.borderRadius.small,
-      maxHeight: 0.8 * screenHeight,
+      height: 0.8 * screenHeight,
       paddingTop: 0,
     },
     titleSearch: {
@@ -146,6 +150,7 @@ const createStyles = (theme: ExtendedTheme, screenHeight: number) => {
     },
     childrenStyle: {
       paddingBottom: 0,
+      maxHeight: 0.8 * screenHeight,
     },
   });
 };

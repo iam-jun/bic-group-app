@@ -6,6 +6,7 @@ import {useDispatch} from 'react-redux';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useChatSocket} from '~/hooks/chat';
 import useNotificationSocket from '~/hooks/notificationSocket';
+import {useMyPermissions} from '~/hooks/permissions';
 import {useKeySelector} from '~/hooks/selector';
 import BottomTabBar from '~/router/components/BottomTabBar';
 import groupsActions from '~/screens/Groups/redux/actions';
@@ -44,6 +45,7 @@ const MainTabs = () => {
       return;
     }
 
+    dispatch(groupsActions.getMyPermissions());
     dispatch(postActions.getDraftPosts({}));
     dispatch(giphyActions.getAPIKey());
     dispatch(groupsActions.getMyCommunities());
