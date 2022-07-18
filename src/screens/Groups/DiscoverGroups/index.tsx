@@ -6,7 +6,7 @@ import {
   FlatList,
   RefreshControl,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import Header from '~/beinComponents/Header';
@@ -14,42 +14,38 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import Divider from '~/beinComponents/Divider';
 import DiscoverItem from '../components/DiscoverItem';
-import {ITheme} from '~/theme/interfaces';
+
 import actions from '../redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
+import spacing from '~/theme/spacing';
 
 const DiscoverGroups = ({route}: any) => {
   const {communityId} = route.params;
-  const theme = useTheme() as ITheme;
-  const styles = createStyles(theme);
+  const theme: ExtendedTheme = useTheme();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 
-  const {data, items, loading, canLoadMore} = useKeySelector(
+  const {ids, items, loading, canLoadMore} = useKeySelector(
     groupsKeySelector.discoverGroups,
   );
 
-  const getDiscoverGroups = () => {
-    dispatch(actions.getDiscoverGroups({communityId}));
+  const getDiscoverGroups = (isRefreshing?: boolean) => {
+    dispatch(actions.getDiscoverGroups({communityId, isRefreshing}));
   };
 
   useEffect(() => {
-    getDiscoverGroups();
-    return () => {
-      dispatch(actions.resetDiscoverGroups());
-    };
+    getDiscoverGroups(true); // refreshing whenever open
   }, [communityId]);
 
   const onLoadMore = () => {
-    getDiscoverGroups();
+    canLoadMore && getDiscoverGroups();
   };
 
   const onRefresh = () => {
-    dispatch(actions.resetDiscoverGroups());
-    getDiscoverGroups();
+    getDiscoverGroups(true);
   };
 
   const onPressGroup = (groupId: number) => {
@@ -96,7 +92,7 @@ const DiscoverGroups = ({route}: any) => {
     return (
       !loading &&
       canLoadMore &&
-      data.length > 0 && (
+      ids.length > 0 && (
         <View style={styles.listFooter}>
           <ActivityIndicator />
         </View>
@@ -113,7 +109,7 @@ const DiscoverGroups = ({route}: any) => {
       />
       <FlatList
         testID="flatlist"
-        data={data}
+        data={ids}
         renderItem={renderItem}
         keyExtractor={(item, index) => `groups_${item}_${index}`}
         onEndReached={onLoadMore}
@@ -125,7 +121,7 @@ const DiscoverGroups = ({route}: any) => {
           <RefreshControl
             refreshing={loading}
             onRefresh={onRefresh}
-            tintColor={theme.colors.borderDisable}
+            tintColor={theme.colors.gray40}
           />
         }
       />
@@ -135,17 +131,13 @@ const DiscoverGroups = ({route}: any) => {
 
 export default DiscoverGroups;
 
-const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    listFooter: {
-      height: 100,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-    divider: {
-      marginVertical: spacing.margin.tiny,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  listFooter: {
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  divider: {
+    marginVertical: spacing.margin.tiny,
+  },
+});

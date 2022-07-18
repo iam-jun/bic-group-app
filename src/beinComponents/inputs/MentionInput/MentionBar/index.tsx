@@ -8,10 +8,9 @@ import {
   ViewStyle,
 } from 'react-native';
 import {useDispatch} from 'react-redux';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {useKeySelector} from '~/hooks/selector';
-import {ITheme} from '~/theme/interfaces';
 import {IMentionUser} from '~/interfaces/IPost';
 
 import {
@@ -22,6 +21,7 @@ import {
 import MentionBarItem from '~/beinComponents/inputs/MentionInput/MentionBar/MentionBarItem';
 import Divider from '~/beinComponents/Divider';
 import {debounce} from 'lodash';
+import spacing from '~/theme/spacing';
 
 interface MentionBarProps {
   testID?: string;
@@ -42,8 +42,8 @@ const MentionBar: FC<MentionBarProps> = ({
   const dispatch = useDispatch();
   const {data} = useKeySelector(type);
 
-  const theme: ITheme = useTheme() as ITheme;
-  const {spacing, colors} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const isShow = !!data?.length;
@@ -114,7 +114,7 @@ const MentionBar: FC<MentionBarProps> = ({
             testID="mention_bar.list.divider"
             horizontal
             style={{marginVertical: spacing.margin.small}}
-            color={colors.borderFocus}
+            color={colors.gray40}
           />
         )}
         renderItem={renderItem}
@@ -123,14 +123,14 @@ const MentionBar: FC<MentionBarProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
       minHeight: 44,
       borderTopWidth: 1,
-      borderColor: colors.borderFocus,
-      backgroundColor: colors.background,
+      borderColor: colors.gray40,
+      backgroundColor: colors.white,
     },
   });
 };

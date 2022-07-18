@@ -1,22 +1,18 @@
 import React, {useState} from 'react';
 import {StyleSheet, View, TouchableOpacity, Dimensions} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import TimeView from '~/beinComponents/TimeView';
 import Icon from '~/beinComponents/Icon';
 
-import {
-  IGetStreamNotificationActivity,
-  INotiExtraData,
-} from '~/interfaces/INotification';
-import {ITheme} from '~/theme/interfaces';
 import NotificationAvatar from './NotificationAvatar';
 import NotificationContent from './NotificationContent';
 import {useKeySelector} from '~/hooks/selector';
 import notificationSelector from '~/screens/Notification/redux/selector';
 import {isEmpty, isEqual} from 'lodash';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
+import spacing from '~/theme/spacing';
+import {useTheme, ExtendedTheme} from '@react-navigation/native';
 
-const {width: screenWidth, height} = Dimensions.get('window');
+const {width: screenWidth} = Dimensions.get('window');
 
 export interface NotificationItemProps {
   // activities: IGetStreamNotificationActivity[];
@@ -47,7 +43,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   testID,
   id,
 }: NotificationItemProps) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
   const {colors} = theme;
 
@@ -107,9 +103,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
       style={[
         styles.container,
         {
-          backgroundColor: isRead
-            ? theme.colors.background
-            : theme.colors.bgSecondary,
+          backgroundColor: isRead ? theme.colors.white : theme.colors.neutral1,
         },
       ]}>
       {notShowAvatar ? (
@@ -180,7 +174,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           <Icon
             icon={'menu'}
             size={15}
-            tintColor={colors.textSecondary}
+            tintColor={colors.gray50}
             testID="notificationItem.menuIcon"
           />
         </TouchableOpacity>
@@ -189,15 +183,15 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {
       flex: 1,
       flexDirection: 'row',
       alignItems: 'flex-start',
-      padding: theme.spacing.padding.large,
+      padding: spacing.padding.large,
       width: screenWidth,
     },
     row: {
@@ -208,11 +202,11 @@ const createStyles = (theme: ITheme) => {
       width: 6,
       height: 6,
       borderRadius: 6,
-      backgroundColor: colors.primary5,
+      backgroundColor: colors.purple30,
       marginRight: spacing.margin.small,
     },
     timeCreated: {
-      color: colors.textSecondary,
+      color: colors.gray50,
       fontSize: 13,
       marginBottom: spacing.margin.base,
     },

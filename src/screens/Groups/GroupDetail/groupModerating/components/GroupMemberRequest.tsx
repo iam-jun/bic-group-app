@@ -9,7 +9,13 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import PendingUserItem from '~/screens/Groups/components/PendingUserItem';
 
-const GroupMemberRequest = ({requestId}: {requestId: number}) => {
+const GroupMemberRequest = ({
+  requestId,
+  organizationId,
+}: {
+  requestId: number;
+  organizationId: number;
+}) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
 

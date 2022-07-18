@@ -4,21 +4,21 @@
 import React from 'react';
 import {Image, StyleSheet, useWindowDimensions, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import {spacing} from '~/theme';
 import {useBaseHook} from '~/hooks';
 import {authStack} from '~/configs/navigator';
 import images from '~/resources/images';
 import LandingImg from '../../../../assets/images/landing_page.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 
 const LandingWithInvitation = () => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {t, navigation} = useBaseHook();
   const styles = themeStyles(theme);
   const dimensions = useWindowDimensions();
@@ -47,7 +47,7 @@ const LandingWithInvitation = () => {
         {/*@ts-ignore*/}
         <SVGIcon source={LandingImg} size={imgSize} />
         <Text.H5 style={styles.title}>{title}</Text.H5>
-        {!!desc && <Text.Subtitle style={styles.desc}>{desc}</Text.Subtitle>}
+        {!!desc && <Text.BodyS style={styles.desc}>{desc}</Text.BodyS>}
       </View>
       <Button.Primary
         style={styles.button}
@@ -59,7 +59,7 @@ const LandingWithInvitation = () => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const insets = useSafeAreaInsets();
   const {colors} = theme;
 
@@ -67,7 +67,7 @@ const themeStyles = (theme: ITheme) => {
     container: {
       paddingTop: insets.top,
       paddingHorizontal: spacing.padding.big,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     contentContainer: {
       flex: 1,

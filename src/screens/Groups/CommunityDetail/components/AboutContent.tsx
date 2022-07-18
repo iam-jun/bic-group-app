@@ -1,20 +1,20 @@
 import {View, StyleSheet} from 'react-native';
 import React from 'react';
 import i18next from 'i18next';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
-import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import privacyTypes, {groupPrivacy} from '~/constants/privacyTypes';
 import PreviewMembers from '../../components/PreviewMembers';
 import groupJoinStatus from '~/constants/groupJoinStatus';
+import spacing from '~/theme/spacing';
 
 const AboutContent = () => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {description, user_count, privacy, join_status} = infoDetail;
@@ -26,11 +26,11 @@ const AboutContent = () => {
     <View style={styles.container} testID="about_content">
       {!!description && (
         <View style={styles.descriptionSection}>
-          <Text.BodyM style={styles.titleDescription} useI18n>
+          <Text.ButtonM style={styles.titleDescription} useI18n>
             common:text_description
-          </Text.BodyM>
+          </Text.ButtonM>
           <CollapsibleText
-            textProps={{variant: 'body'}}
+            textProps={{variant: 'bodyM'}}
             content={description}
           />
         </View>
@@ -62,13 +62,13 @@ const AboutContent = () => {
 
 export default AboutContent;
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingVertical: spacing.padding.large,
       paddingBottom: 80, // to avoid Join button at the bottom
     },

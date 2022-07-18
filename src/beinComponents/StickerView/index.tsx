@@ -1,19 +1,21 @@
 import {GiphyContent, GiphyGridView, GiphyMedia} from '@giphy/react-native-sdk';
 import {useKeyboard} from '@react-native-community/hooks';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import i18next from 'i18next';
 import {debounce} from 'lodash';
 import React, {useEffect, useImperativeHandle, useRef} from 'react';
 import {Keyboard, NativeSyntheticEvent, StyleSheet, View} from 'react-native';
 import {Modalize} from 'react-native-modalize';
-import {Portal, useTheme} from 'react-native-paper';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import {Portal} from 'react-native-portalize';
+
 import {AppConfig} from '~/configs';
 import {dimension} from '~/theme';
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {EmojiBoardProps} from '../emoji/EmojiBoard';
 import SearchInput from '../inputs/SearchInput';
 import LoadingIndicator from '../LoadingIndicator';
@@ -41,7 +43,7 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
 
   const height = useSharedValue(0);
 
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const keyboard = useKeyboard();
@@ -176,12 +178,12 @@ const _StickerView = ({stickerViewRef, onMediaSelect}: Props) => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     stickerView: {
       marginTop: spacing.margin.small,

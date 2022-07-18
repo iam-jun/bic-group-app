@@ -9,9 +9,7 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Divider from '~/beinComponents/Divider';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
@@ -23,6 +21,7 @@ import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import {scaleSize} from '~/theme/dimension';
 import DiscoverItem from '../components/DiscoverItem';
+import spacing from '~/theme/spacing';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -39,8 +38,7 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   const {ids, items, loading, canLoadMore} = data || {};
 
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
+  const theme: ExtendedTheme = useTheme();
 
   useEffect(() => {
     getData(true); // refreshing whenever open
@@ -122,7 +120,7 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
         <RefreshControl
           refreshing={loading}
           onRefresh={onRefresh}
-          tintColor={theme.colors.borderDisable}
+          tintColor={theme.colors.gray40}
         />
       }
     />
@@ -144,35 +142,31 @@ const DiscoverHeader = ({list}: any) => {
   return null;
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    container: {},
-    item: {
-      height: '100%',
-      flex: 1,
-      paddingVertical: spacing.padding.small,
-    },
-    iconSmall: {
-      marginRight: spacing.margin.tiny,
-      height: 16,
-    },
-    groupInfo: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginTop: 2,
-    },
-    divider: {
-      marginVertical: spacing.margin.tiny,
-      marginHorizontal: spacing.margin.large,
-    },
-    listFooter: {
-      height: 100,
-      justifyContent: 'center',
-      alignItems: 'center',
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {},
+  item: {
+    height: '100%',
+    flex: 1,
+    paddingVertical: spacing.padding.small,
+  },
+  iconSmall: {
+    marginRight: spacing.margin.tiny,
+    height: 16,
+  },
+  groupInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 2,
+  },
+  divider: {
+    marginVertical: spacing.margin.tiny,
+    marginHorizontal: spacing.margin.large,
+  },
+  listFooter: {
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default DiscoverCommunities;

@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import AvatarComponent, {
   AvatarProps,
   AvatarType,
@@ -8,8 +8,10 @@ import AvatarComponent, {
 import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import images from '~/resources/images';
+import dimension from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 
 export interface AvatarGroupProps extends AvatarProps {
   variant?: AvatarType;
@@ -25,8 +27,8 @@ const AvatarGroup = ({
   totalMember,
   ...props
 }: AvatarGroupProps) => {
-  const theme = useTheme() as ITheme;
-  const {colors, spacing, dimension} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
 
   const containerSize = dimension?.avatarSizes?.[variant] || 36;
   const border = 2;
@@ -54,9 +56,9 @@ const AvatarGroup = ({
             width: itemContainerSize,
             height: itemContainerSize,
             borderWidth: border,
-            borderColor: colors.background,
-            borderRadius: spacing?.borderRadius.small,
-            backgroundColor: colors.background,
+            borderColor: colors.white,
+            borderRadius: spacing.borderRadius.small,
+            backgroundColor: colors.white,
             overflow: 'hidden',
           },
           style,
@@ -66,7 +68,7 @@ const AvatarGroup = ({
           style={{
             width: itemSize,
             height: itemSize,
-            backgroundColor: colors.primary1,
+            backgroundColor: colors.violet1,
           }}
           source={source}
         />
@@ -147,7 +149,7 @@ const AvatarGroup = ({
                 style={{
                   width: itemContainerSize,
                   height: itemContainerSize,
-                  backgroundColor: colors.background,
+                  backgroundColor: colors.white,
                   borderRadius: 6,
                   marginLeft: -6,
                   justifyContent: 'center',
@@ -157,7 +159,7 @@ const AvatarGroup = ({
                   <Text
                     testID="avatar_group.total_member"
                     style={{
-                      fontFamily: fontFamilies.OpenSans,
+                      fontFamily: fontFamilies.BeVietnamProLight,
                       marginTop: 2,
                       fontSize: totalMemberFontSize,
                     }}>
@@ -180,8 +182,8 @@ const AvatarGroup = ({
         {
           width: containerSize,
           height: containerSize,
-          backgroundColor: colors.primary1,
-          borderRadius: spacing?.borderRadius.small,
+          backgroundColor: colors.violet1,
+          borderRadius: spacing.borderRadius.small,
           justifyContent: 'center',
           alignItems: 'center',
           padding: 1,

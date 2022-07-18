@@ -1,14 +1,13 @@
 import React, {FC} from 'react';
 import {StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import RoleItem from '~/screens/Groups/CreatePermissionScheme/components/RoleItem';
 import {IPermission, IRole} from '~/interfaces/IGroup';
+import spacing from '~/theme/spacing';
 
 export interface SchemeRolesProps {
   roles: IRole[];
@@ -27,7 +26,7 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
   onAnchorRole,
   useRoleInherited = true,
 }: SchemeRolesProps) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const permissionCategories = useKeySelector(
@@ -77,8 +76,8 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     title: {
       paddingHorizontal: spacing.padding.large,
@@ -87,27 +86,27 @@ const createStyle = (theme: ITheme) => {
     },
     roleName: {
       marginTop: spacing.margin.small,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       padding: spacing.padding.large,
       borderTopWidth: 1,
       borderBottomWidth: 1,
-      borderColor: colors.bgFocus,
+      borderColor: colors.gray20,
     },
     catName: {
       textTransform: 'uppercase',
-      color: colors.textSecondary,
+      color: colors.gray50,
       paddingVertical: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
-      backgroundColor: colors.surface,
+      backgroundColor: colors.neutral1,
       borderBottomWidth: 1,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
     },
     subCatName: {
-      color: colors.textSecondary,
+      color: colors.gray50,
       paddingTop: spacing.padding.base,
       paddingBottom: spacing.padding.tiny,
       paddingHorizontal: spacing.padding.large,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     permissionName: {
       flex: 1,
@@ -115,7 +114,7 @@ const createStyle = (theme: ITheme) => {
     permissionItem: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.base,
     },

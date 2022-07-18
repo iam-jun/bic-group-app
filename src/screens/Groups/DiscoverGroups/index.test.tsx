@@ -17,7 +17,7 @@ describe('DiscoverGroups component', () => {
       loading: false,
       canLoadMore: false,
       // @ts-ignore
-      data: [discoverGroup.id],
+      ids: [discoverGroup.id],
       items: {[discoverGroup.id]: discoverGroup},
     };
     const store = createTestStore(state);

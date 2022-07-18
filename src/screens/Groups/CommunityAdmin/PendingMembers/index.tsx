@@ -9,9 +9,10 @@ import groupsKeySelector from '../../redux/keySelector';
 import CommunityApproveDeclineAllRequests from './CommunityApproveDeclineAllRequests';
 import MemberRequestList from '../../components/MemberRequestList';
 
-const CommunityPendingMembers = () => {
+const CommunityPendingMembers = (props: any) => {
   const dispatch = useDispatch();
-  const {id: communityId} = useKeySelector(groupsKeySelector.communityDetail);
+  const params = props.route.params;
+  const {id: communityId} = params || {};
   const {canLoadMore, ids} = useKeySelector(
     groupsKeySelector.communityMemberRequests,
   );
@@ -49,6 +50,7 @@ const CommunityPendingMembers = () => {
         type="community"
         onLoadMore={onLoadMore}
         onRefresh={onRefresh}
+        id={communityId}
       />
 
       {ids.length > 0 && <CommunityApproveDeclineAllRequests />}

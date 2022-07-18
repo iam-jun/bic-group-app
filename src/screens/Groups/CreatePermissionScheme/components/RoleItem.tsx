@@ -1,8 +1,6 @@
 import React, {FC, useState} from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
@@ -10,6 +8,7 @@ import PermissionItem from '~/screens/Groups/CreatePermissionScheme/components/P
 import {ICategory, IPermission, IRole} from '~/interfaces/IGroup';
 import {permissionRoleSectionHeaderHeight} from '~/theme/dimension';
 import {CATEGORY_KEY, ROLE_TYPE} from '~/constants/permissionScheme';
+import spacing from '~/theme/spacing';
 
 export interface RoleItemProps {
   categories: ICategory[];
@@ -32,7 +31,7 @@ const RoleItem: FC<RoleItemProps> = ({
 }: RoleItemProps) => {
   const [isExpand, setIsExpand] = useState(false);
 
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const onPress = () => {
@@ -57,9 +56,7 @@ const RoleItem: FC<RoleItemProps> = ({
 
           return (
             <View key={`role_${keyRoleId}_cat_${cat?.key}`}>
-              <Text.ButtonSmall style={styles.catName}>
-                {cat?.name}
-              </Text.ButtonSmall>
+              <Text.ButtonS style={styles.catName}>{cat?.name}</Text.ButtonS>
               {cat?.subCategories?.map((subCat: any) => (
                 <View
                   key={`role_${keyRoleId}_cat_${cat?.key}_subCat_${subCat?.key}`}>
@@ -107,8 +104,8 @@ const RoleItem: FC<RoleItemProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.margin.small,
@@ -117,30 +114,30 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       minHeight: permissionRoleSectionHeaderHeight,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.large,
       borderTopWidth: 1,
       borderBottomWidth: 1,
-      borderColor: colors.bgFocus,
+      borderColor: colors.gray20,
     },
     roleName: {
       flex: 1,
     },
     catName: {
       textTransform: 'uppercase',
-      color: colors.textSecondary,
+      color: colors.gray50,
       paddingVertical: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
-      backgroundColor: colors.surface,
+      backgroundColor: colors.neutral1,
       borderBottomWidth: 1,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
     },
     subCatName: {
-      color: colors.textSecondary,
+      color: colors.gray50,
       paddingTop: spacing.padding.base,
       paddingBottom: spacing.padding.tiny,
       paddingHorizontal: spacing.padding.large,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
   });
 };

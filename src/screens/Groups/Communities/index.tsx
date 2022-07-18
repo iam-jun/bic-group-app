@@ -1,11 +1,10 @@
 import React, {useRef, useState} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useSharedValue} from 'react-native-reanimated';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
 
-import {ITheme} from '~/theme/interfaces';
 import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
 import Filter from '../../../beinComponents/Filter';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
@@ -15,13 +14,14 @@ import {communityMenuData} from '~/constants/communityMenuData';
 import ManagedCommunities from './ManagedCommunities';
 import SearchCommunityView from './SearchCommunityView';
 import {useBaseHook} from '~/hooks';
+import spacing from '~/theme/spacing';
 
 const {width: screenWidth} = Dimensions.get('window');
 
 const Communities: React.FC = () => {
   const headerRef = useRef<any>();
 
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
@@ -105,13 +105,13 @@ const Communities: React.FC = () => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
 
   return StyleSheet.create({
     containerScreen: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     groupContainer: {
       flex: 1,

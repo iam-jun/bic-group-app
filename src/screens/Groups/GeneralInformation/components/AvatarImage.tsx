@@ -3,12 +3,13 @@ import React from 'react';
 import Text from '~/beinComponents/Text';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Image from '~/beinComponents/Image';
-import {ITheme} from '~/theme/interfaces';
+
 import {scaleSize} from '~/theme/dimension';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import images from '~/resources/images';
+import spacing from '~/theme/spacing';
 
 interface Props {
   testID?: string;
@@ -20,16 +21,16 @@ interface Props {
 const AvatarImage = ({testID, onEditAvatar, avatar, canEditInfo}: Props) => {
   const loadingAvatar = useKeySelector(groupsKeySelector.loadingAvatar);
 
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = themeStyles(theme);
 
-  const textColor = !loadingAvatar ? colors.primary7 : colors.textDisabled;
+  const textColor = !loadingAvatar ? colors.purple60 : colors.gray40;
 
   return (
     <View testID={testID}>
       <View style={styles.avatarHeader}>
-        <Text.H5 color={colors.iconTint} useI18n>
+        <Text.H5 color={colors.neutral80} useI18n>
           settings:title_avatar
         </Text.H5>
         {!!canEditInfo && (
@@ -62,8 +63,8 @@ const AvatarImage = ({testID, onEditAvatar, avatar, canEditInfo}: Props) => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     avatarHeader: {
       flexDirection: 'row',
@@ -82,7 +83,7 @@ const themeStyles = (theme: ITheme) => {
       alignItems: 'center',
     },
     imageLoading: {
-      backgroundColor: colors.bgDisable,
+      backgroundColor: colors.gray20,
       justifyContent: 'center',
     },
   });

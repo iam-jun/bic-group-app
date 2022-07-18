@@ -8,10 +8,11 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {showHideToastMessage} from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 import ButtonWrapper from '../Button/ButtonWrapper';
 import Text from '../Text';
 
@@ -31,7 +32,7 @@ const CopyableView = ({
   onPress,
   ...props
 }: Props) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
 
@@ -113,8 +114,8 @@ const CopyableView = ({
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     contentSelected: {
       backgroundColor: '#ACCEF7',
@@ -124,12 +125,12 @@ const themeStyles = (theme: ITheme) => {
     },
     tooltip: {
       alignSelf: 'baseline',
-      backgroundColor: colors.onSurface,
+      backgroundColor: colors.black,
       padding: spacing.padding.base,
       borderRadius: spacing.borderRadius.small,
     },
     text: {
-      color: colors.textReversed,
+      color: colors.white,
     },
   });
 };

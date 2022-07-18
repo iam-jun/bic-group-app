@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import React, {useEffect, useRef} from 'react';
 import {ScrollView, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Header from '~/beinComponents/Header';
@@ -17,20 +17,20 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import * as modalActions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+
 import AvatarImage from './components/AvatarImage';
 import PrivacyItem from './components/PrivacyItem';
 import CoverImage from './components/CoverImage';
 import InfoView from './components/InfoView';
 import {alertAction, _openImagePicker} from './helper';
+import spacing from '~/theme/spacing';
 
 const GeneralInformation = (props: any) => {
   const params = props.route.params;
   const {id, type = 'group'} = params || {};
 
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
-  const styles = themeStyles(theme);
   const dispatch = useDispatch();
 
   const baseSheetRef: any = useRef();
@@ -217,7 +217,7 @@ const GeneralInformation = (props: any) => {
           ContentComponent={
             <View style={styles.contentBottomSheet}>
               <Text.H5
-                color={colors.iconTint}
+                color={colors.neutral80}
                 style={styles.privacyTypeText}
                 useI18n>
                 settings:title_privacy_type
@@ -238,21 +238,17 @@ const GeneralInformation = (props: any) => {
 
 export default GeneralInformation;
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    contentBottomSheet: {
-      marginHorizontal: spacing.margin.base,
-      marginTop: spacing.margin.large,
-    },
-    privacyTypeText: {
-      marginLeft: spacing.margin.base,
-      marginBottom: spacing.margin.small,
-      fontSize: 18,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  contentBottomSheet: {
+    marginHorizontal: spacing.margin.base,
+    marginTop: spacing.margin.large,
+  },
+  privacyTypeText: {
+    marginLeft: spacing.margin.base,
+    marginBottom: spacing.margin.small,
+    fontSize: 18,
+  },
+});

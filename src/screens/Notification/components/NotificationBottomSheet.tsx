@@ -1,13 +1,13 @@
 import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
-import {ITheme} from '~/theme/interfaces';
+
 import BottomSheet from '~/beinComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import notificationsActions from '../redux/actions';
 import i18n from 'i18next';
 import * as modalActions from '~/store/modal/actions';
+import spacing from '~/theme/spacing';
 
 export interface NotificationBottomSheetProps {
   modalizeRef: any;
@@ -18,9 +18,6 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
   modalizeRef,
   flag,
 }: NotificationBottomSheetProps) => {
-  const theme: ITheme = useTheme() as ITheme;
-  const styles = createStyle(theme);
-
   const dispatch = useDispatch();
 
   const markReadAllNotifications = () => {
@@ -61,17 +58,14 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {
-      paddingVertical: spacing.padding.tiny,
-    },
-    item: {
-      height: 44,
-      paddingHorizontal: spacing.padding.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    paddingVertical: spacing.padding.tiny,
+  },
+  item: {
+    height: 44,
+    paddingHorizontal: spacing.padding.large,
+  },
+});
 
 export default NotificationBottomSheet;

@@ -1,13 +1,14 @@
 import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
-import {ITheme} from '~/theme/interfaces';
+
 import BottomSheet from '~/beinComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import notificationsActions from '../redux/actions';
 import i18n from 'i18next';
 import * as modalActions from '~/store/modal/actions';
+import spacing from '~/theme/spacing';
 
 export interface NotificationOptionBottomSheetProps {
   modalize: any;
@@ -20,8 +21,7 @@ const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
   data,
   keyValue,
 }: NotificationOptionBottomSheetProps) => {
-  const theme: ITheme = useTheme() as ITheme;
-  const styles = createStyle(theme);
+  const theme: ExtendedTheme = useTheme();
 
   const dispatch = useDispatch();
 
@@ -71,17 +71,14 @@ const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {
-      paddingVertical: spacing.padding.tiny,
-    },
-    item: {
-      height: 44,
-      paddingHorizontal: spacing.padding.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    paddingVertical: spacing.padding.tiny,
+  },
+  item: {
+    height: 44,
+    paddingHorizontal: spacing.padding.large,
+  },
+});
 
 export default NotificationOptionBottomSheet;

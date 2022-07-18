@@ -2,13 +2,12 @@ import {StyleSheet, View} from 'react-native';
 import React, {useCallback, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
-import {ITheme} from '~/theme/interfaces';
 import SearchBaseView from '~/beinComponents/SearchBaseView';
 import actions from '~/screens/Groups/redux/actions';
 import {debounce} from 'lodash';
 import appConfig from '~/configs/appConfig';
 import Text from '~/beinComponents/Text';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import {ICommunityMembers} from '~/interfaces/ICommunity';
@@ -32,7 +31,7 @@ const SearchMemberView = ({
   onPressMenu,
 }: SearchMemberViewProps) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles();
   const {can_manage_member} = useKeySelector(groupsKeySelector.communityDetail);
@@ -84,7 +83,7 @@ const SearchMemberView = ({
       ) : (
         <View style={styles.text}>
           <Text.BodyS
-            color={theme.colors.textSecondary}
+            color={theme.colors.gray50}
             testID="search_member_view.type_search"
             useI18n>
             common:text_type_search_keyword

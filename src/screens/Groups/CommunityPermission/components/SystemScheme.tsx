@@ -1,9 +1,7 @@
 import React, {FC, useEffect} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {cloneDeep} from 'lodash';
-
-import {ITheme} from '~/theme/interfaces';
 
 import Text from '~/beinComponents/Text';
 import TextBadge from '~/beinComponents/Badge/TextBadge';
@@ -16,6 +14,7 @@ import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import groupsActions from '~/screens/Groups/redux/actions';
+import spacing from '~/theme/spacing';
 
 export interface SystemSchemeProps {
   style?: StyleProp<ViewStyle>;
@@ -24,7 +23,7 @@ export interface SystemSchemeProps {
 const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const {colors} = theme || {};
 
@@ -77,8 +76,8 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
         <Button.Primary
           onPress={onPressView}
           useI18n
-          colorHover={colors.borderCard}
-          textColor={colors.textPrimary}
+          colorHover={colors.gray5}
+          textColor={colors.neutral80}
           style={styles.buttonView}>
           communities:permission:btn_view_permission
         </Button.Primary>
@@ -86,29 +85,29 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
           <Button.Primary
             onPress={onPressApply}
             useI18n
-            colorHover={colors.borderCard}
-            textColor={colors.textPrimary}
+            colorHover={colors.gray20}
+            textColor={colors.neutral80}
             style={styles.buttonView}>
             communities:permission:btn_apply
           </Button.Primary>
         )}
       </View>
       <View style={styles.descScheme}>
-        <Text.Subtitle useI18n>
+        <Text.BodyS useI18n>
           communities:permission:text_desc_system_scheme
-        </Text.Subtitle>
+        </Text.BodyS>
       </View>
     </View>
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {
       padding: spacing.padding.large,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       marginTop: spacing.margin.base,
       borderRadius: spacing.borderRadius.small,
     },
@@ -124,7 +123,7 @@ const createStyle = (theme: ITheme) => {
       paddingVertical: spacing.padding.tiny,
       paddingHorizontal: spacing.padding.tiny,
       marginLeft: spacing.margin.small,
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray5,
     },
     activatedText: {
       marginLeft: spacing.margin.base,

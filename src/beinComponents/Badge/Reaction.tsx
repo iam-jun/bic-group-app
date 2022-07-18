@@ -1,3 +1,4 @@
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import NodeEmoji from 'node-emoji';
 import React, {useEffect, useState} from 'react';
 import {
@@ -7,11 +8,11 @@ import {
   TouchableOpacity,
   ViewStyle,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+
 import Text from '~/beinComponents/Text';
 import commonActions, {IAction} from '~/constants/commonActions';
 import {useKeySelector} from '~/hooks/selector';
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 interface ReactionProps {
   testId?: string;
@@ -39,7 +40,7 @@ const Reaction: React.FC<ReactionProps> = ({
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const [isSelected, setIsSelected] = useState<boolean>(selected);
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyles(theme, isSelected, loading);
 
@@ -77,38 +78,37 @@ const Reaction: React.FC<ReactionProps> = ({
       {loading ? (
         <ActivityIndicator
           testID="reaction.indicator"
-          color={colors.borderDisable}
+          color={colors.gray20}
           style={styles.indicator}
         />
       ) : (
-        <Text.BodySM
-          color={isSelected ? colors.primary7 : colors.textPrimary}
+        <Text.BodySMedium
+          color={isSelected ? colors.purple60 : colors.neutral80}
           style={styles.text}
           testID="reaction.children">
-          <Text.BodySM style={styles.emoji} testID={`reaction.${icon}`}>
+          <Text.BodySMedium style={styles.emoji} testID={`reaction.${icon}`}>
             {emoji}
-          </Text.BodySM>
+          </Text.BodySMedium>
           {` ${value}`}
-        </Text.BodySM>
+        </Text.BodySMedium>
       )}
     </TouchableOpacity>
   );
 };
 
 const createStyles = (
-  theme: ITheme,
+  theme: ExtendedTheme,
   isSelected: boolean,
   loading?: boolean,
 ) => {
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {
       backgroundColor:
-        isSelected && !loading ? colors.primary2 : colors.placeholder,
+        isSelected && !loading ? colors.purple5 : colors.neutral5,
       borderWidth: 1,
-      borderColor:
-        isSelected && !loading ? colors.primary6 : colors.placeholder,
+      borderColor: isSelected && !loading ? colors.purple50 : colors.neutral5,
       borderRadius: 6,
       paddingHorizontal: 6,
       justifyContent: 'center',

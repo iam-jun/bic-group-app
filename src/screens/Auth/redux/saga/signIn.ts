@@ -4,9 +4,9 @@ import {put} from 'redux-saga/effects';
 import {authErrors} from '~/constants/authConstants';
 import * as IAuth from '~/interfaces/IAuth';
 import notificationsActions from '~/screens/Notification/redux/actions';
-import {initPushTokenMessage} from '~/services/helper';
 import modalActions from '~/store/modal/actions';
 import actions from '../actions';
+import {initPushTokenMessage} from '~/services/firebase';
 
 export default function* signIn({
   payload,

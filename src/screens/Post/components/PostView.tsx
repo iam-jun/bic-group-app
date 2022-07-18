@@ -1,8 +1,8 @@
 import {isEqual} from 'lodash';
 import React, {FC, memo} from 'react';
 import {Keyboard, StyleSheet, TouchableOpacity, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Image from '~/beinComponents/Image';
 import ReactionView from '~/beinComponents/ReactionView';
@@ -35,7 +35,7 @@ import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import modalActions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {formatLargeNumber} from '~/utils/formatData';
 import SeenCountsView from './SeenCountsView';
 import UsersSeenPostBottomSheet from './UsersSeenPostBottomSheet';
@@ -76,7 +76,7 @@ const _PostView: FC<PostViewProps> = ({
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   let actor: IAudienceUser | undefined,
@@ -334,12 +334,12 @@ const _PostView: FC<PostViewProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     rowCenter: {flexDirection: 'row', alignItems: 'center'},
     container: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     reactions: {
       paddingHorizontal: spacing.padding.base,
@@ -348,7 +348,7 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       padding: spacing.padding.large,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     imageDelete: {width: 35, height: 35, marginRight: spacing.margin.large},
   });

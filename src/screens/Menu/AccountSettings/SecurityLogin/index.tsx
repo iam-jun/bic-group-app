@@ -1,7 +1,6 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {useTheme} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 
 import {useBaseHook} from '~/hooks';
@@ -13,15 +12,13 @@ import Divider from '~/beinComponents/Divider';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import {securityLoginMenu} from '~/constants/settings';
-import {ITheme} from '~/theme/interfaces';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
+import spacing from '~/theme/spacing';
 
 const SecurityLogin = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const navigation = useNavigation();
-  const theme: ITheme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
 
   const onSecurityLoginPress = (item: ISetting) => {
     switch (item.type) {
@@ -57,16 +54,12 @@ const SecurityLogin = () => {
 
 export default SecurityLogin;
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    firstMenuGroup: {
-      marginTop: spacing.margin.base,
-    },
-    divider: {
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.small,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  firstMenuGroup: {
+    marginTop: spacing.margin.base,
+  },
+  divider: {
+    marginHorizontal: spacing.margin.large,
+    marginVertical: spacing.margin.small,
+  },
+});

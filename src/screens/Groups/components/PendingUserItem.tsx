@@ -1,18 +1,19 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Avatar from '~/beinComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import {IconType} from '~/resources/icons';
-import {ITheme} from '~/theme/interfaces';
+
 import {formatFullTime} from '~/beinComponents/TimeView';
 import {AppContext} from '~/contexts/AppContext';
 import {IJoiningMember} from '~/interfaces/IGroup';
 import {useBaseHook} from '~/hooks';
 import Divider from '~/beinComponents/Divider';
+import spacing from '~/theme/spacing';
 
 interface PendingUserItemProps {
   requestItem: IJoiningMember;
@@ -25,8 +26,7 @@ const PendingUserItem = ({
   onPressApprove,
   onPressDecline,
 }: PendingUserItemProps) => {
-  const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const {language} = useContext(AppContext);
 
@@ -53,8 +53,8 @@ const PendingUserItem = ({
     return (
       (!!title || !!TitleComponent) && (
         <View style={styles.itemComponent}>
-          <Icon icon={icon} tintColor={theme.colors.primary6} size={24} />
-          <Text.Body style={styles.text}>{title}</Text.Body>
+          <Icon icon={icon} tintColor={theme.colors.purple50} size={24} />
+          <Text.BodyM style={styles.text}>{title}</Text.BodyM>
           {TitleComponent}
         </View>
       )
@@ -67,13 +67,13 @@ const PendingUserItem = ({
         <Avatar.Large source={avatar} isRounded />
 
         <View style={styles.textHeader}>
-          <Text.ButtonBase>{fullName}</Text.ButtonBase>
-          <Text.Body color={theme.colors.textSecondary}>
+          <Text.ButtonM>{fullName}</Text.ButtonM>
+          <Text.BodyM color={theme.colors.gray50}>
             {`${t('groups:text_requested_at')} ${formatFullTime(
               updatedAt,
               language,
             )}`}
-          </Text.Body>
+          </Text.BodyM>
 
           <Divider style={{marginVertical: 8}} />
 
@@ -101,17 +101,15 @@ const PendingUserItem = ({
       {isCanceled ? (
         <View style={styles.hintMessage}>
           <Icon style={{marginRight: 4}} icon={'CircleInfo'} size={18} />
-          <Text.Subtitle useI18n>
-            groups:text_request_been_canceled
-          </Text.Subtitle>
+          <Text.BodyS useI18n>groups:text_request_been_canceled</Text.BodyS>
         </View>
       ) : (
         <View style={styles.buttons}>
           <Button.Secondary
             testID="pending_user_item.btn_decline"
             style={styles.buttonDecline}
-            color={theme.colors.bgHover}
-            textColor={theme.colors.textPrimary}
+            color={theme.colors.gray10}
+            textColor={theme.colors.neutral80}
             onPress={onPressDecline}
             useI18n>
             common:btn_decline
@@ -120,7 +118,7 @@ const PendingUserItem = ({
             highEmphasis
             testID="pending_user_item.btn_approve"
             style={styles.buttonApprove}
-            color={theme.colors.primary6}
+            color={theme.colors.purple50}
             onPress={onPressApprove}
             useI18n>
             common:btn_approve
@@ -131,47 +129,43 @@ const PendingUserItem = ({
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    container: {
-      marginVertical: spacing.margin.tiny,
-    },
-    header: {
-      flexDirection: 'row',
-    },
-    textHeader: {
-      marginLeft: spacing.margin.base,
-      justifyContent: 'center',
-      flex: 1,
-    },
-    itemComponent: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginBottom: spacing.margin.small,
-      marginRight: spacing.margin.base,
-    },
-    text: {
-      marginLeft: spacing.margin.large,
-    },
-    buttons: {
-      flexDirection: 'row',
-      marginVertical: spacing.margin.small,
-    },
-    buttonDecline: {
-      flex: 1,
-      marginRight: spacing.margin.small,
-    },
-    buttonApprove: {
-      flex: 1,
-    },
-    hintMessage: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginVertical: spacing.margin.tiny,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    marginVertical: spacing.margin.tiny,
+  },
+  header: {
+    flexDirection: 'row',
+  },
+  textHeader: {
+    marginLeft: spacing.margin.base,
+    justifyContent: 'center',
+    flex: 1,
+  },
+  itemComponent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: spacing.margin.small,
+    marginRight: spacing.margin.base,
+  },
+  text: {
+    marginLeft: spacing.margin.large,
+  },
+  buttons: {
+    flexDirection: 'row',
+    marginVertical: spacing.margin.small,
+  },
+  buttonDecline: {
+    flex: 1,
+    marginRight: spacing.margin.small,
+  },
+  buttonApprove: {
+    flex: 1,
+  },
+  hintMessage: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginVertical: spacing.margin.tiny,
+  },
+});
 
 export default PendingUserItem;

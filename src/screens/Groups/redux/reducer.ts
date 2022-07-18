@@ -8,6 +8,11 @@ import {getNewSchemeRolesOnUpdatePermission} from '~/screens/Groups/CreatePermis
 import {cloneDeep} from 'lodash';
 
 export const groupInitState = {
+  myPermissions: {
+    loading: false,
+    data: undefined,
+    timeGetMyPermissions: null,
+  },
   permissionScheme: {
     categories: {
       data: undefined,
@@ -131,7 +136,7 @@ export const groupInitState = {
   loadingCover: false,
   discoverGroups: {
     loading: false,
-    data: [],
+    ids: [],
     items: {},
     canLoadMore: true,
   },
@@ -220,6 +225,15 @@ function groupsReducer(state = groupInitState, action: any = {}) {
   } = state;
 
   switch (type) {
+    case groupsTypes.SET_MY_PERMISSIONS:
+      return {
+        ...state,
+        myPermissions: {
+          ...cloneDeep(state.myPermissions),
+          ...payload,
+        },
+      };
+
     //Group Structure Settings
     case groupsTypes.SET_GROUP_STRUCTURE:
       return {
@@ -292,7 +306,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
                 ...state.permissionScheme.creatingScheme,
                 ...payload,
               }
-            : {},
+            : groupInitState.permissionScheme.creatingScheme,
         },
       };
     case groupsTypes.SET_CREATING_SCHEME_DATA:
@@ -308,7 +322,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
                   cloneDeep(state.permissionScheme.creatingScheme.data),
                   payload,
                 )
-              : {},
+              : groupInitState.permissionScheme.creatingScheme.data,
           },
         },
       };
@@ -732,32 +746,13 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       };
     }
 
-    case groupsTypes.GET_DISCOVER_GROUPS:
-      return {
-        ...state,
-        discoverGroups: {
-          ...discoverGroups,
-          loading: discoverGroups.data.length === 0,
-        },
-      };
     case groupsTypes.SET_DISCOVER_GROUPS:
       return {
         ...state,
         discoverGroups: {
           ...discoverGroups,
-          loading: false,
-          data: [...discoverGroups.data, ...payload.ids],
-          items: {
-            ...discoverGroups.items,
-            ...payload.items,
-          },
-          canLoadMore: payload.ids.length === appConfig.recordsPerPage,
+          ...payload,
         },
-      };
-    case groupsTypes.RESET_DISCOVER_GROUPS:
-      return {
-        ...state,
-        discoverGroups: groupInitState.discoverGroups,
       };
     case groupsTypes.EDIT_DISCOVER_GROUP_ITEM:
       return {

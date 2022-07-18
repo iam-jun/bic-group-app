@@ -6,9 +6,15 @@ import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import groupsActions from '../../redux/actions';
 
-const CommunityMemberRequest = ({requestId}: {requestId: number}) => {
+const CommunityMemberRequest = ({
+  requestId,
+  organizationId: communityId,
+}: {
+  requestId: number;
+  organizationId: number;
+}) => {
   const dispatch = useDispatch();
-  const {id: communityId} = useKeySelector(groupsKeySelector.communityDetail);
+
   const communityMemberRequests = useKeySelector(
     groupsKeySelector.communityMemberRequests,
   );

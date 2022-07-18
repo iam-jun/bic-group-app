@@ -29,9 +29,7 @@ describe('EditName conponent', () => {
     );
     const inputComponent = rendered.getByTestId('edit_name.text_input');
     expect(inputComponent).toBeDefined();
-    expect(inputComponent.props.outlineColor).toBe(
-      colors.light.colors.borderCard,
-    );
+    expect(inputComponent.props.outlineColor).toBe(colors.light.colors.gray40);
   });
 
   it('renders correctly activeOutlineColor when focus to text input', () => {
@@ -44,7 +42,7 @@ describe('EditName conponent', () => {
     expect(inputComponent).toBeDefined();
     fireEvent.press(inputComponent);
     expect(inputComponent.props.activeOutlineColor).toBe(
-      colors.light.colors.primary6,
+      colors.light.colors.purple50,
     );
   });
 

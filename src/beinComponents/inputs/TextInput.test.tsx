@@ -32,9 +32,7 @@ describe('TextInput component', () => {
     const component = wrapper.getByTestId('text_input.input');
 
     expect(component.props.disabled).toBeTruthy();
-    expect(component.props.theme.colors.background).toBe(
-      colors.light.colors.bgDisable,
-    );
+    expect(component.props.theme.colors.white).toBe(colors.light.colors.gray20);
   });
 
   it(`onChangeText should be called`, async () => {
@@ -60,7 +58,7 @@ describe('TextInput component', () => {
     const component = wrapper.getByTestId('text_input.text_helper');
     const flattenedStyle = StyleSheet.flatten(component.props.style);
     expect(component).not.toBeNull();
-    expect(flattenedStyle.color).toBe(colors.light.colors.textSecondary);
+    expect(flattenedStyle.color).toBe(colors.light.colors.gray50);
   });
 
   it(`should show "TextInput" with text helper in error`, async () => {
@@ -72,11 +70,13 @@ describe('TextInput component', () => {
     const wrapper = render(<TextInput {...props} />);
     const component = wrapper.getByTestId('text_input.input');
 
-    expect(component.props.theme.colors.text).toBe(colors.light.colors.error);
+    expect(component.props.theme.colors.neutral80).toBe(
+      colors.light.colors.red60,
+    );
     const textHelper = wrapper.getByTestId('text_input.text_helper');
     const flattenedStyle = StyleSheet.flatten(textHelper.props.style);
     expect(textHelper).not.toBeNull();
-    expect(flattenedStyle.color).toBe(colors.light.colors.error);
+    expect(flattenedStyle.color).toBe(colors.light.colors.red60);
   });
 
   it(`should show "TextInput" with text helper action`, async () => {

@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import isEmpty from 'lodash/isEmpty';
 
@@ -12,10 +12,11 @@ import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
 import {IObject} from '~/interfaces/common';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
-import {ITheme} from '~/theme/interfaces';
+
 import TextInputController from '~/beinComponents/inputs/TextInputController';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 import {getEnv} from '~/utils/env';
+import spacing from '~/theme/spacing';
 
 interface Props {
   useFormData: IObject<any>;
@@ -23,7 +24,7 @@ interface Props {
 
 const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
   const dispatch = useDispatch();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
 
@@ -125,9 +126,7 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
   return (
     <View style={styles.container}>
       <View style={styles.inputSectionContainer}>
-        <Text.BodyM>
-          {t('auth:text_forgot_password_input_code_title')}
-        </Text.BodyM>
+        <Text.H6>{t('auth:text_forgot_password_input_code_title')}</Text.H6>
         <Text.BodyS style={styles.desc}>
           {t('auth:text_forgot_password_input_code_desc')?.replace?.(
             '(email)',
@@ -151,18 +150,18 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
         />
         <Text.BodyS>
           {t('auth:text_request_new_code')}{' '}
-          <Text.BodySM
+          <Text.BodySMedium
             onPress={onRequestForgotPassword}
             suppressHighlighting
             style={styles.highlightText}>
             {t('auth:btn_resend_code')}
-          </Text.BodySM>
+          </Text.BodySMedium>
         </Text.BodyS>
       </View>
       <View style={styles.inputSectionContainer}>
-        <Text.BodyM style={styles.newPasswordTitle}>
+        <Text.H6 style={styles.newPasswordTitle}>
           {t('auth:text_forgot_password_input_pw_title')}
-        </Text.BodyM>
+        </Text.H6>
         <PasswordInputController
           useFormData={useFormData}
           name={'newPassword'}
@@ -228,8 +227,8 @@ const ForgotInputCodePw: React.FC<Props> = ({useFormData}) => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -246,7 +245,7 @@ const themeStyles = (theme: ITheme) => {
       marginBottom: spacing.margin.small,
     },
     highlightText: {
-      color: colors.textTertiary,
+      color: colors.gray70,
     },
   });
 };

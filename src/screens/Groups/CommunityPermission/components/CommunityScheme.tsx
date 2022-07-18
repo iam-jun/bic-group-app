@@ -1,8 +1,6 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
@@ -17,6 +15,7 @@ import modalActions from '~/store/modal/actions';
 import {useDispatch} from 'react-redux';
 import {useBaseHook} from '~/hooks';
 import groupsActions from '~/screens/Groups/redux/actions';
+import spacing from '~/theme/spacing';
 
 export interface CommunitySchemeProps {
   style?: StyleProp<ViewStyle>;
@@ -28,7 +27,7 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
   const {t} = useBaseHook();
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const {colors} = theme || {};
 
@@ -78,7 +77,7 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
             {deleting ? (
               <LoadingIndicator size={16} />
             ) : (
-              <Icon size={16} tintColor={colors.badgeError} icon={'TrashCan'} />
+              <Icon size={16} tintColor={colors.red40} icon={'TrashCan'} />
             )}
           </Button>
         </View>
@@ -106,25 +105,25 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
         <View style={styles.buttonContainer}>{renderButtons()}</View>
       </View>
       <View style={styles.descScheme}>
-        <Text.Subtitle useI18n>
+        <Text.BodyS useI18n>
           communities:permission:text_desc_community_scheme
-        </Text.Subtitle>
+        </Text.BodyS>
       </View>
       {!!name && (
-        <Text.HeadingSB style={styles.textName}>{name}</Text.HeadingSB>
+        <Text.BodySMedium style={styles.textName}>{name}</Text.BodySMedium>
       )}
-      {!!description && <Text.Heading>{description}</Text.Heading>}
+      {!!description && <Text.BodyS>{description}</Text.BodyS>}
     </View>
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
     container: {
       padding: spacing.padding.large,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       marginTop: spacing.margin.base,
       borderRadius: spacing.borderRadius.small,
     },
@@ -146,12 +145,12 @@ const createStyle = (theme: ITheme) => {
       marginBottom: spacing.margin.tiny,
     },
     buttonEdit: {
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray5,
       padding: spacing.padding.small,
       borderRadius: spacing.borderRadius.small,
     },
     buttonDelete: {
-      backgroundColor: colors.bgError,
+      backgroundColor: colors.red1,
       padding: spacing.padding.small,
       borderRadius: spacing.borderRadius.small,
       marginLeft: spacing.margin.small,

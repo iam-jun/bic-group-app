@@ -9,10 +9,13 @@ import {
   FlatList,
 } from 'react-native';
 import {debounce, throttle} from 'lodash';
-import {useTheme} from 'react-native-paper';
+import {
+  ExtendedTheme,
+  useFocusEffect,
+  useTheme,
+} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
-import {scaleSize} from '~/theme/dimension';
+import dimension, {scaleSize} from '~/theme/dimension';
 
 import Text from '~/beinComponents/Text';
 import PostView from '~/screens/Post/components/PostView';
@@ -24,12 +27,12 @@ import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import FloatingCreatePost from '~/beinFragments/FloatingCreatePost';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useFocusEffect} from '@react-navigation/native';
 import NoticePanel from '~/screens/Home/Newsfeed/components/NoticePanel';
 import {FlashList} from '@shopify/flash-list';
 import Animated, {useSharedValue} from 'react-native-reanimated';
 import {FlashListProps} from '@shopify/flash-list/src/FlashListProps';
 import {IPostActivity} from '~/interfaces/IPost';
+import spacing from '~/theme/spacing';
 export interface NewsfeedListProps {
   data?: any;
   refreshing?: boolean;
@@ -62,8 +65,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
 
   const prevOffsetYShared = useSharedValue(0);
 
-  const theme = useTheme() as ITheme;
-  const {spacing, dimension} = theme;
+  const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
 
@@ -177,6 +179,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     return (
       <PostView
         postId={item.id}
+        style={styles.itemStyle}
         testID="newsfeed_list.post.item"
         btnReactTestID="newsfeed_list.post.btn_react"
         btnCommentTestID="newsfeed_list.post.btn_comment"
@@ -232,7 +235,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
         {canLoadMore && !refreshing && (
           <ActivityIndicator
             testID={'newsfeed_list.activity_indicator'}
-            color={theme.colors.bgFocus}
+            color={theme.colors.gray20}
           />
         )}
         {!refreshing && !canLoadMore && (
@@ -243,12 +246,12 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
               source={images.img_empty_cant_load_more}
             />
             <Text.H6 useI18n>post:newsfeed:title_empty_cant_load_more</Text.H6>
-            <Text.Subtitle
+            <Text.BodyS
               useI18n
-              color={theme.colors.textSecondary}
+              color={theme.colors.gray50}
               style={{marginBottom: spacing.margin.large}}>
               post:newsfeed:text_empty_cant_load_more
-            </Text.Subtitle>
+            </Text.BodyS>
           </>
         )}
       </View>
@@ -315,16 +318,16 @@ const NewsfeedListEmpty = ({styles, HeaderComponent, theme}: any) => {
           source={images.img_empty_no_post}
         />
         <Text.H6 useI18n>post:newsfeed:title_empty_no_post</Text.H6>
-        <Text.Subtitle useI18n color={theme.colors.textSecondary}>
+        <Text.BodyS useI18n color={theme.colors.gray50}>
           post:newsfeed:text_empty_no_post
-        </Text.Subtitle>
+        </Text.BodyS>
       </View>
     </View>
   );
 };
 
-const createStyle = (theme: ITheme, insets: any) => {
-  const {colors, spacing, dimension} = theme;
+const createStyle = (theme: ExtendedTheme, insets: any) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -346,7 +349,7 @@ const createStyle = (theme: ITheme, insets: any) => {
       bottom: 0,
       left: 0,
       right: 0,
-      backgroundColor: colors.bgSecondary,
+      backgroundColor: colors.neutral1,
     },
     imgEmpty: {
       width: scaleSize(240),
@@ -361,6 +364,9 @@ const createStyle = (theme: ITheme, insets: any) => {
     },
     emptyContainer: {
       marginTop: insets.top + dimension.headerHeight,
+    },
+    itemStyle: {
+      marginBottom: spacing.margin.small,
     },
   });
 };

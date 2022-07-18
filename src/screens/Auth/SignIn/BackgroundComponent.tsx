@@ -1,9 +1,9 @@
 import React from 'react';
 import {Dimensions, ImageBackground, View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import images from '~/resources/images';
-import {ITheme} from '~/theme/interfaces';
+
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import BackgroundEntries1 from '../../../../assets/images/sign_in_bg_entries_1.svg';
 import BackgroundEntries2 from '../../../../assets/images/sign_in_bg_entries_2.svg';
@@ -12,7 +12,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 const screenWidth = Dimensions.get('window').width;
 
 const BackgroundComponent = ({children}: {children: React.ReactNode}) => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   return (
@@ -38,8 +38,7 @@ const BackgroundComponent = ({children}: {children: React.ReactNode}) => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
   const insets = useSafeAreaInsets();
   return StyleSheet.create({
     background: {

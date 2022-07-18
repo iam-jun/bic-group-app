@@ -1,19 +1,20 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+
 import {useBaseHook} from '~/hooks';
 import {useKeySelector} from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
+import spacing from '~/theme/spacing';
 
 const NoticePanel = () => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const {t} = useBaseHook();
   const dispatch = useDispatch();
@@ -40,10 +41,10 @@ const NoticePanel = () => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <Text.BodySM testID="notice_panel.title">{title}</Text.BodySM>
-        <Text.Subtitle useI18n style={styles.description}>
+        <Text.BodySMedium testID="notice_panel.title">{title}</Text.BodySMedium>
+        <Text.BodyS useI18n style={styles.description}>
           home:notice_post_video_uploading:description
-        </Text.Subtitle>
+        </Text.BodyS>
       </View>
       <ButtonWrapper
         testID="notice_panel.button_close"
@@ -52,7 +53,7 @@ const NoticePanel = () => {
         onPress={onPress}>
         <Icon
           size={16}
-          tintColor={theme.colors.iconTintLight}
+          tintColor={theme.colors.neutral80Light}
           icon={'iconClose'}
         />
       </ButtonWrapper>
@@ -60,12 +61,12 @@ const NoticePanel = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
 
   return StyleSheet.create({
     description: {
-      color: colors.textSecondary,
+      color: colors.gray50,
       marginTop: spacing.margin.tiny / 2,
     },
     closeButton: {
@@ -76,7 +77,7 @@ const createStyle = (theme: ITheme) => {
     },
     container: {
       width: '100%',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       flexDirection: 'row',
       paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.small,

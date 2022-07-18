@@ -1,21 +1,21 @@
 import {View, StyleSheet} from 'react-native';
 import React from 'react';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Image from '~/beinComponents/Image';
 import Icon from '~/beinComponents/Icon';
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
 import images from '~/resources/images';
-import {scaleCoverHeight} from '~/theme/dimension';
+import dimension, {scaleCoverHeight} from '~/theme/dimension';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import privacyTypes from '~/constants/privacyTypes';
 import i18next from 'i18next';
+import spacing from '~/theme/spacing';
 
 const InfoHeader = () => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {name, user_count, background_img_url, icon, privacy} = infoDetail;
@@ -41,26 +41,26 @@ const InfoHeader = () => {
           style={styles.avatar}
         />
         <View style={{flex: 1}}>
-          <Text.BodyM testID="info_header.name">{name}</Text.BodyM>
+          <Text.H6 testID="info_header.name">{name}</Text.H6>
           <View style={styles.info}>
             <Icon
               icon={iconPrivacy}
               size={16}
-              tintColor={theme.colors.iconTint}
+              tintColor={theme.colors.neutral80}
             />
             <Text.BodyS
-              color={theme.colors.textSecondary}
+              color={theme.colors.gray50}
               testID="info_header.privacy">
               {` ${i18next.t(privacyTitle)}`}
             </Text.BodyS>
-            <Text.BodyS color={theme.colors.textSecondary}> • </Text.BodyS>
+            <Text.BodyS color={theme.colors.gray50}> • </Text.BodyS>
             <Icon
               icon={'UserGroup'}
               size={16}
-              tintColor={theme.colors.iconTint}
+              tintColor={theme.colors.neutral80}
             />
             <Text.BodyS
-              color={theme.colors.textSecondary}
+              color={theme.colors.gray50}
               testID="info_header.member_count">
               {` ${user_count} ${i18next.t('groups:text_members', {
                 count: user_count,
@@ -82,8 +82,8 @@ const InfoHeader = () => {
 
 export default InfoHeader;
 
-const themeStyles = (theme: ITheme) => {
-  const {dimension, spacing, colors} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     cover: {
       width: dimension.deviceWidth,
@@ -94,7 +94,7 @@ const themeStyles = (theme: ITheme) => {
       marginRight: spacing.margin.base,
     },
     infoContainer: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.large,
       paddingVertical: spacing.padding.small,
       flexDirection: 'row',

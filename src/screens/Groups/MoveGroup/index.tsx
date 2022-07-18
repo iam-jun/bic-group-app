@@ -1,8 +1,6 @@
 import React, {FC, useEffect} from 'react';
 import {View, StyleSheet, ScrollView} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
 import {useBaseHook} from '~/hooks';
@@ -26,7 +24,7 @@ export interface MoveGroupProps {
 const MoveGroup: FC<MoveGroupProps> = ({route}: MoveGroupProps) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const initGroup = route?.params?.group;
@@ -116,12 +114,12 @@ const MoveGroup: FC<MoveGroupProps> = ({route}: MoveGroupProps) => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
   });
 };

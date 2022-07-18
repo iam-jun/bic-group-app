@@ -1,6 +1,6 @@
 import React, {FC, useContext, useState} from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import Button from '~/beinComponents/Button';
@@ -8,7 +8,6 @@ import Divider from '~/beinComponents/Divider';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
 import {formatDateTime} from '~/beinComponents/TimeView';
-import {ITheme} from '~/theme/interfaces';
 
 import {AppContext} from '~/contexts/AppContext';
 import {useBaseHook} from '~/hooks';
@@ -19,6 +18,7 @@ import NFSFilterCreatedBy from './NFSFilterCreatedBy';
 import NFSFilterDate from './NFSFilterDate';
 import homeActions from '../../redux/actions';
 import modalActions from '~/store/modal/actions';
+import spacing from '~/theme/spacing';
 
 export interface NFSFilterOptionMenuProps {
   filterCreatedBy?: any;
@@ -42,7 +42,7 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
 
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
   const userId = useUserIdAuth();
@@ -120,15 +120,15 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
   return (
     <TouchableOpacity activeOpacity={1} style={styles.container}>
       <View style={styles.header}>
-        <Text.ButtonSmall style={styles.textHeader}>
+        <Text.ButtonS style={styles.textHeader}>
           {t('home:newsfeed_search:label_all_filters')}
-        </Text.ButtonSmall>
+        </Text.ButtonS>
         <Button
           onPress={_onPressReset}
           style={{justifyContent: 'center', alignSelf: 'center'}}>
-          <Text.ButtonSmall style={styles.btnReset}>
+          <Text.ButtonS style={styles.btnReset}>
             {t('home:newsfeed_search:btn_reset').toUpperCase()}
-          </Text.ButtonSmall>
+          </Text.ButtonS>
         </Button>
       </View>
       <Divider style={styles.divider} />
@@ -138,12 +138,12 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
         style={styles.itemContainer}
         title={t('home:newsfeed_search:label_creator')}
         subTitle={textCreatedBy}
-        subTitleProps={{color: colors.primary6}}
+        subTitleProps={{color: colors.purple50}}
         RightComponent={
           createdBy && (
             <Button.Secondary
               onPress={() => setCreatedBy(undefined)}
-              color={colors.surface}
+              color={colors.neutral1}
               style={styles.buttonRight}>
               {t('home:newsfeed_search:btn_reset')}
             </Button.Secondary>
@@ -156,12 +156,12 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
         style={styles.itemContainer}
         title={t('home:newsfeed_search:label_creation_date')}
         subTitle={textDate}
-        subTitleProps={{color: colors.primary6}}
+        subTitleProps={{color: colors.purple50}}
         RightComponent={
           date && (
             <Button.Secondary
               onPress={() => setDate(undefined)}
-              color={colors.surface}
+              color={colors.neutral1}
               style={styles.buttonRight}>
               {t('home:newsfeed_search:btn_reset')}
             </Button.Secondary>
@@ -171,15 +171,15 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
       <Button.Primary
         onPress={_onPressApply}
         style={styles.buttonApply}
-        color={colors.primary6}>
+        color={colors.purple50}>
         {t('home:newsfeed_search:btn_show_results')}
       </Button.Primary>
     </TouchableOpacity>
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingBottom: spacing.padding.extraLarge,
@@ -189,7 +189,7 @@ const createStyle = (theme: ITheme) => {
     },
     textHeader: {
       flex: 1,
-      color: colors.textSecondary,
+      color: colors.gray50,
       marginTop: spacing.margin.tiny,
       marginBottom: spacing.margin.tiny,
       marginHorizontal: spacing.margin.extraLarge,
@@ -199,7 +199,7 @@ const createStyle = (theme: ITheme) => {
       alignItems: 'center',
     },
     btnReset: {
-      color: colors.primary6,
+      color: colors.purple50,
       marginRight: spacing.margin.extraLarge,
     },
     itemContainer: {

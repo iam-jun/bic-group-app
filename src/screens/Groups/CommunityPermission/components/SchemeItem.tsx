@@ -3,8 +3,8 @@ import React from 'react';
 import {useDispatch} from 'react-redux';
 
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
+
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import TextBadge from '~/beinComponents/Badge/TextBadge';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
@@ -12,13 +12,14 @@ import modalActions from '~/store/modal/actions';
 import {IApplyingGroups, IGroupScheme} from '~/interfaces/IGroup';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import spacing from '~/theme/spacing';
 
 interface SchemeItemProps {
   item: IGroupScheme;
 }
 
 const SchemeItem = ({item}: SchemeItemProps) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const {colors} = theme;
   const dispatch = useDispatch();
@@ -52,7 +53,7 @@ const SchemeItem = ({item}: SchemeItemProps) => {
           style={styles.buttonDelete}
           onPress={onPressDelete}
           testID="scheme_item.btn_delete">
-          <Icon size={16} tintColor={colors.badgeError} icon={'TrashCan'} />
+          <Icon size={16} tintColor={colors.red40} icon={'TrashCan'} />
         </Button>
       </View>
     );
@@ -61,7 +62,7 @@ const SchemeItem = ({item}: SchemeItemProps) => {
   const renderItem = (item: IApplyingGroups) => {
     return (
       <View key={item.id} style={styles.nameTag} testID="scheme_item.group_tag">
-        <Text.Subtitle>{item.name}</Text.Subtitle>
+        <Text.BodyS>{item.name}</Text.BodyS>
       </View>
     );
   };
@@ -70,12 +71,12 @@ const SchemeItem = ({item}: SchemeItemProps) => {
     <View>
       <View style={styles.titleContainer}>
         <View style={[styles.flex1, styles.row]}>
-          <Text.BodySM
+          <Text.BodySMedium
             numberOfLines={3}
             style={styles.flex1}
             testID="scheme_item.name">
             {name}
-          </Text.BodySM>
+          </Text.BodySMedium>
           {isActivated && (
             <TextBadge
               useI18n
@@ -87,7 +88,7 @@ const SchemeItem = ({item}: SchemeItemProps) => {
         {renderButtons()}
       </View>
       {!!description && (
-        <Text.Subtitle style={styles.textDesc}>{description}</Text.Subtitle>
+        <Text.BodyS style={styles.textDesc}>{description}</Text.BodyS>
       )}
       {applyingGroups?.length > 0 && (
         <View testID="scheme_item.group_list" style={styles.groupListView}>
@@ -98,8 +99,8 @@ const SchemeItem = ({item}: SchemeItemProps) => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     flex1: {flex: 1},
     titleContainer: {
@@ -112,12 +113,12 @@ const createStyle = (theme: ITheme) => {
       alignItems: 'flex-start',
     },
     buttonEdit: {
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray5,
       padding: spacing.padding.small,
       borderRadius: spacing.borderRadius.small,
     },
     buttonDelete: {
-      backgroundColor: colors.bgError,
+      backgroundColor: colors.red1,
       padding: spacing.padding.small,
       borderRadius: spacing.borderRadius.small,
       marginLeft: spacing.margin.small,
@@ -127,7 +128,7 @@ const createStyle = (theme: ITheme) => {
       marginRight: spacing.margin.small,
     },
     nameTag: {
-      backgroundColor: colors.bgHover,
+      backgroundColor: colors.gray5,
       borderRadius: 50,
       alignItems: 'center',
       paddingVertical: 2,
