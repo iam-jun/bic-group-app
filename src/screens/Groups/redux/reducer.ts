@@ -11,6 +11,7 @@ export const groupInitState = {
   myPermissions: {
     loading: false,
     data: undefined,
+    timeGetMyPermissions: null,
   },
   permissionScheme: {
     categories: {

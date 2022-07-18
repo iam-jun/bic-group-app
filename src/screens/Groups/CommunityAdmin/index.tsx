@@ -36,9 +36,9 @@ const CommunityAdmin = () => {
     'communities',
     communityId,
   );
-  const canManageJoiningRequests = hasPermissions([
+  const canManageJoiningRequests = hasPermissions(
     PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
-  ]);
+  );
   const canEditCommunityInfo = hasPermissions([
     PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
     PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,

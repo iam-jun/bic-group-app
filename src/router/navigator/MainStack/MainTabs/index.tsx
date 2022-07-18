@@ -26,7 +26,6 @@ const MainTabs = () => {
 
   useChatSocket();
   useNotificationSocket();
-  useMyPermissions();
 
   const dimensions = useWindowDimensions();
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
@@ -46,6 +45,7 @@ const MainTabs = () => {
       return;
     }
 
+    dispatch(groupsActions.getMyPermissions());
     dispatch(postActions.getDraftPosts({}));
     dispatch(giphyActions.getAPIKey());
     dispatch(groupsActions.getMyCommunities());
