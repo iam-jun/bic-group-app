@@ -117,7 +117,7 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
       return {
         ...state,
         ...newNotificationData,
-        unseenNumber: state.unseenNumber - 1,
+        unseenNumber: Math.max(state.unseenNumber - 1, 0),
       };
     }
     case notificationsTypes.UPDATE: {
