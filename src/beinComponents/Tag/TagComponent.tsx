@@ -30,7 +30,7 @@ const TagComponent: React.FC<TagProps> = ({
   variant = 'medium',
   avatar,
   label,
-  icon = 'Times',
+  icon = 'Xmark',
   selected = false,
   disabled = false,
   onActionPress,

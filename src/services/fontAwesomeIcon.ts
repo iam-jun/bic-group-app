@@ -95,6 +95,9 @@ import {faDesktop} from '@fortawesome/pro-regular-svg-icons/faDesktop';
 import {faCoins} from '@fortawesome/pro-regular-svg-icons/faCoins';
 import {faShieldHalved} from '@fortawesome/pro-regular-svg-icons/faShieldHalved';
 import {faFloppyDisk} from '@fortawesome/pro-regular-svg-icons/faFloppyDisk';
+import {faListUl} from '@fortawesome/pro-regular-svg-icons/faListUl';
+import {faFaceSmile} from '@fortawesome/pro-regular-svg-icons/faFaceSmile';
+import {faKeySkeleton} from '@fortawesome/pro-regular-svg-icons/faKeySkeleton';
 
 /**
  * We add single icon from package to reduce bundle size
@@ -210,6 +213,9 @@ export const initFontAwesomeIcon = () => {
     faCoins,
     faShieldHalved,
     faFloppyDisk,
+    faListUl,
+    faFaceSmile,
+    faKeySkeleton,
   );
 };
 
@@ -311,6 +317,9 @@ export const fontAwesomeIcons = {
   Coins: 'fa-regular fa-coins',
   ShieldHalved: 'fa-regular fa-shield-halved',
   FloppyDisk: 'fa-regular fa-floppy-disk',
+  ListUl: 'fa-regular fa-list-ul',
+  FaceSmile: 'fa-regular fa-face-smile',
+  KeySkeleton: 'fa-regular fa-key-skeleton',
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(

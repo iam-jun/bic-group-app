@@ -6,6 +6,8 @@ const notiStack = {
   generalInfo: 'general-info',
   communityMembers: 'community-members',
   groupMembers: 'group-members',
+  communityPendingMembers: 'community-pending-members',
+  groupPendingMembers: 'group-pending-members',
 };
 
 export default notiStack;
