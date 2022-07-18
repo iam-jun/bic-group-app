@@ -16,7 +16,7 @@ exports[`NormalToastMessage component renders correctly 1`] = `
     Object {
       "alignItems": "center",
       "alignSelf": "baseline",
-      "backgroundColor": "#B2BDCD",
+      "backgroundColor": undefined,
       "borderRadius": 6,
       "flexDirection": "row",
       "opacity": 1,
@@ -46,13 +46,11 @@ exports[`NormalToastMessage component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
+              "color": undefined,
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
             },
-            Object {
-              "color": "#FFFFFF",
-            },
+            Object {},
             undefined,
           ]
         }

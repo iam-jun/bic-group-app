@@ -11,7 +11,6 @@ import mockRNCNetInfo from '@react-native-community/netinfo/jest/netinfo-mock.js
 import 'react-native-gesture-handler/jestSetup';
 import {initReactI18next} from 'react-i18next';
 
-import colors from '~/theme/colors';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 import mockSafeAreaContext from '~/test/mockSafeAreaContext';

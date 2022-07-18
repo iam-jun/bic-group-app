@@ -20,8 +20,8 @@ exports[`Header Avatar component renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#EAEDF2",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "borderRadius": 4,
       "flexDirection": "row",
       "marginBottom": 24,
       "marginHorizontal": 16,
@@ -35,7 +35,7 @@ exports[`Header Avatar component renders correctly 1`] = `
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 48,
         "width": 48,
       }
@@ -138,9 +138,9 @@ exports[`Header Avatar component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 17,
           },
           Object {},
           undefined,
@@ -155,9 +155,9 @@ exports[`Header Avatar component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 12,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 13,
           },
           Object {},
           undefined,
@@ -191,8 +191,8 @@ exports[`Header Avatar component renders correctly with props Avatar Props 1`] =
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#EAEDF2",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "borderRadius": 4,
       "flexDirection": "row",
       "marginBottom": 24,
       "marginHorizontal": 16,
@@ -208,7 +208,7 @@ exports[`Header Avatar component renders correctly with props Avatar Props 1`] =
       Object {
         "backgroundColor": "#FF9800",
         "borderColor": "#FFB74D",
-        "borderRadius": 6,
+        "borderRadius": 4,
         "borderWidth": 2,
         "height": 48,
         "width": 48,
@@ -312,9 +312,9 @@ exports[`Header Avatar component renders correctly with props Avatar Props 1`] =
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 17,
           },
           Object {},
           undefined,
@@ -329,9 +329,9 @@ exports[`Header Avatar component renders correctly with props Avatar Props 1`] =
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 12,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 13,
           },
           Object {},
           undefined,
@@ -382,7 +382,7 @@ exports[`Header Avatar component renders correctly with props Container Style 1`
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 48,
         "width": 48,
       }
@@ -485,9 +485,9 @@ exports[`Header Avatar component renders correctly with props Container Style 1`
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 17,
           },
           Object {},
           undefined,
@@ -502,9 +502,9 @@ exports[`Header Avatar component renders correctly with props Container Style 1`
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 12,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 13,
           },
           Object {},
           undefined,
@@ -538,8 +538,8 @@ exports[`Header Avatar component renders correctly with props First Label Props 
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#EAEDF2",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "borderRadius": 4,
       "flexDirection": "row",
       "marginBottom": 24,
       "marginHorizontal": 16,
@@ -553,7 +553,7 @@ exports[`Header Avatar component renders correctly with props First Label Props 
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 48,
         "width": 48,
       }
@@ -656,9 +656,9 @@ exports[`Header Avatar component renders correctly with props First Label Props 
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 17,
           },
           Object {},
           Object {
@@ -676,9 +676,9 @@ exports[`Header Avatar component renders correctly with props First Label Props 
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 12,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 13,
           },
           Object {},
           undefined,
@@ -712,8 +712,8 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#EAEDF2",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "borderRadius": 4,
       "flexDirection": "row",
       "marginBottom": 24,
       "marginHorizontal": 16,
@@ -727,7 +727,7 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 48,
         "width": 48,
       }
@@ -830,9 +830,9 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 17,
           },
           Object {},
           undefined,
@@ -846,7 +846,7 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
           style={
             Object {
               "alignItems": "center",
-              "backgroundColor": "#00A64D",
+              "backgroundColor": undefined,
               "borderRadius": 10,
               "height": 20,
               "justifyContent": "center",
@@ -912,70 +912,27 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
               >
                 <View>
                   <View
-                    onLayout={[Function]}
                     style={
-                      Object {
-                        "backgroundColor": "transparent",
-                        "position": "relative",
-                      }
+                      Array [
+                        Object {
+                          "alignItems": "center",
+                          "justifyContent": "center",
+                        },
+                        Object {
+                          "height": 15.600000000000001,
+                          "width": 15.600000000000001,
+                        },
+                      ]
                     }
                   >
-                    <View
-                      collapsable={false}
+                    <Text
                       style={
                         Object {
-                          "bottom": 0,
-                          "left": 0,
-                          "opacity": 1,
-                          "position": "absolute",
-                          "right": 0,
-                          "top": 0,
+                          "fontSize": 11.700000000000001,
+                          "textAlignVertical": "bottom",
                         }
                       }
-                    >
-                      <View
-                        style={
-                          Object {
-                            "alignItems": "center",
-                            "backgroundColor": "#f9f9f9",
-                            "height": 12,
-                            "justifyContent": "center",
-                            "width": 12,
-                          }
-                        }
-                        testID="Image__placeholder"
-                      />
-                    </View>
-                    <View
-                      style={
-                        Array [
-                          Object {
-                            "overflow": "hidden",
-                          },
-                          Object {
-                            "height": 12,
-                            "width": 12,
-                          },
-                        ]
-                      }
-                    >
-                      <FastImageView
-                        onFastImageError={[Function]}
-                        onFastImageLoadEnd={[Function]}
-                        resizeMode="cover"
-                        size={12}
-                        source={null}
-                        style={
-                          Object {
-                            "bottom": 0,
-                            "left": 0,
-                            "position": "absolute",
-                            "right": 0,
-                            "top": 0,
-                          }
-                        }
-                      />
-                    </View>
+                    />
                   </View>
                 </View>
               </View>
@@ -988,9 +945,9 @@ exports[`Header Avatar component renders correctly with props Icon Check Circle 
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 12,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 13,
           },
           Object {},
           undefined,
@@ -1024,8 +981,8 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#EAEDF2",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "borderRadius": 4,
       "flexDirection": "row",
       "marginBottom": 24,
       "marginHorizontal": 16,
@@ -1039,7 +996,7 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 48,
         "width": 48,
       }
@@ -1142,9 +1099,9 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 17,
           },
           Object {},
           undefined,
@@ -1209,54 +1166,7 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
             >
               <View
                 testID="header_avatar.icon_first_label"
-              >
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={12}
-                  bbWidth={12}
-                  color={4281284933}
-                  data-name="Layer 1"
-                  focusable={false}
-                  height={12}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {},
-                      Object {
-                        "flex": 0,
-                        "height": 12,
-                        "width": 12,
-                      },
-                    ]
-                  }
-                  tintColor={4281284933}
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={12}
-                >
-                  <RNSVGGroup>
-                    <RNSVGPath
-                      d="M19 14h2a1 1 0 000-2h-2v-1a5.15 5.15 0 00-.21-1.36A5 5 0 0022 5a1 1 0 00-2 0 3 3 0 01-2.14 2.87A5 5 0 0016 6.4a2.58 2.58 0 000-.4 4 4 0 00-8 0 2.58 2.58 0 000 .4 5 5 0 00-1.9 1.47A3 3 0 014 5a1 1 0 00-2 0 5 5 0 003.21 4.64A5.15 5.15 0 005 11v1H3a1 1 0 000 2h2v1a7 7 0 00.14 1.38A5 5 0 002 21a1 1 0 002 0 3 3 0 011.81-2.74 7 7 0 0012.38 0A3 3 0 0120 21a1 1 0 002 0 5 5 0 00-3.14-4.62A7 7 0 0019 15zm-8 5.9A5 5 0 017 15v-4a3 3 0 013-3h1zM10 6a2 2 0 014 0zm7 9a5 5 0 01-4 4.9V8h1a3 3 0 013 3z"
-                      fill={
-                        Array [
-                          2,
-                        ]
-                      }
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+              />
             </View>
           </View>
         </View>
@@ -1266,9 +1176,9 @@ exports[`Header Avatar component renders correctly with props Icon First Label 1
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 12,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 13,
           },
           Object {},
           undefined,
@@ -1302,8 +1212,8 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#EAEDF2",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "borderRadius": 4,
       "flexDirection": "row",
       "marginBottom": 24,
       "marginHorizontal": 16,
@@ -1317,7 +1227,7 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 48,
         "width": 48,
       }
@@ -1420,9 +1330,9 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 17,
           },
           Object {},
           undefined,
@@ -1487,54 +1397,7 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
             >
               <View
                 testID="header_avatar.icon_first_label"
-              >
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={12}
-                  bbWidth={12}
-                  color={4294940672}
-                  data-name="Layer 1"
-                  focusable={false}
-                  height={12}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {},
-                      Object {
-                        "flex": 0,
-                        "height": 12,
-                        "width": 12,
-                      },
-                    ]
-                  }
-                  tintColor={4294940672}
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={12}
-                >
-                  <RNSVGGroup>
-                    <RNSVGPath
-                      d="M19 14h2a1 1 0 000-2h-2v-1a5.15 5.15 0 00-.21-1.36A5 5 0 0022 5a1 1 0 00-2 0 3 3 0 01-2.14 2.87A5 5 0 0016 6.4a2.58 2.58 0 000-.4 4 4 0 00-8 0 2.58 2.58 0 000 .4 5 5 0 00-1.9 1.47A3 3 0 014 5a1 1 0 00-2 0 5 5 0 003.21 4.64A5.15 5.15 0 005 11v1H3a1 1 0 000 2h2v1a7 7 0 00.14 1.38A5 5 0 002 21a1 1 0 002 0 3 3 0 011.81-2.74 7 7 0 0012.38 0A3 3 0 0120 21a1 1 0 002 0 5 5 0 00-3.14-4.62A7 7 0 0019 15zm-8 5.9A5 5 0 017 15v-4a3 3 0 013-3h1zM10 6a2 2 0 014 0zm7 9a5 5 0 01-4 4.9V8h1a3 3 0 013 3z"
-                      fill={
-                        Array [
-                          2,
-                        ]
-                      }
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+              />
             </View>
           </View>
         </View>
@@ -1544,9 +1407,9 @@ exports[`Header Avatar component renders correctly with props Icon First Label P
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 12,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 13,
           },
           Object {},
           undefined,
@@ -1580,8 +1443,8 @@ exports[`Header Avatar component renders correctly with props Second Label Props
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#EAEDF2",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "borderRadius": 4,
       "flexDirection": "row",
       "marginBottom": 24,
       "marginHorizontal": 16,
@@ -1595,7 +1458,7 @@ exports[`Header Avatar component renders correctly with props Second Label Props
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 48,
         "width": 48,
       }
@@ -1698,9 +1561,9 @@ exports[`Header Avatar component renders correctly with props Second Label Props
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 17,
           },
           Object {},
           undefined,
@@ -1715,9 +1578,9 @@ exports[`Header Avatar component renders correctly with props Second Label Props
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 12,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 13,
           },
           Object {},
           Object {

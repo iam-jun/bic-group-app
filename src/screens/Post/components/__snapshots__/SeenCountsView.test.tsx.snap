@@ -33,13 +33,11 @@ exports[`SeenCountsView renders correctly seen counts view 1`] = `
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 14,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 13,
           },
-          Object {
-            "color": "#627286",
-          },
+          Object {},
           undefined,
         ]
       }

@@ -5,13 +5,11 @@ exports[`TimeView component renders correctly 1`] = `
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 14,
+        "color": undefined,
+        "fontFamily": "BeVietnamPro-Light",
+        "fontSize": 13,
       },
-      Object {
-        "color": "#627286",
-      },
+      Object {},
       undefined,
     ]
   }
@@ -26,13 +24,11 @@ exports[`TimeView component renders correctly with props style 1`] = `
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 14,
+        "color": undefined,
+        "fontFamily": "BeVietnamPro-Light",
+        "fontSize": 13,
       },
-      Object {
-        "color": "#627286",
-      },
+      Object {},
       Object {
         "color": "#FF9800",
       },
@@ -50,13 +46,11 @@ exports[`TimeView component renders correctly with props textProps 1`] = `
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 14,
+        "color": undefined,
+        "fontFamily": "BeVietnamPro-Light",
+        "fontSize": 13,
       },
-      Object {
-        "color": "#627286",
-      },
+      Object {},
       undefined,
     ]
   }
@@ -71,13 +65,11 @@ exports[`TimeView component renders correctly with time empty 1`] = `
   style={
     Array [
       Object {
-        "color": "#2F3945",
-        "fontFamily": "OpenSans-Regular",
-        "fontSize": 14,
+        "color": undefined,
+        "fontFamily": "BeVietnamPro-Light",
+        "fontSize": 13,
       },
-      Object {
-        "color": "#627286",
-      },
+      Object {},
       undefined,
     ]
   }

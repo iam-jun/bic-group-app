@@ -20,7 +20,7 @@ exports[`MentionBarItem component renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#F9FAFB",
+      "backgroundColor": undefined,
       "borderRadius": 16,
       "flexDirection": "row",
       "marginHorizontal": 8,
@@ -33,7 +33,7 @@ exports[`MentionBarItem component renders correctly 1`] = `
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 24,
         "width": 24,
       }
@@ -124,9 +124,9 @@ exports[`MentionBarItem component renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": "#2F3945",
-          "fontFamily": "OpenSans-Regular",
-          "fontSize": 14,
+          "color": undefined,
+          "fontFamily": "BeVietnamPro-Light",
+          "fontSize": 13,
         },
         Object {},
         Object {

@@ -34,7 +34,7 @@ exports[`GroupInfoView component renders correctly 1`] = `
           "paddingHorizontal": 12,
         }
       }
-      testID="group_info_view.name"
+      testID="info_view.name"
     >
       <View
         style={
@@ -48,17 +48,15 @@ exports[`GroupInfoView component renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 15,
               },
               Object {},
               undefined,
             ]
           }
-        >
-          Group Name
-        </Text>
+        />
       </View>
     </View>
   </View>
@@ -88,7 +86,7 @@ exports[`GroupInfoView component renders correctly 1`] = `
           "paddingHorizontal": 12,
         }
       }
-      testID="group_info_view.description"
+      testID="info_view.description"
     >
       <View
         style={
@@ -102,17 +100,15 @@ exports[`GroupInfoView component renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 15,
               },
               Object {},
               undefined,
             ]
           }
-        >
-          Group Description
-        </Text>
+        />
       </View>
     </View>
   </View>
@@ -142,7 +138,7 @@ exports[`GroupInfoView component renders correctly 1`] = `
           "paddingHorizontal": 12,
         }
       }
-      testID="group_info_view.privacy"
+      testID="info_view.privacy"
     >
       <View
         style={
@@ -156,9 +152,9 @@ exports[`GroupInfoView component renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 15,
               },
               Object {},
               undefined,

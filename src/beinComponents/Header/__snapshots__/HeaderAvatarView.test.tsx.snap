@@ -35,7 +35,7 @@ exports[`Header Avatar View component renders correctly 1`] = `
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 48,
         "marginRight": 12,
         "width": 48,
@@ -46,7 +46,7 @@ exports[`Header Avatar View component renders correctly 1`] = `
     <View
       style={
         Object {
-          "borderRadius": 6,
+          "borderRadius": 4,
           "height": 48,
           "width": 48,
         }
@@ -80,7 +80,7 @@ exports[`Header Avatar View component renders correctly 1`] = `
               Object {
                 "alignItems": "center",
                 "backgroundColor": "#f9f9f9",
-                "borderRadius": 6,
+                "borderRadius": 4,
                 "height": 48,
                 "justifyContent": "center",
                 "width": 48,
@@ -96,7 +96,7 @@ exports[`Header Avatar View component renders correctly 1`] = `
                 "overflow": "hidden",
               },
               Object {
-                "borderRadius": 6,
+                "borderRadius": 4,
                 "height": 48,
                 "width": 48,
               },
@@ -138,9 +138,9 @@ exports[`Header Avatar View component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 14,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-SemiBold",
+            "fontSize": 15,
           },
           Object {},
           undefined,
@@ -154,9 +154,9 @@ exports[`Header Avatar View component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-Regular",
-            "fontSize": 12,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-Light",
+            "fontSize": 13,
           },
           Object {},
           undefined,

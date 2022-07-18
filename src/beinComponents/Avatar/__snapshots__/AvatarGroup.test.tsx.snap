@@ -5,8 +5,8 @@ exports[`Avatar Group component renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#F8F5FF",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "borderRadius": 4,
       "height": 40,
       "justifyContent": "center",
       "padding": 1,
@@ -18,7 +18,7 @@ exports[`Avatar Group component renders correctly 1`] = `
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 40,
         "width": 40,
       }
@@ -28,8 +28,8 @@ exports[`Avatar Group component renders correctly 1`] = `
     <View
       style={
         Object {
-          "backgroundColor": "#B2BDCD",
-          "borderRadius": 6,
+          "backgroundColor": undefined,
+          "borderRadius": 4,
           "height": 40,
           "width": 40,
         }
@@ -63,7 +63,7 @@ exports[`Avatar Group component renders correctly 1`] = `
               Object {
                 "alignItems": "center",
                 "backgroundColor": "#f9f9f9",
-                "borderRadius": 6,
+                "borderRadius": 4,
                 "height": 40,
                 "justifyContent": "center",
                 "width": 40,
@@ -79,7 +79,7 @@ exports[`Avatar Group component renders correctly 1`] = `
                 "overflow": "hidden",
               },
               Object {
-                "borderRadius": 6,
+                "borderRadius": 4,
                 "height": 40,
                 "width": 40,
               },
@@ -118,8 +118,8 @@ exports[`Avatar Group component renders correctly avatar when call Avatar.Group 
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#F8F5FF",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "borderRadius": 4,
       "height": 40,
       "justifyContent": "center",
       "padding": 1,
@@ -131,7 +131,7 @@ exports[`Avatar Group component renders correctly avatar when call Avatar.Group 
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 40,
         "width": 40,
       }
@@ -141,7 +141,7 @@ exports[`Avatar Group component renders correctly avatar when call Avatar.Group 
     <View
       style={
         Object {
-          "borderRadius": 6,
+          "borderRadius": 4,
           "height": 40,
           "width": 40,
         }
@@ -175,7 +175,7 @@ exports[`Avatar Group component renders correctly avatar when call Avatar.Group 
               Object {
                 "alignItems": "center",
                 "backgroundColor": "#f9f9f9",
-                "borderRadius": 6,
+                "borderRadius": 4,
                 "height": 40,
                 "justifyContent": "center",
                 "width": 40,
@@ -191,7 +191,7 @@ exports[`Avatar Group component renders correctly avatar when call Avatar.Group 
                 "overflow": "hidden",
               },
               Object {
-                "borderRadius": 6,
+                "borderRadius": 4,
                 "height": 40,
                 "width": 40,
               },
@@ -230,8 +230,8 @@ exports[`Avatar Group component renders correctly group with 2 member 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#F8F5FF",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "borderRadius": 4,
       "height": 40,
       "justifyContent": "center",
       "padding": 1,
@@ -251,9 +251,9 @@ exports[`Avatar Group component renders correctly group with 2 member 1`] = `
     <View
       style={
         Object {
-          "backgroundColor": "#FFFFFF",
-          "borderColor": "#FFFFFF",
-          "borderRadius": 6,
+          "backgroundColor": undefined,
+          "borderColor": undefined,
+          "borderRadius": 4,
           "borderWidth": 2,
           "height": 22,
           "overflow": "hidden",
@@ -304,7 +304,7 @@ exports[`Avatar Group component renders correctly group with 2 member 1`] = `
                 "overflow": "hidden",
               },
               Object {
-                "backgroundColor": "#F8F5FF",
+                "backgroundColor": undefined,
                 "height": 18,
                 "width": 18,
               },
@@ -336,9 +336,9 @@ exports[`Avatar Group component renders correctly group with 2 member 1`] = `
     <View
       style={
         Object {
-          "backgroundColor": "#FFFFFF",
-          "borderColor": "#FFFFFF",
-          "borderRadius": 6,
+          "backgroundColor": undefined,
+          "borderColor": undefined,
+          "borderRadius": 4,
           "borderWidth": 2,
           "height": 22,
           "marginLeft": -6,
@@ -390,7 +390,7 @@ exports[`Avatar Group component renders correctly group with 2 member 1`] = `
                 "overflow": "hidden",
               },
               Object {
-                "backgroundColor": "#F8F5FF",
+                "backgroundColor": undefined,
                 "height": 18,
                 "width": 18,
               },
@@ -428,8 +428,8 @@ exports[`Avatar Group component renders correctly group with 3 member 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#F8F5FF",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "borderRadius": 4,
       "height": 40,
       "justifyContent": "center",
       "padding": 1,
@@ -451,9 +451,9 @@ exports[`Avatar Group component renders correctly group with 3 member 1`] = `
       <View
         style={
           Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 6,
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": 4,
             "borderWidth": 2,
             "height": 22,
             "overflow": "hidden",
@@ -504,7 +504,7 @@ exports[`Avatar Group component renders correctly group with 3 member 1`] = `
                   "overflow": "hidden",
                 },
                 Object {
-                  "backgroundColor": "#F8F5FF",
+                  "backgroundColor": undefined,
                   "height": 18,
                   "width": 18,
                 },
@@ -536,9 +536,9 @@ exports[`Avatar Group component renders correctly group with 3 member 1`] = `
       <View
         style={
           Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 6,
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": 4,
             "borderWidth": 2,
             "height": 22,
             "marginLeft": -6,
@@ -590,7 +590,7 @@ exports[`Avatar Group component renders correctly group with 3 member 1`] = `
                   "overflow": "hidden",
                 },
                 Object {
-                  "backgroundColor": "#F8F5FF",
+                  "backgroundColor": undefined,
                   "height": 18,
                   "width": 18,
                 },
@@ -632,9 +632,9 @@ exports[`Avatar Group component renders correctly group with 3 member 1`] = `
       <View
         style={
           Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 6,
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": 4,
             "borderWidth": 2,
             "height": 22,
             "overflow": "hidden",
@@ -685,7 +685,7 @@ exports[`Avatar Group component renders correctly group with 3 member 1`] = `
                   "overflow": "hidden",
                 },
                 Object {
-                  "backgroundColor": "#F8F5FF",
+                  "backgroundColor": undefined,
                   "height": 18,
                   "width": 18,
                 },
@@ -724,8 +724,8 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#F8F5FF",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "borderRadius": 4,
       "height": 40,
       "justifyContent": "center",
       "padding": 1,
@@ -747,9 +747,9 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
       <View
         style={
           Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 6,
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": 4,
             "borderWidth": 2,
             "height": 22,
             "overflow": "hidden",
@@ -800,7 +800,7 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
                   "overflow": "hidden",
                 },
                 Object {
-                  "backgroundColor": "#F8F5FF",
+                  "backgroundColor": undefined,
                   "height": 18,
                   "width": 18,
                 },
@@ -832,9 +832,9 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
       <View
         style={
           Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 6,
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": 4,
             "borderWidth": 2,
             "height": 22,
             "marginLeft": -6,
@@ -886,7 +886,7 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
                   "overflow": "hidden",
                 },
                 Object {
-                  "backgroundColor": "#F8F5FF",
+                  "backgroundColor": undefined,
                   "height": 18,
                   "width": 18,
                 },
@@ -928,9 +928,9 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
       <View
         style={
           Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 6,
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": 4,
             "borderWidth": 2,
             "height": 22,
             "overflow": "hidden",
@@ -981,7 +981,7 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
                   "overflow": "hidden",
                 },
                 Object {
-                  "backgroundColor": "#F8F5FF",
+                  "backgroundColor": undefined,
                   "height": 18,
                   "width": 18,
                 },
@@ -1013,9 +1013,9 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
       <View
         style={
           Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 6,
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": 4,
             "borderWidth": 2,
             "height": 22,
             "marginLeft": -6,
@@ -1067,7 +1067,7 @@ exports[`Avatar Group component renders correctly group with 4 member 1`] = `
                   "overflow": "hidden",
                 },
                 Object {
-                  "backgroundColor": "#F8F5FF",
+                  "backgroundColor": undefined,
                   "height": 18,
                   "width": 18,
                 },
@@ -1106,8 +1106,8 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#F8F5FF",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "borderRadius": 4,
       "height": 40,
       "justifyContent": "center",
       "padding": 1,
@@ -1129,9 +1129,9 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
       <View
         style={
           Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 6,
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": 4,
             "borderWidth": 2,
             "height": 22,
             "overflow": "hidden",
@@ -1182,7 +1182,7 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
                   "overflow": "hidden",
                 },
                 Object {
-                  "backgroundColor": "#F8F5FF",
+                  "backgroundColor": undefined,
                   "height": 18,
                   "width": 18,
                 },
@@ -1214,9 +1214,9 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
       <View
         style={
           Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 6,
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": 4,
             "borderWidth": 2,
             "height": 22,
             "marginLeft": -6,
@@ -1268,7 +1268,7 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
                   "overflow": "hidden",
                 },
                 Object {
-                  "backgroundColor": "#F8F5FF",
+                  "backgroundColor": undefined,
                   "height": 18,
                   "width": 18,
                 },
@@ -1310,9 +1310,9 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
       <View
         style={
           Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 6,
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": 4,
             "borderWidth": 2,
             "height": 22,
             "overflow": "hidden",
@@ -1363,7 +1363,7 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
                   "overflow": "hidden",
                 },
                 Object {
-                  "backgroundColor": "#F8F5FF",
+                  "backgroundColor": undefined,
                   "height": 18,
                   "width": 18,
                 },
@@ -1396,7 +1396,7 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
         style={
           Object {
             "alignItems": "center",
-            "backgroundColor": "#FFFFFF",
+            "backgroundColor": undefined,
             "borderRadius": 6,
             "height": 22,
             "justifyContent": "center",
@@ -1409,13 +1409,13 @@ exports[`Avatar Group component renders correctly group with 4+ member with tota
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
               },
               Object {},
               Object {
-                "fontFamily": "OpenSans-Regular",
+                "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 8,
                 "marginTop": 2,
               },
@@ -1436,8 +1436,8 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#F8F5FF",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "borderRadius": 4,
       "height": 40,
       "justifyContent": "center",
       "padding": 1,
@@ -1459,9 +1459,9 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
       <View
         style={
           Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 6,
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": 4,
             "borderWidth": 2,
             "height": 22,
             "overflow": "hidden",
@@ -1512,7 +1512,7 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
                   "overflow": "hidden",
                 },
                 Object {
-                  "backgroundColor": "#F8F5FF",
+                  "backgroundColor": undefined,
                   "height": 18,
                   "width": 18,
                 },
@@ -1544,9 +1544,9 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
       <View
         style={
           Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 6,
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": 4,
             "borderWidth": 2,
             "height": 22,
             "marginLeft": -6,
@@ -1598,7 +1598,7 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
                   "overflow": "hidden",
                 },
                 Object {
-                  "backgroundColor": "#F8F5FF",
+                  "backgroundColor": undefined,
                   "height": 18,
                   "width": 18,
                 },
@@ -1640,9 +1640,9 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
       <View
         style={
           Object {
-            "backgroundColor": "#FFFFFF",
-            "borderColor": "#FFFFFF",
-            "borderRadius": 6,
+            "backgroundColor": undefined,
+            "borderColor": undefined,
+            "borderRadius": 4,
             "borderWidth": 2,
             "height": 22,
             "overflow": "hidden",
@@ -1693,7 +1693,7 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
                   "overflow": "hidden",
                 },
                 Object {
-                  "backgroundColor": "#F8F5FF",
+                  "backgroundColor": undefined,
                   "height": 18,
                   "width": 18,
                 },
@@ -1726,7 +1726,7 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
         style={
           Object {
             "alignItems": "center",
-            "backgroundColor": "#FFFFFF",
+            "backgroundColor": undefined,
             "borderRadius": 6,
             "height": 22,
             "justifyContent": "center",
@@ -1738,9 +1738,9 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
         <View
           style={
             Object {
-              "backgroundColor": "#FFFFFF",
-              "borderColor": "#FFFFFF",
-              "borderRadius": 6,
+              "backgroundColor": undefined,
+              "borderColor": undefined,
+              "borderRadius": 4,
               "borderWidth": 2,
               "height": 22,
               "overflow": "hidden",
@@ -1791,7 +1791,7 @@ exports[`Avatar Group component renders correctly group with 4+ member without t
                     "overflow": "hidden",
                   },
                   Object {
-                    "backgroundColor": "#F8F5FF",
+                    "backgroundColor": undefined,
                     "height": 18,
                     "width": 18,
                   },
@@ -1831,8 +1831,8 @@ exports[`Avatar Group component renders correctly group with no member 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#F8F5FF",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "borderRadius": 4,
       "height": 40,
       "justifyContent": "center",
       "padding": 1,
@@ -1844,7 +1844,7 @@ exports[`Avatar Group component renders correctly group with no member 1`] = `
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 40,
         "width": 40,
       }
@@ -1854,8 +1854,8 @@ exports[`Avatar Group component renders correctly group with no member 1`] = `
     <View
       style={
         Object {
-          "backgroundColor": "#B2BDCD",
-          "borderRadius": 6,
+          "backgroundColor": undefined,
+          "borderRadius": 4,
           "height": 40,
           "width": 40,
         }
@@ -1889,7 +1889,7 @@ exports[`Avatar Group component renders correctly group with no member 1`] = `
               Object {
                 "alignItems": "center",
                 "backgroundColor": "#f9f9f9",
-                "borderRadius": 6,
+                "borderRadius": 4,
                 "height": 40,
                 "justifyContent": "center",
                 "width": 40,
@@ -1905,7 +1905,7 @@ exports[`Avatar Group component renders correctly group with no member 1`] = `
                 "overflow": "hidden",
               },
               Object {
-                "borderRadius": 6,
+                "borderRadius": 4,
                 "height": 40,
                 "width": 40,
               },

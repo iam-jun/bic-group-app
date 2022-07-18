@@ -6,7 +6,7 @@ exports[`Autocomplete component renders correctly 1`] = `
     Array [
       Object {
         "alignSelf": "center",
-        "backgroundColor": "#FFFFFF",
+        "backgroundColor": undefined,
         "borderRadius": 6,
         "bottom": 100,
         "justifyContent": "center",
@@ -74,13 +74,13 @@ exports[`Autocomplete component renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 15,
               },
               Object {},
               Object {
-                "color": "#B2BDCD",
+                "color": undefined,
                 "margin": 8,
                 "padding": 4,
               },

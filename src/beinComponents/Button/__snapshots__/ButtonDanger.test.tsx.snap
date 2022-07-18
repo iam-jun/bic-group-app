@@ -14,8 +14,8 @@ exports[`ButtonDanger conponent renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": "#FFF2F7",
-      "borderRadius": 6,
+      "backgroundColor": undefined,
+      "borderRadius": 4,
       "padding": 8,
     }
   }
@@ -35,13 +35,11 @@ exports[`ButtonDanger conponent renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": "#2F3945",
-            "fontFamily": "OpenSans-SemiBold",
-            "fontSize": 16,
+            "color": undefined,
+            "fontFamily": "BeVietnamPro-Medium",
+            "fontSize": 15,
           },
-          Object {
-            "color": "#DD2C3E",
-          },
+          Object {},
           Object {
             "textAlign": "center",
           },

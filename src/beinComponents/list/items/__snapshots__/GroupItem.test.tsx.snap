@@ -53,7 +53,7 @@ exports[`Group Item component renders correctly 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "#EAEDF2",
+          "backgroundColor": undefined,
           "flexDirection": "row",
           "height": "100%",
           "marginHorizontal": 12,
@@ -77,7 +77,7 @@ exports[`Group Item component renders correctly 1`] = `
           style={
             Object {
               "alignSelf": "center",
-              "backgroundColor": "#FFFFFF",
+              "backgroundColor": undefined,
               "marginLeft": -7,
               "paddingVertical": 4,
             }
@@ -138,53 +138,7 @@ exports[`Group Item component renders correctly 1`] = `
               >
                 <View
                   testID="group_item.button_wrapper.icon"
-                >
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={18}
-                    bbWidth={18}
-                    color={4281284933}
-                    focusable={false}
-                    height={18}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 18,
-                          "width": 18,
-                        },
-                      ]
-                    }
-                    tintColor={4281284933}
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={18}
-                  >
-                    <RNSVGGroup>
-                      <RNSVGPath
-                        d="M17 9.17a1 1 0 00-1.41 0L12 12.71 8.46 9.17a1 1 0 00-1.41 0 1 1 0 000 1.42l4.24 4.24a1 1 0 001.42 0L17 10.59a1 1 0 000-1.42z"
-                        fill={
-                          Array [
-                            2,
-                          ]
-                        }
-                        propList={
-                          Array [
-                            "fill",
-                          ]
-                        }
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
-                </View>
+                />
               </View>
             </View>
           </View>
@@ -204,7 +158,7 @@ exports[`Group Item component renders correctly 1`] = `
         <View
           style={
             Object {
-              "borderRadius": 6,
+              "borderRadius": 4,
               "height": 40,
               "width": 40,
             }
@@ -214,8 +168,8 @@ exports[`Group Item component renders correctly 1`] = `
           <View
             style={
               Object {
-                "backgroundColor": "#B2BDCD",
-                "borderRadius": 6,
+                "backgroundColor": undefined,
+                "borderRadius": 4,
                 "height": 40,
                 "width": 40,
               }
@@ -249,7 +203,7 @@ exports[`Group Item component renders correctly 1`] = `
                     Object {
                       "alignItems": "center",
                       "backgroundColor": "#f9f9f9",
-                      "borderRadius": 6,
+                      "borderRadius": 4,
                       "height": 40,
                       "justifyContent": "center",
                       "width": 40,
@@ -265,7 +219,7 @@ exports[`Group Item component renders correctly 1`] = `
                       "overflow": "hidden",
                     },
                     Object {
-                      "borderRadius": 6,
+                      "borderRadius": 4,
                       "height": 40,
                       "width": 40,
                     },
@@ -306,9 +260,9 @@ exports[`Group Item component renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 15,
               },
               Object {},
               Object {
@@ -381,53 +335,7 @@ exports[`Group Item component renders correctly 1`] = `
                   ]
                 }
               >
-                <View>
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={16}
-                    bbWidth={16}
-                    color={4284641926}
-                    focusable={false}
-                    height={16}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 16,
-                          "width": 16,
-                        },
-                      ]
-                    }
-                    tintColor={4284641926}
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={16}
-                  >
-                    <RNSVGGroup>
-                      <RNSVGPath
-                        d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
-                        fill={
-                          Array [
-                            2,
-                          ]
-                        }
-                        propList={
-                          Array [
-                            "fill",
-                          ]
-                        }
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
-                </View>
+                <View />
               </View>
             </View>
           </View>
@@ -435,13 +343,11 @@ exports[`Group Item component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-Regular",
-                  "fontSize": 14,
+                  "color": undefined,
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 13,
                 },
-                Object {
-                  "color": "#627286",
-                },
+                Object {},
                 Object {
                   "marginHorizontal": 4,
                 },
@@ -487,7 +393,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
     <View
       style={
         Object {
-          "backgroundColor": "#EAEDF2",
+          "backgroundColor": undefined,
           "height": "100%",
           "marginHorizontal": 12,
           "width": 1,
@@ -521,7 +427,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "#EAEDF2",
+          "backgroundColor": undefined,
           "flexDirection": "row",
           "height": "100%",
           "marginHorizontal": 12,
@@ -545,7 +451,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
           style={
             Object {
               "alignSelf": "center",
-              "backgroundColor": "#FFFFFF",
+              "backgroundColor": undefined,
               "marginLeft": -7,
               "paddingVertical": 4,
             }
@@ -606,53 +512,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
               >
                 <View
                   testID="group_item.button_wrapper.icon"
-                >
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={18}
-                    bbWidth={18}
-                    color={4281284933}
-                    focusable={false}
-                    height={18}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 18,
-                          "width": 18,
-                        },
-                      ]
-                    }
-                    tintColor={4281284933}
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={18}
-                  >
-                    <RNSVGGroup>
-                      <RNSVGPath
-                        d="M17 9.17a1 1 0 00-1.41 0L12 12.71 8.46 9.17a1 1 0 00-1.41 0 1 1 0 000 1.42l4.24 4.24a1 1 0 001.42 0L17 10.59a1 1 0 000-1.42z"
-                        fill={
-                          Array [
-                            2,
-                          ]
-                        }
-                        propList={
-                          Array [
-                            "fill",
-                          ]
-                        }
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
-                </View>
+                />
               </View>
             </View>
           </View>
@@ -672,7 +532,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
         <View
           style={
             Object {
-              "borderRadius": 6,
+              "borderRadius": 4,
               "height": 40,
               "width": 40,
             }
@@ -682,8 +542,8 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
           <View
             style={
               Object {
-                "backgroundColor": "#B2BDCD",
-                "borderRadius": 6,
+                "backgroundColor": undefined,
+                "borderRadius": 4,
                 "height": 40,
                 "width": 40,
               }
@@ -717,7 +577,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
                     Object {
                       "alignItems": "center",
                       "backgroundColor": "#f9f9f9",
-                      "borderRadius": 6,
+                      "borderRadius": 4,
                       "height": 40,
                       "justifyContent": "center",
                       "width": 40,
@@ -733,7 +593,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
                       "overflow": "hidden",
                     },
                     Object {
-                      "borderRadius": 6,
+                      "borderRadius": 4,
                       "height": 40,
                       "width": 40,
                     },
@@ -774,9 +634,9 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 15,
               },
               Object {},
               Object {
@@ -849,53 +709,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
                   ]
                 }
               >
-                <View>
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={16}
-                    bbWidth={16}
-                    color={4284641926}
-                    focusable={false}
-                    height={16}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 16,
-                          "width": 16,
-                        },
-                      ]
-                    }
-                    tintColor={4284641926}
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={16}
-                  >
-                    <RNSVGGroup>
-                      <RNSVGPath
-                        d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
-                        fill={
-                          Array [
-                            2,
-                          ]
-                        }
-                        propList={
-                          Array [
-                            "fill",
-                          ]
-                        }
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
-                </View>
+                <View />
               </View>
             </View>
           </View>
@@ -903,13 +717,11 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-Regular",
-                  "fontSize": 14,
+                  "color": undefined,
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 13,
                 },
-                Object {
-                  "color": "#627286",
-                },
+                Object {},
                 Object {
                   "marginHorizontal": 4,
                 },
@@ -965,7 +777,7 @@ exports[`Group Item component should render default prop 1`] = `
         <View
           style={
             Object {
-              "borderRadius": 6,
+              "borderRadius": 4,
               "height": 40,
               "width": 40,
             }
@@ -975,8 +787,8 @@ exports[`Group Item component should render default prop 1`] = `
           <View
             style={
               Object {
-                "backgroundColor": "#B2BDCD",
-                "borderRadius": 6,
+                "backgroundColor": undefined,
+                "borderRadius": 4,
                 "height": 40,
                 "width": 40,
               }
@@ -1010,7 +822,7 @@ exports[`Group Item component should render default prop 1`] = `
                     Object {
                       "alignItems": "center",
                       "backgroundColor": "#f9f9f9",
-                      "borderRadius": 6,
+                      "borderRadius": 4,
                       "height": 40,
                       "justifyContent": "center",
                       "width": 40,
@@ -1026,7 +838,7 @@ exports[`Group Item component should render default prop 1`] = `
                       "overflow": "hidden",
                     },
                     Object {
-                      "borderRadius": 6,
+                      "borderRadius": 4,
                       "height": 40,
                       "width": 40,
                     },
@@ -1067,9 +879,9 @@ exports[`Group Item component should render default prop 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 15,
               },
               Object {},
               Object {
@@ -1142,53 +954,7 @@ exports[`Group Item component should render default prop 1`] = `
                   ]
                 }
               >
-                <View>
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={16}
-                    bbWidth={16}
-                    color={4284641926}
-                    focusable={false}
-                    height={16}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 16,
-                          "width": 16,
-                        },
-                      ]
-                    }
-                    tintColor={4284641926}
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={16}
-                  >
-                    <RNSVGGroup>
-                      <RNSVGPath
-                        d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
-                        fill={
-                          Array [
-                            2,
-                          ]
-                        }
-                        propList={
-                          Array [
-                            "fill",
-                          ]
-                        }
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
-                </View>
+                <View />
               </View>
             </View>
           </View>
@@ -1196,13 +962,11 @@ exports[`Group Item component should render default prop 1`] = `
             style={
               Array [
                 Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-Regular",
-                  "fontSize": 14,
+                  "color": undefined,
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 13,
                 },
-                Object {
-                  "color": "#627286",
-                },
+                Object {},
                 Object {
                   "marginHorizontal": 4,
                 },
@@ -1271,7 +1035,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": "#EAEDF2",
+          "backgroundColor": undefined,
           "flexDirection": "row",
           "height": "100%",
           "marginHorizontal": 12,
@@ -1295,7 +1059,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
           style={
             Object {
               "alignSelf": "center",
-              "backgroundColor": "#FFFFFF",
+              "backgroundColor": undefined,
               "marginLeft": -7,
               "paddingVertical": 4,
             }
@@ -1356,53 +1120,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
               >
                 <View
                   testID="group_item.button_wrapper.icon"
-                >
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={18}
-                    bbWidth={18}
-                    color={4281284933}
-                    focusable={false}
-                    height={18}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 18,
-                          "width": 18,
-                        },
-                      ]
-                    }
-                    tintColor={4281284933}
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={18}
-                  >
-                    <RNSVGGroup>
-                      <RNSVGPath
-                        d="M17 9.17a1 1 0 00-1.41 0L12 12.71 8.46 9.17a1 1 0 00-1.41 0 1 1 0 000 1.42l4.24 4.24a1 1 0 001.42 0L17 10.59a1 1 0 000-1.42z"
-                        fill={
-                          Array [
-                            2,
-                          ]
-                        }
-                        propList={
-                          Array [
-                            "fill",
-                          ]
-                        }
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
-                </View>
+                />
               </View>
             </View>
           </View>
@@ -1422,7 +1140,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
         <View
           style={
             Object {
-              "borderRadius": 6,
+              "borderRadius": 4,
               "height": 40,
               "width": 40,
             }
@@ -1432,8 +1150,8 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
           <View
             style={
               Object {
-                "backgroundColor": "#B2BDCD",
-                "borderRadius": 6,
+                "backgroundColor": undefined,
+                "borderRadius": 4,
                 "height": 40,
                 "width": 40,
               }
@@ -1467,7 +1185,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
                     Object {
                       "alignItems": "center",
                       "backgroundColor": "#f9f9f9",
-                      "borderRadius": 6,
+                      "borderRadius": 4,
                       "height": 40,
                       "justifyContent": "center",
                       "width": 40,
@@ -1483,7 +1201,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
                       "overflow": "hidden",
                     },
                     Object {
-                      "borderRadius": 6,
+                      "borderRadius": 4,
                       "height": 40,
                       "width": 40,
                     },
@@ -1524,9 +1242,9 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 14,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-SemiBold",
+                "fontSize": 15,
               },
               Object {},
               Object {
@@ -1599,53 +1317,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
                   ]
                 }
               >
-                <View>
-                  <RNSVGSvgView
-                    align="xMidYMid"
-                    bbHeight={16}
-                    bbWidth={16}
-                    color={4284641926}
-                    focusable={false}
-                    height={16}
-                    meetOrSlice={0}
-                    minX={0}
-                    minY={0}
-                    style={
-                      Array [
-                        Object {
-                          "backgroundColor": "transparent",
-                          "borderWidth": 0,
-                        },
-                        Object {},
-                        Object {
-                          "flex": 0,
-                          "height": 16,
-                          "width": 16,
-                        },
-                      ]
-                    }
-                    tintColor={4284641926}
-                    vbHeight={24}
-                    vbWidth={24}
-                    width={16}
-                  >
-                    <RNSVGGroup>
-                      <RNSVGPath
-                        d="M12.3 12.22A4.92 4.92 0 0014 8.5a5 5 0 00-10 0 4.92 4.92 0 001.7 3.72A8 8 0 001 19.5a1 1 0 002 0 6 6 0 0112 0 1 1 0 002 0 8 8 0 00-4.7-7.28zM9 11.5a3 3 0 113-3 3 3 0 01-3 3zm9.74.32A5 5 0 0015 3.5a1 1 0 000 2 3 3 0 013 3 3 3 0 01-1.5 2.59 1 1 0 00-.5.84 1 1 0 00.45.86l.39.26.13.07a7 7 0 014 6.38 1 1 0 002 0 9 9 0 00-4.23-7.68z"
-                        fill={
-                          Array [
-                            2,
-                          ]
-                        }
-                        propList={
-                          Array [
-                            "fill",
-                          ]
-                        }
-                      />
-                    </RNSVGGroup>
-                  </RNSVGSvgView>
-                </View>
+                <View />
               </View>
             </View>
           </View>
@@ -1653,13 +1325,11 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
             style={
               Array [
                 Object {
-                  "color": "#2F3945",
-                  "fontFamily": "OpenSans-Regular",
-                  "fontSize": 14,
+                  "color": undefined,
+                  "fontFamily": "BeVietnamPro-Light",
+                  "fontSize": 13,
                 },
-                Object {
-                  "color": "#627286",
-                },
+                Object {},
                 Object {
                   "marginHorizontal": 4,
                 },

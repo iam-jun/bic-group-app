@@ -12,61 +12,46 @@ exports[`TextInput component renders correctly 1`] = `
   }
   testID="text_input"
 >
-  <RCTSinglelineTextInputView
-    accessible={true}
-    allowFontScaling={true}
-    blurOnSubmit={true}
-    dense={true}
-    focusable={true}
-    forwardedRef={null}
-    mode="outlined"
-    mostRecentEventCount={0}
-    onBlur={[Function]}
-    onChange={[Function]}
-    onChangeSync={null}
-    onChangeText={[Function]}
-    onClick={[Function]}
-    onFocus={[Function]}
-    onResponderGrant={[Function]}
-    onResponderMove={[Function]}
-    onResponderRelease={[Function]}
-    onResponderTerminate={[Function]}
-    onResponderTerminationRequest={[Function]}
-    onScroll={[Function]}
-    onSelectionChange={[Function]}
-    onSelectionChangeShouldSetResponder={[Function]}
-    onStartShouldSetResponder={[Function]}
-    outlineColor="#2F3945"
-    placeholderTextColor="#627286"
-    rejectResponderTermination={true}
-    selection={null}
-    selectionColor="#627286"
+  <View
     style={
       Array [
-        Object {},
+        Object {
+          "alignItems": "center",
+          "borderColor": undefined,
+          "borderRadius": 4,
+          "borderWidth": 1,
+          "flexDirection": "row",
+          "justifyContent": "center",
+          "minHeight": 44,
+          "paddingRight": 12,
+        },
+        Object {
+          "borderColor": undefined,
+        },
         undefined,
       ]
     }
-    testID="text_input.input"
-    text=""
-    theme={
-      Object {
-        "colors": Object {
-          "background": "#FFFFFF",
-          "placeholder": "#627286",
-          "primary": "#B2BDCD",
-          "text": "#2F3945",
-        },
-        "fonts": Object {
-          "regular": Object {
-            "fontFamily": "OpenSans-Regular",
+  >
+    <TextInput
+      onBlur={[Function]}
+      onChangeText={[Function]}
+      onFocus={[Function]}
+      style={
+        Array [
+          Object {
+            "flex": 1,
+            "fontFamily": "BeVietnamPro-Light",
+            "minHeight": 44,
+            "paddingHorizontal": 12,
           },
-        },
-        "roundness": 6,
+          Object {
+            "color": undefined,
+          },
+        ]
       }
-    }
-    underlineColorAndroid="transparent"
-    value=""
-  />
+      testID="text_input.input"
+      value=""
+    />
+  </View>
 </View>
 `;

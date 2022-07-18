@@ -18,7 +18,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
     <View
       style={
         Object {
-          "borderRadius": 6,
+          "borderRadius": 4,
           "height": 48,
           "width": 48,
         }
@@ -122,9 +122,9 @@ exports[`PendingUserItem component should render data correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-SemiBold",
-              "fontSize": 16,
+              "color": undefined,
+              "fontFamily": "BeVietnamPro-Medium",
+              "fontSize": 15,
             },
             Object {},
             undefined,
@@ -137,13 +137,11 @@ exports[`PendingUserItem component should render data correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
+              "color": undefined,
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
             },
-            Object {
-              "color": "#627286",
-            },
+            Object {},
             undefined,
           ]
         }
@@ -155,7 +153,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
           Array [
             Object {
               "alignSelf": "stretch",
-              "backgroundColor": "#EAEDF2",
+              "backgroundColor": undefined,
               "height": 1,
               "marginHorizontal": 0,
               "width": undefined,
@@ -230,53 +228,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
                 ]
               }
             >
-              <View>
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={24}
-                  bbWidth={24}
-                  color={4286071773}
-                  focusable={false}
-                  height={24}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {},
-                      Object {
-                        "flex": 0,
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                  tintColor={4286071773}
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={24}
-                >
-                  <RNSVGGroup>
-                    <RNSVGPath
-                      d="M18 4.48a8.45 8.45 0 00-12 12l5.27 5.28a1 1 0 001.42 0L18 16.43a8.45 8.45 0 000-11.95zM16.57 15L12 19.59 7.43 15a6.46 6.46 0 119.14 0zM9 7.41a4.32 4.32 0 000 6.1 4.31 4.31 0 007.36-3 4.24 4.24 0 00-1.26-3.05A4.3 4.3 0 009 7.41zm4.69 4.68a2.33 2.33 0 11.67-1.63 2.33 2.33 0 01-.72 1.63z"
-                      fill={
-                        Array [
-                          2,
-                        ]
-                      }
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+              <View />
             </View>
           </View>
         </View>
@@ -284,9 +236,9 @@ exports[`PendingUserItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
               },
               Object {},
               Object {
@@ -361,53 +313,7 @@ exports[`PendingUserItem component should render data correctly 1`] = `
                 ]
               }
             >
-              <View>
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={24}
-                  bbWidth={24}
-                  color={4286071773}
-                  focusable={false}
-                  height={24}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {},
-                      Object {
-                        "flex": 0,
-                        "height": 24,
-                        "width": 24,
-                      },
-                    ]
-                  }
-                  tintColor={4286071773}
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={24}
-                >
-                  <RNSVGGroup>
-                    <RNSVGPath
-                      d="M19 4H5a3 3 0 00-3 3v10a3 3 0 003 3h14a3 3 0 003-3V7a3 3 0 00-3-3zm-.41 2l-5.88 5.88a1 1 0 01-1.42 0L5.41 6zM20 17a1 1 0 01-1 1H5a1 1 0 01-1-1V7.41l5.88 5.88a3 3 0 004.24 0L20 7.41z"
-                      fill={
-                        Array [
-                          2,
-                        ]
-                      }
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+              <View />
             </View>
           </View>
         </View>
@@ -415,9 +321,9 @@ exports[`PendingUserItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 15,
               },
               Object {},
               Object {
@@ -452,8 +358,8 @@ exports[`PendingUserItem component should render data correctly 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": "#EAEDF2",
-          "borderRadius": 6,
+          "backgroundColor": undefined,
+          "borderRadius": 4,
           "flex": 1,
           "marginRight": 8,
           "padding": 8,
@@ -475,13 +381,11 @@ exports[`PendingUserItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
               },
-              Object {
-                "color": "#2F3945",
-              },
+              Object {},
               Object {
                 "textAlign": "center",
               },
@@ -505,8 +409,8 @@ exports[`PendingUserItem component should render data correctly 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": "#A17AF2",
-          "borderRadius": 6,
+          "backgroundColor": undefined,
+          "borderRadius": 4,
           "flex": 1,
           "padding": 8,
         }
@@ -527,13 +431,11 @@ exports[`PendingUserItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
               },
-              Object {
-                "color": "#FFFFFF",
-              },
+              Object {},
               Object {
                 "textAlign": "center",
               },

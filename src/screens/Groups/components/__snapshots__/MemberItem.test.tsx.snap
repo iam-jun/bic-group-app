@@ -33,7 +33,7 @@ exports[`MemberItem component should render data correctly 1`] = `
     <View
       style={
         Object {
-          "borderRadius": 6,
+          "borderRadius": 4,
           "height": 40,
           "marginRight": 12,
           "width": 40,
@@ -137,9 +137,9 @@ exports[`MemberItem component should render data correctly 1`] = `
         style={
           Array [
             Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
+              "color": undefined,
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
             },
             Object {},
             undefined,
@@ -151,13 +151,11 @@ exports[`MemberItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 14,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
               },
-              Object {
-                "color": "#627286",
-              },
+              Object {},
               undefined,
             ]
           }
@@ -222,53 +220,7 @@ exports[`MemberItem component should render data correctly 1`] = `
             ]
           }
         >
-          <View>
-            <RNSVGSvgView
-              align="xMidYMid"
-              bbHeight={20}
-              bbWidth={20}
-              color={4281284933}
-              focusable={false}
-              height={20}
-              meetOrSlice={0}
-              minX={0}
-              minY={0}
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                    "borderWidth": 0,
-                  },
-                  Object {},
-                  Object {
-                    "flex": 0,
-                    "height": 20,
-                    "width": 20,
-                  },
-                ]
-              }
-              tintColor={4281284933}
-              vbHeight={24}
-              vbWidth={24}
-              width={20}
-            >
-              <RNSVGGroup>
-                <RNSVGPath
-                  d="M12 7a2 2 0 10-2-2 2 2 0 002 2zm0 10a2 2 0 102 2 2 2 0 00-2-2zm0-7a2 2 0 102 2 2 2 0 00-2-2z"
-                  fill={
-                    Array [
-                      2,
-                    ]
-                  }
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                />
-              </RNSVGGroup>
-            </RNSVGSvgView>
-          </View>
+          <View />
         </View>
       </View>
     </View>
@@ -309,7 +261,7 @@ exports[`MemberItem component should render icon member option correctly when us
     <View
       style={
         Object {
-          "borderRadius": 6,
+          "borderRadius": 4,
           "height": 40,
           "marginRight": 12,
           "width": 40,
@@ -413,9 +365,9 @@ exports[`MemberItem component should render icon member option correctly when us
         style={
           Array [
             Object {
-              "color": "#2F3945",
-              "fontFamily": "OpenSans-Regular",
-              "fontSize": 16,
+              "color": undefined,
+              "fontFamily": "BeVietnamPro-Light",
+              "fontSize": 15,
             },
             Object {},
             undefined,
@@ -427,13 +379,11 @@ exports[`MemberItem component should render icon member option correctly when us
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 14,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
               },
-              Object {
-                "color": "#627286",
-              },
+              Object {},
               undefined,
             ]
           }
@@ -489,7 +439,7 @@ exports[`MemberItem component should render icon member option correctly when us
               "width": 36,
             },
             Object {
-              "backgroundColor": "#F9FAFB",
+              "backgroundColor": undefined,
             },
           ]
         }
@@ -503,53 +453,7 @@ exports[`MemberItem component should render icon member option correctly when us
             ]
           }
         >
-          <View>
-            <RNSVGSvgView
-              align="xMidYMid"
-              bbHeight={20}
-              bbWidth={20}
-              color={4281284933}
-              focusable={false}
-              height={20}
-              meetOrSlice={0}
-              minX={0}
-              minY={0}
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                    "borderWidth": 0,
-                  },
-                  Object {},
-                  Object {
-                    "flex": 0,
-                    "height": 20,
-                    "width": 20,
-                  },
-                ]
-              }
-              tintColor={4281284933}
-              vbHeight={24}
-              vbWidth={24}
-              width={20}
-            >
-              <RNSVGGroup>
-                <RNSVGPath
-                  d="M12 9a1 1 0 101 1 1 1 0 00-1-1zm7-7H5a3 3 0 00-3 3v10a3 3 0 003 3h11.59l3.7 3.71A1 1 0 0021 22a.84.84 0 00.38-.08A1 1 0 0022 21V5a3 3 0 00-3-3zm1 16.59l-2.29-2.3A1 1 0 0017 16H5a1 1 0 01-1-1V5a1 1 0 011-1h14a1 1 0 011 1zM8 9a1 1 0 101 1 1 1 0 00-1-1zm8 0a1 1 0 101 1 1 1 0 00-1-1z"
-                  fill={
-                    Array [
-                      2,
-                    ]
-                  }
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                />
-              </RNSVGGroup>
-            </RNSVGSvgView>
-          </View>
+          <View />
         </View>
       </View>
     </View>
@@ -609,53 +513,7 @@ exports[`MemberItem component should render icon member option correctly when us
             ]
           }
         >
-          <View>
-            <RNSVGSvgView
-              align="xMidYMid"
-              bbHeight={20}
-              bbWidth={20}
-              color={4281284933}
-              focusable={false}
-              height={20}
-              meetOrSlice={0}
-              minX={0}
-              minY={0}
-              style={
-                Array [
-                  Object {
-                    "backgroundColor": "transparent",
-                    "borderWidth": 0,
-                  },
-                  Object {},
-                  Object {
-                    "flex": 0,
-                    "height": 20,
-                    "width": 20,
-                  },
-                ]
-              }
-              tintColor={4281284933}
-              vbHeight={24}
-              vbWidth={24}
-              width={20}
-            >
-              <RNSVGGroup>
-                <RNSVGPath
-                  d="M12 7a2 2 0 10-2-2 2 2 0 002 2zm0 10a2 2 0 102 2 2 2 0 00-2-2zm0-7a2 2 0 102 2 2 2 0 00-2-2z"
-                  fill={
-                    Array [
-                      2,
-                    ]
-                  }
-                  propList={
-                    Array [
-                      "fill",
-                    ]
-                  }
-                />
-              </RNSVGGroup>
-            </RNSVGSvgView>
-          </View>
+          <View />
         </View>
       </View>
     </View>

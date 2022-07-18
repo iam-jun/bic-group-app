@@ -49,9 +49,9 @@ exports[`Menu Item component renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
               },
               Object {},
               undefined,
@@ -121,9 +121,9 @@ exports[`Menu Item component renders correctly RightComponent 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
               },
               Object {},
               undefined,
@@ -194,53 +194,7 @@ exports[`Menu Item component renders correctly RightComponent 1`] = `
           >
             <View
               testID="menu_item.right_component"
-            >
-              <RNSVGSvgView
-                align="xMidYMid"
-                bbHeight={20}
-                bbWidth={20}
-                color={4281284933}
-                focusable={false}
-                height={20}
-                meetOrSlice={0}
-                minX={0}
-                minY={0}
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderWidth": 0,
-                    },
-                    Object {},
-                    Object {
-                      "flex": 0,
-                      "height": 20,
-                      "width": 20,
-                    },
-                  ]
-                }
-                tintColor={4281284933}
-                vbHeight={24}
-                vbWidth={24}
-                width={20}
-              >
-                <RNSVGGroup>
-                  <RNSVGPath
-                    d="M18.71 7.21a1 1 0 00-1.42 0l-7.45 7.46-3.13-3.14A1 1 0 105.29 13l3.84 3.84a1 1 0 001.42 0l8.16-8.16a1 1 0 000-1.47z"
-                    fill={
-                      Array [
-                        2,
-                      ]
-                    }
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  />
-                </RNSVGGroup>
-              </RNSVGSvgView>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -299,9 +253,9 @@ exports[`Menu Item component renders correctly item disable 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
               },
               Object {},
               undefined,
@@ -371,9 +325,9 @@ exports[`Menu Item component renders correctly rightSubIcon 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
               },
               Object {},
               undefined,
@@ -446,54 +400,7 @@ exports[`Menu Item component renders correctly rightSubIcon 1`] = `
             >
               <View
                 testID="menu_item.right_sub_icon"
-              >
-                <RNSVGSvgView
-                  align="xMidYMid"
-                  bbHeight={20}
-                  bbWidth={20}
-                  color={4281284933}
-                  data-name="Layer 1"
-                  focusable={false}
-                  height={20}
-                  meetOrSlice={0}
-                  minX={0}
-                  minY={0}
-                  style={
-                    Array [
-                      Object {
-                        "backgroundColor": "transparent",
-                        "borderWidth": 0,
-                      },
-                      Object {},
-                      Object {
-                        "flex": 0,
-                        "height": 20,
-                        "width": 20,
-                      },
-                    ]
-                  }
-                  tintColor={4281284933}
-                  vbHeight={24}
-                  vbWidth={24}
-                  width={20}
-                >
-                  <RNSVGGroup>
-                    <RNSVGPath
-                      d="M12 19a1 1 0 10-1-1 1 1 0 001 1zm5 0a1 1 0 10-1-1 1 1 0 001 1zm0-4a1 1 0 10-1-1 1 1 0 001 1zm-5 0a1 1 0 10-1-1 1 1 0 001 1zm7-12h-1V2a1 1 0 00-2 0v1H8V2a1 1 0 00-2 0v1H5a3 3 0 00-3 3v14a3 3 0 003 3h14a3 3 0 003-3V6a3 3 0 00-3-3zm1 17a1 1 0 01-1 1H5a1 1 0 01-1-1v-9h16zm0-11H4V6a1 1 0 011-1h1v1a1 1 0 002 0V5h8v1a1 1 0 002 0V5h1a1 1 0 011 1zM7 15a1 1 0 10-1-1 1 1 0 001 1zm0 4a1 1 0 10-1-1 1 1 0 001 1z"
-                      fill={
-                        Array [
-                          2,
-                        ]
-                      }
-                      propList={
-                        Array [
-                          "fill",
-                        ]
-                      }
-                    />
-                  </RNSVGGroup>
-                </RNSVGSvgView>
-              </View>
+              />
             </View>
           </View>
         </View>
@@ -552,9 +459,9 @@ exports[`Menu Item component renders correctly rightSubTitle 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
               },
               Object {},
               undefined,
@@ -574,13 +481,11 @@ exports[`Menu Item component renders correctly rightSubTitle 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 14,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
               },
-              Object {
-                "color": "#2F3945",
-              },
+              Object {},
               undefined,
             ]
           }
@@ -641,9 +546,9 @@ exports[`Menu Item component renders correctly subTitle 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
               },
               Object {},
               undefined,
@@ -656,9 +561,9 @@ exports[`Menu Item component renders correctly subTitle 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 12,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
               },
               Object {},
               undefined,
@@ -729,9 +634,9 @@ exports[`Menu Item component renders correctly testID 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
               },
               Object {},
               undefined,
@@ -801,9 +706,9 @@ exports[`Menu Item component should render NotificationsBadge 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
               },
               Object {},
               undefined,
@@ -817,8 +722,8 @@ exports[`Menu Item component should render NotificationsBadge 1`] = `
           Array [
             Object {
               "alignItems": "center",
-              "backgroundColor": "#D5DCE5",
-              "borderRadius": 24,
+              "backgroundColor": undefined,
+              "borderRadius": 20,
               "height": 20,
               "justifyContent": "center",
               "minWidth": 20,
@@ -834,14 +739,14 @@ exports[`Menu Item component should render NotificationsBadge 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 12,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
               },
               Object {},
               Array [
                 Object {
-                  "color": "#2F3945",
+                  "color": undefined,
                   "lineHeight": 16,
                   "textAlign": "center",
                 },
@@ -914,9 +819,9 @@ exports[`Menu Item component should render badge Number when type= draftPost 1`]
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
               },
               Object {},
               undefined,
@@ -937,15 +842,13 @@ exports[`Menu Item component should render badge Number when type= draftPost 1`]
           Array [
             Object {
               "alignItems": "center",
-              "backgroundColor": "#00A64D",
+              "backgroundColor": undefined,
               "borderRadius": 20,
               "justifyContent": "center",
               "minHeight": 20,
               "minWidth": 20,
             },
-            Object {
-              "backgroundColor": "#B2BDCD",
-            },
+            Object {},
           ]
         }
         testID="menu_item.badge_number"
@@ -954,13 +857,13 @@ exports[`Menu Item component should render badge Number when type= draftPost 1`]
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 12,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
               },
               Object {},
               Object {
-                "color": "#FFFFFF",
+                "color": undefined,
                 "marginTop": -2,
               },
             ]
@@ -1024,9 +927,9 @@ exports[`Menu Item component should render badge Number when type= draftPost and
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
               },
               Object {},
               undefined,
@@ -1047,15 +950,13 @@ exports[`Menu Item component should render badge Number when type= draftPost and
           Array [
             Object {
               "alignItems": "center",
-              "backgroundColor": "#00A64D",
+              "backgroundColor": undefined,
               "borderRadius": 20,
               "justifyContent": "center",
               "minHeight": 20,
               "minWidth": 20,
             },
-            Object {
-              "backgroundColor": "#B2BDCD",
-            },
+            Object {},
           ]
         }
         testID="menu_item.badge_number"
@@ -1064,13 +965,13 @@ exports[`Menu Item component should render badge Number when type= draftPost and
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-Regular",
-                "fontSize": 12,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Light",
+                "fontSize": 13,
               },
               Object {},
               Object {
-                "color": "#FFFFFF",
+                "color": undefined,
                 "marginTop": -2,
               },
             ]
@@ -1177,54 +1078,7 @@ exports[`Menu Item component should render icon with iconProps 1`] = `
           >
             <View
               testID="menu_item.icon"
-            >
-              <RNSVGSvgView
-                align="xMidYMid"
-                bbHeight={24}
-                bbWidth={24}
-                color={4281284933}
-                data-name="Layer 1"
-                focusable={false}
-                height={24}
-                meetOrSlice={0}
-                minX={0}
-                minY={0}
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderWidth": 0,
-                    },
-                    Object {},
-                    Object {
-                      "flex": 0,
-                      "height": 24,
-                      "width": 24,
-                    },
-                  ]
-                }
-                tintColor={4281284933}
-                vbHeight={24}
-                vbWidth={24}
-                width={24}
-              >
-                <RNSVGGroup>
-                  <RNSVGPath
-                    d="M12 19a1 1 0 10-1-1 1 1 0 001 1zm5 0a1 1 0 10-1-1 1 1 0 001 1zm0-4a1 1 0 10-1-1 1 1 0 001 1zm-5 0a1 1 0 10-1-1 1 1 0 001 1zm7-12h-1V2a1 1 0 00-2 0v1H8V2a1 1 0 00-2 0v1H5a3 3 0 00-3 3v14a3 3 0 003 3h14a3 3 0 003-3V6a3 3 0 00-3-3zm1 17a1 1 0 01-1 1H5a1 1 0 01-1-1v-9h16zm0-11H4V6a1 1 0 011-1h1v1a1 1 0 002 0V5h8v1a1 1 0 002 0V5h1a1 1 0 011 1zM7 15a1 1 0 10-1-1 1 1 0 001 1zm0 4a1 1 0 10-1-1 1 1 0 001 1z"
-                    fill={
-                      Array [
-                        2,
-                      ]
-                    }
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  />
-                </RNSVGGroup>
-              </RNSVGSvgView>
-            </View>
+            />
           </View>
         </View>
       </View>
@@ -1240,9 +1094,9 @@ exports[`Menu Item component should render icon with iconProps 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
               },
               Object {},
               undefined,

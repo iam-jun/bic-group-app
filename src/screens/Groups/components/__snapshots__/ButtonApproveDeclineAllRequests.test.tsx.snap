@@ -5,7 +5,7 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
   style={
     Array [
       Object {
-        "backgroundColor": "#FFFFFF",
+        "backgroundColor": undefined,
       },
       undefined,
     ]
@@ -16,7 +16,7 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
       Array [
         Object {
           "alignSelf": "stretch",
-          "backgroundColor": "#EAEDF2",
+          "backgroundColor": undefined,
           "height": 1,
           "marginHorizontal": 0,
           "width": undefined,
@@ -47,8 +47,8 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": "#EAEDF2",
-          "borderRadius": 6,
+          "backgroundColor": undefined,
+          "borderRadius": 4,
           "flex": 1,
           "marginRight": 8,
           "padding": 8,
@@ -70,13 +70,11 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
               },
-              Object {
-                "color": "#2F3945",
-              },
+              Object {},
               Object {
                 "textAlign": "center",
               },
@@ -100,8 +98,8 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": "#A17AF2",
-          "borderRadius": 6,
+          "backgroundColor": undefined,
+          "borderRadius": 4,
           "flex": 1,
           "padding": 8,
         }
@@ -122,13 +120,11 @@ exports[`Button Approve Decline all requests should render UI correctly 1`] = `
           style={
             Array [
               Object {
-                "color": "#2F3945",
-                "fontFamily": "OpenSans-SemiBold",
-                "fontSize": 16,
+                "color": undefined,
+                "fontFamily": "BeVietnamPro-Medium",
+                "fontSize": 15,
               },
-              Object {
-                "color": "#FFFFFF",
-              },
+              Object {},
               Object {
                 "textAlign": "center",
               },

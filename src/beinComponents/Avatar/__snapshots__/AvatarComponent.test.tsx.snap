@@ -4,7 +4,7 @@ exports[`Avatar component renders correctly 1`] = `
 <View
   style={
     Object {
-      "borderRadius": 6,
+      "borderRadius": 4,
       "height": 48,
       "width": 48,
     }
@@ -14,7 +14,7 @@ exports[`Avatar component renders correctly 1`] = `
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 48,
         "width": 48,
       }
@@ -48,7 +48,7 @@ exports[`Avatar component renders correctly 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "#f9f9f9",
-              "borderRadius": 6,
+              "borderRadius": 4,
               "height": 48,
               "justifyContent": "center",
               "width": 48,
@@ -64,7 +64,7 @@ exports[`Avatar component renders correctly 1`] = `
               "overflow": "hidden",
             },
             Object {
-              "borderRadius": 6,
+              "borderRadius": 4,
               "height": 48,
               "width": 48,
             },
@@ -101,7 +101,7 @@ exports[`Avatar component renders correctly badge 1`] = `
 <View
   style={
     Object {
-      "borderRadius": 6,
+      "borderRadius": 4,
       "height": 48,
       "width": 48,
     }
@@ -111,7 +111,7 @@ exports[`Avatar component renders correctly badge 1`] = `
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 48,
         "width": 48,
       }
@@ -145,7 +145,7 @@ exports[`Avatar component renders correctly badge 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "#f9f9f9",
-              "borderRadius": 6,
+              "borderRadius": 4,
               "height": 48,
               "justifyContent": "center",
               "width": 48,
@@ -161,7 +161,7 @@ exports[`Avatar component renders correctly badge 1`] = `
               "overflow": "hidden",
             },
             Object {
-              "borderRadius": 6,
+              "borderRadius": 4,
               "height": 48,
               "width": 48,
             },
@@ -194,7 +194,7 @@ exports[`Avatar component renders correctly badge 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": "#FFFFFF",
+          "backgroundColor": undefined,
           "borderRadius": 12,
           "bottom": undefined,
           "elevation": 2,
@@ -305,7 +305,7 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
 <View
   style={
     Object {
-      "borderRadius": 6,
+      "borderRadius": 4,
       "height": 48,
       "width": 48,
     }
@@ -315,7 +315,7 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 48,
         "width": 48,
       }
@@ -349,7 +349,7 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "#f9f9f9",
-              "borderRadius": 6,
+              "borderRadius": 4,
               "height": 48,
               "justifyContent": "center",
               "width": 48,
@@ -365,7 +365,7 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
               "overflow": "hidden",
             },
             Object {
-              "borderRadius": 6,
+              "borderRadius": 4,
               "height": 48,
               "width": 48,
             },
@@ -398,7 +398,7 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": "#FFFFFF",
+          "backgroundColor": undefined,
           "borderRadius": 12,
           "bottom": -4,
           "elevation": 2,
@@ -509,7 +509,7 @@ exports[`Avatar component renders correctly badge check 1`] = `
 <View
   style={
     Object {
-      "borderRadius": 6,
+      "borderRadius": 4,
       "height": 48,
       "width": 48,
     }
@@ -519,7 +519,7 @@ exports[`Avatar component renders correctly badge check 1`] = `
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 48,
         "width": 48,
       }
@@ -553,7 +553,7 @@ exports[`Avatar component renders correctly badge check 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "#f9f9f9",
-              "borderRadius": 6,
+              "borderRadius": 4,
               "height": 48,
               "justifyContent": "center",
               "width": 48,
@@ -569,7 +569,7 @@ exports[`Avatar component renders correctly badge check 1`] = `
               "overflow": "hidden",
             },
             Object {
-              "borderRadius": 6,
+              "borderRadius": 4,
               "height": 48,
               "width": 48,
             },
@@ -602,8 +602,8 @@ exports[`Avatar component renders correctly badge check 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": "#00A64D",
-          "borderColor": "#FFFFFF",
+          "backgroundColor": undefined,
+          "borderColor": undefined,
           "borderRadius": 8,
           "borderWidth": 1,
           "bottom": 0,
@@ -677,53 +677,7 @@ exports[`Avatar component renders correctly badge check 1`] = `
               ]
             }
           >
-            <View>
-              <RNSVGSvgView
-                align="xMidYMid"
-                bbHeight={12}
-                bbWidth={12}
-                color={4294967295}
-                focusable={false}
-                height={12}
-                meetOrSlice={0}
-                minX={0}
-                minY={0}
-                style={
-                  Array [
-                    Object {
-                      "backgroundColor": "transparent",
-                      "borderWidth": 0,
-                    },
-                    Object {},
-                    Object {
-                      "flex": 0,
-                      "height": 12,
-                      "width": 12,
-                    },
-                  ]
-                }
-                tintColor={4294967295}
-                vbHeight={24}
-                vbWidth={24}
-                width={12}
-              >
-                <RNSVGGroup>
-                  <RNSVGPath
-                    d="M18.71 7.21a1 1 0 00-1.42 0l-7.45 7.46-3.13-3.14A1 1 0 105.29 13l3.84 3.84a1 1 0 001.42 0l8.16-8.16a1 1 0 000-1.47z"
-                    fill={
-                      Array [
-                        2,
-                      ]
-                    }
-                    propList={
-                      Array [
-                        "fill",
-                      ]
-                    }
-                  />
-                </RNSVGGroup>
-              </RNSVGSvgView>
-            </View>
+            <View />
           </View>
         </View>
       </View>
@@ -736,7 +690,7 @@ exports[`Avatar component renders correctly status 1`] = `
 <View
   style={
     Object {
-      "borderRadius": 6,
+      "borderRadius": 4,
       "height": 48,
       "width": 48,
     }
@@ -746,7 +700,7 @@ exports[`Avatar component renders correctly status 1`] = `
   <View
     style={
       Object {
-        "borderRadius": 6,
+        "borderRadius": 4,
         "height": 48,
         "width": 48,
       }
@@ -780,7 +734,7 @@ exports[`Avatar component renders correctly status 1`] = `
             Object {
               "alignItems": "center",
               "backgroundColor": "#f9f9f9",
-              "borderRadius": 6,
+              "borderRadius": 4,
               "height": 48,
               "justifyContent": "center",
               "width": 48,
@@ -796,7 +750,7 @@ exports[`Avatar component renders correctly status 1`] = `
               "overflow": "hidden",
             },
             Object {
-              "borderRadius": 6,
+              "borderRadius": 4,
               "height": 48,
               "width": 48,
             },
@@ -828,8 +782,8 @@ exports[`Avatar component renders correctly status 1`] = `
     <View
       style={
         Object {
-          "backgroundColor": "#00A64D",
-          "borderColor": "#FFFFFF",
+          "backgroundColor": undefined,
+          "borderColor": undefined,
           "borderRadius": 8,
           "borderWidth": 1,
           "bottom": 0,
