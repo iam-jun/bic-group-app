@@ -174,6 +174,7 @@ const EditPhoneNumber = ({
               autoCapitalize="none"
               activeOutlineColor={theme.colors.purple50}
               outlineColor={theme.colors.gray40}
+              style={styles.inputStyle}
             />
           )}
           rules={{
@@ -216,11 +217,14 @@ const createStyles = (theme: ExtendedTheme, screenHeight: number) => {
   return StyleSheet.create({
     inputsView: {
       flexDirection: 'row',
-      alignItems: 'flex-start',
-      // justifyContent: 'center',
+      alignContent: 'center',
+      marginVertical: spacing.margin.small,
     },
     phoneNumberView: {
       flex: 1,
+    },
+    inputStyle: {
+      marginVertical: 0,
     },
     listView: {
       paddingHorizontal: spacing.padding.small,
@@ -229,13 +233,11 @@ const createStyles = (theme: ExtendedTheme, screenHeight: number) => {
       borderRadius: spacing.borderRadius.small,
       borderWidth: 1,
       borderColor: colors.gray40,
-      minHeight: 40,
+      minHeight: 44,
       alignItems: 'stretch',
       justifyContent: 'center',
       paddingLeft: spacing.padding.base,
-      marginVertical: spacing.margin.small,
       marginRight: spacing.margin.small,
-      marginTop: spacing.margin.base,
       minWidth: 80,
     },
     buttonDropDownContent: {

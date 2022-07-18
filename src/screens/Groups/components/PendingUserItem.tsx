@@ -108,7 +108,7 @@ const PendingUserItem = ({
           <Button.Secondary
             testID="pending_user_item.btn_decline"
             style={styles.buttonDecline}
-            color={theme.colors.gray40}
+            color={theme.colors.gray10}
             textColor={theme.colors.neutral80}
             onPress={onPressDecline}
             useI18n>
