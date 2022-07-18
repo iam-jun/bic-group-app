@@ -8,6 +8,7 @@ import {
   Modal,
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import LottieView from 'lottie-react-native';
 
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
@@ -16,6 +17,7 @@ import images from '~/resources/images';
 import useModal from '~/hooks/modal';
 import spacing from '~/theme/spacing';
 import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import {LottieFileLoading} from '~/resources/lottieJson';
 
 const LoadingModal = () => {
   const theme: ExtendedTheme = useTheme();
@@ -28,18 +30,19 @@ const LoadingModal = () => {
     <Modal animationType="fade" visible={visible} style={styles.root}>
       <ImageBackground source={images.img_bg_sign_in} style={styles.background}>
         <View style={styles.logoContainer}>
-          <ActivityIndicator
-            size={Platform.OS === 'android' ? 72 : 'large'}
+          <LottieView
+            source={LottieFileLoading}
+            autoPlay
+            loop
             style={styles.loadingIndicator}
-            color={theme.colors.white}
           />
           <Image
             resizeMode="contain"
             style={styles.logo}
             source={images.logo_beincomm}
           />
+          <Text.ButtonS style={styles.textLoading}>Loading...</Text.ButtonS>
         </View>
-        <Text.ButtonS style={styles.textLoading}>Loading...</Text.ButtonS>
       </ImageBackground>
     </Modal>
   );
@@ -60,21 +63,28 @@ const themeStyles = (theme: ExtendedTheme) => {
       justifyContent: 'center',
     },
     logoContainer: {
-      marginBottom: spacing.margin.big,
+      width: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     logo: {
       alignSelf: 'center',
       width: 48,
       height: 48,
       borderRadius: 50,
+      position: 'absolute',
+      top: -142,
     },
     textLoading: {
       color: colors.white,
+      position: 'absolute',
+      bottom: 40,
     },
     loadingIndicator: {
-      position: 'absolute',
-      top: -50, // = -IndicatorSize / 6, to make it center
-      left: 5,
+      width: 235,
+      height: 235,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   });
 };
