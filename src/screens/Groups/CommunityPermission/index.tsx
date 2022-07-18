@@ -50,7 +50,7 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.gray40,
+      backgroundColor: colors.gray5,
     },
   });
 };

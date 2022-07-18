@@ -145,7 +145,7 @@ const createStyle = (theme: ExtendedTheme) => {
       marginBottom: spacing.margin.tiny,
     },
     buttonEdit: {
-      backgroundColor: colors.gray40,
+      backgroundColor: colors.gray5,
       padding: spacing.padding.small,
       borderRadius: spacing.borderRadius.small,
     },

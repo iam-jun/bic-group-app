@@ -189,9 +189,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
           />
         )}
         {isPhone && (
-          <Text variant="bodyS" style={styles.label}>
-            {t(`tabs:${name}`)}
-          </Text>
+          <Text.BadgeXS style={styles.label}>{t(`tabs:${name}`)}</Text.BadgeXS>
         )}
         {!!unreadCount && (
           <NotificationsBadge.Alert
@@ -221,7 +219,6 @@ const tabBarIconStyles = (
     label: {
       color: color,
       textAlign: 'center',
-      fontSize: sizes.subtitle,
     },
     badge: {
       position: 'absolute',
