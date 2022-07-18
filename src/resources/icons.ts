@@ -28,7 +28,6 @@ import iconCheckboxRestricted from '../../assets/icons/icon_checkbox_retricted.s
 import iconMenuSetting from '../../assets/icons/icon_menu_setting.svg';
 import iconTabNotification from '../../assets/icons/icon_notification.svg';
 import iconTabNotificationBein from '../../assets/icons/icon_notification_bein.svg';
-import iconReact from '../../assets/icons/icon_react.svg';
 import iconSearch from '../../assets/icons/icon_search.svg';
 import iconShieldStar from '../../assets/icons/icon_shield_star.svg';
 import iconStar from '../../assets/icons/icon_star_alt.svg';
@@ -65,7 +64,6 @@ const icons = {
   iconTabNotificationBein,
   iconTabMenu,
   iconSearch,
-  iconReact,
   iconSendComment,
   iconLanguageEn,
   iconLanguageVi,
@@ -105,6 +103,7 @@ const icons = {
   iconLock,
   iconPlayGif,
   iconStar: iconStar,
+  iconReact: fontAwesomeIcons.FaceSmile,
   iconSave: fontAwesomeIcons.FloppyDisk,
   iconSecret: fontAwesomeIcons.ShieldHalved,
   iconPrivate: fontAwesomeIcons.LockKeyhole,

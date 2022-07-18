@@ -10,15 +10,17 @@ import {useKeySelector} from './selector';
 const EXPIRED_TIME = 1000 * 60 * 10; // 10 mins
 
 export const useMyPermissions = (
-  scope?: 'communities' | 'groups',
-  id?: number,
+  scope: 'communities' | 'groups',
+  id: number,
 ) => {
   const dispatch = useDispatch();
   const token = useAuthToken();
   const userId = useUserIdAuth();
-  const {loading} = useKeySelector(groupsKeySelector.myPermissions);
-  const currentPermissions: string[] | undefined = useKeySelector(
-    `groups.myPermissions.data.${scope}.${id}`,
+  const {loading, timeGetMyPermissions} = useKeySelector(
+    groupsKeySelector.myPermissions,
+  );
+  const currentPermissions: string[] = useKeySelector(
+    groupsKeySelector.permissionsByScopeAndId(scope, id),
   );
 
   const getMyPermissions = () => {
@@ -28,19 +30,19 @@ export const useMyPermissions = (
   };
 
   useEffect(() => {
-    if (!scope || !id) {
-      // ONLY RUN THIS WHEN START THE APP
+    if (timeGetMyPermissions + EXPIRED_TIME <= Date.now()) {
       getMyPermissions();
-
-      setInterval(() => {
-        getMyPermissions();
-      }, EXPIRED_TIME);
     }
-  }, [token, userId]);
+  }, [timeGetMyPermissions]);
 
-  const hasPermissions = (requiredPermissions: string[]) => {
-    return [PERMISSION_KEY.FULL_PERMISSION, ...requiredPermissions].some(
-      (per: string) => (currentPermissions || []).includes(per),
+  const hasPermissions = (requiredPermissions: string | string[]) => {
+    let arr = requiredPermissions;
+    if (typeof requiredPermissions === 'string') {
+      arr = [requiredPermissions];
+    }
+
+    return [PERMISSION_KEY.FULL_PERMISSION, ...arr].some((per: string) =>
+      (currentPermissions || []).includes(per),
     );
   };
 

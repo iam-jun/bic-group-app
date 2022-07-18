@@ -51,7 +51,7 @@ const GroupAdministration = (props: any) => {
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
 
   const goToPendingMembers = () => {
-    rootNavigation.navigate(groupStack.groupPendingMembers);
+    rootNavigation.navigate(groupStack.groupPendingMembers, {id: groupId});
   };
 
   const goToGeneralInfo = () => {

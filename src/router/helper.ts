@@ -176,6 +176,7 @@ export const getScreenAndParams = (data: any) => {
             },
           };
         case NOTIFICATION_TYPE.GROUP_ASSIGNED_ROLE_TO_USER:
+        case NOTIFICATION_TYPE.GROUP_DEMOTED_ROLE_TO_USER:
           if (!!community?.id) {
             return {
               screen: 'communities',
@@ -211,6 +212,46 @@ export const getScreenAndParams = (data: any) => {
               },
             },
           };
+        case NOTIFICATION_TYPE.GROUP_REMOVED_FROM_GROUP_TO_USER:
+        case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_APPROVED:
+        case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_REJECTED:
+        case NOTIFICATION_TYPE.GROUP_ADDED_TO_GROUP_TO_USER_IN_ONE_GROUP:
+          if (!!community?.id) {
+            return {
+              screen: 'communities',
+              params: {
+                screen: 'community-detail',
+                params: {
+                  communityId: community.id,
+                },
+              },
+            };
+          }
+          if (!!group?.id) {
+            return {
+              screen: 'communities',
+              params: {
+                screen: 'group-detail',
+                params: {
+                  groupId: group.id,
+                },
+              },
+            };
+          }
+          break;
+        case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
+          return {
+            screen: 'communities',
+            params: {
+              screen: !!community?.id
+                ? 'community-pending-members'
+                : 'group-pending-members',
+              params: {
+                communityId: !!community?.id ? community.id : group.id || '',
+              },
+            },
+          };
+          break;
         default:
           console.log(`Notification type ${type} have not implemented yet`);
           return {

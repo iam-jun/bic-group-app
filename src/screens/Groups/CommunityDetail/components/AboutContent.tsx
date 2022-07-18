@@ -26,9 +26,9 @@ const AboutContent = () => {
     <View style={styles.container} testID="about_content">
       {!!description && (
         <View style={styles.descriptionSection}>
-          <Text.BodyM style={styles.titleDescription} useI18n>
+          <Text.ButtonM style={styles.titleDescription} useI18n>
             common:text_description
-          </Text.BodyM>
+          </Text.ButtonM>
           <CollapsibleText
             textProps={{variant: 'bodyM'}}
             content={description}

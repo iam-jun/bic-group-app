@@ -36,9 +36,9 @@ const CommunityAdmin = () => {
     'communities',
     communityId,
   );
-  const canManageJoiningRequests = hasPermissions([
+  const canManageJoiningRequests = hasPermissions(
     PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
-  ]);
+  );
   const canEditProfileInfo = hasPermissions([
     PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
     PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
@@ -56,7 +56,9 @@ const CommunityAdmin = () => {
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
 
   const onPressPendingMembers = () => {
-    rootNavigation.navigate(groupStack.communityPendingMembers);
+    rootNavigation.navigate(groupStack.communityPendingMembers, {
+      id: communityId,
+    });
   };
 
   const onPressGeneralInfo = () => {

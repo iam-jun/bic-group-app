@@ -41,7 +41,7 @@ const InfoHeader = () => {
           style={styles.avatar}
         />
         <View style={{flex: 1}}>
-          <Text.BodyM testID="info_header.name">{name}</Text.BodyM>
+          <Text.H6 testID="info_header.name">{name}</Text.H6>
           <View style={styles.info}>
             <Icon
               icon={iconPrivacy}

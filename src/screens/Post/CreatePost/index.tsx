@@ -204,7 +204,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
         <View style={styles.setting}>
           <Button.Secondary
             testID="create_post.btn_post_settings"
-            color={colors.gray40}
+            color={colors.gray5}
             leftIcon="SlidersUp"
             style={styles.buttonSettings}
             onPress={onPressSettings}
@@ -241,7 +241,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       flexWrap: 'wrap',
     },
     buttonSettings: {
-      backgroundColor: colors.gray40,
+      backgroundColor: colors.gray5,
       borderRadius: spacing.borderRadius.small,
     },
   });
