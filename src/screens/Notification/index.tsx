@@ -111,8 +111,8 @@ const Notification = () => {
               });
               break;
             }
-            // case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
             case NOTIFICATION_TYPE.GROUP_ASSIGNED_ROLE_TO_USER:
+            case NOTIFICATION_TYPE.GROUP_DEMOTED_ROLE_TO_USER:
               if (!!act?.community?.id) {
                 rootNavigation.navigate(groupStack.communityMembers, {
                   communityId: act.community.id,
@@ -129,6 +129,33 @@ const Notification = () => {
                 id: !!act?.group?.id ? act.group.id : act?.community?.id || '',
                 type: !!act?.group?.id ? 'group' : 'community',
               });
+              break;
+            case NOTIFICATION_TYPE.GROUP_REMOVED_FROM_GROUP_TO_USER:
+            case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_APPROVED:
+            case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_REJECTED:
+            case NOTIFICATION_TYPE.GROUP_ADDED_TO_GROUP_TO_USER_IN_ONE_GROUP:
+              if (!!act?.community?.id) {
+                rootNavigation.navigate(groupStack.communityDetail, {
+                  communityId: act.community.id,
+                });
+              }
+              if (!!act?.group?.id) {
+                rootNavigation.navigate(groupStack.groupDetail, {
+                  groupId: act.group.id,
+                });
+              }
+              break;
+            case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
+              if (!!act?.community?.id) {
+                rootNavigation.navigate(groupStack.communityPendingMembers, {
+                  id: act.community.id,
+                });
+              }
+              if (!!act?.group?.id) {
+                rootNavigation.navigate(groupStack.groupPendingMembers, {
+                  id: act.group.id,
+                });
+              }
               break;
             default:
               console.log(`Notification type ${type} have not implemented yet`);

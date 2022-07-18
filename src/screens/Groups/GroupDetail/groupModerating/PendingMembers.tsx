@@ -9,9 +9,10 @@ import groupsKeySelector from '../../redux/keySelector';
 import GroupApproveDeclineAllRequests from './components/GroupApproveDeclineAllRequests';
 import MemberRequestList from '../../components/MemberRequestList';
 
-const GroupPendingMembers = () => {
+const GroupPendingMembers = (props: any) => {
   const dispatch = useDispatch();
-  const {id: groupId} = useKeySelector(groupsKeySelector.groupDetail.group);
+  const params = props.route.params;
+  const {id: groupId} = params || {};
   const {ids, canLoadMore} = useKeySelector(
     groupsKeySelector.groupMemberRequests,
   );

@@ -22,12 +22,14 @@ interface MemberRequestListProps {
   type: 'community' | 'group';
   onLoadMore: () => void;
   onRefresh: () => void;
+  id: number;
 }
 
 const MemberRequestList = ({
   type,
   onLoadMore,
   onRefresh,
+  id,
 }: MemberRequestListProps) => {
   const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
@@ -40,7 +42,7 @@ const MemberRequestList = ({
     const ItemComponent =
       type === 'community' ? CommunityMemberRequest : GroupMemberRequest;
 
-    return <ItemComponent requestId={item} />;
+    return <ItemComponent requestId={item} organizationId={id} />;
   };
 
   const renderEmpty = () => {
