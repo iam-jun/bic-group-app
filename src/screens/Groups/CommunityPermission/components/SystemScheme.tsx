@@ -76,7 +76,7 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
         <Button.Primary
           onPress={onPressView}
           useI18n
-          colorHover={colors.gray40}
+          colorHover={colors.gray5}
           textColor={colors.neutral80}
           style={styles.buttonView}>
           communities:permission:btn_view_permission
@@ -85,7 +85,7 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
           <Button.Primary
             onPress={onPressApply}
             useI18n
-            colorHover={colors.gray40}
+            colorHover={colors.gray20}
             textColor={colors.neutral80}
             style={styles.buttonView}>
             communities:permission:btn_apply
@@ -123,7 +123,7 @@ const createStyle = (theme: ExtendedTheme) => {
       paddingVertical: spacing.padding.tiny,
       paddingHorizontal: spacing.padding.tiny,
       marginLeft: spacing.margin.small,
-      backgroundColor: colors.gray40,
+      backgroundColor: colors.gray5,
     },
     activatedText: {
       marginLeft: spacing.margin.base,

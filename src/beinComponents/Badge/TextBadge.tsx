@@ -31,11 +31,11 @@ const TextBadge: FC<TextBadgeProps> = ({
     return null;
   }
 
-  let _textColor = colors.blue50;
-  let _backgroundColor = colors.green20;
+  let _textColor = colors.green50;
+  let _backgroundColor = colors.green10;
   if (variant === 'blue') {
     _textColor = colors.blue50;
-    _backgroundColor = colors.blue20;
+    _backgroundColor = colors.blue10;
   }
 
   const containerStyle = {

@@ -115,7 +115,7 @@ export const dark: ExtendedTheme = {
     neutral1: '#F1F2F8',
     neutral5: '#E3E6F2',
     neutral10: '#D6D9EB',
-    neutral20: ' #BAC0DE',
+    neutral20: '#BAC0DE',
     neutral30: '#9FA6D1',
     neutral40: '#838DC3',
     neutral50: '#424D8A',

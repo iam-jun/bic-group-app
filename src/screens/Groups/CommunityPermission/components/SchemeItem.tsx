@@ -113,7 +113,7 @@ const createStyle = (theme: ExtendedTheme) => {
       alignItems: 'flex-start',
     },
     buttonEdit: {
-      backgroundColor: colors.gray40,
+      backgroundColor: colors.gray5,
       padding: spacing.padding.small,
       borderRadius: spacing.borderRadius.small,
     },
@@ -128,7 +128,7 @@ const createStyle = (theme: ExtendedTheme) => {
       marginRight: spacing.margin.small,
     },
     nameTag: {
-      backgroundColor: colors.gray40,
+      backgroundColor: colors.gray5,
       borderRadius: 50,
       alignItems: 'center',
       paddingVertical: 2,
