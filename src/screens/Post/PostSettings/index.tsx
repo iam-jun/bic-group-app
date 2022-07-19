@@ -43,8 +43,8 @@ const PostSettings = ({route}: PostSettingsProps) => {
   const chosenAudiences = useKeySelector(
     postKeySelector.createPost.chosenAudiences,
   );
-  const {hasPermissionsOnEveryAudience, PERMISSION_KEY} = useMyPermissions();
-  const canCreateImportantPost = hasPermissionsOnEveryAudience(
+  const {hasPermissionsOnEachScope, PERMISSION_KEY} = useMyPermissions();
+  const canCreateImportantPost = hasPermissionsOnEachScope(
     'groups',
     chosenAudiences,
     PERMISSION_KEY.GROUP.CREATE_IMPORTANT_POST,

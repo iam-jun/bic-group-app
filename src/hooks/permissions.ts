@@ -43,7 +43,7 @@ export const useMyPermissions = () => {
     );
   };
 
-  const hasPermissionsOnCurrentAudience = (
+  const hasPermissionsOnScopeWithId = (
     scope: 'communities' | 'groups',
     audienceId: number,
     requiredPermissions: string | string[],
@@ -57,34 +57,34 @@ export const useMyPermissions = () => {
     return hasPermissions(requiredPermissions, currentPermissions);
   };
 
-  const hasPermissionsOnEveryAudience = (
+  const hasPermissionsOnEachScope = (
     scope: 'communities' | 'groups',
     audiences: any[],
     requiredPermissions: string | string[],
   ) => {
-    // CHECK IF CURRENT USER HAS SOME PERMISSION ON EVERY AUDIENCE WITH THE SAME SCOPE
+    // CHECK IF CURRENT USER HAS SOME PERMISSION ON EVERY SCOPE
 
     return (audiences || []).every(audience =>
-      hasPermissionsOnCurrentAudience(scope, audience.id, requiredPermissions),
+      hasPermissionsOnScopeWithId(scope, audience.id, requiredPermissions),
     );
   };
 
-  const hasPermissionsOnSomeAudience = (
+  const hasPermissionsOnAtLeastOneScope = (
     scope: 'communities' | 'groups',
     audiences: any[],
     requiredPermissions: string | string[],
   ) => {
-    // CHECK IF CURRENT USER HAS SOME PERMISSION ON AT LEAST 1 AUDIENCE WITH THE SAME SCOPE
+    // CHECK IF CURRENT USER HAS SOME PERMISSION ON AT LEAST 1 SCOPE
 
     return (audiences || []).some(audience =>
-      hasPermissionsOnCurrentAudience(scope, audience.id, requiredPermissions),
+      hasPermissionsOnScopeWithId(scope, audience.id, requiredPermissions),
     );
   };
 
   return {
-    hasPermissionsOnCurrentAudience,
-    hasPermissionsOnEveryAudience,
-    hasPermissionsOnSomeAudience,
+    hasPermissionsOnScopeWithId,
+    hasPermissionsOnEachScope,
+    hasPermissionsOnAtLeastOneScope,
     PERMISSION_KEY,
   };
 };

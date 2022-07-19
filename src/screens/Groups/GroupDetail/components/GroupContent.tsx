@@ -43,8 +43,8 @@ const GroupContent = ({
     groupsKeySelector.refreshingGroupPosts,
   );
 
-  const {hasPermissionsOnCurrentAudience, PERMISSION_KEY} = useMyPermissions();
-  const canCreatePostArticle = hasPermissionsOnCurrentAudience(
+  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const canCreatePostArticle = hasPermissionsOnScopeWithId(
     'groups',
     groupId,
     PERMISSION_KEY.GROUP.CREATE_POST_ARTICLE,

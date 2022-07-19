@@ -52,16 +52,12 @@ const CommunityDetail = (props: any) => {
     groupsKeySelector.isGettingInfoDetail,
   );
   const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
-  const {hasPermissionsOnCurrentAudience, PERMISSION_KEY} = useMyPermissions();
-  const canSetting = hasPermissionsOnCurrentAudience(
-    'communities',
-    communityId,
-    [
-      PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
-      PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
-      PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
-    ],
-  );
+  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const canSetting = hasPermissionsOnScopeWithId('communities', communityId, [
+    PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
+    PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
+    PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
+  ]);
 
   const buttonShow = useSharedValue(0);
 

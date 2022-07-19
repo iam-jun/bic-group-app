@@ -42,8 +42,8 @@ const _GroupMembers = (props: any) => {
   const baseSheetRef: any = useRef();
 
   const {offset} = useKeySelector(groupsKeySelector.groupMembers);
-  const {hasPermissionsOnCurrentAudience, PERMISSION_KEY} = useMyPermissions();
-  const canAddMember = hasPermissionsOnCurrentAudience(
+  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const canAddMember = hasPermissionsOnScopeWithId(
     'groups',
     groupId,
     PERMISSION_KEY.GROUP.ADD_REMOVE_MEMBERS,

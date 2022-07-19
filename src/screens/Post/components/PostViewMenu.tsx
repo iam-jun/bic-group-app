@@ -34,8 +34,8 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
 
   const postData = useKeySelector(postKeySelector.postById(postId));
   const {audience} = postData || {};
-  const {hasPermissionsOnSomeAudience, PERMISSION_KEY} = useMyPermissions();
-  const canDeleteOwnPost = hasPermissionsOnSomeAudience(
+  const {hasPermissionsOnAtLeastOneScope, PERMISSION_KEY} = useMyPermissions();
+  const canDeleteOwnPost = hasPermissionsOnAtLeastOneScope(
     'groups',
     audience?.groups,
     PERMISSION_KEY.GROUP.DELETE_OWN_POST,

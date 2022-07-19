@@ -40,14 +40,14 @@ const MemberOptionsMenu = ({
   const dispatch = useDispatch();
   const {user} = useAuth();
   const {t} = useBaseHook();
-  const {hasPermissionsOnCurrentAudience, PERMISSION_KEY} = useMyPermissions();
+  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
 
-  const canRemoveMember = hasPermissionsOnCurrentAudience(
+  const canRemoveMember = hasPermissionsOnScopeWithId(
     'groups',
     groupId,
     PERMISSION_KEY.GROUP.ADD_REMOVE_MEMBERS,
   );
-  const canManageRole = hasPermissionsOnCurrentAudience(
+  const canManageRole = hasPermissionsOnScopeWithId(
     'groups',
     groupId,
     PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE,

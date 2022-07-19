@@ -13,8 +13,8 @@ interface MembersContentProps {
 
 const MembersContent = ({communityId, onPressMenu}: MembersContentProps) => {
   const dispatch = useDispatch();
-  const {hasPermissionsOnCurrentAudience, PERMISSION_KEY} = useMyPermissions();
-  const canManageMember = hasPermissionsOnCurrentAudience(
+  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const canManageMember = hasPermissionsOnScopeWithId(
     'communities',
     communityId,
     [
