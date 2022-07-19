@@ -2,14 +2,13 @@ import React, {useState} from 'react';
 import {View} from 'react-native';
 import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
+import * as Sentry from '@sentry/react-native';
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import FlashMessage from '~/beinComponents/FlashMessage';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 import NormalToastMessage from '~/beinComponents/ToastMessage/NormalToastMessage';
-// import {copyDeviceToken} from '~/store/app/actions';
-
 import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import {IToastMessage} from '~/interfaces/common';
@@ -195,11 +194,7 @@ const Section1 = () => {
           label={'Unicons Icon (Ship)'}
           style={{marginBottom: spacing?.margin.small}}
         />
-        <Icon
-          icon={'iconReactionHaha'}
-          size={36}
-          label={'Svg Icon (iconReactionHaha)'}
-        />
+        <Icon icon={'iconReact'} size={36} label={'Svg Icon (iconReact)'} />
       </View>,
     );
   };
@@ -381,7 +376,8 @@ const Section1 = () => {
             marginHorizontal: -12,
             paddingTop: spacing?.padding.base,
             paddingBottom: spacing?.padding.large,
-          }}></View>
+          }}
+        />
       </View>,
     );
   };
@@ -390,6 +386,18 @@ const Section1 = () => {
     <View style={{}}>
       {/*<Button.Primary onPress={copyToken}>Copy Device Token</Button.Primary>*/}
       <Text.H5 style={{margin: spacing?.margin.base}}>Section 1</Text.H5>
+      <Button.Danger
+        style={{marginHorizontal: 16, marginVertical: 4}}
+        onPress={() => {
+          throw new Error('Test crash JS');
+        }}>
+        Crash JS!
+      </Button.Danger>
+      <Button.Danger
+        style={{marginHorizontal: 16, marginVertical: 4}}
+        onPress={() => Sentry.nativeCrash()}>
+        Crash Native!
+      </Button.Danger>
       {renderButton()}
       {renderFlashMessage()}
       {renderToastMessage()}
