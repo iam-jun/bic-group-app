@@ -161,6 +161,11 @@ export const NOTIFICATION_TYPE = {
   GROUP_JOIN_GROUP_TO_ADMIN: 'group.join_group.to_admin',
 
   /**
+   * When many users request to join someone's group
+   */
+  GROUP_JOIN_GROUP_TO_ADMIN_AGGREGATED: 'group.join_group.to_admin.aggregated',
+
+  /**
    * When the admin or owner of a group approved someone's request to join
    */
   GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_APPROVED:

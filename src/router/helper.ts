@@ -240,6 +240,7 @@ export const getScreenAndParams = (data: any) => {
           }
           break;
         case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
+        case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN_AGGREGATED:
           return {
             screen: 'communities',
             params: {
