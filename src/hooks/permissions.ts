@@ -9,18 +9,12 @@ import {useKeySelector} from './selector';
 
 const EXPIRED_TIME = 1000 * 60 * 10; // 10 mins
 
-export const useMyPermissions = (
-  scope: 'communities' | 'groups',
-  id: number,
-) => {
+export const useMyPermissions = () => {
   const dispatch = useDispatch();
   const token = useAuthToken();
   const userId = useUserIdAuth();
   const {loading, timeGetMyPermissions} = useKeySelector(
     groupsKeySelector.myPermissions,
-  );
-  const currentPermissions: string[] = useKeySelector(
-    groupsKeySelector.permissionsByScopeAndId(scope, id),
   );
 
   const getMyPermissions = () => {
@@ -35,7 +29,10 @@ export const useMyPermissions = (
     }
   }, [timeGetMyPermissions]);
 
-  const hasPermissions = (requiredPermissions: string | string[]) => {
+  const hasPermissions = (
+    requiredPermissions: string | string[],
+    currentPermissions: string[],
+  ) => {
     let arr = requiredPermissions;
     if (typeof requiredPermissions === 'string') {
       arr = [requiredPermissions];
@@ -46,5 +43,48 @@ export const useMyPermissions = (
     );
   };
 
-  return {hasPermissions, PERMISSION_KEY};
+  const hasPermissionsOnScopeWithId = (
+    scope: 'communities' | 'groups',
+    audienceId: number,
+    requiredPermissions: string | string[],
+  ) => {
+    // CHECK IF CURRENT USER HAS SOME PERMISSION ON A SPECIFIC AUDIENCE
+
+    const currentPermissions: string[] = useKeySelector(
+      groupsKeySelector.permissionsByScopeAndId(scope, audienceId),
+    );
+
+    return hasPermissions(requiredPermissions, currentPermissions);
+  };
+
+  const hasPermissionsOnEachScope = (
+    scope: 'communities' | 'groups',
+    audiences: any[],
+    requiredPermissions: string | string[],
+  ) => {
+    // CHECK IF CURRENT USER HAS SOME PERMISSION ON EVERY SCOPE
+
+    return (audiences || []).every(audience =>
+      hasPermissionsOnScopeWithId(scope, audience.id, requiredPermissions),
+    );
+  };
+
+  const hasPermissionsOnAtLeastOneScope = (
+    scope: 'communities' | 'groups',
+    audiences: any[],
+    requiredPermissions: string | string[],
+  ) => {
+    // CHECK IF CURRENT USER HAS SOME PERMISSION ON AT LEAST 1 SCOPE
+
+    return (audiences || []).some(audience =>
+      hasPermissionsOnScopeWithId(scope, audience.id, requiredPermissions),
+    );
+  };
+
+  return {
+    hasPermissionsOnScopeWithId,
+    hasPermissionsOnEachScope,
+    hasPermissionsOnAtLeastOneScope,
+    PERMISSION_KEY,
+  };
 };
