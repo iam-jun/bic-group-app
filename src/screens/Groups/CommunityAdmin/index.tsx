@@ -32,17 +32,20 @@ const CommunityAdmin = () => {
   } = useKeySelector(groupsKeySelector.communityDetail);
   const {total} = useKeySelector(groupsKeySelector.communityMemberRequests);
 
-  const {hasPermissions, PERMISSION_KEY} = useMyPermissions(
+  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const canManageJoiningRequests = hasPermissionsOnScopeWithId(
     'communities',
     communityId,
-  );
-  const canManageJoiningRequests = hasPermissions(
     PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
   );
-  const canEditCommunityInfo = hasPermissions([
-    PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
-    PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
-  ]);
+  const canEditProfileInfo = hasPermissionsOnScopeWithId(
+    'communities',
+    communityId,
+    [
+      PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
+      PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
+    ],
+  );
 
   useEffect(() => {
     canManageJoiningRequests &&
@@ -125,7 +128,7 @@ const CommunityAdmin = () => {
         useI18n>
         settings:title_community_settings
       </Text.BodyM>
-      {!!canEditCommunityInfo && (
+      {!!canEditProfileInfo && (
         <MenuItem
           testID="community_admin.profile_info"
           title="settings:title_profile_info"

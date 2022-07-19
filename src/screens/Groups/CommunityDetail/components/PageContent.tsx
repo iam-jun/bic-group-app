@@ -17,6 +17,7 @@ import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePos
 import PostItem from '~/beinComponents/list/items/PostItem';
 import actions from '~/screens/Groups/redux/actions';
 import spacing from '~/theme/spacing';
+import {useMyPermissions} from '~/hooks/permissions';
 
 interface PageContentProps {
   communityId: number;
@@ -43,6 +44,14 @@ const _PageContent = ({
   const refreshingGroupPosts = useKeySelector(
     groupsKeySelector.refreshingGroupPosts,
   );
+
+  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const canCreatePostArticle = hasPermissionsOnScopeWithId(
+    'groups',
+    group_id,
+    PERMISSION_KEY.GROUP.CREATE_POST_ARTICLE,
+  );
+
   const dispatch = useDispatch();
 
   const onPressDiscover = () => {
@@ -138,7 +147,7 @@ const _PageContent = ({
           </ScrollView>
           <JoinCancelButton />
         </View>
-        {isMember && (
+        {isMember && canCreatePostArticle && (
           <HeaderCreatePost
             style={styles.createPost}
             audience={{...infoDetail, id: group_id}}

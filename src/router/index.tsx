@@ -37,6 +37,7 @@ import * as screens from './navigator';
 import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
 import * as appTheme from '~/theme/theme';
+import {registerNavigationContainerWithSentry} from '~/services/sentry';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
@@ -105,6 +106,9 @@ const StackNavigator = (): React.ReactElement => {
   const onReady = () => {
     //@ts-ignore
     isNavigationRefReady.current = true;
+
+    // Register the navigation container with the instrumentation for Sentry performance monitoring
+    registerNavigationContainerWithSentry(rootNavigationRef);
   };
 
   const linking = getLinkingCustomConfig(

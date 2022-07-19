@@ -18,6 +18,7 @@ import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import {showAlertNewFeature} from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
+import {useMyPermissions} from '~/hooks/permissions';
 
 const GroupContent = ({
   getGroupPosts,
@@ -40,6 +41,13 @@ const GroupContent = ({
   const isPublicGroup = groupData.privacy === groupPrivacy.public;
   const refreshingGroupPosts = useKeySelector(
     groupsKeySelector.refreshingGroupPosts,
+  );
+
+  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const canCreatePostArticle = hasPermissionsOnScopeWithId(
+    'groups',
+    groupId,
+    PERMISSION_KEY.GROUP.CREATE_POST_ARTICLE,
   );
 
   const onPressChat = () => {
@@ -148,7 +156,7 @@ const GroupContent = ({
             </Button.Secondary>
           </ScrollView>
         </View>
-        {isMember && (
+        {isMember && canCreatePostArticle && (
           <HeaderCreatePost
             audience={groupData}
             style={styles.createPost}

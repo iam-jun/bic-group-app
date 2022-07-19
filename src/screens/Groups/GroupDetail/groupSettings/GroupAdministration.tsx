@@ -17,6 +17,7 @@ import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import spacing from '~/theme/spacing';
+import {useMyPermissions} from '~/hooks/permissions';
 
 const GroupAdministration = (props: any) => {
   const params = props.route.params;
@@ -28,18 +29,20 @@ const GroupAdministration = (props: any) => {
   const {rootNavigation} = useRootNavigation();
   const {name, icon} = useKeySelector(groupsKeySelector.groupDetail.group);
   const {total} = useKeySelector(groupsKeySelector.groupMemberRequests);
-  const can_manage_member = useKeySelector(
-    groupsKeySelector.groupDetail.can_manage_member,
+
+  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const canManageJoiningRequests = hasPermissionsOnScopeWithId(
+    'groups',
+    groupId,
+    PERMISSION_KEY.GROUP.APPROVE_REJECT_JOINING_REQUESTS,
   );
-  const can_edit_info = useKeySelector(
-    groupsKeySelector.groupDetail.can_edit_info,
-  );
-  const can_edit_privacy = useKeySelector(
-    groupsKeySelector.groupDetail.can_edit_privacy,
-  );
+  const canEditProfileInfo = hasPermissionsOnScopeWithId('groups', groupId, [
+    PERMISSION_KEY.GROUP.EDIT_INFORMATION,
+    PERMISSION_KEY.GROUP.EDIT_PRIVACY,
+  ]);
 
   useEffect(() => {
-    can_manage_member &&
+    canManageJoiningRequests &&
       dispatch(groupsActions.getGroupMemberRequests({groupId}));
 
     return () => {
@@ -87,7 +90,7 @@ const GroupAdministration = (props: any) => {
         useI18n>
         settings:title_group_moderating
       </Text.H5>
-      {!!can_manage_member &&
+      {!!canManageJoiningRequests &&
         renderItem(
           'UserCheck',
           'settings:title_pending_members',
@@ -114,7 +117,7 @@ const GroupAdministration = (props: any) => {
         useI18n>
         settings:title_group_settings
       </Text.H5>
-      {(!!can_edit_info || !!can_edit_privacy) &&
+      {canEditProfileInfo &&
         renderItem(
           'Gear',
           'settings:title_profile_info',
