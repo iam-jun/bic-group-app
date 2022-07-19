@@ -13,8 +13,8 @@ interface MembersContentProps {
 
 const MembersContent = ({groupId, onPressMenu}: MembersContentProps) => {
   const dispatch = useDispatch();
-  const {hasPermissions, PERMISSION_KEY} = useMyPermissions('groups', groupId);
-  const canManageMember = hasPermissions([
+  const {hasPermissionsOnCurrentAudience, PERMISSION_KEY} = useMyPermissions();
+  const canManageMember = hasPermissionsOnCurrentAudience('groups', groupId, [
     PERMISSION_KEY.GROUP.ADD_REMOVE_MEMBERS,
     PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE,
   ]);

@@ -30,14 +30,17 @@ const GroupAdministration = (props: any) => {
   const {name, icon} = useKeySelector(groupsKeySelector.groupDetail.group);
   const {total} = useKeySelector(groupsKeySelector.groupMemberRequests);
 
-  const {hasPermissions, PERMISSION_KEY} = useMyPermissions('groups', groupId);
-  const canManageJoiningRequests = hasPermissions([
+  const {hasPermissionsOnCurrentAudience, PERMISSION_KEY} = useMyPermissions();
+  const canManageJoiningRequests = hasPermissionsOnCurrentAudience(
+    'groups',
+    groupId,
     PERMISSION_KEY.GROUP.APPROVE_REJECT_JOINING_REQUESTS,
-  ]);
-  const canEditProfileInfo = hasPermissions([
-    PERMISSION_KEY.GROUP.EDIT_INFORMATION,
-    PERMISSION_KEY.GROUP.EDIT_PRIVACY,
-  ]);
+  );
+  const canEditProfileInfo = hasPermissionsOnCurrentAudience(
+    'groups',
+    groupId,
+    [PERMISSION_KEY.GROUP.EDIT_INFORMATION, PERMISSION_KEY.GROUP.EDIT_PRIVACY],
+  );
 
   useEffect(() => {
     canManageJoiningRequests &&

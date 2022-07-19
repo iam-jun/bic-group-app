@@ -37,8 +37,8 @@ const GroupTopBar = () => {
   const {user} = useAuth();
   const userId = useUserIdAuth();
 
-  const {hasPermissions, PERMISSION_KEY} = useMyPermissions('groups', groupId);
-  const canSetting = hasPermissions([
+  const {hasPermissionsOnCurrentAudience, PERMISSION_KEY} = useMyPermissions();
+  const canSetting = hasPermissionsOnCurrentAudience('groups', groupId, [
     PERMISSION_KEY.GROUP.APPROVE_REJECT_JOINING_REQUESTS,
     PERMISSION_KEY.GROUP.EDIT_INFORMATION,
     PERMISSION_KEY.GROUP.EDIT_PRIVACY,

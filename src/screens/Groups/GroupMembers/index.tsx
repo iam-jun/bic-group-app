@@ -42,10 +42,12 @@ const _GroupMembers = (props: any) => {
   const baseSheetRef: any = useRef();
 
   const {offset} = useKeySelector(groupsKeySelector.groupMembers);
-  const {hasPermissions, PERMISSION_KEY} = useMyPermissions('groups', groupId);
-  const canAddMember = hasPermissions([
+  const {hasPermissionsOnCurrentAudience, PERMISSION_KEY} = useMyPermissions();
+  const canAddMember = hasPermissionsOnCurrentAudience(
+    'groups',
+    groupId,
     PERMISSION_KEY.GROUP.ADD_REMOVE_MEMBERS,
-  ]);
+  );
 
   const getGroupProfile = () => {
     dispatch(groupsActions.getGroupDetail(groupId));

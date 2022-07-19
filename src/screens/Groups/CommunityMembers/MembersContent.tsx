@@ -13,14 +13,15 @@ interface MembersContentProps {
 
 const MembersContent = ({communityId, onPressMenu}: MembersContentProps) => {
   const dispatch = useDispatch();
-  const {hasPermissions, PERMISSION_KEY} = useMyPermissions(
+  const {hasPermissionsOnCurrentAudience, PERMISSION_KEY} = useMyPermissions();
+  const canManageMember = hasPermissionsOnCurrentAudience(
     'communities',
     communityId,
+    [
+      PERMISSION_KEY.COMMUNITY.ADD_REMOVE_MEMBERS,
+      PERMISSION_KEY.COMMUNITY.ASSIGN_UNASSIGN_ROLE,
+    ],
   );
-  const canManageMember = hasPermissions([
-    PERMISSION_KEY.COMMUNITY.ADD_REMOVE_MEMBERS,
-    PERMISSION_KEY.COMMUNITY.ASSIGN_UNASSIGN_ROLE,
-  ]);
 
   useEffect(() => {
     getCommunityDetail();

@@ -22,6 +22,9 @@ import useCreatePost from '~/screens/Post/CreatePost/hooks/useCreatePost';
 import {IPostSettingsParams} from '~/interfaces/IPost';
 import postActions from '~/screens/Post/redux/actions';
 import spacing from '~/theme/spacing';
+import {useMyPermissions} from '~/hooks/permissions';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '../redux/keySelector';
 
 export interface PostSettingsProps {
   route?: {
@@ -37,6 +40,15 @@ const PostSettings = ({route}: PostSettingsProps) => {
   const {colors} = theme;
 
   const styles = createStyle(theme);
+  const chosenAudiences = useKeySelector(
+    postKeySelector.createPost.chosenAudiences,
+  );
+  const {hasPermissionsOnEveryAudience, PERMISSION_KEY} = useMyPermissions();
+  const canCreateImportantPost = hasPermissionsOnEveryAudience(
+    'groups',
+    chosenAudiences,
+    PERMISSION_KEY.GROUP.CREATE_IMPORTANT_POST,
+  );
 
   const screenParams = route?.params || {};
   const {postId} = screenParams;
@@ -177,7 +189,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
       />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {renderImportant()}
+          {!!canCreateImportantPost && renderImportant()}
         </ScrollView>
         <View style={{position: 'absolute', alignSelf: 'center'}}>
           {selectingDate && (
