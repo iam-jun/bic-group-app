@@ -13,11 +13,12 @@ function* getNotifications({
   payload: IParamGetNotifications;
   type: string;
 }) {
-  const {flag = 'ALL', keyValue = 'tabAll'} = payload || {};
+  const {flag = 'ALL', keyValue = 'tabAll', isRefresh = false} = payload || {};
   try {
-    yield put(
-      notificationsActions.setLoadingNotifications({keyValue, value: true}),
-    );
+    if (!isRefresh)
+      yield put(
+        notificationsActions.setLoadingNotifications({keyValue, value: true}),
+      );
     yield put(notificationsActions.setNoMoreNoti({keyValue, value: false}));
 
     const response: IObject<any> = yield call(
@@ -61,9 +62,10 @@ function* getNotifications({
       );
     }
 
-    yield put(
-      notificationsActions.setLoadingNotifications({keyValue, value: false}),
-    );
+    if (!isRefresh)
+      yield put(
+        notificationsActions.setLoadingNotifications({keyValue, value: false}),
+      );
   } catch (err) {
     yield put(
       notificationsActions.setLoadingNotifications({

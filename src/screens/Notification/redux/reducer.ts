@@ -122,8 +122,8 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
     }
     case notificationsTypes.UPDATE: {
       let newUnSeenNumber = state.unseenNumber;
-      const {notifications}: any = state;
-      if (notifications[payload.id]?.isSeen) {
+      const {notificationList}: any = state;
+      if (notificationList[payload.id]?.isSeen) {
         newUnSeenNumber = newUnSeenNumber + 1;
       }
 
