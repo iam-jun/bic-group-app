@@ -146,6 +146,7 @@ const Notification = () => {
               }
               break;
             case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
+            case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN_AGGREGATED:
               if (!!act?.community?.id) {
                 rootNavigation.navigate(groupStack.communityPendingMembers, {
                   id: act.community.id,
