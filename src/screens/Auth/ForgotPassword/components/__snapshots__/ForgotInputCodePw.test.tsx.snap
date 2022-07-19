@@ -20,7 +20,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
             "fontSize": 15,
           },
@@ -35,7 +35,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 13,
           },
@@ -65,7 +65,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
           Array [
             Object {
               "alignItems": "center",
-              "borderColor": undefined,
+              "borderColor": "#A4A9B7",
               "borderRadius": 4,
               "borderWidth": 1,
               "flexDirection": "row",
@@ -74,7 +74,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
               "paddingRight": 12,
             },
             Object {
-              "borderColor": undefined,
+              "borderColor": "#A4A9B7",
             },
             undefined,
           ]
@@ -86,6 +86,8 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
           onChangeText={[Function]}
           onFocus={[Function]}
           placeholder="6-digit code"
+          placeholderTextColor="#767D93"
+          selectionColor="#767D93"
           style={
             Array [
               Object {
@@ -95,7 +97,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
                 "paddingHorizontal": 12,
               },
               Object {
-                "color": undefined,
+                "color": "#181C32",
               },
             ]
           }
@@ -108,7 +110,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 13,
           },
@@ -124,13 +126,13 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": undefined,
+              "color": "#181C32",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 13,
             },
             Object {},
             Object {
-              "color": undefined,
+              "color": "#3F4350",
             },
           ]
         }
@@ -151,7 +153,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
             "fontSize": 15,
           },
@@ -180,7 +182,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
           Array [
             Object {
               "alignItems": "center",
-              "borderColor": undefined,
+              "borderColor": "#A4A9B7",
               "borderRadius": 4,
               "borderWidth": 1,
               "flexDirection": "row",
@@ -189,7 +191,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
               "paddingRight": 12,
             },
             Object {
-              "borderColor": undefined,
+              "borderColor": "#A4A9B7",
             },
             undefined,
           ]
@@ -202,7 +204,9 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
           onChangeText={[Function]}
           onFocus={[Function]}
           placeholder="New password"
+          placeholderTextColor="#767D93"
           secureTextEntry={true}
+          selectionColor="#767D93"
           style={
             Array [
               Object {
@@ -212,7 +216,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
                 "paddingHorizontal": 12,
               },
               Object {
-                "color": undefined,
+                "color": "#181C32",
               },
             ]
           }
@@ -295,7 +299,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
           Array [
             Object {
               "alignItems": "center",
-              "borderColor": undefined,
+              "borderColor": "#A4A9B7",
               "borderRadius": 4,
               "borderWidth": 1,
               "flexDirection": "row",
@@ -304,7 +308,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
               "paddingRight": 12,
             },
             Object {
-              "borderColor": undefined,
+              "borderColor": "#A4A9B7",
             },
             undefined,
           ]
@@ -317,7 +321,9 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
           onChangeText={[Function]}
           onFocus={[Function]}
           placeholder="Confirm new password"
+          placeholderTextColor="#767D93"
           secureTextEntry={true}
+          selectionColor="#767D93"
           style={
             Array [
               Object {
@@ -327,7 +333,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
                 "paddingHorizontal": 12,
               },
               Object {
-                "color": undefined,
+                "color": "#181C32",
               },
             ]
           }
@@ -413,7 +419,7 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
     style={
       Object {
         "alignItems": "center",
-        "backgroundColor": undefined,
+        "backgroundColor": "#D1D4DB",
         "borderRadius": 4,
         "paddingHorizontal": 12,
         "paddingVertical": 8,
@@ -435,11 +441,13 @@ exports[`ForgotInputCodePw component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": undefined,
+              "color": "#181C32",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 15,
             },
-            Object {},
+            Object {
+              "color": "#A4A9B7",
+            },
             Object {
               "textAlign": "center",
             },

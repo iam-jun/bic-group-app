@@ -194,7 +194,7 @@ exports[`Avatar component renders correctly badge 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": undefined,
+          "backgroundColor": "#FFFFFF",
           "borderRadius": 12,
           "bottom": undefined,
           "elevation": 2,
@@ -398,7 +398,7 @@ exports[`Avatar component renders correctly badge bottom 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": undefined,
+          "backgroundColor": "#FFFFFF",
           "borderRadius": 12,
           "bottom": -4,
           "elevation": 2,
@@ -602,8 +602,8 @@ exports[`Avatar component renders correctly badge check 1`] = `
       style={
         Object {
           "alignItems": "center",
-          "backgroundColor": undefined,
-          "borderColor": undefined,
+          "backgroundColor": "#13B055",
+          "borderColor": "#FFFFFF",
           "borderRadius": 8,
           "borderWidth": 1,
           "bottom": 0,
@@ -782,8 +782,8 @@ exports[`Avatar component renders correctly status 1`] = `
     <View
       style={
         Object {
-          "backgroundColor": undefined,
-          "borderColor": undefined,
+          "backgroundColor": "#13B055",
+          "borderColor": "#FFFFFF",
           "borderRadius": 8,
           "borderWidth": 1,
           "bottom": 0,

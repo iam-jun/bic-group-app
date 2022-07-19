@@ -21,7 +21,7 @@ exports[`NFSRecentSearchKeyword component should render empty recent search keyw
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
             "fontSize": 15,
           },
@@ -39,13 +39,13 @@ exports[`NFSRecentSearchKeyword component should render empty recent search keyw
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
         Object {},
         Object {
-          "color": undefined,
+          "color": "#767D93",
           "margin": 24,
           "textAlign": "center",
         },
@@ -78,7 +78,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
             "fontSize": 15,
           },
@@ -125,13 +125,13 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 13,
               },
               Object {},
               Object {
-                "color": undefined,
+                "color": "#7335C0",
                 "marginRight": 4,
               },
             ]
@@ -184,7 +184,7 @@ exports[`NFSRecentSearchKeyword component should render list recent search keywo
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
@@ -298,7 +298,7 @@ exports[`NFSRecentSearchKeyword component should render loading recent search ke
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
             "fontSize": 15,
           },
@@ -313,6 +313,7 @@ exports[`NFSRecentSearchKeyword component should render loading recent search ke
     </Text>
   </View>
   <ActivityIndicator
+    color="#A4A9B7"
     style={
       Object {
         "alignItems": "center",

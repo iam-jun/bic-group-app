@@ -65,7 +65,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
@@ -218,7 +218,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-Light",
                     "fontSize": 15,
                   },
@@ -232,11 +232,13 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },
-                    Object {},
+                    Object {
+                      "color": "#767D93",
+                    },
                     undefined,
                   ]
                 }
@@ -292,7 +294,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                     "width": 36,
                   },
                   Object {
-                    "backgroundColor": undefined,
+                    "backgroundColor": "#F1F2F8",
                   },
                 ]
               }
@@ -523,7 +525,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-Light",
                     "fontSize": 15,
                   },
@@ -537,11 +539,13 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },
-                    Object {},
+                    Object {
+                      "color": "#767D93",
+                    },
                     undefined,
                   ]
                 }
@@ -597,7 +601,7 @@ exports[`MemberSearchResult component should render data correctly 1`] = `
                     "width": 36,
                   },
                   Object {
-                    "backgroundColor": undefined,
+                    "backgroundColor": "#F1F2F8",
                   },
                 ]
               }

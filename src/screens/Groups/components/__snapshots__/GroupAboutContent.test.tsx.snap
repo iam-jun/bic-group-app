@@ -4,7 +4,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
 <View
   style={
     Object {
-      "backgroundColor": undefined,
+      "backgroundColor": "#FFFFFF",
       "flex": 1,
       "paddingHorizontal": 8,
     }
@@ -15,7 +15,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-SemiBold",
           "fontSize": 17,
         },
@@ -46,7 +46,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
@@ -59,7 +59,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
@@ -188,7 +188,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Medium",
                   "fontSize": 15,
                 },
@@ -379,7 +379,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Medium",
                   "fontSize": 15,
                 },
@@ -394,7 +394,7 @@ exports[`GroupAboutContent component should render group privacy item correctly 
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },
@@ -422,7 +422,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": undefined,
+      "backgroundColor": "#FFFFFF",
       "flex": 1,
       "paddingHorizontal": 8,
     }
@@ -433,7 +433,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-SemiBold",
           "fontSize": 17,
         },
@@ -464,7 +464,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
         },
@@ -477,7 +477,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
@@ -606,7 +606,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Medium",
                   "fontSize": 15,
                 },
@@ -797,7 +797,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Medium",
                   "fontSize": 15,
                 },
@@ -812,7 +812,7 @@ exports[`GroupAboutContent component should render member item correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },

@@ -4,7 +4,7 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": undefined,
+      "backgroundColor": "#FFFFFF",
     }
   }
   testID="group_info_header"
@@ -113,7 +113,7 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
         <View
           style={
             Object {
-              "backgroundColor": undefined,
+              "backgroundColor": "#A4A9B7",
               "borderRadius": 4,
               "height": 48,
               "width": 48,
@@ -205,7 +205,7 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-SemiBold",
                   "fontSize": 20,
                 },
@@ -354,7 +354,7 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-Light",
                     "fontSize": 13,
                   },
@@ -368,7 +368,7 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-Light",
                     "fontSize": 13,
                   },
@@ -383,7 +383,7 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-Medium",
                     "fontSize": 13,
                   },
@@ -397,7 +397,7 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-Light",
                     "fontSize": 13,
                   },
@@ -425,7 +425,7 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
           Object {
             "alignItems": "center",
             "alignSelf": "flex-start",
-            "backgroundColor": undefined,
+            "backgroundColor": "#602CA0",
             "borderRadius": 4,
             "marginLeft": 16,
             "padding": 8,
@@ -447,11 +447,13 @@ exports[`GroupInfoHeader component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Medium",
                   "fontSize": 15,
                 },
-                Object {},
+                Object {
+                  "color": "#FFFFFF",
+                },
                 Object {
                   "textAlign": "center",
                 },

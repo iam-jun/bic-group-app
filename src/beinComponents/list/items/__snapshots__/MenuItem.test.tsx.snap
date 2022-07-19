@@ -49,7 +49,7 @@ exports[`Menu Item component renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
@@ -121,7 +121,7 @@ exports[`Menu Item component renders correctly RightComponent 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
@@ -253,7 +253,7 @@ exports[`Menu Item component renders correctly item disable 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
@@ -325,7 +325,7 @@ exports[`Menu Item component renders correctly rightSubIcon 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
@@ -459,7 +459,7 @@ exports[`Menu Item component renders correctly rightSubTitle 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
@@ -481,11 +481,13 @@ exports[`Menu Item component renders correctly rightSubTitle 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
-              Object {},
+              Object {
+                "color": "#181C32",
+              },
               undefined,
             ]
           }
@@ -546,7 +548,7 @@ exports[`Menu Item component renders correctly subTitle 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
@@ -561,7 +563,7 @@ exports[`Menu Item component renders correctly subTitle 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
@@ -634,7 +636,7 @@ exports[`Menu Item component renders correctly testID 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
@@ -706,7 +708,7 @@ exports[`Menu Item component should render NotificationsBadge 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
@@ -722,7 +724,7 @@ exports[`Menu Item component should render NotificationsBadge 1`] = `
           Array [
             Object {
               "alignItems": "center",
-              "backgroundColor": undefined,
+              "backgroundColor": "#D1D4DB",
               "borderRadius": 20,
               "height": 20,
               "justifyContent": "center",
@@ -739,14 +741,14 @@ exports[`Menu Item component should render NotificationsBadge 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
               Object {},
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "lineHeight": 16,
                   "textAlign": "center",
                 },
@@ -819,7 +821,7 @@ exports[`Menu Item component should render badge Number when type= draftPost 1`]
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
@@ -842,13 +844,15 @@ exports[`Menu Item component should render badge Number when type= draftPost 1`]
           Array [
             Object {
               "alignItems": "center",
-              "backgroundColor": undefined,
+              "backgroundColor": "#13B055",
               "borderRadius": 20,
               "justifyContent": "center",
               "minHeight": 20,
               "minWidth": 20,
             },
-            Object {},
+            Object {
+              "backgroundColor": "#A4A9B7",
+            },
           ]
         }
         testID="menu_item.badge_number"
@@ -857,13 +861,13 @@ exports[`Menu Item component should render badge Number when type= draftPost 1`]
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
               Object {},
               Object {
-                "color": undefined,
+                "color": "#FFFFFF",
                 "marginTop": -2,
               },
             ]
@@ -927,7 +931,7 @@ exports[`Menu Item component should render badge Number when type= draftPost and
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },
@@ -950,13 +954,15 @@ exports[`Menu Item component should render badge Number when type= draftPost and
           Array [
             Object {
               "alignItems": "center",
-              "backgroundColor": undefined,
+              "backgroundColor": "#13B055",
               "borderRadius": 20,
               "justifyContent": "center",
               "minHeight": 20,
               "minWidth": 20,
             },
-            Object {},
+            Object {
+              "backgroundColor": "#A4A9B7",
+            },
           ]
         }
         testID="menu_item.badge_number"
@@ -965,13 +971,13 @@ exports[`Menu Item component should render badge Number when type= draftPost and
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
               Object {},
               Object {
-                "color": undefined,
+                "color": "#FFFFFF",
                 "marginTop": -2,
               },
             ]
@@ -1094,7 +1100,7 @@ exports[`Menu Item component should render icon with iconProps 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 15,
               },

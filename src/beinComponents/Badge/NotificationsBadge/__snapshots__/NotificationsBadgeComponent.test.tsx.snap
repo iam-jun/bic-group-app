@@ -6,7 +6,7 @@ exports[`NotificationsBadgeComponent renders correctly 1`] = `
     Array [
       Object {
         "alignItems": "center",
-        "backgroundColor": undefined,
+        "backgroundColor": "#D1D4DB",
         "borderRadius": 20,
         "height": 20,
         "justifyContent": "center",
@@ -22,14 +22,14 @@ exports[`NotificationsBadgeComponent renders correctly 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 13,
         },
         Object {},
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "lineHeight": 16,
             "textAlign": "center",
           },

@@ -14,6 +14,7 @@ import {initReactI18next} from 'react-i18next';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 import mockSafeAreaContext from '~/test/mockSafeAreaContext';
+import colors from '~/theme/theme';
 
 configure({adapter: new Adapter()});
 
@@ -113,6 +114,9 @@ jest.doMock('@react-navigation/native', () => ({
     },
   }),
   useIsFocused: jest.fn(),
+  useTheme: () => ({
+    colors: colors.light.colors,
+  }),
 }));
 
 jest.doMock('react-native-modalize', () => {

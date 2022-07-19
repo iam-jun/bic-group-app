@@ -2,7 +2,7 @@ import React from 'react';
 
 import {cleanup, renderWithRedux, fireEvent} from '~/test/testUtils';
 import Reaction from './Reaction';
-import {colors} from '~/theme';
+import colors from '~/theme/theme';
 import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);

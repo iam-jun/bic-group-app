@@ -5,7 +5,7 @@ exports[`NoticePanel component renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": undefined,
+      "backgroundColor": "#FFFFFF",
       "flexDirection": "row",
       "marginBottom": 12,
       "paddingHorizontal": 16,
@@ -25,7 +25,7 @@ exports[`NoticePanel component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 13,
           },
@@ -41,13 +41,13 @@ exports[`NoticePanel component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 13,
           },
           Object {},
           Object {
-            "color": undefined,
+            "color": "#767D93",
             "marginTop": 2,
           },
         ]

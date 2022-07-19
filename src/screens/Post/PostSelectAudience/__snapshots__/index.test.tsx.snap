@@ -4,7 +4,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
 <View
   style={
     Object {
-      "backgroundColor": undefined,
+      "backgroundColor": "#FFFFFF",
       "flex": 1,
     }
   }
@@ -33,14 +33,14 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
             },
             Object {
               "alignItems": "flex-end",
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFFFFF",
               "flexDirection": "row",
               "overflow": "hidden",
               "paddingTop": 0,
             },
             Object {
               "borderBottomWidth": 0.5,
-              "borderColor": undefined,
+              "borderColor": "#E3E6F2",
               "elevation": 2,
               "shadowColor": "#000",
               "shadowOffset": Object {
@@ -59,7 +59,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
           style={
             Object {
               "alignItems": "center",
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFFFFF",
               "flex": 1,
               "flexDirection": "row",
               "height": 60,
@@ -176,7 +176,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-SemiBold",
                       "fontSize": 17,
                     },
@@ -211,8 +211,8 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": undefined,
-                "borderColor": undefined,
+                "backgroundColor": "#D1D4DB",
+                "borderColor": "#7335C0",
                 "borderRadius": 4,
                 "borderWidth": 0,
                 "height": 40,
@@ -236,11 +236,13 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Medium",
                       "fontSize": 15,
                     },
-                    Object {},
+                    Object {
+                      "color": "#A4A9B7",
+                    },
                     Object {
                       "textAlign": "center",
                     },
@@ -256,7 +258,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
         <View
           style={
             Object {
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFFFFF",
               "height": 0,
               "position": "absolute",
               "top": 0,
@@ -269,7 +271,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
     <View
       style={
         Object {
-          "backgroundColor": undefined,
+          "backgroundColor": "#E3E6F2",
           "borderRadius": 20,
           "height": 40,
           "justifyContent": "center",
@@ -352,10 +354,12 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
           onFocus={[Function]}
           onSubmitEditing={[Function]}
           placeholder="Search for groups or people"
+          placeholderTextColor="#767D93"
           returnKeyType="search"
+          selectionColor="#767D93"
           style={
             Object {
-              "color": undefined,
+              "color": "#181C32",
               "flex": 1,
               "fontFamily": "BeVietnamPro-Light",
               "fontSize": 15,
@@ -446,7 +450,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-SemiBold",
                   "fontSize": 15,
                 },
@@ -467,7 +471,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
           <View
             style={
               Object {
-                "backgroundColor": undefined,
+                "backgroundColor": "#FFFFFF",
               }
             }
           >
@@ -475,7 +479,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-SemiBold",
                     "fontSize": 15,
                   },
@@ -541,7 +545,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                     style={
                       Object {
                         "alignItems": "center",
-                        "backgroundColor": undefined,
+                        "backgroundColor": "#E3E6F2",
                         "borderRadius": 8,
                         "height": 16,
                         "justifyContent": "center",
@@ -612,7 +616,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                     style={
                       Array [
                         Object {
-                          "color": undefined,
+                          "color": "#181C32",
                           "fontFamily": "BeVietnamPro-Light",
                           "fontSize": 15,
                         },
@@ -629,11 +633,13 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                       style={
                         Array [
                           Object {
-                            "color": undefined,
+                            "color": "#181C32",
                             "fontFamily": "BeVietnamPro-Light",
                             "fontSize": 15,
                           },
-                          Object {},
+                          Object {
+                            "color": "#602CA0",
+                          },
                           undefined,
                         ]
                       }
@@ -693,7 +699,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                       <View
                         style={
                           Object {
-                            "backgroundColor": undefined,
+                            "backgroundColor": "#A4A9B7",
                             "borderRadius": 4,
                             "height": 40,
                             "width": 40,
@@ -794,8 +800,8 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                       <View
                         style={
                           Object {
-                            "backgroundColor": undefined,
-                            "borderColor": undefined,
+                            "backgroundColor": "#E3E6F2",
+                            "borderColor": "#A4A9B7",
                             "borderRadius": 6,
                             "borderWidth": 1,
                             "height": 20,
@@ -945,7 +951,7 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                       style={
                         Array [
                           Object {
-                            "color": undefined,
+                            "color": "#181C32",
                             "fontFamily": "BeVietnamPro-SemiBold",
                             "fontSize": 15,
                           },
@@ -1028,11 +1034,13 @@ exports[`PostSelectAudience screen render correctly with 1 group selected 1`] = 
                         style={
                           Array [
                             Object {
-                              "color": undefined,
+                              "color": "#181C32",
                               "fontFamily": "BeVietnamPro-Light",
                               "fontSize": 13,
                             },
-                            Object {},
+                            Object {
+                              "color": "#767D93",
+                            },
                             Object {
                               "marginHorizontal": 4,
                             },
@@ -1067,7 +1075,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": undefined,
+      "backgroundColor": "#FFFFFF",
       "flex": 1,
     }
   }
@@ -1096,14 +1104,14 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
             },
             Object {
               "alignItems": "flex-end",
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFFFFF",
               "flexDirection": "row",
               "overflow": "hidden",
               "paddingTop": 0,
             },
             Object {
               "borderBottomWidth": 0.5,
-              "borderColor": undefined,
+              "borderColor": "#E3E6F2",
               "elevation": 2,
               "shadowColor": "#000",
               "shadowOffset": Object {
@@ -1122,7 +1130,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
           style={
             Object {
               "alignItems": "center",
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFFFFF",
               "flex": 1,
               "flexDirection": "row",
               "height": 60,
@@ -1239,7 +1247,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-SemiBold",
                       "fontSize": 17,
                     },
@@ -1274,8 +1282,8 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": undefined,
-                "borderColor": undefined,
+                "backgroundColor": "#D1D4DB",
+                "borderColor": "#7335C0",
                 "borderRadius": 4,
                 "borderWidth": 0,
                 "height": 40,
@@ -1299,11 +1307,13 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Medium",
                       "fontSize": 15,
                     },
-                    Object {},
+                    Object {
+                      "color": "#A4A9B7",
+                    },
                     Object {
                       "textAlign": "center",
                     },
@@ -1319,7 +1329,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
         <View
           style={
             Object {
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFFFFF",
               "height": 0,
               "position": "absolute",
               "top": 0,
@@ -1332,7 +1342,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
     <View
       style={
         Object {
-          "backgroundColor": undefined,
+          "backgroundColor": "#E3E6F2",
           "borderRadius": 20,
           "height": 40,
           "justifyContent": "center",
@@ -1415,10 +1425,12 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
           onFocus={[Function]}
           onSubmitEditing={[Function]}
           placeholder="Search for groups or people"
+          placeholderTextColor="#767D93"
           returnKeyType="search"
+          selectionColor="#767D93"
           style={
             Object {
-              "color": undefined,
+              "color": "#181C32",
               "flex": 1,
               "fontFamily": "BeVietnamPro-Light",
               "fontSize": 15,
@@ -1509,7 +1521,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-SemiBold",
                   "fontSize": 15,
                 },
@@ -1530,7 +1542,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
           <View
             style={
               Object {
-                "backgroundColor": undefined,
+                "backgroundColor": "#FFFFFF",
               }
             }
           >
@@ -1538,7 +1550,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-SemiBold",
                     "fontSize": 15,
                   },
@@ -1604,7 +1616,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                     style={
                       Object {
                         "alignItems": "center",
-                        "backgroundColor": undefined,
+                        "backgroundColor": "#E3E6F2",
                         "borderRadius": 8,
                         "height": 16,
                         "justifyContent": "center",
@@ -1675,7 +1687,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                     style={
                       Array [
                         Object {
-                          "color": undefined,
+                          "color": "#181C32",
                           "fontFamily": "BeVietnamPro-Light",
                           "fontSize": 15,
                         },
@@ -1692,11 +1704,13 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                       style={
                         Array [
                           Object {
-                            "color": undefined,
+                            "color": "#181C32",
                             "fontFamily": "BeVietnamPro-Light",
                             "fontSize": 15,
                           },
-                          Object {},
+                          Object {
+                            "color": "#602CA0",
+                          },
                           undefined,
                         ]
                       }
@@ -1756,7 +1770,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                       <View
                         style={
                           Object {
-                            "backgroundColor": undefined,
+                            "backgroundColor": "#A4A9B7",
                             "borderRadius": 4,
                             "height": 40,
                             "width": 40,
@@ -1857,8 +1871,8 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                       <View
                         style={
                           Object {
-                            "backgroundColor": undefined,
-                            "borderColor": undefined,
+                            "backgroundColor": "#E3E6F2",
+                            "borderColor": "#A4A9B7",
                             "borderRadius": 6,
                             "borderWidth": 1,
                             "height": 20,
@@ -2008,7 +2022,7 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                       style={
                         Array [
                           Object {
-                            "color": undefined,
+                            "color": "#181C32",
                             "fontFamily": "BeVietnamPro-SemiBold",
                             "fontSize": 15,
                           },
@@ -2091,11 +2105,13 @@ exports[`PostSelectAudience screen render correctly with group item 1`] = `
                         style={
                           Array [
                             Object {
-                              "color": undefined,
+                              "color": "#181C32",
                               "fontFamily": "BeVietnamPro-Light",
                               "fontSize": 13,
                             },
-                            Object {},
+                            Object {
+                              "color": "#767D93",
+                            },
                             Object {
                               "marginHorizontal": 4,
                             },
@@ -2130,7 +2146,7 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
 <View
   style={
     Object {
-      "backgroundColor": undefined,
+      "backgroundColor": "#FFFFFF",
       "flex": 1,
     }
   }
@@ -2159,14 +2175,14 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
             },
             Object {
               "alignItems": "flex-end",
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFFFFF",
               "flexDirection": "row",
               "overflow": "hidden",
               "paddingTop": 0,
             },
             Object {
               "borderBottomWidth": 0.5,
-              "borderColor": undefined,
+              "borderColor": "#E3E6F2",
               "elevation": 2,
               "shadowColor": "#000",
               "shadowOffset": Object {
@@ -2185,7 +2201,7 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
           style={
             Object {
               "alignItems": "center",
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFFFFF",
               "flex": 1,
               "flexDirection": "row",
               "height": 60,
@@ -2302,7 +2318,7 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-SemiBold",
                       "fontSize": 17,
                     },
@@ -2337,8 +2353,8 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": undefined,
-                "borderColor": undefined,
+                "backgroundColor": "#D1D4DB",
+                "borderColor": "#7335C0",
                 "borderRadius": 4,
                 "borderWidth": 0,
                 "height": 40,
@@ -2362,11 +2378,13 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Medium",
                       "fontSize": 15,
                     },
-                    Object {},
+                    Object {
+                      "color": "#A4A9B7",
+                    },
                     Object {
                       "textAlign": "center",
                     },
@@ -2382,7 +2400,7 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
         <View
           style={
             Object {
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFFFFF",
               "height": 0,
               "position": "absolute",
               "top": 0,
@@ -2395,7 +2413,7 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
     <View
       style={
         Object {
-          "backgroundColor": undefined,
+          "backgroundColor": "#E3E6F2",
           "borderRadius": 20,
           "height": 40,
           "justifyContent": "center",
@@ -2478,10 +2496,12 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
           onFocus={[Function]}
           onSubmitEditing={[Function]}
           placeholder="Search for groups or people"
+          placeholderTextColor="#767D93"
           returnKeyType="search"
+          selectionColor="#767D93"
           style={
             Object {
-              "color": undefined,
+              "color": "#181C32",
               "flex": 1,
               "fontFamily": "BeVietnamPro-Light",
               "fontSize": 15,
@@ -2526,6 +2546,7 @@ exports[`PostSelectAudience screen renders correctly with params isFirstStep 1`]
         >
           <View>
             <ActivityIndicator
+              color="#E3E6F2"
               size="large"
             />
           </View>

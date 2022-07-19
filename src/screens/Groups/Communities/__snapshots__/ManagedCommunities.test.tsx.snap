@@ -26,6 +26,7 @@ exports[`ManagedCommunities component should render data correctly 1`] = `
     <RefreshControlMock
       onRefresh={[Function]}
       refreshing={false}
+      tintColor="#A4A9B7"
     />
   }
   removeClippedSubviews={false}
@@ -178,7 +179,7 @@ exports[`ManagedCommunities component should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-SemiBold",
                     "fontSize": 17,
                   },
@@ -262,11 +263,13 @@ exports[`ManagedCommunities component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },
-                    Object {},
+                    Object {
+                      "color": "#767D93",
+                    },
                     undefined,
                   ]
                 }
@@ -277,11 +280,13 @@ exports[`ManagedCommunities component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },
-                    Object {},
+                    Object {
+                      "color": "#767D93",
+                    },
                     undefined,
                   ]
                 }
@@ -292,11 +297,13 @@ exports[`ManagedCommunities component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },
-                    Object {},
+                    Object {
+                      "color": "#767D93",
+                    },
                     undefined,
                   ]
                 }

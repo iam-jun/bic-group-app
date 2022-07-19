@@ -5,7 +5,7 @@ import {cleanup} from '@testing-library/react-native';
 import {configureStore, renderWithRedux, fireEvent} from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import AtMentionItem from './AtMentionItem';
-import {colors} from '~/theme';
+import colors from '~/theme/theme';
 
 afterEach(cleanup);
 

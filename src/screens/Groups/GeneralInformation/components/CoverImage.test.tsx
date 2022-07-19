@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import initialState from '~/store/initialState';
 import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
-import {colors} from '~/theme';
+import colors from '~/theme/theme';
 import CoverImage from './CoverImage';
 
 describe('CoverImage component', () => {

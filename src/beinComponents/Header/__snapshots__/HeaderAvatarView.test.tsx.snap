@@ -138,7 +138,7 @@ exports[`Header Avatar View component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-SemiBold",
             "fontSize": 15,
           },
@@ -154,7 +154,7 @@ exports[`Header Avatar View component renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 13,
           },

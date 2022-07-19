@@ -7,7 +7,7 @@ import {configureStore, renderWithRedux, fireEvent} from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import PostInput from '../PostInput';
 import {StyleSheet} from 'react-native';
-import {colors} from '~/theme';
+import colors from '~/theme/theme';
 
 afterEach(cleanup);
 

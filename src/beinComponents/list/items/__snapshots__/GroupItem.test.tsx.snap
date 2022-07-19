@@ -53,7 +53,7 @@ exports[`Group Item component renders correctly 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": undefined,
+          "backgroundColor": "#E3E6F2",
           "flexDirection": "row",
           "height": "100%",
           "marginHorizontal": 12,
@@ -77,7 +77,7 @@ exports[`Group Item component renders correctly 1`] = `
           style={
             Object {
               "alignSelf": "center",
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFFFFF",
               "marginLeft": -7,
               "paddingVertical": 4,
             }
@@ -168,7 +168,7 @@ exports[`Group Item component renders correctly 1`] = `
           <View
             style={
               Object {
-                "backgroundColor": undefined,
+                "backgroundColor": "#A4A9B7",
                 "borderRadius": 4,
                 "height": 40,
                 "width": 40,
@@ -260,7 +260,7 @@ exports[`Group Item component renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
                 "fontSize": 15,
               },
@@ -343,11 +343,13 @@ exports[`Group Item component renders correctly 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },
-                Object {},
+                Object {
+                  "color": "#767D93",
+                },
                 Object {
                   "marginHorizontal": 4,
                 },
@@ -393,7 +395,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
     <View
       style={
         Object {
-          "backgroundColor": undefined,
+          "backgroundColor": "#E3E6F2",
           "height": "100%",
           "marginHorizontal": 12,
           "width": 1,
@@ -427,7 +429,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": undefined,
+          "backgroundColor": "#E3E6F2",
           "flexDirection": "row",
           "height": "100%",
           "marginHorizontal": 12,
@@ -451,7 +453,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
           style={
             Object {
               "alignSelf": "center",
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFFFFF",
               "marginLeft": -7,
               "paddingVertical": 4,
             }
@@ -542,7 +544,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
           <View
             style={
               Object {
-                "backgroundColor": undefined,
+                "backgroundColor": "#A4A9B7",
                 "borderRadius": 4,
                 "height": 40,
                 "width": 40,
@@ -634,7 +636,7 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
                 "fontSize": 15,
               },
@@ -717,11 +719,13 @@ exports[`Group Item component should render UI Level when uiLevel > 0 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },
-                Object {},
+                Object {
+                  "color": "#767D93",
+                },
                 Object {
                   "marginHorizontal": 4,
                 },
@@ -787,7 +791,7 @@ exports[`Group Item component should render default prop 1`] = `
           <View
             style={
               Object {
-                "backgroundColor": undefined,
+                "backgroundColor": "#A4A9B7",
                 "borderRadius": 4,
                 "height": 40,
                 "width": 40,
@@ -879,7 +883,7 @@ exports[`Group Item component should render default prop 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
                 "fontSize": 15,
               },
@@ -962,11 +966,13 @@ exports[`Group Item component should render default prop 1`] = `
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },
-                Object {},
+                Object {
+                  "color": "#767D93",
+                },
                 Object {
                   "marginHorizontal": 4,
                 },
@@ -1035,7 +1041,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
       onStartShouldSetResponder={[Function]}
       style={
         Object {
-          "backgroundColor": undefined,
+          "backgroundColor": "#E3E6F2",
           "flexDirection": "row",
           "height": "100%",
           "marginHorizontal": 12,
@@ -1059,7 +1065,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
           style={
             Object {
               "alignSelf": "center",
-              "backgroundColor": undefined,
+              "backgroundColor": "#FFFFFF",
               "marginLeft": -7,
               "paddingVertical": 4,
             }
@@ -1150,7 +1156,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
           <View
             style={
               Object {
-                "backgroundColor": undefined,
+                "backgroundColor": "#A4A9B7",
                 "borderRadius": 4,
                 "height": 40,
                 "width": 40,
@@ -1242,7 +1248,7 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
                 "fontSize": 15,
               },
@@ -1325,11 +1331,13 @@ exports[`Group Item component should render toggle button when childrenUiIds.len
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-Light",
                   "fontSize": 13,
                 },
-                Object {},
+                Object {
+                  "color": "#767D93",
+                },
                 Object {
                   "marginHorizontal": 4,
                 },

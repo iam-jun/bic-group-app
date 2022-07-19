@@ -28,7 +28,7 @@ exports[`SchemeItem component should render data correctly 1`] = `
         style={
           Array [
             Object {
-              "color": undefined,
+              "color": "#181C32",
               "fontFamily": "BeVietnamPro-Medium",
               "fontSize": 13,
             },
@@ -46,7 +46,7 @@ exports[`SchemeItem component should render data correctly 1`] = `
         style={
           Array [
             Object {
-              "backgroundColor": undefined,
+              "backgroundColor": "#D0F1DB",
               "borderRadius": 4,
               "marginHorizontal": 4,
               "padding": 4,
@@ -63,14 +63,14 @@ exports[`SchemeItem component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Medium",
                 "fontSize": 13,
               },
               Object {},
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#13B055",
                 },
                 undefined,
               ],
@@ -102,7 +102,7 @@ exports[`SchemeItem component should render data correctly 1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "backgroundColor": undefined,
+            "backgroundColor": "#E8E9ED",
             "borderRadius": 4,
             "opacity": 1,
             "padding": 8,
@@ -192,7 +192,7 @@ exports[`SchemeItem component should render data correctly 1`] = `
         onStartShouldSetResponder={[Function]}
         style={
           Object {
-            "backgroundColor": undefined,
+            "backgroundColor": "#FEECED",
             "borderRadius": 4,
             "marginLeft": 8,
             "opacity": 1,
@@ -276,7 +276,7 @@ exports[`SchemeItem component should render data correctly 1`] = `
     style={
       Array [
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 13,
         },
@@ -304,7 +304,7 @@ exports[`SchemeItem component should render data correctly 1`] = `
         Object {
           "alignItems": "center",
           "alignSelf": "baseline",
-          "backgroundColor": undefined,
+          "backgroundColor": "#E8E9ED",
           "borderRadius": 50,
           "marginBottom": 8,
           "marginRight": 4,
@@ -318,7 +318,7 @@ exports[`SchemeItem component should render data correctly 1`] = `
         style={
           Array [
             Object {
-              "color": undefined,
+              "color": "#181C32",
               "fontFamily": "BeVietnamPro-Light",
               "fontSize": 13,
             },

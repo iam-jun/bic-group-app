@@ -80,7 +80,7 @@ exports[`InfoHeader component renders correctly 1`] = `
   <View
     style={
       Object {
-        "backgroundColor": undefined,
+        "backgroundColor": "#FFFFFF",
         "flexDirection": "row",
         "paddingHorizontal": 16,
         "paddingVertical": 8,
@@ -193,7 +193,7 @@ exports[`InfoHeader component renders correctly 1`] = `
         style={
           Array [
             Object {
-              "color": undefined,
+              "color": "#181C32",
               "fontFamily": "BeVietnamPro-SemiBold",
               "fontSize": 15,
             },
@@ -274,11 +274,13 @@ exports[`InfoHeader component renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
-              Object {},
+              Object {
+                "color": "#767D93",
+              },
               undefined,
             ]
           }
@@ -290,11 +292,13 @@ exports[`InfoHeader component renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
-              Object {},
+              Object {
+                "color": "#767D93",
+              },
               undefined,
             ]
           }
@@ -362,11 +366,13 @@ exports[`InfoHeader component renders correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 13,
               },
-              Object {},
+              Object {
+                "color": "#767D93",
+              },
               undefined,
             ]
           }

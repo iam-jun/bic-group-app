@@ -10,7 +10,7 @@ import {
 } from '~/test/testUtils';
 import initialState from '~/store/initialState';
 import PostSettings from '~/screens/Post/PostSettings/index';
-import {colors} from '~/theme';
+import colors from '~/theme/theme';
 import * as navigationHook from '~/hooks/navigation';
 import modalActions from '~/store/modal/actions';
 import postActions from '~/screens/Post/redux/actions';

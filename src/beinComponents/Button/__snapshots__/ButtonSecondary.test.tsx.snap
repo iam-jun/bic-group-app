@@ -14,7 +14,7 @@ exports[`ButtonSecondary conponent renders correctly 1`] = `
   style={
     Object {
       "alignItems": "center",
-      "backgroundColor": undefined,
+      "backgroundColor": "#FFFFFF",
       "borderRadius": 4,
       "padding": 8,
     }
@@ -35,11 +35,13 @@ exports[`ButtonSecondary conponent renders correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Medium",
             "fontSize": 15,
           },
-          Object {},
+          Object {
+            "color": "#7335C0",
+          },
           Object {
             "textAlign": "center",
           },

@@ -40,7 +40,7 @@ Array [
       Array [
         Object {
           "alignSelf": "center",
-          "backgroundColor": undefined,
+          "backgroundColor": "#FFFFFF",
           "borderRadius": 6,
           "justifyContent": "center",
           "maxHeight": 80,
@@ -108,13 +108,13 @@ Array [
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-SemiBold",
                   "fontSize": 15,
                 },
                 Object {},
                 Object {
-                  "color": undefined,
+                  "color": "#A4A9B7",
                   "margin": 8,
                   "padding": 4,
                 },
@@ -1150,9 +1150,11 @@ Array [
       onSelectionChange={[Function]}
       onSubmitEditing={[Function]}
       placeholder="Write your post here..."
+      placeholderTextColor="#767D93"
+      selectionColor="#767D93"
       style={
         Object {
-          "color": undefined,
+          "color": "#181C32",
           "flex": 1,
           "fontFamily": "BeVietnamPro-Light",
           "fontSize": 15,
@@ -1176,7 +1178,7 @@ Array [
       Array [
         Object {
           "alignSelf": "center",
-          "backgroundColor": undefined,
+          "backgroundColor": "#FFFFFF",
           "borderRadius": 6,
           "justifyContent": "center",
           "maxHeight": 80,
@@ -1244,13 +1246,13 @@ Array [
             style={
               Array [
                 Object {
-                  "color": undefined,
+                  "color": "#181C32",
                   "fontFamily": "BeVietnamPro-SemiBold",
                   "fontSize": 15,
                 },
                 Object {},
                 Object {
-                  "color": undefined,
+                  "color": "#A4A9B7",
                   "margin": 8,
                   "padding": 4,
                 },

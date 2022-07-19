@@ -2,7 +2,7 @@ import React from 'react';
 
 import {fireEvent} from '~/test/testUtils';
 import {render, cleanup} from '@testing-library/react-native';
-import {colors} from '~/theme';
+import colors from '~/theme/theme';
 
 import EditName from './EditName';
 

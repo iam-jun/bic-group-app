@@ -27,6 +27,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
     <RefreshControlMock
       onRefresh={[MockFunction]}
       refreshing={false}
+      tintColor="#A4A9B7"
     />
   }
   removeClippedSubviews={false}
@@ -58,7 +59,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-SemiBold",
                 "fontSize": 17,
               },
@@ -197,7 +198,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-Medium",
                     "fontSize": 15,
                   },
@@ -212,11 +213,13 @@ exports[`MemberRequestList should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-Light",
                     "fontSize": 15,
                   },
-                  Object {},
+                  Object {
+                    "color": "#767D93",
+                  },
                   undefined,
                 ]
               }
@@ -228,7 +231,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
                 Array [
                   Object {
                     "alignSelf": "stretch",
-                    "backgroundColor": undefined,
+                    "backgroundColor": "#E3E6F2",
                     "height": 1,
                     "marginHorizontal": 0,
                     "width": undefined,
@@ -311,7 +314,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 15,
                     },
@@ -396,7 +399,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 15,
                     },
@@ -433,7 +436,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": undefined,
+                "backgroundColor": "#DDDFE4",
                 "borderRadius": 4,
                 "flex": 1,
                 "marginRight": 8,
@@ -456,11 +459,13 @@ exports[`MemberRequestList should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Medium",
                       "fontSize": 15,
                     },
-                    Object {},
+                    Object {
+                      "color": "#181C32",
+                    },
                     Object {
                       "textAlign": "center",
                     },
@@ -484,7 +489,7 @@ exports[`MemberRequestList should render data correctly 1`] = `
             style={
               Object {
                 "alignItems": "center",
-                "backgroundColor": undefined,
+                "backgroundColor": "#9E6FD8",
                 "borderRadius": 4,
                 "flex": 1,
                 "padding": 8,
@@ -506,11 +511,13 @@ exports[`MemberRequestList should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Medium",
                       "fontSize": 15,
                     },
-                    Object {},
+                    Object {
+                      "color": "#FFFFFF",
+                    },
                     Object {
                       "textAlign": "center",
                     },

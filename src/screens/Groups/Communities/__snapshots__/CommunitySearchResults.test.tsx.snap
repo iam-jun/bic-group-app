@@ -46,7 +46,7 @@ exports[`CommunitySearchResults component should render data correctly 1`] = `
           style={
             Array [
               Object {
-                "color": undefined,
+                "color": "#181C32",
                 "fontFamily": "BeVietnamPro-Light",
                 "fontSize": 15,
               },
@@ -200,7 +200,7 @@ exports[`CommunitySearchResults component should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-SemiBold",
                     "fontSize": 17,
                   },
@@ -284,11 +284,13 @@ exports[`CommunitySearchResults component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },
-                    Object {},
+                    Object {
+                      "color": "#767D93",
+                    },
                     undefined,
                   ]
                 }
@@ -299,11 +301,13 @@ exports[`CommunitySearchResults component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },
-                    Object {},
+                    Object {
+                      "color": "#767D93",
+                    },
                     undefined,
                   ]
                 }
@@ -314,11 +318,13 @@ exports[`CommunitySearchResults component should render data correctly 1`] = `
                 style={
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#181C32",
                       "fontFamily": "BeVietnamPro-Light",
                       "fontSize": 13,
                     },
-                    Object {},
+                    Object {
+                      "color": "#767D93",
+                    },
                     undefined,
                   ]
                 }

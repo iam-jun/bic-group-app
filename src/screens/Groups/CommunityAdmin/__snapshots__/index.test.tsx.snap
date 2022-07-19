@@ -4,7 +4,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
 <View
   style={
     Object {
-      "backgroundColor": undefined,
+      "backgroundColor": "#FFFFFF",
       "flex": 1,
     }
   }
@@ -21,14 +21,14 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
           },
           Object {
             "alignItems": "flex-end",
-            "backgroundColor": undefined,
+            "backgroundColor": "#FFFFFF",
             "flexDirection": "row",
             "overflow": "hidden",
             "paddingTop": 0,
           },
           Object {
             "borderBottomWidth": 0.5,
-            "borderColor": undefined,
+            "borderColor": "#E3E6F2",
             "elevation": 2,
             "shadowColor": "#000",
             "shadowOffset": Object {
@@ -47,7 +47,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
         style={
           Object {
             "alignItems": "center",
-            "backgroundColor": undefined,
+            "backgroundColor": "#FFFFFF",
             "flex": 1,
             "flexDirection": "row",
             "height": 60,
@@ -141,7 +141,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
       <View
         style={
           Object {
-            "backgroundColor": undefined,
+            "backgroundColor": "#FFFFFF",
             "height": 0,
             "position": "absolute",
             "top": 0,
@@ -156,7 +156,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
       Array [
         Object {
           "alignSelf": "stretch",
-          "backgroundColor": undefined,
+          "backgroundColor": "#E3E6F2",
           "height": 4,
           "marginHorizontal": 0,
           "width": undefined,
@@ -177,11 +177,13 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
-          Object {},
+          Object {
+            "color": "#181C32",
+          },
           Object {
             "marginHorizontal": 16,
             "marginVertical": 12,
@@ -297,7 +299,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-Medium",
                     "fontSize": 15,
                   },
@@ -315,7 +317,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
               Array [
                 Object {
                   "alignItems": "center",
-                  "backgroundColor": undefined,
+                  "backgroundColor": "#E90C22",
                   "borderRadius": 20,
                   "height": 20,
                   "justifyContent": "center",
@@ -331,14 +333,14 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-Light",
                     "fontSize": 13,
                   },
                   Object {},
                   Array [
                     Object {
-                      "color": undefined,
+                      "color": "#FFFFFF",
                       "lineHeight": 16,
                       "textAlign": "center",
                     },
@@ -426,11 +428,13 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
       style={
         Array [
           Object {
-            "color": undefined,
+            "color": "#181C32",
             "fontFamily": "BeVietnamPro-Light",
             "fontSize": 15,
           },
-          Object {},
+          Object {
+            "color": "#181C32",
+          },
           Object {
             "marginHorizontal": 16,
             "marginVertical": 12,
@@ -546,7 +550,7 @@ exports[`CommunityAdmin component should render data correctly 1`] = `
               style={
                 Array [
                   Object {
-                    "color": undefined,
+                    "color": "#181C32",
                     "fontFamily": "BeVietnamPro-Medium",
                     "fontSize": 15,
                   },
