@@ -38,23 +38,28 @@ const PostSettings = ({route}: PostSettingsProps) => {
   const {rootNavigation} = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
-
   const styles = createStyle(theme);
-  const chosenAudiences = useKeySelector(
-    postKeySelector.createPost.chosenAudiences,
-  );
+
+  let chosenAudiences: any[];
+  const screenParams = route?.params || {};
+  const {postId} = screenParams;
+  if (postId) {
+    useCreatePost({screenParams});
+    chosenAudiences = useKeySelector(
+      postKeySelector.postAudienceById(postId),
+    )?.groups;
+  } else {
+    chosenAudiences = useKeySelector(
+      postKeySelector.createPost.chosenAudiences,
+    );
+  }
+
   const {hasPermissionsOnEachScope, PERMISSION_KEY} = useMyPermissions();
   const canCreateImportantPost = hasPermissionsOnEachScope(
     'groups',
     chosenAudiences,
     PERMISSION_KEY.GROUP.CREATE_IMPORTANT_POST,
   );
-
-  const screenParams = route?.params || {};
-  const {postId} = screenParams;
-  if (postId) {
-    useCreatePost({screenParams});
-  }
 
   useEffect(() => {
     return () => {
