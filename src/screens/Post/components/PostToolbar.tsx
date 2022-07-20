@@ -35,6 +35,7 @@ import {checkPermission} from '~/utils/permission';
 import {clearExistingFiles, validateFilesPicker} from '../CreatePost/helper';
 import {getTotalFileSize} from '../redux/selectors';
 import ReviewMarkdown from './ReviewMarkdown';
+import {fontFamilies} from '~/theme/fonts';
 
 export interface PostToolbarProps {
   toolbarRef?: any;
@@ -261,7 +262,7 @@ const PostToolbar = ({
           **bold**, *italic*, ~~strike~~, # Heading 1, ## Heading 2,...
         </Text.BodyS>
         <Text.BodyS
-          style={{fontFamily: 'OpenSans-SemiBold'}}
+          style={{fontFamily: fontFamilies.BeVietnamProSemiBold}}
           color={theme.colors.blue50}
           onPress={onPressHelp}
           useI18n>
