@@ -491,19 +491,21 @@ const groupsActions = {
     type: groupsTypes.SET_JOINED_COMMUNITIES,
     payload,
   }),
-  getManagedCommunities: (payload?: {
-    managed: boolean;
-    preview_members: boolean;
+  getManagedCommunities: (payload: {
+    isRefreshing?: boolean;
+    params?: {managed: boolean; preview_members: boolean};
   }) => ({
     type: groupsTypes.GET_MANAGED_COMMUNITIES,
     payload,
   }),
-  setManagedCommunities: (payload: any) => ({
+  setManagedCommunities: (payload: {
+    loading?: boolean;
+    canLoadMore?: boolean;
+    ids?: number[];
+    items?: IObject<any>;
+  }) => ({
     type: groupsTypes.SET_MANAGED_COMMUNITIES,
     payload,
-  }),
-  resetManagedCommunities: () => ({
-    type: groupsTypes.RESET_MANAGED_COMMUNITIES,
   }),
   getDiscoverCommunities: (payload: {isRefreshing?: boolean}) => ({
     type: groupsTypes.GET_DISCOVER_COMMUNITIES,

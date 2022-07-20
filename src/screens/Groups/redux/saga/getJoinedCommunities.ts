@@ -13,7 +13,7 @@ export default function* getJoinedCommunities({
   try {
     const {callback} = payload || {};
     const list: any[] = yield select(
-      state => state?.groups?.communities?.data,
+      state => state?.groups?.joinedCommunities?.data,
     ) || [];
     yield put(groupsActions.setMyCommunities({data: list, loading: true}));
     // @ts-ignore

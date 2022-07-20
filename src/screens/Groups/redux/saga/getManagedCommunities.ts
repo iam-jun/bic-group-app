@@ -11,23 +11,31 @@ export default function* getManagedCommunities({
   payload,
 }: {
   type: string;
-  payload?: {managed: boolean; preview_members: boolean};
+  payload: {
+    isRefreshing?: boolean;
+    params?: {managed: boolean; preview_members: boolean};
+  };
 }) {
   try {
+    const {isRefreshing, params} = payload;
     const {groups} = yield select();
-    const {data, items, canLoadMore} = groups.managedCommunities;
+    const {ids, items, canLoadMore} = groups.managedCommunities;
 
-    yield put(actions.setManagedCommunities({loading: data.length === 0}));
+    yield put(
+      actions.setManagedCommunities({
+        loading: isRefreshing ? true : ids.length === 0,
+      }),
+    );
 
-    if (!canLoadMore) return;
+    if (!isRefreshing && !canLoadMore) return;
 
     // @ts-ignore
     const resp = yield call(groupsDataHelper.getJoinedCommunities, {
       managed: true,
       preview_members: true,
       limit: appConfig.recordsPerPage,
-      offset: data.length,
-      ...payload,
+      offset: isRefreshing ? 0 : ids.length,
+      ...params,
     });
 
     const newIds = resp?.map((item: ICommunity) => item.id);
@@ -35,17 +43,15 @@ export default function* getManagedCommunities({
 
     const newData = {
       loading: false,
-      data: [...data, ...newIds],
-      items: {
-        ...items,
-        ...newItems,
-      },
+      ids: isRefreshing ? [...newIds] : [...ids, ...newIds],
+      items: isRefreshing ? {...newItems} : {...items, ...newItems},
       canLoadMore: newIds.length === appConfig.recordsPerPage,
     };
 
     yield put(actions.setManagedCommunities(newData));
   } catch (err) {
     console.log('getManagedCommunities error:', err);
+    yield put(actions.setManagedCommunities({loading: false}));
     yield call(showError, err);
   }
 }

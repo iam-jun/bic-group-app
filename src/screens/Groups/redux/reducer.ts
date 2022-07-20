@@ -103,7 +103,7 @@ export const groupInitState = {
   },
   loadingGroupMember: false,
   groupMembers: {
-    loading: false,
+    loading: true,
     canLoadMore: true,
     offset: 0, // current fetched data count
     // group_admin: {}, group_member: {}
@@ -135,7 +135,7 @@ export const groupInitState = {
   loadingAvatar: false,
   loadingCover: false,
   discoverGroups: {
-    loading: false,
+    loading: true,
     ids: [],
     items: {},
     canLoadMore: true,
@@ -167,15 +167,15 @@ export const groupInitState = {
     items: {},
   },
   managedCommunities: {
-    loading: false,
+    loading: true,
     canLoadMore: true,
-    data: [] as number[],
+    ids: [] as number[],
     items: {},
   },
   isGettingInfoDetail: false,
   communityDetail: {} as ICommunity,
   communityMembers: {
-    loading: false,
+    loading: true,
     canLoadMore: true,
     offset: 0, // current fetched data count
     // community_admin: {}, community_member: {}
@@ -777,11 +777,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           ...managedCommunities,
           ...payload,
         },
-      };
-    case groupsTypes.RESET_MANAGED_COMMUNITIES:
-      return {
-        ...state,
-        managedCommunities: groupInitState.managedCommunities,
       };
     case groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM:
       return {
