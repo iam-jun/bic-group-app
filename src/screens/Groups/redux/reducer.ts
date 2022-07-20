@@ -10,7 +10,7 @@ import {cloneDeep} from 'lodash';
 export const groupInitState = {
   myPermissions: {
     loading: false,
-    data: undefined,
+    data: {},
     timeGetMyPermissions: null,
   },
   permissionScheme: {
