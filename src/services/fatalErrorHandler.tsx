@@ -6,6 +6,7 @@ import {
   setNativeExceptionHandler,
 } from 'react-native-exception-handler';
 import Clipboard from '@react-native-clipboard/clipboard';
+import {captureExceptionWithSentry} from '~/services/sentry';
 import Store from '~/store';
 import modalActions from '~/store/modal/actions';
 import Text from '~/beinComponents/Text';
@@ -19,6 +20,10 @@ export const initFatalErrorHandler = () => {
 };
 
 const errorHandler = (e: any, isFatal: boolean) => {
+  console.log(
+    `\x1b[36m🐣️ fatalErrorHandler errorHandler before captureExceptionWithSentry\x1b[0m`,
+  );
+  captureExceptionWithSentry(e);
   if (isFatal) {
     Clipboard.setString(e.message);
     const content = `Copied error, please send to BIC Devs...

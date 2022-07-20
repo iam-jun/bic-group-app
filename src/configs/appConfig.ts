@@ -1,3 +1,9 @@
+export const APP_ENV = {
+  SANDBOX: 'sbx',
+  STAGING: 'stg',
+  PRODUCTION: 'pro',
+};
+
 const appConfig = {
   dataMode: 'mock',
   defaultLanguage: 'en',

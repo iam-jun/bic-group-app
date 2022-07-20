@@ -5,12 +5,15 @@ import {useDispatch} from 'react-redux';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
+import {useMyPermissions} from '~/hooks/permissions';
+import {useKeySelector} from '~/hooks/selector';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {showHideToastMessage} from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
 import {getLink, LINK_POST} from '~/utils/link';
+import postKeySelector from '../redux/keySelector';
 
 export interface PostViewMenuProps {
   postId: string;
@@ -28,6 +31,15 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
+
+  const postData = useKeySelector(postKeySelector.postById(postId));
+  const {audience} = postData || {};
+  const {hasPermissionsOnAtLeastOneScope, PERMISSION_KEY} = useMyPermissions();
+  const canDeleteOwnPost = hasPermissionsOnAtLeastOneScope(
+    'groups',
+    audience?.groups,
+    PERMISSION_KEY.GROUP.DELETE_OWN_POST,
+  );
 
   const onPress = () => {
     dispatch(modalActions.hideModal());
@@ -138,7 +150,7 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         title={t('post:post_menu_history')}
         onPress={onPress}
       />
-      {isActor && (
+      {isActor && canDeleteOwnPost && (
         <PrimaryItem
           testID={'post_view_menu.delete'}
           style={styles.item}
