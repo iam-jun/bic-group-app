@@ -24,15 +24,10 @@ platform :android do
       file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
       timeout: 600,
     )
-    mattermost(
-        url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-        text: "@all\n🟣🤖 **Bein Dev Android** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-            \n > **Git Branch**: #{git_branch}
-            \n **Git Author**: #{commit[:author]}
-            \n **Git Commit**: #{git_mess}",
-        username: "bein.bot",
-        icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
-    )
+    notice_to_bic("Alo alo có build mới @ngoclinh @trankimmai @ngoccuong \n🟣🤖 **BIC Group Dev Android** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+        \n > **Git Branch**: #{git_branch}
+        \n **Git Author**: #{commit[:author]}
+        \n **Git Commit**: #{git_mess}", [9,14,19])
   end
 
   lane :deploy_staging do
@@ -53,15 +48,10 @@ platform :android do
       file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
       timeout: 600,
     )
-    mattermost(
-        url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-        text: "@all\n🟡🤖 **Bein Staging Android** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-            \n > **Git Branch**: #{git_branch}
-            \n **Git Author**: #{commit[:author]}
-            \n **Git Commit**: #{git_mess}",
-        username: "bein.bot",
-        icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
-    )
+    notice_to_bic("Alo alo có build mới @ngoclinh @trankimmai @ngoccuong \n🟡🤖 **BIC Group Android** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+                                  \n > **Git Branch**: #{git_branch}
+                                  \n **Git Author**: #{commit[:author]}
+                                  \n **Git Commit**: #{git_mess}", [9,14,19])
 #     upload_to_play_store_internal_app_sharing
   end
 
@@ -81,14 +71,9 @@ platform :android do
           file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
           timeout: 600,
         )
-        mattermost(
-            url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-            text: "@all\n🟢🤖 **Bein Production Android** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-                \n > **Git Branch**: #{git_branch}
-                \n **Git Author**: #{commit[:author]}
-                \n **Git Commit**: #{git_mess}",
-            username: "bein.bot",
-            icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
-        )
+        notice_to_bic("Alo alo có build mới @ngoclinh @trankimmai @ngoccuong \n🟢🤖 **BIC Group Production Android** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+            \n > **Git Branch**: #{git_branch}
+            \n **Git Author**: #{commit[:author]}
+            \n **Git Commit**: #{git_mess}", [9,14,19])
     end
 end
