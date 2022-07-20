@@ -125,11 +125,6 @@ const Notification = () => {
               }
               break;
             case NOTIFICATION_TYPE.GROUP_CHANGED_PRIVACY_TO_GROUP:
-              rootNavigation.navigate(groupStack.generalInfo, {
-                id: !!act?.group?.id ? act.group.id : act?.community?.id || '',
-                type: !!act?.group?.id ? 'group' : 'community',
-              });
-              break;
             case NOTIFICATION_TYPE.GROUP_REMOVED_FROM_GROUP_TO_USER:
             case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_APPROVED:
             case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_REJECTED:
