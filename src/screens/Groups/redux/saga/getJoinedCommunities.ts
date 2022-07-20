@@ -12,10 +12,8 @@ export default function* getJoinedCommunities({
 }) {
   try {
     const {callback} = payload || {};
-    const list: any[] = yield select(
-      state => state?.groups?.joinedCommunities?.data,
-    ) || [];
-    yield put(groupsActions.setMyCommunities({data: list, loading: true}));
+
+    yield put(groupsActions.setMyCommunities({loading: true}));
     // @ts-ignore
     const communities = yield call(groupsDataHelper.getJoinedCommunities, {
       preview_members: true,
@@ -29,7 +27,7 @@ export default function* getJoinedCommunities({
     }
     callback && callback();
   } catch (err) {
-    console.log('\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m');
+    console.log('\x1b[33m', 'getJoinedCommunities : error', err, '\x1b[0m');
     yield put(groupsActions.setMyCommunities({data: [], loading: false}));
     yield showError(err);
   }

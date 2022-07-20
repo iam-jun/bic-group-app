@@ -35,12 +35,16 @@ const ManagedCommunities = ({
     groupsKeySelector.managedCommunities,
   );
 
-  const getManagedCommunities = (isRefreshing?: boolean) => {
-    dispatch(actions.getManagedCommunities({isRefreshing}));
+  const getManagedCommunities = (params?: {
+    isRefreshing?: boolean;
+    refreshNoLoading?: boolean;
+  }) => {
+    const {isRefreshing, refreshNoLoading} = params || {};
+    dispatch(actions.getManagedCommunities({isRefreshing, refreshNoLoading}));
   };
 
   useEffect(() => {
-    getManagedCommunities(true); // refreshing whenever open
+    getManagedCommunities({refreshNoLoading: true});
   }, []);
 
   const onLoadMore = () => {
@@ -48,7 +52,7 @@ const ManagedCommunities = ({
   };
 
   const onRefresh = () => {
-    getManagedCommunities(true);
+    getManagedCommunities({isRefreshing: true});
   };
 
   const renderEmptyComponent = () => {

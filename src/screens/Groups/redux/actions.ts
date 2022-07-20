@@ -487,12 +487,13 @@ const groupsActions = {
     type: groupsTypes.GET_JOINED_COMMUNITIES,
     payload,
   }),
-  setMyCommunities: (payload: any) => ({
+  setMyCommunities: (payload: {loading?: boolean; data?: any[]}) => ({
     type: groupsTypes.SET_JOINED_COMMUNITIES,
     payload,
   }),
   getManagedCommunities: (payload: {
     isRefreshing?: boolean;
+    refreshNoLoading?: boolean;
     params?: {managed: boolean; preview_members: boolean};
   }) => ({
     type: groupsTypes.GET_MANAGED_COMMUNITIES,
@@ -507,7 +508,10 @@ const groupsActions = {
     type: groupsTypes.SET_MANAGED_COMMUNITIES,
     payload,
   }),
-  getDiscoverCommunities: (payload: {isRefreshing?: boolean}) => ({
+  getDiscoverCommunities: (payload: {
+    isRefreshing?: boolean;
+    refreshNoLoading?: boolean;
+  }) => ({
     type: groupsTypes.GET_DISCOVER_COMMUNITIES,
     payload,
   }),

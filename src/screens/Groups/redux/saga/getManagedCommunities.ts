@@ -13,11 +13,12 @@ export default function* getManagedCommunities({
   type: string;
   payload: {
     isRefreshing?: boolean;
+    refreshNoLoading?: boolean;
     params?: {managed: boolean; preview_members: boolean};
   };
 }) {
   try {
-    const {isRefreshing, params} = payload;
+    const {isRefreshing, refreshNoLoading, params} = payload;
     const {groups} = yield select();
     const {ids, items, canLoadMore} = groups.managedCommunities;
 
@@ -27,14 +28,14 @@ export default function* getManagedCommunities({
       }),
     );
 
-    if (!isRefreshing && !canLoadMore) return;
+    if (!isRefreshing && !refreshNoLoading && !canLoadMore) return;
 
     // @ts-ignore
     const resp = yield call(groupsDataHelper.getJoinedCommunities, {
       managed: true,
       preview_members: true,
       limit: appConfig.recordsPerPage,
-      offset: isRefreshing ? 0 : ids.length,
+      offset: isRefreshing || refreshNoLoading ? 0 : ids.length,
       ...params,
     });
 
@@ -43,8 +44,11 @@ export default function* getManagedCommunities({
 
     const newData = {
       loading: false,
-      ids: isRefreshing ? [...newIds] : [...ids, ...newIds],
-      items: isRefreshing ? {...newItems} : {...items, ...newItems},
+      ids: isRefreshing || refreshNoLoading ? [...newIds] : [...ids, ...newIds],
+      items:
+        isRefreshing || refreshNoLoading
+          ? {...newItems}
+          : {...items, ...newItems},
       canLoadMore: newIds.length === appConfig.recordsPerPage,
     };
 

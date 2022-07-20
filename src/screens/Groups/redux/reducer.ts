@@ -677,8 +677,8 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       return {
         ...state,
         joinedCommunities: {
-          loading: payload?.loading || false,
-          data: payload?.data || [],
+          ...state.joinedCommunities,
+          ...payload,
         },
       };
     case groupsTypes.SET_DISCOVER_COMMUNITIES:
