@@ -1,12 +1,12 @@
-import {chatSchemes} from '~/constants/chat';
-import {getEnv} from '~/utils/env';
-import {getWebDomain} from './common';
+import { chatSchemes } from '~/constants/chat';
+import { getEnv } from '~/utils/env';
+import { getWebDomain } from './common';
 
 const LINK_POST = 'LINK_POST';
 const LINK_GROUP = 'LINK_GROUP';
 const LINK_COMMENT = 'LINK_COMMENT';
 
-const formatParams = (params?: any) => {
+const formatParams = (params?: any):string => {
   if (typeof params !== 'object') {
     return '';
   }
@@ -14,13 +14,14 @@ const formatParams = (params?: any) => {
   let result = '';
   if (keys.length > 0) {
     keys.forEach((item: string) => {
-      result += item + '=' + params[item];
+      result += `${item}=${params[item]}`;
     });
-    return '?' + result;
+    return `?${result}`;
   }
+  return result;
 };
 
-const formatParamsVer2 = (params?: any) => {
+const formatParamsVer2 = (params?: any) : string => {
   if (typeof params !== 'object') {
     return '';
   }
@@ -28,12 +29,13 @@ const formatParamsVer2 = (params?: any) => {
   let result = '';
   if (keys.length > 0) {
     keys.forEach((item: string, index: number) => {
-      if (!!params[item]) {
-        result += (index ? '&' : '') + item + '=' + params[item];
+      if (params[item]) {
+        result += `${(index ? '&' : '') + item}=${params[item]}`;
       }
     });
-    return '?' + result;
+    return `?${result}`;
   }
+  return result;
 };
 
 const getLink = (
@@ -43,35 +45,31 @@ const getLink = (
 ): string => {
   switch (linkType) {
     case LINK_POST:
-      return getEnv('SELF_DOMAIN') + '/posts/' + id + formatParams(params);
+      return `${getEnv('SELF_DOMAIN')}/posts/${id}${formatParams(params)}`;
     case LINK_COMMENT:
-      return getEnv('SELF_DOMAIN') + '/posts/' + id + formatParamsVer2(params);
+      return `${getEnv('SELF_DOMAIN')}/posts/${id}${formatParamsVer2(params)}`;
     case LINK_GROUP:
-      return getEnv('SELF_DOMAIN') + '/groups/' + id + formatParams(params);
+      return `${getEnv('SELF_DOMAIN')}/groups/${id}${formatParams(params)}`;
     default:
       return '';
   }
 };
 
-export {LINK_POST, LINK_GROUP, LINK_COMMENT, getLink};
+export {
+  LINK_POST, LINK_GROUP, LINK_COMMENT, getLink,
+};
 
-export const getChatDomain = () => {
-  return (
-    chatSchemes.PREFIX_HTTPS +
-    getWebDomain(
+export const getChatDomain = () => (
+  chatSchemes.PREFIX_HTTPS
+    + getWebDomain(
       getEnv('BEIN_CHAT_DEEPLINK').replace(
         chatSchemes.PREFIX_DEEPLINK,
         chatSchemes.PREFIX_HTTPS,
       ),
       true,
     )
-  );
-};
+);
 
-export const formatChannelLink = (teamId: string, channel: string) => {
-  return `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/channels/${channel}`;
-};
+export const formatChannelLink = (teamId: string, channel: string) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/channels/${channel}`;
 
-export const formatDMLink = (teamId: string, username: string) => {
-  return `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/messages/@${username}`;
-};
+export const formatDMLink = (teamId: string, username: string) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/messages/@${username}`;

@@ -1,40 +1,39 @@
-import messaging, {
-  FirebaseMessagingTypes,
-} from '@react-native-firebase/messaging';
+import messaging, { FirebaseMessagingTypes } from '@react-native-firebase/messaging';
+
 import moment from 'moment';
 import 'moment/locale/vi';
 
-import React, {useEffect, useMemo} from 'react';
-import {useTranslation} from 'react-i18next';
-import {LogBox, NativeModules, Platform} from 'react-native';
-import {SafeAreaProvider} from 'react-native-safe-area-context';
+import React, { useEffect, useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
+import { LogBox, NativeModules, Platform } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 /* State Redux */
-import RootNavigator from '~/router';
-import localStorage from '~/services/localStorage';
-
-import {AppConfig, languages} from './configs';
+import { AppConfig, languages } from './configs';
 import moments from './configs/moments';
-import {AppContext} from './contexts/AppContext';
-import {useRootNavigation} from './hooks/navigation';
-import {rootSwitch} from './router/stack';
+import { AppContext } from './contexts/AppContext';
+import { useRootNavigation } from './hooks/navigation';
+import { IUserResponse } from './interfaces/IAuth';
+import { rootSwitch } from './router/stack';
+
+import RootNavigator from '~/router';
+import { getScreenAndParams, isNavigationRefReady } from '~/router/helper';
+import { initFontAwesomeIcon } from '~/services/fontAwesomeIcon';
+import localStorage from '~/services/localStorage';
 import Store from '~/store';
-import {IUserResponse} from './interfaces/IAuth';
-import {isNavigationRefReady, getScreenAndParams} from '~/router/helper';
-import {initFontAwesomeIcon} from '~/services/fontAwesomeIcon';
 
 moment.updateLocale('en', moments.en);
 moment.updateLocale('vi', moments.vi);
 
 initFontAwesomeIcon();
 
-export default (): React.ReactElement => {
+const Root = (): React.ReactElement => {
   LogBox.ignoreAllLogs();
 
   /* Localization */
-  const {i18n} = useTranslation();
+  const { i18n } = useTranslation();
 
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
   useEffect(() => {
     if (i18n?.language) {
@@ -46,8 +45,8 @@ export default (): React.ReactElement => {
     setUpLanguage();
     listenFCMEvents();
 
-    const unsubscribe = messaging().onMessage(async remoteMessage => {
-      console.log('foreground', {remoteMessage});
+    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+      console.warn('foreground', { remoteMessage });
     });
 
     return () => {
@@ -56,13 +55,13 @@ export default (): React.ReactElement => {
   }, []);
 
   const listenFCMEvents = () => {
-    messaging().onNotificationOpenedApp(remoteMessage => {
+    messaging().onNotificationOpenedApp((remoteMessage) => {
       handleInitialNotification(remoteMessage);
     });
 
     messaging()
       .getInitialNotification()
-      .then(remoteMessage => {
+      .then((remoteMessage) => {
         handleInitialNotification(remoteMessage);
       });
   };
@@ -85,7 +84,7 @@ export default (): React.ReactElement => {
 
     const data = handleMessageData(remoteMessage);
 
-    if (data)
+    if (data) {
       rootNavigation.navigate(data.screen || rootSwitch.mainStack, {
         screen: data?.params?.screen || 'main',
         params: {
@@ -93,39 +92,30 @@ export default (): React.ReactElement => {
           initial: false,
         },
       });
+    }
   };
 
   const handleMessageData = (
     remoteMessage: FirebaseMessagingTypes.RemoteMessage | null,
-  ): {screen: any; params: any} | undefined => {
-    if (!remoteMessage) return;
+  ): {screen: string; params: any} | null => {
+    if (!remoteMessage) return null;
 
-    try {
-      const screenData = getScreenAndParams(remoteMessage?.data?.extraData);
-      //@ts-ignore
-      return screenData;
-    } catch (err) {
-      return;
-    }
+    return getScreenAndParams(remoteMessage?.data?.extraData);
   };
 
   /* Change language */
   const setUpLanguage = async () => {
     const language = await localStorage.getLanguage();
     if (language) {
-      // @ts-ignore
-      i18n.language !== language && i18n.changeLanguage(language);
+      if (i18n.language !== language) { i18n.changeLanguage(language); }
       moment.locale(language);
     } else {
-      let systemLocale =
-        Platform.OS === 'ios'
-          ? NativeModules.SettingsManager.settings.AppleLocale
-          : NativeModules.I18nManager.localeIdentifier;
+      let systemLocale = Platform.OS === 'ios'
+        ? NativeModules.SettingsManager.settings.AppleLocale
+        : NativeModules.I18nManager.localeIdentifier;
 
-      if (systemLocale && systemLocale.includes('_'))
-        systemLocale = systemLocale.split('_')[0];
-      else if (systemLocale && systemLocale.includes('-'))
-        systemLocale = systemLocale.split('-')[0];
+      if (systemLocale && systemLocale.includes('_')) systemLocale = systemLocale.split('_')[0];
+      else if (systemLocale && systemLocale.includes('-')) systemLocale = systemLocale.split('-')[0];
 
       const isSupportLanguage = Object.keys(languages).find(
         (item: string) => item === systemLocale,
@@ -144,12 +134,10 @@ export default (): React.ReactElement => {
     await localStorage.setLanguage(language);
   };
 
-  const providerValue = useMemo(() => {
-    return {
-      language: i18n.language,
-      changeLanguage,
-    };
-  }, [i18n.language]);
+  const providerValue = useMemo(() => ({
+    language: i18n.language,
+    changeLanguage,
+  }), [i18n.language]);
 
   return (
     <SafeAreaProvider>
@@ -159,3 +147,5 @@ export default (): React.ReactElement => {
     </SafeAreaProvider>
   );
 };
+
+export default Root;

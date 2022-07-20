@@ -1,10 +1,12 @@
-import {StyleSheet, View, Platform, TextInput} from 'react-native';
-import React, {useState} from 'react';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {
+  StyleSheet, View, Platform, TextInput,
+} from 'react-native';
+import React, { useState } from 'react';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import Icon from './Icon';
-import {fontFamilies} from '~/theme/fonts';
+import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 
@@ -17,14 +19,14 @@ interface SearchBaseViewProps {
   onChangeText?: (text: string) => void;
 }
 
-const SearchBaseView = ({
+function SearchBaseView({
   isOpen,
   children,
   placeholder,
   initSearch,
   onClose,
   onChangeText,
-}: SearchBaseViewProps) => {
+}: SearchBaseViewProps) {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
@@ -41,43 +43,43 @@ const SearchBaseView = ({
     onChangeText?.(text);
   };
 
-  const renderHeader = () => {
-    return (
-      <View style={[styles.headerContainer, styles.bottomBorderAndShadow]}>
-        <View style={styles.inputIconContainer}>
-          <Icon
-            icon="iconBack"
-            onPress={onPressBack}
-            size={24}
-            hitSlop={{top: 20, bottom: 20, left: 20, right: 20}}
-            style={styles.iconBack}
-            buttonTestID="search_base_view.back_button"
-          />
-          <TextInput
-            autoFocus
-            testID={'search_base_view.text_input'}
-            style={styles.textInput}
-            value={searchText}
-            autoComplete={'off'}
-            placeholder={placeholder}
-            placeholderTextColor={theme.colors.gray40}
-            selectionColor={theme.colors.gray50}
-            onChangeText={_onChangeText}
-          />
-          {!!searchText && (
-            <Icon
-              style={styles.iconClose}
-              icon="iconClose"
-              size={20}
-              tintColor={theme.colors.neutral80}
-              onPress={() => _onChangeText('')}
-              buttonTestID="search_base_view.reset_button"
-            />
-          )}
-        </View>
+  const renderHeader = () => (
+    <View style={[styles.headerContainer, styles.bottomBorderAndShadow]}>
+      <View style={styles.inputIconContainer}>
+        <Icon
+          icon="iconBack"
+          onPress={onPressBack}
+          size={24}
+          hitSlop={{
+            top: 20, bottom: 20, left: 20, right: 20,
+          }}
+          style={styles.iconBack}
+          buttonTestID="search_base_view.back_button"
+        />
+        <TextInput
+          autoFocus
+          testID="search_base_view.text_input"
+          style={styles.textInput}
+          value={searchText}
+          autoComplete="off"
+          placeholder={placeholder}
+          placeholderTextColor={theme.colors.gray40}
+          selectionColor={theme.colors.gray50}
+          onChangeText={_onChangeText}
+        />
+        {!!searchText && (
+        <Icon
+          style={styles.iconClose}
+          icon="iconClose"
+          size={20}
+          tintColor={theme.colors.neutral80}
+          onPress={() => _onChangeText('')}
+          buttonTestID="search_base_view.reset_button"
+        />
+        )}
       </View>
-    );
-  };
+    </View>
+  );
 
   return isOpen ? (
     <View style={styles.container}>
@@ -85,10 +87,10 @@ const SearchBaseView = ({
       {children}
     </View>
   ) : null;
-};
+}
 
 const createStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   const insets = useSafeAreaInsets();
 
   return StyleSheet.create({
@@ -108,7 +110,7 @@ const createStyles = (theme: ExtendedTheme) => {
     bottomBorderAndShadow: {
       borderBottomWidth: Platform.OS === 'android' ? 0 : 0.5,
       borderColor: colors.neutral5,
-      shadowOffset: {width: 0, height: 1},
+      shadowOffset: { width: 0, height: 1 },
       shadowColor: '#000',
       shadowOpacity: 0.1,
       shadowRadius: 1,

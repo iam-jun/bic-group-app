@@ -1,117 +1,76 @@
-/* eslint-disable @typescript-eslint/naming-convention */
 module.exports = {
-  root: true,
-  env: {
-    browser: true,
-    es2022: true,
-    node: true,
-    jest: true,
-  },
   extends: [
-    'eslint:recommended',
-    'plugin:react/recommended',
+    'plugin:@typescript-eslint/eslint-recommended',
     'plugin:@typescript-eslint/recommended',
-    '@react-native-community/eslint-config',
     'airbnb',
-    'airbnb/hooks',
-    // 'prettier',
-    // 'prettier/react',
-    // 'plugin:prettier/recommended',
   ],
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
-    ecmaVersion: 12,
-    sourceType: 'module',
-  },
   plugins: [
-    'react',
     '@typescript-eslint',
-    'prettier',
-    'react-hooks',
+    'import',
   ],
   settings: {
     react: {
-      version: 'detect',
+      pragma: 'React',
+      version: '16.5',
     },
   },
+  env: {
+    jest: true,
+  },
+  globals: {
+    __DEV__: true,
+  },
   rules: {
-    'prettier/prettier': 1,
-    'no-extra-boolean-cast': 0,
-    'arrow-body-style': 'warn',
-    'prefer-object-spread': 'warn',
-    'prefer-destructuring': [
-      'error', {
-        VariableDeclarator: {
-          array: false,
-          object: true,
-        },
-        AssignmentExpression: {
-          array: true,
-          object: true,
-        },
-      }, {
-        enforceForRenamedProperties: false,
-      },
-    ],
-    'object-curly-spacing': 'error',
-    'no-new-object': 'error',
-    'object-shorthand': 'error',
-    'no-prototype-builtins': 'error',
-    'no-array-constructor': 'error',
-    'array-callback-return': 'error',
-    'no-shadow': 'off',
-    quotes: ['error', 'single'],
+    'eol-last': ['error', 'always'],
+    'global-require': 0,
+    'no-undefined': 0,
+    'react/jsx-filename-extension': 0,
+    'import/no-unresolved': 0,
+    'import/extensions': 0,
+    'react/require-default-props': 0,
+    'react/function-component-definition': 0,
+    'react/jsx-props-no-spreading': 0,
+    'prefer-destructuring': ['error', {
+      array: false,
+      object: true,
+    }, {
+      enforceForRenamedProperties: false,
+    }],
     camelcase: [
       0,
       {
         properties: 'never',
       },
     ],
-    'react/display-name': 'off',
-    'react-hooks/exhaustive-deps': 'off',
-    // 'react-native/no-unused-styles': 'warn',
-    'react-native/no-inline-styles': 'error',
-    'react-native/no-single-element-style-arrays': 'warn',
-    'react/function-component-definition': [2, { namedComponents: 'arrow-function' }],
-    '@typescript-eslint/ban-ts-comment': 'off',
-    // "@typescript-eslint/no-explicit-any": "off",
-    '@typescript-eslint/explicit-function-return-type': 0,
-    '@typescript-eslint/explicit-module-boundary-types': 'off',
-    '@typescript-eslint/no-explicit-any': 'warn',
-    '@typescript-eslint/member-delimiter-style': 2,
-    '@typescript-eslint/no-var-requires': 0,
-    '@typescript-eslint/no-unused-vars': 0,
-    '@typescript-eslint/naming-convention': [
-      'error',
+    'no-underscore-dangle': 0,
+    'no-plusplus': ['error', { allowForLoopAfterthoughts: true }],
+    'no-console': ['error', { allow: ['warn', 'error'] }],
+    '@typescript-eslint/ban-types': 0,
+    '@typescript-eslint/no-non-null-assertion': 0,
+    '@typescript-eslint/no-unused-vars': [
+      2,
       {
-        selector: 'default',
-        format: ['camelCase'],
-      },
-
-      {
-        selector: 'variable',
-        format: ['camelCase', 'PascalCase', 'UPPER_CASE'],
-      },
-      {
-        selector: 'parameter',
-        format: ['camelCase'],
-        leadingUnderscore: 'allow',
-      },
-
-      {
-        selector: 'memberLike',
-        modifiers: ['private'],
-        format: ['camelCase'],
-        leadingUnderscore: 'require',
-      },
-
-      {
-        selector: 'typeLike',
-        format: ['PascalCase'],
+        vars: 'all',
+        args: 'after-used',
       },
     ],
+    '@typescript-eslint/no-explicit-any': 'warn',
+    'no-use-before-define': 'off',
+    '@typescript-eslint/no-use-before-define': 0,
+    '@typescript-eslint/no-var-requires': 0,
+    '@typescript-eslint/explicit-function-return-type': 0,
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'no-shadow': 0,
+    '@typescript-eslint/no-shadow': 2,
+
   },
+  overrides: [
+    {
+      files: ['*.test.js', '*.test.jsx'],
+      env: {
+        jest: true,
+      },
+    },
+  ],
 };

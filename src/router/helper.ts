@@ -1,4 +1,4 @@
-import React, {RefObject} from 'react';
+import React, { RefObject } from 'react';
 import {
   NavigationContainerRef,
   NavigationState,
@@ -6,9 +6,10 @@ import {
   StackActions,
 } from '@react-navigation/native';
 
-import {IObject} from '~/interfaces/common';
-import {isEmpty, isNumber} from 'lodash';
-import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
+import { isEmpty, isNumber } from 'lodash';
+import { IObject } from '~/interfaces/common';
+import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
+import { parseSafe } from '~/utils/common';
 
 export const isNavigationRefReady = React.createRef();
 
@@ -45,15 +46,14 @@ export const withNavigation = (
       navigationRef?.current?.dispatch(StackActions.replace(name, params));
     } else {
       setTimeout(
-        () =>
-          navigationRef?.current?.dispatch(StackActions.replace(name, params)),
+        () => navigationRef?.current?.dispatch(StackActions.replace(name, params)),
         100,
       );
     }
   };
 
   const goBack = () => {
-    navigationRef?.current?.canGoBack() && navigationRef?.current?.goBack();
+    navigationRef?.current?.goBack?.();
   };
 
   const popToTop = () => {
@@ -67,7 +67,7 @@ export const withNavigation = (
   ): void => {
     navigationRef?.current?.navigate(parentName, {
       screen: name,
-      params: params,
+      params,
     });
   };
 
@@ -87,9 +87,9 @@ export const withNavigation = (
   };
 };
 
-export const getActiveRouteState = function (
+export const getActiveRouteState = (
   route?: NavigationState | PartialState<NavigationState>,
-): string | null {
+): string | null => {
   if (!route || !isNumber(route?.index)) return null;
 
   const currentRoute = route.routes[route.index];
@@ -99,8 +99,8 @@ export const getActiveRouteState = function (
   return getActiveRouteState(childActiveRoute);
 };
 
-export const getScreenAndParams = (data: any) => {
-  const newData = typeof data === 'string' ? JSON.parse(data) : {};
+export const getScreenAndParams = (data: string|undefined):{screen: string; params: any} | null => {
+  const newData = typeof data === 'string' ? parseSafe(data) : {};
   if (!isEmpty(newData)) {
     const {
       type,
@@ -125,12 +125,12 @@ export const getScreenAndParams = (data: any) => {
         case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR_AGGREGATED:
           return {
             screen: 'home',
-            params: {screen: 'post-detail', params: {post_id: postId}},
+            params: { screen: 'post-detail', params: { post_id: postId } },
           };
         case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL:
           return {
             screen: 'home',
-            params: {screen: 'draft-post'},
+            params: { screen: 'draft-post' },
           };
         case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR:
         case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR_AGGREGATED:
@@ -142,7 +142,7 @@ export const getScreenAndParams = (data: any) => {
             screen: 'home',
             params: {
               screen: 'post-detail',
-              params: {post_id: postId, focus_comment: true},
+              params: { post_id: postId, focus_comment: true },
             },
           };
 
@@ -157,7 +157,7 @@ export const getScreenAndParams = (data: any) => {
             screen: 'home',
             params: {
               screen: 'comment-detail',
-              params: {postId: postId, commentId: commentId},
+              params: { postId, commentId },
             },
           };
 
@@ -169,7 +169,7 @@ export const getScreenAndParams = (data: any) => {
             params: {
               screen: 'comment-detail',
               params: {
-                postId: postId,
+                postId,
                 commentId: child?.commentId,
                 parentId: commentId,
               },
@@ -177,7 +177,7 @@ export const getScreenAndParams = (data: any) => {
           };
         case NOTIFICATION_TYPE.GROUP_ASSIGNED_ROLE_TO_USER:
         case NOTIFICATION_TYPE.GROUP_DEMOTED_ROLE_TO_USER:
-          if (!!community?.id) {
+          if (community?.id) {
             return {
               screen: 'communities',
               params: {
@@ -188,7 +188,7 @@ export const getScreenAndParams = (data: any) => {
               },
             };
           }
-          if (!!group?.id) {
+          if (group?.id) {
             return {
               screen: 'communities',
               params: {
@@ -207,8 +207,8 @@ export const getScreenAndParams = (data: any) => {
             params: {
               screen: 'general-info',
               params: {
-                id: !!group?.id ? group.id : community?.id || '',
-                type: !!group?.id ? 'group' : 'community',
+                id: group?.id ? group.id : community?.id || '',
+                type: group?.id ? 'group' : 'community',
               },
             },
           };
@@ -216,7 +216,7 @@ export const getScreenAndParams = (data: any) => {
         case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_APPROVED:
         case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_REJECTED:
         case NOTIFICATION_TYPE.GROUP_ADDED_TO_GROUP_TO_USER_IN_ONE_GROUP:
-          if (!!community?.id) {
+          if (community?.id) {
             return {
               screen: 'communities',
               params: {
@@ -227,7 +227,7 @@ export const getScreenAndParams = (data: any) => {
               },
             };
           }
-          if (!!group?.id) {
+          if (group?.id) {
             return {
               screen: 'communities',
               params: {
@@ -243,23 +243,22 @@ export const getScreenAndParams = (data: any) => {
           return {
             screen: 'communities',
             params: {
-              screen: !!community?.id
+              screen: community?.id
                 ? 'community-pending-members'
                 : 'group-pending-members',
               params: {
-                communityId: !!community?.id ? community.id : group.id || '',
+                communityId: community?.id ? community.id : group.id || '',
               },
             },
           };
-          break;
         default:
-          console.log(`Notification type ${type} have not implemented yet`);
+          console.warn(`Notification type ${type} have not implemented yet`);
           return {
             screen: 'home',
-            params: {screen: 'post-detail', params: {post_id: postId}},
+            params: { screen: 'post-detail', params: { post_id: postId } },
           };
       }
     }
   }
-  return {};
+  return null;
 };
