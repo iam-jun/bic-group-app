@@ -202,16 +202,6 @@ export const getScreenAndParams = (data: any) => {
 
           break;
         case NOTIFICATION_TYPE.GROUP_CHANGED_PRIVACY_TO_GROUP:
-          return {
-            screen: 'communities',
-            params: {
-              screen: 'general-info',
-              params: {
-                id: !!group?.id ? group.id : community?.id || '',
-                type: !!group?.id ? 'group' : 'community',
-              },
-            },
-          };
         case NOTIFICATION_TYPE.GROUP_REMOVED_FROM_GROUP_TO_USER:
         case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_APPROVED:
         case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_REJECTED:
