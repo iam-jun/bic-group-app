@@ -76,7 +76,13 @@ const _NotificationList = ({
 
   const refreshListNotification = () => {
     //@ts-ignore
-    dispatch(notificationsActions.getNotifications({flag: type, keyValue}));
+    dispatch(
+      notificationsActions.getNotifications({
+        flag: type,
+        keyValue,
+        isRefresh: true,
+      }),
+    );
   };
 
   // load more notification handler
