@@ -1,4 +1,4 @@
-import {put, call, select} from 'redux-saga/effects';
+import {put, call} from 'redux-saga/effects';
 
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
@@ -8,7 +8,7 @@ export default function* getJoinedCommunities({
   payload,
 }: {
   type: string;
-  payload: {callback?: () => void};
+  payload?: {callback?: () => void};
 }) {
   try {
     const {callback} = payload || {};
@@ -28,7 +28,7 @@ export default function* getJoinedCommunities({
     callback && callback();
   } catch (err) {
     console.log('\x1b[33m', 'getJoinedCommunities : error', err, '\x1b[0m');
-    yield put(groupsActions.setMyCommunities({data: [], loading: false}));
-    yield showError(err);
+    yield put(groupsActions.setMyCommunities({loading: false}));
+    yield call(showError, err);
   }
 }
