@@ -31,11 +31,11 @@ function* addChildCommentToCommentsOfPost({
       if (!isEmpty(meta)) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        postComments[i].child?.meta = { ...postComments[i]?.child?.meta, ...meta };
+        postComments[i].child.meta = { ...postComments[i]?.child?.meta, ...meta };
       }
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      postComments?.[i].child?.list = newChild;
+      postComments[i].child.list = newChild;
 
       yield put(
         postActions.updateAllCommentsByParentIdsWithComments({

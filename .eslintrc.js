@@ -12,7 +12,7 @@ module.exports = {
   settings: {
     react: {
       pragma: 'React',
-      version: '16.5',
+      version: '18.2.0',
     },
   },
   env: {
@@ -47,6 +47,7 @@ module.exports = {
     'consistent-return': 0,
     'import/prefer-default-export': 0,
     'react/destructuring-assignment': 0,
+    'no-extra-boolean-cast': 0,
     eqeqeq: 0,
     'react/no-array-index-key': 0,
     'no-nested-ternary': 0,

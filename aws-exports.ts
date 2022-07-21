@@ -1,4 +1,4 @@
-import { getEnv } from '~/utils/env';
+import getEnv from '~/utils/env';
 
 const awsmobile = {
   aws_project_region: getEnv('BEIN_AWS_PROJECT_REGION'),

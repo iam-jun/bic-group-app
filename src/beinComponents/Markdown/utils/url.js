@@ -1,5 +1,5 @@
 import { Linking } from 'react-native';
-import { getEnv } from '~/utils/env';
+import  getEnv  from '~/utils/env';
 import { CURRENT_SERVER, DeepLinkTypes, Files } from './config';
 import { latinise } from './latinise.js';
 
