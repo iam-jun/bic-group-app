@@ -13,9 +13,11 @@ export const useMyPermissions = () => {
   const dispatch = useDispatch();
   const token = useAuthToken();
   const userId = useUserIdAuth();
-  const { loading, timeGetMyPermissions } = useKeySelector(
-    groupsKeySelector.myPermissions,
-  );
+  const {
+    loading,
+    timeGetMyPermissions,
+    data = {},
+  } = useKeySelector(groupsKeySelector.myPermissions);
 
   const getMyPermissions = () => {
     if (token && userId && !loading) {
@@ -43,15 +45,12 @@ export const useMyPermissions = () => {
 
   const hasPermissionsOnScopeWithId = (
     scope: 'communities' | 'groups',
-    audienceId: number,
+    id: number,
     requiredPermissions: string | string[],
   ) => {
-    // CHECK IF CURRENT USER HAS SOME PERMISSION ON A SPECIFIC AUDIENCE
+    // CHECK IF CURRENT USER HAS SOME PERMISSION ON A SPECIFIC SCOPE
 
-    const currentPermissions: string[] = useKeySelector(
-      groupsKeySelector.permissionsByScopeAndId(scope, audienceId),
-    );
-
+    const currentPermissions: string[] = data?.[scope]?.[id] || [];
     return hasPermissions(requiredPermissions, currentPermissions);
   };
 

@@ -10,7 +10,7 @@ import { getNewSchemeRolesOnUpdatePermission } from '~/screens/Groups/CreatePerm
 export const groupInitState = {
   myPermissions: {
     loading: false,
-    data: undefined,
+    data: {},
     timeGetMyPermissions: null,
   },
   permissionScheme: {

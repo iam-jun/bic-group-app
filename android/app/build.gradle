@@ -262,7 +262,7 @@ android {
             dimension "version"
             applicationIdSuffix ".development"
             versionNameSuffix "-dev"
-            resValue "string", "app_name", "Beincomm Development"
+            resValue "string", "app_name", "BIC Group Development"
             resValue "string", "facebook_app_id", "362084341568821"
             resValue "string", "provider_authorities", "com.evol.bein.group.development.SharedProvider"
             resValue "string", "provider_read_permission", "com.evol.bein.group.development.READ_DATABASE"
@@ -272,7 +272,7 @@ android {
             dimension "version"
             applicationIdSuffix ".staging"
             versionNameSuffix "-stag"
-            resValue "string", "app_name", "Beincomm Staging"
+            resValue "string", "app_name", "BIC Group Staging"
             resValue "string", "facebook_app_id", "362084341568821"
             resValue "string", "provider_authorities", "com.evol.bein.group.staging.SharedProvider"
             resValue "string", "provider_read_permission", "com.evol.bein.group.staging.READ_DATABASE"
@@ -280,7 +280,7 @@ android {
         }
         production {
             dimension "version"
-            resValue "string", "app_name", "Beincomm"
+            resValue "string", "app_name", "BIC Group"
             resValue "string", "facebook_app_id", "362084341568821"
             resValue "string", "provider_authorities", "com.evol.bein.group.SharedProvider"
             resValue "string", "provider_read_permission", "com.evol.bein.group.READ_DATABASE"
