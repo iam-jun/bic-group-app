@@ -52,11 +52,8 @@ const CommunityDetail = (props: any) => {
     groupsKeySelector.isGettingInfoDetail,
   );
   const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
-  const {hasPermissions, PERMISSION_KEY} = useMyPermissions(
-    'communities',
-    communityId,
-  );
-  const canSetting = hasPermissions([
+  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const canSetting = hasPermissionsOnScopeWithId('communities', communityId, [
     PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
     PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
     PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
@@ -114,7 +111,7 @@ const CommunityDetail = (props: any) => {
           <HeaderMenu
             type="community"
             isMember={isMember}
-            can_setting={canSetting}
+            canSetting={canSetting}
             onPressAdminTools={onPressAdminTools}
           />
         ),

@@ -147,15 +147,10 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
           ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
           changelog: "Production version #{ENV['APP_VERSION']}",
         )
-        mattermost(
-            url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-            text: "@all\n🟢🍎 **Bein Production iOS** New build #{appVersionText} available on TestFlight.}
-                \n > **Git Branch**: #{git_branch}
-                \n **Git Author**: #{commit[:author]}
-                \n **Git Commit**: #{git_mess}",
-            username: "bein.bot",
-            icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
-        )
+        notice_to_bic("Alo alo có build mới @ngoclinh @trankimmai @ngoccuong \n🟢🍎 **BIC Group Production iOS** New build #{appVersionText} available on TestFlight.}
+            \n > **Git Branch**: #{git_branch}
+            \n **Git Author**: #{commit[:author]}
+            \n **Git Commit**: #{git_mess}", [9,14,19])
     end
 
     lane :deploy_staging_ci do
@@ -197,15 +192,10 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
             ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
             changelog: "Staging version #{ENV['APP_VERSION']}",
           )
-          mattermost(
-              url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-              text: "@all\n🟡🍎 **Bein Staging iOS** New build #{appVersionText} available on TestFlight.}
-                  \n > **Git Branch**: #{git_branch}
-                  \n **Git Author**: #{commit[:author]}
-                  \n **Git Commit**: #{git_mess}",
-              username: "bein.bot",
-              icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
-          )
+          notice_to_bic("Alo alo có build mới @ngoclinh @trankimmai @ngoccuong \n🟡🍎 **BIC Group Staging iOS** New build #{appVersionText} available on TestFlight.}
+              \n > **Git Branch**: #{git_branch}
+              \n **Git Author**: #{commit[:author]}
+              \n **Git Commit**: #{git_mess}", [9,14,19])
         end
 
     lane :deploy_production_ci do
@@ -248,14 +238,9 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
                 ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
                 changelog: "Production version #{ENV['APP_VERSION']}",
               )
-              mattermost(
-                  url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
-                  text: "@all\n🟢🍎 **Bein Production iOS** New build #{appVersionText} available on TestFlight.}
-                      \n > **Git Branch**: #{git_branch}
-                      \n **Git Author**: #{commit[:author]}
-                      \n **Git Commit**: #{git_mess}",
-                  username: "bein.bot",
-                  icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
-              )
+              notice_to_bic("Alo alo có build mới @ngoclinh @trankimmai @ngoccuong \n🟢🍎 **BIC Group iOS** New build #{appVersionText} available on TestFlight.}
+                  \n > **Git Branch**: #{git_branch}
+                  \n **Git Author**: #{commit[:author]}
+                  \n **Git Commit**: #{git_mess}", [9,14,19])
   end
 end

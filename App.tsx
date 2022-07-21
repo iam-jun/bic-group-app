@@ -10,6 +10,7 @@ import Store from './src/store';
 import {initFatalErrorHandler} from '~/services/fatalErrorHandler';
 import {initFirebaseMessaging} from '~/services/firebase';
 import {initAmplify} from '~/services/amplify';
+import {initSentry, wrapWithSentry} from '~/services/sentry';
 
 LogBox.ignoreLogs([
   'EventEmitter.removeListener',
@@ -19,9 +20,10 @@ LogBox.ignoreLogs([
 i18Next.language;
 i18Next.options.resources;
 
+initSentry();
 initFatalErrorHandler();
 
-export default () => {
+const App = () => {
   useEffect(() => {
     initAmplify();
     initFirebaseMessaging();
@@ -37,3 +39,5 @@ export default () => {
     </Provider>
   );
 };
+
+export default wrapWithSentry(App);

@@ -38,6 +38,7 @@ export interface IParamGetNotifications {
   idLt?: string;
   flag?: 'ALL' | 'UNREAD' | 'MENTION' | 'IMPORTANT';
   keyValue?: string;
+  isRefresh?: boolean;
 }
 
 export interface INotiExtraData {

@@ -227,8 +227,26 @@ function* deletePost({
       );
     }
     console.log(`\x1b[35m🐣️ saga deletePost response`, response, `\x1b[0m`);
-  } catch (e) {
-    yield showError(e);
+  } catch (e: any) {
+    if (e?.meta?.errors?.groups_denied) {
+      // UPDATE POST AUDIENCE, KEEP DENIED AUDIENCE ONLY
+      const groupsDenied: number[] = e?.meta?.errors?.groups_denied;
+      const data = {
+        audience: {
+          userIds: [],
+          groupIds: groupsDenied,
+        },
+      };
+      const response = yield call(postDataHelper.putEditPost, {
+        postId: id,
+        data,
+      });
+      if (response?.data) {
+        const post = response?.data;
+        yield put(postActions.addToAllPosts({data: post}));
+      }
+    }
+    yield call(showError, e);
   }
 }
 

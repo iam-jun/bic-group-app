@@ -106,9 +106,9 @@ export const getScreenAndParams = (data: any) => {
       type,
       postId = 0,
       commentId = 0,
-      child = {},
-      community = {},
-      group = {},
+      childCommentId = null,
+      communityId = null,
+      groupId = null,
     } = newData;
     if (type !== undefined) {
       switch (type) {
@@ -170,31 +170,31 @@ export const getScreenAndParams = (data: any) => {
               screen: 'comment-detail',
               params: {
                 postId: postId,
-                commentId: child?.commentId,
+                commentId: childCommentId,
                 parentId: commentId,
               },
             },
           };
         case NOTIFICATION_TYPE.GROUP_ASSIGNED_ROLE_TO_USER:
         case NOTIFICATION_TYPE.GROUP_DEMOTED_ROLE_TO_USER:
-          if (!!community?.id) {
+          if (!!communityId) {
             return {
               screen: 'communities',
               params: {
                 screen: 'community-members',
                 params: {
-                  communityId: community.id,
+                  communityId,
                 },
               },
             };
           }
-          if (!!group?.id) {
+          if (!!groupId) {
             return {
               screen: 'communities',
               params: {
                 screen: 'group-members',
                 params: {
-                  groupId: group.id,
+                  groupId,
                 },
               },
             };
@@ -202,52 +202,43 @@ export const getScreenAndParams = (data: any) => {
 
           break;
         case NOTIFICATION_TYPE.GROUP_CHANGED_PRIVACY_TO_GROUP:
-          return {
-            screen: 'communities',
-            params: {
-              screen: 'general-info',
-              params: {
-                id: !!group?.id ? group.id : community?.id || '',
-                type: !!group?.id ? 'group' : 'community',
-              },
-            },
-          };
         case NOTIFICATION_TYPE.GROUP_REMOVED_FROM_GROUP_TO_USER:
         case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_APPROVED:
         case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_REJECTED:
         case NOTIFICATION_TYPE.GROUP_ADDED_TO_GROUP_TO_USER_IN_ONE_GROUP:
-          if (!!community?.id) {
+          if (!!communityId) {
             return {
               screen: 'communities',
               params: {
                 screen: 'community-detail',
                 params: {
-                  communityId: community.id,
+                  communityId,
                 },
               },
             };
           }
-          if (!!group?.id) {
+          if (!!groupId) {
             return {
               screen: 'communities',
               params: {
                 screen: 'group-detail',
                 params: {
-                  groupId: group.id,
+                  groupId,
                 },
               },
             };
           }
           break;
         case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
+        case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN_AGGREGATED:
           return {
             screen: 'communities',
             params: {
-              screen: !!community?.id
+              screen: !!communityId
                 ? 'community-pending-members'
                 : 'group-pending-members',
               params: {
-                communityId: !!community?.id ? community.id : group.id || '',
+                id: !!communityId ? communityId : groupId || '',
               },
             },
           };

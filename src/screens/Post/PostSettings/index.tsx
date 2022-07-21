@@ -22,6 +22,9 @@ import useCreatePost from '~/screens/Post/CreatePost/hooks/useCreatePost';
 import {IPostSettingsParams} from '~/interfaces/IPost';
 import postActions from '~/screens/Post/redux/actions';
 import spacing from '~/theme/spacing';
+import {useMyPermissions} from '~/hooks/permissions';
+import {useKeySelector} from '~/hooks/selector';
+import postKeySelector from '../redux/keySelector';
 
 export interface PostSettingsProps {
   route?: {
@@ -35,14 +38,28 @@ const PostSettings = ({route}: PostSettingsProps) => {
   const {rootNavigation} = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
-
   const styles = createStyle(theme);
 
+  let chosenAudiences: any[];
   const screenParams = route?.params || {};
   const {postId} = screenParams;
   if (postId) {
     useCreatePost({screenParams});
+    chosenAudiences = useKeySelector(
+      postKeySelector.postAudienceById(postId),
+    )?.groups;
+  } else {
+    chosenAudiences = useKeySelector(
+      postKeySelector.createPost.chosenAudiences,
+    );
   }
+
+  const {hasPermissionsOnEachScope, PERMISSION_KEY} = useMyPermissions();
+  const canCreateImportantPost = hasPermissionsOnEachScope(
+    'groups',
+    chosenAudiences,
+    PERMISSION_KEY.GROUP.CREATE_IMPORTANT_POST,
+  );
 
   useEffect(() => {
     return () => {
@@ -177,7 +194,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
       />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {renderImportant()}
+          {!!canCreateImportantPost && renderImportant()}
         </ScrollView>
         <View style={{position: 'absolute', alignSelf: 'center'}}>
           {selectingDate && (
