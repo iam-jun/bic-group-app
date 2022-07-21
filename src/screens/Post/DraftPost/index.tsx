@@ -1,8 +1,7 @@
-import {useIsFocused} from '@react-navigation/native';
-import React, {useEffect, useState} from 'react';
-import {ActivityIndicator, StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import { useIsFocused, ExtendedTheme, useTheme } from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { ActivityIndicator, StyleSheet, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import Header from '~/beinComponents/Header';
 import Image from '~/beinComponents/Image';
@@ -10,11 +9,11 @@ import ListView from '~/beinComponents/list/ListView';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
-import {appScreens} from '~/configs/navigator';
-import {useBaseHook} from '~/hooks';
-import {useUserIdAuth} from '~/hooks/auth';
-import {useKeySelector} from '~/hooks/selector';
-import {IPayloadGetDraftPosts} from '~/interfaces/IPost';
+import { appScreens } from '~/configs/navigator';
+import { useBaseHook } from '~/hooks';
+import { useUserIdAuth } from '~/hooks/auth';
+import { useKeySelector } from '~/hooks/selector';
+import { IPayloadGetDraftPosts } from '~/interfaces/IPost';
 import images from '~/resources/images';
 import PostViewDraft from '~/screens/Post/components/PostViewDraft';
 import postActions from '~/screens/Post/redux/actions';
@@ -27,9 +26,9 @@ import spacing from '~/theme/spacing';
 const DraftPost = () => {
   const [lossInternet, setLossInternet] = useState(false);
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const userId = useUserIdAuth();
@@ -53,9 +52,9 @@ const DraftPost = () => {
     }
   }, [isInternetReachable]);
 
-  //get draft post called from MainTabs
+  // get draft post called from MainTabs
   const draftPostsData = useKeySelector(postKeySelector.draftPostsData) || {};
-  const {posts: draftPosts = [], canLoadMore, refreshing} = draftPostsData;
+  const { posts: draftPosts = [], canLoadMore, refreshing } = draftPostsData;
 
   const getData = (isRefreshing?: boolean) => {
     if (userId) {
@@ -66,38 +65,32 @@ const DraftPost = () => {
     }
   };
 
-  const renderItem = ({item}: any) => {
-    return <PostViewDraft data={item} />;
-  };
+  const renderItem = ({ item }: any) => <PostViewDraft data={item} />;
 
-  const renderFooter = () => {
-    return (
-      <View>
-        {canLoadMore && !refreshing && (
-          <View testID="draft_post.load_more_view" style={styles.listFooter}>
-            <ActivityIndicator color={theme.colors.gray20} />
-          </View>
-        )}
-        {!refreshing && !canLoadMore && (
-          <ViewSpacing height={spacing.margin.large} />
-        )}
+  const renderFooter = () => (
+    <View>
+      {canLoadMore && !refreshing && (
+      <View testID="draft_post.load_more_view" style={styles.listFooter}>
+        <ActivityIndicator color={theme.colors.gray20} />
       </View>
-    );
-  };
+      )}
+      {!refreshing && !canLoadMore && (
+      <ViewSpacing height={spacing.margin.large} />
+      )}
+    </View>
+  );
 
-  const renderEmpty = () => {
-    return (
-      <View testID="draft_post.empty_view" style={styles.emptyContainer}>
-        <Image source={images.img_empty_draft} style={styles.imgEmpty} />
-        <Text.H6 useI18n color={colors.gray50}>
-          post:draft:title_no_draft_posts
-        </Text.H6>
-        <Text useI18n color={colors.gray50}>
-          post:draft:text_no_draft_posts
-        </Text>
-      </View>
-    );
-  };
+  const renderEmpty = () => (
+    <View testID="draft_post.empty_view" style={styles.emptyContainer}>
+      <Image source={images.img_empty_draft} style={styles.imgEmpty} />
+      <Text.H6 useI18n color={colors.gray50}>
+        post:draft:title_no_draft_posts
+      </Text.H6>
+      <Text useI18n color={colors.gray50}>
+        post:draft:text_no_draft_posts
+      </Text>
+    </View>
+  );
 
   const title = `${t('home:draft_post')}${
     draftPosts?.length > 0
@@ -128,7 +121,7 @@ const DraftPost = () => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

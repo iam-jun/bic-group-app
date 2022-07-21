@@ -1,9 +1,9 @@
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
 
-import {useRootNavigation} from '~/hooks/navigation';
+import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {titleCase} from '~/utils/common';
+import { titleCase } from '~/utils/common';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
 import spacing from '~/theme/spacing';
@@ -29,7 +29,7 @@ const InfoView = ({
   canEditPrivacy,
   type,
 }: Props) => {
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
   const editDescription = () => {
     rootNavigation.navigate(groupStack.editDescription, {
@@ -52,12 +52,12 @@ const InfoView = ({
       <PrimaryItem
         testID="info_view.name"
         title={`settings:title_${type}_name`}
-        titleProps={{useI18n: true}}
+        titleProps={{ useI18n: true }}
         subTitle={name}
         onPress={canEditInfo ? editName : undefined}
         RightComponent={
           canEditInfo && (
-            <Icon icon={'AngleRightSolid'} style={styles.rightIcon} />
+            <Icon icon="AngleRightSolid" style={styles.rightIcon} />
           )
         }
       />
@@ -65,24 +65,24 @@ const InfoView = ({
       <PrimaryItem
         testID="info_view.description"
         title={`settings:title_${type}_description`}
-        titleProps={{useI18n: true}}
+        titleProps={{ useI18n: true }}
         subTitle={description}
         onPress={canEditInfo ? editDescription : undefined}
         RightComponent={
           canEditInfo && (
-            <Icon icon={'AngleRightSolid'} style={styles.rightIcon} />
+            <Icon icon="AngleRightSolid" style={styles.rightIcon} />
           )
         }
       />
 
       <PrimaryItem
         testID="info_view.privacy"
-        title={'settings:title_privacy'}
-        titleProps={{useI18n: true}}
+        title="settings:title_privacy"
+        titleProps={{ useI18n: true }}
         subTitle={titleCase(privacy) || ''}
         onPress={canEditPrivacy ? onPressPrivacy : undefined}
         RightComponent={
-          canEditPrivacy && <Icon icon={'PenLine'} style={styles.rightIcon} />
+          canEditPrivacy && <Icon icon="PenLine" style={styles.rightIcon} />
         }
       />
     </View>

@@ -6,19 +6,19 @@ import {
   TextStyle,
   ViewStyle,
   StyleSheet,
+  View,
 } from 'react-native';
 
-import SvgIcon, {SVGIconProps} from './SvgIcon';
+import { useNetInfo } from '@react-native-community/netinfo';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import SvgIcon, { SVGIconProps } from './SvgIcon';
 
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
-import icons, {IconType} from '~/resources/icons';
+import icons, { IconType } from '~/resources/icons';
 
-import {View} from 'react-native';
 import TextEmojiIcon from '~/beinComponents/Icon/TextEmojiIcon';
-import {useNetInfo} from '@react-native-community/netinfo';
 import spacing from '~/theme/spacing';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {
   fontAwesomeIcons,
   fontAwesomeIconValues,
@@ -56,7 +56,9 @@ const Icon: React.FC<IconProps> = ({
   isButton,
   isLoading,
   disabled,
-  hitSlop = {top: 10, left: 10, bottom: 10, right: 10},
+  hitSlop = {
+    top: 10, left: 10, bottom: 10, right: 10,
+  },
   buttonTestID,
 }: IconProps) => {
   const NetInfo = useNetInfo();
@@ -65,7 +67,7 @@ const Icon: React.FC<IconProps> = ({
   const theme: ExtendedTheme = useTheme();
   if (isLoading) return <ActivityIndicator size="small" />;
 
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = StyleSheet.create(createStyles(theme));
   tintColor = tintColor || colors.neutral80;
 
@@ -78,7 +80,8 @@ const Icon: React.FC<IconProps> = ({
   const _icon = typeof icon === 'string' ? icons[icon] : icon;
   const _style: StyleProp<ViewStyle> = {};
 
-  let IconComponent, type, name, source;
+  let IconComponent; let type; let name; let
+    source;
 
   // @ts-ignore
   const hasFontAwesomeIcon = !!fontAwesomeIcons[`${icon || _icon}`];
@@ -92,9 +95,9 @@ const Icon: React.FC<IconProps> = ({
     IconComponent = SvgIcon;
     source = _icon;
   } else if (
-    typeof icon === 'string' &&
-    !icons[icon] &&
-    !icon.includes('http')
+    typeof icon === 'string'
+    && !icons[icon]
+    && !icon.includes('http')
   ) {
     IconComponent = TextEmojiIcon;
     name = icon;
@@ -113,14 +116,16 @@ const Icon: React.FC<IconProps> = ({
       disabled={noInternet || disabled || !onPress}
       onPress={onPress}
       hitSlop={hitSlop}
-      testID={buttonTestID}>
-      <View style={[styles.container, style, {backgroundColor}]}>
+      testID={buttonTestID}
+    >
+      <View style={[styles.container, style, { backgroundColor }]}>
         <View
           style={[
             isButton && styles.button,
             disabled && isButton && styles.disabled,
             iconStyle,
-          ]}>
+          ]}
+        >
           <View testID={testID}>
             <IconComponent
               style={_style as any}
@@ -137,9 +142,10 @@ const Icon: React.FC<IconProps> = ({
             useI18n
             style={[
               styles.label,
-              {color: labelColor || theme.colors.neutral80},
+              { color: labelColor || theme.colors.neutral80 },
               labelStyle,
-            ]}>
+            ]}
+          >
             {label}
           </Text.ButtonM>
         )}
@@ -149,7 +155,7 @@ const Icon: React.FC<IconProps> = ({
 };
 
 const createStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

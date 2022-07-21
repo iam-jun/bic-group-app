@@ -1,33 +1,32 @@
-import React, {useEffect, useState} from 'react';
-import {isEmpty} from 'lodash';
-import {useForm} from 'react-hook-form';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { isEmpty } from 'lodash';
+import { useForm } from 'react-hook-form';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import * as validation from '~/constants/commonRegex';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import authActions from '~/screens/Auth/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 
-import {IChangePasswordError} from '~/interfaces/IAuth';
+import { IChangePasswordError } from '~/interfaces/IAuth';
 import useAuth from '~/hooks/auth';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
-import {getEnv} from '~/utils/env';
+import getEnv from '~/utils/env';
 import spacing from '~/theme/spacing';
 
 const ChangePassword = () => {
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  const {changePasswordError, changePasswordLoading} = useAuth();
-  const {errCurrentPassword}: IChangePasswordError = changePasswordError || {};
+  const { changePasswordError, changePasswordLoading } = useAuth();
+  const { errCurrentPassword }: IChangePasswordError = changePasswordError || {};
   const [disableSaveButton, setDisableSaveButton] = useState(true);
 
   useEffect(() => {
@@ -54,8 +53,7 @@ const ChangePassword = () => {
   }, [errCurrentPassword]);
   const useFormData = useForm();
   const {
-    control,
-    formState: {errors},
+    formState: { errors },
     trigger,
     setError,
     clearErrors,
@@ -111,12 +109,11 @@ const ChangePassword = () => {
     const password = getValues('password');
     const newPassword = getValues('newPassword');
     const confirmNewPassword = getValues('confirmNewPassword');
-    const result =
-      !isEmpty(errors) ||
-      !password ||
-      !newPassword ||
-      !confirmNewPassword ||
-      changePasswordLoading;
+    const result = !isEmpty(errors)
+      || !password
+      || !newPassword
+      || !confirmNewPassword
+      || changePasswordLoading;
     setDisableSaveButton(result);
   };
 
@@ -133,7 +130,7 @@ const ChangePassword = () => {
     const oldPassword = getValues('password');
     const newPassword = getValues('confirmNewPassword');
     dispatch(
-      authActions.changePassword({oldPassword, newPassword, global: false}),
+      authActions.changePassword({ oldPassword, newPassword, global: false }),
     );
   };
 
@@ -144,7 +141,7 @@ const ChangePassword = () => {
         <PasswordInputController
           testID="change_password.current_password"
           useFormData={useFormData}
-          name={'password'}
+          name="password"
           rules={{
             required: t('auth:text_err_password_blank'),
             maxLength: {
@@ -157,8 +154,8 @@ const ChangePassword = () => {
             },
             validate: () => {
               if (
-                !getEnv('SELF_DOMAIN')?.includes('sbx') &&
-                !getEnv('SELF_DOMAIN')?.includes('stg')
+                !getEnv('SELF_DOMAIN')?.includes('sbx')
+                && !getEnv('SELF_DOMAIN')?.includes('stg')
               ) {
                 const value = getValues('password');
                 if (!/(?=.*?[A-Z])/.test(value)) {
@@ -184,7 +181,7 @@ const ChangePassword = () => {
         <PasswordInputController
           testID="change_password.new_password"
           useFormData={useFormData}
-          name={'newPassword'}
+          name="newPassword"
           rules={{
             required: t('auth:text_err_password_blank'),
           }}
@@ -209,24 +206,26 @@ const ChangePassword = () => {
           validateValue={validateConfirmNewPassword}
           onSubmitEditing={handleOnSaveChangePassword}
         />
-        {/*<PrimaryItem*/}
-        {/*  title={t('settings:title_logout_from_all_devices')}*/}
-        {/*  style={styles.logoutFromAllDevices}*/}
-        {/*  isChecked={isCheckLogoutGlobal}*/}
-        {/*  onPressCheckbox={handleOnCheckLogoutGlobal}*/}
-        {/*/>*/}
+        {/* <PrimaryItem */}
+        {/*  title={t('settings:title_logout_from_all_devices')} */}
+        {/*  style={styles.logoutFromAllDevices} */}
+        {/*  isChecked={isCheckLogoutGlobal} */}
+        {/*  onPressCheckbox={handleOnCheckLogoutGlobal} */}
+        {/* /> */}
         <Button.Primary
           testID="change_password.save"
           style={styles.btnSave}
           disabled={disableSaveButton}
-          onPress={handleOnSaveChangePassword}>
+          onPress={handleOnSaveChangePassword}
+        >
           {t('common:text_save')}
         </Button.Primary>
         <View style={styles.forgotPasswordContainer}>
           <TouchableOpacity onPress={handleForgotPassword}>
             <Text.H6
               testID="change_password.forgot_password"
-              style={styles.forgotPasswordText}>
+              style={styles.forgotPasswordText}
+            >
               {t('auth:btn_forgot_password')}
             </Text.H6>
           </TouchableOpacity>
@@ -239,7 +238,7 @@ const ChangePassword = () => {
 export default ChangePassword;
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

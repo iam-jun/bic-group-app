@@ -1,10 +1,10 @@
 import Clipboard from '@react-native-clipboard/clipboard';
 
 import PropTypes from 'prop-types';
-import React, {Children, PureComponent} from 'react';
-import {Alert, Text} from 'react-native';
+import React, { Children, PureComponent } from 'react';
+import { Alert, Text } from 'react-native';
 import urlParse from 'url-parse';
-import {preventDoubleTap} from '../utils/utils';
+import { preventDoubleTap } from '../utils/utils';
 import {
   tryOpenURL,
   normalizeProtocol,
@@ -40,7 +40,9 @@ export default class MdLink extends PureComponent {
   };
 
   handlePress = preventDoubleTap(async () => {
-    const {actions, currentTeamName, href, serverURL, siteURL} = this.props;
+    const {
+      actions, currentTeamName, href, serverURL, siteURL,
+    } = this.props;
     // const {handleSelectChannelByName, showPermalink} = actions;
     const url = normalizeProtocol(href);
 
@@ -92,7 +94,7 @@ export default class MdLink extends PureComponent {
     // }
   });
 
-  parseLinkLiteral = literal => {
+  parseLinkLiteral = (literal) => {
     let nextLiteral = literal;
 
     const WWW_REGEX = /\b^(?:www.)/i;
@@ -105,35 +107,33 @@ export default class MdLink extends PureComponent {
     return parsed.href;
   };
 
-  parseChildren = () => {
-    return Children.map(this.props.children, child => {
-      if (
-        !child.props.literal ||
-        typeof child.props.literal !== 'string' ||
-        (child.props.context &&
-          child.props.context.length &&
-          !child.props.context.includes('link'))
-      ) {
-        return child;
-      }
+  parseChildren = () => Children.map(this.props.children, (child) => {
+    if (
+      !child.props.literal
+        || typeof child.props.literal !== 'string'
+        || (child.props.context
+          && child.props.context.length
+          && !child.props.context.includes('link'))
+    ) {
+      return child;
+    }
 
-      const {props, ...otherChildProps} = child;
-      const {literal, ...otherProps} = props;
+    const { props, ...otherChildProps } = child;
+    const { literal, ...otherProps } = props;
 
-      const nextProps = {
-        literal: this.parseLinkLiteral(literal),
-        ...otherProps,
-      };
+    const nextProps = {
+      literal: this.parseLinkLiteral(literal),
+      ...otherProps,
+    };
 
-      return {
-        props: nextProps,
-        ...otherChildProps,
-      };
-    });
-  };
+    return {
+      props: nextProps,
+      ...otherChildProps,
+    };
+  });
 
   handleLongPress = async () => {
-    console.log(`\x1b[36m🐣️ MdLink handleLongPress\x1b[0m`);
+    console.log('\x1b[36m🐣️ MdLink handleLongPress\x1b[0m');
     // const {formatMessage} = this.context.intl;
     //
     // // const config = mattermostManaged.getCachedConfig();

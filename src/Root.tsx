@@ -114,7 +114,9 @@ const Root = (): React.ReactElement => {
         ? NativeModules.SettingsManager.settings.AppleLocale
         : NativeModules.I18nManager.localeIdentifier;
 
+      // eslint-disable-next-line prefer-destructuring
       if (systemLocale && systemLocale.includes('_')) systemLocale = systemLocale.split('_')[0];
+      // eslint-disable-next-line prefer-destructuring
       else if (systemLocale && systemLocale.includes('-')) systemLocale = systemLocale.split('-')[0];
 
       const isSupportLanguage = Object.keys(languages).find(

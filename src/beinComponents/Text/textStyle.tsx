@@ -1,11 +1,11 @@
-import {StyleSheet} from 'react-native';
-import {ExtendedTheme} from '@react-navigation/native';
+import { StyleSheet } from 'react-native';
+import { ExtendedTheme } from '@react-navigation/native';
 
-import {sizes} from '~/theme/dimension';
-import {fontFamilies} from '~/theme/fonts';
+import { sizes } from '~/theme/dimension';
+import { fontFamilies } from '~/theme/fonts';
 
 export const createTextStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   const style = {
     h1: {

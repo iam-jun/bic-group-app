@@ -1,5 +1,5 @@
 const mainTabStack = {
-  //HOME
+  // HOME
   newsfeed: 'newsfeed',
   'create-post': 'create-post',
   'create-comment': 'create-comment',
@@ -10,7 +10,7 @@ const mainTabStack = {
   'post-settings': 'post-settings',
   'comment-detail': 'comment-detail',
 
-  //GROUP
+  // GROUP
   // 'group-list': Groups,
   // 'add-members': 'add-members',
   'group-detail': 'group-detail',
@@ -23,7 +23,7 @@ const mainTabStack = {
   'invite-members': 'invite-members',
   'pending-members': 'pending-members',
 
-  //MENU
+  // MENU
   // menu: Menu,
   'user-profile': 'user-profile',
   'user-edit': 'user-edit',
@@ -36,7 +36,7 @@ const mainTabStack = {
   'add-work': 'add-work',
   'edit-description': 'edit-description',
 
-  //NOTIFICATION
+  // NOTIFICATION
   // notification: Notification,
   'not-select-notification': 'not-select-notification',
 };

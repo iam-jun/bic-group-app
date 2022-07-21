@@ -1,16 +1,15 @@
-import React, {FC} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import React, { FC } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import Text from '~/beinComponents/Text';
-import {IGroup} from '~/interfaces/IGroup';
-import Icon from '~/beinComponents/Icon';
-import privacyTypes from '~/constants/privacyTypes';
 import Avatar from '~/beinComponents/Avatar';
+import Icon from '~/beinComponents/Icon';
+import Text from '~/beinComponents/Text';
+import privacyTypes from '~/constants/privacyTypes';
+import { IGroup } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';
 
 export interface ReorderGroupHeaderProps {
-  style?: StyleProp<ViewStyle>;
   group: IGroup;
 }
 
@@ -20,14 +19,14 @@ const ReorderGroupInfo: FC<ReorderGroupHeaderProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const {privacy, icon, name} = group || {};
-  const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
-  const {icon: privacyIcon}: any = privacyData || {};
+  const { privacy, icon, name } = group || {};
+  const privacyData = privacyTypes.find((i) => i?.type === privacy) || {};
+  const { icon: privacyIcon }: any = privacyData || {};
 
   return (
     <View style={styles.container}>
       <View style={styles.title}>
-        <Icon icon={'CircleInfo'} />
+        <Icon icon="CircleInfo" />
         <Text.BodyS useI18n>
           communities:group_structure:text_info_reorder
         </Text.BodyS>
@@ -49,7 +48,7 @@ const ReorderGroupInfo: FC<ReorderGroupHeaderProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       marginHorizontal: spacing.margin.large,
@@ -76,7 +75,7 @@ const createStyle = (theme: ExtendedTheme) => {
       flexDirection: 'row',
       alignItems: 'center',
     },
-    textName: {flex: 1, marginLeft: spacing.margin.small},
+    textName: { flex: 1, marginLeft: spacing.margin.small },
     grayDot: {
       marginLeft: spacing.margin.base,
       marginRight: spacing.margin.small,

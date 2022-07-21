@@ -1,6 +1,6 @@
-import {isEmpty} from 'lodash';
-import React, {useEffect, useRef, useState} from 'react';
-import {useForm} from 'react-hook-form';
+import { isEmpty } from 'lodash';
+import React, { useEffect, useRef, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import {
   AppState,
   Keyboard,
@@ -12,8 +12,8 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import {ExtendedTheme, useNavigation, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import { ExtendedTheme, useNavigation, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import Animated, {
   Extrapolate,
   interpolate,
@@ -21,17 +21,17 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import {useKeyboard} from '@react-native-community/hooks';
+import { useKeyboard } from '@react-native-community/hooks';
 
 import Button from '~/beinComponents/Button';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
-import {createTextStyle} from '~/beinComponents/Text/textStyle';
+import { createTextStyle } from '~/beinComponents/Text/textStyle';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 
-import {authStack} from '~/configs/navigator';
+import { authStack } from '~/configs/navigator';
 import * as validation from '~/constants/commonRegex';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import useAuth from '~/hooks/auth';
 import useAuthAmplifyHub from '~/hooks/authAmplifyHub';
 import images from '~/resources/images';
@@ -44,7 +44,7 @@ import {
 } from '~/services/sharePreferences';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 import TextInputController from '~/beinComponents/inputs/TextInputController';
-import {getEnv} from '~/utils/env';
+import getEnv from '~/utils/env';
 import BackgroundComponent from './BackgroundComponent';
 import spacing from '~/theme/spacing';
 
@@ -56,10 +56,10 @@ const MARGIN_LEFT_LOGO = -(screenWidth / 2 - 24 * 2);
 
 const SignIn = () => {
   useAuthAmplifyHub();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const navigation = useNavigation();
   const dispatch = useDispatch();
-  const {loading, signingInError} = useAuth();
+  const { loading, signingInError } = useAuth();
   const [disableSignIn, setDisableSignIn] = useState(true);
   const [authSessions, setAuthSessions] = useState<any>(null);
   const [keyboardHeight, setKeyboardHeight] = useState(0);
@@ -74,7 +74,7 @@ const SignIn = () => {
 
   const useFormData = useForm();
   const {
-    formState: {errors},
+    formState: { errors },
     trigger,
     setError,
     clearErrors,
@@ -121,14 +121,12 @@ const SignIn = () => {
     checkDisableSignIn();
   }, [signingInError]);
 
-  const showEvent =
-    Platform.OS === 'android' ? 'keyboardDidShow' : 'keyboardWillShow';
+  const showEvent = Platform.OS === 'android' ? 'keyboardDidShow' : 'keyboardWillShow';
 
-  const dismissEvent =
-    Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide';
+  const dismissEvent = Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide';
 
   useEffect(() => {
-    const keyboardWillShowListener = Keyboard.addListener(showEvent, event => {
+    const keyboardWillShowListener = Keyboard.addListener(showEvent, (event) => {
       if (event.endCoordinates?.height) {
         keyboardHeightValue.value = withTiming(
           1,
@@ -159,8 +157,8 @@ const SignIn = () => {
 
   useEffect(() => {
     if (
-      keyboard?.keyboardHeight &&
-      keyboardHeight !== keyboard?.keyboardHeight
+      keyboard?.keyboardHeight
+      && keyboardHeight !== keyboard?.keyboardHeight
     ) {
       setKeyboardHeight(keyboard?.keyboardHeight);
     }
@@ -216,7 +214,7 @@ const SignIn = () => {
 
     const email = getValues('email');
     const password = getValues('password');
-    dispatch(actions.signIn({email, password}));
+    dispatch(actions.signIn({ email, password }));
   };
 
   const validateInputs = async () => {
@@ -241,8 +239,7 @@ const SignIn = () => {
     Keyboard.dismiss();
   };
 
-  const goToForgotPassword = () =>
-    navigation.navigate(authStack.forgotPassword);
+  const goToForgotPassword = () => navigation.navigate(authStack.forgotPassword);
 
   const logoContainerStyle = useAnimatedStyle(() => ({
     transform: [
@@ -270,13 +267,13 @@ const SignIn = () => {
   }));
 
   const optionsStyle = useAnimatedStyle(() => ({
-    opacity: withTiming(loading ? 1 : 0, {duration: 500}),
+    opacity: withTiming(loading ? 1 : 0, { duration: 500 }),
   }));
   const renderLoading = () => {
     if (!loading) return null;
     return (
       <Animated.View style={[styles.loading, optionsStyle]}>
-        <LoadingIndicator size={'large'} color={theme.colors.purple50} />
+        <LoadingIndicator size="large" color={theme.colors.purple50} />
       </Animated.View>
     );
   };
@@ -289,18 +286,20 @@ const SignIn = () => {
           showsVerticalScrollIndicator={false}
           style={styles.container}
           contentContainerStyle={styles.contentContainer}
-          keyboardShouldPersistTaps="handled">
+          keyboardShouldPersistTaps="handled"
+        >
           <TouchableWithoutFeedback
             testID="sign_in.button_hide_keyboard"
             onPress={hideKeyboard}
             accessible={false}
-            style={styles.flex1}>
+            style={styles.flex1}
+          >
             <View style={styles.paddingView}>
               <Animated.Image
                 source={images.logo_beincomm}
-                style={[{alignSelf: 'center'}, logoContainerStyle]}
+                style={[{ alignSelf: 'center' }, logoContainerStyle]}
               />
-              <View style={{backgroundColor: 'yellow'}} />
+              <View style={{ backgroundColor: 'yellow' }} />
               <Text.H4 testID="sign_in.title" style={styles.title} useI18n>
                 auth:text_sign_in_desc
               </Text.H4>
@@ -310,7 +309,7 @@ const SignIn = () => {
               <TextInputController
                 ref={inputEmailRef}
                 testID="sign_in.input_email"
-                autoFocus={true}
+                autoFocus
                 useFormData={useFormData}
                 name="email"
                 rules={{
@@ -324,7 +323,7 @@ const SignIn = () => {
                   clearFieldError('email');
                   checkDisableSignIn();
                 }}
-                placeholder={'example@gmail.com'}
+                placeholder="example@gmail.com"
                 keyboardType="email-address"
                 autoCapitalize="none"
                 style={styles.inputEmailContainer}
@@ -345,7 +344,7 @@ const SignIn = () => {
                 ref={inputPasswordRef}
                 useFormData={useFormData}
                 testID="sign_in.input_password"
-                name={'password'}
+                name="password"
                 rules={{
                   required: t('auth:text_err_password_blank'),
                   maxLength: {
@@ -358,8 +357,8 @@ const SignIn = () => {
                   },
                   validate: () => {
                     if (
-                      !getEnv('SELF_DOMAIN')?.includes('sbx') &&
-                      !getEnv('SELF_DOMAIN')?.includes('stg')
+                      !getEnv('SELF_DOMAIN')?.includes('sbx')
+                      && !getEnv('SELF_DOMAIN')?.includes('stg')
                     ) {
                       const value = getValues('password');
                       if (!/(?=.*?[A-Z])/.test(value)) {
@@ -396,7 +395,8 @@ const SignIn = () => {
               />
               <TouchableOpacity
                 testID="sign_in.btn_forgot_password"
-                onPress={goToForgotPassword}>
+                onPress={goToForgotPassword}
+              >
                 <Text.BodyS style={styles.transparentButton} useI18n>
                   auth:btn_forgot_password
                 </Text.BodyS>
@@ -408,8 +408,9 @@ const SignIn = () => {
                 onPress={onSignIn}
                 useI18n
                 color={theme.colors.white}
-                textColor={theme.colors.purple50}>
-                {'auth:btn_sign_in'}
+                textColor={theme.colors.purple50}
+              >
+                auth:btn_sign_in
               </Button.Primary>
 
               <View style={styles.signUpContainer}>
@@ -419,7 +420,8 @@ const SignIn = () => {
                 <TouchableOpacity
                   testID="btnSignInForgotPassword"
                   // onPress={() => navigation.navigate(authStack.signup)}
-                  onPress={handleSignUpNotFunctioning}>
+                  onPress={handleSignUpNotFunctioning}
+                >
                   <Text.H5 style={styles.transparentButton} useI18n>
                     auth:btn_sign_up_now
                   </Text.H5>
@@ -435,7 +437,7 @@ const SignIn = () => {
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   const textStyle = createTextStyle(theme);
 
   return StyleSheet.create({
@@ -450,7 +452,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     contentContainer: {
       flex: 1,
     },
-    flex1: {flex: 1},
+    flex1: { flex: 1 },
     paddingView: {
       flex: 1,
       paddingHorizontal: spacing.padding.extraLarge,

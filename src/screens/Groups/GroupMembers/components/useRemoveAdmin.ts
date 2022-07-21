@@ -1,11 +1,10 @@
-import React from 'react';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
-import {useDispatch} from 'react-redux';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
-import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import {IGroupMembers} from '~/interfaces/IGroup';
+import Text from '~/beinComponents/Text';
+import { IGroupMembers } from '~/interfaces/IGroup';
 
 import modalActions from '~/store/modal/actions';
 import groupsActions from '../../redux/actions';
@@ -15,14 +14,14 @@ interface IUseRemoveAdmin {
   selectedMember: IGroupMembers;
 }
 
-const useRemoveAdmin = ({groupId, selectedMember}: IUseRemoveAdmin) => {
+const useRemoveAdmin = ({ groupId, selectedMember }: IUseRemoveAdmin) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
 
-  const {id: userId, fullname} = selectedMember;
+  const { id: userId, fullname } = selectedMember;
 
   const doRemoveAdmin = () => {
-    userId && dispatch(groupsActions.removeGroupAdmin({groupId, userId}));
+    userId && dispatch(groupsActions.removeGroupAdmin({ groupId, userId }));
   };
 
   const alertPayload = {
@@ -40,8 +39,7 @@ const useRemoveAdmin = ({groupId, selectedMember}: IUseRemoveAdmin) => {
   };
   alertPayload.content = alertPayload.content.replace('{0}', `"${fullname}"`);
 
-  const alertRemovingAdmin = () =>
-    dispatch(modalActions.showAlert(alertPayload));
+  const alertRemovingAdmin = () => dispatch(modalActions.showAlert(alertPayload));
 
   return alertRemovingAdmin;
 };

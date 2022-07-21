@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   StyleProp,
@@ -9,11 +9,11 @@ import {
   TextInputProps as RNTextInputProps,
 } from 'react-native';
 
-import {fontFamilies} from '~/theme/fonts';
-import Text, {TextProps} from '~/beinComponents/Text';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { fontFamilies } from '~/theme/fonts';
+import Text, { TextProps } from '~/beinComponents/Text';
 import Icon from '../Icon';
 import spacing from '~/theme/spacing';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 export type HelperType =
   | 'error'
@@ -71,7 +71,7 @@ const TextInput: React.FC<TextInputProps> = ({
   ...props
 }: TextInputProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = themeStyles(theme, textColor);
   const [text, setText] = useState<string>(value || '');
   const [isFocus, setIsFocus] = useState<boolean>(false);
@@ -98,7 +98,8 @@ const TextInput: React.FC<TextInputProps> = ({
         testID="text_input.text_helper_action"
         onPress={helperActionOnPress}
         {..._textHelperProps}
-        style={helperActionStyle.style}>
+        style={helperActionStyle.style}
+      >
         {`${helperAction}`}
       </Text.H6>
     );
@@ -134,7 +135,8 @@ const TextInput: React.FC<TextInputProps> = ({
               : outlineColor || colors.gray40,
           },
           inputStyle,
-        ]}>
+        ]}
+      >
         <RNTextInput
           testID="text_input.input"
           placeholder={placeholder}
@@ -143,7 +145,7 @@ const TextInput: React.FC<TextInputProps> = ({
           value={text}
           style={[
             styles.input,
-            !!error ? styles.errorStyle : styles.defaultStyle,
+            error ? styles.errorStyle : styles.defaultStyle,
           ]}
           onChangeText={_onChangeText}
           ref={textInputRef}
@@ -172,7 +174,7 @@ const TextInput: React.FC<TextInputProps> = ({
 };
 
 const themeStyles = (theme: ExtendedTheme, textColor?: string) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {
@@ -210,7 +212,7 @@ const themeStyles = (theme: ExtendedTheme, textColor?: string) => {
 };
 
 const getTextHelperProps = (theme: ExtendedTheme, type: HelperType) => {
-  const {colors} = theme;
+  const { colors } = theme;
   const props = {
     error: {
       color: colors.red60,
@@ -229,7 +231,7 @@ const getTextHelperProps = (theme: ExtendedTheme, type: HelperType) => {
 };
 
 const helperActionStyle = StyleSheet.create({
-  style: {textDecorationLine: 'underline'},
+  style: { textDecorationLine: 'underline' },
 });
 
 const _TextInput = React.forwardRef(

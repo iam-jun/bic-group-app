@@ -1,23 +1,23 @@
 import React from 'react';
-import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { View, TouchableOpacity, StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import {IGroup, IParsedGroup} from '~/interfaces/IGroup';
-import {IObject} from '~/interfaces/common';
+import { IGroup, IParsedGroup } from '~/interfaces/IGroup';
+import { IObject } from '~/interfaces/common';
 import Icon from '~/beinComponents/Icon';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {useRootNavigation} from '~/hooks/navigation';
+import { useRootNavigation } from '~/hooks/navigation';
 import Text from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Checkbox from '~/beinComponents/SelectionControl/Checkbox';
-import commonActions, {IAction} from '~/constants/commonActions';
-import {generateUniqueId} from '~/utils/generator';
-import {useKeySelector} from '~/hooks/selector';
+import commonActions, { IAction } from '~/constants/commonActions';
+import { generateUniqueId } from '~/utils/generator';
+import { useKeySelector } from '~/hooks/selector';
 import privacyTypes from '~/constants/privacyTypes';
 import mainStack from '~/router/navigator/MainStack/stack';
-import {AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
-import {IconType} from '~/resources/icons';
+import { AvatarType } from '~/beinComponents/Avatar/AvatarComponent';
+import { IconType } from '~/resources/icons';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 
@@ -74,31 +74,29 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = themeStyles(theme);
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
   if (hide) {
     return null;
   }
 
-  const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
-  const {icon: privacyIcon, title: privacyTitle}: any = privacyData || {};
+  const privacyData = privacyTypes.find((i) => i?.type === privacy) || {};
+  const { icon: privacyIcon, title: privacyTitle }: any = privacyData || {};
 
   const _onPressItem = () => {
     if (onPressItem) {
       onPressItem(props);
+    } else if (community_id) {
+      rootNavigation.navigate(mainStack.communityDetail, {
+        communityId: community_id,
+      });
     } else {
-      if (community_id) {
-        rootNavigation.navigate(mainStack.communityDetail, {
-          communityId: community_id,
-        });
-      } else {
-        rootNavigation.navigate(groupStack.groupDetail, {
-          groupId: id,
-          initial: true,
-        });
-      }
+      rootNavigation.navigate(groupStack.groupDetail, {
+        groupId: id,
+        initial: true,
+      });
     }
   };
 
@@ -118,19 +116,15 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     onCheckedItem?.(props, newChecked);
   };
 
-  const _renderExtraInfo = () => {
-    return renderExtraInfo?.(props);
-  };
+  const _renderExtraInfo = () => renderExtraInfo?.(props);
 
-  const renderLine = (uiLevel: number) => {
-    return (
-      <View
-        testID="group_item.ui_level"
-        key={generateUniqueId()}
-        style={styles.line}
-      />
-    );
-  };
+  const renderLine = (uiLevel: number) => (
+    <View
+      testID="group_item.ui_level"
+      key={generateUniqueId()}
+      style={styles.line}
+    />
+  );
 
   const renderToggle = () => {
     if (uiLevel < 0) {
@@ -144,8 +138,11 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
         onPress={_onToggleItem}
         disabled={!hasChild}
         activeOpacity={1}
-        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-        style={styles.toggleContainer}>
+        hitSlop={{
+          top: 10, bottom: 10, left: 10, right: 10,
+        }}
+        style={styles.toggleContainer}
+      >
         {hasChild && (
           <View style={styles.toggleContent}>
             <Icon
@@ -161,18 +158,18 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 
   const renderUiLevelLines = () => {
     if (uiLevel > 0) {
-      return Array.from(Array(uiLevel).keys()).map(item => renderLine(item));
-    } else {
-      return null;
+      return Array.from(Array(uiLevel).keys()).map((item) => renderLine(item));
     }
+    return null;
   };
 
   return (
     <TouchableOpacity
       testID="group_item.container"
       disabled={!isInternetReachable || disableOnPressItem}
-      onPress={_onPressItem}>
-      <View style={{flexDirection: 'row'}} testID={testID}>
+      onPress={_onPressItem}
+    >
+      <View style={{ flexDirection: 'row' }} testID={testID}>
         {renderUiLevelLines()}
         {renderToggle()}
         <View style={styles.itemContainer}>
@@ -192,7 +189,8 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
               style={
                 disableHorizontal ? styles.textName : styles.textNameHorizontal
               }
-              numberOfLines={nameLines}>
+              numberOfLines={nameLines}
+            >
               {name}
             </Text.H6>
             {showInfo && (
@@ -213,7 +211,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                     <Text.BodyS> ⬩ </Text.BodyS>
                   </>
                 )}
-                <Icon icon={'UserGroup'} size={16} tintColor={colors.gray50} />
+                <Icon icon="UserGroup" size={16} tintColor={colors.gray50} />
                 <Text.BodyS color={colors.gray50} style={styles.textInfo}>
                   {user_count}
                 </Text.BodyS>
@@ -224,9 +222,9 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
           {!!onPressMenu && (
             <View style={styles.btnMenu}>
               <Icon
-                style={{alignSelf: 'auto'}}
+                style={{ alignSelf: 'auto' }}
                 icon={menuIcon}
-                testID={'group_item.button_menu'}
+                testID="group_item.button_menu"
                 onPress={_onPressMenu}
               />
             </View>
@@ -238,7 +236,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 };
 
 const themeStyles = (theme: IObject<any>) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     textContainer: {
       paddingHorizontal: spacing.padding.base,
@@ -287,14 +285,14 @@ const themeStyles = (theme: IObject<any>) => {
       width: dimension?.avatarSizes.medium,
       height: dimension?.avatarSizes.medium,
     },
-    checkbox: {position: 'absolute', bottom: -3, right: -6},
+    checkbox: { position: 'absolute', bottom: -3, right: -6 },
     iconSmall: {
       height: 16,
     },
     privacyTitle: {
       marginLeft: spacing.margin.tiny,
     },
-    btnMenu: {marginRight: 8},
+    btnMenu: { marginRight: 8 },
   });
 };
 

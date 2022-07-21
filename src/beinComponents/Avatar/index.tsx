@@ -5,25 +5,25 @@ import AvatarComponent, {
 import Group from './AvatarGroup';
 
 const Tiny: React.FC<AvatarProps> = (props: AvatarProps) => (
-  <AvatarComponent variant={'tiny'} {...props} />
+  <AvatarComponent variant="tiny" {...props} />
 );
 const Small: React.FC<AvatarProps> = (props: AvatarProps) => (
-  <AvatarComponent variant={'small'} {...props} />
+  <AvatarComponent variant="small" {...props} />
 );
 const SmallAlt: React.FC<AvatarProps> = (props: AvatarProps) => (
-  <AvatarComponent variant={'smallAlt'} {...props} />
+  <AvatarComponent variant="smallAlt" {...props} />
 );
 const Medium: React.FC<AvatarProps> = (props: AvatarProps) => (
-  <AvatarComponent variant={'medium'} {...props} />
+  <AvatarComponent variant="medium" {...props} />
 );
 const Large: React.FC<AvatarProps> = (props: AvatarProps) => (
-  <AvatarComponent variant={'large'} {...props} />
+  <AvatarComponent variant="large" {...props} />
 );
 const LargeAlt: React.FC<AvatarProps> = (props: AvatarProps) => (
-  <AvatarComponent variant={'largeAlt'} {...props} />
+  <AvatarComponent variant="largeAlt" {...props} />
 );
 const UltraSuperLarge: React.FC<AvatarProps> = (props: AvatarProps) => (
-  <AvatarComponent variant={'ultraSuperLarge'} {...props} />
+  <AvatarComponent variant="ultraSuperLarge" {...props} />
 );
 
 const Avatar = Object.assign(AvatarComponent, {

@@ -1,6 +1,6 @@
 import RNDateTimePicker from 'react-native-modal-datetime-picker';
 
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import DatePickerComponentProps from '~/beinComponents/DateTimePicker/DatePickerComponentProps';
 
 const DatePickerComponent: FC<DatePickerComponentProps> = ({
@@ -12,20 +12,16 @@ const DatePickerComponent: FC<DatePickerComponentProps> = ({
   minDate,
   maxDate,
   ...props
-}: DatePickerComponentProps) => {
-  // @ts-ignore
-  return (
-    <RNDateTimePicker
-      isVisible={isVisible}
-      onConfirm={onConfirm}
-      onCancel={onCancel}
-      mode={mode}
-      date={date}
-      minimumDate={minDate}
-      maximumDate={maxDate}
-      {...props}
-    />
-  );
-};
-
+}: DatePickerComponentProps) => (
+  <RNDateTimePicker
+    isVisible={isVisible}
+    onConfirm={onConfirm}
+    onCancel={onCancel}
+    mode={mode}
+    date={date}
+    minimumDate={minDate}
+    maximumDate={maxDate}
+    {...props}
+  />
+);
 export default DatePickerComponent;

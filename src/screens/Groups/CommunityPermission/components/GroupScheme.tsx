@@ -1,16 +1,18 @@
-import React, {FC} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle, FlatList} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import {
+  View, StyleSheet, StyleProp, ViewStyle, FlatList,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import SchemeItem from './SchemeItem';
-import {IGroupScheme} from '~/interfaces/IGroup';
+import { IGroupScheme } from '~/interfaces/IGroup';
 import Divider from '~/beinComponents/Divider';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import {useRootNavigation} from '~/hooks/navigation';
+import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import spacing from '~/theme/spacing';
 
@@ -18,21 +20,19 @@ export interface GroupSchemeProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const GroupScheme: FC<GroupSchemeProps> = ({style}: GroupSchemeProps) => {
-  const {rootNavigation} = useRootNavigation();
+const GroupScheme: FC<GroupSchemeProps> = ({ style }: GroupSchemeProps) => {
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const {data} = useKeySelector(groupsKeySelector.permission.schemes) || {};
-  const {groupSchemes} = data || {};
+  const { data } = useKeySelector(groupsKeySelector.permission.schemes) || {};
+  const { groupSchemes } = data || {};
 
   const onPressAssign = () => {
     rootNavigation.navigate(groupStack.groupSchemeAssignment);
   };
 
-  const renderItem = ({item}: {item: IGroupScheme}) => {
-    return <SchemeItem item={item} />;
-  };
+  const renderItem = ({ item }: {item: IGroupScheme}) => <SchemeItem item={item} />;
 
   return (
     <View style={styles.container}>
@@ -48,7 +48,8 @@ const GroupScheme: FC<GroupSchemeProps> = ({style}: GroupSchemeProps) => {
             <Button.Primary
               onPress={onPressAssign}
               useI18n
-              style={styles.buttonAssign}>
+              style={styles.buttonAssign}
+            >
               communities:permission:btn_assign
             </Button.Primary>
           </View>
@@ -67,9 +68,7 @@ const GroupScheme: FC<GroupSchemeProps> = ({style}: GroupSchemeProps) => {
           renderItem={renderItem}
           style={styles.groupSchemeList}
           scrollEnabled={false}
-          keyExtractor={(item, index) =>
-            `group_scheme_item_${item.id}_${index}`
-          }
+          keyExtractor={(item, index) => `group_scheme_item_${item.id}_${index}`}
           ItemSeparatorComponent={() => (
             <>
               <Divider />
@@ -83,9 +82,9 @@ const GroupScheme: FC<GroupSchemeProps> = ({style}: GroupSchemeProps) => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
-    flex1: {flex: 1},
+    flex1: { flex: 1 },
     container: {
       padding: spacing.padding.large,
       backgroundColor: colors.white,

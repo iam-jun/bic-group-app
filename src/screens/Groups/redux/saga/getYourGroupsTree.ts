@@ -1,4 +1,4 @@
-import {put, call} from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
@@ -11,17 +11,17 @@ export default function* getYourGroupsTree({
   payload: number;
 }): any {
   try {
-    yield put(groupsActions.setYourGroupsTree({loading: true}));
+    yield put(groupsActions.setYourGroupsTree({ loading: true }));
     const groups = yield call(
       groupsDataHelper.getCommunityGroups,
       communityId,
-      {list_by: 'tree'},
+      { list_by: 'tree' },
     );
     yield put(
-      groupsActions.setYourGroupsTree({loading: false, list: groups || []}),
+      groupsActions.setYourGroupsTree({ loading: false, list: groups || [] }),
     );
   } catch (err) {
-    yield put(groupsActions.setYourGroupsTree({loading: false}));
+    yield put(groupsActions.setYourGroupsTree({ loading: false }));
     yield showError(err);
   }
 }

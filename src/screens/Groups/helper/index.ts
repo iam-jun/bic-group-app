@@ -1,8 +1,8 @@
+import { cloneDeep, isEmpty } from 'lodash';
 import modalActions from '~/store/modal/actions';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
-import {IGroup, IRole, IScheme} from '~/interfaces/IGroup';
-import {cloneDeep, isEmpty} from 'lodash';
-import {ROLE_TYPE} from '~/constants/permissionScheme';
+import { IGroup, IRole, IScheme } from '~/interfaces/IGroup';
+import { ROLE_TYPE } from '~/constants/permissionScheme';
 
 export const checkLastAdmin = async (
   groupId: string | number,
@@ -26,13 +26,13 @@ export const checkLastAdmin = async (
       testingAdminCount = 2;
       dispatch(
         modalActions.showHideToastMessage({
-          content: `groups:error:last_admin_leave`,
+          content: 'groups:error:last_admin_leave',
           props: {
             type: 'error',
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
             rightIcon: 'UserGroup',
             rightText: 'Members',
-            onPressRight: onPressRight,
+            onPressRight,
           },
           toastType: 'normal',
         }),
@@ -44,7 +44,7 @@ export const checkLastAdmin = async (
           content: `groups:error:last_admin_inner_group_${type}`,
           props: {
             type: 'error',
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
           },
           toastType: 'normal',
         }),
@@ -56,10 +56,10 @@ export const checkLastAdmin = async (
     dispatch(
       modalActions.showHideToastMessage({
         content:
-          err?.meta?.errors?.[0]?.message ||
-          err?.meta?.message ||
-          'common:text_error_message',
-        props: {textProps: {useI18n: true}, type: 'error'},
+          err?.meta?.errors?.[0]?.message
+          || err?.meta?.message
+          || 'common:text_error_message',
+        props: { textProps: { useI18n: true }, type: 'error' },
       }),
     );
   }
@@ -88,10 +88,10 @@ export const handleLeaveInnerGroups = async (
     dispatch(
       modalActions.showHideToastMessage({
         content:
-          err?.meta?.errors?.[0]?.message ||
-          err?.meta?.message ||
-          'common:text_error_message',
-        props: {textProps: {useI18n: true}, type: 'error'},
+          err?.meta?.errors?.[0]?.message
+          || err?.meta?.message
+          || 'common:text_error_message',
+        props: { textProps: { useI18n: true }, type: 'error' },
       }),
     );
   }
@@ -105,7 +105,7 @@ export const getGroupFromTreeById = (tree: IGroup, groupId: number) => {
     if (parent?.id === groupId) {
       group = parent;
     } else if (!isEmpty(parent?.children)) {
-      parent.children?.map(g => getGroupInChildren(g, groupId));
+      parent.children?.map((g) => getGroupInChildren(g, groupId));
     }
   };
 
@@ -120,12 +120,12 @@ export const getAllChildrenName = (group: IGroup) => {
   const getName = (g: IGroup) => {
     result.push(g.name);
     if (!isEmpty(g.children)) {
-      g.children?.map(child => {
+      g.children?.forEach((child) => {
         getName(child);
       });
     }
   };
-  group.children?.map(child => {
+  group.children?.forEach((child) => {
     getName(child);
   });
   return result;
@@ -153,11 +153,10 @@ export const sortFixedRoles = (data: IScheme) => {
 
   // sorting fixedRoles based on the order of desiredFixedOrder array
   fixedRoles.sort(
-    (a, b) =>
-      desiredFixedOrder.indexOf(a.type) - desiredFixedOrder.indexOf(b.type),
+    (a, b) => desiredFixedOrder.indexOf(a.type) - desiredFixedOrder.indexOf(b.type),
   );
 
   const newOrderedRoles = [...fixedRoles, ...customRoles];
 
-  return {...cloneDeep(data), roles: newOrderedRoles};
+  return { ...cloneDeep(data), roles: newOrderedRoles };
 };

@@ -1,18 +1,20 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import {
+  View, StyleSheet, StyleProp, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import {IGroup} from '~/interfaces/IGroup';
+import { IGroup } from '~/interfaces/IGroup';
 import Icon from '~/beinComponents/Icon';
-import GroupItem, {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
-import GroupTree, {OnChangeCheckedGroupsData} from '~/beinComponents/GroupTree';
-import {useRootNavigation} from '~/hooks/navigation';
+import GroupItem, { GroupItemProps } from '~/beinComponents/list/items/GroupItem';
+import GroupTree, { OnChangeCheckedGroupsData } from '~/beinComponents/GroupTree';
+import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import mainStack from '~/router/navigator/MainStack/stack';
-import {AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
-import {IconType} from '~/resources/icons';
+import { AvatarType } from '~/beinComponents/Avatar/AvatarComponent';
+import { IconType } from '~/resources/icons';
 import spacing from '~/theme/spacing';
 
 export interface FlatGroupItemProps extends GroupItemProps {
@@ -71,46 +73,45 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
 }: FlatGroupItemProps) => {
   const [showTree, setShowTree] = useState(initShowTree);
   const [group, setGroup] = useState<IGroup>(props);
-  const [path, setPath] = useState<PathData>({path: '', total: 0, more: 0});
+  const [path, setPath] = useState<PathData>({ path: '', total: 0, more: 0 });
 
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const getSmallestChild = (smallestGroup: IGroup, path: PathData) => {
     if (smallestGroup?.children?.[0]) {
-      path.total = path.total + 1;
+      path.total += 1;
       if (path.path?.length < limitLength) {
         path.path = `${path.path}${path.path?.length > 0 ? ' ▸ ' : ''}${
           smallestGroup.name
         }`;
       } else {
-        path.more = path.more + 1;
+        path.more += 1;
       }
 
       getSmallestChild(smallestGroup?.children?.[0], path);
     } else {
       if (path.path?.length >= limitLength) {
-        path.path =
-          path.path
-            .substr(0, path.more > 0 ? limitLengthShort : limitLength)
-            ?.trim() + '...';
+        path.path = `${path.path
+          .substr(0, path.more > 0 ? limitLengthShort : limitLength)
+          ?.trim()}...`;
       }
-      setGroup({...smallestGroup});
-      setPath({...path});
+      setGroup({ ...smallestGroup });
+      setPath({ ...path });
     }
   };
 
   const getParentPath = (group: IGroup, path: PathData) => {
     if (group.parent) {
-      path.total = path.total + 1;
+      path.total += 1;
       path.path = `${group.parent.name}${path.path?.length > 0 ? ' ▸ ' : ''}${
         path.path
       }`;
 
       getParentPath(group.parent, path);
     } else {
-      setPath({...path});
+      setPath({ ...path });
     }
   };
 
@@ -137,17 +138,15 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
       onPressGroup(group);
     } else if (onPressItem) {
       onPressItem(group);
+    } else if (group.community_id) {
+      rootNavigation.navigate(mainStack.communityDetail, {
+        communityId: group.community_id,
+      });
     } else {
-      if (group.community_id) {
-        rootNavigation.navigate(mainStack.communityDetail, {
-          communityId: group.community_id,
-        });
-      } else {
-        rootNavigation.navigate(groupStack.groupDetail, {
-          groupId: group.id,
-          initial: true,
-        });
-      }
+      rootNavigation.navigate(groupStack.groupDetail, {
+        groupId: group.id,
+        initial: true,
+      });
     }
   };
 
@@ -171,13 +170,14 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
         <Button onPress={_onPressPath} disabled={!hasTree}>
           <View style={styles.iconArrowRight}>
             <Icon
-              icon={'AngleRightSolid'}
+              icon="AngleRightSolid"
               size={12}
               tintColor={theme.colors.neutral80}
             />
           </View>
-          <Text style={{paddingRight: 20}}>
-            {showTree ? '' : path.path}{' '}
+          <Text style={{ paddingRight: 20 }}>
+            {showTree ? '' : path.path}
+            {' '}
             <Text color={theme.colors.purple60}>{buttonText}</Text>
           </Text>
         </Button>
@@ -231,7 +231,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {},
     iconArrowRight: {

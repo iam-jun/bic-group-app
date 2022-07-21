@@ -1,5 +1,5 @@
-import {IconType} from '~/resources/icons';
 import React from 'react';
+import { IconType } from '~/resources/icons';
 
 export interface IMenuItemProps {
   label: string;

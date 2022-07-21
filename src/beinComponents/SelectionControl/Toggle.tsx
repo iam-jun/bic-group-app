@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   StyleSheet,
   View,
@@ -6,9 +6,9 @@ import {
   StyleProp,
   ViewStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import commonActions, {IAction} from '~/constants/commonActions';
+import commonActions, { IAction } from '~/constants/commonActions';
 
 interface ToggleProps {
   style?: StyleProp<ViewStyle>;
@@ -46,7 +46,8 @@ const Toggle: React.FC<ToggleProps> = ({
     <TouchableOpacity style={style} onPress={_onChangeValue} testID={testID}>
       <View
         testID={testID ? `${testID}.out_side_view` : 'toggle.out_side_view'}
-        style={styles.outsideRectangle}>
+        style={styles.outsideRectangle}
+      >
         <View style={styles.insideCircle} />
       </View>
     </TouchableOpacity>
@@ -54,7 +55,7 @@ const Toggle: React.FC<ToggleProps> = ({
 };
 
 const createStyles = (theme: ExtendedTheme, isChecked: boolean) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     outsideRectangle: {

@@ -1,10 +1,10 @@
-import {View, ActivityIndicator, StyleSheet} from 'react-native';
-import React, {useState} from 'react';
+import { View, ActivityIndicator, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {scaleCoverHeight} from '~/theme/dimension';
-import {useKeySelector} from '~/hooks/selector';
+import { scaleCoverHeight } from '~/theme/dimension';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
@@ -26,7 +26,7 @@ const CoverImage = ({
 }: Props) => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = themeStyles(theme, coverHeight);
   const loadingCover = useKeySelector(groupsKeySelector.loadingCover);
 
@@ -48,7 +48,8 @@ const CoverImage = ({
           <ButtonWrapper
             testID="cover.button_edit"
             onPress={onEditCover}
-            disabled={loadingCover}>
+            disabled={loadingCover}
+          >
             <Text.H6 testID="cover.text_edit" color={textColor} useI18n>
               settings:title_edit
             </Text.H6>
@@ -65,7 +66,8 @@ const CoverImage = ({
         ) : (
           <View
             testID="cover.loading"
-            style={[styles.cover, styles.imageLoading]}>
+            style={[styles.cover, styles.imageLoading]}
+          >
             <ActivityIndicator />
           </View>
         )}
@@ -75,7 +77,7 @@ const CoverImage = ({
 };
 
 const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     coverHeader: {

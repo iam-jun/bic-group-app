@@ -1,113 +1,113 @@
 export default {
-  '1': {
+  1: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '2': {
+  2: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '3': {
+  3: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '4': {
+  4: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '7': {
+  7: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '8': {
+  8: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '9': {
+  9: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '10': {
+  10: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '11': {
+  11: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '12': {
+  12: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '13': {
+  13: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '14': {
+  14: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '16': {
+  16: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '17': {
+  17: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '18': {
+  18: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '19': {
+  19: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '20': {
+  20: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '21': {
+  21: {
     screen: 'home',
     params: {
       screen: 'post-detail',
     },
   },
-  '22': {
+  22: {
     screen: 'home',
     params: {
       screen: 'post-detail',

@@ -1,8 +1,8 @@
 import React from 'react';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import PendingUserItem from '../../components/PendingUserItem';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import groupsActions from '../../redux/actions';
 
@@ -18,11 +18,11 @@ const CommunityMemberRequest = ({
   const communityMemberRequests = useKeySelector(
     groupsKeySelector.communityMemberRequests,
   );
-  const {items} = communityMemberRequests;
+  const { items } = communityMemberRequests;
 
   const requestItem = items[requestId];
-  const {user} = requestItem;
-  const {fullname: fullName} = user;
+  const { user } = requestItem;
+  const { fullname: fullName } = user;
 
   const onPressApprove = () => {
     dispatch(

@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
@@ -11,7 +11,7 @@ interface TitleComponentProps {
   title: string;
 }
 
-const TitleComponent = ({icon, title}: TitleComponentProps) => {
+const TitleComponent = ({ icon, title }: TitleComponentProps) => {
   const theme: ExtendedTheme = useTheme();
 
   return (

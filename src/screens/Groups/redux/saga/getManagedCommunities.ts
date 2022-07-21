@@ -1,11 +1,11 @@
+import { put, call, select } from 'redux-saga/effects';
 import appConfig from '~/configs/appConfig';
-import {put, call, select} from 'redux-saga/effects';
 
 import actions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
-import {mapItems} from '../../helper/mapper';
-import {ICommunity} from '~/interfaces/ICommunity';
+import { mapItems } from '../../helper/mapper';
+import { ICommunity } from '~/interfaces/ICommunity';
 
 export default function* getManagedCommunities({
   payload,
@@ -14,13 +14,14 @@ export default function* getManagedCommunities({
   payload?: {managed: boolean; preview_members: boolean};
 }) {
   try {
-    const {groups} = yield select();
-    const {data, items, canLoadMore} = groups.managedCommunities;
+    const { groups } = yield select();
+    const { data, items, canLoadMore } = groups.managedCommunities;
 
-    yield put(actions.setManagedCommunities({loading: data.length === 0}));
+    yield put(actions.setManagedCommunities({ loading: data.length === 0 }));
 
     if (!canLoadMore) return;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const resp = yield call(groupsDataHelper.getJoinedCommunities, {
       managed: true,
@@ -45,7 +46,7 @@ export default function* getManagedCommunities({
 
     yield put(actions.setManagedCommunities(newData));
   } catch (err) {
-    console.log('getManagedCommunities error:', err);
+    console.error('getManagedCommunities error:', err);
     yield call(showError, err);
   }
 }

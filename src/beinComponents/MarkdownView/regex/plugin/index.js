@@ -18,11 +18,11 @@ const regexPlugin = (md, name, regex, startChar) => {
     const content = state.src.slice(start, state.src.length);
     const match = regex.exec(content);
     if (match) {
-      //move cursor
+      // move cursor
       state.pos += match[0].length;
 
       const token = state.push(`regex_${name}`, '', 0);
-      token.meta = {match: match};
+      token.meta = { match };
 
       return true;
     }

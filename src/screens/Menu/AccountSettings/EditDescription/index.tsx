@@ -1,32 +1,34 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import i18next from 'i18next';
-import {Keyboard, ScrollView, StyleSheet, TextInput, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import {
+  Keyboard, ScrollView, StyleSheet, TextInput, View,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Text from '~/beinComponents/Text';
 
-import {useRootNavigation} from '~/hooks/navigation';
+import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import menuActions from '../../redux/actions';
 import menuKeySelector from '../../redux/keySelector';
-import {useKeySelector} from '~/hooks/selector';
-import {fontFamilies} from '~/theme/fonts';
+import { useKeySelector } from '~/hooks/selector';
+import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 
 const EditDescription = () => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
 
   const styles = createStyles(theme);
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
   const myProfileData = useKeySelector(menuKeySelector.myProfile);
-  const {id, description} = myProfileData;
+  const { id, description } = myProfileData;
 
   const [descriptionText, setDescription] = useState<string>(description);
   const [isFocus, setIsFocus] = useState<boolean>(false);
@@ -68,18 +70,16 @@ const EditDescription = () => {
     setDescription(text);
   };
 
-  const checkIsValid = (descriptionText: string) => {
-    return description !== descriptionText;
-  };
+  const checkIsValid = (descriptionText: string) => description !== descriptionText;
 
   const isValid = checkIsValid(descriptionText);
 
   return (
     <ScreenWrapper isFullView>
       <Header
-        title={'settings:title_edit_description'}
-        titleTextProps={{useI18n: true}}
-        buttonText={'common:text_save'}
+        title="settings:title_edit_description"
+        titleTextProps={{ useI18n: true }}
+        buttonText="common:text_save"
         buttonProps={{
           useI18n: true,
           color: theme.colors.purple50,
@@ -96,7 +96,8 @@ const EditDescription = () => {
           settings:text_description
         </Text.H5>
         <View
-          style={[styles.textInputView, isFocus ? styles.textInputFocus : {}]}>
+          style={[styles.textInputView, isFocus ? styles.textInputFocus : {}]}
+        >
           <TextInput
             value={descriptionText || ''}
             maxLength={250}
@@ -104,7 +105,7 @@ const EditDescription = () => {
             placeholder={i18next.t('common:text_not_set')}
             onChangeText={onChangeDescription}
             style={styles.textInput}
-            multiline={true}
+            multiline
             textAlignVertical="top"
             onFocus={onFocusDescription}
             onBlur={onBlurDescription}
@@ -119,7 +120,7 @@ const EditDescription = () => {
 export default EditDescription;
 
 const createStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

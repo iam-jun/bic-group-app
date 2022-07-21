@@ -1,8 +1,10 @@
 // @ts-ignore
 import mark from 'markdown-it-mark';
-import React, {FC, memo} from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC, memo } from 'react';
+import {
+  StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Icon from '~/beinComponents/Icon';
 import {
   blacklistDefault,
@@ -16,11 +18,11 @@ import Markdown, {
   regexPlugin,
 } from '~/beinComponents/MarkdownView/Markdown/index';
 import Text from '~/beinComponents/Text';
-import {createTextStyle} from '~/beinComponents/Text/textStyle';
-import {audienceRegex} from '~/constants/commonRegex';
-import {IMarkdownAudience} from '~/interfaces/IPost';
-import {sizes} from '~/theme/dimension';
-import {fontFamilies} from '~/theme/fonts';
+import { createTextStyle } from '~/beinComponents/Text/textStyle';
+import { audienceRegex } from '~/constants/commonRegex';
+import { IMarkdownAudience } from '~/interfaces/IPost';
+import { sizes } from '~/theme/dimension';
+import { fontFamilies } from '~/theme/fonts';
 
 import spacing from '~/theme/spacing';
 
@@ -53,7 +55,7 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
 
   const _children = children;
 
-  const markdownIt = MarkdownIt({typographer: false, linkify: true})
+  const markdownIt = MarkdownIt({ typographer: false, linkify: true })
     .use(mark, {})
     .use(emojiPlugin, {
       defs: emojiDefs,
@@ -66,36 +68,31 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
   if (debugPrintTree) {
     const html = markdownIt.render(children);
     const astTree = markdownIt.parse(children, {});
-    console.log(`\x1b[34m🐣️ html :`, html, `\x1b[0m`);
-    console.log(`\x1b[35m🐣️ astTree :`, astTree, `\x1b[0m`);
+    console.log('\x1b[34m🐣️ html :', html, '\x1b[0m');
+    console.log('\x1b[35m🐣️ astTree :', astTree, '\x1b[0m');
   }
 
   const rules = {
     emoji: (node: any, children: any, parent: any, styles: any) => {
-      if (!!node.content) {
+      if (node.content) {
         return (
           <Text key={node.key} style={styles.emojiText}>
             {node.content}
           </Text>
         );
-      } else {
-        return (
-          <View key={node.key} style={styles.emojiContainer}>
-            <Icon style={styles.emojiIcon} size={16} icon={node?.markup} />
-          </View>
-        );
       }
-    },
-    regex_linebreak: (node: any) => {
-      return <Text key={node.key}>{'\n'}</Text>;
-    },
-    mark: (node: any, children: any, parent: any, styles: any) => {
       return (
-        <Text key={node.key} style={styles.mark}>
-          {children}
-        </Text>
+        <View key={node.key} style={styles.emojiContainer}>
+          <Icon style={styles.emojiIcon} size={16} icon={node?.markup} />
+        </View>
       );
     },
+    regex_linebreak: (node: any) => <Text key={node.key}>{'\n'}</Text>,
+    mark: (node: any, children: any, parent: any, styles: any) => (
+      <Text key={node.key} style={styles.mark}>
+        {children}
+      </Text>
+    ),
   };
 
   return (
@@ -106,7 +103,8 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
         rules={rules}
         onLinkPress={onLinkPress}
         markdownit={markdownIt}
-        debugPrintTree={debugPrintTree}>
+        debugPrintTree={debugPrintTree}
+      >
         {_children}
       </Markdown>
     </View>
@@ -115,7 +113,7 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
 
 const createStyle = (theme: ExtendedTheme) => {
   const textStyles = createTextStyle(theme);
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     // Emoji
     emojiText: {},
@@ -124,7 +122,7 @@ const createStyle = (theme: ExtendedTheme) => {
       top: 0,
       paddingHorizontal: 1,
     },
-    emojiIcon: {marginTop: -3},
+    emojiIcon: { marginTop: -3 },
 
     regex_linebreak: {},
     mark: {
@@ -134,7 +132,7 @@ const createStyle = (theme: ExtendedTheme) => {
     },
 
     // The main container
-    body: {...textStyles.bodyM},
+    body: { ...textStyles.bodyM },
 
     // Headings
     heading1: {
@@ -222,7 +220,7 @@ const createStyle = (theme: ExtendedTheme) => {
     td: {},
 
     // Links
-    link: {color: colors.blue50},
+    link: { color: colors.blue50 },
     blocklink: {},
 
     // Images

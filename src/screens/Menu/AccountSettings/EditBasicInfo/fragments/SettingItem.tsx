@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleSheet, TouchableOpacity } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
 
-import {IconType} from '~/resources/icons';
+import { IconType } from '~/resources/icons';
 
 import Icon from '~/beinComponents/Icon';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -35,12 +35,13 @@ const SettingItem = ({
     <TouchableOpacity
       testID="edit_user_info.setting_item"
       onPress={onPress}
-      disabled={isTouchDisabled}>
+      disabled={isTouchDisabled}
+    >
       <PrimaryItem
         testID={testID}
         title={i18next.t(title)}
         subTitle={subtitle}
-        subTitleProps={{variant: 'bodyS'}}
+        subTitleProps={{ variant: 'bodyS' }}
         LeftComponent={
           leftIcon ? (
             <Icon
@@ -52,16 +53,14 @@ const SettingItem = ({
             />
           ) : null
         }
-        RightComponent={
-          <>
-            {!!privacyIcon && (
+        RightComponent={(
+            !!privacyIcon && (
               <ButtonWrapper testID="edit_user_info.setting_item.right_component">
                 <Icon icon={privacyIcon} />
-                <Icon icon={'AngleDown'} style={styles.rightIcon} />
+                <Icon icon="AngleDown" style={styles.rightIcon} />
               </ButtonWrapper>
-            )}
-          </>
-        }
+            )
+        )}
       />
     </TouchableOpacity>
   );

@@ -1,11 +1,11 @@
-import {put, call, select} from 'redux-saga/effects';
+import { put, call, select } from 'redux-saga/effects';
 
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
-import {IParamGetCommunities} from '~/interfaces/ICommunity';
+import { IParamGetCommunities } from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
-import {mapItems} from '../../helper/mapper';
+import { mapItems } from '../../helper/mapper';
 
 export default function* getDiscoverCommunities({
   payload,
@@ -14,10 +14,10 @@ export default function* getDiscoverCommunities({
   payload: {isRefreshing?: boolean};
 }): any {
   try {
-    const {groups} = yield select();
+    const { groups } = yield select();
 
-    const {isRefreshing} = payload;
-    const {ids, items, canLoadMore} = groups.discoverCommunities;
+    const { isRefreshing } = payload;
+    const { ids, items, canLoadMore } = groups.discoverCommunities;
 
     yield put(
       groupsActions.setDiscoverCommunities({
@@ -45,13 +45,13 @@ export default function* getDiscoverCommunities({
       loading: false,
       canLoadMore: newIds.length === appConfig.recordsPerPage,
       ids: isRefreshing ? [...newIds] : [...ids, ...newIds],
-      items: isRefreshing ? {...newItems} : {...items, ...newItems},
+      items: isRefreshing ? { ...newItems } : { ...items, ...newItems },
     };
 
     yield put(groupsActions.setDiscoverCommunities(newData));
   } catch (err) {
-    console.log('\x1b[33m', 'getDiscoverCommunities : error', err, '\x1b[0m');
-    yield put(groupsActions.setDiscoverCommunities({loading: false}));
+    console.error('\x1b[33m', 'getDiscoverCommunities : error', err, '\x1b[0m');
+    yield put(groupsActions.setDiscoverCommunities({ loading: false }));
     yield call(showError, err);
   }
 }

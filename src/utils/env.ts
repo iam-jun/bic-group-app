@@ -1,7 +1,5 @@
 import Config from 'react-native-config';
 
-const getEnv = (key: string) => {
-  return Config[key];
-};
+const getEnv = (key: string) => Config[key];
 
-export {getEnv};
+export default getEnv;

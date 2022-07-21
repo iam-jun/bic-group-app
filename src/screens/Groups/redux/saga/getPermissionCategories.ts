@@ -1,4 +1,4 @@
-import {put, call} from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 
 import actions from '../actions';
 import showError from '~/store/commonSaga/showError';
@@ -12,7 +12,7 @@ export default function* getPermissionCategories({
 }): any {
   try {
     yield put(
-      actions.setPermissionCategories({loading: true, data: undefined}),
+      actions.setPermissionCategories({ loading: true, data: undefined }),
     );
     const response = yield call(
       groupsDataHelper.getPermissionCategories,
@@ -20,14 +20,14 @@ export default function* getPermissionCategories({
     );
     if (response?.data) {
       yield put(
-        actions.setPermissionCategories({loading: false, data: response?.data}),
+        actions.setPermissionCategories({ loading: false, data: response?.data }),
       );
     } else {
-      yield put(actions.setPermissionCategories({loading: false}));
+      yield put(actions.setPermissionCategories({ loading: false }));
     }
   } catch (err) {
-    yield put(actions.setPermissionCategories({loading: false}));
-    console.log('getPermissionCategories error:', err);
+    yield put(actions.setPermissionCategories({ loading: false }));
+    console.error('getPermissionCategories error:', err);
     yield call(showError, err);
   }
 }

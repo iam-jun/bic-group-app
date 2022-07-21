@@ -3,9 +3,10 @@ import {
   GiphyMediaView,
   GiphyRendition,
 } from '@giphy/react-native-sdk';
-import React, {useRef, useState} from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { useRef, useState } from 'react';
+import {
+  StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
 
@@ -14,10 +15,9 @@ interface Props {
   giphy: GiphyMedia;
 }
 
-const GifView = ({style, giphy}: Props) => {
+const GifView = ({ style, giphy }: Props) => {
   const mediaRef = useRef<GiphyMediaView | null>(null);
-  const theme: ExtendedTheme = useTheme();
-  const styles = createStyle(theme);
+  const styles = createStyle();
 
   const [playing, setPlaying] = useState(false);
 
@@ -44,24 +44,22 @@ const GifView = ({style, giphy}: Props) => {
   );
 };
 
-const createStyle = (theme: ExtendedTheme) => {
-  return StyleSheet.create({
-    container: {
-      flex: 1,
-    },
-    giphy: {
-      width: '100%',
-      aspectRatio: 1,
-    },
-    iconPlayGif: {
-      width: '100%',
-      height: '100%',
-      position: 'absolute',
-      zIndex: 3,
-      alignItems: 'center',
-      justifyContent: 'center',
-    },
-  });
-};
+const createStyle = () => StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  giphy: {
+    width: '100%',
+    aspectRatio: 1,
+  },
+  iconPlayGif: {
+    width: '100%',
+    height: '100%',
+    position: 'absolute',
+    zIndex: 3,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
 
 export default GifView;

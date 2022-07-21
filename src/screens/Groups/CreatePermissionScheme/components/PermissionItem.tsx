@@ -1,12 +1,12 @@
-import React, {FC} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
-import {IPermission, IRole} from '~/interfaces/IGroup';
-import {useBaseHook} from '~/hooks';
+import { IPermission, IRole } from '~/interfaces/IGroup';
+import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 
 export interface PermissionItemProps {
@@ -32,11 +32,11 @@ const PermissionItem: FC<PermissionItemProps> = ({
   isFixed,
   isFixedForCreator,
 }: PermissionItemProps) => {
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const {restrictedRoles = [], name = ''} = permission;
+  const { restrictedRoles = [], name = '' } = permission;
 
   const isRestricted = restrictedRoles?.includes?.(role.type || '');
 
@@ -59,14 +59,16 @@ const PermissionItem: FC<PermissionItemProps> = ({
 
   return (
     <View style={styles.permissionItem}>
-      <View style={{flex: 1}}>
-        <Text style={styles.permissionName}>{`${name}${
-          isFixed
-            ? ` (${t('communities:permission:text_fixed_role')})`
-            : isFixedForCreator
-            ? ` (${t('communities:permission:text_fixed_for_creator')})`
-            : ''
-        }`}</Text>
+      <View style={{ flex: 1 }}>
+        <Text style={styles.permissionName}>
+          {`${name}${
+            isFixed
+              ? ` (${t('communities:permission:text_fixed_role')})`
+              : isFixedForCreator
+                ? ` (${t('communities:permission:text_fixed_for_creator')})`
+                : ''
+          }`}
+        </Text>
       </View>
       {onPress && (
         <Button disabled={isRestricted || isInherited} onPress={_onPress}>
@@ -78,7 +80,7 @@ const PermissionItem: FC<PermissionItemProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {},
     permissionName: {

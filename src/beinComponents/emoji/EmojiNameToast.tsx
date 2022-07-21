@@ -5,11 +5,11 @@ import React, {
   useRef,
   useEffect,
 } from 'react';
-import {View, StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { View, StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import SimpleToastMessage from '~/beinComponents/ToastMessage/SimpleToastMessage';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 export interface EmojiNameToastProps {
   toastRef: any;
@@ -25,10 +25,8 @@ const EmojiNameToast: FC<EmojiNameToastProps> = ({
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets);
 
-  useEffect(() => {
-    return () => {
-      timeOutRef?.current && clearTimeout(timeOutRef?.current);
-    };
+  useEffect(() => () => {
+    timeOutRef?.current && clearTimeout(timeOutRef?.current);
   }, []);
 
   const show = (name: string) => {
@@ -54,14 +52,12 @@ const EmojiNameToast: FC<EmojiNameToastProps> = ({
   );
 };
 
-const createStyle = (theme: ExtendedTheme, insets: any) => {
-  return StyleSheet.create({
-    container: {
-      position: 'absolute',
-      alignSelf: 'center',
-      bottom: 100 + insets.bottom,
-    },
-  });
-};
+const createStyle = (theme: ExtendedTheme, insets: any) => StyleSheet.create({
+  container: {
+    position: 'absolute',
+    alignSelf: 'center',
+    bottom: 100 + insets.bottom,
+  },
+});
 
 export default EmojiNameToast;

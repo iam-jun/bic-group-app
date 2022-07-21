@@ -1,12 +1,12 @@
+import { put, select } from 'redux-saga/effects';
+import { isArray } from 'lodash';
 import {
   ICommentData,
   IPayloadAddToAllPost,
   IPostActivity,
 } from '~/interfaces/IPost';
-import {put, select} from 'redux-saga/effects';
-import {isArray} from 'lodash';
 import postActions from '~/screens/Post/redux/actions';
-import {sortComments} from '~/screens/Post/helper/PostUtils';
+import { sortComments } from '~/screens/Post/helper/PostUtils';
 
 function* addToAllPosts({
   payload,
@@ -14,9 +14,9 @@ function* addToAllPosts({
   type: string;
   payload: IPayloadAddToAllPost;
 }): any {
-  const {data, handleComment} = payload || {};
-  const allPosts = yield select(state => state?.post?.allPosts) || {};
-  const newAllPosts = {...allPosts};
+  const { data, handleComment } = payload || {};
+  const allPosts = yield select((state) => state?.post?.allPosts) || {};
+  const newAllPosts = { ...allPosts };
   const newAllCommentByParentId: any = {};
   let newComments: ICommentData[] = [];
 
@@ -27,13 +27,13 @@ function* addToAllPosts({
     posts = new Array(data) as IPostActivity[];
   }
 
-  posts.map((item: IPostActivity) => {
+  posts.forEach((item: IPostActivity) => {
     if (item?.id) {
       if (handleComment) {
         const postComments = sortComments(item?.comments?.list || []);
 
         newAllCommentByParentId[item.id] = postComments;
-        postComments.map((c: ICommentData) => {
+        postComments.forEach((c: ICommentData) => {
           newComments.push(c);
           newComments = newComments.concat(c?.child?.list || []);
         });

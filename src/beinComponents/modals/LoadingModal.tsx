@@ -7,24 +7,24 @@ import {
   Platform,
   Modal,
 } from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import LottieView from 'lottie-react-native';
 
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 
 import useModal from '~/hooks/modal';
 import spacing from '~/theme/spacing';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {LottieFileLoading} from '~/resources/lottieJson';
+import { LottieFileLoading } from '~/resources/lottieJson';
 
 const LoadingModal = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  const {loading} = useModal();
-  const {visible} = loading;
+  const { loading } = useModal();
+  const { visible } = loading;
 
   return (
     <Modal animationType="fade" visible={visible} style={styles.root}>
@@ -50,7 +50,7 @@ const LoadingModal = () => {
 
 const themeStyles = (theme: ExtendedTheme) => {
   const insets = useSafeAreaInsets();
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     root: {

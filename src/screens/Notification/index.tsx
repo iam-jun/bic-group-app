@@ -1,12 +1,14 @@
-import {useIsFocused} from '@react-navigation/native';
-import React, {useCallback, useEffect, useRef, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import { useIsFocused } from '@react-navigation/native';
+import React, {
+  useCallback, useEffect, useRef, useState,
+} from 'react';
+import { useDispatch } from 'react-redux';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {notificationMenuData} from '~/constants/notificationMenuData';
-import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
-import {useRootNavigation} from '~/hooks/navigation';
+import { notificationMenuData } from '~/constants/notificationMenuData';
+import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
+import { useRootNavigation } from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import NotificationBottomSheet from './components/NotificationBottomSheet';
@@ -19,7 +21,7 @@ const Notification = () => {
   const notificationOptionRef = useRef<any>();
 
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
   const isFocused = useIsFocused();
 
   const [activeIndex, setActiveIndex] = useState<number>(0);
@@ -35,7 +37,7 @@ const Notification = () => {
     setActiveIndex(index);
   };
 
-  const onPressItemOption = ({item, e}: {item: any; e: any}) => {
+  const onPressItemOption = ({ item, e }: {item: any; e: any}) => {
     setSelectedNotification(item);
     notificationOptionRef.current?.open?.(e?.pageX, e?.pageY);
   };
@@ -113,12 +115,12 @@ const Notification = () => {
             }
             case NOTIFICATION_TYPE.GROUP_ASSIGNED_ROLE_TO_USER:
             case NOTIFICATION_TYPE.GROUP_DEMOTED_ROLE_TO_USER:
-              if (!!act?.community?.id) {
+              if (act?.community?.id) {
                 rootNavigation.navigate(groupStack.communityMembers, {
                   communityId: act.community.id,
                 });
               }
-              if (!!act?.group?.id) {
+              if (act?.group?.id) {
                 rootNavigation.navigate(groupStack.groupMembers, {
                   groupId: act.group.id,
                 });
@@ -126,20 +128,20 @@ const Notification = () => {
               break;
             case NOTIFICATION_TYPE.GROUP_CHANGED_PRIVACY_TO_GROUP:
               rootNavigation.navigate(groupStack.generalInfo, {
-                id: !!act?.group?.id ? act.group.id : act?.community?.id || '',
-                type: !!act?.group?.id ? 'group' : 'community',
+                id: act?.group?.id ? act.group.id : act?.community?.id || '',
+                type: act?.group?.id ? 'group' : 'community',
               });
               break;
             case NOTIFICATION_TYPE.GROUP_REMOVED_FROM_GROUP_TO_USER:
             case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_APPROVED:
             case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_REJECTED:
             case NOTIFICATION_TYPE.GROUP_ADDED_TO_GROUP_TO_USER_IN_ONE_GROUP:
-              if (!!act?.community?.id) {
+              if (act?.community?.id) {
                 rootNavigation.navigate(groupStack.communityDetail, {
                   communityId: act.community.id,
                 });
               }
-              if (!!act?.group?.id) {
+              if (act?.group?.id) {
                 rootNavigation.navigate(groupStack.groupDetail, {
                   groupId: act.group.id,
                 });
@@ -147,19 +149,19 @@ const Notification = () => {
               break;
             case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN:
             case NOTIFICATION_TYPE.GROUP_JOIN_GROUP_TO_ADMIN_AGGREGATED:
-              if (!!act?.community?.id) {
+              if (act?.community?.id) {
                 rootNavigation.navigate(groupStack.communityPendingMembers, {
                   id: act.community.id,
                 });
               }
-              if (!!act?.group?.id) {
+              if (act?.group?.id) {
                 rootNavigation.navigate(groupStack.groupPendingMembers, {
                   id: act.group.id,
                 });
               }
               break;
             default:
-              console.log(`Notification type ${type} have not implemented yet`);
+              console.warn(`Notification type ${type} have not implemented yet`);
               break;
           }
         } else {
@@ -170,7 +172,7 @@ const Notification = () => {
           });
         }
       } catch (error) {
-        console.log(
+        console.error(
           '\x1b[33m',
           'Navigation for this activity has error',
           type,
@@ -193,7 +195,7 @@ const Notification = () => {
     <ScreenWrapper testID="NotfiticationScreen" isFullView>
       <Header
         title="tabs:notification"
-        titleTextProps={{useI18n: true}}
+        titleTextProps={{ useI18n: true }}
         removeBorderAndShadow={false}
         hideBack
         onPressMenu={onPressMenu}

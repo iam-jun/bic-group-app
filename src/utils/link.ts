@@ -1,5 +1,5 @@
 import { chatSchemes } from '~/constants/chat';
-import { getEnv } from '~/utils/env';
+import getEnv from '~/utils/env';
 import { getWebDomain } from './common';
 
 const LINK_POST = 'LINK_POST';

@@ -1,6 +1,6 @@
-import {ExtendedTheme} from '@react-navigation/native';
+import { ExtendedTheme } from '@react-navigation/native';
 import i18next from 'i18next';
-import {Keyboard} from 'react-native';
+import { Keyboard } from 'react-native';
 import FileUploader from '~/services/fileUploader';
 import modalActions from '~/store/modal/actions';
 
@@ -17,7 +17,7 @@ export const handleBack = (
   isNewsfeed: boolean | undefined,
   onPressDraftPost: () => void,
 ) => {
-  const {colors} = theme;
+  const { colors } = theme;
   Keyboard.dismiss();
   if (isEditPost) {
     if (isEditPostHasChange) {
@@ -35,8 +35,7 @@ export const handleBack = (
       return;
     }
   } else if (hasPostId) {
-    const hasUploadingProcess =
-      FileUploader.getInstance().hasUploadingProcess();
+    const hasUploadingProcess = FileUploader.getInstance().hasUploadingProcess();
 
     if (hasUploadingProcess) {
       dispatch(
@@ -54,7 +53,7 @@ export const handleBack = (
       );
       return;
     }
-    dispatch(postActions.getDraftPosts({isRefresh: true}));
+    dispatch(postActions.getDraftPosts({ isRefresh: true }));
     dispatch(
       modalActions.showHideToastMessage({
         content: 'post:saved_to_draft',
@@ -62,7 +61,7 @@ export const handleBack = (
           textProps: {
             useI18n: true,
             variant: 'bodyS',
-            style: {color: colors.neutral80},
+            style: { color: colors.neutral80 },
           },
           type: 'informative',
           leftIcon: 'CircleInfo',
@@ -89,7 +88,7 @@ export const handleBack = (
           rightTextProps: {
             variant: 'bodySMedium',
           },
-          rightTextStyle: {textDecorationLine: 'none'},
+          rightTextStyle: { textDecorationLine: 'none' },
           onPressRight: onPressDraftPost,
         },
         toastType: 'normal',

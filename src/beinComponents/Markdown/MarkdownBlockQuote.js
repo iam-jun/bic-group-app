@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import React, {PureComponent} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, { PureComponent } from 'react';
+import { StyleSheet, View } from 'react-native';
 import Icon from '~/beinComponents/Icon';
 
 export default class MarkdownBlockQuote extends PureComponent {
@@ -20,8 +20,8 @@ export default class MarkdownBlockQuote extends PureComponent {
   render() {
     let icon;
     if (!this.props.continue) {
-      //todo update icon
-      icon = <Icon icon={'ArrowRight'} size={20} />;
+      // todo update icon
+      icon = <Icon icon="ArrowRight" size={20} />;
     }
 
     return (

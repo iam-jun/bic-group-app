@@ -2,7 +2,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 
 import WebsocketEvents from '~/constants/chatSocketEvents';
 // import {getConfig} from '@mm-redux/selectors/entities/general';
@@ -13,13 +13,17 @@ const MIN_WEBSOCKET_RETRY_TIME = 3000; // 3 sec
 
 const MAX_WEBSOCKET_RETRY_TIME = 300000; // 5 mins
 
-const PING_INTERVAL_TIME = 45000; //45 sec
+const PING_INTERVAL_TIME = 45000; // 45 sec
 
 class WebSocketClient {
   conn?: WebSocket;
+
   connectionUrl: string;
+
   connectionTimeout: any;
+
   connectionId: string | null;
+
   token: string | null;
 
   pingInterval?: any;
@@ -32,14 +36,23 @@ class WebSocketClient {
   // serverSequence is the incrementing sequence number from the
   // server-sent event stream.
   serverSequence: number;
+
   connectFailCount: number;
+
   eventCallback?: Function;
+
   firstConnectCallback?: Function;
+
   missedEventsCallback?: Function;
+
   reconnectCallback?: Function;
+
   errorCallback?: Function;
+
   closeCallback?: Function;
+
   connectingCallback?: Function;
+
   stop: boolean;
 
   constructor() {
@@ -62,8 +75,7 @@ class WebSocketClient {
       connectionUrl: this.connectionUrl,
     };
 
-    const {connectionUrl, forceConnection, ...additionalOptions} =
-      Object.assign({}, defaults, opts);
+    const { connectionUrl, forceConnection, ...additionalOptions } = { ...defaults, ...opts };
 
     if (forceConnection) {
       this.stop = false;
@@ -76,7 +88,7 @@ class WebSocketClient {
       }
 
       if (connectionUrl == null) {
-        console.log('websocket must have connection url'); //eslint-disable-line no-console
+        console.log('websocket must have connection url'); // eslint-disable-line no-console
         reject(new Error('websocket must have connection url'));
         return;
       }
@@ -103,8 +115,7 @@ class WebSocketClient {
         }
       } else {
         // If we're unable to set the origin header, the websocket won't connect, but the URL is likely malformed anyway
-        const errorMessage =
-          'websocket failed to parse origin from ' + connectionUrl;
+        const errorMessage = `websocket failed to parse origin from ${connectionUrl}`;
         console.warn(errorMessage); // eslint-disable-line no-console
         reject(new Error(errorMessage));
         return;
@@ -122,11 +133,12 @@ class WebSocketClient {
       }
 
       if (this.connectFailCount === 0) {
-        console.log(`\x1b[37m🐣️ chatSocket connecting to: \x1b[0m`, url);
+        console.log('\x1b[37m🐣️ chatSocket connecting to: \x1b[0m', url);
       }
 
+      //@ts-ignore
       this.conn = new WebSocket(url, [], {
-        headers: {origin},
+        headers: { origin },
         ...(additionalOptions || {}),
       });
       this.connectionUrl = connectionUrl;
@@ -141,17 +153,17 @@ class WebSocketClient {
         if (token) {
           // we check for the platform as a workaround until we fix on the server that further authentications
           // are ignored
-          this.sendMessage('authentication_challenge', {token});
+          this.sendMessage('authentication_challenge', { token });
         }
 
         if (this.connectFailCount > 0) {
-          console.log('websocket re-established connection'); //eslint-disable-line no-console
+          console.log('websocket re-established connection'); // eslint-disable-line no-console
           if (!reliableWebSockets && this.reconnectCallback) {
             this.reconnectCallback();
           } else if (
-            reliableWebSockets &&
-            this.serverSequence &&
-            this.missedEventsCallback
+            reliableWebSockets
+            && this.serverSequence
+            && this.missedEventsCallback
           ) {
             this.missedEventsCallback();
           }
@@ -173,7 +185,7 @@ class WebSocketClient {
         this.responseSequence = 1;
 
         if (this.connectFailCount === 0) {
-          console.log(`\x1b[37m🐣️ chatSocket onclose\x1b[0m`);
+          console.log('\x1b[37m🐣️ chatSocket onclose\x1b[0m');
         }
 
         this.connectFailCount++;
@@ -204,7 +216,7 @@ class WebSocketClient {
           if (this.token === token) {
             this.initialize(token, opts);
           } else {
-            //skip retry init old token
+            // skip retry init old token
           }
         }, retryTime);
       };
@@ -213,7 +225,7 @@ class WebSocketClient {
         this.stopPing();
 
         if (this.connectFailCount <= 1) {
-          console.log(`\x1b[31m🐣️ chatSocket onerror: \x1b[0m`, evt);
+          console.log('\x1b[31m🐣️ chatSocket onerror: \x1b[0m', evt);
         }
 
         if (this.errorCallback) {
@@ -229,23 +241,23 @@ class WebSocketClient {
         // and only focus on the purely server side event stream.
         if (msg.seq_reply) {
           if (msg.error) {
-            console.warn(msg); //eslint-disable-line no-console
+            console.warn(msg); // eslint-disable-line no-console
           }
         } else if (this.eventCallback) {
           if (reliableWebSockets) {
             // We check the hello packet, which is always the first packet in a stream.
             if (msg.event === WebsocketEvents.HELLO && this.reconnectCallback) {
-              //eslint-disable-next-line no-console
+              // eslint-disable-next-line no-console
               console.log('got connection id ', msg.data.connection_id);
 
               // If we already have a connectionId present, and server sends a different one,
               // that means it's either a long timeout, or server restart, or sequence number is not found.
               // Then we do the sync calls, and reset sequence number to 0.
               if (
-                this.connectionId !== '' &&
-                this.connectionId !== msg.data.connection_id
+                this.connectionId !== ''
+                && this.connectionId !== msg.data.connection_id
               ) {
-                //eslint-disable-next-line no-console
+                // eslint-disable-next-line no-console
                 console.log(
                   'long timeout, or server restart, or sequence number is not found.',
                 );
@@ -263,10 +275,10 @@ class WebSocketClient {
             if (msg.seq !== this.serverSequence) {
               // eslint-disable-next-line no-console
               console.log(
-                'missed websocket event, act_seq=' +
-                  msg.seq +
-                  ' exp_seq=' +
-                  this.serverSequence,
+                `missed websocket event, act_seq=${
+                  msg.seq
+                } exp_seq=${
+                  this.serverSequence}`,
               );
 
               // We are not calling this.close() because we need to auto-restart.
@@ -276,15 +288,15 @@ class WebSocketClient {
               return;
             }
           } else if (
-            msg.seq !== this.serverSequence &&
-            this.reconnectCallback
+            msg.seq !== this.serverSequence
+            && this.reconnectCallback
           ) {
             // eslint-disable-next-line no-console
             console.log(
-              'missed websocket event, act_seq=' +
-                msg.seq +
-                ' exp_seq=' +
-                this.serverSequence,
+              `missed websocket event, act_seq=${
+                msg.seq
+              } exp_seq=${
+                this.serverSequence}`,
             );
             this.reconnectCallback();
           }

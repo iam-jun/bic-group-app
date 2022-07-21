@@ -1,5 +1,5 @@
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import React, {useCallback, useMemo, useState} from 'react';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import {PanGestureHandler} from 'react-native-gesture-handler';
+import { PanGestureHandler } from 'react-native-gesture-handler';
 import Animated, {
   Easing,
   interpolate,
@@ -24,7 +24,7 @@ import spacing from '~/theme/spacing';
 import Icon from './Icon';
 import Text from './Text';
 
-const {width: screenWidth} = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 export interface FilterProps {
   filterRef?: React.Ref<ScrollView>;
   testID?: string;
@@ -63,13 +63,12 @@ const FilterComponent: React.FC<FilterProps> = ({
   const offsetValue = useSharedValue(0);
   const clampedTranslateX = useDerivedValue(() => {
     const lastMeasurements = measurements[measurements.length - 1];
-    const MAX_TRANSLATE_X =
-      -(
-        lastMeasurements?.x +
-        lastMeasurements?.width +
-        spacing.margin.small -
-        screenWidth
-      ) || 0;
+    const MAX_TRANSLATE_X = -(
+      (lastMeasurements?.x || 0)
+        + (lastMeasurements?.width || 0)
+        + spacing.margin.small
+        - screenWidth
+    ) || 0;
     if (MAX_TRANSLATE_X > 0) return 0;
     return Math.max(Math.min(panGestureValue.value, 0), MAX_TRANSLATE_X);
   });
@@ -80,23 +79,25 @@ const FilterComponent: React.FC<FilterProps> = ({
       <View
         style={styles.itemView}
         key={`${itemTestID || 'item_filter'}_${item?.text}`}
-        onLayout={event => {
-          const {x, width, height} = event?.nativeEvent?.layout || {};
+        onLayout={(event) => {
+          const { x, width, height } = event?.nativeEvent?.layout || {};
           if (
-            measurements[index]?.x !== x ||
-            measurements[index]?.width !== width
+            measurements[index]?.x !== x
+            || measurements[index]?.width !== width
           ) {
-            measurements[index] = {x, width, height};
+            measurements[index] = { x, width, height };
             setMeasurements([...measurements]);
           }
-        }}>
+        }}
+      >
         <TouchableOpacity
           activeOpacity={0.25}
           style={[styles.itemContainer]}
           testID={`${itemTestID || 'item_filter'}_${item.id}`}
           onPress={() => {
             _onPress(item, index);
-          }}>
+          }}
+        >
           {!!item?.icon && (
             <Icon
               icon={item.icon}
@@ -132,18 +133,16 @@ const FilterComponent: React.FC<FilterProps> = ({
     },
   });
 
-  const scrollViewContainerStyle = useAnimatedStyle(() => {
-    return {
-      transform: [
-        {
-          translateX: withTiming(clampedTranslateX.value, {
-            duration: 10,
-            easing: Easing.bezier(0.25, 0.1, 0.25, 1),
-          }),
-        },
-      ],
-    };
-  });
+  const scrollViewContainerStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateX: withTiming(clampedTranslateX.value, {
+          duration: 10,
+          easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+        }),
+      },
+    ],
+  }));
 
   const activeStyle = useAnimatedStyle(() => ({
     transform: [
@@ -176,14 +175,16 @@ const FilterComponent: React.FC<FilterProps> = ({
               {
                 flexDirection: 'row',
               },
-            ]}>
+            ]}
+          >
             {data?.map?.(renderItem)}
             <Animated.View
               style={[
-                {...StyleSheet.absoluteFillObject},
+                { ...StyleSheet.absoluteFillObject },
                 styles.itemSelectedContainer,
                 activeStyle,
-              ]}></Animated.View>
+              ]}
+            />
           </View>
         </Animated.View>
       </PanGestureHandler>
@@ -192,7 +193,7 @@ const FilterComponent: React.FC<FilterProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       paddingVertical: spacing.padding.base,
@@ -221,7 +222,7 @@ const createStyle = (theme: ExtendedTheme) => {
       borderRadius: 100,
       zIndex: -1,
     },
-    iconLeftStyle: {marginRight: spacing.margin.base},
+    iconLeftStyle: { marginRight: spacing.margin.base },
     icon: {
       marginRight: spacing.margin.small,
     },

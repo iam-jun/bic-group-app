@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "postinstall": "patch-package && husky install",
-    "precommit": "eslint --fix",
-    "lint": "npx eslint .",
+    "precommit": "npm run lint",
+    "lint": "npx eslint --fix --quiet .",
     "prettier-format": "npx prettier --config .prettierrc.json \"**/*.{js,jsx,ts,tsx}\" --write",
     "start": "npx react-native start",
     "start:clean": "watchman watch-del '/Users/namanh/ReactNative/bein-comm' ; watchman watch-project '/Users/namanh/ReactNative/bein-comm' && npm start -- --reset-cache",

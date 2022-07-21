@@ -3,14 +3,11 @@
   typeof exports === 'object' && typeof module !== 'undefined'
     ? (module.exports = factory())
     : typeof define === 'function' && define.amd
-    ? define(factory)
-    : ((global =
-        typeof globalThis !== 'undefined' ? globalThis : global || self),
+      ? define(factory)
+      : ((global = typeof globalThis !== 'undefined' ? globalThis : global || self),
       (global.markdownitEmoji = factory()));
-})(this, function () {
-  'use strict';
-
-  var emojies_defs = {
+}(this, () => {
+  const emojies_defs = {
     100: '💯',
     1234: '🔢',
     grinning: '😀',
@@ -1853,7 +1850,7 @@
 
   // Emoticons -> Emoji mapping.
 
-  var shortcuts = {
+  const shortcuts = {
     angry: ['>:(', '>:-('],
     blush: [':")', ':-")'],
     broken_heart: ['</3', '<\\3'],
@@ -1882,30 +1879,30 @@
     wink: [';)', ';-)'],
   };
 
-  var render = function emoji_html(tokens, idx /*, options, env */) {
+  const render = function emoji_html(tokens, idx /* , options, env */) {
     return tokens[idx].content;
   };
 
   // Emojies & shortcuts replacement logic.
 
-  var replace = function create_rule(
+  const replace = function create_rule(
     md,
     emojies,
     shortcuts,
     scanRE,
     replaceRE,
   ) {
-    var arrayReplaceAt = md.utils.arrayReplaceAt,
-      ucm = md.utils.lib.ucmicro,
-      ZPCc = new RegExp([ucm.Z.source, ucm.P.source, ucm.Cc.source].join('|'));
+    const { arrayReplaceAt } = md.utils;
+    const ucm = md.utils.lib.ucmicro;
+    const ZPCc = new RegExp([ucm.Z.source, ucm.P.source, ucm.Cc.source].join('|'));
 
     function splitTextToken(text, level, Token) {
-      var token,
-        last_pos = 0,
-        nodes = [];
+      let token;
+      let last_pos = 0;
+      const nodes = [];
 
-      text.replace(replaceRE, function (match, offset, src) {
-        var emoji_name;
+      text.replace(replaceRE, (match, offset, src) => {
+        let emoji_name;
         // Validate emoji name
         if (shortcuts.hasOwnProperty(match)) {
           // replace shortcut with full name
@@ -1918,8 +1915,8 @@
 
           // Don't allow letters after any shortcut
           if (
-            offset + match.length < src.length &&
-            !ZPCc.test(src[offset + match.length])
+            offset + match.length < src.length
+            && !ZPCc.test(src[offset + match.length])
           ) {
             return;
           }
@@ -1952,13 +1949,13 @@
     }
 
     return function emoji_replace(state) {
-      var i,
-        j,
-        l,
-        tokens,
-        token,
-        blockTokens = state.tokens,
-        autolinkLevel = 0;
+      let i;
+      let j;
+      let l;
+      let tokens;
+      let token;
+      const blockTokens = state.tokens;
+      let autolinkLevel = 0;
 
       for (j = 0, l = blockTokens.length; j < l; j++) {
         if (blockTokens[j].type !== 'inline') {
@@ -1978,9 +1975,9 @@
           }
 
           if (
-            token.type === 'text' &&
-            autolinkLevel === 0 &&
-            scanRE.test(token.content)
+            token.type === 'text'
+            && autolinkLevel === 0
+            && scanRE.test(token.content)
           ) {
             // replace current node
             blockTokens[j].children = tokens = arrayReplaceAt(
@@ -2000,13 +1997,13 @@
     return str.replace(/[.?*+^$[\]\\(){}|-]/g, '\\$&');
   }
 
-  var normalize_opts = function normalize_opts(options) {
-    var emojies = options.defs,
-      shortcuts;
+  const normalize_opts = function normalize_opts(options) {
+    let emojies = options.defs;
+    let shortcuts;
 
     // Filter emojies by whitelist, if needed
     if (options.enabled.length) {
-      emojies = Object.keys(emojies).reduce(function (acc, key) {
+      emojies = Object.keys(emojies).reduce((acc, key) => {
         if (options.enabled.indexOf(key) >= 0) {
           acc[key] = emojies[key];
         }
@@ -2015,14 +2012,14 @@
     }
 
     // Flatten shortcuts to simple object: { alias: emoji_name }
-    shortcuts = Object.keys(options.shortcuts).reduce(function (acc, key) {
+    shortcuts = Object.keys(options.shortcuts).reduce((acc, key) => {
       // Skip aliases for filtered emojies, to reduce regexp
       if (!emojies[key]) {
         return acc;
       }
 
       if (Array.isArray(options.shortcuts[key])) {
-        options.shortcuts[key].forEach(function (alias) {
+        options.shortcuts[key].forEach((alias) => {
           acc[alias] = key;
         });
         return acc;
@@ -2032,8 +2029,8 @@
       return acc;
     }, {});
 
-    var keys = Object.keys(emojies),
-      names;
+    const keys = Object.keys(emojies);
+    let names;
 
     // If no definitions are given, return empty regex to avoid replacements with 'undefined'.
     if (keys.length === 0) {
@@ -2041,36 +2038,32 @@
     } else {
       // Compile regexp
       names = keys
-        .map(function (name) {
-          return ':' + name + ':';
-        })
+        .map((name) => `:${name}:`)
         .concat(Object.keys(shortcuts))
         .sort()
         .reverse()
-        .map(function (name) {
-          return quoteRE(name);
-        })
+        .map((name) => quoteRE(name))
         .join('|');
     }
-    var scanRE = RegExp(names);
-    var replaceRE = RegExp(names, 'g');
+    const scanRE = RegExp(names);
+    const replaceRE = RegExp(names, 'g');
 
     return {
       defs: emojies,
-      shortcuts: shortcuts,
-      scanRE: scanRE,
-      replaceRE: replaceRE,
+      shortcuts,
+      scanRE,
+      replaceRE,
     };
   };
 
-  var bare = function emoji_plugin(md, options) {
-    var defaults = {
+  const bare = function emoji_plugin(md, options) {
+    const defaults = {
       defs: {},
       shortcuts: {},
       enabled: [],
     };
 
-    var opts = normalize_opts(md.utils.assign({}, defaults, options || {}));
+    const opts = normalize_opts(md.utils.assign({}, defaults, options || {}));
 
     md.renderer.rules.emoji = render;
 
@@ -2080,17 +2073,17 @@
     );
   };
 
-  var markdownItEmoji = function emoji_plugin(md, options) {
-    var defaults = {
+  const markdownItEmoji = function emoji_plugin(md, options) {
+    const defaults = {
       defs: emojies_defs,
-      shortcuts: shortcuts,
+      shortcuts,
       enabled: [],
     };
 
-    var opts = md.utils.assign({}, defaults, options || {});
+    const opts = md.utils.assign({}, defaults, options || {});
 
     bare(md, opts);
   };
 
   return markdownItEmoji;
-});
+}));

@@ -1,6 +1,5 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import {useEffect, useRef} from 'react';
-import {Animated} from 'react-native';
+import { useEffect, useRef } from 'react';
+import { Animated } from 'react-native';
 
 export const useAnimatedValue = (
   startDelay: number,
@@ -14,7 +13,7 @@ export const useAnimatedValue = (
     Animated.sequence([
       Animated.timing(animatedValue, {
         toValue: end,
-        duration: duration,
+        duration,
         useNativeDriver: false,
       }),
     ]).start();

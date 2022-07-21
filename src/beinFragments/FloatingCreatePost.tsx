@@ -1,20 +1,19 @@
-import React, {FC, useEffect} from 'react';
-import {DeviceEventEmitter, StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useRootNavigation} from '~/hooks/navigation';
-
+import React, { FC, useEffect } from 'react';
+import { DeviceEventEmitter, StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   interpolate,
   withTiming,
 } from 'react-native-reanimated';
+import { useRootNavigation } from '~/hooks/navigation';
 
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
-import {ISelectAudienceParams} from '~/screens/Post/PostSelectAudience/SelectAudienceHelper';
+import { ISelectAudienceParams } from '~/screens/Post/PostSelectAudience/SelectAudienceHelper';
 import spacing from '~/theme/spacing';
 
 export interface FloatingCreatePostProps {
@@ -29,14 +28,14 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
   const showValue = useSharedValue(0);
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
   useEffect(() => {
     const listener = DeviceEventEmitter.addListener(
       'showFloatingCreatePost',
-      isShow => {
+      (isShow) => {
         if (isShow) {
           show();
         } else {
@@ -68,24 +67,24 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
   }));
 
   const show = (duration = 150) => {
-    showValue.value = withTiming(1, {duration});
+    showValue.value = withTiming(1, { duration });
   };
 
   const hide = (duration = 150) => {
-    showValue.value = withTiming(0, {duration});
+    showValue.value = withTiming(0, { duration });
   };
 
   return (
     <Animated.View style={containerStyle}>
       <Button onPress={onPress} style={styles.button}>
-        <Icon tintColor={colors.white} width={20} height={20} icon={'edit'} />
+        <Icon tintColor={colors.white} width={20} height={20} icon="edit" />
       </Button>
     </Animated.View>
   );
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {},
     button: {

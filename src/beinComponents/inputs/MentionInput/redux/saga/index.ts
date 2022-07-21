@@ -1,4 +1,4 @@
-import {takeLatest} from 'redux-saga/effects';
+import { takeLatest } from 'redux-saga/effects';
 import types from '../types';
 import runSearch from './runSearch';
 
