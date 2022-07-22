@@ -79,11 +79,15 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
         timeout: 600,
         file: "./fastlane/development/#{ENV['SCHEME_NAME_IOS']}.ipa",
     )
-    notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
-                        \n🟣🍎 **BIC Group Dev iOS**
-                        \n Tải về tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-                        \n **Git Branch**: #{git_branch}
-                        \n **Git Commit**: #{git_mess}", [9,14,19], 72)
+    mattermost(
+        url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
+        text: "@all\n🟣🍎 **Bein Dev iOS** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+            \n > **Git Branch**: #{git_branch}
+            \n **Git Author**: #{commit[:author]}
+            \n **Git Commit**: #{git_mess}",
+        username: "bein.bot",
+        icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
+    )
   end
 
   lane :deploy_staging do
@@ -110,11 +114,15 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
       ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Staging version #{ENV['APP_VERSION']}",
     )
-    notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
-      \n🟡🍎 **BIC Group Staging iOS**
-      \n Tải về tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-      \n **Git Branch**: #{git_branch}
-      \n **Git Commit**: #{git_mess}", [9,14,19], 72)
+    mattermost(
+        url: "https://team.bein.group/hooks/ufdi5exyo3f8bjt3m8cub986wr",
+        text: "@all\n🟡🍎 **Bein Staging iOS** New build #{appVersionText} available on TestFlight.}
+            \n > **Git Branch**: #{git_branch}
+            \n **Git Author**: #{commit[:author]}
+            \n **Git Commit**: #{git_mess}",
+        username: "bein.bot",
+        icon_url: "https://cdn1.iconfinder.com/data/icons/youtuber/256/bell-notifications-notice-notify-alert-512.png",
+    )
   end
 
     lane :deploy_production do
@@ -139,11 +147,10 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
           ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
           changelog: "Production version #{ENV['APP_VERSION']}",
         )
-        notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
-          \n🟢🍎 **BIC Group Production iOS**
-          \n Tải về tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-          \n **Git Branch**: #{git_branch}
-          \n **Git Commit**: #{git_mess}", [9,14,19], 72)
+        notice_to_bic("Alo alo có build mới @ngoclinh @trankimmai @ngoccuong \n🟢🍎 **BIC Group Production iOS** New build #{appVersionText} available on TestFlight.}
+            \n > **Git Branch**: #{git_branch}
+            \n **Git Author**: #{commit[:author]}
+            \n **Git Commit**: #{git_mess}", [9,14,19])
     end
 
     lane :deploy_staging_ci do
@@ -185,11 +192,10 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
             ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
             changelog: "Staging version #{ENV['APP_VERSION']}",
           )
-          notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
-            \n🟡🍎 **BIC Group Staging iOS**
-            \n Tải về tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-            \n **Git Branch**: #{git_branch}
-            \n **Git Commit**: #{git_mess}", [9,14,19], 72)
+          notice_to_bic("Alo alo có build mới @ngoclinh @trankimmai @ngoccuong \n🟡🍎 **BIC Group Staging iOS** New build #{appVersionText} available on TestFlight.}
+              \n > **Git Branch**: #{git_branch}
+              \n **Git Author**: #{commit[:author]}
+              \n **Git Commit**: #{git_mess}", [9,14,19])
         end
 
     lane :deploy_production_ci do
@@ -232,10 +238,9 @@ DBq1nEhUTmCpgdAAAAIXRoaWVubmFATmd1eWVucy1NYWNCb29rLVByby5sb2NhbAE=
                 ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
                 changelog: "Production version #{ENV['APP_VERSION']}",
               )
-              notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
-                \n🟢🍎 **BIC Group Production iOS**
-                \n Tải về tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-                \n **Git Branch**: #{git_branch}
-                \n **Git Commit**: #{git_mess}", [9,14,19], 72)
+              notice_to_bic("Alo alo có build mới @ngoclinh @trankimmai @ngoccuong \n🟢🍎 **BIC Group iOS** New build #{appVersionText} available on TestFlight.}
+                  \n > **Git Branch**: #{git_branch}
+                  \n **Git Author**: #{commit[:author]}
+                  \n **Git Commit**: #{git_mess}", [9,14,19])
   end
 end
