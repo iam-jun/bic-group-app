@@ -25,10 +25,10 @@ platform :android do
       timeout: 600,
     )
     notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
-        \n🟣🤖 **BIC Group Dev Android**
-        \nTải về tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-        \n **Git Branch**: #{git_branch}
-        \n **Git Commit**: #{git_mess}", [9,14,19], 71)
+      \n🟣🤖 **BIC Group Dev Android**
+      \nTải về tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+      \n **Git Branch**: #{git_branch}
+      \n **Git Commit**: #{git_mess}", [9,14,19], 71)
   end
 
   lane :deploy_staging do
@@ -50,33 +50,32 @@ platform :android do
       timeout: 600,
     )
     notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
-            \n🟡🤖 **BIC Group Staging Android**
-            \nTải về tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-            \n **Git Branch**: #{git_branch}
-            \n **Git Commit**: #{git_mess}", [9,14,19], 71)
-#     upload_to_play_store_internal_app_sharing
+      \n🟡🤖 **BIC Group Staging Android**
+      \nTải về tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+      \n **Git Branch**: #{git_branch}
+      \n **Git Commit**: #{git_mess}", [9,14,19], 71)
   end
 
     lane :deploy_production do
-        Dotenv.overload('../../.env.sample', '../../.env.production')
-        appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
-        commit = last_git_commit
-        git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
-        gradle(task: "clean")
-        gradle(
-          task: "assemble",
-          build_type: "Release",
-          flavor: "Production",
-        )
-        diawi(
-          token: ENV['DIAWI_TOKEN'],
-          file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
-          timeout: 600,
-        )
-        notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
-                    \n🟢🤖 **BIC Group Production Android**
-                    \n Tải về tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-                    \n **Git Branch**: #{git_branch}
-                    \n **Git Commit**: #{git_mess}", [9,14,19], 71)
+      Dotenv.overload('../../.env.sample', '../../.env.production')
+      appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+      commit = last_git_commit
+      git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
+      gradle(task: "clean")
+      gradle(
+        task: "assemble",
+        build_type: "Release",
+        flavor: "Production",
+      )
+      diawi(
+        token: ENV['DIAWI_TOKEN'],
+        file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
+        timeout: 600,
+      )
+      notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+        \n🟢🤖 **BIC Group Production Android**
+        \n Tải về tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+        \n **Git Branch**: #{git_branch}
+        \n **Git Commit**: #{git_mess}", [9,14,19], 71)
     end
 end
