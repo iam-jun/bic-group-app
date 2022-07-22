@@ -1,4 +1,4 @@
-import {put, call, select} from 'redux-saga/effects';
+import {put, call} from 'redux-saga/effects';
 
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
@@ -8,14 +8,12 @@ export default function* getJoinedCommunities({
   payload,
 }: {
   type: string;
-  payload: {callback?: () => void};
+  payload?: {callback?: () => void};
 }) {
   try {
     const {callback} = payload || {};
-    const list: any[] = yield select(
-      state => state?.groups?.communities?.data,
-    ) || [];
-    yield put(groupsActions.setMyCommunities({data: list, loading: true}));
+
+    yield put(groupsActions.setMyCommunities({loading: true}));
     // @ts-ignore
     const communities = yield call(groupsDataHelper.getJoinedCommunities, {
       preview_members: true,
@@ -29,8 +27,8 @@ export default function* getJoinedCommunities({
     }
     callback && callback();
   } catch (err) {
-    console.log('\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m');
-    yield put(groupsActions.setMyCommunities({data: [], loading: false}));
-    yield showError(err);
+    console.log('\x1b[33m', 'getJoinedCommunities : error', err, '\x1b[0m');
+    yield put(groupsActions.setMyCommunities({loading: false}));
+    yield call(showError, err);
   }
 }
