@@ -31,28 +31,28 @@ const ManagedCommunities = ({
   const styles = createStyles(theme);
   const dispatch = useDispatch();
 
-  const {loading, data, items, canLoadMore} = useKeySelector(
+  const {loading, ids, items, canLoadMore} = useKeySelector(
     groupsKeySelector.managedCommunities,
   );
 
-  const getManagedCommunities = () => {
-    dispatch(actions.getManagedCommunities());
+  const getManagedCommunities = (params?: {
+    isRefreshing?: boolean;
+    refreshNoLoading?: boolean;
+  }) => {
+    const {isRefreshing, refreshNoLoading} = params || {};
+    dispatch(actions.getManagedCommunities({isRefreshing, refreshNoLoading}));
   };
 
   useEffect(() => {
-    getManagedCommunities();
-    return () => {
-      dispatch(actions.resetManagedCommunities());
-    };
+    getManagedCommunities({refreshNoLoading: true});
   }, []);
 
   const onLoadMore = () => {
-    getManagedCommunities();
+    canLoadMore && getManagedCommunities();
   };
 
   const onRefresh = () => {
-    dispatch(actions.resetManagedCommunities());
-    getManagedCommunities();
+    getManagedCommunities({isRefreshing: true});
   };
 
   const renderEmptyComponent = () => {
@@ -79,7 +79,7 @@ const ManagedCommunities = ({
   };
 
   const renderListFooter = () => {
-    if (!loading && canLoadMore && data.length > 0)
+    if (!loading && canLoadMore && ids.length > 0)
       return (
         <View style={styles.listFooter}>
           <ActivityIndicator testID="managed_communites.loading_more" />
@@ -92,7 +92,7 @@ const ManagedCommunities = ({
   return (
     <FlatList
       testID="flatlist"
-      data={data}
+      data={ids}
       renderItem={renderItem}
       keyExtractor={(item, index) => `community_item_${item}_${index}`}
       ListEmptyComponent={renderEmptyComponent}

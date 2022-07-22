@@ -11,12 +11,12 @@ export default function* getDiscoverCommunities({
   payload,
 }: {
   type: string;
-  payload: {isRefreshing?: boolean};
+  payload: {isRefreshing?: boolean; refreshNoLoading?: boolean};
 }): any {
   try {
     const {groups} = yield select();
 
-    const {isRefreshing} = payload;
+    const {isRefreshing, refreshNoLoading} = payload;
     const {ids, items, canLoadMore} = groups.discoverCommunities;
 
     yield put(
@@ -25,11 +25,11 @@ export default function* getDiscoverCommunities({
       }),
     );
 
-    if (!isRefreshing && !canLoadMore) return;
+    if (!isRefreshing && !refreshNoLoading && !canLoadMore) return;
 
     const params: IParamGetCommunities = {
       limit: appConfig.recordsPerPage,
-      offset: isRefreshing ? 0 : ids.length,
+      offset: isRefreshing || refreshNoLoading ? 0 : ids.length,
     };
 
     const response = yield call(
@@ -44,8 +44,11 @@ export default function* getDiscoverCommunities({
     const newData = {
       loading: false,
       canLoadMore: newIds.length === appConfig.recordsPerPage,
-      ids: isRefreshing ? [...newIds] : [...ids, ...newIds],
-      items: isRefreshing ? {...newItems} : {...items, ...newItems},
+      ids: isRefreshing || refreshNoLoading ? [...newIds] : [...ids, ...newIds],
+      items:
+        isRefreshing || refreshNoLoading
+          ? {...newItems}
+          : {...items, ...newItems},
     };
 
     yield put(groupsActions.setDiscoverCommunities(newData));
