@@ -17,7 +17,7 @@ platform :ios do
   lane :deploy_dev do
     Dotenv.overload('../../.env.sample', '../../.env')
 
-    appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+    appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
 
     commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
@@ -79,8 +79,8 @@ platform :ios do
         timeout: 600,
         file: "./fastlane/development/#{ENV['SCHEME_NAME_IOS']}.ipa",
     )
-    notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
-        \n 🟣🍎 **Bein Dev iOS**
+    notice_to_bic("🟣🍎 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+        \n **Bein Dev iOS**
         \n Tải tại: TestFlight.
         \n **Git Branch**: #{git_branch}
         \n **Git Commit**: #{git_mess}", [9,14,19])
@@ -89,7 +89,7 @@ platform :ios do
   lane :deploy_staging do
     Dotenv.overload('../../.env.sample', '../../.env.staging')
 
-    appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+    appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
 
     commit = last_git_commit
     git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
@@ -110,8 +110,8 @@ platform :ios do
       ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
       changelog: "Staging version #{ENV['APP_VERSION']}",
     )
-    notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
-        \n 🟡🍎 **BIC Group Staging iOS**
+    notice_to_bic("🟡🍎 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+        \n **BIC Group Staging iOS**
         \n Tải tại: TestFlight.
         \n **Git Branch**: #{git_branch}
         \n **Git Commit**: #{git_mess}", [9,14,19])
@@ -119,7 +119,7 @@ platform :ios do
 
     lane :deploy_production do
         Dotenv.overload('../../.env.sample', '../../.env.production')
-        appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+        appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
 
         commit = last_git_commit
         git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
@@ -139,8 +139,8 @@ platform :ios do
           ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
           changelog: "Production version #{ENV['APP_VERSION']}",
         )
-        notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
-            \n 🟢🍎 **BIC Group Production iOS**
+        notice_to_bic("🟢🍎 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+            \n **BIC Group Production iOS**
             \n Tải tại: TestFlight.
             \n **Git Branch**: #{git_branch}
             \n **Git Commit**: #{git_mess}", [9,14,19])
@@ -164,7 +164,7 @@ platform :ios do
             verbose: true,
     )
 
-          appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+          appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
 
           commit = last_git_commit
           git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
@@ -185,8 +185,8 @@ platform :ios do
             ipa: "./fastlane/staging/#{ENV['SCHEME_NAME_IOS']}.ipa",
             changelog: "Staging version #{ENV['APP_VERSION']}",
           )
-          notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
-              \n 🟡🍎 **BIC Group Staging iOS**
+          notice_to_bic("🟡🍎 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+              \n **BIC Group Staging iOS**
               \n Tải tại: TestFlight.
               \n **Git Branch**: #{git_branch}
               \n **Git Commit**: #{git_mess}", [9,14,19])
@@ -212,7 +212,7 @@ platform :ios do
     )
 
 
-              appVersionText = ENV['APP_VERSION'].length > 0 ? "(the app version is: " + ENV['APP_VERSION'] + ")" : ""
+              appVersionText = ENV['APP_VERSION'].length > 0 ? "**" + ENV['APP_VERSION'] + "**" : ""
 
               commit = last_git_commit
               git_mess = changelog_from_git_commits(commits_count: 1, pretty: "- (%ae) %s")
@@ -232,8 +232,8 @@ platform :ios do
                 ipa: "./fastlane/production/#{ENV['SCHEME_NAME_IOS']}.ipa",
                 changelog: "Production version #{ENV['APP_VERSION']}",
               )
-              notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
-                  \n 🟢🍎 **BIC Group iOS**
+              notice_to_bic("🟢🍎 Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+                  \n **BIC Group iOS**
                   \n Tải tại: TestFlight.
                   \n **Git Branch**: #{git_branch}
                   \n **Git Commit**: #{git_mess}", [9,14,19])
