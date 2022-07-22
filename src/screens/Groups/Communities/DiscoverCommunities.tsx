@@ -43,11 +43,17 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   const theme: ExtendedTheme = useTheme();
 
   useEffect(() => {
-    getData(true); // refreshing whenever open
+    getData({ refreshNoLoading: true });
   }, []);
 
-  const getData = (isRefreshing?: boolean) => {
-    dispatch(groupsActions.getDiscoverCommunities({ isRefreshing }));
+  const getData = (params?: {
+    isRefreshing?: boolean;
+    refreshNoLoading?: boolean;
+  }) => {
+    const { isRefreshing, refreshNoLoading } = params || {};
+    dispatch(
+      groupsActions.getDiscoverCommunities({ isRefreshing, refreshNoLoading }),
+    );
   };
 
   const onLoadMore = () => {
@@ -55,7 +61,7 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   };
 
   const onRefresh = () => {
-    getData(true);
+    getData({ isRefreshing: true });
   };
 
   const onPressJoin = (communityId: number, communityName: string) => {

@@ -28,8 +28,6 @@ function* getNotifications({
     );
 
     if (flag === 'UNREAD' && response?.results?.length < 1) {
-      yield put(groupsActions.getMyCommunities({}));
-      yield timeOut(500);
       const joinedCommunities: IObject<any> = yield select(
         (state: any) => state.groups.joinedCommunities.data,
       );

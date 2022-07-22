@@ -1104,7 +1104,7 @@ const groupsDataHelper = {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getJoinedCommunities(params),
       );
-      if (response && response?.data) {
+      if (response && response?.data?.data) {
         return Promise.resolve(response.data?.data);
       }
       return Promise.reject(response);

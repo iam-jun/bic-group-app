@@ -24,10 +24,11 @@ platform :android do
       file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
       timeout: 600,
     )
-    notice_to_bic("Alo alo có build mới @ngoclinh @trankimmai @ngoccuong \n🟣🤖 **BIC Group Dev Android** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-        \n > **Git Branch**: #{git_branch}
-        \n **Git Author**: #{commit[:author]}
-        \n **Git Commit**: #{git_mess}", [9,14,19])
+    notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+        \n🟣🤖 **BIC Group Dev Android**
+        \nTải về tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+        \n **Git Branch**: #{git_branch}
+        \n **Git Commit**: #{git_mess}", [9,14,19], 71)
   end
 
   lane :deploy_staging do
@@ -48,10 +49,11 @@ platform :android do
       file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
       timeout: 600,
     )
-    notice_to_bic("Alo alo có build mới @ngoclinh @trankimmai @ngoccuong \n🟡🤖 **BIC Group Android** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-                                  \n > **Git Branch**: #{git_branch}
-                                  \n **Git Author**: #{commit[:author]}
-                                  \n **Git Commit**: #{git_mess}", [9,14,19])
+    notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+            \n🟡🤖 **BIC Group Staging Android**
+            \nTải về tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+            \n **Git Branch**: #{git_branch}
+            \n **Git Commit**: #{git_mess}", [9,14,19], 71)
 #     upload_to_play_store_internal_app_sharing
   end
 
@@ -71,9 +73,10 @@ platform :android do
           file: lane_context[SharedValues::GRADLE_ALL_APK_OUTPUT_PATHS][0],
           timeout: 600,
         )
-        notice_to_bic("Alo alo có build mới @ngoclinh @trankimmai @ngoccuong \n🟢🤖 **BIC Group Production Android** New build #{appVersionText} at: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
-            \n > **Git Branch**: #{git_branch}
-            \n **Git Author**: #{commit[:author]}
-            \n **Git Commit**: #{git_mess}", [9,14,19])
+        notice_to_bic("Alo alo có build #{appVersionText} @ngoclinh @trankimmai @ngoccuong
+                    \n🟢🤖 **BIC Group Production Android**
+                    \n Tải về tại: #{lane_context[SharedValues::UPLOADED_FILE_LINK_TO_DIAWI]}
+                    \n **Git Branch**: #{git_branch}
+                    \n **Git Commit**: #{git_mess}", [9,14,19], 71)
     end
 end
