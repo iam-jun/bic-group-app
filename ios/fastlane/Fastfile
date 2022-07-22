@@ -83,7 +83,7 @@ platform :ios do
         \n **Bein Dev iOS**
         \n Tải tại: TestFlight.
         \n **Git Branch**: #{git_branch}
-        \n **Git Commit**: #{git_mess}", [9,14,19])
+        \n **Git Commit**: #{git_mess}", [9,14,19], 72)
   end
 
   lane :deploy_staging do
@@ -114,7 +114,7 @@ platform :ios do
         \n **BIC Group Staging iOS**
         \n Tải tại: TestFlight.
         \n **Git Branch**: #{git_branch}
-        \n **Git Commit**: #{git_mess}", [9,14,19])
+        \n **Git Commit**: #{git_mess}", [9,14,19], 72)
   end
 
     lane :deploy_production do
@@ -143,7 +143,7 @@ platform :ios do
             \n **BIC Group Production iOS**
             \n Tải tại: TestFlight.
             \n **Git Branch**: #{git_branch}
-            \n **Git Commit**: #{git_mess}", [9,14,19])
+            \n **Git Commit**: #{git_mess}", [9,14,19], 72)
     end
 
     lane :deploy_staging_ci do
@@ -189,7 +189,7 @@ platform :ios do
               \n **BIC Group Staging iOS**
               \n Tải tại: TestFlight.
               \n **Git Branch**: #{git_branch}
-              \n **Git Commit**: #{git_mess}", [9,14,19])
+              \n **Git Commit**: #{git_mess}", [9,14,19], 72)
         end
 
     lane :deploy_production_ci do
@@ -236,6 +236,6 @@ platform :ios do
                   \n **BIC Group iOS**
                   \n Tải tại: TestFlight.
                   \n **Git Branch**: #{git_branch}
-                  \n **Git Commit**: #{git_mess}", [9,14,19])
+                  \n **Git Commit**: #{git_mess}", [9,14,19], 72)
   end
 end
