@@ -19,6 +19,7 @@ import actions from '~/screens/Auth/redux/actions';
 
 import spacing from '~/theme/spacing';
 import {getEnv} from '~/utils/env';
+import {APP_ENV} from '~/configs/appConfig';
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -126,10 +127,7 @@ const SignUp = () => {
               message: t('auth:text_err_password_characters'),
             },
             validate: () => {
-              if (
-                !getEnv('SELF_DOMAIN')?.includes('sbx') &&
-                !getEnv('SELF_DOMAIN')?.includes('stg')
-              ) {
+              if (getEnv('APP_ENV') === APP_ENV.PRODUCTION) {
                 const value = getValues('password');
 
                 if (!/(?=.*?[A-Z])/.test(value)) {
