@@ -12,7 +12,7 @@ module Fastlane
         UI.message "mention_user_ids: #{mention_user_ids}"
         UI.message "group_ids: #{group_ids}"
 
-        response = Faraday.post "https://api.stg.bein.group/v1/stream/posts/bot" do |request|
+        response = Faraday.post "https://api.beincomm.app/v1/stream/posts/bot" do |request|
           request.headers['Content-Type'] = 'application/json'
           request.headers['secret'] = '$2a$12$dvgazpG5VPUxPNQBQcIJUe2hZSorX816Wa6gKJMCcQKvk9BzQG66e'
 #           request.headers['bot_id'] = "#{bot_id}"
