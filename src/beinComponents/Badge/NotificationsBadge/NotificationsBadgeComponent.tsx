@@ -1,10 +1,11 @@
 import React from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle, TextStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
-import Text from '~/beinComponents/Text';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-export type NotificationsBadgeType = 'default' | 'info' | 'warning' | 'alert';
+import Text from '~/beinComponents/Text';
+import spacing from '~/theme/spacing';
+
+export type NotificationsBadgeType = 'default' | 'info' | 'alert';
 
 export interface NotificationsBadgeComponentProps {
   style?: StyleProp<ViewStyle>;
@@ -26,32 +27,28 @@ const NotificationsBadgeComponent: React.FC<NotificationsBadgeComponentProps> =
   }: NotificationsBadgeComponentProps) => {
     if (!number) return null;
 
-    const theme: ITheme = useTheme() as ITheme;
+    const theme: ExtendedTheme = useTheme();
     const styles = themeStyles(theme, variant);
     const numberInText = number > maxNumber ? `${maxNumber}+` : `${number}`;
 
     return (
       <View style={[styles.dot, style]} testID={testID}>
-        <Text variant="subtitle" style={[styles.text, textStyle]}>
-          {numberInText}
-        </Text>
+        <Text.BodyS style={[styles.text, textStyle]}>{numberInText}</Text.BodyS>
       </View>
     );
   };
 
-const themeStyles = (theme: ITheme, variant: NotificationsBadgeType) => {
-  const {colors, spacing} = theme;
+const themeStyles = (theme: ExtendedTheme, variant: NotificationsBadgeType) => {
+  const {colors} = theme;
   const defaultWidth = 20;
 
   const dotColors = {
-    default: colors.bgDisable,
-    info: colors.textInfo,
-    warning: colors.statusOrange,
-    alert: colors.error,
+    default: colors.gray20,
+    info: colors.blue50,
+    alert: colors.red60,
   };
 
-  const textColor =
-    variant === 'default' ? colors.textPrimary : colors.textReversed;
+  const textColor = variant === 'default' ? colors.neutral80 : colors.white;
 
   return StyleSheet.create({
     dot: {

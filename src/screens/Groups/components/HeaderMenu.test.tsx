@@ -9,7 +9,7 @@ describe('HeaderMenu component', () => {
     const wrapper = renderWithRedux(
       <HeaderMenu
         type="community"
-        can_setting
+        canSetting
         isMember
         onPressAdminTools={onPressAdminTools}
       />,
@@ -24,7 +24,7 @@ describe('HeaderMenu component', () => {
     const wrapper = renderWithRedux(
       <HeaderMenu
         type="community"
-        can_setting={false}
+        canSetting={false}
         isMember
         onPressAdminTools={onPressAdminTools}
       />,
@@ -38,7 +38,7 @@ describe('HeaderMenu component', () => {
     const wrapper = renderWithRedux(
       <HeaderMenu
         type="community"
-        can_setting={false}
+        canSetting={false}
         isMember
         onPressCopyLink={onPressCopyLink}
       />,
@@ -54,7 +54,7 @@ describe('HeaderMenu component', () => {
     const wrapper = renderWithRedux(
       <HeaderMenu
         type="community"
-        can_setting={false}
+        canSetting={false}
         isMember
         onPressShare={onPressShare}
       />,
@@ -70,7 +70,7 @@ describe('HeaderMenu component', () => {
     const wrapper = renderWithRedux(
       <HeaderMenu
         type="community"
-        can_setting={false}
+        canSetting={false}
         isMember
         onPressFollowing={onPressFollowing}
       />,
@@ -86,7 +86,7 @@ describe('HeaderMenu component', () => {
     const wrapper = renderWithRedux(
       <HeaderMenu
         type="community"
-        can_setting={false}
+        canSetting={false}
         isMember
         onPressPin={onPressPin}
       />,
@@ -102,7 +102,7 @@ describe('HeaderMenu component', () => {
     const wrapper = renderWithRedux(
       <HeaderMenu
         type="community"
-        can_setting={false}
+        canSetting={false}
         isMember
         onPressNotification={onPressNotification}
       />,
@@ -118,7 +118,7 @@ describe('HeaderMenu component', () => {
     const wrapper = renderWithRedux(
       <HeaderMenu
         type="community"
-        can_setting={false}
+        canSetting={false}
         isMember
         onPressLeave={onPressLeave}
       />,
@@ -131,7 +131,7 @@ describe('HeaderMenu component', () => {
 
   it('should NOT render Leave correctly when user is NOT a member', () => {
     const wrapper = renderWithRedux(
-      <HeaderMenu type="community" can_setting={false} isMember={false} />,
+      <HeaderMenu type="community" canSetting={false} isMember={false} />,
     );
     const itemComponent = wrapper.queryByTestId('header_menu.leave_community');
     expect(itemComponent).toBeNull();

@@ -9,15 +9,13 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {Video, ResizeMode} from 'expo-av';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
-import {scaleSize} from '~/theme/dimension';
+import dimension, {scaleSize} from '~/theme/dimension';
 import {orderBy} from 'lodash';
 import Icon from './Icon';
 import LoadingIndicator from './LoadingIndicator';
-import InViewport from './InViewport';
 
 export interface VideoPlayerProps {
   style?: StyleProp<ViewStyle>;
@@ -32,8 +30,8 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   data,
   postId,
 }: VideoPlayerProps) => {
-  const theme = useTheme() as ITheme;
-  const {dimension, colors} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const video = React.useRef();
@@ -82,8 +80,24 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         }
       },
     );
+
+    const stopVideoListener = DeviceEventEmitter.addListener(
+      'stopAllVideo',
+      async () => {
+        if (!!video.current) {
+          const currentStatus = await video.current.getStatusAsync();
+          if (!currentStatus?.isPlaying) return;
+          try {
+            video.current.pauseAsync();
+          } catch (error) {
+            console.log('STOP VIDEO FAILED>>>>>>>>>>', error);
+          }
+        }
+      },
+    );
     return () => {
-      videoListener?.remove();
+      videoListener?.remove?.();
+      stopVideoListener?.remove?.();
     };
   }, [isPlaying]);
 
@@ -108,41 +122,39 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
 
   return (
     <View style={[styles.container]}>
-      <InViewport style={styles.container} onChange={handlePlaying}>
-        <Video
-          ref={video}
-          key={`video_item_${postId}`}
-          style={styles.player}
-          useNativeControls
-          resizeMode={ResizeMode.CONTAIN}
-          isLooping={false}
-          onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
-          onError={(error: string) => {
-            console.warn('video failed', error);
-          }}
-        />
-        {!isPlaying && (
-          <Image style={styles.thumbnail} source={{uri: posterUrl}} />
-        )}
+      <Video
+        ref={video}
+        key={`video_item_${postId}`}
+        style={styles.player}
+        useNativeControls
+        resizeMode={ResizeMode.CONTAIN}
+        isLooping={false}
+        onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
+        onError={(error: string) => {
+          console.warn('video failed', error);
+        }}
+      />
+      {!isPlaying && (
+        <Image style={styles.thumbnail} source={{uri: posterUrl}} />
+      )}
 
-        {loading ? (
-          <LoadingIndicator size={60} color={colors.bgDisable} />
-        ) : !isPlaying ? (
-          <TouchableOpacity
-            activeOpacity={!!url ? 0.85 : 1}
-            onPress={() => {
-              loadAsyncVideo();
-            }}
-            style={styles.buttonPlay}>
-            <Icon size={60} tintColor={colors.bgDisable} icon="PlayCircle" />
-          </TouchableOpacity>
-        ) : null}
-      </InViewport>
+      {loading ? (
+        <LoadingIndicator size={60} color={colors.gray20} />
+      ) : !isPlaying ? (
+        <TouchableOpacity
+          activeOpacity={!!url ? 0.85 : 1}
+          onPress={() => {
+            loadAsyncVideo();
+          }}
+          style={styles.buttonPlay}>
+          <Icon size={60} tintColor={colors.gray20} icon="CirclePlay" />
+        </TouchableOpacity>
+      ) : null}
     </View>
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {
@@ -150,7 +162,7 @@ const createStyle = (theme: ITheme) => {
       height: PLAYER_HEIGHT,
       flex: 1,
       justifyContent: 'center',
-      backgroundColor: colors.onSurface,
+      backgroundColor: colors.black,
     },
     player: {
       position: 'absolute',
@@ -164,7 +176,7 @@ const createStyle = (theme: ITheme) => {
       right: 0,
       bottom: 0,
       resizeMode: 'contain',
-      backgroundColor: colors.onSurface,
+      backgroundColor: colors.black,
     },
     buttonPlay: {
       position: 'absolute',

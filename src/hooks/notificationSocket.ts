@@ -23,8 +23,10 @@ const useNotificationSocket = () => {
     switch (data.action) {
       case notificationActions.ATTACH:
         if (
-          data?.extra?.type === NOTIFICATION_TYPE.POST.VIDEO.FAILED ||
-          data?.extra?.type === NOTIFICATION_TYPE.POST.VIDEO.PUBLISHED
+          data?.extra?.type ===
+            NOTIFICATION_TYPE.POST_VIDEO_TO_USER_SUCCESSFUL ||
+          data?.extra?.type ===
+            NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL
         ) {
           dispatch(postActions.updateAllPostContainingVideoInProgress(data));
         }
@@ -51,6 +53,10 @@ const useNotificationSocket = () => {
     const msgData = ConvertHelper.camelizeKeys(parseSafe(msg), {
       exclude: ['reactions_count'],
     });
+    // console.log(
+    //   `\x1b[34m🐣️ notificationSocket handleInternalEvent`,
+    //   `${JSON.stringify(msgData, undefined, 2)}\x1b[0m`,
+    // );
     const data: any = msgData || {};
     if (
       data?.event === notificationEvent.REACT ||

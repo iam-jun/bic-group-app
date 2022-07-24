@@ -1,13 +1,12 @@
 import React from 'react';
 import {View, TouchableOpacity, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {IParsedGroup} from '~/interfaces/IGroup';
+import {IGroup, IParsedGroup} from '~/interfaces/IGroup';
 import {IObject} from '~/interfaces/common';
 import Icon from '~/beinComponents/Icon';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import {useRootNavigation} from '~/hooks/navigation';
-import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import Avatar from '~/beinComponents/Avatar';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
@@ -18,6 +17,9 @@ import {useKeySelector} from '~/hooks/selector';
 import privacyTypes from '~/constants/privacyTypes';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
+import {IconType} from '~/resources/icons';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 export interface GroupItemProps extends IParsedGroup {
   testID?: string;
@@ -34,6 +36,8 @@ export interface GroupItemProps extends IParsedGroup {
   showInfo?: boolean;
   iconVariant?: AvatarType;
   nameLines?: number;
+  menuIcon?: IconType;
+  renderExtraInfo?: (group: IGroup) => any;
 }
 
 const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
@@ -63,11 +67,13 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     disableHorizontal,
     iconVariant = 'medium',
     nameLines = 2,
+    menuIcon = 'menu',
+    renderExtraInfo,
   } = props;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = themeStyles(theme);
   const {rootNavigation} = useRootNavigation();
@@ -110,6 +116,10 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
       newChecked = true;
     }
     onCheckedItem?.(props, newChecked);
+  };
+
+  const _renderExtraInfo = () => {
+    return renderExtraInfo?.(props);
   };
 
   const renderLine = (uiLevel: number) => {
@@ -193,30 +203,29 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                       style={styles.iconSmall}
                       icon={privacyIcon}
                       size={16}
-                      tintColor={theme.colors.textSecondary}
+                      tintColor={theme.colors.gray50}
                     />
                     {showPrivacyName && (
-                      <Text.Subtitle style={styles.privacyTitle} useI18n>
+                      <Text.BodyS style={styles.privacyTitle} useI18n>
                         {privacyTitle}
-                      </Text.Subtitle>
+                      </Text.BodyS>
                     )}
-                    <Text.Subtitle> ⬩ </Text.Subtitle>
+                    <Text.BodyS> ⬩ </Text.BodyS>
                   </>
                 )}
-                <Icon icon="users" size={16} tintColor={colors.textSecondary} />
-                <Text.BodyS
-                  color={colors.textSecondary}
-                  style={styles.textInfo}>
+                <Icon icon={'UserGroup'} size={16} tintColor={colors.gray50} />
+                <Text.BodyS color={colors.gray50} style={styles.textInfo}>
                   {user_count}
                 </Text.BodyS>
               </View>
             )}
+            {_renderExtraInfo?.()}
           </View>
           {!!onPressMenu && (
             <View style={styles.btnMenu}>
               <Icon
                 style={{alignSelf: 'auto'}}
-                icon={'EllipsisH'}
+                icon={menuIcon}
                 testID={'group_item.button_menu'}
                 onPress={_onPressMenu}
               />
@@ -229,7 +238,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
 };
 
 const themeStyles = (theme: IObject<any>) => {
-  const {spacing, colors, dimension} = theme;
+  const {colors} = theme;
   return StyleSheet.create({
     textContainer: {
       paddingHorizontal: spacing.padding.base,
@@ -253,20 +262,20 @@ const themeStyles = (theme: IObject<any>) => {
     line: {
       width: 1,
       height: '100%',
-      backgroundColor: colors.borderDivider,
+      backgroundColor: colors.neutral5,
       marginHorizontal: spacing?.margin.base,
     },
     toggleContainer: {
       width: 1,
       height: '100%',
-      backgroundColor: colors.borderDivider,
+      backgroundColor: colors.neutral5,
       marginHorizontal: spacing?.margin.base,
       flexDirection: 'row',
     },
     toggleContent: {
       marginLeft: -7,
       alignSelf: 'center',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingVertical: spacing?.padding.tiny,
     },
     itemContainer: {

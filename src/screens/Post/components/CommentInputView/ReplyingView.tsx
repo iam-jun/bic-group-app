@@ -1,16 +1,17 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {useKeySelector} from '~/hooks/selector';
 import {IPayloadReplying} from '~/interfaces/IPost';
-import {ITheme} from '~/theme/interfaces';
+
 import postKeySelector from '../../redux/keySelector';
 
 import Text from '~/beinComponents/Text';
 import i18next from 'i18next';
 import postActions from '../../redux/actions';
 import {useUserIdAuth} from '~/hooks/auth';
+import spacing from '~/theme/spacing';
 
 const ReplyingView = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const ReplyingView = () => {
 
   const userId = useUserIdAuth();
 
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -45,14 +46,14 @@ const ReplyingView = () => {
   return (
     <View style={styles.commentInputHeader}>
       <View style={styles.headerContent}>
-        <Text color={colors.textSecondary}>
+        <Text color={colors.gray50}>
           {i18next.t('post:label_replying_to')}
           <Text.BodyM>
             {replyTargetName || i18next.t('post:someone')}
           </Text.BodyM>
-          <Text.BodyS color={colors.textSecondary}>
+          <Text.BodyS color={colors.gray50}>
             {'  • '}
-            <Text.BodyM useI18n color={colors.textSecondary} onPress={onPress}>
+            <Text.BodyM useI18n color={colors.gray50} onPress={onPress}>
               common:btn_cancel
             </Text.BodyM>
           </Text.BodyS>
@@ -62,8 +63,8 @@ const ReplyingView = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {},
@@ -76,7 +77,7 @@ const createStyle = (theme: ITheme) => {
       marginHorizontal: spacing?.margin.small,
       marginTop: spacing?.margin.small,
       borderBottomWidth: 1,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
     },
     headerContent: {
       flex: 1,

@@ -1,6 +1,5 @@
 import React, {useState, useEffect, useRef, Fragment, useCallback} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import Animated, {
   useAnimatedStyle,
@@ -8,10 +7,10 @@ import Animated, {
   interpolate,
 } from 'react-native-reanimated';
 import {isEmpty} from 'lodash';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {ITheme} from '~/theme/interfaces';
 import PrivateWelcome from './components/PrivateWelcome';
 import actions from '~/screens/Groups/redux/actions';
 import PageContent from './components/PageContent';
@@ -31,6 +30,8 @@ import modalActions from '~/store/modal/actions';
 import HeaderMenu from '../components/HeaderMenu';
 import {useRootNavigation} from '~/hooks/navigation';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import spacing from '~/theme/spacing';
+import {useMyPermissions} from '~/hooks/permissions';
 
 const CommunityDetail = (props: any) => {
   const params = props.route.params;
@@ -41,16 +42,22 @@ const CommunityDetail = (props: any) => {
   const headerRef = useRef<any>();
   const [buttonHeight, setButtonHeight] = useState(250);
 
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const {name, icon, join_status, privacy, group_id, can_setting} = infoDetail;
+  const {name, icon, join_status, privacy, group_id} = infoDetail;
   const isMember = join_status === groupJoinStatus.member;
   const isGettingInfoDetail = useKeySelector(
     groupsKeySelector.isGettingInfoDetail,
   );
   const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
+  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const canSetting = hasPermissionsOnScopeWithId('communities', communityId, [
+    PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
+    PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
+    PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
+  ]);
 
   const buttonShow = useSharedValue(0);
 
@@ -65,8 +72,8 @@ const CommunityDetail = (props: any) => {
   };
 
   const getPosts = useCallback(() => {
-    /* Avoid getting group posts of the nonexisting group, 
-    which will lead to endless fetching group posts in 
+    /* Avoid getting group posts of the nonexisting group,
+    which will lead to endless fetching group posts in
     httpApiRequest > makeGetStreamRequest */
     const privilegeToFetchPost =
       isMember ||
@@ -104,7 +111,7 @@ const CommunityDetail = (props: any) => {
           <HeaderMenu
             type="community"
             isMember={isMember}
-            can_setting={can_setting}
+            canSetting={canSetting}
             onPressAdminTools={onPressAdminTools}
           />
         ),
@@ -194,8 +201,8 @@ const CommunityDetail = (props: any) => {
           title={name}
           avatar={icon}
           useAnimationTitle
-          rightIcon={can_setting ? 'iconShieldStar' : 'EllipsisV'}
-          rightIconProps={{backgroundColor: theme.colors.background}}
+          rightIcon={canSetting ? 'iconShieldStar' : 'menu'}
+          rightIconProps={{backgroundColor: theme.colors.white}}
           onPressChat={isMember ? onPressChat : undefined}
           onRightPress={onRightPress}
         />
@@ -218,11 +225,11 @@ const CommunityDetail = (props: any) => {
 
 export default CommunityDetail;
 
-const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     screenContainer: {
-      backgroundColor: colors.borderDivider,
+      backgroundColor: colors.neutral5,
     },
     contentContainer: {
       flex: 1,

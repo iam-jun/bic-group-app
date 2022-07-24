@@ -6,10 +6,10 @@ import {
   RefreshControl,
   FlatList,
   Dimensions,
+  View,
+  ActivityIndicator,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Divider from '~/beinComponents/Divider';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
@@ -21,6 +21,7 @@ import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import {scaleSize} from '~/theme/dimension';
 import DiscoverItem from '../components/DiscoverItem';
+import spacing from '~/theme/spacing';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -34,30 +35,31 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   onPressCommunities,
 }: DiscoverCommunitiesProps) => {
   const data = useKeySelector(groupsKeySelector.discoverCommunitiesData);
-  const {ids, items, loading} = data || {};
+  const {ids, items, loading, canLoadMore} = data || {};
 
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
+  const theme: ExtendedTheme = useTheme();
 
   useEffect(() => {
-    getData();
-    return () => {
-      resetData();
-    };
+    getData({refreshNoLoading: true});
   }, []);
 
-  const getData = () => {
-    dispatch(groupsActions.getDiscoverCommunities());
+  const getData = (params?: {
+    isRefreshing?: boolean;
+    refreshNoLoading?: boolean;
+  }) => {
+    const {isRefreshing, refreshNoLoading} = params || {};
+    dispatch(
+      groupsActions.getDiscoverCommunities({isRefreshing, refreshNoLoading}),
+    );
   };
 
-  const resetData = () => {
-    dispatch(groupsActions.resetDiscoverCommunities());
+  const onLoadMore = () => {
+    canLoadMore && getData();
   };
 
   const onRefresh = () => {
-    resetData();
-    getData();
+    getData({isRefreshing: true});
   };
 
   const onPressJoin = (communityId: number, communityName: string) => {
@@ -94,6 +96,21 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
     );
   };
 
+  const renderListFooter = () => {
+    if (loading) return null;
+
+    return (
+      canLoadMore &&
+      ids.length > 0 && (
+        <View
+          style={styles.listFooter}
+          testID="discover_communities.loading_more_indicator">
+          <ActivityIndicator />
+        </View>
+      )
+    );
+  };
+
   return (
     <FlatList
       testID="flatlist"
@@ -102,13 +119,14 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
       keyExtractor={(item, index) => `community_${item}_${index}`}
       ListEmptyComponent={renderEmptyComponent}
       ListHeaderComponent={<DiscoverHeader list={ids} />}
-      onEndReached={() => getData()}
+      ListFooterComponent={renderListFooter}
+      onEndReached={onLoadMore}
       ItemSeparatorComponent={() => <Divider style={styles.divider} />}
       refreshControl={
         <RefreshControl
           refreshing={loading}
           onRefresh={onRefresh}
-          tintColor={theme.colors.borderDisable}
+          tintColor={theme.colors.gray40}
         />
       }
     />
@@ -130,29 +148,31 @@ const DiscoverHeader = ({list}: any) => {
   return null;
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
-  return StyleSheet.create({
-    container: {},
-    item: {
-      height: '100%',
-      flex: 1,
-      paddingVertical: spacing.padding.small,
-    },
-    iconSmall: {
-      marginRight: spacing.margin.tiny,
-      height: 16,
-    },
-    groupInfo: {
-      flexDirection: 'row',
-      alignItems: 'center',
-      marginTop: 2,
-    },
-    divider: {
-      marginVertical: spacing.margin.tiny,
-      marginHorizontal: spacing.margin.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {},
+  item: {
+    height: '100%',
+    flex: 1,
+    paddingVertical: spacing.padding.small,
+  },
+  iconSmall: {
+    marginRight: spacing.margin.tiny,
+    height: 16,
+  },
+  groupInfo: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 2,
+  },
+  divider: {
+    marginVertical: spacing.margin.tiny,
+    marginHorizontal: spacing.margin.large,
+  },
+  listFooter: {
+    height: 100,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
 
 export default DiscoverCommunities;

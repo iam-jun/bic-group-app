@@ -9,7 +9,6 @@ import homeReducer from '~/screens/Home/redux/reducer';
 import menuReducer from '~/screens/Menu/redux/reducer';
 import notificationsReducer from '~/screens/Notification/redux/reducer';
 import postReducer from '~/screens/Post/redux/reducer';
-import {initPushTokenMessage} from '~/services/helper';
 
 import {makeRemovePushTokenRequest} from '~/services/httpApiRequest';
 import {ActionTypes} from '~/utils';
@@ -19,6 +18,7 @@ import app from './app/reducer';
 import chatReducer from './chat/reducer';
 import giphyReducer from './giphy/reducer';
 import modal from './modal/reducer';
+import {initPushTokenMessage} from '~/services/firebase';
 
 const authPersistConfig = {
   key: 'auth',
@@ -73,6 +73,7 @@ const rootReducers = (state, action) => {
       'persist:root',
       'persist:auth',
       'persist:notifications',
+      'persist:post',
     ]).catch(e => console.log('error when logout', e));
     return appReducer(undefined, action);
   }

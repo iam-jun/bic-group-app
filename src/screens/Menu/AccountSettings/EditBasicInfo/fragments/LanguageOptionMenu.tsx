@@ -7,7 +7,7 @@ import {
   Keyboard,
   ScrollView,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {isEqual} from 'lodash';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
@@ -17,9 +17,9 @@ import Text from '~/beinComponents/Text';
 import speakingLanguages from '~/constants/speakingLanguages';
 import {ILanguageItem} from '~/interfaces/IEditUser';
 
-import {ITheme} from '~/theme/interfaces';
 import TitleComponent from '../../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
+import spacing from '~/theme/spacing';
 
 interface LanguageOptionMenuProps {
   title: string;
@@ -34,7 +34,7 @@ const LanguageOptionMenu = ({
 }: LanguageOptionMenuProps) => {
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   const styles = themeStyles(theme, screenHeight);
@@ -117,12 +117,12 @@ const LanguageOptionMenu = ({
 
   return (
     <View>
-      <TitleComponent icon="CommentsAlt" title="settings:title_language" />
+      <TitleComponent icon="Comments" title="settings:title_language" />
       <Button
         testID="edit_basic_info.language"
         textProps={{
-          color: colors.textInput,
-          variant: 'body',
+          color: colors.neutral80,
+          variant: 'bodyM',
           numberOfLines: 1,
           style: {flex: 1},
         }}
@@ -141,12 +141,12 @@ const LanguageOptionMenu = ({
         onClose={resetData}
         ContentComponent={
           <View style={styles.contentComponent}>
-            <Text.ButtonSmall
-              color={theme.colors.textSecondary}
+            <Text.ButtonS
+              color={theme.colors.gray50}
               style={styles.chooseText}
               useI18n>
               {title}
-            </Text.ButtonSmall>
+            </Text.ButtonS>
             <Divider />
             <ScrollView
               keyboardShouldPersistTaps="always"
@@ -173,8 +173,8 @@ const LanguageOptionMenu = ({
 
 export default LanguageOptionMenu;
 
-const themeStyles = (theme: ITheme, screenHeight: number) => {
-  const {spacing, colors} = theme;
+const themeStyles = (theme: ExtendedTheme, screenHeight: number) => {
+  const {colors} = theme;
 
   return StyleSheet.create({
     contentComponent: {
@@ -186,7 +186,7 @@ const themeStyles = (theme: ITheme, screenHeight: number) => {
     buttonDropDown: {
       borderRadius: spacing.borderRadius.small,
       borderWidth: 1,
-      borderColor: colors.borderCard,
+      borderColor: colors.gray40,
       minHeight: 44,
       alignItems: 'stretch',
       justifyContent: 'center',

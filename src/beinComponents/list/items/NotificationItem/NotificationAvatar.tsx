@@ -1,11 +1,11 @@
 import _, {parseInt} from 'lodash';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import Avatar from '~/beinComponents/Avatar';
 import {useUserIdAuth} from '~/hooks/auth';
 import {IGetStreamNotificationActivity} from '~/interfaces/INotification';
-import {ITheme} from '~/theme/interfaces';
+import dimension from '~/theme/dimension';
+import spacing from '~/theme/spacing';
 
 interface Props {
   activities: IGetStreamNotificationActivity[];
@@ -29,9 +29,6 @@ const NotificationAvatar = ({
   timerWidth,
 }: Props) => {
   const userId = useUserIdAuth();
-  const theme = useTheme() as ITheme;
-  const {dimension} = theme;
-  const styles = createStyles(theme);
 
   const handleActorNotification = () => {
     switch (verb) {
@@ -167,17 +164,13 @@ const NotificationAvatar = ({
   return <View style={styles.container}>{listAvatar}</View>;
 };
 
-const createStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-    },
-    item: {
-      marginRight: spacing.margin.small,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+  },
+  item: {
+    marginRight: spacing.margin.small,
+  },
+});
 
 export default NotificationAvatar;

@@ -1,10 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {IGroup} from '~/interfaces/IGroup';
 import Icon from '~/beinComponents/Icon';
-import {ITheme} from '~/theme/interfaces';
 import GroupItem, {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
 import GroupTree, {OnChangeCheckedGroupsData} from '~/beinComponents/GroupTree';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -13,6 +12,8 @@ import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {AvatarType} from '~/beinComponents/Avatar/AvatarComponent';
+import {IconType} from '~/resources/icons';
+import spacing from '~/theme/spacing';
 
 export interface FlatGroupItemProps extends GroupItemProps {
   style?: StyleProp<ViewStyle>;
@@ -31,6 +32,8 @@ export interface FlatGroupItemProps extends GroupItemProps {
   disableHorizontal?: boolean;
   iconVariant?: AvatarType;
   nameLines?: number;
+  menuIcon?: IconType;
+  renderExtraInfo?: (group: IGroup) => any;
 }
 
 type PathData = {
@@ -62,6 +65,8 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   disableHorizontal,
   iconVariant,
   nameLines,
+  menuIcon,
+  renderExtraInfo,
   ...props
 }: FlatGroupItemProps) => {
   const [showTree, setShowTree] = useState(initShowTree);
@@ -69,7 +74,7 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   const [path, setPath] = useState<PathData>({path: '', total: 0, more: 0});
 
   const {rootNavigation} = useRootNavigation();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const getSmallestChild = (smallestGroup: IGroup, path: PathData) => {
@@ -126,7 +131,6 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   };
 
   const _onPressGroup = (group: GroupItemProps) => {
-    console.log(`\x1b[35m🐣️ FlatGroupItem _onPressGroup `, group, `\x1b[0m`);
     if (onChangeCheckedGroups) {
       onCheckedGroup(group, !group.isChecked);
     } else if (onPressGroup) {
@@ -167,14 +171,14 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
         <Button onPress={_onPressPath} disabled={!hasTree}>
           <View style={styles.iconArrowRight}>
             <Icon
-              icon={'AngleRightB'}
+              icon={'AngleRightSolid'}
               size={12}
-              tintColor={theme.colors.iconTint}
+              tintColor={theme.colors.neutral80}
             />
           </View>
           <Text style={{paddingRight: 20}}>
             {showTree ? '' : path.path}{' '}
-            <Text color={theme.colors.primary7}>{buttonText}</Text>
+            <Text color={theme.colors.purple60}>{buttonText}</Text>
           </Text>
         </Button>
       </View>
@@ -200,6 +204,8 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           disableHorizontal={disableHorizontal}
           iconVariant={iconVariant}
           nameLines={nameLines}
+          menuIcon={menuIcon}
+          renderExtraInfo={renderExtraInfo}
         />
       ) : (
         <GroupItem
@@ -216,20 +222,22 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
           disableHorizontal={disableHorizontal}
           iconVariant={iconVariant}
           nameLines={nameLines}
+          menuIcon={menuIcon}
+          renderExtraInfo={renderExtraInfo}
         />
       )}
     </View>
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {},
     iconArrowRight: {
       width: 16,
       height: 16,
-      backgroundColor: colors.borderDivider,
+      backgroundColor: colors.neutral5,
       marginRight: spacing.margin.tiny,
       borderRadius: 8,
       justifyContent: 'center',

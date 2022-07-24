@@ -1,12 +1,10 @@
-import i18next from 'i18next';
 import {put, call} from 'redux-saga/effects';
 
-import {IToastMessage} from '~/interfaces/common';
-import * as modalActions from '~/store/modal/actions';
 import {IGroupDetailEdit} from '~/interfaces/IGroup';
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
+import showToastEditSuccess from './showToastEditSuccess';
 
 export default function* editGroupDetail({
   payload,
@@ -26,25 +24,7 @@ export default function* editGroupDetail({
     // @ts-ignore
     const resp = yield call(groupsDataHelper.editGroupDetail, groupId, data);
 
-    // this field is used to indicate which parts of
-    // the profile have been updated
-    let toastContent: string;
-    if (editFieldName) {
-      toastContent = `${editFieldName} ${i18next.t(
-        'common:text_updated_successfully',
-      )}`;
-    } else {
-      toastContent = 'common:text_edit_success';
-    }
-
-    const toastMessage: IToastMessage = {
-      content: toastContent,
-      props: {
-        textProps: {useI18n: true},
-        type: 'success',
-      },
-    };
-    yield put(modalActions.showHideToastMessage(toastMessage));
+    if (!!editFieldName) yield showToastEditSuccess(editFieldName);
 
     yield put(groupsActions.setGroupDetail(resp?.data));
     if (callback) callback();

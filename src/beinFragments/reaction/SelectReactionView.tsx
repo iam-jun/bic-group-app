@@ -1,11 +1,10 @@
 import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
 import Icon from '~/beinComponents/Icon';
 import reactionConfig from '~/beinFragments/reaction/reactionConfig';
 import Button from '~/beinComponents/Button';
 import {IReactionProps} from '~/interfaces/IReaction';
+import spacing from '~/theme/spacing';
 
 export interface ReactionViewProps {
   onPressReaction: (reaction: IReactionProps) => void;
@@ -14,9 +13,6 @@ export interface ReactionViewProps {
 const SelectReactionView: FC<ReactionViewProps> = ({
   onPressReaction,
 }: ReactionViewProps) => {
-  const theme: ITheme = useTheme() as ITheme;
-  const styles = createStyle(theme);
-
   const _onPressReaction = (item: IReactionProps) => {
     onPressReaction?.(item);
   };
@@ -38,19 +34,16 @@ const SelectReactionView: FC<ReactionViewProps> = ({
   return <View style={styles.container}>{reactionConfig.map(renderRow)}</View>;
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {
-      paddingHorizontal: spacing.padding.large,
-      paddingVertical: spacing.padding.large,
-    },
-    row: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      marginVertical: spacing.margin.tiny,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: spacing.padding.large,
+    paddingVertical: spacing.padding.large,
+  },
+  row: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: spacing.margin.tiny,
+  },
+});
 
 export default SelectReactionView;

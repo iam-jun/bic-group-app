@@ -1,7 +1,6 @@
 import i18next from 'i18next';
 import React, {useEffect} from 'react';
 import {ScrollView, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 
 import Divider from '~/beinComponents/Divider';
@@ -29,14 +28,11 @@ import authActions from '~/screens/Auth/redux/actions';
 import menuActions from '~/screens/Menu/redux/actions';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import * as modalActions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
-
-  const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
 
   const {id, fullname, email, avatar} =
     useKeySelector(menuKeySelector.myProfile) || {};
@@ -62,7 +58,7 @@ const Menu = (): React.ReactElement => {
         const alertPayload = {
           title: i18next.t('auth:text_sign_out'),
           content: 'Do you want to Log Out?',
-          iconName: 'SignOutAlt',
+          iconName: 'ArrowRightFromArc',
           cancelBtn: true,
           onConfirm: () => dispatch(authActions.signOut()),
           confirmLabel: i18next.t('auth:text_sign_out'),
@@ -119,7 +115,7 @@ const Menu = (): React.ReactElement => {
           containerStyle={styles.header}
           onPress={goToMyProfile}
         />
-        <ViewSpacing height={theme.spacing.margin.large} />
+        <ViewSpacing height={spacing.margin.large} />
         <>
           {renderDivider()}
           {renderListView({
@@ -154,18 +150,15 @@ const Menu = (): React.ReactElement => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {},
-    header: {
-      marginTop: spacing.margin.large,
-    },
-    divider: {
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.small,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {},
+  header: {
+    marginTop: spacing.margin.large,
+  },
+  divider: {
+    marginHorizontal: spacing.margin.large,
+    marginVertical: spacing.margin.small,
+  },
+});
 
 export default Menu;

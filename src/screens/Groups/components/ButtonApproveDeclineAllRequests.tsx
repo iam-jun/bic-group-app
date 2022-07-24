@@ -1,10 +1,11 @@
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
 import React from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Divider from '~/beinComponents/Divider';
 import Button from '~/beinComponents/Button';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 
 interface ButtonProps {
   style?: StyleProp<ViewStyle>;
@@ -17,7 +18,7 @@ const ButtonApproveDeclineAllRequests = ({
   onPressDeclineAll,
   onPressApproveAll,
 }: ButtonProps) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
   return (
@@ -27,8 +28,8 @@ const ButtonApproveDeclineAllRequests = ({
         <Button.Secondary
           testID="button_approve_decline_all_requests.decline"
           style={styles.buttonDecline}
-          color={theme.colors.bgHover}
-          textColor={theme.colors.textPrimary}
+          color={theme.colors.gray10}
+          textColor={theme.colors.neutral80}
           onPress={onPressDeclineAll}
           useI18n>
           common:btn_decline_all
@@ -37,7 +38,7 @@ const ButtonApproveDeclineAllRequests = ({
           highEmphasis
           testID="button_approve_decline_all_requests.approve"
           style={styles.buttonApprove}
-          color={theme.colors.primary6}
+          color={theme.colors.purple50}
           onPress={onPressApproveAll}
           useI18n>
           common:btn_approve_all
@@ -47,12 +48,12 @@ const ButtonApproveDeclineAllRequests = ({
   );
 };
 
-const createStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     buttons: {
       flexDirection: 'row',

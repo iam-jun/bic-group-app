@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import {isEmpty} from 'lodash';
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
@@ -13,12 +13,12 @@ import privacyTypes from '~/constants/privacyTypes';
 import {useRootNavigation} from '~/hooks/navigation';
 import {useKeySelector} from '~/hooks/selector';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import groupsKeySelector from '../redux/keySelector';
 
 const GroupAboutContent = () => {
   const {rootNavigation} = useRootNavigation();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
@@ -53,13 +53,13 @@ const GroupAboutContent = () => {
       <MenuItem
         testID="group_about_content.members"
         style={styles.memberItem}
-        icon={'UsersAlt'}
+        icon={'UserGroup'}
         onPress={isMember ? onPressMembers : undefined}
         disabled={!isMember}
         title={`${user_count} ${i18next.t('groups:text_members', {
           count: user_count,
         })}`}
-        rightSubIcon={isMember ? 'AngleRightB' : undefined}
+        rightSubIcon={isMember ? 'AngleRightSolid' : undefined}
       />
       <MenuItem
         testID="group_about_content.privacy"
@@ -79,13 +79,13 @@ const GroupAboutContent = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.small,
     },
     labelDescription: {

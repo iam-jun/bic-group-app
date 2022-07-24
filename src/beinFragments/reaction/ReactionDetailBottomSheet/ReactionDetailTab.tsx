@@ -1,12 +1,10 @@
 import React, {FC, useEffect, useState} from 'react';
 import {View, StyleSheet, Dimensions, FlatList} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
 
 import {ReactionType} from '~/constants/reactions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import spacing from '~/theme/spacing';
 
 export interface ReactionDetailTabProps {
   reactionType: ReactionType;
@@ -31,9 +29,6 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
 }: ReactionDetailTabProps) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-
-  const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
 
   const getData = () => {
     if (getDataPromise && getDataParam) {
@@ -98,16 +93,13 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    listContainer: {
-      paddingTop: spacing.padding.tiny,
-    },
-    header: {
-      paddingTop: spacing.padding.tiny,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  listContainer: {
+    paddingTop: spacing.padding.tiny,
+  },
+  header: {
+    paddingTop: spacing.padding.tiny,
+  },
+});
 
 export default ReactionDetailTab;

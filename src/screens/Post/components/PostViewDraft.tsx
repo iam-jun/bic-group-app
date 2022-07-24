@@ -1,8 +1,7 @@
 import React, {FC, useState} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import {useDispatch} from 'react-redux';
 import {useBaseHook} from '~/hooks';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
@@ -23,6 +22,7 @@ import modalActions, {showHideToastMessage} from '~/store/modal/actions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import Text from '~/beinComponents/Text';
+import spacing from '~/theme/spacing';
 
 export interface PostViewDraftProps {
   style?: StyleProp<ViewStyle>;
@@ -40,7 +40,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -162,15 +162,15 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
           <View>
             <PrimaryItem
               height={48}
-              leftIconProps={{icon: 'CalendarAlt', size: 20}}
-              leftIcon={'CalendarAlt'}
+              leftIconProps={{icon: 'Calendar', size: 20}}
+              leftIcon={'Calendar'}
               title={t('post:draft:btn_menu_schedule')}
               onPress={onPressCalendar}
             />
             <PrimaryItem
               height={48}
-              leftIconProps={{icon: 'TrashAlt', size: 20}}
-              leftIcon={'TrashAlt'}
+              leftIconProps={{icon: 'TrashCan', size: 20}}
+              leftIcon={'TrashCan'}
               title={t('post:draft:btn_menu_delete')}
               onPress={onPressDelete}
             />
@@ -183,7 +183,7 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   const renderFooter = () => {
     if (isProcessing) {
       return (
-        <Text.BodyS color={colors.textSecondary} style={styles.draftText}>
+        <Text.BodyS color={colors.gray50} style={styles.draftText}>
           {t('post:draft:text_processing_publish')}
         </Text.BodyS>
       );
@@ -231,11 +231,11 @@ const PostViewDraft: FC<PostViewDraftProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     footerButtonContainer: {
       flexDirection: 'row',

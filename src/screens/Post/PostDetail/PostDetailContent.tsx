@@ -1,4 +1,4 @@
-import {useIsFocused} from '@react-navigation/native';
+import {ExtendedTheme, useIsFocused, useTheme} from '@react-navigation/native';
 import React, {
   memo,
   useCallback,
@@ -9,25 +9,15 @@ import React, {
 } from 'react';
 import {
   DeviceEventEmitter,
-  Platform,
   RefreshControl,
   SectionList,
   StyleSheet,
   View,
 } from 'react-native';
-import {
-  Directions,
-  FlingGestureHandler,
-  FlingGestureHandlerStateChangeEvent,
-  State,
-} from 'react-native-gesture-handler';
-import {useTheme} from 'react-native-paper';
-import Animated, {runOnJS} from 'react-native-reanimated';
 import {useDispatch} from 'react-redux';
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import CommentItem from '~/beinComponents/list/items/CommentItem';
-import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import {useBaseHook} from '~/hooks';
@@ -49,18 +39,17 @@ import PostView from '~/screens/Post/components/PostView';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import Store from '~/store';
-import modalActions, {showHideToastMessage} from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+import modalActions from '~/store/modal/actions';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import CommentNotFoundImg from '~/../assets/images/img_comment_not_found.svg';
 import Text from '~/beinComponents/Text';
 import {IPayloadPutMarkAsRead} from '~/interfaces/IPost';
+import spacing from '~/theme/spacing';
 const defaultList = [{title: '', type: 'empty', data: []}];
 
 const _PostDetailContent = (props: any) => {
   const [groupIds, setGroupIds] = useState<string>('');
   const [refreshing, setRefreshing] = useState(false);
-  const [stickerBoardVisible, setStickerBoardVisible] = useState(false);
   const [isEmpty, setIsEmpty] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -77,7 +66,7 @@ const _PostDetailContent = (props: any) => {
   const dispatch = useDispatch();
   const {t} = useBaseHook();
   const {rootNavigation} = useRootNavigation();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = useMemo(() => createStyle(theme), [theme]);
 
@@ -110,15 +99,8 @@ const _PostDetailContent = (props: any) => {
     : t('post:title_post_detail');
 
   useEffect(() => {
-    const event = DeviceEventEmitter.addListener(
-      'sticker-board-visible-change',
-      (payload: boolean) => {
-        setStickerBoardVisible(payload);
-      },
-    );
     onPressMarkSeenPost();
     return () => {
-      event.remove();
       dispatch(postActions.setCreatePostInitAudiences());
       dispatch(postActions.setCommentErrorCode(false));
     };
@@ -146,14 +128,6 @@ const _PostDetailContent = (props: any) => {
   };
 
   const onPressBack = () => {
-    const _stickerBoardVisible =
-      commentInputRef?.current?.getStickerBoardVisible?.();
-
-    if (_stickerBoardVisible) {
-      commentInputRef?.current?.onBackPress?.();
-      return;
-    }
-
     const newCommentInput = commentInputRef?.current?.getText?.() || '';
     const newCommentSelectedImage = commentInputRef?.current?.hasMedia?.();
 
@@ -364,7 +338,7 @@ const _PostDetailContent = (props: any) => {
   };
 
   const onPressReplySectionHeader = useCallback(
-    (commentData, section, index) => {
+    commentData => {
       navigateToCommentDetailScreen(commentData, commentData);
     },
     [sectionData],
@@ -399,7 +373,7 @@ const _PostDetailContent = (props: any) => {
   };
 
   const onPressReplyCommentItem = useCallback(
-    (commentData, section, index) => {
+    (commentData, section) => {
       navigateToCommentDetailScreen(
         section?.comment || {},
         commentData,
@@ -443,18 +417,8 @@ const _PostDetailContent = (props: any) => {
     }
   }, [layoutSet, sectionData.length, focus_comment, listComment?.length]);
 
-  const handleDown = () => {
-    onRefresh();
-  };
-
-  const onDownFlingHandlerStateChange = ({
-    nativeEvent,
-  }: FlingGestureHandlerStateChangeEvent) => {
-    if (Platform.OS === 'ios') return;
-
-    if (nativeEvent.oldState === State.ACTIVE) {
-      runOnJS(handleDown)();
-    }
+  const onscroll = () => {
+    DeviceEventEmitter.emit('stopAllVideo');
   };
 
   const renderContent = () => {
@@ -463,60 +427,48 @@ const _PostDetailContent = (props: any) => {
     if (isEmpty) return null;
 
     return (
-      <FlingGestureHandler
-        direction={Directions.DOWN}
-        onHandlerStateChange={onDownFlingHandlerStateChange}>
-        <View style={styles.container}>
-          {Platform.OS === 'android' && refreshing && (
-            <Animated.View style={styles.refreshing}>
-              <LoadingIndicator size="large" />
-            </Animated.View>
-          )}
-          <View style={styles.postDetailContainer}>
-            <SectionList
-              ref={listRef}
-              bounces={!stickerBoardVisible}
-              disableScrollViewPanResponder={stickerBoardVisible}
-              sections={deleted ? defaultList : sectionData}
-              renderItem={renderCommentItem}
-              renderSectionHeader={renderSectionHeader}
-              ListHeaderComponent={
-                <PostDetailContentHeader
-                  id={id}
-                  commentLeft={commentLeft}
-                  onPressComment={onPressComment}
-                  onContentLayout={props?.onContentLayout}
-                  idLessThan={listComment?.[0]?.id}
-                />
-              }
-              ListFooterComponent={commentLeft && renderFooter}
-              stickySectionHeadersEnabled={false}
-              ItemSeparatorComponent={() => <View />}
-              keyboardShouldPersistTaps={'handled'}
-              onLayout={onLayout}
-              onContentSizeChange={onLayout}
-              onScrollToIndexFailed={onScrollToIndexFailed}
-              refreshControl={
-                Platform.OS === 'ios' ? (
-                  <RefreshControl
-                    testID={'post_detail_content.refresh_control'}
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                    tintColor={colors.borderDisable}
-                  />
-                ) : undefined
-              }
-            />
+      <View style={styles.container}>
+        <View style={styles.postDetailContainer}>
+          <SectionList
+            ref={listRef}
+            sections={deleted ? defaultList : sectionData}
+            renderItem={renderCommentItem}
+            renderSectionHeader={renderSectionHeader}
+            ListHeaderComponent={
+              <PostDetailContentHeader
+                id={id}
+                commentLeft={commentLeft}
+                onPressComment={onPressComment}
+                onContentLayout={props?.onContentLayout}
+                idLessThan={listComment?.[0]?.id}
+              />
+            }
+            ListFooterComponent={commentLeft && renderFooter}
+            stickySectionHeadersEnabled={false}
+            ItemSeparatorComponent={() => <View />}
+            keyboardShouldPersistTaps={'handled'}
+            onLayout={onLayout}
+            onContentSizeChange={onLayout}
+            onScroll={onscroll}
+            onScrollToIndexFailed={onScrollToIndexFailed}
+            refreshControl={
+              <RefreshControl
+                testID={'post_detail_content.refresh_control'}
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                tintColor={colors.gray40}
+              />
+            }
+          />
 
-            <CommentInputView
-              commentInputRef={commentInputRef}
-              postId={id}
-              groupIds={groupIds}
-              autoFocus={!!focus_comment}
-            />
-          </View>
+          <CommentInputView
+            commentInputRef={commentInputRef}
+            postId={id}
+            groupIds={groupIds}
+            autoFocus={!!focus_comment}
+          />
         </View>
-      </FlingGestureHandler>
+      </View>
     );
   };
 
@@ -583,8 +535,8 @@ const getSectionData = (listComment: ICommentData[]) => {
   return result?.length > 0 ? result : defaultList;
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     flex1: {
       flex: 1,
@@ -598,7 +550,7 @@ const createStyle = (theme: ITheme) => {
     postDetailContainer: {
       flex: 1,
     },
-    footer: {height: spacing.margin.base, backgroundColor: colors.background},
+    footer: {height: spacing.margin.base, backgroundColor: colors.white},
   });
 };
 

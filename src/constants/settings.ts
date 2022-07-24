@@ -6,8 +6,8 @@ export const postFeatureMenu = [
   {
     type: 'draftPost',
     title: 'settings:title_post_feature_draft',
-    icon: 'FileEditAlt',
-    rightIcon: 'AngleRightB',
+    icon: 'FilePen',
+    rightIcon: 'AngleRightSolid',
   },
 ];
 
@@ -73,7 +73,7 @@ export const accountSettingsMenu = [
   {
     type: 'securityLogin',
     title: 'settings:title_security_login',
-    icon: 'Lock',
+    icon: 'iconPrivate',
   },
   {
     type: 'privacy',
@@ -83,28 +83,28 @@ export const accountSettingsMenu = [
   {
     type: 'notification',
     title: 'settings:title_notification',
-    icon: 'bell',
+    icon: 'Bell',
   },
   {
     type: 'appearance',
     title: 'settings:title_appearance',
     icon: 'Monitor',
     rightSubTitle: 'Dark',
-    rightSubIcon: 'AngleRightB',
+    rightSubIcon: 'AngleRightSolid',
   },
   {
     type: 'language',
     title: 'settings:title_language',
     icon: 'Globe',
     rightSubTitle: 'settings:app_language',
-    rightSubIcon: 'AngleRightB',
+    rightSubIcon: 'AngleRightSolid',
   },
   {
     type: 'currency',
     title: 'settings:title_currency',
     icon: 'Coins',
     rightSubTitle: 'BIC',
-    rightSubIcon: 'AngleRightB',
+    rightSubIcon: 'AngleRightSolid',
   },
 ];
 
@@ -114,7 +114,7 @@ export const securityLoginMenu = {
       type: 'changePassword',
       title: 'settings:title_change_password',
       subTitle: 'settings:subtitle_change_password',
-      rightSubIcon: 'AngleRightB',
+      rightSubIcon: 'AngleRightSolid',
       icon: 'KeySkeleton',
     },
   ],
@@ -123,14 +123,14 @@ export const securityLoginMenu = {
       type: 'twoFactorAuthentication',
       title: 'settings:title_two_factor_authentication',
       subTitle: 'settings:subtitle_two_factor_authentication',
-      rightSubIcon: 'AngleRightB',
+      rightSubIcon: 'AngleRightSolid',
       icon: 'ShieldCheck',
     },
     {
       type: 'loginLogs',
       title: 'settings:title_login_logs',
       subTitle: 'settings:subtitle_login_logs',
-      rightSubIcon: 'AngleRightB',
+      rightSubIcon: 'AngleRightSolid',
       icon: 'KeySkeleton',
     },
   ],
@@ -140,8 +140,8 @@ export const settingsMenu = [
   {
     type: 'accountSettings',
     title: 'settings:title_account_settings',
-    icon: 'Cog',
-    rightIcon: 'AngleRightB',
+    icon: 'Gear',
+    rightIcon: 'AngleRightSolid',
   },
 ];
 
@@ -149,7 +149,7 @@ export const infoMenu = [
   {
     type: 'aboutBein',
     title: 'settings:title_about_bein',
-    icon: 'InfoCircle',
+    icon: 'CircleInfo',
     rightTitle: getEnv('APP_VERSION')
       ? i18n.t('settings:text_version') + ' ' + getEnv('APP_VERSION')
       : undefined,
@@ -162,11 +162,11 @@ export const infoMenu = [
   {
     type: 'help_and_support',
     title: 'settings:title_help_and_support',
-    icon: 'QuestionCircle',
+    icon: 'CircleQuestion',
   },
   {
     type: 'feedback',
     title: 'settings:title_feedback',
-    icon: 'CommentHeart',
+    icon: 'CommentSmile',
   },
 ];

@@ -12,8 +12,7 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import {Modal, useTheme} from 'react-native-paper';
-import {useNavigation} from '@react-navigation/native';
+import {ExtendedTheme, useNavigation, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import Animated, {
   Extrapolate,
@@ -38,7 +37,6 @@ import useAuthAmplifyHub from '~/hooks/authAmplifyHub';
 import images from '~/resources/images';
 import * as modalActions from '~/store/modal/actions';
 // import SignInOAuth from '../components/SignInOAuth';
-import {ITheme} from '~/theme/interfaces';
 import actions from '../redux/actions';
 import {
   getUserFromSharedPreferences,
@@ -48,6 +46,8 @@ import PasswordInputController from '~/beinComponents/inputs/PasswordInputContro
 import TextInputController from '~/beinComponents/inputs/TextInputController';
 import {getEnv} from '~/utils/env';
 import BackgroundComponent from './BackgroundComponent';
+import spacing from '~/theme/spacing';
+import {APP_ENV} from '~/configs/appConfig';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -70,7 +70,7 @@ const SignIn = () => {
   const keyboardHeightValue = useSharedValue(0);
   const keyboard = useKeyboard();
 
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const useFormData = useForm();
@@ -270,11 +270,15 @@ const SignIn = () => {
     ),
   }));
 
+  const optionsStyle = useAnimatedStyle(() => ({
+    opacity: withTiming(loading ? 1 : 0, {duration: 500}),
+  }));
   const renderLoading = () => {
+    if (!loading) return null;
     return (
-      <Modal visible={loading} contentContainerStyle={styles.loading}>
-        <LoadingIndicator size={'large'} color={theme.colors.primary6} />
-      </Modal>
+      <Animated.View style={[styles.loading, optionsStyle]}>
+        <LoadingIndicator size={'large'} color={theme.colors.purple50} />
+      </Animated.View>
     );
   };
 
@@ -301,9 +305,9 @@ const SignIn = () => {
               <Text.H4 testID="sign_in.title" style={styles.title} useI18n>
                 auth:text_sign_in_desc
               </Text.H4>
-              <Text.Body style={styles.label} useI18n>
+              <Text.BodyM style={styles.label} useI18n>
                 auth:input_label_email
-              </Text.Body>
+              </Text.BodyM>
               <TextInputController
                 ref={inputEmailRef}
                 testID="sign_in.input_email"
@@ -327,19 +331,17 @@ const SignIn = () => {
                 style={styles.inputEmailContainer}
                 inputStyle={styles.input}
                 helperContent={signingInError}
-                disabled={!!authSessions || loading}
+                editable={!authSessions || !loading}
                 onSubmitEditing={onSubmitEmail}
-                placeholderTextColor={theme.colors.bgFocus}
-                textColor={theme.colors.background}
-                outlineColor={theme.colors.background}
-                activeOutlineColor={theme.colors.background}
+                placeholderTextColor={theme.colors.gray40}
+                textColor={theme.colors.white}
                 helperTextProps={{
                   style: styles.errorText,
                 }}
               />
-              <Text.Body style={styles.label} useI18n>
+              <Text.BodyM style={styles.label} useI18n>
                 auth:input_label_password
-              </Text.Body>
+              </Text.BodyM>
               <PasswordInputController
                 ref={inputPasswordRef}
                 useFormData={useFormData}
@@ -356,10 +358,7 @@ const SignIn = () => {
                     message: t('auth:text_err_password_characters'),
                   },
                   validate: () => {
-                    if (
-                      !getEnv('SELF_DOMAIN')?.includes('sbx') &&
-                      !getEnv('SELF_DOMAIN')?.includes('stg')
-                    ) {
+                    if (getEnv('APP_ENV') === APP_ENV.PRODUCTION) {
                       const value = getValues('password');
                       if (!/(?=.*?[A-Z])/.test(value)) {
                         return t('auth:text_err_password_required_upper_case');
@@ -376,7 +375,7 @@ const SignIn = () => {
                     }
                   },
                 }}
-                disableInput={loading}
+                // editable={!loading}
                 placeholder={t('auth:input_label_password_placeholder')}
                 validateValue={() => {
                   clearFieldError('password');
@@ -385,14 +384,13 @@ const SignIn = () => {
                 onSubmitEditing={onSignIn}
                 inputStyle={styles.input}
                 style={styles.inputPassword}
-                placeholderTextColor={theme.colors.bgFocus}
-                iconColor={theme.colors.background}
-                textColor={theme.colors.background}
-                outlineColor={theme.colors.background}
-                activeOutlineColor={theme.colors.background}
+                placeholderTextColor={theme.colors.gray40}
+                iconColor={theme.colors.white}
+                textColor={theme.colors.white}
                 helperTextProps={{
                   style: styles.errorText,
                 }}
+                editable={!loading}
               />
               <TouchableOpacity
                 testID="sign_in.btn_forgot_password"
@@ -407,15 +405,15 @@ const SignIn = () => {
                 disabled={disableSignIn}
                 onPress={onSignIn}
                 useI18n
-                color={theme.colors.background}
-                textColor={theme.colors.primary6}>
+                color={theme.colors.white}
+                textColor={theme.colors.purple50}>
                 {'auth:btn_sign_in'}
               </Button.Primary>
 
               <View style={styles.signUpContainer}>
-                <Text.Body color={theme.colors.background} useI18n>
+                <Text.BodyM color={theme.colors.white} useI18n>
                   auth:text_sign_up_desc
-                </Text.Body>
+                </Text.BodyM>
                 <TouchableOpacity
                   testID="btnSignInForgotPassword"
                   // onPress={() => navigation.navigate(authStack.signup)}
@@ -434,8 +432,8 @@ const SignIn = () => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   const textStyle = createTextStyle(theme);
 
   return StyleSheet.create({
@@ -465,27 +463,26 @@ const themeStyles = (theme: ITheme) => {
     title: {
       marginTop: spacing.margin.extraLarge,
       marginBottom: spacing.margin.large,
-      color: colors.background,
+      color: colors.white,
     },
     label: {
-      color: colors.background,
+      color: colors.white,
     },
     inputEmailContainer: {
-      marginTop: 0,
-      marginBottom: spacing.margin.large,
+      marginVertical: spacing.margin.small,
     },
     input: {
-      backgroundColor: colors.transparent,
+      borderColor: colors.white,
     },
     inputPassword: {
       marginVertical: spacing.margin.small,
     },
     forgotButton: {
-      color: colors.background,
+      color: colors.white,
     },
     transparentButton: {
-      color: colors.background,
-      fontWeight: '400',
+      color: colors.white,
+      fontWeight: '600',
     },
     btnSignIn: {
       marginTop: spacing.margin.large,
@@ -498,11 +495,11 @@ const themeStyles = (theme: ITheme) => {
     },
     buttonSignupText: {
       ...textStyle.h6,
-      color: colors.primary,
+      color: colors.purple60,
       fontWeight: '500',
     },
     errorText: {
-      backgroundColor: theme.colors.background,
+      backgroundColor: colors.white,
       paddingHorizontal: spacing.padding.small,
       paddingVertical: spacing.padding.tiny,
       marginTop: spacing.margin.tiny,

@@ -1,23 +1,23 @@
 import React, {Fragment} from 'react';
 import {View, StyleSheet, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import {groupPrivacy} from '~/constants/privacyTypes';
 import {useKeySelector} from '~/hooks/selector';
-import {ITheme} from '~/theme/interfaces';
 import groupsKeySelector from '../../redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
+import spacing from '~/theme/spacing';
 
 interface JoinCancelButtonProps {
   style?: ViewStyle;
 }
 
 const JoinCancelButton = ({style}: JoinCancelButtonProps) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
@@ -48,8 +48,8 @@ const JoinCancelButton = ({style}: JoinCancelButtonProps) => {
           <Button.Secondary
             testID="join_cancel_button.cancel"
             style={styles.btnAction}
-            color={theme.colors.bgDisable}
-            textColor={theme.colors.textPrimary}
+            color={theme.colors.gray20}
+            textColor={theme.colors.neutral80}
             onPress={onPressCancelRequest}
             useI18n>
             common:btn_cancel_request
@@ -60,9 +60,9 @@ const JoinCancelButton = ({style}: JoinCancelButtonProps) => {
             leftIcon={'Plus'}
             leftIconProps={{icon: 'Plus', size: 20}}
             style={styles.btnAction}
-            color={theme.colors.primary6}
-            textColor={theme.colors.background}
-            colorHover={theme.colors.primary6}
+            color={theme.colors.purple50}
+            textColor={theme.colors.white}
+            colorHover={theme.colors.purple50}
             onPress={onPressJoin}
             useI18n>
             communities:text_join_community_button
@@ -71,12 +71,12 @@ const JoinCancelButton = ({style}: JoinCancelButtonProps) => {
 
         {isPrivate && (
           <View style={styles.shortDesc}>
-            <Text.Subtitle
-              color={theme.colors.textSecondary}
+            <Text.BodyS
+              color={theme.colors.gray50}
               useI18n
               testID="join_cancel_button.description">
               communities:text_join_community_description
-            </Text.Subtitle>
+            </Text.BodyS>
           </View>
         )}
       </View>
@@ -86,8 +86,8 @@ const JoinCancelButton = ({style}: JoinCancelButtonProps) => {
 
 export default JoinCancelButton;
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     btnAction: {
       marginHorizontal: spacing.margin.large,
@@ -98,7 +98,7 @@ const themeStyles = (theme: ITheme) => {
       alignSelf: 'center',
     },
     buttonView: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingBottom: spacing.padding.small,
     },
   });

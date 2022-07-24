@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {isEqual} from 'lodash';
 
 import Header from '~/beinComponents/Header';
@@ -10,8 +10,8 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import modalActions from '~/store/modal/actions';
-import {useRootNavigation} from '~/hooks/navigation';
-import {ITheme} from '~/theme/interfaces';
+import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
+
 import {IScheme} from '~/interfaces/IGroup';
 
 export interface CreateSchemeHeaderProps {
@@ -33,7 +33,7 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
   const {rootNavigation} = useRootNavigation();
   const dispatch = useDispatch();
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
 
   const {id} = useKeySelector(groupsKeySelector.communityDetail) || {};
   const name = useKeySelector(groupsKeySelector.permission.creatingScheme.name);
@@ -79,14 +79,16 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
           cancelBtn: true,
           cancelLabel: t('common:btn_discard'),
           confirmLabel: t('communities:permission:btn_continue'),
-          cancelBtnProps: {textColor: theme.colors.textPrimary},
-          onDismiss: () => rootNavigation.goBack(),
+          cancelBtnProps: {textColor: theme.colors.neutral80},
+          onCancel: () => rootNavigation.goBack(),
         }),
       );
     } else {
       rootNavigation.goBack();
     }
   };
+
+  useBackPressListener(onPressBack);
 
   return (
     <Header

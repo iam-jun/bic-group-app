@@ -1,14 +1,13 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {IGroupMembers} from '~/interfaces/IGroup';
 import modalActions from '~/store/modal/actions';
 import groupsActions from '../../redux/actions';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import {ITheme} from '~/theme/interfaces';
 
 interface IUseRemoveMember {
   groupId: number;
@@ -17,7 +16,7 @@ interface IUseRemoveMember {
 
 const useRemoveMember = ({groupId, selectedMember}: IUseRemoveMember) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
 
   const {id: userId, fullname} = selectedMember;
 
@@ -26,7 +25,7 @@ const useRemoveMember = ({groupId, selectedMember}: IUseRemoveMember) => {
   };
 
   const alertPayload = {
-    iconName: 'RemoveUser',
+    iconName: 'UserXmark',
     title: i18next.t('groups:modal_confirm_remove_member:title'),
     content: i18next
       .t(`groups:modal_confirm_remove_member:final_alert`)
@@ -34,7 +33,7 @@ const useRemoveMember = ({groupId, selectedMember}: IUseRemoveMember) => {
     ContentComponent: Text.BodyS,
     cancelBtn: true,
     cancelBtnProps: {
-      textColor: theme.colors.primary7,
+      textColor: theme.colors.purple60,
     },
     // @ts-ignore
     onConfirm: () => removeMember(userId, fullname),

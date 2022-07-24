@@ -1,13 +1,11 @@
 import React, {FC, useEffect, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
 import {cloneDeep} from 'lodash';
-
-import {ITheme} from '~/theme/interfaces';
 
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
@@ -17,11 +15,15 @@ import {useBaseHook} from '~/hooks';
 import InputSchemeInfo from '~/screens/Groups/CreatePermissionScheme/InputSchemeInfo';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Text from '~/beinComponents/Text';
-import {getNewSchemeFromSystemScheme} from '~/screens/Groups/CreatePermissionScheme/helper';
+import {
+  getMemberRoleIndex,
+  getNewSchemeFromSystemScheme,
+} from '~/screens/Groups/CreatePermissionScheme/helper';
 import {IPermission, IScheme} from '~/interfaces/IGroup';
 import CreateSchemeHeader from '~/screens/Groups/CreatePermissionScheme/components/CreateSchemeHeader';
 import SelectSchemeRolesView from '~/screens/Groups/CreatePermissionScheme/SelectSchemeRolesView';
 import RoleHeaderAnimated from '~/screens/Groups/components/RoleHeaderAnimated';
+import spacing from '~/theme/spacing';
 
 export interface CreatePermissionSchemeProps {
   route?: {
@@ -41,7 +43,7 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
 
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const isEdit = route?.params?.isEdit;
@@ -72,9 +74,11 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
 
   useEffect(() => {
     if (isEdit && initScheme) {
+      const memberRoleIndex = getMemberRoleIndex(cloneDeep(initScheme));
       dispatch(
         groupsActions.setCreatingScheme({
           data: cloneDeep(initScheme),
+          memberRoleIndex,
         }),
       );
 
@@ -86,8 +90,10 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
         dispatch(groupsActions.getGroupScheme({communityId, schemeId}));
       }
     }
-    if (!permissionCategories?.data && !permissionCategories?.loading) {
-      dispatch(groupsActions.getPermissionCategories());
+    if (!permissionCategories?.loading) {
+      dispatch(
+        groupsActions.getPermissionCategories(schemeId ? 'GROUP' : 'COMMUNITY'),
+      );
     }
     if (!systemScheme?.data && !systemScheme?.loading) {
       dispatch(groupsActions.getSystemScheme());
@@ -157,16 +163,16 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.bgFocus,
+      backgroundColor: colors.gray20,
     },
     loading: {
       textAlign: 'center',
-      color: colors.textSecondary,
+      color: colors.gray50,
       marginTop: spacing.margin.extraLarge,
     },
   });

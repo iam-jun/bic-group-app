@@ -1,122 +1,211 @@
 export const NOTIFICATION_TYPE = {
-  POST: {
-    /**
-     * Post created in single group
-     */
-    CREATED_IN_ONE_GROUP: 'post.to_post_created_in_one_group',
+  /**
+   * When a user created a post with video and processed video unsuccessful
+   */
+  POST_VIDEO_TO_USER_UNSUCCESSFUL: 'post.video.to_user.unsuccessful',
 
-    /**
-     * Post created in multi group
-     */
-    CREATED_IN_MULTIPLE_GROUPS: 'post.to_post_created_in_multiple_groups',
+  /**
+   * When a user created a post with video and processed video successful
+   */
+  POST_VIDEO_TO_USER_SUCCESSFUL: 'post.video.to_user.successful',
 
-    IMPORTANT: {
-      /**
-       * Post created in single group
-       */
-      CREATED_IN_ONE_GROUP: 'post.important.to_post_created_in_one_group',
+  /**
+   * When a user created post and chose only one group audience
+   */
+  POST_TO_USER_IN_ONE_GROUP: 'post.to_user.in_one_group',
 
-      /**
-       * Post created in multi group
-       */
-      CREATED_IN_MULTIPLE_GROUPS:
-        'post.important.to_post_created_in_multiple_groups',
-    },
-    /**
-     * Mention users in a post in one group
-     */
-    MENTION_IN_ONE_GROUP: 'post.to_mention_in_post_in_one_group',
+  /**
+   * When a user created a post and chose more than one group audience
+   */
+  POST_TO_USER_IN_MULTIPLE_GROUPS: 'post.to_user.in_multiple_groups',
 
-    /**
-     * Mention users in a post in multiple groups
-     */
-    MENTION_IN_MULTIPLE_GROUPS: 'post.to_mention_in_post_in_multiple_groups',
+  /**
+   * When a user created a post with mentioned user and chose only one group audience
+   */
+  POST_TO_MENTIONED_USER_IN_POST_IN_ONE_GROUP:
+    'post.to_mentioned_user.in_post_in_one_group',
 
-    VIDEO: {
-      /**
-       * send notification to post owner when a video post is under processing
-       */
-      PROCESSING: 'post.video_processing',
-      /**
-       * send notification to post owner when a video post is published
-       */
-      PUBLISHED: 'post.video_published',
-      /**
-       * send notification to post owner when a video post processing is failed
-       */
-      FAILED: 'post.video_failed',
-    },
-  },
-  COMMENT: {
-    /**
-     * send notification to post owner when other users commented on the post
-     */
-    POST_CREATOR: 'comment.to_post_creator',
-    POST_CREATOR_AGGREGATED: 'comment.to_post_creator_aggregated',
-    /**
-     * Comment created for mentioned user in post
-     */
-    USER_MENTIONED_IN_POST: 'comment.to_user_mentioned_in_post',
-    USER_MENTIONED_IN_POST_AGGREGATED:
-      'comment.to_user_mentioned_in_post_aggregated',
-    /**
-     * Comment created for commented user
-     */
-    USER_COMMENTED_ON_POST: 'comment.to_user_commented_on_post',
-    USER_COMMENTED_ON_POST_AGGREGATED:
-      'comment.to_user_commented_on_post_aggregated',
+  /**
+   * When a user created a post with mentioned user and chose more than one group audience
+   */
+  POST_TO_MENTIONED_USER_IN_POST_IN_MULTIPLE_GROUPS:
+    'post.to_mentioned_user.in_post_in_multiple_groups',
 
-    /**
-     * Notification for comment creator when the comment was replied
-     */
-    CREATOR_OF_THE_PARENT_COMMENT: 'comment.to_creator_of_the_parent_comment',
-    /**
-     * Notification for comment creator when the comment was replied by multiple people
-     */
-    CREATOR_OF_THE_PARENT_COMMENT_AGGREGATED:
-      'comment.to_creator_of_the_parent_comment_aggregated',
+  /**
+   * When a user created a post, marked it as important and chose only one group audience
+   */
+  POST_IMPORTANT_TO_USER_IN_ONE_GROUP: 'post.important.to_user.in_one_group',
 
-    /**
-     * Comment created for commented reply user
-     */
-    USER_REPLIED_TO_THE_SAME_PARENT_COMMENT:
-      'comment.to_user_reply_to_the_same_parent_comment',
+  /**
+   * When a user created a post, marked it as important and chose more than one group audience
+   */
+  POST_IMPORTANT_TO_USER_IN_MULTIPLE_GROUPS:
+    'post.important.to_user.in_multiple_groups',
 
-    USER_REPLIED_TO_THE_SAME_PARENT_COMMENT_AGGREGATED:
-      'comment.to_user_reply_to_the_same_parent_comment_aggregated',
-    /**
-     * Comment created for mentioned user in comment
-     */
-    USER_MENTIONED_IN_PREV_COMMENT: 'comment.to_user_mentioned_in_prev_comment',
+  /**
+   * When a user created a post with mentioned user, marked it as important and chose only one group audience
+   */
+  POST_IMPORTANT_TO_MENTIONED_USER_IN_POST_IN_ONE_GROUP:
+    'post.important.to_mentioned_user.in_post_in_one_group',
 
-    /**
-     *
-     */
-    USER_MENTIONED_IN_COMMENT: 'comment.to_user_mentioned_in_comment',
-    /**
-     *
-     */
-    USER_MENTIONED_IN_REPLIED_COMMENT:
-      'comment.to_user_mentioned_in_replied_comment',
+  /**
+   * When a user created a post with mentioned user, marked it as important and chose more than one group audience
+   */
+  POST_IMPORTANT_TO_MENTIONED_USER_IN_POST_IN_MULTIPLE_GROUPS:
+    'post.important.to_mentioned_user.in_post_in_multiple_groups',
 
-    /**
-     *
-     */
-    USER_MENTIONED_IN_PREV_REPLIED_COMMENT:
-      'comment.to_user_mentioned_in_prev_replied_comment',
+  /**
+   * When a user commented on someone's post
+   */
+  COMMENT_TO_POST_CREATOR: 'comment.to_post_creator',
 
-    /**
-     *
-     */
-    USER_MENTIONED_IN_PARENT_COMMENT:
-      'comment.to_user_mentioned_in_parent_comment',
-    USER_MENTIONED_IN_PARENT_COMMENT_AGGREGATED:
-      'comment.to_user_mentioned_in_parent_comment_aggregated',
-  },
-  REACT: {
-    POST_CREATOR: 'react.post_creator',
-    POST_CREATOR_AGGREGATED: 'react.post_creator_aggregated',
-    COMMENT_CREATOR: 'react.comment_creator',
-    COMMENT_CREATOR_AGGREGATED: 'react.comment_creator_aggregated',
-  },
+  /**
+   * When many users commented on someone's post
+   */
+  COMMENT_TO_POST_CREATOR_AGGREGATED: 'comment.to_post_creator.aggregated',
+
+  /**
+   * When a user commented on a post that someone is mentioned in
+   */
+  COMMENT_TO_MENTIONED_USER_IN_POST: 'comment.to_mentioned_user.in_post',
+
+  /**
+   * When many users commented on a post that someone is mentioned in
+   */
+  COMMENT_TO_MENTIONED_USER_IN_POST_AGGREGATED:
+    'comment.to_mentioned_user.in_post.aggregated',
+
+  /**
+   * when another user commented on a post you commented on before
+   */
+  COMMENT_TO_COMMENTED_USER_ON_POST: 'comment.to_commented_user.on_post',
+
+  /**
+   * When many other users commented on the post you commented on before
+   */
+  COMMENT_TO_COMMENTED_USER_ON_POST_AGGREGATED:
+    'comment.to_commented_user.on_post.aggregated',
+
+  /**
+   * When a user mentioned someone in a comment
+   */
+  COMMENT_TO_MENTIONED_USER_IN_COMMENT: 'comment.to_mentioned_user.in_comment',
+
+  /**
+   * When a user replied to a comment that someone is mentioned in
+   */
+  COMMENT_TO_MENTIONED_USER_IN_PARENT_COMMENT:
+    'comment.to_mentioned_user.in_parent_comment',
+
+  /**
+   * When multiple users replied to a comment that someone is mentioned in
+   */
+  COMMENT_TO_MENTIONED_USER_IN_PARENT_COMMENT_AGGREGATED:
+    'comment.to_mentioned_user.in_parent_comment.aggregated',
+
+  /**
+   * When a user replied to someone's comment
+   */
+  COMMENT_TO_PARENT_COMMENT_CREATOR: 'comment.to_parent_comment_creator',
+
+  /**
+   * When multiple users replied to someone's comment
+   */
+  COMMENT_TO_PARENT_COMMENT_CREATOR_AGGREGATED:
+    'comment.to_parent_comment_creator.aggregated',
+
+  /**
+   * When another user replied to a comment that only you replied before
+   * @using For in app notification
+   */
+  COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT:
+    'comment.to_replied_user.in_the_same_parent_comment',
+
+  /**
+   * When another user replied to a comment that only you replied before
+   * @using For out app notification
+   */
+  COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_PUSH:
+    'comment.to_replied_user.in_the_same_parent_comment.push',
+
+  /**
+   * When many other users replied to the comment you replied before
+   */
+  COMMENT_TO_REPLIED_USER_IN_THE_SAME_PARENT_COMMENT_AGGREGATED:
+    'comment.to_replied_user.in_the_same_parent_comment.aggregated',
+
+  /**
+   * When a user reacted to someone's post
+   */
+  REACTION_TO_POST_CREATOR: 'reaction.to_post_creator',
+
+  /**
+   * when many users reacted to someone's post
+   */
+  REACTION_TO_POST_CREATOR_AGGREGATED: 'reaction.to_post_creator.aggregated',
+
+  /**
+   * When a user reacted to someone's comment
+   */
+  REACTION_TO_COMMENT_CREATOR: 'reaction.to_comment_creator',
+
+  /**
+   * when many users reacted to someone's comment
+   */
+  REACTION_TO_COMMENT_CREATOR_AGGREGATED:
+    'reaction.to_comment_creator.aggregated',
+
+  /**
+   * When a user requests to join someone's group
+   */
+  GROUP_JOIN_GROUP_TO_ADMIN: 'group.join_group.to_admin',
+
+  /**
+   * When many users request to join someone's group
+   */
+  GROUP_JOIN_GROUP_TO_ADMIN_AGGREGATED: 'group.join_group.to_admin.aggregated',
+
+  /**
+   * When the admin or owner of a group approved someone's request to join
+   */
+  GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_APPROVED:
+    'group.join_group.to_request_creator.approved',
+
+  /**
+   * When the admin or owner of a group rejected someone's request to join
+   */
+  GROUP_JOIN_GROUP_TO_REQUEST_CREATOR_REJECTED:
+    'group.join_group.to_request_creator.rejected',
+
+  /**
+   * When the admin or owner of a group added someone to the group
+   */
+  GROUP_ADDED_TO_GROUP_TO_USER_IN_ONE_GROUP:
+    'group.added_to_group.to_user.in_one_group',
+
+  /**
+   * When the admin or owner of a group added someone to multiple groups
+   */
+  GROUP_ADDED_TO_GROUP_TO_USER_IN_MULTIPLE_GROUPS:
+    'group.added_to_group.to_user.in_multiple_groups',
+
+  /**
+   * When the admin or owner of a group removed someone from the group
+   */
+  GROUP_REMOVED_FROM_GROUP_TO_USER: 'group.removed_from_group.to_user',
+
+  /**
+   * When the owner of a group assigned any role to someone in the group
+   */
+  GROUP_ASSIGNED_ROLE_TO_USER: 'group.assigned_role.to_user',
+
+  /**
+   * When the owner of a group demoted any role to someone in the group
+   */
+  GROUP_DEMOTED_ROLE_TO_USER: 'group.demoted_role.to_user',
+
+  /**
+   * When admin changed the community/group privacy
+   */
+  GROUP_CHANGED_PRIVACY_TO_GROUP: 'group.changed_privacy.to_group',
 };

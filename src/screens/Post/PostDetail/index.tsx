@@ -1,18 +1,18 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {InteractionManager, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import Header from '~/beinComponents/Header';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import images from '~/resources/images';
 import PostDetailContent from '~/screens/Post/PostDetail/PostDetailContent';
-import {ITheme} from '~/theme/interfaces';
 
 const PostDetail = (props: any) => {
   const [showContent, setShowContent] = useState(false);
   const [showLoading, setShowLoading] = useState(true);
 
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
 
@@ -29,7 +29,7 @@ const PostDetail = (props: any) => {
   }, []);
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.placeholder}>
+    <ScreenWrapper isFullView backgroundColor={colors.neutral5}>
       {showContent && (
         <PostDetailContent {...props} onContentLayout={onContentLayout} />
       )}
@@ -47,7 +47,7 @@ const PostDetail = (props: any) => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
+const createStyle = (theme: ExtendedTheme) => {
   const {colors} = theme;
   return StyleSheet.create({
     container: {},
@@ -57,7 +57,7 @@ const createStyle = (theme: ITheme) => {
       left: 0,
       right: 0,
       bottom: 0,
-      backgroundColor: colors.placeholder,
+      backgroundColor: colors.neutral5,
       zIndex: 10,
     },
   });

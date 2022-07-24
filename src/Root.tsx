@@ -4,37 +4,15 @@ import messaging, {
 import moment from 'moment';
 import 'moment/locale/vi';
 
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo} from 'react';
 import {useTranslation} from 'react-i18next';
-import {
-  LogBox,
-  NativeModules,
-  Platform,
-  StatusBar,
-  useColorScheme,
-} from 'react-native';
-
-/* Theme */
-import {
-  configureFonts,
-  DarkTheme,
-  DefaultTheme,
-  Portal,
-  Provider as PaperProvider,
-  Provider as ThemeProvider,
-} from 'react-native-paper';
+import {LogBox, NativeModules, Platform} from 'react-native';
 import {SafeAreaProvider} from 'react-native-safe-area-context';
 
 /* State Redux */
-import {useDispatch} from 'react-redux';
-import {fontConfig} from '~/configs/fonts';
-import notificationsActions from '~/constants/notificationActions';
-import {PreferencesContext} from '~/contexts/PreferencesContext';
 import RootNavigator from '~/router';
 import localStorage from '~/services/localStorage';
-import {fetchSetting} from '~/store/modal/actions';
 
-import {colors, dimension, fonts, shadow, spacing} from '~/theme';
 import {AppConfig, languages} from './configs';
 import moments from './configs/moments';
 import {AppContext} from './contexts/AppContext';
@@ -43,32 +21,20 @@ import {rootSwitch} from './router/stack';
 import Store from '~/store';
 import {IUserResponse} from './interfaces/IAuth';
 import {isNavigationRefReady, getScreenAndParams} from '~/router/helper';
+import {initFontAwesomeIcon} from '~/services/fontAwesomeIcon';
 
 moment.updateLocale('en', moments.en);
 moment.updateLocale('vi', moments.vi);
 
+initFontAwesomeIcon();
+
 export default (): React.ReactElement => {
   LogBox.ignoreAllLogs();
 
-  const [stateCurrent, setState] = useState({isUpdate: false, loaded: false});
   /* Localization */
   const {i18n} = useTranslation();
 
-  /*Declare redux and sagas*/
-  const dispatch = useDispatch();
-  // const language = useSelector(state => languageSelector(state));
-
-  /* Theme Setup */
-  const colorScheme = useColorScheme();
-  const [theme, switchTheme] = React.useState<'light' | 'dark'>(
-    colorScheme === 'dark' ? 'dark' : 'light',
-  );
-
   const {rootNavigation} = useRootNavigation();
-
-  useEffect(() => {
-    if (colorScheme !== theme) toggleTheme();
-  }, [colorScheme]);
 
   useEffect(() => {
     if (i18n?.language) {
@@ -76,26 +42,17 @@ export default (): React.ReactElement => {
     }
   }, [i18n?.language]);
 
-  const preferences = React.useMemo(
-    () => ({
-      toggleTheme,
-      theme,
-    }),
-    [theme],
-  );
-
   useEffect(() => {
-    setUpResource();
     setUpLanguage();
     listenFCMEvents();
 
-    // TODO:
     const unsubscribe = messaging().onMessage(async remoteMessage => {
       console.log('foreground', {remoteMessage});
-      // Alert.alert('A new FCM message arrived!', JSON.stringify(remoteMessage));
     });
 
-    return unsubscribe;
+    return () => {
+      unsubscribe?.();
+    };
   }, []);
 
   const listenFCMEvents = () => {
@@ -187,48 +144,6 @@ export default (): React.ReactElement => {
     await localStorage.setLanguage(language);
   };
 
-  const setUpResource = async () => {
-    const stateNew = {
-      isUpdate: false,
-      loaded: false,
-    };
-    try {
-      /*Fetch setting*/
-      dispatch(fetchSetting());
-
-      /*Set loading success*/
-      stateNew.loaded = true;
-      setState(stateNew);
-    } catch (error) {
-      console.error(`Setup error : ${error}`);
-    }
-  };
-
-  const toggleTheme = () => {
-    switchTheme((theme: string) => (theme === 'light' ? 'dark' : 'light'));
-  };
-
-  //Set config theme
-  const themeConfig: any = useMemo(() => {
-    const result: any =
-      theme === 'light'
-        ? {
-            ...DefaultTheme,
-            colors: {...DefaultTheme.colors, ...colors.light.colors},
-          }
-        : {
-            ...DarkTheme,
-            colors: {...DarkTheme.colors, ...colors.dark.colors},
-          };
-    result.fontFamily = stateCurrent.loaded ? fonts : DefaultTheme.fonts;
-    result.spacing = {...spacing};
-    result.dimension = {...dimension};
-    result.shadow = {...shadow};
-    /*Config font*/
-    result.fonts = configureFonts(fontConfig);
-    return result;
-  }, [theme, stateCurrent.loaded]);
-
   const providerValue = useMemo(() => {
     return {
       language: i18n.language,
@@ -238,24 +153,9 @@ export default (): React.ReactElement => {
 
   return (
     <SafeAreaProvider>
-      <ThemeProvider>
-        <StatusBar
-          // Dark mode has not ready yet
-          // barStyle={theme === 'light' ? 'dark-content' : 'light-content'}
-          barStyle="dark-content"
-          translucent
-          backgroundColor="transparent"
-        />
-        <PreferencesContext.Provider value={preferences}>
-          <PaperProvider theme={themeConfig}>
-            <AppContext.Provider value={providerValue}>
-              <Portal.Host>
-                <RootNavigator />
-              </Portal.Host>
-            </AppContext.Provider>
-          </PaperProvider>
-        </PreferencesContext.Provider>
-      </ThemeProvider>
+      <AppContext.Provider value={providerValue}>
+        <RootNavigator />
+      </AppContext.Provider>
     </SafeAreaProvider>
   );
 };

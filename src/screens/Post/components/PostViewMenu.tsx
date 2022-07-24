@@ -1,17 +1,19 @@
 import Clipboard from '@react-native-clipboard/clipboard';
 import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
 import {useDispatch} from 'react-redux';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
+import {useMyPermissions} from '~/hooks/permissions';
+import {useKeySelector} from '~/hooks/selector';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
 import {showHideToastMessage} from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {getLink, LINK_POST} from '~/utils/link';
+import postKeySelector from '../redux/keySelector';
 
 export interface PostViewMenuProps {
   postId: string;
@@ -29,8 +31,15 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
-  const theme: ITheme = useTheme() as ITheme;
-  const styles = createStyle(theme);
+
+  const postData = useKeySelector(postKeySelector.postById(postId));
+  const {audience} = postData || {};
+  const {hasPermissionsOnAtLeastOneScope, PERMISSION_KEY} = useMyPermissions();
+  const canDeleteOwnPost = hasPermissionsOnAtLeastOneScope(
+    'groups',
+    audience?.groups,
+    PERMISSION_KEY.GROUP.DELETE_OWN_POST,
+  );
 
   const onPress = () => {
     dispatch(modalActions.hideModal());
@@ -43,7 +52,7 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
       modalActions.showAlert({
         title: t('post:title_delete_post'),
         content: t('post:content_delete_post'),
-        iconName: 'Trash',
+        iconName: 'TrashCan',
         cancelBtn: true,
         confirmLabel: t('common:btn_delete'),
         onConfirm: () =>
@@ -85,8 +94,8 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         <PrimaryItem
           testID={'post_view_menu.edit'}
           style={styles.item}
-          leftIcon={'Edit'}
-          leftIconProps={{icon: 'Edit', size: 24}}
+          leftIcon={'edit'}
+          leftIconProps={{icon: 'edit', size: 24}}
           title={t('post:post_menu_edit')}
           onPress={onPressEdit}
         />
@@ -95,8 +104,8 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         <PrimaryItem
           testID={'post_view_menu.edit_settings'}
           style={styles.item}
-          leftIcon={'SlidersAlt'}
-          leftIconProps={{icon: 'SlidersAlt', size: 24}}
+          leftIcon={'SlidersUp'}
+          leftIconProps={{icon: 'SlidersUp', size: 24}}
           title={t('post:post_menu_edit_settings')}
           onPress={onPressEditSettings}
         />
@@ -120,8 +129,8 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
       <PrimaryItem
         testID={'post_view_menu.insights'}
         style={styles.item}
-        leftIcon={'TachometerFastAlt'}
-        leftIconProps={{icon: 'TachometerFastAlt', size: 24}}
+        leftIcon={'GaugeHigh'}
+        leftIconProps={{icon: 'GaugeHigh', size: 24}}
         title={t('post:post_menu_view_insights')}
         onPress={onPress}
       />
@@ -136,17 +145,17 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
       <PrimaryItem
         testID={'post_view_menu.history'}
         style={styles.item}
-        leftIcon={'Redo'}
-        leftIconProps={{icon: 'Redo', size: 24}}
+        leftIcon={'RotateRight'}
+        leftIconProps={{icon: 'RotateRight', size: 24}}
         title={t('post:post_menu_history')}
         onPress={onPress}
       />
-      {isActor && (
+      {isActor && canDeleteOwnPost && (
         <PrimaryItem
           testID={'post_view_menu.delete'}
           style={styles.item}
-          leftIcon={'TrashAlt'}
-          leftIconProps={{icon: 'TrashAlt', size: 24}}
+          leftIcon={'TrashCan'}
+          leftIconProps={{icon: 'TrashCan', size: 24}}
           title={t('post:post_menu_delete')}
           onPress={onPressDelete}
         />
@@ -155,8 +164,8 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         <PrimaryItem
           testID={'post_view_menu.report'}
           style={styles.item}
-          leftIcon={'InfoCircle'}
-          leftIconProps={{icon: 'InfoCircle', size: 24}}
+          leftIcon={'CircleInfo'}
+          leftIconProps={{icon: 'CircleInfo', size: 24}}
           title={t('post:post_menu_report')}
           onPress={onPress}
         />
@@ -165,15 +174,12 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {},
-    item: {
-      height: 44,
-      paddingHorizontal: spacing.padding.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {},
+  item: {
+    height: 44,
+    paddingHorizontal: spacing.padding.large,
+  },
+});
 
 export default PostViewMenu;

@@ -3,8 +3,7 @@ import {TouchableOpacity, View} from 'react-native';
 import {useDispatch} from 'react-redux';
 
 import Text from '~/beinComponents/Text';
-import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {IAction} from '~/constants/commonActions';
 import SearchInput from '~/beinComponents/inputs/SearchInput';
@@ -18,9 +17,10 @@ import MentionInput from '~/beinComponents/inputs/MentionInput';
 import {IUser} from '~/interfaces/IAuth';
 import {useBaseHook} from '~/hooks';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
+import spacing from '~/theme/spacing';
 
 const Section2 = () => {
-  const {spacing, colors}: ITheme = useTheme();
+  const {colors}: ExtendedTheme = useTheme();
   const dispatch = useDispatch();
   const {t} = useBaseHook();
 
@@ -68,10 +68,10 @@ const Section2 = () => {
               style={{margin: spacing?.margin.small}}
               number={10}
             />
-            <NotificationsBadge.Warning
+            {/* <NotificationsBadge.Warning
               style={{margin: spacing?.margin.small}}
               number={10}
-            />
+            /> */}
             <NotificationsBadge.Alert
               style={{margin: spacing?.margin.small}}
               number={10}
@@ -172,7 +172,7 @@ const Section2 = () => {
               modalActions.showAlert({
                 title: 'Log Out',
                 content: 'Do you want to log out?',
-                iconName: 'SignOutAlt',
+                iconName: 'ArrowRightFromArc',
                 cancelBtn: true,
                 onConfirm: () => alert('Confirm button'),
                 confirmLabel: 'Log Out',

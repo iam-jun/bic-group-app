@@ -1,16 +1,16 @@
 import * as React from 'react';
 import {render, cleanup} from '@testing-library/react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
+
 import {StyleSheet} from 'react-native';
 
 afterEach(cleanup);
 
 describe('Text component', () => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createTextStyle(theme);
   it(`renders correctly`, () => {
     const rendered = render(<Text />).toJSON();
@@ -109,16 +109,6 @@ describe('Text component', () => {
     const renderedComponent = rendered.getByTestId('text.h6');
     const flattenedStyle = StyleSheet.flatten(renderedComponent.props.style);
     expect(flattenedStyle.fontSize).toBe(styles.h6.fontSize);
-    expect(rendered.toJSON()).toMatchSnapshot();
-  });
-
-  it(`renders correctly variant H6s`, () => {
-    const rendered = render(
-      <Text.H6S testID="text.h6s">renders correctly children</Text.H6S>,
-    );
-    const renderedComponent = rendered.getByTestId('text.h6s');
-    const flattenedStyle = StyleSheet.flatten(renderedComponent.props.style);
-    expect(flattenedStyle.fontSize).toBe(styles.h6s.fontSize);
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 });

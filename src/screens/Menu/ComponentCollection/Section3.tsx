@@ -1,15 +1,16 @@
 import React, {useState} from 'react';
 import {View, Image} from 'react-native';
 import Text from '~/beinComponents/Text';
-import {useTheme} from 'react-native-paper';
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Avatar from '~/beinComponents/Avatar';
+import spacing from '~/theme/spacing';
 
 const Section3 = () => {
-  const {spacing, colors}: ITheme = useTheme();
+  const {colors}: ExtendedTheme = useTheme();
 
   const renderSection = (title: string, child: React.ReactNode) => {
     return (
@@ -33,25 +34,25 @@ const Section3 = () => {
     return renderSection(
       'Header',
       <View>
-        <Divider size={spacing?.margin.base} color={colors.borderCard} />
+        <Divider size={spacing?.margin.base} color={colors.gray40} />
         <Header
           disableInsetTop
           title={'Notifications'}
           subTitle={'New Group Chat'}
           avatar={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
-          icon={'Search'}
+          icon={'search'}
           onPressIcon={() => alert('onPress search')}
           onPressMenu={() => alert('onPress menu')}
           buttonText={'Post'}
           onPressButton={() => alert('onPress post')}
         />
-        <Divider size={spacing?.margin.base} color={colors.borderCard} />
+        <Divider size={spacing?.margin.base} color={colors.gray40} />
         <Header
           disableInsetTop
           hideBack
           title={'Notifications'}
           avatar={'https://i.ibb.co/DW2bMGR/pikachu.jpg'}
-          icon={'Search'}
+          icon={'search'}
           onPressIcon={() => alert('onPress search')}
           onPressMenu={() => alert('onPress menu')}
         />

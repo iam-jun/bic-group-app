@@ -1,10 +1,10 @@
 import React, {FC} from 'react';
 import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
+import spacing from '~/theme/spacing';
 
 interface CommentToolbarProps {
   style?: StyleProp<ViewStyle>;
@@ -21,7 +21,7 @@ const CommentToolbar: FC<CommentToolbarProps> = ({
   onSelectGif,
   onSelectVideo,
 }: CommentToolbarProps) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   if (!onSelectImage && !onSelectFile && !onSelectGif && !onSelectVideo) {
@@ -35,7 +35,7 @@ const CommentToolbar: FC<CommentToolbarProps> = ({
           testID={'comment_toolbar.btn_image'}
           style={styles.button}
           onPress={onSelectImage}>
-          <Icon icon={'iconAddImage'} />
+          <Icon icon={'Image'} />
         </Button>
       )}
       {!!onSelectFile && (
@@ -66,8 +66,8 @@ const CommentToolbar: FC<CommentToolbarProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       height: 56,
@@ -75,9 +75,9 @@ const createStyle = (theme: ITheme) => {
       flexDirection: 'row',
       alignItems: 'center',
       paddingHorizontal: spacing.padding.large,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       borderTopWidth: 1,
-      borderColor: colors.borderFocus,
+      borderColor: colors.gray40,
     },
     button: {
       padding: 2,

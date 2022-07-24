@@ -1,12 +1,11 @@
-import {View, ScrollView, StyleSheet} from 'react-native';
+import {View, ScrollView, StyleSheet, DeviceEventEmitter} from 'react-native';
 import React from 'react';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import ListView from '~/beinComponents/list/ListView';
 import Button from '~/beinComponents/Button';
 import InfoHeader from './InfoHeader';
-import {ITheme} from '~/theme/interfaces';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import JoinCancelButton from './JoinCancelButton';
 import {useRootNavigation} from '~/hooks/navigation';
@@ -17,6 +16,8 @@ import groupJoinStatus from '~/constants/groupJoinStatus';
 import HeaderCreatePost from '~/screens/Home/Newsfeed/components/HeaderCreatePost';
 import PostItem from '~/beinComponents/list/items/PostItem';
 import actions from '~/screens/Groups/redux/actions';
+import spacing from '~/theme/spacing';
+import {useMyPermissions} from '~/hooks/permissions';
 
 interface PageContentProps {
   communityId: number;
@@ -32,8 +33,8 @@ const _PageContent = ({
   onButtonLayout,
 }: PageContentProps) => {
   const {rootNavigation} = useRootNavigation();
-  const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme || {};
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme || {};
   const styles = createStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
@@ -43,6 +44,14 @@ const _PageContent = ({
   const refreshingGroupPosts = useKeySelector(
     groupsKeySelector.refreshingGroupPosts,
   );
+
+  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const canCreatePostArticle = hasPermissionsOnScopeWithId(
+    'groups',
+    group_id,
+    PERMISSION_KEY.GROUP.CREATE_POST_ARTICLE,
+  );
+
   const dispatch = useDispatch();
 
   const onPressDiscover = () => {
@@ -65,6 +74,11 @@ const _PageContent = ({
 
   const onPressYourGroups = () => {
     rootNavigation.navigate(groupStack.yourGroups, {communityId});
+  };
+
+  const _onScroll = (e: any) => {
+    onScroll && onScroll(e);
+    DeviceEventEmitter.emit('stopAllVideo');
   };
 
   const renderItem = ({item}: any) => {
@@ -91,8 +105,8 @@ const _PageContent = ({
               <>
                 <Button.Secondary
                   useI18n
-                  color={colors.bgHover}
-                  textColor={colors.textPrimary}
+                  color={colors.neutral5}
+                  textColor={colors.neutral80}
                   borderRadius={spacing.borderRadius.small}
                   testID="page_content.your_groups_btn"
                   onPress={onPressYourGroups}>
@@ -101,8 +115,8 @@ const _PageContent = ({
                 <ViewSpacing width={spacing.margin.small} />
                 <Button.Secondary
                   useI18n
-                  color={colors.bgHover}
-                  textColor={colors.textPrimary}
+                  color={colors.neutral5}
+                  textColor={colors.neutral80}
                   borderRadius={spacing.borderRadius.small}
                   testID="page_content.discover_btn"
                   onPress={onPressDiscover}>
@@ -113,8 +127,8 @@ const _PageContent = ({
             )}
             <Button.Secondary
               useI18n
-              color={colors.bgHover}
-              textColor={colors.textPrimary}
+              color={colors.neutral5}
+              textColor={colors.neutral80}
               borderRadius={spacing.borderRadius.small}
               testID="page_content.about_btn"
               onPress={onPressAbout}>
@@ -123,8 +137,8 @@ const _PageContent = ({
             <ViewSpacing width={spacing.margin.small} />
             <Button.Secondary
               useI18n
-              color={colors.bgHover}
-              textColor={colors.textPrimary}
+              color={colors.neutral5}
+              textColor={colors.neutral80}
               borderRadius={spacing.borderRadius.small}
               testID="page_content.members_btn"
               onPress={onPressMembers}>
@@ -133,7 +147,7 @@ const _PageContent = ({
           </ScrollView>
           <JoinCancelButton />
         </View>
-        {isMember && (
+        {isMember && canCreatePostArticle && (
           <HeaderCreatePost
             style={styles.createPost}
             audience={{...infoDetail, id: group_id}}
@@ -150,7 +164,7 @@ const _PageContent = ({
       style={styles.listContainer}
       data={posts.data}
       renderItem={renderItem}
-      onScroll={onScroll}
+      onScroll={_onScroll}
       scrollEventThrottle={16}
       refreshing={refreshingGroupPosts}
       onRefresh={_onRefresh}
@@ -158,10 +172,8 @@ const _PageContent = ({
       onEndReachedThreshold={0.5}
       ListHeaderComponent={renderHeader}
       ListHeaderComponentStyle={styles.listHeaderComponentStyle}
-      ListFooterComponent={<ViewSpacing height={theme.spacing.padding.base} />}
-      renderItemSeparator={() => (
-        <ViewSpacing height={theme.spacing.margin.base} />
-      )}
+      ListFooterComponent={<ViewSpacing height={spacing.padding.base} />}
+      renderItemSeparator={() => <ViewSpacing height={spacing.margin.base} />}
     />
   );
 };
@@ -170,15 +182,15 @@ const PageContent = React.memo(_PageContent);
 PageContent.whyDidYouRender = true;
 export default PageContent;
 
-const createStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const createStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     buttonContainer: {
       flexDirection: 'row',
       paddingTop: spacing.padding.tiny,
       paddingBottom: spacing.padding.small,
       paddingHorizontal: spacing.padding.base,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     listContainer: {
       flex: 1,
@@ -188,7 +200,7 @@ const createStyles = (theme: ITheme) => {
     },
     scrollViewBtn: {
       paddingBottom: spacing.padding.tiny,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     createPost: {
       marginTop: spacing.margin.base,

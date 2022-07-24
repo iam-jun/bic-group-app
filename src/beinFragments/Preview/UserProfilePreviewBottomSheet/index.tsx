@@ -3,7 +3,7 @@ import {isEmpty} from 'lodash';
 import React, {useEffect, useRef, useState} from 'react';
 import {ActivityIndicator, StyleSheet, View} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import Avatar from '~/beinComponents/Avatar';
@@ -24,10 +24,11 @@ import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import modalActions from '~/store/modal/actions';
 import commonKeySelector from '~/store/modal/keySelector';
 import {scaleCoverHeight} from '~/theme/dimension';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 
 const UserProfilePreviewBottomSheet = () => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const styles = themeStyles(theme, coverHeight);
   const userPreviewRef: any = useRef();
@@ -124,7 +125,7 @@ const UserProfilePreviewBottomSheet = () => {
         <TouchableOpacity onPress={navigateToUserProfile}>
           <Text.H5>{fullname}</Text.H5>
         </TouchableOpacity>
-        {!!description && <Text.Body>{description}</Text.Body>}
+        {!!description && <Text.BodyM>{description}</Text.BodyM>}
       </View>
     );
   };
@@ -135,8 +136,8 @@ const UserProfilePreviewBottomSheet = () => {
         <Button.Secondary
           onPress={navigateToUserProfile}
           style={styles.button}
-          leftIcon={'UserSquare'}
-          leftIconProps={{icon: 'UserSquare', size: 17}}>
+          leftIcon={'SquareUser'}
+          leftIconProps={{icon: 'SquareUser', size: 17}}>
           {i18next.t('profile:title_view_profile')}
         </Button.Secondary>
       </View>
@@ -150,13 +151,13 @@ const UserProfilePreviewBottomSheet = () => {
       <View style={styles.infoItem}>
         <Icon
           icon={icon}
-          tintColor={theme.colors.primary5}
+          tintColor={theme.colors.purple30}
           size={24}
           style={styles.infoItemIcon}
         />
-        <Text.Body style={styles.infoItemContent} useI18n>
+        <Text.BodyM style={styles.infoItemContent} useI18n>
           {content}
-        </Text.Body>
+        </Text.BodyM>
       </View>
     );
   };
@@ -164,7 +165,7 @@ const UserProfilePreviewBottomSheet = () => {
   const renderBasicInfo = () => {
     return (
       <View style={styles.basicInfoContainer}>
-        {renderInfoItem('CommentsAlt', userLanguages)}
+        {renderInfoItem('Comments', userLanguages)}
         {renderInfoItem('Phone', phone)}
       </View>
     );
@@ -195,8 +196,8 @@ const UserProfilePreviewBottomSheet = () => {
   );
 };
 
-const themeStyles = (theme: ITheme, coverHeight: number) => {
-  const {colors, spacing} = theme;
+const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
+  const {colors} = theme;
   const containerMinHeight = 330;
 
   return StyleSheet.create({
@@ -232,7 +233,7 @@ const themeStyles = (theme: ITheme, coverHeight: number) => {
       marginBottom: spacing.margin.tiny,
       paddingTop: spacing.padding.base,
       paddingHorizontal: spacing.padding.large,
-      borderTopColor: colors.borderDivider,
+      borderTopColor: colors.neutral5,
       borderTopWidth: 1,
     },
     infoItem: {

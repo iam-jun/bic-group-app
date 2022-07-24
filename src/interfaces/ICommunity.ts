@@ -1,11 +1,11 @@
-import {PRIVACY_TYPE} from '~/constants/privacyTypes';
+import {GROUP_PRIVACY_TYPE} from '~/constants/privacyTypes';
 
 export interface ICommunity {
   id: number;
   group_id: number;
   name: string;
   slug: string;
-  privacy: PRIVACY_TYPE;
+  privacy: GROUP_PRIVACY_TYPE;
   description: string;
   icon: string;
   background_img_url: string;

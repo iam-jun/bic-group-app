@@ -5,18 +5,21 @@ import {
   Platform,
   StyleProp,
   StyleSheet,
+  TouchableOpacity,
   View,
   ViewStyle,
 } from 'react-native';
-import {Modal, useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import useModal from '~/hooks/modal';
 import * as actions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import Icon from '../Icon';
 import TextInput from '../inputs/TextInput';
+import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 
 export interface AlertModalProps {
   style?: StyleProp<ViewStyle>;
@@ -27,7 +30,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
   style,
   ...props
 }: AlertModalProps) => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const {alert} = useModal();
@@ -41,6 +44,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
     input,
     inputProps,
     iconName,
+    onCancel,
     onConfirm,
     onDismiss,
     confirmLabel,
@@ -62,7 +66,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
     ? cancelLabel
     : i18next.t('common:btn_cancel');
 
-  const _ContentComponent = ContentComponent || Text.Subtitle;
+  const _ContentComponent = ContentComponent || Text.BodyS;
 
   const _ConfirmBtnComponent = ConfirmBtnComponent || Button.Secondary;
   const _CancelBtnComponent = CancelBtnComponent || Button.Secondary;
@@ -79,106 +83,132 @@ const AlertModal: React.FC<AlertModalProps> = ({
     dispatch(actions.hideAlert());
   };
 
+  const _onCancel = () => {
+    if (onCancel) {
+      onCancel();
+      dispatch(actions.hideAlert());
+    } else {
+      _onDismiss();
+    }
+  };
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  const _onPressContent = () => {};
+
+  const optionsStyle = useAnimatedStyle(() => ({
+    opacity: withTiming(visible ? 1 : 0, {duration: 500}),
+  }));
+
+  if (!visible) return null;
   return (
-    <Modal
-      visible={visible}
-      dismissable={isDismissible}
-      onDismiss={_onDismiss}
-      contentContainerStyle={[styles.modal, style, alertModalStyle]}
-      {...props}>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <View style={styles.modalContainer}>
-          {!!HeaderImageComponent ? HeaderImageComponent : null}
-          <View style={[styles.header, !!headerStyle ? headerStyle : {}]}>
-            {!!title && (
-              <Text.ButtonBase {...titleProps}>{title}</Text.ButtonBase>
+    <Animated.View style={[styles.root, optionsStyle]}>
+      <TouchableOpacity
+        style={styles.root}
+        activeOpacity={1}
+        onPress={isDismissible ? _onDismiss : undefined}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={_onPressContent}
+            style={[styles.modalContainer, style, alertModalStyle]}>
+            {!!HeaderImageComponent ? HeaderImageComponent : null}
+            <View style={[styles.header, !!headerStyle ? headerStyle : {}]}>
+              {!!title && <Text.ButtonM {...titleProps}>{title}</Text.ButtonM>}
+              {!!iconName && (
+                <Icon
+                  icon={iconName}
+                  size={20}
+                  tintColor={theme.colors.neutral80}
+                />
+              )}
+              {showCloseButton && (
+                <View style={styles.closeButton}>
+                  <Icon
+                    icon={'iconClose'}
+                    size={14}
+                    tintColor={theme.colors.neutral80}
+                    onPress={_onDismiss}
+                  />
+                </View>
+              )}
+            </View>
+            {children}
+            {!!content && (
+              <_ContentComponent style={styles.content} {...contentProps}>
+                {content}
+              </_ContentComponent>
             )}
-            {!!iconName && (
-              <Icon
-                icon={iconName}
-                size={20}
-                tintColor={theme.colors.iconTint}
+            {input && (
+              <TextInput
+                onChangeText={(value: string) => setText(value)}
+                autoFocus
+                {...inputProps}
               />
             )}
-            {showCloseButton && (
-              <View style={styles.closeButton}>
-                <Icon
-                  icon={'iconClose'}
-                  size={14}
-                  tintColor={theme.colors.iconTint}
-                  onPress={_onDismiss}
-                />
-              </View>
-            )}
-          </View>
-          {children}
-          {!!content && (
-            <_ContentComponent style={styles.content} {...contentProps}>
-              {content}
-            </_ContentComponent>
-          )}
-          {input && (
-            <TextInput
-              onChangeText={(value: string) => setText(value)}
-              autoFocus
-              {...inputProps}
-            />
-          )}
-          <View
-            style={[
-              styles.displayBtn,
-              !!buttonViewStyle ? buttonViewStyle : {},
-            ]}>
-            {!!cancelBtn && (
-              <_CancelBtnComponent
-                testID="alert_modal.cancel"
-                style={{marginEnd: theme.spacing?.margin.base}}
-                onPress={_onDismiss}
-                {...cancelBtnProps}>
-                {_cancelLabel}
-              </_CancelBtnComponent>
-            )}
-
-            {onConfirm && (
-              <_ConfirmBtnComponent
-                highEmphasis
-                testID="alert_modal.confirm"
-                disabled={input && !text}
-                onPress={() => {
-                  dispatch(actions.hideAlert());
-                  onConfirm(text);
-                }}
-                {...confirmBtnProps}>
-                {confirmLabel || i18next.t('common:btn_confirm')}
-              </_ConfirmBtnComponent>
-            )}
-          </View>
-        </View>
-      </KeyboardAvoidingView>
-    </Modal>
+            <View
+              style={[
+                styles.displayBtn,
+                !!buttonViewStyle ? buttonViewStyle : {},
+              ]}>
+              {!!cancelBtn && (
+                <_CancelBtnComponent
+                  testID="alert_modal.cancel"
+                  style={{marginEnd: spacing?.margin.base}}
+                  onPress={_onCancel}
+                  {...cancelBtnProps}>
+                  {_cancelLabel}
+                </_CancelBtnComponent>
+              )}
+              {!!visible && onConfirm && (
+                <_ConfirmBtnComponent
+                  highEmphasis
+                  testID="alert_modal.confirm"
+                  disabled={input && !text}
+                  onPress={() => {
+                    dispatch(actions.hideAlert());
+                    onConfirm(text);
+                  }}
+                  {...confirmBtnProps}>
+                  {confirmLabel || i18next.t('common:btn_confirm')}
+                </_ConfirmBtnComponent>
+              )}
+            </View>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
+      </TouchableOpacity>
+    </Animated.View>
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   const defaultAlertWidth = 320;
 
   return StyleSheet.create({
     root: {
-      flex: 1,
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      backgroundColor: theme.colors.transparent1,
+      width: '100%',
+      height: '100%',
+      justifyContent: 'center',
     },
     modal: {
-      width: defaultAlertWidth,
-      backgroundColor: colors.background,
-      borderWidth: 1,
-      borderColor: colors.borderCard,
-      borderRadius: 6,
-      alignSelf: 'center',
+      backgroundColor: colors.white,
     },
     modalContainer: {
+      borderColor: colors.gray20,
+      borderRadius: 6,
+      borderWidth: 1,
       paddingHorizontal: spacing?.padding.extraLarge,
       paddingVertical: spacing?.padding.large,
+      width: defaultAlertWidth,
+      backgroundColor: colors.white,
+      alignSelf: 'center',
     },
     displayBtn: {
       flexDirection: 'row',
@@ -196,7 +226,7 @@ const themeStyles = (theme: ITheme) => {
       height: 24,
       alignItems: 'center',
       justifyContent: 'center',
-      backgroundColor: colors.placeholder,
+      backgroundColor: colors.neutral5,
       borderRadius: 6,
     },
     content: {},

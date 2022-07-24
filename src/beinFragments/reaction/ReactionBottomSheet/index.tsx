@@ -5,19 +5,20 @@ import BottomSheet from '~/beinComponents/BottomSheet';
 import {IReactionProps} from '~/interfaces/IReaction';
 import SelectReactionView from '~/beinFragments/reaction/SelectReactionView';
 import Text from '~/beinComponents/Text';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
+
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useKeySelector} from '~/hooks/selector';
 import {useDispatch} from 'react-redux';
 import * as modalActions from '~/store/modal/actions';
 import commonKeySelector from '~/store/modal/keySelector';
+import spacing from '~/theme/spacing';
 
 const ReactionBottomSheet = () => {
   const reactionSheetRef: any = useRef();
 
   const dispatch = useDispatch();
-  const theme: ITheme = useTheme() as ITheme;
-  const {spacing, colors} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
 
   const data = useKeySelector(commonKeySelector.reactionBottomSheet);
   const {title, show, position, callback, side} = data || {};
@@ -47,7 +48,7 @@ const ReactionBottomSheet = () => {
                 paddingHorizontal: spacing.padding.large,
                 paddingTop: spacing.padding.small,
               }}
-              color={colors.textSecondary}>
+              color={colors.gray50}>
               {title}
             </Text.H6>
           )}

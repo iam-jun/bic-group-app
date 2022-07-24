@@ -1,8 +1,6 @@
 import React, {FC, useContext, useRef} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle, ScrollView} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Button from '~/beinComponents/Button';
 import {useBaseHook} from '~/hooks';
@@ -18,14 +16,15 @@ import {AppContext} from '~/contexts/AppContext';
 import {formatDateTime} from '~/beinComponents/TimeView';
 import {ISelectedFilterUser} from '~/interfaces/IHome';
 import NFSFilterOptionMenu from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSFilterOptionMenu';
+import spacing from '~/theme/spacing';
 
 const NFSFilterToolbar = () => {
   const scrollRef = useRef<any>();
   const dispatch = useDispatch();
   const {language} = useContext(AppContext);
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const styles = createStyle(theme);
   const userId = useUserIdAuth();
 
@@ -125,16 +124,16 @@ const NFSFilterToolbar = () => {
         <View style={styles.container}>
           <Button.Secondary
             onPress={onPressFilterOptions}
-            leftIcon={'SlidersAlt'}
+            leftIcon={'SlidersUp'}
             leftIconProps={{
-              icon: 'SlidersAlt',
+              icon: 'SlidersUp',
               style: {
                 marginRight: spacing.margin.small,
                 marginLeft: spacing.margin.tiny,
               },
             }}
-            color={countFilter > 0 ? colors.primary6 : colors.primary1}
-            textColor={countFilter > 0 ? colors.background : colors.primary6}>
+            color={countFilter > 0 ? colors.purple50 : colors.violet1}
+            textColor={countFilter > 0 ? colors.white : colors.purple50}>
             {countFilter > 0
               ? `${countFilter}`
               : t('home:newsfeed_search:filter')}
@@ -142,21 +141,21 @@ const NFSFilterToolbar = () => {
           <Button.Secondary
             onPress={onPressFilterCreatedBy}
             style={styles.button}
-            color={filterCreatedBy ? colors.primary3 : colors.primary1}
-            textColor={colors.primary6}>
+            color={filterCreatedBy ? colors.purple10 : colors.violet1}
+            textColor={colors.purple50}>
             {textCreatedBy}
           </Button.Secondary>
           <Button.Secondary
             onPress={onPressFilterDate}
             style={styles.button}
-            color={filterDate ? colors.primary3 : colors.primary1}
-            textColor={colors.primary6}>
+            color={filterDate ? colors.purple10 : colors.violet1}
+            textColor={colors.purple50}>
             {textDate}
           </Button.Secondary>
           {countFilter > 0 && (
             <Button.Secondary
               style={styles.button}
-              textColor={colors.primary6}
+              textColor={colors.purple50}
               onPress={onPressClear}
               rightIcon={'iconCloseSmall'}
               rightIconProps={{
@@ -172,20 +171,20 @@ const NFSFilterToolbar = () => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     scrollContainer: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     container: {
       flexDirection: 'row',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       paddingTop: spacing.padding.small,
       paddingBottom: spacing.padding.base,
       paddingHorizontal: spacing.padding.base,
       borderBottomWidth: 1,
-      borderColor: colors.bgSecondary,
+      borderColor: colors.neutral1,
     },
     button: {
       marginLeft: spacing.margin.tiny,

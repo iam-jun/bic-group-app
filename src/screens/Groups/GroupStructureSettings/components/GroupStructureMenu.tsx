@@ -1,15 +1,16 @@
 import React, {FC} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
-import {ITheme} from '~/theme/interfaces';
+
 import {GroupItemProps} from '~/beinComponents/list/items/GroupItem';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import modalActions from '~/store/modal/actions';
 import {IGroup} from '~/interfaces/IGroup';
+import spacing from '~/theme/spacing';
 
 export interface GroupStructureMenuProps {
   group?: IGroup;
@@ -25,9 +26,8 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme || {};
-  const styles = createStyle(theme);
 
   const onPressReorderGroup = () => {
     rootNavigation.navigate(groupStack.reorderGroup, {group});
@@ -44,14 +44,14 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
       <PrimaryItem
         testID={'group_structure_menu.reorder'}
         style={styles.item}
-        leftIcon={'Layers'}
+        leftIcon={'LayerGroup'}
         leftIconProps={{
-          icon: 'Layers',
+          icon: 'LayerGroup',
           size: 24,
-          tintColor: disableReorder ? colors.textDisabled : colors.textPrimary,
+          tintColor: disableReorder ? colors.gray40 : colors.neutral80,
         }}
         titleProps={{
-          color: disableReorder ? colors.textDisabled : colors.textPrimary,
+          color: disableReorder ? colors.gray40 : colors.neutral80,
         }}
         title={t('communities:group_structure:title_reorder_group')}
         onPress={disableReorder || !group ? undefined : onPressReorderGroup}
@@ -59,14 +59,14 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
       <PrimaryItem
         testID={'group_structure_menu.reorder'}
         style={styles.item}
-        leftIcon={'Exclude'}
+        leftIcon={'ObjectExclude'}
         leftIconProps={{
-          icon: 'Exclude',
+          icon: 'ObjectExclude',
           size: 24,
-          tintColor: disableMove ? colors.textDisabled : colors.textPrimary,
+          tintColor: disableMove ? colors.gray40 : colors.neutral80,
         }}
         titleProps={{
-          color: disableMove ? colors.textDisabled : colors.textPrimary,
+          color: disableMove ? colors.gray40 : colors.neutral80,
         }}
         title={t('communities:group_structure:title_move_group')}
         onPress={disableMove || !group ? undefined : onPressMoveGroup}
@@ -75,15 +75,12 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    container: {},
-    item: {
-      height: 44,
-      paddingHorizontal: spacing.padding.large,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {},
+  item: {
+    height: 44,
+    paddingHorizontal: spacing.padding.large,
+  },
+});
 
 export default GroupStructureMenu;

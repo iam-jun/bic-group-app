@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
 import appActions from '~/store/app/actions';
 import {scaleSize} from '~/theme/dimension';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 import {getUrlFromText, openLink} from '~/utils/common';
 import ButtonWrapper from './Button/ButtonWrapper';
 
@@ -17,7 +18,7 @@ interface Props {
 
 const LinkPreviewer = ({text}: Props) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const [link, setLink] = useState<string | null | undefined>('');
   const linkPreviews = useKeySelector(`app.linkPreviews`);
@@ -50,29 +51,29 @@ const LinkPreviewer = ({text}: Props) => {
         />
       )}
       <View style={styles.metadata}>
-        <Text.ButtonBase style={styles.title}>
+        <Text.ButtonM style={styles.title}>
           {linkPreviews?.[link].title}
-        </Text.ButtonBase>
+        </Text.ButtonM>
         {!!linkPreviews?.[link].description && (
-          <Text.Subtitle style={styles.description}>
+          <Text.BodyS style={styles.description}>
             {linkPreviews?.[link].description}
-          </Text.Subtitle>
+          </Text.BodyS>
         )}
       </View>
     </ButtonWrapper>
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'column',
       marginTop: spacing.margin.small,
       borderRadius: spacing.borderRadius.small,
-      backgroundColor: colors.surface,
+      backgroundColor: colors.neutral1,
       borderWidth: 1,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
       overflow: 'hidden',
       alignItems: 'flex-start',
     },

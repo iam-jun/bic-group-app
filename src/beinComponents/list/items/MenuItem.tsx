@@ -1,6 +1,6 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import {NotificationsBadgeComponentProps} from '~/beinComponents/Badge/NotificationsBadge/NotificationsBadgeComponent';
 import Icon, {IconProps} from '~/beinComponents/Icon';
@@ -8,7 +8,8 @@ import Text from '~/beinComponents/Text';
 import {useKeySelector} from '~/hooks/selector';
 import {IOption} from '~/interfaces/IOption';
 import postKeySelector from '~/screens/Post/redux/keySelector';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 
 interface MenuItemProps extends IOption {
   RightComponent?: React.ReactNode | React.ReactElement;
@@ -40,7 +41,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
 }: MenuItemProps) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme || {};
   const styles = themeStyles(theme);
 
@@ -48,7 +49,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
   if (type === 'draftPost') {
     const draftPost = useKeySelector(postKeySelector.draft.posts) || [];
     badgeNumber = draftPost?.length || 0;
-    badgeColor = colors.borderCard;
+    badgeColor = colors.gray40;
     if (badgeNumber > 9) {
       badgeNumber = '9+';
     }
@@ -63,16 +64,16 @@ const MenuItem: React.FC<MenuItemProps> = ({
         <View style={[styles.container, style]}>
           {icon && <Icon icon={icon} size={24} {...iconProps} />}
           <View style={styles.titleContainer}>
-            <Text.ButtonBase testID="menu_item.title" useI18n>
+            <Text.ButtonM testID="menu_item.title" useI18n>
               {title}
-            </Text.ButtonBase>
+            </Text.ButtonM>
             {!!subTitle && (
-              <Text.Subtitle
+              <Text.BodyS
                 testID="menu_item.sub_title"
                 numberOfLines={2}
                 useI18n>
                 {subTitle}
-              </Text.Subtitle>
+              </Text.BodyS>
             )}
           </View>
           {(notificationsBadgeNumber || notificationsBadgeProps) && (
@@ -85,7 +86,7 @@ const MenuItem: React.FC<MenuItemProps> = ({
             {!!rightSubTitle && (
               <Text.BodyS
                 testID="menu_item.right_sub_title"
-                color={theme.colors.iconTint}
+                color={theme.colors.neutral80}
                 useI18n>
                 {rightSubTitle}
               </Text.BodyS>
@@ -105,11 +106,11 @@ const MenuItem: React.FC<MenuItemProps> = ({
                 styles.badgeNumberContainer,
                 badgeColor ? {backgroundColor: badgeColor} : {},
               ]}>
-              <Text.Subtitle
+              <Text.BodyS
                 testID="menu_item.badge_number.number"
                 style={styles.badgeNumber}>
                 {badgeNumber}
-              </Text.Subtitle>
+              </Text.BodyS>
             </View>
           )}
           {RightComponent}
@@ -119,8 +120,8 @@ const MenuItem: React.FC<MenuItemProps> = ({
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {
@@ -149,7 +150,7 @@ const themeStyles = (theme: ITheme) => {
       alignItems: 'center',
     },
     badgeNumber: {
-      color: colors.textReversed,
+      color: colors.white,
       marginTop: -2,
     },
   });

@@ -5,8 +5,8 @@ import {AppConfig} from '~/configs';
 import {authStack} from '~/configs/navigator';
 import {useUserIdAuth} from '~/hooks/auth';
 import {IObject} from '~/interfaces/common';
-import {initPushTokenMessage} from '~/services/helper';
 import * as authStacks from './stack';
+import {initPushTokenMessage} from '~/services/firebase';
 
 const Stack = createStackNavigator();
 

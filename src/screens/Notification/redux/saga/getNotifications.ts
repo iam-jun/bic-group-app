@@ -13,11 +13,12 @@ function* getNotifications({
   payload: IParamGetNotifications;
   type: string;
 }) {
-  const {flag = 'ALL', keyValue = 'tabAll'} = payload || {};
+  const {flag = 'ALL', keyValue = 'tabAll', isRefresh = false} = payload || {};
   try {
-    yield put(
-      notificationsActions.setLoadingNotifications({keyValue, value: true}),
-    );
+    if (!isRefresh)
+      yield put(
+        notificationsActions.setLoadingNotifications({keyValue, value: true}),
+      );
     yield put(notificationsActions.setNoMoreNoti({keyValue, value: false}));
 
     const response: IObject<any> = yield call(
@@ -26,8 +27,6 @@ function* getNotifications({
     );
 
     if (flag === 'UNREAD' && response?.results?.length < 1) {
-      yield put(groupsActions.getMyCommunities({}));
-      yield timeOut(500);
       const joinedCommunities: IObject<any> = yield select(
         (state: any) => state.groups.joinedCommunities.data,
       );
@@ -61,9 +60,10 @@ function* getNotifications({
       );
     }
 
-    yield put(
-      notificationsActions.setLoadingNotifications({keyValue, value: false}),
-    );
+    if (!isRefresh)
+      yield put(
+        notificationsActions.setLoadingNotifications({keyValue, value: false}),
+      );
   } catch (err) {
     yield put(
       notificationsActions.setLoadingNotifications({

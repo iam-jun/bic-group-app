@@ -1,8 +1,7 @@
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
-import i18next from 'i18next';
 import {useDispatch} from 'react-redux';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import BottomSheet from '~/beinComponents/BottomSheet';
@@ -12,7 +11,7 @@ import Button from '~/beinComponents/Button';
 import {IGroupMembers} from '~/interfaces/IGroup';
 import {useKeySelector} from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
-import {ITheme} from '~/theme/interfaces';
+
 import useAuth from '~/hooks/auth';
 import modalActions from '~/store/modal/actions';
 import groupsActions from '../../redux/actions';
@@ -20,6 +19,9 @@ import {checkLastAdmin, handleLeaveInnerGroups} from '../../helper';
 import useRemoveMember from './useRemoveMember';
 import useRemoveAdmin from './useRemoveAdmin';
 import useLeaveGroup from './useLeaveGroup';
+import spacing from '~/theme/spacing';
+import {useBaseHook} from '~/hooks';
+import {useMyPermissions} from '~/hooks/permissions';
 
 interface MemberOptionsMenuProps {
   groupId: number;
@@ -34,15 +36,22 @@ const MemberOptionsMenu = ({
   selectedMember,
   onOptionsClosed,
 }: MemberOptionsMenuProps) => {
-  const theme = useTheme() as ITheme;
-  const styles = createStyle(theme);
+  const theme: ExtendedTheme = useTheme();
   const dispatch = useDispatch();
   const {user} = useAuth();
+  const {t} = useBaseHook();
+  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
 
-  const can_manage_member = useKeySelector(
-    groupsKeySelector.groupDetail.can_manage_member,
+  const canRemoveMember = hasPermissionsOnScopeWithId(
+    'groups',
+    groupId,
+    PERMISSION_KEY.GROUP.ADD_REMOVE_MEMBERS,
   );
-  const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
+  const canManageRole = hasPermissionsOnScopeWithId(
+    'groups',
+    groupId,
+    PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE,
+  );
   const groupMembers = useKeySelector(groupsKeySelector.groupMembers);
   const {getInnerGroupsNames} = useRemoveMember({
     groupId,
@@ -77,15 +86,15 @@ const MemberOptionsMenu = ({
   const alertSettingAdmin = () => {
     const alertPayload = {
       iconName: 'Star',
-      title: i18next.t('groups:modal_confirm_set_admin:title'),
-      content: i18next.t('groups:modal_confirm_set_admin:description'),
+      title: t('groups:modal_confirm_set_admin:title'),
+      content: t('groups:modal_confirm_set_admin:description'),
       ContentComponent: Text.BodyS,
       cancelBtn: true,
       cancelBtnProps: {
-        textColor: theme.colors.primary7,
+        textColor: theme.colors.purple60,
       },
       onConfirm: doSetAdmin,
-      confirmLabel: i18next.t('groups:modal_confirm_set_admin:button_confirm'),
+      confirmLabel: t('groups:modal_confirm_set_admin:button_confirm'),
       ConfirmBtnComponent: Button.Secondary,
       confirmBtnProps: {
         highEmphasis: true,
@@ -117,7 +126,7 @@ const MemberOptionsMenu = ({
             props: {
               type: 'error',
               textProps: {useI18n: true},
-              rightIcon: 'UsersAlt',
+              rightIcon: 'UserGroup',
               rightText: 'Members',
               onPressRight: onPressMemberButton,
             },
@@ -200,14 +209,14 @@ const MemberOptionsMenu = ({
       onClose={onOptionsClosed}
       ContentComponent={
         <View style={styles.bottomSheet}>
-          {can_setting &&
+          {canManageRole &&
             (selectedMember?.is_admin ? (
               <PrimaryItem
                 testID="member_options_menu.remove_admin"
                 style={styles.menuOption}
                 leftIcon={'Star'}
                 leftIconProps={{icon: 'Star', size: 24}}
-                title={i18next.t('groups:member_menu:label_remove_as_admin')}
+                title={t('groups:member_menu:label_revoke_admin_role')}
                 onPress={() => onPressMenuOption('remove-admin')}
               />
             ) : (
@@ -216,22 +225,22 @@ const MemberOptionsMenu = ({
                 style={styles.menuOption}
                 leftIcon={'Star'}
                 leftIconProps={{icon: 'Star', size: 24}}
-                title={i18next.t('groups:member_menu:label_set_as_admin')}
+                title={t('groups:member_menu:label_set_as_admin')}
                 onPress={() => onPressMenuOption('set-admin')}
               />
             ))}
-          {can_manage_member && selectedMember?.username !== user?.username && (
+          {canRemoveMember && selectedMember?.username !== user?.username && (
             <PrimaryItem
               testID="member_options_menu.remove_member"
               style={styles.menuOption}
-              leftIcon={'UserTimes'}
+              leftIcon={'UserXmark'}
               leftIconProps={{
-                icon: 'UserTimes',
+                icon: 'UserXmark',
                 size: 24,
-                tintColor: theme.colors.error,
+                tintColor: theme.colors.red60,
               }}
-              title={i18next.t('groups:member_menu:label_remove_member')}
-              titleProps={{color: theme.colors.error}}
+              title={t('groups:member_menu:label_remove_member')}
+              titleProps={{color: theme.colors.red60}}
               onPress={() => onPressMenuOption('remove-member')}
             />
           )}
@@ -239,9 +248,9 @@ const MemberOptionsMenu = ({
             <PrimaryItem
               testID="member_options_menu.leave_group"
               style={styles.menuOption}
-              leftIcon={'SignOutAlt'}
-              leftIconProps={{icon: 'SignOutAlt', size: 24}}
-              title={i18next.t('groups:member_menu:label_leave_group')}
+              leftIcon={'ArrowRightFromArc'}
+              leftIconProps={{icon: 'ArrowRightFromArc', size: 24}}
+              title={t('groups:member_menu:label_leave_group')}
               onPress={() => onPressMenuOption('leave-group')}
             />
           )}
@@ -251,23 +260,20 @@ const MemberOptionsMenu = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing} = theme;
-  return StyleSheet.create({
-    bottomSheet: {
-      paddingVertical: spacing.padding.tiny,
-    },
-    menuOption: {
-      height: 44,
-      paddingHorizontal: spacing.padding.large,
-    },
-    alertRemoveGroupsList: {
-      marginBottom: spacing.margin.small,
-    },
-    alertRemoveGroupsListItem: {
-      marginLeft: spacing.margin.small,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  bottomSheet: {
+    paddingVertical: spacing.padding.tiny,
+  },
+  menuOption: {
+    height: 44,
+    paddingHorizontal: spacing.padding.large,
+  },
+  alertRemoveGroupsList: {
+    marginBottom: spacing.margin.small,
+  },
+  alertRemoveGroupsListItem: {
+    marginLeft: spacing.margin.small,
+  },
+});
 
 export default MemberOptionsMenu;

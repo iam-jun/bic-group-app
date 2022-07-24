@@ -66,15 +66,13 @@ describe('Reaction component', () => {
     const childrenComponent = getByTestId('reaction.children');
     const childrenStyle = StyleSheet.flatten(childrenComponent.props.style);
 
-    expect(childrenStyle.color).toEqual(colors.light.colors.textPrimary);
+    expect(childrenStyle.color).toEqual(colors.light.colors.neutral80);
 
     const reactionComponent = getByTestId('reaction');
     const reactionStyle = StyleSheet.flatten(reactionComponent.props.style);
 
-    expect(reactionStyle.backgroundColor).toEqual(
-      colors.light.colors.placeholder,
-    );
-    expect(reactionStyle.borderColor).toEqual(colors.light.colors.placeholder);
+    expect(reactionStyle.backgroundColor).toEqual(colors.light.colors.neutral5);
+    expect(reactionStyle.borderColor).toEqual(colors.light.colors.neutral5);
   });
 
   it('renders selected = true correctly', () => {
@@ -89,14 +87,14 @@ describe('Reaction component', () => {
 
     const childrenComponent = getByTestId('reaction.children');
     const flattenedStyle = StyleSheet.flatten(childrenComponent.props.style);
-    expect(flattenedStyle.color).toEqual(colors.light.colors.primary7);
+    expect(flattenedStyle.color).toEqual(colors.light.colors.purple60);
 
     const reactionComponent = getByTestId('reaction');
     expect(reactionComponent.props.style.backgroundColor).toEqual(
-      colors.light.colors.primary2,
+      colors.light.colors.purple5,
     );
     expect(reactionComponent.props.style.borderColor).toEqual(
-      colors.light.colors.primary6,
+      colors.light.colors.purple50,
     );
   });
 
@@ -195,10 +193,10 @@ describe('Reaction component', () => {
 
     const button = getByTestId('reaction');
     expect(button.props.style.backgroundColor).toEqual(
-      colors.light.colors.placeholder,
+      colors.light.colors.neutral5,
     );
     expect(button.props.style.borderColor).toEqual(
-      colors.light.colors.placeholder,
+      colors.light.colors.neutral5,
     );
 
     fireEvent.press(button);
@@ -206,10 +204,10 @@ describe('Reaction component', () => {
 
     // expect the colors to be the same
     expect(button.props.style.backgroundColor).toEqual(
-      colors.light.colors.placeholder,
+      colors.light.colors.neutral5,
     );
     expect(button.props.style.borderColor).toEqual(
-      colors.light.colors.placeholder,
+      colors.light.colors.neutral5,
     );
   });
 });

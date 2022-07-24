@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import i18next from 'i18next';
 import {View, StyleSheet, ScrollView, TextInput, Keyboard} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -13,7 +13,6 @@ import Text from '~/beinComponents/Text';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 
-import {ITheme} from '~/theme/interfaces';
 import {useRootNavigation} from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {fontFamilies} from '~/theme/fonts';
@@ -25,9 +24,11 @@ import {showHideToastMessage} from '~/store/modal/actions';
 import {IToastMessage} from '~/interfaces/common';
 import {isEmpty} from 'lodash';
 import Button from '~/beinComponents/Button';
+import spacing from '~/theme/spacing';
+import dimension from '~/theme/dimension';
 
 const AddWork = () => {
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
 
   const styles = createStyles(theme);
@@ -198,8 +199,8 @@ const AddWork = () => {
         maxLength={50}
         testID="add_work.company"
         onChangeText={onChangeCompany}
-        outlineColor={colors.borderCard}
-        activeOutlineColor={colors.primary6}
+        outlineColor={colors.gray40}
+        activeOutlineColor={colors.purple50}
         placeholder={i18next.t('settings:text_compamny')}
       />
     );
@@ -213,8 +214,8 @@ const AddWork = () => {
         testID="add_work.title_position"
         placeholder={i18next.t('settings:text_title_position')}
         onChangeText={onChangePosition}
-        activeOutlineColor={colors.primary6}
-        outlineColor={colors.borderCard}
+        activeOutlineColor={colors.purple50}
+        outlineColor={colors.gray40}
       />
     );
   };
@@ -227,8 +228,8 @@ const AddWork = () => {
         testID="add_work.location"
         placeholder={i18next.t('settings:text_location_optional')}
         onChangeText={onChangeLocation}
-        activeOutlineColor={colors.primary6}
-        outlineColor={colors.borderCard}
+        activeOutlineColor={colors.purple50}
+        outlineColor={colors.gray40}
       />
     );
   };
@@ -249,7 +250,7 @@ const AddWork = () => {
           textAlignVertical="top"
           onFocus={onFocusDescription}
           onBlur={onBlurDescription}
-          placeholderTextColor={colors.textSecondary}
+          placeholderTextColor={colors.gray50}
         />
       </View>
     );
@@ -279,11 +280,11 @@ const AddWork = () => {
           style={styles.buttonDate}
           onPress={onStartDateEditOpen}>
           <Icon
-            icon="CalendarAlt"
-            tintColor={colors.textSecondary}
+            icon="Calendar"
+            tintColor={colors.gray50}
             style={styles.calendarIcon}
           />
-          <Text.BodyS testID="add_work.start_date" color={colors.textSecondary}>
+          <Text.BodyS testID="add_work.start_date" color={colors.gray50}>
             {formatDate(startDateValue, 'MMMM DD, YYYY') ||
               i18next.t('common:text_not_set')}
           </Text.BodyS>
@@ -302,12 +303,12 @@ const AddWork = () => {
           style={styles.buttonDate}
           onPress={onEndDateEditOpen}>
           <Icon
-            icon="CalendarAlt"
-            tintColor={colors.textSecondary}
+            icon="Calendar"
+            tintColor={colors.gray50}
             style={styles.calendarIcon}
           />
 
-          <Text.BodyS testID="add_work.end_date" color={colors.textSecondary}>
+          <Text.BodyS testID="add_work.end_date" color={colors.gray50}>
             {(endDateValue && formatDate(endDateValue, 'MMMM DD, YYYY')) ||
               i18next.t('common:text_not_set')}
           </Text.BodyS>
@@ -342,11 +343,11 @@ const AddWork = () => {
         buttonText={selectedWorkItem ? 'common:text_save' : 'common:text_add'}
         buttonProps={{
           useI18n: true,
-          color: theme.colors.primary6,
-          textColor: theme.colors.background,
+          color: theme.colors.purple50,
+          textColor: theme.colors.white,
           disabled:
             companyValue?.trim?.() && positionValue?.trim?.() ? false : true,
-          borderRadius: theme.spacing.borderRadius.small,
+          borderRadius: spacing.borderRadius.small,
           testID: 'add_work.save',
         }}
         onPressButton={onSave}
@@ -398,8 +399,8 @@ const AddWork = () => {
 
 export default AddWork;
 
-const createStyles = (theme: ITheme) => {
-  const {spacing, colors, dimension} = theme;
+const createStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
 
   return StyleSheet.create({
     container: {
@@ -407,20 +408,20 @@ const createStyles = (theme: ITheme) => {
     },
     textInputView: {
       borderRadius: spacing.borderRadius.small,
-      borderColor: colors.borderCard,
+      borderColor: colors.gray40,
       borderWidth: 1,
       padding: spacing.margin.base,
       marginTop: spacing.margin.small,
       height: 88,
     },
     textInput: {
-      fontFamily: fontFamilies.OpenSans,
-      fontSize: dimension.sizes.body,
-      color: colors.textPrimary,
+      fontFamily: fontFamilies.BeVietnamProLight,
+      fontSize: dimension.sizes.bodyM,
+      color: colors.neutral80,
       flex: 1,
     },
     textInputFocus: {
-      borderColor: colors.primary6,
+      borderColor: colors.purple50,
     },
     selectionView: {
       marginTop: spacing.margin.extraLarge,
@@ -437,7 +438,7 @@ const createStyles = (theme: ITheme) => {
     },
     buttonDate: {
       padding: spacing.padding.small,
-      backgroundColor: colors.bgSecondary,
+      backgroundColor: colors.neutral1,
     },
     calendarIcon: {
       marginRight: spacing.margin.small,

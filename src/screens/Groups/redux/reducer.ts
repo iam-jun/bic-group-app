@@ -8,6 +8,11 @@ import {getNewSchemeRolesOnUpdatePermission} from '~/screens/Groups/CreatePermis
 import {cloneDeep} from 'lodash';
 
 export const groupInitState = {
+  myPermissions: {
+    loading: false,
+    data: {},
+    timeGetMyPermissions: null,
+  },
   permissionScheme: {
     categories: {
       data: undefined,
@@ -28,11 +33,23 @@ export const groupInitState = {
         communityScheme: undefined,
         groupSchemes: undefined,
       },
+      allSchemes: undefined,
     },
     creatingScheme: {
       data: undefined,
-      memberRoleIndex: undefined,
+      memberRoleIndex: 2,
       creating: false,
+    },
+    assignGroupScheme: {
+      assignments: {
+        loading: false,
+        data: undefined,
+      },
+      assigning: {
+        loading: false,
+        data: [],
+        currentAssignments: undefined,
+      },
     },
     groupScheme: {
       // storing this data for comparing original group scheme and editing scheme
@@ -86,7 +103,7 @@ export const groupInitState = {
   },
   loadingGroupMember: false,
   groupMembers: {
-    loading: false,
+    loading: true,
     canLoadMore: true,
     offset: 0, // current fetched data count
     // group_admin: {}, group_member: {}
@@ -118,8 +135,8 @@ export const groupInitState = {
   loadingAvatar: false,
   loadingCover: false,
   discoverGroups: {
-    loading: false,
-    data: [],
+    loading: true,
+    ids: [],
     items: {},
     canLoadMore: true,
   },
@@ -150,15 +167,15 @@ export const groupInitState = {
     items: {},
   },
   managedCommunities: {
-    loading: false,
+    loading: true,
     canLoadMore: true,
-    data: [] as number[],
+    ids: [] as number[],
     items: {},
   },
   isGettingInfoDetail: false,
   communityDetail: {} as ICommunity,
   communityMembers: {
-    loading: false,
+    loading: true,
     canLoadMore: true,
     offset: 0, // current fetched data count
     // community_admin: {}, community_member: {}
@@ -208,6 +225,15 @@ function groupsReducer(state = groupInitState, action: any = {}) {
   } = state;
 
   switch (type) {
+    case groupsTypes.SET_MY_PERMISSIONS:
+      return {
+        ...state,
+        myPermissions: {
+          ...cloneDeep(state.myPermissions),
+          ...payload,
+        },
+      };
+
     //Group Structure Settings
     case groupsTypes.SET_GROUP_STRUCTURE:
       return {
@@ -301,6 +327,8 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
     case groupsTypes.UPDATE_CREATING_SCHEME_PERMISSION: {
+      const memberRoleIndex =
+        state.permissionScheme.creatingScheme?.memberRoleIndex;
       const {permission, roleIndex} = payload || {};
       const roles =
         // @ts-ignore
@@ -309,6 +337,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         permission,
         roleIndex,
         roles,
+        memberRoleIndex,
       );
       const newData = Object.assign(
         // @ts-ignore
@@ -340,6 +369,32 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         permissionScheme: {
           ...state.permissionScheme,
           schemes: payload,
+        },
+      };
+    case groupsTypes.SET_GROUP_SCHEME_ASSIGNMENTS:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          assignGroupScheme: {
+            ...state.permissionScheme.assignGroupScheme,
+            assignments: payload
+              ? payload
+              : groupInitState.permissionScheme.assignGroupScheme.assignments,
+          },
+        },
+      };
+    case groupsTypes.SET_GROUP_SCHEME_ASSIGNING:
+      return {
+        ...state,
+        permissionScheme: {
+          ...state.permissionScheme,
+          assignGroupScheme: {
+            ...state.permissionScheme.assignGroupScheme,
+            assigning: payload
+              ? payload
+              : groupInitState.permissionScheme.assignGroupScheme.assigning,
+          },
         },
       };
     case groupsTypes.SET_GROUP_SCHEME:
@@ -622,8 +677,8 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       return {
         ...state,
         joinedCommunities: {
-          loading: payload?.loading || false,
-          data: payload?.data || [],
+          ...state.joinedCommunities,
+          ...payload,
         },
       };
     case groupsTypes.SET_DISCOVER_COMMUNITIES:
@@ -633,11 +688,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           ...state.discoverCommunities,
           ...payload,
         },
-      };
-    case groupsTypes.RESET_DISCOVER_COMMUNITIES:
-      return {
-        ...state,
-        discoverCommunities: groupInitState.discoverCommunities,
       };
 
     case groupsTypes.GET_COMMUNITY_GROUPS:
@@ -660,6 +710,8 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     case groupsTypes.SET_COMMUNITY_DETAIL:
       return {
         ...state,
+        loadingCover: false,
+        loadingAvatar: false,
         isGettingInfoDetail: false,
         communityDetail: payload,
       };
@@ -694,32 +746,13 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       };
     }
 
-    case groupsTypes.GET_DISCOVER_GROUPS:
-      return {
-        ...state,
-        discoverGroups: {
-          ...discoverGroups,
-          loading: discoverGroups.data.length === 0,
-        },
-      };
     case groupsTypes.SET_DISCOVER_GROUPS:
       return {
         ...state,
         discoverGroups: {
           ...discoverGroups,
-          loading: false,
-          data: [...discoverGroups.data, ...payload.ids],
-          items: {
-            ...discoverGroups.items,
-            ...payload.items,
-          },
-          canLoadMore: payload.ids.length === appConfig.recordsPerPage,
+          ...payload,
         },
-      };
-    case groupsTypes.RESET_DISCOVER_GROUPS:
-      return {
-        ...state,
-        discoverGroups: groupInitState.discoverGroups,
       };
     case groupsTypes.EDIT_DISCOVER_GROUP_ITEM:
       return {
@@ -744,11 +777,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           ...managedCommunities,
           ...payload,
         },
-      };
-    case groupsTypes.RESET_MANAGED_COMMUNITIES:
-      return {
-        ...state,
-        managedCommunities: groupInitState.managedCommunities,
       };
     case groupsTypes.EDIT_DISCOVER_COMMUNITY_ITEM:
       return {

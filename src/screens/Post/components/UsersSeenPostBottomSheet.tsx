@@ -1,9 +1,9 @@
 import React, {useRef} from 'react';
 import {View, StyleSheet, FlatList, Dimensions} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {ITheme} from '~/theme/interfaces';
+
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
@@ -14,14 +14,16 @@ import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import mainStack from '~/router/navigator/MainStack/stack';
 import {useBaseHook} from '~/hooks';
 import modalActions from '~/store/modal/actions';
+import dimension from '~/theme/dimension';
+import spacing from '~/theme/spacing';
 
 const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const insets = useSafeAreaInsets();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme, insets);
-  const {colors, spacing} = theme;
+  const {colors} = theme;
   const {t} = useBaseHook();
 
   React.useEffect(() => {
@@ -83,7 +85,7 @@ const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
 
   return (
     <View style={styles.container}>
-      <Text.H6 style={styles.header} color={colors.primary6} numberOfLines={1}>
+      <Text.H6 style={styles.header} color={colors.purple50} numberOfLines={1}>
         {t('post:label_seen_by')}
         {total}
       </Text.H6>
@@ -100,8 +102,8 @@ const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
   );
 };
 
-const createStyle = (theme: ITheme, insets: any) => {
-  const {spacing, dimension, colors} = theme;
+const createStyle = (theme: ExtendedTheme, insets: any) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       height: dimension?.deviceHeight * 0.6,
@@ -112,7 +114,7 @@ const createStyle = (theme: ITheme, insets: any) => {
       paddingHorizontal: spacing.padding.large,
       paddingBottom: spacing.padding.small,
       borderBottomWidth: 1,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
     },
     header: {
       paddingTop: spacing.padding.small,
@@ -146,7 +148,7 @@ const createStyle = (theme: ITheme, insets: any) => {
       marginBottom: spacing.padding.large,
       height: 2,
       width: 73,
-      backgroundColor: colors.primary6,
+      backgroundColor: colors.purple50,
     },
   });
 };

@@ -11,36 +11,47 @@ export default function* getDiscoverCommunities({
   payload,
 }: {
   type: string;
-  payload?: any;
+  payload: {isRefreshing?: boolean; refreshNoLoading?: boolean};
 }): any {
   try {
     const {groups} = yield select();
-    const {ids, items, canLoadMore} = groups.discoverCommunities;
-    if (!canLoadMore) return;
 
-    yield put(groupsActions.setDiscoverCommunities({loading: true}));
+    const {isRefreshing, refreshNoLoading} = payload;
+    const {ids, items, canLoadMore} = groups.discoverCommunities;
+
+    yield put(
+      groupsActions.setDiscoverCommunities({
+        loading: isRefreshing ? true : ids.length === 0,
+      }),
+    );
+
+    if (!isRefreshing && !refreshNoLoading && !canLoadMore) return;
+
     const params: IParamGetCommunities = {
       limit: appConfig.recordsPerPage,
-      offset: ids.length,
+      offset: isRefreshing || refreshNoLoading ? 0 : ids.length,
     };
+
     const response = yield call(
       groupsDataHelper.getDiscoverCommunities,
       params,
     );
 
-    const respData = response?.data;
-    if (respData) {
-      const newIds = respData.map((item: any) => item.id);
-      const newItems = mapItems(respData);
+    const respData = response.data;
+    const newIds = respData.map((item: any) => item.id);
+    const newItems = mapItems(respData);
 
-      const newData = {
-        loading: false,
-        canLoadMore: newIds.length === appConfig.recordsPerPage,
-        ids: [...ids, ...newIds],
-        items: {...items, ...newItems},
-      };
-      yield put(groupsActions.setDiscoverCommunities(newData));
-    }
+    const newData = {
+      loading: false,
+      canLoadMore: newIds.length === appConfig.recordsPerPage,
+      ids: isRefreshing || refreshNoLoading ? [...newIds] : [...ids, ...newIds],
+      items:
+        isRefreshing || refreshNoLoading
+          ? {...newItems}
+          : {...items, ...newItems},
+    };
+
+    yield put(groupsActions.setDiscoverCommunities(newData));
   } catch (err) {
     console.log('\x1b[33m', 'getDiscoverCommunities : error', err, '\x1b[0m');
     yield put(groupsActions.setDiscoverCommunities({loading: false}));

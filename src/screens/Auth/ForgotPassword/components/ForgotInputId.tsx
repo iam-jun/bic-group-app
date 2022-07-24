@@ -1,7 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useController} from 'react-hook-form';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import isEmpty from 'lodash/isEmpty';
 import {useDispatch} from 'react-redux';
 
@@ -14,7 +14,8 @@ import {IObject} from '~/interfaces/common';
 import actions from '~/screens/Auth/redux/actions';
 import useAuth from '~/hooks/auth';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 
 interface Props {
   useFormData: IObject<any>;
@@ -22,7 +23,7 @@ interface Props {
 
 const ForgotInputId: React.FC<Props> = ({useFormData}) => {
   const dispatch = useDispatch();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
 
@@ -115,7 +116,7 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
         }}
         helperType={errors?.email?.message ? 'error' : undefined}
         helperContent={errors?.email?.message}
-        style={{marginTop: 0, marginBottom: theme.spacing.margin.small}}
+        style={{marginTop: 0, marginBottom: spacing.margin.small}}
         onSubmitEditing={() => onRequestForgotPassword()}
       />
       <Button.Primary
@@ -130,8 +131,8 @@ const ForgotInputId: React.FC<Props> = ({useFormData}) => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingTop: spacing.padding.big,
@@ -145,7 +146,7 @@ const themeStyles = (theme: ITheme) => {
     desc: {
       marginTop: spacing.margin.extraLarge,
       marginBottom: spacing.margin.large,
-      color: colors.text,
+      color: colors.neutral80,
     },
     btnSendRecoverCode: {
       marginTop: spacing.margin.large,

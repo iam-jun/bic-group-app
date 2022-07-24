@@ -6,9 +6,7 @@ import {
   ViewStyle,
   TouchableOpacity,
 } from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import {useDispatch} from 'react-redux';
@@ -19,6 +17,7 @@ import modalActions from '~/store/modal/actions';
 import Divider from '~/beinComponents/Divider';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {useBaseHook} from '~/hooks';
+import spacing from '~/theme/spacing';
 
 export interface GroupJoinedProps {
   style?: StyleProp<ViewStyle>;
@@ -47,8 +46,8 @@ const GroupJoined: FC<GroupJoinedProps> = ({
 
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
   const styles = createStyle(theme);
 
   const onChangeType = (item: any) => {
@@ -129,7 +128,7 @@ const GroupJoined: FC<GroupJoinedProps> = ({
         }}>
         <Text.H5
           useI18n
-          color={colors.textSecondary}
+          color={colors.gray50}
           style={{marginLeft: spacing.margin.small}}>
           communities:text_view_mode
         </Text.H5>
@@ -144,8 +143,8 @@ const GroupJoined: FC<GroupJoinedProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -160,9 +159,9 @@ const createStyle = (theme: ITheme) => {
     },
     menuButton: {
       borderRadius: spacing.borderRadius.small,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
       borderWidth: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       flexDirection: 'row',
       alignItems: 'center',
       padding: spacing.padding.tiny,

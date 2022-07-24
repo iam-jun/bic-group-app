@@ -1,4 +1,6 @@
-export type PRIVACY_TYPE = 'PUBLIC' | 'PRIVATE' | 'SECRET' | 'OPEN';
+export type GROUP_PRIVACY_TYPE = 'PUBLIC' | 'PRIVATE' | 'SECRET' | 'OPEN';
+export type COMMUNITY_PRIVACY_TYPE = 'PUBLIC' | 'PRIVATE' | 'SECRET';
+
 export type GROUP_TYPE = 'GENERIC' | 'COMMUNITY' | 'COMPANY';
 
 export const groupPrivacy = {
@@ -19,7 +21,7 @@ export default [
   {
     type: 'PRIVATE',
     title: 'settings:title_private',
-    icon: 'Lock',
+    icon: 'iconPrivate',
     subtitle: 'settings:title_private_subtitle',
     privacyTitle: 'settings:privacy_private',
   },
@@ -36,5 +38,29 @@ export default [
     icon: 'Eye',
     subtitle: 'settings:title_open_subtitle',
     privacyTitle: 'settings:privacy_open',
+  },
+];
+
+export const communityPrivacyListDetail = [
+  {
+    type: 'PUBLIC',
+    title: 'settings:title_public',
+    icon: 'Globe',
+    subtitle: 'settings:title_public_subtitle',
+    privacyTitle: 'settings:privacy_public',
+  },
+  {
+    type: 'PRIVATE',
+    title: 'settings:title_private',
+    icon: 'iconPrivate',
+    subtitle: 'settings:title_private_subtitle',
+    privacyTitle: 'settings:privacy_private',
+  },
+  {
+    type: 'SECRET',
+    title: 'settings:title_secret',
+    icon: 'iconSecret',
+    subtitle: 'settings:title_secret_subtitle',
+    privacyTitle: 'settings:privacy_secret',
   },
 ];

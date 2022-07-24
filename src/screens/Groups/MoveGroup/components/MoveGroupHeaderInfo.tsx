@@ -1,17 +1,15 @@
 import React, {FC} from 'react';
 import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme} from 'react-native-paper';
-
-import {ITheme} from '~/theme/interfaces';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import {IGroup} from '~/interfaces/IGroup';
 import Avatar from '~/beinComponents/Avatar';
 import Divider from '~/beinComponents/Divider';
 import {useBaseHook} from '~/hooks';
-import MoveLine from '../../../../../assets/images/img_move_line.svg';
-import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 import {getAllChildrenName} from '~/screens/Groups/helper';
+import MoveLine from '~/screens/Groups/MoveGroup/components/MoveLine';
+import spacing from '~/theme/spacing';
 
 export interface MoveGroupHeaderInfoProps {
   style?: StyleProp<ViewStyle>;
@@ -19,40 +17,20 @@ export interface MoveGroupHeaderInfoProps {
 }
 
 const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
-  style,
   group,
 }: MoveGroupHeaderInfoProps) => {
   const {t} = useBaseHook();
-  const theme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
   const styles = createStyle(theme);
 
-  const {icon, name, children} = group || {};
+  const {icon, name} = group || {};
 
-  const childrenName =
-    getAllChildrenName(group).join?.(', ') ||
-    t('communities:group_structure:text_no_group');
+  const childrenName = getAllChildrenName(group).join?.(', ');
 
   return (
     <View style={styles.container}>
-      <View
-        style={{
-          marginTop: spacing.margin.large,
-          flexDirection: 'row',
-        }}>
-        <SvgIcon
-          // @ts-ignore
-          source={MoveLine}
-          width={24}
-          height={172}
-          tintColor="none"
-          style={{
-            marginTop: 2,
-            marginRight: spacing.margin.tiny,
-          }}
-        />
-        <View style={styles.blueDot} />
-      </View>
+      <MoveLine />
       <View style={styles.infoContainer}>
         <View style={styles.groupNameContainer}>
           <Avatar.Small style={styles.iconGroup} source={icon} />
@@ -60,31 +38,37 @@ const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
             {name}
           </Text.H6>
         </View>
-        <Divider color={colors.borderFocus} />
-        <View style={styles.childrenInfo}>
-          <Text.BodyS>
-            <Text.BodySM>{childrenName}</Text.BodySM>{' '}
-            {t('communities:group_structure:text_will_be_move')}{' '}
-            <Text.BodySM>{name}</Text.BodySM>
-          </Text.BodyS>
-        </View>
+        {!!childrenName && (
+          <>
+            <Divider color={colors.gray40} />
+            <View style={styles.childrenInfo}>
+              <Text.BodyS>
+                <Text.BodySMedium>{childrenName}</Text.BodySMedium>{' '}
+                {t('communities:group_structure:text_will_be_move')}{' '}
+                <Text.BodySMedium>{name}</Text.BodySMedium>
+              </Text.BodyS>
+            </View>
+          </>
+        )}
       </View>
     </View>
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
       marginHorizontal: spacing.margin.extraLarge,
+      marginBottom: spacing.margin.large,
     },
     infoContainer: {
+      marginLeft: 0,
       flex: 1,
       marginTop: spacing.margin.extraLarge,
       borderWidth: 1,
-      borderColor: colors.borderFocus,
+      borderColor: colors.gray40,
       alignSelf: 'flex-start',
       marginBottom: spacing.margin.extraLarge,
     },
@@ -94,7 +78,7 @@ const createStyle = (theme: ITheme) => {
     groupNameContainer: {
       flexDirection: 'row',
       alignItems: 'center',
-      backgroundColor: colors.bgSecondary,
+      backgroundColor: colors.neutral1,
       paddingVertical: 2,
     },
     groupName: {
@@ -108,7 +92,7 @@ const createStyle = (theme: ITheme) => {
       width: 4,
       height: 4,
       borderRadius: 2,
-      backgroundColor: colors.textInfo,
+      backgroundColor: colors.blue50,
       marginTop: spacing.margin.extraLarge,
       marginRight: spacing.margin.small,
     },

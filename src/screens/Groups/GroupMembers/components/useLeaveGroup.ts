@@ -1,12 +1,12 @@
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import modalActions from '~/store/modal/actions';
 import groupsActions from '../../redux/actions';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import {ITheme} from '~/theme/interfaces';
+
 import {handleLeaveInnerGroups} from '../../helper';
 
 interface IUseLeaveGroup {
@@ -16,20 +16,20 @@ interface IUseLeaveGroup {
 
 const useLeaveGroup = ({groupId, username}: IUseLeaveGroup) => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
 
   const doLeaveGroup = () => {
     dispatch(groupsActions.leaveGroup(groupId));
   };
 
   const alertPayload = {
-    iconName: 'SignOutAlt',
+    iconName: 'ArrowRightFromArc',
     title: i18next.t('groups:modal_confirm_leave_group:title'),
     content: i18next.t('groups:modal_confirm_leave_group:description'),
     ContentComponent: Text.BodyS,
     cancelBtn: true,
     cancelBtnProps: {
-      textColor: theme.colors.primary7,
+      textColor: theme.colors.purple60,
     },
     onConfirm: doLeaveGroup,
     confirmLabel: i18next.t('groups:modal_confirm_leave_group:button_leave'),

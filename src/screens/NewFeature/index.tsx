@@ -1,20 +1,17 @@
 import React from 'react';
-import {StyleSheet, useWindowDimensions, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {StyleSheet, View} from 'react-native';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import {ITheme} from '~/theme/interfaces';
 import Text from '~/beinComponents/Text';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 import NewFeatureImg from '~/../assets/images/new_feeature_grey.svg';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
-import {deviceDimensions} from '~/theme/dimension';
+import spacing from '~/theme/spacing';
 
 const NewFeature = () => {
-  const theme = useTheme() as ITheme;
-  const dimensions = useWindowDimensions();
-  const isLaptop = dimensions.width >= deviceDimensions.laptop;
-  const styles = themeStyle(theme, isLaptop);
+  const theme: ExtendedTheme = useTheme();
+  const styles = themeStyle(theme);
   // const [showRating, setShowRating] = useState<boolean>(true);
   //
   // const onRatingPress = () => {
@@ -28,14 +25,14 @@ const NewFeature = () => {
   //         useI18n
   //         style={styles.button}
   //         onPress={onRatingPress}
-  //         color={theme.colors.primary3}>
+  //         color={theme.colors.purple10}>
   //         new_feature:button_I_want_it_now
   //       </Button.Secondary>
   //       <Button.Secondary
   //         style={styles.button}
   //         useI18n
   //         onPress={onRatingPress}
-  //         color={theme.colors.primary2}>
+  //         color={theme.colors.purple5}>
   //         new_feature:button_I_can_wait
   //       </Button.Secondary>
   //       <Button.Secondary style={styles.button} useI18n onPress={onRatingPress}>
@@ -55,7 +52,7 @@ const NewFeature = () => {
   //   return (
   //     <>
   //       <Text.H6 useI18n>{header}</Text.H6>
-  //       <Text.Body useI18n>{body}</Text.Body>
+  //       <Text.BodyM useI18n>{body}</Text.BodyM>
   //     </>
   //   );
   // };
@@ -74,7 +71,7 @@ const NewFeature = () => {
         <Text.H6 useI18n>
           new_feature:text_we_are_developing_this_feature
         </Text.H6>
-        <Text.Body useI18n>new_feature:text_we_will_notify_you</Text.Body>
+        <Text.BodyM useI18n>new_feature:text_we_will_notify_you</Text.BodyM>
       </View>
     </ScreenWrapper>
   );
@@ -95,18 +92,17 @@ const NewFeature = () => {
   // );
 };
 
-const themeStyle = (theme: ITheme, isLaptop: boolean) => {
-  const {colors, spacing} = theme;
+const themeStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
 
   return StyleSheet.create({
     screenContainer: {
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     body: {
       flex: 1,
       alignItems: 'center',
-      justifyContent: isLaptop ? 'flex-start' : 'center',
-      paddingTop: isLaptop ? 80 : undefined,
+      justifyContent: 'center',
     },
     buttonsContainer: {
       flex: 1,

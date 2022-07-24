@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {isEmpty} from 'lodash';
 import {useForm} from 'react-hook-form';
 import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 
 import Text from '~/beinComponents/Text';
@@ -13,16 +13,18 @@ import * as validation from '~/constants/commonRegex';
 import {useBaseHook} from '~/hooks';
 import authActions from '~/screens/Auth/redux/actions';
 import * as modalActions from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+
 import {IChangePasswordError} from '~/interfaces/IAuth';
 import useAuth from '~/hooks/auth';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 import {getEnv} from '~/utils/env';
+import spacing from '~/theme/spacing';
+import {APP_ENV} from "~/configs/appConfig";
 
 const ChangePassword = () => {
   const {t} = useBaseHook();
   const dispatch = useDispatch();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const {changePasswordError, changePasswordLoading} = useAuth();
@@ -155,10 +157,7 @@ const ChangePassword = () => {
               message: t('auth:text_err_password_characters'),
             },
             validate: () => {
-              if (
-                !getEnv('SELF_DOMAIN')?.includes('sbx') &&
-                !getEnv('SELF_DOMAIN')?.includes('stg')
-              ) {
+              if (getEnv('APP_ENV') === APP_ENV.PRODUCTION) {
                 const value = getValues('password');
                 if (!/(?=.*?[A-Z])/.test(value)) {
                   return t('auth:text_err_password_required_upper_case');
@@ -237,8 +236,8 @@ const ChangePassword = () => {
 
 export default ChangePassword;
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing, colors} = theme;
+const themeStyles = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -266,7 +265,7 @@ const themeStyles = (theme: ITheme) => {
       alignItems: 'center',
     },
     forgotPasswordText: {
-      color: colors.primary7,
+      color: colors.purple60,
     },
   });
 };

@@ -1,10 +1,9 @@
 import React, {useRef} from 'react';
 import {View, StyleSheet, SectionList} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import {ITheme} from '~/theme/interfaces';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
 import {useKeySelector} from '~/hooks/selector';
@@ -18,13 +17,15 @@ import {useRootNavigation} from '~/hooks/navigation';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import mainStack from '~/router/navigator/MainStack/stack';
+import dimension from '~/theme/dimension';
+import spacing from '~/theme/spacing';
 
 const PostAudiencesBottomSheet = () => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();
   const insets = useSafeAreaInsets();
-  const theme: ITheme = useTheme() as ITheme;
-  const {colors, spacing} = theme;
+  const theme: ExtendedTheme = useTheme();
+  const {colors} = theme;
   const styles = createStyle(theme, insets);
 
   const postAudienceSheetRef = useRef<any>();
@@ -72,18 +73,18 @@ const PostAudiencesBottomSheet = () => {
         <Icon
           size={16}
           icon={privacyData.icon || 'Globe'}
-          tintColor={colors.textSecondary}
+          tintColor={colors.gray50}
         />
-        <Text.BodyS style={styles.diamond} color={colors.textSecondary}>
+        <Text.BodyS style={styles.diamond} color={colors.gray50}>
           ⬩
         </Text.BodyS>
         <Icon
           size={16}
           style={styles.iconUser}
-          icon={'UsersAlt'}
-          tintColor={colors.textSecondary}
+          icon={'UserGroup'}
+          tintColor={colors.gray50}
         />
-        <Text.BodyS color={colors.textSecondary}>{user_count}</Text.BodyS>
+        <Text.BodyS color={colors.gray50}>{user_count}</Text.BodyS>
       </View>
     );
   };
@@ -112,9 +113,9 @@ const PostAudiencesBottomSheet = () => {
         <Text.H6 style={styles.header} useI18n>
           post:label_post_audiences
         </Text.H6>
-        <Text.Subtitle useI18n color={colors.textSecondary}>
+        <Text.BodyS useI18n color={colors.gray50}>
           post:label_desc_post_audiences
-        </Text.Subtitle>
+        </Text.BodyS>
       </View>
     );
   };
@@ -151,8 +152,8 @@ const PostAudiencesBottomSheet = () => {
   );
 };
 
-const createStyle = (theme: ITheme, insets: any) => {
-  const {spacing, dimension, colors} = theme;
+const createStyle = (theme: ExtendedTheme, insets: any) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       height: dimension?.deviceHeight * 0.7,
@@ -163,7 +164,7 @@ const createStyle = (theme: ITheme, insets: any) => {
       paddingHorizontal: spacing.padding.large,
       paddingBottom: spacing.padding.small,
       borderBottomWidth: 1,
-      borderColor: colors.borderDivider,
+      borderColor: colors.neutral5,
     },
     sectionContainer: {
       paddingBottom: spacing.padding.base + insets.bottom,

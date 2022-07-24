@@ -1,10 +1,9 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {View, StyleSheet, Pressable} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
 import i18next from 'i18next';
 
-import {ITheme} from '~/theme/interfaces';
 import {useKeySelector} from '~/hooks/selector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
@@ -21,6 +20,8 @@ import Header from '~/beinComponents/Header';
 import MemberOptionsMenu from './components/MemberOptionsMenu';
 import SearchMemberView from './components/SearchMemberView';
 import MembersContent from './components/MembersContent';
+import spacing from '~/theme/spacing';
+import {useMyPermissions} from '~/hooks/permissions';
 
 const _GroupMembers = (props: any) => {
   const params = props.route.params;
@@ -34,15 +35,18 @@ const _GroupMembers = (props: any) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const dispatch = useDispatch();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {colors} = theme;
   const styles = createStyle(theme);
   const {rootNavigation} = useRootNavigation();
   const baseSheetRef: any = useRef();
 
   const {offset} = useKeySelector(groupsKeySelector.groupMembers);
-  const can_manage_member = useKeySelector(
-    groupsKeySelector.groupDetail.can_manage_member,
+  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const canAddMember = hasPermissionsOnScopeWithId(
+    'groups',
+    groupId,
+    PERMISSION_KEY.GROUP.ADD_REMOVE_MEMBERS,
   );
 
   const getGroupProfile = () => {
@@ -89,20 +93,20 @@ const _GroupMembers = (props: any) => {
   const renderInviteMemberButton = () => {
     // only admin or moderator can see this button
     return (
-      can_manage_member && (
+      canAddMember && (
         <ButtonWrapper
           testID="group_members.invite"
           style={styles.inviteButton}
           onPress={goInviteMembers}>
           <Icon
             style={styles.iconSmall}
-            icon={'iconUserPlus'}
+            icon={'UserPlus'}
             size={22}
-            tintColor={theme.colors.primary7}
+            tintColor={theme.colors.purple60}
           />
-          <Text.ButtonBase color={theme.colors.primary} useI18n>
+          <Text.ButtonM color={theme.colors.purple60} useI18n>
             common:text_invite
-          </Text.ButtonBase>
+          </Text.ButtonM>
         </ButtonWrapper>
       )
     );
@@ -114,7 +118,7 @@ const _GroupMembers = (props: any) => {
   };
 
   return (
-    <ScreenWrapper isFullView backgroundColor={colors.background}>
+    <ScreenWrapper isFullView backgroundColor={colors.white}>
       <Header titleTextProps={{useI18n: true}} title={'groups:title_members'} />
       <View style={styles.searchBar}>
         <Pressable
@@ -148,12 +152,12 @@ const _GroupMembers = (props: any) => {
   );
 };
 
-const createStyle = (theme: ITheme) => {
-  const {colors, spacing} = theme;
+const createStyle = (theme: ExtendedTheme) => {
+  const {colors} = theme;
   return StyleSheet.create({
     searchBtn: {
       flex: 1,
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
       justifyContent: 'space-between',
       marginHorizontal: spacing.margin.base,
       marginVertical: spacing.margin.base,
@@ -166,7 +170,7 @@ const createStyle = (theme: ITheme) => {
       flex: 1,
     },
     inviteButton: {
-      backgroundColor: colors.bgButtonSecondary,
+      backgroundColor: colors.white,
       padding: spacing.padding.small,
       borderRadius: 6,
       marginRight: spacing.margin.small,

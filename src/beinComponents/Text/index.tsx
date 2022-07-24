@@ -1,9 +1,9 @@
 import React from 'react';
 import {Text as TextRN, TextProps as RNTextProps} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+
 import {createTextStyle} from '~/beinComponents/Text/textStyle';
 import {useBaseHook} from '~/hooks';
-import {ITheme} from '~/theme/interfaces';
 
 export type TextVariant =
   | 'h1'
@@ -12,17 +12,36 @@ export type TextVariant =
   | 'h4'
   | 'h5'
   | 'h6'
-  | 'h6s'
-  | 'buttonBase'
-  | 'buttonSmall'
+  | 'subtitleL'
+  | 'subtitleM'
+  | 'subtitleS'
+  | 'subtitleXS'
   | 'bodyM'
-  | 'bodyI'
-  | 'body'
-  | 'bodySM'
+  | 'bodyMMedium'
   | 'bodyS'
-  | 'subtitle'
-  | 'heading'
-  | 'headingSB'
+  | 'bodySMedium'
+  | 'paragraphL'
+  | 'paragraphM'
+  | 'paragraphS'
+  | 'buttonL'
+  | 'buttonM'
+  | 'buttonS'
+  | 'tabL'
+  | 'tabM'
+  | 'tabS'
+  | 'linkM'
+  | 'linkS'
+  | 'badgeL'
+  | 'badgeM'
+  | 'badgeS'
+  | 'badgeXS'
+  | 'labelL'
+  | 'labelM'
+  | 'dropdownM'
+  | 'dropdownS'
+  | 'numberM'
+  | 'numberS'
+  | 'captionS'
   | undefined;
 
 export interface TextProps extends RNTextProps {
@@ -42,10 +61,10 @@ const TextComponent: React.FC<TextProps> = ({
   maxLength,
   ...props
 }: TextProps) => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const styles = createTextStyle(theme);
-  const textStyle = styles[variant || 'body'];
+  const textStyle = styles[variant || 'bodyM'];
 
   let content = useI18n ? t(children) : children;
 
@@ -87,37 +106,95 @@ const H5 = ({...props}: TextProps) => (
 const H6 = ({...props}: TextProps) => (
   <TextComponent variant={'h6'} {...props} />
 );
-const H6S = ({...props}: TextProps) => (
-  <TextComponent variant={'h6s'} {...props} />
+const SubtitleL = ({...props}: TextProps) => (
+  <TextComponent variant={'subtitleL'} {...props} />
 );
-const ButtonBase = ({...props}: TextProps) => (
-  <TextComponent variant={'buttonBase'} {...props} />
+const SubtitleM = ({...props}: TextProps) => (
+  <TextComponent variant={'subtitleM'} {...props} />
 );
-const ButtonSmall = ({...props}: TextProps) => (
-  <TextComponent variant={'buttonSmall'} {...props} />
+const SubtitleS = ({...props}: TextProps) => (
+  <TextComponent variant={'subtitleS'} {...props} />
+);
+const SubtitleXS = ({...props}: TextProps) => (
+  <TextComponent variant={'subtitleXS'} {...props} />
 );
 const BodyM = ({...props}: TextProps) => (
   <TextComponent variant={'bodyM'} {...props} />
 );
-const Body = ({...props}: TextProps) => (
-  <TextComponent variant={'body'} {...props} />
-);
-const BodySM = ({...props}: TextProps) => (
-  <TextComponent variant={'bodySM'} {...props} />
+const BodyMMedium = ({...props}: TextProps) => (
+  <TextComponent variant={'bodyMMedium'} {...props} />
 );
 const BodyS = ({...props}: TextProps) => (
   <TextComponent variant={'bodyS'} {...props} />
 );
-const Subtitle = ({...props}: TextProps) => (
-  <TextComponent variant={'subtitle'} {...props} />
+const BodySMedium = ({...props}: TextProps) => (
+  <TextComponent variant={'bodySMedium'} {...props} />
 );
-
-const Heading = ({...props}: TextProps) => (
-  <TextComponent variant={'heading'} {...props} />
+const ParagraphL = ({...props}: TextProps) => (
+  <TextComponent variant={'paragraphL'} {...props} />
 );
-
-const HeadingSB = ({...props}: TextProps) => (
-  <TextComponent variant={'headingSB'} {...props} />
+const ParagraphM = ({...props}: TextProps) => (
+  <TextComponent variant={'paragraphM'} {...props} />
+);
+const ParagraphS = ({...props}: TextProps) => (
+  <TextComponent variant={'paragraphS'} {...props} />
+);
+const ButtonL = ({...props}: TextProps) => (
+  <TextComponent variant={'buttonL'} {...props} />
+);
+const ButtonM = ({...props}: TextProps) => (
+  <TextComponent variant={'buttonM'} {...props} />
+);
+const ButtonS = ({...props}: TextProps) => (
+  <TextComponent variant={'buttonS'} {...props} />
+);
+const TabL = ({...props}: TextProps) => (
+  <TextComponent variant={'tabL'} {...props} />
+);
+const TabM = ({...props}: TextProps) => (
+  <TextComponent variant={'tabM'} {...props} />
+);
+const TabS = ({...props}: TextProps) => (
+  <TextComponent variant={'tabS'} {...props} />
+);
+const LinkM = ({...props}: TextProps) => (
+  <TextComponent variant={'linkM'} {...props} />
+);
+const LinkS = ({...props}: TextProps) => (
+  <TextComponent variant={'linkS'} {...props} />
+);
+const BadgeL = ({...props}: TextProps) => (
+  <TextComponent variant={'badgeL'} {...props} />
+);
+const BadgeM = ({...props}: TextProps) => (
+  <TextComponent variant={'badgeM'} {...props} />
+);
+const BadgeS = ({...props}: TextProps) => (
+  <TextComponent variant={'badgeS'} {...props} />
+);
+const BadgeXS = ({...props}: TextProps) => (
+  <TextComponent variant={'badgeXS'} {...props} />
+);
+const LabelL = ({...props}: TextProps) => (
+  <TextComponent variant={'labelL'} {...props} />
+);
+const LabelM = ({...props}: TextProps) => (
+  <TextComponent variant={'labelM'} {...props} />
+);
+const DropdownM = ({...props}: TextProps) => (
+  <TextComponent variant={'dropdownM'} {...props} />
+);
+const DropdownS = ({...props}: TextProps) => (
+  <TextComponent variant={'dropdownS'} {...props} />
+);
+const NumberM = ({...props}: TextProps) => (
+  <TextComponent variant={'numberM'} {...props} />
+);
+const NumberS = ({...props}: TextProps) => (
+  <TextComponent variant={'numberS'} {...props} />
+);
+const CaptionS = ({...props}: TextProps) => (
+  <TextComponent variant={'captionS'} {...props} />
 );
 
 const Text = Object.assign(TextComponent, {
@@ -127,16 +204,36 @@ const Text = Object.assign(TextComponent, {
   H4,
   H5,
   H6,
-  H6S,
-  ButtonBase,
-  ButtonSmall,
+  SubtitleL,
+  SubtitleM,
+  SubtitleS,
+  SubtitleXS,
   BodyM,
-  Body,
-  BodySM,
+  BodyMMedium,
   BodyS,
-  Subtitle,
-  Heading,
-  HeadingSB,
+  BodySMedium,
+  ParagraphL,
+  ParagraphM,
+  ParagraphS,
+  ButtonL,
+  ButtonM,
+  ButtonS,
+  TabL,
+  TabM,
+  TabS,
+  LinkM,
+  LinkS,
+  BadgeL,
+  BadgeM,
+  BadgeS,
+  BadgeXS,
+  LabelL,
+  LabelM,
+  DropdownM,
+  DropdownS,
+  NumberM,
+  NumberS,
+  CaptionS,
 });
 
 export default Text;

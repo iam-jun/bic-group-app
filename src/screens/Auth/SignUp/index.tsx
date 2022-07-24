@@ -2,7 +2,7 @@ import isEmpty from 'lodash/isEmpty';
 import React from 'react';
 import {useForm} from 'react-hook-form';
 import {StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useDispatch} from 'react-redux';
 import Button from '~/beinComponents/Button';
@@ -16,9 +16,10 @@ import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
 import {rootNavigationRef} from '~/router/navigator/refs';
 import actions from '~/screens/Auth/redux/actions';
-import {spacing} from '~/theme';
-import {ITheme} from '~/theme/interfaces';
+
+import spacing from '~/theme/spacing';
 import {getEnv} from '~/utils/env';
+import {APP_ENV} from '~/configs/appConfig';
 
 const SignUp = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ const SignUp = () => {
     clearErrors,
     getValues,
   } = useFormData;
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const {t} = useBaseHook();
   const styles = themeStyles(theme);
   const {loading} = useAuth();
@@ -91,7 +92,7 @@ const SignUp = () => {
           rules={{required: t('auth:text_err_username_blank')}}
           name="username"
           validateValue={validateUsername}
-          disabled={loading}
+          editable={loading}
         />
 
         <TextInputController
@@ -110,7 +111,7 @@ const SignUp = () => {
             },
           }}
           validateValue={validateEmail}
-          disabled={loading}
+          editable={loading}
         />
         <PasswordInputController
           useFormData={useFormData}
@@ -126,10 +127,7 @@ const SignUp = () => {
               message: t('auth:text_err_password_characters'),
             },
             validate: () => {
-              if (
-                !getEnv('SELF_DOMAIN')?.includes('sbx') &&
-                !getEnv('SELF_DOMAIN')?.includes('stg')
-              ) {
+              if (getEnv('APP_ENV') === APP_ENV.PRODUCTION) {
                 const value = getValues('password');
 
                 if (!/(?=.*?[A-Z])/.test(value)) {
@@ -170,7 +168,7 @@ const SignUp = () => {
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const insets = useSafeAreaInsets();
   const {colors} = theme;
 
@@ -180,7 +178,7 @@ const themeStyles = (theme: ITheme) => {
       paddingTop: insets.top,
       paddingHorizontal: spacing.padding.big,
       alignContent: 'center',
-      backgroundColor: colors.background,
+      backgroundColor: colors.white,
     },
     button: {
       marginTop: spacing.margin.big,

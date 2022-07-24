@@ -18,6 +18,7 @@ import {updateUserFromSharedPreferences} from './sharePreferences';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import {ConvertHelper} from '~/utils/convertHelper';
 import ApiConfig from '~/configs/apiConfig';
+import groupsActions from '~/screens/Groups/redux/actions';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -230,6 +231,12 @@ const handleResponseError = async (
     if (responseTokenExpired && error.config.useRetry) {
       return handleRetry(error);
     }
+
+    // @ts-ignore
+    if (error.response.status === 403 && error.config.useRetry) {
+      Store.store.dispatch(groupsActions.getMyPermissions());
+    }
+
     return mapResponseSuccessBein(error.response);
   } else if (error.request) {
     // cancel request

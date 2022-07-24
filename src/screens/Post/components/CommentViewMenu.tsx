@@ -1,8 +1,8 @@
 import React, {FC} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {ITheme} from '~/theme/interfaces';
-import {useTheme} from 'react-native-paper';
+
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useBaseHook} from '~/hooks';
@@ -18,6 +18,7 @@ import Text from '~/beinComponents/Text';
 import NodeEmoji from 'node-emoji';
 import {quickReactions} from '~/configs/reactionConfig';
 import {getLink, LINK_COMMENT} from '~/utils/link';
+import spacing from '~/theme/spacing';
 
 export interface CommentViewMenuProps {
   commentId: string;
@@ -48,7 +49,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   const {rootNavigation} = useRootNavigation();
   const {t} = useBaseHook();
   const insets = useSafeAreaInsets();
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme, insets);
 
   const _onPressReaction = (emoji: any) => {
@@ -150,8 +151,8 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
       <PrimaryItem
         testID={'comment_view_menu.reply'}
         style={styles.item}
-        leftIcon={'CornerDownRight'}
-        leftIconProps={{icon: 'CornerDownRight', size: 24}}
+        leftIcon={'ArrowTurnDownRight'}
+        leftIconProps={{icon: 'ArrowTurnDownRight', size: 24}}
         title={t('post:comment_menu_reply')}
         onPress={_onPressReply}
       />
@@ -175,8 +176,8 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
         <PrimaryItem
           testID={'comment_view_menu.edit'}
           style={styles.item}
-          leftIcon={'Edit'}
-          leftIconProps={{icon: 'Edit', size: 24}}
+          leftIcon={'edit'}
+          leftIconProps={{icon: 'edit', size: 24}}
           title={t('post:comment_menu_edit')}
           onPress={_onPressEdit}
         />
@@ -184,8 +185,8 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
       <PrimaryItem
         testID={'comment_view_menu.history'}
         style={styles.item}
-        leftIcon={'Redo'}
-        leftIconProps={{icon: 'Redo', size: 24}}
+        leftIcon={'RotateRight'}
+        leftIconProps={{icon: 'RotateRight', size: 24}}
         title={t('post:comment_menu_history')}
         onPress={_onPress}
       />
@@ -193,8 +194,8 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
         <PrimaryItem
           testID={'comment_view_menu.delete'}
           style={styles.item}
-          leftIcon={'Trash'}
-          leftIconProps={{icon: 'Trash', size: 24}}
+          leftIcon={'TrashCan'}
+          leftIconProps={{icon: 'TrashCan', size: 24}}
           title={t('post:comment_menu_delete')}
           onPress={_onPressDelete}
         />
@@ -203,8 +204,8 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   );
 };
 
-const createStyle = (theme: ITheme, insets: any) => {
-  const {spacing, colors} = theme;
+const createStyle = (theme: ExtendedTheme, insets: any) => {
+  const {colors} = theme;
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing.padding.large,
@@ -221,7 +222,7 @@ const createStyle = (theme: ITheme, insets: any) => {
       width: 32,
       height: 32,
       borderRadius: 16,
-      backgroundColor: colors.primary1,
+      backgroundColor: colors.violet1,
       justifyContent: 'center',
       alignItems: 'center',
     },

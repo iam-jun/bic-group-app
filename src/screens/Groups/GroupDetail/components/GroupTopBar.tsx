@@ -1,8 +1,9 @@
 import Clipboard from '@react-native-clipboard/clipboard';
 import React from 'react';
 import {Share, StyleSheet, View} from 'react-native';
-import {useTheme} from 'react-native-paper';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import {useDispatch} from 'react-redux';
+
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
@@ -15,27 +16,33 @@ import modalActions, {
   clearToastMessage,
   showHideToastMessage,
 } from '~/store/modal/actions';
-import {ITheme} from '~/theme/interfaces';
+import spacing from '~/theme/spacing';
 import {openLink} from '~/utils/common';
 import {formatChannelLink, getLink, LINK_GROUP} from '~/utils/link';
 import HeaderMenu from '../../components/HeaderMenu';
 import useLeaveGroup from '../../GroupMembers/components/useLeaveGroup';
 import {checkLastAdmin} from '../../helper';
 import groupsKeySelector from '../../redux/keySelector';
+import {useMyPermissions} from '~/hooks/permissions';
 
 const GroupTopBar = () => {
   const dispatch = useDispatch();
-  const theme = useTheme() as ITheme;
-  const styles = themeStyles(theme);
+  const theme: ExtendedTheme = useTheme();
   const {rootNavigation} = useRootNavigation();
 
-  const can_setting = useKeySelector(groupsKeySelector.groupDetail.can_setting);
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
   const isMember = join_status === groupJoinStatus.member;
   const {id: groupId, chat_id: chatId} = groupInfo || {};
   const {user} = useAuth();
   const userId = useUserIdAuth();
+
+  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const canSetting = hasPermissionsOnScopeWithId('groups', groupId, [
+    PERMISSION_KEY.GROUP.APPROVE_REJECT_JOINING_REQUESTS,
+    PERMISSION_KEY.GROUP.EDIT_INFORMATION,
+    PERMISSION_KEY.GROUP.EDIT_PRIVACY,
+  ]);
 
   const count = useKeySelector(
     `chat.unreadChannels.${chatId}.mention_count_root`,
@@ -109,7 +116,7 @@ const GroupTopBar = () => {
           <HeaderMenu
             type="group"
             isMember={isMember}
-            can_setting={can_setting}
+            canSetting={canSetting}
             onPressAdminTools={onPressAdminTools}
             onPressCopyLink={onPressCopyLink}
             onPressShare={onPressShare}
@@ -138,7 +145,7 @@ const GroupTopBar = () => {
     // only admin can see this button
     return (
       <ButtonWrapper onPress={onPressMenu} testID="group_top_bar.admin_button">
-        <Icon icon={'iconShieldStar'} fill={theme.colors.iconTint} size={24} />
+        <Icon icon={'iconShieldStar'} fill={theme.colors.neutral80} size={24} />
       </ButtonWrapper>
     );
   };
@@ -152,7 +159,7 @@ const GroupTopBar = () => {
             icon={'iconSearch'}
             size={22}
             style={styles.iconSearch}
-            tintColor={theme.colors.iconTint}
+            tintColor={theme.colors.neutral80}
           />
         </ButtonWrapper>
       )
@@ -162,7 +169,7 @@ const GroupTopBar = () => {
   const renderGroupOption = () => {
     return (
       <ButtonWrapper onPress={onPressMenu} testID="group_top_bar.option_menu">
-        <Icon icon={'EllipsisH'} tintColor={theme.colors.iconTint} />
+        <Icon icon={'menu'} tintColor={theme.colors.neutral80} />
       </ButtonWrapper>
     );
   };
@@ -173,7 +180,7 @@ const GroupTopBar = () => {
         <Icon
           icon={'iconChat'}
           size={24}
-          tintColor={theme.colors.iconTint}
+          tintColor={theme.colors.neutral80}
           style={styles.iconShieldStar}
         />
         <NotificationsBadge.Alert
@@ -199,7 +206,7 @@ const GroupTopBar = () => {
       <View style={styles.rightComponent}>
         {renderSearchIcon()}
         {renderChatIcon()}
-        {can_setting ? renderAdminButton() : renderGroupOption()}
+        {canSetting ? renderAdminButton() : renderGroupOption()}
       </View>
     </View>
   );
@@ -207,33 +214,29 @@ const GroupTopBar = () => {
 
 export default GroupTopBar;
 
-const themeStyles = (theme: ITheme) => {
-  const {spacing} = theme;
-
-  return StyleSheet.create({
-    container: {
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-      marginHorizontal: spacing.margin.large,
-      marginVertical: spacing.margin.small,
-    },
-    leftComponent: {
-      flexDirection: 'row',
-    },
-    rightComponent: {
-      flexDirection: 'row',
-    },
-    iconShieldStar: {
-      marginRight: spacing.margin.extraLarge,
-    },
-    iconSearch: {
-      marginRight: spacing.margin.extraLarge,
-    },
-    badge: {
-      position: 'absolute',
-      top: -6,
-      right: 10,
-    },
-  });
-};
+const styles = StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginHorizontal: spacing.margin.large,
+    marginVertical: spacing.margin.small,
+  },
+  leftComponent: {
+    flexDirection: 'row',
+  },
+  rightComponent: {
+    flexDirection: 'row',
+  },
+  iconShieldStar: {
+    marginRight: spacing.margin.extraLarge,
+  },
+  iconSearch: {
+    marginRight: spacing.margin.extraLarge,
+  },
+  badge: {
+    position: 'absolute',
+    top: -6,
+    right: 10,
+  },
+});

@@ -1,47 +1,56 @@
 import React from 'react';
-import {StyleSheet, View, ImageBackground} from 'react-native';
-import {ActivityIndicator, Modal, useTheme} from 'react-native-paper';
+import {
+  StyleSheet,
+  View,
+  ImageBackground,
+  ActivityIndicator,
+  Platform,
+  Modal,
+} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import LottieView from 'lottie-react-native';
 
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
-import {ITheme} from '~/theme/interfaces';
+
 import useModal from '~/hooks/modal';
+import spacing from '~/theme/spacing';
+import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import {LottieFileLoading} from '~/resources/lottieJson';
 
 const LoadingModal = () => {
-  const theme: ITheme = useTheme() as ITheme;
+  const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
   const {loading} = useModal();
   const {visible} = loading;
 
   return (
-    <Modal visible={visible} contentContainerStyle={styles.root}>
+    <Modal animationType="fade" visible={visible} style={styles.root}>
       <ImageBackground source={images.img_bg_sign_in} style={styles.background}>
         <View style={styles.logoContainer}>
+          <LottieView
+            source={LottieFileLoading}
+            autoPlay
+            loop
+            style={styles.loadingIndicator}
+          />
           <Image
             resizeMode="contain"
             style={styles.logo}
             source={images.logo_beincomm}
           />
-          <ActivityIndicator
-            size={72}
-            style={styles.loadingIndicator}
-            color={theme.colors.background}
-          />
+          <Text.ButtonS style={styles.textLoading}>Loading...</Text.ButtonS>
         </View>
-        <Text.ButtonSmall style={styles.textLoading}>
-          Loading...
-        </Text.ButtonSmall>
       </ImageBackground>
     </Modal>
   );
 };
 
-const themeStyles = (theme: ITheme) => {
+const themeStyles = (theme: ExtendedTheme) => {
   const insets = useSafeAreaInsets();
-  const {colors, spacing} = theme;
+  const {colors} = theme;
 
   return StyleSheet.create({
     root: {
@@ -54,21 +63,28 @@ const themeStyles = (theme: ITheme) => {
       justifyContent: 'center',
     },
     logoContainer: {
-      marginBottom: spacing.margin.big,
+      width: '100%',
+      alignItems: 'center',
+      justifyContent: 'center',
     },
     logo: {
       alignSelf: 'center',
       width: 48,
       height: 48,
       borderRadius: 50,
+      position: 'absolute',
+      top: -142,
     },
     textLoading: {
-      color: colors.background,
+      color: colors.white,
+      position: 'absolute',
+      bottom: 40,
     },
     loadingIndicator: {
-      position: 'absolute',
-      top: -12, // = -IndicatorSize / 6, to make it center
-      left: -12,
+      width: 235,
+      height: 235,
+      alignItems: 'center',
+      justifyContent: 'center',
     },
   });
 };

@@ -12,14 +12,14 @@ export const modalInitState = {
     content: '',
     cancelBtn: false,
     cancelLabel: '',
-    iconName: '',
-    confirmLabel: '',
     onConfirm: () => {
       // do something
     },
     onCancel: () => {
       // do something
     },
+    iconName: '',
+    confirmLabel: '',
     isDismissible: true,
     showCloseButton: false,
     style: {},

@@ -6,16 +6,17 @@ import {useDispatch} from 'react-redux';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useChatSocket} from '~/hooks/chat';
 import useNotificationSocket from '~/hooks/notificationSocket';
+import {useMyPermissions} from '~/hooks/permissions';
 import {useKeySelector} from '~/hooks/selector';
 import BottomTabBar from '~/router/components/BottomTabBar';
 import groupsActions from '~/screens/Groups/redux/actions';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
-import {initPushTokenMessage} from '~/services/helper';
 import giphyActions from '~/store/giphy/actions';
 import {deviceDimensions} from '~/theme/dimension';
 import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens} from './screens';
+import {initPushTokenMessage} from '~/services/firebase';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -44,6 +45,7 @@ const MainTabs = () => {
       return;
     }
 
+    dispatch(groupsActions.getMyPermissions());
     dispatch(postActions.getDraftPosts({}));
     dispatch(giphyActions.getAPIKey());
     dispatch(groupsActions.getMyCommunities());

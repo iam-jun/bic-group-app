@@ -1,10 +1,9 @@
 // Border radius
 export const borderRadius = {
-  base: 12,
-  small: 6,
-  large: 24,
-  big: 32,
-  tiny: 4,
+  small: 4,
+  base: 8,
+  large: 20,
+  circle: 100,
 };
 
 // Line height
@@ -17,9 +16,9 @@ export const lineHeight = {
 
 // Padding
 export const padding = {
-  base: 12,
   tiny: 4,
   small: 8,
+  base: 12,
   large: 16,
   extraLarge: 24,
   big: 32,
@@ -27,9 +26,9 @@ export const padding = {
 
 // Margin
 export const margin = {
-  base: 12,
   tiny: 4,
   small: 8,
+  base: 12,
   large: 16,
   extraLarge: 24,
   big: 32,
