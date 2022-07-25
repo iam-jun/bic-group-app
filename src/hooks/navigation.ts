@@ -5,7 +5,7 @@ import {DeviceEventEmitter} from 'react-native';
 import {NAVIGATION_BACK_PRESSED} from '~/configs/navigator';
 import {ITabTypes} from '~/interfaces/IRouter';
 import {withNavigation} from '~/router/helper';
-import {rootNavigationRef} from '~/router/navigator/refs';
+import {rootNavigationRef} from '~/router/refs';
 
 export const useRootNavigation = () => {
   const rootNavigation = withNavigation(rootNavigationRef);

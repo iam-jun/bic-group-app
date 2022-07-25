@@ -14,7 +14,7 @@ import {authStack} from '~/configs/navigator';
 import * as validation from '~/constants/commonRegex';
 import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
-import {rootNavigationRef} from '~/router/navigator/refs';
+import {rootNavigationRef} from '~/router/refs';
 import actions from '~/screens/Auth/redux/actions';
 
 import spacing from '~/theme/spacing';

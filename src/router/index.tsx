@@ -1,10 +1,9 @@
-/* @react-navigation v5 */
 import NetInfo from '@react-native-community/netinfo';
 import {NavigationContainer, useTheme} from '@react-navigation/native';
 import {createNativeStackNavigator} from 'react-native-screens/native-stack';
 import {Auth} from 'aws-amplify';
 import React, {useEffect} from 'react';
-import {Linking, StatusBar, StyleSheet, View} from 'react-native';
+import {StatusBar, StyleSheet, View} from 'react-native';
 import {Host} from 'react-native-portalize';
 
 import {useDispatch} from 'react-redux';
@@ -14,15 +13,8 @@ import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
 import LoadingModal from '~/beinComponents/modals/LoadingModal';
 import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
 import {AppConfig} from '~/configs';
-import {
-  linkingConfig,
-  linkingConfigFull,
-  navigationSetting,
-} from '~/configs/navigator';
 import {useBaseHook} from '~/hooks';
-import {useRootNavigation} from '~/hooks/navigation';
 import {IUserResponse} from '~/interfaces/IAuth';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import authActions from '~/screens/Auth/redux/actions';
 import InternetConnectionStatus from '~/screens/NoInternet/components/InternetConnectionStatus';
 import SystemIssueModal from '~/screens/NoInternet/components/SystemIssueModal';
@@ -32,21 +24,25 @@ import Store from '~/store';
 import * as modalActions from '~/store/modal/actions';
 import {isNavigationRefReady} from './helper';
 
-import * as screens from './navigator';
-import {rootNavigationRef} from './navigator/refs';
+import {rootNavigationRef} from './refs';
 import {rootSwitch} from './stack';
 import * as appTheme from '~/theme/theme';
 import {registerNavigationContainerWithSentry} from '~/services/sentry';
 
+import AuthStack from '~/router/navigator/AuthStack';
+import MainStack from '~/router/navigator/MainStack';
+import useNavigationLinkingConfig from '~/hooks/navigationLinking';
+
 const Stack = createNativeStackNavigator();
 
-const StackNavigator = (): React.ReactElement => {
-  const {rootNavigation} = useRootNavigation();
+const RootNavigator = (): React.ReactElement => {
   const theme = useTheme();
   const {t} = useBaseHook();
   const dispatch = useDispatch();
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
+
+  const linkingConfig = useNavigationLinkingConfig();
 
   useEffect(() => {
     const unsubscribeNetInfo = NetInfo.addEventListener(() =>
@@ -84,21 +80,12 @@ const StackNavigator = (): React.ReactElement => {
     //@ts-ignore
     isNavigationRefReady.current = false;
     checkAuthKickout();
-    handleDeepLink();
-    // Linking.addEventListener('url', handleOpenURL);
     dispatch(noInternetActions.setSystemIssue(false));
 
     if (!user) {
       makeRemovePushTokenRequest();
     }
   }, []);
-
-  /*Handle when app killed*/
-  const handleDeepLink = async () => {
-    // wait for implementation
-  };
-
-  const cardStyleConfig = navigationSetting.defaultNavigationOption.cardStyle;
 
   const navigationTheme = theme.dark ? appTheme.dark : appTheme.light;
 
@@ -110,20 +97,15 @@ const StackNavigator = (): React.ReactElement => {
     registerNavigationContainerWithSentry(rootNavigationRef);
   };
 
-  const linking = getLinkingCustomConfig(
-    user ? linkingConfigFull : linkingConfig,
-    rootNavigation,
-  );
-
   return (
     <View style={styles.container}>
       <StatusBar
-        barStyle="dark-content"
+        barStyle={'dark-content'}
         translucent
-        backgroundColor="transparent"
+        backgroundColor={'transparent'}
       />
       <NavigationContainer
-        linking={linking}
+        linking={linkingConfig}
         ref={rootNavigationRef}
         onReady={onReady}
         theme={navigationTheme as any}
@@ -132,21 +114,16 @@ const StackNavigator = (): React.ReactElement => {
           <Stack.Navigator
             initialRouteName={
               (user ? rootSwitch.mainStack : rootSwitch.authStack) as any
-            }
-            screenOptions={{cardStyle: cardStyleConfig}}>
+            }>
             <Stack.Screen
               options={AppConfig.defaultScreenOptions}
               name={rootSwitch.authStack as any}
-              component={screens.AuthStack}
+              component={AuthStack}
             />
             <Stack.Screen
               options={AppConfig.defaultScreenOptions}
               name={rootSwitch.mainStack as any}
-              component={screens.MainStack}
-            />
-            <Stack.Screen
-              name={rootSwitch.notFound as any}
-              component={screens.NotFound}
+              component={MainStack}
             />
           </Stack.Navigator>
           <AlertNewFeatureModal />
@@ -161,49 +138,6 @@ const StackNavigator = (): React.ReactElement => {
   );
 };
 
-const getLinkingCustomConfig = (config: any, navigation: any) => {
-  return {
-    ...config,
-    subscribe(listener: any) {
-      const onReceiveURL = ({url}: {url: string}) => {
-        if (url.includes('bein:///posts/')) {
-          const data = url?.replace('bein:///posts/', '');
-          const params = data.split('?');
-
-          if (params?.length === 1) {
-            navigation?.navigate?.(homeStack.postDetail, {post_id: data});
-          } else if (params?.length > 1 && navigation) {
-            const newParams = params[1]
-              .split('&')
-              ?.map(item => item.split('='))
-              ?.reduce((p, c) => {
-                if (c.length > 1) {
-                  //@ts-ignore
-                  p[c[0]] = c[1];
-                }
-                return p;
-              }, {});
-
-            navigation?.navigate?.(homeStack.commentDetail, {
-              ...newParams,
-              postId: params[0],
-            });
-          } else {
-            listener(url);
-          }
-        } else {
-          listener(url);
-        }
-      };
-      const linkingListener = Linking.addEventListener('url', onReceiveURL);
-
-      return () => {
-        linkingListener?.remove?.();
-      };
-    },
-  };
-};
-
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
@@ -214,4 +148,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default StackNavigator;
+export default RootNavigator;

@@ -6,7 +6,7 @@ import showError from '~/store/commonSaga/showError';
 import modalActions from '~/store/modal/actions';
 import {timeOut} from '~/utils/common';
 import {withNavigation} from '~/router/helper';
-import {rootNavigationRef} from '~/router/navigator/refs';
+import {rootNavigationRef} from '~/router/refs';
 import {getMentionsFromContent} from '~/screens/Post/helper/PostUtils';
 
 const navigation = withNavigation(rootNavigationRef);

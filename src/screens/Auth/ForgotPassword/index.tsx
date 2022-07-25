@@ -22,7 +22,7 @@ import {useBaseHook} from '~/hooks';
 import useAuth from '~/hooks/auth';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IForgotPasswordError} from '~/interfaces/IAuth';
-import {rootNavigationRef} from '~/router/navigator/refs';
+import {rootNavigationRef} from '~/router/refs';
 import ForgotInputCodePw from '~/screens/Auth/ForgotPassword/components/ForgotInputCodePw';
 import ForgotInputId from '~/screens/Auth/ForgotPassword/components/ForgotInputId';
 import actions from '~/screens/Auth/redux/actions';

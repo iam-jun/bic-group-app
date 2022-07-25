@@ -6,7 +6,7 @@ import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import i18n from 'i18next';
 import modalActions from '~/store/modal/actions';
 import {withNavigation} from '~/router/helper';
-import {rootNavigationRef} from '~/router/navigator/refs';
+import {rootNavigationRef} from '~/router/refs';
 
 const navigation = withNavigation(rootNavigationRef);
 

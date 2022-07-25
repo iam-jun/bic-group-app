@@ -10,7 +10,7 @@ import {IObject} from '~/interfaces/common';
 import {isEmpty, isNumber} from 'lodash';
 import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 
-export const isNavigationRefReady = React.createRef();
+export const isNavigationRefReady: any = React.createRef();
 
 export interface Props {
   current?: NavigationContainerRef | null;

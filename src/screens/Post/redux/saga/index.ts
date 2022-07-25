@@ -20,7 +20,7 @@ import {
 import postTypes from '~/screens/Post/redux/types';
 import postActions from '~/screens/Post/redux/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
-import {rootNavigationRef} from '~/router/navigator/refs';
+import {rootNavigationRef} from '~/router/refs';
 import {withNavigation} from '~/router/helper';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
