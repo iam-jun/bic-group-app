@@ -1,7 +1,7 @@
 /* @react-navigation v5 */
 import NetInfo from '@react-native-community/netinfo';
 import {NavigationContainer, useTheme} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createNativeStackNavigator} from 'react-native-screens/native-stack';
 import {Auth} from 'aws-amplify';
 import React, {useEffect} from 'react';
 import {Linking, StatusBar, StyleSheet, View} from 'react-native';
@@ -22,7 +22,6 @@ import {
 import {useBaseHook} from '~/hooks';
 import {useRootNavigation} from '~/hooks/navigation';
 import {IUserResponse} from '~/interfaces/IAuth';
-import {RootStackParamList} from '~/interfaces/IRouter';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import authActions from '~/screens/Auth/redux/actions';
 import InternetConnectionStatus from '~/screens/NoInternet/components/InternetConnectionStatus';
@@ -32,14 +31,14 @@ import {makeRemovePushTokenRequest} from '~/services/httpApiRequest';
 import Store from '~/store';
 import * as modalActions from '~/store/modal/actions';
 import {isNavigationRefReady} from './helper';
-/*import config navigation*/
+
 import * as screens from './navigator';
 import {rootNavigationRef} from './navigator/refs';
 import {rootSwitch} from './stack';
 import * as appTheme from '~/theme/theme';
 import {registerNavigationContainerWithSentry} from '~/services/sentry';
 
-const Stack = createStackNavigator<RootStackParamList>();
+const Stack = createNativeStackNavigator();
 
 const StackNavigator = (): React.ReactElement => {
   const {rootNavigation} = useRootNavigation();

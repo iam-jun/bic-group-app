@@ -1,36 +1,27 @@
 import {GiphySDK} from '@giphy/react-native-sdk';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import React, {useEffect} from 'react';
-import {DeviceEventEmitter, useWindowDimensions} from 'react-native';
+import {DeviceEventEmitter} from 'react-native';
 import {useDispatch} from 'react-redux';
 import {useUserIdAuth} from '~/hooks/auth';
 import {useChatSocket} from '~/hooks/chat';
 import useNotificationSocket from '~/hooks/notificationSocket';
-import {useMyPermissions} from '~/hooks/permissions';
 import {useKeySelector} from '~/hooks/selector';
 import BottomTabBar from '~/router/components/BottomTabBar';
 import groupsActions from '~/screens/Groups/redux/actions';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
 import giphyActions from '~/store/giphy/actions';
-import {deviceDimensions} from '~/theme/dimension';
-import {createSideTabNavigator} from '../../../components/SideTabNavigator';
 import {screens} from './screens';
 import {initPushTokenMessage} from '~/services/firebase';
 
 const BottomTab = createBottomTabNavigator();
-const SideTab = createSideTabNavigator();
 
 const MainTabs = () => {
   const backBehavior = 'history';
 
   useChatSocket();
   useNotificationSocket();
-
-  const dimensions = useWindowDimensions();
-  const isPhone = dimensions.width < deviceDimensions.smallTablet;
-
-  const Tab = isPhone ? BottomTab : SideTab;
 
   const dispatch = useDispatch();
 
@@ -70,14 +61,13 @@ const MainTabs = () => {
   }, [giphyAPIKey]);
 
   return (
-    // @ts-ignore
-    <Tab.Navigator
+    <BottomTab.Navigator
       backBehavior={backBehavior}
+      screenOptions={{headerShown: false}}
       tabBar={props => <BottomTabBar {...props} />}>
       {Object.entries(screens).map(([name, component]) => {
         return (
-          // @ts-ignore
-          <Tab.Screen
+          <BottomTab.Screen
             key={'tabs' + name}
             name={name}
             component={component}
@@ -87,7 +77,7 @@ const MainTabs = () => {
           />
         );
       })}
-    </Tab.Navigator>
+    </BottomTab.Navigator>
   );
 };
 

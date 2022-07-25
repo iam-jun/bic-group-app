@@ -1,7 +1,8 @@
-import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
+import {createNativeStackNavigator} from 'react-native-screens/native-stack';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
+
 export interface Props {
   stack: {[x: string]: string};
   screens: {[x: string]: React.ComponentType<any>};
@@ -14,15 +15,14 @@ const BaseStackNavigator = ({
   initialRouteName,
 }: Props): React.ReactElement => {
   return (
-    <Stack.Navigator headerMode="screen" initialRouteName={initialRouteName}>
+    <Stack.Navigator initialRouteName={initialRouteName}>
       {Object.entries(stack).map(([name, component]) => {
         return (
           <Stack.Screen
             key={'screen' + component}
-            name={component} // TODO: refactor
+            name={component}
             component={screens[component]}
             options={{
-              // animationEnabled: true,
               headerShown: false,
               title: name,
             }}

@@ -1,5 +1,5 @@
-import {createStackNavigator} from '@react-navigation/stack';
 import React, {useEffect} from 'react';
+import {createNativeStackNavigator} from 'react-native-screens/native-stack';
 
 import {AppConfig} from '~/configs';
 import {authStack} from '~/configs/navigator';
@@ -8,7 +8,7 @@ import {IObject} from '~/interfaces/common';
 import * as authStacks from './stack';
 import {initPushTokenMessage} from '~/services/firebase';
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 
 const AuthStack = () => {
   const Stacks: IObject<any> = authStacks;
