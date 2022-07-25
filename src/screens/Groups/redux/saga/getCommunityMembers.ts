@@ -1,8 +1,9 @@
-import {put, call, select} from 'redux-saga/effects';
+import { put, call, select } from 'redux-saga/effects';
 
+import { AxiosResponse } from 'axios';
 import actions from '~/screens/Groups/redux/actions';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
-import {IParamGetCommunityMembers} from '~/interfaces/ICommunity';
+import { IParamGetCommunityMembers } from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
 import showError from '~/store/commonSaga/showError';
 
@@ -17,10 +18,10 @@ export default function* getCommunityMembers({
   };
 }) {
   try {
-    const {groups} = yield select();
-    const {communityId, isRefreshing, params} = payload;
-    const communityMembers = groups.communityMembers;
-    const {canLoadMore, offset} = communityMembers;
+    const { groups } = yield select();
+    const { communityId, isRefreshing, params } = payload;
+    const { communityMembers } = groups;
+    const { canLoadMore, offset } = communityMembers;
 
     yield put(
       actions.setCommunityMembers({
@@ -30,8 +31,7 @@ export default function* getCommunityMembers({
 
     if (!isRefreshing && !canLoadMore) return;
 
-    // @ts-ignore
-    const resp = yield call(groupsDataHelper.getCommunityMembers, communityId, {
+    const resp:AxiosResponse = yield call(groupsDataHelper.getCommunityMembers, communityId, {
       limit: appConfig.recordsPerPage,
       offset: isRefreshing ? 0 : offset,
       ...params,
@@ -39,17 +39,21 @@ export default function* getCommunityMembers({
 
     let newDataCount = 0;
     let newDataObj = {};
-    Object.keys(resp)?.map?.((role: string) => {
-      newDataCount += resp[role]?.data?.length;
+
+    Object.keys(resp)?.forEach?.((role: string) => {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const roles = resp[role] || {};
+      newDataCount += roles.data?.length || 0;
       newDataObj = {
         ...newDataObj,
         [role]: {
-          name: resp[role]?.name,
-          user_count: resp[role]?.user_count,
+          name: roles.name,
+          user_count: roles.user_count,
           data:
             isRefreshing || !communityMembers?.[role]?.data
-              ? [...resp[role]?.data]
-              : [...communityMembers?.[role]?.data, ...resp[role]?.data],
+              ? [...roles.data]
+              : [...communityMembers?.[role]?.data || [], ...roles.data],
         },
       };
     });
@@ -63,7 +67,7 @@ export default function* getCommunityMembers({
 
     yield put(actions.setCommunityMembers(newData));
   } catch (err: any) {
-    console.log('getCommunityMembers error:', err);
+    console.error('getCommunityMembers error:', err);
     yield call(showError, err);
   }
 }

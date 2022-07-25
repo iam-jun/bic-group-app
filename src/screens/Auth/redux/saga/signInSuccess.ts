@@ -1,9 +1,9 @@
-import {delay, put} from 'redux-saga/effects';
-import {IObject} from '~/interfaces/common';
-import {IUserResponse} from '~/interfaces/IAuth';
-import {withNavigation} from '~/router/helper';
-import {rootNavigationRef} from '~/router/refs';
-import {rootSwitch} from '~/router/stack';
+import { delay, put } from 'redux-saga/effects';
+import { IObject } from '~/interfaces/common';
+import { IUserResponse } from '~/interfaces/IAuth';
+import { withNavigation } from '~/router/helper';
+import { rootNavigationRef } from '~/router/refs';
+import { rootSwitch } from '~/router/stack';
 import {
   getUserFromSharedPreferences,
   saveUserToSharedPreferences,
@@ -21,10 +21,9 @@ export default function* signInSuccess({
 }): any {
   yield put(modalActions.showLoading());
 
-  const name =
-    payload?.attributes?.name?.length < 50
-      ? payload?.attributes?.name
-      : payload?.attributes?.email?.match?.(/^([^@]*)@/)[1];
+  const name = payload?.attributes?.name?.length < 50
+    ? payload?.attributes?.name
+    : payload?.attributes?.email?.match?.(/^([^@]*)@/)[1];
 
   const userResponse: IUserResponse = {
     username: payload?.username || '',
@@ -38,7 +37,7 @@ export default function* signInSuccess({
   };
   const sessionData: IObject<any> = yield getUserFromSharedPreferences();
   const activeSessions = sessionData?.activeSessions || [];
-  //For sharing data between Group and Chat
+  // For sharing data between Group and Chat
   yield saveUserToSharedPreferences({
     username: userResponse.username,
     email: userResponse.email,

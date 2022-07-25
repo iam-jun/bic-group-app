@@ -1,6 +1,6 @@
-import React, {FC} from 'react';
-import {View, StyleProp, ViewStyle} from 'react-native';
-import {SortableList} from '~/beinComponents/ReorderList/SortableList';
+import React, { FC } from 'react';
+import { View, StyleProp, ViewStyle } from 'react-native';
+import { SortableList } from '~/beinComponents/ReorderList/SortableList';
 
 export interface ReorderListProps {
   style?: StyleProp<ViewStyle>;
@@ -20,17 +20,16 @@ const ReorderList: FC<ReorderListProps> = ({
   itemHeight = 100,
   HeaderComponent,
   onChange,
-}: ReorderListProps) => {
-  return (
-    <View style={style}>
-      {!!HeaderComponent && HeaderComponent}
-      <SortableList
-        item={{width: itemWidth, height: itemHeight}}
-        onChange={onChange}>
-        {data?.map?.(renderItem)}
-      </SortableList>
-    </View>
-  );
-};
+}: ReorderListProps) => (
+  <View style={style}>
+    {!!HeaderComponent && HeaderComponent}
+    <SortableList
+      item={{ width: itemWidth, height: itemHeight }}
+      onChange={onChange}
+    >
+      {data?.map?.(renderItem)}
+    </SortableList>
+  </View>
+);
 
 export default ReorderList;

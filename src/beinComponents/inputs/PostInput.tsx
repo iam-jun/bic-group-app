@@ -1,4 +1,4 @@
-import React, {useImperativeHandle, useRef} from 'react';
+import React, { useImperativeHandle, useRef } from 'react';
 import {
   Keyboard,
   KeyboardType,
@@ -10,11 +10,11 @@ import {
   TextInputSelectionChangeEventData,
   ViewStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import AutoGrowingTextInput from '~/beinComponents/inputs/AutoGrowingTextInput';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import dimension from '~/theme/dimension';
-import {fontFamilies} from '~/theme/fonts';
+import { fontFamilies } from '~/theme/fonts';
 
 import spacing from '~/theme/spacing';
 
@@ -23,7 +23,7 @@ export interface PostInputProps extends TextInputProps {
   placeholder?: string;
   multiline?: boolean;
   isFullScreen?: boolean;
-  textAlignVertical?: 'auto' | 'top' | 'bottom' | 'center'; //ANDROID ONLY
+  textAlignVertical?: 'auto' | 'top' | 'bottom' | 'center'; // ANDROID ONLY
   onChangeText?: (text: string) => void;
   keyboardType?: KeyboardType;
   returnKeyType?: ReturnKeyType;
@@ -51,13 +51,13 @@ const PostInput: React.FC<PostInputProps> = ({
   ...props
 }: PostInputProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {t} = useBaseHook();
-  const {colors} = theme;
+  const { t } = useBaseHook();
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const inputStyle: any = StyleSheet.flatten([
     styles.container,
-    isFullScreen ? {flex: 1} : {},
+    isFullScreen ? { flex: 1 } : {},
     style,
   ]);
 
@@ -100,14 +100,15 @@ const PostInput: React.FC<PostInputProps> = ({
       returnKeyType={returnKeyType}
       onSubmitEditing={onSubmitEditing}
       onSelectionChange={onSelectionChange}
-      {...props}>
+      {...props}
+    >
       {value}
     </AutoGrowingTextInput>
   );
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       margin: spacing.padding.base,

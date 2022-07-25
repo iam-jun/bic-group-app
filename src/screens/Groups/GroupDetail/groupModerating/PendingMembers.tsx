@@ -1,24 +1,24 @@
-import React, {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import groupsActions from '../../redux/actions';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import GroupApproveDeclineAllRequests from './components/GroupApproveDeclineAllRequests';
 import MemberRequestList from '../../components/MemberRequestList';
 
 const GroupPendingMembers = (props: any) => {
   const dispatch = useDispatch();
-  const params = props.route.params;
-  const {id: groupId} = params || {};
-  const {ids, canLoadMore} = useKeySelector(
+  const { params } = props.route;
+  const { id: groupId } = params || {};
+  const { ids, canLoadMore } = useKeySelector(
     groupsKeySelector.groupMemberRequests,
   );
 
   const getData = (isRefreshing?: boolean) => {
-    dispatch(groupsActions.getGroupMemberRequests({groupId, isRefreshing}));
+    dispatch(groupsActions.getGroupMemberRequests({ groupId, isRefreshing }));
   };
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const GroupPendingMembers = (props: any) => {
     <ScreenWrapper testID="GroupPendingMembers" isFullView>
       <Header
         title="settings:title_pending_members"
-        titleTextProps={{useI18n: true}}
+        titleTextProps={{ useI18n: true }}
       />
 
       <MemberRequestList

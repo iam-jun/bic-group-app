@@ -1,9 +1,7 @@
 import React from 'react';
 import MdCodeBlock from './MdCodeBlock';
-import {mmTheme} from '../utils/config';
+import { mmTheme } from '../utils/config';
 
-const MarkdownCodeBlock = props => {
-  return <MdCodeBlock theme={mmTheme} {...props} />;
-};
+const MarkdownCodeBlock = (props) => <MdCodeBlock theme={mmTheme} {...props} />;
 
 export default MarkdownCodeBlock;

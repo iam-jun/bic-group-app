@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Avatar from '~/beinComponents/Avatar';
 import SearchInput, {
@@ -12,7 +12,7 @@ import ListView from '~/beinComponents/list/ListView';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
-import {IUser} from '~/interfaces/IAuth';
+import { IUser } from '~/interfaces/IAuth';
 import images from '~/resources/images';
 import dimension from '~/theme/dimension';
 
@@ -50,49 +50,50 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
 }: MembersSelectionProps): React.ReactElement => {
   const theme: ExtendedTheme = useTheme();
 
-  const renderItemUser = ({item}: {item: IUser; index: number}) => {
+  const renderItemUser = ({ item }: {item: IUser; index: number}) => {
     const selected = selectedUsers.find((user: IUser) => user.id === item.id);
 
     return (
       <PrimaryItem
-        ContentComponent={
+        ContentComponent={(
           <Text.H6 numberOfLines={2}>
             {item.name}
             <Text.BodyS
-              color={theme.colors.gray50}>{` @${item.username}`}</Text.BodyS>
+              color={theme.colors.gray50}
+            >
+              {` @${item.username}`}
+            </Text.BodyS>
           </Text.H6>
-        }
+        )}
         isChecked={!!selected}
-        checkboxProps={{testID: 'members_selection.checkbox'}}
+        checkboxProps={{ testID: 'members_selection.checkbox' }}
         onPressMenu={onPressMenu ? () => onPressMenu(item) : undefined}
-        LeftComponent={
+        LeftComponent={(
           <Avatar.Large
             style={styles.marginRight}
             source={item.avatar}
             placeholderSource={images.img_user_avatar_default}
           />
-        }
+        )}
         onPressCheckbox={selectable ? () => onSelectUser(item) : undefined}
       />
     );
   };
 
-  const renderItemSelectedUser = ({item}: {item: IUser; index: number}) => {
-    return (
-      <View style={styles.itemSelectedUser}>
-        <Avatar.Large
-          source={item.avatar}
-          actionIcon="iconClose"
-          placeholderSource={images.img_user_avatar_default}
-          onPressAction={() => onSelectUser(item)}
-        />
-        <ViewSpacing height={spacing?.margin.small} />
-        <Text.H6 numberOfLines={1} ellipsizeMode="tail">
-          {item.name}
-        </Text.H6>
-      </View>
-    );
-  };
+  const renderItemSelectedUser = ({ item }: {item: IUser; index: number}) => (
+    <View style={styles.itemSelectedUser}>
+      <Avatar.Large
+        source={item.avatar}
+        actionIcon="iconClose"
+        placeholderSource={images.img_user_avatar_default}
+        onPressAction={() => onSelectUser(item)}
+      />
+      <ViewSpacing height={spacing?.margin.small} />
+      <Text.H6 numberOfLines={1} ellipsizeMode="tail">
+        {item.name}
+      </Text.H6>
+    </View>
+  );
 
   const renderRoles = () => (
     <View>
@@ -109,7 +110,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
     </View>
   );
 
-  const EmptyComponent = () => <NoSearchResult />;
+  const renderEmpty = () => <NoSearchResult />;
 
   return (
     <View style={styles.container}>
@@ -135,7 +136,7 @@ const MembersSelection: React.FC<MembersSelectionProps> = ({
         loading={loading}
         isFullView
         ListHeaderComponent={renderRoles}
-        ListEmptyComponent={EmptyComponent}
+        ListEmptyComponent={renderEmpty}
         renderItem={renderItemUser}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.5}

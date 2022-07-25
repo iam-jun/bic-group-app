@@ -1,5 +1,6 @@
-import {isEmpty, isEqual} from 'lodash';
-import React, {useCallback, useEffect, useRef} from 'react';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { isEqual } from 'lodash';
+import React, { useCallback, useEffect, useRef } from 'react';
 import {
   ActivityIndicator,
   Dimensions,
@@ -7,17 +8,17 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useDispatch} from 'react-redux';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch } from 'react-redux';
 import Divider from '~/beinComponents/Divider';
 import Icon from '~/beinComponents/Icon';
 import NotificationItem from '~/beinComponents/list/items/NotificationItem';
 import ListView from '~/beinComponents/list/ListView';
 import Text from '~/beinComponents/Text';
-import {useTabPressListener} from '~/hooks/navigation';
-import {useKeySelector} from '~/hooks/selector';
-import {ITabTypes} from '~/interfaces/IRouter';
+import { useTabPressListener } from '~/hooks/navigation';
+import { useKeySelector } from '~/hooks/selector';
+import { ITabTypes } from '~/interfaces/IRouter';
 import i18n from '~/localization';
 import NoNotificationFound from '~/screens/Notification/components/NoNotificationFound';
 
@@ -25,7 +26,7 @@ import spacing from '~/theme/spacing';
 import notificationsActions from './redux/actions';
 import notificationSelector from './redux/selector';
 
-const {width: screenWidth} = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 export interface Props {
   onPressItemOption: (item: any) => void;
   onItemPress: (item: any) => void;
@@ -61,7 +62,7 @@ const _NotificationList = ({
   useTabPressListener(
     (tabName: ITabTypes) => {
       if (tabName === 'notification') {
-        listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
+        listRef?.current?.scrollToOffset?.({ animated: true, offset: 0 });
       }
     },
     [listRef],
@@ -69,15 +70,15 @@ const _NotificationList = ({
 
   useEffect(() => {
     if (notificationList?.length < 1 && activeIndex) {
-      //@ts-ignore
-      dispatch(notificationsActions.getNotifications({flag: type, keyValue}));
+      // @ts-ignore
+      dispatch(notificationsActions.getNotifications({ flag: type, keyValue }));
     }
   }, [activeIndex]);
 
   const refreshListNotification = () => {
-    //@ts-ignore
     dispatch(
       notificationsActions.getNotifications({
+        // @ts-ignore
         flag: type,
         keyValue,
         isRefresh: true,
@@ -88,8 +89,8 @@ const _NotificationList = ({
   // load more notification handler
   const loadMoreNotifications = () => {
     if (!noMoreNotification && !isLoadingMore) {
-      //@ts-ignore
-      dispatch(notificationsActions.loadMore({flag: type, keyValue}));
+      // @ts-ignore
+      dispatch(notificationsActions.loadMore({ flag: type, keyValue }));
     }
   };
 
@@ -101,8 +102,8 @@ const _NotificationList = ({
   );
 
   const _onPressItemOption = useCallback(
-    ({item, e}: any) => {
-      onPressItemOption?.({item, e});
+    ({ item, e }: any) => {
+      onPressItemOption?.({ item, e });
     },
     [onPressItemOption],
   );
@@ -128,40 +129,37 @@ const _NotificationList = ({
     return null;
   };
 
-  const renderItem = ({item, index}: {item: any; index: number}) => {
-    return (
-      <NotificationItem
-        id={item}
-        testID={`list_view.item_wrapper.${index}`}
-        onPress={(data: any) => {
-          _onItemPress(data);
-        }}
-        onPressOption={(data: any) => {
-          _onPressItemOption(data);
-        }}
-      />
-    );
-  };
+  const renderItem = ({ item, index }: {item: any; index: number}) => (
+    <NotificationItem
+      id={item}
+      testID={`list_view.item_wrapper.${index}`}
+      onPress={(data: any) => {
+        _onItemPress(data);
+      }}
+      onPressOption={(data: any) => {
+        _onPressItemOption(data);
+      }}
+    />
+  );
 
   const renderUnReadNotificationsEmpty = () => {
     if (type === 'UNREAD' && noMoreNotification) {
       return (
         <View style={styles.unReadNotifications}>
           <Icon icon="CircleCheck" size={40} tintColor={theme.colors.success} />
-          <Text.BodyS useI18n style={{marginTop: spacing.margin.base}}>
+          <Text.BodyS useI18n style={{ marginTop: spacing.margin.base }}>
             notification:seen_all_notifications
           </Text.BodyS>
         </View>
       );
-    } else {
-      return <NoNotificationFound />;
     }
+    return <NoNotificationFound />;
   };
 
   const _notificationList = React.useMemo(() => {
     if (
-      notificationList !== undefined &&
-      !isEqual(
+      notificationList !== undefined
+      && !isEqual(
         JSON.stringify(notificationList),
         JSON.stringify(_notificationList),
       )
@@ -173,7 +171,7 @@ const _NotificationList = ({
   const keyExtractor = (item: any) => JSON.stringify(item);
 
   return (
-    <View style={{flex: 1, width: screenWidth}}>
+    <View style={{ flex: 1, width: screenWidth }}>
       {!loadingNotifications ? (
         <ListView
           listRef={listRef}
@@ -201,7 +199,7 @@ const _NotificationList = ({
 
 const themeStyles = (theme: ExtendedTheme) => {
   const insets = useSafeAreaInsets();
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     screenContainer: {
       paddingTop: insets.top,

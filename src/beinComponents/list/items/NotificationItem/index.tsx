@@ -1,18 +1,20 @@
-import React, {useState} from 'react';
-import {StyleSheet, View, TouchableOpacity, Dimensions} from 'react-native';
+import React, { useState } from 'react';
+import {
+  StyleSheet, View, TouchableOpacity, Dimensions,
+} from 'react-native';
+import { isEmpty, isEqual } from 'lodash';
+import { useTheme, ExtendedTheme } from '@react-navigation/native';
 import TimeView from '~/beinComponents/TimeView';
 import Icon from '~/beinComponents/Icon';
 
 import NotificationAvatar from './NotificationAvatar';
 import NotificationContent from './NotificationContent';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import notificationSelector from '~/screens/Notification/redux/selector';
-import {isEmpty, isEqual} from 'lodash';
-import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
+import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
 import spacing from '~/theme/spacing';
-import {useTheme, ExtendedTheme} from '@react-navigation/native';
 
-const {width: screenWidth} = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 
 export interface NotificationItemProps {
   // activities: IGetStreamNotificationActivity[];
@@ -45,7 +47,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 }: NotificationItemProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
-  const {colors} = theme;
+  const { colors } = theme;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
   const [timerWidth, setTimerWidth] = useState(0);
@@ -58,15 +60,16 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
   const _itemValue = React.useMemo(() => {
     if (
-      itemValue !== undefined &&
-      itemValue !== null &&
-      !isEqual(JSON.stringify(itemValue), JSON.stringify(_itemValue))
+      itemValue !== undefined
+      && itemValue !== null
+      && !isEqual(JSON.stringify(itemValue), JSON.stringify(_itemValue))
     ) {
       return itemValue;
     }
   }, [itemValue, onPress, onPressOption, testID, id]);
-  const {activities, isRead, updatedAt, extra, verb, actorCount}: any =
-    _itemValue || {};
+  const {
+    activities, isRead, updatedAt, extra, verb, actorCount,
+  }: any = _itemValue || {};
 
   if (isEmpty(_itemValue)) return null;
 
@@ -88,9 +91,8 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
     }
   };
 
-  const notShowAvatar =
-    extra?.type === NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL ||
-    extra?.type === NOTIFICATION_TYPE.POST_VIDEO_TO_USER_SUCCESSFUL;
+  const notShowAvatar = extra?.type === NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL
+    || extra?.type === NOTIFICATION_TYPE.POST_VIDEO_TO_USER_SUCCESSFUL;
 
   // render notification item
   return (
@@ -105,12 +107,14 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         {
           backgroundColor: isRead ? theme.colors.white : theme.colors.neutral1,
         },
-      ]}>
+      ]}
+    >
       {notShowAvatar ? (
         <View
           style={[
-            {flexDirection: 'row', flex: 1, justifyContent: 'flex-start'},
-          ]}>
+            { flexDirection: 'row', flex: 1, justifyContent: 'flex-start' },
+          ]}
+        >
           {renderIndicator(styles.indicatorMargin)}
           <NotificationContent
             description={extra?.description || ''}
@@ -124,8 +128,9 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         <View
           style={{
             flex: 1,
-          }}>
-          <View style={[styles.row, {flex: 1, justifyContent: 'flex-start'}]}>
+          }}
+        >
+          <View style={[styles.row, { flex: 1, justifyContent: 'flex-start' }]}>
             {renderIndicator()}
             <NotificationAvatar
               actor={extra.actor}
@@ -151,28 +156,28 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
         style={{
           justifyContent: 'flex-end',
           alignItems: 'center',
-        }}>
+        }}
+      >
         <TimeView
           testID="notification_item.time_view"
           time={updatedAt}
           style={styles.timeCreated}
-          type={'short'}
+          type="short"
         />
         <TouchableOpacity
           testID="notificationItem.menuIcon.button"
           style={styles.icon}
           activeOpacity={0.2}
-          onPress={(e: any) =>
-            onPressOption && onPressOption({e: e, item: _itemValue})
-          }
+          onPress={(e: any) => onPressOption && onPressOption({ e, item: _itemValue })}
           hitSlop={{
             bottom: 20,
             left: 20,
             right: 20,
             top: 20,
-          }}>
+          }}
+        >
           <Icon
-            icon={'menu'}
+            icon="menu"
             size={15}
             tintColor={colors.gray50}
             testID="notificationItem.menuIcon"
@@ -184,7 +189,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 };
 
 const createStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

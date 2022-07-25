@@ -21,8 +21,8 @@ import {
   ICommunityDetailEdit,
   IPayloadGroupSchemeAssignments,
 } from '~/interfaces/IGroup';
-import {IUser} from '~/interfaces/IAuth';
-import {IObject} from '~/interfaces/common';
+import { IUser } from '~/interfaces/IAuth';
+import { IObject } from '~/interfaces/common';
 import {
   ICommunity,
   IParamGetCommunityMembers,
@@ -41,7 +41,7 @@ const groupsActions = {
     payload,
   }),
 
-  //group structure settings
+  // group structure settings
   setGroupStructure: (payload?: any) => ({
     type: groupsTypes.SET_GROUP_STRUCTURE,
     payload,
@@ -217,14 +217,12 @@ const groupsActions = {
     payload,
   }),
 
-  setPrivacyModalOpen: (payload: boolean) => {
-    return {
-      type: groupsTypes.SET_PRIVACY_MODAL_OPEN,
-      payload,
-    };
-  },
+  setPrivacyModalOpen: (payload: boolean) => ({
+    type: groupsTypes.SET_PRIVACY_MODAL_OPEN,
+    payload,
+  }),
 
-  setJoinedGroups: function (payload: IGroup[]) {
+  setJoinedGroups(payload: IGroup[]) {
     return {
       type: groupsTypes.SET_JOINED_GROUPS,
       payload,
@@ -235,18 +233,18 @@ const groupsActions = {
     type: groupsTypes.SET_LOADING_GROUP_MEMBER,
     payload,
   }),
-  clearGroupMembers: function () {
+  clearGroupMembers() {
     return {
       type: groupsTypes.CLEAR_GROUP_MEMBER,
     };
   },
-  setGroupMembers: function (payload: any) {
+  setGroupMembers(payload: any) {
     return {
       type: groupsTypes.SET_GROUP_MEMBER,
       payload,
     };
   },
-  getGroupMembers: function (payload: IGroupGetMembers) {
+  getGroupMembers(payload: IGroupGetMembers) {
     return {
       type: groupsTypes.GET_GROUP_MEMBER,
       payload,
@@ -269,20 +267,18 @@ const groupsActions = {
     type: groupsTypes.CLEAR_GROUP_SEARCH_MEMBERS,
   }),
 
-  setGroupDetail: function (payload: IGroupDetail | null) {
+  setGroupDetail(payload: IGroupDetail | null) {
     return {
       type: groupsTypes.SET_GROUP_DETAIL,
       payload,
     };
   },
 
-  getGroupPosts: (payload: string | number) => {
-    return {
-      type: groupsTypes.GET_GROUP_POSTS,
-      payload,
-    };
-  },
-  setGroupPosts: function (payload: IGroup[]) {
+  getGroupPosts: (payload: string | number) => ({
+    type: groupsTypes.GET_GROUP_POSTS,
+    payload,
+  }),
+  setGroupPosts(payload: IGroup[]) {
     return {
       type: groupsTypes.SET_GROUP_POSTS,
       payload,
@@ -334,7 +330,7 @@ const groupsActions = {
     type: groupsTypes.CLEAR_ADD_MEMBERS_MESSAGE,
   }),
 
-  getGroupDetail: function (payload: number, loadingPage = false) {
+  getGroupDetail(payload: number, loadingPage = false) {
     return {
       type: groupsTypes.GET_GROUP_DETAIL,
       payload,
@@ -342,7 +338,7 @@ const groupsActions = {
     };
   },
 
-  editGroupDetail: function (payload: {
+  editGroupDetail(payload: {
     data: IGroupDetailEdit;
     editFieldName?: string;
     callback?: () => void;
@@ -352,13 +348,13 @@ const groupsActions = {
       payload,
     };
   },
-  uploadImage: function (payload: IGroupImageUpload) {
+  uploadImage(payload: IGroupImageUpload) {
     return {
       type: groupsTypes.UPLOAD_IMAGE,
       payload,
     };
   },
-  addMembers: function (payload: IGroupAddMembers) {
+  addMembers(payload: IGroupAddMembers) {
     return {
       type: groupsTypes.ADD_MEMBERS,
       payload,
@@ -374,7 +370,7 @@ const groupsActions = {
     payload,
   }),
 
-  joinNewGroup: function (payload: {groupId: number; groupName: string}) {
+  joinNewGroup(payload: {groupId: number; groupName: string}) {
     return {
       type: groupsTypes.JOIN_NEW_GROUP,
       payload,
@@ -711,7 +707,7 @@ const groupsActions = {
   resetCommunitySearch: () => ({
     type: groupsTypes.RESET_COMMUNITY_SEARCH,
   }),
-  editCommunityDetail: function (payload: {
+  editCommunityDetail(payload: {
     data: ICommunityDetailEdit;
     editFieldName?: string;
     callback?: () => void;

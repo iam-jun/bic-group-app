@@ -1,11 +1,11 @@
-import React, {FC} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
+import React, { FC } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
 
+import i18n from 'i18next';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import notificationsActions from '../redux/actions';
-import i18n from 'i18next';
 import * as modalActions from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
 
@@ -30,28 +30,26 @@ const NotificationBottomSheet: FC<NotificationBottomSheetProps> = ({
     dispatch(modalActions.showAlertNewFeature());
   };
 
-  const renderContent = () => {
-    return (
-      <View style={styles.container}>
-        <PrimaryItem
-          testID="notifications.mark_all_as_read"
-          style={styles.item}
-          leftIcon={'MessageCheck'}
-          leftIconProps={{icon: 'MessageCheck', size: 24}}
-          title={i18n.t('notification:mark_all_as_read')}
-          onPress={markReadAllNotifications}
-        />
-        <PrimaryItem
-          testID="notifications.notification_settings"
-          style={styles.item}
-          leftIcon={'Gear'}
-          leftIconProps={{icon: 'Gear', size: 24}}
-          title={i18n.t('notification:notification_settings')}
-          onPress={showUpcommingFeature}
-        />
-      </View>
-    );
-  };
+  const renderContent = () => (
+    <View style={styles.container}>
+      <PrimaryItem
+        testID="notifications.mark_all_as_read"
+        style={styles.item}
+        leftIcon="MessageCheck"
+        leftIconProps={{ icon: 'MessageCheck', size: 24 }}
+        title={i18n.t('notification:mark_all_as_read')}
+        onPress={markReadAllNotifications}
+      />
+      <PrimaryItem
+        testID="notifications.notification_settings"
+        style={styles.item}
+        leftIcon="Gear"
+        leftIconProps={{ icon: 'Gear', size: 24 }}
+        title={i18n.t('notification:notification_settings')}
+        onPress={showUpcommingFeature}
+      />
+    </View>
+  );
 
   return (
     <BottomSheet modalizeRef={modalizeRef} ContentComponent={renderContent()} />

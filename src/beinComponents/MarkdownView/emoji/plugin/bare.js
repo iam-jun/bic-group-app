@@ -1,17 +1,15 @@
-'use strict';
-
-var emoji_html = require('./lib/render');
-var emoji_replace = require('./lib/replace');
-var normalize_opts = require('./lib/normalize_opts');
+const emoji_html = require('./lib/render');
+const emoji_replace = require('./lib/replace');
+const normalize_opts = require('./lib/normalize_opts');
 
 module.exports = function emoji_plugin(md, options) {
-  var defaults = {
+  const defaults = {
     defs: {},
     shortcuts: {},
     enabled: [],
   };
 
-  var opts = normalize_opts(md.utils.assign({}, defaults, options || {}));
+  const opts = normalize_opts(md.utils.assign({}, defaults, options || {}));
 
   md.renderer.rules.emoji = emoji_html;
 

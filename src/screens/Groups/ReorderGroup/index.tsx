@@ -1,15 +1,15 @@
-import React, {FC, useEffect, useMemo} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC, useEffect, useMemo } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import {IGroup} from '~/interfaces/IGroup';
+import { useDispatch } from 'react-redux';
+import { IGroup } from '~/interfaces/IGroup';
 import ReorderList from '~/beinComponents/ReorderList';
 import ReorderGroupInfo from '~/screens/Groups/ReorderGroup/components/ReorderGroupInfo';
 import ReorderGroupItem, {
   ITEM_HEIGHT,
   ITEM_WIDTH,
 } from '~/screens/Groups/ReorderGroup/components/ReorderGroupItem';
-import {useDispatch} from 'react-redux';
 import groupsActions from '~/screens/Groups/redux/actions';
 import ReorderGroupHeader from '~/screens/Groups/ReorderGroup/components/ReorderGroupHeader';
 
@@ -21,7 +21,7 @@ export interface ReorderGroupProps {
   };
 }
 
-const ReorderGroup: FC<ReorderGroupProps> = ({route}: ReorderGroupProps) => {
+const ReorderGroup: FC<ReorderGroupProps> = ({ route }: ReorderGroupProps) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
@@ -29,23 +29,17 @@ const ReorderGroup: FC<ReorderGroupProps> = ({route}: ReorderGroupProps) => {
   const initGroup = route?.params?.group;
   const children = initGroup?.children || [];
 
-  const initOrder = useMemo(() => {
-    return children?.map?.(g => g.id);
-  }, children);
+  const initOrder = useMemo(() => children?.map?.((g) => g.id), children);
 
-  useEffect(() => {
-    return () => {
-      dispatch(groupsActions.setGroupStructureReorder());
-    };
+  useEffect(() => () => {
+    dispatch(groupsActions.setGroupStructureReorder());
   }, []);
 
-  const renderItem = (data: IGroup) => {
-    return <ReorderGroupItem key={`reorder_item_${data?.id}`} group={data} />;
-  };
+  const renderItem = (data: IGroup) => <ReorderGroupItem key={`reorder_item_${data?.id}`} group={data} />;
 
   const onChange = (newIndex: number[]) => {
     const newOrder = newIndex?.map?.((i: number) => children?.[i]?.id);
-    dispatch(groupsActions.setGroupStructureReorder({newOrder}));
+    dispatch(groupsActions.setGroupStructureReorder({ newOrder }));
   };
 
   return (
@@ -65,7 +59,7 @@ const ReorderGroup: FC<ReorderGroupProps> = ({route}: ReorderGroupProps) => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

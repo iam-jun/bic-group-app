@@ -1,10 +1,12 @@
-import React, {FC} from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
+import React, { FC } from 'react';
+import {
+  StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
 import i18next from 'i18next';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Icon from '~/beinComponents/Icon';
-import Text, {TextProps} from '~/beinComponents/Text';
+import Text, { TextProps } from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
 
 export interface ImportantStatusProps {
@@ -19,7 +21,7 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
   style,
 }: ImportantStatusProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
 
   const ImportantStatusStyle = {
     active: {
@@ -36,15 +38,16 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
     },
   };
 
-  const {iconColor, iconBackgroundColor, textColor, backgroundColor} =
-    notExpired
-      ? ImportantStatusStyle['active']
-      : ImportantStatusStyle['inactive'];
+  const {
+    iconColor, iconBackgroundColor, textColor, backgroundColor,
+  } = notExpired
+    ? ImportantStatusStyle.active
+    : ImportantStatusStyle.inactive;
 
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
     {
       flexDirection: 'row',
-      backgroundColor: backgroundColor,
+      backgroundColor,
       paddingVertical: spacing.padding.small,
       paddingHorizontal: spacing.padding.large,
       borderBottomWidth: 1,
@@ -57,10 +60,10 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
     <View style={containerStyle} testID="important_status">
       <Icon
         isButton
-        iconStyle={[styles.iconStyle, {backgroundColor: iconBackgroundColor}]}
+        iconStyle={[styles.iconStyle, { backgroundColor: iconBackgroundColor }]}
         style={styles.leftIcon}
         size={14}
-        icon={'iconStar'}
+        icon="iconStar"
         tintColor={iconColor}
       />
       <View style={styles.textContainer}>
@@ -69,7 +72,8 @@ const ImportantStatus: FC<ImportantStatusProps> = ({
             notExpired ? 'important_status_active' : 'important_status_expire'
           }
           {...textProps}
-          color={textColor}>
+          color={textColor}
+        >
           {i18next.t('common:text_important')}
         </Text.H6>
       </View>
@@ -86,7 +90,7 @@ const styles = StyleSheet.create({
   leftIcon: {
     marginRight: spacing.margin.small,
   },
-  iconStyle: {padding: 3, borderRadius: 6},
+  iconStyle: { padding: 3, borderRadius: 6 },
 });
 
 export default ImportantStatus;

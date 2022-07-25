@@ -1,10 +1,9 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {isEmpty} from 'lodash';
-import React, {Fragment, useEffect} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useDispatch} from 'react-redux';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { useFocusEffect, ExtendedTheme, useTheme } from '@react-navigation/native';
+import { isEmpty } from 'lodash';
+import React, { Fragment, useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch } from 'react-redux';
 
 import Header from '~/beinComponents/Header';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
@@ -12,11 +11,11 @@ import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCrea
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import groupJoinStatus from '~/constants/groupJoinStatus';
-import {groupPrivacy} from '~/constants/privacyTypes';
-import {useUserIdAuth} from '~/hooks/auth';
-import {useRootNavigation} from '~/hooks/navigation';
-import {useKeySelector} from '~/hooks/selector';
-import {rootSwitch} from '~/router/stack';
+import { groupPrivacy } from '~/constants/privacyTypes';
+import { useUserIdAuth } from '~/hooks/auth';
+import { useRootNavigation } from '~/hooks/navigation';
+import { useKeySelector } from '~/hooks/selector';
+import { rootSwitch } from '~/router/stack';
 import GroupContent from '~/screens/Groups/GroupDetail/components/GroupContent';
 import NoGroupFound from '~/screens/Groups/GroupDetail/components/NoGroupFound';
 import groupsActions from '~/screens/Groups/redux/actions';
@@ -26,7 +25,7 @@ import GroupPrivateWelcome from './components/GroupPrivateWelcome';
 import GroupTopBar from './components/GroupTopBar';
 
 const GroupDetail = (props: any) => {
-  const params = props.route.params;
+  const { params } = props.route;
   const groupId = params?.groupId;
 
   const theme: ExtendedTheme = useTheme();
@@ -36,7 +35,7 @@ const GroupDetail = (props: any) => {
   const dispatch = useDispatch();
 
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
-  const {privacy} = groupInfo;
+  const { privacy } = groupInfo;
 
   const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
   const isMember = join_status === groupJoinStatus.member;
@@ -45,7 +44,7 @@ const GroupDetail = (props: any) => {
   );
   const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
 
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
   useFocusEffect(() => {
     if (!userId) {
@@ -58,12 +57,12 @@ const GroupDetail = (props: any) => {
   };
 
   const getGroupPosts = () => {
-    /* Avoid getting group posts of the nonexisting group, 
-    which will lead to endless fetching group posts in 
+    /* Avoid getting group posts of the nonexisting group,
+    which will lead to endless fetching group posts in
     httpApiRequest > makeGetStreamRequest */
     const privilegeToFetchPost = isMember || privacy === groupPrivacy.public;
     if (loadingGroupDetail || isEmpty(groupInfo) || !privilegeToFetchPost) {
-      console.log('[getGroupPosts] stop fetching');
+      console.warn('[getGroupPosts] stop fetching');
       return;
     }
 
@@ -89,30 +88,28 @@ const GroupDetail = (props: any) => {
     return <GroupContent getGroupPosts={getGroupPosts} />;
   };
 
-  const renderPlaceholder = () => {
-    return (
-      <View style={styles.contentContainer} testID="group_detail.placeholder">
-        <View>
-          <GroupProfilePlaceholder disableRandom />
-          <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
-          <PostViewPlaceholder disableRandom />
-          <PostViewPlaceholder disableRandom />
-        </View>
+  const renderPlaceholder = () => (
+    <View style={styles.contentContainer} testID="group_detail.placeholder">
+      <View>
+        <GroupProfilePlaceholder disableRandom />
+        <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
+        <PostViewPlaceholder disableRandom />
+        <PostViewPlaceholder disableRandom />
       </View>
-    );
-  };
+    </View>
+  );
 
   const renderGroupDetail = () => {
     if (isEmpty(groupInfo)) return <NoGroupFound />;
     return (
-      <Fragment>
+      <>
         <Header>
           <GroupTopBar />
         </Header>
         <View testID="group_detail.content" style={styles.contentContainer}>
           {renderGroupContent()}
         </View>
-      </Fragment>
+      </>
     );
   };
 
@@ -131,7 +128,7 @@ const GroupDetail = (props: any) => {
 
 const themeStyles = (theme: ExtendedTheme) => {
   const insets = useSafeAreaInsets();
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     screenContainer: {
       paddingTop: insets.top,

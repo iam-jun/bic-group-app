@@ -1,1 +1,1 @@
-export {default as useBaseHook} from './baseHook';
+export { default as useBaseHook } from './baseHook';

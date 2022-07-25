@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
@@ -14,7 +14,7 @@ interface Props {
   onPress: (item: any) => void;
 }
 
-const AtMentionItem = ({item, onPress}: Props) => {
+const AtMentionItem = ({ item, onPress }: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
@@ -22,29 +22,29 @@ const AtMentionItem = ({item, onPress}: Props) => {
     onPress(item);
   };
 
-  const renderMentionAll = () => {
-    return (
-      <View>
-        <TouchableOpacity
-          testID="at_mention_item.item_all"
-          onPress={_onPressItem}>
-          <View style={styles.mentionAll}>
-            <Text.ButtonM style={styles.textMentionAll}>@all</Text.ButtonM>
-            <Text.BodyS useI18n>common:title_mention_all</Text.BodyS>
-          </View>
-        </TouchableOpacity>
-      </View>
-    );
-  };
+  const renderMentionAll = () => (
+    <View>
+      <TouchableOpacity
+        testID="at_mention_item.item_all"
+        onPress={_onPressItem}
+      >
+        <View style={styles.mentionAll}>
+          <Text.ButtonM style={styles.textMentionAll}>@all</Text.ButtonM>
+          <Text.BodyS useI18n>common:title_mention_all</Text.BodyS>
+        </View>
+      </TouchableOpacity>
+    </View>
+  );
 
   if (item.username === 'all') return renderMentionAll();
 
   return (
-    <View testID={'at_mention_item'} style={styles.mentionContainer}>
+    <View testID="at_mention_item" style={styles.mentionContainer}>
       <TouchableOpacity
         style={styles.container}
         onPress={_onPressItem}
-        testID={'at_mention_item.touchable'}>
+        testID="at_mention_item.touchable"
+      >
         <Avatar.Medium
           style={styles.avatar}
           source={item.avatar || item.icon}
@@ -57,7 +57,7 @@ const AtMentionItem = ({item, onPress}: Props) => {
 };
 
 const createStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',

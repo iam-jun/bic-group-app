@@ -1,7 +1,7 @@
 import i18next from 'i18next';
 import React from 'react';
-import {StyleSheet, useWindowDimensions, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Button from '~/beinComponents/Button';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -21,13 +21,12 @@ const NotFound = () => {
   if (imgSize > imgMaxWidth) imgSize = imgMaxWidth;
 
   const onPressGoBack = () => {
-    alert('Pressed "Go back"');
+    // alert('Pressed "Go back"');
   };
 
   return (
     <ScreenWrapper isFullView style={styles.container}>
       <View style={styles.contentContainer}>
-        {/* @ts-ignore */}
         <SVGIcon source={NotFoundImg} size={imgSize} />
         <Text.BodyM style={styles.desc}>
           {i18next.t('error:not_found_desc')}
@@ -36,7 +35,8 @@ const NotFound = () => {
           style={styles.button}
           highEmphasis
           onPress={onPressGoBack}
-          textVariant="h6">
+          textVariant="h6"
+        >
           {i18next.t('error:button_not_found')}
         </Button.Secondary>
       </View>
@@ -45,7 +45,7 @@ const NotFound = () => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

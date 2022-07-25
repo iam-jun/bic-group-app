@@ -1,10 +1,9 @@
-export class ConvertHelperOptions {
-  public separator?: string;
-  public split?: RegExp;
-  public process?: (arg) => any;
-  public exclude?: string[];
-}
-export class ConvertHelper {
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable no-restricted-syntax */
+/* eslint-disable no-param-reassign */
+import ConvertHelperOptions from './ConvertHelperOptions';
+
+export default class ConvertHelper {
   /**
    * Check input is function
    * @private
@@ -42,7 +41,7 @@ export class ConvertHelper {
    * @returns Boolean
    */
   private static _isArray(obj: unknown): boolean {
-    return Object.prototype.toString.call(obj) == '[object Array]';
+    return Object.prototype.toString.call(obj) === '[object Array]';
   }
 
   /**
@@ -52,7 +51,7 @@ export class ConvertHelper {
    * @returns Boolean
    */
   private static _isDate(obj: unknown): boolean {
-    return Object.prototype.toString.call(obj) == '[object Date]';
+    return Object.prototype.toString.call(obj) === '[object Date]';
   }
 
   /**
@@ -62,7 +61,7 @@ export class ConvertHelper {
    * @returns Boolean
    */
   private static _isRegExp(obj: unknown): boolean {
-    return Object.prototype.toString.call(obj) == '[object RegExp]';
+    return Object.prototype.toString.call(obj) === '[object RegExp]';
   }
 
   /**
@@ -72,7 +71,7 @@ export class ConvertHelper {
    * @returns Boolean
    */
   private static _isBoolean(obj: unknown): boolean {
-    return Object.prototype.toString.call(obj) == '[object Boolean]';
+    return Object.prototype.toString.call(obj) === '[object Boolean]';
   }
 
   /**
@@ -82,16 +81,13 @@ export class ConvertHelper {
    * @param options ConvertHelperOptions
    * @returns  default convert function or using custom convert function.
    */
-  private static _processor(convert, options): any {
-    const callback =
-      options && 'process' in options ? options.process : options;
+  private static _processor(convert:any, options:any): any {
+    const callback = options && 'process' in options ? options.process : options;
 
     if (typeof callback !== 'function') {
       return convert;
     }
-    return (string: string, options) => {
-      return callback(string, convert, options);
-    };
+    return (string: string, options:any) => callback(string, convert, options);
   }
 
   /**
@@ -102,16 +98,16 @@ export class ConvertHelper {
    * @param options ConvertHelperOptions
    */
   private static _processKeys(
-    convert: (...arg) => string,
+    convert: (...arg: any) => string,
     obj: any,
     options?: ConvertHelperOptions,
   ): any {
     if (
-      !ConvertHelper._isObject(obj) ||
-      ConvertHelper._isDate(obj) ||
-      ConvertHelper._isRegExp(obj) ||
-      ConvertHelper._isBoolean(obj) ||
-      ConvertHelper._isFunction(obj)
+      !ConvertHelper._isObject(obj)
+      || ConvertHelper._isDate(obj)
+      || ConvertHelper._isRegExp(obj)
+      || ConvertHelper._isBoolean(obj)
+      || ConvertHelper._isFunction(obj)
     ) {
       return obj;
     }
@@ -127,8 +123,10 @@ export class ConvertHelper {
       output = {};
       for (const key in obj) {
         if (Array.prototype.includes.call(options?.exclude ?? [], key)) {
+          // @ts-ignore
           output[convert(key, options)] = obj[key];
         } else {
+          // @ts-ignore
           output[convert(key, options)] = ConvertHelper._processKeys(
             convert,
             obj[key],
@@ -166,9 +164,7 @@ export class ConvertHelper {
   protected static decamelize = (
     string: string,
     options?: ConvertHelperOptions,
-  ): string => {
-    return ConvertHelper.separateWords(string, options).toLowerCase();
-  };
+  ): string => ConvertHelper.separateWords(string, options).toLowerCase();
 
   /**
    * Snake case to camel
@@ -179,9 +175,8 @@ export class ConvertHelper {
     if (ConvertHelper._isNumerical(string)) {
       return string;
     }
-    string = string.replace(/[\-_\s]+(.)?/g, function (match, chr) {
-      return chr ? chr.toUpperCase() : '';
-    });
+    // eslint-disable-next-line no-useless-escape
+    string = string.replace(/[\-_\s]+(.)?/g, (match, chr) => (chr ? chr.toUpperCase() : ''));
     return string.substring(0, 1).toLowerCase() + string.substring(1);
   };
 

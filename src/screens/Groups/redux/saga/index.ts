@@ -1,6 +1,7 @@
 import i18next from 'i18next';
-import {put, select, takeLatest} from 'redux-saga/effects';
+import { put, select, takeLatest } from 'redux-saga/effects';
 
+import { AxiosResponse } from 'axios';
 import {
   IGroupAddMembers,
   IGroupGetJoinableMembers,
@@ -10,12 +11,12 @@ import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsTypes from '~/screens/Groups/redux/types';
 import * as modalActions from '~/store/modal/actions';
-import {IResponseData, IToastMessage} from '~/interfaces/common';
-import {mapData} from '../../helper/mapper';
+import { IResponseData, IToastMessage } from '~/interfaces/common';
+import { mapData } from '../../helper/mapper';
 import appConfig from '~/configs/appConfig';
-import ImageUploader, {IGetFile} from '~/services/imageUploader';
-import {withNavigation} from '~/router/helper';
-import {rootNavigationRef} from '~/router/refs';
+import ImageUploader, { IGetFile } from '~/services/imageUploader';
+import { withNavigation } from '~/router/helper';
+import { rootNavigationRef } from '~/router/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 
 import joinNewGroup from './joinNewGroup';
@@ -205,12 +206,11 @@ export default function* groupsSaga() {
   yield takeLatest(groupsTypes.EDIT_COMMUNITY_DETAIL, editCommunityDetail);
 }
 
-function* getGroupSearch({payload}: {type: string; payload: string}) {
+function* getGroupSearch({ payload }: {type: string; payload: string}) {
   try {
-    yield put(groupsActions.setGroupSearch({loading: true}));
-    const params = {key: payload || '', discover: true};
-    // @ts-ignore
-    const response = yield groupsDataHelper.getSearchGroups(params);
+    yield put(groupsActions.setGroupSearch({ loading: true }));
+    const params = { key: payload || '', discover: true };
+    const response: AxiosResponse = yield groupsDataHelper.getSearchGroups(params);
 
     yield put(
       groupsActions.setGroupSearch({
@@ -218,19 +218,23 @@ function* getGroupSearch({payload}: {type: string; payload: string}) {
         loading: false,
       }),
     );
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     if (response.code != 200 && response.code?.toUpperCase?.() !== 'OK') {
-      console.log(`\x1b[31m🐣️ saga getGroupSearch error: ${response}\x1b[0m`);
+      console.error(`\x1b[31m🐣️ saga getGroupSearch error: ${response}\x1b[0m`);
     }
   } catch (err) {
-    console.log(`\x1b[31m🐣️ saga getGroupSearch error: ${err}\x1b[0m`);
-    yield put(groupsActions.setGroupSearch({loading: false, result: []}));
+    console.error(`\x1b[31m🐣️ saga getGroupSearch error: ${err}\x1b[0m`);
+    yield put(groupsActions.setGroupSearch({ loading: false, result: [] }));
     // yield showError(err);
   }
 }
 
-function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
+function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
   try {
-    const {file, id, fieldName, uploadType, destination} = payload;
+    const {
+      file, id, fieldName, uploadType, destination,
+    } = payload;
     yield updateLoadingImageState(fieldName, true);
 
     const data: IGetFile = yield ImageUploader.getInstance().upload({
@@ -241,7 +245,7 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
     if (destination === 'group') {
       yield put(
         groupsActions.editGroupDetail({
-          data: {id, [fieldName]: data.url},
+          data: { id, [fieldName]: data.url },
           editFieldName:
             fieldName === 'icon'
               ? i18next.t('common:text_avatar')
@@ -251,7 +255,7 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
     } else {
       yield put(
         groupsActions.editCommunityDetail({
-          data: {id, [fieldName]: data.url},
+          data: { id, [fieldName]: data.url },
           editFieldName:
             fieldName === 'icon'
               ? i18next.t('common:text_avatar')
@@ -260,7 +264,7 @@ function* uploadImage({payload}: {type: string; payload: IGroupImageUpload}) {
       );
     }
   } catch (err) {
-    console.log('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
+    console.error('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
     yield updateLoadingImageState(payload.fieldName, false);
     yield showError(err);
   }
@@ -273,13 +277,13 @@ function* getJoinableUsers({
   payload: IGroupGetJoinableMembers;
 }) {
   try {
-    const {groups} = yield select();
-    const {offset, data} = groups.users;
+    const { groups } = yield select();
+    const { offset, data } = groups.users;
 
-    const {groupId, params} = payload;
+    const { groupId, params } = payload;
     const response: IResponseData = yield groupsDataHelper.getJoinableUsers(
       groupId,
-      {offset, limit: appConfig.recordsPerPage, ...params},
+      { offset, limit: appConfig.recordsPerPage, ...params },
     );
     const result = mapData(response.data);
 
@@ -292,7 +296,7 @@ function* getJoinableUsers({
       yield put(groupsActions.setExtraJoinableUsers(result));
     }
   } catch (err) {
-    console.log(
+    console.error(
       '\x1b[33m',
       'getUsers catch: ',
       JSON.stringify(err, undefined, 2),
@@ -302,17 +306,17 @@ function* getJoinableUsers({
 }
 
 function* mergeExtraJoinableUsers() {
-  const {groups} = yield select();
-  const {canLoadMore, loading, params} = groups.users;
-  const {id: groupId} = groups?.groupDetail?.group;
+  const { groups } = yield select();
+  const { canLoadMore, loading, params } = groups.users;
+  const { id: groupId } = groups?.groupDetail?.group || {};
   if (!loading && canLoadMore) {
-    yield put(groupsActions.getJoinableUsers({groupId, params}));
+    yield put(groupsActions.getJoinableUsers({ groupId, params }));
   }
 }
 
-function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
+function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
   try {
-    const {groupId, userIds} = payload;
+    const { groupId, userIds } = payload;
 
     yield groupsDataHelper.addUsers(groupId, userIds);
 
@@ -330,15 +334,15 @@ function* addMembers({payload}: {type: string; payload: IGroupAddMembers}) {
         )
         .replace('{n}', userAddedCount.toString()),
       props: {
-        textProps: {useI18n: true},
+        textProps: { useI18n: true },
         type: 'success',
       },
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
 
-    navigation.navigate(groupStack.groupMembers, {groupId});
+    navigation.navigate(groupStack.groupMembers, { groupId });
   } catch (err) {
-    console.log(
+    console.error(
       '\x1b[33m',
       'addMembers catch: ',
       JSON.stringify(err, undefined, 2),
@@ -355,7 +359,7 @@ function* cancelJoinGroup({
   payload: {groupId: number; groupName: string};
 }) {
   try {
-    const {groupId, groupName} = payload;
+    const { groupId, groupName } = payload;
 
     yield groupsDataHelper.cancelJoinGroup(groupId);
 
@@ -363,7 +367,7 @@ function* cancelJoinGroup({
     yield put(
       groupsActions.editDiscoverGroupItem({
         id: groupId,
-        data: {join_status: groupJoinStatus.visitor},
+        data: { join_status: groupJoinStatus.visitor },
       }),
     );
 
@@ -381,8 +385,8 @@ function* cancelJoinGroup({
     console.error('cancelJoinGroup catch', err);
 
     if (
-      err?.meta?.message ===
-      'You have been approved to be a member of this group'
+      err?.meta?.message
+      === 'You have been approved to be a member of this group'
     ) {
       const toastMessage: IToastMessage = {
         content: `${i18next.t('groups:text_approved_member_group')}`,
@@ -413,6 +417,6 @@ function* updateLoadingImageState(
 
 export function* refreshGroupMembers(groupId: number) {
   yield put(groupsActions.clearGroupMembers());
-  yield put(groupsActions.getGroupMembers({groupId}));
+  yield put(groupsActions.getGroupMembers({ groupId }));
   yield put(groupsActions.getGroupDetail(groupId));
 }

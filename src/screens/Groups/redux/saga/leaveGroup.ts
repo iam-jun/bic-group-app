@@ -1,13 +1,13 @@
 import i18next from 'i18next';
-import {put, select, call} from 'redux-saga/effects';
+import { put, select, call } from 'redux-saga/effects';
 
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import * as modalActions from '~/store/modal/actions';
-import {IToastMessage} from '~/interfaces/common';
-import {groupPrivacy} from '~/constants/privacyTypes';
-import {withNavigation} from '~/router/helper';
-import {rootNavigationRef} from '~/router/refs';
+import { IToastMessage } from '~/interfaces/common';
+import { groupPrivacy } from '~/constants/privacyTypes';
+import { withNavigation } from '~/router/helper';
+import { rootNavigationRef } from '~/router/refs';
 import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
 import showError from '~/store/commonSaga/showError';
 import groupJoinStatus from '~/constants/groupJoinStatus';
@@ -21,7 +21,7 @@ export default function* leaveGroup({
   type: string;
 }) {
   try {
-    const {groups} = yield select();
+    const { groups } = yield select();
     const privacy = groups?.groupDetail?.group?.privacy;
 
     yield call(groupsDataHelper.leaveGroup, payload);
@@ -30,7 +30,7 @@ export default function* leaveGroup({
     yield put(
       groupsActions.editDiscoverGroupItem({
         id: payload,
-        data: {join_status: groupJoinStatus.visitor},
+        data: { join_status: groupJoinStatus.visitor },
       }),
     );
 
@@ -50,7 +50,7 @@ export default function* leaveGroup({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
-    console.log('leaveGroup:', err);
+    console.error('leaveGroup:', err);
     yield showError(err);
   }
 }
@@ -61,7 +61,7 @@ export function* navigationReplace() {
 
 export function* navigateToGroup(groupId: number) {
   yield navigation.navigate(groupStack.groupDetail, {
-    groupId: groupId,
+    groupId,
     initial: true,
   });
 }

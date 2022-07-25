@@ -1,8 +1,7 @@
-import React, {FC} from 'react';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import React, { FC } from 'react';
 
 import Button from '~/beinComponents/Button';
-import icons from '~/resources/icons';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 
 export interface ButtonDiscoverItemActionProps {
@@ -21,9 +20,10 @@ const ButtonDiscoverItemAction: FC<ButtonDiscoverItemActionProps> = ({
   joinStatus,
 }: ButtonDiscoverItemActionProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
 
-  let icon, text;
+  let icon; let
+    text;
 
   switch (joinStatus) {
     case groupJoinStatus.unableToJoin:
@@ -37,6 +37,8 @@ const ButtonDiscoverItemAction: FC<ButtonDiscoverItemActionProps> = ({
       break;
     case groupJoinStatus.member:
       text = 'common:btn_view';
+      break;
+    default:
       break;
   }
 
@@ -57,6 +59,8 @@ const ButtonDiscoverItemAction: FC<ButtonDiscoverItemActionProps> = ({
       case groupJoinStatus.member:
         onPressView();
         break;
+      default:
+        break;
     }
   };
 
@@ -66,12 +70,13 @@ const ButtonDiscoverItemAction: FC<ButtonDiscoverItemActionProps> = ({
 
   return (
     <Button.Secondary
-      textVariant={'h5'}
+      textVariant="h5"
       textColor={colors.neutral80}
       leftIcon={icon}
       useI18n
       color={colors.neutral5}
-      onPress={onPress}>
+      onPress={onPress}
+    >
       {text}
     </Button.Secondary>
   );

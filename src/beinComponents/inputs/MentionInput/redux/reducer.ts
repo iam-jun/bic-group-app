@@ -12,7 +12,7 @@ export const mentionInputInitState = {
 };
 
 const reducer = (state = mentionInputInitState, action: any = {}) => {
-  const {type, payload} = action;
+  const { type, payload } = action;
 
   switch (type) {
     case types.SET_TEXT:
@@ -51,7 +51,7 @@ const reducer = (state = mentionInputInitState, action: any = {}) => {
     case types.ADD_TEMP_SELECTED:
       return {
         ...state,
-        tempSelected: {...state.tempSelected, ...payload},
+        tempSelected: { ...state.tempSelected, ...payload },
       };
     default:
       return state;

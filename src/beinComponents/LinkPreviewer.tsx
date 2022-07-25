@@ -1,27 +1,27 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import Image from '~/beinComponents/Image';
 import Text from '~/beinComponents/Text';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import appActions from '~/store/app/actions';
-import {scaleSize} from '~/theme/dimension';
+import { scaleSize } from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
-import {getUrlFromText, openLink} from '~/utils/common';
+import { getUrlFromText, openLink } from '~/utils/common';
 import ButtonWrapper from './Button/ButtonWrapper';
 
 interface Props {
   text?: string;
 }
 
-const LinkPreviewer = ({text}: Props) => {
+const LinkPreviewer = ({ text }: Props) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
   const [link, setLink] = useState<string | null | undefined>('');
-  const linkPreviews = useKeySelector(`app.linkPreviews`);
+  const linkPreviews = useKeySelector('app.linkPreviews');
 
   useEffect(() => {
     const url = getUrlFromText(text);
@@ -65,7 +65,7 @@ const LinkPreviewer = ({text}: Props) => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'column',

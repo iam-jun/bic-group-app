@@ -1,33 +1,33 @@
 import NetInfo from '@react-native-community/netinfo';
-import {NavigationContainer, useTheme} from '@react-navigation/native';
-import {createNativeStackNavigator} from 'react-native-screens/native-stack';
-import React, {useEffect} from 'react';
-import {StatusBar, StyleSheet, View} from 'react-native';
-import {Host} from 'react-native-portalize';
+import { NavigationContainer, useTheme } from '@react-navigation/native';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+import React, { useEffect } from 'react';
+import { StatusBar, StyleSheet, View } from 'react-native';
+import { Host } from 'react-native-portalize';
 
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
 import LoadingModal from '~/beinComponents/modals/LoadingModal';
 import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
-import {AppConfig} from '~/configs';
-import {IUserResponse} from '~/interfaces/IAuth';
+import { AppConfig } from '~/configs';
+import { IUserResponse } from '~/interfaces/IAuth';
 import InternetConnectionStatus from '~/screens/NoInternet/components/InternetConnectionStatus';
 import SystemIssueModal from '~/screens/NoInternet/components/SystemIssueModal';
 import noInternetActions from '~/screens/NoInternet/redux/actions';
-import {makeRemovePushTokenRequest} from '~/services/httpApiRequest';
+import { makeRemovePushTokenRequest } from '~/services/httpApiRequest';
 import Store from '~/store';
-import {isNavigationRefReady} from './helper';
+import { isNavigationRefReady } from './helper';
 
-import {rootNavigationRef} from './refs';
-import {rootSwitch} from './stack';
+import { rootNavigationRef } from './refs';
+import { rootSwitch } from './stack';
 import * as appTheme from '~/theme/theme';
-import {registerNavigationContainerWithSentry} from '~/services/sentry';
+import { registerNavigationContainerWithSentry } from '~/services/sentry';
 
 import AuthStack from '~/router/navigator/AuthStack';
 import MainStack from '~/router/navigator/MainStack';
 import useNavigationLinkingConfig from '~/hooks/navigationLinking';
-import {useAuthKickOut} from '~/hooks/auth';
+import { useAuthKickOut } from '~/hooks/auth';
 
 const Stack = createNativeStackNavigator();
 
@@ -45,9 +45,7 @@ const RootNavigator = (): React.ReactElement => {
     isNavigationRefReady.current = false;
     dispatch(noInternetActions.setSystemIssue(false));
 
-    const unsubscribeNetInfo = NetInfo.addEventListener(() =>
-      dispatch(noInternetActions.checkInternetReachable()),
-    );
+    const unsubscribeNetInfo = NetInfo.addEventListener(() => dispatch(noInternetActions.checkInternetReachable()));
     if (!user) {
       makeRemovePushTokenRequest();
     }
@@ -68,21 +66,23 @@ const RootNavigator = (): React.ReactElement => {
   return (
     <View style={styles.container}>
       <StatusBar
-        barStyle={'dark-content'}
+        barStyle="dark-content"
         translucent
-        backgroundColor={'transparent'}
+        backgroundColor="transparent"
       />
       <NavigationContainer
         linking={linkingConfig}
         ref={rootNavigationRef}
         onReady={onReady}
         theme={navigationTheme as any}
-        documentTitle={{enabled: false}}>
+        documentTitle={{ enabled: false }}
+      >
         <Host>
           <Stack.Navigator
             initialRouteName={
               (user ? rootSwitch.mainStack : rootSwitch.authStack) as any
-            }>
+            }
+          >
             <Stack.Screen
               options={AppConfig.defaultScreenOptions}
               name={rootSwitch.authStack as any}

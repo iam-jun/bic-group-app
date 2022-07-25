@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 
-import {getEnv} from '~/utils/env';
+import getEnv from '~/utils/env';
 
 export const postFeatureMenu = [
   {
@@ -27,7 +27,7 @@ export const documentsMenu = [
     icon: 'iconMenuInfo',
     disableClick: true,
     rightSubTitle: getEnv('APP_VERSION')
-      ? i18n.t('settings:text_version') + ' ' + getEnv('APP_VERSION')
+      ? `${i18n.t('settings:text_version')} ${getEnv('APP_VERSION')}`
       : undefined,
   },
   {
@@ -151,7 +151,7 @@ export const infoMenu = [
     title: 'settings:title_about_bein',
     icon: 'CircleInfo',
     rightTitle: getEnv('APP_VERSION')
-      ? i18n.t('settings:text_version') + ' ' + getEnv('APP_VERSION')
+      ? `${i18n.t('settings:text_version')} ${getEnv('APP_VERSION')}`
       : undefined,
   },
   {

@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   View,
   StyleSheet,
@@ -7,18 +7,18 @@ import {
   ActivityIndicator,
   TouchableOpacity,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {debounce} from 'lodash';
-import {useDispatch} from 'react-redux';
-import {TouchableOpacity as TouchableGestureHandler} from 'react-native-gesture-handler';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { debounce } from 'lodash';
+import { useDispatch } from 'react-redux';
+import { TouchableOpacity as TouchableGestureHandler } from 'react-native-gesture-handler';
 
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import homeActions from '~/screens/Home/redux/actions';
 import Divider from '~/beinComponents/Divider';
 import modalActions from '~/store/modal/actions';
-import {ISelectedFilterUser} from '~/interfaces/IHome';
+import { ISelectedFilterUser } from '~/interfaces/IHome';
 
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
@@ -35,11 +35,10 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
   dismissModalOnPress,
 }: NFSFilterCreateBySpecificProps) => {
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
 
-  const {data, canLoadMore} =
-    useKeySelector(homeKeySelector.newsfeedSearchUsers) || {};
+  const { data, canLoadMore } = useKeySelector(homeKeySelector.newsfeedSearchUsers) || {};
 
   useEffect(() => {
     dispatch(homeActions.getSearchUsers(''));
@@ -51,27 +50,24 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
 
   const onPressUser = (user: any) => {
     dismissModalOnPress && dispatch(modalActions.hideModal());
-    onSelect?.({id: `${user?.id}`, name: user?.fullname});
+    onSelect?.({ id: `${user?.id}`, name: user?.fullname });
   };
 
-  const ItemWrapper: any =
-    Platform.OS === 'android' ? TouchableGestureHandler : View;
+  const ItemWrapper: any = Platform.OS === 'android' ? TouchableGestureHandler : View;
 
-  const renderItem = ({item}: any) => {
-    return (
-      <ItemWrapper onPress={() => onPressUser(item)}>
-        <PrimaryItem
-          height={40}
-          title={item?.fullname}
-          showAvatar
-          avatar={item?.avatar}
-          avatarProps={{variant: 'small'}}
-          style={styles.item}
-          onPress={() => onPressUser(item)}
-        />
-      </ItemWrapper>
-    );
-  };
+  const renderItem = ({ item }: any) => (
+    <ItemWrapper onPress={() => onPressUser(item)}>
+      <PrimaryItem
+        height={40}
+        title={item?.fullname}
+        showAvatar
+        avatar={item?.avatar}
+        avatarProps={{ variant: 'small' }}
+        style={styles.item}
+        onPress={() => onPressUser(item)}
+      />
+    </ItemWrapper>
+  );
 
   const onEndReached = () => {
     if (canLoadMore) {
@@ -83,7 +79,7 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
     if (canLoadMore) {
       return (
         <ActivityIndicator
-          style={{marginVertical: spacing.margin.base}}
+          style={{ marginVertical: spacing.margin.base }}
           color={theme.colors.gray20}
         />
       );
@@ -102,9 +98,9 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
       <FlatList
         data={data || []}
         renderItem={renderItem}
-        keyExtractor={item => `newsfeed_search_user_${item?.id}`}
-        keyboardShouldPersistTaps={'always'}
-        ListHeaderComponent={<View style={{height: spacing.margin.base}} />}
+        keyExtractor={(item) => `newsfeed_search_user_${item?.id}`}
+        keyboardShouldPersistTaps="always"
+        ListHeaderComponent={<View style={{ height: spacing.margin.base }} />}
         ListFooterComponent={renderFooter}
         onEndReached={onEndReached}
       />

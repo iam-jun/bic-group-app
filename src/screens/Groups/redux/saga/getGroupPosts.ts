@@ -1,6 +1,6 @@
-import {put, select, call} from 'redux-saga/effects';
+import { put, select, call } from 'redux-saga/effects';
 import appConfig from '~/configs/appConfig';
-import {IParamGetGroupPosts} from '~/interfaces/IGroup';
+import { IParamGetGroupPosts } from '~/interfaces/IGroup';
 import postActions from '~/screens/Post/redux/actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import groupsActions from '../actions';
@@ -12,13 +12,13 @@ export default function* getGroupPosts({
   payload: string;
 }): any {
   try {
-    const {groups} = yield select();
-    const {offset, data} = groups.posts;
+    const { groups } = yield select();
+    const { offset, data } = groups.posts;
 
-    const param: IParamGetGroupPosts = {groupId: payload, offset};
+    const param: IParamGetGroupPosts = { groupId: payload, offset };
     const result = yield call(groupsDataHelper.getGroupPosts, param);
 
-    yield put(postActions.addToAllPosts({data: result}));
+    yield put(postActions.addToAllPosts({ data: result }));
     if (data.length === 0) {
       yield put(groupsActions.setGroupPosts(result));
       if (result.length === appConfig.recordsPerPage) {
@@ -31,7 +31,7 @@ export default function* getGroupPosts({
     yield put(groupsActions.setLoadingPage(false));
   } catch (e) {
     yield put(groupsActions.setLoadingPage(false));
-    console.log(
+    console.error(
       '\x1b[33m',
       'namanh --- getGroupPosts | getGroupPosts : error',
       e,

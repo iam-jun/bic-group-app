@@ -1,5 +1,5 @@
-import {BottomTabBarProps} from '@react-navigation/bottom-tabs/lib/typescript/src/types';
-import React, {FC, useEffect, useRef} from 'react';
+import { BottomTabBarProps } from '@react-navigation/bottom-tabs/lib/typescript/src/types';
+import React, { FC, useEffect, useRef } from 'react';
 import {
   DeviceEventEmitter,
   Keyboard,
@@ -13,9 +13,9 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import {EdgeInsets, useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useDispatch} from 'react-redux';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { EdgeInsets, useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch } from 'react-redux';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import Icon from '~/beinComponents/Icon';
@@ -25,14 +25,14 @@ import {
   bottomTabIconsFocused,
   hideBottomTabRoutes,
 } from '~/configs/navigator';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import useTabBadge from '~/hooks/tabBadge';
 import appActions from '~/store/app/actions';
 import dimension from '~/theme/dimension';
-import {fontFamilies} from '~/theme/fonts';
+import { fontFamilies } from '~/theme/fonts';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 
 const BottomTabBar: FC<BottomTabBarProps> = ({
   state,
@@ -46,8 +46,8 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
 
   const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
-  const {t} = useBaseHook();
-  const {colors} = theme;
+  const { t } = useBaseHook();
+  const { colors } = theme;
   const styles = createStyle(theme, insets);
 
   const tabBadge: any = useTabBadge();
@@ -62,11 +62,11 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     if (!tabBarVisible) {
       return;
     }
-    showValue.value = withTiming(1, {duration});
+    showValue.value = withTiming(1, { duration });
   };
 
   const hide = (duration = 150) => {
-    showValue.value = withTiming(0, {duration});
+    showValue.value = withTiming(0, { duration });
   };
 
   const getActiveRouteName = (state: any): any => {
@@ -77,9 +77,9 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     return route?.name;
   };
 
-  useEffect(() => {
+  useEffect(
     // @ts-ignore
-    return navigation.addListener('state', (event: any) => {
+    () => navigation.addListener('state', (event: any) => {
       const routeName = getActiveRouteName(event?.data?.state);
       const shouldHideTab = hideBottomTabRoutes.includes(routeName);
       if (shouldHideTab) {
@@ -87,14 +87,13 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
           tabBarVisible = false;
           hide();
         }
-      } else {
-        if (!tabBarVisible) {
-          tabBarVisible = true;
-          show();
-        }
+      } else if (!tabBarVisible) {
+        tabBarVisible = true;
+        show();
       }
-    });
-  }, [navigation]);
+    }),
+    [navigation],
+  );
 
   useEffect(() => {
     const onShow = () => hide(0);
@@ -105,7 +104,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     const hideListener = Keyboard.addListener('keyboardDidHide', onHide);
     const showBottomBarListener = DeviceEventEmitter.addListener(
       'showBottomBar',
-      isShow => {
+      (isShow) => {
         if (isShow) {
           show();
         } else {
@@ -123,9 +122,9 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   }, []);
 
   const renderItem = (route: any, index: any) => {
-    const {key, name} = route || {};
+    const { key, name, params } = route || {};
 
-    const {options} = descriptors[route.key];
+    const { options } = descriptors[route.key];
 
     const isFocused = state.index === index;
     const unreadCount = tabBadge[name] || undefined;
@@ -167,8 +166,9 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
         testID={`tab_${name}`}
         onPress={onPress}
         onLongPress={onLongPress}
-        style={styles.container}>
-        {!!name && t(`tabs:${name}`) !== t(`tabs:menus`) ? (
+        style={styles.container}
+      >
+        {!!name && t(`tabs:${name}`) !== t('tabs:menus') ? (
           <Icon icon={iconName} size={20} tintColor="none" />
         ) : (
           <Image
@@ -200,7 +200,7 @@ const tabBarIconStyles = (
   focused: boolean,
   color?: string,
 ) => {
-  const {colors} = theme || {};
+  const { colors } = theme || {};
   return StyleSheet.create({
     container: {
       flex: 1,
@@ -211,7 +211,7 @@ const tabBarIconStyles = (
       borderTopColor: colors.purple50,
     },
     label: {
-      color: color,
+      color,
       textAlign: 'center',
     },
     badge: {
@@ -219,7 +219,7 @@ const tabBarIconStyles = (
       top: '6%',
       left: '54%',
     },
-    textBadge: {fontFamily: fontFamilies.BeVietnamProLight},
+    textBadge: { fontFamily: fontFamilies.BeVietnamProLight },
     avatarStyle: {
       width: 20,
       height: 20,
@@ -229,7 +229,7 @@ const tabBarIconStyles = (
 };
 
 const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',
@@ -237,7 +237,7 @@ const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
       backgroundColor: colors.white,
       borderTopWidth: 0.5,
       borderColor: colors.neutral5,
-      shadowOffset: {width: 0, height: 1},
+      shadowOffset: { width: 0, height: 1 },
       shadowColor: '#000',
       shadowOpacity: 0.1,
       shadowRadius: 1,

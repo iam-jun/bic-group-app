@@ -1,5 +1,5 @@
-import {Linking} from 'react-native';
-import {getEnv} from '~/utils/env';
+import { Linking } from 'react-native';
+import getEnv from '~/utils/env';
 
 export default function openUrl(url, customCallback) {
   if (customCallback) {
@@ -16,14 +16,14 @@ function openURL(url) {
   if (url.includes(getEnv('SELF_DOMAIN'))) {
     const newUrl = url.replace(getEnv('SELF_DOMAIN'), 'bein://');
     Linking.canOpenURL(newUrl)
-      .then(supported => {
+      .then((supported) => {
         if (supported) {
           Linking.openURL(newUrl);
         } else {
           Linking.openURL(url);
         }
       })
-      .catch(e => {
+      .catch((e) => {
         console.log('error when open link:', e);
       });
     return;

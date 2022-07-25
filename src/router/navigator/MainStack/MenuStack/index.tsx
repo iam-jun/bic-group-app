@@ -3,8 +3,6 @@ import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import screens from './screens';
 import stack from './stack';
 
-const MenuStack = (): React.ReactElement => {
-  return <BaseStackNavigator stack={stack} screens={screens} />;
-};
+const MenuStack = (): React.ReactElement => <BaseStackNavigator stack={stack} screens={screens} />;
 
 export default MenuStack;

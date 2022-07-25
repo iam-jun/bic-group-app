@@ -1,4 +1,4 @@
-import {takeLatest} from 'redux-saga/effects';
+import { takeLatest } from 'redux-saga/effects';
 import menuTypes from '../types';
 import deleteWorkExperience from './deleteWorkExperience';
 import getMyWorkExperience from './getMyWorkExperience';

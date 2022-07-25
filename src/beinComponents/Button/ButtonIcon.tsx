@@ -1,11 +1,12 @@
 import React from 'react';
-import {StyleProp, ViewStyle} from 'react-native';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import {
+  StyleProp, ViewStyle, StyleSheet, View,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import {IconType} from '~/resources/icons';
+import { IconType } from '~/resources/icons';
 
-import ButtonWrapper, {ButtonWrapperProps} from './ButtonWrapper';
+import ButtonWrapper, { ButtonWrapperProps } from './ButtonWrapper';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
 
@@ -33,7 +34,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
       <ButtonWrapper
         style={[styles.icon, iconWrapperStyle]}
         leftIcon={icon}
-        leftIconProps={{icon, tintColor}}
+        leftIconProps={{ icon, tintColor }}
         {...props}
       />
       {label && (
@@ -46,7 +47,7 @@ const ButtonIcon: React.FC<ButtonIconProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       alignItems: 'center',

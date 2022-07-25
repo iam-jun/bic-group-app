@@ -1,8 +1,8 @@
-import React, {memo, useState} from 'react';
-import {TouchableOpacity, View} from 'react-native';
-import Image, {ImageProps} from '.';
+import React, { memo, useState } from 'react';
+import { TouchableOpacity, View } from 'react-native';
+import { isArray } from 'lodash';
+import Image, { ImageProps } from '.';
 import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
-import {isArray} from 'lodash';
 
 export interface ImagePreviewerProps extends ImageProps {
   initIndex?: number;
@@ -28,7 +28,8 @@ const ImagePreviewer: React.FC<ImagePreviewerProps> = ({
     <View>
       <TouchableOpacity
         onPress={() => setVisible(true)}
-        onLongPress={_onLongPress}>
+        onLongPress={_onLongPress}
+      >
         <Image {...props} source={thumbnailSource} />
       </TouchableOpacity>
       {visible && (

@@ -1,49 +1,38 @@
-import {useDispatch, useSelector} from 'react-redux';
-import {IObject} from '~/interfaces/common';
-import {useEffect} from 'react';
-import {Auth} from 'aws-amplify';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { Auth } from 'aws-amplify';
+import { put } from 'redux-saga/effects';
 import authActions from '~/screens/Auth/redux/actions';
-import {put} from 'redux-saga/effects';
+import { IObject } from '~/interfaces/common';
 import modalActions from '~/store/modal/actions';
-import {useBaseHook} from '~/hooks/index';
+import { useBaseHook } from '~/hooks/index';
 
-const useAuth = () => {
-  return useSelector((state: IObject<any>) => state.auth);
-};
+const useAuth = () => useSelector((state: IObject<any>) => state.auth);
 
-export const useUserIdAuth = () => {
-  return (
-    useSelector(
-      (state: IObject<any>) =>
-        state.auth?.user?.signInUserSession?.idToken?.payload?.[
-          'custom:bein_user_id'
-        ],
-    ) || ''
-  );
-};
+export const useUserIdAuth = () => (
+  useSelector(
+    (state: IObject<any>) => state.auth?.user?.signInUserSession?.idToken?.payload?.[
+      'custom:bein_user_id'
+    ],
+  ) || ''
+);
 
-export const useAuthToken = () => {
-  return (
-    useSelector(
-      (state: IObject<any>) =>
-        state.auth?.user?.signInUserSession?.idToken?.jwtToken,
-    ) || ''
-  );
-};
+export const useAuthToken = () => (
+  useSelector(
+    (state: IObject<any>) => state.auth?.user?.signInUserSession?.idToken?.jwtToken,
+  ) || ''
+);
 
-export const useAuthTokenExpire = () => {
-  return (
-    useSelector(
-      (state: IObject<any>) =>
-        state.auth?.user?.signInUserSession?.idToken?.payload?.exp,
-    ) || ''
-  );
-};
+export const useAuthTokenExpire = () => (
+  useSelector(
+    (state: IObject<any>) => state.auth?.user?.signInUserSession?.idToken?.payload?.exp,
+  ) || ''
+);
 
 export const useAuthKickOut = () => {
   const dispatch = useDispatch();
   const userId = useUserIdAuth();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
 
   const checkAuthKickOut = async () => {
     try {

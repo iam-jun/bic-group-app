@@ -1,9 +1,9 @@
-import {IUserProfile, IUserWorkExperience} from '~/interfaces/IAuth';
+import { IUserProfile, IUserWorkExperience } from '~/interfaces/IAuth';
 import menuTypes from './types';
 import countryCode from '~/constants/countryCode';
-import {ICountryCodeList, ILocation} from '~/interfaces/common';
+import { ICountryCodeList, ILocation } from '~/interfaces/common';
 import locations from '~/constants/locations';
-import {searchText} from '~/utils/common';
+import { searchText } from '~/utils/common';
 
 export const menuInitState = {
   loadingMyProfile: false,
@@ -34,8 +34,8 @@ export const menuInitState = {
 };
 
 const menuReducer = (state = menuInitState, action: any = {}) => {
-  const {type, payload} = action;
-  const {countryCodeList, locationList} = state;
+  const { type, payload } = action;
+  const { countryCodeList, locationList } = state;
 
   switch (type) {
     case menuTypes.GET_USER_PROFILE:
@@ -99,9 +99,9 @@ const menuReducer = (state = menuInitState, action: any = {}) => {
         countryCodeList: {
           ...countryCodeList,
           searchResult: countryCodeList.data.filter(
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            (item: ICountryCodeList) =>
-              searchText(payload, item.code) || searchText(payload, item.name),
+            (item: ICountryCodeList) => searchText(payload, item.code) || searchText(payload, item.name),
           ),
         },
       };
@@ -111,9 +111,8 @@ const menuReducer = (state = menuInitState, action: any = {}) => {
         locationList: {
           ...locationList,
           searchResult: locationList.data.filter(
-            (item: ILocation) =>
-              searchText(payload, item.name) ||
-              searchText(payload, item.country),
+            (item: ILocation) => searchText(payload, item.name)
+              || searchText(payload, item.country),
           ),
         },
       };

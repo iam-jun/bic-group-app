@@ -5,99 +5,73 @@ import {
   IUserProfile,
   IUserWorkExperience,
 } from '~/interfaces/IAuth';
-import {IUserImageUpload} from '~/interfaces/IEditUser';
+import { IUserImageUpload } from '~/interfaces/IEditUser';
 import menuTypes from './types';
 
 const menuActions = {
-  setLanguageModalOpen: (payload: boolean) => {
-    return {
-      type: menuTypes.SET_LANGUAGE_MODAL_OPEN,
-      payload,
-    };
-  },
+  setLanguageModalOpen: (payload: boolean) => ({
+    type: menuTypes.SET_LANGUAGE_MODAL_OPEN,
+    payload,
+  }),
 
-  getUserProfile: (payload: IGetUserProfile) => {
-    return {
-      type: menuTypes.GET_USER_PROFILE,
-      payload,
-    };
-  },
-  setUserProfile: (payload: IUserProfile | null) => {
-    return {
-      type: menuTypes.SET_USER_PROFILE,
-      payload,
-    };
-  },
-  setShowUserNotFound: () => {
-    return {
-      type: menuTypes.SET_SHOW_USER_NOT_FOUND,
-    };
-  },
-  clearUserProfile: () => {
-    return {
-      type: menuTypes.CLEAR_USER_PROFILE,
-    };
-  },
+  getUserProfile: (payload: IGetUserProfile) => ({
+    type: menuTypes.GET_USER_PROFILE,
+    payload,
+  }),
+  setUserProfile: (payload: IUserProfile | null) => ({
+    type: menuTypes.SET_USER_PROFILE,
+    payload,
+  }),
+  setShowUserNotFound: () => ({
+    type: menuTypes.SET_SHOW_USER_NOT_FOUND,
+  }),
+  clearUserProfile: () => ({
+    type: menuTypes.CLEAR_USER_PROFILE,
+  }),
 
-  getMyProfile: (payload: IGetUserProfile) => {
-    return {
-      type: menuTypes.GET_MY_PROFILE,
-      payload,
-    };
-  },
-  setMyProfile: (payload: IUserProfile | null) => {
-    return {
-      type: menuTypes.SET_MY_PROFILE,
-      payload,
-    };
-  },
+  getMyProfile: (payload: IGetUserProfile) => ({
+    type: menuTypes.GET_MY_PROFILE,
+    payload,
+  }),
+  setMyProfile: (payload: IUserProfile | null) => ({
+    type: menuTypes.SET_MY_PROFILE,
+    payload,
+  }),
 
-  getMyWorkExperience: () => {
-    return {
-      type: menuTypes.GET_MY_WORK_EXPERIENCE,
-    };
-  },
-  setMyWorkExperience: (payload: IUserWorkExperience[]) => {
-    return {
-      type: menuTypes.SET_MY_WORK_EXPERIENCE,
-      payload,
-    };
-  },
+  getMyWorkExperience: () => ({
+    type: menuTypes.GET_MY_WORK_EXPERIENCE,
+  }),
+  setMyWorkExperience: (payload: IUserWorkExperience[]) => ({
+    type: menuTypes.SET_MY_WORK_EXPERIENCE,
+    payload,
+  }),
   addWorkExperience: (
     payload: IUserAddWorkExperience,
     callback?: () => void,
-  ) => {
-    return {
-      type: menuTypes.ADD_WORK_EXPERIENCE,
-      payload,
-      callback,
-    };
-  },
+  ) => ({
+    type: menuTypes.ADD_WORK_EXPERIENCE,
+    payload,
+    callback,
+  }),
   editWorkExperience: (
     id: number,
     payload: IUserAddWorkExperience,
     callback?: () => void,
-  ) => {
-    return {
-      type: menuTypes.EDIT_WORK_EXPERIENCE,
-      id,
-      payload,
-      callback,
-    };
-  },
-  deleteWorkExperience: (id: number, callback?: () => void) => {
-    return {
-      type: menuTypes.DELETE_WORK_EXPERIENCE,
-      id,
-      callback,
-    };
-  },
-  setSelectedWorkItem: (payload: IUserWorkExperience | null) => {
-    return {
-      type: menuTypes.SET_SELECTED_WORK_ITEM,
-      payload,
-    };
-  },
+  ) => ({
+    type: menuTypes.EDIT_WORK_EXPERIENCE,
+    id,
+    payload,
+    callback,
+  }),
+  deleteWorkExperience: (id: number, callback?: () => void) => ({
+    type: menuTypes.DELETE_WORK_EXPERIENCE,
+    id,
+    callback,
+  }),
+  setSelectedWorkItem: (payload: IUserWorkExperience | null) => ({
+    type: menuTypes.SET_SELECTED_WORK_ITEM,
+    payload,
+  }),
 
   searchCountryCode: (payload: string) => ({
     type: menuTypes.SEARCH_COUNTRY_CODE,
@@ -108,7 +82,7 @@ const menuActions = {
     payload,
   }),
 
-  editMyProfile: function (
+  editMyProfile(
     payload: IUserEdit,
     editFieldToastMessage?: string,
     callback?: () => void,
@@ -128,13 +102,11 @@ const menuActions = {
     type: menuTypes.SET_PHONE_NUMBER_EDIT_ERROR,
     payload,
   }),
-  uploadImage: (payload: IUserImageUpload, callback?: () => void) => {
-    return {
-      type: menuTypes.UPLOAD_IMAGE,
-      payload,
-      callback,
-    };
-  },
+  uploadImage: (payload: IUserImageUpload, callback?: () => void) => ({
+    type: menuTypes.UPLOAD_IMAGE,
+    payload,
+    callback,
+  }),
 
   setLoadingAvatar: (payload: boolean) => ({
     type: menuTypes.SET_LOADING_AVATAR,
@@ -149,12 +121,10 @@ const menuActions = {
     type: menuTypes.GET_USER_WORK_EXPERIENCE,
     id,
   }),
-  setUserWorkExperience: (payload: IUserWorkExperience[]) => {
-    return {
-      type: menuTypes.SET_USER_WORK_EXPERIENCE,
-      payload,
-    };
-  },
+  setUserWorkExperience: (payload: IUserWorkExperience[]) => ({
+    type: menuTypes.SET_USER_WORK_EXPERIENCE,
+    payload,
+  }),
 };
 
 export default menuActions;

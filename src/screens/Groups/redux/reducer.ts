@@ -1,11 +1,11 @@
-import {ICommunity, ICommunityMembers} from '~/interfaces/ICommunity';
+import { cloneDeep } from 'lodash';
+import { ICommunity, ICommunityMembers } from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
 import groupsTypes from '~/screens/Groups/redux/types';
-import {IUser} from '~/interfaces/IAuth';
-import {IGroupDetail, IGroupMembers, IJoiningMember} from '~/interfaces/IGroup';
-import {IObject} from '~/interfaces/common';
-import {getNewSchemeRolesOnUpdatePermission} from '~/screens/Groups/CreatePermissionScheme/helper';
-import {cloneDeep} from 'lodash';
+import { IUser } from '~/interfaces/IAuth';
+import { IGroupDetail, IGroupMembers, IJoiningMember } from '~/interfaces/IGroup';
+import { IObject } from '~/interfaces/common';
+import { getNewSchemeRolesOnUpdatePermission } from '~/screens/Groups/CreatePermissionScheme/helper';
 
 export const groupInitState = {
   myPermissions: {
@@ -130,6 +130,7 @@ export const groupInitState = {
     offset: 0,
     canLoadMore: true,
   },
+  // eslint-disable-next-line no-array-constructor
   selectedUsers: new Array<IUser>(),
 
   loadingAvatar: false,
@@ -210,7 +211,7 @@ export const groupInitState = {
 };
 
 function groupsReducer(state = groupInitState, action: any = {}) {
-  const {type, payload} = action;
+  const { type, payload } = action;
   const {
     selectedUsers,
     groupMemberRequests,
@@ -234,11 +235,11 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
 
-    //Group Structure Settings
+    // Group Structure Settings
     case groupsTypes.SET_GROUP_STRUCTURE:
       return {
         ...state,
-        groupStructure: payload ? {...payload} : groupInitState.groupStructure,
+        groupStructure: payload ? { ...payload } : groupInitState.groupStructure,
       };
     case groupsTypes.SET_GROUP_STRUCTURE_COMMUNITY_TREE:
       return {
@@ -246,7 +247,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         groupStructure: {
           ...state.groupStructure,
           communityTree: payload
-            ? {...payload}
+            ? { ...payload }
             : groupInitState.groupStructure.communityTree,
         },
       };
@@ -256,7 +257,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         groupStructure: {
           ...state.groupStructure,
           reorder: payload
-            ? {...payload}
+            ? { ...payload }
             : groupInitState.groupStructure.reorder,
         },
       };
@@ -265,7 +266,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         ...state,
         groupStructure: {
           ...state.groupStructure,
-          move: payload ? {...payload} : groupInitState.groupStructure.move,
+          move: payload ? { ...payload } : groupInitState.groupStructure.move,
         },
       };
     case groupsTypes.SET_GROUP_STRUCTURE_MOVE_SELECTING:
@@ -303,9 +304,9 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           ...state.permissionScheme,
           creatingScheme: payload
             ? {
-                ...state.permissionScheme.creatingScheme,
-                ...payload,
-              }
+              ...state.permissionScheme.creatingScheme,
+              ...payload,
+            }
             : groupInitState.permissionScheme.creatingScheme,
         },
       };
@@ -318,21 +319,19 @@ function groupsReducer(state = groupInitState, action: any = {}) {
             ...state.permissionScheme.creatingScheme,
             data: payload
               ? Object.assign(
-                  // @ts-ignore
-                  cloneDeep(state.permissionScheme.creatingScheme.data),
-                  payload,
-                )
+                // @ts-ignore
+                cloneDeep(state.permissionScheme.creatingScheme.data),
+                payload,
+              )
               : groupInitState.permissionScheme.creatingScheme.data,
           },
         },
       };
     case groupsTypes.UPDATE_CREATING_SCHEME_PERMISSION: {
-      const memberRoleIndex =
-        state.permissionScheme.creatingScheme?.memberRoleIndex;
-      const {permission, roleIndex} = payload || {};
-      const roles =
-        // @ts-ignore
-        [...state.permissionScheme.creatingScheme?.data?.roles] || [];
+      const memberRoleIndex = state.permissionScheme.creatingScheme?.memberRoleIndex;
+      const { permission, roleIndex } = payload || {};
+      // @ts-ignore
+      const roles = state.permissionScheme.creatingScheme?.data?.roles || [];
       const newRoles = getNewSchemeRolesOnUpdatePermission(
         permission,
         roleIndex,
@@ -342,7 +341,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
       const newData = Object.assign(
         // @ts-ignore
         cloneDeep(state.permissionScheme.creatingScheme.data),
-        {roles: newRoles},
+        { roles: newRoles },
       );
       return {
         ...state,
@@ -360,7 +359,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         ...state,
         permissionScheme: {
           ...state.permissionScheme,
-          communityScheme: {...payload},
+          communityScheme: { ...payload },
         },
       };
     case groupsTypes.SET_SCHEMES:
@@ -378,9 +377,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           ...state.permissionScheme,
           assignGroupScheme: {
             ...state.permissionScheme.assignGroupScheme,
-            assignments: payload
-              ? payload
-              : groupInitState.permissionScheme.assignGroupScheme.assignments,
+            assignments: payload || groupInitState.permissionScheme.assignGroupScheme.assignments,
           },
         },
       };
@@ -391,9 +388,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
           ...state.permissionScheme,
           assignGroupScheme: {
             ...state.permissionScheme.assignGroupScheme,
-            assigning: payload
-              ? payload
-              : groupInitState.permissionScheme.assignGroupScheme.assigning,
+            assigning: payload || groupInitState.permissionScheme.assignGroupScheme.assigning,
           },
         },
       };
@@ -402,7 +397,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         ...state,
         permissionScheme: {
           ...state.permissionScheme,
-          groupScheme: {...payload},
+          groupScheme: { ...payload },
         },
       };
 
@@ -564,7 +559,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         ...state,
         selectedUsers: !included
           ? [...selectedUsers, payload]
-          : selectedUsers.filter(user => user.id !== payload.id),
+          : selectedUsers.filter((user) => user.id !== payload.id),
       };
     }
     case groupsTypes.CLEAR_SELECTED_USERS:
@@ -625,13 +620,13 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     case groupsTypes.UNDO_DECLINED_GROUP_MEMBER_REQUESTS:
       return {
         ...state,
-        groupMemberRequests: {...state.undoGroupMemberRequests},
+        groupMemberRequests: { ...state.undoGroupMemberRequests },
         undoGroupMemberRequests: groupInitState.undoGroupMemberRequests,
       };
     case groupsTypes.STORE_UNDO_GROUP_MEMBER_REQUESTS:
       return {
         ...state,
-        undoGroupMemberRequests: {...groupMemberRequests},
+        undoGroupMemberRequests: { ...groupMemberRequests },
       };
     case groupsTypes.EDIT_GROUP_MEMBER_REQUEST:
       return {
@@ -810,12 +805,12 @@ function groupsReducer(state = groupInitState, action: any = {}) {
     case groupsTypes.STORE_UNDO_COMMUNITY_MEMBER_REQUESTS:
       return {
         ...state,
-        undoCommunityMemberRequests: {...communityMemberRequests},
+        undoCommunityMemberRequests: { ...communityMemberRequests },
       };
     case groupsTypes.UNDO_DECLINED_COMMUNITY_MEMBER_REQUESTS:
       return {
         ...state,
-        communityMemberRequests: {...state.undoCommunityMemberRequests},
+        communityMemberRequests: { ...state.undoCommunityMemberRequests },
         undoCommunityMemberRequests: groupInitState.undoCommunityMemberRequests,
       };
     case groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS:

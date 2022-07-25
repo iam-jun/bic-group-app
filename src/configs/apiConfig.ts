@@ -1,7 +1,8 @@
-import {AxiosRequestConfig} from 'axios';
+/* eslint-disable no-undef */
+import { AxiosRequestConfig } from 'axios';
 
-import {getEnv} from '~/utils/env';
-import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
+import getEnv from '~/utils/env';
+import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import appConfig from './appConfig';
 
 const providers = {
@@ -24,34 +25,30 @@ const providers = {
 };
 
 const Upload = {
-  createVideoId: (): HttpApiRequestConfig => {
-    return {
-      url: `${providers.beinUpload.url}videos`,
-      method: 'post',
-      provider: providers.beinUpload,
-      useRetry: true,
-    };
-  },
+  createVideoId: (): HttpApiRequestConfig => ({
+    url: `${providers.beinUpload.url}videos`,
+    method: 'post',
+    provider: providers.beinUpload,
+    useRetry: true,
+  }),
   uploadVideo: (
     id: string,
     type: any,
     data: FormData,
     onUploadProgress?: (progressEvent: any) => void,
     abortSignal?: AbortSignal,
-  ): HttpApiRequestConfig => {
-    return {
-      url: `${providers.beinUpload.url}videos/${id}`,
-      method: 'post',
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-      useRetry: true,
-      provider: providers.beinUpload,
-      onUploadProgress: onUploadProgress,
-      data,
-      signal: abortSignal,
-    };
-  },
+  ): HttpApiRequestConfig => ({
+    url: `${providers.beinUpload.url}videos/${id}`,
+    method: 'post',
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+    useRetry: true,
+    provider: providers.beinUpload,
+    onUploadProgress,
+    data,
+    signal: abortSignal,
+  }),
   uploadImage: (
     type: any,
     data: FormData,
@@ -93,7 +90,7 @@ const Upload = {
       },
       useRetry: true,
       provider,
-      onUploadProgress: onUploadProgress,
+      onUploadProgress,
       data,
     };
   },
@@ -125,72 +122,60 @@ const Upload = {
       data,
       signal: abortSignal,
       timeout: appConfig.fileUploadTimeout,
-      onUploadProgress: onUploadProgress,
+      onUploadProgress,
     };
   },
 };
 
 const App = {
-  info: (): HttpApiRequestConfig => {
-    return {
-      url: `${providers.bein.url}hello/bein`,
-      method: 'get',
-      provider: providers.bein,
-      useRetry: true,
-    };
-  },
-  pushToken: (deviceToken: string, deviceId: string): HttpApiRequestConfig => {
-    return {
-      url: `${providers.beinNotification.url}device-tokens`,
-      method: 'post',
-      provider: providers.beinNotification,
-      useRetry: true,
-      data: {
-        token: deviceToken,
-        deviceId,
-      },
-    };
-  },
-  removePushToken: (deviceId: string): HttpApiRequestConfig => {
-    return {
-      url: `${providers.beinNotification.url}device-tokens/${deviceId}`,
-      method: 'delete',
-      provider: providers.beinNotification,
-      useRetry: false,
-      timeout: 5000,
-    };
-  },
-  getLinkPreview: (link: string): HttpApiRequestConfig => {
-    return {
-      url: `${providers.bein.url}link-preview/${link}`,
-      method: 'get',
-      provider: providers.bein,
-      useRetry: true,
-    };
-  },
-  getUsers: (params: IParamsGetUsers): HttpApiRequestConfig => {
-    return {
-      url: `${providers.bein.url}users`,
-      method: 'get',
-      useRetry: true,
-      provider: providers.bein,
-      params: {
-        ...params,
-        key: !!params?.key?.trim?.() ? params.key : undefined,
-      },
-    };
-  },
+  info: (): HttpApiRequestConfig => ({
+    url: `${providers.bein.url}hello/bein`,
+    method: 'get',
+    provider: providers.bein,
+    useRetry: true,
+  }),
+  pushToken: (deviceToken: string, deviceId: string): HttpApiRequestConfig => ({
+    url: `${providers.beinNotification.url}device-tokens`,
+    method: 'post',
+    provider: providers.beinNotification,
+    useRetry: true,
+    data: {
+      token: deviceToken,
+      deviceId,
+    },
+  }),
+  removePushToken: (deviceId: string): HttpApiRequestConfig => ({
+    url: `${providers.beinNotification.url}device-tokens/${deviceId}`,
+    method: 'delete',
+    provider: providers.beinNotification,
+    useRetry: false,
+    timeout: 5000,
+  }),
+  getLinkPreview: (link: string): HttpApiRequestConfig => ({
+    url: `${providers.bein.url}link-preview/${link}`,
+    method: 'get',
+    provider: providers.bein,
+    useRetry: true,
+  }),
+  getUsers: (params: IParamsGetUsers): HttpApiRequestConfig => ({
+    url: `${providers.bein.url}users`,
+    method: 'get',
+    useRetry: true,
+    provider: providers.bein,
+    params: {
+      ...params,
+      key: params?.key?.trim?.() ? params.key : undefined,
+    },
+  }),
 };
 
 const Chat = {
-  init: (): HttpApiRequestConfig => {
-    return {
-      url: `${providers.bein.url}chat/channels/unread`,
-      method: 'get',
-      provider: providers.bein,
-      useRetry: true,
-    };
-  },
+  init: (): HttpApiRequestConfig => ({
+    url: `${providers.bein.url}chat/channels/unread`,
+    method: 'get',
+    provider: providers.bein,
+    useRetry: true,
+  }),
 };
 
 export interface HttpApiRequestConfig extends AxiosRequestConfig {

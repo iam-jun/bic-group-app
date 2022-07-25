@@ -1,9 +1,11 @@
-import {GiphyMedia} from '@giphy/react-native-sdk';
-import {isEmpty} from 'lodash';
-import React, {FC, useState} from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {uploadTypes} from '~/configs/resourceConfig';
-import {IPostMedia} from '~/interfaces/IPost';
+import { GiphyMedia } from '@giphy/react-native-sdk';
+import { isEmpty } from 'lodash';
+import React, { FC, useState } from 'react';
+import {
+  StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
+import { uploadTypes } from '~/configs/resourceConfig';
+import { IPostMedia } from '~/interfaces/IPost';
 import PostPhotoPreview from '~/screens/Post/components/PostPhotoPreview';
 import spacing from '~/theme/spacing';
 import GifView from './GifView';
@@ -23,7 +25,7 @@ const CommentMediaView: FC<CommentMediaViewProps> = ({
 }: CommentMediaViewProps) => {
   const [width, setWidth] = useState();
 
-  const {images} = media || {};
+  const { images } = media || {};
 
   const onLayout = (e: any) => {
     const width = e?.nativeEvent?.layout?.width;
@@ -40,7 +42,7 @@ const CommentMediaView: FC<CommentMediaViewProps> = ({
     if (giphy) {
       return <GifView giphy={giphy} />;
     }
-    if (images && !isEmpty(images))
+    if (images && !isEmpty(images)) {
       return (
         <PostPhotoPreview
           data={images}
@@ -50,13 +52,15 @@ const CommentMediaView: FC<CommentMediaViewProps> = ({
           enableGalleryModal
         />
       );
+    }
     return null;
   };
 
   return (
     <View
       style={StyleSheet.flatten([styles.container, style])}
-      onLayout={onLayout}>
+      onLayout={onLayout}
+    >
       {renderContent()}
     </View>
   );

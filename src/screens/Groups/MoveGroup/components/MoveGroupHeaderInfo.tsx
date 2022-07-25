@@ -1,30 +1,29 @@
-import React, {FC} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import React, { FC } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import Text from '~/beinComponents/Text';
-import {IGroup} from '~/interfaces/IGroup';
 import Avatar from '~/beinComponents/Avatar';
 import Divider from '~/beinComponents/Divider';
-import {useBaseHook} from '~/hooks';
-import {getAllChildrenName} from '~/screens/Groups/helper';
+import Text from '~/beinComponents/Text';
+import { useBaseHook } from '~/hooks';
+import { IGroup } from '~/interfaces/IGroup';
+import { getAllChildrenName } from '~/screens/Groups/helper';
 import MoveLine from '~/screens/Groups/MoveGroup/components/MoveLine';
 import spacing from '~/theme/spacing';
 
 export interface MoveGroupHeaderInfoProps {
-  style?: StyleProp<ViewStyle>;
   group: IGroup;
 }
 
 const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
   group,
 }: MoveGroupHeaderInfoProps) => {
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
-  const {icon, name} = group || {};
+  const { icon, name } = group || {};
 
   const childrenName = getAllChildrenName(group).join?.(', ');
 
@@ -43,8 +42,10 @@ const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
             <Divider color={colors.gray40} />
             <View style={styles.childrenInfo}>
               <Text.BodyS>
-                <Text.BodySMedium>{childrenName}</Text.BodySMedium>{' '}
-                {t('communities:group_structure:text_will_be_move')}{' '}
+                <Text.BodySMedium>{childrenName}</Text.BodySMedium>
+                {' '}
+                {t('communities:group_structure:text_will_be_move')}
+                {' '}
                 <Text.BodySMedium>{name}</Text.BodySMedium>
               </Text.BodyS>
             </View>
@@ -56,7 +57,7 @@ const MoveGroupHeaderInfo: FC<MoveGroupHeaderInfoProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',

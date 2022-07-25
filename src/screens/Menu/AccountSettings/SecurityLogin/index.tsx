@@ -1,22 +1,22 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {useNavigation} from '@react-navigation/native';
+import { StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import * as modalActions from '~/store/modal/actions';
 
-import {ISetting} from '~/interfaces/common';
+import { ISetting } from '~/interfaces/common';
 import Header from '~/beinComponents/Header';
 import Divider from '~/beinComponents/Divider';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {securityLoginMenu} from '~/constants/settings';
+import { securityLoginMenu } from '~/constants/settings';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import spacing from '~/theme/spacing';
 
 const SecurityLogin = () => {
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const dispatch = useDispatch();
   const navigation = useNavigation();
 

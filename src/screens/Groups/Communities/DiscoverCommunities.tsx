@@ -1,4 +1,4 @@
-import React, {FC, useEffect} from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   StyleSheet,
   StyleProp,
@@ -9,17 +9,17 @@ import {
   View,
   ActivityIndicator,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { useDispatch } from 'react-redux';
 import Divider from '~/beinComponents/Divider';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
-import {useDispatch} from 'react-redux';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
-import {scaleSize} from '~/theme/dimension';
+import { scaleSize } from '~/theme/dimension';
 import DiscoverItem from '../components/DiscoverItem';
 import spacing from '~/theme/spacing';
 
@@ -35,22 +35,24 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   onPressCommunities,
 }: DiscoverCommunitiesProps) => {
   const data = useKeySelector(groupsKeySelector.discoverCommunitiesData);
-  const {ids, items, loading, canLoadMore} = data || {};
+  const {
+    ids, items, loading, canLoadMore,
+  } = data || {};
 
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
 
   useEffect(() => {
-    getData({refreshNoLoading: true});
+    getData({ refreshNoLoading: true });
   }, []);
 
   const getData = (params?: {
     isRefreshing?: boolean;
     refreshNoLoading?: boolean;
   }) => {
-    const {isRefreshing, refreshNoLoading} = params || {};
+    const { isRefreshing, refreshNoLoading } = params || {};
     dispatch(
-      groupsActions.getDiscoverCommunities({isRefreshing, refreshNoLoading}),
+      groupsActions.getDiscoverCommunities({ isRefreshing, refreshNoLoading }),
     );
   };
 
@@ -59,15 +61,15 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   };
 
   const onRefresh = () => {
-    getData({isRefreshing: true});
+    getData({ isRefreshing: true });
   };
 
   const onPressJoin = (communityId: number, communityName: string) => {
-    dispatch(groupsActions.joinCommunity({communityId, communityName}));
+    dispatch(groupsActions.joinCommunity({ communityId, communityName }));
   };
 
   const onPressCancel = (communityId: number, communityName: string) => {
-    dispatch(groupsActions.cancelJoinCommunity({communityId, communityName}));
+    dispatch(groupsActions.cancelJoinCommunity({ communityId, communityName }));
   };
 
   const renderEmptyComponent = () => {
@@ -76,14 +78,14 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
     }
     return (
       <EmptyScreen
-        source={'addUsers'}
+        source="addUsers"
         title="communities:empty_communities:title"
         description="communities:empty_communities:description"
       />
     );
   };
 
-  const renderItem = ({item, index}: {item: number; index: number}) => {
+  const renderItem = ({ item, index }: {item: number; index: number}) => {
     const currentItem = items[item];
     return (
       <DiscoverItem
@@ -100,11 +102,12 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
     if (loading) return null;
 
     return (
-      canLoadMore &&
-      ids.length > 0 && (
+      canLoadMore
+      && ids.length > 0 && (
         <View
           style={styles.listFooter}
-          testID="discover_communities.loading_more_indicator">
+          testID="discover_communities.loading_more_indicator"
+        >
           <ActivityIndicator />
         </View>
       )
@@ -122,26 +125,26 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
       ListFooterComponent={renderListFooter}
       onEndReached={onLoadMore}
       ItemSeparatorComponent={() => <Divider style={styles.divider} />}
-      refreshControl={
+      refreshControl={(
         <RefreshControl
           refreshing={loading}
           onRefresh={onRefresh}
           tintColor={theme.colors.gray40}
         />
-      }
+      )}
     />
   );
 };
 
-const DiscoverHeader = ({list}: any) => {
+const DiscoverHeader = ({ list }: any) => {
   const width = screenWidth;
   const height = scaleSize(144);
   if (list?.length > 0) {
     return (
       <Image
-        testID={'discover_communities.header'}
+        testID="discover_communities.header"
         source={images.img_banner_discover_communities}
-        style={{width, height}}
+        style={{ width, height }}
       />
     );
   }

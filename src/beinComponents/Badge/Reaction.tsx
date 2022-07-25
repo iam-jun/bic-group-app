@@ -1,6 +1,6 @@
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import NodeEmoji from 'node-emoji';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   ActivityIndicator,
   StyleProp,
@@ -10,8 +10,8 @@ import {
 } from 'react-native';
 
 import Text from '~/beinComponents/Text';
-import commonActions, {IAction} from '~/constants/commonActions';
-import {useKeySelector} from '~/hooks/selector';
+import commonActions, { IAction } from '~/constants/commonActions';
+import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
 
 interface ReactionProps {
@@ -41,7 +41,7 @@ const Reaction: React.FC<ReactionProps> = ({
 
   const [isSelected, setIsSelected] = useState<boolean>(selected);
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyles(theme, isSelected, loading);
 
   useEffect(() => {
@@ -74,7 +74,8 @@ const Reaction: React.FC<ReactionProps> = ({
       disabled={!isInternetReachable || loading}
       style={StyleSheet.flatten([styles.container, style])}
       onPress={_onChangeValue}
-      onLongPress={_onLongPress}>
+      onLongPress={_onLongPress}
+    >
       {loading ? (
         <ActivityIndicator
           testID="reaction.indicator"
@@ -85,7 +86,8 @@ const Reaction: React.FC<ReactionProps> = ({
         <Text.BodySMedium
           color={isSelected ? colors.purple60 : colors.neutral80}
           style={styles.text}
-          testID="reaction.children">
+          testID="reaction.children"
+        >
           <Text.BodySMedium style={styles.emoji} testID={`reaction.${icon}`}>
             {emoji}
           </Text.BodySMedium>
@@ -101,7 +103,7 @@ const createStyles = (
   isSelected: boolean,
   loading?: boolean,
 ) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

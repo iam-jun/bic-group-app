@@ -1,9 +1,8 @@
-import {useBackHandler} from '@react-native-community/hooks';
-import {useNavigationState} from '@react-navigation/native';
+import { useBackHandler } from '@react-native-community/hooks';
+import { useNavigationState, ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
-import {DeviceEventEmitter, StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import { DeviceEventEmitter, StyleSheet, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 import CommonModal from '~/beinFragments/CommonModal';
 import UserProfilePreviewBottomSheet from '~/beinFragments/Preview/UserProfilePreviewBottomSheet';
 import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
@@ -12,10 +11,10 @@ import {
   customBackHandlerRoutes,
   NAVIGATION_BACK_PRESSED,
 } from '~/configs/navigator';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import MenuSidebarDrawer from '~/router/components/MenuSidebarDrawer';
-import {getActiveRouteState} from '~/router/helper';
+import { getActiveRouteState } from '~/router/helper';
 import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 import appActions from '~/store/app/actions';
 
@@ -61,7 +60,7 @@ const MainStack = (): React.ReactElement => {
 };
 
 const createStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

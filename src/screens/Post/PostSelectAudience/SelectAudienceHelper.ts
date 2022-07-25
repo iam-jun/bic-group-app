@@ -1,5 +1,5 @@
-import {ICreatePostParams} from '~/interfaces/IPost';
-import {isEqual} from 'lodash';
+import { isEqual } from 'lodash';
+import { ICreatePostParams } from '~/interfaces/IPost';
 
 export interface ISelectAudienceParams extends ICreatePostParams {
   isFirstStep?: boolean;

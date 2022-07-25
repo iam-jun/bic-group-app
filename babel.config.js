@@ -29,7 +29,7 @@ module.exports = function (api) {
     plugins.push(['transform-remove-console']);
   }
 
-  //Reanimated plugin has to be listed last
+  // Reanimated plugin has to be listed last
   plugins.push(['react-native-reanimated/plugin']);
 
   return {

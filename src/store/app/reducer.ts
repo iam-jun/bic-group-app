@@ -14,8 +14,8 @@ export const appInitState = {
  * @returns {*}
  */
 function reducer(state = appInitState, action: any = {}) {
-  const {type, payload} = action;
-  const {configs} = state;
+  const { type, payload } = action;
+  const { configs } = state;
 
   switch (type) {
     case types.SET_CONFIGS:

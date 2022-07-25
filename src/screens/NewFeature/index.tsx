@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
@@ -59,10 +59,9 @@ const NewFeature = () => {
 
   return (
     <ScreenWrapper style={styles.screenContainer} isFullView>
-      <Header title="new_feature:title" titleTextProps={{useI18n: true}} />
+      <Header title="new_feature:title" titleTextProps={{ useI18n: true }} />
       <View style={styles.body}>
         <SvgIcon
-          // @ts-ignore
           source={NewFeatureImg}
           width={250}
           height={200}
@@ -93,7 +92,7 @@ const NewFeature = () => {
 };
 
 const themeStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     screenContainer: {

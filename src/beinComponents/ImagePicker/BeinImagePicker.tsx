@@ -1,5 +1,5 @@
 import ImagePicker from 'react-native-image-crop-picker';
-import {IFilePicked} from '~/interfaces/common';
+import { IFilePicked } from '~/interfaces/common';
 
 const formatImage = (image: any) => {
   const fileName = image?.path?.replace?.(/(.+)\/(.+)$/, '$2') || 'bein_image';
@@ -28,9 +28,8 @@ const openPickerSingle = async (option = {}) => {
     if (image) {
       const result: IFilePicked = formatImage(image);
       return Promise.resolve(result);
-    } else {
-      return Promise.reject('image not found');
     }
+    return Promise.reject(new Error('image not found'));
   } catch (e) {
     return Promise.reject(e);
   }
@@ -48,11 +47,10 @@ const openPickerMultiple = async (option = {}) => {
     });
     if (images?.length > 0) {
       const result: IFilePicked[] = [];
-      images?.map(image => result.push(formatImage(image)));
+      images?.map((image) => result.push(formatImage(image)));
       return Promise.resolve(result);
-    } else {
-      return Promise.reject('images not found');
     }
+    return Promise.reject(new Error('images not found'));
   } catch (e) {
     return Promise.reject(e);
   }

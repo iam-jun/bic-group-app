@@ -1,5 +1,5 @@
 import React from 'react';
-import {createNativeStackNavigator} from 'react-native-screens/native-stack';
+import { createNativeStackNavigator } from 'react-native-screens/native-stack';
 
 const Stack = createNativeStackNavigator();
 
@@ -13,24 +13,20 @@ const BaseStackNavigator = ({
   stack,
   screens,
   initialRouteName,
-}: Props): React.ReactElement => {
-  return (
-    <Stack.Navigator initialRouteName={initialRouteName}>
-      {Object.entries(stack).map(([name, component]) => {
-        return (
-          <Stack.Screen
-            key={'screen' + component}
-            name={component}
-            component={screens[component]}
-            options={{
-              headerShown: false,
-              title: name,
-            }}
-          />
-        );
-      })}
-    </Stack.Navigator>
-  );
-};
+}: Props): React.ReactElement => (
+  <Stack.Navigator initialRouteName={initialRouteName}>
+    {Object.entries(stack).map(([name, component]) => (
+      <Stack.Screen
+        key={`screen${component}`}
+        name={component}
+        component={screens[component]}
+        options={{
+          headerShown: false,
+          title: name,
+        }}
+      />
+    ))}
+  </Stack.Navigator>
+);
 
 export default BaseStackNavigator;

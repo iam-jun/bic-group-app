@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {Node} from 'commonmark';
+import { Node } from 'commonmark';
 
 export function escapeRegex(text) {
   return text.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
@@ -9,8 +9,7 @@ export function escapeRegex(text) {
 
 /* eslint-disable no-underscore-dangle */
 
-const cjkPattern =
-  /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf\uac00-\ud7a3]/;
+const cjkPattern = /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf\uac00-\ud7a3]/;
 
 // Combines adjacent text nodes into a single text node to make further transformation easier
 export function combineTextNodes(ast) {
@@ -22,7 +21,7 @@ export function combineTextNodes(ast) {
       continue;
     }
 
-    const node = e.node;
+    const { node } = e;
 
     if (node.type !== 'text') {
       continue;
@@ -58,7 +57,7 @@ export function addListItemIndices(ast) {
   let e;
   while ((e = walker.next())) {
     if (e.entering) {
-      const node = e.node;
+      const { node } = e;
 
       if (node.type === 'list') {
         let i = node.listStart == null ? 1 : node.listStart; // List indices match what would be displayed in the UI
@@ -88,7 +87,7 @@ export function pullOutImages(ast) {
       continue;
     }
 
-    const node = e.node;
+    const { node } = e;
 
     // Skip tables because we'll render images inside of those as links
     if (node.type === 'table') {
@@ -105,9 +104,9 @@ export function pullOutImages(ast) {
 }
 
 function pullOutImage(image) {
-  let parent = image.parent;
-  let prev = image.prev;
-  let next = image.next;
+  let { parent } = image;
+  let { prev } = image;
+  let { next } = image;
 
   // Remove image from its siblings
   if (prev) {
@@ -243,7 +242,7 @@ function copyNodeWithoutNeighbors(node) {
   copy._next = null;
 
   // Deep copy list data since it's an object
-  copy._listData = {...node._listData};
+  copy._listData = { ...node._listData };
 
   return copy;
 }
@@ -268,10 +267,10 @@ export function highlightMentions(ast, mentionKeys) {
       continue;
     }
 
-    const node = e.node;
+    const { node } = e;
 
     if (node.type === 'text') {
-      const {index, mention} = getFirstMention(node.literal, mentionKeys);
+      const { index, mention } = getFirstMention(node.literal, mentionKeys);
 
       if (index === -1 || !mention) {
         continue;
@@ -288,8 +287,8 @@ export function highlightMentions(ast, mentionKeys) {
       // that was part of this one
       walker.resumeAt(mentionNode, false);
     } else if (node.type === 'at_mention') {
-      const matches = mentionKeys.some(mention => {
-        const mentionName = '@' + node.mentionName;
+      const matches = mentionKeys.some((mention) => {
+        const mentionName = `@${node.mentionName}`;
         const flags = mention.caseSensitive ? '' : 'i';
         const pattern = new RegExp(
           `@${escapeRegex(mention.key.replace('@', ''))}\\.?\\b`,
@@ -353,7 +352,7 @@ export function getFirstMention(str, mentionKeys) {
 // the text before the highlight (if any exists), the highlighted text, and the text after the highlight
 // the end of the highlight (if any exists). Returns a node containing the highlighted text.
 export function highlightTextNode(node, start, end, type) {
-  const literal = node.literal;
+  const { literal } = node;
   node.literal = literal.substring(start, end);
 
   // Start by wrapping the node and then re-insert any non-highlighted code around it
