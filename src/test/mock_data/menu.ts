@@ -2,7 +2,7 @@ export const USER_PROFILE = {
   address: null,
   avatar:
     'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/3849e4fc-941f-4b2a-bce9-9da2069a2e55.jpg',
-  background_img_url:
+  backgroundImgUrl:
     'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/cover/images/original/9b7c23c6-b337-42ac-b084-c52843fceeb5.jpg',
   bein_staff_role: null,
   birthday: '1976-03-01T17:00:00.000Z',

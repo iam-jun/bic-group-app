@@ -71,7 +71,7 @@ export interface IUserProfile {
   updated_at?: string;
   deleted_at?: string;
   avatar?: string;
-  background_img_url?: string;
+  backgroundImgUrl?: string;
   phone?: string;
   country_code?: string;
   address?: string;
@@ -98,7 +98,7 @@ export interface IUserEdit {
   gender?: GENDER_TYPE;
   birthday?: string;
   avatar?: string;
-  background_img_url?: string;
+  backgroundImgUrl?: string;
   phone?: string;
   country_code?: string;
   address?: string;

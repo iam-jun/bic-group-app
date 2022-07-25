@@ -41,11 +41,11 @@ const MemberList = ({
     return !loading ? <NoSearchResult /> : null;
   };
 
-  const renderSectionHeader = ({section: {title, user_count}}: any) => {
+  const renderSectionHeader = ({section: {title, userCount}}: any) => {
     return (
       <View style={styles.sectionHeader}>
         <Text.BodyM
-          color={colors.neutral80}>{`${title} • ${user_count}`}</Text.BodyM>
+          color={colors.neutral80}>{`${title} • ${userCount}`}</Text.BodyM>
       </View>
     );
   };

@@ -30,16 +30,9 @@ const PendingUserItem = ({
   const {t} = useBaseHook();
   const {language} = useContext(AppContext);
 
-  const {user, updated_at: updatedAt, isCanceled} = requestItem || {};
-  const {
-    avatar,
-    fullname: fullName,
-    email,
-    country_code: countryCode,
-    phone,
-    latest_work: latestWork,
-    city,
-  } = user || {};
+  const {user, updatedAt, isCanceled} = requestItem || {};
+  const {avatar, fullname, email, countryCode, phone, latestWork, city} =
+    user || {};
 
   const renderItem = ({
     icon,
@@ -67,7 +60,7 @@ const PendingUserItem = ({
         <Avatar.Large source={avatar} isRounded />
 
         <View style={styles.textHeader}>
-          <Text.ButtonM>{fullName}</Text.ButtonM>
+          <Text.ButtonM>{fullname}</Text.ButtonM>
           <Text.BodyM color={theme.colors.gray50}>
             {`${t('groups:text_requested_at')} ${formatFullTime(
               updatedAt,
@@ -81,7 +74,7 @@ const PendingUserItem = ({
             icon: 'iconSuitcase',
             title:
               latestWork &&
-              `${latestWork?.title_position} ${t('common:text_at')} ${
+              `${latestWork?.titlePosition} ${t('common:text_at')} ${
                 latestWork?.company
               }`,
           })}

@@ -38,7 +38,7 @@ export default function* getGroupMembers({
         ...newDataObj,
         [role]: {
           name: resp[role]?.name,
-          user_count: resp[role]?.user_count,
+          userCount: resp[role]?.userCount,
           data:
             isRefreshing || !groupMembers?.[role]?.data
               ? [...resp[role]?.data]

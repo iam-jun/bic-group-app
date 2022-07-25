@@ -61,7 +61,7 @@ const UserEditProfile = (props: any) => {
     fullname,
     gender,
     avatar,
-    background_img_url,
+    backgroundImgUrl,
     birthday,
     language,
     relationship_status,
@@ -134,7 +134,7 @@ const UserEditProfile = (props: any) => {
 
   const uploadFile = (
     file: IFilePicked,
-    fieldName: 'avatar' | 'background_img_url',
+    fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
     dispatch(
@@ -148,9 +148,9 @@ const UserEditProfile = (props: any) => {
   };
 
   // fieldName: field name in group profile to be edited
-  // 'avatar' for avatar and 'background_img_url' for cover
+  // 'avatar' for avatar and 'backgroundImgUrl' for cover
   const _openImagePicker = async (
-    fieldName: 'avatar' | 'background_img_url',
+    fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
     checkPermission('photo', dispatch, canOpenPicker => {
@@ -169,7 +169,7 @@ const UserEditProfile = (props: any) => {
   const onEditAvatar = () => _openImagePicker('avatar', uploadTypes.userAvatar);
 
   const onEditCover = () =>
-    _openImagePicker('background_img_url', uploadTypes.userCover);
+    _openImagePicker('backgroundImgUrl', uploadTypes.userCover);
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -247,7 +247,7 @@ const UserEditProfile = (props: any) => {
           {!loadingCover ? (
             <Image
               style={styles.cover}
-              source={background_img_url || images.img_cover_default}
+              source={backgroundImgUrl || images.img_cover_default}
             />
           ) : (
             <View style={[styles.cover, styles.imageLoading]}>

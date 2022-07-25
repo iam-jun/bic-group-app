@@ -23,13 +23,13 @@ const JoinCancelButton = ({style}: JoinCancelButtonProps) => {
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {
     privacy,
-    join_status,
+    joinStatus,
     id: communityId,
     name: communityName,
   } = infoDetail;
   const isPrivate = privacy === groupPrivacy.private;
-  const isMember = join_status === groupJoinStatus.member;
-  const hasRequested = join_status === groupJoinStatus.requested;
+  const isMember = joinStatus === groupJoinStatus.member;
+  const hasRequested = joinStatus === groupJoinStatus.requested;
 
   if (isMember) return null;
 

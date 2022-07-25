@@ -25,7 +25,7 @@ const GroupMemberRequest = ({
   const {items} = groupMemberRequests;
 
   const requestItem = items[requestId];
-  const {group_id: groupId, user} = requestItem;
+  const {groupId, user} = requestItem;
   const {fullname: fullName} = user;
 
   const navigateToGroupMembers = () => {

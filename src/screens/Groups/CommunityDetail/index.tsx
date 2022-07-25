@@ -46,8 +46,8 @@ const CommunityDetail = (props: any) => {
   const styles = themeStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const {name, icon, join_status, privacy, group_id} = infoDetail;
-  const isMember = join_status === groupJoinStatus.member;
+  const {name, icon, joinStatus, privacy, groupId} = infoDetail;
+  const isMember = joinStatus === groupJoinStatus.member;
   const isGettingInfoDetail = useKeySelector(
     groupsKeySelector.isGettingInfoDetail,
   );
@@ -85,8 +85,8 @@ const CommunityDetail = (props: any) => {
     }
 
     dispatch(actions.clearGroupPosts());
-    dispatch(actions.getGroupPosts(group_id));
-  }, [group_id, isMember, privacy, isGettingInfoDetail, infoDetail]);
+    dispatch(actions.getGroupPosts(groupId));
+  }, [groupId, isMember, privacy, isGettingInfoDetail, infoDetail]);
 
   useEffect(() => {
     getCommunityDetail(true);

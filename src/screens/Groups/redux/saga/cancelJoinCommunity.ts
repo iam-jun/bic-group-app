@@ -22,7 +22,7 @@ export default function* cancelJoinCommunity({
     yield put(
       groupsActions.editDiscoverCommunityItem({
         id: communityId,
-        data: {join_status: groupJoinStatus.visitor},
+        data: {joinStatus: groupJoinStatus.visitor},
       }),
     );
 
@@ -45,7 +45,7 @@ export default function* cancelJoinCommunity({
       yield put(
         groupsActions.editDiscoverCommunityItem({
           id: communityId,
-          data: {join_status: groupJoinStatus.member},
+          data: {joinStatus: groupJoinStatus.member},
         }),
       );
       yield put(

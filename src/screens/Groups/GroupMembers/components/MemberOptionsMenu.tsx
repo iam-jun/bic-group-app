@@ -116,7 +116,7 @@ const MemberOptionsMenu = ({
 
   const onPressRemoveAdmin = () => {
     if (selectedMember?.id) {
-      const adminCount = groupMembers?.group_admin?.user_count;
+      const adminCount = groupMembers?.group_admin?.userCount;
       if (adminCount > 1) {
         alertRemovingAdmin();
       } else {

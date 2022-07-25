@@ -68,7 +68,7 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
   const onPressSave = () => {
     // @ts-ignore
     const schemeId = groupSchemes?.[selectingIndex]?.id || null;
-    const groupId = initGroup?.group_id;
+    const groupId = initGroup?.groupId;
     if (groupId) {
       const newData = handleSelectNewGroupScheme(
         groupId,

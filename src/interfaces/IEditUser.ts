@@ -10,7 +10,7 @@ export type RELATIONSHIP_TYPE =
 
 export interface IUserImageUpload {
   id: string;
-  fieldName: 'avatar' | 'background_img_url';
+  fieldName: 'avatar' | 'backgroundImgUrl';
   file: IFilePicked;
   uploadType: IUploadType;
 }

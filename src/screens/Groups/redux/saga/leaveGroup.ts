@@ -30,7 +30,7 @@ export default function* leaveGroup({
     yield put(
       groupsActions.editDiscoverGroupItem({
         id: payload,
-        data: {join_status: groupJoinStatus.visitor},
+        data: {joinStatus: groupJoinStatus.visitor},
       }),
     );
 

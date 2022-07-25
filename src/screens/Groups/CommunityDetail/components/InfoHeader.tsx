@@ -18,7 +18,7 @@ const InfoHeader = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const {name, user_count, background_img_url, icon, privacy} = infoDetail;
+  const {name, userCount, backgroundImgUrl, icon, privacy} = infoDetail;
   const privacyData = privacyTypes.find(item => item?.type === privacy) || {};
   const {icon: iconPrivacy, privacyTitle}: any = privacyData || {};
 
@@ -27,7 +27,7 @@ const InfoHeader = () => {
       <View testID="info_header.cover">
         <Image
           style={styles.cover}
-          source={background_img_url || images.img_cover_default}
+          source={backgroundImgUrl || images.img_cover_default}
         />
       </View>
     );
@@ -62,8 +62,8 @@ const InfoHeader = () => {
             <Text.BodyS
               color={theme.colors.gray50}
               testID="info_header.member_count">
-              {` ${user_count} ${i18next.t('groups:text_members', {
-                count: user_count,
+              {` ${userCount} ${i18next.t('groups:text_members', {
+                count: userCount,
               })}`}
             </Text.BodyS>
           </View>

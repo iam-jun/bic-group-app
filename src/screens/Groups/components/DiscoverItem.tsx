@@ -29,7 +29,7 @@ const DiscoverItem = ({
   const {colors} = theme;
   const {t} = useBaseHook();
 
-  const {id, name, icon, user_count, privacy, join_status} = item || {};
+  const {id, name, icon, userCount, privacy, joinStatus} = item || {};
   const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
   const {icon: privacyIcon, title: privacyTitle}: any = privacyData || {};
 
@@ -73,10 +73,10 @@ const DiscoverItem = ({
             size={16}
             tintColor={colors.gray50}
           />
-          <Text.BodyS color={colors.gray50}>{user_count}</Text.BodyS>
+          <Text.BodyS color={colors.gray50}>{userCount}</Text.BodyS>
           <Text.BodyS color={colors.gray50}>
             {` ${t('groups:text_members', {
-              count: user_count,
+              count: userCount,
             })}`}
           </Text.BodyS>
         </View>
@@ -84,7 +84,7 @@ const DiscoverItem = ({
       RightComponent={
         <ButtonDiscoverItemAction
           data={item}
-          joinStatus={join_status}
+          joinStatus={joinStatus}
           onView={onView}
           onJoin={onJoin}
           onCancel={onCancel}

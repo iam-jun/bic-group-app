@@ -19,12 +19,12 @@ export default function* joinNewGroup({
 
     // @ts-ignore
     const response = yield call(groupsDataHelper.joinGroup, groupId);
-    const join_status = response?.data?.join_status;
-    const hasRequested = join_status === groupJoinStatus.requested;
+    const joinStatus = response?.data?.joinStatus;
+    const hasRequested = joinStatus === groupJoinStatus.requested;
 
     // update button Join/Cancel/View status on Discover groups
     yield put(
-      groupsActions.editDiscoverGroupItem({id: groupId, data: {join_status}}),
+      groupsActions.editDiscoverGroupItem({id: groupId, data: {joinStatus}}),
     );
 
     if (hasRequested) {

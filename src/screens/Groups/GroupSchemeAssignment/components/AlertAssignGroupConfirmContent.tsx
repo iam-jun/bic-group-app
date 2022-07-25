@@ -75,7 +75,7 @@ export const findGroupInAssignmentsById = (
 ) => {
   let result: any;
   const findGroup = (group: any) => {
-    if (group?.group_id === groupId) {
+    if (group?.groupId === groupId) {
       result = group;
     } else {
       group?.children?.map(findGroup);
@@ -92,8 +92,8 @@ export const prepareData = (
 ) => {
   const result: any = [];
   assigning?.map?.((item: any) => {
-    const {scheme_id, group_id} = item || {};
-    const group = findGroupInAssignmentsById(group_id, assignments);
+    const {scheme_id, groupId} = item || {};
+    const group = findGroupInAssignmentsById(groupId, assignments);
     const groupName = group?.name;
     const oldSchemeName =
       allSchemes?.[group?.scheme_id]?.name ||

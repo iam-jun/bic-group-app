@@ -3,14 +3,14 @@ import {cloneDeep} from 'lodash';
 export const handleSelectNewGroupScheme = (
   groupId: string,
   schemeId: string,
-  data: {group_id: string; scheme_id: string}[],
+  data: {groupId: string; scheme_id: string}[],
   groupAssignments: any,
 ) => {
   // filter to remove current selected
-  const newData = data?.filter(item => item?.group_id !== groupId);
+  const newData = data?.filter(item => item?.groupId !== groupId);
 
   const findGroup = (groupAssign: any) => {
-    if (groupAssign?.group_id === groupId) {
+    if (groupAssign?.groupId === groupId) {
       group = groupAssign;
     } else {
       groupAssign?.children?.map?.(findGroup);
@@ -23,7 +23,7 @@ export const handleSelectNewGroupScheme = (
 
   // only push to array if scheme id is difference
   if (group?.scheme_id !== schemeId) {
-    newData.push({group_id: groupId, scheme_id: schemeId});
+    newData.push({groupId: groupId, scheme_id: schemeId});
   }
 
   return newData;
@@ -37,7 +37,7 @@ export const changeSchemeIdOfGroup = (
   const newAssignments = cloneDeep(groupAssignments);
 
   const updateSchemeId = (group: any) => {
-    if (group?.group_id === groupId) {
+    if (group?.groupId === groupId) {
       group.scheme_id = schemeId;
     } else {
       group?.children?.map(updateSchemeId);

@@ -19,14 +19,14 @@ export default function* joinCommunity({
 
     // @ts-ignore
     const response = yield call(groupsDataHelper.joinCommunity, communityId);
-    const join_status = response?.data?.join_status;
-    const hasRequested = join_status === groupJoinStatus.requested;
+    const joinStatus = response?.data?.joinStatus;
+    const hasRequested = joinStatus === groupJoinStatus.requested;
 
     // update button Join/Cancel/View status on Discover communities
     yield put(
       groupsActions.editDiscoverCommunityItem({
         id: communityId,
-        data: {join_status},
+        data: {joinStatus},
       }),
     );
 

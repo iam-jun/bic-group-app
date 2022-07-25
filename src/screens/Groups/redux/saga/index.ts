@@ -363,7 +363,7 @@ function* cancelJoinGroup({
     yield put(
       groupsActions.editDiscoverGroupItem({
         id: groupId,
-        data: {join_status: groupJoinStatus.visitor},
+        data: {joinStatus: groupJoinStatus.visitor},
       }),
     );
 
@@ -401,7 +401,7 @@ function* cancelJoinGroup({
 }
 
 function* updateLoadingImageState(
-  fieldName: 'icon' | 'background_img_url',
+  fieldName: 'icon' | 'backgroundImgUrl',
   value: boolean,
 ) {
   if (fieldName === 'icon') {

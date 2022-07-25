@@ -38,7 +38,7 @@ function* upload(file: IFilePicked, uploadType: IUploadType) {
 }
 
 function* updateLoadingImageState(
-  fieldName: 'avatar' | 'background_img_url',
+  fieldName: 'avatar' | 'backgroundImgUrl',
   value: boolean,
 ) {
   if (fieldName === 'avatar') {

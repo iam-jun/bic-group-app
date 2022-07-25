@@ -45,7 +45,7 @@ export default function* getCommunityMembers({
         ...newDataObj,
         [role]: {
           name: resp[role]?.name,
-          user_count: resp[role]?.user_count,
+          userCount: resp[role]?.userCount,
           data:
             isRefreshing || !communityMembers?.[role]?.data
               ? [...resp[role]?.data]

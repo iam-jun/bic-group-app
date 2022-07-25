@@ -45,7 +45,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     id,
     community_id,
     name,
-    user_count,
+    userCount,
     icon,
     testID = 'group_item',
 
@@ -215,7 +215,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                 )}
                 <Icon icon={'UserGroup'} size={16} tintColor={colors.gray50} />
                 <Text.BodyS color={colors.gray50} style={styles.textInfo}>
-                  {user_count}
+                  {userCount}
                 </Text.BodyS>
               </View>
             )}

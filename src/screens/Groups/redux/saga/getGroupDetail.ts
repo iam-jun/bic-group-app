@@ -20,8 +20,8 @@ export default function* getGroupDetail({
     yield put(groupsActions.setGroupDetail(resp?.data));
 
     const {groups} = yield select();
-    const join_status = groups?.groupDetail?.join_status;
-    const isMember = join_status === groupJoinStatus.member;
+    const joinStatus = groups?.groupDetail?.joinStatus;
+    const isMember = joinStatus === groupJoinStatus.member;
 
     const privacy = groups?.groupDetail?.group?.privacy;
     const isPublic = privacy === groupPrivacy.public;

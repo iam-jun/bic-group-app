@@ -19,7 +19,7 @@ export default function* approveAllGroupMemberRequests({
 
     yield call(groupsDataHelper.approveAllGroupMemberRequests, groupId);
 
-    // to update user_count
+    // to update userCount
     yield put(groupsActions.getGroupDetail(groupId));
 
     let toastProps: ToastMessageProps;

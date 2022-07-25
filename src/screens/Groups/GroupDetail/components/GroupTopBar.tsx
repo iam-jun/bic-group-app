@@ -30,10 +30,10 @@ const GroupTopBar = () => {
   const theme: ExtendedTheme = useTheme();
   const {rootNavigation} = useRootNavigation();
 
-  const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
+  const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
-  const isMember = join_status === groupJoinStatus.member;
-  const {id: groupId, chat_id: chatId} = groupInfo || {};
+  const isMember = joinStatus === groupJoinStatus.member;
+  const {id: groupId, chatId} = groupInfo || {};
   const {user} = useAuth();
   const userId = useUserIdAuth();
 

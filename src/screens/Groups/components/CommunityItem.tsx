@@ -26,7 +26,7 @@ const CommunityItem = ({
   const styles = createStyles(theme);
   const {t} = useBaseHook();
 
-  const {id, name, icon, user_count, privacy} = item || {};
+  const {id, name, icon, userCount, privacy} = item || {};
   const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
   const {icon: privacyIcon, title: privacyTitle}: any = privacyData || {};
 
@@ -43,10 +43,10 @@ const CommunityItem = ({
           {privacyTitle}
         </Text.BodyS>
         <Text.BodyS color={colors.gray50}>{`  •  `}</Text.BodyS>
-        <Text.BodyS color={colors.gray50}>{`${user_count} ${t(
+        <Text.BodyS color={colors.gray50}>{`${userCount} ${t(
           'groups:text_members',
           {
-            count: user_count,
+            count: userCount,
           },
         )}`}</Text.BodyS>
       </View>

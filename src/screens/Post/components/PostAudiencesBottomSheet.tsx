@@ -62,7 +62,7 @@ const PostAudiencesBottomSheet = () => {
   const renderSectionHeader = () => null;
 
   const renderGroupContentComponent = (item: any) => {
-    const {type, user_count, privacy} = item || {};
+    const {type, userCount, privacy} = item || {};
     const privacyData: any =
       privacyTypes.find(item => item?.type === privacy) || {};
     if (type === 'user') {
@@ -84,7 +84,7 @@ const PostAudiencesBottomSheet = () => {
           icon={'UserGroup'}
           tintColor={colors.gray50}
         />
-        <Text.BodyS color={colors.gray50}>{user_count}</Text.BodyS>
+        <Text.BodyS color={colors.gray50}>{userCount}</Text.BodyS>
       </View>
     );
   };

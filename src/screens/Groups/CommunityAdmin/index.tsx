@@ -27,8 +27,8 @@ const CommunityAdmin = () => {
     id: communityId,
     name,
     icon,
-    can_manage_scheme,
-    can_edit_info,
+    canManageScheme,
+    canEditInfo,
   } = useKeySelector(groupsKeySelector.communityDetail);
   const {total} = useKeySelector(groupsKeySelector.communityMemberRequests);
 
@@ -138,7 +138,7 @@ const CommunityAdmin = () => {
           onPress={onPressGeneralInfo}
         />
       )}
-      {!!can_edit_info && ( //todo temp use can edit info, should use correct permission when BE update
+      {!!canEditInfo && ( //todo temp use can edit info, should use correct permission when BE update
         <MenuItem
           testID="community_admin.group_structure_settings"
           title="settings:title_group_structure"
@@ -148,7 +148,7 @@ const CommunityAdmin = () => {
           onPress={onPressGroupStructure}
         />
       )}
-      {!!can_manage_scheme && (
+      {!!canManageScheme && (
         <MenuItem
           testID="community_admin.permission_settings"
           title="settings:title_permission_settings"

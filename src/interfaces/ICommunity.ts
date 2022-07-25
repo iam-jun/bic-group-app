@@ -2,24 +2,21 @@ import {GROUP_PRIVACY_TYPE} from '~/constants/privacyTypes';
 
 export interface ICommunity {
   id: string;
-  group_id: string;
+  groupId: string;
   name: string;
   slug: string;
   privacy: GROUP_PRIVACY_TYPE;
   description: string;
   icon: string;
-  background_img_url: string;
-  team_id?: string;
-  created_at: string;
-  updated_at: string;
-  user_count: number;
-  can_setting?: boolean;
-  can_edit_info?: boolean;
-  can_edit_privacy?: boolean;
-  can_manage_member?: boolean;
-  can_leave?: boolean;
-  can_manage_scheme?: boolean;
-  join_status?: number;
+  backgroundImgUrl: string;
+  createdAt: string;
+  updatedAt: string;
+  userCount: number;
+  canEditInfo?: boolean;
+  canEditPrivacy?: boolean;
+  canManageMember?: boolean;
+  canManageScheme?: boolean;
+  joinStatus?: number;
   members?: IPreviewMember[];
 }
 

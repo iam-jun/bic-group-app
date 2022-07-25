@@ -16,7 +16,7 @@ const userProfileDataMocksResponse = {
       created_at: '2021-08-06T08:00:43.869Z',
       updated_at: '2021-08-06T08:00:43.871Z',
       deleted_at: null,
-      background_img_url:
+      backgroundImgUrl:
         'https://evolgroup.vn/wp-content/uploads/sites/18/2020/04/Thumb-EVOL.jpg',
       phone: '123456789',
       address: 'this is my adress',
