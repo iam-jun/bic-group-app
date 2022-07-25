@@ -12,6 +12,7 @@ import {
   TOAST_MIN_HEIGHT,
 } from './constanst';
 import useInputHeight from './hooks/useInputHeight';
+import ImageUploader from '~/services/imageUploader';
 
 export const validateImages = (
   selectingImages: IFilePicked[] | IActivityDataImage[],
@@ -31,7 +32,7 @@ export const validateImages = (
       });
     } else {
       const { file, fileName } = item || {};
-      const { url, uploading, result } = FileUploader.getInstance().getFile(fileName) || {};
+      const { url, uploading, result } = ImageUploader.getInstance().getFile(fileName) || {};
       if (uploading) {
         imageUploading = true;
         imageError = t('post:error_wait_uploading');
