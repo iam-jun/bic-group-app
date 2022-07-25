@@ -5,7 +5,6 @@ import {
   Keyboard,
   StyleSheet,
   TouchableOpacity,
-  useWindowDimensions,
   View,
 } from 'react-native';
 import Animated, {
@@ -29,7 +28,7 @@ import {
 import {useBaseHook} from '~/hooks';
 import useTabBadge from '~/hooks/tabBadge';
 import appActions from '~/store/app/actions';
-import dimension, {deviceDimensions, sizes} from '~/theme/dimension';
+import dimension from '~/theme/dimension';
 import {fontFamilies} from '~/theme/fonts';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
@@ -49,10 +48,8 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   const insets = useSafeAreaInsets();
   const {t} = useBaseHook();
   const {colors} = theme;
-  const dimensions = useWindowDimensions();
   const styles = createStyle(theme, insets);
 
-  const isPhone = dimensions.width < deviceDimensions.smallTablet;
   const tabBadge: any = useTabBadge();
   const bottomBarHeight = dimension.bottomBarHeight + insets.bottom;
 
@@ -126,7 +123,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   }, []);
 
   const renderItem = (route: any, index: any) => {
-    const {key, name, params} = route || {};
+    const {key, name} = route || {};
 
     const {options} = descriptors[route.key];
 
@@ -136,7 +133,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     // @ts-ignore
     const iconName = icon[name];
     const textColor = isFocused ? colors.purple50 : colors.gray50;
-    const styles = tabBarIconStyles(theme, isFocused, isPhone, textColor);
+    const styles = tabBarIconStyles(theme, isFocused, textColor);
 
     const onPress = () => {
       if (name === 'menus') {
@@ -164,22 +161,13 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
 
     return (
       <TouchableOpacity
-        // activeOpacity={1}
         key={key}
         accessibilityRole="button"
-        accessibilityStates={isFocused ? ['selected'] : []}
         accessibilityLabel={options.tabBarAccessibilityLabel}
         testID={`tab_${name}`}
         onPress={onPress}
         onLongPress={onLongPress}
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: colors.white,
-          borderTopWidth: isFocused ? 2 : 0,
-          borderTopColor: colors.purple50,
-        }}>
+        style={styles.container}>
         {!!name && t(`tabs:${name}`) !== t(`tabs:menus`) ? (
           <Icon icon={iconName} size={20} tintColor="none" />
         ) : (
@@ -188,9 +176,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
             source={avatar || images.img_user_avatar_default}
           />
         )}
-        {isPhone && (
-          <Text.BadgeXS style={styles.label}>{t(`tabs:${name}`)}</Text.BadgeXS>
-        )}
+        <Text.BadgeXS style={styles.label}>{t(`tabs:${name}`)}</Text.BadgeXS>
         {!!unreadCount && (
           <NotificationsBadge.Alert
             style={styles.badge}
@@ -212,17 +198,25 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
 const tabBarIconStyles = (
   theme: ExtendedTheme,
   focused: boolean,
-  isPhone: boolean,
   color?: string,
 ) => {
+  const {colors} = theme || {};
   return StyleSheet.create({
+    container: {
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: colors.white,
+      borderTopWidth: focused ? 2 : 0,
+      borderTopColor: colors.purple50,
+    },
     label: {
       color: color,
       textAlign: 'center',
     },
     badge: {
       position: 'absolute',
-      top: isPhone ? '6%' : '18%',
+      top: '6%',
       left: '54%',
     },
     textBadge: {fontFamily: fontFamilies.BeVietnamProLight},

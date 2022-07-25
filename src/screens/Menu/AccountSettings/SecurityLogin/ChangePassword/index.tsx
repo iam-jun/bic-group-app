@@ -19,7 +19,7 @@ import useAuth from '~/hooks/auth';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 import {getEnv} from '~/utils/env';
 import spacing from '~/theme/spacing';
-import {APP_ENV} from "~/configs/appConfig";
+import {APP_ENV} from '~/configs/appConfig';
 
 const ChangePassword = () => {
   const {t} = useBaseHook();
