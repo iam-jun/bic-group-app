@@ -13,8 +13,8 @@ const GroupMemberRequest = ({
   requestId,
   organizationId,
 }: {
-  requestId: number;
-  organizationId: number;
+  requestId: string;
+  organizationId: string;
 }) => {
   const dispatch = useDispatch();
   const {rootNavigation} = useRootNavigation();

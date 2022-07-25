@@ -13,7 +13,7 @@ import {IGroup} from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';
 
 export interface GroupJoinedTreeProps {
-  communityId: number;
+  communityId: string;
 }
 
 const GroupJoinedTree: FC<GroupJoinedTreeProps> = ({

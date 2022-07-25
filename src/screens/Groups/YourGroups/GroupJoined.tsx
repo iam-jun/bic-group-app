@@ -21,7 +21,7 @@ import spacing from '~/theme/spacing';
 
 export interface GroupJoinedProps {
   style?: StyleProp<ViewStyle>;
-  communityId: number;
+  communityId: string;
   initModeIndex?: number;
 }
 

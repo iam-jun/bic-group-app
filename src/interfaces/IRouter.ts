@@ -6,7 +6,7 @@ export type RootStackParamList = {
     roomId?: string;
   };
   GroupDetail: {
-    groupId?: number;
+    groupId?: string;
     initial?: boolean;
   };
 

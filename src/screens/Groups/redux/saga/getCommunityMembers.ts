@@ -11,7 +11,7 @@ export default function* getCommunityMembers({
 }: {
   type: string;
   payload: {
-    communityId: number;
+    communityId: string;
     isRefreshing?: boolean;
     params?: IParamGetCommunityMembers;
   };

@@ -14,7 +14,7 @@ import {ICommunityMembers} from '~/interfaces/ICommunity';
 import MemberSearchResult from '../components/MemberSearchResult';
 
 interface SearchMemberViewProps {
-  communityId: number;
+  communityId: string;
   isOpen: boolean;
   placeholder?: string;
   initSearch?: string;

@@ -81,7 +81,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   useEffect(() => {
     if (replyTargetUserId && replyTargetUser?.username) {
       let content = `@${replyTargetUser?.username} `;
-      if (replyTargetUserId === Number(userId)) {
+      if (replyTargetUserId === userId) {
         content = '';
       }
       mentionInputRef?.current?.setContent(content);
@@ -135,7 +135,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         postId,
         parentCommentId: replyTargetId || defaultReplyTargetId,
         commentData: {content: content?.trim(), media, giphy: sendData?.giphy},
-        userId: Number(userId),
+        userId: userId,
         onSuccess: _onCommentSuccess,
         isCommentLevel1Screen: isCommentLevel1Screen,
         viewMore,

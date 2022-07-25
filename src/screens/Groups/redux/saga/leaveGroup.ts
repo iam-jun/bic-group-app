@@ -17,7 +17,7 @@ const navigation = withNavigation(rootNavigationRef);
 export default function* leaveGroup({
   payload,
 }: {
-  payload: number;
+  payload: string;
   type: string;
 }) {
   try {
@@ -59,9 +59,9 @@ export function* navigationReplace() {
   yield navigation.replace(groupStack.groups);
 }
 
-export function* navigateToGroup(groupId: number) {
+export function* navigateToGroup(groupId: string) {
   yield navigation.navigate(groupStack.groupDetail, {
-    groupId: groupId,
+    groupId,
     initial: true,
   });
 }

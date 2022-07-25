@@ -9,8 +9,8 @@ export default function* getGroupStructureMoveTargets({
 }: {
   type: string;
   payload: {
-    communityId: number;
-    groupId: number;
+    communityId: string;
+    groupId: string;
     key?: string;
   };
 }): any {

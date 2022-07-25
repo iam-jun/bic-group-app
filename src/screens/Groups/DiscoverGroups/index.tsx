@@ -48,15 +48,15 @@ const DiscoverGroups = ({route}: any) => {
     getDiscoverGroups(true);
   };
 
-  const onPressGroup = (groupId: number) => {
+  const onPressGroup = (groupId: string) => {
     rootNavigation.navigate(groupStack.groupDetail, {groupId});
   };
 
-  const onPressJoin = (groupId: number, groupName: string) => {
+  const onPressJoin = (groupId: string, groupName: string) => {
     dispatch(actions.joinNewGroup({groupId, groupName}));
   };
 
-  const onPressCancel = (groupId: number, groupName: string) => {
+  const onPressCancel = (groupId: string, groupName: string) => {
     dispatch(actions.cancelJoinGroup({groupId, groupName}));
   };
 

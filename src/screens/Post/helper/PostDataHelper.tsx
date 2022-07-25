@@ -87,19 +87,19 @@ export const postApiConfig = {
     useRetry: true,
     ...(isDraftPost ? {params: {is_draft: true}} : {}),
   }),
-  deleteComment: (id: number): HttpApiRequestConfig => ({
+  deleteComment: (id: string): HttpApiRequestConfig => ({
     url: `${provider.url}comments/${id}`,
     method: 'delete',
     provider,
     useRetry: true,
   }),
-  getAudienceGroups: (userId: number): HttpApiRequestConfig => ({
+  getAudienceGroups: (userId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/groups-be-in`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getAudienceUsers: (userId: number): HttpApiRequestConfig => ({
+  getAudienceUsers: (userId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users`,
     method: 'get',
     provider: ApiConfig.providers.bein,
@@ -151,7 +151,7 @@ export const postApiConfig = {
       },
     };
   },
-  putMarkAsRead: (postId: number): HttpApiRequestConfig => ({
+  putMarkAsRead: (postId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.beinFeed.url}posts/${postId}/mark-as-read`,
     method: 'put',
     provider: ApiConfig.providers.beinFeed,
@@ -227,7 +227,7 @@ export const postApiConfig = {
     useRetry: true,
   }),
   getCommentDetail: (
-    commentId: number,
+    commentId: string,
     params: IRequestGetPostComment,
   ): HttpApiRequestConfig => ({
     url: `${provider.url}comments/${commentId}`,
@@ -329,7 +329,7 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  deleteComment: async (id: number) => {
+  deleteComment: async (id: string) => {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.deleteComment(id),
@@ -388,7 +388,7 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  putMarkAsRead: async (postId: number) => {
+  putMarkAsRead: async (postId: string) => {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.putMarkAsRead(postId),
@@ -545,7 +545,7 @@ const postDataHelper = {
     }
   },
   getCommentDetail: async (
-    commentId: number,
+    commentId: string,
     params: IRequestGetPostComment,
   ) => {
     try {

@@ -29,7 +29,7 @@ const ReplyingView = () => {
     replying?.comment?.actor || replying?.parentComment?.actor;
   const replyTargetUserId = replyTargetUser?.id;
   let replyTargetName = replyTargetUser?.fullname;
-  if (replyTargetUserId === Number(userId)) {
+  if (replyTargetUserId === userId) {
     replyTargetName = i18next.t('post:label_yourself');
   }
 

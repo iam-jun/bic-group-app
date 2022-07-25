@@ -6,7 +6,7 @@ import i18next from 'i18next';
 import {IUploadType} from '~/configs/resourceConfig';
 
 export interface IGetFile {
-  id?: number | string;
+  id?: string;
   fileName: string;
   url?: string;
   size?: any;

@@ -11,7 +11,7 @@ export default function* deleteWorkExperience({
   callback,
 }: {
   type: string;
-  id: number;
+  id: string;
   callback?: () => void;
 }) {
   try {

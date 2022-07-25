@@ -8,7 +8,7 @@ export default function* getYourGroupsList({
   payload: communityId,
 }: {
   type: string;
-  payload: number;
+  payload: string;
 }): any {
   try {
     yield put(groupsActions.setYourGroupsList({loading: true}));

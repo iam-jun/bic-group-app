@@ -14,7 +14,7 @@ export default function* postCreateSchemePermission({
   payload,
 }: {
   type: string;
-  payload: {communityId: number};
+  payload: {communityId: string};
 }): any {
   try {
     const {communityId} = payload || {};

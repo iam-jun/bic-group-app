@@ -11,7 +11,7 @@ import GroupItem from '~/beinComponents/list/items/GroupItem';
 import spacing from '~/theme/spacing';
 
 export interface GroupJoinedListProps {
-  communityId: number;
+  communityId: string;
 }
 
 const GroupJoinedList: FC<GroupJoinedListProps> = ({

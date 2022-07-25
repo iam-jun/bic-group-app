@@ -13,8 +13,8 @@ export default function* approveSingleGroupMemberRequest({
 }: {
   type: string;
   payload: {
-    groupId: number;
-    requestId: number;
+    groupId: string;
+    requestId: string;
     fullName: string;
     callback: () => void;
   };
@@ -35,7 +35,7 @@ export default function* approveSingleGroupMemberRequest({
     yield put(
       groupsActions.setGroupMemberRequests({
         total: total - 1,
-        ids: ids.filter((item: number) => item !== requestId),
+        ids: ids.filter((item: string) => item !== requestId),
         items: requestItems,
       }),
     );

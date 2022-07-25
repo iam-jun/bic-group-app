@@ -1,9 +1,9 @@
 import {cloneDeep} from 'lodash';
 
 export const handleSelectNewGroupScheme = (
-  groupId: number,
+  groupId: string,
   schemeId: string,
-  data: {group_id: number; scheme_id: string}[],
+  data: {group_id: string; scheme_id: string}[],
   groupAssignments: any,
 ) => {
   // filter to remove current selected
@@ -30,7 +30,7 @@ export const handleSelectNewGroupScheme = (
 };
 
 export const changeSchemeIdOfGroup = (
-  groupId: number,
+  groupId: string,
   schemeId: string,
   groupAssignments: any,
 ) => {

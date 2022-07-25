@@ -7,7 +7,7 @@ export default function* declineAllCommunityMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; callback?: () => void};
+  payload: {communityId: string; callback?: () => void};
 }) {
   const {communityId} = payload;
   try {

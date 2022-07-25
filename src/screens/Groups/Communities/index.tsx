@@ -54,7 +54,7 @@ const Communities: React.FC = () => {
     translateX.value = 2 * screenWidth;
   };
 
-  const onPressCommunities = (communityId: number) => {
+  const onPressCommunities = (communityId: string) => {
     rootNavigation.navigate(groupStack.communityDetail, {communityId});
   };
 

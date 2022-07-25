@@ -12,7 +12,7 @@ export default function* joinCommunity({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; communityName: string};
+  payload: {communityId: string; communityName: string};
 }) {
   try {
     const {communityId, communityName} = payload;

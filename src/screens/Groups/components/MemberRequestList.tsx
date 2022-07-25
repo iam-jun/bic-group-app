@@ -22,7 +22,7 @@ interface MemberRequestListProps {
   type: 'community' | 'group';
   onLoadMore: () => void;
   onRefresh: () => void;
-  id: number;
+  id: string;
 }
 
 const MemberRequestList = ({

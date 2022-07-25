@@ -11,7 +11,7 @@ export default function* removeMember({
   payload,
 }: {
   type: string;
-  payload: {groupId: number; userId: string; userFullname: string};
+  payload: {groupId: string; userId: string; userFullname: string};
 }) {
   try {
     const {groupId, userId, userFullname} = payload;

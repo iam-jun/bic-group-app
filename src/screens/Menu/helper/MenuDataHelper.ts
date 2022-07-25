@@ -4,14 +4,14 @@ import {IAddWorkExperienceReq} from '~/interfaces/IWorkExperienceRequest';
 import {makeHttpRequest} from '~/services/httpApiRequest';
 
 export const menuApiConfig = {
-  getUserProfile: (userId: number, params?: any): HttpApiRequestConfig => ({
+  getUserProfile: (userId: string, params?: any): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/profile`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
     params,
   }),
-  editMyProfile: (userId: number, data: IUserEdit): HttpApiRequestConfig => ({
+  editMyProfile: (userId: string, data: IUserEdit): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/profile`,
     method: 'put',
     provider: ApiConfig.providers.bein,
@@ -34,7 +34,7 @@ export const menuApiConfig = {
     data,
   }),
   editWorkExperience: (
-    id: number,
+    id: string,
     data: IAddWorkExperienceReq,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/work-experience/${id}`,
@@ -43,14 +43,14 @@ export const menuApiConfig = {
     useRetry: false,
     data,
   }),
-  deleteWorkExperience: (id: number): HttpApiRequestConfig => ({
+  deleteWorkExperience: (id: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/work-experience/${id}`,
     method: 'delete',
     provider: ApiConfig.providers.bein,
     useRetry: false,
   }),
   //get others work experience data
-  getWorkExperience: (id: number): HttpApiRequestConfig => ({
+  getWorkExperience: (id: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${id}/work-experience`,
     method: 'get',
     provider: ApiConfig.providers.bein,
@@ -65,7 +65,7 @@ export const menuApiConfig = {
 };
 
 const menuDataHelper = {
-  getUserProfile: async (userId: number, params?: any) => {
+  getUserProfile: async (userId: string, params?: any) => {
     try {
       const response: any = await makeHttpRequest(
         menuApiConfig.getUserProfile(userId, params),
@@ -124,7 +124,7 @@ const menuDataHelper = {
       return Promise.reject(e);
     }
   },
-  editWorkExperience: async (id: number, data: IAddWorkExperienceReq) => {
+  editWorkExperience: async (id: string, data: IAddWorkExperienceReq) => {
     try {
       const response: any = await makeHttpRequest(
         menuApiConfig.editWorkExperience(id, data),
@@ -138,7 +138,7 @@ const menuDataHelper = {
       return Promise.reject(e);
     }
   },
-  deleteWorkExperience: async (id: number) => {
+  deleteWorkExperience: async (id: string) => {
     console.log('deleteWorkExperience', id);
 
     try {
@@ -154,7 +154,7 @@ const menuDataHelper = {
       return Promise.reject(e);
     }
   },
-  getWorkExperience: async (id: number) => {
+  getWorkExperience: async (id: string) => {
     try {
       const response: any = await makeHttpRequest(
         menuApiConfig.getWorkExperience(id),

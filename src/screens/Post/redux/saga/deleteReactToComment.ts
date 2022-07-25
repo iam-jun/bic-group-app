@@ -3,7 +3,6 @@ import {call, select} from 'redux-saga/effects';
 
 import {
   ICommentData,
-  IOwnReaction,
   IPayloadReactToComment,
   IReaction,
 } from '~/interfaces/IPost';
@@ -48,7 +47,7 @@ export default function* deleteReactToComment({
 }
 
 // function* addReactionLoadingLocal(
-//   id: number,
+//   id: string,
 //   reactionId: string,
 //   comment: ICommentData,
 // ): any {
@@ -76,7 +75,7 @@ export default function* deleteReactToComment({
 // }
 
 function* removeReactionLocal(
-  id: number,
+  id: string,
   reactionId: string,
   comment: ICommentData,
 ): any {

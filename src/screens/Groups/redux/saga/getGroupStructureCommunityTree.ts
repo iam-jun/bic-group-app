@@ -8,7 +8,7 @@ export default function* getGroupStructureCommunityTree({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; showLoading?: boolean};
+  payload: {communityId: string; showLoading?: boolean};
 }): any {
   const {communityId, showLoading = true} = payload || {};
   try {

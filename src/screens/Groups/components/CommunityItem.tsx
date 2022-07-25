@@ -12,7 +12,7 @@ import spacing from '~/theme/spacing';
 
 interface CommunityItemProps {
   item: ICommunity;
-  onPressCommunities?: (communityId: number) => void;
+  onPressCommunities?: (communityId: string) => void;
   onPressMenu?: () => void;
 }
 

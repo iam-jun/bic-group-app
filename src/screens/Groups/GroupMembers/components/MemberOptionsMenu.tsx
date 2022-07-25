@@ -24,7 +24,7 @@ import {useBaseHook} from '~/hooks';
 import {useMyPermissions} from '~/hooks/permissions';
 
 interface MemberOptionsMenuProps {
-  groupId: number;
+  groupId: string;
   modalizeRef: any;
   selectedMember: IGroupMembers;
   onOptionsClosed: () => void;

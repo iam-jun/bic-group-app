@@ -23,7 +23,7 @@ import spacing from '~/theme/spacing';
 export interface HeaderCreatePostProps {
   audience?: any;
   style?: StyleProp<ViewStyle>;
-  createFromGroupId?: number;
+  createFromGroupId?: string;
 }
 
 const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({

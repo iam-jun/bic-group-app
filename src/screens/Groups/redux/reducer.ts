@@ -406,12 +406,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
 
-    case groupsTypes.SET_PRIVACY_MODAL_OPEN:
-      return {
-        ...state,
-        isPrivacyModalOpen: action.payload,
-      };
-
     case groupsTypes.GET_GROUP_DETAIL:
       return {
         ...state,

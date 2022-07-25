@@ -9,7 +9,7 @@ export default function* getGroupSchemeAssignments({
 }: {
   type: string;
   payload: {
-    communityId: number;
+    communityId: string;
     showLoading?: boolean;
   };
 }): any {

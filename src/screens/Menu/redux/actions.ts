@@ -74,7 +74,7 @@ const menuActions = {
     };
   },
   editWorkExperience: (
-    id: number,
+    id: string,
     payload: IUserAddWorkExperience,
     callback?: () => void,
   ) => {
@@ -85,7 +85,7 @@ const menuActions = {
       callback,
     };
   },
-  deleteWorkExperience: (id: number, callback?: () => void) => {
+  deleteWorkExperience: (id: string, callback?: () => void) => {
     return {
       type: menuTypes.DELETE_WORK_EXPERIENCE,
       id,
@@ -145,7 +145,7 @@ const menuActions = {
     payload,
   }),
 
-  getUserWorkExperience: (id: number) => ({
+  getUserWorkExperience: (id: string) => ({
     type: menuTypes.GET_USER_WORK_EXPERIENCE,
     id,
   }),

@@ -16,7 +16,7 @@ export default function* getGroupScheme({
   payload,
 }: {
   type: string;
-  payload: {communityId: number | string; schemeId: string};
+  payload: {communityId: string; schemeId: string};
 }): any {
   const {communityId, schemeId} = payload || {};
   try {

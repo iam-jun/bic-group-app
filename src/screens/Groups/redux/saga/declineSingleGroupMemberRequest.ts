@@ -12,7 +12,7 @@ export default function* declineSingleGroupMemberRequest({
   payload,
 }: {
   type: string;
-  payload: {groupId: number; requestId: number; fullName: string};
+  payload: {groupId: string; requestId: string; fullName: string};
 }) {
   const {groupId, requestId, fullName} = payload;
   try {
@@ -30,7 +30,7 @@ export default function* declineSingleGroupMemberRequest({
     yield put(
       groupsActions.setGroupMemberRequests({
         total: total - 1,
-        ids: ids.filter((item: number) => item !== requestId),
+        ids: ids.filter((item: string) => item !== requestId),
         items: requestItems,
       }),
     );

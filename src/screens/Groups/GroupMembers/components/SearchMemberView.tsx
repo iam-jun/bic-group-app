@@ -14,7 +14,7 @@ import groupsKeySelector from '../../redux/keySelector';
 import MemberSearchResult from '../../components/MemberSearchResult';
 
 interface SearchMemberViewProps {
-  groupId: number;
+  groupId: string;
   isOpen: boolean;
   placeholder?: string;
   initSearch?: string;

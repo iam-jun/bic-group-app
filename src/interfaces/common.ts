@@ -65,7 +65,7 @@ export interface IPayloadShowModal {
 
 export interface IUserPreview {
   isOpen?: boolean;
-  userId?: number | string;
+  userId?: string;
   params?: IObject<any>;
   position?: {x: number; y: number};
 }

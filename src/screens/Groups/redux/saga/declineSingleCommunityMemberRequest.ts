@@ -13,8 +13,8 @@ export default function* declineSingleCommunityMemberRequest({
 }: {
   type: string;
   payload: {
-    communityId: number;
-    requestId: number;
+    communityId: string;
+    requestId: string;
     fullName: string;
   };
 }) {
@@ -34,7 +34,7 @@ export default function* declineSingleCommunityMemberRequest({
     yield put(
       groupsActions.setCommunityMemberRequests({
         total: total - 1,
-        ids: ids.filter((item: number) => item !== requestId),
+        ids: ids.filter((item: string) => item !== requestId),
         items: requestItems,
       }),
     );

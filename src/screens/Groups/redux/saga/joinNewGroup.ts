@@ -12,7 +12,7 @@ export default function* joinNewGroup({
   payload,
 }: {
   type: string;
-  payload: {groupId: number; groupName: string};
+  payload: {groupId: string; groupName: string};
 }) {
   try {
     const {groupId, groupName} = payload;

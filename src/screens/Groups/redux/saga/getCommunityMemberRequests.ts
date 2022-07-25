@@ -11,7 +11,7 @@ export default function* getCommunityMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; isRefreshing?: boolean; params?: any};
+  payload: {communityId: string; isRefreshing?: boolean; params?: any};
 }) {
   try {
     const {groups} = yield select();

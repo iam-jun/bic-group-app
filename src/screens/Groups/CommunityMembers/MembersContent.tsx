@@ -7,7 +7,7 @@ import actions from '~/screens/Groups/redux/actions';
 import {useMyPermissions} from '~/hooks/permissions';
 
 interface MembersContentProps {
-  communityId: number;
+  communityId: string;
   onPressMenu: (item: ICommunityMembers) => void;
 }
 

@@ -10,7 +10,7 @@ export default function* getCommunityScheme({
   payload,
 }: {
   type: string;
-  payload: {communityId: number | string};
+  payload: {communityId: string};
 }): any {
   try {
     const {communityId} = payload || {};

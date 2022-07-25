@@ -10,7 +10,7 @@ export default function* getCommunitySearchMembers({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; params: IParamGetCommunityMembers};
+  payload: {communityId: string; params: IParamGetCommunityMembers};
 }) {
   try {
     const {groups} = yield select();

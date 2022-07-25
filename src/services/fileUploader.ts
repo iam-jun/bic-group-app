@@ -7,7 +7,7 @@ import {IUploadType} from '~/configs/resourceConfig';
 import {isEmpty} from 'lodash';
 
 export interface IGetFile {
-  id?: number | string;
+  id?: string;
   fileName: string;
   url?: string;
   size?: any;
@@ -17,7 +17,7 @@ export interface IGetFile {
 }
 
 export interface IFileUploadResponse {
-  id?: number | string;
+  id?: string;
   originUrl: string;
   properties: {
     name: string;

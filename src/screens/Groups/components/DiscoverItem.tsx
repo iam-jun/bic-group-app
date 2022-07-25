@@ -13,9 +13,9 @@ import spacing from '~/theme/spacing';
 interface DiscoverItemProps {
   item: any;
   testID?: string;
-  onPressJoin: (id: number, name: string) => void;
-  onPressCancel: (id: number, name: string) => void;
-  onPressView?: (id: number) => void;
+  onPressJoin: (id: string, name: string) => void;
+  onPressCancel: (id: string, name: string) => void;
+  onPressView?: (id: string) => void;
 }
 
 const DiscoverItem = ({

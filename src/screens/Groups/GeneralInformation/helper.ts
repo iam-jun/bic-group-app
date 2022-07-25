@@ -14,7 +14,7 @@ import {checkPermission} from '~/utils/permission';
 
 export const uploadFile = (
   dispatch: any,
-  id: number,
+  id: string,
   file: IFilePicked,
   fieldName: 'icon' | 'background_img_url',
   uploadType: IUploadType,
@@ -34,7 +34,7 @@ export const uploadFile = (
 // 'icon' for avatar and 'background_img_url' for cover
 export const _openImagePicker = async (
   dispatch: any,
-  id: number,
+  id: string,
   fieldName: 'icon' | 'background_img_url',
   uploadType: IUploadType,
   destination: 'group' | 'community',
