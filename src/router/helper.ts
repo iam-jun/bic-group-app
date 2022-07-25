@@ -13,7 +13,7 @@ import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
 export const isNavigationRefReady: any = React.createRef();
 
 export interface Props {
-  current?: NavigationContainerRef | null;
+  current?: NavigationContainerRef<any> | null;
   canGoBack: boolean | undefined;
   navigate: (name: string, params?: IObject<unknown>) => void;
   replace: (name: string, params?: IObject<unknown>) => void;
@@ -28,7 +28,7 @@ export interface Props {
 }
 
 export const withNavigation = (
-  navigationRef: RefObject<NavigationContainerRef> | null | undefined,
+  navigationRef: RefObject<NavigationContainerRef<any>> | null | undefined,
 ): Props => {
   const canGoBack = navigationRef?.current?.canGoBack();
 
