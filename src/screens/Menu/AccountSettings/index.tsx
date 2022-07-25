@@ -1,8 +1,7 @@
-import React, {useContext, useEffect, useRef} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {useIsFocused} from '@react-navigation/native';
+import React, { useContext, useEffect, useRef } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
@@ -13,28 +12,28 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 
 import languages from '~/constants/languages';
-import {accountSettingsMenu} from '~/constants/settings';
-import {AppContext} from '~/contexts/AppContext';
-import {useBaseHook} from '~/hooks';
-import {useRootNavigation} from '~/hooks/navigation';
+import { accountSettingsMenu } from '~/constants/settings';
+import { AppContext } from '~/contexts/AppContext';
+import { useBaseHook } from '~/hooks';
+import { useRootNavigation } from '~/hooks/navigation';
 
-import {ILanguage, ISetting} from '~/interfaces/common';
+import { ILanguage, ISetting } from '~/interfaces/common';
 import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
 import * as modalActions from '~/store/modal/actions';
 import mainStack from '~/router/navigator/MainStack/stack';
 import appActions from '~/store/app/actions';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import menuKeySelector from '../redux/keySelector';
 import spacing from '~/theme/spacing';
 
 const GeneralSettings = () => {
   const theme: ExtendedTheme = useTheme();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
   const baseSheetRef: any = useRef();
-  const {changeLanguage, language} = useContext(AppContext);
+  const { changeLanguage, language } = useContext(AppContext);
 
   const isFocused = useIsFocused();
 
@@ -68,26 +67,24 @@ const GeneralSettings = () => {
     }
   };
 
-  const renderLanguageOption = ({item}: {item: ILanguage}) => {
-    return (
-      <TouchableOpacity onPress={() => onLanguageMenuPress(item)}>
-        <MenuItem
-          style={styles.languageOption}
-          title={t(item.title)}
-          icon={item.icon}
-          RightComponent={
+  const renderLanguageOption = ({ item }: {item: ILanguage}) => (
+    <TouchableOpacity onPress={() => onLanguageMenuPress(item)}>
+      <MenuItem
+        style={styles.languageOption}
+        title={t(item.title)}
+        icon={item.icon}
+        RightComponent={
             language === item.code ? (
               <Icon
-                icon={'Check'}
+                icon="Check"
                 size={24}
                 tintColor={theme.colors.purple60}
               />
             ) : null
           }
-        />
-      </TouchableOpacity>
-    );
-  };
+      />
+    </TouchableOpacity>
+  );
 
   return (
     <ScreenWrapper testID="AccountSettings" style={styles.container} isFullView>
@@ -103,12 +100,13 @@ const GeneralSettings = () => {
       />
       <BottomSheet
         modalizeRef={baseSheetRef}
-        ContentComponent={
+        ContentComponent={(
           <View>
             <Text.ButtonS
               color={theme.colors.gray50}
               style={styles.chooseLanguageText}
-              useI18n>
+              useI18n
+            >
               settings:title_choose_language
             </Text.ButtonS>
             <Divider />
@@ -119,7 +117,7 @@ const GeneralSettings = () => {
               onItemPress={onLanguageMenuPress}
             />
           </View>
-        }
+        )}
       />
     </ScreenWrapper>
   );

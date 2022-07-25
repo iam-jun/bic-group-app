@@ -1,13 +1,14 @@
 import * as React from 'react';
-import {render, cleanup} from '@testing-library/react-native';
-import TimeView, {
+import { render, cleanup } from '@testing-library/react-native';
+import moment from 'moment';
+import { StyleSheet } from 'react-native';
+import TimeView from '.';
+import {
   formatShortTime,
   formatFullTime,
   formatDateTime,
-} from '~/beinComponents/TimeView';
-import moment from 'moment';
-import {languages} from '~/test/testUtils';
-import {StyleSheet} from 'react-native';
+} from './helper';
+import { languages } from '~/test/testUtils';
 
 afterEach(cleanup);
 
@@ -15,13 +16,13 @@ describe('TimeView component', () => {
   const currentData = new Date();
   const date = new Date(currentData.setHours(0, 0, 0, 0)).toISOString();
 
-  it(`renders correctly`, () => {
+  it('renders correctly', () => {
     const time = moment('20/10/2020', 'DD/MM/YYYY').toISOString();
     const rendered = render(<TimeView time={time} />).toJSON();
     expect(rendered).toMatchSnapshot();
   });
 
-  it(`renders correctly with time empty`, () => {
+  it('renders correctly with time empty', () => {
     const rendered = render(<TimeView time="" />);
     expect(rendered.toJSON()).toMatchSnapshot();
     const timeComponent = rendered.getByTestId('time_view');
@@ -29,20 +30,20 @@ describe('TimeView component', () => {
     expect(timeComponent.children).toBeDefined();
   });
 
-  it(`renders correctly with props style`, () => {
+  it('renders correctly with props style', () => {
     const rendered = render(
-      <TimeView time={date} style={{color: '#FF9800'}} />,
+      <TimeView time={date} style={{ color: '#FF9800' }} />,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     const timeComponent = rendered.getByTestId('time_view');
     expect(timeComponent).toBeDefined();
     const flattenedStyle = StyleSheet.flatten(timeComponent.props.style);
-    expect(flattenedStyle).toMatchObject({color: '#FF9800'});
+    expect(flattenedStyle).toMatchObject({ color: '#FF9800' });
   });
 
-  it(`renders correctly with props textProps`, () => {
+  it('renders correctly with props textProps', () => {
     const rendered = render(
-      <TimeView time={date} textProps={{numberOfLines: 2}} />,
+      <TimeView time={date} textProps={{ numberOfLines: 2 }} />,
     );
     expect(rendered.toJSON()).toMatchSnapshot();
     const timeComponent = rendered.getByTestId('time_view');
@@ -50,9 +51,9 @@ describe('TimeView component', () => {
     expect(timeComponent.props.numberOfLines).toEqual(2);
   });
 
-  it(`renders correctly with propstime`, () => {
+  it('renders correctly with propstime', () => {
     const date = new Date('2022-02-02 00:00:00');
-    const {getByTestId, getByText} = render(<TimeView time={date} />);
+    const { getByTestId, getByText } = render(<TimeView time={date} />);
     const timeComponent = getByTestId('time_view');
     expect(timeComponent.children).toBeDefined();
     expect(
@@ -60,9 +61,9 @@ describe('TimeView component', () => {
     ).toBeDefined();
   });
 
-  it(`renders correctly with props type fullDateTime`, () => {
+  it('renders correctly with props type fullDateTime', () => {
     const date = new Date('2022-02-02 00:00:00');
-    const {getByTestId, getByText} = render(
+    const { getByTestId, getByText } = render(
       <TimeView time={date} type="fullDateTime" />,
     );
     const timeComponent = getByTestId('time_view');
@@ -72,22 +73,22 @@ describe('TimeView component', () => {
     ).toBeDefined();
   });
 
-  it(`renders correctly with props type dateTime`, () => {
+  it('renders correctly with props type dateTime', () => {
     const date = new Date('2022-02-02 00:00:00');
-    const {getByTestId, getByText} = render(
+    const { getByTestId, getByText } = render(
       <TimeView time={date} type="dateTime" />,
     );
     const timeComponent = getByTestId('time_view');
     expect(timeComponent.children).toBeDefined();
-    expect(getByText(`Feb 02, 2022`)).toBeDefined();
+    expect(getByText('Feb 02, 2022')).toBeDefined();
   });
 
-  it(`renders correctly with props type short`, () => {
+  it('renders correctly with props type short', () => {
     const dateTime = new Date();
     const time = new Date(
       dateTime.setMinutes(dateTime.getMinutes() - 5),
     ).toISOString();
-    const {getByTestId, getByText} = render(
+    const { getByTestId, getByText } = render(
       <TimeView time={time} type="short" />,
     );
     const timeComponent = getByTestId('time_view');
@@ -95,12 +96,12 @@ describe('TimeView component', () => {
     expect(getByText(`5${languages.common.time.short_min}`)).toBeDefined();
   });
 
-  it(`function formatShortTime with now`, () => {
+  it('function formatShortTime with now', () => {
     const now = moment.utc();
     expect(formatShortTime(now, 'vi')).toMatch(languages.common.time.now);
   });
 
-  it(`function formatShortTime with 5 minutes ago`, () => {
+  it('function formatShortTime with 5 minutes ago', () => {
     const dateTime = new Date();
     const time = new Date(
       dateTime.setMinutes(dateTime.getMinutes() - 5),
@@ -110,7 +111,7 @@ describe('TimeView component', () => {
     );
   });
 
-  it(`function formatShortTime with 5 hour ago`, () => {
+  it('function formatShortTime with 5 hour ago', () => {
     const dateTime = new Date();
     const time = new Date(
       dateTime.setHours(dateTime.getHours() - 5),
@@ -120,7 +121,7 @@ describe('TimeView component', () => {
     );
   });
 
-  it(`function formatShortTime with 5 days ago`, () => {
+  it('function formatShortTime with 5 days ago', () => {
     const dateTime = new Date();
     const time = new Date(
       dateTime.setDate(dateTime.getDate() - 5),
@@ -130,7 +131,7 @@ describe('TimeView component', () => {
     );
   });
 
-  it(`function formatShortTime with 1 weeks ago`, () => {
+  it('function formatShortTime with 1 weeks ago', () => {
     const dateTime = new Date();
     const time = new Date(
       dateTime.setDate(dateTime.getDate() - 10),
@@ -140,7 +141,7 @@ describe('TimeView component', () => {
     );
   });
 
-  it(`function formatShortTime with date display`, () => {
+  it('function formatShortTime with date display', () => {
     const dateTime = new Date();
     const time = new Date(
       dateTime.setMonth(dateTime.getMonth() - 13),
@@ -150,13 +151,13 @@ describe('TimeView component', () => {
     );
   });
 
-  it(`function formatFullTime`, () => {
+  it('function formatFullTime', () => {
     expect(formatFullTime(date, 'vi')).toMatch(
       `${languages.common.time.today} ${languages.common.time.at}`,
     );
   });
 
-  it(`function formatFullTime with yesterday`, () => {
+  it('function formatFullTime with yesterday', () => {
     const dateTime = new Date();
     const time = new Date(
       dateTime.setDate(dateTime.getDate() - 1),
@@ -166,7 +167,7 @@ describe('TimeView component', () => {
     );
   });
 
-  it(`function formatFullTime with date display`, () => {
+  it('function formatFullTime with date display', () => {
     const dateTime = new Date();
     const time = new Date(
       dateTime.setDate(dateTime.getDate() - 5),
@@ -176,11 +177,11 @@ describe('TimeView component', () => {
     );
   });
 
-  it(`funtion formatDateTime`, () => {
+  it('funtion formatDateTime', () => {
     expect(formatDateTime(date, 'vi')).toMatch(languages.common.time.today);
   });
 
-  it(`funtion formatDateTime with yesterday`, () => {
+  it('funtion formatDateTime with yesterday', () => {
     const dateTime = new Date();
     const time = new Date(
       dateTime.setDate(dateTime.getDate() - 1),
@@ -188,7 +189,7 @@ describe('TimeView component', () => {
     expect(formatDateTime(time, 'vi')).toMatch(languages.common.time.yesterday);
   });
 
-  it(`funtion formatDateTime with date display`, () => {
+  it('funtion formatDateTime with date display', () => {
     const dateTime = new Date();
     const time = new Date(
       dateTime.setDate(dateTime.getDate() - 13),

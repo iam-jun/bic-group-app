@@ -1,18 +1,18 @@
-import React, {useEffect} from 'react';
-import {StyleSheet, View, useWindowDimensions} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {ExtendedTheme, useIsFocused, useTheme} from '@react-navigation/native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ExtendedTheme, useIsFocused, useTheme } from '@react-navigation/native';
 
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {useBaseHook} from '~/hooks';
-import {authStack} from '~/configs/navigator';
-import {deviceDimensions} from '~/theme/dimension';
+import { useBaseHook } from '~/hooks';
+import { authStack } from '~/configs/navigator';
+import { deviceDimensions } from '~/theme/dimension';
 import LandingImg from '../../../../assets/images/landing_page.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
 import useAuth from '~/hooks/auth';
-import {rootSwitch} from '~/router/stack';
+import { rootSwitch } from '~/router/stack';
 import images from '~/resources/images';
 import Image from '~/beinComponents/Image';
 import spacing from '~/theme/spacing';
@@ -20,11 +20,11 @@ import spacing from '~/theme/spacing';
 const LOGO_SIZE = 72;
 
 const Landing = () => {
-  const {user} = useAuth();
+  const { user } = useAuth();
   const isFocused = useIsFocused();
 
   const theme: ExtendedTheme = useTheme();
-  const {t, navigation} = useBaseHook();
+  const { t, navigation } = useBaseHook();
   const dimensions = useWindowDimensions();
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
   const styles = createStyle(theme, isPhone);
@@ -66,7 +66,8 @@ const Landing = () => {
           testID="landing.start"
           style={styles.button}
           onPress={() => navigation.navigate(authStack.login)}
-          textVariant="h5">
+          textVariant="h5"
+        >
           {t('auth:btn_landing_start')}
         </Button.Primary>
       </View>
@@ -76,7 +77,7 @@ const Landing = () => {
 
 const createStyle = (theme: ExtendedTheme, isPhone: boolean) => {
   const insets = useSafeAreaInsets();
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     root: {

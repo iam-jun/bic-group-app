@@ -1,4 +1,4 @@
-import React, {useState, useEffect, FC} from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import {
   View,
   StyleSheet,
@@ -8,11 +8,12 @@ import {
   KeyboardAvoidingView,
   DeviceEventEmitter,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import debounce from 'lodash/debounce';
 
-import {useBaseHook} from '~/hooks';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useBaseHook } from '~/hooks';
 
 import postActions from '~/screens/Post/redux/actions';
 
@@ -24,22 +25,21 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import SelectingAudiences from '~/screens/Post/components/SelectingAudiences';
 
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
-import {IGroup} from '~/interfaces/IGroup';
-import {OnChangeCheckedGroupsData} from '~/beinComponents/GroupTree';
+import { IGroup } from '~/interfaces/IGroup';
+import { OnChangeCheckedGroupsData } from '~/beinComponents/GroupTree';
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
-import {useRootNavigation} from '~/hooks/navigation';
-import {IUser} from '~/interfaces/IAuth';
+import { useRootNavigation } from '~/hooks/navigation';
+import { IUser } from '~/interfaces/IAuth';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import modalActions from '~/store/modal/actions';
 import {
   checkChangeAudiences,
   ISelectAudienceParams,
 } from './SelectAudienceHelper';
-import {ICreatePostParams} from '~/interfaces/IPost';
+import { ICreatePostParams } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import spacing from '~/theme/spacing';
 
 export interface PostSelectAudienceProps {
@@ -51,12 +51,14 @@ export interface PostSelectAudienceProps {
 const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   route,
 }: PostSelectAudienceProps) => {
-  const {isFirstStep, ...createPostParams} = route?.params || {};
+  const { isFirstStep, ...createPostParams } = route?.params || {};
 
   const [lossInternet, setLossInternet] = useState(false);
 
   const state = useKeySelector(postKeySelector.postSelectAudienceState);
-  const {loading, selectingAudiences, selectingGroups, selectingUsers} = state;
+  const {
+    loading, selectingAudiences, selectingGroups, selectingUsers,
+  } = state;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
   const initAudiences = useKeySelector(
@@ -75,14 +77,13 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     selectingAudiences,
   );
 
-  const disableButtonSave =
-    selectingAudiences?.length === 0 || !isAudiencesHasChanged;
+  const disableButtonSave = selectingAudiences?.length === 0 || !isAudiencesHasChanged;
 
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
-  const {rootNavigation} = useRootNavigation();
+  const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const insets = useSafeAreaInsets();
@@ -110,17 +111,17 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
 
   const updateSelectingAudiences = () => {
     const newSelectingAudiences: (IUser | IGroup)[] = [];
-    Object.values(selectingGroups).map(group => {
+    Object.values(selectingGroups).forEach((group) => {
       if (group) {
         newSelectingAudiences.push(group as IGroup);
       }
     });
-    Object.values(selectingUsers).map(user => {
+    Object.values(selectingUsers).forEach((user) => {
       if (user) {
         newSelectingAudiences.push(user as IUser);
       }
     });
-    const p = {selectingAudiences: newSelectingAudiences};
+    const p = { selectingAudiences: newSelectingAudiences };
     dispatch(postActions.setPostSelectAudienceState(p));
   };
 
@@ -132,15 +133,15 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     }
     if (initAudiences) {
       handleSearchResult(initAudiences);
-      dispatch(postActions.setPostSelectAudienceState({loading: false}));
+      dispatch(postActions.setPostSelectAudienceState({ loading: false }));
     } else if (sectionListData.length === 0 || isFirstStep) {
       onSearch('');
     } else {
-      dispatch(postActions.setPostSelectAudienceState({loading: false}));
+      dispatch(postActions.setPostSelectAudienceState({ loading: false }));
     }
 
     setTimeout(() => {
-      //emit event show header to avoid case quick scroll then press create, lead to missing header
+      // emit event show header to avoid case quick scroll then press create, lead to missing header
       DeviceEventEmitter.emit('showHeader', true);
       DeviceEventEmitter.emit('showBottomBar', true);
     }, 2000);
@@ -165,7 +166,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     if (selectingAudiences?.length === 0) {
       const newSelectingUsers: any = {};
       const newSelectingGroups: any = {};
-      chosenAudiences?.map?.((item: any) => {
+      chosenAudiences?.forEach?.((item: any) => {
         if (item && item?.type === 'user') {
           newSelectingUsers[item.id] = item;
         } else {
@@ -266,30 +267,30 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
 
   const onRemoveItem = (item: any) => {
     if (item.type === 'user') {
-      const newSelectingUsers: any = {...selectingUsers};
+      const newSelectingUsers: any = { ...selectingUsers };
       newSelectingUsers[item.id] = false;
-      const p = {selectingUsers: newSelectingUsers};
+      const p = { selectingUsers: newSelectingUsers };
       dispatch(postActions.setPostSelectAudienceState(p));
     } else {
-      const newSelectingGroups: any = {...selectingGroups};
+      const newSelectingGroups: any = { ...selectingGroups };
       newSelectingGroups[item.id] = false;
-      const p = {selectingGroups: newSelectingGroups};
+      const p = { selectingGroups: newSelectingGroups };
       dispatch(postActions.setPostSelectAudienceState(p));
     }
   };
 
   const onChangeCheckedGroups = (data: OnChangeCheckedGroupsData) => {
-    const p = {selectingGroups: {...selectingGroups, ...data}};
+    const p = { selectingGroups: { ...selectingGroups, ...data } };
     dispatch(postActions.setPostSelectAudienceState(p));
   };
 
   const handleSearchResult = (data: any) => {
-    const {users = [], groups = []} = data || {};
+    const { users = [], groups = [] } = data || {};
 
     dispatch(postActions.setSearchResultAudienceGroups(groups));
 
     const newListUsers: any = [];
-    users?.map?.((item: any) => {
+    users?.forEach?.((item: any) => {
       newListUsers.push({
         id: item.id,
         type: 'user',
@@ -301,18 +302,18 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   };
 
   const onSearch = debounce((searchText: string) => {
-    dispatch(postActions.setPostSelectAudienceState({loading: true}));
+    dispatch(postActions.setPostSelectAudienceState({ loading: true }));
     postDataHelper
       .getSearchAudiences(searchText)
-      .then(response => {
+      .then((response) => {
         if (response && response.data) {
           handleSearchResult(response.data);
         }
-        dispatch(postActions.setPostSelectAudienceState({loading: false}));
+        dispatch(postActions.setPostSelectAudienceState({ loading: false }));
       })
-      .catch(e => {
-        dispatch(postActions.setPostSelectAudienceState({loading: false}));
-        console.log('\x1b[31m', '🐣️ getSearchAudiences |  : ', e, '\x1b[0m');
+      .catch((e) => {
+        dispatch(postActions.setPostSelectAudienceState({ loading: false }));
+        console.error('\x1b[31m', '🐣️ getSearchAudiences |  : ', e, '\x1b[0m');
       });
   }, 500);
 
@@ -321,18 +322,20 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   };
 
   const onPressUser = (user: any) => {
-    const newSelectingUsers: any = {...selectingUsers};
+    const newSelectingUsers: any = { ...selectingUsers };
     if (newSelectingUsers[user.id]) {
       newSelectingUsers[user.id] = false;
     } else {
       newSelectingUsers[user.id] = user;
     }
-    const p = {selectingUsers: newSelectingUsers};
+    const p = { selectingUsers: newSelectingUsers };
     dispatch(postActions.setPostSelectAudienceState(p));
   };
 
-  const renderItem = ({item}: any) => {
-    const {id, name, icon, avatar, type} = item || {};
+  const renderItem = ({ item }: any) => {
+    const {
+      id, name, icon, avatar, type,
+    } = item || {};
     const isGroup = type !== 'user';
 
     if (isGroup) {
@@ -347,56 +350,51 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           onChangeCheckedGroups={onChangeCheckedGroups}
         />
       );
-    } else {
-      return (
-        <PrimaryItem
-          showAvatar
-          avatar={icon || avatar}
-          avatarProps={{variant: isGroup ? 'largeAlt' : 'large'}}
-          style={styles.item}
-          title={name}
-          onPressCheckbox={() => onPressUser(item)}
-          onPress={() => onPressUser(item)}
-          checkboxProps={{
-            style: {position: 'absolute', left: 26, bottom: 0},
-            isChecked: !!selectingUsers[id],
-          }}
-        />
-      );
     }
+    return (
+      <PrimaryItem
+        showAvatar
+        avatar={icon || avatar}
+        avatarProps={{ variant: isGroup ? 'largeAlt' : 'large' }}
+        style={styles.item}
+        title={name}
+        onPressCheckbox={() => onPressUser(item)}
+        onPress={() => onPressUser(item)}
+        checkboxProps={{
+          style: { position: 'absolute', left: 26, bottom: 0 },
+          isChecked: !!selectingUsers[id],
+        }}
+      />
+    );
   };
 
   const renderListHeader = () => {
     if (
-      searchResultAudienceGroups?.length === 0 &&
-      searchResultAudienceUsers?.length === 0
+      searchResultAudienceGroups?.length === 0
+      && searchResultAudienceUsers?.length === 0
     ) {
       return null;
     }
     return (
-      <Text.H6 style={{marginVertical: spacing?.margin.small}}>
+      <Text.H6 style={{ marginVertical: spacing?.margin.small }}>
         Search Results
       </Text.H6>
     );
   };
 
-  const renderSectionHeader = ({section: {title}}: any) => {
-    return (
-      <View style={styles.sectionHeaderContainer}>
-        <Text.H6 style={styles.sectionHeaderText}>{title}</Text.H6>
-      </View>
-    );
-  };
+  const renderSectionHeader = ({ section: { title } }: any) => (
+    <View style={styles.sectionHeaderContainer}>
+      <Text.H6 style={styles.sectionHeaderText}>{title}</Text.H6>
+    </View>
+  );
 
-  const renderListFooter = () => {
-    return (
-      <View>
-        {loading && (
-          <ActivityIndicator size={'large'} color={colors.neutral5} />
-        )}
-      </View>
-    );
-  };
+  const renderListFooter = () => (
+    <View>
+      {loading && (
+      <ActivityIndicator size="large" color={colors.neutral5} />
+      )}
+    </View>
+  );
 
   const renderEmpty = () => {
     if (loading) {
@@ -409,14 +407,15 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     <ScreenWrapper isFullView style={styles.container}>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : undefined}
-        enabled={true}
-        style={{flex: 1}}
+        enabled
+        style={{ flex: 1 }}
         keyboardVerticalOffset={
-          Platform.OS === 'ios' ? (!!insets?.bottom ? 90 : 60) : 0
-        }>
+          Platform.OS === 'ios' ? (insets?.bottom ? 90 : 60) : 0
+        }
+      >
         <Header
-          title={'post:select_audience'}
-          titleTextProps={{useI18n: true}}
+          title="post:select_audience"
+          titleTextProps={{ useI18n: true }}
           buttonText={isFirstStep ? 'common:btn_next' : 'common:btn_done'}
           buttonProps={{
             useI18n: true,
@@ -438,18 +437,16 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
           onRemoveItem={onRemoveItem}
         />
         <SectionList
-          style={{paddingHorizontal: spacing?.padding.large}}
+          style={{ paddingHorizontal: spacing?.padding.large }}
           sections={sectionListData}
-          keyExtractor={(item, index) =>
-            item?.unique || `section_list_${item}_${index}`
-          }
+          keyExtractor={(item, index) => item?.unique || `section_list_${item}_${index}`}
           ListHeaderComponent={renderListHeader}
           ListFooterComponent={renderListFooter}
           ListEmptyComponent={renderEmpty}
           renderSectionHeader={renderSectionHeader}
           renderItem={renderItem}
           ItemSeparatorComponent={() => (
-            <View style={{height: spacing?.margin.large}} />
+            <View style={{ height: spacing?.margin.large }} />
           )}
         />
       </KeyboardAvoidingView>
@@ -458,7 +455,7 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {},
     searchInput: {

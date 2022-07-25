@@ -33,7 +33,7 @@ const postKeySelector = {
     loading: 'post.seenPostList.loading',
   },
 
-  //Post data
+  // Post data
   postById: (id: string | number) => `post.allPosts.${id}`,
   postActorById: (id: string | number) => `post.allPosts.${id}.actor`,
   postAudienceById: (id: string | number) => `post.allPosts.${id}.audience`,
@@ -43,31 +43,21 @@ const postKeySelector = {
   postHighlightById: (id: string | number) => `post.allPosts.${id}.highlight`,
   postSettingById: (id: string | number) => `post.allPosts.${id}.setting`,
   postMentionsById: (id: string | number) => `post.allPosts.${id}.mentions`,
-  postOwnerReactionById: (id: string | number) =>
-    `post.allPosts.${id}.ownerReactions`,
-  postReactionCountsById: (id: string | number) =>
-    `post.allPosts.${id}.reactionsCount`,
-  postCommentsCountById: (id: string | number) =>
-    `post.allPosts.${id}.commentsCount`,
-  postCommentOnlyCountById: (id: number) =>
-    `post.allPosts.${id}.comments.meta.hasNextPage`,
-  postCommentListById: (id: string | number) =>
-    `post.allPosts.${id}.comments.list`,
+  postOwnerReactionById: (id: string | number) => `post.allPosts.${id}.ownerReactions`,
+  postReactionCountsById: (id: string | number) => `post.allPosts.${id}.reactionsCount`,
+  postCommentsCountById: (id: string | number) => `post.allPosts.${id}.commentsCount`,
+  postCommentOnlyCountById: (id: number) => `post.allPosts.${id}.comments.meta.hasNextPage`,
+  postCommentListById: (id: string | number) => `post.allPosts.${id}.comments.list`,
   postIsDraftById: (id: string | number) => `post.allPosts.${id}.isDraft`,
-  postReactionsOrderById: (id: string | number) =>
-    `post.allPosts.${id}.reactions_order`,
+  postReactionsOrderById: (id: string | number) => `post.allPosts.${id}.reactions_order`,
   postDeletedById: (id: string | number) => `post.allPosts.${id}.deleted`,
-  postMarkedReadById: (id: string | number) =>
-    `post.allPosts.${id}.markedReadPost`,
-  postMarkedReadSuccessById: (id: string | number) =>
-    `post.allPosts.${id}.markedReadSuccess`,
-  postTotalUsersSeenById: (id: string | number) =>
-    `post.allPosts.${id}.totalUsersSeen`,
+  postMarkedReadById: (id: string | number) => `post.allPosts.${id}.markedReadPost`,
+  postMarkedReadSuccessById: (id: string | number) => `post.allPosts.${id}.markedReadSuccess`,
+  postTotalUsersSeenById: (id: string | number) => `post.allPosts.${id}.totalUsersSeen`,
 
-  //Comment data
+  // Comment data
   allCommentsByParentIds: 'post.allCommentsByParentIds',
-  commentsByParentId: (id: string | number) =>
-    `post.allCommentsByParentIds.${id}`,
+  commentsByParentId: (id: string | number) => `post.allCommentsByParentIds.${id}`,
   commentById: (id?: string | number) => `post.allComments.${id}`,
 
   scrollToLatestItem: 'post.scrollToLatestItem',

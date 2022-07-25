@@ -1,13 +1,15 @@
-import React, {FC, useEffect, useState} from 'react';
-import {View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC, useEffect, useState } from 'react';
+import {
+  View, StyleSheet, TouchableOpacity, ScrollView,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import homeKeySelector from '~/screens/Home/redux/keySelector';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import Icon from '~/beinComponents/Icon';
-import {useDispatch} from 'react-redux';
 import homeActions from '~/screens/Home/redux/actions';
 import NFSRecentSearchKeyword from '~/screens/Home/Newsfeed/NewsfeedSearch/NFSRecentSearchKeyword';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
@@ -23,15 +25,14 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
   const [lossInternet, setLossInternet] = useState(false);
 
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const {data: listRecentKeywords} =
-    useKeySelector(homeKeySelector.newsfeedSearchRecentKeyword) || {};
+  const { data: listRecentKeywords } = useKeySelector(homeKeySelector.newsfeedSearchRecentKeyword) || {};
 
   const searchText = useKeySelector(homeKeySelector.newsfeedSearch.searchText);
   const searchInputRef = useKeySelector(
@@ -45,8 +46,8 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
   useEffect(() => {
     if (isInternetReachable) {
       if (
-        lossInternet &&
-        (!listRecentKeywords || listRecentKeywords?.length === 0)
+        lossInternet
+        && (!listRecentKeywords || listRecentKeywords?.length === 0)
       ) {
         setLossInternet(false);
         dispatch(
@@ -64,7 +65,7 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
   }, [isInternetReachable]);
 
   useEffect(() => {
-    //timeout wait animation of header finish to avoid lagging
+    // timeout wait animation of header finish to avoid lagging
     setTimeout(() => {
       dispatch(
         homeActions.getRecentSearchKeywords({
@@ -79,10 +80,10 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
 
   const onPressCtaSearch = () => {
     searchInputRef?.current?.blur?.();
-    dispatch(homeActions.setNewsfeedSearch({isSuggestion: false}));
+    dispatch(homeActions.setNewsfeedSearch({ isSuggestion: false }));
   };
 
-  const onDeleteKeyword = (id: string, keyword: string) => {
+  const onDeleteKeyword = (id: string) => {
     dispatch(homeActions.deleteRecentSearchById(id));
   };
 
@@ -91,13 +92,14 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
   };
 
   return (
-    <ScrollView keyboardShouldPersistTaps={'always'}>
+    <ScrollView keyboardShouldPersistTaps="always">
       <View style={styles.container}>
-        {!!searchText ? (
+        {searchText ? (
           <TouchableOpacity
             style={styles.ctaContainer}
-            onPress={onPressCtaSearch}>
-            <Icon icon={'search'} tintColor={colors.purple50} />
+            onPress={onPressCtaSearch}
+          >
+            <Icon icon="search" tintColor={colors.purple50} />
             <Text style={styles.ctaText}>{ctaText}</Text>
           </TouchableOpacity>
         ) : (
@@ -114,7 +116,7 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

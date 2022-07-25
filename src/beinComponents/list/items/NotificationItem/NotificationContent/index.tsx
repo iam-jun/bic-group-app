@@ -1,7 +1,7 @@
-import {StyleSheet, View} from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React from 'react';
-import {IGetStreamNotificationActivity} from '~/interfaces/INotification';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { IGetStreamNotificationActivity } from '~/interfaces/INotification';
 
 import Text from '~/beinComponents/Text';
 import MarkdownView from '~/beinComponents/MarkdownView';
@@ -33,9 +33,9 @@ const NotificationContent = ({
           return false;
         }
         return (
-          activities[0]?.comment?.child?.content ||
-          activities[0]?.comment?.content ||
-          ''
+          activities[0]?.comment?.child?.content
+          || activities[0]?.comment?.content
+          || ''
         );
       case 'POST':
       case 'CHANGE':
@@ -43,9 +43,9 @@ const NotificationContent = ({
       case 'REACT':
         if (actorCount === 1) {
           return (
-            activities[0]?.comment?.child?.content ||
-            activities[0]?.comment?.content ||
-            defaultContent
+            activities[0]?.comment?.child?.content
+            || activities[0]?.comment?.content
+            || defaultContent
           );
         }
         return defaultContent;
@@ -65,7 +65,8 @@ const NotificationContent = ({
         <Text.BodyS
           testID="notification_content.content"
           numberOfLines={1}
-          style={styles.subContent}>
+          style={styles.subContent}
+        >
           {content}
         </Text.BodyS>
       )}
@@ -74,7 +75,7 @@ const NotificationContent = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

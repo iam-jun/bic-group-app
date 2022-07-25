@@ -1,11 +1,10 @@
-import React, {FC} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, { FC } from 'react';
+import { StyleSheet, View } from 'react-native';
 
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 import NoSearchResultImg from '~/../assets/images/no_search_result_grey.svg';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
-
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 export interface NoSearchResultProps {
   title?: string;
@@ -29,7 +28,7 @@ const NoSearchResult: FC<NoSearchResultProps> = ({
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

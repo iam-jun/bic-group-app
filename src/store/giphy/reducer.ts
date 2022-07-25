@@ -11,7 +11,7 @@ export const giphyInitState = {
  * @returns {*}
  */
 function reducer(state = giphyInitState, action: any = {}) {
-  const {type, payload} = action;
+  const { type, payload } = action;
 
   switch (type) {
     case types.SET_API_KEY:

@@ -4,8 +4,8 @@ import reactionIcons from '~/resources/reactions';
 
 const getDefs = (defaultDefs = {}) => {
   const reactions: {[key: string]: string} = {};
-  Object.keys(reactionIcons).map(key => (reactions[key] = ''));
-  return Object.assign({}, defaultDefs, reactions);
+  Object.keys(reactionIcons).map((key) => (reactions[key] = ''));
+  return { ...defaultDefs, ...reactions };
 };
 
 const defs = getDefs(full);

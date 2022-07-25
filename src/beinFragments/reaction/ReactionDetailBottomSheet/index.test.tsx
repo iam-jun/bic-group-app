@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {cleanup, waitFor} from '@testing-library/react-native';
+import { cleanup, waitFor } from '@testing-library/react-native';
 
-import {fireEvent, renderWithRedux, configureStore} from '~/test/testUtils';
+import { fireEvent, renderWithRedux, configureStore } from '~/test/testUtils';
 import ReactionDetailBottomSheet from './index';
 import initialState from '~/store/initialState';
 
@@ -39,7 +39,7 @@ describe('ReactionDetailBottomSheet component', () => {
       commentId: undefined,
       postId: 'efe9c800-92be-11ec-8080-800124087730',
     },
-    getDataPromise: getDataPromise,
+    getDataPromise,
     initReaction: 'grinning_face_with_star_eyes',
     isOpen: true,
     reactionCounts: {
@@ -52,27 +52,23 @@ describe('ReactionDetailBottomSheet component', () => {
     },
   };
   it('renders correctly', async () => {
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
 
     // @ts-ignore
     storeData.modal.reactionDetailBottomSheet = fake_data;
     const store = mockStore(storeData);
-    const rendered = await waitFor(() =>
-      renderWithRedux(<ReactionDetailBottomSheet />, store),
-    );
+    const rendered = await waitFor(() => renderWithRedux(<ReactionDetailBottomSheet />, store));
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`should render list user react correspondingly when clicking reaction item on ReactionTabBar`, async () => {
-    const storeData = {...initialState};
+  it('should render list user react correspondingly when clicking reaction item on ReactionTabBar', async () => {
+    const storeData = { ...initialState };
 
     // @ts-ignore
     storeData.modal.reactionDetailBottomSheet = fake_data;
     const store = mockStore(storeData);
 
-    const rendered = await waitFor(() =>
-      renderWithRedux(<ReactionDetailBottomSheet />, store),
-    );
+    const rendered = await waitFor(() => renderWithRedux(<ReactionDetailBottomSheet />, store));
 
     const btnComponent = rendered.getByTestId(
       'reaction_detail_bottomSheet.kissing_closed_eyes',
@@ -88,24 +84,22 @@ describe('ReactionDetailBottomSheet component', () => {
     expect(rendered.toJSON()).toMatchSnapshot();
   });
 
-  it(`should render list empty user react if call api failed`, async () => {
+  it('should render list empty user react if call api failed', async () => {
     const getDataPromiseFail = jest
       .fn()
       .mockImplementation((): Promise<any> => Promise.reject());
 
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
 
-    // @ts-ignore
     storeData.modal.reactionDetailBottomSheet = {
       ...fake_data,
+      // @ts-ignore
       getDataPromise: getDataPromiseFail,
       isOpen: false,
     };
     const store = mockStore(storeData);
 
-    const rendered = await waitFor(() =>
-      renderWithRedux(<ReactionDetailBottomSheet />, store),
-    );
+    const rendered = await waitFor(() => renderWithRedux(<ReactionDetailBottomSheet />, store));
     const listUserComponent = rendered.getByTestId(
       'reaction_detail_bottomSheet.list_user',
     );
@@ -113,16 +107,14 @@ describe('ReactionDetailBottomSheet component', () => {
     expect(listUserComponent.props?.data?.length).toEqual(0);
   });
 
-  it(`should call navigate to user profile by id when click item`, async () => {
-    const storeData = {...initialState};
+  it('should call navigate to user profile by id when click item', async () => {
+    const storeData = { ...initialState };
 
     // @ts-ignore
     storeData.modal.reactionDetailBottomSheet = fake_data;
     const store = mockStore(storeData);
 
-    const rendered = await waitFor(() =>
-      renderWithRedux(<ReactionDetailBottomSheet />, store),
-    );
+    const rendered = await waitFor(() => renderWithRedux(<ReactionDetailBottomSheet />, store));
 
     const itemComponent = rendered.getByTestId(
       'reaction_detail_bottomSheet.Hoàng Minh Trọng',
@@ -130,22 +122,21 @@ describe('ReactionDetailBottomSheet component', () => {
     expect(itemComponent).toBeDefined();
     fireEvent.press(itemComponent);
 
-    //will update when find solution with navigation.navigate func
+    // will update when find solution with navigation.navigate func
   });
 
-  it(`should call navigate to user profile by username when click item`, async () => {
-    const storeData = {...initialState};
+  it('should call navigate to user profile by username when click item', async () => {
+    const storeData = { ...initialState };
     const _getDataPromise = jest.fn().mockImplementation(
-      (): Promise<any> =>
-        Promise.resolve([
-          {
-            avatar:
+      (): Promise<any> => Promise.resolve([
+        {
+          avatar:
               'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/75f92c17-843b-49de-8445-93531854fd65.jpeg',
-            fullname: 'Hoàng Minh Trọng',
-            username: 'tronghoang',
-            id: '',
-          },
-        ]),
+          fullname: 'Hoàng Minh Trọng',
+          username: 'tronghoang',
+          id: '',
+        },
+      ]),
     );
 
     // @ts-ignore
@@ -155,9 +146,7 @@ describe('ReactionDetailBottomSheet component', () => {
     };
     const store = mockStore(storeData);
 
-    const rendered = await waitFor(() =>
-      renderWithRedux(<ReactionDetailBottomSheet />, store),
-    );
+    const rendered = await waitFor(() => renderWithRedux(<ReactionDetailBottomSheet />, store));
 
     const itemComponent = rendered.getByTestId(
       'reaction_detail_bottomSheet.Hoàng Minh Trọng',
@@ -165,15 +154,15 @@ describe('ReactionDetailBottomSheet component', () => {
     expect(itemComponent).toBeDefined();
     fireEvent.press(itemComponent);
 
-    //will update when find solution with navigation.navigate func
+    // will update when find solution with navigation.navigate func
   });
 
-  it(`should render list empty user react if call api return null`, async () => {
+  it('should render list empty user react if call api return null', async () => {
     const getDataPromiseFail = jest
       .fn()
       .mockImplementation((): Promise<any> => Promise.resolve(null));
 
-    const storeData = {...initialState};
+    const storeData = { ...initialState };
 
     // @ts-ignore
     storeData.modal.reactionDetailBottomSheet = {
@@ -183,9 +172,7 @@ describe('ReactionDetailBottomSheet component', () => {
     };
     const store = mockStore(storeData);
 
-    const rendered = await waitFor(() =>
-      renderWithRedux(<ReactionDetailBottomSheet />, store),
-    );
+    const rendered = await waitFor(() => renderWithRedux(<ReactionDetailBottomSheet />, store));
     const listUserComponent = rendered.getByTestId(
       'reaction_detail_bottomSheet.list_user',
     );

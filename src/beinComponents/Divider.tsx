@@ -1,6 +1,7 @@
 import React from 'react';
-import {StyleProp, View, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleProp, View, ViewStyle } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+
 export interface DividerProps {
   testID?: string;
   color?: string;
@@ -18,7 +19,7 @@ const Divider: React.FC<DividerProps> = ({
   margin = 0,
   style = {},
 }: DividerProps) => {
-  const {colors}: ExtendedTheme = useTheme() as ExtendedTheme;
+  const { colors }: ExtendedTheme = useTheme() as ExtendedTheme;
   return (
     <View
       testID={testID || 'divider'}

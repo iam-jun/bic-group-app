@@ -1,4 +1,4 @@
-import {takeEvery} from 'redux-saga/effects';
+import { takeEvery } from 'redux-saga/effects';
 import homeTypes from '~/screens/Home/redux/types';
 import getHomePosts from '~/screens/Home/redux/saga/getHomePosts';
 import getSearchPosts from '~/screens/Home/redux/saga/getSearchPosts';

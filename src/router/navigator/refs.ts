@@ -1,5 +1,5 @@
-import React, {RefObject} from 'react';
-import {NavigationContainerRef} from '@react-navigation/native';
+import React, { RefObject } from 'react';
+import { NavigationContainerRef } from '@react-navigation/native';
 
 export const rootNavigationRef:
   | RefObject<NavigationContainerRef>

@@ -2,9 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const STORE_BEIN = 'STORE_BEIN';
 
-// @ts-ignore
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-const storeData = async (value, key: string): Promise<void> => {
+const storeData = async (value:any, key: string): Promise<void> => {
   const storage_Key = `${STORE_BEIN}${key}`;
 
   if (value) {
@@ -30,7 +28,7 @@ const removeData = async (key: string): Promise<boolean> => {
     await AsyncStorage.removeItem(storage_Key);
     return Promise.resolve(true);
   } catch (error) {
-    return Promise.reject(false);
+    return Promise.reject(error);
   }
 };
 
@@ -41,7 +39,7 @@ const removeAllData = async (
     const all_keys = await AsyncStorage.getAllKeys();
     if (all_keys) {
       // get key of app
-      const app_keys = all_keys.filter(value => {
+      const app_keys = all_keys.filter((value) => {
         const exception_key = value.replace(STORE_BEIN, '');
         if (exception_keys.includes(exception_key)) {
           return false;
@@ -61,13 +59,9 @@ const removeAllData = async (
   return Promise.resolve(false);
 };
 
-const setLanguage = async (language: string): Promise<void> => {
-  return storeData(language, 'language');
-};
+const setLanguage = async (language: string): Promise<void> => storeData(language, 'language');
 
-const getLanguage = async (): Promise<string | undefined> => {
-  return getData('language');
-};
+const getLanguage = async (): Promise<string | undefined> => getData('language');
 
 export default {
   getData,

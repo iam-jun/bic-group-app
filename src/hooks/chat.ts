@@ -1,16 +1,17 @@
+/* eslint-disable no-console */
 import NetInfo from '@react-native-community/netinfo';
-import {useEffect, useRef} from 'react';
-import {useAuthToken, useAuthTokenExpire, useUserIdAuth} from '~/hooks/auth';
+import { useEffect, useRef } from 'react';
+import { useDispatch } from 'react-redux';
+import { debounce } from 'lodash';
+import { Auth } from 'aws-amplify';
+import { useAuthToken, useAuthTokenExpire, useUserIdAuth } from '~/hooks/auth';
 
 import chatSocketClient from '~/services/chatSocket';
 import chatAction from '~/store/chat/actions';
-import {getTokenAndCallBackBein} from '~/services/httpApiRequest';
-import {useDispatch} from 'react-redux';
-import {getEnv} from '~/utils/env';
-import {debounce} from 'lodash';
-import {Auth} from 'aws-amplify';
+import { getTokenAndCallBackBein } from '~/services/httpApiRequest';
+import getEnv from '~/utils/env';
 
-export const useChatSocket = () => {
+const useChatSocket = () => {
   const isConnectedRef = useRef(true);
 
   const userId = useUserIdAuth();
@@ -44,7 +45,7 @@ export const useChatSocket = () => {
     const sessionData = await Auth.currentSession();
     const idToken = sessionData?.getIdToken().getJwtToken();
     if (idToken === tokenRef.current) {
-      console.log(`\x1b[31m🐣️ chat refreshtoken token not refresh yet\x1b[0m`);
+      console.log('\x1b[31m🐣️ chat refreshtoken token not refresh yet\x1b[0m');
       // token expire but not refresh yet, delay and retry
       refreshToken();
       return;
@@ -53,7 +54,7 @@ export const useChatSocket = () => {
   }, 1000);
 
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(state => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
       isConnectedRef.current = state.isConnected || false;
       if (isConnectedRef.current) {
         connectSocket();
@@ -68,18 +69,16 @@ export const useChatSocket = () => {
     if (userId) {
       dispatch(chatAction.initChat());
     }
-    chatSocketClient.setEventCallback((evt: any) =>
-      dispatch(chatAction.handleChatEvent(evt)),
-    );
+    chatSocketClient.setEventCallback((evt: any) => dispatch(chatAction.handleChatEvent(evt)));
     // chatSocketClient.setErrorCallback(async (evt: any) => {}); //error callback not work on iOS
     chatSocketClient.setCloseCallback(() => {
       if (!isConnectedRef.current) {
-        console.log(`\x1b[31m🐣️ useChatSocket network error, skipped!\x1b[0m`);
+        console.log('\x1b[31m🐣️ useChatSocket network error, skipped!\x1b[0m');
         chatSocketClient.close(true);
         return;
       }
       if (isTokenExpired()) {
-        chatSocketClient.close(true); //close to disable retry
+        chatSocketClient.close(true); // close to disable retry
         refreshToken();
       }
     });
@@ -114,3 +113,5 @@ export const useChatSocket = () => {
 
   return {};
 };
+
+export default useChatSocket;

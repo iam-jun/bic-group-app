@@ -1,5 +1,5 @@
 /* Declare Dimensions */
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 
 const guidelineBaseWidth = 375;
 
@@ -169,8 +169,7 @@ export const maxNewsfeedWidth = 584;
 export const bottomBarHeight = 60;
 export const permissionRoleSectionHeaderHeight = 56;
 
-export const scaleSize = (size: number): number =>
-  (DeviceWidth / guidelineBaseWidth) * size;
+export const scaleSize = (size: number): number => (DeviceWidth / guidelineBaseWidth) * size;
 
 export default {
   sizes,

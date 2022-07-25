@@ -1,7 +1,8 @@
-import React, {useEffect} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {fontFamilies} from '~/theme/fonts';
+import React, { useEffect } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { fontFamilies } from '~/theme/fonts';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -10,20 +11,18 @@ import DateTimePicker from '~/beinComponents/DateTimePicker';
 import Button from '~/beinComponents/Button';
 import Toggle from '~/beinComponents/SelectionControl/Toggle';
 
-import {useDispatch} from 'react-redux';
-
-import {useRootNavigation} from '~/hooks/navigation';
+import { useRootNavigation } from '~/hooks/navigation';
 import modalActions from '~/store/modal/actions';
 
-import {useBaseHook} from '~/hooks';
-import {formatDate} from '~/utils/formatData';
-import {usePostSettings} from '~/screens/Post/PostSettings/usePostSettings';
+import { useBaseHook } from '~/hooks';
+import { formatDate } from '~/utils/formatData';
+import { usePostSettings } from '~/screens/Post/PostSettings/usePostSettings';
 import useCreatePost from '~/screens/Post/CreatePost/hooks/useCreatePost';
-import {IPostSettingsParams} from '~/interfaces/IPost';
+import { IPostSettingsParams } from '~/interfaces/IPost';
 import postActions from '~/screens/Post/redux/actions';
 import spacing from '~/theme/spacing';
-import {useMyPermissions} from '~/hooks/permissions';
-import {useKeySelector} from '~/hooks/selector';
+import { useMyPermissions } from '~/hooks/permissions';
+import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '../redux/keySelector';
 
 export interface PostSettingsProps {
@@ -32,19 +31,19 @@ export interface PostSettingsProps {
   };
 }
 
-const PostSettings = ({route}: PostSettingsProps) => {
+const PostSettings = ({ route }: PostSettingsProps) => {
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
-  const {rootNavigation} = useRootNavigation();
+  const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   let chosenAudiences: any[];
   const screenParams = route?.params || {};
-  const {postId} = screenParams;
+  const { postId } = screenParams;
   if (postId) {
-    useCreatePost({screenParams});
+    useCreatePost({ screenParams });
     chosenAudiences = useKeySelector(
       postKeySelector.postAudienceById(postId),
     )?.groups;
@@ -54,21 +53,19 @@ const PostSettings = ({route}: PostSettingsProps) => {
     );
   }
 
-  const {hasPermissionsOnEachScope, PERMISSION_KEY} = useMyPermissions();
+  const { hasPermissionsOnEachScope, PERMISSION_KEY } = useMyPermissions();
   const canCreateImportantPost = hasPermissionsOnEachScope(
     'groups',
     chosenAudiences,
     PERMISSION_KEY.GROUP.CREATE_IMPORTANT_POST,
   );
 
-  useEffect(() => {
-    return () => {
-      if (postId) {
-        dispatch(postActions.clearCreatPostData());
-        dispatch(postActions.setSearchResultAudienceGroups([]));
-        dispatch(postActions.setSearchResultAudienceUsers([]));
-      }
-    };
+  useEffect(() => () => {
+    if (postId) {
+      dispatch(postActions.clearCreatPostData());
+      dispatch(postActions.setSearchResultAudienceGroups([]));
+      dispatch(postActions.setSearchResultAudienceUsers([]));
+    }
   }, []);
 
   const {
@@ -84,7 +81,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
     handleChangeTimePicker,
     getMinDate,
     getMaxDate,
-  } = usePostSettings({postId});
+  } = usePostSettings({ postId });
 
   const onPressBack = () => {
     if (disableButtonSave) {
@@ -107,7 +104,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
   };
 
   const renderImportantDate = () => {
-    const {expires_time} = sImportant || {};
+    const { expires_time } = sImportant || {};
     let date = t('common:text_set_date');
     let time = t('common:text_set_time');
 
@@ -119,23 +116,25 @@ const PostSettings = ({route}: PostSettingsProps) => {
     return (
       <View style={styles.importantButtons}>
         <Button.Secondary
-          testID={'post_settings.important.btn_date'}
-          leftIcon={'Calendar'}
-          leftIconProps={{icon: 'Calendar', size: 20}}
+          testID="post_settings.important.btn_date"
+          leftIcon="Calendar"
+          leftIconProps={{ icon: 'Calendar', size: 20 }}
           style={styles.buttonDate}
           onPress={() => setSelectingDate(true)}
           color={colors.gray40}
-          textProps={{color: colors.neutral80}}>
+          textProps={{ color: colors.neutral80 }}
+        >
           {date}
         </Button.Secondary>
         <Button.Secondary
-          testID={'post_settings.important.btn_time'}
-          leftIcon={'Clock'}
-          leftIconProps={{icon: 'Clock', size: 20}}
+          testID="post_settings.important.btn_time"
+          leftIcon="Clock"
+          leftIconProps={{ icon: 'Clock', size: 20 }}
           style={styles.buttonTime}
           onPress={() => setSelectingTime(true)}
           color={colors.gray40}
-          textProps={{color: colors.neutral80}}>
+          textProps={{ color: colors.neutral80 }}
+        >
           {time}
         </Button.Secondary>
       </View>
@@ -143,7 +142,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
   };
 
   const renderImportant = () => {
-    const {active} = sImportant || {};
+    const { active } = sImportant || {};
 
     return (
       <View style={styles.content}>
@@ -151,7 +150,8 @@ const PostSettings = ({route}: PostSettingsProps) => {
           style={[
             styles.row,
             sImportant.active ? styles.active : styles.important,
-          ]}>
+          ]}
+        >
           <View style={[styles.flex1]}>
             <Text style={[styles.flex1]} useI18n>
               post:mark_as_important
@@ -161,13 +161,14 @@ const PostSettings = ({route}: PostSettingsProps) => {
                 useI18n
                 testID="post_settings.expire_time_desc"
                 color={colors.gray50}
-                style={{fontFamily: fontFamilies.BeVietnamProSemiBold}}>
+                style={{ fontFamily: fontFamilies.BeVietnamProSemiBold }}
+              >
                 post:expire_time_desc
               </Text.BodyS>
             ) : null}
           </View>
           <Toggle
-            testID={'post_settings.toggle_important'}
+            testID="post_settings.toggle_important"
             isChecked={sImportant?.active}
             onActionPress={handleToggleImportant}
           />
@@ -180,7 +181,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral1}>
       <Header
-        titleTextProps={{useI18n: true}}
+        titleTextProps={{ useI18n: true }}
         title="post:settings"
         buttonText="post:save"
         onPressBack={onPressBack}
@@ -196,7 +197,7 @@ const PostSettings = ({route}: PostSettingsProps) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           {!!canCreateImportantPost && renderImportant()}
         </ScrollView>
-        <View style={{position: 'absolute', alignSelf: 'center'}}>
+        <View style={{ position: 'absolute', alignSelf: 'center' }}>
           {selectingDate && (
             <DateTimePicker
               isVisible={selectingDate}
@@ -207,10 +208,10 @@ const PostSettings = ({route}: PostSettingsProps) => {
               }
               minDate={getMinDate()}
               maxDate={getMaxDate()}
-              mode={'date'}
+              mode="date"
               onConfirm={handleChangeDatePicker}
               onCancel={handleChangeDatePicker}
-              testID={'post_settings.important.date_picker'}
+              testID="post_settings.important.date_picker"
             />
           )}
           {selectingTime && (
@@ -223,10 +224,10 @@ const PostSettings = ({route}: PostSettingsProps) => {
               }
               minDate={getMinDate()}
               maxDate={getMaxDate()}
-              mode={'time'}
+              mode="time"
               onConfirm={handleChangeTimePicker}
               onCancel={handleChangeTimePicker}
-              testID={'post_settings.important.time_picker'}
+              testID="post_settings.important.time_picker"
             />
           )}
         </View>
@@ -236,19 +237,19 @@ const PostSettings = ({route}: PostSettingsProps) => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
-    container: {backgroundColor: colors.white, flex: 1},
-    row: {flexDirection: 'row', alignItems: 'center'},
-    flex1: {flex: 1},
+    container: { backgroundColor: colors.white, flex: 1 },
+    row: { flexDirection: 'row', alignItems: 'center' },
+    flex1: { flex: 1 },
     content: {
       marginBottom: spacing.margin.extraLarge,
       marginLeft: spacing.margin.large,
       marginRight: spacing.margin.base,
       justifyContent: 'center',
     },
-    important: {marginTop: spacing.margin.base},
-    active: {marginTop: spacing.margin.tiny},
+    important: { marginTop: spacing.margin.base },
+    active: { marginTop: spacing.margin.tiny },
     importantButtons: {
       flexDirection: 'row',
       alignItems: 'center',

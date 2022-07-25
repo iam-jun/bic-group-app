@@ -1,6 +1,6 @@
 import _ from 'lodash';
-import {forgotPasswordStages} from '~/constants/authConstants';
-import {ActionTypes} from '~/utils';
+import { forgotPasswordStages } from '~/constants/authConstants';
+import { ActionTypes } from '~/utils';
 import types from './types';
 
 export const authInitState = {
@@ -9,13 +9,13 @@ export const authInitState = {
   loading: false,
   signingInError: '',
   forgotPasswordStage: forgotPasswordStages.INPUT_ID,
-  forgotPasswordError: {errBox: '', errRequest: '', errConfirm: ''},
-  changePasswordError: {errCurrentPassword: '', errBox: ''},
+  forgotPasswordError: { errBox: '', errRequest: '', errConfirm: '' },
+  changePasswordError: { errCurrentPassword: '', errBox: '' },
   changePasswordLoading: false,
 };
 
 function authReducer(state = authInitState, action: any = {}) {
-  const {type} = action;
+  const { type } = action;
   switch (type) {
     case types.SET_USER:
       return {
@@ -46,12 +46,12 @@ function authReducer(state = authInitState, action: any = {}) {
     case types.SET_FORGOT_PASSWORD_ERROR:
       return {
         ...state,
-        forgotPasswordError: {...action.payload},
+        forgotPasswordError: { ...action.payload },
       };
     case types.SET_CHANGE_PASSWORD_ERROR:
       return {
         ...state,
-        changePasswordError: {...action.payload},
+        changePasswordError: { ...action.payload },
       };
     case types.SET_CHANGE_PASSWORD_LOADING:
       return {

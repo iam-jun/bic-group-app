@@ -1,22 +1,22 @@
 import React from 'react';
-import {DeviceEventEmitter, StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import { DeviceEventEmitter, StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {useRootNavigation} from '~/hooks/navigation';
+import { useRootNavigation } from '~/hooks/navigation';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import * as modalActions from '~/store/modal/actions';
 
-import {IconType} from '~/resources/icons';
-import {appScreens} from '~/configs/navigator';
+import { IconType } from '~/resources/icons';
+import { appScreens } from '~/configs/navigator';
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import spacing from '~/theme/spacing';
 
 const LeftPanel = () => {
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const onPressNewsfeed = () => {
@@ -43,20 +43,19 @@ const LeftPanel = () => {
     path?: string;
     onPress?: () => void;
     [key: string]: any;
-  }) => {
-    return (
-      <View style={[styles.itemContainer]}>
-        <MenuItem title={title} icon={icon} onPress={onPress} {...props} />
-      </View>
-    );
-  };
+  }) => (
+    <View style={[styles.itemContainer]}>
+      <MenuItem title={title} icon={icon} onPress={onPress} {...props} />
+    </View>
+  );
 
   return (
     <ScreenWrapper
       testID="VipScreen"
       disabledDarkMode
       isFullView
-      style={styles.root}>
+      style={styles.root}
+    >
       {renderItem({
         icon: 'iconTabHomeBein',
         title: 'home:newsfeed',
@@ -84,7 +83,7 @@ const LeftPanel = () => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     root: {
       paddingTop: spacing.padding.base,

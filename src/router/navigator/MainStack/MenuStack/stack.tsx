@@ -6,7 +6,7 @@ const menuStack = {
   changePassword: 'change-password',
   userProfile: 'user-profile',
 
-  //use for draft posts
+  // use for draft posts
   createPost: 'create-post',
   createComment: 'create-comment',
   postSelectAudience: 'post-select-audience',

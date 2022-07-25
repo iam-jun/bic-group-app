@@ -1,12 +1,14 @@
 import React from 'react';
-import {StyleProp, Text, TextStyle, StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import {
+  StyleProp, Text, TextStyle, StyleSheet,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import isEmpty from 'lodash/isEmpty';
 
-import {useKeySelector} from '~/hooks/selector';
-import {IMarkdownAudience} from '~/interfaces/IPost';
+import { useKeySelector } from '~/hooks/selector';
+import { IMarkdownAudience } from '~/interfaces/IPost';
 
-import {fontFamilies} from '~/theme/fonts';
+import { fontFamilies } from '~/theme/fonts';
 
 interface Props {
   selector: string;
@@ -15,7 +17,9 @@ interface Props {
   onPress?: (audience: IMarkdownAudience, e: any) => void;
 }
 
-const AtMention = ({mentionName, selector, style, onPress}: Props) => {
+const AtMention = ({
+  mentionName, selector, style, onPress,
+}: Props) => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme);
 
@@ -37,16 +41,19 @@ const AtMention = ({mentionName, selector, style, onPress}: Props) => {
     <Text
       testID="text_mention"
       style={withAudience ? style : styles.baseStyle}
-      onPress={withAudience ? _onPress : undefined}>{`@${
-      name || mentionName
-    }`}</Text>
+      onPress={withAudience ? _onPress : undefined}
+    >
+      {`@${
+        name || mentionName
+      }`}
+    </Text>
   );
 };
 
 export default AtMention;
 
 const createStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     baseStyle: {
       color: colors.neutral80,

@@ -1,39 +1,42 @@
-import React, {useRef, useState, useEffect} from 'react';
-import {StyleSheet, View, Keyboard, ScrollView} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { useRef, useState, useEffect } from 'react';
+import {
+  StyleSheet, View, Keyboard, ScrollView,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
-import {useDispatch} from 'react-redux';
-import {useForm} from 'react-hook-form';
+import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import menuKeySelector from '../../redux/keySelector';
-import {useRootNavigation} from '~/hooks/navigation';
+import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import Button from '~/beinComponents/Button';
 import TitleComponent from '../fragments/TitleComponent';
 import EditPhoneNumber from './fragments/EditPhoneNumber';
 import EditLocation from './fragments/EditLocation';
-import {ILocation} from '~/interfaces/common';
+import { ILocation } from '~/interfaces/common';
 import menuActions from '../../redux/actions';
 import spacing from '~/theme/spacing';
 
 const EditContact = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
   const locationRef = useRef<any>();
 
   const dispatch = useDispatch();
 
   const myProfile = useKeySelector(menuKeySelector.myProfile);
-  const {email, phone, country_code, country, city, id} = myProfile || {};
+  const {
+    email, phone, country_code, country, city, id,
+  } = myProfile || {};
 
-  const [countryCodeState, setCountryCountryCodeState] =
-    useState<string>(country_code);
+  const [countryCodeState, setCountryCountryCodeState] = useState<string>(country_code);
   const [countryState, setCountryState] = useState<string>(country);
   const [cityState, setCityState] = useState<string>(city);
   const phoneNumberEditError = useKeySelector(
@@ -42,7 +45,7 @@ const EditContact = () => {
 
   const {
     control,
-    formState: {errors},
+    formState: { errors },
     trigger,
     getValues,
     setError,
@@ -83,8 +86,7 @@ const EditContact = () => {
         {
           id,
           phone: phoneNumber,
-          //@ts-ignore
-          country_code: !!phoneNumber ? countryCodeState : null,
+          country_code: phoneNumber ? countryCodeState : null,
           country: countryState,
           city: cityState,
         },
@@ -96,9 +98,7 @@ const EditContact = () => {
     );
   };
 
-  const validateInputs = async () => {
-    return await trigger('phoneNumber');
-  };
+  const validateInputs = async () => trigger('phoneNumber');
 
   const showErrors = () => {
     setError('phoneNumber', {
@@ -133,14 +133,12 @@ const EditContact = () => {
     countryState: string,
     cityState: string,
     phoneNumber: string,
-  ) => {
-    return (
-      country_code !== countryCodeState ||
-      country !== countryState ||
-      city !== cityState ||
-      phone !== phoneNumber
-    );
-  };
+  ) => (
+    country_code !== countryCodeState
+      || country !== countryState
+      || city !== cityState
+      || phone !== phoneNumber
+  );
 
   const isValid = checkIsValid(
     countryCodeState,
@@ -152,10 +150,10 @@ const EditContact = () => {
   return (
     <ScreenWrapper testID="EditContact" isFullView>
       <Header
-        titleTextProps={{useI18n: true}}
-        title={'settings:title_edit_contact'}
+        titleTextProps={{ useI18n: true }}
+        title="settings:title_edit_contact"
         onPressBack={navigateBack}
-        buttonText={'common:text_save'}
+        buttonText="common:text_save"
         buttonProps={{
           useI18n: true,
           color: theme.colors.purple50,
@@ -179,24 +177,26 @@ const EditContact = () => {
           <TitleComponent icon="Envelope" title="settings:title_email" />
           <Button
             testID="edit_contact.email"
-            textProps={{color: theme.colors.gray60, variant: 'bodyM'}}
+            textProps={{ color: theme.colors.gray60, variant: 'bodyM' }}
             style={[
               styles.buttonDropDown,
-              {backgroundColor: theme.colors.gray10},
+              { backgroundColor: theme.colors.gray10 },
             ]}
             contentStyle={styles.buttonDropDownContent}
             activeOpacity={1}
-            disabled>
+            disabled
+          >
             {email || i18next.t('common:text_not_set')}
           </Button>
 
           <TitleComponent icon="LocationDot" title="settings:title_address" />
           <Button
             testID="edit_contact.location"
-            textProps={{color: theme.colors.neutral80, variant: 'bodyM'}}
+            textProps={{ color: theme.colors.neutral80, variant: 'bodyM' }}
             style={styles.buttonDropDown}
             contentStyle={styles.buttonDropDownContent}
-            onPress={e => onEditLocationOpen(e)}>
+            onPress={(e) => onEditLocationOpen(e)}
+          >
             {cityState && countryState
               ? `${cityState}, ${countryState}`
               : i18next.t('common:text_not_set')}
@@ -214,7 +214,7 @@ const EditContact = () => {
 export default EditContact;
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     infoItem: {

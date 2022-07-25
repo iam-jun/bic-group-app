@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -9,11 +9,11 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {Video, ResizeMode} from 'expo-av';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { Video, ResizeMode } from 'expo-av';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import dimension, {scaleSize} from '~/theme/dimension';
-import {orderBy} from 'lodash';
+import { orderBy } from 'lodash';
+import dimension, { scaleSize } from '~/theme/dimension';
 import Icon from './Icon';
 import LoadingIndicator from './LoadingIndicator';
 
@@ -31,14 +31,14 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   postId,
 }: VideoPlayerProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const video = React.useRef();
   const [isPlaying, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const {url, id, thumbnails} = data || {};
+  const { url, id, thumbnails } = data || {};
 
   const getThumbnailImageLink = () => {
     const deviceWidthPixel = PixelRatio.get() * dimension.deviceWidth;
@@ -84,7 +84,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
     const stopVideoListener = DeviceEventEmitter.addListener(
       'stopAllVideo',
       async () => {
-        if (!!video.current) {
+        if (video.current) {
           const currentStatus = await video.current.getStatusAsync();
           if (!currentStatus?.isPlaying) return;
           try {
@@ -135,18 +135,19 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         }}
       />
       {!isPlaying && (
-        <Image style={styles.thumbnail} source={{uri: posterUrl}} />
+        <Image style={styles.thumbnail} source={{ uri: posterUrl }} />
       )}
 
       {loading ? (
         <LoadingIndicator size={60} color={colors.gray20} />
       ) : !isPlaying ? (
         <TouchableOpacity
-          activeOpacity={!!url ? 0.85 : 1}
+          activeOpacity={url ? 0.85 : 1}
           onPress={() => {
             loadAsyncVideo();
           }}
-          style={styles.buttonPlay}>
+          style={styles.buttonPlay}
+        >
           <Icon size={60} tintColor={colors.gray20} icon="CirclePlay" />
         </TouchableOpacity>
       ) : null}
@@ -155,7 +156,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       // width: '100%',

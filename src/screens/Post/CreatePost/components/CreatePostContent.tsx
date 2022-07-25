@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, { useEffect, useRef } from 'react';
 import {
   Animated,
   Easing,
@@ -7,29 +7,29 @@ import {
   Text as RNText,
   View,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import MentionInput from '~/beinComponents/inputs/MentionInput';
 import PostInput from '~/beinComponents/inputs/PostInput';
 import UploadingFile from '~/beinComponents/UploadingFile';
-import {uploadTypes} from '~/configs/resourceConfig';
-import {useBaseHook} from '~/hooks';
-import {useKeyboardStatus} from '~/hooks/keyboard';
-import {useRootNavigation} from '~/hooks/navigation';
-import {IFilePicked} from '~/interfaces/common';
+import { uploadTypes } from '~/configs/resourceConfig';
+import { useBaseHook } from '~/hooks';
+import { useKeyboardStatus } from '~/hooks/keyboard';
+import { useRootNavigation } from '~/hooks/navigation';
+import { IFilePicked } from '~/interfaces/common';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import modalActions from '~/store/modal/actions';
-import {fontFamilies} from '~/theme/fonts';
+import { fontFamilies } from '~/theme/fonts';
 
 import PostPhotoPreview from '../../components/PostPhotoPreview';
 import postActions from '../../redux/actions';
-import {CONTENT_MIN_HEIGHT, MIN_INPUT_HEIGHT} from '../constanst';
-import {calculateInputHeight, isAndroidAnimated} from '../helper';
+import { CONTENT_MIN_HEIGHT, MIN_INPUT_HEIGHT } from '../constanst';
+import { calculateInputHeight, isAndroidAnimated } from '../helper';
 import ToastAutoSave from './ToastAutoSave';
 import FilesView from '../../components/FilesView';
-import {IGetFile} from '~/services/fileUploader';
+import { IGetFile } from '~/services/fileUploader';
 import VideoPlayer from '~/beinComponents/VideoPlayer';
-import {getTotalFileSize} from '../../redux/selectors';
+import { getTotalFileSize } from '../../redux/selectors';
 import appConfig from '~/configs/appConfig';
 import Button from '~/beinComponents/Button';
 import spacing from '~/theme/spacing';
@@ -41,13 +41,13 @@ interface Props {
   inputRef: any;
 }
 
-const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
+const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const mentionInputRef = useRef<any>();
-  const {rootNavigation} = useRootNavigation();
-  const {t} = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
   const refTextInput = inputRef;
 
   const {
@@ -62,8 +62,8 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
     handleUploadFileSuccess,
   } = useCreatePostData;
 
-  const {loading, data} = createPostData || {};
-  const {content} = data || {};
+  const { loading, data } = createPostData || {};
+  const { content } = data || {};
 
   const [photosHeight, setPhotosHeight] = React.useState<number>(0);
   const [inputHeight, setInputHeight] = React.useState<number>(0);
@@ -76,9 +76,9 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
 
   const strGroupIds = groupIds.join(',');
 
-  const {isOpen: isKeyboardOpen} = useKeyboardStatus();
+  const { isOpen: isKeyboardOpen } = useKeyboardStatus();
   const isAnimated = isAndroidAnimated();
-  const {totalSize} = getTotalFileSize();
+  const { totalSize } = getTotalFileSize();
 
   useEffect(() => {
     if (content !== contentInput && isAnimated) {
@@ -144,7 +144,7 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
         content: t('upload:text_upload_error', {
           file_type: t(`file_type:${type}`),
         }),
-        props: {type: 'error'},
+        props: { type: 'error' },
       }),
     );
   };
@@ -160,22 +160,25 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
     <>
       {isAnimated && (
         <View
-          testID={'create_post.clone_text_container'}
-          style={styles.textCloneContainer}>
+          testID="create_post.clone_text_container"
+          style={styles.textCloneContainer}
+        >
           <RNText
             style={styles.textContentClone}
             onLayout={onLayoutCloneText}
-            ref={refRNText}>
-            {contentInput + '.'}
+            ref={refRNText}
+          >
+            {`${contentInput}.`}
           </RNText>
         </View>
       )}
       <ScrollView bounces={false} keyboardShouldPersistTaps="always">
         <View style={styles.flex1}>
           <Animated.View
-            style={isAnimated ? {height: heightAnimated} : styles.flex1}>
+            style={isAnimated ? { height: heightAnimated } : styles.flex1}
+          >
             <MentionInput
-              disableAutoComplete={true}
+              disableAutoComplete
               groupIds={strGroupIds}
               mentionInputRef={mentionInputRef}
               style={styles.flex1}
@@ -185,7 +188,7 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
                 title: t('post:mention_title'),
                 emptyContent: t('post:mention_empty_content'),
                 showShadow: true,
-                modalStyle: {maxHeight: 350},
+                modalStyle: { maxHeight: 350 },
               }}
               ComponentInput={PostInput}
               componentInputProps={{
@@ -200,15 +203,13 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
             <View onLayout={onLayoutPhotoPreview}>
               <PostPhotoPreview
                 data={images || []}
-                style={{alignSelf: 'center'}}
+                style={{ alignSelf: 'center' }}
                 uploadType={uploadTypes.postImage}
-                onPress={() =>
-                  rootNavigation.navigate(homeStack.postSelectImage)
-                }
+                onPress={() => rootNavigation.navigate(homeStack.postSelectImage)}
               />
               {video && video?.thumbnails?.length > 0 ? (
                 <VideoPlayer data={video} postId={sPostData?.id || ''} />
-              ) : !!video ? (
+              ) : video ? (
                 <UploadingFile
                   uploadType={uploadTypes.postVideo}
                   file={video as IFilePicked}
@@ -236,10 +237,10 @@ const Content = ({groupIds, useCreatePostData, inputRef}: Props) => {
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
-    flex1: {flex: 1},
+    flex1: { flex: 1 },
     textContentClone: {
       position: 'absolute',
       top: 1,
@@ -250,7 +251,7 @@ const themeStyles = (theme: ExtendedTheme) => {
       fontFamily: fontFamilies.BeVietnamProLight,
       color: colors.success,
     },
-    textCloneContainer: {height: 0, overflow: 'hidden'},
+    textCloneContainer: { height: 0, overflow: 'hidden' },
     buttonSettings: {
       backgroundColor: colors.gray40,
       borderRadius: spacing.borderRadius.small,

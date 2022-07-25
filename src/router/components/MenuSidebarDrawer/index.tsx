@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
-import {PanGestureHandler} from 'react-native-gesture-handler';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { Dimensions, StyleSheet, TouchableOpacity } from 'react-native';
+import { PanGestureHandler } from 'react-native-gesture-handler';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated, {
   interpolate,
   runOnJS,
@@ -10,10 +10,10 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useDispatch} from 'react-redux';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch } from 'react-redux';
 
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import MenuSidebarContent from '~/router/components/MenuSidebarDrawer/MenuSidebarContent';
 import appActions from '~/store/app/actions';
 
@@ -54,7 +54,7 @@ const MenuSidebarDrawer = () => {
       setIsShow(false);
       dispatch(appActions.setDrawerVisible(false));
     };
-    showValue.value = withTiming(0, {duration}, () => {
+    showValue.value = withTiming(0, { duration }, () => {
       runOnJS(onHideDone)();
     });
   };
@@ -62,7 +62,7 @@ const MenuSidebarDrawer = () => {
   const show = (duration = 400) => {
     setIsShow(true);
     dispatch(appActions.setDrawerVisible(true));
-    showValue.value = withTiming(1, {duration});
+    showValue.value = withTiming(1, { duration });
   };
 
   useEffect(() => {
@@ -75,13 +75,13 @@ const MenuSidebarDrawer = () => {
 
   const gestureHandler = useAnimatedGestureHandler({
     onStart(event: any) {
-      xValue.value = withTiming(event?.x, {duration: 16});
+      xValue.value = withTiming(event?.x, { duration: 16 });
     },
     onActive(event: any) {
       const absoluteX = event?.absoluteX || 0;
       const delta = absoluteX - xValue.value;
       const newShowValue = Math.min(1, 1 - delta / DeviceWidth);
-      showValue.value = withTiming(newShowValue, {duration: 0});
+      showValue.value = withTiming(newShowValue, { duration: 0 });
     },
     onFinish(event: any) {
       const absoluteX = event?.absoluteX || 0;
@@ -104,14 +104,16 @@ const MenuSidebarDrawer = () => {
       <Animated.View style={styles.status} />
       <TouchableOpacity
         activeOpacity={1}
-        style={{flex: 1}}
-        onPress={() => hide()}>
+        style={{ flex: 1 }}
+        onPress={() => hide()}
+      >
         <PanGestureHandler onGestureEvent={gestureHandler}>
           <Animated.View style={animatedContentStyle}>
             <TouchableOpacity
               style={styles.contentContainer}
               activeOpacity={1}
-              onPress={undefined}>
+              onPress={undefined}
+            >
               <MenuSidebarContent onCloseSidebar={hide} />
             </TouchableOpacity>
           </Animated.View>
@@ -122,7 +124,7 @@ const MenuSidebarDrawer = () => {
 };
 
 const themeStyles = (theme: ExtendedTheme, insets: any) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     status: {

@@ -1,7 +1,7 @@
 import useNotifications from '~/hooks/notifications';
 
 const useTabBadge = () => {
-  const {unseenNumber} = useNotifications();
+  const { unseenNumber } = useNotifications();
   return {
     notification: unseenNumber,
   };

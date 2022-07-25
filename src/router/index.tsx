@@ -1,58 +1,58 @@
 /* @react-navigation v5 */
 import NetInfo from '@react-native-community/netinfo';
-import {NavigationContainer, useTheme} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import {Auth} from 'aws-amplify';
-import React, {useEffect} from 'react';
-import {Linking, StatusBar, StyleSheet, View} from 'react-native';
-import {Host} from 'react-native-portalize';
+import { NavigationContainer, useTheme } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { Auth } from 'aws-amplify';
+import React, { useEffect } from 'react';
+import {
+  Linking, StatusBar, StyleSheet, View,
+} from 'react-native';
+import { Host } from 'react-native-portalize';
 
-import {useDispatch} from 'react-redux';
-import {put} from 'redux-saga/effects';
+import { useDispatch } from 'react-redux';
+import { put } from 'redux-saga/effects';
 import AlertModal from '~/beinComponents/modals/AlertModal';
 import AlertNewFeatureModal from '~/beinComponents/modals/AlertNewFeatureModal';
 import LoadingModal from '~/beinComponents/modals/LoadingModal';
 import ToastMessage from '~/beinComponents/ToastMessage/ToastMessage';
-import {AppConfig} from '~/configs';
+import { AppConfig } from '~/configs';
 import {
   linkingConfig,
   linkingConfigFull,
   navigationSetting,
 } from '~/configs/navigator';
-import {useBaseHook} from '~/hooks';
-import {useRootNavigation} from '~/hooks/navigation';
-import {IUserResponse} from '~/interfaces/IAuth';
-import {RootStackParamList} from '~/interfaces/IRouter';
+import { useBaseHook } from '~/hooks';
+import { useRootNavigation } from '~/hooks/navigation';
+import { IUserResponse } from '~/interfaces/IAuth';
+import { RootStackParamList } from '~/interfaces/IRouter';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
 import authActions from '~/screens/Auth/redux/actions';
 import InternetConnectionStatus from '~/screens/NoInternet/components/InternetConnectionStatus';
 import SystemIssueModal from '~/screens/NoInternet/components/SystemIssueModal';
 import noInternetActions from '~/screens/NoInternet/redux/actions';
-import {makeRemovePushTokenRequest} from '~/services/httpApiRequest';
+import { makeRemovePushTokenRequest } from '~/services/httpApiRequest';
 import Store from '~/store';
 import * as modalActions from '~/store/modal/actions';
-import {isNavigationRefReady} from './helper';
-/*import config navigation*/
+import { isNavigationRefReady } from './helper';
+/* import config navigation */
 import * as screens from './navigator';
-import {rootNavigationRef} from './navigator/refs';
-import {rootSwitch} from './stack';
+import { rootNavigationRef } from './navigator/refs';
+import { rootSwitch } from './stack';
 import * as appTheme from '~/theme/theme';
-import {registerNavigationContainerWithSentry} from '~/services/sentry';
+import { registerNavigationContainerWithSentry } from '~/services/sentry';
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 const StackNavigator = (): React.ReactElement => {
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
   const theme = useTheme();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const dispatch = useDispatch();
 
   const user: IUserResponse | boolean = Store.getCurrentUser();
 
   useEffect(() => {
-    const unsubscribeNetInfo = NetInfo.addEventListener(() =>
-      dispatch(noInternetActions.checkInternetReachable()),
-    );
+    const unsubscribeNetInfo = NetInfo.addEventListener(() => dispatch(noInternetActions.checkInternetReachable()));
 
     return () => {
       unsubscribeNetInfo();
@@ -82,7 +82,7 @@ const StackNavigator = (): React.ReactElement => {
   };
 
   useEffect(() => {
-    //@ts-ignore
+    // @ts-ignore
     isNavigationRefReady.current = false;
     checkAuthKickout();
     handleDeepLink();
@@ -94,7 +94,7 @@ const StackNavigator = (): React.ReactElement => {
     }
   }, []);
 
-  /*Handle when app killed*/
+  /* Handle when app killed */
   const handleDeepLink = async () => {
     // wait for implementation
   };
@@ -104,7 +104,7 @@ const StackNavigator = (): React.ReactElement => {
   const navigationTheme = theme.dark ? appTheme.dark : appTheme.light;
 
   const onReady = () => {
-    //@ts-ignore
+    // @ts-ignore
     isNavigationRefReady.current = true;
 
     // Register the navigation container with the instrumentation for Sentry performance monitoring
@@ -128,13 +128,15 @@ const StackNavigator = (): React.ReactElement => {
         ref={rootNavigationRef}
         onReady={onReady}
         theme={navigationTheme as any}
-        documentTitle={{enabled: false}}>
+        documentTitle={{ enabled: false }}
+      >
         <Host>
           <Stack.Navigator
             initialRouteName={
               (user ? rootSwitch.mainStack : rootSwitch.authStack) as any
             }
-            screenOptions={{cardStyle: cardStyleConfig}}>
+            screenOptions={{ cardStyle: cardStyleConfig }}
+          >
             <Stack.Screen
               options={AppConfig.defaultScreenOptions}
               name={rootSwitch.authStack as any}
@@ -162,48 +164,47 @@ const StackNavigator = (): React.ReactElement => {
   );
 };
 
-const getLinkingCustomConfig = (config: any, navigation: any) => {
-  return {
-    ...config,
-    subscribe(listener: any) {
-      const onReceiveURL = ({url}: {url: string}) => {
-        if (url.includes('bein:///posts/')) {
-          const data = url?.replace('bein:///posts/', '');
-          const params = data.split('?');
+const getLinkingCustomConfig = (config: any, navigation: any) => ({
+  ...config,
+  subscribe(listener: any) {
+    const onReceiveURL = ({ url }: {url: string}) => {
+      if (url.includes('bein:///posts/')) {
+        const data = url?.replace('bein:///posts/', '');
+        const params = data.split('?');
 
-          if (params?.length === 1) {
-            navigation?.navigate?.(homeStack.postDetail, {post_id: data});
-          } else if (params?.length > 1 && navigation) {
-            const newParams = params[1]
-              .split('&')
-              ?.map(item => item.split('='))
-              ?.reduce((p, c) => {
-                if (c.length > 1) {
-                  //@ts-ignore
-                  p[c[0]] = c[1];
-                }
-                return p;
-              }, {});
+        if (params?.length === 1) {
+          navigation?.navigate?.(homeStack.postDetail, { post_id: data });
+        } else if (params?.length > 1 && navigation) {
+          const newParams = params[1]
+            .split('&')
+            ?.map((item) => item.split('='))
+            ?.reduce((p, c) => {
+              if (c.length > 1) {
+                // @ts-ignore
+                // eslint-disable-next-line prefer-destructuring
+                p[c[0]] = c[1];
+              }
+              return p;
+            }, {});
 
-            navigation?.navigate?.(homeStack.commentDetail, {
-              ...newParams,
-              postId: params[0],
-            });
-          } else {
-            listener(url);
-          }
+          navigation?.navigate?.(homeStack.commentDetail, {
+            ...newParams,
+            postId: params[0],
+          });
         } else {
           listener(url);
         }
-      };
-      const linkingListener = Linking.addEventListener('url', onReceiveURL);
+      } else {
+        listener(url);
+      }
+    };
+    const linkingListener = Linking.addEventListener('url', onReceiveURL);
 
-      return () => {
-        linkingListener?.remove?.();
-      };
-    },
-  };
-};
+    return () => {
+      linkingListener?.remove?.();
+    };
+  },
+});
 
 const styles = StyleSheet.create({
   wrapper: {

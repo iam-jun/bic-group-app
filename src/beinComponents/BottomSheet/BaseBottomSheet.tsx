@@ -1,8 +1,10 @@
-import React, {useEffect} from 'react';
-import {Modalize, ModalizeProps} from 'react-native-modalize';
-import {StyleSheet, ViewStyle, StyleProp, Keyboard} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {Portal} from 'react-native-portalize';
+import React, { useEffect } from 'react';
+import { Modalize, ModalizeProps } from 'react-native-modalize';
+import {
+  StyleSheet, ViewStyle, StyleProp, Keyboard,
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { Portal } from 'react-native-portalize';
 
 import spacing from '~/theme/spacing';
 
@@ -92,7 +94,8 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
           modalStyle={_modalStyle}
           overlayStyle={overlayStyle}
           childrenStyle={_childrenStyle}
-          {...props}>
+          {...props}
+        >
           {flatListProps ? undefined : ContentComponent}
         </Modalize>
       </Portal>

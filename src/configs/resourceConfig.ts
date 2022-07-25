@@ -1,4 +1,4 @@
-import {getEnv} from '~/utils/env';
+import getEnv from '~/utils/env';
 
 export const uploadTypes = {
   userAvatar: 'user_avatar',
@@ -44,8 +44,6 @@ export const getResourceUrl = (
   uploadType: IUploadType | string,
   fileName: string,
   variant?: IResourceVariant | string,
-) => {
-  return `${getEnv('BEIN_RESOURCE')}${uploadEndpoints[uploadType]}${
-    variant || 'original'
-  }/${fileName}`;
-};
+) => `${getEnv('BEIN_RESOURCE')}${uploadEndpoints[uploadType]}${
+  variant || 'original'
+}/${fileName}`;

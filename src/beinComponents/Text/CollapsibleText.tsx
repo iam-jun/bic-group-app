@@ -1,19 +1,21 @@
-import React, {FC, memo, useEffect, useState} from 'react';
+import React, {
+  FC, memo, useEffect, useState,
+} from 'react';
 import {
   View,
   StyleProp,
   ViewStyle,
   TouchableWithoutFeedback,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import {useBaseHook} from '~/hooks';
-import Text, {TextProps} from '~/beinComponents/Text';
+import { useBaseHook } from '~/hooks';
+import Text, { TextProps } from '~/beinComponents/Text';
 
 import MarkdownView from '~/beinComponents/MarkdownView';
 import Markdown from '~/beinComponents/Markdown';
 import CopyableView from '../CopyableView';
-import {escapeMarkDown} from '~/utils/formatData';
+import { escapeMarkDown } from '~/utils/formatData';
 
 export interface CollapsibleTextProps extends TextProps {
   testID?: string;
@@ -51,18 +53,17 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   const getShortContent = (c?: string) => {
     if (c && c?.length > limitLength) {
       return `${c.substr(0, shortLength)}...`;
-    } else {
-      return '';
     }
+    return '';
   };
 
   const [contentShowAll, setContentShowAll] = useState(false);
   const [shortContent, setShortContent] = useState(getShortContent(content));
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
 
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
 
   useEffect(() => {
     const newShort = getShortContent(content);
@@ -81,44 +82,44 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
     }
   };
 
-  const renderContentWithMarkdown = () => {
-    return (
-      <View style={style}>
-        {useMarkdownIt ? (
-          <MarkdownView
-            {...textProps}
-            limitMarkdownTypes={limitMarkdownTypes}
-            onPressAudience={onPressAudience}>
-            {!shortContent ? content : contentShowAll ? content : shortContent}
-          </MarkdownView>
-        ) : (
-          <Markdown
-            {...textProps}
-            textTestID={
+  const renderContentWithMarkdown = () => (
+    <View style={style}>
+      {useMarkdownIt ? (
+        <MarkdownView
+          {...textProps}
+          limitMarkdownTypes={limitMarkdownTypes}
+          onPressAudience={onPressAudience}
+        >
+          {!shortContent ? content : contentShowAll ? content : shortContent}
+        </MarkdownView>
+      ) : (
+        <Markdown
+          {...textProps}
+          textTestID={
               parentCommentId
                 ? 'collapsible_text.level_2.content'
                 : 'collapsible_text.level_1.content'
             }
-            onPressAudience={onPressAudience}
-            value={
+          onPressAudience={onPressAudience}
+          value={
               !shortContent ? content : contentShowAll ? content : shortContent
             }
-          />
-        )}
+        />
+      )}
 
-        {!!shortContent && (
-          <Text.BodyM
-            testID="collapsible_text.markdown.short_content"
-            onPress={onToggleShowLess}
-            color={colors.neutral50}>
-            {contentShowAll
-              ? t('common:text_see_less')
-              : t('common:text_see_more')}
-          </Text.BodyM>
-        )}
-      </View>
-    );
-  };
+      {!!shortContent && (
+      <Text.BodyM
+        testID="collapsible_text.markdown.short_content"
+        onPress={onToggleShowLess}
+        color={colors.neutral50}
+      >
+        {contentShowAll
+          ? t('common:text_see_less')
+          : t('common:text_see_more')}
+      </Text.BodyM>
+      )}
+    </View>
+  );
 
   const renderContent = () => {
     console.log('aloooo', textProps);
@@ -132,7 +133,8 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
           <Text.BodyM
             testID="collapsible_text.show_text"
             onPress={onToggleShowLess}
-            color={colors.neutral50}>
+            color={colors.neutral50}
+          >
             {contentShowAll
               ? t('common:text_see_less')
               : t('common:text_see_more')}
@@ -152,7 +154,8 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
       activeOpacity={0.6}
       content={escapeMarkDown(content)}
       disabled={!(onPress || (toggleOnPress && shortContent))}
-      onPress={_onPress}>
+      onPress={_onPress}
+    >
       {useMarkdown ? renderContentWithMarkdown() : renderContent()}
     </WrapperComponent>
   );

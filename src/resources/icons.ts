@@ -52,7 +52,7 @@ import iconLock from '../../assets/icons/icon_lock.svg';
 import iconPlayGif from '../../assets/icons/ic_play_gif.svg';
 import iconBeinChat from '../../assets/icons/icon_bein_chat.svg';
 import fileIcons from './fileIcons';
-import {fontAwesomeIcons} from '~/services/fontAwesomeIcon';
+import { fontAwesomeIcons } from '~/services/fontAwesomeIcon';
 
 const icons = {
   ...fileIcons,
@@ -102,7 +102,7 @@ const icons = {
   iconTabCommunitiesBein,
   iconLock,
   iconPlayGif,
-  iconStar: iconStar,
+  iconStar,
   iconReact: fontAwesomeIcons.FaceSmile,
   iconSave: fontAwesomeIcons.FloppyDisk,
   iconSecret: fontAwesomeIcons.ShieldHalved,

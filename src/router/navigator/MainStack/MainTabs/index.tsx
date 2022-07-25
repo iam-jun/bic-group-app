@@ -1,22 +1,21 @@
-import {GiphySDK} from '@giphy/react-native-sdk';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import React, {useEffect} from 'react';
-import {DeviceEventEmitter, useWindowDimensions} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {useUserIdAuth} from '~/hooks/auth';
-import {useChatSocket} from '~/hooks/chat';
+import { GiphySDK } from '@giphy/react-native-sdk';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { useEffect } from 'react';
+import { DeviceEventEmitter, useWindowDimensions } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { useUserIdAuth } from '~/hooks/auth';
+import useChatSocket from '~/hooks/chat';
 import useNotificationSocket from '~/hooks/notificationSocket';
-import {useMyPermissions} from '~/hooks/permissions';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import BottomTabBar from '~/router/components/BottomTabBar';
 import groupsActions from '~/screens/Groups/redux/actions';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
 import giphyActions from '~/store/giphy/actions';
-import {deviceDimensions} from '~/theme/dimension';
-import {createSideTabNavigator} from '../../../components/SideTabNavigator';
-import {screens} from './screens';
-import {initPushTokenMessage} from '~/services/firebase';
+import { deviceDimensions } from '~/theme/dimension';
+import { createSideTabNavigator } from '../../../components/SideTabNavigator';
+import { screens } from './screens';
+import { initPushTokenMessage } from '~/services/firebase';
 
 const BottomTab = createBottomTabNavigator();
 const SideTab = createSideTabNavigator();
@@ -51,12 +50,12 @@ const MainTabs = () => {
     dispatch(groupsActions.getMyCommunities());
     dispatch(notificationsActions.registerPushToken());
     initPushTokenMessage()
-      .then(messaging => {
-        tokenRefreshSubscription = messaging().onTokenRefresh((token: string) =>
-          dispatch(notificationsActions.registerPushToken({token})),
-        );
+      .then((messaging) => {
+        tokenRefreshSubscription = messaging()
+          .onTokenRefresh((token: string) => dispatch(notificationsActions
+            .registerPushToken({ token })));
       })
-      .catch(e => console.log('error when delete push token at auth stack', e));
+      .catch((e) => console.error('error when delete push token at auth stack', e));
     return () => {
       tokenRefreshSubscription && tokenRefreshSubscription();
     };
@@ -70,23 +69,21 @@ const MainTabs = () => {
   }, [giphyAPIKey]);
 
   return (
-    // @ts-ignore
     <Tab.Navigator
       backBehavior={backBehavior}
-      tabBar={props => <BottomTabBar {...props} />}>
-      {Object.entries(screens).map(([name, component]) => {
-        return (
-          // @ts-ignore
-          <Tab.Screen
-            key={'tabs' + name}
-            name={name}
-            component={component}
-            listeners={{
-              tabPress: () => DeviceEventEmitter.emit('onTabPress', name),
-            }}
-          />
-        );
-      })}
+      // eslint-disable-next-line react/no-unstable-nested-components
+      tabBar={(props) => <BottomTabBar {...props} />}
+    >
+      {Object.entries(screens).map(([name, component]) => (
+        <Tab.Screen
+          key={`tabs${name}`}
+          name={name}
+          component={component}
+          listeners={{
+            tabPress: () => DeviceEventEmitter.emit('onTabPress', name),
+          }}
+        />
+      ))}
     </Tab.Navigator>
   );
 };

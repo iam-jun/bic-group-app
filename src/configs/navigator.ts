@@ -1,4 +1,4 @@
-import {getEnv} from '~/utils/env';
+import getEnv from '~/utils/env';
 
 export const authStack = {
   landing: 'Landing',
@@ -8,14 +8,14 @@ export const authStack = {
 };
 
 export const hideBottomTabRoutes = [
-  //Post: Post Detail, Comment View
+  // Post: Post Detail, Comment View
   'post-detail',
   'create-post',
   'create-comment',
   'comment-view',
   'add-members',
   'comment-detail',
-  //Setting: Account setting, Edit account, Security, Privacy
+  // Setting: Account setting, Edit account, Security, Privacy
   'user-edit',
   'user-profile',
   'security-and-login',
@@ -57,7 +57,7 @@ export const navigationSetting = {
       justifyContent: 'space-between',
       textAlign: 'center',
     },
-    cardStyle: {backgroundColor: '#fff'},
+    cardStyle: { backgroundColor: '#fff' },
   },
 };
 

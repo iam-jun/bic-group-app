@@ -1,27 +1,27 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { View, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 
-import {IGroupMembers} from '~/interfaces/IGroup';
-import {useKeySelector} from '~/hooks/selector';
+import { IGroupMembers } from '~/interfaces/IGroup';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 
 import useAuth from '~/hooks/auth';
 import modalActions from '~/store/modal/actions';
 import groupsActions from '../../redux/actions';
-import {checkLastAdmin, handleLeaveInnerGroups} from '../../helper';
+import { checkLastAdmin, handleLeaveInnerGroups } from '../../helper';
 import useRemoveMember from './useRemoveMember';
 import useRemoveAdmin from './useRemoveAdmin';
 import useLeaveGroup from './useLeaveGroup';
 import spacing from '~/theme/spacing';
-import {useBaseHook} from '~/hooks';
-import {useMyPermissions} from '~/hooks/permissions';
+import { useBaseHook } from '~/hooks';
+import { useMyPermissions } from '~/hooks/permissions';
 
 interface MemberOptionsMenuProps {
   groupId: number;
@@ -38,9 +38,9 @@ const MemberOptionsMenu = ({
 }: MemberOptionsMenuProps) => {
   const theme: ExtendedTheme = useTheme();
   const dispatch = useDispatch();
-  const {user} = useAuth();
-  const {t} = useBaseHook();
-  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const { user } = useAuth();
+  const { t } = useBaseHook();
+  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
 
   const canRemoveMember = hasPermissionsOnScopeWithId(
     'groups',
@@ -53,12 +53,12 @@ const MemberOptionsMenu = ({
     PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE,
   );
   const groupMembers = useKeySelector(groupsKeySelector.groupMembers);
-  const {getInnerGroupsNames} = useRemoveMember({
+  const { getInnerGroupsNames } = useRemoveMember({
     groupId,
     selectedMember,
   });
-  const alertRemovingAdmin = useRemoveAdmin({groupId, selectedMember});
-  const alertLeaveGroup = useLeaveGroup({groupId, username: user?.username});
+  const alertRemovingAdmin = useRemoveAdmin({ groupId, selectedMember });
+  const alertLeaveGroup = useLeaveGroup({ groupId, username: user?.username });
 
   const onPressMenuOption = (
     type: 'set-admin' | 'remove-admin' | 'remove-member' | 'leave-group',
@@ -108,9 +108,9 @@ const MemberOptionsMenu = ({
   };
 
   const doSetAdmin = () => {
-    selectedMember?.id &&
-      dispatch(
-        groupsActions.setGroupAdmin({groupId, userIds: [selectedMember.id]}),
+    selectedMember?.id
+      && dispatch(
+        groupsActions.setGroupAdmin({ groupId, userIds: [selectedMember.id] }),
       );
   };
 
@@ -125,7 +125,7 @@ const MemberOptionsMenu = ({
             content: 'groups:error:last_admin_remove',
             props: {
               type: 'error',
-              textProps: {useI18n: true},
+              textProps: { useI18n: true },
               rightIcon: 'UserGroup',
               rightText: 'Members',
               onPressRight: onPressMemberButton,
@@ -142,7 +142,7 @@ const MemberOptionsMenu = ({
   };
 
   const onPressRemoveMember = () => {
-    if (selectedMember?.id)
+    if (selectedMember?.id) {
       return checkLastAdmin(
         groupId,
         selectedMember.id,
@@ -151,11 +151,12 @@ const MemberOptionsMenu = ({
         onPressMemberButton,
         'remove',
       );
+    }
   };
 
   const alertRemovingMember = (selectedMember: IGroupMembers) => {
-    selectedMember?.username &&
-      handleLeaveInnerGroups(
+    selectedMember?.username
+      && handleLeaveInnerGroups(
         groupId,
         selectedMember.username,
         dispatch,
@@ -175,7 +176,9 @@ const MemberOptionsMenu = ({
       <View style={styles.alertRemoveGroupsList}>
         {first3groups.map((name, index) => (
           <Text.BodyM key={index} style={styles.alertRemoveGroupsListItem}>
-            • {name}
+            •
+            {' '}
+            {name}
           </Text.BodyM>
         ))}
         {count > 3 && <Text.BodyS>...</Text.BodyS>}
@@ -207,15 +210,15 @@ const MemberOptionsMenu = ({
     <BottomSheet
       modalizeRef={modalizeRef}
       onClose={onOptionsClosed}
-      ContentComponent={
+      ContentComponent={(
         <View style={styles.bottomSheet}>
-          {canManageRole &&
-            (selectedMember?.is_admin ? (
+          {canManageRole
+            && (selectedMember?.is_admin ? (
               <PrimaryItem
                 testID="member_options_menu.remove_admin"
                 style={styles.menuOption}
-                leftIcon={'Star'}
-                leftIconProps={{icon: 'Star', size: 24}}
+                leftIcon="Star"
+                leftIconProps={{ icon: 'Star', size: 24 }}
                 title={t('groups:member_menu:label_revoke_admin_role')}
                 onPress={() => onPressMenuOption('remove-admin')}
               />
@@ -223,8 +226,8 @@ const MemberOptionsMenu = ({
               <PrimaryItem
                 testID="member_options_menu.set_admin"
                 style={styles.menuOption}
-                leftIcon={'Star'}
-                leftIconProps={{icon: 'Star', size: 24}}
+                leftIcon="Star"
+                leftIconProps={{ icon: 'Star', size: 24 }}
                 title={t('groups:member_menu:label_set_as_admin')}
                 onPress={() => onPressMenuOption('set-admin')}
               />
@@ -233,14 +236,14 @@ const MemberOptionsMenu = ({
             <PrimaryItem
               testID="member_options_menu.remove_member"
               style={styles.menuOption}
-              leftIcon={'UserXmark'}
+              leftIcon="UserXmark"
               leftIconProps={{
                 icon: 'UserXmark',
                 size: 24,
                 tintColor: theme.colors.red60,
               }}
               title={t('groups:member_menu:label_remove_member')}
-              titleProps={{color: theme.colors.red60}}
+              titleProps={{ color: theme.colors.red60 }}
               onPress={() => onPressMenuOption('remove-member')}
             />
           )}
@@ -248,14 +251,14 @@ const MemberOptionsMenu = ({
             <PrimaryItem
               testID="member_options_menu.leave_group"
               style={styles.menuOption}
-              leftIcon={'ArrowRightFromArc'}
-              leftIconProps={{icon: 'ArrowRightFromArc', size: 24}}
+              leftIcon="ArrowRightFromArc"
+              leftIconProps={{ icon: 'ArrowRightFromArc', size: 24 }}
               title={t('groups:member_menu:label_leave_group')}
               onPress={() => onPressMenuOption('leave-group')}
             />
           )}
         </View>
-      }
+      )}
     />
   );
 };

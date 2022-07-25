@@ -1,74 +1,74 @@
 import React from 'react';
-import {StyleSheet, View, useWindowDimensions, ScrollView} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import {
+  StyleSheet, View, useWindowDimensions, ScrollView,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
 
 import Text from '~/beinComponents/Text';
 
 import Button from '~/beinComponents/Button';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import Markdown from '~/beinComponents/Markdown';
 import menuKeySelector from '~/screens/Menu/redux/keySelector';
 import Avatar from '~/beinComponents/Avatar';
-import {IAudience} from '~/interfaces/IPost';
+import { IAudience } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
 
-const ReviewMarkdown = ({onPressDone}: {onPressDone: () => void}) => {
+const ReviewMarkdown = ({ onPressDone }: {onPressDone: () => void}) => {
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
 
   const theme: ExtendedTheme = useTheme();
   const styles = createStyles(theme, screenHeight);
   const content = useKeySelector(postKeySelector.createPost.content);
-  const {fullname, avatar} = useKeySelector(menuKeySelector.myProfile) || {};
+  const { fullname, avatar } = useKeySelector(menuKeySelector.myProfile) || {};
   const chosenAudiences = useKeySelector(
     postKeySelector.createPost.chosenAudiences,
   );
 
-  const renderTitleHeader = () => {
-    return (
-      <View style={styles.header}>
-        <Text.H5 useI18n>post:text_review_markdown</Text.H5>
-        <Button.Secondary
-          testID="header.button"
-          style={styles.buttonDone}
-          textColor={theme.colors.purple50}
-          textProps={{useI18n: true}}
-          onPress={onPressDone}>
-          common:btn_done
-        </Button.Secondary>
-      </View>
-    );
-  };
+  const renderTitleHeader = () => (
+    <View style={styles.header}>
+      <Text.H5 useI18n>post:text_review_markdown</Text.H5>
+      <Button.Secondary
+        testID="header.button"
+        style={styles.buttonDone}
+        textColor={theme.colors.purple50}
+        textProps={{ useI18n: true }}
+        onPress={onPressDone}
+      >
+        common:btn_done
+      </Button.Secondary>
+    </View>
+  );
 
-  const renderPost = () => {
-    return (
-      <View style={styles.post}>
-        {/* render post header */}
-        <View style={styles.postHeader}>
-          <Avatar.Large isRounded source={avatar} style={{marginRight: 8}} />
-          <View>
-            <Text.H6>{fullname}</Text.H6>
-            <View style={styles.audienceLine}>
-              <Text.BodySMedium
-                useI18n
-                color={theme.colors.gray50}
-                style={styles.textTo}>
-                post:to
-              </Text.BodySMedium>
-              <Text.H6>{getAudiences(chosenAudiences)}</Text.H6>
-            </View>
+  const renderPost = () => (
+    <View style={styles.post}>
+      {/* render post header */}
+      <View style={styles.postHeader}>
+        <Avatar.Large isRounded source={avatar} style={{ marginRight: 8 }} />
+        <View>
+          <Text.H6>{fullname}</Text.H6>
+          <View style={styles.audienceLine}>
+            <Text.BodySMedium
+              useI18n
+              color={theme.colors.gray50}
+              style={styles.textTo}
+            >
+              post:to
+            </Text.BodySMedium>
+            <Text.H6>{getAudiences(chosenAudiences)}</Text.H6>
           </View>
         </View>
-
-        {/* render post content */}
-        <ScrollView style={styles.content}>
-          <Markdown value={content} />
-        </ScrollView>
       </View>
-    );
-  };
+
+      {/* render post content */}
+      <ScrollView style={styles.content}>
+        <Markdown value={content} />
+      </ScrollView>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
@@ -99,7 +99,7 @@ const getAudiences = (aud: IAudience[]) => {
 };
 
 const createStyles = (theme: ExtendedTheme, screenHeight: number) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       height: 0.8 * screenHeight,

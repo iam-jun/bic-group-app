@@ -1,13 +1,11 @@
 import textStyleProps from '../data/textStyleProps';
 
 export default function removeTextStyleProps(style) {
-  const intersection = textStyleProps.filter(value =>
-    Object.keys(style).includes(value),
-  );
+  const intersection = textStyleProps.filter((value) => Object.keys(style).includes(value));
 
-  const obj = {...style};
+  const obj = { ...style };
 
-  intersection.forEach(value => {
+  intersection.forEach((value) => {
     delete obj[value];
   });
 

@@ -8,12 +8,12 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text, {TextProps, TextVariant} from '~/beinComponents/Text';
-import Icon, {IconProps} from '~/beinComponents/Icon';
-import {createTextStyle} from '~/beinComponents/Text/textStyle';
-import {useKeySelector} from '~/hooks/selector';
+import Text, { TextProps, TextVariant } from '~/beinComponents/Text';
+import Icon, { IconProps } from '~/beinComponents/Icon';
+import { createTextStyle } from '~/beinComponents/Text/textStyle';
+import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
 
 export interface ButtonWrapperProps {
@@ -64,7 +64,7 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
   onLayout,
 }: ButtonWrapperProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const textStyles = createTextStyle(theme);
   textVariant = textVariant || 'buttonM';
 
@@ -114,7 +114,8 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
       activeOpacity={activeOpacity}
       onPress={onPress}
       onLongPress={onLongPress}
-      onLayout={onLayout}>
+      onLayout={onLayout}
+    >
       <View
         testID="button_wrapper.content"
         style={StyleSheet.flatten([
@@ -124,7 +125,8 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
             justifyContent: 'center',
           },
           contentStyle,
-        ])}>
+        ])}
+      >
         {renderLoading()}
         {renderIcon(leftIcon, leftIconProps)}
         {typeof children === 'string' ? (
@@ -133,7 +135,8 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
             style={styles.text}
             color={disabled ? colors.gray40 : undefined}
             useI18n={useI18n}
-            {...textProps}>
+            {...textProps}
+          >
             {children}
           </Text>
         ) : (

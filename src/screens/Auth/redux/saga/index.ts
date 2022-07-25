@@ -1,20 +1,21 @@
-import {CognitoHostedUIIdentityProvider} from '@aws-amplify/auth/lib/types/Auth';
-import {Auth} from 'aws-amplify';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { CognitoHostedUIIdentityProvider } from '@aws-amplify/auth/lib/types/Auth';
+import { Auth } from 'aws-amplify';
 import i18n from 'i18next';
-import {put, takeLatest} from 'redux-saga/effects';
-import {authStack} from '~/configs/navigator';
-import {authErrors} from '~/constants/authConstants';
-import {IObject, IToastMessage} from '~/interfaces/common';
+import { put, takeLatest } from 'redux-saga/effects';
+import { authStack } from '~/configs/navigator';
+import { authErrors } from '~/constants/authConstants';
+import { IObject, IToastMessage } from '~/interfaces/common';
 import * as IAuth from '~/interfaces/IAuth';
-import {withNavigation} from '~/router/helper';
-import {rootNavigationRef} from '~/router/navigator/refs';
-import {rootSwitch} from '~/router/stack';
+import { withNavigation } from '~/router/helper';
+import { rootNavigationRef } from '~/router/navigator/refs';
+import { rootSwitch } from '~/router/stack';
 import {
   getUserFromSharedPreferences,
   saveUserToSharedPreferences,
 } from '~/services/sharePreferences';
 import * as actionsCommon from '~/store/modal/actions';
-import {ActionTypes} from '~/utils';
+import { ActionTypes } from '~/utils';
 import actions from '../actions';
 import types from '../types';
 import forgotPasswordConfirm from './forgotPasswordConfirm';
@@ -47,7 +48,7 @@ function* changePassword({
   try {
     yield put(actions.setChangePasswordLoading(true));
 
-    const {oldPassword, newPassword, global} = payload;
+    const { oldPassword, newPassword, global } = payload;
     const user: IObject<any> = yield Auth.currentAuthenticatedUser();
     const data: string = yield Auth.changePassword(
       user,
@@ -55,7 +56,7 @@ function* changePassword({
       newPassword,
     );
     if (data === 'SUCCESS' && global) {
-      yield Auth.signOut({global});
+      yield Auth.signOut({ global });
     }
     yield put(actions.setChangePasswordLoading(false));
 
@@ -63,15 +64,15 @@ function* changePassword({
     const toastMessage: IToastMessage = {
       content: 'auth:text_change_password_success_desc',
       props: {
-        textProps: {useI18n: true},
+        textProps: { useI18n: true },
         type: 'success',
       },
     };
     yield put(actionsCommon.showHideToastMessage(toastMessage));
   } catch (error: any) {
     console.log('changePassword error:', error);
-    let errCurrentPassword = '',
-      errBox = '';
+    let errCurrentPassword = '';
+    let errBox = '';
     switch (error.code) {
       case authErrors.NOT_AUTHORIZED_EXCEPTION:
         errCurrentPassword = i18n.t('auth:text_err_wrong_current_password');
@@ -83,7 +84,7 @@ function* changePassword({
         errBox = error?.message || '';
     }
     yield put(actions.setChangePasswordLoading(false));
-    yield put(actions.setChangePasswordError({errCurrentPassword, errBox}));
+    yield put(actions.setChangePasswordError({ errCurrentPassword, errBox }));
     yield showErrorWithDefinedMessage(errBox);
   }
 }
@@ -96,15 +97,15 @@ function* signInOAuth({
 }) {
   try {
     yield put(actions.setLoading(true));
-    yield Auth.federatedSignIn({provider: payload});
+    yield Auth.federatedSignIn({ provider: payload });
   } catch (e) {
     yield put(actions.setLoading(false));
     console.log(e);
   }
 }
 
-function* signUp({payload}: {type: string; payload: IAuth.ISignUp}) {
-  const {username, email, password} = payload;
+function* signUp({ payload }: {type: string; payload: IAuth.ISignUp}) {
+  const { username, email, password } = payload;
   try {
     yield put(actions.setLoading(true));
 
@@ -134,7 +135,7 @@ function* signUp({payload}: {type: string; payload: IAuth.ISignUp}) {
   }
 }
 
-function* signOut({payload}: any) {
+function* signOut({ payload }: any) {
   try {
     if (payload) {
       navigation.replace(rootSwitch.authStack);
@@ -169,7 +170,7 @@ export function* showErrorWithDefinedMessage(mess: string) {
   const toastMessage: IToastMessage = {
     content: mess,
     props: {
-      textProps: {useI18n: true},
+      textProps: { useI18n: true },
       type: 'error',
     },
   };

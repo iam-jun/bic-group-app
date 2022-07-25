@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 module.exports = {
   preset: 'react-native',
   testRunner: 'jest-circus/runner',

@@ -1,7 +1,7 @@
-import {get} from 'lodash';
-import {call, select} from 'redux-saga/effects';
+import { get } from 'lodash';
+import { call, select } from 'redux-saga/effects';
 
-import {IOwnReaction, IPayloadReactToPost, IReaction} from '~/interfaces/IPost';
+import { IOwnReaction, IPayloadReactToPost, IReaction } from '~/interfaces/IPost';
 import showError from '~/store/commonSaga/showError';
 import postDataHelper from '../../helper/PostDataHelper';
 import postKeySelector from '../keySelector';
@@ -13,37 +13,38 @@ export default function* putReactionToPost({
   type: string;
   payload: IPayloadReactToPost;
 }): any {
-  const {id, reactionId, ownReaction, reactionCounts} = payload;
+  const {
+    id, reactionId, ownReaction, reactionCounts,
+  } = payload;
   try {
-    const post1 = yield select(s => get(s, postKeySelector.postById(id)));
+    const post1 = yield select((s) => get(s, postKeySelector.postById(id)));
     const cReactionCounts1 = post1.reactionsCount || {};
     const cOwnReaction1 = post1.ownerReactions || [];
 
-    const added =
-      cOwnReaction1?.find(
-        (item: IReaction) => item?.reactionName === reactionId,
-      )?.id || '';
+    const added = cOwnReaction1?.find(
+      (item: IReaction) => item?.reactionName === reactionId,
+    )?.id || '';
     if (!added) {
       let isAdded = false;
 
       const newOwnReaction1: IOwnReaction = [...cOwnReaction1];
-      newOwnReaction1.push({reactionName: reactionId, loading: true});
+      newOwnReaction1.push({ reactionName: reactionId, loading: true });
 
-      const _cReactionCounts = {...cReactionCounts1};
+      const _cReactionCounts = { ...cReactionCounts1 };
 
       const _reactionsCountArray: any = Object.values(
         _cReactionCounts || {},
       )?.map((reaction: any) => {
         const key = Object.keys(reaction || {})?.[0];
         if (key === reactionId) {
-          reaction[key] = reaction[key] + 1;
+          reaction[key] += 1;
           isAdded = true;
         }
         return reaction;
       });
 
       if (!isAdded) {
-        _reactionsCountArray.push({[reactionId]: 1});
+        _reactionsCountArray.push({ [reactionId]: 1 });
       }
 
       const newReactionCounts: any = {};
@@ -59,9 +60,10 @@ export default function* putReactionToPost({
         targetId: id,
       });
 
-      // Disable update data base on response because of calculate wrong value when receive socket msg
+      // Disable update data base on response because of
+      // calculate wrong value when receive socket msg
       if (response?.data) {
-        const post2 = yield select(s => get(s, postKeySelector.postById(id)));
+        const post2 = yield select((s) => get(s, postKeySelector.postById(id)));
         const cReactionCounts2 = post2.reactionsCount || {};
         const cOwnReaction2 = post2.ownerReactions || [];
         const newOwnReaction2: IOwnReaction = [...cOwnReaction2];
@@ -70,7 +72,7 @@ export default function* putReactionToPost({
           let isAdded = false;
           newOwnReaction2.forEach((ownReaction: IReaction, index: number) => {
             if (ownReaction?.reactionName === response.data?.reactionName) {
-              newOwnReaction2[index] = {...response.data};
+              newOwnReaction2[index] = { ...response.data };
               isAdded = true;
             }
           });

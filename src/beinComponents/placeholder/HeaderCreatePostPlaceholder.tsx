@@ -1,6 +1,6 @@
-import React, {FC} from 'react';
-import {StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import { StyleSheet, StyleProp, ViewStyle } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import {
   Placeholder,
   PlaceholderMedia,
@@ -24,15 +24,16 @@ const HeaderCreatePostPlaceholder: FC<CreatePostHeaderPlaceholderProps> = ({
   return (
     <Placeholder
       Animation={ShineOverlay}
-      Left={props => <PlaceholderMedia style={[props.style, styles.left]} />}
-      style={[styles.container, style]}>
+      Left={(props) => <PlaceholderMedia style={[props.style, styles.left]} />}
+      style={[styles.container, style]}
+    >
       <PlaceholderLine style={styles.content} />
     </Placeholder>
   );
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',

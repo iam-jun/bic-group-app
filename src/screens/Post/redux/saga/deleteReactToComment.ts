@@ -1,9 +1,8 @@
-import {get} from 'lodash';
-import {call, select} from 'redux-saga/effects';
+import { get } from 'lodash';
+import { call, select } from 'redux-saga/effects';
 
 import {
   ICommentData,
-  IOwnReaction,
   IPayloadReactToComment,
   IReaction,
 } from '~/interfaces/IPost';
@@ -18,12 +17,13 @@ export default function* deleteReactToComment({
   type: string;
   payload: IPayloadReactToComment;
 }): any {
-  const {id, comment, reactionId, reactionsCount, ownerReactions} = payload;
+  const {
+    id, comment, reactionId, reactionsCount, ownerReactions,
+  } = payload;
   try {
-    const rId =
-      ownerReactions?.find(
-        (item: IReaction) => item?.reactionName === reactionId,
-      )?.id || '';
+    const rId = ownerReactions?.find(
+      (item: IReaction) => item?.reactionName === reactionId,
+    )?.id || '';
     if (rId) {
       // yield addReactionLoadingLocal(id, reactionId, comment);
 
@@ -76,11 +76,11 @@ export default function* deleteReactToComment({
 // }
 
 function* removeReactionLocal(
-  id: number,
+  id: string,
   reactionId: string,
   comment: ICommentData,
 ): any {
-  const cmt = yield select(s => get(s, postKeySelector.commentById(id))) || {};
+  const cmt = yield select((s) => get(s, postKeySelector.commentById(id))) || {};
   const reactionsCount = cmt.reactionsCount || {};
   const ownerReactions = cmt.ownerReactions || [];
 
@@ -89,12 +89,12 @@ function* removeReactionLocal(
   );
 
   const newReactionCounts = reactionsCount;
-  Object.keys(reactionsCount)?.map?.(k => {
+  Object.keys(reactionsCount)?.forEach?.((k) => {
     const _reactionId = Object.keys(reactionsCount?.[k])?.[0];
     const nextKey = `${Object.keys(reactionsCount).length}`;
     const _reactionCount = reactionsCount?.[k]?.[_reactionId] || 0;
     if (reactionId !== _reactionId) {
-      newReactionCounts[nextKey] = {[_reactionId]: _reactionCount};
+      newReactionCounts[nextKey] = { [_reactionId]: _reactionCount };
     } else {
       newReactionCounts[nextKey] = {
         [_reactionId]: Math.max(0, _reactionCount - 1),

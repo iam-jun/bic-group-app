@@ -1,6 +1,8 @@
 import React from 'react';
-import {StyleSheet, View, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import {
+  StyleSheet, View, StyleProp, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import {
   ShineOverlay,
   Placeholder,
@@ -10,7 +12,7 @@ import {
 import dimension from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
-import {getRandomInt} from '~/utils/generator';
+import { getRandomInt } from '~/utils/generator';
 
 export interface CommentPlaceholderProps {
   style?: StyleProp<ViewStyle>;
@@ -28,8 +30,9 @@ const CommentPlaceholder: React.FC<CommentPlaceholderProps> = ({
     <View style={StyleSheet.flatten([styles.container, style])}>
       <Placeholder
         Animation={ShineOverlay}
-        Left={p => <PlaceholderMedia style={styles.avatar} />}
-        style={styles.infoContainer}>
+        Left={(p) => <PlaceholderMedia style={styles.avatar} />}
+        style={styles.infoContainer}
+      >
         <Placeholder Animation={ShineOverlay} style={styles.contentContainer}>
           <PlaceholderLine width={disableRandom ? 50 : getRandomInt(30, 60)} />
           <PlaceholderLine
@@ -45,7 +48,7 @@ const CommentPlaceholder: React.FC<CommentPlaceholderProps> = ({
 export default CommentPlaceholder;
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       backgroundColor: colors.white,

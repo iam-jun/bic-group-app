@@ -56,7 +56,7 @@ function SideTabNavigator({
   inactiveTintColor,
   activeBackgroundColor,
 }: Props) {
-  const {state, navigation, descriptors} = useNavigationBuilder<
+  const { state, navigation, descriptors } = useNavigationBuilder<
     TabNavigationState<ParamListBase>,
     TabRouterOptions,
     TabActionHelpers<ParamListBase>,
@@ -72,7 +72,7 @@ function SideTabNavigator({
     <NavigationHelpersContext.Provider value={navigation}>
       <View style={styles.container}>
         <View style={[styles.tabBar, tabBarStyle]}>
-          {state.routes.map(route => {
+          {state.routes.map((route) => {
             const focused = route.key === state.routes[state.index].key;
             return (
               <Pressable
@@ -93,17 +93,19 @@ function SideTabNavigator({
                       target: state.key,
                     });
                   }
-                }}>
+                }}
+              >
                 <View
                   style={[
                     styles.iconWrapper,
-                    focused ? {backgroundColor: activeBackgroundColor} : {},
-                  ]}>
+                    focused ? { backgroundColor: activeBackgroundColor } : {},
+                  ]}
+                >
                   {descriptors[route.key].options.title && (
                     <Text>{descriptors[route.key].options.title}</Text>
                   )}
-                  {descriptors[route.key].options.tabBarIcon &&
-                    descriptors[route.key].options.tabBarIcon({
+                  {descriptors[route.key].options.tabBarIcon
+                    && descriptors[route.key].options.tabBarIcon({
                       focused,
                       color: focused ? activeTintColor : inactiveTintColor,
                     })}
@@ -113,18 +115,17 @@ function SideTabNavigator({
           })}
         </View>
         <View style={[styles.content, contentStyle]}>
-          {state.routes.map((route, i) => {
-            return (
-              <View
-                key={route.key}
-                style={[
-                  StyleSheet.absoluteFill,
-                  {display: i === state.index ? 'flex' : 'none'},
-                ]}>
-                {descriptors[route.key].render()}
-              </View>
-            );
-          })}
+          {state.routes.map((route, i) => (
+            <View
+              key={route.key}
+              style={[
+                StyleSheet.absoluteFill,
+                { display: i === state.index ? 'flex' : 'none' },
+              ]}
+            >
+              {descriptors[route.key].render()}
+            </View>
+          ))}
         </View>
       </View>
     </NavigationHelpersContext.Provider>

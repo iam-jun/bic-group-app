@@ -1,18 +1,18 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import React from 'react';
 
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import images from '~/resources/images';
 import useAuth from '~/hooks/auth';
-import {formatDMLink} from '~/utils/link';
-import {openLink} from '~/utils/common';
-import {useRootNavigation} from '~/hooks/navigation';
+import { formatDMLink } from '~/utils/link';
+import { openLink } from '~/utils/common';
+import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import spacing from '~/theme/spacing';
 
@@ -22,17 +22,19 @@ interface MemberItemProps {
   onPressMenu: (item: any) => void;
 }
 
-const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
+const MemberItem = ({ item, canManageMember, onPressMenu }: MemberItemProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
-  const {user} = useAuth();
+  const { colors } = theme;
+  const { user } = useAuth();
   const communityDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
-  const {id, fullname, avatar, username} = item || {};
+  const {
+    id, fullname, avatar, username,
+  } = item || {};
 
   const goToUserProfile = () => {
-    rootNavigation.navigate(mainStack.userProfile, {userId: id});
+    rootNavigation.navigate(mainStack.userProfile, { userId: id });
   };
 
   const onPressChat = () => {
@@ -47,19 +49,19 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
       testID="member_item"
       style={styles.itemContainer}
       avatar={avatar || images.img_user_avatar_default}
-      avatarProps={{isRounded: true, variant: 'medium'}}
+      avatarProps={{ isRounded: true, variant: 'medium' }}
       onPress={goToUserProfile}
-      ContentComponent={
+      ContentComponent={(
         <Text.BodyM numberOfLines={1}>
           {fullname}
           <Text.BodyS color={colors.gray50}>{` @${username}`}</Text.BodyS>
         </Text.BodyM>
-      }
-      RightComponent={
+      )}
+      RightComponent={(
         <>
           {user?.username !== username && (
             <Icon
-              icon={'MessageDots'}
+              icon="MessageDots"
               backgroundColor={colors.neutral1}
               style={styles.iconChat}
               onPress={onPressChat}
@@ -68,14 +70,14 @@ const MemberItem = ({item, canManageMember, onPressMenu}: MemberItemProps) => {
           )}
           {canManageMember && (
             <Icon
-              icon={'menu'}
+              icon="menu"
               style={styles.iconOption}
               onPress={() => onPressMenu(item)}
               buttonTestID="member_item.icon_option.button"
             />
           )}
         </>
-      }
+      )}
     />
   );
 };

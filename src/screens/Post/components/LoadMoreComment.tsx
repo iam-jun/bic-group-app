@@ -1,4 +1,6 @@
-import React, {FC, useCallback, useEffect, useState} from 'react';
+import React, {
+  FC, useCallback, useEffect, useState,
+} from 'react';
 import {
   View,
   StyleSheet,
@@ -12,12 +14,12 @@ import Animated, {
   withTiming,
   Easing,
 } from 'react-native-reanimated';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import postActions from '~/screens/Post/redux/actions';
-import {useDispatch} from 'react-redux';
 import CommentPlaceholder from '~/beinComponents/placeholder/CommentPlaceholder';
 import spacing from '~/theme/spacing';
 
@@ -44,15 +46,13 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
 
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme, commentId);
 
   const progress = useSharedValue(0);
-  const animatedStyle = useAnimatedStyle(() => {
-    return {
-      height: progress.value,
-    };
-  });
+  const animatedStyle = useAnimatedStyle(() => ({
+    height: progress.value,
+  }));
 
   useEffect(() => {
     if (loadingMore) {
@@ -69,7 +69,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   }, [loadingMore]);
 
   const onPressLoadMore = useCallback(() => {
-    if (!!onPress) {
+    if (onPress) {
       onPress();
       return;
     }
@@ -78,14 +78,14 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
       setTimeout(() => {
         dispatch(
           postActions.getCommentsByPostId({
-            postId: postId,
+            postId,
             order: 'DESC',
             idLt: idLessThan,
             idGt: idGreaterThan,
             parentId: commentId,
             limit: 10,
             isMerge: true,
-            callbackLoading: loading => setLoadingMore(loading),
+            callbackLoading: (loading) => setLoadingMore(loading),
           }),
         );
       }, 150);
@@ -111,7 +111,7 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme, commentId?: string) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',

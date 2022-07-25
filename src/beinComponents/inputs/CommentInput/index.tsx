@@ -1,5 +1,5 @@
-import {GiphyMedia, GiphyMediaView} from '@giphy/react-native-sdk';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { GiphyMedia, GiphyMediaView } from '@giphy/react-native-sdk';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, {
   useCallback,
   useEffect,
@@ -18,8 +18,8 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useDispatch} from 'react-redux';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch } from 'react-redux';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
 import Image from '~/beinComponents/Image';
@@ -29,16 +29,16 @@ import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import StickerView from '~/beinComponents/StickerView';
 import Text from '~/beinComponents/Text';
-import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
-import {useBaseHook} from '~/hooks';
-import {IFilePicked, IGiphy} from '~/interfaces/common';
-import {IActivityDataImage} from '~/interfaces/IPost';
-import ImageUploader, {IGetFile} from '~/services/imageUploader';
+import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
+import { useBaseHook } from '~/hooks';
+import { IFilePicked, IGiphy } from '~/interfaces/common';
+import { IActivityDataImage } from '~/interfaces/IPost';
+import ImageUploader, { IGetFile } from '~/services/imageUploader';
 import modalActions from '~/store/modal/actions';
 import dimension from '~/theme/dimension';
-import {fontFamilies} from '~/theme/fonts';
+import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
-import {checkPermission} from '~/utils/permission';
+import { checkPermission, permissionTypes } from '~/utils/permission';
 
 export interface ICommentInputSendParam {
   content: string;
@@ -60,7 +60,7 @@ export interface CommentInputProps {
   onKeyPress?: (e: any) => void;
   autoFocus?: boolean;
   blurOnSubmit?: boolean;
-  value?: string; //work only on init, not handle change
+  value?: string; // work only on init, not handle change
   HeaderComponent?: React.ReactNode;
   textInputRef?: any;
   loading?: boolean;
@@ -85,7 +85,6 @@ const CommentInput: React.FC<CommentInputProps> = ({
   onChangeText,
   onPressSend,
   onPressSelectImage,
-  onPressFile,
   onSelectionChange,
   onKeyPress,
   autoFocus,
@@ -99,14 +98,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
   isHandleUpload,
   clearWhenUploadDone,
   uploadImageType = uploadTypes.commentImage,
-  uploadVideoType = uploadTypes.commentVideo,
-  uploadFileType = uploadTypes.commentFile,
   uploadFilePromise,
   useTestID = true,
   ...props
 }: CommentInputProps) => {
   const [text, setText] = useState<string>(value || '');
-  const [selection, setSelection] = useState<{start: number; end: number}>();
 
   const [textTextInputHeight, setTextInputHeight] = useState(DEFAULT_HEIGHT);
   const heightAnimated = useRef(new Animated.Value(DEFAULT_HEIGHT)).current;
@@ -133,9 +129,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const _loading = loading || uploading;
 
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const insets = useSafeAreaInsets();
   const styles = createStyle(theme, insets, _loading);
 
@@ -150,9 +146,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
   }, [selectedGiphy]);
 
   const _onPressSelectImage = () => {
-    checkPermission('photo', dispatch, canOpenPicker => {
+    checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
       if (canOpenPicker) {
-        ImagePicker.openPickerSingle().then(file => {
+        ImagePicker.openPickerSingle().then((file) => {
           if (!file) return;
           setSelectedGiphy(undefined);
           if (!isHandleUpload) {
@@ -183,14 +179,13 @@ const CommentInput: React.FC<CommentInputProps> = ({
 
   const handleUpload = () => {
     if (selectedImage) {
-      console.log(`\x1b[36m🐣️ CommentInput handleUpload upload now\x1b[0m`);
       setUploading(true);
       const param = {
         file: selectedImage,
         uploadType: uploadImageType,
       };
       const promise = uploadFilePromise
-        ? uploadFilePromise({...param, text})
+        ? uploadFilePromise({ ...param, text })
         : ImageUploader.getInstance().upload(param);
       promise
         .then((result: IGetFile) => {
@@ -202,21 +197,20 @@ const CommentInput: React.FC<CommentInputProps> = ({
             width: selectedImage.width,
             height: selectedImage.height,
           };
-          !clearWhenUploadDone &&
-            onPressSend?.({content: text, image: imageData});
+          !clearWhenUploadDone
+            && onPressSend?.({ content: text, image: imageData });
           clearWhenUploadDone && clear();
         })
         .catch((e: any) => {
-          console.log(`\x1b[31m🐣️ CommentInput upload Error:`, e, `\x1b[0m`);
-          const errorMessage =
-            typeof e === 'string'
-              ? e
-              : e?.meta?.message || t('post:error_upload_photo_failed');
+          console.error('\x1b[31m🐣️ CommentInput upload Error:', e, '\x1b[0m');
+          const errorMessage = typeof e === 'string'
+            ? e
+            : e?.meta?.message || t('post:error_upload_photo_failed');
           setUploading(false);
           setUploadError(errorMessage);
         });
     } else {
-      onPressSend?.({content: text});
+      onPressSend?.({ content: text });
     }
   };
 
@@ -233,7 +227,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
         });
         setSelectedGiphy(undefined);
       } else if (!isHandleUpload) {
-        onPressSend?.({content: text});
+        onPressSend?.({ content: text });
       } else {
         handleUpload();
       }
@@ -250,14 +244,12 @@ const CommentInput: React.FC<CommentInputProps> = ({
   };
 
   const _onSelectionChange = (event: any) => {
-    setSelection(event.nativeEvent.selection);
     onSelectionChange?.(event);
   };
 
   const onMediaSelect = useCallback(
     (media: GiphyMedia) => {
       setSelectedImage(undefined);
-      console.log('stickerViewRef?.current', stickerViewRef?.current);
       stickerViewRef?.current?.hide?.();
       setSelectedGiphy(media);
     },
@@ -327,7 +319,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
       if (!text) return null;
 
       return (
-        <View style={{backgroundColor: colors.white}}>
+        <View style={{ backgroundColor: colors.white }}>
           <View style={styles.selectedImageWrapper}>
             <View style={styles.selectedImageContainer}>
               <GiphyMediaView
@@ -337,8 +329,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
             </View>
             <Button
               style={styles.iconCloseSelectedImage}
-              onPress={() => setSelectedGiphy(undefined)}>
-              <Icon size={12} icon={'iconCloseSmall'} />
+              onPress={() => setSelectedGiphy(undefined)}
+            >
+              <Icon size={12} icon="iconCloseSmall" />
             </Button>
           </View>
         </View>
@@ -348,7 +341,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
       return null;
     }
     return (
-      <View style={{backgroundColor: colors.white}}>
+      <View style={{ backgroundColor: colors.white }}>
         {!!uploadError && (
           <View style={styles.selectedImageErrorContainer}>
             <Text color={colors.red60}>
@@ -368,7 +361,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
               style={styles.selectedImage}
               source={
                 selectedImage?.uri
-                  ? {uri: selectedImage?.uri}
+                  ? { uri: selectedImage?.uri }
                   : selectedImage?.base64
               }
             />
@@ -376,16 +369,18 @@ const CommentInput: React.FC<CommentInputProps> = ({
               <View
                 style={[
                   styles.selectedImageFilter,
-                  {borderWidth: uploadError ? 1 : 0},
-                ]}>
+                  { borderWidth: uploadError ? 1 : 0 },
+                ]}
+              >
                 {_loading && <LoadingIndicator />}
               </View>
             )}
           </View>
           <Button
             style={styles.iconCloseSelectedImage}
-            onPress={() => setSelectedImage(undefined)}>
-            <Icon size={12} icon={'iconCloseSmall'} />
+            onPress={() => setSelectedImage(undefined)}
+          >
+            <Icon size={12} icon="iconCloseSmall" />
           </Button>
         </View>
       </View>
@@ -397,7 +392,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
       <View style={[styles.root, style]}>
         {HeaderComponent}
         <View style={styles.container}>
-          <Animated.View style={{flex: 1, zIndex: 1, height: heightAnimated}}>
+          <Animated.View style={{ flex: 1, zIndex: 1, height: heightAnimated }}>
             <TextInput
               {...props}
               testID={useTestID ? 'comment_input' : undefined}
@@ -405,7 +400,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
               ref={_textInputRef}
               style={styles.textInput}
               selectionColor={colors.gray50}
-              multiline={true}
+              multiline
               autoFocus={autoFocus}
               placeholder={placeholder}
               placeholderTextColor={colors.gray50}
@@ -413,7 +408,8 @@ const CommentInput: React.FC<CommentInputProps> = ({
               onFocus={_onFocus}
               onChangeText={_onChangeText}
               onSelectionChange={_onSelectionChange}
-              onKeyPress={_onKeyPress}>
+              onKeyPress={_onKeyPress}
+            >
               {text}
             </TextInput>
           </Animated.View>
@@ -440,7 +436,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme, insets: any, loading: boolean) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     root: {
       borderTopWidth: 1,
@@ -452,12 +448,12 @@ const createStyle = (theme: ExtendedTheme, insets: any, loading: boolean) => {
     container: {
       flexDirection: 'row',
       alignItems: 'flex-end',
-      paddingBottom: spacing?.padding.small,
+      paddingBottom: spacing.padding.small,
     },
     iconContainer: {
       width: 24,
       height: 24,
-      marginRight: spacing?.margin.small,
+      marginRight: spacing.margin.small,
       borderRadius: 12,
       backgroundColor: theme.colors.purple60,
       justifyContent: 'center',
@@ -466,22 +462,22 @@ const createStyle = (theme: ExtendedTheme, insets: any, loading: boolean) => {
     textInput: {
       width: '100%',
       lineHeight: 22,
-      paddingTop: spacing?.padding.small,
-      paddingBottom: spacing?.padding.small,
-      paddingHorizontal: spacing?.padding.large,
-      color: loading ? colors.textSecondary : colors.neutral80,
+      paddingTop: spacing.padding.small,
+      paddingBottom: spacing.padding.small,
+      paddingHorizontal: spacing.padding.large,
+      color: loading ? colors.gray50 : colors.neutral80,
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: dimension?.sizes.bodyM,
     },
     iconSend: {
-      marginBottom: spacing?.margin.base,
-      marginHorizontal: spacing?.margin.large,
+      marginBottom: spacing.margin.base,
+      marginHorizontal: spacing.margin.large,
     },
     loadingContainer: {
-      marginBottom: spacing?.margin.base,
-      marginHorizontal: spacing?.margin.large,
+      marginBottom: spacing.margin.base,
+      marginHorizontal: spacing.margin.large,
     },
-    buttonEmoji: {position: 'absolute', right: 10, bottom: 10},
+    buttonEmoji: { position: 'absolute', right: 10, bottom: 10 },
     selectedImageWrapper: {
       alignSelf: 'flex-start',
       marginHorizontal: spacing.margin.small,
@@ -493,7 +489,7 @@ const createStyle = (theme: ExtendedTheme, insets: any, loading: boolean) => {
       borderRadius: spacing.borderRadius.small,
       overflow: 'hidden',
     },
-    selectedImage: {width: 64, height: 64},
+    selectedImage: { width: 64, height: 64 },
     iconCloseSelectedImage: {
       position: 'absolute',
       top: 0,
@@ -505,7 +501,7 @@ const createStyle = (theme: ExtendedTheme, insets: any, loading: boolean) => {
       justifyContent: 'center',
       alignItems: 'center',
       shadowColor: colors.neutral80,
-      shadowOffset: {width: 0, height: 4},
+      shadowOffset: { width: 0, height: 4 },
       shadowOpacity: 0.3,
       shadowRadius: 4.65,
       elevation: 8,

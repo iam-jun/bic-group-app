@@ -1,18 +1,18 @@
-import React, {FC} from 'react';
-import {StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {isEqual} from 'lodash';
+import React, { FC } from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { isEqual } from 'lodash';
 
+import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
-import {useBaseHook} from '~/hooks';
-import {useDispatch} from 'react-redux';
+import { useBaseHook } from '~/hooks';
 import groupsActions from '~/screens/Groups/redux/actions';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import modalActions from '~/store/modal/actions';
-import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
+import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 
-import {IScheme} from '~/interfaces/IGroup';
+import { IScheme } from '~/interfaces/IGroup';
 
 export interface CreateSchemeHeaderProps {
   style?: StyleProp<ViewStyle>;
@@ -30,12 +30,12 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
   isEdit,
   schemeId,
 }: CreateSchemeHeaderProps) => {
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
 
-  const {id} = useKeySelector(groupsKeySelector.communityDetail) || {};
+  const { id } = useKeySelector(groupsKeySelector.communityDetail) || {};
   const name = useKeySelector(groupsKeySelector.permission.creatingScheme.name);
   const desc = useKeySelector(
     groupsKeySelector.permission.creatingScheme.description,
@@ -46,8 +46,7 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
   const roles = useKeySelector(
     groupsKeySelector.permission.creatingScheme.roles,
   );
-  const groupScheme =
-    useKeySelector(groupsKeySelector.permission.groupScheme) || {};
+  const groupScheme = useKeySelector(groupsKeySelector.permission.groupScheme) || {};
   const {
     name: initName,
     description: initDesc,
@@ -59,18 +58,18 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
   const onPress = () => {
     if (isEdit) {
       if (schemeId) {
-        dispatch(groupsActions.updateGroupScheme({communityId: id, schemeId}));
-      } else dispatch(groupsActions.updateCommunityScheme({communityId: id}));
+        dispatch(groupsActions.updateGroupScheme({ communityId: id, schemeId }));
+      } else dispatch(groupsActions.updateCommunityScheme({ communityId: id }));
     } else {
-      dispatch(groupsActions.postCreateSchemePermission({communityId: id}));
+      dispatch(groupsActions.postCreateSchemePermission({ communityId: id }));
     }
   };
 
   const onPressBack = () => {
     if (
-      name !== initName ||
-      desc !== initDesc ||
-      !isEqual(roles, initRoles || groupScheme?.roles) // initRoles = undefined for group
+      name !== initName
+      || desc !== initDesc
+      || !isEqual(roles, initRoles || groupScheme?.roles) // initRoles = undefined for group
     ) {
       dispatch(
         modalActions.showAlert({
@@ -79,7 +78,7 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
           cancelBtn: true,
           cancelLabel: t('common:btn_discard'),
           confirmLabel: t('communities:permission:btn_continue'),
-          cancelBtnProps: {textColor: theme.colors.neutral80},
+          cancelBtnProps: { textColor: theme.colors.neutral80 },
           onCancel: () => rootNavigation.goBack(),
         }),
       );
@@ -98,13 +97,13 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
           : 'communities:permission:title_edit_community_scheme',
       )}
       onPressButton={onPress}
-      buttonText={'common:btn_save'}
+      buttonText="common:btn_save"
       buttonProps={{
         loading: creating,
         disabled: disableButtonCreate,
         useI18n: true,
         highEmphasis: true,
-        style: {borderWidth: 0},
+        style: { borderWidth: 0 },
         testID: 'common.btn_create',
       }}
       onPressBack={onPressBack}
