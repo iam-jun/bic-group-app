@@ -12,7 +12,7 @@ import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 import { ReactionType } from '~/constants/reactions';
 import { useRootNavigation } from '~/hooks/navigation';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import * as modalActions from '~/store/modal/actions';
 import { showHideToastMessage } from '~/store/modal/actions';
 import Text from '~/beinComponents/Text';

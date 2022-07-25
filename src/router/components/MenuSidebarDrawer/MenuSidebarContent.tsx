@@ -17,8 +17,8 @@ import mainStack from '~/router/navigator/MainStack/stack';
 import { useBaseHook } from '~/hooks';
 import authActions from '~/screens/Auth/redux/actions';
 import * as modalActions from '~/store/modal/actions';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 
 import settings, {
   settingsMenu,

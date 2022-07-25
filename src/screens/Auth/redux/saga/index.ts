@@ -8,7 +8,7 @@ import { authErrors } from '~/constants/authConstants';
 import { IObject, IToastMessage } from '~/interfaces/common';
 import * as IAuth from '~/interfaces/IAuth';
 import { withNavigation } from '~/router/helper';
-import { rootNavigationRef } from '~/router/navigator/refs';
+import { rootNavigationRef } from '~/router/refs';
 import { rootSwitch } from '~/router/stack';
 import {
   getUserFromSharedPreferences,

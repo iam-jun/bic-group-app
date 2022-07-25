@@ -16,8 +16,8 @@ import { mapData } from '../../helper/mapper';
 import appConfig from '~/configs/appConfig';
 import ImageUploader, { IGetFile } from '~/services/imageUploader';
 import { withNavigation } from '~/router/helper';
-import { rootNavigationRef } from '~/router/navigator/refs';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import { rootNavigationRef } from '~/router/refs';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
 import joinNewGroup from './joinNewGroup';
 import leaveGroup from './leaveGroup';

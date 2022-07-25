@@ -2,7 +2,7 @@ import { delay, put } from 'redux-saga/effects';
 import { IObject } from '~/interfaces/common';
 import { IUserResponse } from '~/interfaces/IAuth';
 import { withNavigation } from '~/router/helper';
-import { rootNavigationRef } from '~/router/navigator/refs';
+import { rootNavigationRef } from '~/router/refs';
 import { rootSwitch } from '~/router/stack';
 import {
   getUserFromSharedPreferences,

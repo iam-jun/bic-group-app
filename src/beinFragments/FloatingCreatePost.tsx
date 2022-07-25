@@ -9,7 +9,7 @@ import Animated, {
 } from 'react-native-reanimated';
 import { useRootNavigation } from '~/hooks/navigation';
 
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';

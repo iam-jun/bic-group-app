@@ -17,7 +17,7 @@ import { useBaseHook } from '~/hooks';
 import { useKeyboardStatus } from '~/hooks/keyboard';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IFilePicked } from '~/interfaces/common';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import modalActions from '~/store/modal/actions';
 import { fontFamilies } from '~/theme/fonts';
 

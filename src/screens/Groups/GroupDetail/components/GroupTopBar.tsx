@@ -11,7 +11,7 @@ import groupJoinStatus from '~/constants/groupJoinStatus';
 import useAuth, { useUserIdAuth } from '~/hooks/auth';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import modalActions, {
   clearToastMessage,
   showHideToastMessage,

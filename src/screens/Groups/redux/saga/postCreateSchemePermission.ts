@@ -3,7 +3,7 @@ import { put, call, select } from 'redux-saga/effects';
 import showError from '~/store/commonSaga/showError';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import { withNavigation } from '~/router/helper';
-import { rootNavigationRef } from '~/router/navigator/refs';
+import { rootNavigationRef } from '~/router/refs';
 import { IToastMessage } from '~/interfaces/common';
 import modalActions from '~/store/modal/actions';
 import groupsActions from '~/screens/Groups/redux/actions';

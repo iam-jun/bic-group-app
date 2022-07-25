@@ -21,8 +21,8 @@ import { useKeySelector } from '~/hooks/selector';
 import { ISetting } from '~/interfaces/common';
 
 import images from '~/resources/images';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
 import authActions from '~/screens/Auth/redux/actions';
 import menuActions from '~/screens/Menu/redux/actions';

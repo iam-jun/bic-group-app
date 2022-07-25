@@ -5,7 +5,7 @@ import Text from '~/beinComponents/Text';
 
 import { useBaseHook } from '~/hooks';
 import Button from '~/beinComponents/Button';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { IAudience } from '~/interfaces/IPost';
 import Icon from '~/beinComponents/Icon';
 import { useRootNavigation } from '~/hooks/navigation';

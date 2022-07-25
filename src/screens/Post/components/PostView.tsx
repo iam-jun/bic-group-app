@@ -25,7 +25,7 @@ import {
   IReactionCounts,
 } from '~/interfaces/IPost';
 import resourceImages from '~/resources/images';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import ButtonMarkAsRead from '~/screens/Post/components/ButtonMarkAsRead';
 import PostViewContent from '~/screens/Post/components/postView/PostViewContent';
 import PostViewFooter from '~/screens/Post/components/postView/PostViewFooter';
