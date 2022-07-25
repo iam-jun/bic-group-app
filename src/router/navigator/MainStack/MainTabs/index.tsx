@@ -4,7 +4,7 @@ import React, { useEffect } from 'react';
 import { DeviceEventEmitter } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useUserIdAuth } from '~/hooks/auth';
-import { useChatSocket } from '~/hooks/chat';
+import useChatSocket from '~/hooks/chat';
 import useNotificationSocket from '~/hooks/notificationSocket';
 import { useKeySelector } from '~/hooks/selector';
 import BottomTabBar from '~/router/components/BottomTabBar';
