@@ -1,15 +1,17 @@
 import React from 'react';
-import {Modal, StyleSheet, TouchableOpacity, View} from 'react-native';
+import {
+  StyleSheet, TouchableOpacity, View,
+} from 'react-native';
 
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import Text from '~/beinComponents/Text';
 import SvgIcon from '~/beinComponents/Icon/SvgIcon';
 import SystemIssueImg from '~/../assets/images/SystemIssue.svg';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import noInternetKeySelector from '../redux/keySelector';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 
 const SystemIssueModal = () => {
   const theme: ExtendedTheme = useTheme();
@@ -17,7 +19,7 @@ const SystemIssueModal = () => {
 
   const systemIssue = useKeySelector(noInternetKeySelector.systemIssue);
   const optionsStyle = useAnimatedStyle(() => ({
-    opacity: withTiming(systemIssue ? 1 : 0, {duration: 500}),
+    opacity: withTiming(systemIssue ? 1 : 0, { duration: 500 }),
   }));
 
   if (!systemIssue) return null;
@@ -27,7 +29,6 @@ const SystemIssueModal = () => {
       <TouchableOpacity style={styles.root} activeOpacity={1}>
         <View style={styles.modal}>
           <SvgIcon
-            // @ts-ignore
             source={SystemIssueImg}
             width={200}
             height={200}
@@ -45,7 +46,7 @@ const SystemIssueModal = () => {
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     root: {

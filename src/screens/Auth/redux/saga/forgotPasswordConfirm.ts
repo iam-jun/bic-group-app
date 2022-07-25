@@ -1,10 +1,10 @@
-import {Auth} from 'aws-amplify';
-import {put} from 'redux-saga/effects';
+import { Auth } from 'aws-amplify';
+import { put } from 'redux-saga/effects';
 import i18n from 'i18next';
 
-import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
+import { authErrors, forgotPasswordStages } from '~/constants/authConstants';
 import actions from '../actions';
-import {showErrorWithDefinedMessage} from '.';
+import { showErrorWithDefinedMessage } from '.';
 import * as IAuth from '~/interfaces/IAuth';
 
 export default function* forgotPasswordConfirm({
@@ -13,7 +13,7 @@ export default function* forgotPasswordConfirm({
   type: string;
   payload: IAuth.IForgotPasswordConfirm;
 }) {
-  const {code, email, password} = payload;
+  const { code, email, password } = payload;
   try {
     yield put(
       actions.setForgotPasswordError({
@@ -29,8 +29,8 @@ export default function* forgotPasswordConfirm({
     yield put(actions.setForgotPasswordLoading(false));
     yield put(actions.setForgotPasswordStage(forgotPasswordStages.COMPLETE));
   } catch (error: any) {
-    let errBox = '',
-      errConfirm = '';
+    let errBox = '';
+    let errConfirm = '';
     switch (error.code) {
       case authErrors.CODE_MISMATCH_EXCEPTION:
         errConfirm = i18n.t('auth:text_err_wrong_code');
@@ -46,7 +46,7 @@ export default function* forgotPasswordConfirm({
     }
 
     yield put(
-      actions.setForgotPasswordError({errBox, errConfirm, errRequest: ''}),
+      actions.setForgotPasswordError({ errBox, errConfirm, errRequest: '' }),
     );
     if (errBox) yield showErrorWithDefinedMessage(errBox);
     yield put(actions.setForgotPasswordLoading(false));

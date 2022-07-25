@@ -1,19 +1,19 @@
-import React, {useEffect} from 'react';
-import {useDispatch} from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
-import {ICommunityMembers} from '~/interfaces/ICommunity';
+import { ICommunityMembers } from '~/interfaces/ICommunity';
 import MemberList from '../components/MemberList';
 import actions from '~/screens/Groups/redux/actions';
-import {useMyPermissions} from '~/hooks/permissions';
+import { useMyPermissions } from '~/hooks/permissions';
 
 interface MembersContentProps {
   communityId: number;
   onPressMenu: (item: ICommunityMembers) => void;
 }
 
-const MembersContent = ({communityId, onPressMenu}: MembersContentProps) => {
+const MembersContent = ({ communityId, onPressMenu }: MembersContentProps) => {
   const dispatch = useDispatch();
-  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canManageMember = hasPermissionsOnScopeWithId(
     'communities',
     communityId,
@@ -33,7 +33,7 @@ const MembersContent = ({communityId, onPressMenu}: MembersContentProps) => {
   }, [communityId]);
 
   const getCommunityMembers = (isRefreshing?: boolean) => {
-    dispatch(actions.getCommunityMembers({communityId, isRefreshing}));
+    dispatch(actions.getCommunityMembers({ communityId, isRefreshing }));
   };
 
   const resetCommunityMembers = () => {
@@ -42,7 +42,7 @@ const MembersContent = ({communityId, onPressMenu}: MembersContentProps) => {
 
   const getCommunityDetail = () => {
     // to update can_manage_member when member role changes
-    dispatch(actions.getCommunityDetail({communityId}));
+    dispatch(actions.getCommunityDetail({ communityId }));
   };
 
   const onLoadMore = () => {

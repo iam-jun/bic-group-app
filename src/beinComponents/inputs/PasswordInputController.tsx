@@ -1,12 +1,13 @@
 import React from 'react';
-import {useController} from 'react-hook-form';
+import { useController } from 'react-hook-form';
 
 import PasswordInput from './PasswordInput';
-import {IObject} from '~/interfaces/common';
-import {TextInputProps} from './TextInput';
+import { IObject } from '~/interfaces/common';
+import { TextInputProps } from './TextInput';
 
 interface Props extends TextInputProps {
   useFormData: IObject<any>;
+  label: string,
   name: string;
   rules: any;
   loading?: boolean;
@@ -26,20 +27,19 @@ const PasswordInputController: React.FC<Props> = ({
   placeholder,
   validateValue,
   ref,
-  iconColor,
   ...props
 }) => {
   const {
     control,
-    formState: {errors},
+    formState: { errors },
   } = useFormData;
 
   const {
-    field: {onChange, value},
+    field: { onChange, value },
   } = useController({
     control,
-    name: name,
-    rules: rules,
+    name,
+    rules,
     defaultValue: '',
   });
 
@@ -52,13 +52,12 @@ const PasswordInputController: React.FC<Props> = ({
       autoCapitalize="none"
       editable={!loading}
       value={value}
-      onChangeText={text => {
+      onChangeText={(text) => {
         onChange(text);
         validateValue?.();
       }}
       helperType={errors?.[name]?.message ? 'error' : undefined}
       helperContent={errors?.[name]?.message}
-      iconColor={iconColor}
       {...props}
     />
   );

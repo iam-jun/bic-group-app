@@ -1,7 +1,7 @@
 import React from 'react';
-import {ActivityIndicator, StyleProp, ViewStyle} from 'react-native';
+import { ActivityIndicator, StyleProp, ViewStyle } from 'react-native';
 
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 export interface LoadingIndicatorProps {
   testID?: string;
@@ -17,7 +17,7 @@ const LoadingIndicator: React.FC<LoadingIndicatorProps> = ({
   color,
 }: LoadingIndicatorProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
 
   return (
     <ActivityIndicator

@@ -1,10 +1,10 @@
-import {put} from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 import i18n from 'i18next';
-import {Auth} from 'aws-amplify';
+import { Auth } from 'aws-amplify';
 
 import actions from '../actions';
-import {authErrors, forgotPasswordStages} from '~/constants/authConstants';
-import {showErrorWithDefinedMessage} from '.';
+import { authErrors, forgotPasswordStages } from '~/constants/authConstants';
+import { showErrorWithDefinedMessage } from '.';
 
 export default function* forgotPasswordRequest({
   payload,
@@ -39,7 +39,7 @@ export default function* forgotPasswordRequest({
         errBox = error.message;
     }
 
-    if (error?.['code'] === authErrors.USER_NOT_FOUND_EXCEPTION) {
+    if (error?.code === authErrors.USER_NOT_FOUND_EXCEPTION) {
       yield put(
         actions.setForgotPasswordError({
           errBox: '',
@@ -50,7 +50,7 @@ export default function* forgotPasswordRequest({
     } else {
       yield showErrorWithDefinedMessage(errBox);
       yield put(
-        actions.setForgotPasswordError({errBox, errRequest, errConfirm: ''}),
+        actions.setForgotPasswordError({ errBox, errRequest, errConfirm: '' }),
       );
     }
 

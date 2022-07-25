@@ -1,7 +1,7 @@
 import i18next from 'i18next';
-import {put} from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 
-import {IToastMessage} from '~/interfaces/common';
+import { IToastMessage } from '~/interfaces/common';
 import modalActions from '~/store/modal/actions';
 
 export default function* showToastEditSuccess(editFieldName: string): any {
@@ -18,12 +18,12 @@ export default function* showToastEditSuccess(editFieldName: string): any {
     const toastMessage: IToastMessage = {
       content: toastContent,
       props: {
-        textProps: {useI18n: true},
+        textProps: { useI18n: true },
         type: 'success',
       },
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (e) {
-    console.log('\x1b[31m', '🐣️ showToastEditSuccess error: ', e, '\x1b[0m');
+    console.error('\x1b[31m', '🐣️ showToastEditSuccess error: ', e, '\x1b[0m');
   }
 }

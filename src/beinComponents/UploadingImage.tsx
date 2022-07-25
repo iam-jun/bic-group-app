@@ -1,15 +1,17 @@
-import React, {FC, useEffect, useState} from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC, useEffect, useState } from 'react';
+import {
+  StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Button from '~/beinComponents/Button';
 import Icon from '~/beinComponents/Icon';
 import Image from '~/beinComponents/Image';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import Text from '~/beinComponents/Text';
-import {getResourceUrl, IUploadType} from '~/configs/resourceConfig';
-import {useBaseHook} from '~/hooks';
-import {IFilePicked} from '~/interfaces/common';
-import ImageUploader, {IGetFile, IUploadParam} from '~/services/imageUploader';
+import { getResourceUrl, IUploadType } from '~/configs/resourceConfig';
+import { useBaseHook } from '~/hooks';
+import { IFilePicked } from '~/interfaces/common';
+import ImageUploader, { IGetFile, IUploadParam } from '~/services/imageUploader';
 
 import spacing from '~/theme/spacing';
 
@@ -39,9 +41,9 @@ const UploadingImage: FC<UploadingImageProps> = ({
   const [imageUrl, setImageUrl] = useState<string>();
   const [error, setError] = useState('');
 
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const _setImageUrl = (url: string) => {
@@ -64,7 +66,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
           _setImageUrl(data.url || '');
           onUploadSuccess?.(data.url || '', fileName || '');
         },
-        onError: e => {
+        onError: (e) => {
           setError(
             typeof e === 'string' ? e : t('post:error_upload_photo_failed'),
           );
@@ -73,7 +75,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
       try {
         await ImageUploader.getInstance().upload(param);
       } catch (e) {
-        console.log(`\x1b[35m🐣️ UploadingImage upload error:`, e, `\x1b[0m`);
+        console.log('\x1b[35m🐣️ UploadingImage upload error:', e, '\x1b[0m');
       }
     } else if (fileName) {
       const result: IGetFile = ImageUploader.getInstance().getFile(
@@ -83,7 +85,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
           onUploadSuccess?.(data.url || '', fileName || '');
         },
         undefined,
-        e => {
+        (e) => {
           setError(
             typeof e === 'string' ? e : t('post:error_upload_photo_failed'),
           );
@@ -105,7 +107,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
     }
     return (
       <Button style={styles.icRemove} onPress={onPressRemove}>
-        <Icon size={12} icon={'iconCloseSmall'} />
+        <Icon size={12} icon="iconCloseSmall" />
       </Button>
     );
   };
@@ -113,7 +115,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
   if (error) {
     return (
       <View style={styles.errorContainer}>
-        <Icon icon={'Image'} tintColor={colors.red60} />
+        <Icon icon="Image" tintColor={colors.red60} />
         <Text.H6 style={styles.textError}>{error}</Text.H6>
         <Button onPress={() => upload()}>
           <Text.H6 style={styles.textRetry} useI18n>
@@ -127,12 +129,13 @@ const UploadingImage: FC<UploadingImageProps> = ({
 
   return (
     <View
-      style={StyleSheet.flatten([styles.container, {width, height}, style])}>
+      style={StyleSheet.flatten([styles.container, { width, height }, style])}
+    >
       {imageUrl ? (
         <Image source={imageUrl} useOnLayoutSize={false} style={styles.image} />
       ) : (
         <View style={styles.contentContainer}>
-          <LoadingIndicator size={'large'} />
+          <LoadingIndicator size="large" />
         </View>
       )}
       {renderRemove()}
@@ -141,7 +144,7 @@ const UploadingImage: FC<UploadingImageProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       backgroundColor: colors.neutral1,
@@ -161,7 +164,7 @@ const createStyle = (theme: ExtendedTheme) => {
       backgroundColor: colors.neutral1,
       marginBottom: spacing.margin.large,
     },
-    image: {width: '100%', height: '100%'},
+    image: { width: '100%', height: '100%' },
     icRemove: {
       position: 'absolute',
       top: spacing.margin.small,
@@ -173,7 +176,7 @@ const createStyle = (theme: ExtendedTheme) => {
       justifyContent: 'center',
       alignItems: 'center',
       shadowColor: colors.neutral80,
-      shadowOffset: {width: 0, height: 4},
+      shadowOffset: { width: 0, height: 4 },
       shadowOpacity: 0.3,
       shadowRadius: 4.65,
       elevation: 8,

@@ -1,5 +1,5 @@
-import {IUploadType} from '~/configs/resourceConfig';
-import {IFilePicked} from './common';
+import { IUploadType } from '~/configs/resourceConfig';
+import { IFilePicked } from './common';
 
 export type GENDER_TYPE = 'MALE' | 'FEMALE' | 'OTHERS';
 export type RELATIONSHIP_TYPE =

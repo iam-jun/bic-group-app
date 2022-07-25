@@ -1,14 +1,14 @@
-import {IUser} from '~/interfaces/IAuth';
 import _ from 'lodash';
+import { IUser } from '~/interfaces/IAuth';
 
-/* 
+/*
   Generate room name by members name incase room has no name.
 */
 export const generateRoomName = (user: IUser, usernames: string[]): string => {
   let name = '';
   usernames
-    .filter(username => username !== user.name)
-    .forEach(username => {
+    .filter((username) => username !== user.name)
+    .forEach((username) => {
       name = `${name}${name ? `, ${username}` : username}`;
     });
   return name;
@@ -32,11 +32,9 @@ export function generateRandomUser(): IUser {
 
   return {
     id: uid,
-    _id: uid,
     name: generateRandomName(),
     email: generateRandomEmail(),
     avatar: 'https://placeimg.com/140/140/any',
-    online: getRandomInt(1, 2) == 1,
     role: 'User role',
   };
 }
@@ -47,7 +45,7 @@ export function generateRandomEmail(): string {
   for (let ii = 0; ii < 15; ii++) {
     string += chars[Math.floor(Math.random() * chars.length)];
   }
-  return string + '@domain.com';
+  return `${string}@domain.com`;
 }
 
 export function generateRandomWords(min?: number, max?: number): string {
@@ -2928,9 +2926,8 @@ export function generateRandomName(): string {
     'Lieuwe',
   ];
 
-  const name =
-    capFirst(name1[getRandomInt(0, name1.length + 1)]) +
-    ' ' +
-    capFirst(name2[getRandomInt(0, name2.length + 1)]);
+  const name = `${capFirst(name1[getRandomInt(0, name1.length + 1)])
+  } ${
+    capFirst(name2[getRandomInt(0, name2.length + 1)])}`;
   return name;
 }

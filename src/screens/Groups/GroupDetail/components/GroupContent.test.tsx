@@ -1,6 +1,6 @@
 import React from 'react';
 import * as navigationHook from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
 import {createTestStore, renderWithRedux, fireEvent} from '~/test/testUtils';
 import GroupContent from './GroupContent';

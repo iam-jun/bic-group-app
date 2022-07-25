@@ -1,14 +1,14 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import { View, StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
 
-import {useBaseHook} from '~/hooks';
-import {useKeySelector} from '~/hooks/selector';
+import { useBaseHook } from '~/hooks';
+import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import postActions from '~/screens/Post/redux/actions';
 import spacing from '~/theme/spacing';
@@ -16,7 +16,7 @@ import spacing from '~/theme/spacing';
 const NoticePanel = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const dispatch = useDispatch();
 
   const total = useKeySelector(
@@ -50,11 +50,12 @@ const NoticePanel = () => {
         testID="notice_panel.button_close"
         style={styles.closeButton}
         activeOpacity={0.9}
-        onPress={onPress}>
+        onPress={onPress}
+      >
         <Icon
           size={16}
           tintColor={theme.colors.neutral80Light}
-          icon={'iconClose'}
+          icon="iconClose"
         />
       </ButtonWrapper>
     </View>
@@ -62,7 +63,7 @@ const NoticePanel = () => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     description: {

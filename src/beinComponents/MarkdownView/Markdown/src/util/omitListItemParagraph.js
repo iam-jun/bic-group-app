@@ -4,7 +4,7 @@ export default function omitListItemParagraph(tokens) {
   return tokens.filter((token, index) => {
     // update depth if we've already removed a starting paragraph token
     if (depth !== null) {
-      depth = depth + token.nesting;
+      depth += token.nesting;
     }
 
     // check for a list_item token followed by paragraph token (to remove)
@@ -18,7 +18,7 @@ export default function omitListItemParagraph(tokens) {
       if (token.nesting === 1 && depth === 1) {
         // remove the paragraph token immediately after the list_item token
         return false;
-      } else if (token.nesting === -1 && depth === 0) {
+      } if (token.nesting === -1 && depth === 0) {
         // remove the ending paragraph token; reset depth
         depth = null;
         return false;

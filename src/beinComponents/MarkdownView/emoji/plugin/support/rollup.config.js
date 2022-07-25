@@ -1,13 +1,13 @@
 import nodeResolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
+import { terser } from 'rollup-plugin-terser';
 import pkg from '../package.json';
-import {terser} from 'rollup-plugin-terser';
 
 const plugins = [
-  nodeResolve({preferBuiltins: true}),
+  nodeResolve({ preferBuiltins: true }),
   commonjs(),
-  json({namedExports: false}),
+  json({ namedExports: false }),
   {
     banner() {
       return `/*! ${pkg.name} ${pkg.version} https://github.com/${pkg.repository} @license ${pkg.license} */`;
@@ -39,7 +39,7 @@ export default [
         plugins: plugins_minify,
       },
     ],
-    plugins: plugins,
+    plugins,
   },
   {
     input: 'light.js',
@@ -56,7 +56,7 @@ export default [
         plugins: plugins_minify,
       },
     ],
-    plugins: plugins,
+    plugins,
   },
   {
     input: 'bare.js',
@@ -73,6 +73,6 @@ export default [
         plugins: plugins_minify,
       },
     ],
-    plugins: plugins,
+    plugins,
   },
 ];

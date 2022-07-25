@@ -5,7 +5,7 @@ import {
   PlaceholderLine,
   Fade,
 } from 'rn-placeholder';
-import {getRandomInt} from '~/utils/generator';
+import { getRandomInt } from '~/utils/generator';
 
 const Message = () => {
   const count = getRandomInt(1, 3); // lines count
@@ -28,11 +28,12 @@ const Message = () => {
             },
           ]}
         />
-      )}>
+      )}
+    >
       {Array.from(Array(count).keys()).map((item, index) => (
         <PlaceholderLine
           key={`loading-message-line-${index}`}
-          style={{marginTop: 1}}
+          style={{ marginTop: 1 }}
           width={getRandomInt(3, 7) * 10}
         />
       ))}

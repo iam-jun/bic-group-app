@@ -1,10 +1,10 @@
-import {put, call, select} from 'redux-saga/effects';
+import { put, call, select } from 'redux-saga/effects';
 
 import actions from '~/screens/Groups/redux/actions';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import appConfig from '~/configs/appConfig';
 import showError from '~/store/commonSaga/showError';
-import {IGroupGetMembers} from '~/interfaces/IGroup';
+import { IGroupGetMembers } from '~/interfaces/IGroup';
 
 export default function* getGroupSearchMembers({
   payload,
@@ -13,14 +13,15 @@ export default function* getGroupSearchMembers({
   payload: IGroupGetMembers;
 }) {
   try {
-    const {groups} = yield select();
-    const {canLoadMore, data} = groups.groupSearchMembers;
-    yield put(actions.setGroupSearchMembers({loading: data.length === 0}));
+    const { groups } = yield select();
+    const { canLoadMore, data } = groups.groupSearchMembers;
+    yield put(actions.setGroupSearchMembers({ loading: data.length === 0 }));
 
-    const {groupId, params} = payload;
+    const { groupId, params } = payload;
 
     if (!canLoadMore) return;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const resp = yield call(groupsDataHelper.getGroupMembers, groupId, {
       limit: appConfig.recordsPerPage,
@@ -30,7 +31,7 @@ export default function* getGroupSearchMembers({
 
     let newDataCount = 0;
     let newDataArr: any = [];
-    Object.keys(resp)?.map?.((role: string) => {
+    Object.keys(resp)?.forEach?.((role: string) => {
       newDataCount += resp[role].data.length;
       newDataArr = [...newDataArr, ...resp[role].data];
     });
@@ -44,7 +45,7 @@ export default function* getGroupSearchMembers({
 
     yield put(actions.setGroupSearchMembers(newData));
   } catch (err) {
-    console.log('getGroupSearchMembers error:', err);
+    console.error('getGroupSearchMembers error:', err);
     yield call(showError, err);
   }
 }

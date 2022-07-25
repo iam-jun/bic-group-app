@@ -1,7 +1,7 @@
-import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
-import {IUserEdit} from '~/interfaces/IAuth';
-import {IAddWorkExperienceReq} from '~/interfaces/IWorkExperienceRequest';
-import {makeHttpRequest} from '~/services/httpApiRequest';
+import ApiConfig, { HttpApiRequestConfig } from '~/configs/apiConfig';
+import { IUserEdit } from '~/interfaces/IAuth';
+import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
+import { makeHttpRequest } from '~/services/httpApiRequest';
 
 export const menuApiConfig = {
   getUserProfile: (userId: number, params?: any): HttpApiRequestConfig => ({
@@ -49,7 +49,7 @@ export const menuApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: false,
   }),
-  //get others work experience data
+  // get others work experience data
   getWorkExperience: (id: number): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${id}/work-experience`,
     method: 'get',
@@ -72,16 +72,15 @@ const menuDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
   },
   editMyProfile: async (params: any) => {
     try {
-      const {userId, data} = params;
+      const { userId, data } = params;
 
       const response: any = await makeHttpRequest(
         menuApiConfig.editMyProfile(userId, data),
@@ -89,9 +88,8 @@ const menuDataHelper = {
 
       if (response && response?.data) {
         return Promise.resolve(response.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -103,9 +101,8 @@ const menuDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -117,9 +114,8 @@ const menuDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -131,25 +127,21 @@ const menuDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
   },
   deleteWorkExperience: async (id: number) => {
-    console.log('deleteWorkExperience', id);
-
     try {
       const response: any = await makeHttpRequest(
         menuApiConfig.deleteWorkExperience(id),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -161,9 +153,8 @@ const menuDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -173,9 +164,8 @@ const menuDataHelper = {
       const response: any = await makeHttpRequest(menuApiConfig.logout());
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }

@@ -1,8 +1,9 @@
-import {put, call} from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 import i18next from 'i18next';
 
+import { AxiosResponse } from 'axios';
 import modalActions from '~/store/modal/actions';
-import {IToastMessage} from '~/interfaces/common';
+import { IToastMessage } from '~/interfaces/common';
 import groupsActions from '~/screens/Groups/redux/actions';
 import showError from '~/store/commonSaga/showError';
 import groupJoinStatus from '~/constants/groupJoinStatus';
@@ -15,10 +16,9 @@ export default function* joinCommunity({
   payload: {communityId: number; communityName: string};
 }) {
   try {
-    const {communityId, communityName} = payload;
+    const { communityId, communityName } = payload;
 
-    // @ts-ignore
-    const response = yield call(groupsDataHelper.joinCommunity, communityId);
+    const response: AxiosResponse = yield call(groupsDataHelper.joinCommunity, communityId);
     const join_status = response?.data?.join_status;
     const hasRequested = join_status === groupJoinStatus.requested;
 
@@ -26,12 +26,12 @@ export default function* joinCommunity({
     yield put(
       groupsActions.editDiscoverCommunityItem({
         id: communityId,
-        data: {join_status},
+        data: { join_status },
       }),
     );
 
     if (hasRequested) {
-      yield put(groupsActions.getCommunityDetail({communityId}));
+      yield put(groupsActions.getCommunityDetail({ communityId }));
       const toastMessage: IToastMessage = {
         content: `${i18next.t(
           'groups:text_request_join_community',
@@ -54,7 +54,7 @@ export default function* joinCommunity({
     };
 
     yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.getCommunityDetail({communityId}));
+    yield put(groupsActions.getCommunityDetail({ communityId }));
   } catch (err) {
     console.error('joinCommunity catch', err);
     yield call(showError, err);

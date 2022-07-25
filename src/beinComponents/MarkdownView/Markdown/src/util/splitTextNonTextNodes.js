@@ -9,6 +9,6 @@ export default function splitTextNonTextNodes(children) {
 
       return acc;
     },
-    {textNodes: [], nonTextNodes: []},
+    { textNodes: [], nonTextNodes: [] },
   );
 }

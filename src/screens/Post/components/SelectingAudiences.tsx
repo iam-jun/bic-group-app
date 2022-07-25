@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Text from '~/beinComponents/Text';
 
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import Tag from '~/beinComponents/Tag';
-import {IAudience} from '~/interfaces/IPost';
+import { IAudience } from '~/interfaces/IPost';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
 
@@ -42,7 +42,7 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
   }, [list]);
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const onPressShowAll = () => {
@@ -54,21 +54,21 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
   };
 
   const onLayoutContainer = (e: any) => {
-    const {width} = e?.nativeEvent?.layout || {};
+    const { width } = e?.nativeEvent?.layout || {};
     setContainerWidth(width);
   };
 
   const onLayoutAudiences = (e: any) => {
-    const {width} = e?.nativeEvent?.layout || {};
+    const { width } = e?.nativeEvent?.layout || {};
     setAudiencesWidth(width);
   };
 
   const renderItem = (item: any, index: number) => {
-    const {name, icon, avatar} = item;
+    const { name, icon, avatar } = item;
     return (
       <Tag
         style={styles.item}
-        key={'tag_' + index}
+        key={`tag_${index}`}
         avatar={icon || avatar}
         label={name}
         onPressIcon={() => onPressRemoveItem(item)}
@@ -82,36 +82,41 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
 
   return (
     <View
-      testID={'selecting_audience.container'}
+      testID="selecting_audience.container"
       style={styles.container}
-      onLayout={onLayoutContainer}>
+      onLayout={onLayoutContainer}
+    >
       <View style={styles.headerContainer}>
-        <Text.H6 style={{flex: 1}}>Chosen Audiences</Text.H6>
+        <Text.H6 style={{ flex: 1 }}>Chosen Audiences</Text.H6>
         {showBtnShowAll && (
           <ButtonWrapper
-            textProps={{color: colors.purple60, variant: 'buttonS'}}
+            textProps={{ color: colors.purple60, variant: 'buttonS' }}
             onPress={onPressShowAll}
-            testID="selecting_audiences.show">
+            testID="selecting_audiences.show"
+          >
             {showAll ? 'Show less' : `Show all(${list?.length})`}
           </ButtonWrapper>
         )}
       </View>
       <View>
         <ScrollView
-          style={showAll ? {position: 'absolute'} : {}}
+          style={showAll ? { position: 'absolute' } : {}}
           horizontal
-          scrollEnabled={false}>
+          scrollEnabled={false}
+        >
           <View
             onLayout={onLayoutAudiences}
             testID="selecting_audiences"
-            style={styles.contentContainer}>
+            style={styles.contentContainer}
+          >
             {list?.map?.(renderItem)}
           </View>
         </ScrollView>
         {showAll && (
           <View
             testID="selecting_audiences_all"
-            style={styles.contentContainer}>
+            style={styles.contentContainer}
+          >
             {list?.map?.(renderItem)}
           </View>
         )}
@@ -122,7 +127,7 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing.padding.large,

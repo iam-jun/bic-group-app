@@ -1,5 +1,5 @@
-import React, {memo} from 'react';
-import {IPostActivity} from '~/interfaces/IPost';
+import React, { memo } from 'react';
+import { IPostActivity } from '~/interfaces/IPost';
 import PostView from '~/screens/Post/components/PostView';
 
 export interface PostItemProps {
@@ -14,15 +14,13 @@ const PostItem = ({
   testID,
   btnReactTestID,
   btnCommentTestID,
-}: any) => {
-  return (
-    <PostView
-      postId={postData?.id}
-      testID={testID}
-      btnReactTestID={btnReactTestID}
-      btnCommentTestID={btnCommentTestID}
-    />
-  );
-};
+}: any) => (
+  <PostView
+    postId={postData?.id}
+    testID={testID}
+    btnReactTestID={btnReactTestID}
+    btnCommentTestID={btnCommentTestID}
+  />
+);
 
 export default memo(PostItem);

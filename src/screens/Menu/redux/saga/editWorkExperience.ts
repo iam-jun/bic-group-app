@@ -1,5 +1,5 @@
-import {put, call} from 'redux-saga/effects';
-import {IUserAddWorkExperience} from '~/interfaces/IAuth';
+import { put, call } from 'redux-saga/effects';
+import { IUserAddWorkExperience } from '~/interfaces/IAuth';
 import menuDataHelper from '../../helper/MenuDataHelper';
 import menuActions from '../actions';
 import showError from '~/store/commonSaga/showError';

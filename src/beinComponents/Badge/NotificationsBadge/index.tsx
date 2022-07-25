@@ -5,19 +5,19 @@ import NotificationsBadgeComponent, {
 
 const Default: React.FC<NotificationsBadgeComponentProps> = (
   props: NotificationsBadgeComponentProps,
-) => <NotificationsBadgeComponent variant={'default'} {...props} />;
+) => <NotificationsBadgeComponent variant="default" {...props} />;
 
 const Info: React.FC<NotificationsBadgeComponentProps> = (
   props: NotificationsBadgeComponentProps,
-) => <NotificationsBadgeComponent variant={'info'} {...props} />;
+) => <NotificationsBadgeComponent variant="info" {...props} />;
 
 const Warning: React.FC<NotificationsBadgeComponentProps> = (
   props: NotificationsBadgeComponentProps,
-) => <NotificationsBadgeComponent variant={'warning'} {...props} />;
+) => <NotificationsBadgeComponent variant="warning" {...props} />;
 
 const Alert: React.FC<NotificationsBadgeComponentProps> = (
   props: NotificationsBadgeComponentProps,
-) => <NotificationsBadgeComponent variant={'alert'} {...props} />;
+) => <NotificationsBadgeComponent variant="alert" {...props} />;
 
 const NotificationsBadge = Object.assign(NotificationsBadgeComponent, {
   Default,

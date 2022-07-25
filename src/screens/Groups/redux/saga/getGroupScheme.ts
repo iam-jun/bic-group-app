@@ -1,14 +1,14 @@
-import {put, call} from 'redux-saga/effects';
-import {cloneDeep} from 'lodash';
+import { put, call } from 'redux-saga/effects';
+import { cloneDeep } from 'lodash';
 
 import actions from '../actions';
 import showError from '~/store/commonSaga/showError';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
-import {withNavigation} from '~/router/helper';
-import {rootNavigationRef} from '~/router/navigator/refs';
-import {sortFixedRoles} from '../../helper';
-import {getMemberRoleIndex} from '../../CreatePermissionScheme/helper';
+import { withNavigation } from '~/router/helper';
+import { rootNavigationRef } from '~/router/refs';
+import { sortFixedRoles } from '../../helper';
+import { getMemberRoleIndex } from '../../CreatePermissionScheme/helper';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -18,7 +18,7 @@ export default function* getGroupScheme({
   type: string;
   payload: {communityId: number | string; schemeId: string};
 }): any {
-  const {communityId, schemeId} = payload || {};
+  const { communityId, schemeId } = payload || {};
   try {
     const response = yield call(
       groupsDataHelper.getGroupScheme,
@@ -30,7 +30,7 @@ export default function* getGroupScheme({
 
     // storing this data for comparing original group scheme and editing scheme
     yield put(
-      actions.setGroupScheme({data: cloneDeep(dataWithOrderedFixRole)}),
+      actions.setGroupScheme({ data: cloneDeep(dataWithOrderedFixRole) }),
     );
 
     // provide full groupScheme detail for updating group scheme
@@ -42,10 +42,10 @@ export default function* getGroupScheme({
       }),
     );
   } catch (err: any) {
-    console.log('getGroupScheme error:', err);
+    console.error('getGroupScheme error:', err);
 
     if (err?.code === API_ERROR_CODE.GROUP.SCHEME_NOT_FOUND) {
-      yield put(actions.getSchemes({communityId, isRefreshing: true}));
+      yield put(actions.getSchemes({ communityId, isRefreshing: true }));
       navigation.goBack();
     }
 

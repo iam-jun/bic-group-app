@@ -1,11 +1,11 @@
+import { put, call, select } from 'redux-saga/effects';
 import appConfig from '~/configs/appConfig';
-import {put, call, select} from 'redux-saga/effects';
 
 import actions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
-import {mapItems} from '../../helper/mapper';
-import {ICommunity} from '~/interfaces/ICommunity';
+import { mapItems } from '../../helper/mapper';
+import { ICommunity } from '~/interfaces/ICommunity';
 
 export default function* getManagedCommunities({
   payload,
@@ -18,9 +18,9 @@ export default function* getManagedCommunities({
   };
 }) {
   try {
-    const {isRefreshing, refreshNoLoading, params} = payload;
-    const {groups} = yield select();
-    const {ids, items, canLoadMore} = groups.managedCommunities;
+    const { isRefreshing, refreshNoLoading, params } = payload;
+    const { groups } = yield select();
+    const { ids, items, canLoadMore } = groups.managedCommunities;
 
     yield put(
       actions.setManagedCommunities({
@@ -30,6 +30,7 @@ export default function* getManagedCommunities({
 
     if (!isRefreshing && !refreshNoLoading && !canLoadMore) return;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const resp = yield call(groupsDataHelper.getJoinedCommunities, {
       managed: true,
@@ -47,15 +48,15 @@ export default function* getManagedCommunities({
       ids: isRefreshing || refreshNoLoading ? [...newIds] : [...ids, ...newIds],
       items:
         isRefreshing || refreshNoLoading
-          ? {...newItems}
-          : {...items, ...newItems},
+          ? { ...newItems }
+          : { ...items, ...newItems },
       canLoadMore: newIds.length === appConfig.recordsPerPage,
     };
 
     yield put(actions.setManagedCommunities(newData));
   } catch (err) {
-    console.log('getManagedCommunities error:', err);
-    yield put(actions.setManagedCommunities({loading: false}));
+    console.error('getManagedCommunities error:', err);
+    yield put(actions.setManagedCommunities({ loading: false }));
     yield call(showError, err);
   }
 }

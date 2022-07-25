@@ -1,4 +1,4 @@
-import React, {RefObject} from 'react';
+import React, { RefObject } from 'react';
 import {
   NavigationContainerRef,
   NavigationState,
@@ -6,14 +6,15 @@ import {
   StackActions,
 } from '@react-navigation/native';
 
-import {IObject} from '~/interfaces/common';
-import {isEmpty, isNumber} from 'lodash';
-import {NOTIFICATION_TYPE} from '~/constants/notificationTypes';
+import { isEmpty, isNumber } from 'lodash';
+import { IObject } from '~/interfaces/common';
+import { NOTIFICATION_TYPE } from '~/constants/notificationTypes';
+import { parseSafe } from '~/utils/common';
 
-export const isNavigationRefReady = React.createRef();
+export const isNavigationRefReady: any = React.createRef();
 
 export interface Props {
-  current?: NavigationContainerRef | null;
+  current?: NavigationContainerRef<any> | null;
   canGoBack: boolean | undefined;
   navigate: (name: string, params?: IObject<unknown>) => void;
   replace: (name: string, params?: IObject<unknown>) => void;
@@ -28,7 +29,7 @@ export interface Props {
 }
 
 export const withNavigation = (
-  navigationRef: RefObject<NavigationContainerRef> | null | undefined,
+  navigationRef: RefObject<NavigationContainerRef<any>> | null | undefined,
 ): Props => {
   const canGoBack = navigationRef?.current?.canGoBack();
 
@@ -45,15 +46,14 @@ export const withNavigation = (
       navigationRef?.current?.dispatch(StackActions.replace(name, params));
     } else {
       setTimeout(
-        () =>
-          navigationRef?.current?.dispatch(StackActions.replace(name, params)),
+        () => navigationRef?.current?.dispatch(StackActions.replace(name, params)),
         100,
       );
     }
   };
 
   const goBack = () => {
-    navigationRef?.current?.canGoBack() && navigationRef?.current?.goBack();
+    navigationRef?.current?.goBack?.();
   };
 
   const popToTop = () => {
@@ -67,7 +67,7 @@ export const withNavigation = (
   ): void => {
     navigationRef?.current?.navigate(parentName, {
       screen: name,
-      params: params,
+      params,
     });
   };
 
@@ -87,9 +87,9 @@ export const withNavigation = (
   };
 };
 
-export const getActiveRouteState = function (
+export const getActiveRouteState = (
   route?: NavigationState | PartialState<NavigationState>,
-): string | null {
+): string | null => {
   if (!route || !isNumber(route?.index)) return null;
 
   const currentRoute = route.routes[route.index];
@@ -99,8 +99,8 @@ export const getActiveRouteState = function (
   return getActiveRouteState(childActiveRoute);
 };
 
-export const getScreenAndParams = (data: any) => {
-  const newData = typeof data === 'string' ? JSON.parse(data) : {};
+export const getScreenAndParams = (data: string|undefined):{screen: string; params: any} | null => {
+  const newData = typeof data === 'string' ? parseSafe(data) : {};
   if (!isEmpty(newData)) {
     const {
       type,
@@ -125,12 +125,12 @@ export const getScreenAndParams = (data: any) => {
         case NOTIFICATION_TYPE.REACTION_TO_POST_CREATOR_AGGREGATED:
           return {
             screen: 'home',
-            params: {screen: 'post-detail', params: {post_id: postId}},
+            params: { screen: 'post-detail', params: { post_id: postId } },
           };
         case NOTIFICATION_TYPE.POST_VIDEO_TO_USER_UNSUCCESSFUL:
           return {
             screen: 'home',
-            params: {screen: 'draft-post'},
+            params: { screen: 'draft-post' },
           };
         case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR:
         case NOTIFICATION_TYPE.COMMENT_TO_POST_CREATOR_AGGREGATED:
@@ -142,7 +142,7 @@ export const getScreenAndParams = (data: any) => {
             screen: 'home',
             params: {
               screen: 'post-detail',
-              params: {post_id: postId, focus_comment: true},
+              params: { post_id: postId, focus_comment: true },
             },
           };
 
@@ -157,7 +157,7 @@ export const getScreenAndParams = (data: any) => {
             screen: 'home',
             params: {
               screen: 'comment-detail',
-              params: {postId: postId, commentId: commentId},
+              params: { postId, commentId },
             },
           };
 
@@ -169,7 +169,7 @@ export const getScreenAndParams = (data: any) => {
             params: {
               screen: 'comment-detail',
               params: {
-                postId: postId,
+                postId,
                 commentId: childCommentId,
                 parentId: commentId,
               },
@@ -242,15 +242,14 @@ export const getScreenAndParams = (data: any) => {
               },
             },
           };
-          break;
         default:
-          console.log(`Notification type ${type} have not implemented yet`);
+          console.warn(`Notification type ${type} have not implemented yet`);
           return {
             screen: 'home',
-            params: {screen: 'post-detail', params: {post_id: postId}},
+            params: { screen: 'post-detail', params: { post_id: postId } },
           };
       }
     }
   }
-  return {};
+  return null;
 };

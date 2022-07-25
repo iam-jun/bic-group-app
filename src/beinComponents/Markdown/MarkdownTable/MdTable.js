@@ -51,21 +51,20 @@ export default class MdTable extends React.PureComponent {
     );
 
     const window = Dimensions.get('window');
-    this.setMaxPreviewColumns({window});
+    this.setMaxPreviewColumns({ window });
   }
 
   componentWillUnmount() {
     this.dimensionsListener?.remove();
   }
 
-  setMaxPreviewColumns = ({window}) => {
+  setMaxPreviewColumns = ({ window }) => {
     const maxPreviewColumns = Math.floor(window.width / CELL_MIN_WIDTH);
-    this.setState({maxPreviewColumns});
+    this.setState({ maxPreviewColumns });
   };
 
   getTableWidth = (isFullView = false) => {
-    const maxPreviewColumns =
-      this.state.maxPreviewColumns || MAX_PREVIEW_COLUMNS;
+    const maxPreviewColumns = this.state.maxPreviewColumns || MAX_PREVIEW_COLUMNS;
     const columns = Math.min(this.props.numColumns, maxPreviewColumns);
 
     return isFullView || columns === 1
@@ -84,7 +83,7 @@ export default class MdTable extends React.PureComponent {
     );
   });
 
-  handleContainerLayout = e => {
+  handleContainerLayout = (e) => {
     this.setState({
       containerWidth: e.nativeEvent.layout.width,
     });
@@ -96,22 +95,20 @@ export default class MdTable extends React.PureComponent {
     });
   };
 
-  renderPreviewRows = (isFullView = false) => {
-    return this.renderRows(isFullView, true);
-  };
+  renderPreviewRows = (isFullView = false) => this.renderRows(isFullView, true);
 
   shouldRenderAsFlex = (isFullView = false) => {
-    const {numColumns} = this.props;
-    const {height, width} = Dimensions.get('window');
+    const { numColumns } = this.props;
+    const { height, width } = Dimensions.get('window');
     const isLandscape = width > height;
 
     // render as flex in the channel screen, only for mobile phones on the portrait mode,
     // and if tables have 2 ~ 4 columns
     if (
-      !isFullView &&
-      numColumns > 1 &&
-      numColumns < 4
-      //&&!DeviceTypes.IS_TABLET
+      !isFullView
+      && numColumns > 1
+      && numColumns < 4
+      // &&!DeviceTypes.IS_TABLET
     ) {
       return true;
     }
@@ -125,9 +122,9 @@ export default class MdTable extends React.PureComponent {
     // render as flex in full table screen, only for mobile phones on portrait mode,
     // and if tables have 3 or 4 columns
     if (
-      isFullView &&
-      numColumns >= 3 &&
-      numColumns <= 4
+      isFullView
+      && numColumns >= 3
+      && numColumns <= 4
       // &&!DeviceTypes.IS_TABLET
     ) {
       return true;
@@ -136,8 +133,8 @@ export default class MdTable extends React.PureComponent {
     return false;
   };
 
-  getTableStyle = isFullView => {
-    const {theme} = this.props;
+  getTableStyle = (isFullView) => {
+    const { theme } = this.props;
     const style = getStyleSheet(theme);
     const tableStyle = [style.table];
 
@@ -147,7 +144,7 @@ export default class MdTable extends React.PureComponent {
       return tableStyle;
     }
 
-    tableStyle.push({width: this.getTableWidth(isFullView)});
+    tableStyle.push({ width: this.getTableWidth(isFullView) });
     return tableStyle;
   };
 
@@ -156,13 +153,13 @@ export default class MdTable extends React.PureComponent {
 
     let rows = React.Children.toArray(this.props.children);
     if (isPreview) {
-      const {maxPreviewColumns} = this.state;
+      const { maxPreviewColumns } = this.state;
       const prevRowLength = rows.length;
       const prevColLength = React.Children.toArray(
         rows[0].props.children,
       ).length;
 
-      rows = rows.slice(0, maxPreviewColumns).map(row => {
+      rows = rows.slice(0, maxPreviewColumns).map((row) => {
         const children = React.Children.toArray(row.props.children).slice(
           0,
           maxPreviewColumns,
@@ -177,8 +174,7 @@ export default class MdTable extends React.PureComponent {
       });
 
       this.rowsSliced = prevRowLength > rows.length;
-      this.colsSliced =
-        prevColLength > React.Children.toArray(rows[0].props.children).length;
+      this.colsSliced = prevColLength > React.Children.toArray(rows[0].props.children).length;
     }
 
     // Add an extra prop to the last row of the table so that it knows not to render a bottom border
@@ -200,8 +196,8 @@ export default class MdTable extends React.PureComponent {
   };
 
   render() {
-    const {containerWidth, contentHeight} = this.state;
-    const {theme} = this.props;
+    const { containerWidth, contentHeight } = this.state;
+    const { theme } = this.props;
     const style = getStyleSheet(theme);
     const tableWidth = this.getTableWidth();
     const renderAsFlex = this.shouldRenderAsFlex();
@@ -222,9 +218,9 @@ export default class MdTable extends React.PureComponent {
     // or if the columns exceed maximum allowed for previews
     let moreRight = null;
     if (
-      this.colsSliced ||
-      (containerWidth && tableWidth > containerWidth && !renderAsFlex) ||
-      this.props.numColumns > MAX_PREVIEW_COLUMNS
+      this.colsSliced
+      || (containerWidth && tableWidth > containerWidth && !renderAsFlex)
+      || this.props.numColumns > MAX_PREVIEW_COLUMNS
     ) {
       moreRight = (
         <LinearGradient
@@ -232,9 +228,9 @@ export default class MdTable extends React.PureComponent {
             changeOpacity(theme.centerChannelColor, 0.0),
             changeOpacity(theme.centerChannelColor, 0.1),
           ]}
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}
-          style={[style.moreRight, {height: contentHeight, left: leftOffset}]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          style={[style.moreRight, { height: contentHeight, left: leftOffset }]}
         />
       );
     }
@@ -251,7 +247,7 @@ export default class MdTable extends React.PureComponent {
             changeOpacity(theme.centerChannelColor, 0.0),
             changeOpacity(theme.centerChannelColor, 0.1),
           ]}
-          style={[style.moreBelow, {width}]}
+          style={[style.moreBelow, { width }]}
         />
       );
     }
@@ -263,11 +259,12 @@ export default class MdTable extends React.PureComponent {
         <TouchableOpacity
           type="opacity"
           onPress={this.handlePress}
-          style={[style.expandButton, {left: expandButtonOffset}]}
-          testID="markdown_table.expand.button">
-          <View style={[style.iconContainer, {width: this.getTableWidth()}]}>
+          style={[style.expandButton, { left: expandButtonOffset }]}
+          testID="markdown_table.expand.button"
+        >
+          <View style={[style.iconContainer, { width: this.getTableWidth() }]}>
             <View style={style.iconButton}>
-              <Icon icon={'ExpandArrows'} style={style.icon} />
+              <Icon icon="ExpandArrows" style={style.icon} />
             </View>
           </View>
         </TouchableOpacity>
@@ -280,13 +277,15 @@ export default class MdTable extends React.PureComponent {
         style={style.tablePadding}
         onPress={this.handlePress}
         type="opacity"
-        testID="markdown_table">
+        testID="markdown_table"
+      >
         <ScrollView
           onContentSizeChange={this.handleContentSizeChange}
           onLayout={this.handleContainerLayout}
           scrollEnabled={false}
           showsVerticalScrollIndicator={false}
-          style={style.container}>
+          style={style.container}
+        >
           {previewRows}
         </ScrollView>
         {moreRight}
@@ -297,76 +296,74 @@ export default class MdTable extends React.PureComponent {
   }
 }
 
-const getStyleSheet = makeStyleSheetFromTheme(theme => {
-  return {
-    container: {
-      maxHeight: MAX_HEIGHT,
-    },
-    expandButton: {
-      height: 34,
-      width: 34,
-    },
-    iconContainer: {
-      maxWidth: '100%',
-      alignItems: 'flex-end',
-      paddingTop: 8,
-      paddingBottom: 4,
-      ...Platform.select({
-        ios: {
-          paddingRight: 14,
-        },
-      }),
-    },
-    iconButton: {
-      backgroundColor: theme.centerChannelBg,
-      marginTop: -32,
-      marginRight: -6,
-      borderWidth: 1,
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: 50,
-      borderColor: changeOpacity(theme.centerChannelColor, 0.2),
-      width: 34,
-      height: 34,
-    },
-    icon: {
-      fontSize: 14,
-      color: theme.linkColor,
-      ...Platform.select({
-        ios: {
-          fontSize: 13,
-        },
-      }),
-    },
-    displayFlex: {
-      flex: 1,
-    },
-    table: {
-      width: '100%',
-      borderColor: changeOpacity(theme.centerChannelColor, 0.2),
-      borderWidth: 1,
-    },
-    tablePadding: {
-      paddingRight: 10,
-    },
-    moreBelow: {
-      bottom: Platform.select({
-        ios: 34,
-        android: 33.75,
-      }),
-      height: 20,
-      position: 'absolute',
-      left: 0,
-      borderColor: changeOpacity(theme.centerChannelColor, 0.2),
-    },
-    moreRight: {
-      maxHeight: MAX_HEIGHT,
-      position: 'absolute',
-      top: 0,
-      width: 20,
-      borderColor: changeOpacity(theme.centerChannelColor, 0.2),
-      borderRightWidth: 1,
-    },
-  };
-});
+const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
+  container: {
+    maxHeight: MAX_HEIGHT,
+  },
+  expandButton: {
+    height: 34,
+    width: 34,
+  },
+  iconContainer: {
+    maxWidth: '100%',
+    alignItems: 'flex-end',
+    paddingTop: 8,
+    paddingBottom: 4,
+    ...Platform.select({
+      ios: {
+        paddingRight: 14,
+      },
+    }),
+  },
+  iconButton: {
+    backgroundColor: theme.centerChannelBg,
+    marginTop: -32,
+    marginRight: -6,
+    borderWidth: 1,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 50,
+    borderColor: changeOpacity(theme.centerChannelColor, 0.2),
+    width: 34,
+    height: 34,
+  },
+  icon: {
+    fontSize: 14,
+    color: theme.linkColor,
+    ...Platform.select({
+      ios: {
+        fontSize: 13,
+      },
+    }),
+  },
+  displayFlex: {
+    flex: 1,
+  },
+  table: {
+    width: '100%',
+    borderColor: changeOpacity(theme.centerChannelColor, 0.2),
+    borderWidth: 1,
+  },
+  tablePadding: {
+    paddingRight: 10,
+  },
+  moreBelow: {
+    bottom: Platform.select({
+      ios: 34,
+      android: 33.75,
+    }),
+    height: 20,
+    position: 'absolute',
+    left: 0,
+    borderColor: changeOpacity(theme.centerChannelColor, 0.2),
+  },
+  moreRight: {
+    maxHeight: MAX_HEIGHT,
+    position: 'absolute',
+    top: 0,
+    width: 20,
+    borderColor: changeOpacity(theme.centerChannelColor, 0.2),
+    borderRightWidth: 1,
+  },
+}));

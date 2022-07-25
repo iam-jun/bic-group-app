@@ -1,4 +1,4 @@
-import {IObject} from '~/interfaces/common';
+import { IObject } from '~/interfaces/common';
 
 export const fontConfig: IObject<any> = {
   ios: {

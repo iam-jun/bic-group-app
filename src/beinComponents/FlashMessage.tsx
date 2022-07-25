@@ -1,11 +1,13 @@
-import React, {FC} from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import {
+  StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Icon from '~/beinComponents/Icon';
-import Text, {TextProps} from '~/beinComponents/Text';
+import Text, { TextProps } from '~/beinComponents/Text';
 
-import {IconType} from '~/resources/icons';
+import { IconType } from '~/resources/icons';
 import spacing from '~/theme/spacing';
 
 export interface FlashMessageProps {
@@ -26,7 +28,7 @@ const FlashMessage: FC<FlashMessageProps> = ({
   onClose,
 }: FlashMessageProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
 
   const flashMessageStyle = {
     success: {
@@ -46,13 +48,12 @@ const FlashMessage: FC<FlashMessageProps> = ({
     },
   };
 
-  const {iconColor, textColor, backgroundColor} =
-    flashMessageStyle[type] || flashMessageStyle.success;
+  const { iconColor, textColor, backgroundColor } = flashMessageStyle[type] || flashMessageStyle.success;
 
   const containerStyle: StyleProp<ViewStyle> = StyleSheet.flatten([
     {
       flexDirection: 'row',
-      backgroundColor: backgroundColor,
+      backgroundColor,
       padding: spacing.padding.base,
     },
     style,
@@ -74,7 +75,7 @@ const FlashMessage: FC<FlashMessageProps> = ({
         </Text.BodyM>
       </View>
       {onClose && (
-        <Icon icon={'iconClose'} tintColor={iconColor} onPress={onClose} />
+        <Icon icon="iconClose" tintColor={iconColor} onPress={onClose} />
       )}
     </View>
   );

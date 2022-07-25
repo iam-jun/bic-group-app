@@ -1,5 +1,6 @@
-import {IFilePicked} from '~/interfaces/common';
-import {ICommentData} from '~/interfaces/IPost';
+/* eslint-disable no-unsafe-optional-chaining */
+import { IFilePicked } from '~/interfaces/common';
+import { ICommentData } from '~/interfaces/IPost';
 import postTypes from './types';
 
 export const postInitState = {
@@ -41,7 +42,7 @@ export const postInitState = {
   reactionBottomSheet: {
     show: false,
     title: '',
-    position: {x: -1, y: -1},
+    position: { x: -1, y: -1 },
     callback: undefined,
   },
   mention: {
@@ -87,7 +88,7 @@ export const postInitState = {
 };
 
 function postReducer(state = postInitState, action: any = {}) {
-  const {type, payload} = action;
+  const { type, payload } = action;
 
   switch (type) {
     case postTypes.SET_ALL_POSTS:
@@ -235,14 +236,13 @@ function postReducer(state = postInitState, action: any = {}) {
         ...state,
         createPost: {
           ...state.createPost,
-          files: state.createPost.files.map((file: IFilePicked) =>
-            file.name === filename ? payload : file,
-          ),
+          files: state.createPost.files
+            .map((file: IFilePicked) => (file.name === filename ? payload : file)),
         },
       };
     }
     case postTypes.REMOVE_CREATE_POST_FILE: {
-      let name = payload.name;
+      let { name } = payload;
       if (!name) name = payload.fileName;
 
       return {
@@ -310,8 +310,10 @@ function postReducer(state = postInitState, action: any = {}) {
       };
     case postTypes.UPDATE_COMMENT_API: {
       // update pre-comment with data receiving from API
-      const {status, localId, postId, resultComment, parentCommentId} = payload;
-      const allCommentsByPost: any = {...state.allCommentsByParentIds};
+      const {
+        status, localId, postId, resultComment, parentCommentId,
+      } = payload;
+      const allCommentsByPost: any = { ...state.allCommentsByParentIds };
       const postComments = [...allCommentsByPost[postId]];
       let comment;
 
@@ -335,7 +337,7 @@ function postReducer(state = postInitState, action: any = {}) {
         const position = postComments.findIndex(
           (item: ICommentData) => item?.localId === localId,
         );
-        comment = {...postComments[position], ...resultComment, status};
+        comment = { ...postComments[position], ...resultComment, status };
         postComments[position] = comment;
       }
 
@@ -347,8 +349,10 @@ function postReducer(state = postInitState, action: any = {}) {
     }
     case postTypes.POST_CANCEL_FAILED_COMMENT: {
       // find and remove target reply comment
-      const {localId, parentCommentId, postId} = payload;
-      const allCommentsByPost: any = {...state.allCommentsByParentIds};
+      const { localId, parentCommentId, postId } = payload;
+      const allCommentsByPost: any = { ...state.allCommentsByParentIds };
+
+      // eslint-disable-next-line
       const postComments = [...allCommentsByPost?.[postId]];
 
       if (parentCommentId) {
@@ -388,7 +392,7 @@ function postReducer(state = postInitState, action: any = {}) {
       return {
         ...state,
         postSelectAudienceState: payload
-          ? {...state.postSelectAudienceState, ...payload}
+          ? { ...state.postSelectAudienceState, ...payload }
           : postInitState.postSelectAudienceState,
       };
     case postTypes.SET_SCROLL_TO_COMMENTS_POSITION:
@@ -407,10 +411,10 @@ function postReducer(state = postInitState, action: any = {}) {
         commentErrorCode: payload,
       };
     case postTypes.REMOVE_CHILD_COMMENT: {
-      const allCommentsByPost: any = {...state.allCommentsByParentIds};
+      const allCommentsByPost: any = { ...state.allCommentsByParentIds };
 
       // eslint-disable-next-line no-case-declarations
-      const {localId, postId, parentCommentId} = payload || {};
+      const { localId, postId, parentCommentId } = payload || {};
       // eslint-disable-next-line no-case-declarations
       const postComments = [...allCommentsByPost[postId]];
 
@@ -443,11 +447,11 @@ function postReducer(state = postInitState, action: any = {}) {
       };
     }
     case postTypes.REMOVE_COMMENT_DELETED: {
-      const allCommentsByPost: any = {...state.allCommentsByParentIds};
-      const newAllPosts: any = {...state.allPosts};
-      const {postId, commentId, localId} = payload || {};
+      const allCommentsByPost: any = { ...state.allCommentsByParentIds };
+      const newAllPosts: any = { ...state.allPosts };
+      const { postId, commentId, localId } = payload || {};
 
-      const deleteCommentPost = {...newAllPosts[postId]};
+      const deleteCommentPost = { ...newAllPosts[postId] };
       const postComments = [...allCommentsByPost[postId]];
       if (commentId && postComments) {
         const pIndexCommentNeedDelete = postComments.findIndex(
@@ -456,15 +460,15 @@ function postReducer(state = postInitState, action: any = {}) {
 
         deleteCommentPost.commentsCount = Math.max(
           0,
-          (deleteCommentPost.commentsCount || 0) -
-            1 -
-            postComments[pIndexCommentNeedDelete].totalReply,
+          (deleteCommentPost.commentsCount || 0)
+            - 1
+            - postComments[pIndexCommentNeedDelete].totalReply,
         );
 
         const newPostComments = postComments?.filter?.(
           (cmt: ICommentData) => cmt.id !== commentId,
         );
-        newAllPosts[postId] = {...deleteCommentPost};
+        newAllPosts[postId] = { ...deleteCommentPost };
         allCommentsByPost[postId] = newPostComments;
       } else if (localId && postComments) {
         const pIndexCommentNeedDelete = postComments.findIndex(
@@ -473,15 +477,15 @@ function postReducer(state = postInitState, action: any = {}) {
 
         deleteCommentPost.commentsCount = Math.max(
           0,
-          (deleteCommentPost.commentsCount || 0) -
-            1 -
-            postComments[pIndexCommentNeedDelete].totalReply,
+          (deleteCommentPost.commentsCount || 0)
+            - 1
+            - postComments[pIndexCommentNeedDelete].totalReply,
         );
 
         const newPostComments = postComments?.filter?.(
           (cmt: ICommentData) => cmt.localId !== localId,
         );
-        newAllPosts[postId] = {...deleteCommentPost};
+        newAllPosts[postId] = { ...deleteCommentPost };
         allCommentsByPost[postId] = newPostComments;
       }
       return {

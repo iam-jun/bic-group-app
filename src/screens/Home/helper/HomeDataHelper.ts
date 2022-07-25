@@ -1,5 +1,5 @@
-import {makeHttpRequest} from '~/services/httpApiRequest';
-import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
+import { makeHttpRequest } from '~/services/httpApiRequest';
+import ApiConfig, { HttpApiRequestConfig } from '~/configs/apiConfig';
 import {
   IParamGetFeed,
   IParamGetRecentSearchKeywords,
@@ -7,8 +7,7 @@ import {
   IParamPostNewRecentSearchKeyword,
   IRecentSearchTarget,
 } from '~/interfaces/IHome';
-import apiConfig from '~/configs/apiConfig';
-import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
+import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 
 const homeApiConfig = {
   getNewsfeed: (param: IParamGetFeed): HttpApiRequestConfig => ({
@@ -31,7 +30,7 @@ const homeApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
-    params: {...param},
+    params: { ...param },
   }),
   getRecentSearchKeyword: (
     param: IParamGetRecentSearchKeywords,
@@ -40,7 +39,7 @@ const homeApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
-    params: {...param},
+    params: { ...param },
   }),
   postNewRecentSearchKeyword: (
     data: IParamPostNewRecentSearchKeyword,
@@ -75,9 +74,8 @@ const homeDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -89,9 +87,8 @@ const homeDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -99,13 +96,12 @@ const homeDataHelper = {
   getUsers: async (params: IParamsGetUsers) => {
     try {
       const response: any = await makeHttpRequest(
-        apiConfig.App.getUsers(params),
+        ApiConfig.App.getUsers(params),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -117,9 +113,8 @@ const homeDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -133,9 +128,8 @@ const homeDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -147,9 +141,8 @@ const homeDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -161,9 +154,8 @@ const homeDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }

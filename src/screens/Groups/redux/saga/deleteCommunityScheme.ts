@@ -1,4 +1,4 @@
-import {put, call, select} from 'redux-saga/effects';
+import { put, call, select } from 'redux-saga/effects';
 
 import actions from '../actions';
 import showError from '~/store/commonSaga/showError';
@@ -10,10 +10,9 @@ export default function* deleteCommunityScheme({
   type: string;
   payload: {communityId: number | string};
 }): any {
-  const {communityId} = payload || {};
-  const {data} =
-    (yield select(state => state.groups?.permissionScheme?.communityScheme)) ||
-    {};
+  const { communityId } = payload || {};
+  const { data } = (yield select((state) => state.groups?.permissionScheme?.communityScheme))
+    || {};
   try {
     yield put(
       actions.setCommunityScheme({
@@ -36,14 +35,14 @@ export default function* deleteCommunityScheme({
       );
     } else {
       yield put(
-        actions.setCommunityScheme({loading: false, data, deleting: false}),
+        actions.setCommunityScheme({ loading: false, data, deleting: false }),
       );
     }
   } catch (err: any) {
     yield put(
-      actions.setCommunityScheme({loading: false, data, deleting: false}),
+      actions.setCommunityScheme({ loading: false, data, deleting: false }),
     );
-    console.log('getCommunityScheme error:', err);
+    console.error('getCommunityScheme error:', err);
     yield call(showError, err);
   }
 }

@@ -1,7 +1,7 @@
-import React, {FC, useEffect, useRef} from 'react';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { FC, useEffect, useRef } from 'react';
+import { StyleSheet, TouchableOpacity, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
 import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
@@ -9,20 +9,20 @@ import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 
 import appConfig from '~/configs/appConfig';
-import {useBaseHook} from '~/hooks';
-import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
-import {IAudience, ICreatePostParams} from '~/interfaces/IPost';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import { useBaseHook } from '~/hooks';
+import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
+import { IAudience, ICreatePostParams } from '~/interfaces/IPost';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
 import useCreatePost from '~/screens/Post/CreatePost/hooks/useCreatePost';
 import postActions from '~/screens/Post/redux/actions';
 
 import spacing from '~/theme/spacing';
 import CreatePostChosenAudiences from '../components/CreatePostChosenAudiences';
-import {getTotalFileSize} from '../redux/selectors';
+import { getTotalFileSize } from '../redux/selectors';
 import CreatePostContent from './components/CreatePostContent';
 import CreatePostFooter from './components/CreatePostFooter';
-import {handleBack} from './handler';
+import { handleBack } from './handler';
 
 export interface CreatePostProps {
   route?: {
@@ -30,16 +30,16 @@ export interface CreatePostProps {
   };
 }
 
-const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
+const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
   const toolbarRef = useRef<any>();
   const mentionInputRef = useRef<any>();
   const screenParams = route?.params || {};
 
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
-  const {rootNavigation} = useRootNavigation();
+  const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = themeStyles(theme);
   const refTextInput = useRef<any>();
 
@@ -69,11 +69,11 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
     important,
     count,
   } = createPostData || {};
-  const {content} = data || {};
-  const {totalFiles, totalSize} = getTotalFileSize();
+  const { content } = data || {};
+  const { totalFiles, totalSize } = getTotalFileSize();
 
   const groupIds: any[] = [];
-  chosenAudiences.map((selected: IAudience) => {
+  chosenAudiences.forEach((selected: IAudience) => {
     if (selected.type !== 'user') {
       groupIds.push(selected.id);
     }
@@ -82,7 +82,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   const sPostId = sPostData?.id;
   const isEdit = !!(sPostId && !sPostData?.isDraft);
 
-  let imageDisabled, fileDisabled, videoDisabled;
+  let imageDisabled; let fileDisabled; let
+    videoDisabled;
 
   if (video) {
     videoDisabled = true;
@@ -97,8 +98,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   }
 
   if (
-    totalFiles === appConfig.maxFiles ||
-    totalSize >= appConfig.totalFileSize
+    totalFiles === appConfig.maxFiles
+    || totalSize >= appConfig.totalFileSize
   ) {
     fileDisabled = true;
   }
@@ -127,8 +128,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       dispatch(postActions.setSearchResultAudienceUsers([]));
       dispatch(postActions.setCreatePostImagesDraft([]));
 
-      //clear comment because of comment input view listen emit event change text
-      dispatch(postActions.setCreateComment({content: '', loading: false}));
+      // clear comment because of comment input view listen emit event change text
+      dispatch(postActions.setCreateComment({ content: '', loading: false }));
     };
   }, []);
 
@@ -153,7 +154,7 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 
   const onPressDraftPost = () => {
     if (isNewsfeed) {
-      dispatch(postActions.getDraftPosts({isRefresh: true}));
+      dispatch(postActions.getDraftPosts({ isRefresh: true }));
       rootNavigation.navigate(homeStack.draftPost);
     }
   };
@@ -171,17 +172,17 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
   };
 
   return (
-    <ScreenWrapper isFullView testID={'CreatePostScreen'}>
+    <ScreenWrapper isFullView testID="CreatePostScreen">
       <Header
-        titleTextProps={{useI18n: true}}
+        titleTextProps={{ useI18n: true }}
         title={isEdit ? 'post:title_edit_post' : 'post:title_create_post'}
         buttonText={isEdit ? 'common:btn_publish' : 'post:post_button'}
         buttonProps={{
-          loading: loading,
+          loading,
           disabled: disableButtonPost,
           useI18n: true,
           highEmphasis: true,
-          style: {borderWidth: 0},
+          style: { borderWidth: 0 },
           testID: 'create_post.btn_post',
         }}
         onPressBack={onPressBack}
@@ -190,7 +191,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
       <TouchableOpacity
         style={styles.flex1}
         onPress={onPressInput}
-        activeOpacity={1}>
+        activeOpacity={1}
+      >
         <View>
           {!!important?.active && <ImportantStatus notExpired />}
           <CreatePostChosenAudiences disabled={loading} />
@@ -208,7 +210,8 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
             leftIcon="SlidersUp"
             style={styles.buttonSettings}
             onPress={onPressSettings}
-            textProps={{color: colors.neutral80, style: {fontSize: 14}}}>
+            textProps={{ color: colors.neutral80, style: { fontSize: 14 } }}
+          >
             {t('post:settings') + (count > 0 ? ` (${count})` : '')}
           </Button.Secondary>
         </View>
@@ -226,10 +229,10 @@ const CreatePost: FC<CreatePostProps> = ({route}: CreatePostProps) => {
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
-    flex1: {flex: 1},
+    flex1: { flex: 1 },
     container: {
       flex: 1,
     },

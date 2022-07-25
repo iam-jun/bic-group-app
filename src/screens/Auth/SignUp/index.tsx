@@ -1,41 +1,41 @@
 import isEmpty from 'lodash/isEmpty';
 import React from 'react';
-import {useForm} from 'react-hook-form';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useDispatch} from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch } from 'react-redux';
 import Button from '~/beinComponents/Button';
 import PasswordInputController from '~/beinComponents/inputs/PasswordInputController';
 
 import TextInputController from '~/beinComponents/inputs/TextInputController';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
-import {authStack} from '~/configs/navigator';
+import { authStack } from '~/configs/navigator';
 import * as validation from '~/constants/commonRegex';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import useAuth from '~/hooks/auth';
-import {rootNavigationRef} from '~/router/navigator/refs';
+import { rootNavigationRef } from '~/router/refs';
 import actions from '~/screens/Auth/redux/actions';
 
 import spacing from '~/theme/spacing';
-import {getEnv} from '~/utils/env';
-import {APP_ENV} from '~/configs/appConfig';
+import getEnv from '~/utils/env';
+import { APP_ENV } from '~/configs/appConfig';
 
 const SignUp = () => {
   const dispatch = useDispatch();
   const useFormData = useForm();
 
   const {
-    formState: {errors},
+    formState: { errors },
     trigger,
     setError,
     clearErrors,
     getValues,
   } = useFormData;
   const theme: ExtendedTheme = useTheme();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const styles = themeStyles(theme);
-  const {loading} = useAuth();
+  const { loading } = useAuth();
 
   const onSubmit = async () => {
     const email: string = getValues('email');
@@ -89,7 +89,7 @@ const SignUp = () => {
           placeholder={t('auth:input_label_username')}
           autoCapitalize="none"
           useFormData={useFormData}
-          rules={{required: t('auth:text_err_username_blank')}}
+          rules={{ required: t('auth:text_err_username_blank') }}
           name="username"
           validateValue={validateUsername}
           editable={loading}
@@ -115,7 +115,7 @@ const SignUp = () => {
         />
         <PasswordInputController
           useFormData={useFormData}
-          name={'password'}
+          name="password"
           rules={{
             required: t('auth:text_err_password_blank'),
             maxLength: {
@@ -146,21 +146,23 @@ const SignUp = () => {
             },
           }}
           loading={loading}
-          testID={'inputPassword'}
+          testID="inputPassword"
           label={t('auth:input_label_password')}
           placeholder={t('auth:input_label_password')}
           validateValue={validatePassword}
         />
         <Button
           testID="textSignin"
-          onPress={() => rootNavigationRef?.current?.navigate(authStack.login)}>
+          onPress={() => rootNavigationRef?.current?.navigate(authStack.login)}
+        >
           {t('auth:navigate_sign_in')}
         </Button>
         <Button.Primary
           testID="btnSignUp"
           disabled={disableBtn || loading}
           loading={loading}
-          onPress={onSubmit}>
+          onPress={onSubmit}
+        >
           {t('auth:btn_sign_up')}
         </Button.Primary>
       </View>
@@ -170,7 +172,7 @@ const SignUp = () => {
 
 const themeStyles = (theme: ExtendedTheme) => {
   const insets = useSafeAreaInsets();
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

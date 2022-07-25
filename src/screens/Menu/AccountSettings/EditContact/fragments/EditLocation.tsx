@@ -1,20 +1,22 @@
-import React, {useState, useCallback} from 'react';
-import {StyleSheet, View, ScrollView, useWindowDimensions} from 'react-native';
+import React, { useState, useCallback } from 'react';
+import {
+  StyleSheet, View, ScrollView, useWindowDimensions,
+} from 'react-native';
 import i18next from 'i18next';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {debounce} from 'lodash';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useKeyboard} from '@react-native-community/hooks';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { debounce } from 'lodash';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useKeyboard } from '@react-native-community/hooks';
 
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import menuKeySelector from '../../../redux/keySelector';
 import menuActions from '../../../redux/actions';
 import appConfig from '~/configs/appConfig';
-import {ILocation} from '~/interfaces/common';
+import { ILocation } from '~/interfaces/common';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import Divider from '~/beinComponents/Divider';
 import Text from '~/beinComponents/Text';
@@ -26,7 +28,7 @@ interface EditLocationProps {
   onItemPress: (item: any) => void;
 }
 
-const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
+const EditLocation = ({ modalizeRef, onItemPress }: EditLocationProps) => {
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
   const theme: ExtendedTheme = useTheme();
@@ -35,7 +37,7 @@ const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
   const insets = useSafeAreaInsets();
 
   const locationList = useKeySelector(menuKeySelector.locationList);
-  const {data, searchResult} = locationList || {};
+  const { data, searchResult } = locationList || {};
 
   const [searchQuery, setSearchQuery] = useState<string>('');
 
@@ -57,16 +59,14 @@ const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
     setSearchQuery('');
   };
 
-  const renderItem = ({item}: {item: ILocation}) => {
-    return (
-      <PrimaryItem
-        testID={'edit_location.item'}
-        height={34}
-        title={`${item.name}, ${item.country}`}
-        onPress={() => onItemPress?.(item)}
-      />
-    );
-  };
+  const renderItem = ({ item }: {item: ILocation}) => (
+    <PrimaryItem
+      testID="edit_location.item"
+      height={34}
+      title={`${item.name}, ${item.country}`}
+      onPress={() => onItemPress?.(item)}
+    />
+  );
   const keyboard = useKeyboard();
 
   return (
@@ -84,7 +84,7 @@ const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
           height: '100%',
         },
       }}
-      ContentComponent={
+      ContentComponent={(
         <View style={styles.contentComponent}>
           <Text.BodyS useI18n style={styles.titleSearch}>
             settings:title_choose_location
@@ -101,56 +101,55 @@ const EditLocation = ({modalizeRef, onItemPress}: EditLocationProps) => {
             keyboardShouldPersistTaps="handled"
             showsVerticalScrollIndicator={false}
             style={styles.listView}
-            scrollEventThrottle={16}>
+            scrollEventThrottle={16}
+          >
             {(searchQuery ? searchResult : data || []).map(
               (item: ILocation) => (
-                <View key={item?.country + item?.type + item?.name}>
-                  {renderItem({item})}
+                <View key={`${item?.country} ${item?.type} ${item?.name}`}>
+                  {renderItem({ item })}
                 </View>
               ),
             )}
-            <ViewSpacing height={insets?.bottom + 100} />
-            <View style={{height: keyboard?.keyboardHeight || 0}} />
+            <ViewSpacing height={insets.bottom + 100} />
+            <View style={{ height: keyboard?.keyboardHeight || 0 }} />
           </ScrollView>
         </View>
-      }
+      )}
     />
   );
 };
 
 export default EditLocation;
 
-const createStyles = (theme: ExtendedTheme, screenHeight: number) => {
-  return StyleSheet.create({
-    searchInput: {
-      margin: spacing.margin.base,
-    },
-    listView: {
-      paddingHorizontal: spacing.margin.base,
-      paddingBottom: spacing.margin.large,
-    },
-    contentComponent: {
-      height: 0.8 * screenHeight,
-      borderTopRightRadius: spacing.borderRadius.small,
-      borderTopLeftRadius: spacing.borderRadius.small,
-      paddingBottom: spacing.margin.large,
-    },
-    divider: {
-      marginTop: spacing.margin.small,
-    },
-    modalStyle: {
-      borderTopRightRadius: spacing.borderRadius.small,
-      borderTopLeftRadius: spacing.borderRadius.small,
-      height: 0.8 * screenHeight,
-      paddingTop: 0,
-    },
-    titleSearch: {
-      marginLeft: spacing.margin.large,
-      marginTop: spacing.margin.extraLarge,
-    },
-    childrenStyle: {
-      paddingBottom: 0,
-      maxHeight: 0.8 * screenHeight,
-    },
-  });
-};
+const createStyles = (theme: ExtendedTheme, screenHeight: number) => StyleSheet.create({
+  searchInput: {
+    margin: spacing.margin.base,
+  },
+  listView: {
+    paddingHorizontal: spacing.margin.base,
+    paddingBottom: spacing.margin.large,
+  },
+  contentComponent: {
+    height: 0.8 * screenHeight,
+    borderTopRightRadius: spacing.borderRadius.small,
+    borderTopLeftRadius: spacing.borderRadius.small,
+    paddingBottom: spacing.margin.large,
+  },
+  divider: {
+    marginTop: spacing.margin.small,
+  },
+  modalStyle: {
+    borderTopRightRadius: spacing.borderRadius.small,
+    borderTopLeftRadius: spacing.borderRadius.small,
+    height: 0.8 * screenHeight,
+    paddingTop: 0,
+  },
+  titleSearch: {
+    marginLeft: spacing.margin.large,
+    marginTop: spacing.margin.extraLarge,
+  },
+  childrenStyle: {
+    paddingBottom: 0,
+    maxHeight: 0.8 * screenHeight,
+  },
+});

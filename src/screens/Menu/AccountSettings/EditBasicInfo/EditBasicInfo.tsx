@@ -1,12 +1,14 @@
-import React, {useState, useRef} from 'react';
-import {StyleSheet, Keyboard, ScrollView, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { useState, useRef } from 'react';
+import {
+  StyleSheet, Keyboard, ScrollView, View,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import i18next from 'i18next';
-import {isEqual} from 'lodash';
+import { isEqual } from 'lodash';
 
 import genders from '~/constants/genders';
-import {formatDate} from '~/utils/formatData';
+import { formatDate } from '~/utils/formatData';
 import relationshipStatus from '~/constants/relationshipStatus';
 import menuActions from '~/screens/Menu/redux/actions';
 import {
@@ -18,9 +20,9 @@ import {
 import OptionMenu from './fragments/OptionMenu';
 import LanguageOptionMenu from './fragments/LanguageOptionMenu';
 import * as modalActions from '~/store/modal/actions';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import menuKeySelector from '../../redux/keySelector';
-import {useRootNavigation} from '~/hooks/navigation';
+import { useRootNavigation } from '~/hooks/navigation';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
@@ -28,20 +30,21 @@ import EditName from './fragments/EditName';
 import DateTimePicker from '~/beinComponents/DateTimePicker';
 import TitleComponent from '../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
-import {dataMapping, maxBirthday} from './helper';
+import { dataMapping, maxBirthday } from './helper';
 import spacing from '~/theme/spacing';
 
 const EditBasicInfo = () => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
 
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
   const myProfileData = useKeySelector(menuKeySelector.myProfile);
-  const {id, fullname, gender, birthday, relationship_status, language} =
-    myProfileData;
+  const {
+    id, fullname, gender, birthday, relationship_status, language,
+  } = myProfileData;
 
   const genderSheetRef = useRef<any>();
   const relationshipSheetRef = useRef<any>();
@@ -51,8 +54,7 @@ const EditBasicInfo = () => {
   const [selectingDate, setSelectingDate] = useState<boolean>(false);
   const [birthdayState, setBirthdayState] = useState<string>(birthday);
   const [languageState, setLanguageState] = useState<string[]>(language);
-  const [relationshipState, setRelationshipState] =
-    useState<RELATIONSHIP_TYPE>(relationship_status);
+  const [relationshipState, setRelationshipState] = useState<RELATIONSHIP_TYPE>(relationship_status);
 
   const [error, setError] = useState<boolean>(false);
 
@@ -65,16 +67,14 @@ const EditBasicInfo = () => {
     birthdayState: string,
     languageState: string[],
     relationshipState: string,
-  ) => {
-    return (
-      (fullname !== nameState ||
-        gender !== genderState ||
-        birthday !== birthdayState ||
-        !isEqual(language, languageState) ||
-        relationship_status !== relationshipState) &&
-      nameState?.trim?.()?.length > 0
-    );
-  };
+  ) => (
+    (fullname !== nameState
+        || gender !== genderState
+        || birthday !== birthdayState
+        || !isEqual(language, languageState)
+        || relationship_status !== relationshipState)
+      && nameState?.trim?.()?.length > 0
+  );
 
   const isValid = checkIsValid(
     nameState,
@@ -160,7 +160,7 @@ const EditBasicInfo = () => {
   const onChangeName = (text: string) => {
     const newName = text?.trim?.();
     setNameState(newName);
-    if (!!newName) {
+    if (newName) {
       error && setError(false);
     } else {
       setError(true);
@@ -170,9 +170,9 @@ const EditBasicInfo = () => {
   return (
     <ScreenWrapper testID="EditBasicInfo" style={styles.container} isFullView>
       <Header
-        titleTextProps={{useI18n: true}}
-        title={'settings:title_edit_basic_info'}
-        buttonText={'common:text_save'}
+        titleTextProps={{ useI18n: true }}
+        title="settings:title_edit_basic_info"
+        buttonText="common:text_save"
         buttonProps={{
           useI18n: true,
           color: theme.colors.purple50,
@@ -187,7 +187,8 @@ const EditBasicInfo = () => {
 
       <ScrollView
         keyboardShouldPersistTaps="always"
-        contentContainerStyle={styles.content}>
+        contentContainerStyle={styles.content}
+      >
         <EditName
           error={error}
           fullname={nameState}
@@ -196,31 +197,33 @@ const EditBasicInfo = () => {
         <TitleComponent icon="SquareUser" title="settings:title_gender" />
         <Button
           testID="edit_basic_info.gender"
-          textProps={{color: colors.neutral80, variant: 'bodyM'}}
+          textProps={{ color: colors.neutral80, variant: 'bodyM' }}
           style={styles.buttonDropDown}
           contentStyle={styles.buttonDropDownContent}
-          rightIcon={'AngleDown'}
-          onPress={e => onGenderEditOpen(e)}>
-          {!!genderState
+          rightIcon="AngleDown"
+          onPress={(e) => onGenderEditOpen(e)}
+        >
+          {genderState
             ? i18next.t(genders[genderState])
             : i18next.t('common:text_not_set')}
         </Button>
         <TitleComponent icon="Calendar" title="settings:title_birthday" />
         <Button
           testID="edit_basic_info.birthday"
-          textProps={{color: colors.neutral80, variant: 'bodyM'}}
+          textProps={{ color: colors.neutral80, variant: 'bodyM' }}
           style={styles.buttonDropDown}
           contentStyle={styles.buttonDropDownContent}
-          onPress={() => onDateEditOpen()}>
-          {formatDate(birthdayState, 'DD/MM/YYYY') ||
-            i18next.t('common:text_not_set')}
+          onPress={() => onDateEditOpen()}
+        >
+          {formatDate(birthdayState, 'DD/MM/YYYY')
+            || i18next.t('common:text_not_set')}
         </Button>
         {selectingDate && (
           <View testID="edit_basic_info.date_picker">
             <DateTimePicker
               isVisible={selectingDate}
               date={maxBirthday()}
-              mode={'date'}
+              mode="date"
               onConfirm={onSetBirthday}
               onCancel={onDateEditClose}
               maxDate={maxBirthday()}
@@ -228,7 +231,7 @@ const EditBasicInfo = () => {
           </View>
         )}
         <LanguageOptionMenu
-          title={'settings:title_choose_languages'}
+          title="settings:title_choose_languages"
           onChangeLanguages={_onChangeLanguages}
           selectedLanguages={languageState}
         />
@@ -239,20 +242,21 @@ const EditBasicInfo = () => {
         />
         <Button
           testID="edit_basic_info.relationship"
-          textProps={{color: colors.neutral80, variant: 'bodyM'}}
+          textProps={{ color: colors.neutral80, variant: 'bodyM' }}
           style={styles.buttonDropDown}
           contentStyle={styles.buttonDropDownContent}
-          rightIcon={'AngleDown'}
-          onPress={e => onRelationshipEditOpen(e)}>
-          {i18next.t(relationshipStatus[relationshipState]) ||
-            i18next.t('common:text_not_set')}
+          rightIcon="AngleDown"
+          onPress={(e) => onRelationshipEditOpen(e)}
+        >
+          {i18next.t(relationshipStatus[relationshipState])
+            || i18next.t('common:text_not_set')}
         </Button>
       </ScrollView>
       <OptionMenu
         testID="edit_basic_info.gender_list"
         data={gendersList}
         value={genderState}
-        title={'settings:title_choose_gender'}
+        title="settings:title_choose_gender"
         menuRef={genderSheetRef}
         onItemPress={onGenderItemPress}
       />
@@ -260,7 +264,7 @@ const EditBasicInfo = () => {
         testID="edit_basic_info.relationship_status_list"
         data={relationshipStatusList}
         value={relationshipState}
-        title={'settings:title_choose_relationship'}
+        title="settings:title_choose_relationship"
         menuRef={relationshipSheetRef}
         onItemPress={onRelationshipItemPress}
       />
@@ -271,7 +275,7 @@ const EditBasicInfo = () => {
 export default EditBasicInfo;
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {
@@ -283,7 +287,7 @@ const themeStyles = (theme: ExtendedTheme) => {
     textEdit: {
       marginBottom: spacing.margin.small,
     },
-    contentComponent: {marginHorizontal: spacing.margin.base},
+    contentComponent: { marginHorizontal: spacing.margin.base },
     chooseGenderText: {
       margin: spacing.margin.base,
     },

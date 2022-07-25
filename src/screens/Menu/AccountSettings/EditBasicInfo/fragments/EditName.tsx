@@ -1,6 +1,6 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
 
 import TextInput from '~/beinComponents/inputs/TextInput';
@@ -12,9 +12,9 @@ interface EditNameProps {
   error: boolean;
 }
 
-const EditName = ({onChangeName, fullname, error}: EditNameProps) => {
+const EditName = ({ onChangeName, fullname, error }: EditNameProps) => {
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(theme);
+  const styles = createStyles();
 
   const _onChangeName = (text: string) => {
     // removed trim here to avoid issue when typing Vietnamese
@@ -43,8 +43,6 @@ const EditName = ({onChangeName, fullname, error}: EditNameProps) => {
 
 export default EditName;
 
-const createStyles = (theme: ExtendedTheme) => {
-  return StyleSheet.create({
-    textinput: {},
-  });
-};
+const createStyles = () => StyleSheet.create({
+  textinput: {},
+});

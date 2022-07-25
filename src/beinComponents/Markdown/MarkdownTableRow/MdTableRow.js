@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import {View} from 'react-native';
+import { View } from 'react-native';
 
-import {changeOpacity, makeStyleSheetFromTheme} from '../utils/utils';
+import { changeOpacity, makeStyleSheetFromTheme } from '../utils/utils';
 
 export default class MdTableRow extends React.PureComponent {
   static propTypes = {
@@ -38,18 +38,16 @@ export default class MdTableRow extends React.PureComponent {
   }
 }
 
-const getStyleSheet = makeStyleSheetFromTheme(theme => {
-  return {
-    row: {
-      flex: 1,
-      flexDirection: 'row',
-    },
-    rowTopBackground: {
-      backgroundColor: changeOpacity(theme.centerChannelColor, 0.1),
-    },
-    rowBottomBorder: {
-      borderColor: changeOpacity(theme.centerChannelColor, 0.2),
-      borderBottomWidth: 1,
-    },
-  };
-});
+const getStyleSheet = makeStyleSheetFromTheme((theme) => ({
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  rowTopBackground: {
+    backgroundColor: changeOpacity(theme.centerChannelColor, 0.1),
+  },
+  rowBottomBorder: {
+    borderColor: changeOpacity(theme.centerChannelColor, 0.2),
+    borderBottomWidth: 1,
+  },
+}));

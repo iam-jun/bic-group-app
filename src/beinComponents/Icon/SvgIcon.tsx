@@ -1,7 +1,8 @@
 import React from 'react';
+import { SvgProps } from 'react-native-svg';
 
 export interface SVGIconProps {
-  source?: SVGElement;
+  source?: React.FC<SvgProps>;
   size?: number;
   width?: number;
   height?: number;
@@ -22,7 +23,6 @@ const SvgIcon: React.FC<SVGIconProps> = ({
   if (!SVGIcon) return null;
 
   return (
-    // @ts-ignore
     <SVGIcon
       {...props}
       width={width || size}
@@ -34,6 +34,7 @@ const SvgIcon: React.FC<SVGIconProps> = ({
 
 SvgIcon.defaultProps = {
   size: 14,
+  // eslint-disable-next-line react/default-props-match-prop-types
   fill: '#000',
 };
 

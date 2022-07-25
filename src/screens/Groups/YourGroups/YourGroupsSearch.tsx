@@ -1,9 +1,9 @@
 import React from 'react';
-import {StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Animated, {useAnimatedStyle} from 'react-native-reanimated';
-import {useKeySelector} from '~/hooks/selector';
+import Animated, { useAnimatedStyle } from 'react-native-reanimated';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import ListView from '~/beinComponents/list/ListView';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
@@ -15,7 +15,9 @@ const YourGroupsSearch = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const {showSearch, loading, key, list} = useKeySelector(
+  const {
+    showSearch, loading, key, list,
+  } = useKeySelector(
     groupsKeySelector.yourGroupsSearchData,
   );
 
@@ -32,9 +34,7 @@ const YourGroupsSearch = () => {
     return !loading && <EmptyScreen description={desc} />;
   };
 
-  const renderItem = ({item}: any) => {
-    return <GroupItem showPrivacy {...item} />;
-  };
+  const renderItem = ({ item }: any) => <GroupItem showPrivacy {...item} />;
 
   const renderHeader = () => {
     if (list?.length > 0) {
@@ -64,7 +64,7 @@ const YourGroupsSearch = () => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       position: 'absolute',

@@ -1,14 +1,16 @@
-import React, {FC} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import {
+  View, StyleSheet, StyleProp, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Reaction from '~/beinComponents/Badge/Reaction';
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
 
-import {blacklistReactions, ReactionType} from '~/constants/reactions';
-import {IOwnReaction, IReactionCounts} from '~/interfaces/IPost';
-import commonActions, {IAction} from '~/constants/commonActions';
+import { blacklistReactions, ReactionType } from '~/constants/reactions';
+import { IOwnReaction, IReactionCounts } from '~/interfaces/IPost';
+import commonActions, { IAction } from '~/constants/commonActions';
 import appConfig from '~/configs/appConfig';
 import spacing from '~/theme/spacing';
 
@@ -57,13 +59,13 @@ const ReactionView: FC<ReactionViewProps> = ({
     const reactionMap = new Map();
 
     if (ownerReactions?.length > 0) {
-      ownerReactions.forEach(ownReaction => {
+      ownerReactions.forEach((ownReaction) => {
         if (ownReaction?.reactionName) {
           _ownReactions[ownReaction.reactionName] = ownReaction;
         }
       });
     }
-    Object.values(reactionsCount || {})?.map((reaction: any) => {
+    Object.values(reactionsCount || {})?.forEach((reaction: any) => {
       const key = Object.keys(reaction || {})?.[0];
       if (key) {
         reactionMap.set(key, reaction?.[key]);
@@ -71,25 +73,27 @@ const ReactionView: FC<ReactionViewProps> = ({
     });
 
     const rendered: React.ReactNode[] = [];
-    for (const [key] of reactionMap) {
+
+    reactionMap.forEach((value, key) => {
       const react = key as ReactionType;
       if (!blacklistReactions?.[react] && reactionMap.get(key) > 0) {
         rendered.push(
           <Reaction
             testId={`reaction.button.${key}`}
             key={`${key}`}
-            style={{margin: 2}}
+            style={{ margin: 2 }}
             value={reactionMap.get(key)}
             icon={key}
             disableUpdateState
             onLongPress={() => _onLongPressItem(react)}
             loading={_ownReactions?.[react]?.loading}
             selected={!!_ownReactions?.[react]?.id}
-            onActionPress={action => onActionReaction(react, action)}
+            onActionPress={(action) => onActionReaction(react, action)}
           />,
         );
       }
-    }
+    })
+
     return rendered;
   };
 
@@ -102,31 +106,32 @@ const ReactionView: FC<ReactionViewProps> = ({
           <Button
             style={styles.buttonReact}
             onPress={onPressSelectReaction}
-            testID="reaction_view.react">
-            <Icon size={16} icon={'iconReact'} />
+            testID="reaction_view.react"
+          >
+            <Icon size={16} icon="iconReact" />
           </Button>
         )}
       </View>
     );
-  } else {
-    return (
-      <View style={[styles.container, style]} testID="reaction_view">
-        {renderReactions()}
-        {!!onPressSelectReaction &&
-          renderedReactions.length < appConfig.limitReactionCount && (
+  }
+  return (
+    <View style={[styles.container, style]} testID="reaction_view">
+      {renderReactions()}
+      {!!onPressSelectReaction
+          && renderedReactions.length < appConfig.limitReactionCount && (
             <Button
               style={[styles.buttonReact, styles.marginHorizontal6]}
-              onPress={onPressSelectReaction}>
-              <Icon size={16} icon={'iconReact'} testID="reaction_view.react" />
+              onPress={onPressSelectReaction}
+            >
+              <Icon size={16} icon="iconReact" testID="reaction_view.react" />
             </Button>
-          )}
-      </View>
-    );
-  }
+      )}
+    </View>
+  );
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     containerButtonOnly: {
       flex: 1,
@@ -150,7 +155,7 @@ const createStyle = (theme: ExtendedTheme) => {
       justifyContent: 'center',
       alignItems: 'center',
     },
-    marginHorizontal6: {marginHorizontal: 6},
+    marginHorizontal6: { marginHorizontal: 6 },
   });
 };
 

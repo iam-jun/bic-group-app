@@ -1,9 +1,9 @@
-import {RefreshControl, ScrollView, View} from 'react-native';
+import { RefreshControl, ScrollView, View } from 'react-native';
 import React from 'react';
 import InfoHeader from './InfoHeader';
 import AboutContent from './AboutContent';
 import JoinCancelButton from './JoinCancelButton';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 
 interface PrivateWelcomeProps {
@@ -34,7 +34,8 @@ const PrivateWelcome = ({
             onRefresh={onRefresh}
           />
         ) : undefined
-      }>
+      }
+    >
       <View onLayout={onButtonLayout}>
         <InfoHeader />
         <JoinCancelButton />

@@ -1,9 +1,11 @@
-import React, {FC} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle, Dimensions} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import {
+  View, StyleSheet, StyleProp, ViewStyle, Dimensions,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
-import {IGroup} from '~/interfaces/IGroup';
+import { IGroup } from '~/interfaces/IGroup';
 import Avatar from '~/beinComponents/Avatar';
 import Icon from '~/beinComponents/Icon';
 import privacyTypes from '~/constants/privacyTypes';
@@ -26,18 +28,18 @@ const ReorderGroupItem: FC<ReorderGroupItemProps> = ({
   group,
 }: ReorderGroupItemProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
-  const {privacy, icon, name} = group || {};
-  const privacyData = privacyTypes.find(i => i?.type === privacy) || {};
-  const {icon: privacyIcon}: any = privacyData || {};
+  const { privacy, icon, name } = group || {};
+  const privacyData = privacyTypes.find((i) => i?.type === privacy) || {};
+  const { icon: privacyIcon }: any = privacyData || {};
 
   return (
     <View style={[styles.container, style]}>
       <View style={styles.groupInfo}>
         <View style={styles.drag}>
-          <Icon size={16} icon={'Bars'} tintColor={colors.white} />
+          <Icon size={16} icon="Bars" tintColor={colors.white} />
         </View>
         <View>
           <Avatar.Small source={icon} />
@@ -47,7 +49,8 @@ const ReorderGroupItem: FC<ReorderGroupItemProps> = ({
         </View>
         <Text.H6
           numberOfLines={1}
-          style={{flex: 1, marginLeft: spacing.margin.small}}>
+          style={{ flex: 1, marginLeft: spacing.margin.small }}
+        >
           {name}
         </Text.H6>
       </View>
@@ -56,7 +59,7 @@ const ReorderGroupItem: FC<ReorderGroupItemProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       width: ITEM_WIDTH,
@@ -82,7 +85,7 @@ const createStyle = (theme: ExtendedTheme) => {
       backgroundColor: colors.white,
       borderRadius: 2,
     },
-    textName: {flex: 1, marginLeft: spacing.margin.small},
+    textName: { flex: 1, marginLeft: spacing.margin.small },
     drag: {
       width: 25,
       height: '100%',

@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   KeyboardAvoidingView,
   Platform,
@@ -9,9 +9,10 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
+import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import useModal from '~/hooks/modal';
@@ -19,7 +20,6 @@ import * as actions from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
 import Icon from '../Icon';
 import TextInput from '../inputs/TextInput';
-import Animated, {useAnimatedStyle, withTiming} from 'react-native-reanimated';
 
 export interface AlertModalProps {
   style?: StyleProp<ViewStyle>;
@@ -33,7 +33,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  const {alert} = useModal();
+  const { alert } = useModal();
   const {
     isDismissible,
     visible,
@@ -62,14 +62,12 @@ const AlertModal: React.FC<AlertModalProps> = ({
     headerStyle,
     HeaderImageComponent,
   } = alert;
-  const _cancelLabel = cancelLabel
-    ? cancelLabel
-    : i18next.t('common:btn_cancel');
+  const _cancelLabel = cancelLabel || i18next.t('common:btn_cancel');
 
-  const _ContentComponent = ContentComponent || Text.BodyS;
+  const Content = ContentComponent || Text.BodyS;
 
-  const _ConfirmBtnComponent = ConfirmBtnComponent || Button.Secondary;
-  const _CancelBtnComponent = CancelBtnComponent || Button.Secondary;
+  const ConfirmBtn = ConfirmBtnComponent || Button.Secondary;
+  const CancelBtn = CancelBtnComponent || Button.Secondary;
 
   const dispatch = useDispatch();
   const [text, setText] = useState(inputProps?.value || '');
@@ -96,7 +94,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
   const _onPressContent = () => {};
 
   const optionsStyle = useAnimatedStyle(() => ({
-    opacity: withTiming(visible ? 1 : 0, {duration: 500}),
+    opacity: withTiming(visible ? 1 : 0, { duration: 500 }),
   }));
 
   if (!visible) return null;
@@ -105,15 +103,18 @@ const AlertModal: React.FC<AlertModalProps> = ({
       <TouchableOpacity
         style={styles.root}
         activeOpacity={1}
-        onPress={isDismissible ? _onDismiss : undefined}>
+        onPress={isDismissible ? _onDismiss : undefined}
+      >
         <KeyboardAvoidingView
-          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        >
           <TouchableOpacity
             activeOpacity={1}
             onPress={_onPressContent}
-            style={[styles.modalContainer, style, alertModalStyle]}>
-            {!!HeaderImageComponent ? HeaderImageComponent : null}
-            <View style={[styles.header, !!headerStyle ? headerStyle : {}]}>
+            style={[styles.modalContainer, style, alertModalStyle]}
+          >
+            {HeaderImageComponent || null}
+            <View style={[styles.header, headerStyle || {}]}>
               {!!title && <Text.ButtonM {...titleProps}>{title}</Text.ButtonM>}
               {!!iconName && (
                 <Icon
@@ -125,7 +126,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
               {showCloseButton && (
                 <View style={styles.closeButton}>
                   <Icon
-                    icon={'iconClose'}
+                    icon="iconClose"
                     size={14}
                     tintColor={theme.colors.neutral80}
                     onPress={_onDismiss}
@@ -135,9 +136,9 @@ const AlertModal: React.FC<AlertModalProps> = ({
             </View>
             {children}
             {!!content && (
-              <_ContentComponent style={styles.content} {...contentProps}>
+              <Content style={styles.content} {...contentProps}>
                 {content}
-              </_ContentComponent>
+              </Content>
             )}
             {input && (
               <TextInput
@@ -149,19 +150,21 @@ const AlertModal: React.FC<AlertModalProps> = ({
             <View
               style={[
                 styles.displayBtn,
-                !!buttonViewStyle ? buttonViewStyle : {},
-              ]}>
+                buttonViewStyle || {},
+              ]}
+            >
               {!!cancelBtn && (
-                <_CancelBtnComponent
+                <CancelBtn
                   testID="alert_modal.cancel"
-                  style={{marginEnd: spacing?.margin.base}}
+                  style={{ marginEnd: spacing?.margin.base }}
                   onPress={_onCancel}
-                  {...cancelBtnProps}>
+                  {...cancelBtnProps}
+                >
                   {_cancelLabel}
-                </_CancelBtnComponent>
+                </CancelBtn>
               )}
               {!!visible && onConfirm && (
-                <_ConfirmBtnComponent
+                <ConfirmBtn
                   highEmphasis
                   testID="alert_modal.confirm"
                   disabled={input && !text}
@@ -169,9 +172,10 @@ const AlertModal: React.FC<AlertModalProps> = ({
                     dispatch(actions.hideAlert());
                     onConfirm(text);
                   }}
-                  {...confirmBtnProps}>
+                  {...confirmBtnProps}
+                >
                   {confirmLabel || i18next.t('common:btn_confirm')}
-                </_ConfirmBtnComponent>
+                </ConfirmBtn>
               )}
             </View>
           </TouchableOpacity>
@@ -182,7 +186,7 @@ const AlertModal: React.FC<AlertModalProps> = ({
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   const defaultAlertWidth = 320;
 
   return StyleSheet.create({

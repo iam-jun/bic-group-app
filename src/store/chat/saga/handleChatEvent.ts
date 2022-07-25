@@ -1,6 +1,6 @@
-import {put, select} from 'redux-saga/effects';
+import { put, select } from 'redux-saga/effects';
 import chatSocketEvents from '~/constants/chatSocketEvents';
-import {IObject} from '~/interfaces/common';
+import { IObject } from '~/interfaces/common';
 import actions from '../actions';
 
 export default function* handleChatEvent({
@@ -18,6 +18,8 @@ export default function* handleChatEvent({
       break;
     case chatSocketEvents.POST_UNREAD:
       yield handlePostUnreadEvent(payload);
+      break;
+    default:
       break;
   }
 }
@@ -37,25 +39,25 @@ function* handlePostedEvent(payload: any) {
       const id = payload.broadcast.channel_id;
       let channel = channels[id];
       if (!channel) {
-        channel = {[id]: {mention_count_root: 1}};
+        channel = { [id]: { mention_count_root: 1 } };
       } else {
-        channel = {[id]: {mention_count_root: channel.mention_count_root + 1}};
+        channel = { [id]: { mention_count_root: channel.mention_count_root + 1 } };
       }
       yield put(actions.updateChannelNotificationCount(channel));
     }
   } catch (err: any) {
-    console.log('handlePostedEvent', err);
+    console.error('handlePostedEvent', err);
   }
 }
 
 function* handleChannelViewedEvent(payload: any) {
   try {
     const id = payload.data.channel_id;
-    const channel = {[id]: {mention_count_root: 0}};
+    const channel = { [id]: { mention_count_root: 0 } };
 
     yield put(actions.updateChannelNotificationCount(channel));
   } catch (err: any) {
-    console.log('handlePostedEvent', err);
+    console.error('handlePostedEvent', err);
   }
 }
 
@@ -63,11 +65,11 @@ function* handlePostUnreadEvent(payload: any) {
   try {
     const id = payload.broadcast.channel_id;
     const channel = {
-      [id]: {mention_count_root: payload.data.mention_count_root},
+      [id]: { mention_count_root: payload.data.mention_count_root },
     };
 
     yield put(actions.updateChannelNotificationCount(channel));
   } catch (err: any) {
-    console.log('handlePostUnreadEvent', err);
+    console.error('handlePostUnreadEvent', err);
   }
 }

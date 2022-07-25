@@ -9,7 +9,6 @@
 // - https://github.com/wooorm/emoticon/blob/master/Support.md
 // - http://factoryjoe.com/projects/emoticons/
 //
-'use strict';
 
 module.exports = {
   angry: ['>:(', '>:-('],
