@@ -5,7 +5,7 @@ import PageContent from './PageContent';
 import initialState from '~/store/initialState';
 import {communityDetailData} from '~/test/mock_data/communities';
 import * as navigationHook from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import {groupPostData} from '~/test/mock_data/group';
 
 describe('PageContent', () => {

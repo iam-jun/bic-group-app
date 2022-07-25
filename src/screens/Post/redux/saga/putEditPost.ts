@@ -3,7 +3,7 @@ import i18n from 'i18next';
 import { IPayloadPutEditPost } from '~/interfaces/IPost';
 import postActions from '~/screens/Post/redux/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import modalActions from '~/store/modal/actions';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';

@@ -36,7 +36,7 @@ import EditName from '~/screens/Groups/GeneralInformation/EditName';
 import GroupSchemeAssignment from '~/screens/Groups/GroupSchemeAssignment';
 import GroupSchemeAssignSelection from '~/screens/Groups/GroupSchemeAssignSelection';
 
-export default {
+const groupScreens = {
   // community
   communities: Communities,
   'community-detail': CommunityDetail,
@@ -78,4 +78,6 @@ export default {
 
   // group moderating
   'group-pending-members': GroupPendingMembers,
-};
+}
+
+export default groupScreens;

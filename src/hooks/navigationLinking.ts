@@ -1,5 +1,5 @@
 import { Linking } from 'react-native';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useUserIdAuth } from '~/hooks/auth';
 import { linkingConfig, linkingConfigFull } from '~/configs/navigator';

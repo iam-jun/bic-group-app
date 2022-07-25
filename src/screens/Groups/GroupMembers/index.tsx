@@ -8,7 +8,7 @@ import { useKeySelector } from '~/hooks/selector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import { useRootNavigation } from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { IGroupMembers } from '~/interfaces/IGroup';
 
 import Text from '~/beinComponents/Text';

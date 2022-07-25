@@ -11,7 +11,7 @@ import { useTheme, ExtendedTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { useKeySelector } from '~/hooks/selector';
 import menuActions from '~/screens/Menu/redux/actions';
 import { useUserIdAuth } from '~/hooks/auth';

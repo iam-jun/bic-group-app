@@ -8,7 +8,7 @@ import GroupMembers from '~/screens/Groups/GroupMembers';
 import CommunityPendingMembers from '~/screens/Groups/CommunityAdmin/PendingMembers';
 import GroupPendingMembers from '~/screens/Groups/GroupDetail/groupModerating/PendingMembers';
 
-export default {
+const notiScreens = {
   // TODO: add screen that need to navigate from tab Notification
   notification: Notification,
   'post-detail': PostDetail,
@@ -20,4 +20,6 @@ export default {
 
   'community-pending-members': CommunityPendingMembers,
   'group-pending-members': GroupPendingMembers,
-};
+}
+
+export default notiScreens;

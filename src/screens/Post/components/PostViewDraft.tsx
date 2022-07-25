@@ -22,7 +22,7 @@ import PostViewImportant from '~/screens/Post/components/postView/PostViewImport
 import Button from '~/beinComponents/Button';
 import modalActions, { showHideToastMessage } from '~/store/modal/actions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
 

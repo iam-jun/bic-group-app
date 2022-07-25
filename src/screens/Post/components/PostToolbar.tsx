@@ -24,7 +24,7 @@ import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import { ICreatePostImage } from '~/interfaces/IPost';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import { showHideToastMessage } from '~/store/modal/actions';

@@ -23,7 +23,7 @@ import {
 import modalActions from '~/store/modal/actions';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import * as navigationHook from '~/hooks/navigation';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 
 afterEach(cleanup);
 

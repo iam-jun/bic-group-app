@@ -10,7 +10,7 @@ import CommentDetailContent from './CommentDetailContent';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
 import Button from '~/beinComponents/Button';
 import { useRootNavigation } from '~/hooks/navigation';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import postActions from '../redux/actions';
 import { useKeySelector } from '~/hooks/selector';
 import API_ERROR_CODE from '~/constants/apiErrorCode';

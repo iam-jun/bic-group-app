@@ -32,7 +32,7 @@ import {
   IPayloadPutMarkAsRead,
 } from '~/interfaces/IPost';
 import images from '~/resources/images';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import { rootSwitch } from '~/router/stack';
 import CommentInputView from '~/screens/Post/components/CommentInputView';
 import LoadMoreComment from '~/screens/Post/components/LoadMoreComment';

@@ -39,7 +39,7 @@ import {
   ISelectAudienceParams,
 } from './SelectAudienceHelper';
 import { ICreatePostParams } from '~/interfaces/IPost';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import spacing from '~/theme/spacing';
 
 export interface PostSelectAudienceProps {

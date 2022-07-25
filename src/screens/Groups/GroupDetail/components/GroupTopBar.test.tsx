@@ -5,7 +5,7 @@ import GroupTopBar from './GroupTopBar';
 import initialState from '~/store/initialState';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import * as navigationHook from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
 describe('GroupTopBar component', () => {
   it('renders Search icon correctly', () => {

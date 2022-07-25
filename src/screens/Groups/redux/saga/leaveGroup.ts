@@ -8,7 +8,7 @@ import { IToastMessage } from '~/interfaces/common';
 import { groupPrivacy } from '~/constants/privacyTypes';
 import { withNavigation } from '~/router/helper';
 import { rootNavigationRef } from '~/router/refs';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import showError from '~/store/commonSaga/showError';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 

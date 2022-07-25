@@ -9,7 +9,7 @@ import {
   showAlert,
   showHideToastMessage,
 } from '~/store/modal/actions';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 
 import Text from '~/beinComponents/Text';

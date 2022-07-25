@@ -13,7 +13,7 @@ import UserProfile from '~/screens/Menu/UserProfile';
 import PostSettings from '~/screens/Post/PostSettings';
 import CommentDetail from '~/screens/Post/CommentDetail';
 
-export default {
+const menuScreens = {
   menu: Menu,
   'component-collection': ComponentCollection,
   'account-settings': AccoutSettings,
@@ -30,4 +30,6 @@ export default {
   'draft-post': DraftPost,
   'post-settings': PostSettings,
   'comment-detail': CommentDetail,
-};
+}
+
+export default menuScreens;

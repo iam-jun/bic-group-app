@@ -13,7 +13,7 @@ import groupJoinStatus from '~/constants/groupJoinStatus';
 import { groupPrivacy } from '~/constants/privacyTypes';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import GroupInfoHeader from '~/screens/Groups/GroupDetail/components/GroupInfoHeader';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';

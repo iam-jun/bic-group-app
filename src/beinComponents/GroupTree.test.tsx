@@ -4,7 +4,7 @@ import {fireEvent, renderWithRedux, waitForUpdateRedux} from '~/test/testUtils';
 import GroupTree from '~/beinComponents/GroupTree';
 import {GROUP_TREE, GROUP_TREE_WITH_SELECTING} from '~/test/mock_data/group';
 import * as navigationHook from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
 describe('GroupTree component', () => {
   it(`renders correctly empty tree`, async () => {

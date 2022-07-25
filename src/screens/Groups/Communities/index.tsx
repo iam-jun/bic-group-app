@@ -7,7 +7,7 @@ import Header from '~/beinComponents/Header';
 
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import Filter from '../../../beinComponents/Filter';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import JoinedCommunities from '~/screens/Groups/Communities/JoinedCommunities';
 import DiscoverCommunities from '~/screens/Groups/Communities/DiscoverCommunities';
 import { communityMenuData } from '~/constants/communityMenuData';

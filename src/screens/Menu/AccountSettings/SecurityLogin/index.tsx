@@ -12,7 +12,7 @@ import Divider from '~/beinComponents/Divider';
 import ListView from '~/beinComponents/list/ListView';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import { securityLoginMenu } from '~/constants/settings';
-import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import spacing from '~/theme/spacing';
 
 const SecurityLogin = () => {
