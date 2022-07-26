@@ -12,7 +12,7 @@ const useAuth = () => useSelector((state: IObject<any>) => state.auth);
 export const useUserIdAuth = () => (
   useSelector(
     (state: IObject<any>) => state.auth?.user?.signInUserSession?.idToken?.payload?.[
-      'custom:bein_user_id'
+      'custom:user_uuid'
     ],
   ) || ''
 );
