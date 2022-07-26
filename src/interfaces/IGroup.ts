@@ -85,7 +85,7 @@ export interface IGroup {
   communityId?: string;
   children?: IGroup[];
   verified?: boolean;
-  parents?: number[] | null;
+  parents?: string[] | null;
   collapsed?: boolean;
   path?: string;
   treeData?: IGroup;

@@ -259,6 +259,7 @@ const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
   let result = false;
   // add apis have param in path to this array
   const apisWithParam = [
+    `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/group-structure`,
     `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/scheme`,
     `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/schemes`,
     `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*`,

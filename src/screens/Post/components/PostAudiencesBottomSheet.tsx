@@ -50,9 +50,9 @@ const PostAudiencesBottomSheet = () => {
   };
 
   const onPressItem = (item: any) => {
-    const { id, community_id } = item || {};
-    if (community_id) {
-      navigateToCommunity(community_id);
+    const { id, communityId } = item || {};
+    if (communityId) {
+      navigateToCommunity(communityId);
     } else {
       navigateToGroup(id);
     }
