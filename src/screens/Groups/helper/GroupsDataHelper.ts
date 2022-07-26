@@ -1059,8 +1059,8 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getDiscoverCommunities: async (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getDiscoverCommunities, params),
-  getJoinedCommunities: async (params: {
+  getDiscoverCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getDiscoverCommunities, params),
+  getJoinedCommunities: (params: {
     preview_members?: boolean;
     managed?: boolean;
   }) => withHttpRequestPromise(groupsApiConfig.getJoinedCommunities, params),
@@ -1077,23 +1077,11 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getCommunityDetail: async (communityId: string) => withHttpRequestPromise(groupsApiConfig.getCommunityDetail, communityId),
-  getCommunityMembers: async (
+  getCommunityDetail: (communityId: string) => withHttpRequestPromise(groupsApiConfig.getCommunityDetail, communityId),
+  getCommunityMembers: (
     communityId: string,
     params?: IParamGetCommunityMembers,
-  ) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getCommunityMembers(communityId, params),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  ) => withHttpRequestPromise(groupsApiConfig.getCommunityMembers, communityId, params),
   getDiscoverGroups: async (
     communityId: string,
     params?: IParamGetDiscoverGroups,
