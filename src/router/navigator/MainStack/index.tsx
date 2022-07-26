@@ -1,7 +1,7 @@
 import React from 'react';
 import { DeviceEventEmitter, StyleSheet, View } from 'react-native';
 import { ExtendedTheme, useTheme, useNavigationState } from '@react-navigation/native';
-import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useBackHandler } from '@react-native-community/hooks';
 import { useDispatch } from 'react-redux';
 

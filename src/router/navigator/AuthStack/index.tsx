@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { AppConfig } from '~/configs';
 import { authStack } from '~/configs/navigator';
@@ -22,7 +22,7 @@ const AuthStack = () => {
     }
   }, [currentUserId]);
   return (
-    <Stack.Navigator headerMode="screen" initialRouteName={authStack.landing}>
+    <Stack.Navigator initialRouteName={authStack.landing}>
       <Stack.Screen
         options={AppConfig.defaultScreenOptions}
         name={authStack.landing}
