@@ -12,7 +12,7 @@ import {
   IParamGetCommunityMembers,
   IParamGetDiscoverGroups,
 } from '~/interfaces/ICommunity';
-import { makeHttpRequest } from '~/services/httpApiRequest';
+import { makeHttpRequest, withHttpRequestPromise } from '~/services/httpApiRequest';
 import appConfig from '~/configs/appConfig';
 
 export const groupsApiConfig = {
@@ -1113,19 +1113,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getCommunityDetail: async (communityId: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getCommunityDetail(communityId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getCommunityDetail: async (communityId: string) => withHttpRequestPromise(groupsApiConfig.getCommunityDetail, communityId),
   getCommunityMembers: async (
     communityId: string,
     params?: IParamGetCommunityMembers,

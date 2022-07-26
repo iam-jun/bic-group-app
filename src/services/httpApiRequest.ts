@@ -2,7 +2,7 @@
 import { Auth } from 'aws-amplify';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import i18n from 'i18next';
-import _ from 'lodash';
+import _, { isEmpty } from 'lodash';
 import moment from 'moment';
 import DeviceInfo from 'react-native-device-info';
 import { put } from 'redux-saga/effects';
@@ -411,10 +411,23 @@ const makeRemovePushTokenRequest = async () => {
   return axiosInstance(requestConfig);
 };
 
+const withHttpRequestPromise = async (fn: Function, ...args: any[]) => {
+  try {
+    const response: any = await makeHttpRequest(isEmpty(args) ? fn() : fn(...args));
+    if (response && response?.data) {
+      return Promise.resolve(response?.data);
+    }
+    return Promise.reject(response);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+}
+
 export {
   makeHttpRequest,
   makePushTokenRequest,
   makeRemovePushTokenRequest,
   mapResponseSuccessBein,
   getTokenAndCallBackBein,
+  withHttpRequestPromise,
 };
