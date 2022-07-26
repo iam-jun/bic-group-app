@@ -35,7 +35,7 @@ describe('UserEditProfile screen', () => {
   it(`should render empty view if posts are empty`, async () => {
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
     storeData.auth.user = user as any;
@@ -60,7 +60,7 @@ describe('UserEditProfile screen', () => {
   it(`should render title with list draft post < 9`, async () => {
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
     storeData.auth.user = user as any;
@@ -84,7 +84,7 @@ describe('UserEditProfile screen', () => {
   it(`should render title with list draft post > 9`, async () => {
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
     storeData.auth.user = user as any;
@@ -108,7 +108,7 @@ describe('UserEditProfile screen', () => {
   it(`should render load more if canLoadMore && !refreshing`, async () => {
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
     storeData.auth.user = user as any;
