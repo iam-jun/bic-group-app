@@ -506,19 +506,7 @@ export const groupsApiConfig = {
 };
 
 const groupsDataHelper = {
-  getMyPermissions: async () => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getMyPermissions(),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getMyPermissions: () => withHttpRequestPromise(groupsApiConfig.getMyPermissions),
   getCommunityGroupTree: async (id: string) => {
     try {
       const response: any = await makeHttpRequest(
