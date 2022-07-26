@@ -25,7 +25,7 @@ export interface IParamGetCommunities {
   offset?: number;
   limit?: number;
   sort?: string;
-  preview_members?: boolean;
+  previewMembers?: boolean;
 }
 
 export interface IPreviewMember {

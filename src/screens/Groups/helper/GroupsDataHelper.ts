@@ -1117,19 +1117,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getCommunities: async (params?: IParamGetCommunities) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getCommunities(params),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response.data.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getCommunities, params),
   editCommunityDetail: async (
     communityId: string,
     data: ICommunityDetailEdit,
