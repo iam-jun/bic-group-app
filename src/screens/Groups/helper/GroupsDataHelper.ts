@@ -1052,19 +1052,7 @@ const groupsDataHelper = {
     preview_members?: boolean;
     managed?: boolean;
   }) => withHttpRequestPromise(groupsApiConfig.getJoinedCommunities, params),
-  getCommunityGroups: async (id: string, params: IGetCommunityGroup) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getCommunityGroups(id, params),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response.data?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getCommunityGroups: (id: string, params: IGetCommunityGroup) => withHttpRequestPromise(groupsApiConfig.getCommunityGroups, id, params),
   getCommunityDetail: (communityId: string) => withHttpRequestPromise(groupsApiConfig.getCommunityDetail, communityId),
   getCommunityMembers: (
     communityId: string,

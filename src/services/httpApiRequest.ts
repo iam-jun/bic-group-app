@@ -257,6 +257,7 @@ const mapResponseSuccessBein = (
 
 const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
   let result = false;
+  const uuidRegex = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
   // add apis have param in path to this array
   const apisWithParam = [
     `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/group-structure`,
@@ -265,6 +266,7 @@ const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
     `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*`,
     `${ApiConfig.providers.bein.url}groups/[A-Za-z_$@0-9]*`,
     `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/members`,
+    `${ApiConfig.providers.bein.url}me/communities/${uuidRegex}/groups`,
   ];
   apisWithParam.forEach((api) => {
     if (new RegExp(api, 'g').test(endPoint || '')) {
