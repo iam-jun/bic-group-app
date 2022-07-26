@@ -1,7 +1,4 @@
-import {
-  GROUP_PRIVACY_TYPE,
-  COMMUNITY_PRIVACY_TYPE,
-} from '~/constants/privacyTypes';
+import { GROUP_PRIVACY_TYPE } from '~/constants/privacyTypes';
 import { IFilePicked } from './common';
 import { IUploadType } from '~/configs/resourceConfig';
 
@@ -245,14 +242,6 @@ export interface IGetCommunityGroup {
   list_by?: 'tree' | 'flat';
 }
 
-export interface ICommunityDetailEdit {
-  id: string;
-  name?: string | null;
-  description?: string | null;
-  icon?: string;
-  backgroundImgUrl?: string;
-  privacy?: COMMUNITY_PRIVACY_TYPE;
-}
 export interface IPayloadGroupSchemeAssignments {
   communityId: string;
   data: {groupId: string; schemeId: string}[];

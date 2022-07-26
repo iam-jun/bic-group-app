@@ -1,11 +1,11 @@
-import { GROUP_PRIVACY_TYPE } from '~/constants/privacyTypes';
+import { COMMUNITY_PRIVACY_TYPE } from '~/constants/privacyTypes';
 
 export interface ICommunity {
   id: string;
   groupId: string;
   name: string;
   slug: string;
-  privacy: GROUP_PRIVACY_TYPE;
+  privacy: COMMUNITY_PRIVACY_TYPE;
   description: string;
   icon: string;
   backgroundImgUrl: string;
@@ -67,4 +67,13 @@ export interface ISetCommunitySearchMembers {
   loading?: boolean;
   canLoadMore?: boolean;
   data?: ICommunityMembers[];
+}
+
+export interface ICommunityDetailEdit {
+  id: string;
+  name?: string | null;
+  description?: string | null;
+  icon?: string;
+  backgroundImgUrl?: string;
+  privacy?: COMMUNITY_PRIVACY_TYPE;
 }

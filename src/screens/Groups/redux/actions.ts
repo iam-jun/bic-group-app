@@ -18,7 +18,6 @@ import {
   IGroupMembers,
   IPermission,
   IScheme,
-  ICommunityDetailEdit,
   IPayloadGroupSchemeAssignments,
 } from '~/interfaces/IGroup';
 import { IUser } from '~/interfaces/IAuth';
@@ -30,6 +29,7 @@ import {
   ISetMembers,
   ISetCommunitySearchMembers,
   IParamGetCommunities,
+  ICommunityDetailEdit,
 } from '~/interfaces/ICommunity';
 
 const groupsActions = {

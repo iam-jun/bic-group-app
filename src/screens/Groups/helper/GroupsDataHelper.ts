@@ -1,6 +1,5 @@
 import ApiConfig, { HttpApiRequestConfig } from '~/configs/apiConfig';
 import {
-  ICommunityDetailEdit,
   IGetCommunityGroup,
   IGroupDetailEdit,
   IParamGetGroupPosts,
@@ -11,6 +10,7 @@ import {
   IParamGetCommunities,
   IParamGetCommunityMembers,
   IParamGetDiscoverGroups,
+  ICommunityDetailEdit,
 } from '~/interfaces/ICommunity';
 import { makeHttpRequest, withHttpRequestPromise } from '~/services/httpApiRequest';
 import appConfig from '~/configs/appConfig';
@@ -398,6 +398,18 @@ export const groupsApiConfig = {
     useRetry: true,
     params: { preview_members: true },
   }),
+  editCommunityDetail: (
+    communityId: string,
+    data: ICommunityDetailEdit,
+  ): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.bein.url}communities/${communityId}`,
+    method: 'put',
+    provider: ApiConfig.providers.bein,
+    useRetry: true,
+    data: {
+      ...data,
+    },
+  }),
   getCommunityMembers: (
     communityId: string,
     params?: IParamGetCommunityMembers,
@@ -489,18 +501,6 @@ export const groupsApiConfig = {
     params: {
       ...params,
       key: params?.key?.trim?.() ? params.key : undefined,
-    },
-  }),
-  editCommunityDetail: (
-    communityId: string,
-    data: ICommunityDetailEdit,
-  ): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}communities/${communityId}`,
-    method: 'put',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
-    data: {
-      ...data,
     },
   }),
 };
@@ -1030,6 +1030,10 @@ const groupsDataHelper = {
   }) => withHttpRequestPromise(groupsApiConfig.getJoinedCommunities, params),
   getCommunityGroups: (id: string, params: IGetCommunityGroup) => withHttpRequestPromise(groupsApiConfig.getCommunityGroups, id, params),
   getCommunityDetail: (communityId: string) => withHttpRequestPromise(groupsApiConfig.getCommunityDetail, communityId),
+  editCommunityDetail: (
+    communityId: string,
+    data: ICommunityDetailEdit,
+  ) => withHttpRequestPromise(groupsApiConfig.editCommunityDetail, communityId, data),
   getCommunityMembers: (
     communityId: string,
     params?: IParamGetCommunityMembers,
@@ -1118,22 +1122,6 @@ const groupsDataHelper = {
     }
   },
   getCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getCommunities, params),
-  editCommunityDetail: async (
-    communityId: string,
-    data: ICommunityDetailEdit,
-  ) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.editCommunityDetail(communityId, data),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
 };
 
 export default groupsDataHelper;
