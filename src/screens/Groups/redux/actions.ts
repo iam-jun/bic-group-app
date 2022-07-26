@@ -439,7 +439,7 @@ const groupsActions = {
   getManagedCommunities: (payload: {
     isRefreshing?: boolean;
     refreshNoLoading?: boolean;
-    params?: {managed: boolean; preview_members: boolean};
+    params?: {managed: boolean; previewMembers: boolean};
   }) => ({
     type: groupsTypes.GET_MANAGED_COMMUNITIES,
     payload,

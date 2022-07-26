@@ -237,7 +237,7 @@ export interface IStateList {
 }
 
 export interface IGetCommunityGroup {
-  preview_members?: boolean;
+  previewMembers?: boolean;
   key?: string;
   list_by?: 'tree' | 'flat';
 }

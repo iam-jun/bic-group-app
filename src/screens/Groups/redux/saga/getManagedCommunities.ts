@@ -14,7 +14,7 @@ export default function* getManagedCommunities({
   payload: {
     isRefreshing?: boolean;
     refreshNoLoading?: boolean;
-    params?: {managed: boolean; preview_members: boolean};
+    params?: {managed: boolean; previewMembers: boolean};
   };
 }) {
   try {
@@ -34,7 +34,7 @@ export default function* getManagedCommunities({
     // @ts-ignore
     const resp = yield call(groupsDataHelper.getJoinedCommunities, {
       managed: true,
-      preview_members: true,
+      previewMembers: true,
       limit: appConfig.recordsPerPage,
       offset: isRefreshing || refreshNoLoading ? 0 : ids.length,
       ...params,

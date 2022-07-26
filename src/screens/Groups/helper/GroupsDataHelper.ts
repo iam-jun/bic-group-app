@@ -369,7 +369,7 @@ export const groupsApiConfig = {
     },
   }),
   getJoinedCommunities: (params: {
-    preview_members?: boolean;
+    previewMembers?: boolean;
     managed?: boolean;
   }): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}me/communities`,
@@ -396,7 +396,7 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    params: { preview_members: true },
+    params: { previewMembers: true },
   }),
   editCommunityDetail: (
     communityId: string,
@@ -1025,7 +1025,7 @@ const groupsDataHelper = {
   },
   getDiscoverCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getDiscoverCommunities, params),
   getJoinedCommunities: (params: {
-    preview_members?: boolean;
+    previewMembers?: boolean;
     managed?: boolean;
   }) => withHttpRequestPromise(groupsApiConfig.getJoinedCommunities, params),
   getCommunityGroups: (id: string, params: IGetCommunityGroup) => withHttpRequestPromise(groupsApiConfig.getCommunityGroups, id, params),

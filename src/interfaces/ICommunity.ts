@@ -53,7 +53,7 @@ export interface IParamGetDiscoverGroups {
   offset?: number;
   limit?: number;
   sort?: string;
-  preview_members?: boolean;
+  previewMembers?: boolean;
 }
 
 export interface ISetMembers {

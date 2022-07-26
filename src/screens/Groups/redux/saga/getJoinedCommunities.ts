@@ -17,7 +17,7 @@ export default function* getJoinedCommunities({
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const response = yield call(groupsDataHelper.getJoinedCommunities, {
-      preview_members: true,
+      previewMembers: true,
     });
 
     const communities = response.data;
