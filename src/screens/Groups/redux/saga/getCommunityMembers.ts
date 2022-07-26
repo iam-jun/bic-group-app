@@ -40,16 +40,17 @@ export default function* getCommunityMembers({
     let newDataCount = 0;
     let newDataObj = {};
 
-    Object.keys(resp)?.forEach?.((role: string) => {
+    const members = resp.data;
+    Object.keys(members)?.forEach?.((role: string) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const roles = resp[role] || {};
+      const roles = members[role] || {};
       newDataCount += roles.data?.length || 0;
       newDataObj = {
         ...newDataObj,
         [role]: {
-          name: resp[role]?.name,
-          userCount: resp[role]?.userCount,
+          name: members[role]?.name,
+          userCount: members[role]?.userCount,
           data:
             isRefreshing || !communityMembers?.[role]?.data
               ? [...roles.data]
