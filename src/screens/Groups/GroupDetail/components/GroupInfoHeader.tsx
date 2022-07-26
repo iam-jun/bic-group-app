@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { useState } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import images from '~/resources/images';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
-import {scaleCoverHeight} from '~/theme/dimension';
+import { scaleCoverHeight } from '~/theme/dimension';
 import groupsActions from '../../redux/actions';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import privacyTypes from '~/constants/privacyTypes';
 
 import Image from '~/beinComponents/Image';
@@ -25,7 +25,7 @@ const GroupInfoHeader = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
 
   const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group);
   const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
@@ -40,8 +40,8 @@ const GroupInfoHeader = () => {
     privacy,
   } = groupDetail;
 
-  const privacyData = privacyTypes.find(item => item?.type === privacy) || {};
-  const {icon: iconPrivacy, privacyTitle}: any = privacyData || {};
+  const privacyData = privacyTypes.find((item) => item?.type === privacy) || {};
+  const { icon: iconPrivacy, privacyTitle }: any = privacyData || {};
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -50,51 +50,49 @@ const GroupInfoHeader = () => {
     setCoverHeight(coverHeight);
   };
 
-  const renderCoverImage = () => {
-    return (
-      <View onLayout={onCoverLayout} testID="group_info_header.cover">
-        <Image
-          style={styles.cover}
-          source={backgroundImgUrl || images.img_cover_default}
-        />
-      </View>
-    );
-  };
+  const renderCoverImage = () => (
+    <View onLayout={onCoverLayout} testID="group_info_header.cover">
+      <Image
+        style={styles.cover}
+        source={backgroundImgUrl || images.img_cover_default}
+      />
+    </View>
+  );
 
-  const renderGroupInfoHeader = () => {
-    return (
-      <View style={styles.nameHeader}>
-        <Text.H4 style={styles.nameHeader} testID="group_info_header.name">
-          {groupName}
-        </Text.H4>
-        <View style={styles.groupInfo}>
-          <Icon
-            style={styles.iconSmall}
-            icon={iconPrivacy}
-            size={16}
-            tintColor={theme.colors.neutral80}
-          />
-          <Text.BodyS testID="group_info_header.privacy" useI18n>
-            {privacyTitle}
-          </Text.BodyS>
-          <Text.BodyS> • </Text.BodyS>
-          <Text.BodySMedium testID="group_info_header.member_count">
-            {userCount}
-          </Text.BodySMedium>
-          <Text.BodyS>{` ${t('groups:text_members', {
+  const renderGroupInfoHeader = () => (
+    <View style={styles.nameHeader}>
+      <Text.H4 style={styles.nameHeader} testID="group_info_header.name">
+        {groupName}
+      </Text.H4>
+      <View style={styles.groupInfo}>
+        <Icon
+          style={styles.iconSmall}
+          icon={iconPrivacy}
+          size={16}
+          tintColor={theme.colors.neutral80}
+        />
+        <Text.BodyS testID="group_info_header.privacy" useI18n>
+          {privacyTitle}
+        </Text.BodyS>
+        <Text.BodyS> • </Text.BodyS>
+        <Text.BodySMedium testID="group_info_header.member_count">
+          {userCount}
+        </Text.BodySMedium>
+        <Text.BodyS>
+          {` ${t('groups:text_members', {
             count: userCount,
-          })}`}</Text.BodyS>
-        </View>
+          })}`}
+        </Text.BodyS>
       </View>
-    );
-  };
+    </View>
+  );
 
   const onPressJoin = () => {
-    dispatch(groupsActions.joinNewGroup({groupId, groupName}));
+    dispatch(groupsActions.joinNewGroup({ groupId, groupName }));
   };
 
   const onPressCancelRequest = () => {
-    dispatch(groupsActions.cancelJoinGroup({groupId, groupName}));
+    dispatch(groupsActions.cancelJoinGroup({ groupId, groupName }));
   };
 
   const renderJoinButton = () => {
@@ -103,31 +101,31 @@ const GroupInfoHeader = () => {
     return (
       <Button.Secondary
         testID="group_info_header.join"
-        rightIcon={'Plus'}
-        rightIconProps={{icon: 'Plus', size: 20}}
+        rightIcon="Plus"
+        rightIconProps={{ icon: 'Plus', size: 20 }}
         style={styles.btnGroupAction}
         onPress={onPressJoin}
         color={theme.colors.purple60}
         textColor={theme.colors.white}
         colorHover={theme.colors.purple50}
-        useI18n>
+        useI18n
+      >
         common:btn_join
       </Button.Secondary>
     );
   };
 
-  const renderCancelRequestButton = () => {
-    return (
-      <Button.Secondary
-        testID="group_info_header.cancel"
-        style={styles.btnGroupAction}
-        onPress={onPressCancelRequest}
-        textColor={theme.colors.purple60}
-        useI18n>
-        common:btn_cancel_request
-      </Button.Secondary>
-    );
-  };
+  const renderCancelRequestButton = () => (
+    <Button.Secondary
+      testID="group_info_header.cancel"
+      style={styles.btnGroupAction}
+      onPress={onPressCancelRequest}
+      textColor={theme.colors.purple60}
+      useI18n
+    >
+      common:btn_cancel_request
+    </Button.Secondary>
+  );
 
   return (
     <View style={styles.coverAndInfoHeader} testID="group_info_header">
@@ -150,7 +148,7 @@ const GroupInfoHeader = () => {
 export default GroupInfoHeader;
 
 const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     infoContainer: {
       paddingHorizontal: spacing.padding.large,

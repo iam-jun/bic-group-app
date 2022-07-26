@@ -1,4 +1,4 @@
-import {POST_CONTAINING_VIDEO_PROCESS} from './draftPosts';
+import { POST_CONTAINING_VIDEO_PROCESS } from './draftPosts';
 
 export const CHILD_COMMENT = {
   id: 1335,
@@ -430,10 +430,10 @@ export const NOTIFICATIONS_RESPONSE = {
             createdAt: '2022-05-16T10:53:04.185Z',
             updatedAt: '2022-05-16T10:53:04.185Z',
             reactionsCount: {
-              '0': {
+              0: {
                 grinning: 1,
               },
-              '1': {
+              1: {
                 heart_eyes: 1,
               },
             },
@@ -500,7 +500,7 @@ export const NOTIFICATIONS_RESPONSE = {
             createdAt: '2022-05-16T10:53:04.185Z',
             updatedAt: '2022-05-16T10:53:04.185Z',
             reactionsCount: {
-              '0': {
+              0: {
                 grinning: 1,
               },
             },
@@ -722,7 +722,7 @@ export const ATTACH_NOTIFICATION_PUBLISHED = {
     ...NOTIFICATIONS_RESPONSE.data.list[2].extra,
     type: 'post.video_published',
   },
-  activities: [{...POST_CONTAINING_VIDEO_PROCESS}],
+  activities: [{ ...POST_CONTAINING_VIDEO_PROCESS }],
 };
 
 export const ATTACH_NOTIFICATION_FAILED = {
@@ -731,5 +731,5 @@ export const ATTACH_NOTIFICATION_FAILED = {
     ...NOTIFICATIONS_RESPONSE.data.list[2].extra,
     type: 'post.video_failed',
   },
-  activities: [{...POST_CONTAINING_VIDEO_PROCESS}],
+  activities: [{ ...POST_CONTAINING_VIDEO_PROCESS }],
 };

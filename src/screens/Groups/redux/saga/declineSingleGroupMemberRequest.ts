@@ -1,8 +1,8 @@
 import i18next from 'i18next';
-import {call, put, select} from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 
 import approveDeclineCode from '~/constants/approveDeclineCode';
-import {IToastMessage} from '~/interfaces/common';
+import { IToastMessage } from '~/interfaces/common';
 import showError from '~/store/commonSaga/showError';
 import modalActions from '~/store/modal/actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
@@ -14,7 +14,7 @@ export default function* declineSingleGroupMemberRequest({
   type: string;
   payload: {groupId: string; requestId: string; fullName: string};
 }) {
-  const {groupId, requestId, fullName} = payload;
+  const { groupId, requestId, fullName } = payload;
   try {
     yield call(
       groupsDataHelper.declineSingleGroupMemberRequest,
@@ -23,9 +23,9 @@ export default function* declineSingleGroupMemberRequest({
     );
 
     // Update data state
-    const {groups} = yield select();
-    const {total, ids, items} = groups.groupMemberRequests;
-    const requestItems = {...items};
+    const { groups } = yield select();
+    const { total, ids, items } = groups.groupMemberRequests;
+    const requestItems = { ...items };
     delete requestItems[requestId];
     yield put(
       groupsActions.setGroupMemberRequests({
@@ -38,7 +38,7 @@ export default function* declineSingleGroupMemberRequest({
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
       props: {
-        textProps: {useI18n: true},
+        textProps: { useI18n: true },
         type: 'success',
       },
       toastType: 'normal',
@@ -51,7 +51,7 @@ export default function* declineSingleGroupMemberRequest({
       yield put(
         groupsActions.editGroupMemberRequest({
           id: requestId,
-          data: {isCanceled: true},
+          data: { isCanceled: true },
         }),
       );
       return;

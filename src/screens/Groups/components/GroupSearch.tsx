@@ -1,19 +1,19 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { useEffect, useState } from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated, {
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withSpring,
 } from 'react-native-reanimated';
-import {useDispatch} from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import FlatGroupItem from '~/beinComponents/list/items/FlatGroupItem';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import NoSearchResult from '~/beinFragments/NoSearchResult';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import GroupItemPlaceholder from '~/screens/Groups/components/GroupItemPlaceholder';
 import groupsActions from '~/screens/Groups/redux/actions';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
@@ -28,8 +28,9 @@ const GroupSearch = () => {
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const {isShow, loading, searchKey, result} =
-    useKeySelector(groupsKeySelector.groupSearch) || {};
+  const {
+    isShow, loading, searchKey, result,
+  } = useKeySelector(groupsKeySelector.groupSearch) || {};
 
   const containerStyle = useAnimatedStyle(() => ({
     opacity: showValue.value,
@@ -44,7 +45,7 @@ const GroupSearch = () => {
     const onHideDone = () => {
       _setIsShow(false);
     };
-    showValue.value = withSpring(0, undefined, isFinished => {
+    showValue.value = withSpring(0, undefined, (isFinished) => {
       if (isFinished) {
         runOnJS(onHideDone)();
       }
@@ -52,7 +53,6 @@ const GroupSearch = () => {
   };
 
   useEffect(() => {
-    console.log(`\x1b[36m🐣️ GroupSearch \x1b[0m`);
     if (isShow) {
       dispatch(groupsActions.getGroupSearch(searchKey));
     }
@@ -71,38 +71,34 @@ const GroupSearch = () => {
     return null;
   }
 
-  const renderItem = ({item}: any) => {
-    return (
-      <FlatGroupItem
-        {...item}
-        groupItemTestID="group_search.item"
-        initShowTree={false}
-        hidePath={false}
-        showSmallestChild
-        style={styles.item}
-      />
-    );
-  };
+  const renderItem = ({ item }: any) => (
+    <FlatGroupItem
+      {...item}
+      groupItemTestID="group_search.item"
+      initShowTree={false}
+      hidePath={false}
+      showSmallestChild
+      style={styles.item}
+    />
+  );
 
-  const renderHeader = () => {
-    return (
-      <Text.H6 useI18n style={styles.labelHeader}>
-        common:text_search_results
-      </Text.H6>
-    );
-  };
+  const renderHeader = () => (
+    <Text.H6 useI18n style={styles.labelHeader}>
+      common:text_search_results
+    </Text.H6>
+  );
 
   const renderEmpty = () => {
     if (loading) {
       return (
         <View>
-          {Array.from(Array(10).keys()).map(item => (
-            <GroupItemPlaceholder key={'group_search_placeholder_' + item} />
+          {Array.from(Array(10).keys()).map((item) => (
+            <GroupItemPlaceholder key={`group_search_placeholder_${item}`} />
           ))}
         </View>
       );
     }
-    return <NoSearchResult title={'error:no_group_found_title'} />;
+    return <NoSearchResult title="error:no_group_found_title" />;
   };
 
   return (
@@ -112,9 +108,7 @@ const GroupSearch = () => {
         scrollEnabled={!loading}
         style={styles.list}
         data={loading ? [] : result}
-        keyExtractor={(item, index) =>
-          item?.unique || `group_search_${item}_${index}`
-        }
+        keyExtractor={(item, index) => item?.unique || `group_search_${item}_${index}`}
         renderItem={renderItem}
         ListEmptyComponent={renderEmpty}
         ItemSeparatorComponent={() => (
@@ -126,7 +120,7 @@ const GroupSearch = () => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       position: 'absolute',

@@ -1,6 +1,6 @@
-import {StyleSheet, View, Pressable} from 'react-native';
-import React, {useState} from 'react';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleSheet, View, Pressable } from 'react-native';
+import React, { useState } from 'react';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import SearchInput from '~/beinComponents/inputs/SearchInput';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
@@ -8,17 +8,17 @@ import Header from '~/beinComponents/Header';
 
 import SearchMemberView from './SearchMemberView';
 import MembersContent from './MembersContent';
-import {ICommunityMembers} from '~/interfaces/ICommunity';
-import {useBaseHook} from '~/hooks';
+import { ICommunityMembers } from '~/interfaces/ICommunity';
+import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 
-const CommunityMembers = ({route}: any) => {
-  const {communityId} = route.params;
+const CommunityMembers = ({ route }: any) => {
+  const { communityId } = route.params;
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyles(theme);
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -36,12 +36,13 @@ const CommunityMembers = ({route}: any) => {
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.white}>
-      <Header titleTextProps={{useI18n: true}} title={'groups:title_members'} />
+      <Header titleTextProps={{ useI18n: true }} title="groups:title_members" />
       <View style={styles.searchBar}>
         <Pressable
           testID="community_members.search"
           onPress={onPressSearch}
-          style={styles.searchAndInvite}>
+          style={styles.searchAndInvite}
+        >
           <View pointerEvents="none">
             <SearchInput placeholder={t('groups:text_search_member')} />
           </View>
@@ -64,7 +65,7 @@ const CommunityMembers = ({route}: any) => {
 export default CommunityMembers;
 
 const createStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     searchBar: {

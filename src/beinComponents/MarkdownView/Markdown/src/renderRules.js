@@ -125,7 +125,8 @@ const renderRules = {
         <View key={node.key} style={styles._VIEW_SAFE_list_item}>
           <Text
             style={[modifiedInheritedStylesObj, styles.bullet_list_icon]}
-            accessible={false}>
+            accessible={false}
+          >
             ●
           </Text>
           <View style={styles._VIEW_SAFE_bullet_list_content}>{children}</View>
@@ -135,7 +136,7 @@ const renderRules = {
 
     if (hasParents(parent, 'ordered_list')) {
       const orderedListIndex = parent.findIndex(
-        el => el.type === 'ordered_list',
+        (el) => el.type === 'ordered_list',
       );
 
       const orderedList = parent[orderedListIndex];
@@ -174,11 +175,11 @@ const renderRules = {
   ),
   code_block: (node, children, parent, styles, inheritedStyles = {}) => {
     // we trim new lines off the end of code blocks because the parser sends an extra one.
-    let {content} = node;
+    let { content } = node;
 
     if (
-      typeof node.content === 'string' &&
-      node.content.charAt(node.content.length - 1) === '\n'
+      typeof node.content === 'string'
+      && node.content.charAt(node.content.length - 1) === '\n'
     ) {
       content = node.content.substring(0, node.content.length - 1);
     }
@@ -191,11 +192,11 @@ const renderRules = {
   },
   fence: (node, children, parent, styles, inheritedStyles = {}) => {
     // we trim new lines off the end of code blocks because the parser sends an extra one.
-    let {content} = node;
+    let { content } = node;
 
     if (
-      typeof node.content === 'string' &&
-      node.content.charAt(node.content.length - 1) === '\n'
+      typeof node.content === 'string'
+      && node.content.charAt(node.content.length - 1) === '\n'
     ) {
       content = node.content.substring(0, node.content.length - 1);
     }
@@ -244,7 +245,8 @@ const renderRules = {
     <Text
       key={node.key}
       style={styles.link}
-      onPress={() => openUrl(node.attributes.href, onLinkPress)}>
+      onPress={() => openUrl(node.attributes.href, onLinkPress)}
+    >
       {children}
     </Text>
   ),
@@ -252,7 +254,8 @@ const renderRules = {
     <TouchableWithoutFeedback
       key={node.key}
       onPress={() => openUrl(node.attributes.href, onLinkPress)}
-      style={styles.blocklink}>
+      style={styles.blocklink}
+    >
       <View style={styles.image}>{children}</View>
     </TouchableWithoutFeedback>
   ),
@@ -266,13 +269,10 @@ const renderRules = {
     allowedImageHandlers,
     defaultImageHandler,
   ) => {
-    const {src, alt} = node.attributes;
+    const { src, alt } = node.attributes;
 
     // we check that the source starts with at least one of the elements in allowedImageHandlers
-    const show =
-      allowedImageHandlers.filter(value => {
-        return src.toLowerCase().startsWith(value.toLowerCase());
-      }).length > 0;
+    const show = allowedImageHandlers.filter((value) => src.toLowerCase().startsWith(value.toLowerCase())).length > 0;
 
     if (show === false && defaultImageHandler === null) {
       return null;

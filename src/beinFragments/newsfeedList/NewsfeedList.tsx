@@ -1,4 +1,6 @@
-import React, {FC, memo, useEffect, useRef, useState} from 'react';
+import React, {
+  FC, memo, useEffect, useRef, useState,
+} from 'react';
 import {
   View,
   StyleSheet,
@@ -8,31 +10,32 @@ import {
   DeviceEventEmitter,
   FlatList,
 } from 'react-native';
-import {debounce, throttle} from 'lodash';
+import { debounce, throttle } from 'lodash';
 import {
   ExtendedTheme,
   useFocusEffect,
   useTheme,
 } from '@react-navigation/native';
 
-import dimension, {scaleSize} from '~/theme/dimension';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { FlashList } from '@shopify/flash-list';
+import Animated, { useSharedValue } from 'react-native-reanimated';
+import { FlashListProps } from '@shopify/flash-list/src/FlashListProps';
+import dimension, { scaleSize } from '~/theme/dimension';
 
 import Text from '~/beinComponents/Text';
 import PostView from '~/screens/Post/components/PostView';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
-import {useTabPressListener} from '~/hooks/navigation';
-import {ITabTypes} from '~/interfaces/IRouter';
+import { useTabPressListener } from '~/hooks/navigation';
+import { ITabTypes } from '~/interfaces/IRouter';
 import Image from '~/beinComponents/Image';
 import images from '~/resources/images';
 import FloatingCreatePost from '~/beinFragments/FloatingCreatePost';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import NoticePanel from '~/screens/Home/Newsfeed/components/NoticePanel';
-import {FlashList} from '@shopify/flash-list';
-import Animated, {useSharedValue} from 'react-native-reanimated';
-import {FlashListProps} from '@shopify/flash-list/src/FlashListProps';
-import {IPostActivity} from '~/interfaces/IPost';
+import { IPostActivity } from '~/interfaces/IPost';
 import spacing from '~/theme/spacing';
+
 export interface NewsfeedListProps {
   data?: any;
   refreshing?: boolean;
@@ -82,11 +85,9 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     }
 
     const isDown = offsetY - prevOffsetYShared.value > 2;
-    const isDown5Percent =
-      ((offsetY - prevOffsetYShared.value) * 100) / screenHeight >= 5;
+    const isDown5Percent = ((offsetY - prevOffsetYShared.value) * 100) / screenHeight >= 5;
     const isUp = prevOffsetYShared.value - offsetY > 2;
-    const isUp5Percent =
-      ((prevOffsetYShared.value - offsetY) * 100) / screenHeight >= 5;
+    const isUp5Percent = ((prevOffsetYShared.value - offsetY) * 100) / screenHeight >= 5;
 
     const showFloating = offsetY > CREATE_POST_HEADER_HEIGHT;
     emit('stopAllVideo');
@@ -121,13 +122,11 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   };
 
   useFocusEffect(
-    React.useCallback(() => {
-      return () => {
-        // setTimeout(() => {
-        DeviceEventEmitter.emit('showHeader', true);
-        DeviceEventEmitter.emit('showBottomBar', true);
-        // }, 100);
-      };
+    React.useCallback(() => () => {
+      // setTimeout(() => {
+      DeviceEventEmitter.emit('showHeader', true);
+      DeviceEventEmitter.emit('showBottomBar', true);
+      // }, 100);
     }, []),
   );
 
@@ -175,17 +174,15 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     }
   };
 
-  const renderItem = ({item}: any) => {
-    return (
-      <PostView
-        postId={item.id}
-        style={styles.itemStyle}
-        testID="newsfeed_list.post.item"
-        btnReactTestID="newsfeed_list.post.btn_react"
-        btnCommentTestID="newsfeed_list.post.btn_comment"
-      />
-    );
-  };
+  const renderItem = ({ item }: any) => (
+    <PostView
+      postId={item.id}
+      style={styles.itemStyle}
+      testID="newsfeed_list.post.item"
+      btnReactTestID="newsfeed_list.post.btn_react"
+      btnCommentTestID="newsfeed_list.post.btn_comment"
+    />
+  );
 
   const renderPlaceholder = () => {
     if (!initializing) {
@@ -205,58 +202,57 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     if (data?.length === 0 && !canLoadMore) {
       return (
         <FlatList
-          testID={'newsfeed_list.empty_list'}
+          testID="newsfeed_list.empty_list"
           data={[]}
           renderItem={null}
-          refreshControl={
+          refreshControl={(
             <RefreshControl
-              testID={'newsfeed_list.refresh_control'}
+              testID="newsfeed_list.refresh_control"
               progressViewOffset={refreshControlOffset}
               refreshing={!!refreshing}
               onRefresh={() => onRefresh?.()}
             />
-          }
-          ListEmptyComponent={
+          )}
+          ListEmptyComponent={(
             <NewsfeedListEmpty
               styles={styles}
               HeaderComponent={HeaderComponent}
               theme={theme}
             />
-          }
+          )}
         />
       );
     }
     return null;
   };
 
-  const renderFooter = () => {
-    return (
-      <View style={styles.listFooter}>
-        {canLoadMore && !refreshing && (
-          <ActivityIndicator
-            testID={'newsfeed_list.activity_indicator'}
-            color={theme.colors.gray20}
-          />
-        )}
-        {!refreshing && !canLoadMore && (
-          <>
-            <Image
-              resizeMode={'contain'}
-              style={[styles.imgEmpty, {marginTop: spacing.margin.base}]}
-              source={images.img_empty_cant_load_more}
-            />
-            <Text.H6 useI18n>post:newsfeed:title_empty_cant_load_more</Text.H6>
-            <Text.BodyS
-              useI18n
-              color={theme.colors.gray50}
-              style={{marginBottom: spacing.margin.large}}>
-              post:newsfeed:text_empty_cant_load_more
-            </Text.BodyS>
-          </>
-        )}
-      </View>
-    );
-  };
+  const renderFooter = () => (
+    <View style={styles.listFooter}>
+      {canLoadMore && !refreshing && (
+      <ActivityIndicator
+        testID="newsfeed_list.activity_indicator"
+        color={theme.colors.gray20}
+      />
+      )}
+      {!refreshing && !canLoadMore && (
+      <>
+        <Image
+          resizeMode="contain"
+          style={[styles.imgEmpty, { marginTop: spacing.margin.base }]}
+          source={images.img_empty_cant_load_more}
+        />
+        <Text.H6 useI18n>post:newsfeed:title_empty_cant_load_more</Text.H6>
+        <Text.BodyS
+          useI18n
+          color={theme.colors.gray50}
+          style={{ marginBottom: spacing.margin.large }}
+        >
+          post:newsfeed:text_empty_cant_load_more
+        </Text.BodyS>
+      </>
+      )}
+    </View>
+  );
 
   return (
     <View testID="newsfeed_list" style={styles.container}>
@@ -269,14 +265,14 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
           onScroll={onScroll}
           onLoad={onLoaded}
           refreshing
-          refreshControl={
+          refreshControl={(
             <RefreshControl
-              testID={'newsfeed_list.refresh_control'}
+              testID="newsfeed_list.refresh_control"
               progressViewOffset={refreshControlOffset}
               refreshing={!!refreshing}
               onRefresh={() => onRefresh?.()}
             />
-          }
+          )}
           showsHorizontalScrollIndicator={false}
           onRefresh={onRefresh}
           onEndReached={_onEndReached}
@@ -294,7 +290,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
   );
 };
 
-const NewsfeedListHeader = ({HeaderComponent}: any) => {
+const NewsfeedListHeader = ({ HeaderComponent }: any) => {
   const insets = useSafeAreaInsets();
   const theme = useTheme() as any;
   const styles = createStyle(theme, insets);
@@ -307,27 +303,25 @@ const NewsfeedListHeader = ({HeaderComponent}: any) => {
   );
 };
 
-const NewsfeedListEmpty = ({styles, HeaderComponent, theme}: any) => {
-  return (
-    <View testID={'newsfeed_list.empty_view'} style={styles.emptyContainer}>
-      {!!HeaderComponent && HeaderComponent}
-      <View style={styles.listFooter}>
-        <Image
-          resizeMode={'contain'}
-          style={styles.imgEmpty}
-          source={images.img_empty_no_post}
-        />
-        <Text.H6 useI18n>post:newsfeed:title_empty_no_post</Text.H6>
-        <Text.BodyS useI18n color={theme.colors.gray50}>
-          post:newsfeed:text_empty_no_post
-        </Text.BodyS>
-      </View>
+const NewsfeedListEmpty = ({ styles, HeaderComponent, theme }: any) => (
+  <View testID="newsfeed_list.empty_view" style={styles.emptyContainer}>
+    {!!HeaderComponent && HeaderComponent}
+    <View style={styles.listFooter}>
+      <Image
+        resizeMode="contain"
+        style={styles.imgEmpty}
+        source={images.img_empty_no_post}
+      />
+      <Text.H6 useI18n>post:newsfeed:title_empty_no_post</Text.H6>
+      <Text.BodyS useI18n color={theme.colors.gray50}>
+        post:newsfeed:text_empty_no_post
+      </Text.BodyS>
     </View>
-  );
-};
+  </View>
+);
 
 const createStyle = (theme: ExtendedTheme, insets: any) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

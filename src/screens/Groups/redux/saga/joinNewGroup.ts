@@ -1,10 +1,11 @@
 import i18next from 'i18next';
-import {put, call, select} from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 
+import { AxiosResponse } from 'axios';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import * as modalActions from '~/store/modal/actions';
-import {IToastMessage} from '~/interfaces/common';
+import { IToastMessage } from '~/interfaces/common';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import showError from '~/store/commonSaga/showError';
 
@@ -15,7 +16,7 @@ export default function* joinNewGroup({
   payload: {groupId: string; groupName: string};
 }) {
   try {
-    const {groupId, groupName} = payload;
+    const { groupId, groupName } = payload;
 
     // @ts-ignore
     const response = yield call(groupsDataHelper.joinGroup, groupId);
@@ -24,7 +25,7 @@ export default function* joinNewGroup({
 
     // update button Join/Cancel/View status on Discover groups
     yield put(
-      groupsActions.editDiscoverGroupItem({id: groupId, data: {joinStatus}}),
+      groupsActions.editDiscoverGroupItem({ id: groupId, data: { joinStatus } }),
     );
 
     if (hasRequested) {

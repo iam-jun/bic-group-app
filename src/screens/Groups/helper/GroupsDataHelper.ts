@@ -1,4 +1,4 @@
-import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
+import ApiConfig, { HttpApiRequestConfig } from '~/configs/apiConfig';
 import {
   ICommunityDetailEdit,
   IGetCommunityGroup,
@@ -12,7 +12,7 @@ import {
   IParamGetCommunityMembers,
   IParamGetDiscoverGroups,
 } from '~/interfaces/ICommunity';
-import {makeHttpRequest} from '~/services/httpApiRequest';
+import { makeHttpRequest } from '~/services/httpApiRequest';
 import appConfig from '~/configs/appConfig';
 
 export const groupsApiConfig = {
@@ -47,7 +47,7 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    ...(key ? {params: {key}} : {}),
+    ...(key ? { params: { key } } : {}),
   }),
   putGroupStructureMoveToTarget: (
     communityId: string,
@@ -72,7 +72,7 @@ export const groupsApiConfig = {
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    data: {status},
+    data: { status },
   }),
   getPermissionCategories: (
     scope?: 'SYSTEM' | 'COMMUNITY' | 'GROUP',
@@ -81,7 +81,7 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    params: {scope},
+    params: { scope },
   }),
   getSystemScheme: (): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}system-scheme`,
@@ -109,7 +109,7 @@ export const groupsApiConfig = {
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    data: {data},
+    data: { data },
   }),
   updateCommunityScheme: (
     communityId: string,
@@ -202,7 +202,7 @@ export const groupsApiConfig = {
     useRetry: true,
     params: {
       ...params,
-      key: !!params?.key?.trim?.() ? params.key : undefined,
+      key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
   getInfoGroups: (ids: string): HttpApiRequestConfig => ({
@@ -239,7 +239,7 @@ export const groupsApiConfig = {
     useRetry: true,
     params: {
       ...params,
-      key: !!params?.key?.trim?.() ? params.key : undefined,
+      key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
   addUsers: (groupId: string, userIds: string[]): HttpApiRequestConfig => ({
@@ -314,7 +314,7 @@ export const groupsApiConfig = {
     params: {
       ...params,
       sort: 'updated_at:desc',
-      key: !!params?.key?.trim?.() ? params.key : undefined,
+      key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
   approveSingleGroupMemberRequest: (
@@ -365,7 +365,7 @@ export const groupsApiConfig = {
     useRetry: true,
     params: {
       ...params,
-      key: !!params?.key?.trim?.() ? params.key : undefined,
+      key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
   getJoinedCommunities: (params: {
@@ -388,7 +388,7 @@ export const groupsApiConfig = {
     useRetry: true,
     params: {
       ...otherParams,
-      key: !!otherParams?.key?.trim?.() ? otherParams.key : undefined,
+      key: otherParams?.key?.trim?.() ? otherParams.key : undefined,
     },
   }),
   getCommunityDetail: (communityId: string): HttpApiRequestConfig => ({
@@ -396,7 +396,7 @@ export const groupsApiConfig = {
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    params: {preview_members: true},
+    params: { preview_members: true },
   }),
   getCommunityMembers: (
     communityId: string,
@@ -408,7 +408,7 @@ export const groupsApiConfig = {
     useRetry: true,
     params: {
       ...params,
-      key: !!params?.key?.trim?.() ? params.key : undefined,
+      key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
   getDiscoverGroups: (
@@ -444,7 +444,7 @@ export const groupsApiConfig = {
     params: {
       ...params,
       sort: 'updated_at:desc',
-      key: !!params?.key?.trim?.() ? params.key : undefined,
+      key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
   approveSingleCommunityMemberRequest: (
@@ -488,7 +488,7 @@ export const groupsApiConfig = {
     useRetry: true,
     params: {
       ...params,
-      key: !!params?.key?.trim?.() ? params.key : undefined,
+      key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
   editCommunityDetail: (
@@ -513,9 +513,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -527,9 +526,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -541,9 +539,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -556,7 +553,7 @@ const groupsDataHelper = {
     try {
       if (!communityId || !groupId) {
         return Promise.reject(
-          'getCommunityStructureMoveTargets invalid params',
+          new Error('getCommunityStructureMoveTargets invalid params'),
         );
       }
       const response: any = await makeHttpRequest(
@@ -568,9 +565,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -582,7 +578,7 @@ const groupsDataHelper = {
   ) => {
     try {
       if (!communityId || !moveId || !targetId) {
-        return Promise.reject('putGroupStructureMoveToTarget invalid params');
+        return Promise.reject(new Error('putGroupStructureMoveToTarget invalid params'));
       }
       const response: any = await makeHttpRequest(
         groupsApiConfig.putGroupStructureMoveToTarget(
@@ -593,9 +589,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -607,7 +602,7 @@ const groupsDataHelper = {
   ) => {
     try {
       if (!communityId || !groupId) {
-        return Promise.reject('putGroupStructureCollapseStatus invalid params');
+        return Promise.reject(new Error('putGroupStructureCollapseStatus invalid params'));
       }
       const response: any = await makeHttpRequest(
         groupsApiConfig.putGroupStructureCollapseStatus(
@@ -618,9 +613,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -632,9 +626,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -646,9 +639,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -656,23 +648,22 @@ const groupsDataHelper = {
   getCommunityScheme: async (communityId: string) => {
     try {
       if (!communityId) {
-        return Promise.reject('getCommunityScheme invalid communityId');
+        return Promise.reject(new Error('getCommunityScheme invalid communityId'));
       }
       const response: any = await makeHttpRequest(
         groupsApiConfig.getCommunityScheme(communityId),
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
   },
   updateCommunityScheme: async (communityId: string, scheme: IScheme) => {
     if (!communityId || !scheme) {
-      return Promise.reject('updateCommunityScheme invalid data');
+      return Promise.reject(new Error('updateCommunityScheme invalid data'));
     }
     try {
       const response: any = await makeHttpRequest(
@@ -680,9 +671,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -690,16 +680,15 @@ const groupsDataHelper = {
   deleteCommunityScheme: async (communityId: string) => {
     try {
       if (!communityId) {
-        return Promise.reject('deleteCommunityScheme invalid communityId');
+        return Promise.reject(new Error('deleteCommunityScheme invalid communityId'));
       }
       const response: any = await makeHttpRequest(
         groupsApiConfig.deleteCommunityScheme(communityId),
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -707,16 +696,15 @@ const groupsDataHelper = {
   getSchemes: async (communityId: string) => {
     try {
       if (!communityId) {
-        return Promise.reject('getSchemes invalid communityId');
+        return Promise.reject(new Error('getSchemes invalid communityId'));
       }
       const response: any = await makeHttpRequest(
         groupsApiConfig.getSchemes(communityId),
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -724,16 +712,15 @@ const groupsDataHelper = {
   getGroupScheme: async (communityId: string, schemeId: string) => {
     try {
       if (!communityId || !schemeId) {
-        return Promise.reject('getGroupScheme invalid communityId or schemeId');
+        return Promise.reject(new Error('getGroupScheme invalid communityId or schemeId'));
       }
       const response: any = await makeHttpRequest(
         groupsApiConfig.getGroupScheme(communityId, schemeId),
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -745,24 +732,22 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
   },
   putGroupSchemeAssignments: async (params: IPayloadGroupSchemeAssignments) => {
     try {
-      const {communityId, data} = params || {};
+      const { communityId, data } = params || {};
       const response: any = await makeHttpRequest(
         groupsApiConfig.putGroupSchemeAssignments(communityId, data),
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -774,23 +759,22 @@ const groupsDataHelper = {
   ) => {
     try {
       if (!communityId || !schemeId || !schemeData) {
-        return Promise.reject('updateGroupScheme invalid inputs');
+        return Promise.reject(new Error('updateGroupScheme invalid inputs'));
       }
       const response: any = await makeHttpRequest(
         groupsApiConfig.updateGroupScheme(communityId, schemeId, schemeData),
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
   },
   postCreateSchemePermission: async (communityId: string, scheme: IScheme) => {
     if (!communityId || !scheme) {
-      return Promise.reject('postCreateSchemePermission invalid data');
+      return Promise.reject(new Error('postCreateSchemePermission invalid data'));
     }
     try {
       const response: any = await makeHttpRequest(
@@ -798,9 +782,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -812,9 +795,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -826,9 +808,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -844,9 +825,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data?.data?.list) {
         return Promise.resolve(response?.data?.data?.list);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -858,9 +838,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -872,9 +851,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -886,9 +864,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -900,9 +877,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -914,9 +890,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -928,9 +903,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -942,9 +916,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -956,9 +929,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -970,9 +942,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -984,9 +955,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -998,9 +968,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1012,9 +981,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1026,9 +994,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1043,9 +1010,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1057,9 +1023,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1074,9 +1039,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1088,9 +1052,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1102,9 +1065,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1116,9 +1078,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1133,9 +1094,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1147,9 +1107,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1161,9 +1120,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1178,9 +1136,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1195,9 +1152,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1209,9 +1165,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1223,9 +1178,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1237,9 +1191,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1257,9 +1210,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1277,9 +1229,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1291,9 +1242,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1305,9 +1255,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1319,9 +1268,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response.data.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -1336,9 +1284,8 @@ const groupsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }

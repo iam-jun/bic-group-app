@@ -1,5 +1,5 @@
-import {ISignUpResult} from 'amazon-cognito-identity-js';
-import {GENDER_TYPE, RELATIONSHIP_TYPE} from './IEditUser';
+import { ISignUpResult } from 'amazon-cognito-identity-js';
+import { GENDER_TYPE, RELATIONSHIP_TYPE } from './IEditUser';
 
 // Actiontype
 export interface ISignIn {
@@ -40,8 +40,8 @@ export interface IUserResponse extends IUser {
   username: string;
   signInUserSession?: any;
   attributes?: any;
-  name: string; //merge from attributes
-  email: string; //merge from attributes
+  name: string; // merge from attributes
+  email: string; // merge from attributes
 }
 
 export interface IForgotPasswordError {
@@ -100,7 +100,7 @@ export interface IUserEdit {
   avatar?: string;
   backgroundImgUrl?: string;
   phone?: string;
-  country_code?: string;
+  country_code?: string|null;
   address?: string;
   language?: string[];
   description?: string;

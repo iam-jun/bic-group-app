@@ -1,15 +1,15 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 import React from 'react';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import i18next from 'i18next';
 
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import Avatar from '~/beinComponents/Avatar';
 import Text from '~/beinComponents/Text';
 import ListView from '~/beinComponents/list/ListView';
 
-import {IPreviewMember} from '~/interfaces/ICommunity';
+import { IPreviewMember } from '~/interfaces/ICommunity';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import spacing from '~/theme/spacing';
 
@@ -17,11 +17,9 @@ const PreviewMembers = () => {
   const theme: ExtendedTheme = useTheme();
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const {userCount, members} = infoDetail;
+  const { userCount, members } = infoDetail;
 
-  const renderItem = ({item}: {item: IPreviewMember}) => {
-    return <Avatar.Small isRounded source={item.avatar} />;
-  };
+  const renderItem = ({ item }: {item: IPreviewMember}) => <Avatar.Small isRounded source={item.avatar} />;
 
   const renderMembersDescription = () => {
     let memberText: string;
@@ -41,7 +39,8 @@ const PreviewMembers = () => {
       <Text.BodyS
         testID="preview_members.description"
         color={theme.colors.gray50}
-        style={styles.memberDescriptionText}>
+        style={styles.memberDescriptionText}
+      >
         {memberText}
       </Text.BodyS>
     );

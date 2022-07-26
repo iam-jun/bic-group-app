@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unstable-nested-components */
 import _ from 'lodash';
 import React from 'react';
 import {
@@ -10,13 +11,13 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import items, {IListViewItem} from '~/beinComponents/list/items';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import items, { IListViewItem } from '~/beinComponents/list/items';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import loadings from '~/beinComponents/list/loadings';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 
 import spacing from '~/theme/spacing';
 
@@ -104,14 +105,14 @@ const ListView: React.FC<ListViewProps> = ({
 }: ListViewProps) => {
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const {colors} = useTheme() as ExtendedTheme;
+  const { colors } = useTheme() as ExtendedTheme;
 
   const ItemComponent = items[type] || PrimaryItem;
   const LoadingPlaceholder = loadings[type];
 
-  const _renderItem = ({item, index}: {item: any; index: number}) => {
+  const _renderItem = ({ item, index }: {item: any; index: number}) => {
     if (renderItem) {
-      return renderItem({item, index});
+      return renderItem({ item, index });
     }
 
     let itemPath = '';
@@ -119,7 +120,7 @@ const ListView: React.FC<ListViewProps> = ({
 
     switch (type) {
       case 'menu':
-        itemPath = item['path'];
+        itemPath = item.path;
         break;
       case 'notification':
         itemPath = item.id;
@@ -134,7 +135,8 @@ const ListView: React.FC<ListViewProps> = ({
         testID={`list_view.item_wrapper.${index}`}
         disabled={!isInternetReachable || !onItemPress || item.disableClick}
         onPress={(e: any) => onItemPress && onItemPress(item, e)}
-        onLongPress={(e: any) => onItemLongPress && onItemLongPress(item, e)}>
+        onLongPress={(e: any) => onItemLongPress && onItemLongPress(item, e)}
+      >
         <ItemComponent
           testID={itemTestID ? `${itemTestID}.item.${index}` : undefined}
           {...item}
@@ -154,7 +156,7 @@ const ListView: React.FC<ListViewProps> = ({
   const _renderItemSeparator = () => {
     if (!showItemSeparator) {
       return null;
-    } else if (renderItemSeparator) {
+    } if (renderItemSeparator) {
       return renderItemSeparator();
     }
     return (
@@ -172,14 +174,14 @@ const ListView: React.FC<ListViewProps> = ({
       if (LoadingPlaceholder) {
         return (
           <View testID="list_view.loading_placeholder">
-            {Array.from(Array(10).keys()).map(item => (
+            {Array.from(Array(10).keys()).map((item) => (
               <LoadingPlaceholder key={`loading_placeholder_${item}`} />
             ))}
           </View>
         );
       }
       return (
-        <View style={{marginTop: spacing.margin.large}}>
+        <View style={{ marginTop: spacing.margin.large }}>
           <ActivityIndicator
             color={colors.gray40}
             testID="list_view.indicator.loading"
@@ -191,38 +193,38 @@ const ListView: React.FC<ListViewProps> = ({
 
   return (
     <View
-      style={StyleSheet.flatten([isFullView && {flex: 1}, containerStyle])}
-      testID="list_view">
+      style={StyleSheet.flatten([isFullView && { flex: 1 }, containerStyle])}
+      testID="list_view"
+    >
       {title && (
         <Text.ButtonM
           testID="list_view.title"
           style={{
             marginVertical: spacing.margin.small,
             marginHorizontal: spacing.margin.base,
-          }}>
+          }}
+        >
           {title}
         </Text.ButtonM>
       )}
       {_renderLoading()}
       <FlatList
         testID="list_view.flat_list"
-        showsVerticalScrollIndicator={true}
+        showsVerticalScrollIndicator
         ref={listRef}
         data={data}
         style={listStyle}
         horizontal={horizontal}
-        renderItem={item => _renderItem(item)}
+        renderItem={(item) => _renderItem(item)}
         initialNumToRender={10}
         ListHeaderComponent={ListHeaderComponent}
         ListFooterComponent={ListFooterComponent}
         ListEmptyComponent={ListEmptyComponent}
         ItemSeparatorComponent={_renderItemSeparator}
         keyboardShouldPersistTaps={keyboardShouldPersistTaps}
-        keyExtractor={(item, index) =>
-          item.id || item._id
-            ? `list-${type}-${index}-${item.id || item._id}`
-            : _.uniqueId(`list-${type}-${index}`)
-        }
+        keyExtractor={(item, index) => (item.id || item._id
+          ? `list-${type}-${index}-${item.id || item._id}`
+          : _.uniqueId(`list-${type}-${index}`))}
         refreshControl={
           onRefresh ? (
             <RefreshControl
@@ -237,7 +239,7 @@ const ListView: React.FC<ListViewProps> = ({
         {...props}
       />
       {loadingMore && (
-        <ActivityIndicator testID={'list_view.indicator.loading_more'} />
+        <ActivityIndicator testID="list_view.indicator.loading_more" />
       )}
     </View>
   );

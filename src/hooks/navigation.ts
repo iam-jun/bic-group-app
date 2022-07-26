@@ -1,11 +1,11 @@
-import {useFocusEffect} from '@react-navigation/native';
-import {useCallback, useEffect} from 'react';
-import {DeviceEventEmitter} from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useEffect } from 'react';
+import { DeviceEventEmitter } from 'react-native';
 
-import {NAVIGATION_BACK_PRESSED} from '~/configs/navigator';
-import {ITabTypes} from '~/interfaces/IRouter';
-import {withNavigation} from '~/router/helper';
-import {rootNavigationRef} from '~/router/navigator/refs';
+import { NAVIGATION_BACK_PRESSED } from '~/configs/navigator';
+import { ITabTypes } from '~/interfaces/IRouter';
+import { withNavigation } from '~/router/helper';
+import { rootNavigationRef } from '~/router/refs';
 
 export const useRootNavigation = () => {
   const rootNavigation = withNavigation(rootNavigationRef);

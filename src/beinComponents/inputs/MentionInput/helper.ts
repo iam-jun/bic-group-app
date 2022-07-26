@@ -1,5 +1,5 @@
-import {DeviceEventEmitter, Platform} from 'react-native';
-import {AT_MENTION_REGEX} from '~/constants/autocomplete';
+import { DeviceEventEmitter, Platform } from 'react-native';
+import { AT_MENTION_REGEX } from '~/constants/autocomplete';
 import actions from '~/beinComponents/inputs/MentionInput/redux/actions';
 
 export interface ICursorPositionChange {
@@ -40,6 +40,7 @@ export function switchKeyboardForCodeBlocks(
 
     const matches = [];
     let nextMatch;
+    // eslint-disable-next-line no-cond-assign
     while ((nextMatch = regexForCodeBlock.exec(value)) !== null) {
       matches.push({
         startOfMatch: regexForCodeBlock.lastIndex - nextMatch[0].length,
@@ -48,9 +49,8 @@ export function switchKeyboardForCodeBlocks(
     }
 
     const cursorIsInsideCodeBlock = matches.some(
-      match =>
-        cursorPosition >= match.startOfMatch &&
-        cursorPosition <= match.endOfMatch,
+      (match) => cursorPosition >= match.startOfMatch
+        && cursorPosition <= match.endOfMatch,
     );
 
     // 'email-address' keyboardType prevents iOS emdash autocorrect
@@ -87,7 +87,7 @@ export const completeMention = ({
   DeviceEventEmitter.emit('mention-input-on-complete-mention', completedDraft);
   dispatch(actions.setData([]));
 
-  dispatch(actions.addTempSelected({[mention]: {id: item?.id, data: item}}));
+  dispatch(actions.addTempSelected({ [mention]: { id: item?.id, data: item } }));
 
   // For testing output
   return {
@@ -103,7 +103,7 @@ export const checkRunSearch = (text: string, groupIds: any, dispatch: any) => {
 
   if (_matchTerm !== null && !_matchTerm.endsWith(' ')) {
     flagRun = true;
-    dispatch(actions.runSearch({group_ids: groupIds, key: _matchTerm}));
+    dispatch(actions.runSearch({ group_ids: groupIds, key: _matchTerm }));
   } else {
     dispatch(actions.setData([]));
   }

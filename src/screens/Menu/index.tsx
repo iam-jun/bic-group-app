@@ -1,7 +1,7 @@
 import i18next from 'i18next';
-import React, {useEffect} from 'react';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {useDispatch} from 'react-redux';
+import React, { useEffect } from 'react';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import Divider from '~/beinComponents/Divider';
 import Header from '~/beinComponents/Header';
@@ -15,14 +15,14 @@ import settings, {
   logoutMenu,
   postFeatureMenu,
 } from '~/constants/settings';
-import {useUserIdAuth} from '~/hooks/auth';
-import {useRootNavigation} from '~/hooks/navigation';
-import {useKeySelector} from '~/hooks/selector';
-import {ISetting} from '~/interfaces/common';
+import { useUserIdAuth } from '~/hooks/auth';
+import { useRootNavigation } from '~/hooks/navigation';
+import { useKeySelector } from '~/hooks/selector';
+import { ISetting } from '~/interfaces/common';
 
 import images from '~/resources/images';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import menuStack from '~/router/navigator/MainStack/MenuStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
+import menuStack from '~/router/navigator/MainStack/stacks/menuStack/stack';
 import mainStack from '~/router/navigator/MainStack/stack';
 import authActions from '~/screens/Auth/redux/actions';
 import menuActions from '~/screens/Menu/redux/actions';
@@ -32,15 +32,15 @@ import spacing from '~/theme/spacing';
 
 const Menu = (): React.ReactElement => {
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
-  const {id, fullname, email, avatar} =
-    useKeySelector(menuKeySelector.myProfile) || {};
+  const {
+    id, fullname, email, avatar,
+  } = useKeySelector(menuKeySelector.myProfile) || {};
   const currentUserId = useUserIdAuth();
 
   useEffect(() => {
-    if (!!currentUserId)
-      dispatch(menuActions.getMyProfile({userId: currentUserId}));
+    if (currentUserId) dispatch(menuActions.getMyProfile({ userId: currentUserId }));
   }, []);
 
   const onSettingPress = (item: ISetting) => {
@@ -73,7 +73,7 @@ const Menu = (): React.ReactElement => {
   };
 
   const goToMyProfile = () => {
-    rootNavigation.navigate(mainStack.userProfile, {userId: id});
+    rootNavigation.navigate(mainStack.userProfile, { userId: id });
   };
 
   const renderDivider = () => <Divider style={styles.divider} />;
@@ -84,29 +84,25 @@ const Menu = (): React.ReactElement => {
   }: {
     data: Array<any>;
     itemTestID?: string;
-  }) => {
-    return (
-      <View>
-        {data.map((item, index) => {
-          return (
-            <MenuItem
-              title={item.title}
-              key={`menu_${item.type}`}
-              onPress={() => onSettingPress(item)}
-              icon={item.icon}
-              testID={itemTestID ? `${itemTestID}.item.${index}` : undefined}
-              rightSubTitle={item.rightSubTitle}
-              type={item.type}
-            />
-          );
-        })}
-      </View>
-    );
-  };
+  }) => (
+    <View>
+      {data.map((item, index) => (
+        <MenuItem
+          title={item.title}
+          key={`menu_${item.type}`}
+          onPress={() => onSettingPress(item)}
+          icon={item.icon}
+          testID={itemTestID ? `${itemTestID}.item.${index}` : undefined}
+          rightSubTitle={item.rightSubTitle}
+          type={item.type}
+        />
+      ))}
+    </View>
+  );
 
   return (
     <ScreenWrapper testID="UserProfile" style={styles.container} isFullView>
-      <Header hideBack title="tabs:menus" titleTextProps={{useI18n: true}} />
+      <Header hideBack title="tabs:menus" titleTextProps={{ useI18n: true }} />
       <ScrollView showsVerticalScrollIndicator={false}>
         <HeaderAvatarView
           firstLabel={fullname}

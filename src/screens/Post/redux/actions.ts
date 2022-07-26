@@ -32,16 +32,15 @@ import {
   IPayloadDeleteComment,
   ICommentData,
   IPayloadPutMarkAsRead,
-  IRequestGetUsersSeenPost,
   ISeenPostListSheet,
   IPayloadPutMarkSeenPost,
   IGetSeenPostListSheet,
 } from '~/interfaces/IPost';
-import {IGroup} from '~/interfaces/IGroup';
-import {IUser} from '~/interfaces/IAuth';
-import {ReactionType} from '~/constants/reactions';
-import {IFilePicked} from '~/interfaces/common';
-import {IGetFile} from '~/services/imageUploader';
+import { IGroup } from '~/interfaces/IGroup';
+import { IUser } from '~/interfaces/IAuth';
+import { ReactionType } from '~/constants/reactions';
+import { IFilePicked } from '~/interfaces/common';
+import { IGetFile } from '~/services/imageUploader';
 
 const postActions = {
   setAllPosts: (payload: IAllPosts) => ({
@@ -135,7 +134,7 @@ const postActions = {
     type: postTypes.SET_CREATE_POST_CURRENT_SETTINGS,
     payload,
   }),
-  //post detail
+  // post detail
   setPostDetailReplyingComment: (payload?: IPayloadReplying) => ({
     type: postTypes.SET_POST_DETAIL_REPLYING_COMMENT,
     payload,
@@ -163,7 +162,7 @@ const postActions = {
     payload,
   }),
 
-  //saga
+  // saga
   postCreateNewPost: (payload: IPostCreatePost) => ({
     type: postTypes.POST_CREATE_NEW_POST,
     payload,
@@ -213,7 +212,7 @@ const postActions = {
     type: postTypes.ADD_TO_ALL_POSTS,
     payload,
   }),
-  addToAllComments: (payload: IReaction[] | IReaction) => ({
+  addToAllComments: (payload: ICommentData[] | ICommentData) => ({
     type: postTypes.ADD_TO_ALL_COMMENTS,
     payload,
   }),
@@ -313,7 +312,7 @@ const postActions = {
     type: postTypes.REMOVE_CHILD_COMMENT,
     payload,
   }),
-  getCommentDetail: (payload: any) => ({
+  getCommentDetail: (payload: IPayloadGetCommentsById) => ({
     type: postTypes.GET_COMMENT_DETAIL,
     payload,
   }),

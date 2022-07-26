@@ -1,8 +1,8 @@
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useSelector} from 'react-redux';
-import {getUnreadChannelCount} from '~/selectors/chat';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
+import { getUnreadChannelCount } from '~/selectors/chat';
 
 import spacing from '~/theme/spacing';
 import NotificationsBadge from '../Badge/NotificationsBadge';
@@ -12,9 +12,9 @@ interface Props {
   onPress: () => void;
 }
 
-const IconChat = ({onPress}: Props) => {
+const IconChat = ({ onPress }: Props) => {
   const theme: ExtendedTheme = useTheme();
-  const count = useSelector(state => getUnreadChannelCount(state));
+  const count = useSelector((state) => getUnreadChannelCount(state));
 
   return (
     <View>

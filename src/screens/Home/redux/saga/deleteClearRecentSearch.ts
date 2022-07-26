@@ -1,5 +1,5 @@
-import {IRecentSearchTarget} from '~/interfaces/IHome';
-import {call, put} from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
+import { IRecentSearchTarget } from '~/interfaces/IHome';
 import homeDataHelper from '~/screens/Home/helper/HomeDataHelper';
 import homeActions from '~/screens/Home/redux/actions';
 
@@ -20,6 +20,6 @@ export default function* deleteClearRecentSearch({
       }),
     );
   } catch (e) {
-    console.log(`\x1b[31m🐣️ saga clear Recent Search error: `, e, `\x1b[0m`);
+    console.error('\x1b[31m🐣️ saga clear Recent Search error: ', e, '\x1b[0m');
   }
 }

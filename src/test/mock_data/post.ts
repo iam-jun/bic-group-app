@@ -49,10 +49,10 @@ export const POST_DETAIL = {
   },
   commentsCount: 5,
   reactionsCount: {
-    '0': {
+    0: {
       wink: 1,
     },
-    '1': {
+    1: {
       thinking_face: 1,
     },
   },
@@ -311,7 +311,7 @@ export const allCommentsByParentIds = {
           },
           CHILD_COMMENT,
         ],
-        meta: {hasPreviousPage: true, hasNextPage: false},
+        meta: { hasPreviousPage: true, hasNextPage: false },
       },
     },
     {
@@ -373,12 +373,12 @@ export const allCommentsByParentIdsWith1ChildComment = {
 };
 
 export const allCommentsArray = [
-  {...allCommentsByParentIdsWith1ChildComment[302][0]},
-  {...allCommentsByParentIdsWith1ChildComment[302][0].child[0]},
-  {...allCommentsByParentIdsWith1ChildComment[302][0].child[1]},
-  {...allCommentsByParentIdsWith1ChildComment[302][0].child[2]},
-  {...allCommentsByParentIdsWith1ChildComment[302][1]},
-  {...allCommentsByParentIdsWith1ChildComment[302][2]},
+  { ...allCommentsByParentIdsWith1ChildComment[302][0] },
+  { ...allCommentsByParentIdsWith1ChildComment[302][0].child[0] },
+  { ...allCommentsByParentIdsWith1ChildComment[302][0].child[1] },
+  { ...allCommentsByParentIdsWith1ChildComment[302][0].child[2] },
+  { ...allCommentsByParentIdsWith1ChildComment[302][1] },
+  { ...allCommentsByParentIdsWith1ChildComment[302][2] },
 ];
 
 export const baseCommentData = {
@@ -393,7 +393,7 @@ export const baseCommentData = {
         updatedAt: '2022-04-27T03:54:38.962Z',
       },
     ],
-    meta: {hasPreviousPage: false, hasNextPage: false},
+    meta: { hasPreviousPage: false, hasNextPage: false },
   },
   content: '.',
   createdAt: '2022-04-26T09:25:02.870Z',
@@ -510,10 +510,10 @@ export const COMMENT_HAS_REACTION = {
     },
   ],
   reactionsCount: {
-    '0': {
+    0: {
       wink: 1,
     },
-    '1': {
+    1: {
       thinking_face: 1,
     },
   },

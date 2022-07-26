@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import getUniqueID from './util/getUniqueID';
 import convertAdditionalStyles from './util/convertAdditionalStyles';
@@ -36,7 +36,7 @@ export default class AstRenderer {
    * @param {string} type
    * @return {string}
    */
-  getRenderFunction = type => {
+  getRenderFunction = (type) => {
     const renderFunction = this._renderRules[type];
 
     if (!renderFunction) {
@@ -63,7 +63,7 @@ export default class AstRenderer {
       let str = '';
 
       for (let a = 0; a < parents.length; a++) {
-        str = str + '-';
+        str += '-';
       }
 
       console.log(`${str}${node.type}`);
@@ -72,9 +72,7 @@ export default class AstRenderer {
     parents.unshift(node);
 
     // calculate the children first
-    let children = node.children.map(value => {
-      return this.renderNode(value, parents);
-    });
+    let children = node.children.map((value) => this.renderNode(value, parents));
 
     // render any special types of nodes that have different renderRule function signatures
 
@@ -114,9 +112,9 @@ export default class AstRenderer {
         let refStyle = {};
 
         if (
-          parentNodes[a].attributes &&
-          parentNodes[a].attributes.style &&
-          typeof parentNodes[a].attributes.style === 'string'
+          parentNodes[a].attributes
+          && parentNodes[a].attributes.style
+          && typeof parentNodes[a].attributes.style === 'string'
         ) {
           refStyle = convertAdditionalStyles(parentNodes[a].attributes.style);
         }
@@ -161,9 +159,9 @@ export default class AstRenderer {
     // cull top level children
 
     if (
-      isRoot === true &&
-      this._maxTopLevelChildren &&
-      children.length > this._maxTopLevelChildren
+      isRoot === true
+      && this._maxTopLevelChildren
+      && children.length > this._maxTopLevelChildren
     ) {
       children = children.slice(0, this._maxTopLevelChildren);
       children.push(this._topLevelMaxExceededItem);
@@ -179,8 +177,8 @@ export default class AstRenderer {
    * @param nodes
    * @return {*}
    */
-  render = nodes => {
-    const root = {type: 'body', key: getUniqueID(), children: nodes};
+  render = (nodes) => {
+    const root = { type: 'body', key: getUniqueID(), children: nodes };
     return this.renderNode(root, [], true);
   };
 }

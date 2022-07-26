@@ -1,10 +1,12 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, View, ScrollView, ActivityIndicator} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import {
+  StyleSheet, View, ScrollView, ActivityIndicator,
+} from 'react-native';
+import { ExtendedTheme, useTheme, useIsFocused } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import i18next from 'i18next';
-import {useIsFocused} from '@react-navigation/native';
 
+import { isEmpty } from 'lodash';
 import Text from '~/beinComponents/Text';
 import Image from '~/beinComponents/Image';
 import Button from '~/beinComponents/Button';
@@ -12,40 +14,40 @@ import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Header from '~/beinComponents/Header';
 import Avatar from '~/beinComponents/Avatar';
 
-import {scaleCoverHeight, userProfileImageCropRatio} from '~/theme/dimension';
+import { scaleCoverHeight, userProfileImageCropRatio } from '~/theme/dimension';
 import images from '~/resources/images';
-import {useRootNavigation} from '~/hooks/navigation';
+import { useRootNavigation } from '~/hooks/navigation';
 import ProfileBlock from './components/ProfileBlock';
 import menuActions from '../redux/actions';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import menuKeySelector from '../redux/keySelector';
-import {useUserIdAuth} from '~/hooks/auth';
+import { useUserIdAuth } from '~/hooks/auth';
 import NoUserFound from '~/screens/Menu/fragments/NoUserFound';
 import mainStack from '~/router/navigator/MainStack/stack';
 import Icon from '~/beinComponents/Icon';
-import {IUploadType, uploadTypes} from '~/configs/resourceConfig';
+import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import ImagePicker from '~/beinComponents/ImagePicker';
-import {IFilePicked} from '~/interfaces/common';
+import { IFilePicked } from '~/interfaces/common';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import {openLink} from '~/utils/common';
+import { openLink } from '~/utils/common';
 import homeActions from '~/screens/Home/redux/actions';
-import {checkPermission} from '~/utils/permission';
-import {formatDMLink} from '~/utils/link';
+import { checkPermission, permissionTypes } from '~/utils/permission';
+import { formatDMLink } from '~/utils/link';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import {isEmpty} from 'lodash';
 import groupsActions from '~/screens/Groups/redux/actions';
 import spacing from '~/theme/spacing';
 
 const UserProfile = (props: any) => {
-  const {userId, params} = props?.route?.params || {};
+  const { userId, params } = props?.route?.params || {};
 
   const userProfileData = useKeySelector(menuKeySelector.userProfile);
-  const {fullname, description, avatar, backgroundImgUrl, username} =
-    userProfileData || {};
+  const {
+    fullname, description, avatar, backgroundImgUrl, username,
+  } = userProfileData || {};
   const loadingUserProfile = useKeySelector(menuKeySelector.loadingUserProfile);
 
   const myProfileData = useKeySelector(menuKeySelector.myProfile);
-  const {username: currentUsername, id} = myProfileData || {};
+  const { username: currentUsername, id } = myProfileData || {};
   const showUserNotFound = useKeySelector(menuKeySelector.showUserNotFound);
   const joinedCommunities = useKeySelector(groupsKeySelector.joinedCommunities);
 
@@ -57,15 +59,15 @@ const UserProfile = (props: any) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme, coverHeight);
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
   const currentUserId = useUserIdAuth();
   const isFocused = useIsFocused();
 
   const getUserProfile = () => {
     dispatch(menuActions.clearUserProfile());
-    if (!!userId) {
-      dispatch(menuActions.getUserProfile({userId, params}));
+    if (userId) {
+      dispatch(menuActions.getUserProfile({ userId, params }));
     }
   };
 
@@ -76,25 +78,25 @@ const UserProfile = (props: any) => {
 
   useEffect(() => {
     isFocused && getUserProfile();
-    const {avatar: _avatar, backgroundImgUrl: _bgIm} = myProfileData;
+    const { avatar: _avatar, backgroundImgUrl: _bgIm } = myProfileData;
     if (
-      userId?.toString?.() === currentUserId?.toString?.() ||
-      userId?.toString?.() === currentUsername?.toString?.()
+      userId?.toString?.() === currentUserId?.toString?.()
+      || userId?.toString?.() === currentUsername?.toString?.()
     ) {
       if (avatarState !== _avatar || _bgIm !== bgImgState) {
-        dispatch(menuActions.getMyProfile({userId, params}));
-        dispatch(homeActions.getHomePosts({isRefresh: true}));
+        dispatch(menuActions.getMyProfile({ userId, params }));
+        dispatch(homeActions.getHomePosts({ isRefresh: true }));
       }
     }
   }, [isFocused, userId]);
 
   useEffect(() => {
     if (
-      userId?.toString?.() === currentUserId?.toString?.() ||
-      userId?.toString?.() === currentUsername?.toString?.()
+      userId?.toString?.() === currentUserId?.toString?.()
+      || userId?.toString?.() === currentUsername?.toString?.()
     ) {
       if (isChangeImg === 'avatar') {
-        dispatch(homeActions.getHomePosts({isRefresh: true}));
+        dispatch(homeActions.getHomePosts({ isRefresh: true }));
         setAvatarState(myProfileData?.avatar);
       } else if (isChangeImg === 'backgroundImgUrl') {
         setBgImgState(myProfileData?.backgroundImgUrl);
@@ -102,8 +104,7 @@ const UserProfile = (props: any) => {
     }
   }, [myProfileData]);
 
-  const onEditProfileButton = () =>
-    rootNavigation.navigate(mainStack.userEdit, {userId});
+  const onEditProfileButton = () => rootNavigation.navigate(mainStack.userEdit, { userId });
 
   const uploadFile = (
     file: IFilePicked,
@@ -129,13 +130,13 @@ const UserProfile = (props: any) => {
     fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
-    checkPermission('photo', dispatch, canOpenPicker => {
+    checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
       if (canOpenPicker) {
         ImagePicker.openPickerSingle({
           ...userProfileImageCropRatio[fieldName],
           cropping: true,
           mediaType: 'photo',
-        }).then(file => {
+        }).then((file) => {
           uploadFile(file, fieldName, uploadType);
         });
       }
@@ -144,8 +145,7 @@ const UserProfile = (props: any) => {
 
   const onEditAvatar = () => _openImagePicker('avatar', uploadTypes.userAvatar);
 
-  const onEditCover = () =>
-    _openImagePicker('backgroundImgUrl', uploadTypes.userCover);
+  const onEditCover = () => _openImagePicker('backgroundImgUrl', uploadTypes.userCover);
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -168,106 +168,97 @@ const UserProfile = (props: any) => {
       );
       openLink(link);
     } else {
-      dispatch(groupsActions.getMyCommunities({callback: onPressChat}));
+      dispatch(groupsActions.getMyCommunities({ callback: onPressChat }));
     }
   };
 
-  const renderEditButton = (style: any, onPress: any, testID: string) => {
-    return userId == currentUserId || userId == currentUsername ? (
-      <ButtonWrapper
-        testID={testID}
-        style={[styles.editButton, style]}
-        activeOpacity={0.9}
-        onPress={onPress}>
-        <Icon size={16} tintColor={theme.colors.purple60} icon={'Camera'} />
-      </ButtonWrapper>
-    ) : null;
-  };
+  const renderEditButton = (style: any, onPress: any, testID: string) => (userId == currentUserId || userId == currentUsername ? (
+    <ButtonWrapper
+      testID={testID}
+      style={[styles.editButton, style]}
+      activeOpacity={0.9}
+      onPress={onPress}
+    >
+      <Icon size={16} tintColor={theme.colors.purple60} icon="Camera" />
+    </ButtonWrapper>
+  ) : null);
 
-  const renderCoverImage = () => {
-    return (
-      <View testID="user_profile.cover_image" onLayout={onCoverLayout}>
-        <Image
-          style={styles.cover}
-          source={bgImgState || images.img_cover_default}
+  const renderCoverImage = () => (
+    <View testID="user_profile.cover_image" onLayout={onCoverLayout}>
+      <Image
+        style={styles.cover}
+        source={bgImgState || images.img_cover_default}
+      />
+      {renderEditButton(
+        styles.editCoverPhoto,
+        onEditCover,
+        'user_profile.edit.cover_image',
+      )}
+    </View>
+  );
+
+  const renderAvatar = () => (
+    <View style={styles.imageButton}>
+      <View>
+        <Avatar.UltraSuperLarge
+          source={avatarState || images.img_user_avatar_default}
+          isRounded
+          showBorder
         />
         {renderEditButton(
-          styles.editCoverPhoto,
-          onEditCover,
-          'user_profile.edit.cover_image',
+          styles.editAvatar,
+          onEditAvatar,
+          'user_profile.edit.avatar',
         )}
       </View>
-    );
-  };
+    </View>
+  );
 
-  const renderAvatar = () => {
-    return (
-      <View style={styles.imageButton}>
-        <View>
-          <Avatar.UltraSuperLarge
-            source={avatarState || images.img_user_avatar_default}
-            isRounded={true}
-            showBorder={true}
-          />
-          {renderEditButton(
-            styles.editAvatar,
-            onEditAvatar,
-            'user_profile.edit.avatar',
-          )}
-        </View>
-      </View>
-    );
-  };
+  const renderUserHeader = () => (
+    <View style={styles.headerName}>
+      <Text>
+        <Text.H4>{fullname}</Text.H4>
+      </Text>
+      {!!username && <Text.BodyS>{`@${username}`}</Text.BodyS>}
+      {!!description && (
+      <Text>
+        <Text style={styles.subtitleText}>{description}</Text>
+      </Text>
+      )}
+    </View>
+  );
 
-  const renderUserHeader = () => {
-    return (
-      <View style={styles.headerName}>
-        <Text>
-          <Text.H4>{fullname}</Text.H4>
-        </Text>
-        {!!username && <Text.BodyS>{`@${username}`}</Text.BodyS>}
-        {!!description && (
-          <Text>
-            <Text style={styles.subtitleText}>{description}</Text>
-          </Text>
-        )}
-      </View>
-    );
-  };
+  const renderButton = () => (userId == currentUserId || userId == currentUsername ? (
+    <Button.Secondary
+      testID="user_profile.edit"
+      textColor={theme.colors.purple50}
+      style={styles.buttonEdit}
+      leftIcon="PenLine"
+      onPress={onEditProfileButton}
+      borderRadius={spacing.borderRadius.small}
+    >
+      {i18next.t('profile:title_edit_profile')}
+    </Button.Secondary>
+  ) : (
+    <Button.Secondary
+      testID="user_profile.message"
+      style={styles.button}
+      textColor={theme.colors.neutral1}
+      color={theme.colors.purple50}
+      colorHover={theme.colors.purple30}
+      rightIcon="Message"
+      borderRadius={spacing.borderRadius.small}
+      onPress={onPressChat}
+    >
+      {i18next.t('profile:title_direct_message')}
+    </Button.Secondary>
+  ));
 
-  const renderButton = () => {
-    return userId == currentUserId || userId == currentUsername ? (
-      <Button.Secondary
-        testID="user_profile.edit"
-        textColor={theme.colors.purple50}
-        style={styles.buttonEdit}
-        leftIcon={'PenLine'}
-        onPress={onEditProfileButton}
-        borderRadius={spacing.borderRadius.small}>
-        {i18next.t('profile:title_edit_profile')}
-      </Button.Secondary>
-    ) : (
-      <Button.Secondary
-        testID="user_profile.message"
-        style={styles.button}
-        textColor={theme.colors.neutral1}
-        color={theme.colors.purple50}
-        colorHover={theme.colors.purple30}
-        rightIcon={'Message'}
-        borderRadius={spacing.borderRadius.small}
-        onPress={onPressChat}>
-        {i18next.t('profile:title_direct_message')}
-      </Button.Secondary>
-    );
-  };
-
-  const renderLoading = () => {
-    return (
-      <View testID="user_profile.loading" style={styles.loadingProfile}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  };
+  const renderLoading = () => (
+    <View testID="user_profile.loading" style={styles.loadingProfile}>
+      <ActivityIndicator size="large" />
+    </View>
+  );
 
   if (showUserNotFound) return <NoUserFound />;
 
@@ -280,7 +271,8 @@ const UserProfile = (props: any) => {
       ) : (
         <ScrollView
           style={styles.container}
-          showsVerticalScrollIndicator={false}>
+          showsVerticalScrollIndicator={false}
+        >
           {renderCoverImage()}
           {renderAvatar()}
           {renderUserHeader()}
@@ -299,7 +291,7 @@ const UserProfile = (props: any) => {
 export default UserProfile;
 
 const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

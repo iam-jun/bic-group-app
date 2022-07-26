@@ -1,27 +1,26 @@
-import React, {useEffect, useRef} from 'react';
-import {StyleSheet, View, useWindowDimensions, Platform} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useIsFocused} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import React, { useEffect, useRef } from 'react';
+import {
+  StyleSheet, View,
+} from 'react-native';
+import { useDispatch } from 'react-redux';
 
-import groupsActions from '~/screens/Groups/redux/actions';
-import ListView from '~/beinComponents/list/ListView';
+import { debounce } from 'lodash';
 import Header from '~/beinComponents/Header';
+import ListView from '~/beinComponents/list/ListView';
+import groupsActions from '~/screens/Groups/redux/actions';
 
-import {useKeySelector} from '~/hooks/selector';
-import groupsKeySelector from './redux/keySelector';
-import {deviceDimensions} from '~/theme/dimension';
-import {useBackPressListener, useTabPressListener} from '~/hooks/navigation';
-import {ITabTypes} from '~/interfaces/IRouter';
-import GroupSearch from '~/screens/Groups/components/GroupSearch';
-import appActions from '~/store/app/actions';
-import {debounce} from 'lodash';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
+import { useBackPressListener, useTabPressListener } from '~/hooks/navigation';
+import { useKeySelector } from '~/hooks/selector';
+import { ITabTypes } from '~/interfaces/IRouter';
 import images from '~/resources/images';
+import GroupSearch from '~/screens/Groups/components/GroupSearch';
 import spacing from '~/theme/spacing';
+import groupsKeySelector from './redux/keySelector';
 
 const Groups: React.FC = (props: any) => {
-  const {communityId} = props?.route?.params || {};
+  const { communityId } = props?.route?.params || {};
 
   const listRef = useRef<any>();
   const headerRef = useRef<any>();
@@ -35,9 +34,6 @@ const Groups: React.FC = (props: any) => {
   );
   const joinedGroups = useKeySelector(groupsKeySelector.joinedGroups);
 
-  const dimensions = useWindowDimensions();
-  const isLaptop = dimensions.width >= deviceDimensions.laptop;
-
   useEffect(() => {
     getData();
   }, []);
@@ -45,7 +41,7 @@ const Groups: React.FC = (props: any) => {
   useTabPressListener(
     (tabName: ITabTypes) => {
       if (tabName === 'groups') {
-        listRef?.current?.scrollToOffset?.({animated: true, offset: 0});
+        listRef?.current?.scrollToOffset?.({ animated: true, offset: 0 });
       }
     },
     [listRef],
@@ -58,14 +54,14 @@ const Groups: React.FC = (props: any) => {
   useBackPressListener(handleBackPress);
 
   const getData = () => {
-    !!communityId &&
-      dispatch(groupsActions.getCommunityGroups({id: communityId}));
+    !!communityId
+      && dispatch(groupsActions.getCommunityGroups({ id: communityId }));
   };
 
   const onShowSearch = (isShow: boolean) => {
     dispatch(
       groupsActions.setGroupSearch({
-        isShow: isShow,
+        isShow,
         loading: false,
         searchKey: '',
         result: [],
@@ -74,50 +70,45 @@ const Groups: React.FC = (props: any) => {
   };
 
   const onSearchText = debounce((searchText: string) => {
-    dispatch(groupsActions.setGroupSearch({searchKey: searchText}));
+    dispatch(groupsActions.setGroupSearch({ searchKey: searchText }));
   }, 300);
 
-  const renderEmpty = () => {
-    return (
-      !loadingJoinedGroups && (
-        <EmptyScreen
-          source={'addUsers'}
-          title="groups:text_this_place_looks_lonely"
-          description="groups:text_join_community_get_updated"
-        />
-      )
-    );
-  };
+  const renderEmpty = () => (
+    !loadingJoinedGroups && (
+    <EmptyScreen
+      source="addUsers"
+      title="groups:text_this_place_looks_lonely"
+      description="groups:text_join_community_get_updated"
+    />
+    )
+  );
 
-  const renderDataList = () => {
-    return (
-      <ListView
-        listRef={listRef}
-        containerStyle={styles.dataList}
-        type={'flatGroups'}
-        data={joinedGroups}
-        onRefresh={getData}
-        refreshing={loadingJoinedGroups}
-        isFullView
-        ListEmptyComponent={renderEmpty}
-      />
-    );
-  };
+  const renderDataList = () => (
+    <ListView
+      listRef={listRef}
+      containerStyle={styles.dataList}
+      type="flatGroups"
+      data={joinedGroups}
+      onRefresh={getData}
+      refreshing={loadingJoinedGroups}
+      isFullView
+      ListEmptyComponent={renderEmpty}
+    />
+  );
 
   return (
     <View style={styles.containerScreen}>
       <Header
         headerRef={headerRef}
         title="tabs:groups"
-        titleTextProps={{useI18n: true}}
+        titleTextProps={{ useI18n: true }}
         searchInputTestID="groups.search_input"
         searchIconTestID="groups.search_icon"
-        removeBorderAndShadow={isLaptop}
         onShowSearch={onShowSearch}
         onSearchText={onSearchText}
         avatar={images.logo_bein}
       />
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         {renderDataList()}
         <GroupSearch />
       </View>
@@ -126,7 +117,7 @@ const Groups: React.FC = (props: any) => {
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     containerScreen: {

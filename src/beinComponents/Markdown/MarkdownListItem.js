@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
-import React, {PureComponent} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import React, { PureComponent } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 export default class MarkdownListItem extends PureComponent {
   static propTypes = {
@@ -25,7 +25,7 @@ export default class MarkdownListItem extends PureComponent {
     if (this.props.continue) {
       bullet = '';
     } else if (this.props.ordered) {
-      bullet = this.props.index + '.';
+      bullet = `${this.props.index}.`;
     } else if (this.props.level % 2 === 0) {
       bullet = '◦';
     } else {
@@ -34,7 +34,7 @@ export default class MarkdownListItem extends PureComponent {
 
     return (
       <View style={style.container}>
-        <View style={[{width: this.props.bulletWidth}, style.bullet]}>
+        <View style={[{ width: this.props.bulletWidth }, style.bullet]}>
           <Text style={this.props.bulletStyle}>{bullet}</Text>
         </View>
         <View style={style.contents}>{this.props.children}</View>

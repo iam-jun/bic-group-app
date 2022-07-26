@@ -1,22 +1,22 @@
-import React, {FC, useState} from 'react';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import React, { FC, useState } from 'react';
 import {
-  View,
-  StyleSheet,
   StyleProp,
-  ViewStyle,
+  StyleSheet,
   TouchableOpacity,
+  View,
+  ViewStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
-import {useDispatch} from 'react-redux';
-import GroupJoinedTree from '~/screens/Groups/YourGroups/GroupJoinedTree';
-import GroupJoinedList from '~/screens/Groups/YourGroups/GroupJoinedList';
-import Icon from '~/beinComponents/Icon';
-import modalActions from '~/store/modal/actions';
+import { useDispatch } from 'react-redux';
 import Divider from '~/beinComponents/Divider';
+import Icon from '~/beinComponents/Icon';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import {useBaseHook} from '~/hooks';
+import Text from '~/beinComponents/Text';
+import { useBaseHook } from '~/hooks';
+import GroupJoinedList from '~/screens/Groups/YourGroups/GroupJoinedList';
+import GroupJoinedTree from '~/screens/Groups/YourGroups/GroupJoinedTree';
+import modalActions from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
 
 export interface GroupJoinedProps {
@@ -44,10 +44,10 @@ const GroupJoined: FC<GroupJoinedProps> = ({
 }: GroupJoinedProps) => {
   const [selectingMode, setSelectingMode] = useState(menuType[initModeIndex]);
 
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const onChangeType = (item: any) => {
@@ -55,26 +55,24 @@ const GroupJoined: FC<GroupJoinedProps> = ({
     dispatch(modalActions.hideModal());
   };
 
-  const renderItem = (item: any, index: number) => {
-    return (
-      <PrimaryItem
-        key={`view_mode_${index}`}
-        height={48}
-        leftIcon={item.icon as any}
-        leftIconProps={{
-          icon: item.icon as any,
-          size: 20,
-          style: {
-            marginLeft: spacing.margin.tiny,
-            marginRight: spacing.margin.large,
-          },
-        }}
-        titleProps={{variant: 'h5'}}
-        onPress={() => onChangeType(item)}
-        title={t(item.title)}
-      />
-    );
-  };
+  const renderItem = (item: any, index: number) => (
+    <PrimaryItem
+      key={`view_mode_${index}`}
+      height={48}
+      leftIcon={item.icon as any}
+      leftIconProps={{
+        icon: item.icon as any,
+        size: 20,
+        style: {
+          marginLeft: spacing.margin.tiny,
+          marginRight: spacing.margin.large,
+        },
+      }}
+      titleProps={{ variant: 'h5' }}
+      onPress={() => onChangeType(item)}
+      title={t(item.title)}
+    />
+  );
 
   const onPressShowMenu = () => {
     dispatch(
@@ -100,23 +98,24 @@ const GroupJoined: FC<GroupJoinedProps> = ({
   };
 
   const renderMenuButton = () => {
-    const {icon, title} = selectingMode || {};
+    const { icon, title } = selectingMode || {};
     return (
       <TouchableOpacity
-        testID={'group_joined.btn_mode_view'}
+        testID="group_joined.btn_mode_view"
         onPress={onPressShowMenu}
-        style={styles.menuButton}>
+        style={styles.menuButton}
+      >
         {!!icon && (
-          <Icon icon={icon as any} style={{marginRight: spacing.margin.tiny}} />
+          <Icon icon={icon as any} style={{ marginRight: spacing.margin.tiny }} />
         )}
         <Text useI18n>{title}</Text>
-        <Icon icon={'AngleDown'} style={{marginLeft: spacing.margin.tiny}} />
+        <Icon icon="AngleDown" style={{ marginLeft: spacing.margin.tiny }} />
       </TouchableOpacity>
     );
   };
 
   return (
-    <View testID={'group_joined'} style={styles.container}>
+    <View testID="group_joined" style={styles.container}>
       <View
         style={{
           zIndex: 10,
@@ -125,11 +124,13 @@ const GroupJoined: FC<GroupJoinedProps> = ({
           alignItems: 'center',
           paddingVertical: spacing.padding.small,
           paddingHorizontal: spacing.padding.small,
-        }}>
+        }}
+      >
         <Text.H5
           useI18n
           color={colors.gray50}
-          style={{marginLeft: spacing.margin.small}}>
+          style={{ marginLeft: spacing.margin.small }}
+        >
           communities:text_view_mode
         </Text.H5>
         {renderMenuButton()}
@@ -144,7 +145,7 @@ const GroupJoined: FC<GroupJoinedProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

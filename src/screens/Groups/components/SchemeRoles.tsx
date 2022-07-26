@@ -1,12 +1,12 @@
-import React, {FC} from 'react';
-import {StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import { StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import RoleItem from '~/screens/Groups/CreatePermissionScheme/components/RoleItem';
-import {IPermission, IRole} from '~/interfaces/IGroup';
+import { IPermission, IRole } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';
 
 export interface SchemeRolesProps {
@@ -59,12 +59,12 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
             !useRoleInherited
               ? undefined
               : roleIndex !== memberRoleIndex
-              ? memberRole
-              : undefined
+                ? memberRole
+                : undefined
           }
           onLayout={({
             nativeEvent: {
-              layout: {y: anchor},
+              layout: { y: anchor },
             },
           }: any) => {
             onAnchorRole?.(roleIndex, role?.name, anchor);
@@ -77,7 +77,7 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     title: {
       paddingHorizontal: spacing.padding.large,

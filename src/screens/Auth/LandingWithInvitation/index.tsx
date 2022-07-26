@@ -2,15 +2,17 @@
 // copied from old landing
 
 import React from 'react';
-import {Image, StyleSheet, useWindowDimensions, View} from 'react-native';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import {
+  Image, StyleSheet, useWindowDimensions, View,
+} from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
-import {useBaseHook} from '~/hooks';
-import {authStack} from '~/configs/navigator';
+import { useBaseHook } from '~/hooks';
+import { authStack } from '~/configs/navigator';
 import images from '~/resources/images';
 import LandingImg from '../../../../assets/images/landing_page.svg';
 import SVGIcon from '~/beinComponents/Icon/SvgIcon';
@@ -19,7 +21,7 @@ import spacing from '~/theme/spacing';
 
 const LandingWithInvitation = () => {
   const theme: ExtendedTheme = useTheme();
-  const {t, navigation} = useBaseHook();
+  const { t, navigation } = useBaseHook();
   const styles = themeStyles(theme);
   const dimensions = useWindowDimensions();
 
@@ -44,7 +46,7 @@ const LandingWithInvitation = () => {
         <Image resizeMode="contain" style={styles.logo} source={logo} />
       )}
       <View style={styles.contentContainer}>
-        {/*@ts-ignore*/}
+        {/* @ts-ignore */}
         <SVGIcon source={LandingImg} size={imgSize} />
         <Text.H5 style={styles.title}>{title}</Text.H5>
         {!!desc && <Text.BodyS style={styles.desc}>{desc}</Text.BodyS>}
@@ -52,7 +54,8 @@ const LandingWithInvitation = () => {
       <Button.Primary
         style={styles.button}
         onPress={() => navigation.navigate(authStack.login)}
-        textVariant="h5">
+        textVariant="h5"
+      >
         {t('auth:btn_landing_start')}
       </Button.Primary>
     </ScreenWrapper>
@@ -61,7 +64,7 @@ const LandingWithInvitation = () => {
 
 const themeStyles = (theme: ExtendedTheme) => {
   const insets = useSafeAreaInsets();
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

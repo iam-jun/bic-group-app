@@ -1,4 +1,4 @@
-import {reactions} from '~/constants/reactions';
+import { reactions } from '~/constants/reactions';
 
 export const reactionDefault = [
   reactions.crazy_love_heart,

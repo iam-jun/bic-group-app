@@ -1,5 +1,5 @@
-import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
-import {makeHttpRequest} from '~/services/httpApiRequest';
+import ApiConfig, { HttpApiRequestConfig } from '~/configs/apiConfig';
+import { makeHttpRequest } from '~/services/httpApiRequest';
 import {
   IParamDeleteReaction,
   ICommentData,
@@ -23,7 +23,7 @@ const DEFAULT_LIMIT = 10;
 
 export const postApiConfig = {
   getPostDetail: (params: IParamGetPostDetail): HttpApiRequestConfig => {
-    const {postId, ...restParams} = params;
+    const { postId, ...restParams } = params;
     return {
       url: `${provider.url}posts/${postId}`,
       method: 'get',
@@ -32,19 +32,17 @@ export const postApiConfig = {
       params: restParams,
     };
   },
-  getDraftPosts: (params: IParamGetDraftPosts): HttpApiRequestConfig => {
-    return {
-      url: `${provider.url}posts/draft`,
-      method: 'get',
-      provider,
-      useRetry: true,
-      params: {
-        offset: params?.offset || 0,
-        limit: params?.limit || 10,
-        isProcessing: params?.isProcessing || false,
-      },
-    };
-  },
+  getDraftPosts: (params: IParamGetDraftPosts): HttpApiRequestConfig => ({
+    url: `${provider.url}posts/draft`,
+    method: 'get',
+    provider,
+    useRetry: true,
+    params: {
+      offset: params?.offset || 0,
+      limit: params?.limit || 10,
+      isProcessing: params?.isProcessing || false,
+    },
+  }),
   postCreateNewPost: (data: IPostCreatePost): HttpApiRequestConfig => ({
     url: `${provider.url}posts`,
     method: 'post',
@@ -52,19 +50,17 @@ export const postApiConfig = {
     useRetry: true,
     data,
   }),
-  putReaction: (params: IParamPutReaction): HttpApiRequestConfig => {
-    return {
-      url: `${provider.url}reactions`,
-      method: 'post',
-      provider,
-      useRetry: true,
-      data: {
-        ...params,
-      },
-    };
-  },
+  putReaction: (params: IParamPutReaction): HttpApiRequestConfig => ({
+    url: `${provider.url}reactions`,
+    method: 'post',
+    provider,
+    useRetry: true,
+    data: {
+      ...params,
+    },
+  }),
   putEditPost: (param: IParamPutEditPost): HttpApiRequestConfig => {
-    const {postId, data} = param || {};
+    const { postId, data } = param || {};
     return {
       url: `${provider.url}posts/${postId}`,
       method: 'put',
@@ -85,7 +81,7 @@ export const postApiConfig = {
     method: 'delete',
     provider,
     useRetry: true,
-    ...(isDraftPost ? {params: {is_draft: true}} : {}),
+    ...(isDraftPost ? { params: { is_draft: true } } : {}),
   }),
   deleteComment: (id: string): HttpApiRequestConfig => ({
     url: `${provider.url}comments/${id}`,
@@ -99,7 +95,7 @@ export const postApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getAudienceUsers: (userId: string): HttpApiRequestConfig => ({
+  getAudienceUsers: (): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users`,
     method: 'get',
     provider: ApiConfig.providers.bein,
@@ -139,7 +135,7 @@ export const postApiConfig = {
     },
   }),
   postReplyComment: (params: IRequestReplyComment): HttpApiRequestConfig => {
-    const {postId, parentCommentId, data} = params;
+    const { postId, parentCommentId, data } = params;
     return {
       url: `${provider.url}comments/${parentCommentId}/reply`,
       method: 'post',
@@ -189,7 +185,7 @@ export const postApiConfig = {
     params: {
       group_ids: params.group_ids,
       user_ids: params.user_ids,
-      key: !!params.key ? params.key : undefined,
+      key: params.key ? params.key : undefined,
       offset: params.skip,
       limit: params.take,
     },
@@ -209,7 +205,7 @@ export const postApiConfig = {
   ): HttpApiRequestConfig => ({
     url: `${provider.url}reactions`,
     method: 'get',
-    provider: provider,
+    provider,
     useRetry: true,
     params: {
       reactionName: param.reactionName,
@@ -223,7 +219,7 @@ export const postApiConfig = {
   postPublishDraftPost: (draftPostId: string): HttpApiRequestConfig => ({
     url: `${provider.url}posts/${draftPostId}/publish`,
     method: 'put',
-    provider: provider,
+    provider,
     useRetry: true,
   }),
   getCommentDetail: (
@@ -242,20 +238,17 @@ export const postApiConfig = {
   }),
   getUsersSeenPost: (
     params: IRequestGetUsersSeenPost,
-  ): HttpApiRequestConfig => {
-    // const {postId, ...restParams} = params;
-    return {
-      url: `${provider.url}feeds/seen/user`,
-      method: 'get',
-      provider,
-      useRetry: true,
-      params: {
-        postId: params.postId,
-        limit: params?.limit || 20,
-        offset: params?.offset || 0,
-      },
-    };
-  },
+  ): HttpApiRequestConfig => ({
+    url: `${provider.url}feeds/seen/user`,
+    method: 'get',
+    provider,
+    useRetry: true,
+    params: {
+      postId: params.postId,
+      limit: params?.limit || 20,
+      offset: params?.offset || 0,
+    },
+  }),
 };
 
 const postDataHelper = {
@@ -266,9 +259,8 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -280,9 +272,8 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -294,9 +285,8 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -308,9 +298,8 @@ const postDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -322,9 +311,8 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -336,16 +324,15 @@ const postDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
   },
   getCommentsByPostId: async (params: IRequestGetPostComment) => {
     if (!params?.postId) {
-      return Promise.reject('Post Id not found');
+      return Promise.reject(new Error('Post Id not found'));
     }
     try {
       const response: any = await makeHttpRequest(
@@ -353,9 +340,8 @@ const postDataHelper = {
       );
       if (response?.data?.data?.list) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -367,9 +353,8 @@ const postDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -381,9 +366,8 @@ const postDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -395,9 +379,8 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -409,9 +392,8 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -423,9 +405,8 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -437,9 +418,8 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -451,15 +431,14 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
   },
   getReactionDetail: async (param: IParamGetReactionDetail) => {
-    const {reactionName, targetId, target} = param;
+    const { reactionName, targetId, target } = param;
     if (reactionName && targetId && target) {
       try {
         const response: any = await makeHttpRequest(
@@ -467,14 +446,13 @@ const postDataHelper = {
         );
         if (response && response?.data?.data?.list) {
           return Promise.resolve(response.data.data);
-        } else {
-          return Promise.reject(response);
         }
+        return Promise.reject(response);
       } catch (e) {
         return Promise.reject(e);
       }
     } else {
-      return Promise.reject('Invalid param');
+      return Promise.reject(new Error('Invalid param'));
     }
   },
 
@@ -489,9 +467,8 @@ const postDataHelper = {
       );
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -505,13 +482,12 @@ const postDataHelper = {
         return Promise.resolve({
           data: response?.data?.data?.list || [],
           canLoadMore:
-            (param?.offset || 0) + (param?.limit || DEFAULT_LIMIT) <=
-            response?.data?.data?.meta?.total,
+            (param?.offset || 0) + (param?.limit || DEFAULT_LIMIT)
+            <= response?.data?.data?.meta?.total,
           total: response?.data?.data?.meta?.total,
         });
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -523,9 +499,8 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -537,9 +512,8 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -554,9 +528,8 @@ const postDataHelper = {
       );
       if (response && response?.data && response.data?.data) {
         return Promise.resolve(response.data.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -570,9 +543,8 @@ const postDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }

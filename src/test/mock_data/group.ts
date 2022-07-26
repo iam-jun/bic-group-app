@@ -1,5 +1,5 @@
-import {IGroupDetail} from '~/interfaces/IGroup';
-import {POST_DETAIL} from './post';
+import { IGroupDetail } from '~/interfaces/IGroup';
+import { POST_DETAIL } from './post';
 
 export const groupDetailData: IGroupDetail = {
   group: {
@@ -164,8 +164,8 @@ export const discoverGroup = {
  *  -  - [x] Bein Product Team
  */
 export const GROUP_TREE_WITH_SELECTING = {
-  '1': false,
-  '10': {
+  1: false,
+  10: {
     id: 10,
     parent_id: 1,
     name: 'Bein Community',
@@ -190,7 +190,7 @@ export const GROUP_TREE_WITH_SELECTING = {
     isChecked: true,
     childrenUiIds: ['tree_0_0_0'],
   },
-  '17': {
+  17: {
     id: 17,
     parent_id: 10,
     name: 'Bein Product Team',

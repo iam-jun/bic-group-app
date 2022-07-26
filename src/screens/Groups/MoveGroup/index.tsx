@@ -1,14 +1,14 @@
-import React, {FC, useEffect} from 'react';
-import {View, StyleSheet, ScrollView} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC, useEffect } from 'react';
+import { View, StyleSheet, ScrollView } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
-import {useBaseHook} from '~/hooks';
-import {useKeySelector} from '~/hooks/selector';
+import { useBaseHook } from '~/hooks';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import {useDispatch} from 'react-redux';
 import groupsActions from '~/screens/Groups/redux/actions';
-import {IGroup} from '~/interfaces/IGroup';
+import { IGroup } from '~/interfaces/IGroup';
 import MoveGroupHeaderInfo from '~/screens/Groups/MoveGroup/components/MoveGroupHeaderInfo';
 import MoveGroupTargets from '~/screens/Groups/MoveGroup/components/MoveGroupTargets';
 import modalActions from '~/store/modal/actions';
@@ -21,25 +21,26 @@ export interface MoveGroupProps {
   };
 }
 
-const MoveGroup: FC<MoveGroupProps> = ({route}: MoveGroupProps) => {
+const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
   const initGroup = route?.params?.group;
-  const {id: groupId} = initGroup || {};
+  const { id: groupId } = initGroup || {};
 
-  const {id: communityId} = useKeySelector(groupsKeySelector.communityDetail);
-  const {loading, targetGroups, movingGroup, selecting} =
-    useKeySelector(groupsKeySelector.groupStructure.move) || {};
+  const { id: communityId } = useKeySelector(groupsKeySelector.communityDetail);
+  const {
+    loading, targetGroups, movingGroup, selecting,
+  } = useKeySelector(groupsKeySelector.groupStructure.move) || {};
 
-  const {userCount} = movingGroup || {};
+  const { userCount } = movingGroup || {};
 
   const getMoveTargets = (key = '') => {
     if (communityId && groupId) {
       dispatch(
-        groupsActions.getGroupStructureMoveTargets({communityId, groupId, key}),
+        groupsActions.getGroupStructureMoveTargets({ communityId, groupId, key }),
       );
     }
   };
@@ -91,13 +92,13 @@ const MoveGroup: FC<MoveGroupProps> = ({route}: MoveGroupProps) => {
       <Header
         title={t('communities:group_structure:title_move_group')}
         onPressButton={onPressSave}
-        buttonText={'common:btn_save'}
+        buttonText="common:btn_save"
         buttonProps={{
-          loading: loading,
+          loading,
           disabled: !selecting,
           useI18n: true,
           highEmphasis: true,
-          style: {borderWidth: 0},
+          style: { borderWidth: 0 },
           testID: 'move_group.btn_save',
         }}
       />
@@ -115,7 +116,7 @@ const MoveGroup: FC<MoveGroupProps> = ({route}: MoveGroupProps) => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

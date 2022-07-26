@@ -19,7 +19,7 @@ export const USER_PROFILE = {
   gender: 'FEMALE',
   id: 58,
   language: ['vi', 'en'],
-  latest_work: {company: 'testqqqqq', title_position: 'test 145qw'},
+  latest_work: { company: 'testqqqqq', title_position: 'test 145qw' },
   phone: '89871234',
   relationship_status: 'SINGLE',
   updated_at: '2022-03-14T11:34:45.360Z',

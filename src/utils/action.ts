@@ -3,12 +3,10 @@ interface ReduxAction {
   payload: unknown;
 }
 
-const createAction = (type: string, payload = {}): ReduxAction => {
-  return {
-    type: `${type}`,
-    payload,
-  };
-};
+const createAction = (type: string, payload = {}): ReduxAction => ({
+  type: `${type}`,
+  payload,
+});
 
 const ActionTypes = {
   UnauthorizedLogout: 'UnauthorizedLogout',
@@ -16,4 +14,4 @@ const ActionTypes = {
   SaveAuthTokens: 'SaveAuthTokens',
 };
 
-export {ReduxAction, ActionTypes, createAction};
+export { ReduxAction, ActionTypes, createAction };

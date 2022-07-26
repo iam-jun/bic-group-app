@@ -1,13 +1,15 @@
-import React, {useState} from 'react';
-import {StyleProp, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { useState } from 'react';
+import {
+  StyleProp, StyleSheet, TouchableOpacity, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Icon from '../Icon';
 
-import Text, {TextVariant} from '~/beinComponents/Text';
-import commonActions, {IAction} from '~/constants/commonActions';
+import Text, { TextVariant } from '~/beinComponents/Text';
+import commonActions, { IAction } from '~/constants/commonActions';
 import Avatar from '~/beinComponents/Avatar';
-import {fontFamilies} from '~/theme/fonts';
+import { fontFamilies } from '~/theme/fonts';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 
@@ -62,7 +64,8 @@ const TagComponent: React.FC<TagProps> = ({
       testID="tag.item"
       disabled={disabled}
       style={StyleSheet.flatten([styles.container, style])}
-      onPress={_onChangeValue}>
+      onPress={_onChangeValue}
+    >
       {avatar && <Avatar.Tiny source={avatar} style={styles.avatar} />}
       <Text style={StyleSheet.flatten([styles.labelText])}>{label}</Text>
       {!disabled && onPressIcon && (
@@ -86,7 +89,7 @@ const createStyles = (
   isSelected: boolean,
   disabled: boolean,
 ) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   const tagVariants = {
     small: {
@@ -98,7 +101,7 @@ const createStyles = (
       paddingHorizontal: spacing?.padding.large || 16,
     },
   };
-  const {fontSize, paddingHorizontal} = tagVariants[variant];
+  const { fontSize, paddingHorizontal } = tagVariants[variant];
 
   let _textColor;
   let _backgroundColor = colors.violet1;
@@ -118,13 +121,13 @@ const createStyles = (
       backgroundColor: _backgroundColor,
       borderRadius: 100,
       paddingVertical: 6,
-      paddingHorizontal: paddingHorizontal,
+      paddingHorizontal,
       justifyContent: 'center',
       alignItems: 'center',
       flexDirection: 'row',
     },
     labelText: {
-      fontSize: fontSize,
+      fontSize,
       fontFamily: _fontFamily,
       color: _textColor,
     },

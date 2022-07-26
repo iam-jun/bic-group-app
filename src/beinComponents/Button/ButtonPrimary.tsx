@@ -5,7 +5,7 @@ import {
   TouchableHighlight,
   ViewStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import ButtonWrapper, {
   ButtonWrapperProps,
@@ -35,7 +35,7 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
   disabled,
   ...props
 }: ButtonPrimaryProps) => {
-  const {colors}: ExtendedTheme = useTheme() as ExtendedTheme;
+  const { colors }: ExtendedTheme = useTheme() as ExtendedTheme;
 
   const _colorHover = colorHover || colors.neutral80;
   let _backgroundColor = color || colors.purple50;
@@ -63,7 +63,8 @@ const ButtonPrimary: React.FC<ButtonPrimaryProps> = ({
       underlayColor={_colorHover}
       TouchableComponent={TouchableHighlight}
       {...props}
-      textProps={{color: _textColor, useI18n, ...props?.textProps}}>
+      textProps={{ color: _textColor, useI18n, ...props?.textProps }}
+    >
       {children}
     </ButtonWrapper>
   );

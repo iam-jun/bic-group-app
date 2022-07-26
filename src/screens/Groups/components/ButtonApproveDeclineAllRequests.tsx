@@ -1,6 +1,8 @@
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
+import {
+  View, StyleSheet, StyleProp, ViewStyle,
+} from 'react-native';
 import React from 'react';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Divider from '~/beinComponents/Divider';
 import Button from '~/beinComponents/Button';
@@ -31,7 +33,8 @@ const ButtonApproveDeclineAllRequests = ({
           color={theme.colors.gray10}
           textColor={theme.colors.neutral80}
           onPress={onPressDeclineAll}
-          useI18n>
+          useI18n
+        >
           common:btn_decline_all
         </Button.Secondary>
         <Button.Secondary
@@ -40,7 +43,8 @@ const ButtonApproveDeclineAllRequests = ({
           style={styles.buttonApprove}
           color={theme.colors.purple50}
           onPress={onPressApproveAll}
-          useI18n>
+          useI18n
+        >
           common:btn_approve_all
         </Button.Secondary>
       </View>
@@ -49,7 +53,7 @@ const ButtonApproveDeclineAllRequests = ({
 };
 
 const createStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

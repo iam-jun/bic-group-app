@@ -5,7 +5,7 @@ export const initialChatState = {
 };
 
 function reducer(state = initialChatState, action: any = {}) {
-  const {type, payload} = action;
+  const { type, payload } = action;
   switch (type) {
     case actions.SET_UNREAD_CHANNELS:
       return {

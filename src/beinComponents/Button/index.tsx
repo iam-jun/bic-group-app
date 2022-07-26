@@ -1,11 +1,11 @@
 import React from 'react';
-import ButtonWrapper, {ButtonWrapperProps} from './ButtonWrapper';
+import { StyleProp, ViewStyle } from 'react-native';
+import ButtonWrapper, { ButtonWrapperProps } from './ButtonWrapper';
 import Primary from './ButtonPrimary';
 import Secondary from './ButtonSecondary';
 import Danger from './ButtonDanger';
 import Icon from './ButtonIcon';
-import {StyleProp, ViewStyle} from 'react-native';
-import {TextProps, TextVariant} from '~/beinComponents/Text';
+import { TextProps, TextVariant } from '~/beinComponents/Text';
 
 export interface ButtonProps extends ButtonWrapperProps {
   children?: React.ReactNode;
@@ -17,9 +17,7 @@ export interface ButtonProps extends ButtonWrapperProps {
   textProps?: TextProps;
 }
 
-const ButtonComponent: React.FC<ButtonProps> = (props: ButtonProps) => {
-  return <ButtonWrapper {...props} />;
-};
+const ButtonComponent: React.FC<ButtonProps> = (props: ButtonProps) => <ButtonWrapper {...props} />;
 
 const Button = Object.assign(ButtonComponent, {
   Primary,

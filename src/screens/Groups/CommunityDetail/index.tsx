@@ -1,43 +1,45 @@
-import React, {useState, useEffect, useRef, Fragment, useCallback} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
+import React, {
+  useState, useEffect, useRef, Fragment, useCallback,
+} from 'react';
+import { View, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
   interpolate,
 } from 'react-native-reanimated';
-import {isEmpty} from 'lodash';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { isEmpty } from 'lodash';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import PrivateWelcome from './components/PrivateWelcome';
 import actions from '~/screens/Groups/redux/actions';
 import PageContent from './components/PageContent';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
-import {groupPrivacy} from '~/constants/privacyTypes';
+import { groupPrivacy } from '~/constants/privacyTypes';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import JoinCancelButton from './components/JoinCancelButton';
 import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholder';
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
-import {ICommunity} from '~/interfaces/ICommunity';
-import {formatChannelLink} from '~/utils/link';
-import {openLink} from '~/utils/common';
-import {chatSchemes} from '~/constants/chat';
+import { ICommunity } from '~/interfaces/ICommunity';
+import { formatChannelLink } from '~/utils/link';
+import { openLink } from '~/utils/common';
+import { chatSchemes } from '~/constants/chat';
 import modalActions from '~/store/modal/actions';
 import HeaderMenu from '../components/HeaderMenu';
-import {useRootNavigation} from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import { useRootNavigation } from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
-import {useMyPermissions} from '~/hooks/permissions';
+import { useMyPermissions } from '~/hooks/permissions';
 
 const CommunityDetail = (props: any) => {
-  const params = props.route.params;
+  const { params } = props.route;
   const communityId = params?.communityId;
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
   const headerRef = useRef<any>();
   const [buttonHeight, setButtonHeight] = useState(250);
@@ -46,13 +48,15 @@ const CommunityDetail = (props: any) => {
   const styles = themeStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const {name, icon, joinStatus, privacy, groupId} = infoDetail;
+  const {
+    name, icon, joinStatus, privacy, groupId,
+  } = infoDetail;
   const isMember = joinStatus === groupJoinStatus.member;
   const isGettingInfoDetail = useKeySelector(
     groupsKeySelector.isGettingInfoDetail,
   );
   const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
-  const {hasPermissionsOnScopeWithId, PERMISSION_KEY} = useMyPermissions();
+  const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId('communities', communityId, [
     PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
     PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
@@ -63,7 +67,7 @@ const CommunityDetail = (props: any) => {
 
   const getCommunityDetail = (loadingPage = false) => {
     dispatch(
-      actions.getCommunityDetail({communityId, loadingPage, showLoading: true}),
+      actions.getCommunityDetail({ communityId, loadingPage, showLoading: true }),
     );
   };
 
@@ -75,10 +79,9 @@ const CommunityDetail = (props: any) => {
     /* Avoid getting group posts of the nonexisting group,
     which will lead to endless fetching group posts in
     httpApiRequest > makeGetStreamRequest */
-    const privilegeToFetchPost =
-      isMember ||
-      privacy === groupPrivacy.public ||
-      privacy === groupPrivacy.open;
+    const privilegeToFetchPost = isMember
+      || privacy === groupPrivacy.public
+      || privacy === groupPrivacy.open;
 
     if (isGettingInfoDetail || isEmpty(infoDetail) || !privilegeToFetchPost) {
       return;
@@ -100,7 +103,7 @@ const CommunityDetail = (props: any) => {
 
   const onPressAdminTools = () => {
     dispatch(modalActions.hideModal());
-    rootNavigation.navigate(groupStack.communityAdmin, {communityId});
+    rootNavigation.navigate(groupStack.communityAdmin, { communityId });
   };
 
   const onRightPress = () => {
@@ -118,26 +121,25 @@ const CommunityDetail = (props: any) => {
         props: {
           isContextMenu: true,
           menuMinWidth: 280,
-          modalStyle: {borderTopLeftRadius: 20, borderTopRightRadius: 20},
+          modalStyle: { borderTopLeftRadius: 20, borderTopRightRadius: 20 },
         },
       }),
     );
   };
 
-  const renderPlaceholder = () => {
-    return (
-      <View
-        style={styles.contentContainer}
-        testID="community_detail.placeholder">
-        <View>
-          <GroupProfilePlaceholder disableRandom />
-          <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
-          <PostViewPlaceholder disableRandom />
-          <PostViewPlaceholder disableRandom />
-        </View>
+  const renderPlaceholder = () => (
+    <View
+      style={styles.contentContainer}
+      testID="community_detail.placeholder"
+    >
+      <View>
+        <GroupProfilePlaceholder disableRandom />
+        <HeaderCreatePostPlaceholder style={styles.headerCreatePost} />
+        <PostViewPlaceholder disableRandom />
+        <PostViewPlaceholder disableRandom />
       </View>
-    );
-  };
+    </View>
+  );
 
   const renderCommunityContent = () => {
     if (!isMember && privacy === groupPrivacy.private) {
@@ -193,28 +195,26 @@ const CommunityDetail = (props: any) => {
     [buttonHeight],
   );
 
-  const renderCommunityDetail = () => {
-    return (
-      <Fragment>
-        <Header
-          headerRef={headerRef}
-          title={name}
-          avatar={icon}
-          useAnimationTitle
-          rightIcon={canSetting ? 'iconShieldStar' : 'menu'}
-          rightIconProps={{backgroundColor: theme.colors.white}}
-          onPressChat={isMember ? onPressChat : undefined}
-          onRightPress={onRightPress}
-        />
-        <View testID="community_detail.content" style={styles.contentContainer}>
-          {renderCommunityContent()}
-        </View>
-        <Animated.View style={buttonStyle}>
-          <JoinCancelButton style={styles.joinBtn} />
-        </Animated.View>
-      </Fragment>
-    );
-  };
+  const renderCommunityDetail = () => (
+    <>
+      <Header
+        headerRef={headerRef}
+        title={name}
+        avatar={icon}
+        useAnimationTitle
+        rightIcon={canSetting ? 'iconShieldStar' : 'menu'}
+        rightIconProps={{ backgroundColor: theme.colors.white }}
+        onPressChat={isMember ? onPressChat : undefined}
+        onRightPress={onRightPress}
+      />
+      <View testID="community_detail.content" style={styles.contentContainer}>
+        {renderCommunityContent()}
+      </View>
+      <Animated.View style={buttonStyle}>
+        <JoinCancelButton style={styles.joinBtn} />
+      </Animated.View>
+    </>
+  );
 
   return (
     <ScreenWrapper style={styles.screenContainer} isFullView>
@@ -226,7 +226,7 @@ const CommunityDetail = (props: any) => {
 export default CommunityDetail;
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     screenContainer: {
       backgroundColor: colors.neutral5,

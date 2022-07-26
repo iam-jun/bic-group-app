@@ -2,8 +2,8 @@ import {
   GROUP_PRIVACY_TYPE,
   COMMUNITY_PRIVACY_TYPE,
 } from '~/constants/privacyTypes';
-import {IFilePicked} from './common';
-import {IUploadType} from '~/configs/resourceConfig';
+import { IFilePicked } from './common';
+import { IUploadType } from '~/configs/resourceConfig';
 
 export interface IRole {
   id?: string;

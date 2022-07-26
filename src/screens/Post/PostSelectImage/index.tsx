@@ -1,41 +1,39 @@
-import React, {useEffect, useState} from 'react';
-import {FlatList, StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { FlatList, StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import Button from '~/beinComponents/Button';
 import Header from '~/beinComponents/Header';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import ScreenWrapper from '~/beinComponents/ScreenWrapper';
 import UploadingImage from '~/beinComponents/UploadingImage';
 import appConfig from '~/configs/appConfig';
-import {uploadTypes} from '~/configs/resourceConfig';
-import {useBaseHook} from '~/hooks';
-import {useRootNavigation} from '~/hooks/navigation';
-import {useKeySelector} from '~/hooks/selector';
-import {ICreatePostImage} from '~/interfaces/IPost';
+import { uploadTypes } from '~/configs/resourceConfig';
+import { useBaseHook } from '~/hooks';
+import { useRootNavigation } from '~/hooks/navigation';
+import { useKeySelector } from '~/hooks/selector';
+import { ICreatePostImage } from '~/interfaces/IPost';
 import i18n from '~/localization';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import * as modalActions from '~/store/modal/actions';
-import {showHideToastMessage} from '~/store/modal/actions';
+import { showHideToastMessage } from '~/store/modal/actions';
 import dimension from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
-import {checkPermission} from '~/utils/permission';
+import { checkPermission, permissionTypes } from '~/utils/permission';
 
 const PostSelectImage = () => {
   const [currentImages, setCurrentImages] = useState<ICreatePostImage[]>([]);
   const dispatch = useDispatch();
-  const {t} = useBaseHook();
-  const {rootNavigation} = useRootNavigation();
+  const { t } = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
-  const selectedImages: ICreatePostImage[] =
-    useKeySelector(postKeySelector.createPost.images) || [];
-  const selectedImagesDraft: ICreatePostImage[] =
-    useKeySelector(postKeySelector.createPost.imagesDraft) || [];
+  const selectedImages: ICreatePostImage[] = useKeySelector(postKeySelector.createPost.images) || [];
+  const selectedImagesDraft: ICreatePostImage[] = useKeySelector(postKeySelector.createPost.imagesDraft) || [];
 
   useEffect(() => {
     if (currentImages?.length === 0) {
@@ -74,6 +72,7 @@ const PostSelectImage = () => {
   };
 
   const onUploadSuccess = (url: string, fileName: string) => {
+    // eslint-disable-next-line no-console
     console.log(`\x1b[36m🐣️ index onUploadSuccess ${fileName}: ${url}\x1b[0m`);
   };
 
@@ -85,12 +84,12 @@ const PostSelectImage = () => {
   };
 
   const onPressAddImage = () => {
-    checkPermission('photo', dispatch, canOpenPicker => {
+    checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
       if (canOpenPicker) {
-        ImagePicker.openPickerMultiple().then(images => {
+        ImagePicker.openPickerMultiple().then((images) => {
           const newImages: ICreatePostImage[] = [];
-          images.map(item => {
-            newImages.push({fileName: item.filename, file: item});
+          images.forEach((item) => {
+            newImages.push({ fileName: item.filename, file: item });
           });
           let newCurrentImages = [...currentImages, ...newImages];
           if (newCurrentImages.length > appConfig.postPhotoLimit) {
@@ -104,7 +103,7 @@ const PostSelectImage = () => {
             dispatch(
               showHideToastMessage({
                 content: errorContent,
-                props: {textProps: {useI18n: true}, type: 'error'},
+                props: { textProps: { useI18n: true }, type: 'error' },
               }),
             );
           }
@@ -121,8 +120,8 @@ const PostSelectImage = () => {
     item: ICreatePostImage;
     index: number;
   }) => {
-    const {file, fileName, url} = item || {};
-    const {width = 1, height = 1} = file || {};
+    const { file, fileName, url } = item || {};
+    const { width = 1, height = 1 } = file || {};
     const ratio = height / width;
     const dfWidth = Math.min(dimension.deviceWidth, dimension.maxNewsfeedWidth);
 
@@ -146,7 +145,7 @@ const PostSelectImage = () => {
       return null;
     }
     return (
-      <Button.Secondary leftIcon={'Image'} onPress={onPressAddImage}>
+      <Button.Secondary leftIcon="Image" onPress={onPressAddImage}>
         {t('post:add_photo')}
       </Button.Secondary>
     );
@@ -155,10 +154,10 @@ const PostSelectImage = () => {
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral1}>
       <Header
-        titleTextProps={{useI18n: true}}
-        title={'post:title_edit_images'}
-        buttonText={'common:btn_done'}
-        buttonProps={{useI18n: true, testID: 'post_select_image.btn_done'}}
+        titleTextProps={{ useI18n: true }}
+        title="post:title_edit_images"
+        buttonText="common:btn_done"
+        buttonProps={{ useI18n: true, testID: 'post_select_image.btn_done' }}
         onPressBack={onPressBack}
         onPressButton={onPressSave}
       />
@@ -167,19 +166,17 @@ const PostSelectImage = () => {
         renderItem={renderItem}
         contentContainerStyle={styles.container}
         ListFooterComponent={renderFooter}
-        keyExtractor={(item, index) =>
-          `create_post_image_${index}_${item?.fileName}`
-        }
+        keyExtractor={(item, index) => `create_post_image_${index}_${item?.fileName}`}
       />
     </ScreenWrapper>
   );
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
-    container: {backgroundColor: colors.white},
-    item: {marginBottom: spacing.margin.large, alignSelf: 'center'},
+    container: { backgroundColor: colors.white },
+    item: { marginBottom: spacing.margin.large, alignSelf: 'center' },
   });
 };
 

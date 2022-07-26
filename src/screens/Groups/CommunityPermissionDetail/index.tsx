@@ -1,19 +1,19 @@
-import React, {FC, useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC, useState, useEffect } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Animated, {
   useAnimatedScrollHandler,
   useSharedValue,
 } from 'react-native-reanimated';
 
+import { useDispatch } from 'react-redux';
 import Header from '~/beinComponents/Header';
-import {IScheme} from '~/interfaces/IGroup';
+import { IScheme } from '~/interfaces/IGroup';
 import SchemeRoles from '~/screens/Groups/components/SchemeRoles';
 import RoleHeaderAnimated from '~/screens/Groups/components/RoleHeaderAnimated';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
-import {useDispatch} from 'react-redux';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import spacing from '~/theme/spacing';
 
@@ -38,10 +38,10 @@ const CommunityPermissionDetail: FC<CommunityPermissionDetailProps> = ({
   const permissionCategories = useKeySelector(
     groupsKeySelector.permission.categories,
   );
-  const {loading} = permissionCategories || {};
+  const { loading } = permissionCategories || {};
 
   const initScheme = route?.params?.scheme;
-  const {name, roles} = initScheme || {};
+  const { name, roles } = initScheme || {};
 
   useEffect(() => {
     if (!permissionCategories?.loading) {
@@ -49,25 +49,26 @@ const CommunityPermissionDetail: FC<CommunityPermissionDetailProps> = ({
     }
   }, []);
 
-  const scrollHandler = useAnimatedScrollHandler(event => {
+  const scrollHandler = useAnimatedScrollHandler((event) => {
     translationY.value = event.contentOffset.y;
   });
 
   const onAnchorRole = (i: number, role: any, anchor: number) => {
-    setAnchorRole({...anchorRole, [i]: {role, anchor}});
+    setAnchorRole({ ...anchorRole, [i]: { role, anchor } });
   };
 
   return (
     <View style={styles.container}>
-      <Header style={{zIndex: 2}} title={name} />
+      <Header style={{ zIndex: 2 }} title={name} />
       {loading ? (
         <LoadingIndicator />
       ) : (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
           <Animated.ScrollView
             scrollEventThrottle={1}
             onScroll={scrollHandler}
-            contentContainerStyle={styles.contentContainer}>
+            contentContainerStyle={styles.contentContainer}
+          >
             <SchemeRoles
               roles={roles || []}
               onAnchorRole={onAnchorRole}
@@ -86,7 +87,7 @@ const CommunityPermissionDetail: FC<CommunityPermissionDetailProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flex: 1,

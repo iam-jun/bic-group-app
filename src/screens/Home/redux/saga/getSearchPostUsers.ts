@@ -1,5 +1,5 @@
-import {put, select} from 'redux-saga/effects';
-import {IParamsGetUsers} from '~/interfaces/IAppHttpRequest';
+import { put, select } from 'redux-saga/effects';
+import { IParamsGetUsers } from '~/interfaces/IAppHttpRequest';
 import homeActions from '~/screens/Home/redux/actions';
 import homeDataHelper from '~/screens/Home/helper/HomeDataHelper';
 
@@ -10,11 +10,11 @@ export default function* getSearchPostUsers({
   type: string;
 }): any {
   try {
-    const state = yield select(state => state?.home?.newsfeedSearchUsers);
+    const state = yield select((state) => state?.home?.newsfeedSearchUsers);
     let data = state?.data || [];
 
-    //if doesnt have payload a.k.a search key => action load more page
-    let params: IParamsGetUsers | undefined = undefined;
+    // if doesnt have payload a.k.a search key => action load more page
+    let params: IParamsGetUsers | undefined;
     if (payload || payload === '') {
       data = [];
       yield put(
@@ -23,18 +23,16 @@ export default function* getSearchPostUsers({
           loading: true,
           canLoadMore: true,
           offset: 0,
-          data: data,
+          data,
         }),
       );
-      params = {key: payload, offset: 0, limit: state.limit};
-    } else {
-      if (state && state.canLoadMore && state.data?.length) {
-        params = {
-          key: state.key,
-          offset: state.data.length,
-          limit: state.limit,
-        };
-      }
+      params = { key: payload, offset: 0, limit: state.limit };
+    } else if (state && state.canLoadMore && state.data?.length) {
+      params = {
+        key: state.key,
+        offset: state.data.length,
+        limit: state.limit,
+      };
     }
 
     if (state && params) {
@@ -52,9 +50,9 @@ export default function* getSearchPostUsers({
         }),
       );
     } else {
-      console.log(`\x1b[36m🐣️ saga getSearchPostUsers: cant load more\x1b[0m`);
+      console.warn('\x1b[36m🐣️ saga getSearchPostUsers: cant load more\x1b[0m');
     }
   } catch (e) {
-    console.log(`\x1b[31m🐣️ saga getSearchPostUsers error: `, e, `\x1b[0m`);
+    console.error('\x1b[31m🐣️ saga getSearchPostUsers error: ', e, '\x1b[0m');
   }
 }

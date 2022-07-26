@@ -12,7 +12,7 @@ import {baseCommentData, POST_DETAIL_3} from '~/test/mock_data/post';
 import MockedNavigator from '~/test/MockedNavigator';
 import i18next from 'i18next';
 import * as navigationHook from '~/hooks/navigation';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 
 describe('Comment Detail screen', () => {

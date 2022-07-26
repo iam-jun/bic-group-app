@@ -1,7 +1,7 @@
 import i18next from 'i18next';
-import {call, put, select} from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
 import approveDeclineCode from '~/constants/approveDeclineCode';
-import {IToastMessage} from '~/interfaces/common';
+import { IToastMessage } from '~/interfaces/common';
 import showError from '~/store/commonSaga/showError';
 import modalActions from '~/store/modal/actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
@@ -17,7 +17,7 @@ export default function* approveSingleCommunityMemberRequest({
     fullName: string;
   };
 }) {
-  const {communityId, requestId, fullName} = payload;
+  const { communityId, requestId, fullName } = payload;
   try {
     yield call(
       groupsDataHelper.approveSingleCommunityMemberRequest,
@@ -26,9 +26,9 @@ export default function* approveSingleCommunityMemberRequest({
     );
 
     // Update data state
-    const {groups} = yield select();
-    const {total, ids, items} = groups.communityMemberRequests;
-    const requestItems = {...items};
+    const { groups } = yield select();
+    const { total, ids, items } = groups.communityMemberRequests;
+    const requestItems = { ...items };
     delete requestItems[requestId];
     yield put(
       groupsActions.setCommunityMemberRequests({
@@ -41,13 +41,13 @@ export default function* approveSingleCommunityMemberRequest({
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
       props: {
-        textProps: {useI18n: true},
+        textProps: { useI18n: true },
         type: 'success',
       },
       toastType: 'normal',
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.getCommunityDetail({communityId})); // to update userCount
+    yield put(groupsActions.getCommunityDetail({ communityId })); // to update userCount
   } catch (err: any) {
     console.log('approveSingleCommunityMemberRequest: ', err);
 
@@ -55,7 +55,7 @@ export default function* approveSingleCommunityMemberRequest({
       yield put(
         groupsActions.editCommunityMemberRequest({
           id: requestId,
-          data: {isCanceled: true},
+          data: { isCanceled: true },
         }),
       );
       return;

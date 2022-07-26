@@ -1,4 +1,4 @@
-import React, {FC, useEffect, useState} from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   StyleSheet,
   StyleProp,
@@ -6,18 +6,18 @@ import {
   RefreshControl,
   FlatList,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
+import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
 import Divider from '~/beinComponents/Divider';
 import EmptyScreen from '~/beinFragments/EmptyScreen';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
-import {useDispatch} from 'react-redux';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import CommunityItem from '../components/CommunityItem';
-import {ICommunity} from '~/interfaces/ICommunity';
+import { ICommunity } from '~/interfaces/ICommunity';
 import spacing from '~/theme/spacing';
 
 export interface JoinedCommunitiesProps {
@@ -55,31 +55,28 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
     getData();
   };
 
-  const renderEmptyComponent = () => {
-    return (
-      <EmptyScreen
-        source={'addUsers'}
-        title="communities:empty_communities:title"
-        description="communities:empty_communities:description"
-        ButtonComponent={
-          <ButtonWrapper
-            testID="empty_screen.button"
-            onPress={onPressDiscover}
-            style={styles.buttonWrapper}>
-            <Text.ButtonM useI18n color={theme.colors.purple50}>
-              communities:empty_communities:button_text
-            </Text.ButtonM>
-          </ButtonWrapper>
-        }
-      />
-    );
-  };
+  const renderEmptyComponent = () => (
+    <EmptyScreen
+      source="addUsers"
+      title="communities:empty_communities:title"
+      description="communities:empty_communities:description"
+      ButtonComponent={(
+        <ButtonWrapper
+          testID="empty_screen.button"
+          onPress={onPressDiscover}
+          style={styles.buttonWrapper}
+        >
+          <Text.ButtonM useI18n color={theme.colors.purple50}>
+            communities:empty_communities:button_text
+          </Text.ButtonM>
+        </ButtonWrapper>
+        )}
+    />
+  );
 
-  const renderItem = ({item}: {item: ICommunity}) => {
-    return (
-      <CommunityItem item={item} onPressCommunities={onPressCommunities} />
-    );
-  };
+  const renderItem = ({ item }: {item: ICommunity}) => (
+    <CommunityItem item={item} onPressCommunities={onPressCommunities} />
+  );
 
   return (
     <FlatList
@@ -96,13 +93,13 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
           }}
         />
       )}
-      refreshControl={
+      refreshControl={(
         <RefreshControl
           refreshing={refreshing}
           onRefresh={onRefresh}
           tintColor={theme.colors.gray40}
         />
-      }
+      )}
     />
   );
 };

@@ -1,5 +1,7 @@
-import {debounce} from 'lodash';
-import React, {useCallback, useImperativeHandle, useRef, useState} from 'react';
+import { debounce } from 'lodash';
+import React, {
+  useCallback, useImperativeHandle, useRef, useState,
+} from 'react';
 import {
   DeviceEventEmitter,
   KeyboardTypeOptions,
@@ -11,16 +13,13 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {
-  default as actions,
-  default as actionsMention,
-} from '~/beinComponents/inputs/MentionInput/redux/actions';
-import {useKeyboardStatus} from '~/hooks/keyboard';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import actions from '~/beinComponents/inputs/MentionInput/redux/actions';
+import { useKeyboardStatus } from '~/hooks/keyboard';
 
 import Autocomplete from './Autocomplete';
-import {ICursorPositionChange, switchKeyboardForCodeBlocks} from './helper';
+import { ICursorPositionChange, switchKeyboardForCodeBlocks } from './helper';
 
 interface Props {
   textInputRef?: any;
@@ -53,15 +52,14 @@ const _MentionInput = ({
   const inputRef = textInputRef || useRef<TextInput>();
   const _mentionInputRef = mentionInputRef || useRef<any>();
 
-  const [keyboardType, setKeyboardType] =
-    useState<KeyboardTypeOptions>('default');
-  const {isOpen: isKeyboardOpen} = useKeyboardStatus();
+  const [keyboardType, setKeyboardType] = useState<KeyboardTypeOptions>('default');
+  const { isOpen: isKeyboardOpen } = useKeyboardStatus();
   const [topPosition, setTopPosition] = useState<number>(0);
   const [measuredHeight, setMeasuredHeight] = useState(0);
   const cursorPosition = useRef(0);
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyles();
 
   const dispatch = useDispatch();
@@ -73,7 +71,7 @@ const _MentionInput = ({
     );
     return () => {
       onCompleteMentionListener?.remove?.();
-      dispatch(actionsMention.setData([]));
+      dispatch(actions.setData([]));
     };
   }, []);
 
@@ -127,10 +125,10 @@ const _MentionInput = ({
 
   const checkSendWhenEnter = (event: any) => {
     if (
-      event?.key === 'Enter' &&
-      !event?.shiftKey &&
-      (componentInputProps?.value?.trim?.()?.length > 0 ||
-        componentInputProps?.commentInputRef?.current?.hasMedia?.())
+      event?.key === 'Enter'
+      && !event?.shiftKey
+      && (componentInputProps?.value?.trim?.()?.length > 0
+        || componentInputProps?.commentInputRef?.current?.hasMedia?.())
     ) {
       if (componentInputProps?.commentInputRef?.current?.send) {
         event.preventDefault();
@@ -143,12 +141,12 @@ const _MentionInput = ({
     setTopPosition(e.nativeEvent.contentSize.height);
   };
 
-  const debounceSetMeasuredHeight = debounce(height => {
+  const debounceSetMeasuredHeight = debounce((height) => {
     setMeasuredHeight(height);
   }, 80);
 
   const _onLayoutContainer = useCallback(
-    e => {
+    (e) => {
       debounceSetMeasuredHeight(e.nativeEvent.layout.height);
     },
     [isKeyboardOpen],
@@ -159,14 +157,15 @@ const _MentionInput = ({
       <View
         testID="_mention_input"
         style={[styles.containerWrapper, style]}
-        onLayout={_onLayoutContainer}>
+        onLayout={_onLayoutContainer}
+      >
         <ComponentInput
           testID="_mention_input.input"
           {...componentInputProps}
           keyboardType={keyboardType}
           textInputRef={inputRef}
           editable={!disabled}
-          style={[textInputStyle, disabled ? {color: colors.gray50} : {}]}
+          style={[textInputStyle, disabled ? { color: colors.gray50 } : {}]}
           onContentSizeChange={_onContentSizeChange}
           onSelectionChange={onSelectionChange}
           onKeyPress={_onKeyPress}
@@ -187,21 +186,19 @@ const _MentionInput = ({
   );
 };
 
-const createStyles = () => {
-  return StyleSheet.create({
-    containerWrapper: {
-      zIndex: 1,
-    },
-    hidden: {
-      height: 0,
-      flex: undefined,
-      marginTop: 0,
-      marginBottom: 0,
-      paddingTop: 0,
-      paddingBottom: 0,
-      borderWidth: 0,
-    },
-  });
-};
+const createStyles = () => StyleSheet.create({
+  containerWrapper: {
+    zIndex: 1,
+  },
+  hidden: {
+    height: 0,
+    flex: undefined,
+    marginTop: 0,
+    marginBottom: 0,
+    paddingTop: 0,
+    paddingBottom: 0,
+    borderWidth: 0,
+  },
+});
 
 export default _MentionInput;

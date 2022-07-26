@@ -1,13 +1,13 @@
-import React, {useRef, useState, useEffect} from 'react';
-import {Dimensions, View} from 'react-native';
+import React, { useRef, useState, useEffect } from 'react';
+import { Dimensions, View } from 'react-native';
 
+import { useDispatch } from 'react-redux';
 import BottomSheet from '~/beinComponents/BottomSheet';
-import {useKeySelector} from '~/hooks/selector';
-import {useDispatch} from 'react-redux';
-import {clearReactionDetailBottomSheet} from '~/store/modal/actions';
+import { useKeySelector } from '~/hooks/selector';
+import { clearReactionDetailBottomSheet } from '~/store/modal/actions';
 import ReactionTabBar from '~/beinFragments/reaction/ReactionDetailBottomSheet/ReactionTabBar';
 import ReactionDetailTab from '~/beinFragments/reaction/ReactionDetailBottomSheet/ReactionDetailTab';
-import {useRootNavigation} from '~/hooks/navigation';
+import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import modalKeySelector from '~/store/modal/keySelector';
 
@@ -19,14 +19,15 @@ const ReactionDetailBottomSheet = () => {
   const [selectingReaction, setSelectingReaction] = useState<any>();
 
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
   const data = useKeySelector(modalKeySelector.reactionDetailBottomSheet);
-  const {isOpen, reactionCounts, initReaction, getDataPromise, getDataParam} =
-    data || {};
+  const {
+    isOpen, reactionCounts, initReaction, getDataPromise, getDataParam,
+  } = data || {};
 
   useEffect(() => {
-    //reset
+    // reset
     if (!reactionCounts) {
       setSelectingReaction(undefined);
     }
@@ -45,7 +46,7 @@ const ReactionDetailBottomSheet = () => {
   const onPressItem = (item: any) => {
     const itemUserId = item?.item?.id;
     if (itemUserId) {
-      rootNavigation.navigate(mainStack.userProfile, {userId: itemUserId});
+      rootNavigation.navigate(mainStack.userProfile, { userId: itemUserId });
     } else {
       rootNavigation.navigate(mainStack.userProfile, {
         userId: item?.item.username,
@@ -63,7 +64,7 @@ const ReactionDetailBottomSheet = () => {
       isOpen={isOpen}
       isContextMenu={false}
       onClose={_onClose}
-      ContentComponent={
+      ContentComponent={(
         <View>
           <ReactionTabBar
             reactionCounts={reactionCounts}
@@ -78,7 +79,7 @@ const ReactionDetailBottomSheet = () => {
             getDataParam={getDataParam}
           />
         </View>
-      }
+      )}
     />
   );
 };

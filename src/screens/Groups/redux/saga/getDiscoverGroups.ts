@@ -1,11 +1,12 @@
+import { put, call, select } from 'redux-saga/effects';
+import { AxiosResponse } from 'axios';
 import appConfig from '~/configs/appConfig';
-import {put, call, select} from 'redux-saga/effects';
 
-import {IParamGetDiscoverGroups} from '~/interfaces/ICommunity';
+import { IParamGetDiscoverGroups } from '~/interfaces/ICommunity';
 import actions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import showError from '~/store/commonSaga/showError';
-import {mapItems} from '../../helper/mapper';
+import { mapItems } from '../../helper/mapper';
 
 export default function* getDiscoverGroups({
   payload,
@@ -18,9 +19,9 @@ export default function* getDiscoverGroups({
   };
 }) {
   try {
-    const {groups} = yield select();
-    const {communityId, params, isRefreshing} = payload;
-    const {ids, items, canLoadMore} = groups.discoverGroups;
+    const { groups } = yield select();
+    const { communityId, params, isRefreshing } = payload;
+    const { ids, items, canLoadMore } = groups.discoverGroups;
 
     yield put(
       actions.setDiscoverGroups({
@@ -30,8 +31,7 @@ export default function* getDiscoverGroups({
 
     if (!isRefreshing && !canLoadMore) return;
 
-    // @ts-ignore
-    const resp = yield call(groupsDataHelper.getDiscoverGroups, communityId, {
+    const resp: AxiosResponse = yield call(groupsDataHelper.getDiscoverGroups, communityId, {
       limit: appConfig.recordsPerPage,
       offset: isRefreshing ? 0 : ids.length,
       ...params,
@@ -45,13 +45,13 @@ export default function* getDiscoverGroups({
       loading: false,
       canLoadMore: newIds.length === appConfig.recordsPerPage,
       ids: isRefreshing ? [...newIds] : [...ids, ...newIds],
-      items: isRefreshing ? {...newItems} : {...items, ...newItems},
+      items: isRefreshing ? { ...newItems } : { ...items, ...newItems },
     };
 
     yield put(actions.setDiscoverGroups(newData));
   } catch (err) {
-    console.log('getDiscoverGroups error:', err);
-    yield put(actions.setDiscoverGroups({loading: false}));
+    console.error('getDiscoverGroups error:', err);
+    yield put(actions.setDiscoverGroups({ loading: false }));
     yield call(showError, err);
   }
 }

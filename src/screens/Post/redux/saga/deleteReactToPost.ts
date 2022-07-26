@@ -1,7 +1,7 @@
-import {get} from 'lodash';
-import {call, select} from 'redux-saga/effects';
+import { get } from 'lodash';
+import { call, select } from 'redux-saga/effects';
 
-import {IPayloadReactToPost, IReaction} from '~/interfaces/IPost';
+import { IPayloadReactToPost, IReaction } from '~/interfaces/IPost';
 import showError from '~/store/commonSaga/showError';
 import postDataHelper from '../../helper/PostDataHelper';
 import postKeySelector from '../keySelector';
@@ -13,14 +13,15 @@ export default function* deleteReactToPost({
   type: string;
   payload: IPayloadReactToPost;
 }): any {
-  const {id, reactionId, reactionCounts, ownReaction} = payload;
-  const post1 = yield select(s => get(s, postKeySelector.postById(id)));
+  const {
+    id, reactionId, reactionCounts, ownReaction,
+  } = payload;
+  const post1 = yield select((s) => get(s, postKeySelector.postById(id)));
   try {
     const cOwnReaction1 = post1.ownerReactions || [];
-    const rId =
-      cOwnReaction1?.find(
-        (item: IReaction) => item?.reactionName === reactionId,
-      )?.id || '';
+    const rId = cOwnReaction1?.find(
+      (item: IReaction) => item?.reactionName === reactionId,
+    )?.id || '';
     if (rId) {
       yield removeReactionLocal(id, reactionId);
       yield call(postDataHelper.deleteReaction, {
@@ -31,7 +32,7 @@ export default function* deleteReactToPost({
       });
     }
   } catch (e) {
-    yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); //rollback
+    yield onUpdateReactionOfPostById(id, ownReaction, reactionCounts); // rollback
     yield showError(e);
   }
 }
@@ -59,19 +60,19 @@ export default function* deleteReactToPost({
 // }
 
 function* removeReactionLocal(id: string, reactionId: string): any {
-  const post2 = yield select(s => get(s, postKeySelector.postById(id)));
+  const post2 = yield select((s) => get(s, postKeySelector.postById(id)));
   const cOwnerReactions2 = post2.ownerReactions || [];
   const cReactionCounts2 = post2.reactionsCount || {};
   const newOwnerReactions2 = cOwnerReactions2?.filter?.(
     (or: IReaction) => or?.reactionName !== reactionId,
   );
   const newReactionCounts2: any = {};
-  Object.keys(cReactionCounts2)?.map?.(k => {
+  Object.keys(cReactionCounts2)?.forEach?.((k) => {
     const _reactionId = Object.keys(cReactionCounts2?.[k])?.[0];
     const nextKey = `${Object.keys(newReactionCounts2).length}`;
     const _reactionCount = cReactionCounts2?.[k]?.[_reactionId] || 0;
     if (reactionId !== _reactionId) {
-      newReactionCounts2[nextKey] = {[_reactionId]: _reactionCount};
+      newReactionCounts2[nextKey] = { [_reactionId]: _reactionCount };
     } else {
       newReactionCounts2[nextKey] = {
         [_reactionId]: Math.max(0, _reactionCount - 1),

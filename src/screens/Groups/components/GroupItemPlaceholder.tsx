@@ -1,6 +1,8 @@
-import React, {FC} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import {
+  View, StyleSheet, StyleProp, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import {
   ShineOverlay,
@@ -8,7 +10,7 @@ import {
   PlaceholderLine,
   PlaceholderMedia,
 } from 'rn-placeholder';
-import {getRandomInt} from '~/utils/generator';
+import { getRandomInt } from '~/utils/generator';
 import spacing from '~/theme/spacing';
 
 export interface GroupItemPlaceholderProps {
@@ -33,8 +35,9 @@ const GroupItemPlaceholder: FC<GroupItemPlaceholderProps> = ({
       </Placeholder>
       <Placeholder
         Animation={ShineOverlay}
-        Left={p => <PlaceholderMedia style={[p.style, styles.avatar]} />}
-        style={styles.infoContainer}>
+        Left={(p) => <PlaceholderMedia style={[p.style, styles.avatar]} />}
+        style={styles.infoContainer}
+      >
         <PlaceholderLine
           width={disableRandom ? 50 : getRandomInt(30, 60)}
           style={styles.marginBottomSmall}
@@ -49,11 +52,11 @@ const GroupItemPlaceholder: FC<GroupItemPlaceholderProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
-    flex1: {flex: 1},
-    margin0: {marginTop: 0, marginBottom: 0},
-    marginBottomSmall: {marginBottom: spacing.margin.small},
+    flex1: { flex: 1 },
+    margin0: { marginTop: 0, marginBottom: 0 },
+    marginBottomSmall: { marginBottom: spacing.margin.small },
     container: {
       backgroundColor: colors.white,
       marginBottom: spacing.margin.base,

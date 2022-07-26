@@ -1,16 +1,16 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {useKeySelector} from '~/hooks/selector';
-import {IPayloadReplying} from '~/interfaces/IPost';
+import { View, StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import i18next from 'i18next';
+import { useKeySelector } from '~/hooks/selector';
+import { IPayloadReplying } from '~/interfaces/IPost';
 
 import postKeySelector from '../../redux/keySelector';
 
 import Text from '~/beinComponents/Text';
-import i18next from 'i18next';
 import postActions from '../../redux/actions';
-import {useUserIdAuth} from '~/hooks/auth';
+import { useUserIdAuth } from '~/hooks/auth';
 import spacing from '~/theme/spacing';
 
 const ReplyingView = () => {
@@ -22,11 +22,10 @@ const ReplyingView = () => {
   const userId = useUserIdAuth();
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
-  const replyTargetUser =
-    replying?.comment?.actor || replying?.parentComment?.actor;
+  const replyTargetUser = replying?.comment?.actor || replying?.parentComment?.actor;
   const replyTargetUserId = replyTargetUser?.id;
   let replyTargetName = replyTargetUser?.fullname;
   if (replyTargetUserId === userId) {
@@ -64,12 +63,12 @@ const ReplyingView = () => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {},
-    flex1: {flex: 1},
-    row: {flexDirection: 'row'},
+    flex1: { flex: 1 },
+    row: { flexDirection: 'row' },
     commentInputHeader: {
       flexDirection: 'row',
       paddingHorizontal: spacing.padding.small,

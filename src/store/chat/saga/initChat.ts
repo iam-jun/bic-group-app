@@ -1,7 +1,7 @@
-import {AxiosResponse} from 'axios';
-import {put} from 'redux-saga/effects';
+import { AxiosResponse } from 'axios';
+import { put } from 'redux-saga/effects';
 import apiConfig from '~/configs/apiConfig';
-import {makeHttpRequest} from '~/services/httpApiRequest';
+import { makeHttpRequest } from '~/services/httpApiRequest';
 
 import actions from '../actions';
 
@@ -13,12 +13,13 @@ export default function* initChat() {
     const data = response.data?.data;
 
     const result = (data || []).reduce(
+      // eslint-disable-next-line no-return-assign, no-sequences
       (obj: any, item: any) => ((obj[item.channel_id] = item), obj),
       {},
     );
 
     yield put(actions.setUnreadChannels(result));
   } catch (err: any) {
-    console.log('initChat error', err);
+    console.error('initChat error', err);
   }
 }

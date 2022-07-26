@@ -1,19 +1,16 @@
 import moment from 'moment';
 import removeMd from 'remove-markdown';
 
-export const formatNumber = (n: number) => {
-  return n.toFixed(0).replace(/./g, function (c, i, a) {
-    return i > 0 && c !== ',' && (a.length - i) % 3 === 0 ? ',' + c : c;
-  });
-};
+export const formatNumber = (n: number) => n.toFixed(0).replace(/./g, (c, i, a) => (i > 0 && c !== ',' && (a.length - i) % 3 === 0 ? `,${c}` : c));
 
 export const formatDate = (
-  value: string | number | Date | moment.Moment,
+  _value: string | number | Date | moment.Moment,
   format?: string,
   locale?: string,
   maxFromDays?: number,
   fromNow = true,
 ) => {
+  let value = _value;
   const formats = [moment.ISO_8601, 'MM/DD/YYYY HH*mm*ss'];
   const date = moment(value, formats, true);
   if (!date.isValid()) return '';
@@ -33,12 +30,10 @@ export const formatDate = (
       } else {
         value = momentValue.format('lll');
       }
+    } else if (days < (maxFromDays || 1)) {
+      value = momentValue.calendar();
     } else {
-      if (days < (maxFromDays || 1)) {
-        value = momentValue.calendar();
-      } else {
-        value = momentValue.format('L');
-      }
+      value = momentValue.format('L');
     }
   }
 
@@ -48,23 +43,23 @@ export const formatDate = (
 export const formatLargeNumber = (value: number) => {
   if (value < 1000) {
     return value;
-  } else if (value < 10000) {
+  } if (value < 10000) {
     return `${Number(value / 1000)
       .toFixed(2)
       .replace(/(\.0+|0+)$/, '')}k`;
-  } else if (value < 100000) {
+  } if (value < 100000) {
     return `${Number(value / 1000)
       .toFixed(1)
       .replace(/(\.0+|0+)$/, '')}k`;
-  } else if (value < 1000000) {
+  } if (value < 1000000) {
     return `${Number(value / 1000)
       .toFixed(3)
       .replace(/(\.0+|0+)$/, '')}k`;
-  } else if (value < 1000000000) {
+  } if (value < 1000000000) {
     return `${Number(value / 1000000)
       .toFixed(0)
       .replace(/(\.0+|0+)$/, '')}m`;
-  } else if (value >= 1000000000) {
+  } if (value >= 1000000000) {
     return `${Number(value / 1000000000)
       .toFixed(0)
       .replace(/(\.0+|0+)$/, '')}b`;
@@ -80,20 +75,21 @@ export const timestampToISODate = (date: any): string => {
 
 export const formatPhoneNumber = (text: string) => {
   if (!text) return text;
-  const cleaned = ('' + text).replace(/\D/g, '');
+  const cleaned = (`${text}`).replace(/\D/g, '');
   const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/);
   if (match) {
-    const intlCode = match[1] ? '+1 ' : '',
-      number = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join(
-        '',
-      );
+    const intlCode = match[1] ? '+1 ' : '';
+    const number = [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join(
+      '',
+    );
 
     return number;
   }
   return text;
 };
 
-export const toNumber = (text: string, decimalFixed: number) => {
+export const toNumber = (_text: string, decimalFixed: number) => {
+  let text = _text;
   if (!text) return text;
   const fixed = decimalFixed || 2;
   let value: string | number = text;
@@ -121,12 +117,14 @@ export function formatBytes(bytes: number, decimals = 1) {
 
   const i = Math.floor(Math.log(bytes) / Math.log(k));
 
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  return `${parseFloat((bytes / k ** i).toFixed(dm))} ${sizes[i]}`;
 }
-export const escapeMarkDown = (text: string) => {
+export const escapeMarkDown = (_text: string) => {
   const MENTION_USER_REG = /@\[u:(\d+):(\S.*?)\]/gm;
+  let text = _text;
 
   let match;
+  // eslint-disable-next-line no-cond-assign
   while ((match = MENTION_USER_REG.exec(text))) {
     text = text.replace(match[0], match[2]);
     MENTION_USER_REG.lastIndex = 0;

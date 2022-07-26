@@ -1,12 +1,12 @@
-import {makeHttpRequest} from '~/services/httpApiRequest';
-import ApiConfig, {HttpApiRequestConfig} from '~/configs/apiConfig';
-import {IParamGetNotifications} from '~/interfaces/INotification';
+import { makeHttpRequest } from '~/services/httpApiRequest';
+import ApiConfig, { HttpApiRequestConfig } from '~/configs/apiConfig';
+import { IParamGetNotifications } from '~/interfaces/INotification';
 
 const LIMIT = 20;
 
 export const notificationApiConfig = {
   getNotifications: (params: IParamGetNotifications): HttpApiRequestConfig => {
-    const {limit, ...restParams} = params || {};
+    const { limit, ...restParams } = params || {};
     return {
       url: `${ApiConfig.providers.beinNotification.url}notifications`,
       method: 'get',
@@ -18,44 +18,36 @@ export const notificationApiConfig = {
       },
     };
   },
-  putMarkAsReadById: (id: string): HttpApiRequestConfig => {
-    return {
-      url: `${ApiConfig.providers.beinNotification.url}notifications/${id}/mark-read`,
-      method: 'put',
-      provider: ApiConfig.providers.beinNotification,
-      useRetry: true,
-    };
-  },
-  putMarkAllAsRead: (flag: string): HttpApiRequestConfig => {
-    return {
-      url: `${ApiConfig.providers.beinNotification.url}notifications/mark-read/${flag}`,
-      method: 'put',
-      provider: ApiConfig.providers.beinNotification,
-      useRetry: true,
-    };
-  },
-  putMarkAllAsSeen: (): HttpApiRequestConfig => {
-    return {
-      url: `${ApiConfig.providers.beinNotification.url}notifications/mark-seen`,
-      method: 'put',
-      provider: ApiConfig.providers.beinNotification,
-      useRetry: true,
-    };
-  },
-  putMarkAsUnReadById: (id: string): HttpApiRequestConfig => {
-    return {
-      url: `${ApiConfig.providers.beinNotification.url}notifications/${id}/mark-unread`,
-      method: 'put',
-      provider: ApiConfig.providers.beinNotification,
-      useRetry: true,
-    };
-  },
+  putMarkAsReadById: (id: string): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.beinNotification.url}notifications/${id}/mark-read`,
+    method: 'put',
+    provider: ApiConfig.providers.beinNotification,
+    useRetry: true,
+  }),
+  putMarkAllAsRead: (flag: string): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.beinNotification.url}notifications/mark-read/${flag}`,
+    method: 'put',
+    provider: ApiConfig.providers.beinNotification,
+    useRetry: true,
+  }),
+  putMarkAllAsSeen: (): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.beinNotification.url}notifications/mark-seen`,
+    method: 'put',
+    provider: ApiConfig.providers.beinNotification,
+    useRetry: true,
+  }),
+  putMarkAsUnReadById: (id: string): HttpApiRequestConfig => ({
+    url: `${ApiConfig.providers.beinNotification.url}notifications/${id}/mark-unread`,
+    method: 'put',
+    provider: ApiConfig.providers.beinNotification,
+    useRetry: true,
+  }),
 };
 
 const notificationsDataHelper = {
   getDefaultLoadNotiOptions: (userId: string) => {
     const options: any = {
-      user_id: userId.toString(), //current user is userId, all reaction of userId will return in field own_reactions
+      user_id: userId.toString(), // current user is userId, all reaction of userId will return in field own_reactions
       ownReactions: true,
       withOwnReactions: true,
       withOwnChildren: false,
@@ -76,9 +68,8 @@ const notificationsDataHelper = {
           results: response?.data?.data?.list || [],
           unseen: response?.data?.meta?.unSeen,
         });
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -100,14 +91,14 @@ const notificationsDataHelper = {
           // we must minute unseen count by 1
           // to make unseen number correct after we hide the noti
           if (!notiGroup.isSeen) {
-            userHisOwnNotiCount++;
+            userHisOwnNotiCount += 1;
           }
           return false;
         }
       }
       return true;
     });
-    return {filteredNotis, userHisOwnNotiCount};
+    return { filteredNotis, userHisOwnNotiCount };
   },
 
   markAsReadAll: async (flag: string) => {
@@ -117,9 +108,8 @@ const notificationsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -132,9 +122,8 @@ const notificationsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -147,9 +136,8 @@ const notificationsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }
@@ -161,9 +149,8 @@ const notificationsDataHelper = {
       );
       if (response && response?.data) {
         return Promise.resolve(response?.data);
-      } else {
-        return Promise.reject(response);
       }
+      return Promise.reject(response);
     } catch (e) {
       return Promise.reject(e);
     }

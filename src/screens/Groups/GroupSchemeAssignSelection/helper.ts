@@ -1,4 +1,4 @@
-import {cloneDeep} from 'lodash';
+import { cloneDeep } from 'lodash';
 
 export const handleSelectNewGroupScheme = (
   groupId: string,
@@ -7,7 +7,7 @@ export const handleSelectNewGroupScheme = (
   groupAssignments: any,
 ) => {
   // filter to remove current selected
-  const newData = data?.filter(item => item?.groupId !== groupId);
+  const newData = data?.filter((item) => item?.groupId !== groupId);
 
   const findGroup = (groupAssign: any) => {
     if (groupAssign?.groupId === groupId) {
@@ -23,7 +23,7 @@ export const handleSelectNewGroupScheme = (
 
   // only push to array if scheme id is difference
   if (group?.scheme_id !== schemeId) {
-    newData.push({groupId: groupId, scheme_id: schemeId});
+    newData.push({ groupId, scheme_id: schemeId });
   }
 
   return newData;

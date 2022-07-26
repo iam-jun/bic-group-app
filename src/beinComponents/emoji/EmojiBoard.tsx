@@ -1,5 +1,5 @@
 import NodeEmoji from 'node-emoji';
-import React, {FC, useRef} from 'react';
+import React, { FC, useRef } from 'react';
 import {
   StyleProp,
   StyleSheet,
@@ -7,13 +7,13 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Button from '~/beinComponents/Button';
 import EmojiNameToast from '~/beinComponents/emoji/EmojiNameToast';
-import EmojiSelector, {Categories} from '~/beinComponents/emoji/EmojiSelector';
+import EmojiSelector, { Categories } from '~/beinComponents/emoji/EmojiSelector';
 import Icon from '~/beinComponents/Icon';
-import {useBaseHook} from '~/hooks';
-import {useKeySelector} from '~/hooks/selector';
+import { useBaseHook } from '~/hooks';
+import { useKeySelector } from '~/hooks/selector';
 
 import spacing from '~/theme/spacing';
 
@@ -40,8 +40,8 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
   const emojiRef = useRef<any>();
 
   const theme: ExtendedTheme = useTheme();
-  const {t} = useBaseHook();
-  const {colors} = theme;
+  const { t } = useBaseHook();
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const _onEmojiSelected = (emoji: string) => {
@@ -57,11 +57,12 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
     <TouchableOpacity
       disabled={!isInternetReachable}
       activeOpacity={1}
-      style={[styles.container, {width, height}]}>
+      style={[styles.container, { width, height }]}
+    >
       <EmojiSelector
         theme={colors.purple60}
-        showHistory={true}
-        showSearchBar={true}
+        showHistory
+        showSearchBar
         category={Categories.emotion}
         placeholder={t('common:text_search_emoji')}
         inactiveTab={colors.neutral5}
@@ -74,7 +75,7 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
         <View style={styles.buttonContainer}>
           {!!onPressKeyboard && (
             <Button onPress={onPressKeyboard} style={styles.buttonSide}>
-              <Icon size={18} icon={'Keyboard'} />
+              <Icon size={18} icon="Keyboard" />
             </Button>
           )}
           {!!onPressSpace && (
@@ -82,7 +83,7 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
           )}
           {!!onPressBackSpace && (
             <Button onPress={onPressBackSpace} style={styles.buttonSide}>
-              <Icon size={18} icon={'DeleteLeft'} />
+              <Icon size={18} icon="DeleteLeft" />
             </Button>
           )}
         </View>
@@ -93,7 +94,7 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       width: '100%',

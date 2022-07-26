@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, { FC, useState } from 'react';
 import {
   View,
   StyleSheet,
@@ -6,11 +6,8 @@ import {
   ViewStyle,
   TouchableOpacity,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
-import Text from '~/beinComponents/Text';
-import Icon from '~/beinComponents/Icon';
-import {useBaseHook} from '~/hooks';
 import Animated, {
   interpolate,
   runOnJS,
@@ -18,6 +15,9 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import Text from '~/beinComponents/Text';
+import Icon from '~/beinComponents/Icon';
+import { useBaseHook } from '~/hooks';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
 
@@ -44,14 +44,14 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
 
   const showOptionsValue = useSharedValue(0);
 
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const selectingItem = data?.[selectingIndex] || {};
 
-  const {title = t('common:text_select'), icon} = selectingItem;
+  const { title = t('common:text_select'), icon } = selectingItem;
 
   const optionsStyle = useAnimatedStyle(() => ({
     right: interpolate(showOptionsValue.value, [0, 0.2, 1], [-200, 0, 0]),
@@ -59,13 +59,13 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
   }));
 
   const showOptions = (callback?: () => void) => {
-    showOptionsValue.value = withTiming(1, {duration: 300}, () => {
+    showOptionsValue.value = withTiming(1, { duration: 300 }, () => {
       callback && runOnJS(callback)();
     });
   };
 
   const hideOptions = (callback?: () => void) => {
-    showOptionsValue.value = withTiming(0, {duration: 100}, () => {
+    showOptionsValue.value = withTiming(0, { duration: 100 }, () => {
       callback && runOnJS(callback)();
     });
   };
@@ -77,27 +77,24 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
     });
   };
 
-  const renderActiveItem = () => {
-    return (
-      <TouchableOpacity
-        onPress={() =>
-          showOptionsValue.value === 1 ? hideOptions() : showOptions()
-        }
-        style={styles.row}>
-        {!!icon && (
-          <Icon
-            tintColor={colors.gray50}
-            icon={icon}
-            style={{marginRight: spacing.margin.tiny}}
-          />
-        )}
-        <Text useI18n color={colors.gray50}>
-          {title}
-        </Text>
-        <Icon icon={'AngleDown'} style={{marginLeft: spacing.margin.tiny}} />
-      </TouchableOpacity>
-    );
-  };
+  const renderActiveItem = () => (
+    <TouchableOpacity
+      onPress={() => (showOptionsValue.value === 1 ? hideOptions() : showOptions())}
+      style={styles.row}
+    >
+      {!!icon && (
+      <Icon
+        tintColor={colors.gray50}
+        icon={icon}
+        style={{ marginRight: spacing.margin.tiny }}
+      />
+      )}
+      <Text useI18n color={colors.gray50}>
+        {title}
+      </Text>
+      <Icon icon="AngleDown" style={{ marginLeft: spacing.margin.tiny }} />
+    </TouchableOpacity>
+  );
 
   const renderItem = (item: any, index: number) => {
     if (index === selectingIndex) {
@@ -110,30 +107,28 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
             <Icon
               tintColor={colors.gray50}
               icon={item?.icon}
-              style={{marginRight: spacing.margin.tiny}}
+              style={{ marginRight: spacing.margin.tiny }}
             />
           )}
           <Text useI18n color={colors.gray50}>
             {item?.title}
           </Text>
         </View>
-        {index < data?.length - 1 && <Divider margin={spacing.margin.tiny} />}
+        {index < (data?.length || 0) - 1 && <Divider margin={spacing.margin.tiny} />}
       </TouchableOpacity>
     );
   };
 
-  const renderOptions = () => {
-    return (
-      <Animated.View style={[styles.optionStyle, optionsStyle]}>
-        {renderActiveItem()}
-        <Divider margin={spacing.margin.tiny} />
-        {data?.map?.(renderItem)}
-      </Animated.View>
-    );
-  };
+  const renderOptions = () => (
+    <Animated.View style={[styles.optionStyle, optionsStyle]}>
+      {renderActiveItem()}
+      <Divider margin={spacing.margin.tiny} />
+      {data?.map?.(renderItem)}
+    </Animated.View>
+  );
 
   return (
-    <View style={[styles.container, {minWidth}, style]}>
+    <View style={[styles.container, { minWidth }, style]}>
       <View style={styles.activeItemContainer}>{renderActiveItem()}</View>
       {renderOptions()}
     </View>
@@ -141,7 +136,7 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       zIndex: 10,

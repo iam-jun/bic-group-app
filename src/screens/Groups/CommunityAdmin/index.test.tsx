@@ -2,7 +2,7 @@ import React from 'react';
 import {renderWithRedux, fireEvent} from '~/test/testUtils';
 import CommunityAdmin from '.';
 import * as navigationHook from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
 describe('CommunityAdmin component', () => {
   it('should render data correctly', () => {

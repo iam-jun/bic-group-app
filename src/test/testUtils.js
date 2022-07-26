@@ -1,10 +1,10 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import React from 'react';
-import {act, render, cleanup, fireEvent} from '@testing-library/react-native';
-import {renderHook} from '@testing-library/react-hooks';
-import {Provider} from 'react-redux';
+import {
+  act, render, cleanup, fireEvent,
+} from '@testing-library/react-native';
+import { renderHook } from '@testing-library/react-hooks';
+import { Provider } from 'react-redux';
 import configureStore from 'redux-mock-store';
-import initialState from '~/store/initialState';
 import {
   withReanimatedTimer,
   advanceAnimationByTime,
@@ -12,15 +12,11 @@ import {
   getAnimatedStyle,
 } from 'react-native-reanimated/src/reanimated2/jestUtils';
 
-// WARNING: Don't remove this import
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import Store from '~/store';
-
-import {applyMiddleware, compose, createStore} from 'redux';
+import { applyMiddleware, compose, createStore } from 'redux';
 import createSagaMiddleware from 'redux-saga';
-import {appReducer} from '~/store/reducers';
+import initialState from '~/store/initialState';
+import { appReducer } from '~/store/reducers';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const languages = require('~/localization/en.json');
 
 const mockStore = configureStore([]);
@@ -45,17 +41,15 @@ export function rerenderWithRedux(
   return wrapper?.rerender?.(<Provider store={store}>{component}</Provider>);
 }
 
-const waitForUpdateRedux = (timeout = 500) => {
-  return new Promise(r => setTimeout(r, timeout));
-};
+const waitForUpdateRedux = (timeout = 500) => new Promise((r) => setTimeout(r, timeout));
 
 const getHookReduxWrapper = (store = createTestStore()) => {
-  const wrapper = ({children}) => <Provider store={store}>{children}</Provider>;
+  const wrapper = ({ children }) => <Provider store={store}>{children}</Provider>;
   return wrapper;
 };
 
 // must use React.useState
-const setHookTestState = newState => {
+const setHookTestState = (newState) => {
   const setStateMockFn = () => {};
   return Object.keys(newState).reduce((acc, val) => {
     acc = acc?.mockImplementationOnce(() => [newState[val], setStateMockFn]);

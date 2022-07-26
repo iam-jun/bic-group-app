@@ -1,11 +1,11 @@
 import i18next from 'i18next';
-import {debounce} from 'lodash';
-import React, {useCallback, useEffect, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import { debounce } from 'lodash';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 
-import {IUser} from '~/interfaces/IAuth';
+import { IUser } from '~/interfaces/IAuth';
 import groupsActions from '../redux/actions';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
 import appConfig from '~/configs/appConfig';
 
@@ -16,8 +16,8 @@ import ViewSpacing from '~/beinComponents/ViewSpacing';
 import spacing from '~/theme/spacing';
 
 const AddMembersToGroup = (props: any) => {
-  const params = props.route.params;
-  const {groupId} = params || {};
+  const { params } = props.route;
+  const { groupId } = params || {};
 
   const dispatch = useDispatch();
   const selectedUsers = useKeySelector(groupsKeySelector.selectedUsers);
@@ -27,7 +27,7 @@ const AddMembersToGroup = (props: any) => {
 
   useEffect(() => {
     dispatch(groupsActions.resetJoinableUsers());
-    dispatch(groupsActions.getJoinableUsers({groupId}));
+    dispatch(groupsActions.getJoinableUsers({ groupId }));
   }, []);
 
   const loadMoreData = () => {
@@ -42,7 +42,7 @@ const AddMembersToGroup = (props: any) => {
     setSearchText(searchQuery);
     dispatch(groupsActions.resetJoinableUsers());
     dispatch(
-      groupsActions.getJoinableUsers({groupId, params: {key: searchQuery}}),
+      groupsActions.getJoinableUsers({ groupId, params: { key: searchQuery } }),
     );
   };
 
@@ -61,7 +61,7 @@ const AddMembersToGroup = (props: any) => {
 
   const doAddUsers = () => {
     const userIds = selectedUsers.map((user: IUser) => user.id);
-    dispatch(groupsActions.addMembers({groupId, userIds}));
+    dispatch(groupsActions.addMembers({ groupId, userIds }));
   };
 
   return (

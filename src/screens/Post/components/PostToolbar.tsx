@@ -1,5 +1,5 @@
-import {isEmpty, throttle} from 'lodash';
-import React, {useImperativeHandle, useRef, useState} from 'react';
+import { isEmpty, throttle } from 'lodash';
+import React, { useImperativeHandle, useRef, useState } from 'react';
 import {
   Animated,
   Keyboard,
@@ -8,34 +8,34 @@ import {
   View,
   ViewStyle,
 } from 'react-native';
-import {PanGestureHandler} from 'react-native-gesture-handler';
-import {GestureEvent} from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import { PanGestureHandler } from 'react-native-gesture-handler';
+import { GestureEvent } from 'react-native-gesture-handler/lib/typescript/handlers/gestureHandlers';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 import BottomSheet from '~/beinComponents/BottomSheet/index';
 import DocumentPicker from '~/beinComponents/DocumentPicker';
 import Icon from '~/beinComponents/Icon';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
-import {tryOpenURL} from '~/beinComponents/Markdown/utils/url.js';
+import { tryOpenURL } from '~/beinComponents/Markdown/utils/url.js';
 import Text from '~/beinComponents/Text';
 import appConfig from '~/configs/appConfig';
-import {useBaseHook} from '~/hooks';
-import {useRootNavigation} from '~/hooks/navigation';
-import {useKeySelector} from '~/hooks/selector';
-import {ICreatePostImage} from '~/interfaces/IPost';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import { useBaseHook } from '~/hooks';
+import { useRootNavigation } from '~/hooks/navigation';
+import { useKeySelector } from '~/hooks/selector';
+import { ICreatePostImage } from '~/interfaces/IPost';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
-import {showHideToastMessage} from '~/store/modal/actions';
+import { showHideToastMessage } from '~/store/modal/actions';
 
 import spacing from '~/theme/spacing';
-import {getChatDomain} from '~/utils/link';
-import {checkPermission} from '~/utils/permission';
-import {clearExistingFiles, validateFilesPicker} from '../CreatePost/helper';
-import {getTotalFileSize} from '../redux/selectors';
+import { getChatDomain } from '~/utils/link';
+import { checkPermission, permissionTypes } from '~/utils/permission';
+import { clearExistingFiles, validateFilesPicker } from '../CreatePost/helper';
+import { getTotalFileSize } from '../redux/selectors';
 import ReviewMarkdown from './ReviewMarkdown';
-import {fontFamilies} from '~/theme/fonts';
+import { fontFamilies } from '~/theme/fonts';
 
 export interface PostToolbarProps {
   toolbarRef?: any;
@@ -61,10 +61,10 @@ const PostToolbar = ({
   const animated = useRef(new Animated.Value(0)).current;
 
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
-  const {t} = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
   const modalizeRef = useRef<any>();
 
@@ -73,7 +73,7 @@ const PostToolbar = ({
   );
   const content = useKeySelector(postKeySelector.createPost.content);
   const selectedFiles = useKeySelector(postKeySelector.createPost.files);
-  const {totalFiles, totalSize} = getTotalFileSize();
+  const { totalFiles, totalSize } = getTotalFileSize();
 
   const [isOpen, setIsOpen] = useState(false);
 
@@ -104,7 +104,7 @@ const PostToolbar = ({
   }));
 
   const handleGesture = (event: GestureEvent<any>) => {
-    const {nativeEvent} = event;
+    const { nativeEvent } = event;
     if (nativeEvent.velocityY < 0) {
       openModal();
     }
@@ -116,7 +116,7 @@ const PostToolbar = ({
 
   const _onPressSelectImage = () => {
     modalizeRef?.current?.close?.();
-    checkPermission('photo', dispatch, canOpenPicker => {
+    checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
       if (canOpenPicker) {
         openGallery();
       }
@@ -125,7 +125,7 @@ const PostToolbar = ({
 
   const _onPressSelectVideo = () => {
     modalizeRef?.current?.close?.();
-    checkPermission('photo', dispatch, canOpenPicker => {
+    checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
       if (canOpenPicker) {
         openSingleVideoPicker();
       }
@@ -133,22 +133,22 @@ const PostToolbar = ({
   };
 
   const openSingleVideoPicker = () => {
-    ImagePicker.openPickerSingle({mediaType: 'video'})
-      .then(selected => {
+    ImagePicker.openPickerSingle({ mediaType: 'video' })
+      .then((selected) => {
         const data = selected;
         dispatch(postActions.setCreatePostVideo(data));
       })
-      .catch(e => {
-        console.log(`\x1b[36m🐣️ openSingleVideoPicker error: \x1b[0m`, e);
+      .catch((e) => {
+        console.error('\x1b[36m🐣️ openSingleVideoPicker error: \x1b[0m', e);
       });
   };
 
   const openGallery = () => {
     ImagePicker.openPickerMultiple()
-      .then(images => {
+      .then((images) => {
         const newImages: ICreatePostImage[] = [];
-        images.map(item => {
-          newImages.push({fileName: item.filename, file: item});
+        images.forEach((item) => {
+          newImages.push({ fileName: item.filename, file: item });
         });
         let newImageDraft = [...selectedImage, ...newImages];
         if (newImageDraft.length > appConfig.postPhotoLimit) {
@@ -160,15 +160,15 @@ const PostToolbar = ({
           dispatch(
             showHideToastMessage({
               content: errorContent,
-              props: {textProps: {useI18n: true}, type: 'error'},
+              props: { textProps: { useI18n: true }, type: 'error' },
             }),
           );
         }
         dispatch(postActions.setCreatePostImagesDraft(newImageDraft));
         rootNavigation.navigate(homeStack.postSelectImage);
       })
-      .catch(e => {
-        console.log(`\x1b[36m🐣️ openPickerMultiple error: \x1b[0m`, e);
+      .catch((e) => {
+        console.error('\x1b[36m🐣️ openPickerMultiple error: \x1b[0m', e);
       });
   };
 
@@ -188,8 +188,8 @@ const PostToolbar = ({
 
       dispatch(postActions.addCreatePostFiles(newFiles));
     } catch (e) {
-      console.log(
-        `\x1b[36m🐣️ DocumentPicker.openPickerSingle error: \x1b[0m`,
+      console.error(
+        '\x1b[36m🐣️ DocumentPicker.openPickerSingle error: \x1b[0m',
         e,
       );
     }
@@ -220,57 +220,55 @@ const PostToolbar = ({
     );
   };
 
-  const renderToolbar = () => {
-    return (
-      <PanGestureHandler onGestureEvent={handleGesture}>
-        <Animated.View style={containerStyle}>
-          <View
-            style={StyleSheet.flatten([styles.toolbarStyle, style])}
-            testID="post_toolbar">
-            {renderToolbarButton(
-              'CreditCard',
-              'post_toolbar.markdown_preview',
-              content && onPressMarkdownPreview,
-            )}
-            {renderToolbarButton(
-              'Image',
-              'post_toolbar.add_photo',
-              !imageDisabled ? _onPressSelectImage : undefined,
-            )}
-            {renderToolbarButton(
-              'CirclePlay',
-              'post_toolbar.add_video',
-              !videoDisabled ? _onPressSelectVideo : undefined,
-            )}
-            {renderToolbarButton(
-              'Paperclip',
-              'post_toolbar.add_file',
-              !fileDisabled ? onPressAddFile : undefined,
-            )}
-          </View>
-          {!!content && renderMarkdownHelp()}
-          <KeyboardSpacer iosOnly />
-        </Animated.View>
-      </PanGestureHandler>
-    );
-  };
+  const renderToolbar = () => (
+    <PanGestureHandler onGestureEvent={handleGesture}>
+      <Animated.View style={containerStyle}>
+        <View
+          style={StyleSheet.flatten([styles.toolbarStyle, style])}
+          testID="post_toolbar"
+        >
+          {renderToolbarButton(
+            'CreditCard',
+            'post_toolbar.markdown_preview',
+            content && onPressMarkdownPreview,
+          )}
+          {renderToolbarButton(
+            'Image',
+            'post_toolbar.add_photo',
+            !imageDisabled ? _onPressSelectImage : undefined,
+          )}
+          {renderToolbarButton(
+            'CirclePlay',
+            'post_toolbar.add_video',
+            !videoDisabled ? _onPressSelectVideo : undefined,
+          )}
+          {renderToolbarButton(
+            'Paperclip',
+            'post_toolbar.add_file',
+            !fileDisabled ? onPressAddFile : undefined,
+          )}
+        </View>
+        {!!content && renderMarkdownHelp()}
+        <KeyboardSpacer iosOnly />
+      </Animated.View>
+    </PanGestureHandler>
+  );
 
-  const renderMarkdownHelp = () => {
-    return (
-      <View style={styles.markdownView}>
-        <Text.BodyS style={styles.markdownText} numberOfLines={1}>
-          **bold**, *italic*, ~~strike~~, # Heading 1, ## Heading 2,...
-        </Text.BodyS>
-        <Text.BodyS
-          style={{fontFamily: fontFamilies.BeVietnamProSemiBold}}
-          color={theme.colors.blue50}
-          onPress={onPressHelp}
-          useI18n>
-          common:text_help
-        </Text.BodyS>
-      </View>
-    );
-  };
+  const renderMarkdownHelp = () => (
+    <View style={styles.markdownView}>
+      <Text.BodyS style={styles.markdownText} numberOfLines={1}>
+        **bold**, *italic*, ~~strike~~, # Heading 1, ## Heading 2,...
+      </Text.BodyS>
+      <Text.BodyS
+        style={{ fontFamily: fontFamilies.BeVietnamProSemiBold }}
+        color={theme.colors.blue50}
+        onPress={onPressHelp}
+        useI18n
+      >
+        common:text_help
+      </Text.BodyS>
+    </View>
+  );
 
   return (
     <BottomSheet
@@ -278,17 +276,18 @@ const PostToolbar = ({
       ContentComponent={<ReviewMarkdown onPressDone={closeModal} />}
       panGestureAnimatedValue={animated}
       modalStyle={styles.modalStyle}
-      {...props}>
+      {...props}
+    >
       {renderToolbar()}
     </BottomSheet>
   );
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
-    row: {flexDirection: 'row'},
-    flex1: {flex: 1},
+    row: { flexDirection: 'row' },
+    flex1: { flex: 1 },
     toolbarStyle: {
       height: 52,
       backgroundColor: colors.white,

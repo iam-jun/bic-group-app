@@ -1,8 +1,10 @@
-import {put, call, select} from 'redux-saga/effects';
+/* eslint-disable @typescript-eslint/ban-ts-comment */
+import { put, call, select } from 'redux-saga/effects';
 
+import { AxiosResponse } from 'axios';
 import actions from '~/screens/Groups/redux/actions';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
-import {IParamGetCommunityMembers} from '~/interfaces/ICommunity';
+import { IParamGetCommunityMembers } from '~/interfaces/ICommunity';
 import appConfig from '~/configs/appConfig';
 import showError from '~/store/commonSaga/showError';
 
@@ -13,16 +15,15 @@ export default function* getCommunitySearchMembers({
   payload: {communityId: string; params: IParamGetCommunityMembers};
 }) {
   try {
-    const {groups} = yield select();
-    const {canLoadMore, data} = groups.communitySearchMembers;
-    yield put(actions.setCommunitySearchMembers({loading: data.length === 0}));
+    const { groups } = yield select();
+    const { canLoadMore, data } = groups.communitySearchMembers;
+    yield put(actions.setCommunitySearchMembers({ loading: data.length === 0 }));
 
-    const {communityId, params} = payload;
+    const { communityId, params } = payload;
 
     if (!canLoadMore) return;
 
-    // @ts-ignore
-    const resp = yield call(groupsDataHelper.getCommunityMembers, communityId, {
+    const resp: AxiosResponse = yield call(groupsDataHelper.getCommunityMembers, communityId, {
       limit: appConfig.recordsPerPage,
       offset: data.length,
       ...params,
@@ -30,9 +31,11 @@ export default function* getCommunitySearchMembers({
 
     let newDataCount = 0;
     let newDataArr: any = [];
-    Object.keys(resp)?.map?.((role: string) => {
-      newDataCount += resp[role]?.data?.length;
-      newDataArr = [...newDataArr, ...resp[role]?.data];
+    Object.keys(resp)?.forEach?.((role: string) => {
+      // @ts-ignore
+      newDataCount += resp[role]?.data?.length || 0;
+      // @ts-ignore
+      newDataArr = [...newDataArr, ...resp[role]?.data || []];
     });
 
     // update search results data
@@ -44,7 +47,7 @@ export default function* getCommunitySearchMembers({
 
     yield put(actions.setCommunitySearchMembers(newData));
   } catch (err: any) {
-    console.log('getCommunitySearchMembers error:', err);
+    console.error('getCommunitySearchMembers error:', err);
     yield call(showError, err);
   }
 }

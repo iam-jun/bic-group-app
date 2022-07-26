@@ -1,13 +1,13 @@
-import React, {Fragment} from 'react';
-import {View, StyleSheet, ViewStyle} from 'react-native';
-import {useDispatch} from 'react-redux';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { Fragment } from 'react';
+import { View, StyleSheet, ViewStyle } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import groupJoinStatus from '~/constants/groupJoinStatus';
-import {groupPrivacy} from '~/constants/privacyTypes';
-import {useKeySelector} from '~/hooks/selector';
+import { groupPrivacy } from '~/constants/privacyTypes';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../../redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import spacing from '~/theme/spacing';
@@ -16,7 +16,7 @@ interface JoinCancelButtonProps {
   style?: ViewStyle;
 }
 
-const JoinCancelButton = ({style}: JoinCancelButtonProps) => {
+const JoinCancelButton = ({ style }: JoinCancelButtonProps) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
   const dispatch = useDispatch();
@@ -34,60 +34,61 @@ const JoinCancelButton = ({style}: JoinCancelButtonProps) => {
   if (isMember) return null;
 
   const onPressJoin = () => {
-    dispatch(groupsActions.joinCommunity({communityId, communityName}));
+    dispatch(groupsActions.joinCommunity({ communityId, communityName }));
   };
 
   const onPressCancelRequest = () => {
-    dispatch(groupsActions.cancelJoinCommunity({communityId, communityName}));
+    dispatch(groupsActions.cancelJoinCommunity({ communityId, communityName }));
   };
 
   return (
-    <Fragment>
-      <View style={[styles.buttonView, style]} testID="join_cancel_button">
-        {hasRequested ? (
-          <Button.Secondary
-            testID="join_cancel_button.cancel"
-            style={styles.btnAction}
-            color={theme.colors.gray20}
-            textColor={theme.colors.neutral80}
-            onPress={onPressCancelRequest}
-            useI18n>
-            common:btn_cancel_request
-          </Button.Secondary>
-        ) : (
-          <Button.Secondary
-            testID="join_cancel_button.join"
-            leftIcon={'Plus'}
-            leftIconProps={{icon: 'Plus', size: 20}}
-            style={styles.btnAction}
-            color={theme.colors.purple50}
-            textColor={theme.colors.white}
-            colorHover={theme.colors.purple50}
-            onPress={onPressJoin}
-            useI18n>
-            communities:text_join_community_button
-          </Button.Secondary>
-        )}
+    <View style={[styles.buttonView, style]} testID="join_cancel_button">
+      {hasRequested ? (
+        <Button.Secondary
+          testID="join_cancel_button.cancel"
+          style={styles.btnAction}
+          color={theme.colors.gray20}
+          textColor={theme.colors.neutral80}
+          onPress={onPressCancelRequest}
+          useI18n
+        >
+          common:btn_cancel_request
+        </Button.Secondary>
+      ) : (
+        <Button.Secondary
+          testID="join_cancel_button.join"
+          leftIcon="Plus"
+          leftIconProps={{ icon: 'Plus', size: 20 }}
+          style={styles.btnAction}
+          color={theme.colors.purple50}
+          textColor={theme.colors.white}
+          colorHover={theme.colors.purple50}
+          onPress={onPressJoin}
+          useI18n
+        >
+          communities:text_join_community_button
+        </Button.Secondary>
+      )}
 
-        {isPrivate && (
-          <View style={styles.shortDesc}>
-            <Text.BodyS
-              color={theme.colors.gray50}
-              useI18n
-              testID="join_cancel_button.description">
-              communities:text_join_community_description
-            </Text.BodyS>
-          </View>
-        )}
+      {isPrivate && (
+      <View style={styles.shortDesc}>
+        <Text.BodyS
+          color={theme.colors.gray50}
+          useI18n
+          testID="join_cancel_button.description"
+        >
+          communities:text_join_community_description
+        </Text.BodyS>
       </View>
-    </Fragment>
+      )}
+    </View>
   );
 };
 
 export default JoinCancelButton;
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     btnAction: {
       marginHorizontal: spacing.margin.large,

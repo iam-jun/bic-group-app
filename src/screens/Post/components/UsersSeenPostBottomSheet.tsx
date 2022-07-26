@@ -1,33 +1,33 @@
-import React, {useRef} from 'react';
-import {View, StyleSheet, FlatList, Dimensions} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import React from 'react';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useDispatch } from 'react-redux';
 
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import postActions from '~/screens/Post/redux/actions';
-import {useKeySelector} from '~/hooks/selector';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import Text from '~/beinComponents/Text';
-import {useRootNavigation} from '~/hooks/navigation';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
+import Text from '~/beinComponents/Text';
+import { useBaseHook } from '~/hooks';
+import { useRootNavigation } from '~/hooks/navigation';
+import { useKeySelector } from '~/hooks/selector';
 import mainStack from '~/router/navigator/MainStack/stack';
-import {useBaseHook} from '~/hooks';
+import postActions from '~/screens/Post/redux/actions';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 import modalActions from '~/store/modal/actions';
 import dimension from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 
-const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
+const UsersSeenPostBottomSheet = ({ postId }: {postId: string}) => {
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
   const insets = useSafeAreaInsets();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme, insets);
-  const {colors} = theme;
-  const {t} = useBaseHook();
+  const { colors } = theme;
+  const { t } = useBaseHook();
 
   React.useEffect(() => {
-    dispatch(postActions.getSeenPost({postId: postId}));
+    dispatch(postActions.getSeenPost({ postId }));
     return () => {
       const payloadSet = {
         data: [],
@@ -49,7 +49,7 @@ const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
 
     const itemUserId = item?.item?.id;
     if (itemUserId) {
-      rootNavigation.navigate(mainStack.userProfile, {userId: itemUserId});
+      rootNavigation.navigate(mainStack.userProfile, { userId: itemUserId });
     } else {
       rootNavigation.navigate(mainStack.userProfile, {
         userId: item?.item.username,
@@ -60,28 +60,24 @@ const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
     }
   };
 
-  const renderFooter = () => {
-    return canLoadMore && <LoadingIndicator />;
-  };
+  const renderFooter = () => canLoadMore && <LoadingIndicator />;
   const getSeenPost = () => {
-    dispatch(postActions.getSeenPost({postId: postId}));
+    dispatch(postActions.getSeenPost({ postId }));
   };
   const onLoadMore = () => {
     getSeenPost();
   };
 
-  const renderItem = (item: any) => {
-    return (
-      <PrimaryItem
-        testID={`users_seen_post_bottom_sheet.item_username.${item?.item?.username}`}
-        showAvatar
-        height={44}
-        onPress={() => onPressItem(item)}
-        avatar={item?.item?.avatar}
-        title={item?.item?.fullname}
-      />
-    );
-  };
+  const renderItem = (item: any) => (
+    <PrimaryItem
+      testID={`users_seen_post_bottom_sheet.item_username.${item?.item?.username}`}
+      showAvatar
+      height={44}
+      onPress={() => onPressItem(item)}
+      avatar={item?.item?.avatar}
+      title={item?.item?.fullname}
+    />
+  );
 
   return (
     <View style={styles.container}>
@@ -89,11 +85,11 @@ const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
         {t('post:label_seen_by')}
         {total}
       </Text.H6>
-      <View style={styles.ruler}></View>
+      <View style={styles.ruler} />
       <FlatList
         data={dataList}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={(item) => item.id}
         ListFooterComponent={renderFooter}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.1}
@@ -103,10 +99,10 @@ const UsersSeenPostBottomSheet = ({postId}: {postId: string}) => {
 };
 
 const createStyle = (theme: ExtendedTheme, insets: any) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
-      height: dimension?.deviceHeight * 0.6,
+      height: dimension.deviceHeight * 0.6,
       paddingHorizontal: 0,
       paddingBottom: 0,
     },

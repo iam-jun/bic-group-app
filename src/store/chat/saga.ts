@@ -1,4 +1,4 @@
-import {takeLatest} from 'redux-saga/effects';
+import { takeLatest } from 'redux-saga/effects';
 import initChat from './saga/initChat';
 import types from './constants';
 import handleChatEvent from './saga/handleChatEvent';

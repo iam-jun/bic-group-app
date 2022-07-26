@@ -1,14 +1,16 @@
-import React, {FC, useState} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle, Dimensions} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC, useState } from 'react';
+import {
+  View, StyleSheet, StyleProp, ViewStyle, Dimensions,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Text from '~/beinComponents/Text';
-import {IActivityDataImage} from '~/interfaces/IPost';
+import { IActivityDataImage } from '~/interfaces/IPost';
 import UploadingImage from '~/beinComponents/UploadingImage';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 import Button from '~/beinComponents/Button';
 import ImageGalleryModal from '~/beinComponents/modals/ImageGalleryModal';
-import {getResourceUrl, IUploadType} from '~/configs/resourceConfig';
+import { getResourceUrl, IUploadType } from '~/configs/resourceConfig';
 import dimension from '~/theme/dimension';
 
 const DeviceWidth = Dimensions.get('window').width;
@@ -37,8 +39,8 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   const [galleryVisible, setGalleryVisible] = useState(false);
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
-  const styles = createStyle(theme);
+  const { colors } = theme;
+  const styles = createStyle();
 
   if (data?.length === 0) {
     return null;
@@ -75,7 +77,7 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
 
   const getImageUrls = () => {
     const result: any = [];
-    data.map(item => {
+    data.forEach((item) => {
       if (item.url) {
         result.push({
           name: item.origin_name || item.name,
@@ -93,15 +95,15 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
     return result;
   };
 
-  const renderMore = () => {
-    return (
-      <View style={styles.moreContainer}>
-        <Text.H4 color={colors.white} testID="post_photo_preview.more_photos">
-          + {data.length - 4}
-        </Text.H4>
-      </View>
-    );
-  };
+  const renderMore = () => (
+    <View style={styles.moreContainer}>
+      <Text.H4 color={colors.white} testID="post_photo_preview.more_photos">
+        +
+        {' '}
+        {data.length - 4}
+      </Text.H4>
+    </View>
+  );
 
   const renderSmallImage = (
     fileName?: string,
@@ -119,8 +121,8 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
           <UploadingImage
             style={styles.image}
             uploadType={uploadType}
-            width={'100%'}
-            height={'100%'}
+            width="100%"
+            height="100%"
             fileName={fileName}
             url={url}
           />
@@ -137,14 +139,15 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
       activeOpacity={0.8}
       onPress={_onPress}
       onLongPress={_onLongPress}
-      style={StyleSheet.flatten([wrapperStyle, style])}>
+      style={StyleSheet.flatten([wrapperStyle, style])}
+    >
       <View style={StyleSheet.flatten([styles.container, containerStyle])}>
-        <View style={{flex: data?.length === 2 ? 1 : 2}}>
+        <View style={{ flex: data?.length === 2 ? 1 : 2 }}>
           <UploadingImage
             style={styles.image}
             uploadType={uploadType}
-            width={'100%'}
-            height={'100%'}
+            width="100%"
+            height="100%"
             fileName={data[0].origin_name}
             url={data[0].url || data[0].name}
           />
@@ -153,7 +156,8 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
           <>
             <ViewSpacing width={4} height={4} />
             <View
-              style={{flex: 1, flexDirection: isVertical ? 'column' : 'row'}}>
+              style={{ flex: 1, flexDirection: isVertical ? 'column' : 'row' }}
+            >
               {renderSmallImage(
                 data?.[1]?.origin_name || data?.[1]?.name,
                 data?.[1]?.url || data?.[1]?.name,
@@ -186,20 +190,18 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   );
 };
 
-const createStyle = (theme: ExtendedTheme) => {
-  return StyleSheet.create({
-    container: {},
-    image: {borderRadius: 0},
-    flex1: {flex: 1},
-    moreContainer: {
-      position: 'absolute',
-      width: '100%',
-      height: '100%',
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'rgba(130,128,133,0.64)',
-    },
-  });
-};
+const createStyle = () => StyleSheet.create({
+  container: {},
+  image: { borderRadius: 0 },
+  flex1: { flex: 1 },
+  moreContainer: {
+    position: 'absolute',
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(130,128,133,0.64)',
+  },
+});
 
 export default PostPhotoPreview;

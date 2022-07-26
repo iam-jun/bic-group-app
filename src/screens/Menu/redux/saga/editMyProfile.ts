@@ -1,11 +1,11 @@
 import i18next from 'i18next';
-import {put, call} from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 
-import {IResponseData, IToastMessage} from '~/interfaces/common';
-import {IUserEdit} from '~/interfaces/IAuth';
+import { IResponseData, IToastMessage } from '~/interfaces/common';
+import { IUserEdit } from '~/interfaces/IAuth';
 import modalActions from '~/store/modal/actions';
 import menuActions from '../actions';
-import {mapProfile} from '../helper';
+import { mapProfile } from '../helper';
 import menuDataHelper from '~/screens/Menu/helper/MenuDataHelper';
 import showError from '~/store/commonSaga/showError';
 
@@ -23,7 +23,6 @@ export default function* editMyProfile({
     const userId = payload.id;
     delete payload.id; // edit data should not contain user's id
 
-    // @ts-ignore
     const result: IResponseData = yield call(menuDataHelper.editMyProfile, {
       userId,
       data: payload,
@@ -31,27 +30,23 @@ export default function* editMyProfile({
 
     // checking if uploading avatar/cover image
     // to use different toast message content
-    const {avatar, backgroundImgUrl} = payload;
+    const { avatar, backgroundImgUrl } = payload;
     let toastContent: string;
 
-    if (!!avatar) {
+    if (avatar) {
       toastContent = 'common:avatar_changed';
     } else if (!!backgroundImgUrl) {
       toastContent = 'common:cover_changed';
     } else {
       // this field is used to indicate which parts of
       // user profile have been updated
-      if (editFieldToastMessage) {
-        toastContent = editFieldToastMessage;
-      } else {
-        toastContent = 'common:text_edit_success';
-      }
+      toastContent = editFieldToastMessage || 'common:text_edit_success';
     }
 
     const toastMessage: IToastMessage = {
       content: toastContent,
       props: {
-        textProps: {useI18n: true},
+        textProps: { useI18n: true },
         type: 'success',
       },
     };
@@ -59,10 +54,9 @@ export default function* editMyProfile({
     yield put(menuActions.setMyProfile(mapProfile(result.data)));
 
     if (callback) return callback();
-  } catch (err) {
-    console.log('\x1b[33m', 'editMyProfile : error', err, '\x1b[0m');
+  } catch (err:any) {
+    console.error('\x1b[33m', 'editMyProfile : error', err, '\x1b[0m');
 
-    // @ts-ignore
     const errorMessage: string = err?.meta?.message;
 
     switch (errorMessage) {

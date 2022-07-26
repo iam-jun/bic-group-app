@@ -1,22 +1,18 @@
-import React, {FC} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import React from 'react';
+import { StyleSheet, View } from 'react-native';
 
 import Icon from '~/beinComponents/Icon';
 import spacing from '~/theme/spacing';
 
-export interface MoveLineProps {
-  style?: StyleProp<ViewStyle>;
-}
-
-const MoveLine: FC<MoveLineProps> = ({style}: MoveLineProps) => {
+const MoveLine = () => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   return (
     <View>
-      <View style={{position: 'absolute', top: 44, bottom: 0}}>
+      <View style={{ position: 'absolute', top: 44, bottom: 0 }}>
         <View style={styles.horizontal}>
           <View style={styles.horizontalBg} />
         </View>
@@ -24,12 +20,12 @@ const MoveLine: FC<MoveLineProps> = ({style}: MoveLineProps) => {
           <View style={styles.verticalBg} />
         </View>
         <Icon
-          style={{position: 'absolute', top: -8, left: -1}}
-          icon={'AngleDown'}
+          style={{ position: 'absolute', top: -8, left: -1 }}
+          icon="AngleDown"
           tintColor={colors.blue50}
         />
       </View>
-      <View style={{marginLeft: 28, marginTop: 18}}>
+      <View style={{ marginLeft: 28, marginTop: 18 }}>
         <View style={styles.blueDot} />
       </View>
     </View>
@@ -37,7 +33,7 @@ const MoveLine: FC<MoveLineProps> = ({style}: MoveLineProps) => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {},
     blueDot: {
