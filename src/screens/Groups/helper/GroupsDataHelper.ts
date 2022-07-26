@@ -1058,22 +1058,10 @@ const groupsDataHelper = {
     communityId: string,
     params?: IParamGetCommunityMembers,
   ) => withHttpRequestPromise(groupsApiConfig.getCommunityMembers, communityId, params),
-  getDiscoverGroups: async (
+  getDiscoverGroups: (
     communityId: string,
     params?: IParamGetDiscoverGroups,
-  ) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getDiscoverGroups(communityId, params),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  ) => withHttpRequestPromise(groupsApiConfig.getDiscoverGroups, communityId, params),
   joinCommunity: async (communityId: string) => {
     try {
       const response: any = await makeHttpRequest(
