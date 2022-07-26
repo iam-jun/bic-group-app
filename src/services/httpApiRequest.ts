@@ -261,6 +261,8 @@ const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
   const apisWithParam = [
     `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/scheme`,
     `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/schemes`,
+    `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*`,
+    `${ApiConfig.providers.bein.url}groups/[A-Za-z_$@0-9]*`,
   ];
   apisWithParam.forEach((api) => {
     if (new RegExp(api, 'g').test(endPoint || '')) {
@@ -271,6 +273,8 @@ const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
   switch (endPoint) {
     case `${ApiConfig.providers.bein.url}system-scheme`:
     case `${ApiConfig.providers.bein.url}permissions/categories`:
+    case `${ApiConfig.providers.bein.url}me/communities`:
+    case `${ApiConfig.providers.bein.url}communities/discover`:
       result = true;
       break;
     default:
