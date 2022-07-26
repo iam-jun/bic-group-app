@@ -1059,35 +1059,11 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getDiscoverCommunities: async (params?: IParamGetCommunities) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getDiscoverCommunities(params || {}),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getDiscoverCommunities: async (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getDiscoverCommunities, params),
   getJoinedCommunities: async (params: {
     preview_members?: boolean;
     managed?: boolean;
-  }) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getJoinedCommunities(params),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response.data?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  }) => withHttpRequestPromise(groupsApiConfig.getJoinedCommunities, params),
   getCommunityGroups: async (id: string, params: IGetCommunityGroup) => {
     try {
       const response: any = await makeHttpRequest(
