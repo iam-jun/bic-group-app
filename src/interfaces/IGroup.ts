@@ -239,7 +239,7 @@ export interface IStateList {
 export interface IGetCommunityGroup {
   previewMembers?: boolean;
   key?: string;
-  list_by?: 'tree' | 'flat';
+  listBy?: 'tree' | 'flat';
 }
 
 export interface IPayloadGroupSchemeAssignments {

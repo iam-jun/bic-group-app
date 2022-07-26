@@ -15,7 +15,7 @@ export default function* getYourGroupsList({
     const response = yield call(
       groupsDataHelper.getCommunityGroups,
       communityId,
-      { list_by: 'flat' },
+      { listBy: 'flat' },
     );
 
     const groups = response.data;

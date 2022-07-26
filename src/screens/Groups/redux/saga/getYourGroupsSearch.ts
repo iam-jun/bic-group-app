@@ -22,7 +22,7 @@ export default function* getYourGroupsSearch({
     const response = yield call(
       groupsDataHelper.getCommunityGroups,
       communityId,
-      { key, list_by: 'flat' },
+      { key, listBy: 'flat' },
     );
     const currentKey = yield select(
       (state) => state?.groups?.yourGroupsSearch?.key,

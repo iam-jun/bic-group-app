@@ -15,7 +15,7 @@ export default function* getYourGroupsTree({
     const response = yield call(
       groupsDataHelper.getCommunityGroups,
       communityId,
-      { list_by: 'tree' },
+      { listBy: 'tree' },
     );
     const groups = response.data;
     yield put(
