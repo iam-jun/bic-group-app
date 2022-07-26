@@ -40,8 +40,9 @@ export default function* getManagedCommunities({
       ...params,
     });
 
-    const newIds = resp?.map((item: ICommunity) => item.id);
-    const newItems = mapItems(resp);
+    const communities = resp.data
+    const newIds = communities?.map((item: ICommunity) => item.id);
+    const newItems = mapItems(communities);
 
     const newData = {
       loading: false,
