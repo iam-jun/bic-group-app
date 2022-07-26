@@ -1,15 +1,21 @@
-import {Parser, Node} from 'commonmark';
+/* eslint-disable class-methods-use-this */
+/* eslint-disable react/default-props-match-prop-types */
+/* eslint-disable react/forbid-prop-types */
+/* eslint-disable react/static-property-placement */
+import { Parser, Node } from 'commonmark';
 import Renderer from 'commonmark-react-renderer';
 import PropTypes from 'prop-types';
-import React, {PureComponent} from 'react';
-import {Platform, View, Text} from 'react-native';
+import React, { PureComponent } from 'react';
+import { Platform, View, Text } from 'react-native';
 
 // import AtMention from '@components/at_mention';
 
+import NodeEmoji from 'node-emoji';
 import {
   blendColors,
   concatStyles,
   makeStyleSheetFromTheme,
+  getScheme,
 } from './utils/utils';
 
 import MarkdownBlockQuote from './MarkdownBlockQuote';
@@ -25,8 +31,6 @@ import {
   combineTextNodes,
   pullOutImages,
 } from './utils/transform';
-import {getScheme} from './utils/utils';
-import NodeEmoji from 'node-emoji';
 import AtMention from './AtMention';
 
 export default class Md extends PureComponent {
@@ -82,64 +86,60 @@ export default class Md extends PureComponent {
     this.renderer = this.createRenderer();
   }
 
-  createParser = () => {
-    return new Parser({
-      urlFilter: this.urlFilter,
-      minimumHashtagLength: this.props.minimumHashtagLength,
-    });
-  };
+  createParser = () => new Parser({
+    urlFilter: this.urlFilter,
+    minimumHashtagLength: this.props.minimumHashtagLength,
+  });
 
-  urlFilter = url => {
+  urlFilter = (url) => {
     const scheme = getScheme(url);
 
     return !scheme || this.props.autolinkedUrlSchemes.indexOf(scheme) !== -1;
   };
 
-  createRenderer = () => {
-    return new Renderer({
-      renderers: {
-        text: this.renderText,
+  createRenderer = () => new Renderer({
+    renderers: {
+      text: this.renderText,
 
-        emph: Renderer.forwardChildren,
-        strong: Renderer.forwardChildren,
-        del: Renderer.forwardChildren,
-        code: this.renderCodeSpan,
-        link: this.renderLink,
-        image: this.renderImage,
-        atMention: this.renderAtMention,
-        channelLink: this.renderChannelLink,
-        emoji: this.renderEmoji,
-        hashtag: this.renderHashtag,
+      emph: Renderer.forwardChildren,
+      strong: Renderer.forwardChildren,
+      del: Renderer.forwardChildren,
+      code: this.renderCodeSpan,
+      link: this.renderLink,
+      image: this.renderImage,
+      atMention: this.renderAtMention,
+      channelLink: this.renderChannelLink,
+      emoji: this.renderEmoji,
+      hashtag: this.renderHashtag,
 
-        paragraph: this.renderParagraph,
-        heading: this.renderHeading,
-        codeBlock: this.renderCodeBlock,
-        blockQuote: this.renderBlockQuote,
+      paragraph: this.renderParagraph,
+      heading: this.renderHeading,
+      codeBlock: this.renderCodeBlock,
+      blockQuote: this.renderBlockQuote,
 
-        list: this.renderList,
-        item: this.renderListItem,
+      list: this.renderList,
+      item: this.renderListItem,
 
-        hardBreak: this.renderHardBreak,
-        thematicBreak: this.renderThematicBreak,
-        softBreak: this.renderSoftBreak,
+      hardBreak: this.renderHardBreak,
+      thematicBreak: this.renderThematicBreak,
+      softBreak: this.renderSoftBreak,
 
-        htmlBlock: this.renderHtml,
-        htmlInline: this.renderHtml,
+      htmlBlock: this.renderHtml,
+      htmlInline: this.renderHtml,
 
-        table: this.renderTable,
-        table_row: this.renderTableRow,
-        table_cell: this.renderTableCell,
+      table: this.renderTable,
+      table_row: this.renderTableRow,
+      table_cell: this.renderTableCell,
 
-        mention_highlight: Renderer.forwardChildren,
+      mention_highlight: Renderer.forwardChildren,
 
-        editedIndicator: this.renderEditedIndicator,
-      },
-      renderParagraphsInLists: true,
-      getExtraPropsForNode: this.getExtraPropsForNode,
-    });
-  };
+      editedIndicator: this.renderEditedIndicator,
+    },
+    renderParagraphsInLists: true,
+    getExtraPropsForNode: this.getExtraPropsForNode,
+  });
 
-  getExtraPropsForNode = node => {
+  getExtraPropsForNode = (node) => {
     const extraProps = {
       continue: node.continue,
       index: node.index,
@@ -155,15 +155,15 @@ export default class Md extends PureComponent {
 
   computeTextStyle = (baseStyle, context) => {
     const contextStyles = context
-      .map(type => this.props.textStyles[type])
-      .filter(f => f !== undefined);
+      .map((type) => this.props.textStyles[type])
+      .filter((f) => f !== undefined);
     return contextStyles.length
       ? concatStyles(baseStyle, contextStyles)
       : baseStyle;
   };
 
-  renderText = data => {
-    const {context, literal} = data;
+  renderText = (data) => {
+    const { context, literal } = data;
     if (context.indexOf('image') !== -1) {
       // If this text is displayed, it will be styled by the image component
       return (
@@ -181,61 +181,53 @@ export default class Md extends PureComponent {
     );
   };
 
-  renderCodeSpan = ({context, literal}) => {
-    return (
-      <Text
-        style={this.computeTextStyle(
-          [this.props.baseTextStyle, this.props.textStyles.code],
-          context,
-        )}>
-        {literal}
-      </Text>
-    );
-  };
+  renderCodeSpan = ({ context, literal }) => (
+    <Text
+      style={this.computeTextStyle(
+        [this.props.baseTextStyle, this.props.textStyles.code],
+        context,
+      )}
+    >
+      {literal}
+    </Text>
+  );
 
-  renderImage = ({src}) => {
-    //Just render as link because of not have metadata from server
-    return (
-      <Text
-        testID={this.props.textTestID || 'markdown_text'}
-        style={this.props.baseTextStyle}>
-        {src}
-      </Text>
-    );
-  };
+  // Just render as link because of not have metadata from server
+  renderImage = ({ src }) => (
+    <Text
+      testID={this.props.textTestID || 'markdown_text'}
+      style={this.props.baseTextStyle}
+    >
+      {src}
+    </Text>
+  );
 
-  renderAtMention = ({mentionName}) => {
-    return (
-      <AtMention
-        mentionName={mentionName}
-        style={[this.props.textStyles?.mention || this.props.baseTextStyle]}
-        selector={this.props.selector}
-        onPress={this.props.onPressAudience}
-      />
-    );
-  };
+  renderAtMention = ({ mentionName }) => (
+    <AtMention
+      mentionName={mentionName}
+      style={[this.props.textStyles?.mention || this.props.baseTextStyle]}
+      selector={this.props.selector}
+      onPress={this.props.onPressAudience}
+    />
+  );
 
-  renderChannelLink = ({context, channelName}) => {
-    return this.renderText({context, literal: `~${channelName}`});
-  };
+  renderChannelLink = ({ context, channelName }) => this.renderText({ context, literal: `~${channelName}` });
 
-  renderEmoji = ({emojiName, literal}) => {
-    // Just render unicode emoji, image custom emoji need a story
-    return (
-      <Text style={this.props.baseTextStyle}>
-        {NodeEmoji.find(emojiName || '')?.emoji || literal}
-      </Text>
-    );
-  };
+  // Just render unicode emoji, image custom emoji need a story
+  renderEmoji = ({ emojiName, literal }) => (
+    <Text style={this.props.baseTextStyle}>
+      {NodeEmoji.find(emojiName || '')?.emoji || literal}
+    </Text>
+  );
 
-  renderHashtag = ({context, hashtag}) => {
+  renderHashtag = ({ context, hashtag }) => {
     if (this.props.disableHashtags) {
-      return this.renderText({context, literal: `#${hashtag}`});
+      return this.renderText({ context, literal: `#${hashtag}` });
     }
     return <Text style={this.props.baseTextStyle}>{hashtag}</Text>;
   };
 
-  renderParagraph = ({children, first}) => {
+  renderParagraph = ({ children, first }) => {
     if (!children || children.length === 0) {
       return <View />;
     }
@@ -253,7 +245,7 @@ export default class Md extends PureComponent {
     );
   };
 
-  renderHeading = ({children, level}) => {
+  renderHeading = ({ children, level }) => {
     const containerStyle = [
       getStyleSheet(this.props.theme).block,
       this.props.blockStyles[`heading${level}`],
@@ -266,7 +258,7 @@ export default class Md extends PureComponent {
     );
   };
 
-  renderCodeBlock = props => {
+  renderCodeBlock = (props) => {
     // These sometimes include a trailing newline
     const content = props.literal.replace(/\n$/, '');
 
@@ -280,55 +272,49 @@ export default class Md extends PureComponent {
     );
   };
 
-  renderBlockQuote = ({children, ...otherProps}) => {
-    return (
-      <MarkdownBlockQuote
-        iconStyle={this.props.blockStyles.quoteBlockIcon}
-        {...otherProps}>
-        {children}
-      </MarkdownBlockQuote>
-    );
-  };
+  renderBlockQuote = ({ children, ...otherProps }) => (
+    <MarkdownBlockQuote
+      iconStyle={this.props.blockStyles.quoteBlockIcon}
+      {...otherProps}
+    >
+      {children}
+    </MarkdownBlockQuote>
+  );
 
-  renderList = ({children, start, tight, type}) => {
-    return (
-      <MarkdownList ordered={type !== 'bullet'} start={start} tight={tight}>
-        {children}
-      </MarkdownList>
-    );
-  };
+  renderList = ({
+    children, start, tight, type,
+  }) => (
+    <MarkdownList ordered={type !== 'bullet'} start={start} tight={tight}>
+      {children}
+    </MarkdownList>
+  );
 
-  renderListItem = ({children, context, ...otherProps}) => {
-    const level = context.filter(type => type === 'list').length;
+  renderListItem = ({ children, context, ...otherProps }) => {
+    const level = context.filter((type) => type === 'list').length;
 
     return (
       <MarkdownListItem
         bulletStyle={this.props.baseTextStyle}
         level={level}
-        {...otherProps}>
+        {...otherProps}
+      >
         {children}
       </MarkdownListItem>
     );
   };
 
-  renderHardBreak = () => {
-    return <Text>{'\n'}</Text>;
-  };
+  renderHardBreak = () => <Text>{'\n'}</Text>;
 
-  renderThematicBreak = () => {
-    return (
-      <View
-        style={this.props.blockStyles.horizontalRule}
-        testID="markdown_thematic_break"
-      />
-    );
-  };
+  renderThematicBreak = () => (
+    <View
+      style={this.props.blockStyles.horizontalRule}
+      testID="markdown_thematic_break"
+    />
+  );
 
-  renderSoftBreak = () => {
-    return <Text>{'\n'}</Text>;
-  };
+  renderSoftBreak = () => <Text>{'\n'}</Text>;
 
-  renderHtml = props => {
+  renderHtml = (props) => {
     let rendered = this.renderText(props);
 
     if (props.isBlock) {
@@ -340,28 +326,22 @@ export default class Md extends PureComponent {
     return rendered;
   };
 
-  renderTable = ({children, numColumns}) => {
-    return (
-      <MarkdownTable showModal={this.props.showModal} numColumns={numColumns}>
-        {children}
-      </MarkdownTable>
-    );
-  };
+  renderTable = ({ children, numColumns }) => (
+    <MarkdownTable showModal={this.props.showModal} numColumns={numColumns}>
+      {children}
+    </MarkdownTable>
+  );
 
-  renderTableRow = args => {
-    return <MarkdownTableRow {...args} />;
-  };
+  renderTableRow = (args) => <MarkdownTableRow {...args} />;
 
-  renderTableCell = args => {
-    return <MarkdownTableCell {...args} />;
-  };
+  renderTableCell = (args) => <MarkdownTableCell {...args} />;
 
-  renderLink = data => {
-    const {href, children} = data;
+  renderLink = (data) => {
+    const { href, children } = data;
     return <MarkdownLink href={href}>{children}</MarkdownLink>;
   };
 
-  renderEditedIndicator = ({context}) => {
+  renderEditedIndicator = ({ context }) => {
     let spacer = '';
     if (context[0] === 'paragraph') {
       spacer = ' ';
@@ -373,7 +353,7 @@ export default class Md extends PureComponent {
     return (
       <Text style={styles}>
         {spacer}
-        <Text style={this.props.baseTextStyle}>{'(edited)'}</Text>
+        <Text style={this.props.baseTextStyle}>(edited)</Text>
       </Text>
     );
   };
@@ -389,8 +369,8 @@ export default class Md extends PureComponent {
     if (this.props.isEdited) {
       const editIndicatorNode = new Node('edited_indicator');
       if (
-        ast.lastChild &&
-        ['heading', 'paragraph'].includes(ast.lastChild.type)
+        ast.lastChild
+        && ['heading', 'paragraph'].includes(ast.lastChild.type)
       ) {
         ast.lastChild.appendChild(editIndicatorNode);
       } else {
@@ -405,7 +385,7 @@ export default class Md extends PureComponent {
   }
 }
 
-const getStyleSheet = makeStyleSheetFromTheme(theme => {
+const getStyleSheet = makeStyleSheetFromTheme((theme) => {
   // Android has trouble giving text transparency depending on how it's nested,
   // so we calculate the resulting colour manually
   const editedOpacity = Platform.select({

@@ -1,4 +1,4 @@
-import {call} from 'redux-saga/effects';
+import { call } from 'redux-saga/effects';
 
 import showError from '~/store/commonSaga/showError';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
@@ -9,7 +9,7 @@ export default function* declineAllGroupMemberRequests({
   type: string;
   payload: {groupId: string; callback?: () => void};
 }) {
-  const {groupId} = payload;
+  const { groupId } = payload;
   try {
     yield call(groupsDataHelper.declineAllGroupMemberRequests, groupId);
   } catch (err: any) {

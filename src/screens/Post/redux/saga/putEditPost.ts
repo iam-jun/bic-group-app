@@ -1,12 +1,12 @@
-import {IPayloadPutEditPost} from '~/interfaces/IPost';
-import {call, put} from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
+import i18n from 'i18next';
+import { IPayloadPutEditPost } from '~/interfaces/IPost';
 import postActions from '~/screens/Post/redux/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import i18n from 'i18next';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import modalActions from '~/store/modal/actions';
-import {withNavigation} from '~/router/helper';
-import {rootNavigationRef} from '~/router/navigator/refs';
+import { withNavigation } from '~/router/helper';
+import { rootNavigationRef } from '~/router/refs';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -26,20 +26,20 @@ export default function* putEditPost({
     disableNavigate,
   } = payload;
   if (!id || !data) {
-    console.log(`\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m`);
+    console.error('\x1b[31m🐣️ saga putEditPost: id or data not found\x1b[0m');
     return;
   }
   try {
     yield put(postActions.setLoadingCreatePost(true));
-    const response = yield call(postDataHelper.putEditPost, {postId: id, data});
+    const response = yield call(postDataHelper.putEditPost, { postId: id, data });
     yield put(postActions.setLoadingCreatePost(false));
     if (response?.data) {
       const post = response?.data;
-      yield put(postActions.addToAllPosts({data: post}));
+      yield put(postActions.addToAllPosts({ data: post }));
       yield put(
         modalActions.showHideToastMessage({
           content: msgSuccess || 'post:text_edit_post_success',
-          props: {textProps: {useI18n: true}, type: 'success'},
+          props: { textProps: { useI18n: true }, type: 'success' },
         }),
       );
       if (!disableNavigate) {
@@ -53,7 +53,7 @@ export default function* putEditPost({
         content: msgError || 'post:text_edit_post_failed',
         toastType: 'normal',
         props: {
-          textProps: {useI18n: true},
+          textProps: { useI18n: true },
           type: 'error',
           rightText: i18n.t('common:text_retry'),
           onPressRight: onRetry,
@@ -65,7 +65,7 @@ export default function* putEditPost({
 
 export function navigate(replaceWithDetail: boolean, postId?: string) {
   if (replaceWithDetail) {
-    navigation.replace(homeStack.postDetail, {post_id: postId});
+    navigation.replace(homeStack.postDetail, { post_id: postId });
   } else {
     navigation.goBack();
   }

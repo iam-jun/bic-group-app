@@ -1,30 +1,30 @@
-import React, {useRef, useState} from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
-import {useSharedValue} from 'react-native-reanimated';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { useRef, useState } from 'react';
+import { Dimensions, StyleSheet, View } from 'react-native';
+import { useSharedValue } from 'react-native-reanimated';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Header from '~/beinComponents/Header';
 
-import {useBackPressListener, useRootNavigation} from '~/hooks/navigation';
+import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import Filter from '../../../beinComponents/Filter';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import JoinedCommunities from '~/screens/Groups/Communities/JoinedCommunities';
 import DiscoverCommunities from '~/screens/Groups/Communities/DiscoverCommunities';
-import {communityMenuData} from '~/constants/communityMenuData';
+import { communityMenuData } from '~/constants/communityMenuData';
 import ManagedCommunities from './ManagedCommunities';
 import SearchCommunityView from './SearchCommunityView';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 
-const {width: screenWidth} = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 
 const Communities: React.FC = () => {
   const headerRef = useRef<any>();
 
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
-  const {rootNavigation} = useRootNavigation();
-  const {t} = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
 
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +55,7 @@ const Communities: React.FC = () => {
   };
 
   const onPressCommunities = (communityId: string) => {
-    rootNavigation.navigate(groupStack.communityDetail, {communityId});
+    rootNavigation.navigate(groupStack.communityDetail, { communityId });
   };
 
   const renderContent = () => {
@@ -66,9 +66,9 @@ const Communities: React.FC = () => {
           onPressDiscover={onPressDiscover}
         />
       );
-    } else if (selectedIndex === 1) {
+    } if (selectedIndex === 1) {
       return <ManagedCommunities onPressCommunities={onPressCommunities} />;
-    } else if (selectedIndex === 2) {
+    } if (selectedIndex === 2) {
       return <DiscoverCommunities onPressCommunities={onPressCommunities} />;
     }
     return null;
@@ -80,11 +80,11 @@ const Communities: React.FC = () => {
         hideBack
         headerRef={headerRef}
         title="tabs:communities"
-        titleTextProps={{useI18n: true}}
-        rightIcon={'iconSearch'}
+        titleTextProps={{ useI18n: true }}
+        rightIcon="iconSearch"
         onRightPress={onPressSearch}
       />
-      <View style={{flex: 1}}>
+      <View style={{ flex: 1 }}>
         <Filter
           data={communityMenuData}
           activeIndex={selectedIndex}
@@ -106,7 +106,7 @@ const Communities: React.FC = () => {
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     containerScreen: {

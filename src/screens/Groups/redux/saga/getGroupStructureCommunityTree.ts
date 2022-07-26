@@ -1,4 +1,4 @@
-import {put, call} from 'redux-saga/effects';
+import { put, call } from 'redux-saga/effects';
 
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
@@ -10,13 +10,12 @@ export default function* getGroupStructureCommunityTree({
   type: string;
   payload: {communityId: string; showLoading?: boolean};
 }): any {
-  const {communityId, showLoading = true} = payload || {};
+  const { communityId, showLoading = true } = payload || {};
   try {
     if (showLoading) {
-      yield put(groupsActions.setGroupStructureCommunityTree({loading: true}));
+      yield put(groupsActions.setGroupStructureCommunityTree({ loading: true }));
     }
-    const response =
-      (yield call(groupsDataHelper.getCommunityGroupTree, communityId)) || [];
+    const response = (yield call(groupsDataHelper.getCommunityGroupTree, communityId)) || [];
 
     if (response?.data) {
       yield put(
@@ -26,10 +25,10 @@ export default function* getGroupStructureCommunityTree({
         }),
       );
     } else {
-      yield put(groupsActions.setGroupStructureCommunityTree({loading: false}));
+      yield put(groupsActions.setGroupStructureCommunityTree({ loading: false }));
     }
   } catch (err) {
-    yield put(groupsActions.setGroupStructureCommunityTree({loading: false}));
+    yield put(groupsActions.setGroupStructureCommunityTree({ loading: false }));
     yield showError(err);
   }
 }

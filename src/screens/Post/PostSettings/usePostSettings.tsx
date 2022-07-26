@@ -1,4 +1,6 @@
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
+import { isEqual } from 'lodash';
+import { useDispatch } from 'react-redux';
 import {
   IActivityImportant,
   IAudienceUser,
@@ -7,12 +9,10 @@ import {
   IPostCreatePost,
   IPostSetting,
 } from '~/interfaces/IPost';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
-import {isEqual} from 'lodash';
 import postActions from '~/screens/Post/redux/actions';
-import {useDispatch} from 'react-redux';
-import {useRootNavigation} from '~/hooks/navigation';
+import { useRootNavigation } from '~/hooks/navigation';
 
 const MAX_DAYS = 7;
 
@@ -22,10 +22,10 @@ export interface IUsePostSettings {
 }
 
 export const usePostSettings = (params?: IUsePostSettings) => {
-  const {postId} = params || {};
+  const { postId } = params || {};
 
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
   const putUpdateSettings = !!postId;
 
@@ -34,7 +34,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     initPostData = useKeySelector(postKeySelector.postById(postId));
   }
 
-  const {important, currentSettings} = useKeySelector(
+  const { important, currentSettings } = useKeySelector(
     postKeySelector.createPost.all,
   );
 
@@ -64,12 +64,12 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       //   shares,
       //   reacts,
     ];
-    const newCount = dataCount.filter(i => !i);
+    const newCount = dataCount.filter((i) => !i);
     setDisableButtonSave(newCount.length === 0);
   };
 
   const handleToggleImportant = () => {
-    const newImportant = {...sImportant};
+    const newImportant = { ...sImportant };
     newImportant.active = !sImportant.active;
     if (!newImportant.expires_time) {
       newImportant.expires_time = getMinDate().toDateString();
@@ -90,7 +90,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     setSelectingDate(false);
     setSelectingTime(false);
     if (date) {
-      const newImportant = {...sImportant};
+      const newImportant = { ...sImportant };
       let expiresTime = '';
       if (date) {
         const time = sImportant.expires_time
@@ -111,7 +111,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     setSelectingDate(false);
     setSelectingTime(false);
     if (time) {
-      const newImportant = {...sImportant};
+      const newImportant = { ...sImportant };
       const date = sImportant.expires_time
         ? new Date(sImportant.expires_time)
         : new Date();
@@ -128,16 +128,17 @@ export const usePostSettings = (params?: IUsePostSettings) => {
   };
 
   const handlePutUpdateSettings = () => {
-    const {id, content, media, setting, audience, mentions} =
-      initPostData || {};
+    const {
+      id, content, media, setting, audience, mentions,
+    } = initPostData || {};
     if (!id) {
-      console.log(`\x1b[31m🐣️ usePostSettings update: id not found\x1b[0m`);
+      console.error('\x1b[31m🐣️ usePostSettings update: id not found\x1b[0m');
       return 'doNothing';
     }
 
     const userIds: string[] = [];
     const groupIds: string[] = [];
-    const audienceIds = {groupIds, userIds};
+    const audienceIds = { groupIds, userIds };
     audience?.users?.map?.(
       (u: IAudienceUser) => !!u?.id && userIds.push(u.id || ''),
     );
@@ -145,7 +146,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
       (u: IAudienceUser) => !!u?.id && groupIds.push(u.id || ''),
     );
 
-    const newSettings: IPostSetting = {...setting};
+    const newSettings: IPostSetting = { ...setting };
     newSettings.isImportant = sImportant?.active;
     newSettings.importantExpiredAt = sImportant?.active
       ? sImportant?.expires_time
@@ -178,10 +179,10 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     }
 
     const dataDefault = [
-      sImportant.active === currentSettings?.important?.active ||
-        sImportant.expires_time === currentSettings?.important?.expires_time,
+      sImportant.active === currentSettings?.important?.active
+        || sImportant.expires_time === currentSettings?.important?.expires_time,
     ];
-    const newCount = dataDefault.filter(i => !i);
+    const newCount = dataDefault.filter((i) => !i);
     dispatch(
       postActions.setCreatePostSettings({
         important: sImportant,

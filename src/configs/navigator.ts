@@ -1,4 +1,4 @@
-import {getEnv} from '~/utils/env';
+import getEnv from '~/utils/env';
 
 export const authStack = {
   landing: 'Landing',
@@ -8,14 +8,14 @@ export const authStack = {
 };
 
 export const hideBottomTabRoutes = [
-  //Post: Post Detail, Comment View
+  // Post: Post Detail, Comment View
   'post-detail',
   'create-post',
   'create-comment',
   'comment-view',
   'add-members',
   'comment-detail',
-  //Setting: Account setting, Edit account, Security, Privacy
+  // Setting: Account setting, Edit account, Security, Privacy
   'user-edit',
   'user-profile',
   'security-and-login',
@@ -36,30 +36,6 @@ export const customBackHandlerRoutes = [
 ];
 
 export const NAVIGATION_BACK_PRESSED = 'navigation-back-pressed';
-
-export const navigationSetting = {
-  defaultNavigationOption: {
-    headerStyle: {
-      borderBottomWidth: 0,
-      shadowColor: 'black',
-      shadowOffset: {
-        width: 0,
-        height: 0,
-      },
-      shadowOpacity: 0.1,
-      elevation: 2,
-    },
-    headerTitleStyle: {
-      flex: 1,
-      fontSize: 16,
-      lineHeight: 24,
-      fontWeight: 'bold',
-      justifyContent: 'space-between',
-      textAlign: 'center',
-    },
-    cardStyle: {backgroundColor: '#fff'},
-  },
-};
 
 export const bottomTabIcons = {
   home: 'iconTabHome',

@@ -1,5 +1,5 @@
-import {IGetSeenPostListSheet} from '~/interfaces/IPost';
-import {call, put, select} from 'redux-saga/effects';
+import { call, put, select } from 'redux-saga/effects';
+import { IGetSeenPostListSheet } from '~/interfaces/IPost';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import postActions from '~/screens/Post/redux/actions';
 import showError from '~/store/commonSaga/showError';
@@ -11,8 +11,8 @@ function* getSeenPost({
   payload: IGetSeenPostListSheet;
 }): any {
   try {
-    const {data, canLoadMore} = yield select(
-      state => state?.post?.seenPostList,
+    const { data, canLoadMore } = yield select(
+      (state) => state?.post?.seenPostList,
     ) || {};
     const params = {
       postId: payload.postId,
@@ -26,7 +26,7 @@ function* getSeenPost({
 
     if (response && response?.data?.list) {
       const newData = response ? response.data : undefined;
-      const {list, meta} = newData;
+      const { list, meta } = newData;
       const dataList = data.concat(list);
       const payloadSet = {
         data: dataList,
@@ -38,7 +38,7 @@ function* getSeenPost({
       return Promise.reject(response);
     }
   } catch (e) {
-    console.log(`\x1b[31m🐣️ saga getCommentsByPostId error: `, e, `\x1b[0m`);
+    console.error('\x1b[31m🐣️ saga getCommentsByPostId error: ', e, '\x1b[0m');
     yield showError(e);
   }
 }

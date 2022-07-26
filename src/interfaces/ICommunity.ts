@@ -1,4 +1,4 @@
-import {GROUP_PRIVACY_TYPE} from '~/constants/privacyTypes';
+import { GROUP_PRIVACY_TYPE } from '~/constants/privacyTypes';
 
 export interface ICommunity {
   id: string;

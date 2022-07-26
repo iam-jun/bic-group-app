@@ -1,5 +1,5 @@
 import Clipboard from '@react-native-clipboard/clipboard';
-import React, {useRef, useState} from 'react';
+import React, { useRef, useState } from 'react';
 import {
   GestureResponderEvent,
   LayoutChangeEvent,
@@ -8,9 +8,9 @@ import {
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
-import {showHideToastMessage} from '~/store/modal/actions';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
+import { showHideToastMessage } from '~/store/modal/actions';
 
 import spacing from '~/theme/spacing';
 import ButtonWrapper from '../Button/ButtonWrapper';
@@ -37,12 +37,12 @@ const CopyableView = ({
   const dispatch = useDispatch();
 
   const [tooltipVisible, setTooltipVisible] = useState(false);
-  const [tooltopPosition, setTooltipPosition] = useState({left: 0, top: 0});
-  const tooltipSize = useRef({width: 50, height: 40});
+  const [tooltopPosition, setTooltipPosition] = useState({ left: 0, top: 0 });
+  const tooltipSize = useRef({ width: 50, height: 40 });
 
   const showTooltip = (left: number, top: number) => {
     setTooltipVisible(true);
-    setTooltipPosition({left, top});
+    setTooltipPosition({ left, top });
   };
   const hideTooltip = () => setTooltipVisible(false);
 
@@ -52,7 +52,7 @@ const CopyableView = ({
       showHideToastMessage({
         content: 'common:text_copied_to_clipboard',
         props: {
-          textProps: {useI18n: true},
+          textProps: { useI18n: true },
           type: 'success',
         },
       }),
@@ -90,7 +90,8 @@ const CopyableView = ({
     <TouchableWithoutFeedback
       {...props}
       onLongPress={onLongPress}
-      onPress={_onPress}>
+      onPress={_onPress}
+    >
       <View>
         {tooltipVisible && (
           <Modal visible={tooltipVisible} transparent>
@@ -99,7 +100,8 @@ const CopyableView = ({
                 <ButtonWrapper
                   style={[styles.tooltip, tooltopPosition]}
                   onLayout={onLayout}
-                  onPress={copyContent}>
+                  onPress={copyContent}
+                >
                   <Text useI18n style={styles.text}>
                     common:btn_copy
                   </Text>
@@ -115,7 +117,7 @@ const CopyableView = ({
 };
 
 const themeStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     contentSelected: {
       backgroundColor: '#ACCEF7',

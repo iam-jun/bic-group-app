@@ -1,8 +1,8 @@
 import i18next from 'i18next';
-import {isEmpty} from 'lodash';
+import { isEmpty } from 'lodash';
 import React from 'react';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import MenuItem from '~/beinComponents/list/items/MenuItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
@@ -10,14 +10,14 @@ import Text from '~/beinComponents/Text';
 import CollapsibleText from '~/beinComponents/Text/CollapsibleText';
 import groupJoinStatus from '~/constants/groupJoinStatus';
 import privacyTypes from '~/constants/privacyTypes';
-import {useRootNavigation} from '~/hooks/navigation';
-import {useKeySelector} from '~/hooks/selector';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import { useRootNavigation } from '~/hooks/navigation';
+import { useKeySelector } from '~/hooks/selector';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
 import groupsKeySelector from '../redux/keySelector';
 
 const GroupAboutContent = () => {
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
@@ -26,13 +26,13 @@ const GroupAboutContent = () => {
   const isMember = join_status === groupJoinStatus.member;
 
   const groupId = groupData.id;
-  const {description, user_count, privacy} = groupData;
+  const { description, user_count, privacy } = groupData;
 
-  const privacyData = privacyTypes.find(item => item?.type === privacy) || {};
-  const {icon, title, subtitle}: any = privacyData || {};
+  const privacyData = privacyTypes.find((item) => item?.type === privacy) || {};
+  const { icon, title, subtitle }: any = privacyData || {};
 
   const onPressMembers = () => {
-    rootNavigation.navigate(groupStack.groupMembers, {groupId});
+    rootNavigation.navigate(groupStack.groupMembers, { groupId });
   };
 
   const renderContent = () => (
@@ -45,7 +45,7 @@ const GroupAboutContent = () => {
           <CollapsibleText
             limitLength={500}
             shortLength={500}
-            textProps={{variant: 'h4', style: styles.descriptionContainer}}
+            textProps={{ variant: 'h4', style: styles.descriptionContainer }}
             content={description}
           />
         </>
@@ -53,7 +53,7 @@ const GroupAboutContent = () => {
       <MenuItem
         testID="group_about_content.members"
         style={styles.memberItem}
-        icon={'UserGroup'}
+        icon="UserGroup"
         onPress={isMember ? onPressMembers : undefined}
         disabled={!isMember}
         title={`${user_count} ${i18next.t('groups:text_members', {
@@ -80,7 +80,7 @@ const GroupAboutContent = () => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

@@ -70,12 +70,10 @@ export default {
     payload,
   }),
 
-  signOut: (shouldNavigate = true) => {
-    return {
-      type: types.SIGN_OUT,
-      payload: shouldNavigate,
-    };
-  },
+  signOut: (shouldNavigate = true) => ({
+    type: types.SIGN_OUT,
+    payload: shouldNavigate,
+  }),
 
   forgotPasswordRequest: (payload: string) => ({
     type: types.FORGOT_PASSWORD_REQUEST,

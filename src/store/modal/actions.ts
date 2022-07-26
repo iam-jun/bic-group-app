@@ -10,7 +10,7 @@ import {
   IToastMessage,
   IUserPreview,
 } from '~/interfaces/common';
-import {ReactionType} from '~/constants/reactions';
+import { ReactionType } from '~/constants/reactions';
 
 export function setModal(payload: IPayloadShowModal) {
   return {

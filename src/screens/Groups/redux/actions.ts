@@ -21,8 +21,8 @@ import {
   ICommunityDetailEdit,
   IPayloadGroupSchemeAssignments,
 } from '~/interfaces/IGroup';
-import {IUser} from '~/interfaces/IAuth';
-import {IObject} from '~/interfaces/common';
+import { IUser } from '~/interfaces/IAuth';
+import { IObject } from '~/interfaces/common';
 import {
   ICommunity,
   IParamGetCommunityMembers,
@@ -41,7 +41,7 @@ const groupsActions = {
     payload,
   }),
 
-  //group structure settings
+  // group structure settings
   setGroupStructure: (payload?: any) => ({
     type: groupsTypes.SET_GROUP_STRUCTURE,
     payload,

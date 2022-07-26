@@ -1,9 +1,12 @@
-import {put, select, takeEvery, takeLatest} from 'redux-saga/effects';
-import NetInfo, {NetInfoState} from '@react-native-community/netinfo';
+import {
+  put, select, takeEvery, takeLatest,
+} from 'redux-saga/effects';
+import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
 
 import actions from './actions';
 import authActions from '~/screens/Auth/redux/actions';
 import types from './types';
+import { timeOut } from '~/utils/common';
 
 export default function* noInternetSaga() {
   yield takeLatest(types.CHECK_IS_INTERNET_REACHABLE, checkIsInternetReachable);
@@ -20,30 +23,27 @@ export default function* noInternetSaga() {
   yield takeEvery(types.HIDE_SYSTEM_ISSUE_AND_LOGOUT, hideSystemIssueAndLogout);
 }
 
-function timeOut(ms: number) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
 function* setIsInternetReachable(state: NetInfoState) {
-  const {noInternet} = yield select();
-  const {isInternetReachable} = noInternet;
+  const { noInternet } = yield select();
+  const { isInternetReachable } = noInternet;
 
   const result = state.isInternetReachable ? state.isConnected : false;
 
-  if (isInternetReachable !== result)
-    yield put(actions.setIsInternetReachable(result));
+  if (isInternetReachable !== result) yield put(actions.setIsInternetReachable(result));
 }
 
 function* checkIsInternetReachable() {
   try {
     let netInfoState = {} as NetInfoState;
 
-    yield NetInfo.fetch().then(state => (netInfoState = state));
+    // eslint-disable-next-line no-return-assign
+    yield NetInfo.fetch().then((state) => (netInfoState = state));
 
     if (netInfoState.isInternetReachable === null) {
       const threshold = 5000; // 5000 is for slow 3G, the faster network, the smaller threshold is
       yield timeOut(threshold);
-      yield NetInfo.fetch().then(state => (netInfoState = state));
+      // eslint-disable-next-line no-return-assign
+      yield NetInfo.fetch().then((state) => (netInfoState = state));
     }
 
     yield setIsInternetReachable(netInfoState);
@@ -54,7 +54,7 @@ function* checkIsInternetReachable() {
 
 function* showSystemIssueThenLogout() {
   try {
-    const {noInternet} = yield select();
+    const { noInternet } = yield select();
     const isShownAlready = noInternet.systemIssue;
 
     /**
@@ -69,12 +69,12 @@ function* showSystemIssueThenLogout() {
     yield timeOut(MODAL_VISIBLE_DURATION);
     yield hideSystemIssueAndLogout();
   } catch (error) {
-    console.log(`error`, error);
+    console.error('error', error);
   }
 }
 
 function* hideSystemIssueAndLogout() {
-  const {noInternet} = yield select();
+  const { noInternet } = yield select();
   const isShownAlready = noInternet.systemIssue;
   if (!isShownAlready) return;
 

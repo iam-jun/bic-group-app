@@ -1,4 +1,4 @@
-import {put} from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 import modalActions from '~/store/modal/actions';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 
@@ -8,11 +8,11 @@ function* showError(err: any) {
   yield put(
     modalActions.showHideToastMessage({
       content:
-        err?.meta?.errors?.[0]?.message ||
-        err?.meta?.message ||
-        'common:text_error_message',
+        err?.meta?.errors?.[0]?.message
+        || err?.meta?.message
+        || 'common:text_error_message',
       props: {
-        textProps: {useI18n: true},
+        textProps: { useI18n: true },
         type: 'error',
       },
     }),

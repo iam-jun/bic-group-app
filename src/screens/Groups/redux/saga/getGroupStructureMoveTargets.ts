@@ -1,4 +1,4 @@
-import {put, call, select} from 'redux-saga/effects';
+import { put, call, select } from 'redux-saga/effects';
 
 import groupsActions from '../actions';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
@@ -14,9 +14,8 @@ export default function* getGroupStructureMoveTargets({
     key?: string;
   };
 }): any {
-  const {communityId, groupId, key} = payload || {};
-  const {targetGroups, movingGroup} =
-    (yield select(state => state.groups?.groupStructure?.move)) || {};
+  const { communityId, groupId, key } = payload || {};
+  const { targetGroups, movingGroup } = (yield select((state) => state.groups?.groupStructure?.move)) || {};
   try {
     yield put(
       groupsActions.setGroupStructureMove({

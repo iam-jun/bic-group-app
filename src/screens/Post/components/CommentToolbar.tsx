@@ -1,6 +1,8 @@
-import React, {FC} from 'react';
-import {StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import React, { FC } from 'react';
+import {
+  StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
@@ -32,34 +34,38 @@ const CommentToolbar: FC<CommentToolbarProps> = ({
     <View style={[styles.container, style]}>
       {!!onSelectImage && (
         <Button
-          testID={'comment_toolbar.btn_image'}
+          testID="comment_toolbar.btn_image"
           style={styles.button}
-          onPress={onSelectImage}>
-          <Icon icon={'Image'} />
+          onPress={onSelectImage}
+        >
+          <Icon icon="Image" />
         </Button>
       )}
       {!!onSelectFile && (
         <Button
-          testID={'comment_toolbar.btn_file'}
+          testID="comment_toolbar.btn_file"
           style={styles.button}
-          onPress={onSelectFile}>
-          <Icon icon={'Link'} />
+          onPress={onSelectFile}
+        >
+          <Icon icon="Link" />
         </Button>
       )}
       {!!onSelectGif && (
         <Button
-          testID={'comment_toolbar.btn_gif'}
+          testID="comment_toolbar.btn_gif"
           style={styles.button}
-          onPress={onSelectGif}>
-          <Icon icon={'iconAddGif'} />
+          onPress={onSelectGif}
+        >
+          <Icon icon="iconAddGif" />
         </Button>
       )}
       {!!onSelectVideo && (
         <Button
-          testID={'comment_toolbar.btn_video'}
+          testID="comment_toolbar.btn_video"
           style={styles.button}
-          onPress={onSelectVideo}>
-          <Icon icon={'Video'} />
+          onPress={onSelectVideo}
+        >
+          <Icon icon="Video" />
         </Button>
       )}
     </View>
@@ -67,7 +73,7 @@ const CommentToolbar: FC<CommentToolbarProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       height: 56,

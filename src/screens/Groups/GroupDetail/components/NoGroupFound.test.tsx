@@ -3,7 +3,7 @@ import React from 'react';
 import NoGroupFound from './NoGroupFound';
 import * as navigationHook from '~/hooks/navigation';
 import {renderWithRedux, fireEvent} from '~/test/testUtils';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 
 describe('NoGroupFound component', () => {
   it('should render correctly', () => {

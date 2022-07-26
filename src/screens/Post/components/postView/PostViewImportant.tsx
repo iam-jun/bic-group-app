@@ -1,7 +1,7 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
+import { StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import ImportantStatus from '~/screens/Post/components/ImportantStatus';
-import {StyleSheet, View} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
 
 import Icon from '~/beinComponents/Icon';
 import spacing from '~/theme/spacing';
@@ -20,7 +20,7 @@ const PostViewImportant: FC<PostViewImportantProps> = ({
   isLite,
 }: PostViewImportantProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme || {};
+  const { colors } = theme || {};
   const styles = createStyle(theme);
 
   if (!isImportant || !expireTime) {
@@ -28,17 +28,17 @@ const PostViewImportant: FC<PostViewImportantProps> = ({
   }
 
   const now = new Date();
-  const notExpired =
-    now.getTime() < new Date(expireTime).getTime() && !markedReadPost;
+  const notExpired = now.getTime() < new Date(expireTime).getTime() && !markedReadPost;
 
   if (isLite) {
     return (
       <View
-        testID={'post_view.important_status_lite'}
-        style={styles.liteContainer}>
+        testID="post_view.important_status_lite"
+        style={styles.liteContainer}
+      >
         <Icon
           size={12}
-          icon={'iconStar'}
+          icon="iconStar"
           iconStyle={styles.iconStar}
           tintColor={colors.purple50}
         />
@@ -50,7 +50,7 @@ const PostViewImportant: FC<PostViewImportantProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     liteContainer: {
       position: 'absolute',

@@ -1,4 +1,4 @@
-import {StyleProp, ViewStyle} from 'react-native';
+import { StyleProp, ViewStyle } from 'react-native';
 
 export interface ImageGalleryModalProps {
   visible: boolean;
@@ -7,5 +7,5 @@ export interface ImageGalleryModalProps {
   initIndex?: number;
   alwaysShowFileName?: boolean;
 
-  //web
+  // web
 }

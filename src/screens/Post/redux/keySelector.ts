@@ -33,7 +33,7 @@ const postKeySelector = {
     loading: 'post.seenPostList.loading',
   },
 
-  //Post data
+  // Post data
   postById: (id: string) => `post.allPosts.${id}`,
   postActorById: (id: string) => `post.allPosts.${id}.actor`,
   postAudienceById: (id: string) => `post.allPosts.${id}.audience`,
@@ -46,18 +46,16 @@ const postKeySelector = {
   postOwnerReactionById: (id: string) => `post.allPosts.${id}.ownerReactions`,
   postReactionCountsById: (id: string) => `post.allPosts.${id}.reactionsCount`,
   postCommentsCountById: (id: string) => `post.allPosts.${id}.commentsCount`,
-  postCommentOnlyCountById: (id: string) =>
-    `post.allPosts.${id}.comments.meta.hasNextPage`,
+  postCommentOnlyCountById: (id: string) => `post.allPosts.${id}.comments.meta.hasNextPage`,
   postCommentListById: (id: string) => `post.allPosts.${id}.comments.list`,
   postIsDraftById: (id: string) => `post.allPosts.${id}.isDraft`,
   postReactionsOrderById: (id: string) => `post.allPosts.${id}.reactions_order`,
   postDeletedById: (id: string) => `post.allPosts.${id}.deleted`,
   postMarkedReadById: (id: string) => `post.allPosts.${id}.markedReadPost`,
-  postMarkedReadSuccessById: (id: string) =>
-    `post.allPosts.${id}.markedReadSuccess`,
+  postMarkedReadSuccessById: (id: string) => `post.allPosts.${id}.markedReadSuccess`,
   postTotalUsersSeenById: (id: string) => `post.allPosts.${id}.totalUsersSeen`,
 
-  //Comment data
+  // Comment data
   allCommentsByParentIds: 'post.allCommentsByParentIds',
   commentsByParentId: (id: string) => `post.allCommentsByParentIds.${id}`,
   commentById: (id?: string) => `post.allComments.${id}`,

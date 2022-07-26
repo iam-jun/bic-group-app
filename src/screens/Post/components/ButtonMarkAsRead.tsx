@@ -1,14 +1,16 @@
-import React, {FC, useState} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {useTheme, ExtendedTheme} from '@react-navigation/native';
+import React, { FC, useState } from 'react';
+import {
+  View, StyleSheet, StyleProp, ViewStyle,
+} from 'react-native';
+import { useTheme, ExtendedTheme } from '@react-navigation/native';
 
+import { useDispatch } from 'react-redux';
 import Button from '~/beinComponents/Button';
-import {IPayloadPutMarkAsRead} from '~/interfaces/IPost';
-import {useDispatch} from 'react-redux';
+import { IPayloadPutMarkAsRead } from '~/interfaces/IPost';
 import postActions from '~/screens/Post/redux/actions';
 import icons from '~/resources/icons';
-import {useBaseHook} from '~/hooks';
-import {useKeySelector} from '~/hooks/selector';
+import { useBaseHook } from '~/hooks';
+import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '~/screens/Post/redux/keySelector';
 import spacing from '~/theme/spacing';
 
@@ -35,21 +37,21 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
     postKeySelector.postMarkedReadSuccessById(postId),
   );
 
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const now = new Date();
   const expired = now.getTime() >= new Date(expireTime || '').getTime();
 
   if (
-    !isImportant ||
-    isActor ||
-    (markedReadPost && !markReadSuccess) ||
-    !expireTime ||
-    expired
+    !isImportant
+    || isActor
+    || (markedReadPost && !markReadSuccess)
+    || !expireTime
+    || expired
   ) {
     return null;
   }
@@ -69,10 +71,11 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
 
   return (
     <View
-      testID={'button_mark_as_read.container'}
-      style={[styles.container, style]}>
+      testID="button_mark_as_read.container"
+      style={[styles.container, style]}
+    >
       <Button.Secondary
-        testID={'button_mark_as_read.button'}
+        testID="button_mark_as_read.button"
         loading={loading}
         color={colors.neutral1}
         textColor={colors.neutral80}
@@ -80,7 +83,8 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
         colorDisabled={colors.white}
         textColorDisabled={colors.gray50}
         leftIcon={markedReadPost && icons.Check}
-        onPress={onPressMarkAsRead}>
+        onPress={onPressMarkAsRead}
+      >
         {markedReadPost ? t('post:marked_as_read') : t('post:mark_as_read')}
       </Button.Secondary>
     </View>
@@ -88,7 +92,7 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       paddingVertical: spacing.padding.small,

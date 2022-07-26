@@ -1,5 +1,5 @@
 import React from 'react';
-import {AppConfig} from '~/configs';
+import { AppConfig } from '~/configs';
 
 type AppContextType = {
   language: string;

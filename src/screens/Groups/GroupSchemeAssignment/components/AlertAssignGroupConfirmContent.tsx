@@ -1,12 +1,14 @@
-import React, {useMemo} from 'react';
-import {View, StyleSheet, ScrollView, Dimensions} from 'react-native';
+import React, { useMemo } from 'react';
+import {
+  View, StyleSheet, ScrollView, Dimensions,
+} from 'react-native';
 
+import i18n from 'i18next';
 import Text from '~/beinComponents/Text';
-import {useBaseHook} from '~/hooks';
-import {useKeySelector} from '~/hooks/selector';
+import { useBaseHook } from '~/hooks';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import Icon from '~/beinComponents/Icon';
-import i18n from 'i18next';
 import Divider from '~/beinComponents/Divider';
 import spacing from '~/theme/spacing';
 
@@ -14,45 +16,38 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const contentHeight = SCREEN_HEIGHT * 0.4;
 
 const AlertAssignGroupConfirmContent = () => {
-  const {t} = useBaseHook();
+  const { t } = useBaseHook();
 
-  const {allSchemes} =
-    useKeySelector(groupsKeySelector.permission.schemes) || {};
-  const {data: initAssignments} =
-    useKeySelector(
-      groupsKeySelector.permission.assignGroupScheme.assignments,
-    ) || {};
-  const {data: dataAssigning} =
-    useKeySelector(groupsKeySelector.permission.assignGroupScheme.assigning) ||
-    {};
+  const { allSchemes } = useKeySelector(groupsKeySelector.permission.schemes) || {};
+  const { data: initAssignments } = useKeySelector(
+    groupsKeySelector.permission.assignGroupScheme.assignments,
+  ) || {};
+  const { data: dataAssigning } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assigning)
+    || {};
 
   const data = useMemo(
     () => prepareData(initAssignments, dataAssigning, allSchemes),
     [initAssignments, dataAssigning, allSchemes],
   );
 
-  console.log(
-    `\x1b[34m🐣️ AlertAssignGroupConfirmContent AlertAssignGroupConfirmContent`,
-    `${JSON.stringify(data, undefined, 2)}\x1b[0m`,
-  );
-
   const renderItem = (item: any, index: number) => {
-    const {groupName, oldSchemeName, newSchemeName} = item || {};
+    const { groupName, oldSchemeName, newSchemeName } = item || {};
     return (
       <View
         key={`alert_assign_group_confirm.item_${index}`}
-        style={styles.itemContainer}>
+        style={styles.itemContainer}
+      >
         <Text.H6>{groupName}</Text.H6>
         <View style={styles.itemContent}>
           <Text.BodyS style={styles.textName} numberOfLines={1}>
             {oldSchemeName}
           </Text.BodyS>
-          <Icon style={styles.iconArrow} icon={'ArrowRight'} />
+          <Icon style={styles.iconArrow} icon="ArrowRight" />
           <Text.BodyS style={styles.textName} numberOfLines={1}>
             {newSchemeName}
           </Text.BodyS>
         </View>
-        {index !== data?.length - 1 && <Divider style={styles.divider} />}
+        {index !== (data?.length || 0) - 1 && <Divider style={styles.divider} />}
       </View>
     );
   };
@@ -91,22 +86,20 @@ export const prepareData = (
   allSchemes: any,
 ) => {
   const result: any = [];
-  assigning?.map?.((item: any) => {
-    const {scheme_id, group_id} = item || {};
+  assigning?.forEach?.((item: any) => {
+    const { scheme_id, group_id } = item || {};
     const group = findGroupInAssignmentsById(group_id, assignments);
     const groupName = group?.name;
-    const oldSchemeName =
-      allSchemes?.[group?.scheme_id]?.name ||
-      (group?.scheme_id
+    const oldSchemeName = allSchemes?.[group?.scheme_id]?.name
+      || (group?.scheme_id
         ? i18n.t('communities:permission:text_unknown_scheme')
         : i18n.t('communities:permission:text_none_scheme'));
-    const newSchemeName =
-      allSchemes?.[scheme_id]?.name ||
-      (scheme_id
+    const newSchemeName = allSchemes?.[scheme_id]?.name
+      || (scheme_id
         ? i18n.t('communities:permission:text_unknown_scheme')
         : i18n.t('communities:permission:text_none_scheme'));
     if (group) {
-      result.push({groupName, oldSchemeName, newSchemeName});
+      result.push({ groupName, oldSchemeName, newSchemeName });
     }
   });
   return result;

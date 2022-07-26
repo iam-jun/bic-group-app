@@ -5,12 +5,14 @@ import React, {
   useState,
   useImperativeHandle,
 } from 'react';
-import {StyleSheet, View, TextInput, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import {
+  StyleSheet, View, TextInput, StyleProp, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import Icon from '../Icon';
-import {fontFamilies} from '~/theme/fonts';
-import {TextInputProps} from './TextInput';
+import { fontFamilies } from '~/theme/fonts';
+import { TextInputProps } from './TextInput';
 import spacing from '~/theme/spacing';
 import dimension from '~/theme/dimension';
 
@@ -84,13 +86,13 @@ const SearchInput: React.FC<SearchInputProps> = ({
           style={styles.textInput}
           value={text}
           autoFocus={autoFocus}
-          autoComplete={'off'}
+          autoComplete="off"
           onChangeText={_onChangeText}
           placeholder={placeholder}
           placeholderTextColor={theme.colors.gray50}
           selectionColor={theme.colors.gray50}
           onFocus={_onFocus}
-          returnKeyType={'search'}
+          returnKeyType="search"
           onSubmitEditing={_onSubmitEditing}
         />
         {!!text && (
@@ -107,7 +109,7 @@ const SearchInput: React.FC<SearchInputProps> = ({
 };
 
 const createStyles = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
 
   return StyleSheet.create({
     container: {

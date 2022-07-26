@@ -7,11 +7,11 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-import Icon, {IconProps} from '~/beinComponents/Icon';
-import Text, {TextProps, TextVariant} from '~/beinComponents/Text';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import Icon, { IconProps } from '~/beinComponents/Icon';
+import Text, { TextProps, TextVariant } from '~/beinComponents/Text';
 // import {TouchableOpacity} from 'react-native-gesture-handler';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import spacing from '~/theme/spacing';
 
 interface DrawerItemProps {
@@ -66,13 +66,14 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
 
   return (
     <TouchableOpacity
       disabled={!isInternetReachable || disabled}
       onPress={onPress}
-      testID={testID}>
+      testID={testID}
+    >
       <View style={[styles.container, style]}>
         {icon && (
           <Icon
@@ -83,7 +84,8 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
           />
         )}
         <View
-          style={StyleSheet.flatten([styles.titleContainer, titleContainer])}>
+          style={StyleSheet.flatten([styles.titleContainer, titleContainer])}
+        >
           <Text variant={textVariant || 'bodyM'} useI18n {...titleProps}>
             {title}
           </Text>
@@ -92,7 +94,8 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
               variant={textVariantSubTitle || 'bodyS'}
               useI18n
               numberOfLines={2}
-              {...subTitleProps}>
+              {...subTitleProps}
+            >
               {subTitle}
             </Text>
           )}
@@ -102,8 +105,9 @@ const MenuSidebarItem: React.FC<DrawerItemProps> = ({
             <Text
               variant={textVariantRightTitle || 'bodyS'}
               useI18n
-              style={{color: colors.gray50}}
-              {...rightTitleProps}>
+              style={{ color: colors.gray50 }}
+              {...rightTitleProps}
+            >
               {rightTitle}
             </Text>
           )}

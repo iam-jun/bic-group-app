@@ -1,5 +1,5 @@
-import {IFilePicked, IGiphy} from '~/interfaces/common';
-import {ReactionType} from '~/constants/reactions';
+import { IFilePicked, IGiphy } from '~/interfaces/common';
+import { ReactionType } from '~/constants/reactions';
 
 export interface IPostAudience {
   users?: IAudienceUser[];
@@ -7,6 +7,7 @@ export interface IPostAudience {
 }
 
 export interface IAudienceUser {
+  data?: any;
   id?: string;
   username?: string;
   fullname?: string;
@@ -188,7 +189,7 @@ export interface IPayloadCreatePost {
 
 export interface IPayloadCreateComment {
   postId: string;
-  parentCommentId?: string;
+  parentCommentId?: string|number;
   commentData: ICommentData;
   userId: string;
   localId?: string | number[]; // used when retry adding new comment
@@ -277,11 +278,12 @@ export interface IRequestGetPostComment {
   childLimit?: number;
 }
 
-export interface IPayloadGetCommentsById extends IRequestGetPostComment {
-  isMerge: boolean;
-  callbackLoading?: (loading: boolean, canLoadMore?: boolean) => void;
+export interface IPayloadGetCommentsById {
+  isMerge?: boolean;
   position?: string;
-  commentId?: string;
+  commentId: string;
+  params?: IRequestGetPostComment,
+  callbackLoading?: (loading: boolean, canLoadMore?: boolean) => void;
 }
 
 export interface IReaction {
@@ -297,6 +299,9 @@ export interface IReaction {
   parentCommentId?: string | number; // used when retry/cancel adding new comment
   child?: any;
   actor?: IAudienceUser;
+  activity_id: string;
+  user_id:string;
+  data:any
 }
 
 export interface IGetStreamAudienceUser {
@@ -405,7 +410,7 @@ export interface IParamPutReactionToComment {
 export interface IPayloadUpdateCommentsById {
   id: string;
   comments: ICommentData[];
-  isMerge: boolean;
+  isMerge?: boolean;
   isReplace?: boolean;
   commentId?: string;
 }

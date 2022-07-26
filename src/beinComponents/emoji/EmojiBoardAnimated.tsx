@@ -12,7 +12,7 @@ import {
   Animated,
   Keyboard,
 } from 'react-native';
-import {useKeyboard} from '@react-native-community/hooks';
+import { useKeyboard } from '@react-native-community/hooks';
 
 import EmojiBoard from '~/beinComponents/emoji/EmojiBoard';
 import dimension from '~/theme/dimension';
@@ -43,8 +43,8 @@ const EmojiBoardAnimated: FC<EmojiBoardAnimatedProps> = ({
 
   useEffect(() => {
     if (
-      keyboard?.keyboardHeight &&
-      keyboardHeight !== keyboard?.keyboardHeight
+      keyboard?.keyboardHeight
+      && keyboardHeight !== keyboard?.keyboardHeight
     ) {
       setKeyboardHeight(keyboard?.keyboardHeight);
     }
@@ -86,7 +86,7 @@ const EmojiBoardAnimated: FC<EmojiBoardAnimatedProps> = ({
   }
 
   return (
-    <Animated.View style={[styles.container, {height}]}>
+    <Animated.View style={[styles.container, { height }]}>
       <EmojiBoard
         width={dimension.deviceWidth}
         height={keyboardHeight}

@@ -1,9 +1,9 @@
-import React, {FC} from 'react';
-import {View, StyleSheet} from 'react-native';
+import React, { FC } from 'react';
+import { View, StyleSheet } from 'react-native';
 import Icon from '~/beinComponents/Icon';
 import reactionConfig from '~/beinFragments/reaction/reactionConfig';
 import Button from '~/beinComponents/Button';
-import {IReactionProps} from '~/interfaces/IReaction';
+import { IReactionProps } from '~/interfaces/IReaction';
 import spacing from '~/theme/spacing';
 
 export interface ReactionViewProps {
@@ -17,19 +17,18 @@ const SelectReactionView: FC<ReactionViewProps> = ({
     onPressReaction?.(item);
   };
 
-  const renderRow = (row: IReactionProps[], rowIndex: any) => {
-    return (
-      <View key={`reaction_row_${rowIndex}`} style={styles.row}>
-        {row.map((item, index) => (
-          <Button
-            key={`reaction_${rowIndex}_${index}_${item.id}`}
-            onPress={() => _onPressReaction(item)}>
-            <Icon icon={item.icon} size={30} />
-          </Button>
-        ))}
-      </View>
-    );
-  };
+  const renderRow = (row: IReactionProps[], rowIndex: any) => (
+    <View key={`reaction_row_${rowIndex}`} style={styles.row}>
+      {row.map((item, index) => (
+        <Button
+          key={`reaction_${rowIndex}_${index}_${item.id}`}
+          onPress={() => _onPressReaction(item)}
+        >
+          <Icon icon={item.icon} size={30} />
+        </Button>
+      ))}
+    </View>
+  );
 
   return <View style={styles.container}>{reactionConfig.map(renderRow)}</View>;
 };

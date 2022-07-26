@@ -1,4 +1,4 @@
-import {call, put} from 'redux-saga/effects';
+import { call, put } from 'redux-saga/effects';
 import homeDataHelper from '~/screens/Home/helper/HomeDataHelper';
 import homeActions from '~/screens/Home/redux/actions';
 
@@ -19,6 +19,6 @@ export default function* deleteRecentSearchById({
       }),
     );
   } catch (e) {
-    console.log(`\x1b[31m🐣️ saga delete Recent Search error: `, e, `\x1b[0m`);
+    console.error('\x1b[31m🐣️ saga delete Recent Search error: ', e, '\x1b[0m');
   }
 }

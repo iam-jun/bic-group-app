@@ -1,7 +1,7 @@
-import {IOptionItem} from '~/interfaces/IEditUser';
+import { IOptionItem } from '~/interfaces/IEditUser';
 
 export const dataMapping = (dataObject: any): IOptionItem[] => {
-  const dataList = Object.keys(dataObject).map(type => ({
+  const dataList = Object.keys(dataObject).map((type) => ({
     type,
     title: dataObject[type],
   }));

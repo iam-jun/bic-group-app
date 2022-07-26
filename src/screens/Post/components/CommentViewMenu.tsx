@@ -1,23 +1,23 @@
-import React, {FC} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
+import React, { FC } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { useDispatch } from 'react-redux';
 
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Clipboard from '@react-native-clipboard/clipboard';
+import NodeEmoji from 'node-emoji';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {useBaseHook} from '~/hooks';
+import { useBaseHook } from '~/hooks';
 import Icon from '~/beinComponents/Icon';
 import Button from '~/beinComponents/Button';
-import {ReactionType} from '~/constants/reactions';
-import {useRootNavigation} from '~/hooks/navigation';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import { ReactionType } from '~/constants/reactions';
+import { useRootNavigation } from '~/hooks/navigation';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import * as modalActions from '~/store/modal/actions';
-import Clipboard from '@react-native-clipboard/clipboard';
-import {showHideToastMessage} from '~/store/modal/actions';
+import { showHideToastMessage } from '~/store/modal/actions';
 import Text from '~/beinComponents/Text';
-import NodeEmoji from 'node-emoji';
-import {quickReactions} from '~/configs/reactionConfig';
-import {getLink, LINK_COMMENT} from '~/utils/link';
+import { quickReactions } from '~/configs/reactionConfig';
+import { getLink, LINK_COMMENT } from '~/utils/link';
 import spacing from '~/theme/spacing';
 
 export interface CommentViewMenuProps {
@@ -46,8 +46,8 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   onPressDelete,
 }: CommentViewMenuProps) => {
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
-  const {t} = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
   const insets = useSafeAreaInsets();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme, insets);
@@ -65,8 +65,8 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   const _onPressEdit = () => {
     dispatch(modalActions.hideModal());
     rootNavigation.navigate(homeStack.createComment, {
-      commentId: commentId,
-      groupIds: groupIds,
+      commentId,
+      groupIds,
     });
   };
 
@@ -93,7 +93,7 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
         showHideToastMessage({
           content: 'common:text_copied_to_clipboard',
           props: {
-            textProps: {useI18n: true},
+            textProps: { useI18n: true },
             type: 'success',
           },
         }),
@@ -113,89 +113,87 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
       showHideToastMessage({
         content: 'post:comment_link_copied',
         props: {
-          textProps: {useI18n: true},
+          textProps: { useI18n: true },
           type: 'success',
         },
       }),
     );
   };
 
-  const renderReactItem = (item: any, index: number) => {
-    return (
-      <Button
-        testID={`comment_view_menu.react_${index}`}
-        key={`reaction_${index}_${item.id}`}
-        onPress={() => _onPressReaction(item)}>
-        <Text style={{fontSize: 24, lineHeight: 30}}>{item}</Text>
-      </Button>
-    );
-  };
+  const renderReactItem = (item: any, index: number) => (
+    <Button
+      testID={`comment_view_menu.react_${index}`}
+      key={`reaction_${index}_${item.id}`}
+      onPress={() => _onPressReaction(item)}
+    >
+      <Text style={{ fontSize: 24, lineHeight: 30 }}>{item}</Text>
+    </Button>
+  );
 
-  const renderReact = () => {
-    return (
-      <View style={styles.reactContainer}>
-        {quickReactions.map(renderReactItem)}
-        <Button
-          testID={'comment_view_menu.more_react'}
-          style={styles.btnReact}
-          onPress={_onPressMoreReaction}>
-          <Icon icon={'iconReact'} size={22} />
-        </Button>
-      </View>
-    );
-  };
+  const renderReact = () => (
+    <View style={styles.reactContainer}>
+      {quickReactions.map(renderReactItem)}
+      <Button
+        testID="comment_view_menu.more_react"
+        style={styles.btnReact}
+        onPress={_onPressMoreReaction}
+      >
+        <Icon icon="iconReact" size={22} />
+      </Button>
+    </View>
+  );
 
   return (
     <View style={styles.container}>
       {renderReact()}
       <PrimaryItem
-        testID={'comment_view_menu.reply'}
+        testID="comment_view_menu.reply"
         style={styles.item}
-        leftIcon={'ArrowTurnDownRight'}
-        leftIconProps={{icon: 'ArrowTurnDownRight', size: 24}}
+        leftIcon="ArrowTurnDownRight"
+        leftIconProps={{ icon: 'ArrowTurnDownRight', size: 24 }}
         title={t('post:comment_menu_reply')}
         onPress={_onPressReply}
       />
       <PrimaryItem
-        testID={'comment_view_menu.copy'}
+        testID="comment_view_menu.copy"
         style={styles.item}
-        leftIcon={'Copy'}
-        leftIconProps={{icon: 'Copy', size: 24}}
+        leftIcon="Copy"
+        leftIconProps={{ icon: 'Copy', size: 24 }}
         title={t('post:comment_menu_copy_text')}
         onPress={_onPressCopy}
       />
       <PrimaryItem
-        testID={'comment_view_menu.copy_link'}
+        testID="comment_view_menu.copy_link"
         style={styles.item}
-        leftIcon={'Link'}
-        leftIconProps={{icon: 'Link', size: 24}}
+        leftIcon="Link"
+        leftIconProps={{ icon: 'Link', size: 24 }}
         title={t('post:comment_menu_copy_link')}
         onPress={_onPressCopyLink}
       />
       {isActor && (
         <PrimaryItem
-          testID={'comment_view_menu.edit'}
+          testID="comment_view_menu.edit"
           style={styles.item}
-          leftIcon={'edit'}
-          leftIconProps={{icon: 'edit', size: 24}}
+          leftIcon="edit"
+          leftIconProps={{ icon: 'edit', size: 24 }}
           title={t('post:comment_menu_edit')}
           onPress={_onPressEdit}
         />
       )}
       <PrimaryItem
-        testID={'comment_view_menu.history'}
+        testID="comment_view_menu.history"
         style={styles.item}
-        leftIcon={'RotateRight'}
-        leftIconProps={{icon: 'RotateRight', size: 24}}
+        leftIcon="RotateRight"
+        leftIconProps={{ icon: 'RotateRight', size: 24 }}
         title={t('post:comment_menu_history')}
         onPress={_onPress}
       />
       {isActor && (
         <PrimaryItem
-          testID={'comment_view_menu.delete'}
+          testID="comment_view_menu.delete"
           style={styles.item}
-          leftIcon={'TrashCan'}
-          leftIconProps={{icon: 'TrashCan', size: 24}}
+          leftIcon="TrashCan"
+          leftIconProps={{ icon: 'TrashCan', size: 24 }}
           title={t('post:comment_menu_delete')}
           onPress={_onPressDelete}
         />
@@ -205,13 +203,13 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
 };
 
 const createStyle = (theme: ExtendedTheme, insets: any) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       paddingHorizontal: spacing.padding.large,
       paddingBottom: spacing.padding.base + insets.bottom,
     },
-    item: {height: 44},
+    item: { height: 44 },
     reactContainer: {
       flexDirection: 'row',
       justifyContent: 'space-between',

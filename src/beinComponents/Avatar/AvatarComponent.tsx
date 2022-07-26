@@ -1,9 +1,11 @@
 import React from 'react';
-import {ImageStyle, StyleProp, StyleSheet, View, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import {
+  ImageStyle, StyleProp, StyleSheet, View, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import Icon from '~/beinComponents/Icon';
-import Image, {ImageProps} from '~/beinComponents/Image';
-import {IconType} from '~/resources/icons';
+import Image, { ImageProps } from '~/beinComponents/Image';
+import { IconType } from '~/resources/icons';
 import dimension from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
@@ -55,7 +57,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   ...props
 }: AvatarProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = creatStyle(theme);
 
   const avatarSize = dimension?.avatarSizes[variant] || 24;
@@ -66,7 +68,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   if (isRounded) {
     avatarStyle = StyleSheet.flatten([
       avatarStyle,
-      {borderRadius: avatarSize / 2},
+      { borderRadius: avatarSize / 2 },
     ]);
   }
 
@@ -91,7 +93,8 @@ const AvatarComponent: React.FC<AvatarProps> = ({
           backgroundColor: colors.white,
           justifyContent: 'center',
           alignItems: 'center',
-        }}>
+        }}
+      >
         {actionIcon && (
           <Icon
             testID="avatar.action_icon.button"
@@ -109,7 +112,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
       return null;
     }
 
-    //todo update in specific case
+    // todo update in specific case
     const statusSize = avatarSize / 3;
     const statusColor = colors.success;
 
@@ -136,7 +139,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
       return null;
     }
 
-    //todo update in specific case
+    // todo update in specific case
     const badgeContainerSize = avatarSize / 2;
     const badgeSize = badgeContainerSize * 0.45;
 
@@ -158,12 +161,13 @@ const AvatarComponent: React.FC<AvatarProps> = ({
           backgroundColor: colors.white,
           justifyContent: 'center',
           alignItems: 'center',
-          shadowOffset: {width: 0, height: 1},
+          shadowOffset: { width: 0, height: 1 },
           shadowColor: '#000',
           shadowOpacity: 0.1,
           shadowRadius: 1,
           elevation: 2,
-        }}>
+        }}
+      >
         <Icon size={badgeSize} icon={badge} />
       </View>
     );
@@ -188,12 +192,13 @@ const AvatarComponent: React.FC<AvatarProps> = ({
           alignItems: 'center',
           borderWidth: 1,
           borderColor: colors.white,
-          shadowOffset: {width: 0, height: 1},
+          shadowOffset: { width: 0, height: 1 },
           shadowColor: '#000',
           shadowOpacity: 0.1,
           shadowRadius: 1,
           elevation: 2,
-        }}>
+        }}
+      >
         <Icon size={iconCheckSize} icon="Check" tintColor={colors.neutral80} />
       </View>
     );
@@ -202,22 +207,27 @@ const AvatarComponent: React.FC<AvatarProps> = ({
   return (
     <View
       testID="avatar"
-      style={StyleSheet.flatten([avatarContainerStyle, style])}>
+      style={StyleSheet.flatten([avatarContainerStyle, style])}
+    >
       <View
         testID="avatar_container"
         style={StyleSheet.flatten([
           avatarStyle,
-          source ? {} : {backgroundColor: colors.gray40},
-        ])}>
+          source ? {} : { backgroundColor: colors.gray40 },
+        ])}
+      >
         <Image
           testID="avatar.image"
           style={[avatarStyle, borderStyle]}
           source={source}
           {...props}
         />
-        {!!counter ? (
+        {counter ? (
           <View style={[avatarStyle, styles.textStyle]}>
-            <Text.BodyS color={theme.colors.white}>+{counter}</Text.BodyS>
+            <Text.BodyS color={theme.colors.white}>
+              +
+              {counter}
+            </Text.BodyS>
           </View>
         ) : null}
         {renderStatus()}
@@ -230,7 +240,7 @@ const AvatarComponent: React.FC<AvatarProps> = ({
 };
 
 const creatStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {},
     tiny: {

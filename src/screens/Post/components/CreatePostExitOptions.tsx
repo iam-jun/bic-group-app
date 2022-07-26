@@ -1,10 +1,10 @@
-import React, {FC} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {useDispatch} from 'react-redux';
+import React, { FC } from 'react';
+import { View, StyleSheet } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { useDispatch } from 'react-redux';
 
-import {useBaseHook} from '~/hooks';
-import {useRootNavigation} from '~/hooks/navigation';
+import { useBaseHook } from '~/hooks';
+import { useRootNavigation } from '~/hooks/navigation';
 import modalActions from '~/store/modal/actions';
 
 import Text from '~/beinComponents/Text';
@@ -19,10 +19,10 @@ const CreatePostExitOptions: FC<CreatePostExitOptionsProps> = ({
   onPressSaveDraft,
 }: CreatePostExitOptionsProps) => {
   const dispatch = useDispatch();
-  const {rootNavigation} = useRootNavigation();
-  const {t} = useBaseHook();
+  const { rootNavigation } = useRootNavigation();
+  const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
 
   const onPressSaveAsDraft = () => {
     dispatch(modalActions.hideModal());
@@ -48,22 +48,22 @@ const CreatePostExitOptions: FC<CreatePostExitOptionsProps> = ({
       </View>
       <PrimaryItem
         height={48}
-        leftIconProps={{icon: 'FilePen', size: 20}}
-        leftIcon={'FilePen'}
+        leftIconProps={{ icon: 'FilePen', size: 20 }}
+        leftIcon="FilePen"
         title={t('post:post_exit_option_save')}
         onPress={onPressSaveAsDraft}
       />
       <PrimaryItem
         height={48}
-        leftIconProps={{icon: 'TrashCan', size: 20}}
-        leftIcon={'TrashCan'}
+        leftIconProps={{ icon: 'TrashCan', size: 20 }}
+        leftIcon="TrashCan"
         title={t('post:post_exit_option_discard')}
         onPress={onPressDiscard}
       />
       <PrimaryItem
         height={48}
-        leftIconProps={{icon: 'PenLine', size: 20}}
-        leftIcon={'PenLine'}
+        leftIconProps={{ icon: 'PenLine', size: 20 }}
+        leftIcon="PenLine"
         title={t('post:post_exit_option_continue')}
         onPress={onPressContinue}
       />

@@ -1,8 +1,7 @@
-import React, {FC} from 'react';
-import {StyleProp, StyleSheet, TouchableOpacity, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import React, { FC } from 'react';
+import { StyleSheet, TouchableOpacity } from 'react-native';
 
-import {permissionRoleSectionHeaderHeight} from '~/theme/dimension';
 import Animated, {
   interpolate,
   useAnimatedStyle,
@@ -10,13 +9,12 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 import TextAnimated from '~/beinComponents/Text/TextAnimated';
-import Icon from '~/beinComponents/Icon';
+import { permissionRoleSectionHeaderHeight } from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 
 export interface RoleHeaderAnimatedProps {
   anchorRole?: any;
   sharedValue?: any;
-  style?: StyleProp<ViewStyle>;
 }
 
 const RoleHeaderAnimated: FC<RoleHeaderAnimatedProps> = ({
@@ -24,7 +22,7 @@ const RoleHeaderAnimated: FC<RoleHeaderAnimatedProps> = ({
   sharedValue,
 }: RoleHeaderAnimatedProps) => {
   const theme: ExtendedTheme = useTheme();
-  const {colors} = theme;
+  const { colors } = theme;
   const styles = createStyle(theme);
 
   const anchorRoles = Object.values(anchorRole) || [];
@@ -70,10 +68,10 @@ const RoleHeaderAnimated: FC<RoleHeaderAnimatedProps> = ({
     }
     inputRange.push(9999999);
     outputRange.push(0);
-    return {inputRange, outputRange};
+    return { inputRange, outputRange };
   };
 
-  const {inputRange, outputRange} = getRange();
+  const { inputRange, outputRange } = getRange();
 
   const headerStyle = useAnimatedStyle(
     () => ({
@@ -89,15 +87,15 @@ const RoleHeaderAnimated: FC<RoleHeaderAnimatedProps> = ({
   return (
     <Animated.View style={[headerStyle]}>
       <TouchableOpacity activeOpacity={1} style={styles.container}>
-        <TextAnimated sharedValue={title} style={{flex: 1}} />
-        {/*<Icon icon={'AngleDown'} />*/}
+        <TextAnimated sharedValue={title} style={{ flex: 1 }} />
+        {/* <Icon icon={'AngleDown'} /> */}
       </TouchableOpacity>
     </Animated.View>
   );
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
     container: {
       flexDirection: 'row',

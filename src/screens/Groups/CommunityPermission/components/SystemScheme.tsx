@@ -1,18 +1,20 @@
-import React, {FC, useEffect} from 'react';
-import {View, StyleSheet, StyleProp, ViewStyle} from 'react-native';
-import {ExtendedTheme, useTheme} from '@react-navigation/native';
-import {cloneDeep} from 'lodash';
+import React, { FC, useEffect } from 'react';
+import {
+  View, StyleSheet, StyleProp, ViewStyle,
+} from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
+import { cloneDeep } from 'lodash';
 
+import { useDispatch } from 'react-redux';
 import Text from '~/beinComponents/Text';
 import TextBadge from '~/beinComponents/Badge/TextBadge';
 import Button from '~/beinComponents/Button';
-import {useKeySelector} from '~/hooks/selector';
+import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import modalActions from '~/store/modal/actions';
-import {useDispatch} from 'react-redux';
-import {useBaseHook} from '~/hooks';
-import {useRootNavigation} from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import { useBaseHook } from '~/hooks';
+import { useRootNavigation } from '~/hooks/navigation';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import groupsActions from '~/screens/Groups/redux/actions';
 import spacing from '~/theme/spacing';
 
@@ -20,19 +22,17 @@ export interface SystemSchemeProps {
   style?: StyleProp<ViewStyle>;
 }
 
-const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
-  const {t} = useBaseHook();
+const SystemScheme: FC<SystemSchemeProps> = ({ style }: SystemSchemeProps) => {
+  const { t } = useBaseHook();
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
-  const {colors} = theme || {};
+  const { colors } = theme || {};
 
-  const {rootNavigation} = useRootNavigation();
+  const { rootNavigation } = useRootNavigation();
 
-  const {data: communityScheme, loading: loadingCommunityScheme} =
-    useKeySelector(groupsKeySelector.permission.communityScheme) || {};
-  const systemScheme =
-    useKeySelector(groupsKeySelector.permission.systemScheme) || {};
+  const { data: communityScheme, loading: loadingCommunityScheme } = useKeySelector(groupsKeySelector.permission.communityScheme) || {};
+  const systemScheme = useKeySelector(groupsKeySelector.permission.systemScheme) || {};
 
   useEffect(() => {
     if (!systemScheme?.data && !systemScheme?.loading) {
@@ -68,7 +68,7 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
           {!loadingCommunityScheme && !communityScheme && (
             <TextBadge
               useI18n
-              value={'common:text_activated'}
+              value="common:text_activated"
               style={styles.activatedText}
             />
           )}
@@ -78,7 +78,8 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
           useI18n
           colorHover={colors.gray5}
           textColor={colors.neutral80}
-          style={styles.buttonView}>
+          style={styles.buttonView}
+        >
           communities:permission:btn_view_permission
         </Button.Primary>
         {!loadingCommunityScheme && communityScheme && (
@@ -87,7 +88,8 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
             useI18n
             colorHover={colors.gray20}
             textColor={colors.neutral80}
-            style={styles.buttonView}>
+            style={styles.buttonView}
+          >
             communities:permission:btn_apply
           </Button.Primary>
         )}
@@ -102,9 +104,9 @@ const SystemScheme: FC<SystemSchemeProps> = ({style}: SystemSchemeProps) => {
 };
 
 const createStyle = (theme: ExtendedTheme) => {
-  const {colors} = theme;
+  const { colors } = theme;
   return StyleSheet.create({
-    flex1: {flex: 1},
+    flex1: { flex: 1 },
     container: {
       padding: spacing.padding.large,
       backgroundColor: colors.white,

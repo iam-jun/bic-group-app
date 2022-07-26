@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useRef} from 'react';
-import {StyleSheet} from 'react-native';
-import {useKeySelector} from '~/hooks/selector';
+import React, { useState, useEffect, useRef } from 'react';
+import { StyleSheet } from 'react-native';
+import { useKeySelector } from '~/hooks/selector';
 
 import BannerMessage from '~/beinComponents/ToastMessage/BannerMessage';
 
@@ -34,10 +34,8 @@ const InternetConnectionStatus = () => {
     doShowBanner();
   }, [isInternetReachable]);
 
-  useEffect(() => {
-    return () => {
-      timeoutRef.current && clearTimeout(timeoutRef.current);
-    };
+  useEffect(() => () => {
+    timeoutRef.current && clearTimeout(timeoutRef.current);
   }, []);
 
   if (!showBanner) return null;
@@ -45,31 +43,31 @@ const InternetConnectionStatus = () => {
   return isInternetReachable ? (
     <BannerMessage
       style={styles.banner}
-      type={'success'}
-      leftIcon={'Check'}
-      textProps={{useI18n: true}}>
+      type="success"
+      leftIcon="Check"
+      textProps={{ useI18n: true }}
+    >
       internet_connection:online
     </BannerMessage>
   ) : (
     <BannerMessage
       style={styles.banner}
-      leftIcon={'WifiSlash'}
-      textProps={{useI18n: true}}>
+      leftIcon="WifiSlash"
+      textProps={{ useI18n: true }}
+    >
       internet_connection:offline
     </BannerMessage>
   );
 };
 
-const createStyle = () => {
-  return StyleSheet.create({
-    banner: {
-      position: 'absolute',
-      bottom: 110,
-      alignSelf: 'center',
-      marginHorizontal: 12,
-      marginBottom: 4,
-    },
-  });
-};
+const createStyle = () => StyleSheet.create({
+  banner: {
+    position: 'absolute',
+    bottom: 110,
+    alignSelf: 'center',
+    marginHorizontal: 12,
+    marginBottom: 4,
+  },
+});
 
 export default InternetConnectionStatus;

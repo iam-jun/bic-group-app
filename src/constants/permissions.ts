@@ -1,6 +1,6 @@
-import {Platform} from 'react-native';
+import { Platform } from 'react-native';
 import i18next from 'i18next';
-import {titleCase} from '~/utils/common';
+import { titleCase } from '~/utils/common';
 
 export const photo_permission_steps = [
   {
