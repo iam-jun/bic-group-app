@@ -18,7 +18,7 @@ import DiscoverItem from '../components/DiscoverItem';
 import actions from '../redux/actions';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '../redux/keySelector';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import spacing from '~/theme/spacing';
 

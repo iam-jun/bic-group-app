@@ -11,7 +11,7 @@ import Icon from '~/beinComponents/Icon';
 import modalActions from '~/store/modal/actions';
 import { IApplyingGroups, IGroupScheme } from '~/interfaces/IGroup';
 import { useRootNavigation } from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
 
 interface SchemeItemProps {

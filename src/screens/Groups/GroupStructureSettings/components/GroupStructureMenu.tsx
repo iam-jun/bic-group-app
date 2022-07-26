@@ -6,7 +6,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import modalActions from '~/store/modal/actions';
 import { IGroup } from '~/interfaces/IGroup';
 import spacing from '~/theme/spacing';

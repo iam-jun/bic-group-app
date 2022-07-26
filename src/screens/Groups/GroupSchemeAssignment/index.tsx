@@ -8,7 +8,7 @@ import Animated, { FadeIn, LightSpeedInLeft } from 'react-native-reanimated';
 import Text from '~/beinComponents/Text';
 import Header from '~/beinComponents/Header';
 import { useBaseHook } from '~/hooks';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useBackPressListener, useRootNavigation } from '~/hooks/navigation';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';

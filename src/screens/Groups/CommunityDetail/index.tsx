@@ -31,7 +31,7 @@ import { chatSchemes } from '~/constants/chat';
 import modalActions from '~/store/modal/actions';
 import HeaderMenu from '../components/HeaderMenu';
 import { useRootNavigation } from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
 

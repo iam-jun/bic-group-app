@@ -9,7 +9,7 @@ import UserProfile from '~/screens/Menu/UserProfile';
 import PostSettings from '~/screens/Post/PostSettings';
 import CommentDetail from '~/screens/Post/CommentDetail';
 
-export default {
+const homeScreens = {
   newsfeed: Newsfeed,
   'post-detail': PostDetail,
   'create-post': CreatePost,
@@ -20,4 +20,6 @@ export default {
   'user-profile': UserProfile,
   'post-settings': PostSettings,
   'comment-detail': CommentDetail,
-};
+}
+
+export default homeScreens;

@@ -20,9 +20,9 @@ import {
   IPostAudience,
   IReaction,
 } from '~/interfaces/IPost';
+import { rootNavigationRef } from '~/router/refs';
 import { withNavigation } from '~/router/helper';
-import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
-import { rootNavigationRef } from '~/router/navigator/refs';
+import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
 import homeActions from '~/screens/Home/redux/actions';

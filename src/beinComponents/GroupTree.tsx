@@ -4,7 +4,7 @@ import { isArray, isObject } from 'lodash';
 
 import { IGroup, IParsedGroup } from '~/interfaces/IGroup';
 import GroupItem, { GroupItemProps } from '~/beinComponents/list/items/GroupItem';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { AvatarType } from '~/beinComponents/Avatar/AvatarComponent';

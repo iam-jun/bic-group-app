@@ -51,9 +51,7 @@ module.exports = {
     eqeqeq: 0,
     'react/no-array-index-key': 0,
     'no-nested-ternary': 0,
-    'no-unused-vars': ['warn', {
-      vars: 'all', args: 'all', ignoreRestSiblings: true, caughtErrors: 'none',
-    }],
+    'no-unused-vars': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'max-len': ['error', { code: 150 }],
     semi: 0,

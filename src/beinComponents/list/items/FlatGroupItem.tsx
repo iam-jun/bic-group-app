@@ -9,7 +9,7 @@ import Icon from '~/beinComponents/Icon';
 import GroupItem, { GroupItemProps } from '~/beinComponents/list/items/GroupItem';
 import GroupTree, { OnChangeCheckedGroupsData } from '~/beinComponents/GroupTree';
 import { useRootNavigation } from '~/hooks/navigation';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import Button from '~/beinComponents/Button';
 import Text from '~/beinComponents/Text';
 import mainStack from '~/router/navigator/MainStack/stack';

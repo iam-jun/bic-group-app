@@ -1,8 +1,10 @@
-import { useBackHandler } from '@react-native-community/hooks';
-import { useNavigationState, ExtendedTheme, useTheme } from '@react-navigation/native';
 import React from 'react';
 import { DeviceEventEmitter, StyleSheet, View } from 'react-native';
+import { ExtendedTheme, useTheme, useNavigationState } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useBackHandler } from '@react-native-community/hooks';
 import { useDispatch } from 'react-redux';
+
 import CommonModal from '~/beinFragments/CommonModal';
 import UserProfilePreviewBottomSheet from '~/beinFragments/Preview/UserProfilePreviewBottomSheet';
 import ReactionBottomSheet from '~/beinFragments/reaction/ReactionBottomSheet';
@@ -12,14 +14,17 @@ import {
   NAVIGATION_BACK_PRESSED,
 } from '~/configs/navigator';
 import { useKeySelector } from '~/hooks/selector';
-import BaseStackNavigator from '~/router/components/BaseStackNavigator';
 import MenuSidebarDrawer from '~/router/components/MenuSidebarDrawer';
 import { getActiveRouteState } from '~/router/helper';
 import PostAudiencesBottomSheet from '~/screens/Post/components/PostAudiencesBottomSheet';
 import appActions from '~/store/app/actions';
 
-import screens from './screens';
-import stack from './stack';
+import mainTabScreens from './screens';
+import mainTabStack from './stack';
+import MainTabs from '~/router/navigator/MainStack/MainTabs';
+import { AppConfig } from '~/configs';
+
+const Stack = createNativeStackNavigator();
 
 const MainStack = (): React.ReactElement => {
   const dispatch = useDispatch();
@@ -47,7 +52,20 @@ const MainStack = (): React.ReactElement => {
   return (
     <View style={styles.container}>
       <View style={styles.content}>
-        <BaseStackNavigator stack={stack} screens={screens} />
+        <Stack.Navigator screenOptions={AppConfig.defaultScreenOptions}>
+          <Stack.Screen name="main" component={MainTabs} />
+          {Object.entries(mainTabStack).map(([name, component]) => (
+            <Stack.Screen
+              key={`screen${component}`}
+              name={component}
+              component={mainTabScreens[component]}
+              options={{
+                headerShown: false,
+                title: name,
+              }}
+            />
+          ))}
+        </Stack.Navigator>
       </View>
       <MenuSidebarDrawer />
       <PostAudiencesBottomSheet />

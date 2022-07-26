@@ -1,7 +1,7 @@
 import { GiphySDK } from '@giphy/react-native-sdk';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React, { useEffect } from 'react';
-import { DeviceEventEmitter, useWindowDimensions } from 'react-native';
+import { DeviceEventEmitter } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { useUserIdAuth } from '~/hooks/auth';
 import useChatSocket from '~/hooks/chat';
@@ -12,24 +12,16 @@ import groupsActions from '~/screens/Groups/redux/actions';
 import notificationsActions from '~/screens/Notification/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
 import giphyActions from '~/store/giphy/actions';
-import { deviceDimensions } from '~/theme/dimension';
-import { createSideTabNavigator } from '../../../components/SideTabNavigator';
 import { screens } from './screens';
 import { initPushTokenMessage } from '~/services/firebase';
 
 const BottomTab = createBottomTabNavigator();
-const SideTab = createSideTabNavigator();
 
 const MainTabs = () => {
   const backBehavior = 'history';
 
   useChatSocket();
   useNotificationSocket();
-
-  const dimensions = useWindowDimensions();
-  const isPhone = dimensions.width < deviceDimensions.smallTablet;
-
-  const Tab = isPhone ? BottomTab : SideTab;
 
   const dispatch = useDispatch();
 
@@ -69,13 +61,13 @@ const MainTabs = () => {
   }, [giphyAPIKey]);
 
   return (
-    <Tab.Navigator
+    <BottomTab.Navigator
       backBehavior={backBehavior}
-      // eslint-disable-next-line react/no-unstable-nested-components
+      screenOptions={{ headerShown: false }}
       tabBar={(props) => <BottomTabBar {...props} />}
     >
       {Object.entries(screens).map(([name, component]) => (
-        <Tab.Screen
+        <BottomTab.Screen
           key={`tabs${name}`}
           name={name}
           component={component}
@@ -84,7 +76,7 @@ const MainTabs = () => {
           }}
         />
       ))}
-    </Tab.Navigator>
+    </BottomTab.Navigator>
   );
 };
 

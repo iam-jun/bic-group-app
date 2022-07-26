@@ -6,7 +6,7 @@ import showError from '~/store/commonSaga/showError';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import { withNavigation } from '~/router/helper';
-import { rootNavigationRef } from '~/router/navigator/refs';
+import { rootNavigationRef } from '~/router/refs';
 import { sortFixedRoles } from '../../helper';
 import { getMemberRoleIndex } from '../../CreatePermissionScheme/helper';
 

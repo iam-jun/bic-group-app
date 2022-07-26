@@ -9,7 +9,7 @@ import modalActions, { clearToastMessage } from '~/store/modal/actions';
 import groupsActions from '~/screens/Groups/redux/actions';
 import { useKeySelector } from '~/hooks/selector';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
-import groupStack from '~/router/navigator/MainStack/GroupStack/stack';
+import groupStack from '~/router/navigator/MainStack/stacks/groupStack/stack';
 import { useRootNavigation } from '~/hooks/navigation';
 import { IToastMessage } from '~/interfaces/common';
 import ButtonApproveDeclineAllRequests from '~/screens/Groups/components/ButtonApproveDeclineAllRequests';

@@ -5,7 +5,6 @@ export const APP_ENV = {
 };
 
 const appConfig = {
-  dataMode: 'mock',
   defaultLanguage: 'en',
   recordsPerPage: 25,
   maxFileSize: {
