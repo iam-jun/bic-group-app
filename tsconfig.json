@@ -20,6 +20,13 @@
     "rootDir": "./",
     "outDir": "./",
   },
+  "include": [
+    "src/**/*",
+    "assets/**/*",
+    "App.tsx",
+    "*.d.ts",
+    "wdyr.js"
+  ],
   "exclude": [
     "build",
     "node_modules",
@@ -28,7 +35,7 @@
     "jest.config.js",
     "**/*.test.ts",
     "**/*.test.tsx",
-    // "src/test/**/*",
+    "src/test/**/*",
     "src/screens/Menu/ComponentCollection/*.tsx"
   ]
 }
