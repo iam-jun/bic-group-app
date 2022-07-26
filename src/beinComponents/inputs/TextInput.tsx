@@ -31,21 +31,22 @@ export interface TextInputProps extends RNTextInputProps {
   helperError?: string;
   helperTextProps?: TextProps;
   helperAction?: string;
-  helperActionOnPress?: () => void;
   placeholder?: string;
   error?: boolean;
   keyboardType?: KeyboardTypeOptions | undefined;
   editable?: boolean;
   value?: string;
-  onChangeText?: ((text: string) => void) | undefined;
   clearText?: boolean;
   textInputRef?: React.Ref<RNTextInput>;
   textColor?: string;
   RightComponent?: React.ReactNode | React.ReactElement;
   activeOutlineColor?: string;
   outlineColor?: string;
+
   onFocus?: () => void;
   onBlur?: () => void;
+  onChangeText?: ((text: string) => void) | undefined;
+  helperActionOnPress?: () => void;
 }
 
 const TextInput: React.FC<TextInputProps> = ({
@@ -55,19 +56,20 @@ const TextInput: React.FC<TextInputProps> = ({
   helperContent,
   helperTextProps,
   helperAction,
-  helperActionOnPress,
   placeholder,
   error,
   value,
-  onChangeText,
   clearText,
   textInputRef,
   textColor,
   RightComponent,
   activeOutlineColor,
   outlineColor,
+
   onFocus,
   onBlur,
+  onChangeText,
+  helperActionOnPress,
   ...props
 }: TextInputProps) => {
   const theme: ExtendedTheme = useTheme();

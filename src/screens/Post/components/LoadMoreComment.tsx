@@ -78,12 +78,14 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
       setTimeout(() => {
         dispatch(
           postActions.getCommentsByPostId({
-            postId,
-            order: 'DESC',
-            idLt: idLessThan,
-            idGt: idGreaterThan,
-            parentId: commentId,
-            limit: 10,
+            params: {
+              postId,
+              order: 'DESC',
+              idLt: idLessThan,
+              idGt: idGreaterThan,
+              parentId: commentId,
+              limit: 10,
+            },
             isMerge: true,
             callbackLoading: (loading) => setLoadingMore(loading),
           }),

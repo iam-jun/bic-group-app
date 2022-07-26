@@ -19,7 +19,7 @@ export interface CommentItemProps {
   contentBackgroundColor?: string;
   section?: any;
   index?: number;
-  onPressReply?: (data: IReaction, section?: any, index?: number) => void;
+  onPressReply?: (data: ICommentData, section?: any, index?: number) => void;
   onPressLoadMore?: (data: any) => void;
   isNotReplyingComment?: boolean;
 }

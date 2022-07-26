@@ -28,7 +28,7 @@ export default function* putReactionToPost({
       let isAdded = false;
 
       const newOwnReaction1: IOwnReaction = [...cOwnReaction1];
-      newOwnReaction1.push({ reactionName: reactionId, loading: true });
+      newOwnReaction1.push({ reactionName: reactionId, loading: true } as IReaction);
 
       const _cReactionCounts = { ...cReactionCounts1 };
 

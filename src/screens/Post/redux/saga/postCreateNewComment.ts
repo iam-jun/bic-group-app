@@ -1,6 +1,6 @@
 import { isEmpty } from 'lodash';
 import { put, select } from 'redux-saga/effects';
-import { IPayloadCreateComment } from '~/interfaces/IPost';
+import { IPayloadCreateComment, IReaction } from '~/interfaces/IPost';
 import postActions from '~/screens/Post/redux/actions';
 import postDataHelper from '~/screens/Post/helper/PostDataHelper';
 import showError from '~/store/commonSaga/showError';
@@ -164,7 +164,7 @@ function* postCreateNewComment({
           status: 'failed',
           localId: preComment?.localId,
           postId,
-          resultComment: {},
+          resultComment: {} as IReaction,
           parentCommentId,
         }),
       );

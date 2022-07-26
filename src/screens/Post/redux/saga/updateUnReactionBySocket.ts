@@ -19,7 +19,7 @@ export default function* updateUnReactionBySocket({
 }): any {
   const { userId, data } = payload || {};
   const {
-    reactionsCount, reaction = {}, comment, id,
+    reactionsCount, reaction, comment, id,
   } = data as ISocketReaction;
 
   const _userId = userId.toString();

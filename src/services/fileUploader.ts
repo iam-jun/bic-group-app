@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable prefer-promise-reject-errors */
-/* eslint-disable no-undef */
 /* eslint-disable class-methods-use-this */
 import i18next from 'i18next';
 import { isEmpty } from 'lodash';

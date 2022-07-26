@@ -18,8 +18,8 @@ function* getCommentDetail({
     callbackLoading?.(true);
     const response = yield call(
       postDataHelper.getCommentDetail,
-      commentId,
-      payload.params,
+      fetchable(commentId),
+      fetchable(payload.params as any),
     );
     const { actor, list } = response;
     if (!!actor && list?.length > 0) {

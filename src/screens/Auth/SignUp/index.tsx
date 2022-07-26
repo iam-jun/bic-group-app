@@ -147,7 +147,6 @@ const SignUp = () => {
           }}
           loading={loading}
           testID="inputPassword"
-          label={t('auth:input_label_password')}
           placeholder={t('auth:input_label_password')}
           validateValue={validatePassword}
         />

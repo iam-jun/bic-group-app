@@ -34,7 +34,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  const video = React.useRef();
+  const video = React.createRef<Video>();
   const [isPlaying, setPlaying] = useState(false);
   const [loading, setLoading] = useState(false);
 
@@ -66,7 +66,7 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         setPlaying(true);
       } catch (error) {
         setLoading(false);
-        console.log('>>>>>>>loadAsync error>>>>>>>', error);
+        console.error('>>>>>>>loadAsync error>>>>>>>', error);
       }
     }
   };
@@ -86,11 +86,12 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
       async () => {
         if (video.current) {
           const currentStatus = await video.current.getStatusAsync();
+          // @ts-ignore
           if (!currentStatus?.isPlaying) return;
           try {
             video.current.pauseAsync();
           } catch (error) {
-            console.log('STOP VIDEO FAILED>>>>>>>>>>', error);
+            console.error('STOP VIDEO FAILED>>>>>>>>>>', error);
           }
         }
       },

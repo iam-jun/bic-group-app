@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { AxiosRequestConfig } from 'axios';
 
 import getEnv from '~/utils/env';

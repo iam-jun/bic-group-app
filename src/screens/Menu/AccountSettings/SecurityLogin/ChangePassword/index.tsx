@@ -171,7 +171,6 @@ const ChangePassword = () => {
               }
             },
           }}
-          label={t('auth:input_label_current_password')}
           placeholder={t('auth:input_label_current_password')}
           validateValue={validatePassword}
           autoComplete="off"
@@ -184,7 +183,6 @@ const ChangePassword = () => {
             required: t('auth:text_err_password_blank'),
           }}
           loading={changePasswordLoading}
-          label={t('auth:input_label_new_password')}
           placeholder={t('auth:input_label_new_password')}
           validateValue={validateNewPassword}
           autoComplete="off"
@@ -198,7 +196,6 @@ const ChangePassword = () => {
             required: t('auth:text_err_password_blank'),
           }}
           loading={changePasswordLoading}
-          label={t('auth:input_label_confirm_new_password')}
           placeholder={t('auth:input_label_confirm_new_password')}
           autoComplete="off"
           validateValue={validateConfirmNewPassword}

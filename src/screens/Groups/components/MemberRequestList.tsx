@@ -19,17 +19,17 @@ import CommunityMemberRequest from '../CommunityAdmin/PendingMembers/CommunityMe
 import spacing from '~/theme/spacing';
 
 interface MemberRequestListProps {
+  id?: number;
   type: 'community' | 'group';
   onLoadMore: () => void;
   onRefresh: () => void;
-  id: number;
 }
 
 const MemberRequestList = ({
+  id,
   type,
   onLoadMore,
   onRefresh,
-  id,
 }: MemberRequestListProps) => {
   const theme: ExtendedTheme = useTheme();
   const { t } = useBaseHook();
@@ -41,9 +41,9 @@ const MemberRequestList = ({
   );
 
   const renderItem = ({ item }: {item: number}) => {
-    const ItemComponent = type === 'community' ? CommunityMemberRequest : GroupMemberRequest;
+    if (id && type === 'community') return <CommunityMemberRequest requestId={id} organizationId={id} />
 
-    return <ItemComponent requestId={item} organizationId={id} />;
+    return <GroupMemberRequest requestId={item} />;
   };
 
   const renderEmpty = () => {

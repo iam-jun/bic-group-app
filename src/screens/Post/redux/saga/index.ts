@@ -1,14 +1,14 @@
 /* eslint-disable no-console */
+import { get, isArray } from 'lodash';
 import {
-  put, call, takeLatest, select, takeEvery,
+  call, put, select, takeEvery, takeLatest,
 } from 'redux-saga/effects';
-import { isArray, get } from 'lodash';
 
+import API_ERROR_CODE from '~/constants/apiErrorCode';
 import {
   ICommentData,
   IParamGetPostAudiences,
-  IParamGetPostDetail,
-  IPayloadCreateComment,
+  IParamGetPostDetail, IPayloadCreateComment,
   IPayloadCreatePost,
   IPayloadDeletePost,
   IPayloadGetDraftPosts,
@@ -20,40 +20,39 @@ import {
   IPostAudience,
   IReaction,
 } from '~/interfaces/IPost';
-import postTypes from '~/screens/Post/redux/types';
-import postActions from '~/screens/Post/redux/actions';
-import postDataHelper from '~/screens/Post/helper/PostDataHelper';
-import { rootNavigationRef } from '~/router/navigator/refs';
 import { withNavigation } from '~/router/helper';
 import homeStack from '~/router/navigator/MainStack/HomeStack/stack';
+import { rootNavigationRef } from '~/router/navigator/refs';
 import groupsDataHelper from '~/screens/Groups/helper/GroupsDataHelper';
-import * as modalActions from '~/store/modal/actions';
-import postKeySelector from '~/screens/Post/redux/keySelector';
-import { sortComments } from '~/screens/Post/helper/PostUtils';
-import homeActions from '~/screens/Home/redux/actions';
 import groupsActions from '~/screens/Groups/redux/actions';
-import deleteComment from './deleteComment';
-import putEditPost from '~/screens/Post/redux/saga/putEditPost';
-import getDraftPosts from './getDraftPosts';
-import postCreateNewComment from '~/screens/Post/redux/saga/postCreateNewComment';
-import showError from '~/store/commonSaga/showError';
+import homeActions from '~/screens/Home/redux/actions';
+import postDataHelper from '~/screens/Post/helper/PostDataHelper';
+import { sortComments } from '~/screens/Post/helper/PostUtils';
+import postActions from '~/screens/Post/redux/actions';
+import postKeySelector from '~/screens/Post/redux/keySelector';
 import addToAllPosts from '~/screens/Post/redux/saga/addToAllPosts';
-import putReactionToPost from './putReactionToPost';
-import deleteReactToPost from './deleteReactToPost';
-import putReactionToComment from './putReactionToComment';
-import deleteReactToComment from './deleteReactToComment';
-import updateReactionBySocket from './updateReactionBySocket';
-import updateUnReactionBySocket from './updateUnReactionBySocket';
 import getCommentsByPostId from '~/screens/Post/redux/saga/getCommentsByPostId';
+import postCreateNewComment from '~/screens/Post/redux/saga/postCreateNewComment';
 import putEditComment from '~/screens/Post/redux/saga/putEditComment';
-import { timeOut } from '~/utils/common';
-import getCommentDetail from './getCommentDetail';
+import putEditPost from '~/screens/Post/redux/saga/putEditPost';
 import putMarkAsRead from '~/screens/Post/redux/saga/putMarkAsRead';
+import postTypes from '~/screens/Post/redux/types';
+import showError from '~/store/commonSaga/showError';
+import * as modalActions from '~/store/modal/actions';
+import { timeOut } from '~/utils/common';
+import deleteComment from './deleteComment';
+import deleteReactToComment from './deleteReactToComment';
+import deleteReactToPost from './deleteReactToPost';
+import getCommentDetail from './getCommentDetail';
+import getDraftPosts from './getDraftPosts';
+import getPostsContainingVideoInProgress from './getPostsContainingVideoInProgress';
 import getSeenPost from './getSeenPost';
 import putMarkSeenPost from './putMarKSeenPost';
-import API_ERROR_CODE from '~/constants/apiErrorCode';
-import getPostsContainingVideoInProgress from './getPostsContainingVideoInProgress';
+import putReactionToComment from './putReactionToComment';
+import putReactionToPost from './putReactionToPost';
 import updatePostsContainingVideoInProgress from './updatePostsContainingVideoInProgress';
+import updateReactionBySocket from './updateReactionBySocket';
+import updateUnReactionBySocket from './updateUnReactionBySocket';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -201,11 +200,13 @@ function* deletePost({
   type: string;
   payload: IPayloadDeletePost;
 }): any {
-  const { id, isDraftPost } = payload || {};
-  if (!id) {
+  if (!payload?.id) {
     console.log('\x1b[31m🐣️ saga deletePost: id not found\x1b[0m');
     return;
   }
+
+  const { id, isDraftPost } = payload;
+
   try {
     const response = yield postDataHelper.deletePost(id, isDraftPost);
     if (response?.data) {
@@ -238,7 +239,7 @@ function* deletePost({
       const response = yield call(postDataHelper.putEditPost, {
         postId: id,
         data,
-      });
+      } as any);
       if (response?.data) {
         const post = response?.data;
         yield put(postActions.addToAllPosts({ data: post }));

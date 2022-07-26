@@ -54,7 +54,7 @@ const NoticePanel = () => {
       >
         <Icon
           size={16}
-          tintColor={theme.colors.neutral80Light}
+          tintColor={theme.colors.neutral80}
           icon="iconClose"
         />
       </ButtonWrapper>

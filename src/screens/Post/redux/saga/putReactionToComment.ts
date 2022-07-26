@@ -40,7 +40,7 @@ export default function* putReactionToComment({
       let isAdded = false;
 
       const newOwnReaction1: IOwnReaction = [...cOwnReaction1];
-      newOwnReaction1.push({ reactionName: reactionId, loading: true });
+      newOwnReaction1.push({ reactionName: reactionId, loading: true } as IReaction);
 
       const newReactionCounts1 = { ...cReactionCount1 };
       Object.keys(newReactionCounts1 || {}).forEach((key) => {

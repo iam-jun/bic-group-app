@@ -188,14 +188,12 @@ const GeneralInformation = (props: any) => {
           testID="general_information.avatar"
           onEditAvatar={onEditAvatar}
           canEditInfo={canEditInfo}
-          type={type}
         />
         <CoverImage
           backgroundUrl={backgroundUrl}
           testID="general_information.cover"
           onEditCover={onEditCover}
           canEditInfo={canEditInfo}
-          type={type}
         />
         <InfoView
           id={id}

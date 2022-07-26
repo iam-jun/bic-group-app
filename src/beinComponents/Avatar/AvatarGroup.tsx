@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+  ImageStyle,
   StyleProp, StyleSheet, View, ViewStyle,
 } from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
@@ -17,7 +18,7 @@ import spacing from '~/theme/spacing';
 
 export interface AvatarGroupProps extends AvatarProps {
   variant?: AvatarType;
-  style?: StyleProp<ViewStyle>;
+  style?: StyleProp<ImageStyle>;
   source?: any;
   totalMember?: number;
 }
@@ -52,7 +53,7 @@ const AvatarGroup = ({
   ) => (
     <View
       testID={`avatar_group.item_${index}`}
-      style={StyleSheet.flatten([
+      style={[
         {
           width: itemContainerSize,
           height: itemContainerSize,
@@ -63,7 +64,7 @@ const AvatarGroup = ({
           overflow: 'hidden',
         },
         style,
-      ])}
+      ]}
     >
       <Image
         {...props}

@@ -308,7 +308,7 @@ const SignIn = () => {
                 auth:input_label_email
               </Text.BodyM>
               <TextInputController
-                ref={inputEmailRef}
+                textInputRef={inputEmailRef}
                 testID="sign_in.input_email"
                 autoFocus
                 useFormData={useFormData}

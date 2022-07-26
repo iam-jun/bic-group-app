@@ -8,7 +8,7 @@ import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import { IconType } from '~/resources/icons';
 
-import { formatFullTime } from '~/beinComponents/TimeView';
+import { formatFullTime } from '~/beinComponents/TimeView/helper';
 import { AppContext } from '~/contexts/AppContext';
 import { IJoiningMember } from '~/interfaces/IGroup';
 import { useBaseHook } from '~/hooks';

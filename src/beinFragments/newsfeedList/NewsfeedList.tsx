@@ -258,6 +258,7 @@ const _NewsfeedList: FC<NewsfeedListProps> = ({
     <View testID="newsfeed_list" style={styles.container}>
       {data && data.length > 0 && (
         <AnimatedFlashList
+        // @ts-ignore
           data={data}
           renderItem={renderItem}
           keyExtractor={(item: IPostActivity) => `newsfeed-list-${item?.id}`}

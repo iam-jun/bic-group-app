@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable no-undef */
 /* eslint-disable prefer-promise-reject-errors */
 /* eslint-disable class-methods-use-this */
 import i18next from 'i18next';

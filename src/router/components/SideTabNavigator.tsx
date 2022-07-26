@@ -32,7 +32,7 @@ type TabNavigationConfig = {
 
 type TabNavigationOptions = {
   title?: string;
-  tabBarIcon: (props: {focused: boolean; color: string}) => React.ReactNode;
+  tabBarIcon: (props: {focused: boolean; color?: string}) => React.ReactNode;
 };
 
 type TabNavigationEventMap = {

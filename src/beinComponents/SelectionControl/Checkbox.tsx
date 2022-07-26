@@ -38,9 +38,9 @@ const Checkbox: React.FC<CheckboxProps> = ({
     setChecked(newValue);
 
     if (newValue) {
-      onActionPress(commonActions.checkBox as IAction);
+      onActionPress?.(commonActions.checkBox as IAction);
     } else {
-      onActionPress(commonActions.uncheckBox as IAction);
+      onActionPress?.(commonActions.uncheckBox as IAction);
     }
   };
 

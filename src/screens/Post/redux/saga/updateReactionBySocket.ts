@@ -20,7 +20,7 @@ export default function* updateReactionBySocket({
   const { userId, data } = payload || {};
   const {
     reactionsCount,
-    reaction = {},
+    reaction,
     reactionsOfActor,
     comment,
     id,

@@ -17,12 +17,10 @@ const PostDetail = (props: any) => {
   const styles = createStyle(theme);
 
   useEffect(() => {
-    // eslint-disable-next-line no-undef
     const taskId = requestAnimationFrame(() => {
       setShowContent(true);
     });
 
-    // eslint-disable-next-line no-undef
     return () => cancelAnimationFrame(taskId);
   }, []);
 

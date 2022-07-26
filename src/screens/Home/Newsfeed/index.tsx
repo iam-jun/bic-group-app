@@ -52,7 +52,6 @@ const Newsfeed = () => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    // eslint-disable-next-line no-undef
     const taskId = requestAnimationFrame(() => {
       if (isFocused) {
         dispatch(appActions.setRootScreenName(appScreens.newsfeed));
@@ -60,7 +59,6 @@ const Newsfeed = () => {
         DeviceEventEmitter.emit('showHeader', true);
       }
     });
-    // eslint-disable-next-line no-undef
     return () => cancelAnimationFrame(taskId);
   }, [isFocused]);
 
