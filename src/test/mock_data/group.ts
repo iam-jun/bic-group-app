@@ -29,9 +29,9 @@ export const adminDetail = {
   fullname: 'Test Name Admin',
   avatar:
     'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/user/avatar/Avatar_Profile.png',
-  chat_user_id: 'mdp9rococ3d83qk9nbrybxay3e',
-  is_admin: true,
-  custom_role_ids: [],
+  chatUserId: 'mdp9rococ3d83qk9nbrybxay3e',
+  isAdmin: true,
+  customRoleIds: [],
   roles: [
     {
       data_values: {
@@ -118,9 +118,9 @@ export const memberDetail = {
   fullname: 'Test Name Member',
   avatar:
     'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/26657b00-f704-47e6-9254-9e51d2365ac4.jpg',
-  chat_user_id: '4bkzernmdtgb7eiy9yspw3n4ra',
-  is_admin: false,
-  custom_role_ids: [],
+  chatUserId: '4bkzernmdtgb7eiy9yspw3n4ra',
+  isAdmin: false,
+  customRoleIds: [],
   roles: [],
 };
 

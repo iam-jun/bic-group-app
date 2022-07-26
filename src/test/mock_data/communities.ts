@@ -67,13 +67,13 @@ export const previewMemberDetail = {
 export const adminDetail = {
   ...previewMemberDetail,
   roles: { name: 'COMMUNITY_ADMIN' as COMMUNITY_ROLE },
-  chat_user_id: 'tg6kmc6cmybgwpcif9znngyyebe',
+  chatUserId: 'tg6kmc6cmybgwpcif9znngyyebe',
 };
 
 export const memberDetail = {
   ...previewMemberDetail,
   roles: { name: 'MEMBER' as COMMUNITY_ROLE },
-  chat_user_id: 'tg6kmc6cmybgwpcif9znngyyebe',
+  chatUserId: 'tg6kmc6cmybgwpcif9znngyyebe',
 };
 
 export const previewMemberData = [

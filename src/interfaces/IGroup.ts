@@ -185,9 +185,9 @@ export interface IGroupMembers {
   username?: string;
   fullname?: string;
   avatar?: string;
-  chat_user_id?: string;
-  is_admin?: boolean;
-  custom_role_ids?: any[];
+  chatUserId?: string;
+  isAdmin?: boolean;
+  customRoleIds?: any[];
   roles?: any[];
 }
 

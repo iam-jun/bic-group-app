@@ -33,17 +33,18 @@ export default function* getGroupMembers({
 
     let newDataCount = 0;
     let newDataObj = {};
-    Object.keys(resp)?.forEach?.((role: string) => {
-      newDataCount += resp[role]?.data?.length || 0;
+    const members = resp.data;
+    Object.keys(members)?.forEach?.((role: string) => {
+      newDataCount += members[role]?.data?.length || 0;
       newDataObj = {
         ...newDataObj,
         [role]: {
-          name: resp[role]?.name,
-          userCount: resp[role]?.userCount,
+          name: members[role]?.name,
+          userCount: members[role]?.userCount,
           data:
             isRefreshing || !groupMembers?.[role]?.data
-              ? [...resp[role]?.data || []]
-              : [...groupMembers?.[role]?.data || [], ...resp[role]?.data || []],
+              ? [...members[role]?.data || []]
+              : [...groupMembers?.[role]?.data || [], ...members[role]?.data || []],
         },
       };
     });

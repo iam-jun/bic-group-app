@@ -268,6 +268,7 @@ const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
     `${ApiConfig.providers.bein.url}communities/${uuidRegex}/members`,
     `${ApiConfig.providers.bein.url}me/communities/${uuidRegex}/groups`,
     `${ApiConfig.providers.bein.url}communities/${uuidRegex}/groups/discover`,
+    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/users`,
   ];
   apisWithParam.forEach((api) => {
     if (new RegExp(api, 'g').test(endPoint || '')) {

@@ -820,32 +820,8 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getGroupMembers: async (groupId: string, params: any) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getGroupMembers(groupId, params),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  getGroupDetail: async (groupId: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getGroupDetail(groupId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getGroupMembers: (groupId: string, params: any) => withHttpRequestPromise(groupsApiConfig.getGroupMembers, groupId, params),
+  getGroupDetail: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getGroupDetail, groupId),
   editGroupDetail: async (groupId: string, data: IGroupDetailEdit) => {
     try {
       const response: any = await makeHttpRequest(

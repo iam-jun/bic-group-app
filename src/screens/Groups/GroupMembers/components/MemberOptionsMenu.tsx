@@ -213,7 +213,7 @@ const MemberOptionsMenu = ({
       ContentComponent={(
         <View style={styles.bottomSheet}>
           {canManageRole
-            && (selectedMember?.is_admin ? (
+            && (selectedMember?.isAdmin ? (
               <PrimaryItem
                 testID="member_options_menu.remove_admin"
                 style={styles.menuOption}
