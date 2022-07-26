@@ -19,10 +19,11 @@ const MAX_DAYS = 7;
 export interface IUsePostSettings {
   postId?: string;
   replaceWithDetail?: boolean;
+  listAudiencesWithoutPermission?: any[];
 }
 
 export const usePostSettings = (params?: IUsePostSettings) => {
-  const { postId } = params || {};
+  const { postId, listAudiencesWithoutPermission } = params || {};
 
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
@@ -41,6 +42,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
   const [selectingDate, setSelectingDate] = useState<boolean>();
   const [selectingTime, setSelectingTime] = useState<boolean>();
   const [disableButtonSave, setDisableButtonSave] = useState<boolean>(true);
+  const [showWarning, setShowWarning] = useState<boolean>(false);
   const [sImportant, setImportant] = useState<IActivityImportant>({
     active: false,
     expires_time: '',
@@ -69,21 +71,33 @@ export const usePostSettings = (params?: IUsePostSettings) => {
   };
 
   const handleToggleImportant = () => {
-    const newImportant = { ...sImportant };
-    newImportant.active = !sImportant.active;
-    if (!newImportant.expires_time) {
-      newImportant.expires_time = getMinDate().toDateString();
-    }
-    if (newImportant.active && newImportant.expires_time) {
-      const date = new Date(newImportant.expires_time);
-      if (date.getTime() < getMinDate().getTime()) {
-        newImportant.expires_time = getMinDate().toISOString();
+    if (!!listAudiencesWithoutPermission?.length && listAudiencesWithoutPermission.length > 0) {
+      const newImportant = { ...sImportant };
+      newImportant.active = !sImportant.active;
+      setImportant(newImportant);
+      setTimeout(() => {
+        const _newImportant = { ...newImportant };
+        _newImportant.active = !newImportant.active;
+        setImportant(_newImportant);
+        setShowWarning(true);
+      }, 100);
+    } else {
+      const newImportant = { ...sImportant };
+      newImportant.active = !sImportant.active;
+      if (!newImportant.expires_time) {
+        newImportant.expires_time = getMinDate().toDateString();
       }
+      if (newImportant.active && newImportant.expires_time) {
+        const date = new Date(newImportant.expires_time);
+        if (date.getTime() < getMinDate().getTime()) {
+          newImportant.expires_time = getMinDate().toISOString();
+        }
+      }
+      if (!newImportant.active) {
+        newImportant.expires_time = currentSettings?.important?.expires_time;
+      }
+      setImportant(newImportant);
     }
-    if (!newImportant.active) {
-      newImportant.expires_time = currentSettings?.important?.expires_time;
-    }
-    setImportant(newImportant);
   };
 
   const handleChangeDatePicker = (date?: Date) => {
@@ -215,6 +229,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     selectingDate,
     selectingTime,
     disableButtonSave,
+    showWarning,
     handlePressSave,
     handleToggleImportant,
     handleChangeDatePicker,

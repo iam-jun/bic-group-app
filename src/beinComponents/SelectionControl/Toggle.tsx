@@ -71,7 +71,12 @@ const createStyles = (theme: ExtendedTheme, isChecked: boolean) => {
       height: 24,
       right: 0,
       borderRadius: 12,
-      backgroundColor: colors.gray10,
+      backgroundColor: colors.white,
+      shadowOffset: {width: 0, height: 1},
+      shadowColor: colors.gray30,
+      shadowOpacity: 1,
+      shadowRadius: 1,
+      elevation: 4,
     },
   });
 };
