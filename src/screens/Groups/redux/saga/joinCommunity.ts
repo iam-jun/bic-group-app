@@ -18,6 +18,7 @@ export default function* joinCommunity({
   try {
     const { communityId, communityName } = payload;
 
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const response = yield call(groupsDataHelper.joinCommunity, communityId);
     const joinStatus = response?.data?.joinStatus;
