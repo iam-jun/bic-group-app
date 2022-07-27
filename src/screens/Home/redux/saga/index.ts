@@ -8,9 +8,15 @@ import getRecentSearchKeywords from '~/screens/Home/redux/saga/getRecentSearchKe
 import deleteRecentSearchById from '~/screens/Home/redux/saga/deleteRecentSearchById';
 
 export default function* homeSaga() {
-  yield takeEvery(homeTypes.GET_HOME_POSTS, getHomePosts);
-  yield takeEvery(homeTypes.GET_SEARCH_POSTS, getSearchPosts);
-  yield takeEvery(homeTypes.GET_SEARCH_POSTS_USERS, getSearchPostUsers);
+  yield takeEvery(
+    homeTypes.GET_HOME_POSTS, getHomePosts,
+  );
+  yield takeEvery(
+    homeTypes.GET_SEARCH_POSTS, getSearchPosts,
+  );
+  yield takeEvery(
+    homeTypes.GET_SEARCH_POSTS_USERS, getSearchPostUsers,
+  );
   yield takeEvery(
     homeTypes.GET_RECENT_SEARCH_KEYWORDS,
     getRecentSearchKeywords,

@@ -35,34 +35,34 @@ const PostSelectImage = () => {
   const selectedImages: ICreatePostImage[] = useKeySelector(postKeySelector.createPost.images) || [];
   const selectedImagesDraft: ICreatePostImage[] = useKeySelector(postKeySelector.createPost.imagesDraft) || [];
 
-  useEffect(() => {
-    if (currentImages?.length === 0) {
-      let data: any = [];
-      if (selectedImages.length > 0) {
-        data = selectedImages;
+  useEffect(
+    () => {
+      if (currentImages?.length === 0) {
+        let data: any = [];
+        if (selectedImages.length > 0) {
+          data = selectedImages;
+        }
+        if (selectedImagesDraft?.length > 0) {
+          data = selectedImagesDraft;
+        }
+        setCurrentImages(data);
       }
-      if (selectedImagesDraft?.length > 0) {
-        data = selectedImagesDraft;
-      }
-      setCurrentImages(data);
-    }
-  }, [selectedImages, selectedImagesDraft]);
+    }, [selectedImages, selectedImagesDraft],
+  );
 
   const onPressBack = () => {
-    dispatch(
-      modalActions.showAlert({
-        title: i18n.t('common:label_discard_changes'),
-        content: i18n.t('common:text_discard_warning'),
-        showCloseButton: true,
-        cancelBtn: true,
-        cancelLabel: i18n.t('common:btn_continue_editing'),
-        confirmLabel: i18n.t('common:btn_discard'),
-        onConfirm: () => {
-          dispatch(postActions.setCreatePostImagesDraft([]));
-          rootNavigation.goBack();
-        },
-      }),
-    );
+    dispatch(modalActions.showAlert({
+      title: i18n.t('common:label_discard_changes'),
+      content: i18n.t('common:text_discard_warning'),
+      showCloseButton: true,
+      cancelBtn: true,
+      cancelLabel: i18n.t('common:btn_continue_editing'),
+      confirmLabel: i18n.t('common:btn_discard'),
+      onConfirm: () => {
+        dispatch(postActions.setCreatePostImagesDraft([]));
+        rootNavigation.goBack();
+      },
+    }));
   };
 
   const onPressSave = () => {
@@ -71,46 +71,50 @@ const PostSelectImage = () => {
     rootNavigation.goBack();
   };
 
-  const onUploadSuccess = (url: string, fileName: string) => {
+  const onUploadSuccess = (
+    url: string, fileName: string,
+  ) => {
     // eslint-disable-next-line no-console
     console.log(`\x1b[36m🐣️ index onUploadSuccess ${fileName}: ${url}\x1b[0m`);
   };
 
-  const onPressRemoveImage = (item: ICreatePostImage, index: number) => {
-    const newList = currentImages.filter(
-      (image, i) => image.fileName !== item.fileName || index !== i,
-    );
+  const onPressRemoveImage = (
+    item: ICreatePostImage, index: number,
+  ) => {
+    const newList = currentImages.filter((
+      image, i,
+    ) => image.fileName !== item.fileName || index !== i);
     setCurrentImages(newList);
   };
 
   const onPressAddImage = () => {
-    checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
-      if (canOpenPicker) {
-        ImagePicker.openPickerMultiple().then((images) => {
-          const newImages: ICreatePostImage[] = [];
-          images.forEach((item) => {
-            newImages.push({ fileName: item.filename, file: item });
-          });
-          let newCurrentImages = [...currentImages, ...newImages];
-          if (newCurrentImages.length > appConfig.postPhotoLimit) {
-            newCurrentImages = newCurrentImages.slice(
-              0,
-              appConfig.postPhotoLimit,
-            );
-            const errorContent = t(
-              'post:error_reach_upload_photo_limit',
-            ).replace('%LIMIT%', appConfig.postPhotoLimit);
-            dispatch(
-              showHideToastMessage({
+    checkPermission(
+      permissionTypes.photo, dispatch, (canOpenPicker) => {
+        if (canOpenPicker) {
+          ImagePicker.openPickerMultiple().then((images) => {
+            const newImages: ICreatePostImage[] = [];
+            images.forEach((item) => {
+              newImages.push({ fileName: item.filename, file: item });
+            });
+            let newCurrentImages = [...currentImages, ...newImages];
+            if (newCurrentImages.length > appConfig.postPhotoLimit) {
+              newCurrentImages = newCurrentImages.slice(
+                0,
+                appConfig.postPhotoLimit,
+              );
+              const errorContent = t('post:error_reach_upload_photo_limit').replace(
+                '%LIMIT%', appConfig.postPhotoLimit,
+              );
+              dispatch(showHideToastMessage({
                 content: errorContent,
                 props: { textProps: { useI18n: true }, type: 'error' },
-              }),
-            );
-          }
-          setCurrentImages(newCurrentImages);
-        });
-      }
-    });
+              }));
+            }
+            setCurrentImages(newCurrentImages);
+          });
+        }
+      },
+    );
   };
 
   const renderItem = ({
@@ -123,7 +127,9 @@ const PostSelectImage = () => {
     const { file, fileName, url } = item || {};
     const { width = 1, height = 1 } = file || {};
     const ratio = height / width;
-    const dfWidth = Math.min(dimension.deviceWidth, dimension.maxNewsfeedWidth);
+    const dfWidth = Math.min(
+      dimension.deviceWidth, dimension.maxNewsfeedWidth,
+    );
 
     return (
       <UploadingImage
@@ -135,7 +141,9 @@ const PostSelectImage = () => {
         width={dfWidth}
         height={dfWidth * ratio}
         onUploadSuccess={onUploadSuccess}
-        onPressRemove={() => onPressRemoveImage(item, index)}
+        onPressRemove={() => onPressRemoveImage(
+          item, index,
+        )}
       />
     );
   };
@@ -166,7 +174,9 @@ const PostSelectImage = () => {
         renderItem={renderItem}
         contentContainerStyle={styles.container}
         ListFooterComponent={renderFooter}
-        keyExtractor={(item, index) => `create_post_image_${index}_${item?.fileName}`}
+        keyExtractor={(
+          item, index,
+        ) => `create_post_image_${index}_${item?.fileName}`}
       />
     </ScreenWrapper>
   );

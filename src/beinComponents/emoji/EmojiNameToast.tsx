@@ -23,23 +23,31 @@ const EmojiNameToast: FC<EmojiNameToastProps> = ({
 
   const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
-  const styles = createStyle(theme, insets);
+  const styles = createStyle(
+    theme, insets,
+  );
 
-  useEffect(() => () => {
-    timeOutRef?.current && clearTimeout(timeOutRef?.current);
-  }, []);
+  useEffect(
+    () => () => {
+      timeOutRef?.current && clearTimeout(timeOutRef?.current);
+    }, [],
+  );
 
   const show = (name: string) => {
     timeOutRef?.current && clearTimeout(timeOutRef?.current);
     setName(name);
-    timeOutRef.current = setTimeout(() => {
-      setName('');
-    }, 3000);
+    timeOutRef.current = setTimeout(
+      () => {
+        setName('');
+      }, 3000,
+    );
   };
 
-  useImperativeHandle(toastRef, () => ({
-    show,
-  }));
+  useImperativeHandle(
+    toastRef, () => ({
+      show,
+    }),
+  );
 
   if (!name) {
     return null;
@@ -52,7 +60,9 @@ const EmojiNameToast: FC<EmojiNameToastProps> = ({
   );
 };
 
-const createStyle = (theme: ExtendedTheme, insets: any) => StyleSheet.create({
+const createStyle = (
+  theme: ExtendedTheme, insets: any,
+) => StyleSheet.create({
   container: {
     position: 'absolute',
     alignSelf: 'center',

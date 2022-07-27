@@ -47,9 +47,7 @@ export const notificationApiConfig = {
 const notificationsDataHelper = {
   getNotificationList: async (param: IParamGetNotifications) => {
     try {
-      const response: any = await makeHttpRequest(
-        notificationApiConfig.getNotifications(param),
-      );
+      const response: any = await makeHttpRequest(notificationApiConfig.getNotifications(param));
       if (response && response?.data?.data) {
         return Promise.resolve({
           results: response?.data?.data?.list || [],
@@ -63,9 +61,7 @@ const notificationsDataHelper = {
   },
   markAsReadAll: async (flag: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        notificationApiConfig.putMarkAllAsRead(flag),
-      );
+      const response: any = await makeHttpRequest(notificationApiConfig.putMarkAllAsRead(flag));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -77,9 +73,7 @@ const notificationsDataHelper = {
 
   markAsSeenAll: async () => {
     try {
-      const response: any = await makeHttpRequest(
-        notificationApiConfig.putMarkAllAsSeen(),
-      );
+      const response: any = await makeHttpRequest(notificationApiConfig.putMarkAllAsSeen());
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -91,9 +85,7 @@ const notificationsDataHelper = {
 
   markAsRead: async (activityId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        notificationApiConfig.putMarkAsReadById(activityId),
-      );
+      const response: any = await makeHttpRequest(notificationApiConfig.putMarkAsReadById(activityId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -104,9 +96,7 @@ const notificationsDataHelper = {
   },
   markAsUnRead: async (activityId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        notificationApiConfig.putMarkAsUnReadById(activityId),
-      );
+      const response: any = await makeHttpRequest(notificationApiConfig.putMarkAsUnReadById(activityId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }

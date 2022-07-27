@@ -28,37 +28,43 @@ const MainTabs = () => {
   const userId = useUserIdAuth();
   const giphyAPIKey = useKeySelector('giphy.APIKey');
 
-  useEffect(() => {
-    let tokenRefreshSubscription: any;
+  useEffect(
+    () => {
+      let tokenRefreshSubscription: any;
 
-    // only valid if user logged in
-    if (!userId) {
-      return;
-    }
+      // only valid if user logged in
+      if (!userId) {
+        return;
+      }
 
-    dispatch(groupsActions.getMyPermissions());
-    dispatch(postActions.getDraftPosts({}));
-    dispatch(giphyActions.getAPIKey());
-    dispatch(groupsActions.getMyCommunities());
-    dispatch(notificationsActions.registerPushToken());
-    initPushTokenMessage()
-      .then((messaging) => {
-        tokenRefreshSubscription = messaging()
-          .onTokenRefresh((token: string) => dispatch(notificationsActions
-            .registerPushToken({ token })));
-      })
-      .catch((e) => console.error('error when delete push token at auth stack', e));
-    return () => {
-      tokenRefreshSubscription && tokenRefreshSubscription();
-    };
-  }, [userId]);
+      dispatch(groupsActions.getMyPermissions());
+      dispatch(postActions.getDraftPosts({}));
+      dispatch(giphyActions.getAPIKey());
+      dispatch(groupsActions.getMyCommunities());
+      dispatch(notificationsActions.registerPushToken());
+      initPushTokenMessage()
+        .then((messaging) => {
+          tokenRefreshSubscription = messaging()
+            .onTokenRefresh((token: string) => dispatch(notificationsActions
+              .registerPushToken({ token })));
+        })
+        .catch((e) => console.error(
+          'error when delete push token at auth stack', e,
+        ));
+      return () => {
+        tokenRefreshSubscription && tokenRefreshSubscription();
+      };
+    }, [userId],
+  );
 
-  useEffect(() => {
+  useEffect(
+    () => {
     // Configure GiphySDK API keys
-    GiphySDK.configure({
-      apiKey: giphyAPIKey,
-    });
-  }, [giphyAPIKey]);
+      GiphySDK.configure({
+        apiKey: giphyAPIKey,
+      });
+    }, [giphyAPIKey],
+  );
 
   return (
     <BottomTab.Navigator
@@ -72,7 +78,9 @@ const MainTabs = () => {
           name={name}
           component={component}
           listeners={{
-            tabPress: () => DeviceEventEmitter.emit('onTabPress', name),
+            tabPress: () => DeviceEventEmitter.emit(
+              'onTabPress', name,
+            ),
           }}
         />
       ))}

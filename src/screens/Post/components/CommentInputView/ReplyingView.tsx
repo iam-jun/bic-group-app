@@ -15,9 +15,7 @@ import spacing from '~/theme/spacing';
 
 const ReplyingView = () => {
   const dispatch = useDispatch();
-  const replying: IPayloadReplying = useKeySelector(
-    postKeySelector.replyingComment,
-  );
+  const replying: IPayloadReplying = useKeySelector(postKeySelector.replyingComment);
 
   const userId = useUserIdAuth();
 

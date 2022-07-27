@@ -189,7 +189,7 @@ export interface IPayloadCreatePost {
 
 export interface IPayloadCreateComment {
   postId: string;
-  parentCommentId?: string|number;
+  parentCommentId?: string;
   commentData: ICommentData;
   userId: string;
   localId?: string | number[]; // used when retry adding new comment
@@ -278,10 +278,10 @@ export interface IRequestGetPostComment {
   childLimit?: number;
 }
 
-export interface IPayloadGetCommentsById {
+export interface IPayloadGetCommentsById{
   isMerge?: boolean;
   position?: string;
-  commentId: string;
+  commentId?: string;
   params?: IRequestGetPostComment,
   callbackLoading?: (loading: boolean, canLoadMore?: boolean) => void;
 }
@@ -296,7 +296,7 @@ export interface IReaction {
   loading?: boolean;
   status?: 'pending' | 'success' | 'failed';
   localId?: string | number[]; // from uuid-v4
-  parentCommentId?: string | number; // used when retry/cancel adding new comment
+  parentCommentId?: string ; // used when retry/cancel adding new comment
   child?: any;
   actor?: IAudienceUser;
   activity_id: string;
@@ -420,7 +420,7 @@ export interface ICreatePostParams {
   postId?: string;
   replaceWithDetail?: boolean;
   initAudience?: any;
-  createFromGroupId?: string | number;
+  createFromGroupId?: string;
   initAutoSaveDraft?: boolean;
 }
 

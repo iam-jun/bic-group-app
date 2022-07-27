@@ -32,7 +32,9 @@ const GroupAboutContent = () => {
   const { icon, title, subtitle }: any = privacyData || {};
 
   const onPressMembers = () => {
-    rootNavigation.navigate(groupStack.groupMembers, { groupId });
+    rootNavigation.navigate(
+      groupStack.groupMembers, { groupId },
+    );
   };
 
   const renderContent = () => (

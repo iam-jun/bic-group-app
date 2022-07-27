@@ -40,12 +40,10 @@ const SearchMemberView = ({
   );
 
   const getCommunitySearchMembers = (searchText: string) => {
-    dispatch(
-      actions.getCommunitySearchMembers({
-        communityId,
-        params: { key: searchText },
-      }),
-    );
+    dispatch(actions.getCommunitySearchMembers({
+      communityId,
+      params: { key: searchText },
+    }));
   };
 
   const onLoadMore = () => {
@@ -59,7 +57,9 @@ const SearchMemberView = ({
   };
 
   const searchHandler = useCallback(
-    debounce(searchMember, appConfig.searchTriggerTime),
+    debounce(
+      searchMember, appConfig.searchTriggerTime,
+    ),
     [],
   );
 

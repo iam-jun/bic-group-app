@@ -50,7 +50,9 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   const { t } = useBaseHook();
   const insets = useSafeAreaInsets();
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyle(theme, insets);
+  const styles = createStyle(
+    theme, insets,
+  );
 
   const _onPressReaction = (emoji: any) => {
     dispatch(modalActions.hideModal());
@@ -64,10 +66,12 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
 
   const _onPressEdit = () => {
     dispatch(modalActions.hideModal());
-    rootNavigation.navigate(homeStack.createComment, {
-      commentId,
-      groupIds,
-    });
+    rootNavigation.navigate(
+      homeStack.createComment, {
+        commentId,
+        groupIds,
+      },
+    );
   };
 
   const _onPress = () => {
@@ -89,38 +93,36 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
     dispatch(modalActions.hideModal());
     if (content) {
       Clipboard.setString(content);
-      dispatch(
-        showHideToastMessage({
-          content: 'common:text_copied_to_clipboard',
-          props: {
-            textProps: { useI18n: true },
-            type: 'success',
-          },
-        }),
-      );
+      dispatch(showHideToastMessage({
+        content: 'common:text_copied_to_clipboard',
+        props: {
+          textProps: { useI18n: true },
+          type: 'success',
+        },
+      }));
     }
   };
 
   const _onPressCopyLink = () => {
     dispatch(modalActions.hideModal());
-    Clipboard.setString(
-      getLink(LINK_COMMENT, postId, {
+    Clipboard.setString(getLink(
+      LINK_COMMENT, postId, {
         commentId,
         parentId: parentCommentId || '',
-      }),
-    );
-    dispatch(
-      showHideToastMessage({
-        content: 'post:comment_link_copied',
-        props: {
-          textProps: { useI18n: true },
-          type: 'success',
-        },
-      }),
-    );
+      },
+    ));
+    dispatch(showHideToastMessage({
+      content: 'post:comment_link_copied',
+      props: {
+        textProps: { useI18n: true },
+        type: 'success',
+      },
+    }));
   };
 
-  const renderReactItem = (item: any, index: number) => (
+  const renderReactItem = (
+    item: any, index: number,
+  ) => (
     <Button
       testID={`comment_view_menu.react_${index}`}
       key={`reaction_${index}_${item.id}`}
@@ -202,7 +204,9 @@ const CommentViewMenu: FC<CommentViewMenuProps> = ({
   );
 };
 
-const createStyle = (theme: ExtendedTheme, insets: any) => {
+const createStyle = (
+  theme: ExtendedTheme, insets: any,
+) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {

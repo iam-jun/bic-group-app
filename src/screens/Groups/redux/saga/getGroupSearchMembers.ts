@@ -23,11 +23,13 @@ export default function* getGroupSearchMembers({
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const resp = yield call(groupsDataHelper.getGroupMembers, groupId, {
-      limit: appConfig.recordsPerPage,
-      offset: data.length,
-      ...params,
-    });
+    const resp = yield call(
+      groupsDataHelper.getGroupMembers, groupId, {
+        limit: appConfig.recordsPerPage,
+        offset: data.length,
+        ...params,
+      },
+    );
 
     let newDataCount = 0;
     let newDataArr: any = [];
@@ -46,7 +48,11 @@ export default function* getGroupSearchMembers({
 
     yield put(actions.setGroupSearchMembers(newData));
   } catch (err) {
-    console.error('getGroupSearchMembers error:', err);
-    yield call(showError, err);
+    console.error(
+      'getGroupSearchMembers error:', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

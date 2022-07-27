@@ -68,9 +68,15 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
   const selectingImages = useKeySelector(postKeySelector.createPost.images);
   const selectingVideo = useKeySelector(postKeySelector.createPost.video);
   const selectingFiles = useKeySelector(postKeySelector.createPost.files);
-  const { images, imageUploading } = validateImages(selectingImages, t);
-  const { video, videoUploading } = validateVideo(selectingVideo, t);
-  const { files, fileUploading } = validateFiles(selectingFiles, t);
+  const { images, imageUploading } = validateImages(
+    selectingImages, t,
+  );
+  const { video, videoUploading } = validateVideo(
+    selectingVideo, t,
+  );
+  const { files, fileUploading } = validateFiles(
+    selectingFiles, t,
+  );
 
   // const [hasVideoProgress, setHasVideoProgress] = useState(videoUploading);
 
@@ -84,9 +90,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
 
   if (draftPostId) {
     const draftPosts = useKeySelector(postKeySelector.draft.posts) || [];
-    initPostData = draftPosts?.find(
-      (item: IPostActivity) => item?.id === draftPostId,
-    );
+    initPostData = draftPosts?.find((item: IPostActivity) => item?.id === draftPostId);
   }
 
   const createPostData = useKeySelector(postKeySelector.createPost.all);
@@ -110,8 +114,12 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     }
   });
 
-  const isAudienceHasChange = !isEqual(initGroupsRef.current, groups)
-    || !isEqual(initUsersRef.current, users);
+  const isAudienceHasChange = !isEqual(
+    initGroupsRef.current, groups,
+  )
+    || !isEqual(
+      initUsersRef.current, users,
+    );
   const isImageHasChange = !isEqual(
     selectingImages,
     initSelectingImagesRef.current,
@@ -161,175 +169,191 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
     clearTimeout(refStopsTyping?.current);
   };
 
-  useEffect(() => {
-    if (initAutoSaveDraft) {
-      autoSaveDraftPost();
-    }
-  }, []);
+  useEffect(
+    () => {
+      if (initAutoSaveDraft) {
+        autoSaveDraftPost();
+      }
+    }, [],
+  );
 
-  useEffect(() => {
-    setPostData({ ...initPostData });
-  }, [initPostData?.id]);
+  useEffect(
+    () => {
+      setPostData({ ...initPostData });
+    }, [initPostData?.id],
+  );
 
-  useEffect(() => {
-    debouncedStopsTyping();
-  }, [content]);
+  useEffect(
+    () => {
+      debouncedStopsTyping();
+    }, [content],
+  );
 
-  useEffect(() => {
-    if (initPostData && (isEditDraftPost || isEditPost)) {
+  useEffect(
+    () => {
+      if (initPostData && (isEditDraftPost || isEditPost)) {
       // get post audience for select audience screen and check audience has changed
-      initPostData?.audience?.groups?.map?.((g) => initGroupsRef.current.push(g?.id));
-      initPostData?.audience?.users?.map?.((u) => initUsersRef.current.push(u?.id));
-      const p: IParamGetPostAudiences = {
-        groupIds: initGroupsRef.current.join(','),
-      };
-      dispatch(postActions.getCreatePostInitAudience(p));
+        initPostData?.audience?.groups?.map?.((g) => initGroupsRef.current.push(g?.id));
+        initPostData?.audience?.users?.map?.((u) => initUsersRef.current.push(u?.id));
+        const p: IParamGetPostAudiences = {
+          groupIds: initGroupsRef.current.join(','),
+        };
+        dispatch(postActions.getCreatePostInitAudience(p));
 
-      // handle selected, uploaded post's image
-      const initImages: any = [];
-      initPostData?.media?.images?.forEach((item) => {
-        initImages.push({
-          id: item?.id,
-          fileName: item?.origin_name || item?.name,
-          file: {
-            name: item?.origin_name || item?.name,
-            filename: item?.origin_name || item?.name,
-            width: item?.width || 0,
-            height: item?.height || 0,
-          },
-          url: item?.name?.includes('http')
-            ? item.name
-            : getResourceUrl(uploadTypes.postImage, item?.name),
+        // handle selected, uploaded post's image
+        const initImages: any = [];
+        initPostData?.media?.images?.forEach((item) => {
+          initImages.push({
+            id: item?.id,
+            fileName: item?.origin_name || item?.name,
+            file: {
+              name: item?.origin_name || item?.name,
+              filename: item?.origin_name || item?.name,
+              width: item?.width || 0,
+              height: item?.height || 0,
+            },
+            url: item?.name?.includes('http')
+              ? item.name
+              : getResourceUrl(
+                uploadTypes.postImage, item?.name,
+              ),
+          });
         });
-      });
-      dispatch(postActions.setCreatePostImagesDraft(initImages));
-      dispatch(postActions.setCreatePostImages(initImages));
-      initSelectingImagesRef.current = initImages;
-    }
-  }, [initPostData]);
+        dispatch(postActions.setCreatePostImagesDraft(initImages));
+        dispatch(postActions.setCreatePostImages(initImages));
+        initSelectingImagesRef.current = initImages;
+      }
+    }, [initPostData],
+  );
 
-  useEffect(() => {
-    if (initPostData?.id) {
-      const initData = {
-        content: initPostData?.content || '',
-        images: initPostData?.media?.images,
-        files: initPostData?.media?.files,
-        videos: initPostData?.media?.videos,
-      };
-      dispatch(postActions.setCreatePostData(initData));
+  useEffect(
+    () => {
+      if (initPostData?.id) {
+        const initData = {
+          content: initPostData?.content || '',
+          images: initPostData?.media?.images,
+          files: initPostData?.media?.files,
+          videos: initPostData?.media?.videos,
+        };
+        dispatch(postActions.setCreatePostData(initData));
 
-      const initChosenAudience: any = [];
-      initPostData?.audience?.groups?.forEach?.((group) => {
-        initChosenAudience.push({
-          id: group?.id,
-          type: 'group',
-          name: group?.name,
-          avatar: group?.icon,
+        const initChosenAudience: any = [];
+        initPostData?.audience?.groups?.forEach?.((group) => {
+          initChosenAudience.push({
+            id: group?.id,
+            type: 'group',
+            name: group?.name,
+            avatar: group?.icon,
+          });
         });
-      });
-      initPostData?.audience?.users?.forEach?.((user) => {
-        initChosenAudience.push({
-          id: user?.id,
-          type: 'user',
-          name: user?.fullname,
-          avatar: user?.avatar,
+        initPostData?.audience?.users?.forEach?.((user) => {
+          initChosenAudience.push({
+            id: user?.id,
+            type: 'user',
+            name: user?.fullname,
+            avatar: user?.avatar,
+          });
         });
-      });
-      dispatch(postActions.setCreatePostChosenAudiences(initChosenAudience));
+        dispatch(postActions.setCreatePostChosenAudiences(initChosenAudience));
 
-      const initImportant = {
-        active: !!initPostData?.setting?.isImportant,
-        expires_time: initPostData?.setting?.importantExpiredAt,
-      };
-      dispatch(postActions.setCreatePostImportant(initImportant));
-      dispatch(
-        postActions.setCreatePostCurrentSettings({ important: initImportant }),
-      );
+        const initImportant = {
+          active: !!initPostData?.setting?.isImportant,
+          expires_time: initPostData?.setting?.importantExpiredAt,
+        };
+        dispatch(postActions.setCreatePostImportant(initImportant));
+        dispatch(postActions.setCreatePostCurrentSettings({ important: initImportant }));
 
-      const initVideo = initPostData?.media?.videos?.[0];
-      dispatch(postActions.setCreatePostVideo(initVideo));
-      const initFiles = initPostData?.media?.files;
-      dispatch(postActions.setCreatePostFiles(initFiles));
+        const initVideo = initPostData?.media?.videos?.[0];
+        dispatch(postActions.setCreatePostVideo(initVideo));
+        const initFiles = initPostData?.media?.files;
+        dispatch(postActions.setCreatePostFiles(initFiles));
 
-      prevData.current = {
-        ...prevData.current,
-        chosenAudiences: initChosenAudience,
-        important: initImportant,
-        selectingVideo: initVideo,
-      };
-    }
-  }, [initPostData?.id]);
+        prevData.current = {
+          ...prevData.current,
+          chosenAudiences: initChosenAudience,
+          important: initImportant,
+          selectingVideo: initVideo,
+        };
+      }
+    }, [initPostData?.id],
+  );
 
-  useEffect(() => {
-    const dataChangeList = [
-      isEmpty(
-        differenceWith(
+  useEffect(
+    () => {
+      const dataChangeList = [
+        isEmpty(differenceWith(
           selectingImages,
           prevData?.current?.selectingImages,
           isEqual,
-        ),
-      ),
-      isEmpty(
-        differenceWith(
+        )),
+        isEmpty(differenceWith(
           chosenAudiences,
           prevData?.current?.chosenAudiences,
           isEqual,
+        )),
+        isEqual(
+          important, prevData?.current?.important,
         ),
-      ),
-      isEqual(important, prevData?.current?.important),
-      isEqual(selectingVideo, prevData?.current?.selectingVideo),
-      isEmpty(
-        differenceWith(
+        isEqual(
+          selectingVideo, prevData?.current?.selectingVideo,
+        ),
+        isEmpty(differenceWith(
           selectingFiles,
           prevData?.current?.selectingFiles,
           isEqual,
-        ),
-      ),
-    ];
-    const newDataChange = dataChangeList.filter((i) => !i);
-    if (isAutoSave && newDataChange.length > 0 && sPostId) {
-      prevData.current = {
-        ...prevData.current,
-        selectingImages,
-        chosenAudiences,
-        important,
-        selectingVideo,
-        selectingFiles,
-      };
-      autoSaveDraftPost();
-    }
-  }, [
-    JSON.stringify(selectingImages),
-    JSON.stringify(chosenAudiences),
-    selectingVideo?.id,
-    selectingVideo?.name,
-    important,
-    JSON.stringify(selectingFiles),
-  ]);
+        )),
+      ];
+      const newDataChange = dataChangeList.filter((i) => !i);
+      if (isAutoSave && newDataChange.length > 0 && sPostId) {
+        prevData.current = {
+          ...prevData.current,
+          selectingImages,
+          chosenAudiences,
+          important,
+          selectingVideo,
+          selectingFiles,
+        };
+        autoSaveDraftPost();
+      }
+    }, [
+      JSON.stringify(selectingImages),
+      JSON.stringify(chosenAudiences),
+      selectingVideo?.id,
+      selectingVideo?.name,
+      important,
+      JSON.stringify(selectingFiles),
+    ],
+  );
 
-  useEffect(() => {
-    debouncedAutoSave();
-    return () => {
-      clearAutoSaveTimeout();
-    };
-  }, [isPause]);
+  useEffect(
+    () => {
+      debouncedAutoSave();
+      return () => {
+        clearAutoSaveTimeout();
+      };
+    }, [isPause],
+  );
 
   const debouncedAutoSave = () => {
     if (!isPause) {
-      refAutoSave.current = setTimeout(() => {
-        setPause(true);
-        autoSaveDraftPost();
-      }, 5000);
+      refAutoSave.current = setTimeout(
+        () => {
+          setPause(true);
+          autoSaveDraftPost();
+        }, 5000,
+      );
     }
   };
 
   const debouncedStopsTyping = () => {
     if (isAutoSave && refIsFocus.current) {
       clearTimeout(refStopsTyping?.current);
-      refStopsTyping.current = setTimeout(() => {
-        clearTimeout(refAutoSave?.current);
-        autoSaveDraftPost();
-      }, 500);
+      refStopsTyping.current = setTimeout(
+        () => {
+          clearTimeout(refAutoSave?.current);
+          autoSaveDraftPost();
+        }, 500,
+      );
     }
   };
 
@@ -352,7 +376,9 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
       setting.importantExpiredAt = important?.expires_time;
     }
 
-    const newMentions = getMentionsFromContent(_content, tempMentions);
+    const newMentions = getMentionsFromContent(
+      _content, tempMentions,
+    );
     const mentions = { ...initPostData?.mentions, ...newMentions };
 
     const data: IPostCreatePost = {
@@ -403,12 +429,10 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
 
       if (invalidData || !isAutoSave || imageError || videoError || fileError) {
         if (imageError) {
-          dispatch(
-            modalActions.showHideToastMessage({
-              content: imageError,
-              props: { textProps: { useI18n: true }, type: 'error' },
-            }),
-          );
+          dispatch(modalActions.showHideToastMessage({
+            content: imageError,
+            props: { textProps: { useI18n: true }, type: 'error' },
+          }));
         }
         return;
       }
@@ -444,15 +468,21 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
         dispatch(postActions.setSavingDraftPost(false));
         setShowToastAutoSave(true);
         clearTimeout(refToastAutoSave?.current);
-        refToastAutoSave.current = setTimeout(() => {
-          setShowToastAutoSave(false);
-        }, 3000);
+        refToastAutoSave.current = setTimeout(
+          () => {
+            setShowToastAutoSave(false);
+          }, 3000,
+        );
       }
     } catch (error) {
       if (!isEdit) {
         dispatch(postActions.setSavingDraftPost(false));
       }
-      if (__DEV__) console.error('error: ', error);
+      if (__DEV__) {
+        console.error(
+          'error: ', error,
+        );
+      }
     }
   };
 
@@ -473,15 +503,15 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
       clearAutoSaveTimeout();
     }
 
-    const { imageError } = validateImages(selectingImages, t);
+    const { imageError } = validateImages(
+      selectingImages, t,
+    );
 
     if (imageError) {
-      dispatch(
-        modalActions.showHideToastMessage({
-          content: imageError,
-          props: { textProps: { useI18n: true }, type: 'error' },
-        }),
-      );
+      dispatch(modalActions.showHideToastMessage({
+        content: imageError,
+        props: { textProps: { useI18n: true }, type: 'error' },
+      }));
       return 'attachmentError';
     }
 
@@ -510,9 +540,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
       dispatch(postActions.putEditPost(payload));
       result = 'editPost';
     } else {
-      console.error(
-        '\x1b[31m🐣️ useCreatePost handlePressPost must create post from draft \x1b[0m',
-      );
+      console.error('\x1b[31m🐣️ useCreatePost handlePressPost must create post from draft \x1b[0m');
       result = 'newPost';
     }
     Keyboard.dismiss();

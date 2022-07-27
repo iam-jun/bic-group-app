@@ -34,7 +34,9 @@ export const homeInitState = {
   },
 };
 
-const homeReducer = (state = homeInitState, action: any = {}) => {
+const homeReducer = (
+  state = homeInitState, action: any = {},
+) => {
   const { type, payload } = action;
 
   switch (type) {

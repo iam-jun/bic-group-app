@@ -52,7 +52,9 @@ const UserEditProfile = (props: any) => {
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = themeStyles(theme, coverHeight);
+  const styles = themeStyles(
+    theme, coverHeight,
+  );
   const dispatch = useDispatch();
 
   const myProfile: any = useKeySelector(menuKeySelector.myProfile);
@@ -89,36 +91,37 @@ const UserEditProfile = (props: any) => {
     if (userId) dispatch(menuActions.getUserProfile({ userId }));
   };
 
-  useEffect(() => {
-    setShowEditButton(
-      userId?.toString?.() === currentUserId?.toString?.()
-        || userId?.toString?.() === currentUsername?.toString?.(),
-    );
-    if (
-      userId?.toString?.() === currentUserId?.toString?.()
+  useEffect(
+    () => {
+      setShowEditButton(userId?.toString?.() === currentUserId?.toString?.()
+        || userId?.toString?.() === currentUsername?.toString?.());
+      if (
+        userId?.toString?.() === currentUserId?.toString?.()
       || userId?.toString?.() === currentUsername?.toString?.()
-    ) {
-      dispatch(homeActions.getHomePosts({ isRefresh: true }));
-      setUserData(myProfile);
-    } else {
-      setUserData(userProfileData);
-    }
-    dispatch(menuActions.getUserWorkExperience(userId));
-  }, [myProfile, userProfileData, userId]);
-
-  useEffect(() => {
-    getUserProfile();
-  }, []);
-
-  useEffect(() => {
-    dispatch(menuActions.getMyWorkExperience());
-  }, []);
-
-  const userLanguageList = language?.map(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    (code: string) => speakingLanguages[code].name,
+      ) {
+        dispatch(homeActions.getHomePosts({ isRefresh: true }));
+        setUserData(myProfile);
+      } else {
+        setUserData(userProfileData);
+      }
+      dispatch(menuActions.getUserWorkExperience(userId));
+    }, [myProfile, userProfileData, userId],
   );
+
+  useEffect(
+    () => {
+      getUserProfile();
+    }, [],
+  );
+
+  useEffect(
+    () => {
+      dispatch(menuActions.getMyWorkExperience());
+    }, [],
+  );
+
+  // @ts-ignore
+  const userLanguageList = language?.map((code: string) => speakingLanguages[code].name);
   const userLanguages = userLanguageList?.join(', ');
 
   const goToEditInfo = () => rootNavigation.navigate(mainStack.editBasicInfo);
@@ -140,14 +143,12 @@ const UserEditProfile = (props: any) => {
     fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
-    dispatch(
-      menuActions.uploadImage({
-        id,
-        file,
-        fieldName,
-        uploadType,
-      }),
-    );
+    dispatch(menuActions.uploadImage({
+      id,
+      file,
+      fieldName,
+      uploadType,
+    }));
   };
 
   // fieldName: field name in group profile to be edited
@@ -156,20 +157,26 @@ const UserEditProfile = (props: any) => {
     fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
-    checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
-      if (canOpenPicker) {
-        ImagePicker.openPickerSingle({
-          ...userProfileImageCropRatio[fieldName],
-          cropping: true,
-          mediaType: 'photo',
-        }).then((file) => {
-          uploadFile(file, fieldName, uploadType);
-        });
-      }
-    });
+    checkPermission(
+      permissionTypes.photo, dispatch, (canOpenPicker) => {
+        if (canOpenPicker) {
+          ImagePicker.openPickerSingle({
+            ...userProfileImageCropRatio[fieldName],
+            cropping: true,
+            mediaType: 'photo',
+          }).then((file) => {
+            uploadFile(
+              file, fieldName, uploadType,
+            );
+          });
+        }
+      },
+    );
   };
 
-  const onEditAvatar = () => _openImagePicker('avatar', uploadTypes.userAvatar);
+  const onEditAvatar = () => _openImagePicker(
+    'avatar', uploadTypes.userAvatar,
+  );
 
   const onEditCover = () => _openImagePicker('backgroundImgUrl', uploadTypes.userCover);
 
@@ -334,7 +341,9 @@ const UserEditProfile = (props: any) => {
         <SettingItem
           title="settings:title_birthday"
           subtitle={
-              formatDate(birthday, 'MMMM DD, YYYY')
+              formatDate(
+                birthday, 'MMMM DD, YYYY',
+              )
               || i18next.t('common:text_not_set')
             }
           leftIcon="Calendar"
@@ -427,17 +436,15 @@ const UserEditProfile = (props: any) => {
       ContentComponent={(
         <View>
           <Text.ButtonM>
-            {`${item?.titlePosition} ${i18next.t(
-              'common:text_at',
-            )} ${item?.company}`}
+            {`${item?.titlePosition} ${i18next.t('common:text_at')} ${item?.company}`}
           </Text.ButtonM>
           {item?.startDate && (
           <Text>
-            {`${formatDate(item.startDate, 'MMM Do, YYYY')} ${
+            {`${formatDate(
+              item.startDate, 'MMM Do, YYYY',
+            )} ${
               item?.currentlyWorkHere
-                ? `${i18next.t('common:text_to')} ${i18next.t(
-                  'common:text_present',
-                )}`
+                ? `${i18next.t('common:text_to')} ${i18next.t('common:text_present')}`
                 : item?.endDate
                   ? `${i18next.t('common:text_to')} ${formatDate(
                     item.endDate,
@@ -528,7 +535,9 @@ const UserEditProfile = (props: any) => {
 
 export default UserEditProfile;
 
-const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
+const themeStyles = (
+  theme: ExtendedTheme, coverHeight: number,
+) => {
   const { colors } = theme;
 
   return StyleSheet.create({

@@ -4,14 +4,18 @@ import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
 import { withHttpRequestPromise } from '~/services/httpApiRequest';
 
 export const menuApiConfig = {
-  getUserProfile: (userId: string, params?: any): HttpApiRequestConfig => ({
+  getUserProfile: (
+    userId: string, params?: any,
+  ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/profile`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
     params,
   }),
-  editMyProfile: (userId: string, data: IUserEdit): HttpApiRequestConfig => ({
+  editMyProfile: (
+    userId: string, data: IUserEdit,
+  ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/profile`,
     method: 'put',
     provider: ApiConfig.providers.bein,

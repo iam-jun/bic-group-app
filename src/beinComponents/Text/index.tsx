@@ -75,12 +75,15 @@ const TextComponent: React.FC<TextProps> = ({
     && maxLength < content.length
     && typeof content === 'string'
   ) {
-    content = `${content.substring(0, maxLength)}...`;
+    content = `${content.substring(
+      0, maxLength,
+    )}...`;
   }
 
   return (
     <TextRN
-      // allowFontScaling={false} disable block font scaling because somewhere not set fontSize (markdown, input) still use scale size
+      // allowFontScaling={false} disable block font scaling because
+      // somewhere not set fontSize (markdown, input) still use scale size
       {...props}
       style={[textStyle, color ? { color } : {}, style]}
     >
@@ -198,43 +201,45 @@ const CaptionS = ({ ...props }: TextProps) => (
   <TextComponent variant="captionS" {...props} />
 );
 
-const Text = Object.assign(TextComponent, {
-  H1,
-  H2,
-  H3,
-  H4,
-  H5,
-  H6,
-  SubtitleL,
-  SubtitleM,
-  SubtitleS,
-  SubtitleXS,
-  BodyM,
-  BodyMMedium,
-  BodyS,
-  BodySMedium,
-  ParagraphL,
-  ParagraphM,
-  ParagraphS,
-  ButtonL,
-  ButtonM,
-  ButtonS,
-  TabL,
-  TabM,
-  TabS,
-  LinkM,
-  LinkS,
-  BadgeL,
-  BadgeM,
-  BadgeS,
-  BadgeXS,
-  LabelL,
-  LabelM,
-  DropdownM,
-  DropdownS,
-  NumberM,
-  NumberS,
-  CaptionS,
-});
+const Text = Object.assign(
+  TextComponent, {
+    H1,
+    H2,
+    H3,
+    H4,
+    H5,
+    H6,
+    SubtitleL,
+    SubtitleM,
+    SubtitleS,
+    SubtitleXS,
+    BodyM,
+    BodyMMedium,
+    BodyS,
+    BodySMedium,
+    ParagraphL,
+    ParagraphM,
+    ParagraphS,
+    ButtonL,
+    ButtonM,
+    ButtonS,
+    TabL,
+    TabM,
+    TabS,
+    LinkM,
+    LinkS,
+    BadgeL,
+    BadgeM,
+    BadgeS,
+    BadgeXS,
+    LabelL,
+    LabelM,
+    DropdownM,
+    DropdownS,
+    NumberM,
+    NumberS,
+    CaptionS,
+  },
+);
 
 export default Text;

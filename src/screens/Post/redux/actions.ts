@@ -181,9 +181,7 @@ const postActions = {
     type: postTypes.UPDATE_COMMENT_API,
     payload,
   }),
-  setScrollToLatestItem: (
-    payload: null | {parentCommentId?: string | number},
-  ) => ({
+  setScrollToLatestItem: (payload: null | {parentCommentId?: string | number}) => ({
     type: postTypes.SET_SCROLL_TO_LATEST_ITEM,
     payload,
   }),
@@ -250,9 +248,7 @@ const postActions = {
     type: postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS,
     payload,
   }),
-  updateAllCommentsByParentIdsWithComments: (
-    payload: IPayloadUpdateCommentsById,
-  ) => ({
+  updateAllCommentsByParentIdsWithComments: (payload: IPayloadUpdateCommentsById) => ({
     type: postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS_WITH_COMMENTS,
     payload,
   }),

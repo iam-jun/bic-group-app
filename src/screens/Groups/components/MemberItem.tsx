@@ -34,12 +34,16 @@ const MemberItem = ({ item, canManageMember, onPressMenu }: MemberItemProps) => 
   } = item || {};
 
   const goToUserProfile = () => {
-    rootNavigation.navigate(mainStack.userProfile, { userId: id });
+    rootNavigation.navigate(
+      mainStack.userProfile, { userId: id },
+    );
   };
 
   const onPressChat = () => {
     if (!username) return;
-    const link = formatDMLink(communityDetail.slug, username);
+    const link = formatDMLink(
+      communityDetail.slug, username,
+    );
     openLink(link);
   };
 

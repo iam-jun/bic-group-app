@@ -17,9 +17,13 @@ const SelectReactionView: FC<ReactionViewProps> = ({
     onPressReaction?.(item);
   };
 
-  const renderRow = (row: IReactionProps[], rowIndex: any) => (
+  const renderRow = (
+    row: IReactionProps[], rowIndex: any,
+  ) => (
     <View key={`reaction_row_${rowIndex}`} style={styles.row}>
-      {row.map((item, index) => (
+      {row.map((
+        item, index,
+      ) => (
         <Button
           key={`reaction_${rowIndex}_${index}_${item.id}`}
           onPress={() => _onPressReaction(item)}

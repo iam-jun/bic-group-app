@@ -80,7 +80,9 @@ const MemberList = ({
       testID="member_list"
       style={styles.content}
       sections={sectionList}
-      keyExtractor={(item, index) => `member_list_${item.id}_${index}`}
+      keyExtractor={(
+        item, index,
+      ) => `member_list_${item.id}_${index}`}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.1}
       ListEmptyComponent={renderEmpty}

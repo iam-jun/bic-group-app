@@ -22,21 +22,19 @@ export default function* deleteComment({
     console.error('\x1b[31m🐣️ deleteComment commentId not found\x1b[0m');
     return;
   }
-  const allComments = yield select((state) => get(state, postKeySelector.allComments)) || {};
+  const allComments = yield select((state) => get(
+    state, postKeySelector.allComments,
+  )) || {};
   const comment: ICommentData = allComments?.[commentId] || {};
   try {
     yield postDataHelper.deleteComment(commentId);
 
     // update allCommentsByParentId
-    const allCommentsByParentIds = yield select(
-      (state) => state?.post?.allCommentsByParentIds,
-    ) || {};
+    const allCommentsByParentIds = yield select((state) => state?.post?.allCommentsByParentIds) || {};
     let commentsOfPost = allCommentsByParentIds[postId] || [];
     if (parentCommentId) {
       // find comment index
-      const pIndex = commentsOfPost?.findIndex?.(
-        (cmt: IReaction) => cmt?.id === parentCommentId,
-      );
+      const pIndex = commentsOfPost?.findIndex?.((cmt: IReaction) => cmt?.id === parentCommentId);
       // remove reply
       if (commentsOfPost?.[pIndex]?.child?.list) {
         commentsOfPost[pIndex].child.list = commentsOfPost[
@@ -57,24 +55,18 @@ export default function* deleteComment({
         0,
         newParentComment.totalReply - 1,
       );
-      newParentComment.child.list = newParentComment.child?.list?.filter?.(
-        (cmt: IReaction) => cmt?.id !== commentId,
-      );
+      newParentComment.child.list = newParentComment.child?.list?.filter?.((cmt: IReaction) => cmt?.id !== commentId);
 
       yield put(postActions.addToAllComments(newParentComment));
     } else {
       // remove comment
-      commentsOfPost = commentsOfPost?.filter?.(
-        (cmt: IReaction) => cmt?.id !== commentId,
-      );
+      commentsOfPost = commentsOfPost?.filter?.((cmt: IReaction) => cmt?.id !== commentId);
     }
-    yield put(
-      postActions.updateAllCommentsByParentIdsWithComments({
-        id: postId,
-        comments: [...commentsOfPost],
-        isMerge: false,
-      }),
-    );
+    yield put(postActions.updateAllCommentsByParentIdsWithComments({
+      id: postId,
+      comments: [...commentsOfPost],
+      isMerge: false,
+    }));
 
     // update reaction counts, should minus comment and all reply counts
     const childrenCommentCount = comment?.totalReply || 0;
@@ -110,12 +102,10 @@ export default function* deleteComment({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (e) {
-    yield put(
-      modalActions.showHideToastMessage({
-        content: 'post:comment:text_delete_comment_error',
-        props: { textProps: { useI18n: true }, type: 'error' },
-        toastType: 'normal',
-      }),
-    );
+    yield put(modalActions.showHideToastMessage({
+      content: 'post:comment:text_delete_comment_error',
+      props: { textProps: { useI18n: true }, type: 'error' },
+      toastType: 'normal',
+    }));
   }
 }

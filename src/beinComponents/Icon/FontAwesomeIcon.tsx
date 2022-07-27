@@ -10,9 +10,7 @@ export interface FontAwesomeIconProps {
   style?: StyleProp<StyleProp<any>>;
 }
 
-const FontAwesomeIcon: FC<FontAwesomeIconProps> = (
-  props: FontAwesomeIconProps,
-) => {
+const FontAwesomeIcon: FC<FontAwesomeIconProps> = (props: FontAwesomeIconProps) => {
   const {
     name, size, tintColor, style, ...rest
   } = props;

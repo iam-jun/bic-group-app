@@ -40,13 +40,17 @@ const NFSFilterCreateBySpecific: FC<NFSFilterCreateBySpecificProps> = ({
 
   const { data, canLoadMore } = useKeySelector(homeKeySelector.newsfeedSearchUsers) || {};
 
-  useEffect(() => {
-    dispatch(homeActions.getSearchUsers(''));
-  }, []);
+  useEffect(
+    () => {
+      dispatch(homeActions.getSearchUsers(''));
+    }, [],
+  );
 
-  const onChangeText = debounce((text: string) => {
-    dispatch(homeActions.getSearchUsers(text));
-  }, 200);
+  const onChangeText = debounce(
+    (text: string) => {
+      dispatch(homeActions.getSearchUsers(text));
+    }, 200,
+  );
 
   const onPressUser = (user: any) => {
     dismissModalOnPress && dispatch(modalActions.hideModal());

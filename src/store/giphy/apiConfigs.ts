@@ -15,9 +15,7 @@ export const giphyApiConfig = {
 const giphyDataHelper = {
   getAPIKey: async (params?: any) => {
     try {
-      const response: any = await makeHttpRequest(
-        giphyApiConfig.getAPIKey(params),
-      );
+      const response: any = await makeHttpRequest(giphyApiConfig.getAPIKey(params));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }

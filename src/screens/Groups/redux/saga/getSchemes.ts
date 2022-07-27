@@ -18,7 +18,9 @@ export default function* getSchemes({
       yield put(actions.setSchemes({ loading: true, data: undefined }));
     }
 
-    const response = yield call(groupsDataHelper.getSchemes, communityId);
+    const response = yield call(
+      groupsDataHelper.getSchemes, communityId,
+    );
     if (response?.data) {
       const { communityScheme, groupSchemes } = response.data || {};
       const allSchemes: any = {};
@@ -26,15 +28,17 @@ export default function* getSchemes({
         allSchemes[communityScheme.id] = communityScheme;
       }
       groupSchemes?.forEach?.((scheme: any) => { allSchemes[scheme?.id] = scheme; });
-      yield put(
-        actions.setSchemes({ loading: false, data: response?.data, allSchemes }),
-      );
+      yield put(actions.setSchemes({ loading: false, data: response?.data, allSchemes }));
     } else {
       yield put(actions.setSchemes({ loading: false }));
     }
   } catch (err) {
     yield put(actions.setSchemes({ loading: false }));
-    console.error('getSchemes error:', err);
-    yield call(showError, err);
+    console.error(
+      'getSchemes error:', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

@@ -288,7 +288,9 @@ const groupsActions = {
     type: groupsTypes.CLEAR_SELECTED_USERS,
   }),
 
-  getGroupDetail: (payload: string, loadingPage = false) => ({
+  getGroupDetail: (
+    payload: string, loadingPage = false,
+  ) => ({
     type: groupsTypes.GET_GROUP_DETAIL,
     payload,
     loadingPage,

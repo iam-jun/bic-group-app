@@ -49,7 +49,9 @@ const SearchCommunityView = ({
   };
 
   const searchHandler = useCallback(
-    debounce(searchCommunities, appConfig.searchTriggerTime),
+    debounce(
+      searchCommunities, appConfig.searchTriggerTime,
+    ),
     [],
   );
 

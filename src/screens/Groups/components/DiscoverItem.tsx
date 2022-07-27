@@ -40,11 +40,15 @@ const DiscoverItem = ({
   };
 
   const onJoin = () => {
-    onPressJoin(id, name);
+    onPressJoin(
+      id, name,
+    );
   };
 
   const onCancel = () => {
-    onPressCancel(id, name);
+    onPressCancel(
+      id, name,
+    );
   };
 
   return (

@@ -41,19 +41,21 @@ const RootNavigator = (): React.ReactElement => {
 
   const linkingConfig = useNavigationLinkingConfig();
 
-  useEffect(() => {
-    isNavigationRefReady.current = false;
-    dispatch(noInternetActions.setSystemIssue(false));
+  useEffect(
+    () => {
+      isNavigationRefReady.current = false;
+      dispatch(noInternetActions.setSystemIssue(false));
 
-    const unsubscribeNetInfo = NetInfo.addEventListener(() => dispatch(noInternetActions.checkInternetReachable()));
-    if (!user) {
-      makeRemovePushTokenRequest();
-    }
+      const unsubscribeNetInfo = NetInfo.addEventListener(() => dispatch(noInternetActions.checkInternetReachable()));
+      if (!user) {
+        makeRemovePushTokenRequest();
+      }
 
-    return () => {
-      unsubscribeNetInfo();
-    };
-  }, []);
+      return () => {
+        unsubscribeNetInfo();
+      };
+    }, [],
+  );
 
   const navigationTheme = theme.dark ? appTheme.dark : appTheme.light;
 

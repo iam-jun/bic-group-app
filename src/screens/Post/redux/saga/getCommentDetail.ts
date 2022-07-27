@@ -18,8 +18,8 @@ function* getCommentDetail({
     callbackLoading?.(true);
     const response = yield call(
       postDataHelper.getCommentDetail,
-      commentId,
-      payload.params,
+      fetchable(commentId),
+      fetchable(payload.params as any),
     );
     const { actor, list } = response?.data || {};
     if (!!actor && list?.length > 0) {
@@ -33,7 +33,9 @@ function* getCommentDetail({
       };
 
       yield put(postActions.updateAllCommentsByParentIdsWithComments(payload));
-      const post = yield select((state) => get(state, `post.allPosts.${comment?.postId}`, {}));
+      const post = yield select((state) => get(
+        state, `post.allPosts.${comment?.postId}`, {},
+      ));
       if (isEmpty(post) && comment?.postId) {
         post.id = comment.postId;
         post.actor = actor;
@@ -42,7 +44,9 @@ function* getCommentDetail({
     }
     callbackLoading?.(false);
   } catch (e: any) {
-    console.error('\x1b[31m🐣️ saga getCommentDetail error: ', e, '\x1b[0m');
+    console.error(
+      '\x1b[31m🐣️ saga getCommentDetail error: ', e, '\x1b[0m',
+    );
     if (
       e?.code === API_ERROR_CODE.POST.postPrivacy
       || e?.code === API_ERROR_CODE.POST.copiedCommentIsDeleted

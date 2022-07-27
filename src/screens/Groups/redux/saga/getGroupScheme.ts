@@ -29,26 +29,26 @@ export default function* getGroupScheme({
     const dataWithOrderedFixRole = sortFixedRoles(response.data);
 
     // storing this data for comparing original group scheme and editing scheme
-    yield put(
-      actions.setGroupScheme({ data: cloneDeep(dataWithOrderedFixRole) }),
-    );
+    yield put(actions.setGroupScheme({ data: cloneDeep(dataWithOrderedFixRole) }));
 
     // provide full groupScheme detail for updating group scheme
     const memberRoleIndex = getMemberRoleIndex(dataWithOrderedFixRole);
-    yield put(
-      actions.setCreatingScheme({
-        data: cloneDeep(dataWithOrderedFixRole),
-        memberRoleIndex,
-      }),
-    );
+    yield put(actions.setCreatingScheme({
+      data: cloneDeep(dataWithOrderedFixRole),
+      memberRoleIndex,
+    }));
   } catch (err: any) {
-    console.error('getGroupScheme error:', err);
+    console.error(
+      'getGroupScheme error:', err,
+    );
 
     if (err?.code === API_ERROR_CODE.GROUP.SCHEME_NOT_FOUND) {
       yield put(actions.getSchemes({ communityId, isRefreshing: true }));
       navigation.goBack();
     }
 
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

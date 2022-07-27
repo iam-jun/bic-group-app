@@ -25,44 +25,40 @@ export const checkLastAdmin = async (
       mainCallback();
     } else if (data.length === 1 && data[0].id === groupId) {
       testingAdminCount = 2;
-      dispatch(
-        modalActions.showHideToastMessage({
-          content: 'groups:error:last_admin_leave',
-          props: {
-            type: 'error',
-            textProps: { useI18n: true },
-            rightIcon: 'UserGroup',
-            rightText: 'Members',
-            onPressRight,
-          },
-          toastType: 'normal',
-        }),
-      );
+      dispatch(modalActions.showHideToastMessage({
+        content: 'groups:error:last_admin_leave',
+        props: {
+          type: 'error',
+          textProps: { useI18n: true },
+          rightIcon: 'UserGroup',
+          rightText: 'Members',
+          onPressRight,
+        },
+        toastType: 'normal',
+      }));
     } else {
       testingAdminCount = 3;
-      dispatch(
-        modalActions.showHideToastMessage({
-          content: `groups:error:last_admin_inner_group_${type}`,
-          props: {
-            type: 'error',
-            textProps: { useI18n: true },
-          },
-          toastType: 'normal',
-        }),
-      );
+      dispatch(modalActions.showHideToastMessage({
+        content: `groups:error:last_admin_inner_group_${type}`,
+        props: {
+          type: 'error',
+          textProps: { useI18n: true },
+        },
+        toastType: 'normal',
+      }));
     }
   } catch (err: any) {
     testingAdminCount = -1;
-    console.error('[ERROR] error while fetching group members', err);
-    dispatch(
-      modalActions.showHideToastMessage({
-        content:
+    console.error(
+      '[ERROR] error while fetching group members', err,
+    );
+    dispatch(modalActions.showHideToastMessage({
+      content:
           err?.meta?.errors?.[0]?.message
           || err?.meta?.message
           || 'common:text_error_message',
-        props: { textProps: { useI18n: true }, type: 'error' },
-      }),
-    );
+      props: { textProps: { useI18n: true }, type: 'error' },
+    }));
   }
 
   return testingAdminCount;
@@ -79,38 +75,46 @@ export const handleLeaveInnerGroups = async (
   // Get inner groups info (if any) when user leave/being removed from a group
   try {
     const resp = await groupsDataHelper.getUserInnerGroups(groupId, username);
-    const innerGroups = resp.data.innerGroups.map(
+    const innerGroups = resp?.data?.innerGroups?.map?.(
       (group: IGroup) => group.name,
     );
     testingFlag = true;
     callback(innerGroups);
   } catch (err: any) {
-    console.error('Error while fetching user inner groups', err);
-    dispatch(
-      modalActions.showHideToastMessage({
-        content:
+    console.error(
+      'Error while fetching user inner groups', err,
+    );
+    dispatch(modalActions.showHideToastMessage({
+      content:
           err?.meta?.errors?.[0]?.message
           || err?.meta?.message
           || 'common:text_error_message',
-        props: { textProps: { useI18n: true }, type: 'error' },
-      }),
-    );
+      props: { textProps: { useI18n: true }, type: 'error' },
+    }));
   }
   return testingFlag;
 };
 
-export const getGroupFromTreeById = (tree: IGroup, groupId: string) => {
+export const getGroupFromTreeById = (
+  tree: IGroup, groupId: string,
+) => {
   let group: IGroup;
 
-  const getGroupInChildren = (parent: IGroup, groupId: string) => {
+  const getGroupInChildren = (
+    parent: IGroup, groupId: string,
+  ) => {
     if (parent?.id === groupId) {
       group = parent;
     } else if (!isEmpty(parent?.children)) {
-      parent.children?.map((g) => getGroupInChildren(g, groupId));
+      parent.children?.map((g) => getGroupInChildren(
+        g, groupId,
+      ));
     }
   };
 
-  getGroupInChildren(tree, groupId);
+  getGroupInChildren(
+    tree, groupId,
+  );
 
   // @ts-ignore
   return group;
@@ -153,9 +157,9 @@ export const sortFixedRoles = (data: IScheme) => {
   });
 
   // sorting fixedRoles based on the order of desiredFixedOrder array
-  fixedRoles.sort(
-    (a, b) => desiredFixedOrder.indexOf(a.type) - desiredFixedOrder.indexOf(b.type),
-  );
+  fixedRoles.sort((
+    a, b,
+  ) => desiredFixedOrder.indexOf(a.type) - desiredFixedOrder.indexOf(b.type));
 
   const newOrderedRoles = [...fixedRoles, ...customRoles];
 

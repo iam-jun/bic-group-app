@@ -43,11 +43,9 @@ const NotificationOptionBottomSheet: FC<NotificationOptionBottomSheetProps> = ({
         style={styles.item}
         leftIcon="MessageCheck"
         leftIconProps={{ icon: 'MessageCheck', size: 24 }}
-        title={i18n.t(
-          !data?.isRead
-            ? 'notification:mark_as_read'
-            : 'notification:mark_as_unread',
-        )}
+        title={i18n.t(!data?.isRead
+          ? 'notification:mark_as_read'
+          : 'notification:mark_as_unread')}
         onPress={handleMarkNotification}
       />
       <PrimaryItem

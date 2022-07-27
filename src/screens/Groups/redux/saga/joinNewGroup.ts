@@ -40,9 +40,7 @@ export default function* joinNewGroup({
     }
 
     const toastMessage: IToastMessage = {
-      content: `${i18next.t(
-        'groups:text_successfully_join_group',
-      )} ${groupName}`,
+      content: `${i18next.t('groups:text_successfully_join_group')} ${groupName}`,
       props: {
         type: 'success',
       },

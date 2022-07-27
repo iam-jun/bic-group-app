@@ -43,9 +43,7 @@ const _PageContent = ({
   const { joinStatus, groupId } = infoDetail;
   const isMember = joinStatus === groupJoinStatus.member;
   const posts = useKeySelector(groupsKeySelector.posts);
-  const refreshingGroupPosts = useKeySelector(
-    groupsKeySelector.refreshingGroupPosts,
-  );
+  const refreshingGroupPosts = useKeySelector(groupsKeySelector.refreshingGroupPosts);
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canCreatePostArticle = hasPermissionsOnScopeWithId(
@@ -57,7 +55,9 @@ const _PageContent = ({
   const dispatch = useDispatch();
 
   const onPressDiscover = () => {
-    rootNavigation.navigate(groupStack.discoverGroups, { communityId });
+    rootNavigation.navigate(
+      groupStack.discoverGroups, { communityId },
+    );
   };
 
   const onPressAbout = () => {
@@ -65,7 +65,9 @@ const _PageContent = ({
   };
 
   const onPressMembers = () => {
-    rootNavigation.navigate(groupStack.communityMembers, { communityId });
+    rootNavigation.navigate(
+      groupStack.communityMembers, { communityId },
+    );
   };
 
   const loadMoreData = () => {
@@ -75,7 +77,9 @@ const _PageContent = ({
   };
 
   const onPressYourGroups = () => {
-    rootNavigation.navigate(groupStack.yourGroups, { communityId });
+    rootNavigation.navigate(
+      groupStack.yourGroups, { communityId },
+    );
   };
 
   const _onScroll = (e: any) => {

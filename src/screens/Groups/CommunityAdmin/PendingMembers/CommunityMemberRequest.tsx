@@ -15,9 +15,7 @@ const CommunityMemberRequest = ({
 }) => {
   const dispatch = useDispatch();
 
-  const communityMemberRequests = useKeySelector(
-    groupsKeySelector.communityMemberRequests,
-  );
+  const communityMemberRequests = useKeySelector(groupsKeySelector.communityMemberRequests);
   const { items } = communityMemberRequests;
 
   const requestItem = items[requestId];
@@ -25,23 +23,19 @@ const CommunityMemberRequest = ({
   const { fullname: fullName } = user;
 
   const onPressApprove = () => {
-    dispatch(
-      groupsActions.approveSingleCommunityMemberRequest({
-        communityId,
-        requestId,
-        fullName,
-      }),
-    );
+    dispatch(groupsActions.approveSingleCommunityMemberRequest({
+      communityId,
+      requestId,
+      fullName,
+    }));
   };
 
   const onPressDecline = () => {
-    dispatch(
-      groupsActions.declineSingleCommunityMemberRequest({
-        communityId,
-        requestId,
-        fullName,
-      }),
-    );
+    dispatch(groupsActions.declineSingleCommunityMemberRequest({
+      communityId,
+      requestId,
+      fullName,
+    }));
   };
 
   return (

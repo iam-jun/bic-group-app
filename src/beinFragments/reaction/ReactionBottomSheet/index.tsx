@@ -22,7 +22,7 @@ const ReactionBottomSheet = () => {
 
   const data = useKeySelector(commonKeySelector.reactionBottomSheet);
   const {
-    title, show, position, callback, side,
+    title, show, position, callback,
   } = data || {};
 
   const _onPressReaction = (reaction: IReactionProps) => {
@@ -39,7 +39,6 @@ const ReactionBottomSheet = () => {
       modalizeRef={reactionSheetRef}
       isOpen={show}
       position={position}
-      side={side || 'center'}
       menuMinWidth={375}
       onClose={_onClose}
       ContentComponent={(

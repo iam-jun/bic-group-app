@@ -18,11 +18,15 @@ function* putMarkAsRead({
     return;
   }
   try {
-    const response = yield call(postDataHelper.putMarkAsRead, postId);
+    const response = yield call(
+      postDataHelper.putMarkAsRead, postId,
+    );
     const isSuccess = !!response?.data;
     callback?.(isSuccess);
     if (isSuccess) {
-      const post = yield select((state) => get(state, postKeySelector.postById(postId)));
+      const post = yield select((state) => get(
+        state, postKeySelector.postById(postId),
+      ));
       post.markedReadPost = true;
       post.markedReadSuccess = true;
       yield put(postActions.addToAllPosts({ ...post }));

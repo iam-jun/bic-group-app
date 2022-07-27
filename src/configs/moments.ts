@@ -3,7 +3,9 @@ export default {
     relativeTime: {
       future: 'in %s',
       past: '%s',
-      s(number: any, withoutSuffix: any) {
+      s(
+        number: any, withoutSuffix: any,
+      ) {
         return withoutSuffix ? 'now' : 'a few seconds';
       },
       m: '1m',
@@ -22,7 +24,9 @@ export default {
     relativeTime: {
       future: 'in %s',
       past: '%s',
-      s(number: any, withoutSuffix: any) {
+      s(
+        number: any, withoutSuffix: any,
+      ) {
         return withoutSuffix ? 'now' : 'vài giây trước';
       },
       m: '1m',

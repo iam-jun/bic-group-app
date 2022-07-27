@@ -2,7 +2,9 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { IFilePicked } from '~/interfaces/common';
 
 const formatImage = (image: any) => {
-  const fileName = image?.path?.replace?.(/(.+)\/(.+)$/, '$2') || 'bein_image';
+  const fileName = image?.path?.replace?.(
+    /(.+)\/(.+)$/, '$2',
+  ) || 'bein_image';
   return {
     name: fileName,
     filename: fileName,

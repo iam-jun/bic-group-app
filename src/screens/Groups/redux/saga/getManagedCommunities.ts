@@ -22,11 +22,9 @@ export default function* getManagedCommunities({
     const { groups } = yield select();
     const { ids, items, canLoadMore } = groups.managedCommunities;
 
-    yield put(
-      actions.setManagedCommunities({
-        loading: isRefreshing ? true : ids.length === 0,
-      }),
-    );
+    yield put(actions.setManagedCommunities({
+      loading: isRefreshing ? true : ids.length === 0,
+    }));
 
     if (!isRefreshing && !refreshNoLoading && !canLoadMore) return;
 
@@ -56,8 +54,12 @@ export default function* getManagedCommunities({
 
     yield put(actions.setManagedCommunities(newData));
   } catch (err) {
-    console.error('getManagedCommunities error:', err);
+    console.error(
+      'getManagedCommunities error:', err,
+    );
     yield put(actions.setManagedCommunities({ loading: false }));
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

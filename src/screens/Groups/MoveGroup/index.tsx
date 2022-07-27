@@ -39,19 +39,19 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
 
   const getMoveTargets = (key = '') => {
     if (communityId && groupId) {
-      dispatch(
-        groupsActions.getGroupStructureMoveTargets({ communityId, groupId, key }),
-      );
+      dispatch(groupsActions.getGroupStructureMoveTargets({ communityId, groupId, key }));
     }
   };
 
-  useEffect(() => {
-    getMoveTargets();
+  useEffect(
+    () => {
+      getMoveTargets();
 
-    return () => {
-      dispatch(groupsActions.setGroupStructureMove());
-    };
-  }, []);
+      return () => {
+        dispatch(groupsActions.setGroupStructureMove());
+      };
+    }, [],
+  );
 
   const onPressSave = () => {
     if (communityId && groupId && selecting?.id) {

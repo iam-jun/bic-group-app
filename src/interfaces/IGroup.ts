@@ -83,6 +83,7 @@ export interface IGroup {
   children?: IGroup[];
   verified?: boolean;
   parents?: string[] | null;
+  ownerId?: string;
   collapsed?: boolean;
   path?: string;
   treeData?: IGroup;

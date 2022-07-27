@@ -111,11 +111,13 @@ const CommentInput: React.FC<CommentInputProps> = ({
     if (newHeight === textTextInputHeight) return;
 
     setTextInputHeight(newHeight);
-    Animated.timing(heightAnimated, {
-      toValue: newHeight,
-      duration: 100,
-      useNativeDriver: false,
-    }).start();
+    Animated.timing(
+      heightAnimated, {
+        toValue: newHeight,
+        duration: 100,
+        useNativeDriver: false,
+      },
+    ).start();
   };
 
   const [selectedImage, setSelectedImage] = useState<IFilePicked>();
@@ -133,34 +135,40 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
   const insets = useSafeAreaInsets();
-  const styles = createStyle(theme, insets, _loading);
+  const styles = createStyle(
+    theme, insets, _loading,
+  );
 
-  useEffect(() => {
-    if (selectedGiphy) {
-      if (text) {
-        focus();
-      } else {
-        _onPressSend();
+  useEffect(
+    () => {
+      if (selectedGiphy) {
+        if (text) {
+          focus();
+        } else {
+          _onPressSend();
+        }
       }
-    }
-  }, [selectedGiphy]);
+    }, [selectedGiphy],
+  );
 
   const _onPressSelectImage = () => {
-    checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
-      if (canOpenPicker) {
-        ImagePicker.openPickerSingle().then((file) => {
-          if (!file) return;
-          setSelectedGiphy(undefined);
-          if (!isHandleUpload) {
-            onPressSelectImage?.(file);
-          } else {
-            setUploadError('');
-            setSelectedImage(file);
-          }
-          focus();
-        });
-      }
-    });
+    checkPermission(
+      permissionTypes.photo, dispatch, (canOpenPicker) => {
+        if (canOpenPicker) {
+          ImagePicker.openPickerSingle().then((file) => {
+            if (!file) return;
+            setSelectedGiphy(undefined);
+            if (!isHandleUpload) {
+              onPressSelectImage?.(file);
+            } else {
+              setUploadError('');
+              setSelectedImage(file);
+            }
+            focus();
+          });
+        }
+      },
+    );
   };
 
   const _onPressFile = async () => {
@@ -202,7 +210,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
           clearWhenUploadDone && clear();
         })
         .catch((e: any) => {
-          console.error('\x1b[31m🐣️ CommentInput upload Error:', e, '\x1b[0m');
+          console.error(
+            '\x1b[31m🐣️ CommentInput upload Error:', e, '\x1b[0m',
+          );
           const errorMessage = typeof e === 'string'
             ? e
             : e?.meta?.message || t('post:error_upload_photo_failed');
@@ -257,7 +267,11 @@ const CommentInput: React.FC<CommentInputProps> = ({
   );
 
   const calculateTextInputHeight = (height: number) => {
-    let newHeight = Math.min(Math.max(DEFAULT_HEIGHT, height), LIMIT_HEIGHT);
+    let newHeight = Math.min(
+      Math.max(
+        DEFAULT_HEIGHT, height,
+      ), LIMIT_HEIGHT,
+    );
     if (value?.length === 0) {
       newHeight = DEFAULT_HEIGHT;
     }
@@ -267,9 +281,7 @@ const CommentInput: React.FC<CommentInputProps> = ({
   const _onContentSizeChange = (e: any) => {
     onContentSizeChange?.(e);
 
-    const newHeight = calculateTextInputHeight(
-      e.nativeEvent.contentSize.height,
-    );
+    const newHeight = calculateTextInputHeight(e.nativeEvent.contentSize.height);
 
     handleSetTextInputHeight(newHeight);
   };
@@ -299,16 +311,18 @@ const CommentInput: React.FC<CommentInputProps> = ({
     stickerViewRef?.current?.onBackPress?.();
   };
 
-  useImperativeHandle(commentInputRef, () => ({
-    setText,
-    getText,
-    hasMedia,
-    clear,
-    focus,
-    isFocused,
-    send,
-    onBackPress,
-  }));
+  useImperativeHandle(
+    commentInputRef, () => ({
+      setText,
+      getText,
+      hasMedia,
+      clear,
+      focus,
+      isFocused,
+      send,
+      onBackPress,
+    }),
+  );
 
   const _onKeyPress = (e: any) => {
     onKeyPress?.(e);
@@ -435,7 +449,9 @@ const CommentInput: React.FC<CommentInputProps> = ({
   );
 };
 
-const createStyle = (theme: ExtendedTheme, insets: any, loading: boolean) => {
+const createStyle = (
+  theme: ExtendedTheme, insets: any, loading: boolean,
+) => {
   const { colors } = theme;
   return StyleSheet.create({
     root: {

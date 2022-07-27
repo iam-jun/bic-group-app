@@ -123,19 +123,17 @@ const EditBasicInfo = () => {
   const _onPressBack = () => {
     if (isValid) {
       Keyboard.dismiss();
-      dispatch(
-        modalActions.showAlert({
-          title: i18next.t('common:label_discard_changes'),
-          showCloseButton: true,
-          cancelBtn: true,
-          isDismissible: false,
-          onConfirm: () => {
-            rootNavigation.goBack();
-          },
-          confirmLabel: i18next.t('common:btn_discard'),
-          content: i18next.t('common:text_not_saved_changes_warning'),
-        }),
-      );
+      dispatch(modalActions.showAlert({
+        title: i18next.t('common:label_discard_changes'),
+        showCloseButton: true,
+        cancelBtn: true,
+        isDismissible: false,
+        onConfirm: () => {
+          rootNavigation.goBack();
+        },
+        confirmLabel: i18next.t('common:btn_discard'),
+        content: i18next.t('common:text_not_saved_changes_warning'),
+      }));
     } else {
       rootNavigation.goBack();
     }
@@ -143,7 +141,9 @@ const EditBasicInfo = () => {
 
   const onGenderEditOpen = (e: any) => {
     Keyboard.dismiss();
-    genderSheetRef?.current?.open?.(e?.pageX, e?.pageY);
+    genderSheetRef?.current?.open?.(
+      e?.pageX, e?.pageY,
+    );
   };
 
   const onDateEditOpen = () => {
@@ -154,7 +154,9 @@ const EditBasicInfo = () => {
 
   const onRelationshipEditOpen = (e: any) => {
     Keyboard.dismiss();
-    relationshipSheetRef?.current?.open?.(e?.pageX, e?.pageY);
+    relationshipSheetRef?.current?.open?.(
+      e?.pageX, e?.pageY,
+    );
   };
 
   const onChangeName = (text: string) => {
@@ -215,7 +217,9 @@ const EditBasicInfo = () => {
           contentStyle={styles.buttonDropDownContent}
           onPress={() => onDateEditOpen()}
         >
-          {formatDate(birthdayState, 'DD/MM/YYYY')
+          {formatDate(
+            birthdayState, 'DD/MM/YYYY',
+          )
             || i18next.t('common:text_not_set')}
         </Button>
         {selectingDate && (

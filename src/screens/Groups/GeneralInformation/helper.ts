@@ -21,15 +21,13 @@ export const uploadFile = (
   uploadType: IUploadType,
   destination: 'group' | 'community',
 ) => {
-  dispatch(
-    groupsActions.uploadImage({
-      id,
-      file,
-      fieldName,
-      uploadType,
-      destination,
-    }),
-  );
+  dispatch(groupsActions.uploadImage({
+    id,
+    file,
+    fieldName,
+    uploadType,
+    destination,
+  }));
 };
 
 // 'icon' for avatar and 'backgroundImgUrl' for cover
@@ -40,19 +38,23 @@ export const _openImagePicker = async (
   uploadType: IUploadType,
   destination: 'group' | 'community',
 ) => {
-  await checkPermission(permissionTypes.photo, dispatch, (canOpenPicker:boolean) => {
-    if (canOpenPicker) {
-      ImagePicker.openPickerSingle({
-        ...groupProfileImageCropRatio[fieldName],
-        cropping: true,
-        mediaType: 'photo',
-      }).then((file) => {
-        uploadFile(dispatch, id, file, fieldName, uploadType, destination);
-      });
-      return true;
-    }
-    return false;
-  });
+  await checkPermission(
+    permissionTypes.photo, dispatch, (canOpenPicker:boolean) => {
+      if (canOpenPicker) {
+        ImagePicker.openPickerSingle({
+          ...groupProfileImageCropRatio[fieldName],
+          cropping: true,
+          mediaType: 'photo',
+        }).then((file) => {
+          uploadFile(
+            dispatch, id, file, fieldName, uploadType, destination,
+          );
+        });
+        return true;
+      }
+      return false;
+    },
+  );
 
   // for testing
   return false;

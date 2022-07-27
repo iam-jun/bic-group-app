@@ -22,16 +22,18 @@ export default function* getJoinedCommunities({
 
     const communities = response.data;
     if (communities?.length > 0) {
-      yield put(
-        groupsActions.setMyCommunities({ data: communities, loading: false }),
-      );
+      yield put(groupsActions.setMyCommunities({ data: communities, loading: false }));
     } else {
       yield put(groupsActions.setMyCommunities({ data: [], loading: false }));
     }
     callback && callback();
   } catch (err) {
-    console.error('\x1b[33m', 'getJoinedCommunities : error', err, '\x1b[0m');
+    console.error(
+      '\x1b[33m', 'getJoinedCommunities : error', err, '\x1b[0m',
+    );
     yield put(groupsActions.setMyCommunities({ loading: false }));
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

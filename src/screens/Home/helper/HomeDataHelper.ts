@@ -32,27 +32,21 @@ const homeApiConfig = {
     useRetry: true,
     params: { ...param },
   }),
-  getRecentSearchKeyword: (
-    param: IParamGetRecentSearchKeywords,
-  ): HttpApiRequestConfig => ({
+  getRecentSearchKeyword: (param: IParamGetRecentSearchKeywords): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.beinFeed.url}recent-searches`,
     method: 'get',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
     params: { ...param },
   }),
-  postNewRecentSearchKeyword: (
-    data: IParamPostNewRecentSearchKeyword,
-  ): HttpApiRequestConfig => ({
+  postNewRecentSearchKeyword: (data: IParamPostNewRecentSearchKeyword): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.beinFeed.url}recent-searches`,
     method: 'post',
     provider: ApiConfig.providers.beinFeed,
     useRetry: true,
     data,
   }),
-  deleteClearRecentSearch: (
-    target: IRecentSearchTarget,
-  ): HttpApiRequestConfig => ({
+  deleteClearRecentSearch: (target: IRecentSearchTarget): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.beinFeed.url}recent-searches/${target}/clean`,
     method: 'delete',
     provider: ApiConfig.providers.beinFeed,
@@ -69,9 +63,7 @@ const homeApiConfig = {
 const homeDataHelper = {
   getNewsfeed: async (param: IParamGetFeed) => {
     try {
-      const response: any = await makeHttpRequest(
-        homeApiConfig.getNewsfeed(param),
-      );
+      const response: any = await makeHttpRequest(homeApiConfig.getNewsfeed(param));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
       }
@@ -82,9 +74,7 @@ const homeDataHelper = {
   },
   getSearchPost: async (param: IParamGetSearchPost) => {
     try {
-      const response: any = await makeHttpRequest(
-        homeApiConfig.getSearchPost(param),
-      );
+      const response: any = await makeHttpRequest(homeApiConfig.getSearchPost(param));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
       }
@@ -95,9 +85,7 @@ const homeDataHelper = {
   },
   getUsers: async (params: IParamsGetUsers) => {
     try {
-      const response: any = await makeHttpRequest(
-        ApiConfig.App.getUsers(params),
-      );
+      const response: any = await makeHttpRequest(ApiConfig.App.getUsers(params));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
       }
@@ -108,9 +96,7 @@ const homeDataHelper = {
   },
   getRecentSearchKeywords: async (param: IParamGetRecentSearchKeywords) => {
     try {
-      const response: any = await makeHttpRequest(
-        homeApiConfig.getRecentSearchKeyword(param),
-      );
+      const response: any = await makeHttpRequest(homeApiConfig.getRecentSearchKeyword(param));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
       }
@@ -119,13 +105,9 @@ const homeDataHelper = {
       return Promise.reject(e);
     }
   },
-  postNewRecentSearchKeyword: async (
-    param: IParamPostNewRecentSearchKeyword,
-  ) => {
+  postNewRecentSearchKeyword: async (param: IParamPostNewRecentSearchKeyword) => {
     try {
-      const response: any = await makeHttpRequest(
-        homeApiConfig.postNewRecentSearchKeyword(param),
-      );
+      const response: any = await makeHttpRequest(homeApiConfig.postNewRecentSearchKeyword(param));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
       }
@@ -136,9 +118,7 @@ const homeDataHelper = {
   },
   deleteCleanRecentSearch: async (target: IRecentSearchTarget) => {
     try {
-      const response: any = await makeHttpRequest(
-        homeApiConfig.deleteClearRecentSearch(target),
-      );
+      const response: any = await makeHttpRequest(homeApiConfig.deleteClearRecentSearch(target));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
       }
@@ -149,9 +129,7 @@ const homeDataHelper = {
   },
   deleteRecentSearchById: async (id: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        homeApiConfig.deleteRecentSearchById(id),
-      );
+      const response: any = await makeHttpRequest(homeApiConfig.deleteRecentSearchById(id));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
       }

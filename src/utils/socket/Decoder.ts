@@ -54,7 +54,9 @@ export default class Decoder extends Emitter {
   public add(chunk: any) {
     const packet = decode(chunk) as any;
     this.checkPacket(packet);
-    this.emit('decoded', packet);
+    this.emit(
+      'decoded', packet,
+    );
   }
 
   public destroy() {

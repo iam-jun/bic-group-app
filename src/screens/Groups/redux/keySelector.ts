@@ -62,7 +62,9 @@ const groupsKeySelector = {
   },
   communitySearch: 'groups.communitySearch',
   myPermissions: 'groups.myPermissions',
-  permissionsByScopeAndId: (scope: 'communities' | 'groups', id: number) => `groups.myPermissions.data.${scope}.${id}`,
+  permissionsByScopeAndId: (
+    scope: 'communities' | 'groups', id: number,
+  ) => `groups.myPermissions.data.${scope}.${id}`,
 };
 
 export default groupsKeySelector;

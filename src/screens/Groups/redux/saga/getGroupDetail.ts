@@ -17,7 +17,9 @@ export default function* getGroupDetail({
     if (loadingPage) yield put(groupsActions.setLoadingPage(true));
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const resp = yield call(groupsDataHelper.getGroupDetail, payload);
+    const resp = yield call(
+      groupsDataHelper.getGroupDetail, payload,
+    );
     yield put(groupsActions.setGroupDetail(resp?.data));
 
     const { groups } = yield select();
@@ -29,7 +31,9 @@ export default function* getGroupDetail({
 
     if (!isMember && !isPublic) yield put(groupsActions.setLoadingPage(false));
   } catch (e) {
-    console.error('[getGroupDetail]', e);
+    console.error(
+      '[getGroupDetail]', e,
+    );
     yield put(groupsActions.setLoadingPage(false));
     yield put(groupsActions.setGroupDetail(null));
   }

@@ -41,7 +41,7 @@ const NotificationAvatar = ({
             })),
             'username',
           );
-          return _listNoti.filter((item) => item?.id !== parseInt(userId));
+          return _listNoti.filter((item) => item?.id !== userId);
         }
         // Reaction to your comment
         if (activities[0]?.comment?.reaction) {
@@ -51,7 +51,7 @@ const NotificationAvatar = ({
             })),
             'username',
           );
-          return _listNoti1.filter((item) => item?.id !== parseInt(userId));
+          return _listNoti1.filter((item) => item?.id !== userId);
         }
         // Reaction to your Post
         // eslint-disable-next-line no-case-declarations
@@ -61,7 +61,7 @@ const NotificationAvatar = ({
           })),
           'username',
         );
-        return _listNoti2.filter((item) => item?.id !== parseInt(userId));
+        return _listNoti2.filter((item) => item?.id !== userId);
       case 'COMMENT':
         // Mention to your comments
         if (
@@ -74,7 +74,8 @@ const NotificationAvatar = ({
             })),
             'username',
           );
-          return _listNoti.filter((item) => item?.id !== parseInt(userId));
+          // @ts-ignore
+          return _listNoti.filter((item) => item?.id !== userId);
         }
         // Mention to your reply comments
         if (
@@ -87,7 +88,8 @@ const NotificationAvatar = ({
             })),
             'username',
           );
-          return _listNoti.filter((item) => item?.id !== parseInt(userId));
+          // @ts-ignore
+          return _listNoti.filter((item) => item?.id !== userId);
         }
         // Reply to your comments
         if (activities[0]?.comment?.child) {
@@ -118,6 +120,8 @@ const NotificationAvatar = ({
             })),
             'username',
           );
+
+          // @ts-ignore
           return _listNoti.filter((item) => item?.id !== parseInt(userId));
         }
         return [actor];
@@ -131,7 +135,9 @@ const NotificationAvatar = ({
   const listActor = handleActorNotification();
 
   let _listAvatarWidth = 0;
-  const listAvatar = listActor?.map?.((item: any, index: number) => {
+  const listAvatar = listActor?.map?.((
+    item: any, index: number,
+  ) => {
     if (index < MAX_AVATAR && _listAvatarWidth <= listAvatarWidth) {
       _listAvatarWidth = (index + 1) * (AVATAR_WIDTH + 8);
       if (

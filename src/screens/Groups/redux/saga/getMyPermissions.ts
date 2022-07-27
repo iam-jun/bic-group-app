@@ -13,15 +13,17 @@ export default function* getMyPermissions(): any {
 
     const response = yield call(groupsDataHelper.getMyPermissions);
 
-    yield put(
-      actions.setMyPermissions({
-        loading: false,
-        data: response.data,
-        timeGetMyPermissions: Date.now(),
-      }),
-    );
+    yield put(actions.setMyPermissions({
+      loading: false,
+      data: response.data,
+      timeGetMyPermissions: Date.now(),
+    }));
   } catch (err) {
-    console.error('getMyPermissions error:', err);
-    yield call(showError, err);
+    console.error(
+      'getMyPermissions error:', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

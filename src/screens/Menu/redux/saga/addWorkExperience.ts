@@ -37,7 +37,9 @@ export default function* addWorkExperience({
 
     if (callback) return callback();
   } catch (err) {
-    console.error('addWorkExperience:', err);
+    console.error(
+      'addWorkExperience:', err,
+    );
     yield showError(err);
   }
 }

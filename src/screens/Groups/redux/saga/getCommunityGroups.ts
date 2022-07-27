@@ -24,7 +24,9 @@ export default function* getCommunityGroups({
       yield put(groupsActions.setCommunityGroups([]));
     }
   } catch (err) {
-    console.error('\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m');
+    console.error(
+      '\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m',
+    );
     yield put(groupsActions.setCommunityGroups([]));
     yield showError(err);
   }

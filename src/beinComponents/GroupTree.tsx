@@ -60,29 +60,43 @@ const GroupTree: React.FC<GroupTreeProps> = ({
   const parseTreeData = () => {
     const newData: {[x: string]: IParsedGroup} = {};
     if (isArray(data)) {
-      data?.map?.((group, index) => getItem(group, newData, 0, 'tree', index));
+      data?.map?.((
+        group, index,
+      ) => getItem(
+        group, newData, 0, 'tree', index,
+      ));
       setTreeData(newData);
     } else if (isObject(data)) {
-      getItem(data, newData, 0, 'tree', 0);
+      getItem(
+        data, newData, 0, 'tree', 0,
+      );
       setTreeData(newData);
     } else {
-      console.log('\x1b[31m', '🐣️ parse tree data: unknown ', data, '\x1b[0m');
+      console.log(
+        '\x1b[31m', '🐣️ parse tree data: unknown ', data, '\x1b[0m',
+      );
     }
   };
 
-  useEffect(() => {
-    renderTree();
-  }, [treeData]);
+  useEffect(
+    () => {
+      renderTree();
+    }, [treeData],
+  );
 
-  useEffect(() => {
-    if (data) {
-      parseTreeData();
-    }
-  }, [data]);
+  useEffect(
+    () => {
+      if (data) {
+        parseTreeData();
+      }
+    }, [data],
+  );
 
   const _onPressGroup = (group: GroupItemProps) => {
     if (onChangeCheckedGroups) {
-      onCheckedGroup(group, !treeData[group.uiId].isChecked);
+      onCheckedGroup(
+        group, !treeData[group.uiId].isChecked,
+      );
     } else if (onPressGroup) {
       onPressGroup(group);
     } else if (toggleOnPress) {
@@ -92,10 +106,12 @@ const GroupTree: React.FC<GroupTreeProps> = ({
         communityId: group.communityId,
       });
     } else {
-      rootNavigation.navigate(groupStack.groupDetail, {
-        groupId: group.id,
-        initial: true,
-      });
+      rootNavigation.navigate(
+        groupStack.groupDetail, {
+          groupId: group.id,
+          initial: true,
+        },
+      );
     }
   };
 
@@ -128,7 +144,9 @@ const GroupTree: React.FC<GroupTreeProps> = ({
     const newCollapsing = !group.isCollapsing;
     const { uiId } = group;
 
-    onToggle?.(group, newCollapsing);
+    onToggle?.(
+      group, newCollapsing,
+    );
 
     newTreeData[uiId].isCollapsing = newCollapsing;
     newTreeData[uiId].childrenUiIds.forEach((childUiId) => {
@@ -146,35 +164,49 @@ const GroupTree: React.FC<GroupTreeProps> = ({
    * Logic:
    *  - If child uncheck => auto uncheck parent and above
    */
-  const onCheckedGroupParent = (newTree: TreeData, group: IParsedGroup) => {
+  const onCheckedGroupParent = (
+    newTree: TreeData, group: IParsedGroup,
+  ) => {
     const uiUd = group.parentUiId;
     if (!newTree[uiUd]) {
       return;
     }
     newTree[uiUd].isChecked = false;
-    onCheckedGroupParent(newTree, newTree[uiUd]);
+    onCheckedGroupParent(
+      newTree, newTree[uiUd],
+    );
   };
 
   /**
    * Logic:
    *  - If group checked => auto check inner group
    */
-  const onCheckedGroupInner = (newTree: TreeData, group: IParsedGroup) => {
+  const onCheckedGroupInner = (
+    newTree: TreeData, group: IParsedGroup,
+  ) => {
     group?.childrenUiIds?.forEach?.((innerUiId) => {
       newTree[innerUiId] = treeData[innerUiId];
       newTree[innerUiId].isChecked = true;
-      onCheckedGroupInner(newTree, treeData[innerUiId]);
+      onCheckedGroupInner(
+        newTree, treeData[innerUiId],
+      );
     });
   };
 
-  const onCheckedGroup = (group: GroupItemProps, newChecked: boolean) => {
+  const onCheckedGroup = (
+    group: GroupItemProps, newChecked: boolean,
+  ) => {
     const newTreeData = { ...treeData };
     const { uiId } = group;
     newTreeData[uiId].isChecked = newChecked;
     if (!newChecked) {
-      onCheckedGroupParent(newTreeData, group);
+      onCheckedGroupParent(
+        newTreeData, group,
+      );
     } else {
-      onCheckedGroupInner(newTreeData, group);
+      onCheckedGroupInner(
+        newTreeData, group,
+      );
     }
     if (onChangeCheckedGroups) {
       const callbackData: OnChangeCheckedGroupsData = {};
@@ -199,7 +231,9 @@ const GroupTree: React.FC<GroupTreeProps> = ({
     const collapsed = !!group?.collapsed;
     const hide = parentHide || parentCollapsing;
     const uiId = `${parentUiId}_${index}`;
-    group.children?.map((child, childIndex) => childrenUiIds.push(`${uiId}_${childIndex}`));
+    group.children?.map((
+      child, childIndex,
+    ) => childrenUiIds.push(`${uiId}_${childIndex}`));
     treeData[uiId] = {
       ...group,
       uiId,
@@ -212,31 +246,35 @@ const GroupTree: React.FC<GroupTreeProps> = ({
       children: [],
     };
     if (group.children) {
-      group.children.map((child, index) => getItem(child, treeData, uiLevel + 1, uiId, index, collapsed, hide));
+      group.children.map((
+        child, index,
+      ) => getItem(
+        child, treeData, uiLevel + 1, uiId, index, collapsed, hide,
+      ));
     }
   };
 
   const renderTree = () => {
     const tree: React.ReactNode[] = [];
-    Object.values(treeData).map((group, index) => tree.push(
-      <GroupItem
-        key={`tree_item_${index}_${group?.id}`}
-        {...group}
-        showPrivacy={showPrivacy}
-        showPrivacyName={showPrivacyName}
-        showInfo={showInfo}
-        onPressItem={_onPressGroup}
-        onToggleItem={onToggleGroup}
-        onCheckedItem={onChangeCheckedGroups ? onCheckedGroup : undefined}
-        onPressMenu={onPressMenu}
-        disableOnPressItem={disableOnPressItem}
-        disableHorizontal={disableHorizontal}
-        iconVariant={iconVariant}
-        nameLines={nameLines}
-        menuIcon={menuIcon}
-        renderExtraInfo={renderExtraInfo}
-      />,
-    ));
+    Object.values(treeData).map((
+      group, index,
+    ) => tree.push(<GroupItem
+      key={`tree_item_${index}_${group?.id}`}
+      {...group}
+      showPrivacy={showPrivacy}
+      showPrivacyName={showPrivacyName}
+      showInfo={showInfo}
+      onPressItem={_onPressGroup}
+      onToggleItem={onToggleGroup}
+      onCheckedItem={onChangeCheckedGroups ? onCheckedGroup : undefined}
+      onPressMenu={onPressMenu}
+      disableOnPressItem={disableOnPressItem}
+      disableHorizontal={disableHorizontal}
+      iconVariant={iconVariant}
+      nameLines={nameLines}
+      menuIcon={menuIcon}
+      renderExtraInfo={renderExtraInfo}
+    />));
     setRenderedTree(tree);
   };
 

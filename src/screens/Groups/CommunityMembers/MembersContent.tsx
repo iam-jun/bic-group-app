@@ -23,14 +23,16 @@ const MembersContent = ({ communityId, onPressMenu }: MembersContentProps) => {
     ],
   );
 
-  useEffect(() => {
-    getCommunityDetail();
-    getCommunityMembers();
+  useEffect(
+    () => {
+      getCommunityDetail();
+      getCommunityMembers();
 
-    return () => {
-      resetCommunityMembers();
-    };
-  }, [communityId]);
+      return () => {
+        resetCommunityMembers();
+      };
+    }, [communityId],
+  );
 
   const getCommunityMembers = (isRefreshing?: boolean) => {
     dispatch(actions.getCommunityMembers({ communityId, isRefreshing }));

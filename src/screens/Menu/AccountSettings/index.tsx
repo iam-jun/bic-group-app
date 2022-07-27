@@ -39,27 +39,35 @@ const GeneralSettings = () => {
 
   const myProfileData = useKeySelector(menuKeySelector.myProfile);
 
-  useEffect(() => {
-    if (isFocused) dispatch(appActions.setRootScreenName('settings'));
-  }, [isFocused]);
+  useEffect(
+    () => {
+      if (isFocused) dispatch(appActions.setRootScreenName('settings'));
+    }, [isFocused],
+  );
 
   const onLanguageMenuPress = (item: ILanguage) => {
     changeLanguage(item.code);
   };
 
-  const onAccountSettingsPress = (item: ISetting, e: any) => {
+  const onAccountSettingsPress = (
+    item: ISetting, e: any,
+  ) => {
     switch (item.type) {
       case 'userProfile':
-        return rootNavigation.navigate(mainStack.userEdit, {
-          userId: myProfileData?.id,
-          params: {},
-        });
+        return rootNavigation.navigate(
+          mainStack.userEdit, {
+            userId: myProfileData?.id,
+            params: {},
+          },
+        );
 
       case 'securityLogin':
         return rootNavigation.navigate(menuStack.securityLogin);
 
       case 'language':
-        baseSheetRef?.current?.open?.(e?.pageX, e?.pageY);
+        baseSheetRef?.current?.open?.(
+          e?.pageX, e?.pageY,
+        );
         return;
 
       default:

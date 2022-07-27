@@ -30,30 +30,28 @@ const EditDescription = (props: any) => {
     setText(value);
   };
 
-  useEffect(() => {
-    !text && setText(description);
-  }, [description]);
+  useEffect(
+    () => {
+      !text && setText(description);
+    }, [description],
+  );
 
   const onSave = () => {
     if (type === 'group') {
-      dispatch(
-        groupsActions.editGroupDetail({
-          data: {
-            id,
-            description: text?.trim() ? text?.trim() : null,
-          },
-          editFieldName: i18next.t('common:text_description'),
-          callback: onNavigateBack,
-        }),
-      );
+      dispatch(groupsActions.editGroupDetail({
+        data: {
+          id,
+          description: text?.trim() ? text?.trim() : null,
+        },
+        editFieldName: i18next.t('common:text_description'),
+        callback: onNavigateBack,
+      }));
     } else {
-      dispatch(
-        groupsActions.editCommunityDetail({
-          data: { id, description: text?.trim() ? text.trim() : null },
-          editFieldName: i18next.t('common:text_description'),
-          callback: onNavigateBack,
-        }),
-      );
+      dispatch(groupsActions.editCommunityDetail({
+        data: { id, description: text?.trim() ? text.trim() : null },
+        editFieldName: i18next.t('common:text_description'),
+        callback: onNavigateBack,
+      }));
     }
   };
 

@@ -64,16 +64,18 @@ const _MentionInput = ({
 
   const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    const onCompleteMentionListener = DeviceEventEmitter.addListener(
-      'mention-input-on-complete-mention',
-      _setContent,
-    );
-    return () => {
-      onCompleteMentionListener?.remove?.();
-      dispatch(actions.setData([]));
-    };
-  }, []);
+  React.useEffect(
+    () => {
+      const onCompleteMentionListener = DeviceEventEmitter.addListener(
+        'mention-input-on-complete-mention',
+        _setContent,
+      );
+      return () => {
+        onCompleteMentionListener?.remove?.();
+        dispatch(actions.setData([]));
+      };
+    }, [],
+  );
 
   const getContent = () => componentInputProps?.value;
 
@@ -81,17 +83,21 @@ const _MentionInput = ({
     componentInputProps.onChangeText?.(c);
   };
 
-  useImperativeHandle(_mentionInputRef, () => ({
-    setContent: _setContent,
-    getContent,
-  }));
+  useImperativeHandle(
+    _mentionInputRef, () => ({
+      setContent: _setContent,
+      getContent,
+    }),
+  );
 
   const onSelectionChange = (event: any) => {
     const position = event.nativeEvent.selection.end;
     const text = componentInputProps?.value;
 
     if (Platform.OS === 'ios') {
-      const _keyboardType = switchKeyboardForCodeBlocks(text, position);
+      const _keyboardType = switchKeyboardForCodeBlocks(
+        text, position,
+      );
       setKeyboardType(_keyboardType);
     }
     cursorPosition.current = position;
@@ -101,7 +107,9 @@ const _MentionInput = ({
       value: text,
       groupIds,
     };
-    DeviceEventEmitter.emit('autocomplete-on-selection-change', param);
+    DeviceEventEmitter.emit(
+      'autocomplete-on-selection-change', param,
+    );
   };
 
   const onChangeText = (value: string) => {
@@ -112,7 +120,9 @@ const _MentionInput = ({
       value,
       groupIds,
     };
-    DeviceEventEmitter.emit('autocomplete-on-selection-change', param);
+    DeviceEventEmitter.emit(
+      'autocomplete-on-selection-change', param,
+    );
   };
 
   const _onKeyPress = (event: any) => {
@@ -141,9 +151,11 @@ const _MentionInput = ({
     setTopPosition(e.nativeEvent.contentSize.height);
   };
 
-  const debounceSetMeasuredHeight = debounce((height) => {
-    setMeasuredHeight(height);
-  }, 80);
+  const debounceSetMeasuredHeight = debounce(
+    (height) => {
+      setMeasuredHeight(height);
+    }, 80,
+  );
 
   const _onLayoutContainer = useCallback(
     (e) => {

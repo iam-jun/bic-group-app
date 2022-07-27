@@ -38,7 +38,9 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
   const insets = useSafeAreaInsets();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = createStyle(theme, insets);
+  const styles = createStyle(
+    theme, insets,
+  );
 
   const imageUrls = getImageUrls(source);
 
@@ -56,7 +58,9 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
         message: imageUrls?.[activeIndex]?.url,
         url: imageUrls?.[activeIndex]?.url,
       }).then((result) => {
-        console.log('\x1b[35m🐣️ Gallery share result: ', result, '\x1b[0m');
+        console.log(
+          '\x1b[35m🐣️ Gallery share result: ', result, '\x1b[0m',
+        );
       });
     } catch (error: any) {
       console.error(error.message);
@@ -98,7 +102,9 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     }
   };
 
-  const getItemFooterLayout = (data: any, index: number) => ({
+  const getItemFooterLayout = (
+    data: any, index: number,
+  ) => ({
     length: 48,
     offset: 48 * index,
     index,
@@ -149,7 +155,9 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
     let fileName = imageUrls?.[activeIndex]?.name?.toUpperCase?.();
     if (!fileName && alwaysShowFileName) {
       fileName = imageUrls?.[activeIndex]?.url
-        ?.replace?.(/(.+)\/(.+)$/, '$2')
+        ?.replace?.(
+          /(.+)\/(.+)$/, '$2',
+        )
         ?.toUpperCase?.();
     }
 
@@ -171,13 +179,17 @@ const ImageGalleryModal: FC<ImageGalleryModalProps> = ({
           renderItem={renderFooterItem}
           showsHorizontalScrollIndicator={false}
           onScrollToIndexFailed={onScrollToIndexFailed}
-          keyExtractor={(item, index) => `footer_item_${index}_${item?.url}`}
+          keyExtractor={(
+            item, index,
+          ) => `footer_item_${index}_${item?.url}`}
         />
       </View>
     );
   };
 
-  const renderScreen = (item: any, index: number) => (
+  const renderScreen = (
+    item: any, index: number,
+  ) => (
     <TouchableOpacity
       key={`${index}`}
       activeOpacity={0.8}
@@ -268,7 +280,9 @@ const getImageUrls = (source: any) => {
   return result;
 };
 
-const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
+const createStyle = (
+  theme: ExtendedTheme, insets: EdgeInsets,
+) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {

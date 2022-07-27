@@ -53,7 +53,9 @@ const GroupDetail = (props: any) => {
   });
 
   const getGroupDetail = () => {
-    dispatch(groupsActions.getGroupDetail(groupId, true));
+    dispatch(groupsActions.getGroupDetail(
+      groupId, true,
+    ));
   };
 
   const getGroupPosts = () => {
@@ -70,13 +72,17 @@ const GroupDetail = (props: any) => {
     dispatch(groupsActions.getGroupPosts(groupId));
   };
 
-  useEffect(() => {
-    getGroupDetail();
-  }, [groupId]);
+  useEffect(
+    () => {
+      getGroupDetail();
+    }, [groupId],
+  );
 
-  useEffect(() => {
-    getGroupPosts();
-  }, [groupInfo]);
+  useEffect(
+    () => {
+      getGroupPosts();
+    }, [groupInfo],
+  );
 
   const renderGroupContent = () => {
     // visitors can only see "About" of Private group

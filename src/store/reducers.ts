@@ -41,11 +41,17 @@ const postPersistConfig = {
 export const appReducer = combineReducers({
   app,
   modal,
-  auth: persistReducer(authPersistConfig, auth),
-  post: persistReducer(postPersistConfig, postReducer),
+  auth: persistReducer(
+    authPersistConfig, auth,
+  ),
+  post: persistReducer(
+    postPersistConfig, postReducer,
+  ),
   groups: groupsReducer,
   home: homeReducer,
-  notifications: persistReducer(notiPersistConfig, notificationsReducer),
+  notifications: persistReducer(
+    notiPersistConfig, notificationsReducer,
+  ),
   menu: menuReducer,
   noInternet: noInternetReducer,
   mentionInput: mentionInputReducer,
@@ -53,27 +59,39 @@ export const appReducer = combineReducers({
   giphy: giphyReducer,
 });
 
-const rootReducers = (state:any, action:{type:string, payload?:any}) => {
+const rootReducers = (
+  state:any, action:{type:string, payload?:any},
+) => {
   if (
     action.type === types.SIGN_OUT
     || action.type === ActionTypes.UnauthorizedLogout
   ) {
     if (state?.auth?.user) {
-      makeRemovePushTokenRequest().catch((e) => console.error('error when call api logout', e));
+      makeRemovePushTokenRequest().catch((e) => console.error(
+        'error when call api logout', e,
+      ));
     }
     initPushTokenMessage()
       .then((messaging) => messaging().deleteToken())
-      .catch((e) => console.error('error when delete token', e));
+      .catch((e) => console.error(
+        'error when delete token', e,
+      ));
     AsyncStorage.multiRemove([
       'persist:root',
       'persist:auth',
       'persist:notifications',
       'persist:post',
-    ]).catch((e) => console.error('error when logout', e));
-    return appReducer(undefined, action);
+    ]).catch((e) => console.error(
+      'error when logout', e,
+    ));
+    return appReducer(
+      undefined, action,
+    );
   }
 
-  return appReducer(state, action);
+  return appReducer(
+    state, action,
+  );
 };
 
 export default rootReducers;

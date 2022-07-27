@@ -209,7 +209,9 @@ export const groupInitState = {
   },
 };
 
-function groupsReducer(state = groupInitState, action: any = {}) {
+function groupsReducer(
+  state = groupInitState, action: any = {},
+) {
   const { type, payload } = action;
   const {
     selectedUsers,
@@ -545,9 +547,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
     case groupsTypes.SELECT_JOINABLE_USERS: {
-      const included = selectedUsers.find(
-        (item: IUser) => payload.id === item.id,
-      );
+      const included = selectedUsers.find((item: IUser) => payload.id === item.id);
       return {
         ...state,
         selectedUsers: !included

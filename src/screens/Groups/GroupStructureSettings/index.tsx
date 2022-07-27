@@ -32,19 +32,21 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = () => {
 
   const { id: communityId } = useKeySelector(groupsKeySelector.communityDetail) || {};
 
-  const { data: communityTree, loading } = useKeySelector(
-    groupsKeySelector.groupStructure.communityTree,
-  );
+  const { data: communityTree, loading } = useKeySelector(groupsKeySelector.groupStructure.communityTree);
 
-  useEffect(() => {
-    dispatch(groupsActions.getGroupStructureCommunityTree({ communityId }));
-  }, []);
+  useEffect(
+    () => {
+      dispatch(groupsActions.getGroupStructureCommunityTree({ communityId }));
+    }, [],
+  );
 
   const onPressMenu = (group: GroupItemProps) => {
     const { communityId, childrenUiIds, level = 0 } = group || {};
     let groupLevel1NoSibling = false;
     if (level === 1 && group?.parents?.[0]) {
-      const groupParent = getGroupFromTreeById(communityTree, group.parents[0]);
+      const groupParent = getGroupFromTreeById(
+        communityTree, group.parents[0],
+      );
       groupLevel1NoSibling = isEmpty(groupParent.children) || groupParent?.children?.length === 1;
     }
     const disableMove = !!communityId || groupLevel1NoSibling;
@@ -53,18 +55,16 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = () => {
       communityTree,
       group?.id,
     );
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: (
-          <GroupStructureMenu
-            group={groupFromTree}
-            disableMove={disableMove}
-            disableReorder={disableReorder}
-          />
-        ),
-      }),
-    );
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent: (
+        <GroupStructureMenu
+          group={groupFromTree}
+          disableMove={disableMove}
+          disableReorder={disableReorder}
+        />
+      ),
+    }));
   };
 
   return (

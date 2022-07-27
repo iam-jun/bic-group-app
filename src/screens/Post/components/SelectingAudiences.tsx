@@ -23,23 +23,27 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
   const [containerWidth, setContainerWidth] = useState();
   const [audiencesWidth, setAudiencesWidth] = useState();
 
-  useEffect(() => {
-    if (audiencesWidth && containerWidth) {
-      if (audiencesWidth > containerWidth) {
-        setShowBtnShowAll(true);
-      } else {
+  useEffect(
+    () => {
+      if (audiencesWidth && containerWidth) {
+        if (audiencesWidth > containerWidth) {
+          setShowBtnShowAll(true);
+        } else {
+          setShowAll(false);
+          setShowBtnShowAll(false);
+        }
+      }
+    }, [audiencesWidth, containerWidth],
+  );
+
+  useEffect(
+    () => {
+      if (!list || list?.length === 0) {
         setShowAll(false);
         setShowBtnShowAll(false);
       }
-    }
-  }, [audiencesWidth, containerWidth]);
-
-  useEffect(() => {
-    if (!list || list?.length === 0) {
-      setShowAll(false);
-      setShowBtnShowAll(false);
-    }
-  }, [list]);
+    }, [list],
+  );
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
@@ -63,7 +67,9 @@ const SelectingAudiences: React.FC<SelectingAudiencesProps> = ({
     setAudiencesWidth(width);
   };
 
-  const renderItem = (item: any, index: number) => {
+  const renderItem = (
+    item: any, index: number,
+  ) => {
     const { name, icon, avatar } = item;
     return (
       <Tag

@@ -42,7 +42,9 @@ import { checkPermission, permissionTypes } from '~/utils/permission';
 import dimension from '~/theme/dimension';
 
 const inputMinHeight = 66;
-const isAndroid8 = Platform.OS === 'android' && parseInt(DeviceInfo.getSystemVersion(), 10) === 8;
+const isAndroid8 = Platform.OS === 'android' && parseInt(
+  DeviceInfo.getSystemVersion(), 10,
+) === 8;
 const isAnimated = isAndroid8;
 
 export interface CreateCommentProps {
@@ -90,30 +92,32 @@ const CreateComment: FC<CreateCommentProps> = ({ route }: CreateCommentProps) =>
     || isEmpty;
   const showToolbar = !selectedImg;
 
-  useEffect(() => {
-    dispatch(
-      postActions.setCreateComment({
+  useEffect(
+    () => {
+      dispatch(postActions.setCreateComment({
         content: oldContent || '',
         image: oldImages?.[0],
-      }),
-    );
-    if (oldContent && !mentionInputRef?.current?.getContent?.()) {
-      mentionInputRef?.current?.setContent?.(oldContent);
-    }
-    if (oldImages?.[0]) {
-      const {
-        name, origin_name, width, height,
-      } = oldImages[0];
-      const file: any = { width: width || 1, height: height || 1 };
-      setSelectedImg({
-        url: name?.includes('http')
-          ? name
-          : getResourceUrl(uploadTypes.commentImage, name),
-        fileName: origin_name,
-        file,
-      });
-    }
-  }, [oldContent, oldImages]);
+      }));
+      if (oldContent && !mentionInputRef?.current?.getContent?.()) {
+        mentionInputRef?.current?.setContent?.(oldContent);
+      }
+      if (oldImages?.[0]) {
+        const {
+          name, origin_name, width, height,
+        } = oldImages[0];
+        const file: any = { width: width || 1, height: height || 1 };
+        setSelectedImg({
+          url: name?.includes('http')
+            ? name
+            : getResourceUrl(
+              uploadTypes.commentImage, name,
+            ),
+          fileName: origin_name,
+          file,
+        });
+      }
+    }, [oldContent, oldImages],
+  );
 
   const onPressSave = () => {
     Keyboard.dismiss();
@@ -129,30 +133,30 @@ const CreateComment: FC<CreateCommentProps> = ({ route }: CreateCommentProps) =>
         images.push(imageData);
       }
       const newData: ICommentData = { content, media: { images } };
-      dispatch(
-        postActions.putEditComment({
-          id: commentId,
-          comment,
-          data: newData,
-        }),
-      );
+      dispatch(postActions.putEditComment({
+        id: commentId,
+        comment,
+        data: newData,
+      }));
     }
   };
 
   const onSelectImage = () => {
-    checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
-      if (canOpenPicker) {
-        ImagePicker.openPickerSingle().then((file) => {
-          if (!file) return;
-          setUploading(true);
-          const image: ICreatePostImage = {
-            fileName: file.filename,
-            file,
-          };
-          setSelectedImg(image);
-        });
-      }
-    });
+    checkPermission(
+      permissionTypes.photo, dispatch, (canOpenPicker) => {
+        if (canOpenPicker) {
+          ImagePicker.openPickerSingle().then((file) => {
+            if (!file) return;
+            setUploading(true);
+            const image: ICreatePostImage = {
+              fileName: file.filename,
+              file,
+            };
+            setSelectedImg(image);
+          });
+        }
+      },
+    );
   };
 
   const onChangeText = (text: string) => {
@@ -163,17 +167,15 @@ const CreateComment: FC<CreateCommentProps> = ({ route }: CreateCommentProps) =>
     Keyboard.dismiss();
 
     if (isEditHasChange) {
-      dispatch(
-        modalActions.showAlert({
-          title: t('common:label_discard_changes'),
-          content: t('common:text_discard_warning'),
-          showCloseButton: true,
-          cancelBtn: true,
-          cancelLabel: t('common:btn_continue_editing'),
-          confirmLabel: t('common:btn_discard'),
-          onConfirm: () => rootNavigation.goBack(),
-        }),
-      );
+      dispatch(modalActions.showAlert({
+        title: t('common:label_discard_changes'),
+        content: t('common:text_discard_warning'),
+        showCloseButton: true,
+        cancelBtn: true,
+        cancelLabel: t('common:btn_continue_editing'),
+        confirmLabel: t('common:btn_discard'),
+        onConfirm: () => rootNavigation.goBack(),
+      }));
       return;
     }
     rootNavigation.goBack();
@@ -181,20 +183,28 @@ const CreateComment: FC<CreateCommentProps> = ({ route }: CreateCommentProps) =>
 
   const onLayoutCloneText = (e: any) => {
     const height = e?.nativeEvent?.layout?.height;
-    let newHeight = Math.max(inputMinHeight, height);
+    let newHeight = Math.max(
+      inputMinHeight, height,
+    );
     if (isAndroid8) {
       // Avoid bug white screen on android 8
-      newHeight = Math.min(500, newHeight);
+      newHeight = Math.min(
+        500, newHeight,
+      );
     }
-    Animated.timing(inputHeightAnim, {
-      toValue: newHeight,
-      useNativeDriver: false,
-      duration: 0,
-      easing: Easing.ease,
-    }).start();
+    Animated.timing(
+      inputHeightAnim, {
+        toValue: newHeight,
+        useNativeDriver: false,
+        duration: 0,
+        easing: Easing.ease,
+      },
+    ).start();
   };
 
-  const onUploadImageSuccess = (url: string, filename: string) => {
+  const onUploadImageSuccess = (
+    url: string, filename: string,
+  ) => {
     if (selectedImg?.fileName === filename) {
       setSelectedImg({ ...selectedImg, url });
     }
@@ -215,7 +225,9 @@ const CreateComment: FC<CreateCommentProps> = ({ route }: CreateCommentProps) =>
     const { file, fileName, url } = selectedImg;
     const { width = 1, height = 1 } = file || {};
     const ratio = height / width;
-    const dfWidth = Math.min(dimension.deviceWidth, dimension.maxNewsfeedWidth);
+    const dfWidth = Math.min(
+      dimension.deviceWidth, dimension.maxNewsfeedWidth,
+    );
 
     return (
       <UploadingImage

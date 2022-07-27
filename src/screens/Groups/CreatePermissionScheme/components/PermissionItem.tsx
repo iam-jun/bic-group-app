@@ -41,7 +41,9 @@ const PermissionItem: FC<PermissionItemProps> = ({
   const isRestricted = restrictedRoles?.includes?.(role.type || '');
 
   const _onPress = () => {
-    onPress?.(permission, roleIndex);
+    onPress?.(
+      permission, roleIndex,
+    );
   };
 
   let icon: any = 'iconCheckboxUnselected';

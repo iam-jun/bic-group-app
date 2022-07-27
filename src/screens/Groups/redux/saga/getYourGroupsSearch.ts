@@ -12,9 +12,7 @@ export default function* getYourGroupsSearch({
 }): any {
   const { key, communityId } = payload || {};
   if (!key?.trim?.()) {
-    yield put(
-      groupsActions.setYourGroupsSearch({ loading: false, list: [], key: '' }),
-    );
+    yield put(groupsActions.setYourGroupsSearch({ loading: false, list: [], key: '' }));
     return;
   }
   try {

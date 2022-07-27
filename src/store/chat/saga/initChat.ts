@@ -7,19 +7,22 @@ import actions from '../actions';
 
 export default function* initChat() {
   try {
-    const response: AxiosResponse = yield makeHttpRequest(
-      apiConfig.Chat.init(),
-    );
+    const response: AxiosResponse = yield makeHttpRequest(apiConfig.Chat.init());
     const data = response.data?.data;
 
     const result = (data || []).reduce(
-      // eslint-disable-next-line no-return-assign, no-sequences
-      (obj: any, item: any) => ((obj[item.channel_id] = item), obj),
+      // eslint-disable-next-line no-return-assign
+      (
+        obj: any, item: any,
+      // eslint-disable-next-line no-sequences
+      ) => ((obj[item.channel_id] = item), obj),
       {},
     );
 
     yield put(actions.setUnreadChannels(result));
   } catch (err: any) {
-    console.error('initChat error', err);
+    console.error(
+      'initChat error', err,
+    );
   }
 }

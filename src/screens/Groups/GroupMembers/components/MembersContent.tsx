@@ -14,10 +14,12 @@ interface MembersContentProps {
 const MembersContent = ({ groupId, onPressMenu }: MembersContentProps) => {
   const dispatch = useDispatch();
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canManageMember = hasPermissionsOnScopeWithId('groups', groupId, [
-    PERMISSION_KEY.GROUP.ADD_REMOVE_MEMBERS,
-    PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE,
-  ]);
+  const canManageMember = hasPermissionsOnScopeWithId(
+    'groups', groupId, [
+      PERMISSION_KEY.GROUP.ADD_REMOVE_MEMBERS,
+      PERMISSION_KEY.GROUP.ASSIGN_UNASSIGN_ROLE,
+    ],
+  );
 
   const getGroupProfile = () => {
     // to update canManageMember when member role changes
@@ -30,15 +32,17 @@ const MembersContent = ({ groupId, onPressMenu }: MembersContentProps) => {
     }
   };
 
-  useEffect(() => {
-    dispatch(actions.clearGroupMembers());
-    getMembers();
-    getGroupProfile();
-
-    return () => {
+  useEffect(
+    () => {
       dispatch(actions.clearGroupMembers());
-    };
-  }, [groupId]);
+      getMembers();
+      getGroupProfile();
+
+      return () => {
+        dispatch(actions.clearGroupMembers());
+      };
+    }, [groupId],
+  );
 
   const onLoadMore = () => {
     getMembers();

@@ -10,23 +10,17 @@ import { useBaseHook } from '~/hooks/index';
 const useAuth = () => useSelector((state: IObject<any>) => state.auth);
 
 export const useUserIdAuth = () => (
-  useSelector(
-    (state: IObject<any>) => state.auth?.user?.signInUserSession?.idToken?.payload?.[
-      'custom:user_uuid'
-    ],
-  ) || ''
+  useSelector((state: IObject<any>) => state.auth?.user?.signInUserSession?.idToken?.payload?.[
+    'custom:user_uuid'
+  ]) || ''
 );
 
 export const useAuthToken = () => (
-  useSelector(
-    (state: IObject<any>) => state.auth?.user?.signInUserSession?.idToken?.jwtToken,
-  ) || ''
+  useSelector((state: IObject<any>) => state.auth?.user?.signInUserSession?.idToken?.jwtToken) || ''
 );
 
 export const useAuthTokenExpire = () => (
-  useSelector(
-    (state: IObject<any>) => state.auth?.user?.signInUserSession?.idToken?.payload?.exp,
-  ) || ''
+  useSelector((state: IObject<any>) => state.auth?.user?.signInUserSession?.idToken?.payload?.exp) || ''
 );
 
 export const useAuthKickOut = () => {
@@ -44,20 +38,20 @@ export const useAuthKickOut = () => {
         return;
       }
       dispatch(authActions.signOut());
-      dispatch(
-        modalActions.showAlert({
-          title: t('auth:text_kickout_title'),
-          content: t('auth:text_kickout_desc'),
-          onConfirm: () => put(modalActions.hideAlert()),
-          confirmLabel: t('auth:text_kickout_confirm_button'),
-        }),
-      );
+      dispatch(modalActions.showAlert({
+        title: t('auth:text_kickout_title'),
+        content: t('auth:text_kickout_desc'),
+        onConfirm: () => put(modalActions.hideAlert()),
+        confirmLabel: t('auth:text_kickout_confirm_button'),
+      }));
     }
   };
 
-  useEffect(() => {
-    checkAuthKickOut();
-  }, []);
+  useEffect(
+    () => {
+      checkAuthKickOut();
+    }, [],
+  );
 };
 
 export default useAuth;

@@ -37,15 +37,9 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
 
   const { id } = useKeySelector(groupsKeySelector.communityDetail) || {};
   const name = useKeySelector(groupsKeySelector.permission.creatingScheme.name);
-  const desc = useKeySelector(
-    groupsKeySelector.permission.creatingScheme.description,
-  );
-  const creating = useKeySelector(
-    groupsKeySelector.permission.creatingScheme.creating,
-  );
-  const roles = useKeySelector(
-    groupsKeySelector.permission.creatingScheme.roles,
-  );
+  const desc = useKeySelector(groupsKeySelector.permission.creatingScheme.description);
+  const creating = useKeySelector(groupsKeySelector.permission.creatingScheme.creating);
+  const roles = useKeySelector(groupsKeySelector.permission.creatingScheme.roles);
   const groupScheme = useKeySelector(groupsKeySelector.permission.groupScheme) || {};
   const {
     name: initName,
@@ -69,19 +63,19 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
     if (
       name !== initName
       || desc !== initDesc
-      || !isEqual(roles, initRoles || groupScheme?.roles) // initRoles = undefined for group
+      || !isEqual(
+        roles, initRoles || groupScheme?.roles,
+      ) // initRoles = undefined for group
     ) {
-      dispatch(
-        modalActions.showAlert({
-          title: t('communities:permission:text_title_discard_create_scheme'),
-          content: t('communities:permission:text_desc_discard_create_scheme'),
-          cancelBtn: true,
-          cancelLabel: t('common:btn_discard'),
-          confirmLabel: t('communities:permission:btn_continue'),
-          cancelBtnProps: { textColor: theme.colors.neutral80 },
-          onCancel: () => rootNavigation.goBack(),
-        }),
-      );
+      dispatch(modalActions.showAlert({
+        title: t('communities:permission:text_title_discard_create_scheme'),
+        content: t('communities:permission:text_desc_discard_create_scheme'),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_discard'),
+        confirmLabel: t('communities:permission:btn_continue'),
+        cancelBtnProps: { textColor: theme.colors.neutral80 },
+        onCancel: () => rootNavigation.goBack(),
+      }));
     } else {
       rootNavigation.goBack();
     }
@@ -91,11 +85,9 @@ const CreateSchemeHeader: FC<CreateSchemeHeaderProps> = ({
 
   return (
     <Header
-      title={t(
-        schemeId
-          ? 'communities:permission:title_edit_group_scheme'
-          : 'communities:permission:title_edit_community_scheme',
-      )}
+      title={t(schemeId
+        ? 'communities:permission:title_edit_group_scheme'
+        : 'communities:permission:title_edit_community_scheme')}
       onPressButton={onPress}
       buttonText="common:btn_save"
       buttonProps={{

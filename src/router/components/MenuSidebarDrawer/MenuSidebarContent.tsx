@@ -52,7 +52,9 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
     onCloseSidebar?.();
     switch (type) {
       case 'myProfile':
-        return rootNavigation.navigate(mainStack.userProfile, { userId: id });
+        return rootNavigation.navigate(
+          mainStack.userProfile, { userId: id },
+        );
       case 'draftPost':
         return rootNavigation.navigate(homeStack.draftPost);
       case 'accountSettings':
@@ -67,7 +69,9 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
           cancelBtn: true,
           onConfirm: () => {
             // waiting for close alert success before clear data
-            setTimeout(() => dispatch(authActions.signOut()), 100);
+            setTimeout(
+              () => dispatch(authActions.signOut()), 100,
+            );
           },
           confirmLabel: t('auth:text_sign_out'),
         };
@@ -89,7 +93,9 @@ const MenuSidebarContent: FC<MenuSidebarContentProps> = ({
     itemTestID?: string;
   }) => (
     <>
-      {data.map((item, index) => (
+      {data.map((
+        item, index,
+      ) => (
         <MenuSidebarItem
           key={`${index}_menu_${item?.type}`}
           icon={item?.icon}

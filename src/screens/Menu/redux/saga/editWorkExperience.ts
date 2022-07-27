@@ -39,7 +39,9 @@ export default function* editWorkExperience({
 
     if (callback) return callback();
   } catch (err) {
-    console.log('editWorkExperience:', err);
+    console.log(
+      'editWorkExperience:', err,
+    );
     yield showError(err);
   }
 }

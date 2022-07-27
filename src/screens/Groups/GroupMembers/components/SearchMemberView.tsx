@@ -42,9 +42,7 @@ const SearchMemberView = ({
   );
 
   const getGroupSearchMembers = (searchText: string) => {
-    dispatch(
-      actions.getGroupSearchMembers({ groupId, params: { key: searchText } }),
-    );
+    dispatch(actions.getGroupSearchMembers({ groupId, params: { key: searchText } }));
   };
 
   const onLoadMore = () => {
@@ -58,7 +56,9 @@ const SearchMemberView = ({
   };
 
   const searchHandler = useCallback(
-    debounce(searchMembers, appConfig.searchTriggerTime),
+    debounce(
+      searchMembers, appConfig.searchTriggerTime,
+    ),
     [],
   );
 

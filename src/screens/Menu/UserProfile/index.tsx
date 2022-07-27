@@ -57,7 +57,9 @@ const UserProfile = (props: any) => {
   const [isChangeImg, setIsChangeImg] = useState<string>('');
 
   const theme: ExtendedTheme = useTheme();
-  const styles = themeStyles(theme, coverHeight);
+  const styles = themeStyles(
+    theme, coverHeight,
+  );
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
 
@@ -90,60 +92,68 @@ const UserProfile = (props: any) => {
     }
   }, [isFocused, userId]);
 
-  useEffect(() => {
-    if (
-      userId?.toString?.() === currentUserId?.toString?.()
+  useEffect(
+    () => {
+      if (
+        userId?.toString?.() === currentUserId?.toString?.()
       || userId?.toString?.() === currentUsername?.toString?.()
-    ) {
-      if (isChangeImg === 'avatar') {
-        dispatch(homeActions.getHomePosts({ isRefresh: true }));
-        setAvatarState(myProfileData?.avatar);
-      } else if (isChangeImg === 'backgroundImgUrl') {
-        setBgImgState(myProfileData?.backgroundImgUrl);
+      ) {
+        if (isChangeImg === 'avatar') {
+          dispatch(homeActions.getHomePosts({ isRefresh: true }));
+          setAvatarState(myProfileData?.avatar);
+        } else if (isChangeImg === 'backgroundImgUrl') {
+          setBgImgState(myProfileData?.backgroundImgUrl);
+        }
       }
-    }
-  }, [myProfileData]);
+    }, [myProfileData],
+  );
 
-  const onEditProfileButton = () => rootNavigation.navigate(mainStack.userEdit, { userId });
+  const onEditProfileButton = () => rootNavigation.navigate(
+    mainStack.userEdit, { userId },
+  );
 
   const uploadFile = (
     file: IFilePicked,
     fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
-    dispatch(
-      menuActions.uploadImage(
-        {
-          id,
-          file,
-          fieldName,
-          uploadType,
-        },
-        () => {
-          setIsChangeImg(fieldName);
-        },
-      ),
-    );
+    dispatch(menuActions.uploadImage(
+      {
+        id,
+        file,
+        fieldName,
+        uploadType,
+      },
+      () => {
+        setIsChangeImg(fieldName);
+      },
+    ));
   };
 
   const _openImagePicker = async (
     fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
-    checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
-      if (canOpenPicker) {
-        ImagePicker.openPickerSingle({
-          ...userProfileImageCropRatio[fieldName],
-          cropping: true,
-          mediaType: 'photo',
-        }).then((file) => {
-          uploadFile(file, fieldName, uploadType);
-        });
-      }
-    });
+    checkPermission(
+      permissionTypes.photo, dispatch, (canOpenPicker) => {
+        if (canOpenPicker) {
+          ImagePicker.openPickerSingle({
+            ...userProfileImageCropRatio[fieldName],
+            cropping: true,
+            mediaType: 'photo',
+          }).then((file) => {
+            uploadFile(
+              file, fieldName, uploadType,
+            );
+          });
+        }
+      },
+    );
   };
 
-  const onEditAvatar = () => _openImagePicker('avatar', uploadTypes.userAvatar);
+  const onEditAvatar = () => _openImagePicker(
+    'avatar', uploadTypes.userAvatar,
+  );
 
   const onEditCover = () => _openImagePicker('backgroundImgUrl', uploadTypes.userCover);
 
@@ -155,9 +165,11 @@ const UserProfile = (props: any) => {
   };
 
   const onSeeMore = () => {
-    rootNavigation.navigate(mainStack.userEdit, {
-      userId,
-    });
+    rootNavigation.navigate(
+      mainStack.userEdit, {
+        userId,
+      },
+    );
   };
 
   const onPressChat = () => {
@@ -172,7 +184,9 @@ const UserProfile = (props: any) => {
     }
   };
 
-  const renderEditButton = (style: any, onPress: any, testID: string) => (userId == currentUserId || userId == currentUsername ? (
+  const renderEditButton = (
+    style: any, onPress: any, testID: string,
+  ) => (userId == currentUserId || userId == currentUsername ? (
     <ButtonWrapper
       testID={testID}
       style={[styles.editButton, style]}
@@ -290,7 +304,9 @@ const UserProfile = (props: any) => {
 
 export default UserProfile;
 
-const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
+const themeStyles = (
+  theme: ExtendedTheme, coverHeight: number,
+) => {
   const { colors } = theme;
 
   return StyleSheet.create({

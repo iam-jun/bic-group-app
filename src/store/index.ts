@@ -44,7 +44,9 @@ if (__DEV__) {
   sagaMiddleware = createSagaMiddleware();
 }
 
-const persistedReducer = persistReducer(persistConfig, rootReducer);
+const persistedReducer = persistReducer(
+  persistConfig, rootReducer,
+);
 
 const composeEnhancers = compose;
 let enhancer;
@@ -56,17 +58,23 @@ if (__DEV__) {
 } else {
   enhancer = composeEnhancers(applyMiddleware(sagaMiddleware));
 }
-const store = createStore(persistedReducer, enhancer);
+const store = createStore(
+  persistedReducer, enhancer,
+);
 const persistor = persistStore(store);
 
 const getCurrentUser = (): IUserResponse | boolean => {
   const state = store.getState();
-  return _.get(state, 'auth.user', false);
+  return _.get(
+    state, 'auth.user', false,
+  );
 };
 
 const getCurrentAuth = (): unknown | boolean => {
   const state = store.getState();
-  return _.get(state, 'auth', false);
+  return _.get(
+    state, 'auth', false,
+  );
 };
 
 export default {

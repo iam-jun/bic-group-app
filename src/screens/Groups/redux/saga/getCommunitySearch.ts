@@ -32,14 +32,12 @@ export default function* getCommunitySearch({
     const newIds = communities.map((item: ICommunity) => item.id);
     const newItems = mapItems(communities);
 
-    yield put(
-      groupsActions.setCommunitySearch({
-        loading: false,
-        canLoadMore: newIds.length === appConfig.recordsPerPage,
-        ids: [...ids, ...newIds],
-        items: { ...items, ...newItems },
-      }),
-    );
+    yield put(groupsActions.setCommunitySearch({
+      loading: false,
+      canLoadMore: newIds.length === appConfig.recordsPerPage,
+      ids: [...ids, ...newIds],
+      items: { ...items, ...newItems },
+    }));
   } catch (err) {
     console.error('getCommunitySearch error:', err);
     yield put(groupsActions.setCommunitySearch({ loading: false }));

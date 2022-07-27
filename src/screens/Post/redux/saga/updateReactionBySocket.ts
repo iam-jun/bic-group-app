@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { get, isEmpty } from 'lodash';
 import { select } from 'redux-saga/effects';
 
@@ -20,7 +19,7 @@ export default function* updateReactionBySocket({
   const { userId, data } = payload || {};
   const {
     reactionsCount,
-    reaction = {},
+    reaction,
     reactionsOfActor,
     comment,
     id,
@@ -29,7 +28,9 @@ export default function* updateReactionBySocket({
   if (!isEmpty(reaction)) {
     // handle reaction to post
     // merge own reaction if reaction's actor is current user
-    const p = (yield select((state) => get(state, postKeySelector.postById(id)))) || {};
+    const p = (yield select((state) => get(
+      state, postKeySelector.postById(id),
+    ))) || {};
     const ownReactions = p?.ownerReactions ? [...p.ownerReactions] : [];
     const isCurrentUser = userId.toString() == reaction?.actor?.id;
     yield onUpdateReactionOfPostById(
@@ -44,7 +45,6 @@ export default function* updateReactionBySocket({
 
   if (!isEmpty(comment)) {
     // handle reaction to comment
-    // @ts-ignore
     const {
       id: _cId,
       reactionsOfActor: _cOwnerReactions,
@@ -66,12 +66,14 @@ export default function* updateReactionBySocket({
       isCurrentUser = userId == child?.actor?.id;
     }
     // merge own children if reaction's actor is current user
-    const c = (yield select((s) => get(s, postKeySelector.commentById(finalId || 0))))
+    const c = (yield select((s) => get(
+      s, postKeySelector.commentById(finalId || 0),
+    )))
       || {};
     const ownReactions = c?.ownerReactions ? [...c.ownerReactions] : [];
 
     yield onUpdateReactionOfCommentById(
-      finalId as number,
+      finalId,
       isCurrentUser && finalReaction?.reactionName
         ? finalOwnerReactions
         : ownReactions,

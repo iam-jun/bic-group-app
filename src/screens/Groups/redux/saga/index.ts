@@ -80,7 +80,9 @@ import getMyPermissions from './getMyPermissions';
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* groupsSaga() {
-  yield takeLatest(groupsTypes.GET_MY_PERMISSIONS, getMyPermissions);
+  yield takeLatest(
+    groupsTypes.GET_MY_PERMISSIONS, getMyPermissions,
+  );
   yield takeLatest(
     groupsTypes.GET_GROUP_STRUCTURE_COMMUNITY_TREE,
     getGroupStructureCommunityTree,
@@ -105,16 +107,28 @@ export default function* groupsSaga() {
     groupsTypes.PUT_GROUP_STRUCTURE_COLLAPSE_STATUS,
     putGroupStructureCollapseStatus,
   );
-  yield takeLatest(groupsTypes.GET_SYSTEM_SCHEME, getSystemScheme);
-  yield takeLatest(groupsTypes.GET_SCHEMES, getSchemes);
-  yield takeLatest(groupsTypes.GET_COMMUNITY_SCHEME, getCommunityScheme);
-  yield takeLatest(groupsTypes.UPDATE_COMMUNITY_SCHEME, updateCommunityScheme);
-  yield takeLatest(groupsTypes.DELETE_COMMUNITY_SCHEME, deleteCommunityScheme);
+  yield takeLatest(
+    groupsTypes.GET_SYSTEM_SCHEME, getSystemScheme,
+  );
+  yield takeLatest(
+    groupsTypes.GET_SCHEMES, getSchemes,
+  );
+  yield takeLatest(
+    groupsTypes.GET_COMMUNITY_SCHEME, getCommunityScheme,
+  );
+  yield takeLatest(
+    groupsTypes.UPDATE_COMMUNITY_SCHEME, updateCommunityScheme,
+  );
+  yield takeLatest(
+    groupsTypes.DELETE_COMMUNITY_SCHEME, deleteCommunityScheme,
+  );
   yield takeLatest(
     groupsTypes.POST_CREATE_SCHEME_PERMISSION,
     postCreateSchemePermission,
   );
-  yield takeLatest(groupsTypes.GET_GROUP_SCHEME, getGroupScheme);
+  yield takeLatest(
+    groupsTypes.GET_GROUP_SCHEME, getGroupScheme,
+  );
   yield takeLatest(
     groupsTypes.GET_GROUP_SCHEME_ASSIGNMENTS,
     getGroupSchemeAssignments,
@@ -123,27 +137,61 @@ export default function* groupsSaga() {
     groupsTypes.PUT_GROUP_SCHEME_ASSIGNMENTS,
     putGroupSchemeAssignments,
   );
-  yield takeLatest(groupsTypes.UPDATE_GROUP_SCHEME, updateGroupScheme);
-  yield takeLatest(groupsTypes.GET_GROUP_DETAIL, getGroupDetail);
-  yield takeLatest(groupsTypes.GET_GROUP_MEMBER, getGroupMembers);
-  yield takeLatest(groupsTypes.GET_GROUP_SEARCH_MEMBERS, getGroupSearchMembers);
-  yield takeLatest(groupsTypes.GET_GROUP_POSTS, getGroupPosts);
-  yield takeLatest(groupsTypes.MERGE_EXTRA_GROUP_POSTS, mergeExtraGroupPosts);
-  yield takeLatest(groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail);
-  yield takeLatest(groupsTypes.UPLOAD_IMAGE, uploadImage);
-  yield takeLatest(groupsTypes.GET_JOINABLE_USERS, getJoinableUsers);
+  yield takeLatest(
+    groupsTypes.UPDATE_GROUP_SCHEME, updateGroupScheme,
+  );
+  yield takeLatest(
+    groupsTypes.GET_GROUP_DETAIL, getGroupDetail,
+  );
+  yield takeLatest(
+    groupsTypes.GET_GROUP_MEMBER, getGroupMembers,
+  );
+  yield takeLatest(
+    groupsTypes.GET_GROUP_SEARCH_MEMBERS, getGroupSearchMembers,
+  );
+  yield takeLatest(
+    groupsTypes.GET_GROUP_POSTS, getGroupPosts,
+  );
+  yield takeLatest(
+    groupsTypes.MERGE_EXTRA_GROUP_POSTS, mergeExtraGroupPosts,
+  );
+  yield takeLatest(
+    groupsTypes.EDIT_GROUP_DETAIL, editGroupDetail,
+  );
+  yield takeLatest(
+    groupsTypes.UPLOAD_IMAGE, uploadImage,
+  );
+  yield takeLatest(
+    groupsTypes.GET_JOINABLE_USERS, getJoinableUsers,
+  );
   yield takeLatest(
     groupsTypes.MERGE_EXTRA_JOINABLE_USERS,
     mergeExtraJoinableUsers,
   );
-  yield takeLatest(groupsTypes.ADD_MEMBERS, addMembers);
-  yield takeLatest(groupsTypes.JOIN_NEW_GROUP, joinNewGroup);
-  yield takeLatest(groupsTypes.CANCEL_JOIN_GROUP, cancelJoinGroup);
-  yield takeLatest(groupsTypes.GET_GROUP_SEARCH, getGroupSearch);
-  yield takeLatest(groupsTypes.REMOVE_MEMBER, removeMember);
-  yield takeLatest(groupsTypes.LEAVE_GROUP, leaveGroup);
-  yield takeLatest(groupsTypes.SET_GROUP_ADMIN, setGroupAdmin);
-  yield takeLatest(groupsTypes.REMOVE_GROUP_ADMIN, removeGroupAdmin);
+  yield takeLatest(
+    groupsTypes.ADD_MEMBERS, addMembers,
+  );
+  yield takeLatest(
+    groupsTypes.JOIN_NEW_GROUP, joinNewGroup,
+  );
+  yield takeLatest(
+    groupsTypes.CANCEL_JOIN_GROUP, cancelJoinGroup,
+  );
+  yield takeLatest(
+    groupsTypes.GET_GROUP_SEARCH, getGroupSearch,
+  );
+  yield takeLatest(
+    groupsTypes.REMOVE_MEMBER, removeMember,
+  );
+  yield takeLatest(
+    groupsTypes.LEAVE_GROUP, leaveGroup,
+  );
+  yield takeLatest(
+    groupsTypes.SET_GROUP_ADMIN, setGroupAdmin,
+  );
+  yield takeLatest(
+    groupsTypes.REMOVE_GROUP_ADMIN, removeGroupAdmin,
+  );
 
   yield takeLatest(
     groupsTypes.GET_GROUP_MEMBER_REQUESTS,
@@ -165,25 +213,47 @@ export default function* groupsSaga() {
     groupsTypes.DECLINE_ALL_GROUP_MEMBER_REQUESTS,
     declineAllGroupMemberRequests,
   );
-  yield takeLatest(groupsTypes.GET_YOUR_GROUPS_SEARCH, getYourGroupsSearch);
-  yield takeLatest(groupsTypes.GET_YOUR_GROUPS_TREE, getYourGroupsTree);
-  yield takeLatest(groupsTypes.GET_YOUR_GROUPS_LIST, getYourGroupsList);
-  yield takeLatest(groupsTypes.GET_JOINED_COMMUNITIES, getJoinedCommunities);
-  yield takeLatest(groupsTypes.GET_MANAGED_COMMUNITIES, getManagedCommunities);
+  yield takeLatest(
+    groupsTypes.GET_YOUR_GROUPS_SEARCH, getYourGroupsSearch,
+  );
+  yield takeLatest(
+    groupsTypes.GET_YOUR_GROUPS_TREE, getYourGroupsTree,
+  );
+  yield takeLatest(
+    groupsTypes.GET_YOUR_GROUPS_LIST, getYourGroupsList,
+  );
+  yield takeLatest(
+    groupsTypes.GET_JOINED_COMMUNITIES, getJoinedCommunities,
+  );
+  yield takeLatest(
+    groupsTypes.GET_MANAGED_COMMUNITIES, getManagedCommunities,
+  );
   yield takeLatest(
     groupsTypes.GET_DISCOVER_COMMUNITIES,
     getDiscoverCommunities,
   );
-  yield takeLatest(groupsTypes.GET_COMMUNITY_GROUPS, getCommunityGroups);
-  yield takeLatest(groupsTypes.GET_COMMUNITY_DETAIL, getCommunityDetail);
-  yield takeLatest(groupsTypes.GET_COMMUNITY_MEMBERS, getCommunityMembers);
+  yield takeLatest(
+    groupsTypes.GET_COMMUNITY_GROUPS, getCommunityGroups,
+  );
+  yield takeLatest(
+    groupsTypes.GET_COMMUNITY_DETAIL, getCommunityDetail,
+  );
+  yield takeLatest(
+    groupsTypes.GET_COMMUNITY_MEMBERS, getCommunityMembers,
+  );
   yield takeLatest(
     groupsTypes.GET_COMMUNITY_SEARCH_MEMBERS,
     getCommunitySearchMembers,
   );
-  yield takeLatest(groupsTypes.GET_DISCOVER_GROUPS, getDiscoverGroups);
-  yield takeLatest(groupsTypes.JOIN_COMMUNITY, joinCommunity);
-  yield takeLatest(groupsTypes.CANCEL_JOIN_COMMUNITY, cancelJoinCommunity);
+  yield takeLatest(
+    groupsTypes.GET_DISCOVER_GROUPS, getDiscoverGroups,
+  );
+  yield takeLatest(
+    groupsTypes.JOIN_COMMUNITY, joinCommunity,
+  );
+  yield takeLatest(
+    groupsTypes.CANCEL_JOIN_COMMUNITY, cancelJoinCommunity,
+  );
   yield takeLatest(
     groupsTypes.GET_COMMUNITY_MEMBER_REQUESTS,
     getCommunityMemberRequests,
@@ -204,8 +274,12 @@ export default function* groupsSaga() {
     groupsTypes.DECLINE_ALL_COMMUNITY_MEMBER_REQUESTS,
     declineAllCommunityMemberRequests,
   );
-  yield takeLatest(groupsTypes.GET_COMMUNITY_SEARCH, getCommunitySearch);
-  yield takeLatest(groupsTypes.EDIT_COMMUNITY_DETAIL, editCommunityDetail);
+  yield takeLatest(
+    groupsTypes.GET_COMMUNITY_SEARCH, getCommunitySearch,
+  );
+  yield takeLatest(
+    groupsTypes.EDIT_COMMUNITY_DETAIL, editCommunityDetail,
+  );
 }
 
 function* getGroupSearch({ payload }: {type: string; payload: string}) {
@@ -214,12 +288,10 @@ function* getGroupSearch({ payload }: {type: string; payload: string}) {
     const params = { key: payload || '', discover: true };
     const response: AxiosResponse = yield groupsDataHelper.getSearchGroups(params);
 
-    yield put(
-      groupsActions.setGroupSearch({
-        result: response.data || [],
-        loading: false,
-      }),
-    );
+    yield put(groupsActions.setGroupSearch({
+      result: response.data || [],
+      loading: false,
+    }));
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (response.code != 200 && response.code?.toUpperCase?.() !== 'OK') {
@@ -237,7 +309,9 @@ function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
     const {
       file, id, fieldName, uploadType, destination,
     } = payload;
-    yield updateLoadingImageState(fieldName, true);
+    yield updateLoadingImageState(
+      fieldName, true,
+    );
 
     const data: IGetFile = yield ImageUploader.getInstance().upload({
       file,
@@ -245,29 +319,29 @@ function* uploadImage({ payload }: {type: string; payload: IGroupImageUpload}) {
     });
 
     if (destination === 'group') {
-      yield put(
-        groupsActions.editGroupDetail({
-          data: { id, [fieldName]: data.url },
-          editFieldName:
+      yield put(groupsActions.editGroupDetail({
+        data: { id, [fieldName]: data.url },
+        editFieldName:
             fieldName === 'icon'
               ? i18next.t('common:text_avatar')
               : i18next.t('common:text_cover'),
-        }),
-      );
+      }));
     } else {
-      yield put(
-        groupsActions.editCommunityDetail({
-          data: { id, [fieldName]: data.url },
-          editFieldName:
+      yield put(groupsActions.editCommunityDetail({
+        data: { id, [fieldName]: data.url },
+        editFieldName:
             fieldName === 'icon'
               ? i18next.t('common:text_avatar')
               : i18next.t('common:text_cover'),
-        }),
-      );
+      }));
     }
   } catch (err) {
-    console.error('\x1b[33m', 'uploadImage : error', err, '\x1b[0m');
-    yield updateLoadingImageState(payload.fieldName, false);
+    console.error(
+      '\x1b[33m', 'uploadImage : error', err, '\x1b[0m',
+    );
+    yield updateLoadingImageState(
+      payload.fieldName, false,
+    );
     yield showError(err);
   }
 }
@@ -302,7 +376,9 @@ function* getJoinableUsers({
     console.error(
       '\x1b[33m',
       'getUsers catch: ',
-      JSON.stringify(err, undefined, 2),
+      JSON.stringify(
+        err, undefined, 2,
+      ),
       '\x1b[0m',
     );
     yield call(showError, err)
@@ -331,12 +407,12 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
 
     const toastMessage: IToastMessage = {
       content: i18next
-        .t(
-          `common:message_add_member_success:${
-            userAddedCount > 1 ? 'many' : '1'
-          }`,
-        )
-        .replace('{n}', userAddedCount.toString()),
+        .t(`common:message_add_member_success:${
+          userAddedCount > 1 ? 'many' : '1'
+        }`)
+        .replace(
+          '{n}', userAddedCount.toString(),
+        ),
       props: {
         textProps: { useI18n: true },
         type: 'success',
@@ -344,12 +420,16 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
 
-    navigation.navigate(groupStack.groupMembers, { groupId });
+    navigation.navigate(
+      groupStack.groupMembers, { groupId },
+    );
   } catch (err) {
     console.error(
       '\x1b[33m',
       'addMembers catch: ',
-      JSON.stringify(err, undefined, 2),
+      JSON.stringify(
+        err, undefined, 2,
+      ),
       '\x1b[0m',
     );
     yield call(showError, err);
@@ -386,7 +466,9 @@ function* cancelJoinGroup({
 
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.error('cancelJoinGroup catch', err);
+    console.error(
+      'cancelJoinGroup catch', err,
+    );
 
     if (
       err?.meta?.message
@@ -399,7 +481,9 @@ function* cancelJoinGroup({
         },
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
-      yield put(groupsActions.getGroupDetail(payload.groupId, true));
+      yield put(groupsActions.getGroupDetail(
+        payload.groupId, true,
+      ));
 
       return;
     }

@@ -26,9 +26,7 @@ const CommunityApproveDeclineAllRequests = () => {
   const timeOutRef = useRef<any>();
   const { t } = useBaseHook();
 
-  const { id: communityId, name } = useKeySelector(
-    groupsKeySelector.communityDetail,
-  );
+  const { id: communityId, name } = useKeySelector(groupsKeySelector.communityDetail);
   const { total } = useKeySelector(groupsKeySelector.communityMemberRequests);
 
   const alertAction = (
@@ -56,9 +54,11 @@ const CommunityApproveDeclineAllRequests = () => {
   const onPressDeclineAll = () => {
     alertAction(
       t('groups:text_respond_all_member_requests:title:decline'),
-      t('groups:text_respond_all_member_requests:content:decline', {
-        count: total,
-      }),
+      t(
+        'groups:text_respond_all_member_requests:content:decline', {
+          count: total,
+        },
+      ),
       doDeclineAll,
     );
   };
@@ -80,9 +80,11 @@ const CommunityApproveDeclineAllRequests = () => {
     };
     dispatch(showHideToastMessage(toastMessage));
 
-    timeOutRef.current = setTimeout(() => {
-      dispatch(groupsActions.declineAllCommunityMemberRequests({ communityId }));
-    }, 4500);
+    timeOutRef.current = setTimeout(
+      () => {
+        dispatch(groupsActions.declineAllCommunityMemberRequests({ communityId }));
+      }, 4500,
+    );
   };
 
   const onPressUndo = () => {
@@ -94,25 +96,29 @@ const CommunityApproveDeclineAllRequests = () => {
   const onPressApproveAll = () => {
     alertAction(
       t('groups:text_respond_all_member_requests:title:approve'),
-      t('groups:text_respond_all_member_requests:content:approve', {
-        count: total,
-      }).replace('{0}', name),
+      t(
+        'groups:text_respond_all_member_requests:content:approve', {
+          count: total,
+        },
+      ).replace(
+        '{0}', name,
+      ),
       doApproveAll,
     );
   };
 
   const doApproveAll = () => {
-    dispatch(
-      groupsActions.approveAllCommunityMemberRequests({
-        communityId,
-        callback: navigateToCommunityMembers,
-      }),
-    );
+    dispatch(groupsActions.approveAllCommunityMemberRequests({
+      communityId,
+      callback: navigateToCommunityMembers,
+    }));
   };
 
   const navigateToCommunityMembers = () => {
     dispatch(clearToastMessage());
-    rootNavigation.navigate(groupStack.communityMembers, { communityId });
+    rootNavigation.navigate(
+      groupStack.communityMembers, { communityId },
+    );
   };
 
   return (

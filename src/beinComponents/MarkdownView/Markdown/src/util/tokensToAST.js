@@ -7,17 +7,23 @@ import getTokenTypeByToken from './getTokenTypeByToken';
  * @param {number} tokenIndex
  * @return {{type: string, content, tokenIndex: *, index: number, attributes: {}, children: *}}
  */
-function createNode(token, tokenIndex) {
+function createNode(
+  token, tokenIndex,
+) {
   const type = getTokenTypeByToken(token);
   const { content } = token;
 
   let attributes = {};
 
   if (token.attrs) {
-    attributes = token.attrs.reduce((prev, curr) => {
-      const [name, value] = curr;
-      return { ...prev, [name]: value };
-    }, {});
+    attributes = token.attrs.reduce(
+      (
+        prev, curr,
+      ) => {
+        const [name, value] = curr;
+        return { ...prev, [name]: value };
+      }, {},
+    );
   }
 
   return {
@@ -51,7 +57,9 @@ export default function tokensToAST(tokens) {
 
   for (let i = 0; i < tokens.length; i++) {
     const token = tokens[i];
-    const astNode = createNode(token, i);
+    const astNode = createNode(
+      token, i,
+    );
 
     if (
       !(
