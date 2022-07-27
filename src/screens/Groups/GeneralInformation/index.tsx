@@ -45,11 +45,11 @@ const GeneralInformation = (props: any) => {
   let canEditPrivacy: boolean;
   let total: number;
   if (type === 'group') {
-    canEditInfo = useKeySelector(groupsKeySelector.groupDetail.can_edit_info) || {};
-    canEditPrivacy = useKeySelector(groupsKeySelector.groupDetail.can_edit_privacy) || {};
+    canEditInfo = useKeySelector(groupsKeySelector.groupDetail.canEditInfo) || {};
+    canEditPrivacy = useKeySelector(groupsKeySelector.groupDetail.canEditPrivacy) || {};
     const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group) || {};
     avatar = groupDetail?.icon || '';
-    backgroundUrl = groupDetail?.background_img_url || '';
+    backgroundUrl = groupDetail?.backgroundImgUrl || '';
     organizationName = groupDetail?.name || '';
     organizationDescription = groupDetail?.description || '';
     organizationPrivacy = groupDetail?.privacy || '';
@@ -57,12 +57,12 @@ const GeneralInformation = (props: any) => {
   } else {
     const communityDetail = useKeySelector(groupsKeySelector.communityDetail) || {};
     avatar = communityDetail?.icon || '';
-    backgroundUrl = communityDetail?.background_img_url || '';
-    canEditInfo = communityDetail?.can_edit_info || false;
+    backgroundUrl = communityDetail?.backgroundImgUrl || '';
+    canEditInfo = communityDetail?.canEditInfo || false;
     organizationName = communityDetail?.name || '';
     organizationDescription = communityDetail?.description || '';
     organizationPrivacy = communityDetail?.privacy || '';
-    canEditPrivacy = communityDetail?.can_edit_privacy || false;
+    canEditPrivacy = communityDetail?.canEditPrivacy || false;
     total = useKeySelector(groupsKeySelector.communityMemberRequests)?.total || 0;
   }
 
@@ -161,7 +161,7 @@ const GeneralInformation = (props: any) => {
   const onEditCover = () => _openImagePicker(
     dispatch,
     id,
-    'background_img_url',
+    'backgroundImgUrl',
     uploadTypes.groupCover,
     type,
   );
@@ -188,14 +188,12 @@ const GeneralInformation = (props: any) => {
           testID="general_information.avatar"
           onEditAvatar={onEditAvatar}
           canEditInfo={canEditInfo}
-          type={type}
         />
         <CoverImage
           backgroundUrl={backgroundUrl}
           testID="general_information.cover"
           onEditCover={onEditCover}
           canEditInfo={canEditInfo}
-          type={type}
         />
         <InfoView
           id={id}

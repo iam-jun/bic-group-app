@@ -1,5 +1,7 @@
 import i18next from 'i18next';
-import { put, select, takeLatest } from 'redux-saga/effects';
+import {
+  call, put, select, takeLatest,
+} from 'redux-saga/effects';
 
 import { AxiosResponse } from 'axios';
 import {
@@ -281,7 +283,8 @@ function* getJoinableUsers({
     const { offset, data } = groups.users;
 
     const { groupId, params } = payload;
-    const response: IResponseData = yield groupsDataHelper.getJoinableUsers(
+    const response: IResponseData = yield call(
+      groupsDataHelper.getJoinableUsers,
       groupId,
       { offset, limit: appConfig.recordsPerPage, ...params },
     );
@@ -302,6 +305,7 @@ function* getJoinableUsers({
       JSON.stringify(err, undefined, 2),
       '\x1b[0m',
     );
+    yield call(showError, err)
   }
 }
 
@@ -318,7 +322,7 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
   try {
     const { groupId, userIds } = payload;
 
-    yield groupsDataHelper.addUsers(groupId, userIds);
+    yield call(groupsDataHelper.addUsers, groupId, userIds);
 
     // refresh group detail after adding new members
     yield refreshGroupMembers(groupId);
@@ -348,7 +352,7 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
       JSON.stringify(err, undefined, 2),
       '\x1b[0m',
     );
-    yield showError(err);
+    yield call(showError, err);
   }
 }
 
@@ -361,13 +365,13 @@ function* cancelJoinGroup({
   try {
     const { groupId, groupName } = payload;
 
-    yield groupsDataHelper.cancelJoinGroup(groupId);
+    yield call(groupsDataHelper.cancelJoinGroup, groupId);
 
     // update button Join/Cancel/View status on Discover groups
     yield put(
       groupsActions.editDiscoverGroupItem({
         id: groupId,
-        data: { join_status: groupJoinStatus.visitor },
+        data: { joinStatus: groupJoinStatus.visitor },
       }),
     );
 
@@ -400,12 +404,12 @@ function* cancelJoinGroup({
       return;
     }
 
-    yield showError(err);
+    yield call(showError, err);
   }
 }
 
 function* updateLoadingImageState(
-  fieldName: 'icon' | 'background_img_url',
+  fieldName: 'icon' | 'backgroundImgUrl',
   value: boolean,
 ) {
   if (fieldName === 'icon') {

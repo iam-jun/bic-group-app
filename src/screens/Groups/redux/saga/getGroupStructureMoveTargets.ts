@@ -34,8 +34,8 @@ export default function* getGroupStructureMoveTargets({
     );
 
     if (response?.data) {
-      const newTargetGroups: any = response.data?.target_groups || {};
-      const newMovingGroup = response.data?.moving_group || {};
+      const newTargetGroups: any = response.data?.targetGroups || {};
+      const newMovingGroup = response.data?.movingGroup || {};
 
       yield put(
         groupsActions.setGroupStructureMove({

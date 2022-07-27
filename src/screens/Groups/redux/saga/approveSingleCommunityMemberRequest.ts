@@ -47,9 +47,9 @@ export default function* approveSingleCommunityMemberRequest({
       toastType: 'normal',
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.getCommunityDetail({ communityId })); // to update user_count
+    yield put(groupsActions.getCommunityDetail({ communityId })); // to update userCount
   } catch (err: any) {
-    console.log('approveSingleCommunityMemberRequest: ', err);
+    console.error('approveSingleCommunityMemberRequest: ', err);
 
     if (err?.code === approveDeclineCode.CANCELED) {
       yield put(

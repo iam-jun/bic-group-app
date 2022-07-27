@@ -1,6 +1,6 @@
 import { call, put, select } from 'redux-saga/effects';
 
-import { ICommunityDetailEdit } from '~/interfaces/IGroup';
+import { ICommunityDetailEdit } from '~/interfaces/ICommunity';
 import showError from '~/store/commonSaga/showError';
 import groupsDataHelper from '../../helper/GroupsDataHelper';
 import groupsActions from '../actions';
@@ -18,6 +18,7 @@ export default function* editCommunityDetail({
 }) {
   const { data, editFieldName, callback } = payload;
   try {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const resp = yield call(
       groupsDataHelper.editCommunityDetail,

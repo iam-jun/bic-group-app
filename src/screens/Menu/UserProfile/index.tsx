@@ -42,7 +42,7 @@ const UserProfile = (props: any) => {
 
   const userProfileData = useKeySelector(menuKeySelector.userProfile);
   const {
-    fullname, description, avatar, background_img_url, username,
+    fullname, description, avatar, backgroundImgUrl, username,
   } = userProfileData || {};
   const loadingUserProfile = useKeySelector(menuKeySelector.loadingUserProfile);
 
@@ -53,7 +53,7 @@ const UserProfile = (props: any) => {
 
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const [avatarState, setAvatarState] = useState<string>(avatar);
-  const [bgImgState, setBgImgState] = useState<string>(background_img_url);
+  const [bgImgState, setBgImgState] = useState<string>(backgroundImgUrl);
   const [isChangeImg, setIsChangeImg] = useState<string>('');
 
   const theme: ExtendedTheme = useTheme();
@@ -73,12 +73,12 @@ const UserProfile = (props: any) => {
 
   useEffect(() => {
     setAvatarState(userProfileData?.avatar);
-    setBgImgState(userProfileData?.background_img_url);
+    setBgImgState(userProfileData?.backgroundImgUrl);
   }, [userProfileData]);
 
   useEffect(() => {
     isFocused && getUserProfile();
-    const { avatar: _avatar, background_img_url: _bgIm } = myProfileData;
+    const { avatar: _avatar, backgroundImgUrl: _bgIm } = myProfileData;
     if (
       userId?.toString?.() === currentUserId?.toString?.()
       || userId?.toString?.() === currentUsername?.toString?.()
@@ -98,8 +98,8 @@ const UserProfile = (props: any) => {
       if (isChangeImg === 'avatar') {
         dispatch(homeActions.getHomePosts({ isRefresh: true }));
         setAvatarState(myProfileData?.avatar);
-      } else if (isChangeImg === 'background_img_url') {
-        setBgImgState(myProfileData?.background_img_url);
+      } else if (isChangeImg === 'backgroundImgUrl') {
+        setBgImgState(myProfileData?.backgroundImgUrl);
       }
     }
   }, [myProfileData]);
@@ -108,7 +108,7 @@ const UserProfile = (props: any) => {
 
   const uploadFile = (
     file: IFilePicked,
-    fieldName: 'avatar' | 'background_img_url',
+    fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
     dispatch(
@@ -127,7 +127,7 @@ const UserProfile = (props: any) => {
   };
 
   const _openImagePicker = async (
-    fieldName: 'avatar' | 'background_img_url',
+    fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
     checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
@@ -145,7 +145,7 @@ const UserProfile = (props: any) => {
 
   const onEditAvatar = () => _openImagePicker('avatar', uploadTypes.userAvatar);
 
-  const onEditCover = () => _openImagePicker('background_img_url', uploadTypes.userCover);
+  const onEditCover = () => _openImagePicker('backgroundImgUrl', uploadTypes.userCover);
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;

@@ -41,13 +41,13 @@ const GroupStructureSettings: FC<GroupStructureSettingsProps> = () => {
   }, []);
 
   const onPressMenu = (group: GroupItemProps) => {
-    const { community_id, childrenUiIds, level = 0 } = group || {};
+    const { communityId, childrenUiIds, level = 0 } = group || {};
     let groupLevel1NoSibling = false;
     if (level === 1 && group?.parents?.[0]) {
       const groupParent = getGroupFromTreeById(communityTree, group.parents[0]);
       groupLevel1NoSibling = isEmpty(groupParent.children) || groupParent?.children?.length === 1;
     }
-    const disableMove = !!community_id || groupLevel1NoSibling;
+    const disableMove = !!communityId || groupLevel1NoSibling;
     const disableReorder = isEmpty(childrenUiIds) || childrenUiIds?.length === 1; // props generated when render UI tree
     const groupFromTree: IGroup = getGroupFromTreeById(
       communityTree,

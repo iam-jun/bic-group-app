@@ -30,7 +30,7 @@ export default function* leaveGroup({
     yield put(
       groupsActions.editDiscoverGroupItem({
         id: payload,
-        data: { join_status: groupJoinStatus.visitor },
+        data: { joinStatus: groupJoinStatus.visitor },
       }),
     );
 
@@ -51,7 +51,7 @@ export default function* leaveGroup({
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.error('leaveGroup:', err);
-    yield showError(err);
+    yield call(showError, err);
   }
 }
 

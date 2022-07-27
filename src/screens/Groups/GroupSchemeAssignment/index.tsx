@@ -123,11 +123,11 @@ const GroupSchemeAssignment = () => {
   };
 
   const renderItemExtraInfo = (group: any) => {
-    const { scheme_id } = group || {};
-    if (!scheme_id) {
+    const { schemeId } = group || {};
+    if (!schemeId) {
       return null;
     }
-    const schemeName = allSchemes?.[scheme_id]?.name;
+    const schemeName = allSchemes?.[schemeId]?.name;
     return (
       <View style={styles.schemeNameContainer}>
         <Text.BodyS numberOfLines={1}>{schemeName}</Text.BodyS>
@@ -190,7 +190,7 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.gray40,
+      backgroundColor: colors.gray5,
     },
     textHeader: {
       margin: spacing.margin.large,

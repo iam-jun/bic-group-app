@@ -18,15 +18,17 @@ export default function* joinCommunity({
   try {
     const { communityId, communityName } = payload;
 
-    const response: AxiosResponse = yield call(groupsDataHelper.joinCommunity, communityId);
-    const join_status = response?.data?.join_status;
-    const hasRequested = join_status === groupJoinStatus.requested;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const response = yield call(groupsDataHelper.joinCommunity, communityId);
+    const joinStatus = response?.data?.joinStatus;
+    const hasRequested = joinStatus === groupJoinStatus.requested;
 
     // update button Join/Cancel/View status on Discover communities
     yield put(
       groupsActions.editDiscoverCommunityItem({
         id: communityId,
-        data: { join_status },
+        data: { joinStatus },
       }),
     );
 

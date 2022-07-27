@@ -53,11 +53,11 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
 
   // @ts-ignore
   const selectingSchemeId = groupSchemes?.[selectingIndex]?.id;
-  const disableSave = initGroup?.scheme_id === selectingSchemeId;
+  const disableSave = initGroup?.schemeId === selectingSchemeId;
 
   useEffect(() => {
     const index = groupSchemes?.findIndex(
-      (item: any) => item?.id === initGroup?.scheme_id,
+      (item: any) => item?.id === initGroup?.schemeId,
     );
     if (index !== -1) {
       setSelectingIndex(index);
@@ -67,7 +67,7 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
   const onPressSave = () => {
     // @ts-ignore
     const schemeId = groupSchemes?.[selectingIndex]?.id || null;
-    const groupId = initGroup?.group_id;
+    const groupId = initGroup?.groupId;
     if (groupId) {
       const newData = handleSelectNewGroupScheme(
         groupId,

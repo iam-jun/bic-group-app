@@ -30,12 +30,12 @@ export default function* editMyProfile({
 
     // checking if uploading avatar/cover image
     // to use different toast message content
-    const { avatar, background_img_url } = payload;
+    const { avatar, backgroundImgUrl } = payload;
     let toastContent: string;
 
     if (avatar) {
       toastContent = 'common:avatar_changed';
-    } else if (background_img_url) {
+    } else if (!!backgroundImgUrl) {
       toastContent = 'common:cover_changed';
     } else {
       // this field is used to indicate which parts of

@@ -34,7 +34,7 @@ const SearchMemberView = ({
   const theme: ExtendedTheme = useTheme();
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles();
-  const { can_manage_member } = useKeySelector(groupsKeySelector.communityDetail);
+  const { canManageMember } = useKeySelector(groupsKeySelector.communityDetail);
   const communitySearchMembers = useKeySelector(
     groupsKeySelector.communitySearchMembers,
   );
@@ -76,7 +76,7 @@ const SearchMemberView = ({
     >
       {searchText ? (
         <MemberSearchResult
-          canManageMember={can_manage_member}
+          canManageMember={canManageMember}
           memberSearchData={communitySearchMembers}
           onLoadMore={onLoadMore}
           onPressMenu={onPressMenu}

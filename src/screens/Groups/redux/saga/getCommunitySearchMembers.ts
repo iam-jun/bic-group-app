@@ -31,11 +31,12 @@ export default function* getCommunitySearchMembers({
 
     let newDataCount = 0;
     let newDataArr: any = [];
-    Object.keys(resp)?.forEach?.((role: string) => {
+    const members = resp.data;
+    Object.keys(members)?.forEach?.((role: string) => {
       // @ts-ignore
-      newDataCount += resp[role]?.data?.length || 0;
+      newDataCount += members[role]?.data?.length || 0;
       // @ts-ignore
-      newDataArr = [...newDataArr, ...resp[role]?.data || []];
+      newDataArr = [...newDataArr, ...members[role]?.data || []];
     });
 
     // update search results data

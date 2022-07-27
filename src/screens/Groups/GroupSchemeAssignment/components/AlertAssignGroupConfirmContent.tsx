@@ -70,7 +70,7 @@ export const findGroupInAssignmentsById = (
 ) => {
   let result: any;
   const findGroup = (group: any) => {
-    if (group?.group_id === groupId) {
+    if (group?.groupId === groupId) {
       result = group;
     } else {
       group?.children?.map(findGroup);
@@ -86,16 +86,17 @@ export const prepareData = (
   allSchemes: any,
 ) => {
   const result: any = [];
-  assigning?.forEach?.((item: any) => {
-    const { scheme_id, group_id } = item || {};
-    const group = findGroupInAssignmentsById(group_id, assignments);
+  // eslint-disable-next-line array-callback-return
+  assigning?.map?.((item: any) => {
+    const { schemeId, groupId } = item || {};
+    const group = findGroupInAssignmentsById(groupId, assignments);
     const groupName = group?.name;
-    const oldSchemeName = allSchemes?.[group?.scheme_id]?.name
-      || (group?.scheme_id
+    const oldSchemeName = allSchemes?.[group?.schemeId]?.name
+      || (group?.schemeId
         ? i18n.t('communities:permission:text_unknown_scheme')
         : i18n.t('communities:permission:text_none_scheme'));
-    const newSchemeName = allSchemes?.[scheme_id]?.name
-      || (scheme_id
+    const newSchemeName = allSchemes?.[schemeId]?.name
+      || (schemeId
         ? i18n.t('communities:permission:text_unknown_scheme')
         : i18n.t('communities:permission:text_none_scheme'));
     if (group) {

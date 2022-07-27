@@ -21,7 +21,7 @@ function* getCommentDetail({
       commentId,
       payload.params,
     );
-    const { actor, list } = response;
+    const { actor, list } = response?.data || {};
     if (!!actor && list?.length > 0) {
       const comment = list[0];
       const payload = {

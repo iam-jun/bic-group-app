@@ -11,9 +11,9 @@ import { IUserProfile } from '~/interfaces/IAuth';
 import speakingLanguages from '~/constants/speakingLanguages';
 import { formatDate } from '~/utils/formatData';
 import genders from '~/constants/genders';
-import relationshipStatus from '~/constants/relationshipStatus';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
 import spacing from '~/theme/spacing';
+import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
 
 interface ProfileBlockProps {
   profileData: IUserProfile;
@@ -32,11 +32,11 @@ const ProfileBlock = ({
     country,
     language,
     phone,
-    country_code,
-    relationship_status,
+    countryCode,
+    relationshipStatus,
     gender,
     birthday,
-    latest_work,
+    latestWork,
   } = profileData;
 
   const theme: ExtendedTheme = useTheme();
@@ -69,7 +69,7 @@ const ProfileBlock = ({
 
   return (
     <View style={styles.container}>
-      {!!gender || !!birthday || !!relationship_status || !!userLanguages ? (
+      {!!gender || !!birthday || !!relationshipStatus || !!userLanguages ? (
         <>
           <Text.BodyS color={theme.colors.gray50}>
             {i18next.t('settings:title_about')}
@@ -82,11 +82,11 @@ const ProfileBlock = ({
               title: formatDate(birthday, 'MMM Do, YYYY'),
             })}
           {renderItem({ icon: 'Comments', title: userLanguages })}
-          {relationship_status
+          {relationshipStatus
             && renderItem({
               icon: 'Heart',
               // @ts-ignore
-              title: relationshipStatus[relationship_status],
+              title: RELATIONSHIP_STATUS[relationshipStatus],
             })}
         </>
       ) : null}
@@ -112,10 +112,10 @@ const ProfileBlock = ({
           {renderItem({
             icon: 'Phone',
             TitleComponent:
-              country_code && phone ? (
+              countryCode && phone ? (
                 <Text.BodyM>
                   {' '}
-                  {`(+${country_code}) ${phone}`}
+                  {`(+${countryCode}) ${phone}`}
                   {' '}
                 </Text.BodyM>
               ) : null,
@@ -127,7 +127,7 @@ const ProfileBlock = ({
         </>
       ) : null}
 
-      {!!latest_work && hideSeeMore ? (
+      {!!latestWork && hideSeeMore ? (
         <>
           <Text.BodyS style={styles.title} color={theme.colors.gray50}>
             {i18next.t('settings:text_work')}
@@ -136,9 +136,9 @@ const ProfileBlock = ({
             icon: 'iconSuitcase',
             TitleComponent: (
               <Text.BodyM>
-                {`${latest_work?.title_position} `}
+                {`${latestWork?.titlePosition} `}
                 <Text useI18n>common:text_at</Text>
-                <Text.BodyM>{` ${latest_work?.company}`}</Text.BodyM>
+                <Text.BodyM>{` ${latestWork?.company}`}</Text.BodyM>
               </Text.BodyM>
             ),
           })}

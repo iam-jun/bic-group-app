@@ -12,11 +12,13 @@ export default function* getYourGroupsList({
 }): any {
   try {
     yield put(groupsActions.setYourGroupsList({ loading: true }));
-    const groups = yield call(
+    const response = yield call(
       groupsDataHelper.getCommunityGroups,
       communityId,
-      { list_by: 'flat' },
+      { listBy: 'flat' },
     );
+
+    const groups = response.data;
     yield put(
       groupsActions.setYourGroupsList({ loading: false, list: groups || [] }),
     );

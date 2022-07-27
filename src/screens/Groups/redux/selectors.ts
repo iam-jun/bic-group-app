@@ -7,14 +7,15 @@ export const getMembersSection = (type: 'group' | 'community') => useSelector(
     (memberState) => {
       const sectionList: any = [];
 
-      Object.values(memberState)?.forEach((roleData: any) => {
+      // eslint-disable-next-line array-callback-return
+      Object.values(memberState)?.map((roleData: any) => {
         const section: any = {};
-        const { name, data, user_count } = roleData || {};
+        const { name, data, userCount } = roleData || {};
 
-        if (name && data && user_count) {
+        if (name && data && userCount) {
           section.title = `${roleData.name}s`;
           section.data = roleData.data;
-          section.user_count = roleData.user_count;
+          section.userCount = roleData.userCount;
           sectionList.push(section);
         }
       });

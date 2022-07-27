@@ -20,11 +20,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
-import {
-  bottomTabIcons,
-  bottomTabIconsFocused,
-  hideBottomTabRoutes,
-} from '~/configs/navigator';
+import { bottomTabIcons, bottomTabIconsFocused } from '~/configs/navigator';
 import { useBaseHook } from '~/hooks';
 import useTabBadge from '~/hooks/tabBadge';
 import appActions from '~/store/app/actions';
@@ -39,7 +35,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   descriptors,
   navigation,
 }: BottomTabBarProps) => {
-  let tabBarVisible = useRef(true).current;
+  const tabBarVisible = useRef(true).current;
   const dispatch = useDispatch();
   const showValue = useSharedValue(1);
   const avatar = useKeySelector('menu.myProfile.avatar');
@@ -76,24 +72,6 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     }
     return route?.name;
   };
-
-  useEffect(
-    // @ts-ignore
-    () => navigation.addListener('state', (event: any) => {
-      const routeName = getActiveRouteName(event?.data?.state);
-      const shouldHideTab = hideBottomTabRoutes.includes(routeName);
-      if (shouldHideTab) {
-        if (tabBarVisible) {
-          tabBarVisible = false;
-          hide();
-        }
-      } else if (!tabBarVisible) {
-        tabBarVisible = true;
-        show();
-      }
-    }),
-    [navigation],
-  );
 
   useEffect(() => {
     const onShow = () => hide(0);

@@ -57,7 +57,7 @@ const useNotificationSocket = () => {
   const handleInternalEvent = (msg: string) => {
     console.log('\x1b[36m🐣️ notificationSocket receive internal event\x1b[0m');
     const msgData = ConvertHelper.camelizeKeys(parseSafe(msg), {
-      exclude: ['reactions_count'],
+      excludeValueOfKey: ['reactions_count'],
     });
     // console.log(
     //   `\x1b[34m🐣️ notificationSocket handleInternalEvent`,

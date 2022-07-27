@@ -40,8 +40,8 @@ const _PageContent = ({
   const styles = createStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const { join_status, group_id } = infoDetail;
-  const isMember = join_status === groupJoinStatus.member;
+  const { joinStatus, groupId } = infoDetail;
+  const isMember = joinStatus === groupJoinStatus.member;
   const posts = useKeySelector(groupsKeySelector.posts);
   const refreshingGroupPosts = useKeySelector(
     groupsKeySelector.refreshingGroupPosts,
@@ -50,7 +50,7 @@ const _PageContent = ({
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canCreatePostArticle = hasPermissionsOnScopeWithId(
     'groups',
-    group_id,
+    groupId,
     PERMISSION_KEY.GROUP.CREATE_POST_ARTICLE,
   );
 
@@ -70,7 +70,7 @@ const _PageContent = ({
 
   const loadMoreData = () => {
     if (posts.extra.length !== 0) {
-      dispatch(actions.mergeExtraGroupPosts(group_id));
+      dispatch(actions.mergeExtraGroupPosts(groupId));
     }
   };
 
@@ -154,8 +154,8 @@ const _PageContent = ({
       {isMember && canCreatePostArticle && (
       <HeaderCreatePost
         style={styles.createPost}
-        audience={{ ...infoDetail, id: group_id }}
-        createFromGroupId={group_id}
+        audience={{ ...infoDetail, id: groupId }}
+        createFromGroupId={groupId}
       />
       )}
     </>

@@ -19,7 +19,7 @@ export default function* approveAllCommunityMemberRequests({
 
     yield call(groupsDataHelper.approveAllCommunityMemberRequests, communityId);
 
-    // to update user_count
+    // to update userCount
     yield put(groupsActions.getCommunityDetail({ communityId }));
 
     let toastProps: ToastMessageProps;
@@ -45,7 +45,7 @@ export default function* approveAllCommunityMemberRequests({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log('approveAllCommunityMemberRequest: ', err);
+    console.error('approveAllCommunityMemberRequest: ', err);
 
     yield call(showError, err);
   }

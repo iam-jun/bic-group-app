@@ -6,8 +6,8 @@ import {POST_DETAIL, POST_DETAIL_2} from '~/test/mock_data/post';
 
 const mockPost = {
   actor: {
-    created_at: '2022-01-14T04:58:45.776555Z',
-    updated_at: '2022-02-08T08:23:26.447557Z',
+    createdAt: '2022-01-14T04:58:45.776555Z',
+    updatedAt: '2022-02-08T08:23:26.447557Z',
     id: '20',
     data: {
       avatar:
@@ -26,8 +26,8 @@ const mockPost = {
           icon: 'https://bein-entity-attribute-stg.s3.ap-southeast-1.amazonaws.com/group/avatar/Avatar_Group.png',
           name: 'EVOL Community',
         },
-        created_at: '2022-01-14T07:42:18.184353Z',
-        updated_at: '2022-01-14T07:42:18.184353Z',
+        createdAt: '2022-01-14T07:42:18.184353Z',
+        updatedAt: '2022-01-14T07:42:18.184353Z',
       },
     ],
     users: [],
@@ -53,8 +53,8 @@ const mockPost = {
       videos: [],
       highlight: '==hello==',
     },
-    created_at: '2022-01-24T04:17:16.585495Z',
-    updated_at: '2022-01-24T04:17:17.216444Z',
+    createdAt: '2022-01-24T04:17:16.585495Z',
+    updatedAt: '2022-01-24T04:17:17.216444Z',
   },
   origin: null,
   reaction_counts: {

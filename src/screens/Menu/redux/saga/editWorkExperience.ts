@@ -27,12 +27,12 @@ export default function* editWorkExperience({
 
     yield call(menuDataHelper.editWorkExperience, id, {
       company,
-      title_position: titlePosition,
+      titlePosition,
       location,
       description,
-      currently_work_here: currentlyWorkHere,
-      start_date: startDate,
-      end_date: endDate,
+      currentlyWorkHere,
+      startDate,
+      endDate,
     });
 
     yield put(menuActions.getMyWorkExperience());

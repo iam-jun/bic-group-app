@@ -48,7 +48,7 @@ const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
   const renderItem = (item: any) => {
     const isActive = selecting?.id === item?.id;
     return (
-      <Animated.View entering={LightSpeedInLeft} layout={Layout.springify()}>
+      <Animated.View key={`move_group_target_${item?.id}`} entering={LightSpeedInLeft} layout={Layout.springify()}>
         <TouchableOpacity
           style={[
             styles.itemContainer,

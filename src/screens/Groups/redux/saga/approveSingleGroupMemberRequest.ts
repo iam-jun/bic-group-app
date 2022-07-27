@@ -54,7 +54,7 @@ export default function* approveSingleGroupMemberRequest({
       toastType: 'normal',
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.getGroupDetail(groupId)); // to update user_count
+    yield put(groupsActions.getGroupDetail(groupId)); // to update userCount
   } catch (err: any) {
     console.log('approveSingleGroupMemberRequest: ', err);
 

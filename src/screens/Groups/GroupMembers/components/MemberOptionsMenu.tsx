@@ -116,7 +116,7 @@ const MemberOptionsMenu = ({
 
   const onPressRemoveAdmin = () => {
     if (selectedMember?.id) {
-      const adminCount = groupMembers?.group_admin?.user_count;
+      const adminCount = groupMembers?.groupAdmin?.userCount;
       if (adminCount > 1) {
         alertRemovingAdmin();
       } else {
@@ -213,7 +213,7 @@ const MemberOptionsMenu = ({
       ContentComponent={(
         <View style={styles.bottomSheet}>
           {canManageRole
-            && (selectedMember?.is_admin ? (
+            && (selectedMember?.isAdmin ? (
               <PrimaryItem
                 testID="member_options_menu.remove_admin"
                 style={styles.menuOption}

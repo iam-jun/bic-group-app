@@ -31,9 +31,10 @@ export default function* getGroupSearchMembers({
 
     let newDataCount = 0;
     let newDataArr: any = [];
-    Object.keys(resp)?.forEach?.((role: string) => {
-      newDataCount += resp[role].data.length;
-      newDataArr = [...newDataArr, ...resp[role].data];
+    const members = resp.data;
+    Object.keys(members)?.forEach?.((role: string) => {
+      newDataCount += members[role].data.length;
+      newDataArr = [...newDataArr, ...members[role].data];
     });
 
     // update search results data

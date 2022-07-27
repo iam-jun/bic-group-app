@@ -27,8 +27,8 @@ export default function* getCommunityDetail({
     yield put(actions.setCommunityDetail(resp?.data));
 
     const { groups } = yield select();
-    const join_status = groups?.communityDetail?.join_status;
-    const isMember = join_status === groupJoinStatus.member;
+    const joinStatus = groups?.communityDetail?.joinStatus;
+    const isMember = joinStatus === groupJoinStatus.member;
 
     const privacy = groups?.communityDetail?.privacy;
     const isPublic = privacy === groupPrivacy.public || privacy === groupPrivacy.open;

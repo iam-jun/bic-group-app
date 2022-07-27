@@ -18,13 +18,13 @@ describe('Get My Work Experience Saga', () => {
 
   const workItem = {
     company: 'test 1',
-    currently_work_here: true,
+    currentlyWorkHere: true,
     description: '',
-    end_date: null,
+    endDate: null,
     id: 77,
     location: 'test 1',
-    start_date: '2022-03-07T07:58:05.436Z',
-    title_position: 'test 1',
+    startDate: '2022-03-07T07:58:05.436Z',
+    titlePosition: 'test 1',
   };
 
   it('should request to get user work experience successfully', () => {
