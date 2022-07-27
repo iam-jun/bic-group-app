@@ -247,9 +247,7 @@ export const groupsApiConfig = {
     method: 'post',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    data: {
-      user_ids: userIds,
-    },
+    data: { userIds },
   }),
   removeUsers: (
     groupId: string,
@@ -261,7 +259,7 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
     data: {
-      [type || 'user_ids']: userIds,
+      [type || 'userIds']: userIds,
     },
   }),
   joinGroup: (groupId: string): HttpApiRequestConfig => ({
@@ -290,9 +288,7 @@ export const groupsApiConfig = {
     method: 'post',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    data: {
-      user_ids: userIds,
-    },
+    data: { userIds },
   }),
   removeGroupAdmin: (
     groupId: string,
@@ -644,19 +640,7 @@ const groupsDataHelper = {
   joinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.joinGroup, groupId),
   cancelJoinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.cancelJoinGroup, groupId),
   leaveGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.leaveGroup, groupId),
-  setGroupAdmin: async (groupId: string, userIds: string[]) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.setGroupAdmin(groupId, userIds),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  setGroupAdmin: (groupId: string, userIds: string[]) => withHttpRequestPromise(groupsApiConfig.setGroupAdmin, groupId, userIds),
   removeGroupAdmin: async (groupId: string, userId: string) => {
     try {
       const response: any = await makeHttpRequest(
