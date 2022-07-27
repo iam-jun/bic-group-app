@@ -68,7 +68,7 @@ export default function* putGroupStructureMoveToTarget({
   } catch (err: any) {
     yield put(
       actions.setGroupStructureMove({
-        loading: true,
+        loading: false,
         key,
         targetGroups,
         movingGroup,
