@@ -14,7 +14,7 @@ export default [
   {
     type: 'PUBLIC',
     title: 'settings:title_public',
-    icon: 'Globe',
+    icon: 'iconPublic',
     subtitle: 'settings:title_public_subtitle',
     privacyTitle: 'settings:privacy_public',
   },
@@ -35,7 +35,7 @@ export default [
   {
     type: 'OPEN',
     title: 'settings:title_open',
-    icon: 'Eye',
+    icon: 'iconOpen',
     subtitle: 'settings:title_open_subtitle',
     privacyTitle: 'settings:privacy_open',
   },
@@ -45,7 +45,7 @@ export const communityPrivacyListDetail = [
   {
     type: 'PUBLIC',
     title: 'settings:title_public',
-    icon: 'Globe',
+    icon: 'iconPublic',
     subtitle: 'settings:title_public_subtitle',
     privacyTitle: 'settings:privacy_public',
   },
