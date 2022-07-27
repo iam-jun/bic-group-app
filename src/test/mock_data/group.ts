@@ -125,12 +125,12 @@ export const memberDetail = {
 };
 
 export const memberData = {
-  group_admin: {
+  groupAdmin: {
     name: 'Admin',
     data: [adminDetail, adminDetail, adminDetail],
     userCount: 3,
   },
-  group_member: {
+  groupMember: {
     name: 'Member',
     data: [memberDetail, memberDetail, memberDetail, memberDetail],
     userCount: 4,

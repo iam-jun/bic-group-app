@@ -195,7 +195,7 @@ describe('MemberOptionsMenu component', () => {
     state.groups.groupDetail.canSetting = true;
     state.groups.groupMembers = {
       // @ts-ignore
-      group_admin: {userCount: 2},
+      groupAdmin: {userCount: 2},
     };
     const store = createTestStore(state);
 
@@ -224,7 +224,7 @@ describe('MemberOptionsMenu component', () => {
 
     const state = {...initialState};
     state.groups.groupDetail.canSetting = true;
-    state.groups.groupMembers = {group_admin: {userCount: 1}} as any;
+    state.groups.groupMembers = {groupAdmin: {userCount: 1}} as any;
     state.auth.user = {username: 'testname1'} as any;
     const store = createTestStore(state);
 

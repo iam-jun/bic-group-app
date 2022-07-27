@@ -22,8 +22,8 @@ describe('getGroupMembers saga', () => {
           loading: false,
           canLoadMore: true,
           offset: 0,
-          group_admin: {data: [], userCount: 0},
-          group_member: {data: [], userCount: 0},
+          groupAdmin: {data: [], userCount: 0},
+          groupMember: {data: [], userCount: 0},
         },
       },
     };
@@ -37,12 +37,12 @@ describe('getGroupMembers saga', () => {
           loading: false,
           canLoadMore: false,
           offset: 7,
-          group_admin: {
+          groupAdmin: {
             data: [adminDetail, adminDetail, adminDetail],
             userCount: 3,
             name: 'Admin',
           },
-          group_member: {
+          groupMember: {
             data: [memberDetail, memberDetail, memberDetail, memberDetail],
             userCount: 4,
             name: 'Member',
@@ -62,8 +62,8 @@ describe('getGroupMembers saga', () => {
           loading: false,
           canLoadMore: false,
           offset: 0,
-          group_admin: {data: [], userCount: 0},
-          group_member: {data: [], userCount: 0},
+          groupAdmin: {data: [], userCount: 0},
+          groupMember: {data: [], userCount: 0},
         },
       },
     };
@@ -84,8 +84,8 @@ describe('getGroupMembers saga', () => {
           loading: false,
           canLoadMore: true,
           offset: 0,
-          group_admin: {data: [], userCount: 0},
-          group_member: {data: [], userCount: 0},
+          groupAdmin: {data: [], userCount: 0},
+          groupMember: {data: [], userCount: 0},
         },
       },
     };
@@ -119,12 +119,12 @@ describe('getGroupMembers saga', () => {
           loading: false,
           canLoadMore: false,
           offset: 7,
-          group_admin: {
+          groupAdmin: {
             data: [adminDetail, adminDetail, adminDetail],
             userCount: 3,
             name: 'Admin',
           },
-          group_member: {
+          groupMember: {
             data: [memberDetail, memberDetail, memberDetail, memberDetail],
             userCount: 4,
             name: 'Member',
@@ -142,12 +142,12 @@ describe('getGroupMembers saga', () => {
           loading: false,
           canLoadMore: false,
           offset: 7,
-          group_admin: {
+          groupAdmin: {
             data: [adminDetail, adminDetail, adminDetail],
             userCount: 3,
             name: 'Admin',
           },
-          group_member: {
+          groupMember: {
             data: [memberDetail, memberDetail, memberDetail, memberDetail],
             userCount: 4,
             name: 'Member',
