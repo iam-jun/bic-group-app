@@ -69,16 +69,14 @@ export const menuApiConfig = {
 };
 
 const menuDataHelper = {
-  getUserProfile: (userId: string, params?: any)
-  => withHttpRequestPromise(menuApiConfig.getUserProfile, userId, params),
+  getUserProfile: (userId: string, params?: any) => withHttpRequestPromise(menuApiConfig.getUserProfile, userId, params),
   editMyProfile: (params: any) => {
     const { userId, data } = params || {}
     return withHttpRequestPromise(menuApiConfig.editMyProfile, userId, data)
   },
   getMyWorkExperience: () => withHttpRequestPromise(menuApiConfig.getMyWorkExperience),
   addWorkExperience: (data: IAddWorkExperienceReq) => withHttpRequestPromise(menuApiConfig.addWorkExperience, data),
-  editWorkExperience: (id: string, data: IAddWorkExperienceReq)
-  => withHttpRequestPromise(menuApiConfig.editWorkExperience, id, data),
+  editWorkExperience: (id: string, data: IAddWorkExperienceReq) => withHttpRequestPromise(menuApiConfig.editWorkExperience, id, data),
   deleteWorkExperience: (id: string) => withHttpRequestPromise(menuApiConfig.deleteWorkExperience, id),
   getWorkExperience: (id: string) => withHttpRequestPromise(menuApiConfig.getWorkExperience, id),
 };

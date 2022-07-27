@@ -152,7 +152,7 @@ const createStyle = (theme: ExtendedTheme) => {
     flex1: { flex: 1 },
     container: {
       flex: 1,
-      backgroundColor: colors.gray40,
+      backgroundColor: colors.gray5,
     },
     itemContainer: {
       flexDirection: 'row',
