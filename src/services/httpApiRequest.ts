@@ -289,6 +289,7 @@ const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
     `${ApiConfig.providers.bein.url}groups/${uuidRegex}/users/add`,
     `${ApiConfig.providers.bein.url}groups/${uuidRegex}/users/remove`,
     `${ApiConfig.providers.bein.url}groups/${uuidRegex}/assign-admin`,
+    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/revoke-admin/${uuidRegex}`,
   ];
   apisWithParam.forEach((api) => {
     if (new RegExp(api, 'g').test(endPoint || '')) {

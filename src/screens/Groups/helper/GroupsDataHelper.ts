@@ -641,19 +641,7 @@ const groupsDataHelper = {
   cancelJoinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.cancelJoinGroup, groupId),
   leaveGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.leaveGroup, groupId),
   setGroupAdmin: (groupId: string, userIds: string[]) => withHttpRequestPromise(groupsApiConfig.setGroupAdmin, groupId, userIds),
-  removeGroupAdmin: async (groupId: string, userId: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.removeGroupAdmin(groupId, userId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  removeGroupAdmin: (groupId: string, userId: string) => withHttpRequestPromise(groupsApiConfig.removeGroupAdmin, groupId, userId),
   getGroupMemberRequests: async (groupId: string, params: any) => {
     try {
       const response: any = await makeHttpRequest(
