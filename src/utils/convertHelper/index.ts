@@ -1,9 +1,29 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
-/* eslint-disable no-restricted-syntax */
-/* eslint-disable no-param-reassign */
-import ConvertHelperOptions from './ConvertHelperOptions';
+/* eslint-disable */
+// @ts-nocheck
 
-export default class ConvertHelper {
+/**
+ * Maintainer: Thân Thế Văn (thevan@evolgroup.vn)
+ */
+
+export type StringOrRegex = RegExp | string;
+
+class ConvertHelperOptions {
+  public separator?: string;
+
+  public split?: RegExp;
+
+  public process?: (arg: any) => any;
+
+  public excludeValueOfKey?: StringOrRegex[];
+
+  public excludeKey?: StringOrRegex[];
+}
+
+export class ConvertHelper {
+  private static _shouldNotConvert(patterns: StringOrRegex[], value: any) {
+    return patterns.some((pattern) => (typeof pattern === 'string' ? pattern === value : pattern.test(value)));
+  }
+
   /**
    * Check input is function
    * @private
@@ -81,19 +101,13 @@ export default class ConvertHelper {
    * @param options ConvertHelperOptions
    * @returns  default convert function or using custom convert function.
    */
-  private static _processor(
-    convert:any, options:any,
-  ): any {
+  private static _processor(convert: any, options: any): any {
     const callback = options && 'process' in options ? options.process : options;
 
     if (typeof callback !== 'function') {
       return convert;
     }
-    return (
-      string: string, options:any,
-    ) => callback(
-      string, convert, options,
-    );
+    return (string: string, options: any) => callback(string, convert, options);
   }
 
   /**
@@ -123,29 +137,17 @@ export default class ConvertHelper {
     if (ConvertHelper._isArray(obj)) {
       output = [];
       for (let i = 0; i < obj.length; i++) {
-        output.push(ConvertHelper._processKeys(
-          convert, obj[i], options,
-        ));
+        output.push(ConvertHelper._processKeys(convert, obj[i], options));
       }
     } else {
       output = {};
       for (const key in obj) {
-        if (Array.prototype.includes.call(
-          options?.exclude ?? [], key,
-        )) {
-          // @ts-ignore
-          output[convert(
-            key, options,
-          )] = obj[key];
+        if (ConvertHelper._shouldNotConvert(options?.excludeValueOfKey ?? [], key)) {
+          output[convert(key, options)] = obj[key];
+        } else if (ConvertHelper._shouldNotConvert(options?.excludeKey ?? [], key)) {
+          output[key] = ConvertHelper._processKeys(convert, obj[key], options);
         } else {
-          // @ts-ignore
-          output[convert(
-            key, options,
-          )] = ConvertHelper._processKeys(
-            convert,
-            obj[key],
-            options,
-          );
+          output[convert(key, options)] = ConvertHelper._processKeys(convert, obj[key], options);
         }
       }
     }
@@ -158,10 +160,7 @@ export default class ConvertHelper {
    * @param string String
    * @param options ConvertHelperOptions
    */
-  protected static separateWords(
-    string: string,
-    options?: ConvertHelperOptions,
-  ): string {
+  protected static separateWords(string: string, options?: ConvertHelperOptions): string {
     options = options || {};
     const separator = options.separator || '_';
     const split = options.split || /(?=[A-Z])/;
@@ -175,12 +174,7 @@ export default class ConvertHelper {
    * @param options ConvertHelperOptions
    * @returns String
    */
-  protected static decamelize = (
-    string: string,
-    options?: ConvertHelperOptions,
-  ): string => ConvertHelper.separateWords(
-    string, options,
-  ).toLowerCase();
+  protected static decamelize = (string: string, options?: ConvertHelperOptions): string => ConvertHelper.separateWords(string, options).toLowerCase();
 
   /**
    * Snake case to camel
@@ -191,15 +185,8 @@ export default class ConvertHelper {
     if (ConvertHelper._isNumerical(string)) {
       return string;
     }
-    string = string.replace(
-      // eslint-disable-next-line no-useless-escape
-      /[\-_\s]+(.)?/g, (
-        _match, chr,
-      ) => (chr ? chr.toUpperCase() : ''),
-    );
-    return string.substring(
-      0, 1,
-    ).toLowerCase() + string.substring(1);
+    string = string.replace(/[\-_\s]+(.)?/g, (match, chr) => (chr ? chr.toUpperCase() : ''));
+    return string.substring(0, 1).toLowerCase() + string.substring(1);
   };
 
   /**
@@ -208,14 +195,9 @@ export default class ConvertHelper {
    * @param options ConvertHelperOptions
    * @returns T
    */
-  public static camelizeKeys<T>(
-    object: unknown,
-    options?: ConvertHelperOptions,
-  ): T {
+  public static camelizeKeys<T>(object: unknown, options?: ConvertHelperOptions): T {
     return this._processKeys(
-      ConvertHelper._processor(
-        ConvertHelper.camelize, options,
-      ),
+      ConvertHelper._processor(ConvertHelper.camelize, options),
       object,
       options,
     );
@@ -232,11 +214,11 @@ export default class ConvertHelper {
     options?: ConvertHelperOptions,
   ): Record<string, any> {
     return ConvertHelper._processKeys(
-      ConvertHelper._processor(
-        ConvertHelper.decamelize, options,
-      ),
+      ConvertHelper._processor(ConvertHelper.decamelize, options),
       object,
       options,
     );
   }
 }
+
+export default ConvertHelper

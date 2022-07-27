@@ -106,7 +106,6 @@ export const groupInitState = {
     loading: true,
     canLoadMore: true,
     offset: 0, // current fetched data count
-    // group_admin: {}, group_member: {}
   },
   groupSearchMembers: {
     loading: false,

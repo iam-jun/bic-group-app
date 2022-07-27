@@ -10,7 +10,6 @@ import { useDispatch } from 'react-redux';
 
 import Header from '~/beinComponents/Header';
 import NewsfeedList from '~/beinFragments/newsfeedList/NewsfeedList';
-import { appScreens } from '~/configs/navigator';
 import { useBaseHook } from '~/hooks';
 import { useAuthToken, useUserIdAuth } from '~/hooks/auth';
 import { useBackPressListener, useTabPressListener } from '~/hooks/navigation';
@@ -54,9 +53,7 @@ const Newsfeed = () => {
   useEffect(
     () => {
       const taskId = requestAnimationFrame(() => {
-        if (isFocused) {
-          dispatch(appActions.setRootScreenName(appScreens.newsfeed));
-        } else {
+        if (!isFocused) {
           DeviceEventEmitter.emit(
             'showHeader', true,
           );

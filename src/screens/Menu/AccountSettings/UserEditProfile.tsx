@@ -17,7 +17,7 @@ import Button from '~/beinComponents/Button';
 
 import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import genders from '~/constants/genders';
-import relationshipStatus from '~/constants/relationshipStatus';
+import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
 import speakingLanguages from '~/constants/speakingLanguages';
 import { IFilePicked } from '~/interfaces/common';
 import images from '~/resources/images';
@@ -65,13 +65,13 @@ const UserEditProfile = (props: any) => {
     fullname,
     gender,
     avatar,
-    background_img_url,
+    backgroundImgUrl,
     birthday,
     language,
-    relationship_status,
+    relationshipStatus,
     email,
     phone,
-    country_code,
+    countryCode,
     country,
     city,
     description,
@@ -140,7 +140,7 @@ const UserEditProfile = (props: any) => {
 
   const uploadFile = (
     file: IFilePicked,
-    fieldName: 'avatar' | 'background_img_url',
+    fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
     dispatch(menuActions.uploadImage({
@@ -152,9 +152,9 @@ const UserEditProfile = (props: any) => {
   };
 
   // fieldName: field name in group profile to be edited
-  // 'avatar' for avatar and 'background_img_url' for cover
+  // 'avatar' for avatar and 'backgroundImgUrl' for cover
   const _openImagePicker = async (
-    fieldName: 'avatar' | 'background_img_url',
+    fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
     checkPermission(
@@ -178,9 +178,7 @@ const UserEditProfile = (props: any) => {
     'avatar', uploadTypes.userAvatar,
   );
 
-  const onEditCover = () => _openImagePicker(
-    'background_img_url', uploadTypes.userCover,
-  );
+  const onEditCover = () => _openImagePicker('backgroundImgUrl', uploadTypes.userCover);
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -261,7 +259,7 @@ const UserEditProfile = (props: any) => {
           {!loadingCover ? (
             <Image
               style={styles.cover}
-              source={background_img_url || images.img_cover_default}
+              source={backgroundImgUrl || images.img_cover_default}
             />
           ) : (
             <View style={[styles.cover, styles.imageLoading]}>
@@ -362,7 +360,7 @@ const UserEditProfile = (props: any) => {
           subtitle={
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
-              i18next.t(relationshipStatus[relationship_status])
+              i18next.t(RELATIONSHIP_STATUS[relationshipStatus])
               || i18next.t('common:text_not_set')
             }
           leftIcon="Heart"
@@ -402,8 +400,8 @@ const UserEditProfile = (props: any) => {
         <SettingItem
           title="settings:title_phone_number"
           subtitle={
-              country_code && phone
-                ? `(+${country_code}) ${phone}`
+              countryCode && phone
+                ? `(+${countryCode}) ${phone}`
                 : i18next.t('common:text_not_set')
             }
           leftIcon="Phone"

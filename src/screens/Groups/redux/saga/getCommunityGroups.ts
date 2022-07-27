@@ -15,9 +15,9 @@ export default function* getCommunityGroups({
     const { id, params } = payload;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const groups = yield call(
-      groupsDataHelper.getCommunityGroups, id, params,
-    );
+    const response = yield call(groupsDataHelper.getCommunityGroups, id, params);
+
+    const groups = response.data;
     if (groups?.length > 0) {
       yield put(groupsActions.setCommunityGroups(groups));
     } else {

@@ -45,6 +45,6 @@ export default function* removeMember({
       ),
       '\x1b[0m',
     );
-    yield showError(err);
+    yield call(showError, err);
   }
 }

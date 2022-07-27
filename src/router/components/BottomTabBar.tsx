@@ -20,11 +20,7 @@ import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import NotificationsBadge from '~/beinComponents/Badge/NotificationsBadge';
 import Icon from '~/beinComponents/Icon';
 import Text from '~/beinComponents/Text';
-import {
-  bottomTabIcons,
-  bottomTabIconsFocused,
-  hideBottomTabRoutes,
-} from '~/configs/navigator';
+import { bottomTabIcons, bottomTabIconsFocused } from '~/configs/navigator';
 import { useBaseHook } from '~/hooks';
 import useTabBadge from '~/hooks/tabBadge';
 import appActions from '~/store/app/actions';
@@ -39,7 +35,7 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   descriptors,
   navigation,
 }: BottomTabBarProps) => {
-  let tabBarVisible = useRef(true).current;
+  const tabBarVisible = useRef(true).current;
   const dispatch = useDispatch();
   const showValue = useSharedValue(1);
   const avatar = useKeySelector('menu.myProfile.avatar');
@@ -85,61 +81,31 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     return route?.name;
   };
 
-  useEffect(
-    // @ts-ignore
-    () => navigation.addListener(
-      'state', (event: any) => {
-        const routeName = getActiveRouteName(event?.data?.state);
-        const shouldHideTab = hideBottomTabRoutes.includes(routeName);
-        if (shouldHideTab) {
-          if (tabBarVisible) {
-            tabBarVisible = false;
-            hide();
-          }
-        } else if (!tabBarVisible) {
-          tabBarVisible = true;
+  useEffect(() => {
+    const onShow = () => hide(0);
+    const onHide = () => show(0);
+    const willShowListener = Keyboard.addListener('keyboardWillShow', onShow);
+    const showListener = Keyboard.addListener('keyboardDidShow', onShow);
+    const willHideListener = Keyboard.addListener('keyboardWillHide', onHide);
+    const hideListener = Keyboard.addListener('keyboardDidHide', onHide);
+    const showBottomBarListener = DeviceEventEmitter.addListener(
+      'showBottomBar',
+      (isShow) => {
+        if (isShow) {
           show();
+        } else {
+          hide();
         }
       },
-    ),
-    [navigation],
-  );
-
-  useEffect(
-    () => {
-      const onShow = () => hide(0);
-      const onHide = () => show(0);
-      const willShowListener = Keyboard.addListener(
-        'keyboardWillShow', onShow,
-      );
-      const showListener = Keyboard.addListener(
-        'keyboardDidShow', onShow,
-      );
-      const willHideListener = Keyboard.addListener(
-        'keyboardWillHide', onHide,
-      );
-      const hideListener = Keyboard.addListener(
-        'keyboardDidHide', onHide,
-      );
-      const showBottomBarListener = DeviceEventEmitter.addListener(
-        'showBottomBar',
-        (isShow) => {
-          if (isShow) {
-            show();
-          } else {
-            hide();
-          }
-        },
-      );
-      return () => {
-        showListener.remove();
-        hideListener.remove();
-        willShowListener.remove();
-        willHideListener.remove();
-        showBottomBarListener?.remove();
-      };
-    }, [],
-  );
+    );
+    return () => {
+      showListener.remove();
+      hideListener.remove();
+      willShowListener.remove();
+      willHideListener.remove();
+      showBottomBarListener?.remove();
+    };
+  }, []);
 
   const renderItem = (
     route: any, index: any,

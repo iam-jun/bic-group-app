@@ -21,7 +21,7 @@ function* getCommentDetail({
       fetchable(commentId),
       fetchable(payload.params as any),
     );
-    const { actor, list } = response;
+    const { actor, list } = response?.data || {};
     if (!!actor && list?.length > 0) {
       const comment = list[0];
       const payload = {

@@ -94,7 +94,7 @@ const createStyle = (theme: ExtendedTheme) => {
     container: {
       flex: 1,
       zIndex: 1,
-      backgroundColor: colors.gray40,
+      backgroundColor: colors.gray5,
     },
     contentContainer: {
       paddingBottom: spacing.padding.small,

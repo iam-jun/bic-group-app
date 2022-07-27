@@ -14,7 +14,7 @@ export default function* getManagedCommunities({
   payload: {
     isRefreshing?: boolean;
     refreshNoLoading?: boolean;
-    params?: {managed: boolean; preview_members: boolean};
+    params?: {managed: boolean; previewMembers: boolean};
   };
 }) {
   try {
@@ -30,18 +30,17 @@ export default function* getManagedCommunities({
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const resp = yield call(
-      groupsDataHelper.getJoinedCommunities, {
-        managed: true,
-        preview_members: true,
-        limit: appConfig.recordsPerPage,
-        offset: isRefreshing || refreshNoLoading ? 0 : ids.length,
-        ...params,
-      },
-    );
+    const resp = yield call(groupsDataHelper.getJoinedCommunities, {
+      managed: true,
+      previewMembers: true,
+      limit: appConfig.recordsPerPage,
+      offset: isRefreshing || refreshNoLoading ? 0 : ids.length,
+      ...params,
+    });
 
-    const newIds = resp?.map((item: ICommunity) => item.id);
-    const newItems = mapItems(resp);
+    const communities = resp.data
+    const newIds = communities?.map((item: ICommunity) => item.id);
+    const newItems = mapItems(communities);
 
     const newData = {
       loading: false,

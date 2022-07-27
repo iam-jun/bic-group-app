@@ -38,8 +38,9 @@ export default function* getGroupMemberRequests({
       },
     );
 
-    const requestIds = response.data.map((item: IJoiningMember) => item.id);
-    const requestItems = mapItems(response.data);
+    const { data } = response;
+    const requestIds = data.map((item: IJoiningMember) => item.id);
+    const requestItems = mapItems(data);
 
     yield put(groupsActions.setGroupMemberRequests({
       total: response?.meta?.total,

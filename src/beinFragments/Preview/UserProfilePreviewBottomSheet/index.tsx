@@ -47,7 +47,7 @@ const UserProfilePreviewBottomSheet = () => {
 
   const userProfileData = useKeySelector(menuKeySelector.userProfile);
   const {
-    fullname, description, avatar, background_img_url, language, phone,
+    fullname, description, avatar, backgroundImgUrl, language, phone,
   } = userProfileData || {};
 
   // @ts-ignore
@@ -104,7 +104,7 @@ const UserProfilePreviewBottomSheet = () => {
     <View onLayout={onCoverLayout}>
       <Image
         style={styles.cover}
-        source={background_img_url || images.img_cover_default}
+        source={backgroundImgUrl || images.img_cover_default}
       />
     </View>
   );

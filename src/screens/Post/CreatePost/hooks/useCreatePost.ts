@@ -196,7 +196,7 @@ const useCreatePost = ({ screenParams, mentionInputRef }: IUseCreatePost) => {
         initPostData?.audience?.groups?.map?.((g) => initGroupsRef.current.push(g?.id));
         initPostData?.audience?.users?.map?.((u) => initUsersRef.current.push(u?.id));
         const p: IParamGetPostAudiences = {
-          group_ids: initGroupsRef.current.join(','),
+          groupIds: initGroupsRef.current.join(','),
         };
         dispatch(postActions.getCreatePostInitAudience(p));
 

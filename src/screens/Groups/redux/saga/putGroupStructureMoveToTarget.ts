@@ -62,14 +62,13 @@ export default function* putGroupStructureMoveToTarget({
       );
     }
   } catch (err: any) {
-    yield put(actions.setGroupStructureMove({
-      loading: true,
-      key,
-      targetGroups,
-      movingGroup,
-    }));
-    console.error(
-      'putGroupStructureMoveToTarget error:', err,
+    yield put(
+      actions.setGroupStructureMove({
+        loading: false,
+        key,
+        targetGroups,
+        movingGroup,
+      }),
     );
     yield call(
       showError, err,

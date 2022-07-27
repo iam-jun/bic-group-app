@@ -18,14 +18,14 @@ export default function* joinNewGroup({
   try {
     const { groupId, groupName } = payload;
 
-    const response: AxiosResponse = yield call(
-      groupsDataHelper.joinGroup, groupId,
-    );
-    const join_status = response?.data?.join_status;
-    const hasRequested = join_status === groupJoinStatus.requested;
+    const response:AxiosResponse = yield call(groupsDataHelper.joinGroup, groupId);
+    const joinStatus = response?.data?.joinStatus;
+    const hasRequested = joinStatus === groupJoinStatus.requested;
 
     // update button Join/Cancel/View status on Discover groups
-    yield put(groupsActions.editDiscoverGroupItem({ id: groupId, data: { join_status } }));
+    yield put(
+      groupsActions.editDiscoverGroupItem({ id: groupId, data: { joinStatus } }),
+    );
 
     if (hasRequested) {
       yield put(groupsActions.getGroupDetail(groupId));
@@ -49,9 +49,7 @@ export default function* joinNewGroup({
     yield put(modalActions.showHideToastMessage(toastMessage));
     yield put(groupsActions.getGroupDetail(groupId));
   } catch (err) {
-    console.error(
-      'joinNewGroup catch', err,
-    );
-    yield showError(err);
+    console.error('joinNewGroup catch', err);
+    yield call(showError, err);
   }
 }

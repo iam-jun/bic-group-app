@@ -92,7 +92,7 @@ const menuReducer = (
         myProfile: {
           ...state.myProfile,
           ...payload,
-          country_code: payload.country_code || '84',
+          countryCode: payload.countryCode || '84',
         },
       };
     case menuTypes.SEARCH_COUNTRY_CODE:

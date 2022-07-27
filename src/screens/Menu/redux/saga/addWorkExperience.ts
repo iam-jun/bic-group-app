@@ -23,17 +23,15 @@ export default function* addWorkExperience({
       endDate,
     } = payload;
 
-    yield call(
-      menuDataHelper.addWorkExperience, {
-        company,
-        title_position: titlePosition,
-        location,
-        description,
-        currently_work_here: currentlyWorkHere,
-        start_date: startDate,
-        end_date: endDate,
-      },
-    );
+    yield call(menuDataHelper.addWorkExperience, {
+      company,
+      titlePosition,
+      location,
+      description,
+      currentlyWorkHere,
+      startDate,
+      endDate,
+    });
 
     yield put(menuActions.getMyWorkExperience());
 

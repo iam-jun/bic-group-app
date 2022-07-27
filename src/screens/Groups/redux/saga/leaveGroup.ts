@@ -29,10 +29,12 @@ export default function* leaveGroup({
     );
 
     // update button Join/Cancel/View status on Discover groups
-    yield put(groupsActions.editDiscoverGroupItem({
-      id: payload,
-      data: { join_status: groupJoinStatus.visitor },
-    }));
+    yield put(
+      groupsActions.editDiscoverGroupItem({
+        id: payload,
+        data: { joinStatus: groupJoinStatus.visitor },
+      }),
+    );
 
     if (privacy === groupPrivacy.secret) {
       yield call(navigationReplace);
@@ -52,10 +54,8 @@ export default function* leaveGroup({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
-    console.error(
-      'leaveGroup:', err,
-    );
-    yield showError(err);
+    console.error('leaveGroup:', err);
+    yield call(showError, err);
   }
 }
 

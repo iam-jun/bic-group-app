@@ -39,12 +39,12 @@ const MemberList = ({
 
   const renderEmpty = () => (!loading ? <NoSearchResult /> : null);
 
-  const renderSectionHeader = ({ section: { title, user_count } }: any) => (
+  const renderSectionHeader = ({ section: { title, userCount } }: any) => (
     <View style={styles.sectionHeader}>
       <Text.BodyM
         color={colors.neutral80}
       >
-        {`${title} • ${user_count}`}
+        {`${title} • ${userCount}`}
       </Text.BodyM>
     </View>
   );

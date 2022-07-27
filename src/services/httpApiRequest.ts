@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/ban-ts-comment,no-useless-escape */
 import { Auth } from 'aws-amplify';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import i18n from 'i18next';
-import _ from 'lodash';
+import _, { isEmpty } from 'lodash';
 import moment from 'moment';
 import DeviceInfo from 'react-native-device-info';
 import { put } from 'redux-saga/effects';
@@ -255,60 +255,8 @@ const mapResponseSuccessBein = (response: AxiosResponse): HttpApiResponseFormat 
   meta: response.data.meta,
 });
 
-const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
-  let result = false;
-  // add apis have param in path to this array
-  const apisWithParam = [
-    `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/scheme`,
-    `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/schemes`,
-  ];
-  apisWithParam.forEach((api) => {
-    if (new RegExp(
-      api, 'g',
-    ).test(endPoint || '')) {
-      result = true;
-    }
-  });
-
-  switch (endPoint) {
-    case `${ApiConfig.providers.bein.url}system-scheme`:
-    case `${ApiConfig.providers.bein.url}permissions/categories`:
-      result = true;
-      break;
-    default:
-      break;
-  }
-  return result;
-};
-
 const interceptorsRequestSuccess = (config: AxiosRequestConfig) => {
   const newConfig = { ...config };
-
-  // apply rule snake camel for each bein group's api
-  // we will remove this check after all apis is updated
-  if (shouldApplyAutoSnakeCamel(config?.url)) {
-    // update data of upload file request will lead to some unknown error
-    if (newConfig.headers?.['Content-Type']?.includes('multipart/form-data')) {
-      return newConfig;
-    }
-
-    if (config.params) {
-      newConfig.params = ConvertHelper.decamelizeKeys(config.params);
-    }
-    if (config.data) {
-      newConfig.data = ConvertHelper.decamelizeKeys(config.data);
-    }
-
-    return newConfig;
-  }
-
-  return newConfig;
-};
-
-const interceptorsRequestSnakeSuccess = (config: AxiosRequestConfig) => {
-  const newConfig = { ...config };
-
-  // update data of upload file request will lead to some unknown error
   if (newConfig.headers?.['Content-Type']?.includes('multipart/form-data')) {
     return newConfig;
   }
@@ -322,35 +270,15 @@ const interceptorsRequestSnakeSuccess = (config: AxiosRequestConfig) => {
   return newConfig;
 };
 
-const interceptorsResponseCamelSuccess = (response: AxiosResponse) => {
+const interceptorsResponseSuccess = (response: AxiosResponse) => {
   if (
     response.data
     && response.headers?.['content-type']?.includes?.('application/json')
   ) {
-    response.data = ConvertHelper.camelizeKeys(
-      response.data, {
-        exclude: ['reactions_count'],
-      },
-    );
-  }
-  return response;
-};
-
-const interceptorsResponseSuccess = (response: AxiosResponse) => {
-  // apply rule snake camel for each bein group's api
-  // we will remove this check after all apis is updated
-  if (shouldApplyAutoSnakeCamel(response?.config?.url)) {
-    if (
-      response.data
-      && response.headers?.['content-type']?.includes?.('application/json')
-    ) {
-      response.data = ConvertHelper.camelizeKeys(
-        response.data, {
-          exclude: ['reactions_count'],
-        },
-      );
-    }
-    return response;
+    response.data = ConvertHelper.camelizeKeys(response.data, {
+      excludeValueOfKey: ['reactions_count'],
+      excludeKey: [/^[a-f0-9\-]{36}$/i],
+    });
   }
   return response;
 };
@@ -383,8 +311,8 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
     case ApiConfig.providers.beinFeed.name:
     case ApiConfig.providers.beinNotification.name:
     case ApiConfig.providers.beinUpload.name:
-      interceptorRequestSuccess = interceptorsRequestSnakeSuccess;
-      interceptorResponseSuccess = interceptorsResponseCamelSuccess;
+      interceptorRequestSuccess = interceptorsRequestSuccess;
+      interceptorResponseSuccess = interceptorsResponseSuccess;
       interceptorResponseError = interceptorsResponseError;
       requestConfig.headers = beinHeaders;
       break;
@@ -421,10 +349,24 @@ const makeRemovePushTokenRequest = async () => {
   return axiosInstance(requestConfig);
 };
 
+const withHttpRequestPromise = async (fn: Function, ...args: any[]) => {
+  try {
+    const response: any = await makeHttpRequest(isEmpty(args) ? fn() : fn(...args));
+    const isSuccess = response?.data?.data || response?.data?.code === API_ERROR_CODE.COMMON.SUCCESS
+    if (isSuccess) {
+      return Promise.resolve(response?.data);
+    }
+    return Promise.reject(response);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+}
+
 export {
   makeHttpRequest,
   makePushTokenRequest,
   makeRemovePushTokenRequest,
   mapResponseSuccessBein,
   getTokenAndCallBackBein,
+  withHttpRequestPromise,
 };

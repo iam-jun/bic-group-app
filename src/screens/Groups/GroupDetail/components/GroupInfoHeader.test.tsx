@@ -76,7 +76,7 @@ describe('GroupInfoHeader component', () => {
     const store = createTestStore(state);
     const wrapper = renderWithRedux(<GroupInfoHeader />, store);
     const member = wrapper.getByTestId('group_info_header.member_count');
-    expect(member.props.children).toBe(groupDetailData.group.user_count);
+    expect(member.props.children).toBe(groupDetailData.group.userCount);
   });
 
   it('should render cover image', () => {

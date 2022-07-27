@@ -16,30 +16,30 @@ describe('Get My Profile Saga', () => {
   const state = {
     menu: {
       myProfile: {
-        address: null,
+        address: undefined,
         avatar:
           'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/f00fc177-ab14-4f37-9496-6241263bb362.jpg',
-        background_img_url:
+        backgroundImgUrl:
           'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/cover/images/original/9b7c23c6-b337-42ac-b084-c52843fceeb5.jpg',
-        bein_staff_role: null,
+        beinStaffRole: undefined,
         birthday: '1976-03-01T17:00:00.000Z',
-        chat_user_id: 'ryrzufdkg3g4bg3u3b51p7fyrh',
+        chatUserId: 'ryrzufdkg3g4bg3u3b51p7fyrh',
         city: 'Bà Rịa - Vũng Tàu',
         country: 'Việt Nam',
-        country_code: '84',
-        created_at: '2022-01-24T08:35:17.801Z',
-        deleted_at: null,
+        countryCode: '84',
+        createdAt: '2022-01-24T08:35:17.801Z',
+        deletedAt: undefined,
         description:
           'Aloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo00qqqqqqqqqq6666666',
         email: 'thuquyen@tgm.vn',
         fullname: 'Nguyen Thi Thu Quyền',
         gender: 'FEMALE',
-        id: 58,
+        id: '58',
         language: ['vi', 'en'],
-        latest_work: {company: 'test 1', title_position: 'test 1'},
+        latestWork: {company: 'test 1', titlePosition: 'test 1'},
         phone: '89871234',
-        relationship_status: 'SINGLE',
-        updated_at: '2022-03-11T10:23:30.864Z',
+        relationshipStatus: 'SINGLE',
+        updatedAt: '2022-03-11T10:23:30.864Z',
         username: 'thuquyen',
       },
     },

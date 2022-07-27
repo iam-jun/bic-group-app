@@ -17,7 +17,7 @@ export const uploadFile = (
   dispatch: any,
   id: string,
   file: IFilePicked,
-  fieldName: 'icon' | 'background_img_url',
+  fieldName: 'icon' | 'backgroundImgUrl',
   uploadType: IUploadType,
   destination: 'group' | 'community',
 ) => {
@@ -30,11 +30,11 @@ export const uploadFile = (
   }));
 };
 
-// 'icon' for avatar and 'background_img_url' for cover
+// 'icon' for avatar and 'backgroundImgUrl' for cover
 export const _openImagePicker = async (
   dispatch: any,
   id: string,
-  fieldName: 'icon' | 'background_img_url',
+  fieldName: 'icon' | 'backgroundImgUrl',
   uploadType: IUploadType,
   destination: 'group' | 'community',
 ) => {

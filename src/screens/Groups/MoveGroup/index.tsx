@@ -35,7 +35,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
     loading, targetGroups, movingGroup, selecting,
   } = useKeySelector(groupsKeySelector.groupStructure.move) || {};
 
-  const { user_count } = movingGroup || {};
+  const { userCount } = movingGroup || {};
 
   const getMoveTargets = (key = '') => {
     if (communityId && groupId) {
@@ -55,37 +55,35 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
 
   const onPressSave = () => {
     if (communityId && groupId && selecting?.id) {
-      const title = t('communities:group_structure:text_title_confirm_move_group')
-        .replaceAll(
-          '%MOVING_NAME%', initGroup?.name,
-        )
-        .replaceAll(
-          '%TARGET_NAME%', selecting?.name,
-        );
-      const content = t('communities:group_structure:text_desc_confirm_move_group')
-        .replaceAll(
-          '%COUNT%', user_count || 0,
-        )
-        .replaceAll(
-          '%MOVING_NAME%', initGroup?.name,
-        )
-        .replaceAll(
-          '%TARGET_NAME%', selecting?.name,
-        );
-      dispatch(modalActions.showAlert({
-        title,
-        content,
-        cancelBtn: true,
-        cancelLabel: t('common:btn_cancel'),
-        confirmLabel: t('common:btn_confirm'),
-        onConfirm: () => {
-          dispatch(groupsActions.putGroupStructureMoveToTarget({
-            communityId,
-            moveId: groupId,
-            targetId: selecting.id,
-          }));
-        },
-      }));
+      const title = t(
+        'communities:group_structure:text_title_confirm_move_group',
+      )
+        .replaceAll('%MOVING_NAME%', initGroup?.name)
+        .replaceAll('%TARGET_NAME%', selecting?.name);
+      const content = t(
+        'communities:group_structure:text_desc_confirm_move_group',
+      )
+        .replaceAll('%COUNT%', userCount || 0)
+        .replaceAll('%MOVING_NAME%', initGroup?.name)
+        .replaceAll('%TARGET_NAME%', selecting?.name);
+      dispatch(
+        modalActions.showAlert({
+          title,
+          content,
+          cancelBtn: true,
+          cancelLabel: t('common:btn_cancel'),
+          confirmLabel: t('common:btn_confirm'),
+          onConfirm: () => {
+            dispatch(
+              groupsActions.putGroupStructureMoveToTarget({
+                communityId,
+                moveId: groupId,
+                targetId: selecting.id,
+              }),
+            );
+          },
+        }),
+      );
     }
   };
 

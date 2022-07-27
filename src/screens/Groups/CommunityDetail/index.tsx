@@ -49,10 +49,12 @@ const CommunityDetail = (props: any) => {
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {
-    name, icon, join_status, privacy, group_id,
+    name, icon, joinStatus, privacy, groupId,
   } = infoDetail;
-  const isMember = join_status === groupJoinStatus.member;
-  const isGettingInfoDetail = useKeySelector(groupsKeySelector.isGettingInfoDetail);
+  const isMember = joinStatus === groupJoinStatus.member;
+  const isGettingInfoDetail = useKeySelector(
+    groupsKeySelector.isGettingInfoDetail,
+  );
   const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canSetting = hasPermissionsOnScopeWithId(
@@ -87,8 +89,8 @@ const CommunityDetail = (props: any) => {
       }
 
       dispatch(actions.clearGroupPosts());
-      dispatch(actions.getGroupPosts(group_id));
-    }, [group_id, isMember, privacy, isGettingInfoDetail, infoDetail],
+      dispatch(actions.getGroupPosts(groupId));
+    }, [groupId, isMember, privacy, isGettingInfoDetail, infoDetail],
   );
 
   useEffect(

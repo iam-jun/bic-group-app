@@ -17,12 +17,15 @@ export default function* getYourGroupsSearch({
   }
   try {
     yield put(groupsActions.setYourGroupsSearch({ loading: true, key }));
-    const groups = yield call(
+    const response = yield call(
       groupsDataHelper.getCommunityGroups,
       communityId,
-      { key, list_by: 'flat' },
+      { key, listBy: 'flat' },
     );
-    const currentKey = yield select((state) => state?.groups?.yourGroupsSearch?.key);
+    const currentKey = yield select(
+      (state) => state?.groups?.yourGroupsSearch?.key,
+    );
+    const groups = response.data;
     const list = currentKey?.trim?.() ? groups || [] : [];
     yield put(groupsActions.setYourGroupsSearch({ loading: false, list }));
   } catch (err) {

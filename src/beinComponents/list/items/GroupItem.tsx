@@ -43,9 +43,9 @@ export interface GroupItemProps extends IParsedGroup {
 const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   const {
     id,
-    community_id,
+    communityId,
     name,
-    user_count,
+    userCount,
     icon,
     testID = 'group_item',
 
@@ -88,12 +88,10 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
   const _onPressItem = () => {
     if (onPressItem) {
       onPressItem(props);
-    } else if (community_id) {
-      rootNavigation.navigate(
-        mainStack.communityDetail, {
-          communityId: community_id,
-        },
-      );
+    } else if (communityId) {
+      rootNavigation.navigate(mainStack.communityDetail, {
+        communityId,
+      });
     } else {
       rootNavigation.navigate(
         groupStack.groupDetail, {
@@ -219,7 +217,7 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
                 )}
                 <Icon icon="UserGroup" size={16} tintColor={colors.gray50} />
                 <Text.BodyS color={colors.gray50} style={styles.textInfo}>
-                  {user_count}
+                  {userCount}
                 </Text.BodyS>
               </View>
             )}

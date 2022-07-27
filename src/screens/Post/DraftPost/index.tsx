@@ -1,4 +1,4 @@
-import { useIsFocused, ExtendedTheme, useTheme } from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -9,7 +9,6 @@ import ListView from '~/beinComponents/list/ListView';
 import Text from '~/beinComponents/Text';
 import ViewSpacing from '~/beinComponents/ViewSpacing';
 
-import { appScreens } from '~/configs/navigator';
 import { useBaseHook } from '~/hooks';
 import { useUserIdAuth } from '~/hooks/auth';
 import { useKeySelector } from '~/hooks/selector';
@@ -18,7 +17,6 @@ import images from '~/resources/images';
 import PostViewDraft from '~/screens/Post/components/PostViewDraft';
 import postActions from '~/screens/Post/redux/actions';
 import postKeySelector from '~/screens/Post/redux/keySelector';
-import appActions from '~/store/app/actions';
 import dimension from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
@@ -33,28 +31,18 @@ const DraftPost = () => {
 
   const userId = useUserIdAuth();
 
-  const isFocused = useIsFocused();
-
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  useEffect(
-    () => {
-      if (isFocused) dispatch(appActions.setRootScreenName(appScreens.draftPost));
-    }, [isFocused],
-  );
-
-  useEffect(
-    () => {
-      if (isInternetReachable) {
-        if (lossInternet) {
-          setLossInternet(false);
-          getData(false);
-        }
-      } else {
-        setLossInternet(true);
+  useEffect(() => {
+    if (isInternetReachable) {
+      if (lossInternet) {
+        setLossInternet(false);
+        getData(false);
       }
-    }, [isInternetReachable],
-  );
+    } else {
+      setLossInternet(true);
+    }
+  }, [isInternetReachable]);
 
   // get draft post called from MainTabs
   const draftPostsData = useKeySelector(postKeySelector.draftPostsData) || {};

@@ -21,10 +21,12 @@ export default function* cancelJoinCommunity({
     );
 
     // update button Join/Cancel/View status on Discover communities
-    yield put(groupsActions.editDiscoverCommunityItem({
-      id: communityId,
-      data: { join_status: groupJoinStatus.visitor },
-    }));
+    yield put(
+      groupsActions.editDiscoverCommunityItem({
+        id: communityId,
+        data: { joinStatus: groupJoinStatus.visitor },
+      }),
+    );
 
     yield put(groupsActions.getCommunityDetail({ communityId }));
 
@@ -42,11 +44,15 @@ export default function* cancelJoinCommunity({
     );
 
     if (err?.code === approveDeclineCode.APPROVED) {
-      yield put(groupsActions.editDiscoverCommunityItem({
-        id: communityId,
-        data: { join_status: groupJoinStatus.member },
-      }));
-      yield put(groupsActions.getCommunityDetail({ communityId, loadingPage: true }));
+      yield put(
+        groupsActions.editDiscoverCommunityItem({
+          id: communityId,
+          data: { joinStatus: groupJoinStatus.member },
+        }),
+      );
+      yield put(
+        groupsActions.getCommunityDetail({ communityId, loadingPage: true }),
+      );
     }
 
     yield call(

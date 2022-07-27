@@ -15,9 +15,7 @@ export default function* declineAllCommunityMemberRequests({
       groupsDataHelper.declineAllCommunityMemberRequests, communityId,
     );
   } catch (err: any) {
-    console.log(
-      'declineAllCommunityMemberRequests: ', err,
-    );
+    console.error('declineAllCommunityMemberRequests: ', err);
 
     yield call(
       showError, err,

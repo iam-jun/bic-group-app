@@ -1,9 +1,5 @@
-import {
-  GROUP_TYPE,
-  GROUP_PRIVACY_TYPE,
-  COMMUNITY_PRIVACY_TYPE,
-} from '~/constants/privacyTypes';
-import { IFilePicked, IObject } from './common';
+import { GROUP_PRIVACY_TYPE } from '~/constants/privacyTypes';
+import { IFilePicked } from './common';
 import { IUploadType } from '~/configs/resourceConfig';
 
 export interface IRole {
@@ -65,29 +61,30 @@ export interface ICategory {
 
 export interface IGroup {
   id: string;
-  community_id?: string;
-  name: string;
-  user_count?: number;
-  parent?: any;
   parentId?: string;
-  children?: IGroup[];
-  icon?: string;
-  parent_id?: string | null;
+  name: string;
   slug?: string;
   description?: string;
-  background_img_url?: string | null;
-  privacy?: string;
-  group_type?: GROUP_TYPE;
-  verified?: boolean;
   level?: number;
-  parents?: string[] | null;
-  owner_id?: string;
-  created_at?: string;
-  updated_at?: string;
-  deleted_at?: string | null;
-  chat_id?: string;
-  collapsed?: boolean;
+  parent?: any;
+  createdBy?: string;
+  icon?: string;
+  backgroundImgUrl?: string | null;
+  privacy?: string;
+  chatId?: string;
+  schemeId?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: string | null;
+  userCount?: number;
+  teamName?: string;
 
+  communityId?: string;
+  children?: IGroup[];
+  verified?: boolean;
+  parents?: string[] | null;
+  ownerId?: string;
+  collapsed?: boolean;
   path?: string;
   treeData?: IGroup;
 }
@@ -104,27 +101,22 @@ export interface IParsedGroup extends IGroup {
 
 export interface IGroupDetailEdit {
   id?: string;
-  parent_id?: string;
+  parentId?: string;
   name?: string;
   description?: string | null;
   level?: number;
-  owner_id?: string;
   icon?: string;
-  background_img_url?: string;
-  group_type?: GROUP_TYPE;
+  backgroundImgUrl?: string;
   privacy?: GROUP_PRIVACY_TYPE;
 }
 
 export interface IGroupDetail {
   group: IGroup;
-  can_setting: boolean;
-  can_edit_info?: boolean;
-  can_edit_privacy?: boolean;
-  can_manage_member?: boolean;
-  can_leave?: boolean;
-  can_manage_scheme?: boolean;
-  join_status: number;
-  total_pending_members: number;
+  canEditInfo?: boolean;
+  canEditPrivacy?: boolean;
+  canManageMember?: boolean;
+  canSetting?: boolean;
+  joinStatus: number;
 }
 
 export interface IParamGetGroupPosts {
@@ -148,7 +140,7 @@ export interface IParamGetGroupMembers {
 
 export interface IGroupImageUpload {
   id: string;
-  fieldName: 'icon' | 'background_img_url';
+  fieldName: 'icon' | 'backgroundImgUrl';
   file: IFilePicked;
   uploadType: IUploadType;
   destination: 'group' | 'community';
@@ -192,18 +184,18 @@ export interface IGroupMembers {
   username?: string;
   fullname?: string;
   avatar?: string;
-  chat_user_id?: string;
-  is_admin?: boolean;
-  custom_role_ids?: any[];
+  chatUserId?: string;
+  isAdmin?: boolean;
+  customRoleIds?: any[];
   roles?: any[];
 }
 
 export interface IJoiningMember {
   id: string;
-  user_id: string;
-  group_id: string;
-  created_at: string;
-  updated_at: string;
+  userId: string;
+  groupId: string;
+  createdAt: string;
+  updatedAt: string;
   isCanceled?: boolean;
   user: IJoiningUserInfo;
 }
@@ -217,14 +209,14 @@ export interface IJoiningUserInfo {
   country: string | null;
   city: string | null;
   phone: string | null;
-  country_code: string | null;
-  latest_work: {
+  countryCode: string | null;
+  latestWork: {
     id: string;
-    user_id: string;
-    currently_work_here: boolean;
-    end_date: string | null;
+    userId: string;
+    currentlyWorkHere: boolean;
+    endDate: string | null;
     company: string | null;
-    title_position: string | null;
+    titlePosition: string | null;
   } | null;
 }
 
@@ -247,19 +239,11 @@ export interface IStateList {
 }
 
 export interface IGetCommunityGroup {
-  preview_members?: boolean;
+  previewMembers?: boolean;
   key?: string;
-  list_by?: 'tree' | 'flat';
+  listBy?: 'tree' | 'flat';
 }
 
-export interface ICommunityDetailEdit {
-  id: string;
-  name?: string | null;
-  description?: string | null;
-  icon?: string;
-  background_img_url?: string;
-  privacy?: COMMUNITY_PRIVACY_TYPE;
-}
 export interface IPayloadGroupSchemeAssignments {
   communityId: string;
   data: {groupId: string; schemeId: string}[];
