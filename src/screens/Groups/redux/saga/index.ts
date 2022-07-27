@@ -283,7 +283,8 @@ function* getJoinableUsers({
     const { offset, data } = groups.users;
 
     const { groupId, params } = payload;
-    const response: IResponseData = yield groupsDataHelper.getJoinableUsers(
+    const response: IResponseData = yield call(
+      groupsDataHelper.getJoinableUsers,
       groupId,
       { offset, limit: appConfig.recordsPerPage, ...params },
     );
@@ -304,6 +305,7 @@ function* getJoinableUsers({
       JSON.stringify(err, undefined, 2),
       '\x1b[0m',
     );
+    yield call(showError, err)
   }
 }
 

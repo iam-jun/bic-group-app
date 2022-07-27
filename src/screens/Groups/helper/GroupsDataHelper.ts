@@ -638,19 +638,7 @@ const groupsDataHelper = {
   getGroupMembers: (groupId: string, params: any) => withHttpRequestPromise(groupsApiConfig.getGroupMembers, groupId, params),
   getGroupDetail: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getGroupDetail, groupId),
   editGroupDetail: (groupId: string, data: IGroupDetailEdit) => withHttpRequestPromise(groupsApiConfig.editGroupDetail, groupId, data),
-  getJoinableUsers: async (groupId: string, params: any) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getJoinableUsers(groupId, params),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getJoinableUsers: (groupId: string, params: any) => withHttpRequestPromise(groupsApiConfig.getJoinableUsers, groupId, params),
   addUsers: async (groupId: string, userIds: string[]) => {
     try {
       const response: any = await makeHttpRequest(
