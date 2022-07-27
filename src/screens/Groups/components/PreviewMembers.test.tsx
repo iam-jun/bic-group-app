@@ -44,7 +44,7 @@ describe('PreviewMembers component', () => {
     // @ts-ignore
     state.groups.communityDetail = {
       ...communityDetailData,
-      user_count: 2,
+      userCount: 2,
       members: [previewMemberDetail, previewMemberDetail],
     };
     const store = createTestStore(state);

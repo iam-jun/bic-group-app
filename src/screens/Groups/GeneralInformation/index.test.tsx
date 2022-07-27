@@ -53,7 +53,7 @@ describe('GeneralInformation component', () => {
     expect(_openImagePicker).toBeCalledWith(
       mockDispatchFn,
       groupDetailData.group.id,
-      'background_img_url',
+      'backgroundImgUrl',
       'group_cover',
     );
   });

@@ -103,7 +103,7 @@ export const checkRunSearch = (text: string, groupIds: any, dispatch: any) => {
 
   if (_matchTerm !== null && !_matchTerm.endsWith(' ')) {
     flagRun = true;
-    dispatch(actions.runSearch({ group_ids: groupIds, key: _matchTerm }));
+    dispatch(actions.runSearch({ groupIds, key: _matchTerm }));
   } else {
     dispatch(actions.setData([]));
   }

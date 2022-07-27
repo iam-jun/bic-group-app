@@ -171,8 +171,8 @@ export const postApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
     params: {
-      group_ids: params.group_ids,
-      user_ids: params.user_ids,
+      group_ids: params.groupIds,
+      user_ids: params.userIds,
       key: params.key ? params.key : undefined,
       offset: params.skip,
       limit: params.take,
@@ -246,7 +246,7 @@ const postDataHelper = {
   putEditComment: (id: string, data: ICommentData) => withHttpRequestPromise(postApiConfig.putEditComment, id, data),
   deletePost: (id: string, isDraftPost?: boolean) => withHttpRequestPromise(postApiConfig.deletePost, id, isDraftPost),
   deleteComment: (id: string) => withHttpRequestPromise(postApiConfig.deleteComment, id),
-  getCommentsByPostId: async (params: IRequestGetPostComment) => {
+  getCommentsByPostId: (params: IRequestGetPostComment) => {
     if (!params?.postId) {
       return Promise.reject(new Error('Post Id not found'));
     }
@@ -306,21 +306,9 @@ const postDataHelper = {
     }
   },
   postPublishDraftPost: (draftPostId: string) => withHttpRequestPromise(postApiConfig.postPublishDraftPost, draftPostId),
-  getPostAudience: async (params: IParamGetPostAudiences) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getPostAudiences(params),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getPostAudience: (params: IParamGetPostAudiences) => withHttpRequestPromise(postApiConfig.getPostAudiences, params),
   getCommentDetail: (commentId: string, params: IRequestGetPostComment) => withHttpRequestPromise(postApiConfig.getCommentDetail, commentId, params),
-  getSeenList: async (params: IRequestGetUsersSeenPost) => withHttpRequestPromise(postApiConfig.getUsersSeenPost, params),
+  getSeenList: (params: IRequestGetUsersSeenPost) => withHttpRequestPromise(postApiConfig.getUsersSeenPost, params),
 };
 
 export default postDataHelper;

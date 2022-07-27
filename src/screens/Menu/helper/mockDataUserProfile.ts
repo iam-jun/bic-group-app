@@ -12,10 +12,10 @@ const userProfileDataMocksResponse = {
       birthday: '1981-07-07',
       avatar:
         'https://cdn.dribbble.com/users/81809/screenshots/3460815/piccolo.jpg',
-      bein_staff_role: null,
-      created_at: '2021-08-06T08:00:43.869Z',
-      updated_at: '2021-08-06T08:00:43.871Z',
-      deleted_at: null,
+      beinStaffRole: null,
+      createdAt: '2021-08-06T08:00:43.869Z',
+      updatedAt: '2021-08-06T08:00:43.871Z',
+      deletedAt: null,
       backgroundImgUrl:
         'https://evolgroup.vn/wp-content/uploads/sites/18/2020/04/Thumb-EVOL.jpg',
       phone: '123456789',

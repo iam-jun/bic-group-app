@@ -3,8 +3,8 @@ import { POST_DETAIL } from './post';
 
 export const groupDetailData: IGroupDetail = {
   group: {
-    id: 1,
-    parent_id: null,
+    id: '1',
+    parentId: undefined,
     name: 'EVOL Community',
     slug: 'evol-community-1641809088',
     description: 'The greatest community ever',
@@ -16,7 +16,7 @@ export const groupDetailData: IGroupDetail = {
     chatId: 'rpq3unai7i8ztprmoz97rdjr7w',
     createdAt: '2022-01-10T10:04:48.685Z',
     updatedAt: '2022-01-10T10:04:48.928Z',
-    deleted_at: null,
+    deletedAt: null,
     userCount: 25,
   },
   joinStatus: 2,
@@ -24,7 +24,7 @@ export const groupDetailData: IGroupDetail = {
 };
 
 export const adminDetail = {
-  id: 1,
+  id: '1',
   username: 'testmember',
   fullname: 'Test Name Admin',
   avatar:
@@ -34,7 +34,7 @@ export const adminDetail = {
   customRoleIds: [],
   roles: [
     {
-      data_values: {
+      dataValues: {
         id: '23a07c64-27d7-4438-a17d-9aae7bbbd4df',
         name: 'Admin',
         type: 'GROUP_ADMIN',
@@ -66,7 +66,7 @@ export const adminDetail = {
           'delete_message',
         ],
       },
-      previous_data_values: {
+      previousDataValues: {
         id: '23a07c64-27d7-4438-a17d-9aae7bbbd4df',
         name: 'Admin',
         type: 'GROUP_ADMIN',
@@ -100,20 +100,20 @@ export const adminDetail = {
       },
       changed: {},
       options: {
-        is_new_record: false,
+        isNewRecord: false,
         schema: 'bein',
-        schema_delimiter: '',
-        include_validated: true,
+        schemaDelimiter: '',
+        includeValidated: true,
         raw: true,
         attributes: ['id', 'name', 'type', 'permissions'],
       },
-      is_new_record: false,
+      isNewRecord: false,
     },
   ],
 };
 
 export const memberDetail = {
-  id: 2,
+  id: '2',
   username: 'testmember',
   fullname: 'Test Name Member',
   avatar:
@@ -138,21 +138,21 @@ export const memberData = {
 };
 
 export const discoverGroup = {
-  id: 24,
-  parent_id: 22,
+  id: '24',
+  parentId: '22',
   name: 'Bein Back-end Bein Group',
   slug: '504bb9ec-3e69-472a-8d2d-74cbbac75ca9-1641835590',
   description: null,
   level: 4,
-  created_by: 1,
+  createdBy: '1',
   icon: null,
   backgroundImgUrl: null,
   privacy: 'PUBLIC',
   chatId: 'aj1s4cktxjg53npisjetdspyxy',
-  scheme_id: 'd9e5362a-ca6b-42c7-8530-a3b2aa67f15a',
+  schemeId: 'd9e5362a-ca6b-42c7-8530-a3b2aa67f15a',
   createdAt: '2022-01-10T17:26:29.895Z',
   updatedAt: '2022-01-10T17:47:44.883Z',
-  deleted_at: null,
+  deletedAt: null,
   userCount: 7,
   joinStatus: 1,
 };
@@ -164,10 +164,10 @@ export const discoverGroup = {
  *  -  - [x] Bein Product Team
  */
 export const GROUP_TREE_WITH_SELECTING = {
-  1: false,
-  10: {
-    id: 10,
-    parent_id: 1,
+  '1': false,
+  '10': {
+    id: '10',
+    parentId: '1',
     name: 'Bein Community',
     slug: '863b7fce-2a88-4441-aa24-4803f7b6d1ec-1641834908',
     description: null,
@@ -179,7 +179,7 @@ export const GROUP_TREE_WITH_SELECTING = {
     chatId: 'nc1m1i78fpdaiktp7bdzdnntgh',
     createdAt: '2022-01-10T17:15:08.123Z',
     updatedAt: '2022-01-10T17:15:08.592Z',
-    deleted_at: null,
+    deletedAt: null,
     children: [],
     userCount: '19',
     uiId: 'tree_0_0',
@@ -190,21 +190,21 @@ export const GROUP_TREE_WITH_SELECTING = {
     isChecked: true,
     childrenUiIds: ['tree_0_0_0'],
   },
-  17: {
-    id: 17,
-    parent_id: 10,
+  '17': {
+    id: '17',
+    parentId: '10',
     name: 'Bein Product Team',
     slug: 'cd99ab19-a7bf-461b-9b0e-35f809774821-1641835298',
     description: null,
     level: 2,
-    parents: [1, 10],
+    parents: ['1', '10'],
     icon: null,
     backgroundImgUrl: null,
     privacy: 'PUBLIC',
     chatId: '3typp5m3b3r7byuu5q3fjqmaaa',
     createdAt: '2022-01-10T17:21:38.026Z',
     updatedAt: '2022-01-10T17:47:03.538Z',
-    deleted_at: null,
+    deletedAt: null,
     children: [],
     userCount: '18',
     uiId: 'tree_0_0_0',
@@ -224,8 +224,8 @@ export const GROUP_TREE_WITH_SELECTING = {
  *  - - - Bein Product Team
  */
 export const GROUP_TREE = {
-  id: 1,
-  parent_id: null,
+  id: '1',
+  parentId: null,
   name: 'EVOL Community',
   slug: 'evol-community-1641809088',
   description: 'The greatest community ever',
@@ -237,39 +237,39 @@ export const GROUP_TREE = {
   chatId: 'rpq3unai7i8ztprmoz97rdjr7w',
   createdAt: '2022-01-10T10:04:48.685Z',
   updatedAt: '2022-01-10T10:04:48.928Z',
-  deleted_at: null,
+  deletedAt: null,
   children: [
     {
-      id: 10,
-      parent_id: 1,
+      id: '10',
+      parentId: '1',
       name: 'Bein Community',
       slug: '863b7fce-2a88-4441-aa24-4803f7b6d1ec-1641834908',
       description: null,
       level: 1,
-      parents: [1],
+      parents: ['1'],
       icon: null,
       backgroundImgUrl: null,
       privacy: 'PUBLIC',
       chatId: 'nc1m1i78fpdaiktp7bdzdnntgh',
       createdAt: '2022-01-10T17:15:08.123Z',
       updatedAt: '2022-01-10T17:15:08.592Z',
-      deleted_at: null,
+      deletedAt: null,
       children: [
         {
-          id: 17,
-          parent_id: 10,
+          id: '17',
+          parentId: '10',
           name: 'Bein Product Team',
           slug: 'cd99ab19-a7bf-461b-9b0e-35f809774821-1641835298',
           description: null,
           level: 2,
-          parents: [1, 10],
+          parents: ['1', '10'],
           icon: null,
           backgroundImgUrl: null,
           privacy: 'PUBLIC',
           chatId: '3typp5m3b3r7byuu5q3fjqmaaa',
           createdAt: '2022-01-10T17:21:38.026Z',
           updatedAt: '2022-01-10T17:47:03.538Z',
-          deleted_at: null,
+          deletedAt: null,
           children: [],
           userCount: '18',
         },
@@ -311,8 +311,8 @@ export const groupPostData = [
 ];
 
 export const GROUP_ASSIGNMENTS = {
-  groupId: 1,
-  scheme_id: 'efgh',
+  groupId: '1',
+  schemeId: 'efgh',
   name: 'Town Square',
   level: 0,
   privacy: 'PUBLIC',
@@ -320,8 +320,8 @@ export const GROUP_ASSIGNMENTS = {
   description: 'The greatest community ever yeahhhhhhhhhh 123',
   children: [
     {
-      groupId: 2,
-      scheme_id: null,
+      groupId: '2',
+      schemeId: null,
       name: 'Crypto Inner Circle',
       level: 1,
       privacy: 'PUBLIC',

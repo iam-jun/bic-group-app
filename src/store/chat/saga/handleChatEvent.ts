@@ -35,7 +35,7 @@ function* handlePostedEvent(payload: any) {
     const mentions = JSON.parse(payload.data.mentions);
     const post = JSON.parse(payload.data.post);
 
-    if (mentions.includes(myProfile.chat_user_id) && !post.root_id) {
+    if (mentions.includes(myProfile.chatUserId) && !post.root_id) {
       const id = payload.broadcast.channel_id;
       let channel = channels[id];
       if (!channel) {
