@@ -26,7 +26,7 @@ function* getCommentsByPostId({
   try {
     callbackLoading?.(true);
     const response = yield call(postDataHelper.getCommentsByPostId, params);
-    const { list: newList, meta } = response;
+    const { list: newList, meta } = response?.data || {};
     callbackLoading?.(false);
     if (newList?.length > 0) {
       if (commentId && postId) {

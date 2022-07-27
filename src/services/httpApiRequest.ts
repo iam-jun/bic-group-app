@@ -290,6 +290,8 @@ const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
   });
 
   switch (endPoint) {
+    case `${ApiConfig.providers.bein.url}post-audiences`:
+    case `${ApiConfig.providers.bein.url}users/mentionable`:
     case `${ApiConfig.providers.bein.url}me/permissions`:
     case `${ApiConfig.providers.bein.url}system-scheme`:
     case `${ApiConfig.providers.bein.url}permissions/categories`:

@@ -508,7 +508,7 @@ function* getPostDetail({
     };
     const response = yield call(postDataHelper.getPostDetail, params);
     yield timeOut(500);
-    yield put(postActions.addToAllPosts({ data: response, handleComment: true }));
+    yield put(postActions.addToAllPosts({ data: response?.data || {}, handleComment: true }));
     callbackLoading?.(false, true);
   } catch (e: any) {
     yield timeOut(500);
