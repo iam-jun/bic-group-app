@@ -45,7 +45,7 @@ export default function* approveAllCommunityMemberRequests({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log('approveAllCommunityMemberRequest: ', err);
+    console.error('approveAllCommunityMemberRequest: ', err);
 
     yield call(showError, err);
   }

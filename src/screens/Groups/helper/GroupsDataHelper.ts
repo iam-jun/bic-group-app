@@ -959,70 +959,24 @@ const groupsDataHelper = {
   cancelJoinCommunity: (communityId: string) => withHttpRequestPromise(groupsApiConfig.cancelJoinCommunity, communityId),
   // eslint-disable-next-line max-len
   getCommunityMemberRequests: (communityId: string, params: any) => withHttpRequestPromise(groupsApiConfig.getCommunityMemberRequests, communityId, params),
-  approveSingleCommunityMemberRequest: async (
+  approveSingleCommunityMemberRequest: (
     communityId: string,
     requestId: string,
-  ) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.approveSingleCommunityMemberRequest(
-          communityId,
-          requestId,
-        ),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  declineSingleCommunityMemberRequest: async (
+  ) => withHttpRequestPromise(
+    groupsApiConfig.approveSingleCommunityMemberRequest,
+    communityId,
+    requestId,
+  ),
+  declineSingleCommunityMemberRequest: (
     communityId: string,
     requestId: string,
-  ) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.declineSingleCommunityMemberRequest(
-          communityId,
-          requestId,
-        ),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  approveAllCommunityMemberRequests: async (communityId: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.approveAllCommunityMemberRequests(communityId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  declineAllCommunityMemberRequests: async (communityId: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.declineAllCommunityMemberRequests(communityId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  ) => withHttpRequestPromise(
+    groupsApiConfig.declineSingleCommunityMemberRequest,
+    communityId,
+    requestId,
+  ),
+  approveAllCommunityMemberRequests: (communityId: string) => withHttpRequestPromise(groupsApiConfig.approveAllCommunityMemberRequests, communityId),
+  declineAllCommunityMemberRequests: (communityId: string) => withHttpRequestPromise(groupsApiConfig.declineAllCommunityMemberRequests, communityId),
   getCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getCommunities, params),
 };
 
