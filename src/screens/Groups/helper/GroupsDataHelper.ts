@@ -649,19 +649,7 @@ const groupsDataHelper = {
   },
   getGroupMembers: (groupId: string, params: any) => withHttpRequestPromise(groupsApiConfig.getGroupMembers, groupId, params),
   getGroupDetail: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getGroupDetail, groupId),
-  editGroupDetail: async (groupId: string, data: IGroupDetailEdit) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.editGroupDetail(groupId, data),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  editGroupDetail: (groupId: string, data: IGroupDetailEdit) => withHttpRequestPromise(groupsApiConfig.editGroupDetail, groupId, data),
   getJoinableUsers: async (groupId: string, params: any) => {
     try {
       const response: any = await makeHttpRequest(
