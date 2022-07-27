@@ -18,8 +18,7 @@ export default function* joinNewGroup({
   try {
     const { groupId, groupName } = payload;
 
-    // @ts-ignore
-    const response = yield call(groupsDataHelper.joinGroup, groupId);
+    const response:AxiosResponse = yield call(groupsDataHelper.joinGroup, groupId);
     const joinStatus = response?.data?.joinStatus;
     const hasRequested = joinStatus === groupJoinStatus.requested;
 
@@ -53,6 +52,6 @@ export default function* joinNewGroup({
     yield put(groupsActions.getGroupDetail(groupId));
   } catch (err) {
     console.error('joinNewGroup catch', err);
-    yield showError(err);
+    yield call(showError, err);
   }
 }

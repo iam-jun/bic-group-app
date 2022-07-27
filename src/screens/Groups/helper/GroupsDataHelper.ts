@@ -689,32 +689,8 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  joinGroup: async (groupId: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.joinGroup(groupId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  cancelJoinGroup: async (groupId: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.cancelJoinGroup(groupId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  joinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.joinGroup, groupId),
+  cancelJoinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.cancelJoinGroup, groupId),
   leaveGroup: async (groupId: string) => {
     try {
       const response: any = await makeHttpRequest(

@@ -1,5 +1,7 @@
 import i18next from 'i18next';
-import { put, select, takeLatest } from 'redux-saga/effects';
+import {
+  call, put, select, takeLatest,
+} from 'redux-saga/effects';
 
 import { AxiosResponse } from 'axios';
 import {
@@ -361,7 +363,7 @@ function* cancelJoinGroup({
   try {
     const { groupId, groupName } = payload;
 
-    yield groupsDataHelper.cancelJoinGroup(groupId);
+    yield call(groupsDataHelper.cancelJoinGroup, groupId);
 
     // update button Join/Cancel/View status on Discover groups
     yield put(
@@ -400,7 +402,7 @@ function* cancelJoinGroup({
       return;
     }
 
-    yield showError(err);
+    yield call(showError, err);
   }
 }
 
