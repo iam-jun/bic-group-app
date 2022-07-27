@@ -73,16 +73,16 @@ export interface IUserProfile {
   avatar?: string;
   backgroundImgUrl?: string;
   phone?: string;
-  country_code?: string;
+  countryCode?: string;
   address?: string;
   language?: string[];
   description?: string;
-  relationship_status?: string;
+  relationshipStatus?: string;
   city?: string;
   country?: string;
-  latest_work?: {
+  latestWork?: {
     company?: string;
-    title_position?: string;
+    titlePosition?: string;
   };
 }
 
@@ -100,11 +100,11 @@ export interface IUserEdit {
   avatar?: string;
   backgroundImgUrl?: string;
   phone?: string;
-  country_code?: string|null;
+  countryCode?: string|null;
   address?: string;
   language?: string[];
   description?: string;
-  relationship_status?: RELATIONSHIP_TYPE;
+  relationshipStatus?: RELATIONSHIP_TYPE;
   city?: string;
   country?: string;
 }

@@ -33,10 +33,10 @@ const EditContact = () => {
 
   const myProfile = useKeySelector(menuKeySelector.myProfile);
   const {
-    email, phone, country_code, country, city, id,
+    email, phone, countryCode, country, city, id,
   } = myProfile || {};
 
-  const [countryCodeState, setCountryCountryCodeState] = useState<string>(country_code);
+  const [countryCodeState, setCountryCountryCodeState] = useState<string>(countryCode);
   const [countryState, setCountryState] = useState<string>(country);
   const [cityState, setCityState] = useState<string>(city);
   const phoneNumberEditError = useKeySelector(
@@ -86,7 +86,7 @@ const EditContact = () => {
         {
           id,
           phone: phoneNumber,
-          country_code: phoneNumber ? countryCodeState : null,
+          countryCode: phoneNumber ? countryCodeState : null,
           country: countryState,
           city: cityState,
         },
@@ -134,7 +134,7 @@ const EditContact = () => {
     cityState: string,
     phoneNumber: string,
   ) => (
-    country_code !== countryCodeState
+    countryCode !== countryCodeState
       || country !== countryState
       || city !== cityState
       || phone !== phoneNumber
@@ -167,7 +167,7 @@ const EditContact = () => {
       <ScrollView keyboardShouldPersistTaps="always" scrollEnabled={false}>
         <View style={styles.infoItem}>
           <EditPhoneNumber
-            countryCode={country_code}
+            countryCode={countryCode}
             phoneNumber={phone}
             onChangeCountryCode={onChangeCountryCode}
             control={control}

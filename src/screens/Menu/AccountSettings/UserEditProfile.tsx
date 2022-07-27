@@ -17,7 +17,7 @@ import Button from '~/beinComponents/Button';
 
 import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import genders from '~/constants/genders';
-import relationshipStatus from '~/constants/relationshipStatus';
+import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
 import speakingLanguages from '~/constants/speakingLanguages';
 import { IFilePicked } from '~/interfaces/common';
 import images from '~/resources/images';
@@ -66,10 +66,10 @@ const UserEditProfile = (props: any) => {
     backgroundImgUrl,
     birthday,
     language,
-    relationship_status,
+    relationshipStatus,
     email,
     phone,
-    country_code,
+    countryCode,
     country,
     city,
     description,
@@ -351,7 +351,7 @@ const UserEditProfile = (props: any) => {
           subtitle={
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
-              i18next.t(relationshipStatus[relationship_status])
+              i18next.t(RELATIONSHIP_STATUS[relationshipStatus])
               || i18next.t('common:text_not_set')
             }
           leftIcon="Heart"
@@ -391,8 +391,8 @@ const UserEditProfile = (props: any) => {
         <SettingItem
           title="settings:title_phone_number"
           subtitle={
-              country_code && phone
-                ? `(+${country_code}) ${phone}`
+              countryCode && phone
+                ? `(+${countryCode}) ${phone}`
                 : i18next.t('common:text_not_set')
             }
           leftIcon="Phone"

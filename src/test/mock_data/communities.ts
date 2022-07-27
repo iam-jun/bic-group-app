@@ -126,7 +126,7 @@ export const memberRequestDetail = {
     city: 'Hồ Chí Minh',
     email: 'usernametest@mail.com',
     phone: null,
-    country_code: null,
-    latest_work: null,
+    countryCode: null,
+    latestWork: null,
   },
 };
