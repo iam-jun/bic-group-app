@@ -601,23 +601,11 @@ const groupsDataHelper = {
     }
   },
   getUserInnerGroups: (groupId: string, username: string) => withHttpRequestPromise(groupsApiConfig.getUserInnerGroups, groupId, username),
-  getGroupPosts: async (param: IParamGetGroupPosts) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getGroupPosts({
-          offset: param?.offset || 0,
-          limit: param?.limit || appConfig.recordsPerPage,
-          ...param,
-        }),
-      );
-      if (response && response?.data?.data?.list) {
-        return Promise.resolve(response?.data?.data?.list);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getGroupPosts: (param: IParamGetGroupPosts) => withHttpRequestPromise(groupsApiConfig.getGroupPosts, {
+    offset: param?.offset || 0,
+    limit: param?.limit || appConfig.recordsPerPage,
+    ...param,
+  }),
   getInfoGroups: async (ids: string) => {
     try {
       const response: any = await makeHttpRequest(
