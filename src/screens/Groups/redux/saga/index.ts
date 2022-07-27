@@ -356,7 +356,7 @@ function* cancelJoinGroup({
   payload,
 }: {
   type: string;
-  payload: {groupId: number; groupName: string};
+  payload: {groupId: string; groupName: string};
 }) {
   try {
     const { groupId, groupName } = payload;
@@ -415,7 +415,7 @@ function* updateLoadingImageState(
   }
 }
 
-export function* refreshGroupMembers(groupId: number) {
+export function* refreshGroupMembers(groupId: string) {
   yield put(groupsActions.clearGroupMembers());
   yield put(groupsActions.getGroupMembers({ groupId }));
   yield put(groupsActions.getGroupDetail(groupId));

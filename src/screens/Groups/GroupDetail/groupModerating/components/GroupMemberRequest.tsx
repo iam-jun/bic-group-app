@@ -12,7 +12,8 @@ import PendingUserItem from '~/screens/Groups/components/PendingUserItem';
 const GroupMemberRequest = ({
   requestId,
 }: {
-  requestId: number;
+  requestId: string;
+  organizationId: string;
 }) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();

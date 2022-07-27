@@ -12,8 +12,8 @@ export default function* approveSingleCommunityMemberRequest({
 }: {
   type: string;
   payload: {
-    communityId: number;
-    requestId: number;
+    communityId: string;
+    requestId: string;
     fullName: string;
   };
 }) {
@@ -33,7 +33,7 @@ export default function* approveSingleCommunityMemberRequest({
     yield put(
       groupsActions.setCommunityMemberRequests({
         total: total - 1,
-        ids: ids.filter((item: number) => item !== requestId),
+        ids: ids.filter((item: string) => item !== requestId),
         items: requestItems,
       }),
     );

@@ -22,7 +22,7 @@ import spacing from '~/theme/spacing';
 
 export interface JoinedCommunitiesProps {
   style?: StyleProp<ViewStyle>;
-  onPressCommunities?: (communityId: number) => void;
+  onPressCommunities?: (communityId: string) => void;
   onPressDiscover?: () => void;
 }
 

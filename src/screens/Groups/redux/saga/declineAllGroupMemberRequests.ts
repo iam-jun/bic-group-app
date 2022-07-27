@@ -7,7 +7,7 @@ export default function* declineAllGroupMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {groupId: number; callback?: () => void};
+  payload: {groupId: string; callback?: () => void};
 }) {
   const { groupId } = payload;
   try {

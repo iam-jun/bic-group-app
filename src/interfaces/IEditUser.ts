@@ -9,7 +9,7 @@ export type RELATIONSHIP_TYPE =
   | 'MARRIED';
 
 export interface IUserImageUpload {
-  id: number;
+  id: string;
   fieldName: 'avatar' | 'background_img_url';
   file: IFilePicked;
   uploadType: IUploadType;

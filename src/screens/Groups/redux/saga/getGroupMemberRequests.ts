@@ -11,7 +11,7 @@ export default function* getGroupMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {groupId: number; isRefreshing?: boolean; params?: any};
+  payload: {groupId: string; isRefreshing?: boolean; params?: any};
 }) {
   try {
     const { groups } = yield select();

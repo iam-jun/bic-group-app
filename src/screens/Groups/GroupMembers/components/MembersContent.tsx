@@ -7,7 +7,7 @@ import actions from '~/screens/Groups/redux/actions';
 import { useMyPermissions } from '~/hooks/permissions';
 
 interface MembersContentProps {
-  groupId: number;
+  groupId: string;
   onPressMenu: (item: IGroupMembers) => void;
 }
 

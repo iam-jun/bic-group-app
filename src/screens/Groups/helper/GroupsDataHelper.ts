@@ -22,14 +22,14 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getCommunityGroupsTree: (id: number | string): HttpApiRequestConfig => ({
+  getCommunityGroupsTree: (id: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${id}/group-structure`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
   putGroupStructureReorder: (
-    communityId: number,
+    communityId: string,
     data: number[],
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-structure/order`,
@@ -39,8 +39,8 @@ export const groupsApiConfig = {
     data,
   }),
   getCommunityStructureMoveTargets: (
-    communityId: number,
-    groupId: number,
+    communityId: string,
+    groupId: string,
     key?: string,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-structure/move-targets/${groupId}`,
@@ -50,9 +50,9 @@ export const groupsApiConfig = {
     ...(key ? { params: { key } } : {}),
   }),
   putGroupStructureMoveToTarget: (
-    communityId: number,
-    moveId: number,
-    targetId: number,
+    communityId: string,
+    moveId: string,
+    targetId: string,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-structure/move`,
     method: 'put',
@@ -64,8 +64,8 @@ export const groupsApiConfig = {
     },
   }),
   putGroupStructureCollapseStatus: (
-    communityId: number,
-    groupId: number,
+    communityId: string,
+    groupId: string,
     status: boolean,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-structure/collapse/${groupId}`,
@@ -89,20 +89,20 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getCommunityScheme: (communityId: number | string): HttpApiRequestConfig => ({
+  getCommunityScheme: (communityId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/scheme`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getGroupSchemeAssignments: (communityId: number): HttpApiRequestConfig => ({
+  getGroupSchemeAssignments: (communityId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-scheme-assignments`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
   putGroupSchemeAssignments: (
-    communityId: number,
+    communityId: string,
     data: any[],
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-scheme-assignments`,
@@ -112,7 +112,7 @@ export const groupsApiConfig = {
     data: { data },
   }),
   updateCommunityScheme: (
-    communityId: string | number,
+    communityId: string,
     schemeData: IScheme,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/scheme`,
@@ -123,22 +123,20 @@ export const groupsApiConfig = {
       ...schemeData,
     },
   }),
-  deleteCommunityScheme: (
-    communityId: number | string,
-  ): HttpApiRequestConfig => ({
+  deleteCommunityScheme: (communityId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/scheme`,
     method: 'delete',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getSchemes: (communityId: number | string): HttpApiRequestConfig => ({
+  getSchemes: (communityId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/schemes`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
   getGroupScheme: (
-    communityId: number | string,
+    communityId: string,
     schemeId: string,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/group-schemes/${schemeId}`,
@@ -147,7 +145,7 @@ export const groupsApiConfig = {
     useRetry: true,
   }),
   updateGroupScheme: (
-    communityId: number | string,
+    communityId: string,
     schemeId: string,
     schemeData: IScheme,
   ): HttpApiRequestConfig => ({
@@ -160,7 +158,7 @@ export const groupsApiConfig = {
     },
   }),
   postCreateSchemePermission: (
-    communityId: string | number,
+    communityId: string,
     schemeData: IScheme,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/scheme`,
@@ -186,7 +184,7 @@ export const groupsApiConfig = {
     params,
   }),
   getUserInnerGroups: (
-    groupId: number,
+    groupId: string,
     username: string,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/inner-groups`,
@@ -197,7 +195,7 @@ export const groupsApiConfig = {
       username,
     },
   }),
-  getGroupMembers: (groupId: number, params: any): HttpApiRequestConfig => ({
+  getGroupMembers: (groupId: string, params: any): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/users`,
     method: 'get',
     provider: ApiConfig.providers.bein,
@@ -216,14 +214,14 @@ export const groupsApiConfig = {
       group_ids: ids,
     },
   }),
-  getGroupDetail: (groupId: number): HttpApiRequestConfig => ({
+  getGroupDetail: (groupId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
   editGroupDetail: (
-    groupId: number,
+    groupId: string,
     data: IGroupDetailEdit,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}`,
@@ -234,7 +232,7 @@ export const groupsApiConfig = {
       ...data,
     },
   }),
-  getJoinableUsers: (groupId: number, params: any): HttpApiRequestConfig => ({
+  getJoinableUsers: (groupId: string, params: any): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joinable-users`,
     method: 'get',
     provider: ApiConfig.providers.bein,
@@ -244,7 +242,7 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
-  addUsers: (groupId: number, userIds: number[]): HttpApiRequestConfig => ({
+  addUsers: (groupId: string, userIds: string[]): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/users/add`,
     method: 'post',
     provider: ApiConfig.providers.bein,
@@ -254,8 +252,8 @@ export const groupsApiConfig = {
     },
   }),
   removeUsers: (
-    groupId: number,
-    userIds: (number | string)[],
+    groupId: string,
+    userIds: string[],
     type?: string,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/users/remove`,
@@ -266,27 +264,27 @@ export const groupsApiConfig = {
       [type || 'user_ids']: userIds,
     },
   }),
-  joinGroup: (groupId: number): HttpApiRequestConfig => ({
+  joinGroup: (groupId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/join`,
     method: 'post',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  cancelJoinGroup: (groupId: number): HttpApiRequestConfig => ({
+  cancelJoinGroup: (groupId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/cancel-joining-request`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  leaveGroup: (groupId: number): HttpApiRequestConfig => ({
+  leaveGroup: (groupId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/leave`,
     method: 'post',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
   setGroupAdmin: (
-    groupId: number,
-    userIds: number[],
+    groupId: string,
+    userIds: string[],
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/assign-admin`,
     method: 'post',
@@ -297,8 +295,8 @@ export const groupsApiConfig = {
     },
   }),
   removeGroupAdmin: (
-    groupId: number,
-    userId: number,
+    groupId: string,
+    userId: string,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/revoke-admin/${userId}`,
     method: 'put',
@@ -306,7 +304,7 @@ export const groupsApiConfig = {
     useRetry: true,
   }),
   getGroupMemberRequests: (
-    groupId: number,
+    groupId: string,
     params: any,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests`,
@@ -320,38 +318,38 @@ export const groupsApiConfig = {
     },
   }),
   approveSingleGroupMemberRequest: (
-    groupId: number,
-    requestId: number,
+    groupId: string,
+    requestId: string,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/${requestId}/approve`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  approveAllGroupMemberRequests: (groupId: number): HttpApiRequestConfig => ({
+  approveAllGroupMemberRequests: (groupId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/approve`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
   declineSingleGroupMemberRequest: (
-    groupId: number,
-    requestId: number,
+    groupId: string,
+    requestId: string,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/${requestId}/decline`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  declineAllGroupMemberRequests: (groupId: number): HttpApiRequestConfig => ({
+  declineAllGroupMemberRequests: (groupId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joining-requests/decline`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
   getInnerGroupsLastAdmin: (
-    groupId: number,
-    userId: number,
+    groupId: string,
+    userId: string,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/inner-groups-have-last-admin/${userId}`,
     method: 'get',
@@ -381,7 +379,7 @@ export const groupsApiConfig = {
     params,
   }),
   getCommunityGroups: (
-    id: number,
+    id: string,
     otherParams: IGetCommunityGroup,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}me/communities/${id}/groups`,
@@ -393,7 +391,7 @@ export const groupsApiConfig = {
       key: otherParams?.key?.trim?.() ? otherParams.key : undefined,
     },
   }),
-  getCommunityDetail: (communityId: number): HttpApiRequestConfig => ({
+  getCommunityDetail: (communityId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}`,
     method: 'get',
     provider: ApiConfig.providers.bein,
@@ -401,7 +399,7 @@ export const groupsApiConfig = {
     params: { preview_members: true },
   }),
   getCommunityMembers: (
-    communityId: number,
+    communityId: string,
     params?: IParamGetCommunityMembers,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/members`,
@@ -414,7 +412,7 @@ export const groupsApiConfig = {
     },
   }),
   getDiscoverGroups: (
-    communityId: number,
+    communityId: string,
     params?: IParamGetDiscoverGroups,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/groups/discover`,
@@ -423,20 +421,20 @@ export const groupsApiConfig = {
     useRetry: true,
     params,
   }),
-  joinCommunity: (communityId: number): HttpApiRequestConfig => ({
+  joinCommunity: (communityId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/join`,
     method: 'post',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  cancelJoinCommunity: (communityId: number): HttpApiRequestConfig => ({
+  cancelJoinCommunity: (communityId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/cancel-joining-request`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
   getCommunityMemberRequests: (
-    communityId: number,
+    communityId: string,
     params: any,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests`,
@@ -450,8 +448,8 @@ export const groupsApiConfig = {
     },
   }),
   approveSingleCommunityMemberRequest: (
-    communityId: number,
-    requestId: number,
+    communityId: string,
+    requestId: string,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/${requestId}/approve`,
     method: 'put',
@@ -459,8 +457,8 @@ export const groupsApiConfig = {
     useRetry: true,
   }),
   declineSingleCommunityMemberRequest: (
-    communityId: number,
-    requestId: number,
+    communityId: string,
+    requestId: string,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/${requestId}/decline`,
     method: 'put',
@@ -468,7 +466,7 @@ export const groupsApiConfig = {
     useRetry: true,
   }),
   approveAllCommunityMemberRequests: (
-    communityId: number,
+    communityId: string,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/approve`,
     method: 'put',
@@ -476,7 +474,7 @@ export const groupsApiConfig = {
     useRetry: true,
   }),
   declineAllCommunityMemberRequests: (
-    communityId: number,
+    communityId: string,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/decline`,
     method: 'put',
@@ -494,7 +492,7 @@ export const groupsApiConfig = {
     },
   }),
   editCommunityDetail: (
-    communityId: number,
+    communityId: string,
     data: ICommunityDetailEdit,
   ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}`,
@@ -521,7 +519,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getCommunityGroupTree: async (id: number | string) => {
+  getCommunityGroupTree: async (id: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getCommunityGroupsTree(id),
@@ -534,7 +532,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  putGroupStructureReorder: async (communityId: number, data: number[]) => {
+  putGroupStructureReorder: async (communityId: string, data: number[]) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.putGroupStructureReorder(communityId, data),
@@ -548,8 +546,8 @@ const groupsDataHelper = {
     }
   },
   getCommunityStructureMoveTargets: async (
-    communityId: number,
-    groupId: number,
+    communityId: string,
+    groupId: string,
     key?: string,
   ) => {
     try {
@@ -574,9 +572,9 @@ const groupsDataHelper = {
     }
   },
   putGroupStructureMoveToTarget: async (
-    communityId: number,
-    moveId: number,
-    targetId: number,
+    communityId: string,
+    moveId: string,
+    targetId: string,
   ) => {
     try {
       if (!communityId || !moveId || !targetId) {
@@ -598,8 +596,8 @@ const groupsDataHelper = {
     }
   },
   putGroupStructureCollapseStatus: async (
-    communityId: number,
-    groupId: number,
+    communityId: string,
+    groupId: string,
     status: boolean,
   ) => {
     try {
@@ -647,7 +645,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getCommunityScheme: async (communityId: number | string) => {
+  getCommunityScheme: async (communityId: string) => {
     try {
       if (!communityId) {
         return Promise.reject(new Error('getCommunityScheme invalid communityId'));
@@ -663,10 +661,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  updateCommunityScheme: async (
-    communityId: number | string,
-    scheme: IScheme,
-  ) => {
+  updateCommunityScheme: async (communityId: string, scheme: IScheme) => {
     if (!communityId || !scheme) {
       return Promise.reject(new Error('updateCommunityScheme invalid data'));
     }
@@ -682,7 +677,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  deleteCommunityScheme: async (communityId: number | string) => {
+  deleteCommunityScheme: async (communityId: string) => {
     try {
       if (!communityId) {
         return Promise.reject(new Error('deleteCommunityScheme invalid communityId'));
@@ -698,7 +693,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getSchemes: async (communityId: number | string) => {
+  getSchemes: async (communityId: string) => {
     try {
       if (!communityId) {
         return Promise.reject(new Error('getSchemes invalid communityId'));
@@ -714,7 +709,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getGroupScheme: async (communityId: number | string, schemeId: string) => {
+  getGroupScheme: async (communityId: string, schemeId: string) => {
     try {
       if (!communityId || !schemeId) {
         return Promise.reject(new Error('getGroupScheme invalid communityId or schemeId'));
@@ -730,7 +725,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getGroupSchemeAssignments: async (communityId: number) => {
+  getGroupSchemeAssignments: async (communityId: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getGroupSchemeAssignments(communityId),
@@ -758,7 +753,7 @@ const groupsDataHelper = {
     }
   },
   updateGroupScheme: async (
-    communityId: number | string,
+    communityId: string,
     schemeId: string,
     schemeData: IScheme,
   ) => {
@@ -777,10 +772,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  postCreateSchemePermission: async (
-    communityId: number | string,
-    scheme: IScheme,
-  ) => {
+  postCreateSchemePermission: async (communityId: string, scheme: IScheme) => {
     if (!communityId || !scheme) {
       return Promise.reject(new Error('postCreateSchemePermission invalid data'));
     }
@@ -809,7 +801,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getUserInnerGroups: async (groupId: number, username: string) => {
+  getUserInnerGroups: async (groupId: string, username: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getUserInnerGroups(groupId, username),
@@ -852,7 +844,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getGroupMembers: async (groupId: number, params: any) => {
+  getGroupMembers: async (groupId: string, params: any) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getGroupMembers(groupId, params),
@@ -865,7 +857,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getGroupDetail: async (groupId: number) => {
+  getGroupDetail: async (groupId: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getGroupDetail(groupId),
@@ -878,7 +870,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  editGroupDetail: async (groupId: number, data: IGroupDetailEdit) => {
+  editGroupDetail: async (groupId: string, data: IGroupDetailEdit) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.editGroupDetail(groupId, data),
@@ -891,7 +883,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getJoinableUsers: async (groupId: number, params: any) => {
+  getJoinableUsers: async (groupId: string, params: any) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getJoinableUsers(groupId, params),
@@ -904,7 +896,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  addUsers: async (groupId: number, userIds: number[]) => {
+  addUsers: async (groupId: string, userIds: string[]) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.addUsers(groupId, userIds),
@@ -917,11 +909,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  removeUsers: async (
-    groupId: number,
-    userIds: (number | string)[],
-    type?: string,
-  ) => {
+  removeUsers: async (groupId: string, userIds: string[], type?: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.removeUsers(groupId, userIds, type),
@@ -934,7 +922,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  joinGroup: async (groupId: number) => {
+  joinGroup: async (groupId: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.joinGroup(groupId),
@@ -947,7 +935,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  cancelJoinGroup: async (groupId: number) => {
+  cancelJoinGroup: async (groupId: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.cancelJoinGroup(groupId),
@@ -960,7 +948,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  leaveGroup: async (groupId: number) => {
+  leaveGroup: async (groupId: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.leaveGroup(groupId),
@@ -973,7 +961,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  setGroupAdmin: async (groupId: number, userIds: number[]) => {
+  setGroupAdmin: async (groupId: string, userIds: string[]) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.setGroupAdmin(groupId, userIds),
@@ -986,7 +974,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  removeGroupAdmin: async (groupId: number, userId: number) => {
+  removeGroupAdmin: async (groupId: string, userId: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.removeGroupAdmin(groupId, userId),
@@ -999,7 +987,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getGroupMemberRequests: async (groupId: number, params: any) => {
+  getGroupMemberRequests: async (groupId: string, params: any) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getGroupMemberRequests(groupId, params),
@@ -1013,8 +1001,8 @@ const groupsDataHelper = {
     }
   },
   approveSingleGroupMemberRequest: async (
-    groupId: number,
-    requestId: number,
+    groupId: string,
+    requestId: string,
   ) => {
     try {
       const response: any = await makeHttpRequest(
@@ -1028,7 +1016,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  approveAllGroupMemberRequests: async (groupId: number) => {
+  approveAllGroupMemberRequests: async (groupId: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.approveAllGroupMemberRequests(groupId),
@@ -1042,8 +1030,8 @@ const groupsDataHelper = {
     }
   },
   declineSingleGroupMemberRequest: async (
-    groupId: number,
-    requestId: number,
+    groupId: string,
+    requestId: string,
   ) => {
     try {
       const response: any = await makeHttpRequest(
@@ -1057,7 +1045,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  declineAllGroupMemberRequests: async (groupId: number) => {
+  declineAllGroupMemberRequests: async (groupId: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.declineAllGroupMemberRequests(groupId),
@@ -1070,7 +1058,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getInnerGroupsLastAdmin: async (groupId: number, userId: number) => {
+  getInnerGroupsLastAdmin: async (groupId: string, userId: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getInnerGroupsLastAdmin(groupId, userId),
@@ -1112,7 +1100,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getCommunityGroups: async (id: number, params: IGetCommunityGroup) => {
+  getCommunityGroups: async (id: string, params: IGetCommunityGroup) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getCommunityGroups(id, params),
@@ -1125,7 +1113,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getCommunityDetail: async (communityId: number) => {
+  getCommunityDetail: async (communityId: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getCommunityDetail(communityId),
@@ -1139,7 +1127,7 @@ const groupsDataHelper = {
     }
   },
   getCommunityMembers: async (
-    communityId: number,
+    communityId: string,
     params?: IParamGetCommunityMembers,
   ) => {
     try {
@@ -1155,7 +1143,7 @@ const groupsDataHelper = {
     }
   },
   getDiscoverGroups: async (
-    communityId: number,
+    communityId: string,
     params?: IParamGetDiscoverGroups,
   ) => {
     try {
@@ -1170,7 +1158,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  joinCommunity: async (communityId: number) => {
+  joinCommunity: async (communityId: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.joinCommunity(communityId),
@@ -1183,7 +1171,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  cancelJoinCommunity: async (communityId: number) => {
+  cancelJoinCommunity: async (communityId: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.cancelJoinCommunity(communityId),
@@ -1196,7 +1184,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getCommunityMemberRequests: async (communityId: number, params: any) => {
+  getCommunityMemberRequests: async (communityId: string, params: any) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.getCommunityMemberRequests(communityId, params),
@@ -1210,8 +1198,8 @@ const groupsDataHelper = {
     }
   },
   approveSingleCommunityMemberRequest: async (
-    communityId: number,
-    requestId: number,
+    communityId: string,
+    requestId: string,
   ) => {
     try {
       const response: any = await makeHttpRequest(
@@ -1229,8 +1217,8 @@ const groupsDataHelper = {
     }
   },
   declineSingleCommunityMemberRequest: async (
-    communityId: number,
-    requestId: number,
+    communityId: string,
+    requestId: string,
   ) => {
     try {
       const response: any = await makeHttpRequest(
@@ -1247,7 +1235,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  approveAllCommunityMemberRequests: async (communityId: number) => {
+  approveAllCommunityMemberRequests: async (communityId: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.approveAllCommunityMemberRequests(communityId),
@@ -1260,7 +1248,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  declineAllCommunityMemberRequests: async (communityId: number) => {
+  declineAllCommunityMemberRequests: async (communityId: string) => {
     try {
       const response: any = await makeHttpRequest(
         groupsApiConfig.declineAllCommunityMemberRequests(communityId),
@@ -1287,7 +1275,7 @@ const groupsDataHelper = {
     }
   },
   editCommunityDetail: async (
-    communityId: number,
+    communityId: string,
     data: ICommunityDetailEdit,
   ) => {
     try {

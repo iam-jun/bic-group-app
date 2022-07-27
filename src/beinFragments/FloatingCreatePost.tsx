@@ -18,7 +18,7 @@ import spacing from '~/theme/spacing';
 
 export interface FloatingCreatePostProps {
   audience?: any;
-  createFromGroupId?: number;
+  createFromGroupId?: string;
 }
 
 const FloatingCreatePost: FC<FloatingCreatePostProps> = ({

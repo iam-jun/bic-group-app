@@ -48,7 +48,7 @@ export default function* deleteReactToComment({
 }
 
 // function* addReactionLoadingLocal(
-//   id: number,
+//   id: string,
 //   reactionId: string,
 //   comment: ICommentData,
 // ): any {

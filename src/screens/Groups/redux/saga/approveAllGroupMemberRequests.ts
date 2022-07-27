@@ -11,7 +11,7 @@ export default function* approveAllGroupMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {groupId: number; callback?: () => void};
+  payload: {groupId: string; callback?: () => void};
 }) {
   const { groupId, callback } = payload;
   try {

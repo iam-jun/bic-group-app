@@ -1,8 +1,8 @@
 import { GROUP_PRIVACY_TYPE } from '~/constants/privacyTypes';
 
 export interface ICommunity {
-  id: number;
-  group_id: number;
+  id: string;
+  group_id: string;
   name: string;
   slug: string;
   privacy: GROUP_PRIVACY_TYPE;
@@ -32,7 +32,7 @@ export interface IParamGetCommunities {
 }
 
 export interface IPreviewMember {
-  id: number;
+  id: string;
   username: string;
   fullname: string;
   avatar: string;

@@ -10,7 +10,7 @@ import modalActions from '~/store/modal/actions';
 import groupsActions from '../../redux/actions';
 
 interface IUseRemoveAdmin {
-  groupId: number;
+  groupId: string;
   selectedMember: IGroupMembers;
 }
 

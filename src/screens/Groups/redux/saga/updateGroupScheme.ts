@@ -14,7 +14,7 @@ export default function* updateGroupScheme({
   payload,
 }: {
   type: string;
-  payload: {communityId: number | string; schemeId: string};
+  payload: {communityId: string; schemeId: string};
 }): any {
   try {
     const { communityId, schemeId } = payload || {};
