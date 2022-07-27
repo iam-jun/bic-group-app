@@ -80,7 +80,7 @@ export interface IGroup {
   group_type?: GROUP_TYPE;
   verified?: boolean;
   level?: number;
-  parents?: number[] | null;
+  parents?: string[] | null;
   owner_id?: string;
   created_at?: string;
   updated_at?: string;

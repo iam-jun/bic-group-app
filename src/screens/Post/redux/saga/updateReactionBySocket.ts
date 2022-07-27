@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
 import { get, isEmpty } from 'lodash';
 import { select } from 'redux-saga/effects';
 
@@ -46,7 +45,6 @@ export default function* updateReactionBySocket({
 
   if (!isEmpty(comment)) {
     // handle reaction to comment
-    // @ts-ignore
     const {
       id: _cId,
       reactionsOfActor: _cOwnerReactions,
@@ -75,7 +73,7 @@ export default function* updateReactionBySocket({
     const ownReactions = c?.ownerReactions ? [...c.ownerReactions] : [];
 
     yield onUpdateReactionOfCommentById(
-      finalId as number,
+      finalId,
       isCurrentUser && finalReaction?.reactionName
         ? finalOwnerReactions
         : ownReactions,

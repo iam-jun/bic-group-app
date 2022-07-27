@@ -40,9 +40,7 @@ const useRemoveMember = ({ groupId, selectedMember }: IUseRemoveMember) => {
       textColor: theme.colors.purple60,
     },
     // @ts-ignore
-    onConfirm: () => removeMember(
-      userId, fullname,
-    ),
+    onConfirm: () => removeMember(userId, fullname),
     confirmLabel: i18next.t('groups:modal_confirm_remove_member:button_remove'),
     ConfirmBtnComponent: Button.Danger,
     children: null as React.ReactNode,

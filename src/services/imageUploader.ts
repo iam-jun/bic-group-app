@@ -105,9 +105,7 @@ export default class ImageUploader {
 
     const formData = new FormData();
     // @ts-ignore
-    formData.append(
-      'file', file, file.name,
-    );
+    formData.append('file', file, file.name);
     formData.append(
       'description',
       JSON.stringify({

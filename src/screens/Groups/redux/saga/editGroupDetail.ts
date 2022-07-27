@@ -22,9 +22,7 @@ export default function* editGroupDetail({
     delete data.id; // edit data should not contain group's id
 
     // @ts-ignore
-    const resp = yield call(
-      groupsDataHelper.editGroupDetail, groupId, data,
-    );
+    const resp = yield call(groupsDataHelper.editGroupDetail, groupId, data);
 
     if (editFieldName) yield showToastEditSuccess(editFieldName);
 

@@ -420,7 +420,7 @@ export interface ICreatePostParams {
   postId?: string;
   replaceWithDetail?: boolean;
   initAudience?: any;
-  createFromGroupId?: string | number;
+  createFromGroupId?: string;
   initAutoSaveDraft?: boolean;
 }
 

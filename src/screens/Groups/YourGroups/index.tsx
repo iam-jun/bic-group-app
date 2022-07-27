@@ -68,11 +68,11 @@ const YourGroups: FC<YourGroupsProps> = ({ route }: YourGroupsProps) => {
 
   const onSearchText = debounce(
     (searchText: string) => {
-      dispatch(groupsActions.getYourGroupsSearch({ communityId, key: searchText }));
+      communityId && dispatch(groupsActions.getYourGroupsSearch({ communityId, key: searchText }));
     }, 300,
   );
 
-  const renderContent = () => <GroupJoined communityId={communityId} />;
+  const renderContent = () => (communityId ? <GroupJoined communityId={communityId} /> : null);
 
   return (
     <View style={styles.containerScreen}>

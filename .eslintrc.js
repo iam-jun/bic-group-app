@@ -54,7 +54,7 @@ module.exports = {
     'no-unused-vars': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
     'max-len': ['error', { code: 120, ignoreStrings: true }],
-    'function-paren-newline': ['error', { minItems: 2 }],
+    'function-paren-newline': ['error', 'consistent'],
     'operator-linebreak': ['error', 'before'],
     semi: 0,
     'prefer-destructuring': ['error', {

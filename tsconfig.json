@@ -4,7 +4,7 @@
     "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
-    "isolatedModules": false,
+    "isolatedModules": true,
     "jsx": "react",
     "module": "commonjs",
     "lib": ["es5", "es6", "dom"],
@@ -17,8 +17,6 @@
     "paths": {
       "~/*": ["src/*"]
     },
-    "rootDir": "./",
-    "outDir": "./",
   },
   "include": [
     "src/**/*",
