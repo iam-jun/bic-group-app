@@ -312,6 +312,7 @@ const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
     case `${ApiConfig.providers.bein.url}communities/discover`:
     case `${ApiConfig.providers.bein.url}communities`:
     case `${ApiConfig.providers.beinFeed.url}feeds/timeline`:
+    case `${ApiConfig.providers.bein.url}post-audiences/groups`:
       result = true;
       break;
     default:

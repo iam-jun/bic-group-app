@@ -205,14 +205,12 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
-  getInfoGroups: (ids: string): HttpApiRequestConfig => ({
+  getInfoGroups: (groupIds: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}post-audiences/groups`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
-    params: {
-      group_ids: ids,
-    },
+    params: { groupIds },
   }),
   getGroupDetail: (groupId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}`,
@@ -606,19 +604,7 @@ const groupsDataHelper = {
     limit: param?.limit || appConfig.recordsPerPage,
     ...param,
   }),
-  getInfoGroups: async (ids: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getInfoGroups(ids),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getInfoGroups: (groupIds: string) => withHttpRequestPromise(groupsApiConfig.getInfoGroups, groupIds),
   getGroupMembers: (groupId: string, params: any) => withHttpRequestPromise(groupsApiConfig.getGroupMembers, groupId, params),
   getGroupDetail: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getGroupDetail, groupId),
   editGroupDetail: (groupId: string, data: IGroupDetailEdit) => withHttpRequestPromise(groupsApiConfig.editGroupDetail, groupId, data),
