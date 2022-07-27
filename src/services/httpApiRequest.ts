@@ -1,4 +1,4 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/ban-ts-comment,no-useless-escape */
 import { Auth } from 'aws-amplify';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import i18n from 'i18next';
@@ -344,7 +344,8 @@ const interceptorsResponseCamelSuccess = (response: AxiosResponse) => {
     && response.headers?.['content-type']?.includes?.('application/json')
   ) {
     response.data = ConvertHelper.camelizeKeys(response.data, {
-      exclude: ['reactions_count', 'communities', 'groups'],
+      excludeValueOfKey: ['reactions_count'],
+      excludeKey: [/^[a-f0-9\-]{36}$/i],
     });
   }
   return response;
@@ -359,7 +360,8 @@ const interceptorsResponseSuccess = (response: AxiosResponse) => {
       && response.headers?.['content-type']?.includes?.('application/json')
     ) {
       response.data = ConvertHelper.camelizeKeys(response.data, {
-        exclude: ['reactions_count', 'communities', 'groups'],
+        excludeValueOfKey: ['reactions_count'],
+        excludeKey: [/^[a-f0-9\-]{36}$/i],
       });
     }
     return response;
