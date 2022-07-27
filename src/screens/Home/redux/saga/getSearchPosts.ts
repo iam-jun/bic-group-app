@@ -53,16 +53,16 @@ export default function* getSearchPosts({
     if (endDate) {
       params.endTime = endDate;
     }
-    const response = yield call(homeDataHelper.getSearchPost, params);
+    const response = yield call(
+      homeDataHelper.getSearchPost, params,
+    );
     data = data.concat(response?.list);
     yield put(postActions.addToAllPosts({ data, handleComment: false }));
-    yield put(
-      homeActions.setNewsfeedSearch({
-        loadingResult: false,
-        searchResults: data,
-        totalResult: response?.total,
-      }),
-    );
+    yield put(homeActions.setNewsfeedSearch({
+      loadingResult: false,
+      searchResults: data,
+      totalResult: response?.total,
+    }));
 
     // save keyword to recent search
     if (!isLoadMore) {
@@ -70,18 +70,20 @@ export default function* getSearchPosts({
         keyword: searchText,
         target: 'post',
       };
-      yield call(homeDataHelper.postNewRecentSearchKeyword, recentParam);
-      yield put(
-        homeActions.getRecentSearchKeywords({
-          target: 'post',
-          order: 'DESC',
-          limit: 10,
-          showLoading: false,
-        }),
+      yield call(
+        homeDataHelper.postNewRecentSearchKeyword, recentParam,
       );
+      yield put(homeActions.getRecentSearchKeywords({
+        target: 'post',
+        order: 'DESC',
+        limit: 10,
+        showLoading: false,
+      }));
     }
   } catch (e) {
     yield put(homeActions.setNewsfeedSearch({ loadingResult: false }));
-    console.error('\x1b[31m🐣️ saga getSearchPosts error: ', e, '\x1b[0m');
+    console.error(
+      '\x1b[31m🐣️ saga getSearchPosts error: ', e, '\x1b[0m',
+    );
   }
 }

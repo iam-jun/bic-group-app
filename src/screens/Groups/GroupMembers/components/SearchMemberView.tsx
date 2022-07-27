@@ -34,17 +34,11 @@ const SearchMemberView = ({
   const theme: ExtendedTheme = useTheme();
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles();
-  const can_manage_member = useKeySelector(
-    groupsKeySelector.groupDetail.can_manage_member,
-  );
-  const groupSearchMembers = useKeySelector(
-    groupsKeySelector.groupSearchMembers,
-  );
+  const can_manage_member = useKeySelector(groupsKeySelector.groupDetail.can_manage_member);
+  const groupSearchMembers = useKeySelector(groupsKeySelector.groupSearchMembers);
 
   const getGroupSearchMembers = (searchText: string) => {
-    dispatch(
-      actions.getGroupSearchMembers({ groupId, params: { key: searchText } }),
-    );
+    dispatch(actions.getGroupSearchMembers({ groupId, params: { key: searchText } }));
   };
 
   const onLoadMore = () => {
@@ -58,7 +52,9 @@ const SearchMemberView = ({
   };
 
   const searchHandler = useCallback(
-    debounce(searchMembers, appConfig.searchTriggerTime),
+    debounce(
+      searchMembers, appConfig.searchTriggerTime,
+    ),
     [],
   );
 

@@ -35,25 +35,27 @@ const CommunityPermissionDetail: FC<CommunityPermissionDetailProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const permissionCategories = useKeySelector(
-    groupsKeySelector.permission.categories,
-  );
+  const permissionCategories = useKeySelector(groupsKeySelector.permission.categories);
   const { loading } = permissionCategories || {};
 
   const initScheme = route?.params?.scheme;
   const { name, roles } = initScheme || {};
 
-  useEffect(() => {
-    if (!permissionCategories?.loading) {
-      dispatch(groupsActions.getPermissionCategories());
-    }
-  }, []);
+  useEffect(
+    () => {
+      if (!permissionCategories?.loading) {
+        dispatch(groupsActions.getPermissionCategories());
+      }
+    }, [],
+  );
 
   const scrollHandler = useAnimatedScrollHandler((event) => {
     translationY.value = event.contentOffset.y;
   });
 
-  const onAnchorRole = (i: number, role: any, anchor: number) => {
+  const onAnchorRole = (
+    i: number, role: any, anchor: number,
+  ) => {
     setAnchorRole({ ...anchorRole, [i]: { role, anchor } });
   };
 

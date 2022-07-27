@@ -17,9 +17,7 @@ const PrivateWelcome = ({
   onButtonLayout,
   onRefresh,
 }: PrivateWelcomeProps) => {
-  const isGettingInfoDetail = useKeySelector(
-    groupsKeySelector.isGettingInfoDetail,
-  );
+  const isGettingInfoDetail = useKeySelector(groupsKeySelector.isGettingInfoDetail);
 
   return (
     <ScrollView

@@ -19,16 +19,12 @@ const NoticePanel = () => {
   const { t } = useBaseHook();
   const dispatch = useDispatch();
 
-  const total = useKeySelector(
-    postKeySelector.allPostContainingVideoInProgress,
-  );
+  const total = useKeySelector(postKeySelector.allPostContainingVideoInProgress);
 
   const onPress = () => {
-    dispatch(
-      postActions.setAllPostContainingVideoInProgress({
-        total: 0,
-      }),
-    );
+    dispatch(postActions.setAllPostContainingVideoInProgress({
+      total: 0,
+    }));
   };
 
   if (!total) return null;

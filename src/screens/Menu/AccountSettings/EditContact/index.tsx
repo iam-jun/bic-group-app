@@ -39,9 +39,7 @@ const EditContact = () => {
   const [countryCodeState, setCountryCountryCodeState] = useState<string>(country_code);
   const [countryState, setCountryState] = useState<string>(country);
   const [cityState, setCityState] = useState<string>(city);
-  const phoneNumberEditError = useKeySelector(
-    menuKeySelector.phoneNumberEditError,
-  );
+  const phoneNumberEditError = useKeySelector(menuKeySelector.phoneNumberEditError);
 
   const {
     control,
@@ -54,9 +52,13 @@ const EditContact = () => {
     watch,
   } = useForm();
 
-  useEffect(() => {
-    setValue('phoneNumber', phone);
-  }, []);
+  useEffect(
+    () => {
+      setValue(
+        'phoneNumber', phone,
+      );
+    }, [],
+  );
 
   const navigateBack = () => {
     Keyboard.dismiss();
@@ -67,12 +69,14 @@ const EditContact = () => {
     }
   };
 
-  useEffect(() => {
-    phoneNumberEditError && showErrors();
-    return () => {
-      dispatch(menuActions.setPhoneNumberEditError(''));
-    };
-  }, [phoneNumberEditError]);
+  useEffect(
+    () => {
+      phoneNumberEditError && showErrors();
+      return () => {
+        dispatch(menuActions.setPhoneNumberEditError(''));
+      };
+    }, [phoneNumberEditError],
+  );
 
   const onSave = async () => {
     const validInputs = await validateInputs();
@@ -81,30 +85,30 @@ const EditContact = () => {
     }
     const phoneNumber = getValues('phoneNumber');
 
-    dispatch(
-      menuActions.editMyProfile(
-        {
-          id,
-          phone: phoneNumber,
-          country_code: phoneNumber ? countryCodeState : null,
-          country: countryState,
-          city: cityState,
-        },
-        i18next.t('settings:text_contact_info_update_success'),
-        () => {
-          navigateBack();
-        },
-      ),
-    );
+    dispatch(menuActions.editMyProfile(
+      {
+        id,
+        phone: phoneNumber,
+        country_code: phoneNumber ? countryCodeState : null,
+        country: countryState,
+        city: cityState,
+      },
+      i18next.t('settings:text_contact_info_update_success'),
+      () => {
+        navigateBack();
+      },
+    ));
   };
 
   const validateInputs = async () => trigger('phoneNumber');
 
   const showErrors = () => {
-    setError('phoneNumber', {
-      type: 'validate',
-      message: phoneNumberEditError,
-    });
+    setError(
+      'phoneNumber', {
+        type: 'validate',
+        message: phoneNumberEditError,
+      },
+    );
   };
 
   const clearAllErrors = () => {
@@ -114,7 +118,9 @@ const EditContact = () => {
 
   const onEditLocationOpen = (e: any) => {
     Keyboard.dismiss();
-    locationRef?.current?.open?.(e?.pageX, e?.pageY);
+    locationRef?.current?.open?.(
+      e?.pageX, e?.pageY,
+    );
   };
 
   const onLocationItemPress = (item: ILocation) => {

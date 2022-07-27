@@ -35,7 +35,9 @@ export const notiInitState = {
   },
 };
 
-function notificationsReducer(state = notiInitState, action: any = {}) {
+function notificationsReducer(
+  state = notiInitState, action: any = {},
+) {
   const { type, payload } = action;
   switch (type) {
     case notificationsTypes.SET_LOADING_NOTIFICATIONS: {
@@ -118,7 +120,9 @@ function notificationsReducer(state = notiInitState, action: any = {}) {
       return {
         ...state,
         ...newNotificationData,
-        unseenNumber: Math.max(state.unseenNumber - 1, 0),
+        unseenNumber: Math.max(
+          state.unseenNumber - 1, 0,
+        ),
       };
     }
     case notificationsTypes.UPDATE: {

@@ -24,20 +24,22 @@ export default function* leaveGroup({
     const { groups } = yield select();
     const privacy = groups?.groupDetail?.group?.privacy;
 
-    yield call(groupsDataHelper.leaveGroup, payload);
+    yield call(
+      groupsDataHelper.leaveGroup, payload,
+    );
 
     // update button Join/Cancel/View status on Discover groups
-    yield put(
-      groupsActions.editDiscoverGroupItem({
-        id: payload,
-        data: { join_status: groupJoinStatus.visitor },
-      }),
-    );
+    yield put(groupsActions.editDiscoverGroupItem({
+      id: payload,
+      data: { join_status: groupJoinStatus.visitor },
+    }));
 
     if (privacy === groupPrivacy.secret) {
       yield call(navigationReplace);
     } else {
-      yield call(navigateToGroup, payload);
+      yield call(
+        navigateToGroup, payload,
+      );
     }
 
     yield put(groupsActions.getGroupDetail(payload));
@@ -50,7 +52,9 @@ export default function* leaveGroup({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
-    console.error('leaveGroup:', err);
+    console.error(
+      'leaveGroup:', err,
+    );
     yield showError(err);
   }
 }
@@ -60,8 +64,10 @@ export function* navigationReplace() {
 }
 
 export function* navigateToGroup(groupId: string) {
-  yield navigation.navigate(groupStack.groupDetail, {
-    groupId,
-    initial: true,
-  });
+  yield navigation.navigate(
+    groupStack.groupDetail, {
+      groupId,
+      initial: true,
+    },
+  );
 }

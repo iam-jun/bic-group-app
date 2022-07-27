@@ -12,9 +12,7 @@ export default function* getYourGroupsSearch({
 }): any {
   const { key, communityId } = payload || {};
   if (!key?.trim?.()) {
-    yield put(
-      groupsActions.setYourGroupsSearch({ loading: false, list: [], key: '' }),
-    );
+    yield put(groupsActions.setYourGroupsSearch({ loading: false, list: [], key: '' }));
     return;
   }
   try {
@@ -24,9 +22,7 @@ export default function* getYourGroupsSearch({
       communityId,
       { key, list_by: 'flat' },
     );
-    const currentKey = yield select(
-      (state) => state?.groups?.yourGroupsSearch?.key,
-    );
+    const currentKey = yield select((state) => state?.groups?.yourGroupsSearch?.key);
     const list = currentKey?.trim?.() ? groups || [] : [];
     yield put(groupsActions.setYourGroupsSearch({ loading: false, list }));
   } catch (err) {

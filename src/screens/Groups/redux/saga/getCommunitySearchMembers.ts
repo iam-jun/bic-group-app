@@ -23,11 +23,13 @@ export default function* getCommunitySearchMembers({
 
     if (!canLoadMore) return;
 
-    const resp: AxiosResponse = yield call(groupsDataHelper.getCommunityMembers, communityId, {
-      limit: appConfig.recordsPerPage,
-      offset: data.length,
-      ...params,
-    });
+    const resp: AxiosResponse = yield call(
+      groupsDataHelper.getCommunityMembers, communityId, {
+        limit: appConfig.recordsPerPage,
+        offset: data.length,
+        ...params,
+      },
+    );
 
     let newDataCount = 0;
     let newDataArr: any = [];
@@ -47,7 +49,11 @@ export default function* getCommunitySearchMembers({
 
     yield put(actions.setCommunitySearchMembers(newData));
   } catch (err: any) {
-    console.error('getCommunitySearchMembers error:', err);
-    yield call(showError, err);
+    console.error(
+      'getCommunitySearchMembers error:', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

@@ -36,14 +36,18 @@ const NFSRecentSearchKeyword: FC<NFSRecentSearchKeywordProps> = ({
   };
 
   const onPressDeleteItem = (item: any) => {
-    onDeleteKeyword?.(item?.id, item?.keyword);
+    onDeleteKeyword?.(
+      item?.id, item?.keyword,
+    );
   };
 
   const onPressItem = (item: any) => {
     onSelectKeyword?.(item?.keyword);
   };
 
-  const renderItem = (item: any, index: number) => (
+  const renderItem = (
+    item: any, index: number,
+  ) => (
     <PrimaryItem
       testID={`recent_search_keyword.item_${index}`}
       key={`recent_item_${item.id}`}

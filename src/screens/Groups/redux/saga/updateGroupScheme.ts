@@ -18,9 +18,7 @@ export default function* updateGroupScheme({
 }): any {
   try {
     const { communityId, schemeId } = payload || {};
-    const schemeData = yield select(
-      (state) => state?.groups?.permissionScheme?.creatingScheme?.data,
-    ) || {};
+    const schemeData = yield select((state) => state?.groups?.permissionScheme?.creatingScheme?.data) || {};
 
     yield put(groupsActions.setCreatingScheme({ creating: true }));
 
@@ -47,8 +45,12 @@ export default function* updateGroupScheme({
       yield put(modalActions.showHideToastMessage(toastMessage));
     }
   } catch (err: any) {
-    console.error('updateGroupScheme error:', err);
+    console.error(
+      'updateGroupScheme error:', err,
+    );
     yield put(groupsActions.setCreatingScheme({ creating: false }));
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

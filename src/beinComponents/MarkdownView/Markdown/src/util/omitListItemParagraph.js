@@ -1,7 +1,9 @@
 export default function omitListItemParagraph(tokens) {
   // used to ensure that we remove the correct ending paragraph token
   let depth = null;
-  return tokens.filter((token, index) => {
+  return tokens.filter((
+    token, index,
+  ) => {
     // update depth if we've already removed a starting paragraph token
     if (depth !== null) {
       depth += token.nesting;

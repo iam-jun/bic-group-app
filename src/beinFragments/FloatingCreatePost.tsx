@@ -32,21 +32,23 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
   const styles = createStyle(theme);
   const { rootNavigation } = useRootNavigation();
 
-  useEffect(() => {
-    const listener = DeviceEventEmitter.addListener(
-      'showFloatingCreatePost',
-      (isShow) => {
-        if (isShow) {
-          show();
-        } else {
-          hide();
-        }
-      },
-    );
-    return () => {
-      listener?.remove?.();
-    };
-  }, []);
+  useEffect(
+    () => {
+      const listener = DeviceEventEmitter.addListener(
+        'showFloatingCreatePost',
+        (isShow) => {
+          if (isShow) {
+            show();
+          } else {
+            hide();
+          }
+        },
+      );
+      return () => {
+        listener?.remove?.();
+      };
+    }, [],
+  );
 
   const onPress = () => {
     const params: ISelectAudienceParams = {
@@ -56,22 +58,32 @@ const FloatingCreatePost: FC<FloatingCreatePostProps> = ({
     if (audience) {
       params.initAudience = audience;
     }
-    rootNavigation.navigate(homeStack.postSelectAudience, params as any);
+    rootNavigation.navigate(
+      homeStack.postSelectAudience, params as any,
+    );
   };
 
   const containerStyle = useAnimatedStyle(() => ({
     position: 'absolute',
     right: spacing.margin.small,
-    bottom: interpolate(showValue.value, [0, 0.1, 1], [-50, 8, 8]),
-    opacity: interpolate(showValue.value, [0, 1], [0, 1]),
+    bottom: interpolate(
+      showValue.value, [0, 0.1, 1], [-50, 8, 8],
+    ),
+    opacity: interpolate(
+      showValue.value, [0, 1], [0, 1],
+    ),
   }));
 
   const show = (duration = 150) => {
-    showValue.value = withTiming(1, { duration });
+    showValue.value = withTiming(
+      1, { duration },
+    );
   };
 
   const hide = (duration = 150) => {
-    showValue.value = withTiming(0, { duration });
+    showValue.value = withTiming(
+      0, { duration },
+    );
   };
 
   return (

@@ -9,7 +9,9 @@ export async function requestUserPermission() {
     || authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
   if (enabled) {
-    console.log('Authorization status:', authStatus);
+    console.log(
+      'Authorization status:', authStatus,
+    );
   }
 }
 
@@ -17,6 +19,8 @@ export async function initFirebaseMessaging() {
   try {
     await requestUserPermission();
   } catch (e) {
-    console.log('setupFirebaseHandler failed:', e);
+    console.log(
+      'setupFirebaseHandler failed:', e,
+    );
   }
 }

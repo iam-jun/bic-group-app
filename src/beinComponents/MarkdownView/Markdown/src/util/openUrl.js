@@ -1,7 +1,9 @@
 import { Linking } from 'react-native';
 import getEnv from '~/utils/env';
 
-export default function openUrl(url, customCallback) {
+export default function openUrl(
+  url, customCallback,
+) {
   if (customCallback) {
     const result = customCallback(url);
     if (url && result && typeof result === 'boolean') {
@@ -14,7 +16,9 @@ export default function openUrl(url, customCallback) {
 
 function openURL(url) {
   if (url.includes(getEnv('SELF_DOMAIN'))) {
-    const newUrl = url.replace(getEnv('SELF_DOMAIN'), 'bein://');
+    const newUrl = url.replace(
+      getEnv('SELF_DOMAIN'), 'bein://',
+    );
     Linking.canOpenURL(newUrl)
       .then((supported) => {
         if (supported) {
@@ -24,7 +28,9 @@ function openURL(url) {
         }
       })
       .catch((e) => {
-        console.log('error when open link:', e);
+        console.log(
+          'error when open link:', e,
+        );
       });
     return;
   }

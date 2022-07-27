@@ -15,6 +15,8 @@ export const maxBirthday = () => {
   const currentYear = currentMoment.getFullYear();
 
   // user must be at least 8 years old up to today
-  const maxDateToSelect = new Date(currentYear - 8, currentMonth, currentDay);
+  const maxDateToSelect = new Date(
+    currentYear - 8, currentMonth, currentDay,
+  );
   return maxDateToSelect;
 };

@@ -26,12 +26,14 @@ const ReactionDetailBottomSheet = () => {
     isOpen, reactionCounts, initReaction, getDataPromise, getDataParam,
   } = data || {};
 
-  useEffect(() => {
+  useEffect(
+    () => {
     // reset
-    if (!reactionCounts) {
-      setSelectingReaction(undefined);
-    }
-  }, [reactionCounts]);
+      if (!reactionCounts) {
+        setSelectingReaction(undefined);
+      }
+    }, [reactionCounts],
+  );
 
   const _onClose = () => {
     dispatch(clearReactionDetailBottomSheet());
@@ -46,14 +48,18 @@ const ReactionDetailBottomSheet = () => {
   const onPressItem = (item: any) => {
     const itemUserId = item?.item?.id;
     if (itemUserId) {
-      rootNavigation.navigate(mainStack.userProfile, { userId: itemUserId });
+      rootNavigation.navigate(
+        mainStack.userProfile, { userId: itemUserId },
+      );
     } else {
-      rootNavigation.navigate(mainStack.userProfile, {
-        userId: item?.item.username,
-        params: {
-          type: 'username',
+      rootNavigation.navigate(
+        mainStack.userProfile, {
+          userId: item?.item.username,
+          params: {
+            type: 'username',
+          },
         },
-      });
+      );
     }
     reactionSheetRef?.current?.close?.();
   };

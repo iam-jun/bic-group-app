@@ -48,13 +48,17 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
   const insets = useSafeAreaInsets();
   const { t } = useBaseHook();
   const { colors } = theme;
-  const styles = createStyle(theme, insets);
+  const styles = createStyle(
+    theme, insets,
+  );
 
   const tabBadge: any = useTabBadge();
   const bottomBarHeight = dimension.bottomBarHeight + insets.bottom;
 
   const heightStyle = useAnimatedStyle(() => ({
-    height: interpolate(showValue.value, [0, 1], [0, bottomBarHeight]),
+    height: interpolate(
+      showValue.value, [0, 1], [0, bottomBarHeight],
+    ),
     overflow: 'hidden',
   }));
 
@@ -62,11 +66,15 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     if (!tabBarVisible) {
       return;
     }
-    showValue.value = withTiming(1, { duration });
+    showValue.value = withTiming(
+      1, { duration },
+    );
   };
 
   const hide = (duration = 150) => {
-    showValue.value = withTiming(0, { duration });
+    showValue.value = withTiming(
+      0, { duration },
+    );
   };
 
   const getActiveRouteName = (state: any): any => {
@@ -79,49 +87,63 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
 
   useEffect(
     // @ts-ignore
-    () => navigation.addListener('state', (event: any) => {
-      const routeName = getActiveRouteName(event?.data?.state);
-      const shouldHideTab = hideBottomTabRoutes.includes(routeName);
-      if (shouldHideTab) {
-        if (tabBarVisible) {
-          tabBarVisible = false;
-          hide();
+    () => navigation.addListener(
+      'state', (event: any) => {
+        const routeName = getActiveRouteName(event?.data?.state);
+        const shouldHideTab = hideBottomTabRoutes.includes(routeName);
+        if (shouldHideTab) {
+          if (tabBarVisible) {
+            tabBarVisible = false;
+            hide();
+          }
+        } else if (!tabBarVisible) {
+          tabBarVisible = true;
+          show();
         }
-      } else if (!tabBarVisible) {
-        tabBarVisible = true;
-        show();
-      }
-    }),
+      },
+    ),
     [navigation],
   );
 
-  useEffect(() => {
-    const onShow = () => hide(0);
-    const onHide = () => show(0);
-    const willShowListener = Keyboard.addListener('keyboardWillShow', onShow);
-    const showListener = Keyboard.addListener('keyboardDidShow', onShow);
-    const willHideListener = Keyboard.addListener('keyboardWillHide', onHide);
-    const hideListener = Keyboard.addListener('keyboardDidHide', onHide);
-    const showBottomBarListener = DeviceEventEmitter.addListener(
-      'showBottomBar',
-      (isShow) => {
-        if (isShow) {
-          show();
-        } else {
-          hide();
-        }
-      },
-    );
-    return () => {
-      showListener.remove();
-      hideListener.remove();
-      willShowListener.remove();
-      willHideListener.remove();
-      showBottomBarListener?.remove();
-    };
-  }, []);
+  useEffect(
+    () => {
+      const onShow = () => hide(0);
+      const onHide = () => show(0);
+      const willShowListener = Keyboard.addListener(
+        'keyboardWillShow', onShow,
+      );
+      const showListener = Keyboard.addListener(
+        'keyboardDidShow', onShow,
+      );
+      const willHideListener = Keyboard.addListener(
+        'keyboardWillHide', onHide,
+      );
+      const hideListener = Keyboard.addListener(
+        'keyboardDidHide', onHide,
+      );
+      const showBottomBarListener = DeviceEventEmitter.addListener(
+        'showBottomBar',
+        (isShow) => {
+          if (isShow) {
+            show();
+          } else {
+            hide();
+          }
+        },
+      );
+      return () => {
+        showListener.remove();
+        hideListener.remove();
+        willShowListener.remove();
+        willHideListener.remove();
+        showBottomBarListener?.remove();
+      };
+    }, [],
+  );
 
-  const renderItem = (route: any, index: any) => {
+  const renderItem = (
+    route: any, index: any,
+  ) => {
     const { key, name, params } = route || {};
 
     const { options } = descriptors[route.key];
@@ -132,13 +154,17 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     // @ts-ignore
     const iconName = icon[name];
     const textColor = isFocused ? colors.purple50 : colors.gray50;
-    const styles = tabBarIconStyles(theme, isFocused, textColor);
+    const styles = tabBarIconStyles(
+      theme, isFocused, textColor,
+    );
 
     const onPress = () => {
       if (name === 'menus') {
         dispatch(appActions.setDrawerVisible(true));
       } else {
-        DeviceEventEmitter.emit('onTabPress', name);
+        DeviceEventEmitter.emit(
+          'onTabPress', name,
+        );
         const event: any = navigation.emit({
           type: 'tabPress',
           target: route.key,
@@ -151,7 +177,9 @@ const BottomTabBar: FC<BottomTabBarProps> = ({
     };
 
     const onLongPress = () => {
-      DeviceEventEmitter.emit('onTabPress', name);
+      DeviceEventEmitter.emit(
+        'onTabPress', name,
+      );
       navigation.emit({
         type: 'tabLongPress',
         target: route.key,
@@ -228,7 +256,9 @@ const tabBarIconStyles = (
   });
 };
 
-const createStyle = (theme: ExtendedTheme, insets: EdgeInsets) => {
+const createStyle = (
+  theme: ExtendedTheme, insets: EdgeInsets,
+) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {

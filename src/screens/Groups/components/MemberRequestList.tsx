@@ -36,11 +36,9 @@ const MemberRequestList = ({
 
   const {
     loading, total, ids, canLoadMore,
-  } = useKeySelector(
-    groupsKeySelector[`${type}MemberRequests`],
-  );
+  } = useKeySelector(groupsKeySelector[`${type}MemberRequests`]);
 
-  const renderItem = ({ item }: {item: number}) => {
+  const renderItem = ({ item }: {item: string}) => {
     if (id && type === 'community') return <CommunityMemberRequest requestId={id} organizationId={id} />
 
     return <GroupMemberRequest requestId={item} />;
@@ -92,7 +90,9 @@ const MemberRequestList = ({
       style={styles.flatList}
       data={ids}
       renderItem={renderItem}
-      keyExtractor={(item, index) => `requests_${item}_${index}`}
+      keyExtractor={(
+        item, index,
+      ) => `requests_${item}_${index}`}
       ListEmptyComponent={renderEmpty}
       ListHeaderComponent={renderListHeader}
       ListFooterComponent={renderListFooter}

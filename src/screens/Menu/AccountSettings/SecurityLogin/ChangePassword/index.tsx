@@ -30,28 +30,34 @@ const ChangePassword = () => {
   const { errCurrentPassword }: IChangePasswordError = changePasswordError || {};
   const [disableSaveButton, setDisableSaveButton] = useState(true);
 
-  useEffect(() => {
-    dispatch(
-      authActions.setChangePasswordError({
+  useEffect(
+    () => {
+      dispatch(authActions.setChangePasswordError({
         errCurrentPassword: '',
-      }),
-    );
-  }, []);
+      }));
+    }, [],
+  );
 
-  useEffect(() => {
-    checkDisableSaveButton();
-  }, [changePasswordLoading]);
+  useEffect(
+    () => {
+      checkDisableSaveButton();
+    }, [changePasswordLoading],
+  );
 
-  useEffect(() => {
-    if (errCurrentPassword) {
-      setError('password', {
-        type: 'manual',
-        message: errCurrentPassword,
-      });
-    } else {
-      clearErrors('password');
-    }
-  }, [errCurrentPassword]);
+  useEffect(
+    () => {
+      if (errCurrentPassword) {
+        setError(
+          'password', {
+            type: 'manual',
+            message: errCurrentPassword,
+          },
+        );
+      } else {
+        clearErrors('password');
+      }
+    }, [errCurrentPassword],
+  );
   const useFormData = useForm();
   const {
     formState: { errors },
@@ -82,10 +88,12 @@ const ChangePassword = () => {
 
   const compareCurrentWithNewPassword = () => {
     if (getValues('password') === getValues('newPassword')) {
-      setError('newPassword', {
-        type: 'manual',
-        message: t('auth:text_err_new_password_must_differ_from_current'),
-      });
+      setError(
+        'newPassword', {
+          type: 'manual',
+          message: t('auth:text_err_new_password_must_differ_from_current'),
+        },
+      );
     } else if (errors.newPassword && errors.newPassword.type === 'manual') {
       clearErrors('newPassword');
     }
@@ -97,10 +105,12 @@ const ChangePassword = () => {
     const newPassword = getValues('newPassword');
 
     if (newPassword !== confirmNewPassword) {
-      setError('confirmNewPassword', {
-        type: 'manual',
-        message: t('auth:text_err_confirm_new_password_not_matched'),
-      });
+      setError(
+        'confirmNewPassword', {
+          type: 'manual',
+          message: t('auth:text_err_confirm_new_password_not_matched'),
+        },
+      );
     } else {
       clearErrors('confirmNewPassword');
     }
@@ -130,9 +140,7 @@ const ChangePassword = () => {
 
     const oldPassword = getValues('password');
     const newPassword = getValues('confirmNewPassword');
-    dispatch(
-      authActions.changePassword({ oldPassword, newPassword, global: false }),
-    );
+    dispatch(authActions.changePassword({ oldPassword, newPassword, global: false }));
   };
 
   return (

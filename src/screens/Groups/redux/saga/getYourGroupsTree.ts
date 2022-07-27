@@ -17,9 +17,7 @@ export default function* getYourGroupsTree({
       communityId,
       { list_by: 'tree' },
     );
-    yield put(
-      groupsActions.setYourGroupsTree({ loading: false, list: groups || [] }),
-    );
+    yield put(groupsActions.setYourGroupsTree({ loading: false, list: groups || [] }));
   } catch (err) {
     yield put(groupsActions.setYourGroupsTree({ loading: false }));
     yield showError(err);

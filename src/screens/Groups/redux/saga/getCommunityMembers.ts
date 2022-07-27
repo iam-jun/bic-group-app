@@ -23,19 +23,19 @@ export default function* getCommunityMembers({
     const { communityMembers } = groups;
     const { canLoadMore, offset } = communityMembers;
 
-    yield put(
-      actions.setCommunityMembers({
-        loading: isRefreshing ? true : offset === 0,
-      }),
-    );
+    yield put(actions.setCommunityMembers({
+      loading: isRefreshing ? true : offset === 0,
+    }));
 
     if (!isRefreshing && !canLoadMore) return;
 
-    const resp:AxiosResponse = yield call(groupsDataHelper.getCommunityMembers, communityId, {
-      limit: appConfig.recordsPerPage,
-      offset: isRefreshing ? 0 : offset,
-      ...params,
-    });
+    const resp:AxiosResponse = yield call(
+      groupsDataHelper.getCommunityMembers, communityId, {
+        limit: appConfig.recordsPerPage,
+        offset: isRefreshing ? 0 : offset,
+        ...params,
+      },
+    );
 
     let newDataCount = 0;
     let newDataObj = {};
@@ -67,7 +67,11 @@ export default function* getCommunityMembers({
 
     yield put(actions.setCommunityMembers(newData));
   } catch (err: any) {
-    console.error('getCommunityMembers error:', err);
-    yield call(showError, err);
+    console.error(
+      'getCommunityMembers error:', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

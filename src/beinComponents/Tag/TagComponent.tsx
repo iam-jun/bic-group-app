@@ -41,7 +41,9 @@ const TagComponent: React.FC<TagProps> = ({
 }: TagProps) => {
   const [isSelected, setIsSelected] = useState<boolean>(selected);
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(theme, variant, isSelected, disabled);
+  const styles = createStyles(
+    theme, variant, isSelected, disabled,
+  );
 
   const _onChangeValue = () => {
     if (onActionPress) {

@@ -11,12 +11,16 @@ import omitListItemParagraph from './util/omitListItemParagraph';
  * @param {AstRenderer} [markdownIt]
  * @return {View}
  */
-export default function parser(source, renderer, markdownIt) {
+export default function parser(
+  source, renderer, markdownIt,
+) {
   if (Array.isArray(source)) {
     return renderer(source);
   }
 
-  let tokens = stringToTokens(source, markdownIt);
+  let tokens = stringToTokens(
+    source, markdownIt,
+  );
   tokens = cleanupTokens(tokens);
   tokens = groupTextTokens(tokens);
   tokens = omitListItemParagraph(tokens);

@@ -16,22 +16,20 @@ export default function* cancelJoinCommunity({
 }) {
   const { communityId, communityName } = payload;
   try {
-    yield call(groupsDataHelper.cancelJoinCommunity, communityId);
+    yield call(
+      groupsDataHelper.cancelJoinCommunity, communityId,
+    );
 
     // update button Join/Cancel/View status on Discover communities
-    yield put(
-      groupsActions.editDiscoverCommunityItem({
-        id: communityId,
-        data: { join_status: groupJoinStatus.visitor },
-      }),
-    );
+    yield put(groupsActions.editDiscoverCommunityItem({
+      id: communityId,
+      data: { join_status: groupJoinStatus.visitor },
+    }));
 
     yield put(groupsActions.getCommunityDetail({ communityId }));
 
     const toastMessage: IToastMessage = {
-      content: `${i18next.t(
-        'groups:text_cancel_join_community',
-      )} ${communityName}`,
+      content: `${i18next.t('groups:text_cancel_join_community')} ${communityName}`,
       props: {
         type: 'success',
       },
@@ -39,20 +37,20 @@ export default function* cancelJoinCommunity({
 
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log('cancelJoinCommunity catch', err);
+    console.log(
+      'cancelJoinCommunity catch', err,
+    );
 
     if (err?.code === approveDeclineCode.APPROVED) {
-      yield put(
-        groupsActions.editDiscoverCommunityItem({
-          id: communityId,
-          data: { join_status: groupJoinStatus.member },
-        }),
-      );
-      yield put(
-        groupsActions.getCommunityDetail({ communityId, loadingPage: true }),
-      );
+      yield put(groupsActions.editDiscoverCommunityItem({
+        id: communityId,
+        data: { join_status: groupJoinStatus.member },
+      }));
+      yield put(groupsActions.getCommunityDetail({ communityId, loadingPage: true }));
     }
 
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

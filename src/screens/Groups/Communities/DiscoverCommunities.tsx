@@ -42,18 +42,18 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
 
-  useEffect(() => {
-    getData({ refreshNoLoading: true });
-  }, []);
+  useEffect(
+    () => {
+      getData({ refreshNoLoading: true });
+    }, [],
+  );
 
   const getData = (params?: {
     isRefreshing?: boolean;
     refreshNoLoading?: boolean;
   }) => {
     const { isRefreshing, refreshNoLoading } = params || {};
-    dispatch(
-      groupsActions.getDiscoverCommunities({ isRefreshing, refreshNoLoading }),
-    );
+    dispatch(groupsActions.getDiscoverCommunities({ isRefreshing, refreshNoLoading }));
   };
 
   const onLoadMore = () => {
@@ -64,11 +64,15 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
     getData({ isRefreshing: true });
   };
 
-  const onPressJoin = (communityId: string, communityName: string) => {
+  const onPressJoin = (
+    communityId: string, communityName: string,
+  ) => {
     dispatch(groupsActions.joinCommunity({ communityId, communityName }));
   };
 
-  const onPressCancel = (communityId: string, communityName: string) => {
+  const onPressCancel = (
+    communityId: string, communityName: string,
+  ) => {
     dispatch(groupsActions.cancelJoinCommunity({ communityId, communityName }));
   };
 
@@ -119,7 +123,9 @@ const DiscoverCommunities: FC<DiscoverCommunitiesProps> = ({
       testID="flatlist"
       data={ids}
       renderItem={renderItem}
-      keyExtractor={(item, index) => `community_${item}_${index}`}
+      keyExtractor={(
+        item, index,
+      ) => `community_${item}_${index}`}
       ListEmptyComponent={renderEmptyComponent}
       ListHeaderComponent={<DiscoverHeader list={ids} />}
       ListFooterComponent={renderListFooter}

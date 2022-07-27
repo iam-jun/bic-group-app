@@ -47,28 +47,34 @@ const CommunityAdmin = () => {
     ],
   );
 
-  useEffect(() => {
-    canManageJoiningRequests
+  useEffect(
+    () => {
+      canManageJoiningRequests
       && dispatch(groupsActions.getCommunityMemberRequests({ communityId }));
 
-    return () => {
-      dispatch(groupsActions.resetCommunityMemberRequests());
-    };
-  }, [communityId]);
+      return () => {
+        dispatch(groupsActions.resetCommunityMemberRequests());
+      };
+    }, [communityId],
+  );
 
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
 
   const onPressPendingMembers = () => {
-    rootNavigation.navigate(groupStack.communityPendingMembers, {
-      id: communityId,
-    });
+    rootNavigation.navigate(
+      groupStack.communityPendingMembers, {
+        id: communityId,
+      },
+    );
   };
 
   const onPressGeneralInfo = () => {
-    rootNavigation.navigate(groupStack.generalInfo, {
-      id: communityId,
-      type: 'community',
-    });
+    rootNavigation.navigate(
+      groupStack.generalInfo, {
+        id: communityId,
+        type: 'community',
+      },
+    );
   };
 
   const onPressPermission = () => {

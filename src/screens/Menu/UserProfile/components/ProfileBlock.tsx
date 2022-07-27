@@ -41,10 +41,8 @@ const ProfileBlock = ({
 
   const theme: ExtendedTheme = useTheme();
 
-  const userLanguageList = language?.map(
-    // @ts-ignore
-    (code: string) => speakingLanguages[code].name,
-  );
+  // @ts-ignore
+  const userLanguageList = language?.map((code: string) => speakingLanguages[code].name);
   const userLanguages = userLanguageList?.join(', ');
 
   const renderItem = ({
@@ -79,7 +77,9 @@ const ProfileBlock = ({
           {birthday
             && renderItem({
               icon: 'Calendar',
-              title: formatDate(birthday, 'MMM Do, YYYY'),
+              title: formatDate(
+                birthday, 'MMM Do, YYYY',
+              ),
             })}
           {renderItem({ icon: 'Comments', title: userLanguages })}
           {relationship_status

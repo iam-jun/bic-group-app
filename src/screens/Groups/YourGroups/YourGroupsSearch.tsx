@@ -17,9 +17,7 @@ const YourGroupsSearch = () => {
 
   const {
     showSearch, loading, key, list,
-  } = useKeySelector(
-    groupsKeySelector.yourGroupsSearchData,
-  );
+  } = useKeySelector(groupsKeySelector.yourGroupsSearchData);
 
   const containerStyle = useAnimatedStyle(() => ({}));
 

@@ -17,9 +17,7 @@ export default function* getYourGroupsList({
       communityId,
       { list_by: 'flat' },
     );
-    yield put(
-      groupsActions.setYourGroupsList({ loading: false, list: groups || [] }),
-    );
+    yield put(groupsActions.setYourGroupsList({ loading: false, list: groups || [] }));
   } catch (err) {
     yield put(groupsActions.setYourGroupsList({ loading: false }));
     yield showError(err);

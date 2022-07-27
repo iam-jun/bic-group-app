@@ -9,10 +9,14 @@ export const saveDataToSharedStorage = async (
   data: any,
 ) => {
   try {
-    await SharedGroupPreferences.setItem(key, data, appIdentifier);
+    await SharedGroupPreferences.setItem(
+      key, data, appIdentifier,
+    );
   } catch (errorCode) {
     // errorCode 0 = There is no suite with that name
-    console.error('saveDataToSharedStorage', errorCode);
+    console.error(
+      'saveDataToSharedStorage', errorCode,
+    );
   }
 };
 
@@ -22,11 +26,15 @@ export const loadFromSharedStorage = async (
 ) => {
   let data = null;
   try {
-    data = await SharedGroupPreferences.getItem(key, appIdentifier);
+    data = await SharedGroupPreferences.getItem(
+      key, appIdentifier,
+    );
   } catch (errorCode) {
     // errorCode 0 = no group name exists. You probably need to setup your Xcode Project properly.
     // errorCode 1 = there is no value for that key
-    console.error('loadFromSharedStorage', errorCode);
+    console.error(
+      'loadFromSharedStorage', errorCode,
+    );
   }
   return data;
 };

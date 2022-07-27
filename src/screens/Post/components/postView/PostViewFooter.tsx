@@ -36,7 +36,9 @@ const PostViewFooter: FC<PostViewFooterProps> = ({
 
   const validReactionCount = validateReactionCount(reactionCounts);
 
-  const onEmojiSelected = (emoji: string, key?: string) => {
+  const onEmojiSelected = (
+    emoji: string, key?: string,
+  ) => {
     dispatch(modalActions.hideModal());
     if (key) {
       onAddReaction?.(key);

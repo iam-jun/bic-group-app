@@ -91,20 +91,30 @@ const AvatarGroup = ({
 
     switch (source?.length) {
       case 1:
-        return renderItem(0, source?.[0]);
+        return renderItem(
+          0, source?.[0],
+        );
       case 2:
         return (
           <View testID="avatar_group.group_2" style={{ flexDirection: 'row' }}>
-            {renderItem(0, source?.[0])}
-            {renderItem(1, source?.[1], { marginLeft: -6 })}
+            {renderItem(
+              0, source?.[0],
+            )}
+            {renderItem(
+              1, source?.[1], { marginLeft: -6 },
+            )}
           </View>
         );
       case 3:
         return (
           <View testID="avatar_group.group_3">
             <View style={{ flexDirection: 'row' }}>
-              {renderItem(0, source?.[0])}
-              {renderItem(1, source?.[1], { marginLeft: -6 })}
+              {renderItem(
+                0, source?.[0],
+              )}
+              {renderItem(
+                1, source?.[1], { marginLeft: -6 },
+              )}
             </View>
             <View
               style={{
@@ -113,7 +123,9 @@ const AvatarGroup = ({
                 marginTop: -8,
               }}
             >
-              {renderItem(2, source?.[2])}
+              {renderItem(
+                2, source?.[2],
+              )}
             </View>
           </View>
         );
@@ -121,8 +133,12 @@ const AvatarGroup = ({
         return (
           <View testID="avatar_group.group_4">
             <View style={{ flexDirection: 'row' }}>
-              {renderItem(0, source?.[0])}
-              {renderItem(1, source?.[1], { marginLeft: -6 })}
+              {renderItem(
+                0, source?.[0],
+              )}
+              {renderItem(
+                1, source?.[1], { marginLeft: -6 },
+              )}
             </View>
             <View
               style={{
@@ -131,8 +147,12 @@ const AvatarGroup = ({
                 marginTop: -8,
               }}
             >
-              {renderItem(2, source?.[2])}
-              {renderItem(3, source?.[3], { marginLeft: -6 })}
+              {renderItem(
+                2, source?.[2],
+              )}
+              {renderItem(
+                3, source?.[3], { marginLeft: -6 },
+              )}
             </View>
           </View>
         );
@@ -140,8 +160,12 @@ const AvatarGroup = ({
         return (
           <View testID="avatar_group.group_4_plus">
             <View style={{ flexDirection: 'row' }}>
-              {renderItem(0, source?.[0])}
-              {renderItem(1, source?.[1], { marginLeft: -6 })}
+              {renderItem(
+                0, source?.[0],
+              )}
+              {renderItem(
+                1, source?.[1], { marginLeft: -6 },
+              )}
             </View>
             <View
               style={{
@@ -150,7 +174,9 @@ const AvatarGroup = ({
                 marginTop: -8,
               }}
             >
-              {renderItem(2, source?.[2])}
+              {renderItem(
+                2, source?.[2],
+              )}
               <View
                 style={{
                   width: itemContainerSize,
@@ -171,10 +197,14 @@ const AvatarGroup = ({
                       fontSize: totalMemberFontSize,
                     }}
                   >
-                    {`+${Math.min(99, totalMember)}`}
+                    {`+${Math.min(
+                      99, totalMember,
+                    )}`}
                   </Text>
                 ) : (
-                  renderItem(3, source?.[3])
+                  renderItem(
+                    3, source?.[3],
+                  )
                 )}
               </View>
             </View>

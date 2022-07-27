@@ -60,9 +60,7 @@ const MemberOptionsMenu = ({
   const alertRemovingAdmin = useRemoveAdmin({ groupId, selectedMember });
   const alertLeaveGroup = useLeaveGroup({ groupId, username: user?.username });
 
-  const onPressMenuOption = (
-    type: 'set-admin' | 'remove-admin' | 'remove-member' | 'leave-group',
-  ) => {
+  const onPressMenuOption = (type: 'set-admin' | 'remove-admin' | 'remove-member' | 'leave-group') => {
     modalizeRef.current?.close();
     switch (type) {
       case 'set-admin':
@@ -109,9 +107,7 @@ const MemberOptionsMenu = ({
 
   const doSetAdmin = () => {
     selectedMember?.id
-      && dispatch(
-        groupsActions.setGroupAdmin({ groupId, userIds: [selectedMember.id] }),
-      );
+      && dispatch(groupsActions.setGroupAdmin({ groupId, userIds: [selectedMember.id] }));
   };
 
   const onPressRemoveAdmin = () => {
@@ -120,19 +116,17 @@ const MemberOptionsMenu = ({
       if (adminCount > 1) {
         alertRemovingAdmin();
       } else {
-        dispatch(
-          modalActions.showHideToastMessage({
-            content: 'groups:error:last_admin_remove',
-            props: {
-              type: 'error',
-              textProps: { useI18n: true },
-              rightIcon: 'UserGroup',
-              rightText: 'Members',
-              onPressRight: onPressMemberButton,
-            },
-            toastType: 'normal',
-          }),
-        );
+        dispatch(modalActions.showHideToastMessage({
+          content: 'groups:error:last_admin_remove',
+          props: {
+            type: 'error',
+            textProps: { useI18n: true },
+            rightIcon: 'UserGroup',
+            rightText: 'Members',
+            onPressRight: onPressMemberButton,
+          },
+          toastType: 'normal',
+        }));
       }
     }
   };
@@ -165,16 +159,24 @@ const MemberOptionsMenu = ({
   };
 
   const getAlertPayloadWithInnerGroups = (innerGroups: any) => {
-    getInnerGroupsNames(innerGroups, renderInnerGroupsAlert);
+    getInnerGroupsNames(
+      innerGroups, renderInnerGroupsAlert,
+    );
   };
 
-  const renderInnerGroupsAlert = (message: string, innerGroups: string[]) => {
-    const first3groups = innerGroups.slice(0, 3);
+  const renderInnerGroupsAlert = (
+    message: string, innerGroups: string[],
+  ) => {
+    const first3groups = innerGroups.slice(
+      0, 3,
+    );
     const count = innerGroups.length;
 
     const groupsList = () => (
       <View style={styles.alertRemoveGroupsList}>
-        {first3groups.map((name, index) => (
+        {first3groups.map((
+          name, index,
+        ) => (
           <Text.BodyM key={index} style={styles.alertRemoveGroupsListItem}>
             •
             {' '}

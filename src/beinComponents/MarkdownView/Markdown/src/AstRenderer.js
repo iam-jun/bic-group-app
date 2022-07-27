@@ -40,9 +40,8 @@ export default class AstRenderer {
     const renderFunction = this._renderRules[type];
 
     if (!renderFunction) {
-      console.warn(
-        `Warning, unknown render rule encountered: ${type}. 'unknown' render rule used (by default, returns null - nothing rendered)`,
-      );
+      console.warn(`Warning, unknown render rule encountered: ${type}.
+       'unknown' render rule used (by default, returns null - nothing rendered)`);
       return this._renderRules.unknown;
     }
 
@@ -55,7 +54,9 @@ export default class AstRenderer {
    * @param parentNodes
    * @return {*}
    */
-  renderNode = (node, parentNodes, isRoot = false) => {
+  renderNode = (
+    node, parentNodes, isRoot = false,
+  ) => {
     const renderFunction = this.getRenderFunction(node.type);
     const parents = [...parentNodes];
 
@@ -72,7 +73,9 @@ export default class AstRenderer {
     parents.unshift(node);
 
     // calculate the children first
-    let children = node.children.map((value) => this.renderNode(value, parents));
+    let children = node.children.map((value) => this.renderNode(
+      value, parents,
+    ));
 
     // render any special types of nodes that have different renderRule function signatures
 
@@ -153,7 +156,9 @@ export default class AstRenderer {
         }
       }
 
-      return renderFunction(node, children, parentNodes, this._style, styleObj);
+      return renderFunction(
+        node, children, parentNodes, this._style, styleObj,
+      );
     }
 
     // cull top level children
@@ -163,13 +168,17 @@ export default class AstRenderer {
       && this._maxTopLevelChildren
       && children.length > this._maxTopLevelChildren
     ) {
-      children = children.slice(0, this._maxTopLevelChildren);
+      children = children.slice(
+        0, this._maxTopLevelChildren,
+      );
       children.push(this._topLevelMaxExceededItem);
     }
 
     // render anythign else that has a normal signature
 
-    return renderFunction(node, children, parentNodes, this._style);
+    return renderFunction(
+      node, children, parentNodes, this._style,
+    );
   };
 
   /**
@@ -179,6 +188,8 @@ export default class AstRenderer {
    */
   render = (nodes) => {
     const root = { type: 'body', key: getUniqueID(), children: nodes };
-    return this.renderNode(root, [], true);
+    return this.renderNode(
+      root, [], true,
+    );
   };
 }

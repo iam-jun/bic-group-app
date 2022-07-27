@@ -31,14 +31,12 @@ const _dispatchLogout = async () => {
 };
 
 const _dispatchSessionExpire = () => {
-  Store.store.dispatch(
-    modalActions.showAlert({
-      title: i18n.t('auth:text_kickout_title'),
-      content: i18n.t('auth:text_kickout_desc'),
-      onConfirm: () => put(modalActions.hideAlert()),
-      confirmLabel: i18n.t('auth:text_kickout_confirm_button'),
-    }),
-  );
+  Store.store.dispatch(modalActions.showAlert({
+    title: i18n.t('auth:text_kickout_title'),
+    content: i18n.t('auth:text_kickout_desc'),
+    onConfirm: () => put(modalActions.hideAlert()),
+    confirmLabel: i18n.t('auth:text_kickout_confirm_button'),
+  }));
 };
 
 const _dispatchRefreshTokenSuccess = (
@@ -47,14 +45,14 @@ const _dispatchRefreshTokenSuccess = (
   idToken: string,
   idTokenExp: number,
 ) => {
-  Store.store.dispatch(
-    createAction(ActionTypes.RefreshTokenSuccessBein, {
+  Store.store.dispatch(createAction(
+    ActionTypes.RefreshTokenSuccessBein, {
       newToken,
       refreshToken,
       idToken,
       idTokenExp,
-    }),
-  );
+    },
+  ));
 };
 
 const refreshFailKickOut = () => {
@@ -113,7 +111,9 @@ const handleRetry = async (error: AxiosError) => {
   //= ================= 401 Unauthorized ==================
 
   // create new promise
-  const newReqPromise = new Promise((resolve, reject) => {
+  const newReqPromise = new Promise((
+    resolve, reject,
+  ) => {
     const newOrgConfig = { ...error.config };
     delete newOrgConfig.headers?.Authorization;
 
@@ -162,7 +162,9 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
       timeEndCountLimit = 0;
     }
     if (countLimitRetry === 1) {
-      timeEndCountLimit = moment(moment.now()).add(1, 'minutes').unix(); // 1 minute from now
+      timeEndCountLimit = moment(moment.now()).add(
+        1, 'minutes',
+      ).unix(); // 1 minute from now
     }
     let isSuccess = true;
 
@@ -179,7 +181,9 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
         isSuccess = false;
         return;
       }
-      _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken, exp);
+      _dispatchRefreshTokenSuccess(
+        newToken, refreshToken, idToken, exp,
+      );
 
       // For sharing data between Group and Chat
       await updateUserFromSharedPreferences({ token: idToken, exp });
@@ -195,9 +199,7 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
   }
 };
 
-const handleResponseError = async (
-  error: AxiosError,
-): Promise<HttpApiResponseFormat | unknown> => {
+const handleResponseError = async (error: AxiosError): Promise<HttpApiResponseFormat | unknown> => {
   // Sometime aws return old id token, using this old id token to refresh token will return 401
   // should reset value isRefreshingToken for refresh later
 
@@ -247,9 +249,7 @@ const handleResponseError = async (
   };
 };
 
-const mapResponseSuccessBein = (
-  response: AxiosResponse,
-): HttpApiResponseFormat => ({
+const mapResponseSuccessBein = (response: AxiosResponse): HttpApiResponseFormat => ({
   code: response.data.code,
   data: response.data.data,
   meta: response.data.meta,
@@ -263,7 +263,9 @@ const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
     `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/schemes`,
   ];
   apisWithParam.forEach((api) => {
-    if (new RegExp(api, 'g').test(endPoint || '')) {
+    if (new RegExp(
+      api, 'g',
+    ).test(endPoint || '')) {
       result = true;
     }
   });
@@ -325,9 +327,11 @@ const interceptorsResponseCamelSuccess = (response: AxiosResponse) => {
     response.data
     && response.headers?.['content-type']?.includes?.('application/json')
   ) {
-    response.data = ConvertHelper.camelizeKeys(response.data, {
-      exclude: ['reactions_count'],
-    });
+    response.data = ConvertHelper.camelizeKeys(
+      response.data, {
+        exclude: ['reactions_count'],
+      },
+    );
   }
   return response;
 };
@@ -340,9 +344,11 @@ const interceptorsResponseSuccess = (response: AxiosResponse) => {
       response.data
       && response.headers?.['content-type']?.includes?.('application/json')
     ) {
-      response.data = ConvertHelper.camelizeKeys(response.data, {
-        exclude: ['reactions_count'],
-      });
+      response.data = ConvertHelper.camelizeKeys(
+        response.data, {
+          exclude: ['reactions_count'],
+        },
+      );
     }
     return response;
   }
@@ -388,7 +394,9 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
 
   const axiosInstance = axios.create();
   axiosInstance.defaults.timeout = requestConfig.timeout || defaultTimeout;
-  axiosInstance.interceptors.request.use(interceptorRequestSuccess, undefined);
+  axiosInstance.interceptors.request.use(
+    interceptorRequestSuccess, undefined,
+  );
   axiosInstance.interceptors.response.use(
     interceptorResponseSuccess,
     interceptorResponseError,
@@ -400,7 +408,9 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
 
 const makePushTokenRequest = (deviceToken: string) => {
   const deviceId = DeviceInfo.getUniqueId();
-  return makeHttpRequest(ApiConfig.App.pushToken(deviceToken, deviceId));
+  return makeHttpRequest(ApiConfig.App.pushToken(
+    deviceToken, deviceId,
+  ));
 };
 
 const makeRemovePushTokenRequest = async () => {

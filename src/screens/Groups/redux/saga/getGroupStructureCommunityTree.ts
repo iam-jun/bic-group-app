@@ -15,15 +15,15 @@ export default function* getGroupStructureCommunityTree({
     if (showLoading) {
       yield put(groupsActions.setGroupStructureCommunityTree({ loading: true }));
     }
-    const response = (yield call(groupsDataHelper.getCommunityGroupTree, communityId)) || [];
+    const response = (yield call(
+      groupsDataHelper.getCommunityGroupTree, communityId,
+    )) || [];
 
     if (response?.data) {
-      yield put(
-        groupsActions.setGroupStructureCommunityTree({
-          loading: false,
-          data: response.data,
-        }),
-      );
+      yield put(groupsActions.setGroupStructureCommunityTree({
+        loading: false,
+        data: response.data,
+      }));
     } else {
       yield put(groupsActions.setGroupStructureCommunityTree({ loading: false }));
     }

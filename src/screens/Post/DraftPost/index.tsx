@@ -37,20 +37,24 @@ const DraftPost = () => {
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  useEffect(() => {
-    if (isFocused) dispatch(appActions.setRootScreenName(appScreens.draftPost));
-  }, [isFocused]);
+  useEffect(
+    () => {
+      if (isFocused) dispatch(appActions.setRootScreenName(appScreens.draftPost));
+    }, [isFocused],
+  );
 
-  useEffect(() => {
-    if (isInternetReachable) {
-      if (lossInternet) {
-        setLossInternet(false);
-        getData(false);
+  useEffect(
+    () => {
+      if (isInternetReachable) {
+        if (lossInternet) {
+          setLossInternet(false);
+          getData(false);
+        }
+      } else {
+        setLossInternet(true);
       }
-    } else {
-      setLossInternet(true);
-    }
-  }, [isInternetReachable]);
+    }, [isInternetReachable],
+  );
 
   // get draft post called from MainTabs
   const draftPostsData = useKeySelector(postKeySelector.draftPostsData) || {};

@@ -26,7 +26,9 @@ const PostAudiencesBottomSheet = () => {
   const insets = useSafeAreaInsets();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = createStyle(theme, insets);
+  const styles = createStyle(
+    theme, insets,
+  );
 
   const postAudienceSheetRef = useRef<any>();
   const postAudienceSheet = useKeySelector(postKeySelector.postAudienceSheet);
@@ -38,15 +40,19 @@ const PostAudiencesBottomSheet = () => {
   };
 
   const navigateToGroup = (groupId: any) => {
-    rootNavigation.navigate(mainStack.groupDetail, {
-      groupId,
-    });
+    rootNavigation.navigate(
+      mainStack.groupDetail, {
+        groupId,
+      },
+    );
   };
 
   const navigateToCommunity = (communityId: string) => {
-    rootNavigation.navigate(mainStack.communityDetail, {
-      communityId,
-    });
+    rootNavigation.navigate(
+      mainStack.communityDetail, {
+        communityId,
+      },
+    );
   };
 
   const onPressItem = (item: any) => {
@@ -122,7 +128,9 @@ const PostAudiencesBottomSheet = () => {
         style={styles.sectionContainer}
         showsVerticalScrollIndicator={false}
         sections={data || []}
-        keyExtractor={(item, index) => `section_list_${item}_${index}`}
+        keyExtractor={(
+          item, index,
+        ) => `section_list_${item}_${index}`}
         renderSectionHeader={renderSectionHeader}
         ListHeaderComponent={() => (
           <ViewSpacing height={spacing.margin.small} />
@@ -145,7 +153,9 @@ const PostAudiencesBottomSheet = () => {
   );
 };
 
-const createStyle = (theme: ExtendedTheme, insets: any) => {
+const createStyle = (
+  theme: ExtendedTheme, insets: any,
+) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {

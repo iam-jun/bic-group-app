@@ -41,9 +41,7 @@ function* postCreateNewComment({
   }
 
   try {
-    const creatingComment = yield select(
-      (state) => state?.post?.createComment?.loading,
-    );
+    const creatingComment = yield select((state) => state?.post?.createComment?.loading);
     if (creatingComment) {
       console.error('\x1b[31m🐣️ saga postCreateNewComment: creating\x1b[0m');
       return;
@@ -55,13 +53,11 @@ function* postCreateNewComment({
     // retrying doesn't need this step
     if (preComment) {
       if (!parentCommentId) {
-        yield put(
-          postActions.updateAllCommentsByParentIdsWithComments({
-            id: postId,
-            comments: new Array(preComment),
-            isMerge: true,
-          }),
-        );
+        yield put(postActions.updateAllCommentsByParentIdsWithComments({
+          id: postId,
+          comments: new Array(preComment),
+          isMerge: true,
+        }));
       } else {
         yield addChildCommentToCommentsOfPost({
           postId,
@@ -80,9 +76,7 @@ function* postCreateNewComment({
     yield put(postActions.setPostDetailReplyingComment());
 
     // get mentions from temp selected in mention input
-    const tempMentions = yield select(
-      (state) => state?.mentionInput?.tempSelected,
-    );
+    const tempMentions = yield select((state) => state?.mentionInput?.tempSelected);
     commentData.mentions = getMentionsFromContent(
       commentData?.content,
       tempMentions,
@@ -143,87 +137,71 @@ function* postCreateNewComment({
       yield put(postActions.addToAllComments(resComment));
     }
 
-    yield put(
-      postActions.updateCommentAPI({
-        status: 'success',
-        localId: localId || preComment?.localId,
-        postId,
-        resultComment: resComment,
-        parentCommentId,
-      }),
-    );
+    yield put(postActions.updateCommentAPI({
+      status: 'success',
+      localId: localId || preComment?.localId,
+      postId,
+      resultComment: resComment,
+      parentCommentId,
+    }));
 
     yield put(postActions.setCreateComment({ loading: false, content: '' }));
     onSuccess?.(); // call second time to make sure content is cleared on low performance device
   } catch (e: any) {
-    console.error('err:', JSON.stringify(e));
+    console.error(
+      'err:', JSON.stringify(e),
+    );
     if (preComment && !parentCommentId) {
       // retrying doesn't need to update status because status = 'failed' already
-      yield put(
-        postActions.updateCommentAPI({
-          status: 'failed',
-          localId: preComment?.localId,
-          postId,
-          resultComment: {} as IReaction,
-          parentCommentId,
-        }),
-      );
+      yield put(postActions.updateCommentAPI({
+        status: 'failed',
+        localId: preComment?.localId,
+        postId,
+        resultComment: {} as IReaction,
+        parentCommentId,
+      }));
     }
     yield put(postActions.setCreateComment({ loading: false }));
     if (!!parentCommentId && e?.code === API_ERROR_CODE.POST.commentDeleted) {
-      yield put(
-        postActions.setCommentErrorCode(API_ERROR_CODE.POST.commentDeleted),
-      );
-      yield put(
-        postActions.removeChildComment({
+      yield put(postActions.setCommentErrorCode(API_ERROR_CODE.POST.commentDeleted));
+      yield put(postActions.removeChildComment({
+        localId: preComment?.localId,
+        postId,
+        parentCommentId,
+      }));
+
+      yield put(modalActions.showHideToastMessage({
+        content: 'post:text_comment_deleted',
+        toastType: 'banner',
+        props: {
+          textProps: { useI18n: true },
+          type: 'informative',
+          leftIcon: 'iconCannotComment',
+        },
+      }));
+    } else if (e?.code === API_ERROR_CODE.POST.postDeleted) {
+      yield put(postActions.setCommentErrorCode(API_ERROR_CODE.POST.postDeleted));
+      if (parentCommentId) {
+        yield put(postActions.removeChildComment({
           localId: preComment?.localId,
           postId,
           parentCommentId,
-        }),
-      );
-
-      yield put(
-        modalActions.showHideToastMessage({
-          content: 'post:text_comment_deleted',
-          toastType: 'banner',
-          props: {
-            textProps: { useI18n: true },
-            type: 'informative',
-            leftIcon: 'iconCannotComment',
-          },
-        }),
-      );
-    } else if (e?.code === API_ERROR_CODE.POST.postDeleted) {
-      yield put(
-        postActions.setCommentErrorCode(API_ERROR_CODE.POST.postDeleted),
-      );
-      if (parentCommentId) {
-        yield put(
-          postActions.removeChildComment({
-            localId: preComment?.localId,
-            postId,
-            parentCommentId,
-          }),
-        );
+        }));
       } else {
-        yield put(
-          postActions.removeCommentLevel1Deleted({
-            postId,
-            localId: preComment?.localId,
-          }),
-        );
+        yield put(postActions.removeCommentLevel1Deleted({
+          postId,
+          localId: preComment?.localId,
+        }));
       }
-      yield put(
-        modalActions.showHideToastMessage({
-          content: 'post:text_post_deleted',
-          toastType: 'banner',
-          props: {
-            textProps: { useI18n: true },
-            type: 'informative',
-            leftIcon: 'iconCannotComment',
-          },
-        }),
-      );
+      yield put(modalActions.showHideToastMessage({
+        content: 'post:text_post_deleted',
+        toastType: 'banner',
+        props: {
+          textProps: { useI18n: true },
+          type: 'informative',
+          leftIcon: 'iconCannotComment',
+        },
+      }));
     } else {
       yield showError(e);
     }

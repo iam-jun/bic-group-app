@@ -89,14 +89,18 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     if (onPressItem) {
       onPressItem(props);
     } else if (community_id) {
-      rootNavigation.navigate(mainStack.communityDetail, {
-        communityId: community_id,
-      });
+      rootNavigation.navigate(
+        mainStack.communityDetail, {
+          communityId: community_id,
+        },
+      );
     } else {
-      rootNavigation.navigate(groupStack.groupDetail, {
-        groupId: id,
-        initial: true,
-      });
+      rootNavigation.navigate(
+        groupStack.groupDetail, {
+          groupId: id,
+          initial: true,
+        },
+      );
     }
   };
 
@@ -113,7 +117,9 @@ const GroupItem: React.FC<GroupItemProps> = (props: GroupItemProps) => {
     if (action === commonActions.checkBox) {
       newChecked = true;
     }
-    onCheckedItem?.(props, newChecked);
+    onCheckedItem?.(
+      props, newChecked,
+    );
   };
 
   const _renderExtraInfo = () => renderExtraInfo?.(props);

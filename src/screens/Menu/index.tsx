@@ -39,9 +39,11 @@ const Menu = (): React.ReactElement => {
   } = useKeySelector(menuKeySelector.myProfile) || {};
   const currentUserId = useUserIdAuth();
 
-  useEffect(() => {
-    if (currentUserId) dispatch(menuActions.getMyProfile({ userId: currentUserId }));
-  }, []);
+  useEffect(
+    () => {
+      if (currentUserId) dispatch(menuActions.getMyProfile({ userId: currentUserId }));
+    }, [],
+  );
 
   const onSettingPress = (item: ISetting) => {
     switch (item.type) {
@@ -73,7 +75,9 @@ const Menu = (): React.ReactElement => {
   };
 
   const goToMyProfile = () => {
-    rootNavigation.navigate(mainStack.userProfile, { userId: id });
+    rootNavigation.navigate(
+      mainStack.userProfile, { userId: id },
+    );
   };
 
   const renderDivider = () => <Divider style={styles.divider} />;
@@ -86,7 +90,9 @@ const Menu = (): React.ReactElement => {
     itemTestID?: string;
   }) => (
     <View>
-      {data.map((item, index) => (
+      {data.map((
+        item, index,
+      ) => (
         <MenuItem
           title={item.title}
           key={`menu_${item.type}`}

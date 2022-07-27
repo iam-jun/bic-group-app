@@ -52,79 +52,83 @@ const CommunityDetail = (props: any) => {
     name, icon, join_status, privacy, group_id,
   } = infoDetail;
   const isMember = join_status === groupJoinStatus.member;
-  const isGettingInfoDetail = useKeySelector(
-    groupsKeySelector.isGettingInfoDetail,
-  );
+  const isGettingInfoDetail = useKeySelector(groupsKeySelector.isGettingInfoDetail);
   const loadingPage = useKeySelector(groupsKeySelector.loadingPage);
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canSetting = hasPermissionsOnScopeWithId('communities', communityId, [
-    PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
-    PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
-    PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
-  ]);
+  const canSetting = hasPermissionsOnScopeWithId(
+    'communities', communityId, [
+      PERMISSION_KEY.COMMUNITY.APPROVE_REJECT_JOINING_REQUESTS,
+      PERMISSION_KEY.COMMUNITY.EDIT_INFORMATION,
+      PERMISSION_KEY.COMMUNITY.EDIT_PRIVACY,
+    ],
+  );
 
   const buttonShow = useSharedValue(0);
 
   const getCommunityDetail = (loadingPage = false) => {
-    dispatch(
-      actions.getCommunityDetail({ communityId, loadingPage, showLoading: true }),
-    );
+    dispatch(actions.getCommunityDetail({ communityId, loadingPage, showLoading: true }));
   };
 
   const onRefresh = () => {
     getCommunityDetail();
   };
 
-  const getPosts = useCallback(() => {
+  const getPosts = useCallback(
+    () => {
     /* Avoid getting group posts of the nonexisting group,
     which will lead to endless fetching group posts in
     httpApiRequest > makeGetStreamRequest */
-    const privilegeToFetchPost = isMember
+      const privilegeToFetchPost = isMember
       || privacy === groupPrivacy.public
       || privacy === groupPrivacy.open;
 
-    if (isGettingInfoDetail || isEmpty(infoDetail) || !privilegeToFetchPost) {
-      return;
-    }
+      if (isGettingInfoDetail || isEmpty(infoDetail) || !privilegeToFetchPost) {
+        return;
+      }
 
-    dispatch(actions.clearGroupPosts());
-    dispatch(actions.getGroupPosts(group_id));
-  }, [group_id, isMember, privacy, isGettingInfoDetail, infoDetail]);
+      dispatch(actions.clearGroupPosts());
+      dispatch(actions.getGroupPosts(group_id));
+    }, [group_id, isMember, privacy, isGettingInfoDetail, infoDetail],
+  );
 
-  useEffect(() => {
-    getCommunityDetail(true);
+  useEffect(
+    () => {
+      getCommunityDetail(true);
 
-    return () => {
-      dispatch(actions.setCommunityDetail({} as ICommunity));
-    };
-  }, [communityId]);
+      return () => {
+        dispatch(actions.setCommunityDetail({} as ICommunity));
+      };
+    }, [communityId],
+  );
 
-  useEffect(() => getPosts(), [infoDetail]);
+  useEffect(
+    () => getPosts(), [infoDetail],
+  );
 
   const onPressAdminTools = () => {
     dispatch(modalActions.hideModal());
-    rootNavigation.navigate(groupStack.communityAdmin, { communityId });
+    rootNavigation.navigate(
+      groupStack.communityAdmin, { communityId },
+    );
   };
 
   const onRightPress = () => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: (
-          <HeaderMenu
-            type="community"
-            isMember={isMember}
-            canSetting={canSetting}
-            onPressAdminTools={onPressAdminTools}
-          />
-        ),
-        props: {
-          isContextMenu: true,
-          menuMinWidth: 280,
-          modalStyle: { borderTopLeftRadius: 20, borderTopRightRadius: 20 },
-        },
-      }),
-    );
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent: (
+        <HeaderMenu
+          type="community"
+          isMember={isMember}
+          canSetting={canSetting}
+          onPressAdminTools={onPressAdminTools}
+        />
+      ),
+      props: {
+        isContextMenu: true,
+        menuMinWidth: 280,
+        modalStyle: { borderTopLeftRadius: 20, borderTopRightRadius: 20 },
+      },
+    }));
   };
 
   const renderPlaceholder = () => (
@@ -170,16 +174,20 @@ const CommunityDetail = (props: any) => {
     openLink(link);
   };
 
-  const onButtonLayout = useCallback((e: any) => {
+  const onButtonLayout = useCallback(
+    (e: any) => {
     // to get the height from the start of the cover image to the end of button
-    setButtonHeight(e.nativeEvent.layout.height);
-  }, []);
+      setButtonHeight(e.nativeEvent.layout.height);
+    }, [],
+  );
 
-  const onScroll = useCallback((e: any) => {
-    const offsetY = e?.nativeEvent?.contentOffset?.y;
-    headerRef?.current?.setScrollY?.(offsetY);
-    buttonShow.value = offsetY;
-  }, []);
+  const onScroll = useCallback(
+    (e: any) => {
+      const offsetY = e?.nativeEvent?.contentOffset?.y;
+      headerRef?.current?.setScrollY?.(offsetY);
+      buttonShow.value = offsetY;
+    }, [],
+  );
 
   const buttonStyle = useAnimatedStyle(
     () => ({

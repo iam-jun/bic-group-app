@@ -14,4 +14,8 @@ export const mapUser = (item: any): IUser => ({
 });
 
 // @ts-ignore
-export const mapItems = (data?: []): IObject<any> => (data || []).reduce((obj, item) => ((obj[item.id] = item), obj), {});
+export const mapItems = (data?: []): IObject<any> => (data || []).reduce(
+  (
+    obj, item,
+  ) => ((obj[item.id] = item), obj), {},
+);

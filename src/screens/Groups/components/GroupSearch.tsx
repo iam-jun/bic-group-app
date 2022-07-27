@@ -45,27 +45,33 @@ const GroupSearch = () => {
     const onHideDone = () => {
       _setIsShow(false);
     };
-    showValue.value = withSpring(0, undefined, (isFinished) => {
-      if (isFinished) {
-        runOnJS(onHideDone)();
-      }
-    });
+    showValue.value = withSpring(
+      0, undefined, (isFinished) => {
+        if (isFinished) {
+          runOnJS(onHideDone)();
+        }
+      },
+    );
   };
 
-  useEffect(() => {
-    if (isShow) {
-      dispatch(groupsActions.getGroupSearch(searchKey));
-    }
-  }, [searchKey]);
+  useEffect(
+    () => {
+      if (isShow) {
+        dispatch(groupsActions.getGroupSearch(searchKey));
+      }
+    }, [searchKey],
+  );
 
-  useEffect(() => {
-    if (isShow) {
-      dispatch(groupsActions.getGroupSearch(''));
-      show();
-    } else {
-      hide();
-    }
-  }, [isShow]);
+  useEffect(
+    () => {
+      if (isShow) {
+        dispatch(groupsActions.getGroupSearch(''));
+        show();
+      } else {
+        hide();
+      }
+    }, [isShow],
+  );
 
   if (!_isShow) {
     return null;
@@ -108,7 +114,9 @@ const GroupSearch = () => {
         scrollEnabled={!loading}
         style={styles.list}
         data={loading ? [] : result}
-        keyExtractor={(item, index) => item?.unique || `group_search_${item}_${index}`}
+        keyExtractor={(
+          item, index,
+        ) => item?.unique || `group_search_${item}_${index}`}
         renderItem={renderItem}
         ListEmptyComponent={renderEmpty}
         ItemSeparatorComponent={() => (

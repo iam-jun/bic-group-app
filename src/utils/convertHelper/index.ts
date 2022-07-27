@@ -81,13 +81,19 @@ export default class ConvertHelper {
    * @param options ConvertHelperOptions
    * @returns  default convert function or using custom convert function.
    */
-  private static _processor(convert:any, options:any): any {
+  private static _processor(
+    convert:any, options:any,
+  ): any {
     const callback = options && 'process' in options ? options.process : options;
 
     if (typeof callback !== 'function') {
       return convert;
     }
-    return (string: string, options:any) => callback(string, convert, options);
+    return (
+      string: string, options:any,
+    ) => callback(
+      string, convert, options,
+    );
   }
 
   /**
@@ -117,17 +123,25 @@ export default class ConvertHelper {
     if (ConvertHelper._isArray(obj)) {
       output = [];
       for (let i = 0; i < obj.length; i++) {
-        output.push(ConvertHelper._processKeys(convert, obj[i], options));
+        output.push(ConvertHelper._processKeys(
+          convert, obj[i], options,
+        ));
       }
     } else {
       output = {};
       for (const key in obj) {
-        if (Array.prototype.includes.call(options?.exclude ?? [], key)) {
+        if (Array.prototype.includes.call(
+          options?.exclude ?? [], key,
+        )) {
           // @ts-ignore
-          output[convert(key, options)] = obj[key];
+          output[convert(
+            key, options,
+          )] = obj[key];
         } else {
           // @ts-ignore
-          output[convert(key, options)] = ConvertHelper._processKeys(
+          output[convert(
+            key, options,
+          )] = ConvertHelper._processKeys(
             convert,
             obj[key],
             options,
@@ -164,7 +178,9 @@ export default class ConvertHelper {
   protected static decamelize = (
     string: string,
     options?: ConvertHelperOptions,
-  ): string => ConvertHelper.separateWords(string, options).toLowerCase();
+  ): string => ConvertHelper.separateWords(
+    string, options,
+  ).toLowerCase();
 
   /**
    * Snake case to camel
@@ -175,9 +191,15 @@ export default class ConvertHelper {
     if (ConvertHelper._isNumerical(string)) {
       return string;
     }
-    // eslint-disable-next-line no-useless-escape
-    string = string.replace(/[\-_\s]+(.)?/g, (match, chr) => (chr ? chr.toUpperCase() : ''));
-    return string.substring(0, 1).toLowerCase() + string.substring(1);
+    string = string.replace(
+      // eslint-disable-next-line no-useless-escape
+      /[\-_\s]+(.)?/g, (
+        _match, chr,
+      ) => (chr ? chr.toUpperCase() : ''),
+    );
+    return string.substring(
+      0, 1,
+    ).toLowerCase() + string.substring(1);
   };
 
   /**
@@ -191,7 +213,9 @@ export default class ConvertHelper {
     options?: ConvertHelperOptions,
   ): T {
     return this._processKeys(
-      ConvertHelper._processor(ConvertHelper.camelize, options),
+      ConvertHelper._processor(
+        ConvertHelper.camelize, options,
+      ),
       object,
       options,
     );
@@ -208,7 +232,9 @@ export default class ConvertHelper {
     options?: ConvertHelperOptions,
   ): Record<string, any> {
     return ConvertHelper._processKeys(
-      ConvertHelper._processor(ConvertHelper.decamelize, options),
+      ConvertHelper._processor(
+        ConvertHelper.decamelize, options,
+      ),
       object,
       options,
     );

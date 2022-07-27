@@ -13,14 +13,11 @@ const GroupMemberRequest = ({
   requestId,
 }: {
   requestId: string;
-  organizationId: string;
 }) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
 
-  const groupMemberRequests = useKeySelector(
-    groupsKeySelector.groupMemberRequests,
-  );
+  const groupMemberRequests = useKeySelector(groupsKeySelector.groupMemberRequests);
   const { items } = groupMemberRequests;
 
   const requestItem = items[requestId];
@@ -29,28 +26,26 @@ const GroupMemberRequest = ({
 
   const navigateToGroupMembers = () => {
     dispatch(clearToastMessage());
-    rootNavigation.navigate(groupStack.groupMembers, { groupId });
+    rootNavigation.navigate(
+      groupStack.groupMembers, { groupId },
+    );
   };
 
   const onPressApprove = () => {
-    dispatch(
-      groupsActions.approveSingleGroupMemberRequest({
-        groupId,
-        requestId,
-        fullName,
-        callback: navigateToGroupMembers,
-      }),
-    );
+    dispatch(groupsActions.approveSingleGroupMemberRequest({
+      groupId,
+      requestId,
+      fullName,
+      callback: navigateToGroupMembers,
+    }));
   };
 
   const onPressDecline = () => {
-    dispatch(
-      groupsActions.declineSingleGroupMemberRequest({
-        groupId,
-        requestId,
-        fullName,
-      }),
-    );
+    dispatch(groupsActions.declineSingleGroupMemberRequest({
+      groupId,
+      requestId,
+      fullName,
+    }));
   };
 
   return (

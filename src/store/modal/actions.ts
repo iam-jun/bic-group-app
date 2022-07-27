@@ -88,9 +88,7 @@ export const focusSearchInput = (payload: string) => ({
   payload,
 });
 
-export const showReactionDetailBottomSheet = (
-  payload: IPayloadReactionDetailBottomSheet,
-) => ({
+export const showReactionDetailBottomSheet = (payload: IPayloadReactionDetailBottomSheet) => ({
   type: Actions.SHOW_REACTION_DETAIL_BOTTOM_SHEET,
   payload,
 });

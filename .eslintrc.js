@@ -53,7 +53,9 @@ module.exports = {
     'no-nested-ternary': 0,
     'no-unused-vars': 'off',
     'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
-    'max-len': ['error', { code: 150 }],
+    'max-len': ['error', { code: 120, ignoreStrings: true }],
+    'function-paren-newline': ['error', { minItems: 2 }],
+    'operator-linebreak': ['error', 'before'],
     semi: 0,
     'prefer-destructuring': ['error', {
       VariableDeclarator: {

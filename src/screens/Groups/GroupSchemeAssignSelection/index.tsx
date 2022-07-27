@@ -37,9 +37,7 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
 
   const { data = [], currentAssignments } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assigning)
     || {};
-  const { data: groupAssignments } = useKeySelector(
-    groupsKeySelector.permission.assignGroupScheme.assignments,
-  ) || {};
+  const { data: groupAssignments } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assignments) || {};
 
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
@@ -55,14 +53,14 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
   const selectingSchemeId = groupSchemes?.[selectingIndex]?.id;
   const disableSave = initGroup?.scheme_id === selectingSchemeId;
 
-  useEffect(() => {
-    const index = groupSchemes?.findIndex(
-      (item: any) => item?.id === initGroup?.scheme_id,
-    );
-    if (index !== -1) {
-      setSelectingIndex(index);
-    }
-  }, [groupSchemes]);
+  useEffect(
+    () => {
+      const index = groupSchemes?.findIndex((item: any) => item?.id === initGroup?.scheme_id);
+      if (index !== -1) {
+        setSelectingIndex(index);
+      }
+    }, [groupSchemes],
+  );
 
   const onPressSave = () => {
     // @ts-ignore
@@ -80,17 +78,17 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
         schemeId,
         currentAssignments,
       );
-      dispatch(
-        groupsActions.setGroupSchemeAssigning({
-          data: newData,
-          currentAssignments: newAssignments,
-        }),
-      );
+      dispatch(groupsActions.setGroupSchemeAssigning({
+        data: newData,
+        currentAssignments: newAssignments,
+      }));
       rootNavigation.goBack();
     }
   };
 
-  const onPressItem = (item: IGroup, index: number) => {
+  const onPressItem = (
+    item: IGroup, index: number,
+  ) => {
     if (selectingIndex !== index) {
       setSelectingIndex(index);
     } else {
@@ -106,7 +104,9 @@ const GroupSchemeAssignSelection: FC<GroupSchemeManagementProps> = ({
           styles.itemContainer,
           isActive ? styles.itemContainerActive : {},
         ]}
-        onPress={() => onPressItem(item, index)}
+        onPress={() => onPressItem(
+          item, index,
+        )}
       >
         <Text style={styles.flex1}>{item?.name}</Text>
         <View style={{ minWidth: 20, minHeight: 20 }}>

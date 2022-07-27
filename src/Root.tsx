@@ -22,8 +22,12 @@ import { initFontAwesomeIcon } from '~/services/fontAwesomeIcon';
 import localStorage from '~/services/localStorage';
 import Store from '~/store';
 
-moment.updateLocale('en', moments.en);
-moment.updateLocale('vi', moments.vi);
+moment.updateLocale(
+  'en', moments.en,
+);
+moment.updateLocale(
+  'vi', moments.vi,
+);
 
 initFontAwesomeIcon();
 
@@ -35,24 +39,30 @@ const Root = (): React.ReactElement => {
 
   const { rootNavigation } = useRootNavigation();
 
-  useEffect(() => {
-    if (i18n?.language) {
-      moment.locale(i18n?.language);
-    }
-  }, [i18n?.language]);
+  useEffect(
+    () => {
+      if (i18n?.language) {
+        moment.locale(i18n?.language);
+      }
+    }, [i18n?.language],
+  );
 
-  useEffect(() => {
-    setUpLanguage();
-    listenFCMEvents();
+  useEffect(
+    () => {
+      setUpLanguage();
+      listenFCMEvents();
 
-    const unsubscribe = messaging().onMessage(async (remoteMessage) => {
-      console.warn('foreground', { remoteMessage });
-    });
+      const unsubscribe = messaging().onMessage(async (remoteMessage) => {
+        console.warn(
+          'foreground', { remoteMessage },
+        );
+      });
 
-    return () => {
-      unsubscribe?.();
-    };
-  }, []);
+      return () => {
+        unsubscribe?.();
+      };
+    }, [],
+  );
 
   const listenFCMEvents = () => {
     messaging().onNotificationOpenedApp((remoteMessage) => {
@@ -66,17 +76,17 @@ const Root = (): React.ReactElement => {
       });
   };
 
-  const handleInitialNotification = (
-    remoteMessage: FirebaseMessagingTypes.RemoteMessage | null,
-  ) => {
+  const handleInitialNotification = (remoteMessage: FirebaseMessagingTypes.RemoteMessage | null) => {
     // Do not call user outside this scope, as it will get outdated value
     const user: IUserResponse | boolean = Store.getCurrentUser();
 
     if (!isNavigationRefReady?.current) {
       // On low performance device, retry until navigation ready
-      setTimeout(() => {
-        handleInitialNotification(remoteMessage);
-      }, 2000);
+      setTimeout(
+        () => {
+          handleInitialNotification(remoteMessage);
+        }, 2000,
+      );
       return;
     }
 
@@ -85,19 +95,20 @@ const Root = (): React.ReactElement => {
     const data = handleMessageData(remoteMessage);
 
     if (data) {
-      rootNavigation.navigate(data.screen || rootSwitch.mainStack, {
-        screen: data?.params?.screen || 'main',
-        params: {
-          ...(data?.params?.params || {}),
-          initial: false,
+      rootNavigation.navigate(
+        data.screen || rootSwitch.mainStack, {
+          screen: data?.params?.screen || 'main',
+          params: {
+            ...(data?.params?.params || {}),
+            initial: false,
+          },
         },
-      });
+      );
     }
   };
 
-  const handleMessageData = (
-    remoteMessage: FirebaseMessagingTypes.RemoteMessage | null,
-  ): {screen: string; params: any} | null => {
+  const handleMessageData = (remoteMessage: FirebaseMessagingTypes.RemoteMessage | null)
+  : {screen: string; params: any} | null => {
     if (!remoteMessage) return null;
 
     return getScreenAndParams(remoteMessage?.data?.extraData);
@@ -119,9 +130,7 @@ const Root = (): React.ReactElement => {
       // eslint-disable-next-line prefer-destructuring
       else if (systemLocale && systemLocale.includes('-')) systemLocale = systemLocale.split('-')[0];
 
-      const isSupportLanguage = Object.keys(languages).find(
-        (item: string) => item === systemLocale,
-      );
+      const isSupportLanguage = Object.keys(languages).find((item: string) => item === systemLocale);
 
       const newLanguage = isSupportLanguage
         ? systemLocale
@@ -136,10 +145,12 @@ const Root = (): React.ReactElement => {
     await localStorage.setLanguage(language);
   };
 
-  const providerValue = useMemo(() => ({
-    language: i18n.language,
-    changeLanguage,
-  }), [i18n.language]);
+  const providerValue = useMemo(
+    () => ({
+      language: i18n.language,
+      changeLanguage,
+    }), [i18n.language],
+  );
 
   return (
     <SafeAreaProvider>

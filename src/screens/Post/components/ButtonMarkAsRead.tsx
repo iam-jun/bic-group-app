@@ -33,9 +33,7 @@ const ButtonMarkAsRead: FC<ButtonMarkAsReadProps> = ({
 }: ButtonMarkAsReadProps) => {
   const [loading, setLoading] = useState(false);
 
-  const markReadSuccess = useKeySelector(
-    postKeySelector.postMarkedReadSuccessById(postId),
-  );
+  const markReadSuccess = useKeySelector(postKeySelector.postMarkedReadSuccessById(postId));
 
   const { t } = useBaseHook();
   const dispatch = useDispatch();

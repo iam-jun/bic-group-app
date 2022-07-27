@@ -17,8 +17,10 @@ function* addChildCommentToCommentsOfPost({
   shouldAddChildrenCount?: boolean;
   meta?: any;
 }) {
-  const postComments: ICommentData[] = yield select((state) => get(state, postKeySelector
-    .commentsByParentId(postId))) || [];
+  const postComments: ICommentData[] = yield select((state) => get(
+    state, postKeySelector
+      .commentsByParentId(postId),
+  )) || [];
   for (let i = 0; i < postComments.length; i++) {
     if (postComments[i].id === commentId) {
       const child = postComments[i].child?.list || [];
@@ -37,13 +39,11 @@ function* addChildCommentToCommentsOfPost({
       // @ts-ignore
       postComments[i].child.list = newChild;
 
-      yield put(
-        postActions.updateAllCommentsByParentIdsWithComments({
-          id: postId,
-          comments: new Array(postComments[i]),
-          isMerge: true,
-        }),
-      );
+      yield put(postActions.updateAllCommentsByParentIdsWithComments({
+        id: postId,
+        comments: new Array(postComments[i]),
+        isMerge: true,
+      }));
       return;
     }
   }

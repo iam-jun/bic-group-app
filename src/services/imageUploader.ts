@@ -105,7 +105,9 @@ export default class ImageUploader {
 
     const formData = new FormData();
     // @ts-ignore
-    formData.append('file', file, file.name);
+    formData.append(
+      'file', file, file.name,
+    );
     formData.append(
       'description',
       JSON.stringify({
@@ -115,18 +117,16 @@ export default class ImageUploader {
     );
 
     const _onUploadProgress = (progressEvent: any) => {
-      const percentCompleted = Math.round(
-        (progressEvent.loaded * 100) / progressEvent.total,
-      );
+      const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
       onProgress?.(percentCompleted);
       this.callbackProgress?.[file.name]?.(percentCompleted);
     };
 
     this.fileUploading[file.name] = true;
     try {
-      const response: any = await makeHttpRequest(
-        ApiConfig.Upload.uploadImage(uploadType, formData, _onUploadProgress),
-      );
+      const response: any = await makeHttpRequest(ApiConfig.Upload.uploadImage(
+        uploadType, formData, _onUploadProgress,
+      ));
       const uploadedUrl = response?.data?.data?.url || response?.data?.data?.src;
 
       this.fileUploading[file.name] = false;
@@ -146,11 +146,15 @@ export default class ImageUploader {
       }
       onError?.(response?.data);
       this.callbackError?.[file.name]?.(response?.data);
-      console.error('\x1b[31m🐣️ fileUploader upload err', response, '\x1b[0m');
+      console.error(
+        '\x1b[31m🐣️ fileUploader upload err', response, '\x1b[0m',
+      );
       return Promise.reject(response?.data);
     } catch (e) {
       this.fileUploading[file.name] = false;
-      console.error('\x1b[31m🐣️ fileUploader error ', e, '\x1b[0m');
+      console.error(
+        '\x1b[31m🐣️ fileUploader error ', e, '\x1b[0m',
+      );
       onError?.(e);
       this.callbackError?.[file.name]?.(e);
       return Promise.reject(e);

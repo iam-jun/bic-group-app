@@ -21,11 +21,15 @@ function* putMarkSeenPost({
     return;
   }
   try {
-    const response = yield call(postDataHelper.putMarkSeenPost, postId);
+    const response = yield call(
+      postDataHelper.putMarkSeenPost, postId,
+    );
     const isSuccess = !!response?.data;
     callback?.(isSuccess);
     if (isSuccess) {
-      const post = yield select((state) => get(state, postKeySelector.postById(postId)));
+      const post = yield select((state) => get(
+        state, postKeySelector.postById(postId),
+      ));
       yield put(postActions.addToAllPosts({ ...post }));
     }
   } catch (e) {

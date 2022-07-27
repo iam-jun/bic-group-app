@@ -51,16 +51,20 @@ const Newsfeed = () => {
 
   const isFocused = useIsFocused();
 
-  useEffect(() => {
-    const taskId = requestAnimationFrame(() => {
-      if (isFocused) {
-        dispatch(appActions.setRootScreenName(appScreens.newsfeed));
-      } else {
-        DeviceEventEmitter.emit('showHeader', true);
-      }
-    });
-    return () => cancelAnimationFrame(taskId);
-  }, [isFocused]);
+  useEffect(
+    () => {
+      const taskId = requestAnimationFrame(() => {
+        if (isFocused) {
+          dispatch(appActions.setRootScreenName(appScreens.newsfeed));
+        } else {
+          DeviceEventEmitter.emit(
+            'showHeader', true,
+          );
+        }
+      });
+      return () => cancelAnimationFrame(taskId);
+    }, [isFocused],
+  );
 
   const getData = (isRefresh?: boolean) => {
     dispatch(homeActions.getHomePosts({ isRefresh }));
@@ -76,32 +80,38 @@ const Newsfeed = () => {
     [listRef],
   );
 
-  useEffect(() => {
-    if (
-      isInternetReachable
+  useEffect(
+    () => {
+      if (
+        isInternetReachable
       && token
       && (!homePosts || homePosts?.length === 0)
       && !refreshing
-    ) {
-      getData(true);
-      dispatch(postActions.getAllPostContainingVideoInProgress());
-    }
-  }, [token, isInternetReachable, homePosts]);
-
-  useEffect(() => {
-    if (isInternetReachable) {
-      if (lossInternet && homePosts?.length > 0) {
-        setLossInternet(false);
-        getData();
+      ) {
+        getData(true);
+        dispatch(postActions.getAllPostContainingVideoInProgress());
       }
-    } else {
-      setLossInternet(true);
-    }
-  }, [isInternetReachable]);
+    }, [token, isInternetReachable, homePosts],
+  );
 
-  useEffect(() => {
-    if (currentUserId) dispatch(menuActions.getMyProfile({ userId: currentUserId }));
-  }, []);
+  useEffect(
+    () => {
+      if (isInternetReachable) {
+        if (lossInternet && homePosts?.length > 0) {
+          setLossInternet(false);
+          getData();
+        }
+      } else {
+        setLossInternet(true);
+      }
+    }, [isInternetReachable],
+  );
+
+  useEffect(
+    () => {
+      if (currentUserId) dispatch(menuActions.getMyProfile({ userId: currentUserId }));
+    }, [],
+  );
 
   const handleBackPress = () => {
     headerRef?.current?.goBack?.();
@@ -109,16 +119,22 @@ const Newsfeed = () => {
 
   useBackPressListener(handleBackPress);
 
-  const onShowSearch = (isShow: boolean, searchInputRef?: any) => {
+  const onShowSearch = (
+    isShow: boolean, searchInputRef?: any,
+  ) => {
     if (isShow) {
-      DeviceEventEmitter.emit('showHeader', true);
+      DeviceEventEmitter.emit(
+        'showHeader', true,
+      );
       dispatch(homeActions.setNewsfeedSearch({ isShow, searchInputRef }));
     } else {
       dispatch(homeActions.clearAllNewsfeedSearch());
     }
   };
 
-  const onSearchText = (text: string, searchInputRef: any) => {
+  const onSearchText = (
+    text: string, searchInputRef: any,
+  ) => {
     const searchText = text?.trim?.() || '';
     const payload: IPayloadSetNewsfeedSearch = { searchText };
     if (!searchText) {
@@ -129,15 +145,11 @@ const Newsfeed = () => {
   };
 
   const onFocusSearch = () => {
-    dispatch(
-      homeActions.setNewsfeedSearch({ isSuggestion: true, searchResults: [] }),
-    );
+    dispatch(homeActions.setNewsfeedSearch({ isSuggestion: true, searchResults: [] }));
   };
 
   const onSubmitSearch = () => {
-    dispatch(
-      homeActions.setNewsfeedSearch({ isSuggestion: false, searchResults: [] }),
-    );
+    dispatch(homeActions.setNewsfeedSearch({ isSuggestion: false, searchResults: [] }));
   };
 
   const renderHeader = () => (
@@ -163,9 +175,13 @@ const Newsfeed = () => {
     openLink(getEnv('BEIN_CHAT_DEEPLINK'));
   };
 
-  const onEndReach = useCallback(() => getData(), []);
+  const onEndReach = useCallback(
+    () => getData(), [],
+  );
 
-  const onRefresh = useCallback(() => getData(true), []);
+  const onRefresh = useCallback(
+    () => getData(true), [],
+  );
 
   return (
     <View

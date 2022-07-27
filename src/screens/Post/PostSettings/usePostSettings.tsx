@@ -34,9 +34,7 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     initPostData = useKeySelector(postKeySelector.postById(postId));
   }
 
-  const { important, currentSettings } = useKeySelector(
-    postKeySelector.createPost.all,
-  );
+  const { important, currentSettings } = useKeySelector(postKeySelector.createPost.all);
 
   const [selectingDate, setSelectingDate] = useState<boolean>();
   const [selectingTime, setSelectingTime] = useState<boolean>();
@@ -47,19 +45,27 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     ...important,
   });
 
-  useEffect(() => {
-    if (!isEqual(important, sImportant)) {
-      setImportant(important);
-    }
-  }, [important]);
+  useEffect(
+    () => {
+      if (!isEqual(
+        important, sImportant,
+      )) {
+        setImportant(important);
+      }
+    }, [important],
+  );
 
-  useEffect(() => {
-    checkDisableButtonSave();
-  }, [sImportant]);
+  useEffect(
+    () => {
+      checkDisableButtonSave();
+    }, [sImportant],
+  );
 
   const checkDisableButtonSave = () => {
     const dataCount = [
-      isEqual(sImportant, important),
+      isEqual(
+        sImportant, important,
+      ),
       //   comments,
       //   shares,
       //   reacts,
@@ -96,7 +102,9 @@ export const usePostSettings = (params?: IUsePostSettings) => {
         const time = sImportant.expires_time
           ? new Date(sImportant.expires_time)
           : new Date();
-        date.setHours(time.getHours(), time.getMinutes(), 0, 0);
+        date.setHours(
+          time.getHours(), time.getMinutes(), 0, 0,
+        );
         expiresTime = date.toISOString();
         if (date.getTime() < getMinDate().getTime()) {
           expiresTime = getMinDate().toISOString();
@@ -116,7 +124,9 @@ export const usePostSettings = (params?: IUsePostSettings) => {
         ? new Date(sImportant.expires_time)
         : new Date();
 
-      date.setHours(time.getHours(), time.getMinutes(), 0, 0);
+      date.setHours(
+        time.getHours(), time.getMinutes(), 0, 0,
+      );
       let expiresTime = date.toISOString();
 
       if (date.getTime() < getMinDate().getTime()) {
@@ -139,12 +149,8 @@ export const usePostSettings = (params?: IUsePostSettings) => {
     const userIds: string[] = [];
     const groupIds: string[] = [];
     const audienceIds = { groupIds, userIds };
-    audience?.users?.map?.(
-      (u: IAudienceUser) => !!u?.id && userIds.push(u.id || ''),
-    );
-    audience?.groups?.map?.(
-      (u: IAudienceUser) => !!u?.id && groupIds.push(u.id || ''),
-    );
+    audience?.users?.map?.((u: IAudienceUser) => !!u?.id && userIds.push(u.id || ''));
+    audience?.groups?.map?.((u: IAudienceUser) => !!u?.id && groupIds.push(u.id || ''));
 
     const newSettings: IPostSetting = { ...setting };
     newSettings.isImportant = sImportant?.active;
@@ -183,12 +189,10 @@ export const usePostSettings = (params?: IUsePostSettings) => {
         || sImportant.expires_time === currentSettings?.important?.expires_time,
     ];
     const newCount = dataDefault.filter((i) => !i);
-    dispatch(
-      postActions.setCreatePostSettings({
-        important: sImportant,
-        count: newCount?.length || 0,
-      }),
-    );
+    dispatch(postActions.setCreatePostSettings({
+      important: sImportant,
+      count: newCount?.length || 0,
+    }));
     rootNavigation.goBack();
     return 'setCreatePostSettings';
   };

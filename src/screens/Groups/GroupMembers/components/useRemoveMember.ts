@@ -20,7 +20,9 @@ const useRemoveMember = ({ groupId, selectedMember }: IUseRemoveMember) => {
 
   const { id: userId, fullname } = selectedMember;
 
-  const removeMember = (userId: string, userFullname: string) => {
+  const removeMember = (
+    userId: string, userFullname: string,
+  ) => {
     dispatch(groupsActions.removeMember({ groupId, userId, userFullname }));
   };
 
@@ -29,14 +31,18 @@ const useRemoveMember = ({ groupId, selectedMember }: IUseRemoveMember) => {
     title: i18next.t('groups:modal_confirm_remove_member:title'),
     content: i18next
       .t('groups:modal_confirm_remove_member:final_alert')
-      .replace('{name}', `"${fullname}"`),
+      .replace(
+        '{name}', `"${fullname}"`,
+      ),
     ContentComponent: Text.BodyS,
     cancelBtn: true,
     cancelBtnProps: {
       textColor: theme.colors.purple60,
     },
     // @ts-ignore
-    onConfirm: () => removeMember(userId, fullname),
+    onConfirm: () => removeMember(
+      userId, fullname,
+    ),
     confirmLabel: i18next.t('groups:modal_confirm_remove_member:button_remove'),
     ConfirmBtnComponent: Button.Danger,
     children: null as React.ReactNode,
@@ -61,7 +67,9 @@ const useRemoveMember = ({ groupId, selectedMember }: IUseRemoveMember) => {
     const groupsRemovedFrom = [...innerGroups];
 
     if (groupsRemovedFrom.length === 0) {
-      alertPayload.content = alertPayload.content.replace('{other groups}', '');
+      alertPayload.content = alertPayload.content.replace(
+        '{other groups}', '',
+      );
       result = 0;
     } else {
       const otherGroups = groupsRemovedFromToString(groupsRemovedFrom);
@@ -74,7 +82,9 @@ const useRemoveMember = ({ groupId, selectedMember }: IUseRemoveMember) => {
       const count = innerGroups.length;
       let message = i18next
         .t('groups:modal_confirm_remove_member:alert_inner_groups')
-        .replace('{0}', `${count}`);
+        .replace(
+          '{0}', `${count}`,
+        );
 
       if (count === 1) {
         message = message.replace(
@@ -83,7 +93,9 @@ const useRemoveMember = ({ groupId, selectedMember }: IUseRemoveMember) => {
         );
       }
 
-      alertPayload.children = renderInnerGroupsAlert(message, innerGroups);
+      alertPayload.children = renderInnerGroupsAlert(
+        message, innerGroups,
+      );
       result = 1;
     }
 

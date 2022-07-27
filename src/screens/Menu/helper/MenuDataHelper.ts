@@ -4,14 +4,18 @@ import { IAddWorkExperienceReq } from '~/interfaces/IWorkExperienceRequest';
 import { makeHttpRequest } from '~/services/httpApiRequest';
 
 export const menuApiConfig = {
-  getUserProfile: (userId: string, params?: any): HttpApiRequestConfig => ({
+  getUserProfile: (
+    userId: string, params?: any,
+  ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/profile`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,
     params,
   }),
-  editMyProfile: (userId: string, data: IUserEdit): HttpApiRequestConfig => ({
+  editMyProfile: (
+    userId: string, data: IUserEdit,
+  ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/profile`,
     method: 'put',
     provider: ApiConfig.providers.bein,
@@ -65,11 +69,13 @@ export const menuApiConfig = {
 };
 
 const menuDataHelper = {
-  getUserProfile: async (userId: string, params?: any) => {
+  getUserProfile: async (
+    userId: string, params?: any,
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        menuApiConfig.getUserProfile(userId, params),
-      );
+      const response: any = await makeHttpRequest(menuApiConfig.getUserProfile(
+        userId, params,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -82,9 +88,9 @@ const menuDataHelper = {
     try {
       const { userId, data } = params;
 
-      const response: any = await makeHttpRequest(
-        menuApiConfig.editMyProfile(userId, data),
-      );
+      const response: any = await makeHttpRequest(menuApiConfig.editMyProfile(
+        userId, data,
+      ));
 
       if (response && response?.data) {
         return Promise.resolve(response.data);
@@ -96,9 +102,7 @@ const menuDataHelper = {
   },
   getMyWorkExperience: async () => {
     try {
-      const response: any = await makeHttpRequest(
-        menuApiConfig.getMyWorkExperience(),
-      );
+      const response: any = await makeHttpRequest(menuApiConfig.getMyWorkExperience());
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -109,9 +113,7 @@ const menuDataHelper = {
   },
   addWorkExperience: async (data: IAddWorkExperienceReq) => {
     try {
-      const response: any = await makeHttpRequest(
-        menuApiConfig.addWorkExperience(data),
-      );
+      const response: any = await makeHttpRequest(menuApiConfig.addWorkExperience(data));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -120,11 +122,13 @@ const menuDataHelper = {
       return Promise.reject(e);
     }
   },
-  editWorkExperience: async (id: string, data: IAddWorkExperienceReq) => {
+  editWorkExperience: async (
+    id: string, data: IAddWorkExperienceReq,
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        menuApiConfig.editWorkExperience(id, data),
-      );
+      const response: any = await makeHttpRequest(menuApiConfig.editWorkExperience(
+        id, data,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -134,12 +138,12 @@ const menuDataHelper = {
     }
   },
   deleteWorkExperience: async (id: string) => {
-    console.log('deleteWorkExperience', id);
+    console.log(
+      'deleteWorkExperience', id,
+    );
 
     try {
-      const response: any = await makeHttpRequest(
-        menuApiConfig.deleteWorkExperience(id),
-      );
+      const response: any = await makeHttpRequest(menuApiConfig.deleteWorkExperience(id));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -150,9 +154,7 @@ const menuDataHelper = {
   },
   getWorkExperience: async (id: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        menuApiConfig.getWorkExperience(id),
-      );
+      const response: any = await makeHttpRequest(menuApiConfig.getWorkExperience(id));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }

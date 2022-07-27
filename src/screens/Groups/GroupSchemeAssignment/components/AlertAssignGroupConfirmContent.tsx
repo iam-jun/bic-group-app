@@ -19,18 +19,20 @@ const AlertAssignGroupConfirmContent = () => {
   const { t } = useBaseHook();
 
   const { allSchemes } = useKeySelector(groupsKeySelector.permission.schemes) || {};
-  const { data: initAssignments } = useKeySelector(
-    groupsKeySelector.permission.assignGroupScheme.assignments,
-  ) || {};
+  const { data: initAssignments } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assignments) || {};
   const { data: dataAssigning } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assigning)
     || {};
 
   const data = useMemo(
-    () => prepareData(initAssignments, dataAssigning, allSchemes),
+    () => prepareData(
+      initAssignments, dataAssigning, allSchemes,
+    ),
     [initAssignments, dataAssigning, allSchemes],
   );
 
-  const renderItem = (item: any, index: number) => {
+  const renderItem = (
+    item: any, index: number,
+  ) => {
     const { groupName, oldSchemeName, newSchemeName } = item || {};
     return (
       <View
@@ -88,7 +90,9 @@ export const prepareData = (
   const result: any = [];
   assigning?.forEach?.((item: any) => {
     const { scheme_id, group_id } = item || {};
-    const group = findGroupInAssignmentsById(group_id, assignments);
+    const group = findGroupInAssignmentsById(
+      group_id, assignments,
+    );
     const groupName = group?.name;
     const oldSchemeName = allSchemes?.[group?.scheme_id]?.name
       || (group?.scheme_id

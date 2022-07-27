@@ -135,7 +135,9 @@ const NotificationAvatar = ({
   const listActor = handleActorNotification();
 
   let _listAvatarWidth = 0;
-  const listAvatar = listActor?.map?.((item: any, index: number) => {
+  const listAvatar = listActor?.map?.((
+    item: any, index: number,
+  ) => {
     if (index < MAX_AVATAR && _listAvatarWidth <= listAvatarWidth) {
       _listAvatarWidth = (index + 1) * (AVATAR_WIDTH + 8);
       if (

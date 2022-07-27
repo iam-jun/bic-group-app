@@ -63,9 +63,11 @@ const InfoHeader = () => {
             color={theme.colors.gray50}
             testID="info_header.member_count"
           >
-            {` ${user_count} ${i18next.t('groups:text_members', {
-              count: user_count,
-            })}`}
+            {` ${user_count} ${i18next.t(
+              'groups:text_members', {
+                count: user_count,
+              },
+            )}`}
           </Text.BodyS>
         </View>
       </View>

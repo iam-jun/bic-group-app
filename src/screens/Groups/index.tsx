@@ -29,14 +29,14 @@ const Groups: React.FC = (props: any) => {
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  const loadingJoinedGroups = useKeySelector(
-    groupsKeySelector.loadingJoinedGroups,
-  );
+  const loadingJoinedGroups = useKeySelector(groupsKeySelector.loadingJoinedGroups);
   const joinedGroups = useKeySelector(groupsKeySelector.joinedGroups);
 
-  useEffect(() => {
-    getData();
-  }, []);
+  useEffect(
+    () => {
+      getData();
+    }, [],
+  );
 
   useTabPressListener(
     (tabName: ITabTypes) => {
@@ -59,19 +59,19 @@ const Groups: React.FC = (props: any) => {
   };
 
   const onShowSearch = (isShow: boolean) => {
-    dispatch(
-      groupsActions.setGroupSearch({
-        isShow,
-        loading: false,
-        searchKey: '',
-        result: [],
-      }),
-    );
+    dispatch(groupsActions.setGroupSearch({
+      isShow,
+      loading: false,
+      searchKey: '',
+      result: [],
+    }));
   };
 
-  const onSearchText = debounce((searchText: string) => {
-    dispatch(groupsActions.setGroupSearch({ searchKey: searchText }));
-  }, 300);
+  const onSearchText = debounce(
+    (searchText: string) => {
+      dispatch(groupsActions.setGroupSearch({ searchKey: searchText }));
+    }, 300,
+  );
 
   const renderEmpty = () => (
     !loadingJoinedGroups && (

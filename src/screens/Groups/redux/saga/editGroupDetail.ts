@@ -22,14 +22,18 @@ export default function* editGroupDetail({
     delete data.id; // edit data should not contain group's id
 
     // @ts-ignore
-    const resp = yield call(groupsDataHelper.editGroupDetail, groupId, data);
+    const resp = yield call(
+      groupsDataHelper.editGroupDetail, groupId, data,
+    );
 
     if (editFieldName) yield showToastEditSuccess(editFieldName);
 
     yield put(groupsActions.setGroupDetail(resp?.data));
     if (callback) callback();
   } catch (err) {
-    console.error('\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m');
+    console.error(
+      '\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m',
+    );
     yield showError(err);
     // just in case there is some error regarding editing images url
     yield put(groupsActions.setLoadingAvatar(false));

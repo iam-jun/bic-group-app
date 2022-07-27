@@ -13,13 +13,27 @@ import markAsUnRead from './markAsUnRead';
 import { initPushTokenMessage } from '~/services/firebase';
 
 export default function* notificationsSaga() {
-  yield takeEvery(notificationsTypes.GET_NOTIFICATIONS, getNotifications);
-  yield takeLatest(notificationsTypes.MARK_AS_READ_ALL, markAsReadAll);
-  yield takeLatest(notificationsTypes.MARK_AS_SEEN_ALL, markAsSeenAll);
-  yield takeLatest(notificationsTypes.MARK_AS_READ, markAsRead);
-  yield takeEvery(notificationsTypes.LOAD_MORE, loadMore);
-  yield takeEvery(notificationsTypes.REGISTER_PUSH_TOKEN, registerPushToken);
-  yield takeEvery(notificationsTypes.MARK_AS_UNREAD, markAsUnRead);
+  yield takeEvery(
+    notificationsTypes.GET_NOTIFICATIONS, getNotifications,
+  );
+  yield takeLatest(
+    notificationsTypes.MARK_AS_READ_ALL, markAsReadAll,
+  );
+  yield takeLatest(
+    notificationsTypes.MARK_AS_SEEN_ALL, markAsSeenAll,
+  );
+  yield takeLatest(
+    notificationsTypes.MARK_AS_READ, markAsRead,
+  );
+  yield takeEvery(
+    notificationsTypes.LOAD_MORE, loadMore,
+  );
+  yield takeEvery(
+    notificationsTypes.REGISTER_PUSH_TOKEN, registerPushToken,
+  );
+  yield takeEvery(
+    notificationsTypes.MARK_AS_UNREAD, markAsUnRead,
+  );
 }
 
 // register push token
@@ -42,6 +56,8 @@ function* registerPushToken({ payload }: any): any {
     yield makePushTokenRequest(newToken);
   } catch (e) {
     yield put(notificationsActions.savePushToken(''));
-    console.error('register push token failed', e);
+    console.error(
+      'register push token failed', e,
+    );
   }
 }

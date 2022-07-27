@@ -28,7 +28,9 @@ export default function* updateUnReactionBySocket({
 
   if (!isEmpty(reactionsCount) && !isEmpty(reaction)) {
     // handle un-react post
-    const p = (yield select((state) => get(state, postKeySelector.postById(id)))) || {};
+    const p = (yield select((state) => get(
+      state, postKeySelector.postById(id),
+    ))) || {};
     const ownReactions = p?.ownerReactions ? [...p.ownerReactions] : [];
     const newOwnReaction2 = [] as any;
 
@@ -51,7 +53,9 @@ export default function* updateUnReactionBySocket({
   if (!isEmpty(comment)) {
     // handle reaction to comment
     // merge own children if reaction's actor is current user
-    const c = (yield select((s) => get(s, postKeySelector.commentById(id)))) || {};
+    const c = (yield select((s) => get(
+      s, postKeySelector.commentById(id),
+    ))) || {};
     const ownReactions = c?.ownerReactions ? [...c.ownerReactions] : [];
     const newOwnReaction2 = [] as any;
 

@@ -23,21 +23,25 @@ export default function* addWorkExperience({
       endDate,
     } = payload;
 
-    yield call(menuDataHelper.addWorkExperience, {
-      company,
-      title_position: titlePosition,
-      location,
-      description,
-      currently_work_here: currentlyWorkHere,
-      start_date: startDate,
-      end_date: endDate,
-    });
+    yield call(
+      menuDataHelper.addWorkExperience, {
+        company,
+        title_position: titlePosition,
+        location,
+        description,
+        currently_work_here: currentlyWorkHere,
+        start_date: startDate,
+        end_date: endDate,
+      },
+    );
 
     yield put(menuActions.getMyWorkExperience());
 
     if (callback) return callback();
   } catch (err) {
-    console.error('addWorkExperience:', err);
+    console.error(
+      'addWorkExperience:', err,
+    );
     yield showError(err);
   }
 }

@@ -33,9 +33,7 @@ const ManagedCommunities = ({
 
   const {
     loading, ids, items, canLoadMore,
-  } = useKeySelector(
-    groupsKeySelector.managedCommunities,
-  );
+  } = useKeySelector(groupsKeySelector.managedCommunities);
 
   const getManagedCommunities = (params?: {
     isRefreshing?: boolean;
@@ -45,9 +43,11 @@ const ManagedCommunities = ({
     dispatch(actions.getManagedCommunities({ isRefreshing, refreshNoLoading }));
   };
 
-  useEffect(() => {
-    getManagedCommunities({ refreshNoLoading: true });
-  }, []);
+  useEffect(
+    () => {
+      getManagedCommunities({ refreshNoLoading: true });
+    }, [],
+  );
 
   const onLoadMore = () => {
     canLoadMore && getManagedCommunities();
@@ -97,7 +97,9 @@ const ManagedCommunities = ({
       testID="flatlist"
       data={ids}
       renderItem={renderItem}
-      keyExtractor={(item, index) => `community_item_${item}_${index}`}
+      keyExtractor={(
+        item, index,
+      ) => `community_item_${item}_${index}`}
       ListEmptyComponent={renderEmptyComponent}
       ListFooterComponent={renderListFooter}
       onEndReached={onLoadMore}

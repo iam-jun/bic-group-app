@@ -74,9 +74,7 @@ export const groupsApiConfig = {
     useRetry: true,
     data: { status },
   }),
-  getPermissionCategories: (
-    scope?: 'SYSTEM' | 'COMMUNITY' | 'GROUP',
-  ): HttpApiRequestConfig => ({
+  getPermissionCategories: (scope?: 'SYSTEM' | 'COMMUNITY' | 'GROUP'): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}permissions/categories`,
     method: 'get',
     provider: ApiConfig.providers.bein,
@@ -195,7 +193,9 @@ export const groupsApiConfig = {
       username,
     },
   }),
-  getGroupMembers: (groupId: string, params: any): HttpApiRequestConfig => ({
+  getGroupMembers: (
+    groupId: string, params: any,
+  ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/users`,
     method: 'get',
     provider: ApiConfig.providers.bein,
@@ -232,7 +232,9 @@ export const groupsApiConfig = {
       ...data,
     },
   }),
-  getJoinableUsers: (groupId: string, params: any): HttpApiRequestConfig => ({
+  getJoinableUsers: (
+    groupId: string, params: any,
+  ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/joinable-users`,
     method: 'get',
     provider: ApiConfig.providers.bein,
@@ -242,7 +244,9 @@ export const groupsApiConfig = {
       key: params?.key?.trim?.() ? params.key : undefined,
     },
   }),
-  addUsers: (groupId: string, userIds: string[]): HttpApiRequestConfig => ({
+  addUsers: (
+    groupId: string, userIds: string[],
+  ): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}groups/${groupId}/users/add`,
     method: 'post',
     provider: ApiConfig.providers.bein,
@@ -356,9 +360,7 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getDiscoverCommunities: (
-    params: IParamGetCommunities,
-  ): HttpApiRequestConfig => ({
+  getDiscoverCommunities: (params: IParamGetCommunities): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/discover`,
     method: 'get',
     provider: ApiConfig.providers.bein,
@@ -465,17 +467,13 @@ export const groupsApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  approveAllCommunityMemberRequests: (
-    communityId: string,
-  ): HttpApiRequestConfig => ({
+  approveAllCommunityMemberRequests: (communityId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/approve`,
     method: 'put',
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  declineAllCommunityMemberRequests: (
-    communityId: string,
-  ): HttpApiRequestConfig => ({
+  declineAllCommunityMemberRequests: (communityId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}communities/${communityId}/joining-requests/decline`,
     method: 'put',
     provider: ApiConfig.providers.bein,
@@ -508,9 +506,7 @@ export const groupsApiConfig = {
 const groupsDataHelper = {
   getMyPermissions: async () => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getMyPermissions(),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getMyPermissions());
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
       }
@@ -521,9 +517,7 @@ const groupsDataHelper = {
   },
   getCommunityGroupTree: async (id: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getCommunityGroupsTree(id),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getCommunityGroupsTree(id));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -532,11 +526,13 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  putGroupStructureReorder: async (communityId: string, data: number[]) => {
+  putGroupStructureReorder: async (
+    communityId: string, data: number[],
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.putGroupStructureReorder(communityId, data),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.putGroupStructureReorder(
+        communityId, data,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -552,17 +548,13 @@ const groupsDataHelper = {
   ) => {
     try {
       if (!communityId || !groupId) {
-        return Promise.reject(
-          new Error('getCommunityStructureMoveTargets invalid params'),
-        );
+        return Promise.reject(new Error('getCommunityStructureMoveTargets invalid params'));
       }
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getCommunityStructureMoveTargets(
-          communityId,
-          groupId,
-          key,
-        ),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getCommunityStructureMoveTargets(
+        communityId,
+        groupId,
+        key,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -580,13 +572,11 @@ const groupsDataHelper = {
       if (!communityId || !moveId || !targetId) {
         return Promise.reject(new Error('putGroupStructureMoveToTarget invalid params'));
       }
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.putGroupStructureMoveToTarget(
-          communityId,
-          moveId,
-          targetId,
-        ),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.putGroupStructureMoveToTarget(
+        communityId,
+        moveId,
+        targetId,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -604,13 +594,11 @@ const groupsDataHelper = {
       if (!communityId || !groupId) {
         return Promise.reject(new Error('putGroupStructureCollapseStatus invalid params'));
       }
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.putGroupStructureCollapseStatus(
-          communityId,
-          groupId,
-          status,
-        ),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.putGroupStructureCollapseStatus(
+        communityId,
+        groupId,
+        status,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -621,9 +609,7 @@ const groupsDataHelper = {
   },
   getPermissionCategories: async (scope?: 'SYSTEM' | 'COMMUNITY' | 'GROUP') => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getPermissionCategories(scope),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getPermissionCategories(scope));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
       }
@@ -634,9 +620,7 @@ const groupsDataHelper = {
   },
   getSystemScheme: async () => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getSystemScheme(),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getSystemScheme());
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
       }
@@ -650,9 +634,7 @@ const groupsDataHelper = {
       if (!communityId) {
         return Promise.reject(new Error('getCommunityScheme invalid communityId'));
       }
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getCommunityScheme(communityId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getCommunityScheme(communityId));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
       }
@@ -661,14 +643,16 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  updateCommunityScheme: async (communityId: string, scheme: IScheme) => {
+  updateCommunityScheme: async (
+    communityId: string, scheme: IScheme,
+  ) => {
     if (!communityId || !scheme) {
       return Promise.reject(new Error('updateCommunityScheme invalid data'));
     }
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.updateCommunityScheme(communityId, scheme),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.updateCommunityScheme(
+        communityId, scheme,
+      ));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
       }
@@ -682,9 +666,7 @@ const groupsDataHelper = {
       if (!communityId) {
         return Promise.reject(new Error('deleteCommunityScheme invalid communityId'));
       }
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.deleteCommunityScheme(communityId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.deleteCommunityScheme(communityId));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
       }
@@ -698,9 +680,7 @@ const groupsDataHelper = {
       if (!communityId) {
         return Promise.reject(new Error('getSchemes invalid communityId'));
       }
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getSchemes(communityId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getSchemes(communityId));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
       }
@@ -709,14 +689,16 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getGroupScheme: async (communityId: string, schemeId: string) => {
+  getGroupScheme: async (
+    communityId: string, schemeId: string,
+  ) => {
     try {
       if (!communityId || !schemeId) {
         return Promise.reject(new Error('getGroupScheme invalid communityId or schemeId'));
       }
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getGroupScheme(communityId, schemeId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getGroupScheme(
+        communityId, schemeId,
+      ));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
       }
@@ -727,9 +709,7 @@ const groupsDataHelper = {
   },
   getGroupSchemeAssignments: async (communityId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getGroupSchemeAssignments(communityId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getGroupSchemeAssignments(communityId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -741,9 +721,9 @@ const groupsDataHelper = {
   putGroupSchemeAssignments: async (params: IPayloadGroupSchemeAssignments) => {
     try {
       const { communityId, data } = params || {};
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.putGroupSchemeAssignments(communityId, data),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.putGroupSchemeAssignments(
+        communityId, data,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -761,9 +741,9 @@ const groupsDataHelper = {
       if (!communityId || !schemeId || !schemeData) {
         return Promise.reject(new Error('updateGroupScheme invalid inputs'));
       }
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.updateGroupScheme(communityId, schemeId, schemeData),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.updateGroupScheme(
+        communityId, schemeId, schemeData,
+      ));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
       }
@@ -772,14 +752,16 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  postCreateSchemePermission: async (communityId: string, scheme: IScheme) => {
+  postCreateSchemePermission: async (
+    communityId: string, scheme: IScheme,
+  ) => {
     if (!communityId || !scheme) {
       return Promise.reject(new Error('postCreateSchemePermission invalid data'));
     }
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.postCreateSchemePermission(communityId, scheme),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.postCreateSchemePermission(
+        communityId, scheme,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -790,9 +772,7 @@ const groupsDataHelper = {
   },
   getSearchGroups: async (params?: any) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getSearchGroups(params),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getSearchGroups(params));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -801,11 +781,13 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getUserInnerGroups: async (groupId: string, username: string) => {
+  getUserInnerGroups: async (
+    groupId: string, username: string,
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getUserInnerGroups(groupId, username),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getUserInnerGroups(
+        groupId, username,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -816,13 +798,11 @@ const groupsDataHelper = {
   },
   getGroupPosts: async (param: IParamGetGroupPosts) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getGroupPosts({
-          offset: param?.offset || 0,
-          limit: param?.limit || appConfig.recordsPerPage,
-          ...param,
-        }),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getGroupPosts({
+        offset: param?.offset || 0,
+        limit: param?.limit || appConfig.recordsPerPage,
+        ...param,
+      }));
       if (response && response?.data?.data?.list) {
         return Promise.resolve(response?.data?.data?.list);
       }
@@ -833,9 +813,7 @@ const groupsDataHelper = {
   },
   getInfoGroups: async (ids: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getInfoGroups(ids),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getInfoGroups(ids));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -844,11 +822,13 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getGroupMembers: async (groupId: string, params: any) => {
+  getGroupMembers: async (
+    groupId: string, params: any,
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getGroupMembers(groupId, params),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getGroupMembers(
+        groupId, params,
+      ));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
       }
@@ -859,9 +839,7 @@ const groupsDataHelper = {
   },
   getGroupDetail: async (groupId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getGroupDetail(groupId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getGroupDetail(groupId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -870,11 +848,13 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  editGroupDetail: async (groupId: string, data: IGroupDetailEdit) => {
+  editGroupDetail: async (
+    groupId: string, data: IGroupDetailEdit,
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.editGroupDetail(groupId, data),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.editGroupDetail(
+        groupId, data,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -883,11 +863,13 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getJoinableUsers: async (groupId: string, params: any) => {
+  getJoinableUsers: async (
+    groupId: string, params: any,
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getJoinableUsers(groupId, params),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getJoinableUsers(
+        groupId, params,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -896,11 +878,13 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  addUsers: async (groupId: string, userIds: string[]) => {
+  addUsers: async (
+    groupId: string, userIds: string[],
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.addUsers(groupId, userIds),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.addUsers(
+        groupId, userIds,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -909,11 +893,13 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  removeUsers: async (groupId: string, userIds: string[], type?: string) => {
+  removeUsers: async (
+    groupId: string, userIds: string[], type?: string,
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.removeUsers(groupId, userIds, type),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.removeUsers(
+        groupId, userIds, type,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -924,9 +910,7 @@ const groupsDataHelper = {
   },
   joinGroup: async (groupId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.joinGroup(groupId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.joinGroup(groupId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -937,9 +921,7 @@ const groupsDataHelper = {
   },
   cancelJoinGroup: async (groupId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.cancelJoinGroup(groupId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.cancelJoinGroup(groupId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -950,9 +932,7 @@ const groupsDataHelper = {
   },
   leaveGroup: async (groupId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.leaveGroup(groupId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.leaveGroup(groupId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -961,11 +941,13 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  setGroupAdmin: async (groupId: string, userIds: string[]) => {
+  setGroupAdmin: async (
+    groupId: string, userIds: string[],
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.setGroupAdmin(groupId, userIds),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.setGroupAdmin(
+        groupId, userIds,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -974,11 +956,13 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  removeGroupAdmin: async (groupId: string, userId: string) => {
+  removeGroupAdmin: async (
+    groupId: string, userId: string,
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.removeGroupAdmin(groupId, userId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.removeGroupAdmin(
+        groupId, userId,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -987,11 +971,13 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getGroupMemberRequests: async (groupId: string, params: any) => {
+  getGroupMemberRequests: async (
+    groupId: string, params: any,
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getGroupMemberRequests(groupId, params),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getGroupMemberRequests(
+        groupId, params,
+      ));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
       }
@@ -1005,9 +991,9 @@ const groupsDataHelper = {
     requestId: string,
   ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.approveSingleGroupMemberRequest(groupId, requestId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.approveSingleGroupMemberRequest(
+        groupId, requestId,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -1018,9 +1004,7 @@ const groupsDataHelper = {
   },
   approveAllGroupMemberRequests: async (groupId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.approveAllGroupMemberRequests(groupId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.approveAllGroupMemberRequests(groupId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -1034,9 +1018,9 @@ const groupsDataHelper = {
     requestId: string,
   ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.declineSingleGroupMemberRequest(groupId, requestId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.declineSingleGroupMemberRequest(
+        groupId, requestId,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -1047,9 +1031,7 @@ const groupsDataHelper = {
   },
   declineAllGroupMemberRequests: async (groupId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.declineAllGroupMemberRequests(groupId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.declineAllGroupMemberRequests(groupId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -1058,11 +1040,13 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getInnerGroupsLastAdmin: async (groupId: string, userId: string) => {
+  getInnerGroupsLastAdmin: async (
+    groupId: string, userId: string,
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getInnerGroupsLastAdmin(groupId, userId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getInnerGroupsLastAdmin(
+        groupId, userId,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data?.data);
       }
@@ -1073,9 +1057,7 @@ const groupsDataHelper = {
   },
   getDiscoverCommunities: async (params?: IParamGetCommunities) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getDiscoverCommunities(params || {}),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getDiscoverCommunities(params || {}));
       if (response && response?.data?.data) {
         return Promise.resolve(response.data);
       }
@@ -1089,9 +1071,7 @@ const groupsDataHelper = {
     managed?: boolean;
   }) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getJoinedCommunities(params),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getJoinedCommunities(params));
       if (response && response?.data?.data) {
         return Promise.resolve(response.data?.data);
       }
@@ -1100,11 +1080,13 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getCommunityGroups: async (id: string, params: IGetCommunityGroup) => {
+  getCommunityGroups: async (
+    id: string, params: IGetCommunityGroup,
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getCommunityGroups(id, params),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getCommunityGroups(
+        id, params,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response.data?.data);
       }
@@ -1115,9 +1097,7 @@ const groupsDataHelper = {
   },
   getCommunityDetail: async (communityId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getCommunityDetail(communityId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getCommunityDetail(communityId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -1131,9 +1111,9 @@ const groupsDataHelper = {
     params?: IParamGetCommunityMembers,
   ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getCommunityMembers(communityId, params),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getCommunityMembers(
+        communityId, params,
+      ));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
       }
@@ -1147,9 +1127,9 @@ const groupsDataHelper = {
     params?: IParamGetDiscoverGroups,
   ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getDiscoverGroups(communityId, params),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getDiscoverGroups(
+        communityId, params,
+      ));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
       }
@@ -1160,9 +1140,7 @@ const groupsDataHelper = {
   },
   joinCommunity: async (communityId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.joinCommunity(communityId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.joinCommunity(communityId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -1173,9 +1151,7 @@ const groupsDataHelper = {
   },
   cancelJoinCommunity: async (communityId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.cancelJoinCommunity(communityId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.cancelJoinCommunity(communityId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -1184,11 +1160,13 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getCommunityMemberRequests: async (communityId: string, params: any) => {
+  getCommunityMemberRequests: async (
+    communityId: string, params: any,
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getCommunityMemberRequests(communityId, params),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getCommunityMemberRequests(
+        communityId, params,
+      ));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data);
       }
@@ -1202,12 +1180,10 @@ const groupsDataHelper = {
     requestId: string,
   ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.approveSingleCommunityMemberRequest(
-          communityId,
-          requestId,
-        ),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.approveSingleCommunityMemberRequest(
+        communityId,
+        requestId,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -1221,12 +1197,10 @@ const groupsDataHelper = {
     requestId: string,
   ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.declineSingleCommunityMemberRequest(
-          communityId,
-          requestId,
-        ),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.declineSingleCommunityMemberRequest(
+        communityId,
+        requestId,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -1237,9 +1211,7 @@ const groupsDataHelper = {
   },
   approveAllCommunityMemberRequests: async (communityId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.approveAllCommunityMemberRequests(communityId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.approveAllCommunityMemberRequests(communityId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -1250,9 +1222,7 @@ const groupsDataHelper = {
   },
   declineAllCommunityMemberRequests: async (communityId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.declineAllCommunityMemberRequests(communityId),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.declineAllCommunityMemberRequests(communityId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -1263,9 +1233,7 @@ const groupsDataHelper = {
   },
   getCommunities: async (params?: IParamGetCommunities) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getCommunities(params),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.getCommunities(params));
       if (response && response?.data?.data) {
         return Promise.resolve(response.data.data);
       }
@@ -1279,9 +1247,9 @@ const groupsDataHelper = {
     data: ICommunityDetailEdit,
   ) => {
     try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.editCommunityDetail(communityId, data),
-      );
+      const response: any = await makeHttpRequest(groupsApiConfig.editCommunityDetail(
+        communityId, data,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }

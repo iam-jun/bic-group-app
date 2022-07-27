@@ -37,28 +37,28 @@ const LanguageOptionMenu = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
 
-  const styles = themeStyles(theme, screenHeight);
-
-  const speakingLanguagesList = Object.keys(speakingLanguages).map(
-    (code: string) => ({
-      code,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      ...speakingLanguages[code],
-    }),
+  const styles = themeStyles(
+    theme, screenHeight,
   );
+
+  const speakingLanguagesList = Object.keys(speakingLanguages).map((code: string) => ({
+    code,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    ...speakingLanguages[code],
+  }));
   const [languages, setLanguages] = useState(speakingLanguagesList);
 
   const languageSheetRef = useRef<any>();
 
-  useEffect(() => {
-    setLanguages(
-      languages.map((lang) => ({
+  useEffect(
+    () => {
+      setLanguages(languages.map((lang) => ({
         ...lang,
         selected: selectedLanguages?.includes(lang.code),
-      })),
-    );
-  }, [selectedLanguages]);
+      })));
+    }, [selectedLanguages],
+  );
 
   const onConfirmLanguage = () => {
     const newSelectedLanguages = languages
@@ -73,25 +73,23 @@ const LanguageOptionMenu = ({
       ?.filter((lang1) => lang1?.selected)
       ?.map((lang2) => lang2?.code || '');
 
-    if (!isEqual(selectedLanguages, newSelectedLanguages)) {
-      setLanguages(
-        languages.map((lang) => ({
-          ...lang,
-          selected: selectedLanguages?.includes(lang.code),
-        })),
-      );
+    if (!isEqual(
+      selectedLanguages, newSelectedLanguages,
+    )) {
+      setLanguages(languages.map((lang) => ({
+        ...lang,
+        selected: selectedLanguages?.includes(lang.code),
+      })));
     }
   };
 
   const onSelectItem = (language: ILanguageItem) => {
-    setLanguages(
-      languages.map((item: ILanguageItem) => (item.code === language.code
-        ? {
-          ...item,
-          selected: !item.selected,
-        }
-        : item)),
-    );
+    setLanguages(languages.map((item: ILanguageItem) => (item.code === language.code
+      ? {
+        ...item,
+        selected: !item.selected,
+      }
+      : item)));
   };
 
   const renderItem = ({ item, index }: {item: ILanguageItem; index: number}) => (
@@ -109,7 +107,9 @@ const LanguageOptionMenu = ({
 
   const onLanguageEditOpen = (e: any) => {
     Keyboard.dismiss();
-    languageSheetRef?.current?.open?.(e?.pageX, e?.pageY);
+    languageSheetRef?.current?.open?.(
+      e?.pageX, e?.pageY,
+    );
   };
 
   return (
@@ -152,7 +152,9 @@ const LanguageOptionMenu = ({
               keyboardShouldPersistTaps="always"
               showsVerticalScrollIndicator={false}
             >
-              {languages.map((item: ILanguageItem, index: number) => (
+              {languages.map((
+                item: ILanguageItem, index: number,
+              ) => (
                 <View key={`${item?.code} ${item?.fullName}`}>
                   {renderItem({ item, index })}
                 </View>
@@ -175,7 +177,9 @@ const LanguageOptionMenu = ({
 
 export default LanguageOptionMenu;
 
-const themeStyles = (theme: ExtendedTheme, screenHeight: number) => {
+const themeStyles = (
+  theme: ExtendedTheme, screenHeight: number,
+) => {
   const { colors } = theme;
 
   return StyleSheet.create({

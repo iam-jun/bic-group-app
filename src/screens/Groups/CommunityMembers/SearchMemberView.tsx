@@ -35,17 +35,13 @@ const SearchMemberView = ({
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles();
   const { can_manage_member } = useKeySelector(groupsKeySelector.communityDetail);
-  const communitySearchMembers = useKeySelector(
-    groupsKeySelector.communitySearchMembers,
-  );
+  const communitySearchMembers = useKeySelector(groupsKeySelector.communitySearchMembers);
 
   const getCommunitySearchMembers = (searchText: string) => {
-    dispatch(
-      actions.getCommunitySearchMembers({
-        communityId,
-        params: { key: searchText },
-      }),
-    );
+    dispatch(actions.getCommunitySearchMembers({
+      communityId,
+      params: { key: searchText },
+    }));
   };
 
   const onLoadMore = () => {
@@ -59,7 +55,9 @@ const SearchMemberView = ({
   };
 
   const searchHandler = useCallback(
-    debounce(searchMember, appConfig.searchTriggerTime),
+    debounce(
+      searchMember, appConfig.searchTriggerTime,
+    ),
     [],
   );
 

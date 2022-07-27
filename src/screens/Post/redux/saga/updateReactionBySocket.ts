@@ -29,7 +29,9 @@ export default function* updateReactionBySocket({
   if (!isEmpty(reaction)) {
     // handle reaction to post
     // merge own reaction if reaction's actor is current user
-    const p = (yield select((state) => get(state, postKeySelector.postById(id)))) || {};
+    const p = (yield select((state) => get(
+      state, postKeySelector.postById(id),
+    ))) || {};
     const ownReactions = p?.ownerReactions ? [...p.ownerReactions] : [];
     const isCurrentUser = userId.toString() == reaction?.actor?.id;
     yield onUpdateReactionOfPostById(
@@ -66,7 +68,9 @@ export default function* updateReactionBySocket({
       isCurrentUser = userId == child?.actor?.id;
     }
     // merge own children if reaction's actor is current user
-    const c = (yield select((s) => get(s, postKeySelector.commentById(finalId || 0))))
+    const c = (yield select((s) => get(
+      s, postKeySelector.commentById(finalId || 0),
+    )))
       || {};
     const ownReactions = c?.ownerReactions ? [...c.ownerReactions] : [];
 

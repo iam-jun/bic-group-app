@@ -17,7 +17,9 @@ export default function* approveAllCommunityMemberRequests({
   try {
     yield put(groupsActions.resetCommunityMemberRequests());
 
-    yield call(groupsDataHelper.approveAllCommunityMemberRequests, communityId);
+    yield call(
+      groupsDataHelper.approveAllCommunityMemberRequests, communityId,
+    );
 
     // to update user_count
     yield put(groupsActions.getCommunityDetail({ communityId }));
@@ -45,8 +47,12 @@ export default function* approveAllCommunityMemberRequests({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log('approveAllCommunityMemberRequest: ', err);
+    console.log(
+      'approveAllCommunityMemberRequest: ', err,
+    );
 
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

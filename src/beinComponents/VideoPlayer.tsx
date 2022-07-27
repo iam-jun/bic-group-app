@@ -43,7 +43,9 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
   const getThumbnailImageLink = () => {
     const deviceWidthPixel = PixelRatio.get() * dimension.deviceWidth;
     if (thumbnails?.length > 0) {
-      const newThumbnails = orderBy(thumbnails, ['width'], ['asc']);
+      const newThumbnails = orderBy(
+        thumbnails, ['width'], ['asc'],
+      );
       for (let index = 0; index < thumbnails.length; index++) {
         if (newThumbnails[index]?.width >= deviceWidthPixel) {
           return newThumbnails[index]?.url;
@@ -66,46 +68,54 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         setPlaying(true);
       } catch (error) {
         setLoading(false);
-        console.error('>>>>>>>loadAsync error>>>>>>>', error);
+        console.error(
+          '>>>>>>>loadAsync error>>>>>>>', error,
+        );
       }
     }
   };
 
-  useEffect(() => {
-    const videoListener = DeviceEventEmitter.addListener(
-      'playVideo',
-      (videoId: any) => {
-        if (!!videoId && videoId !== id && isPlaying) {
-          video.current?.pauseAsync?.();
-        }
-      },
-    );
-
-    const stopVideoListener = DeviceEventEmitter.addListener(
-      'stopAllVideo',
-      async () => {
-        if (video.current) {
-          const currentStatus = await video.current.getStatusAsync();
-          // @ts-ignore
-          if (!currentStatus?.isPlaying) return;
-          try {
-            video.current.pauseAsync();
-          } catch (error) {
-            console.error('STOP VIDEO FAILED>>>>>>>>>>', error);
+  useEffect(
+    () => {
+      const videoListener = DeviceEventEmitter.addListener(
+        'playVideo',
+        (videoId: any) => {
+          if (!!videoId && videoId !== id && isPlaying) {
+            video.current?.pauseAsync?.();
           }
-        }
-      },
-    );
-    return () => {
-      videoListener?.remove?.();
-      stopVideoListener?.remove?.();
-    };
-  }, [isPlaying]);
+        },
+      );
+
+      const stopVideoListener = DeviceEventEmitter.addListener(
+        'stopAllVideo',
+        async () => {
+          if (video.current) {
+            const currentStatus = await video.current.getStatusAsync();
+            // @ts-ignore
+            if (!currentStatus?.isPlaying) return;
+            try {
+              video.current.pauseAsync();
+            } catch (error) {
+              console.error(
+                'STOP VIDEO FAILED>>>>>>>>>>', error,
+              );
+            }
+          }
+        },
+      );
+      return () => {
+        videoListener?.remove?.();
+        stopVideoListener?.remove?.();
+      };
+    }, [isPlaying],
+  );
 
   const handlePlaybackStatusUpdate = (status: any) => {
     if (status?.isPlaying) {
       setLoading(false);
-      DeviceEventEmitter.emit('playVideo', id);
+      DeviceEventEmitter.emit(
+        'playVideo', id,
+      );
     }
   };
 
@@ -132,7 +142,9 @@ const VideoPlayer: FC<VideoPlayerProps> = ({
         isLooping={false}
         onPlaybackStatusUpdate={handlePlaybackStatusUpdate}
         onError={(error: string) => {
-          console.warn('video failed', error);
+          console.warn(
+            'video failed', error,
+          );
         }}
       />
       {!isPlaying && (

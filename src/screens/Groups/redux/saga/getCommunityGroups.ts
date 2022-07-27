@@ -15,14 +15,18 @@ export default function* getCommunityGroups({
     const { id, params } = payload;
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const groups = yield call(groupsDataHelper.getCommunityGroups, id, params);
+    const groups = yield call(
+      groupsDataHelper.getCommunityGroups, id, params,
+    );
     if (groups?.length > 0) {
       yield put(groupsActions.setCommunityGroups(groups));
     } else {
       yield put(groupsActions.setCommunityGroups([]));
     }
   } catch (err) {
-    console.error('\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m');
+    console.error(
+      '\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m',
+    );
     yield put(groupsActions.setCommunityGroups([]));
     yield showError(err);
   }

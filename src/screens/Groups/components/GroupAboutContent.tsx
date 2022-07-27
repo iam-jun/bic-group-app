@@ -32,7 +32,9 @@ const GroupAboutContent = () => {
   const { icon, title, subtitle }: any = privacyData || {};
 
   const onPressMembers = () => {
-    rootNavigation.navigate(groupStack.groupMembers, { groupId });
+    rootNavigation.navigate(
+      groupStack.groupMembers, { groupId },
+    );
   };
 
   const renderContent = () => (
@@ -56,9 +58,11 @@ const GroupAboutContent = () => {
         icon="UserGroup"
         onPress={isMember ? onPressMembers : undefined}
         disabled={!isMember}
-        title={`${user_count} ${i18next.t('groups:text_members', {
-          count: user_count,
-        })}`}
+        title={`${user_count} ${i18next.t(
+          'groups:text_members', {
+            count: user_count,
+          },
+        )}`}
         rightSubIcon={isMember ? 'AngleRightSolid' : undefined}
       />
       <MenuItem

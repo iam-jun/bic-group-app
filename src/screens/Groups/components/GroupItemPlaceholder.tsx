@@ -29,7 +29,9 @@ const GroupItemPlaceholder: FC<GroupItemPlaceholderProps> = ({
     <View style={StyleSheet.flatten([styles.container, style])}>
       <Placeholder Animation={ShineOverlay} style={styles.header}>
         <PlaceholderLine
-          width={disableRandom ? 50 : getRandomInt(50, 80)}
+          width={disableRandom ? 50 : getRandomInt(
+            50, 80,
+          )}
           style={styles.marginBottomSmall}
         />
       </Placeholder>
@@ -39,11 +41,15 @@ const GroupItemPlaceholder: FC<GroupItemPlaceholderProps> = ({
         style={styles.infoContainer}
       >
         <PlaceholderLine
-          width={disableRandom ? 50 : getRandomInt(30, 60)}
+          width={disableRandom ? 50 : getRandomInt(
+            30, 60,
+          )}
           style={styles.marginBottomSmall}
         />
         <PlaceholderLine
-          width={disableRandom ? 40 : getRandomInt(30, 50)}
+          width={disableRandom ? 40 : getRandomInt(
+            30, 50,
+          )}
           style={styles.margin0}
         />
       </Placeholder>

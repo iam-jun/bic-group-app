@@ -25,32 +25,40 @@ const KeyboardSpacer: FC<KeyboardSpacerProps> = ({
 
   const dismissEvent = Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide';
 
-  useEffect(() => {
-    const keyboardWillShowListener = Keyboard.addListener(showEvent, (event) => {
-      if (event.endCoordinates?.height) {
-        Animated.timing(animatedValue, {
-          toValue: event.endCoordinates.height + extraHeight,
-          useNativeDriver: false,
-          duration: 250,
-        }).start();
-      }
-    });
-    const keyboardWillHideListener = Keyboard.addListener(
-      dismissEvent,
-      (event) => {
-        Animated.timing(animatedValue, {
-          toValue: 0,
-          useNativeDriver: false,
-          duration: 250,
-        }).start();
-      },
-    );
+  useEffect(
+    () => {
+      const keyboardWillShowListener = Keyboard.addListener(
+        showEvent, (event) => {
+          if (event.endCoordinates?.height) {
+            Animated.timing(
+              animatedValue, {
+                toValue: event.endCoordinates.height + extraHeight,
+                useNativeDriver: false,
+                duration: 250,
+              },
+            ).start();
+          }
+        },
+      );
+      const keyboardWillHideListener = Keyboard.addListener(
+        dismissEvent,
+        (event) => {
+          Animated.timing(
+            animatedValue, {
+              toValue: 0,
+              useNativeDriver: false,
+              duration: 250,
+            },
+          ).start();
+        },
+      );
 
-    return () => {
-      keyboardWillHideListener.remove();
-      keyboardWillShowListener.remove();
-    };
-  }, []);
+      return () => {
+        keyboardWillHideListener.remove();
+        keyboardWillShowListener.remove();
+      };
+    }, [],
+  );
   return (
     <Animated.View testID={testID} style={{ width: '100%', height }} />
   );

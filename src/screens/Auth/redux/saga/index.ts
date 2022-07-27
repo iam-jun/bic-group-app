@@ -29,14 +29,30 @@ import ImageUploader from '~/services/imageUploader';
 const navigation = withNavigation(rootNavigationRef);
 
 export default function* authSaga() {
-  yield takeLatest(types.SIGN_IN, signIn);
-  yield takeLatest(types.SIGN_IN_OAUTH, signInOAuth);
-  yield takeLatest(types.SIGN_UP, signUp);
-  yield takeLatest([types.SIGN_OUT, ActionTypes.UnauthorizedLogout], signOut);
-  yield takeLatest(types.SIGN_IN_SUCCESS, signInSuccess);
-  yield takeLatest(types.FORGOT_PASSWORD_REQUEST, forgotPasswordRequest);
-  yield takeLatest(types.FORGOT_PASSWORD_CONFIRM, forgotPasswordConfirm);
-  yield takeLatest(types.CHANGE_PASSWORD, changePassword);
+  yield takeLatest(
+    types.SIGN_IN, signIn,
+  );
+  yield takeLatest(
+    types.SIGN_IN_OAUTH, signInOAuth,
+  );
+  yield takeLatest(
+    types.SIGN_UP, signUp,
+  );
+  yield takeLatest(
+    [types.SIGN_OUT, ActionTypes.UnauthorizedLogout], signOut,
+  );
+  yield takeLatest(
+    types.SIGN_IN_SUCCESS, signInSuccess,
+  );
+  yield takeLatest(
+    types.FORGOT_PASSWORD_REQUEST, forgotPasswordRequest,
+  );
+  yield takeLatest(
+    types.FORGOT_PASSWORD_CONFIRM, forgotPasswordConfirm,
+  );
+  yield takeLatest(
+    types.CHANGE_PASSWORD, changePassword,
+  );
 }
 
 function* changePassword({
@@ -70,7 +86,9 @@ function* changePassword({
     };
     yield put(actionsCommon.showHideToastMessage(toastMessage));
   } catch (error: any) {
-    console.log('changePassword error:', error);
+    console.log(
+      'changePassword error:', error,
+    );
     let errCurrentPassword = '';
     let errBox = '';
     switch (error.code) {
@@ -120,13 +138,11 @@ function* signUp({ payload }: {type: string; payload: IAuth.ISignUp}) {
     if (response) {
       yield put(actions.setLoading(false));
 
-      yield put(
-        actionsCommon.showAlert({
-          title: i18n.t('auth:text_title_success'),
-          content: i18n.t('auth:text_sign_up_success'),
-          onConfirm: () => navigation.navigate(authStack.login),
-        }),
-      );
+      yield put(actionsCommon.showAlert({
+        title: i18n.t('auth:text_title_success'),
+        content: i18n.t('auth:text_sign_up_success'),
+        onConfirm: () => navigation.navigate(authStack.login),
+      }));
     }
   } catch (err) {
     yield put(actions.setLoading(false));
@@ -148,9 +164,7 @@ function* signOut({ payload }: any) {
     } else {
       const data = {
         ...sessionData,
-        activeSessions: sessionData.activeSessions.filter(
-          (item: string) => item !== 'community',
-        ),
+        activeSessions: sessionData.activeSessions.filter((item: string) => item !== 'community'),
       };
       yield saveUserToSharedPreferences(data);
     }

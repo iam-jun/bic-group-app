@@ -44,13 +44,9 @@ const PostSettings = ({ route }: PostSettingsProps) => {
   const { postId } = screenParams;
   if (postId) {
     useCreatePost({ screenParams });
-    chosenAudiences = useKeySelector(
-      postKeySelector.postAudienceById(postId),
-    )?.groups;
+    chosenAudiences = useKeySelector(postKeySelector.postAudienceById(postId))?.groups;
   } else {
-    chosenAudiences = useKeySelector(
-      postKeySelector.createPost.chosenAudiences,
-    );
+    chosenAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
   }
 
   const { hasPermissionsOnEachScope, PERMISSION_KEY } = useMyPermissions();
@@ -60,13 +56,15 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     PERMISSION_KEY.GROUP.CREATE_IMPORTANT_POST,
   );
 
-  useEffect(() => () => {
-    if (postId) {
-      dispatch(postActions.clearCreatPostData());
-      dispatch(postActions.setSearchResultAudienceGroups([]));
-      dispatch(postActions.setSearchResultAudienceUsers([]));
-    }
-  }, []);
+  useEffect(
+    () => () => {
+      if (postId) {
+        dispatch(postActions.clearCreatPostData());
+        dispatch(postActions.setSearchResultAudienceGroups([]));
+        dispatch(postActions.setSearchResultAudienceUsers([]));
+      }
+    }, [],
+  );
 
   const {
     sImportant,
@@ -87,19 +85,17 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     if (disableButtonSave) {
       rootNavigation.goBack();
     } else {
-      dispatch(
-        modalActions.showAlert({
-          title: t('common:label_discard_changes'),
-          content: t('common:text_discard_warning'),
-          showCloseButton: true,
-          cancelBtn: true,
-          cancelLabel: t('common:btn_continue_editing'),
-          confirmLabel: t('common:btn_discard'),
-          onConfirm: () => {
-            rootNavigation.goBack();
-          },
-        }),
-      );
+      dispatch(modalActions.showAlert({
+        title: t('common:label_discard_changes'),
+        content: t('common:text_discard_warning'),
+        showCloseButton: true,
+        cancelBtn: true,
+        cancelLabel: t('common:btn_continue_editing'),
+        confirmLabel: t('common:btn_discard'),
+        onConfirm: () => {
+          rootNavigation.goBack();
+        },
+      }));
     }
   };
 
@@ -109,8 +105,12 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     let time = t('common:text_set_time');
 
     if (expires_time) {
-      date = formatDate(expires_time, 'MMM Do, YYYY');
-      time = formatDate(expires_time, 'hh:mm A', undefined, 9999);
+      date = formatDate(
+        expires_time, 'MMM Do, YYYY',
+      );
+      time = formatDate(
+        expires_time, 'hh:mm A', undefined, 9999,
+      );
     }
 
     return (

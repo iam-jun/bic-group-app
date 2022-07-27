@@ -40,11 +40,15 @@ const DiscoverItem = ({
   };
 
   const onJoin = () => {
-    onPressJoin(id, name);
+    onPressJoin(
+      id, name,
+    );
   };
 
   const onCancel = () => {
-    onPressCancel(id, name);
+    onPressCancel(
+      id, name,
+    );
   };
 
   return (
@@ -77,9 +81,11 @@ const DiscoverItem = ({
           />
           <Text.BodyS color={colors.gray50}>{user_count}</Text.BodyS>
           <Text.BodyS color={colors.gray50}>
-            {` ${t('groups:text_members', {
-              count: user_count,
-            })}`}
+            {` ${t(
+              'groups:text_members', {
+                count: user_count,
+              },
+            )}`}
           </Text.BodyS>
         </View>
       )}

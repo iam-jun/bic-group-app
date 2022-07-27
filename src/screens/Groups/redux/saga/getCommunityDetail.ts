@@ -23,7 +23,9 @@ export default function* getCommunityDetail({
     if (loadingPage) yield put(actions.setLoadingPage(true));
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const resp = yield call(groupsDataHelper.getCommunityDetail, communityId);
+    const resp = yield call(
+      groupsDataHelper.getCommunityDetail, communityId,
+    );
     yield put(actions.setCommunityDetail(resp?.data));
 
     const { groups } = yield select();
@@ -35,7 +37,9 @@ export default function* getCommunityDetail({
 
     if (!isMember && !isPublic) yield put(actions.setLoadingPage(false));
   } catch (err) {
-    console.error('getCommunityDetail:', err);
+    console.error(
+      'getCommunityDetail:', err,
+    );
     yield put(actions.setCommunityLoading(false));
     yield put(actions.setLoadingPage(false));
     yield put(actions.setCommunityDetail({} as ICommunity));

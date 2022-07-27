@@ -44,21 +44,21 @@ const SignUp = () => {
     await trigger();
 
     if (!isEmpty(errors)) return;
-    dispatch(
-      actions.signUp({
-        username,
-        password,
-        email,
-      }),
-    );
+    dispatch(actions.signUp({
+      username,
+      password,
+      email,
+    }));
   };
 
   const validateUsername = async (value: string) => {
     if (value.trim().length === 0) {
-      setError('username', {
-        type: 'required',
-        message: t('auth:text_err_username_blank'),
-      });
+      setError(
+        'username', {
+          type: 'required',
+          message: t('auth:text_err_username_blank'),
+        },
+      );
     } else {
       clearErrors('username');
     }

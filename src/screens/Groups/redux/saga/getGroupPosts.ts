@@ -16,7 +16,9 @@ export default function* getGroupPosts({
     const { offset, data } = groups.posts;
 
     const param: IParamGetGroupPosts = { groupId: payload, offset };
-    const result = yield call(groupsDataHelper.getGroupPosts, param);
+    const result = yield call(
+      groupsDataHelper.getGroupPosts, param,
+    );
 
     yield put(postActions.addToAllPosts({ data: result }));
     if (data.length === 0) {

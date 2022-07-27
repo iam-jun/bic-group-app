@@ -56,9 +56,11 @@ const useNotificationSocket = () => {
 
   const handleInternalEvent = (msg: string) => {
     console.log('\x1b[36m🐣️ notificationSocket receive internal event\x1b[0m');
-    const msgData = ConvertHelper.camelizeKeys(parseSafe(msg), {
-      exclude: ['reactions_count'],
-    });
+    const msgData = ConvertHelper.camelizeKeys(
+      parseSafe(msg), {
+        exclude: ['reactions_count'],
+      },
+    );
     // console.log(
     //   `\x1b[34m🐣️ notificationSocket handleInternalEvent`,
     //   `${JSON.stringify(msgData, undefined, 2)}\x1b[0m`,
@@ -72,43 +74,49 @@ const useNotificationSocket = () => {
     }
   };
 
-  useEffect(() => {
-    if (!token) {
-      console.log('\x1b[33m🐣️ Maintab: empty token \x1b[0m');
-      return;
-    }
+  useEffect(
+    () => {
+      if (!token) {
+        console.log('\x1b[33m🐣️ Maintab: empty token \x1b[0m');
+        return;
+      }
 
-    dispatch(actions.getNotifications());
+      dispatch(actions.getNotifications());
 
-    const socket = io(getEnv('BEIN_NOTIFICATION_WS_DOMAIN'), {
-      transports: ['websocket'],
-      path: getEnv('BEIN_NOTIFICATION_WS_PATH'),
-      ...getMsgPackParser(getEnv('BEIN_FEED_WS_MSGPACK') !== 'disable'),
-    });
-
-    console.log(
-      `\x1b[37m🐣️ Bein notification socket will connect with token ${token.slice(
-        -10,
-      )}\x1b[0m`,
-    );
-    socket.on('connect', () => {
-      console.log(
-        `\x1b[32m🐣️ Bein notification socket connected with id: ${socket.id}\x1b[0m`,
+      const socket = io(
+        getEnv('BEIN_NOTIFICATION_WS_DOMAIN'), {
+          transports: ['websocket'],
+          path: getEnv('BEIN_NOTIFICATION_WS_PATH'),
+          ...getMsgPackParser(getEnv('BEIN_FEED_WS_MSGPACK') !== 'disable'),
+        },
       );
-      socket.emit('auth_challenge', token);
-    });
-    socket.on('disconnect', (reason) => {
-      console.log(
-        `\x1b[31m🐣️ Bein notification socket disconnected: ${reason}\x1b[0m`,
-      );
-    });
-    socket.on('notifications', handleSocketNoti);
-    socket.on('internal_event', handleInternalEvent);
 
-    return () => {
-      socket?.disconnect?.();
-    };
-  }, [token]);
+      console.log(`\x1b[37m🐣️ Bein notification socket will connect with token ${token.slice(-10)}\x1b[0m`);
+      socket.on(
+        'connect', () => {
+          console.log(`\x1b[32m🐣️ Bein notification socket connected with id: ${socket.id}\x1b[0m`);
+          socket.emit(
+            'auth_challenge', token,
+          );
+        },
+      );
+      socket.on(
+        'disconnect', (reason) => {
+          console.log(`\x1b[31m🐣️ Bein notification socket disconnected: ${reason}\x1b[0m`);
+        },
+      );
+      socket.on(
+        'notifications', handleSocketNoti,
+      );
+      socket.on(
+        'internal_event', handleInternalEvent,
+      );
+
+      return () => {
+        socket?.disconnect?.();
+      };
+    }, [token],
+  );
 };
 
 export default useNotificationSocket;

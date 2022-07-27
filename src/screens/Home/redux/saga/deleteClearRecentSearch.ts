@@ -10,16 +10,18 @@ export default function* deleteClearRecentSearch({
   type: string;
 }): any {
   try {
-    yield call(homeDataHelper.deleteCleanRecentSearch, payload);
-    yield put(
-      homeActions.getRecentSearchKeywords({
-        target: 'post',
-        order: 'DESC',
-        limit: 10,
-        showLoading: false,
-      }),
+    yield call(
+      homeDataHelper.deleteCleanRecentSearch, payload,
     );
+    yield put(homeActions.getRecentSearchKeywords({
+      target: 'post',
+      order: 'DESC',
+      limit: 10,
+      showLoading: false,
+    }));
   } catch (e) {
-    console.error('\x1b[31m🐣️ saga clear Recent Search error: ', e, '\x1b[0m');
+    console.error(
+      '\x1b[31m🐣️ saga clear Recent Search error: ', e, '\x1b[0m',
+    );
   }
 }

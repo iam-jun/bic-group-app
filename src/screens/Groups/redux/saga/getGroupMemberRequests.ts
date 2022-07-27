@@ -19,11 +19,9 @@ export default function* getGroupMemberRequests({
     const { groupId, isRefreshing, params } = payload;
     const { ids, canLoadMore, items } = groups.groupMemberRequests || {};
 
-    yield put(
-      groupsActions.setGroupMemberRequests({
-        loading: isRefreshing ? true : ids.length === 0,
-      }),
-    );
+    yield put(groupsActions.setGroupMemberRequests({
+      loading: isRefreshing ? true : ids.length === 0,
+    }));
 
     if (!isRefreshing && !canLoadMore) return;
 
@@ -43,17 +41,19 @@ export default function* getGroupMemberRequests({
     const requestIds = response.data.map((item: IJoiningMember) => item.id);
     const requestItems = mapItems(response.data);
 
-    yield put(
-      groupsActions.setGroupMemberRequests({
-        total: response?.meta?.total,
-        loading: false,
-        canLoadMore: requestIds.length === appConfig.recordsPerPage,
-        ids: isRefreshing ? [...requestIds] : [...ids, ...requestIds],
-        items: isRefreshing ? { ...requestItems } : { ...items, ...requestItems },
-      }),
-    );
+    yield put(groupsActions.setGroupMemberRequests({
+      total: response?.meta?.total,
+      loading: false,
+      canLoadMore: requestIds.length === appConfig.recordsPerPage,
+      ids: isRefreshing ? [...requestIds] : [...ids, ...requestIds],
+      items: isRefreshing ? { ...requestItems } : { ...items, ...requestItems },
+    }));
   } catch (err) {
-    console.error('getGroupMemberRequests: ', err);
-    yield call(showError, err);
+    console.error(
+      'getGroupMemberRequests: ', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

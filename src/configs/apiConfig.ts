@@ -78,7 +78,9 @@ const Upload = {
       // upload bein feed
       url = `${providers.beinFeed.url}media`;
       provider = providers.beinFeed;
-      data.append('uploadType', type);
+      data.append(
+        'uploadType', type,
+      );
     }
 
     return {
@@ -133,7 +135,9 @@ const App = {
     provider: providers.bein,
     useRetry: true,
   }),
-  pushToken: (deviceToken: string, deviceId: string): HttpApiRequestConfig => ({
+  pushToken: (
+    deviceToken: string, deviceId: string,
+  ): HttpApiRequestConfig => ({
     url: `${providers.beinNotification.url}device-tokens`,
     method: 'post',
     provider: providers.beinNotification,

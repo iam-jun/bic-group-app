@@ -16,9 +16,7 @@ function* getNotifications({
   const { flag = 'ALL', keyValue = 'tabAll', isRefresh = false } = payload || {};
   try {
     if (!isRefresh) {
-      yield put(
-        notificationsActions.setLoadingNotifications({ keyValue, value: true }),
-      );
+      yield put(notificationsActions.setLoadingNotifications({ keyValue, value: true }));
     }
     yield put(notificationsActions.setNoMoreNoti({ keyValue, value: false }));
 
@@ -28,18 +26,14 @@ function* getNotifications({
     );
 
     if (flag === 'UNREAD' && response?.results?.length < 1) {
-      const joinedCommunities: IObject<any> = yield select(
-        (state: any) => state.groups.joinedCommunities.data,
-      );
+      const joinedCommunities: IObject<any> = yield select((state: any) => state.groups.joinedCommunities.data);
       if (joinedCommunities?.length > 0) {
         const _response: IObject<any> = yield call(
           notificationsDataHelper.getNotificationList,
           { flag: 'ALL' },
         );
         if (_response?.results?.length > 1) {
-          yield put(
-            notificationsActions.setNoMoreNoti({ keyValue, value: true }),
-          );
+          yield put(notificationsActions.setNoMoreNoti({ keyValue, value: true }));
         }
       }
     }
@@ -51,29 +45,25 @@ function* getNotifications({
         newData.push(item?.id);
         newResponse[item.id] = { ...item };
       });
-      yield put(
-        notificationsActions.setNotifications({
-          notifications: newResponse,
-          keyValue,
-          data: newData,
-          unseen: response.unseen,
-        }),
-      );
+      yield put(notificationsActions.setNotifications({
+        notifications: newResponse,
+        keyValue,
+        data: newData,
+        unseen: response.unseen,
+      }));
     }
 
     if (!isRefresh) {
-      yield put(
-        notificationsActions.setLoadingNotifications({ keyValue, value: false }),
-      );
+      yield put(notificationsActions.setLoadingNotifications({ keyValue, value: false }));
     }
   } catch (err) {
-    yield put(
-      notificationsActions.setLoadingNotifications({
-        keyValue,
-        value: false,
-      }),
+    yield put(notificationsActions.setLoadingNotifications({
+      keyValue,
+      value: false,
+    }));
+    console.error(
+      '\x1b[31m🐣️ saga getNotifications err: ', err, '\x1b[0m',
     );
-    console.error('\x1b[31m🐣️ saga getNotifications err: ', err, '\x1b[0m');
   }
 }
 

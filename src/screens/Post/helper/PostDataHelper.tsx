@@ -69,14 +69,18 @@ export const postApiConfig = {
       data,
     };
   },
-  putEditComment: (id: string, data: ICommentData): HttpApiRequestConfig => ({
+  putEditComment: (
+    id: string, data: ICommentData,
+  ): HttpApiRequestConfig => ({
     url: `${provider.url}comments/${id}`,
     method: 'put',
     provider,
     useRetry: true,
     data,
   }),
-  deletePost: (id: string, isDraftPost?: boolean): HttpApiRequestConfig => ({
+  deletePost: (
+    id: string, isDraftPost?: boolean,
+  ): HttpApiRequestConfig => ({
     url: `${provider.url}posts/${id}`,
     method: 'delete',
     provider,
@@ -101,9 +105,7 @@ export const postApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
   }),
-  getCommentsByPostId: (
-    params: IRequestGetPostComment,
-  ): HttpApiRequestConfig => ({
+  getCommentsByPostId: (params: IRequestGetPostComment): HttpApiRequestConfig => ({
     url: `${provider.url}comments`,
     method: 'get',
     provider,
@@ -175,9 +177,7 @@ export const postApiConfig = {
     useRetry: true,
     params,
   }),
-  getSearchMentionAudiences: (
-    params: IParamSearchMentionAudiences,
-  ): HttpApiRequestConfig => ({
+  getSearchMentionAudiences: (params: IParamSearchMentionAudiences): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/mentionable`,
     method: 'get',
     provider: ApiConfig.providers.bein,
@@ -200,9 +200,7 @@ export const postApiConfig = {
       reactionName: data?.reactionName,
     },
   }),
-  getReactionDetail: (
-    param: IParamGetReactionDetail,
-  ): HttpApiRequestConfig => ({
+  getReactionDetail: (param: IParamGetReactionDetail): HttpApiRequestConfig => ({
     url: `${provider.url}reactions`,
     method: 'get',
     provider,
@@ -236,9 +234,7 @@ export const postApiConfig = {
       postId: params?.postId || '',
     },
   }),
-  getUsersSeenPost: (
-    params: IRequestGetUsersSeenPost,
-  ): HttpApiRequestConfig => ({
+  getUsersSeenPost: (params: IRequestGetUsersSeenPost): HttpApiRequestConfig => ({
     url: `${provider.url}feeds/seen/user`,
     method: 'get',
     provider,
@@ -254,9 +250,7 @@ export const postApiConfig = {
 const postDataHelper = {
   postCreateNewPost: async (data: IPostCreatePost) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.postCreateNewPost(data),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.postCreateNewPost(data));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -267,9 +261,7 @@ const postDataHelper = {
   },
   putReaction: async (param: IParamPutReaction) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.putReaction(param),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.putReaction(param));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -280,9 +272,7 @@ const postDataHelper = {
   },
   putEditPost: async (param: IParamPutEditPost) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.putEditPost(param),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.putEditPost(param));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -291,11 +281,13 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  putEditComment: async (id: string, data: ICommentData) => {
+  putEditComment: async (
+    id: string, data: ICommentData,
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.putEditComment(id, data),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.putEditComment(
+        id, data,
+      ));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
       }
@@ -304,11 +296,13 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  deletePost: async (id: string, isDraftPost?: boolean) => {
+  deletePost: async (
+    id: string, isDraftPost?: boolean,
+  ) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.deletePost(id, isDraftPost),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.deletePost(
+        id, isDraftPost,
+      ));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -319,9 +313,7 @@ const postDataHelper = {
   },
   deleteComment: async (id: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.deleteComment(id),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.deleteComment(id));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
       }
@@ -335,9 +327,7 @@ const postDataHelper = {
       return Promise.reject(new Error('Post Id not found'));
     }
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getCommentsByPostId(params),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.getCommentsByPostId(params));
       if (response?.data?.data?.list) {
         return Promise.resolve(response?.data?.data);
       }
@@ -348,9 +338,7 @@ const postDataHelper = {
   },
   postNewComment: async (params: IRequestPostComment) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.postNewComment(params),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.postNewComment(params));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
       }
@@ -361,9 +349,7 @@ const postDataHelper = {
   },
   postReplyComment: async (params: IRequestReplyComment) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.postReplyComment(params),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.postReplyComment(params));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
       }
@@ -374,9 +360,7 @@ const postDataHelper = {
   },
   putMarkAsRead: async (postId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.putMarkAsRead(postId),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.putMarkAsRead(postId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -387,9 +371,7 @@ const postDataHelper = {
   },
   putMarkSeenPost: async (postId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.putMarkSeenPost(postId),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.putMarkSeenPost(postId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -400,9 +382,7 @@ const postDataHelper = {
   },
   getSearchAudiences: async (key: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getSearchAudiences(key),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.getSearchAudiences(key));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -413,9 +393,7 @@ const postDataHelper = {
   },
   getSearchMentionAudiences: async (params: IParamSearchMentionAudiences) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getSearchMentionAudiences(params),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.getSearchMentionAudiences(params));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -426,9 +404,7 @@ const postDataHelper = {
   },
   deleteReaction: async (param: IParamDeleteReaction) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.deleteReaction(param),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.deleteReaction(param));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -441,9 +417,7 @@ const postDataHelper = {
     const { reactionName, targetId, target } = param;
     if (reactionName && targetId && target) {
       try {
-        const response: any = await makeHttpRequest(
-          postApiConfig.getReactionDetail(param),
-        );
+        const response: any = await makeHttpRequest(postApiConfig.getReactionDetail(param));
         if (response && response?.data?.data?.list) {
           return Promise.resolve(response.data.data);
         }
@@ -458,13 +432,11 @@ const postDataHelper = {
 
   getPostDetail: async (params: IParamGetPostDetail) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getPostDetail({
-          commentLimit: 10,
-          withComment: true,
-          ...params,
-        }),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.getPostDetail({
+        commentLimit: 10,
+        withComment: true,
+        ...params,
+      }));
       if (response && response?.data?.data) {
         return Promise.resolve(response?.data?.data);
       }
@@ -475,9 +447,7 @@ const postDataHelper = {
   },
   getDraftPosts: async (param: IParamGetDraftPosts) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getDraftPosts(param),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.getDraftPosts(param));
       if (response && response?.data?.data) {
         return Promise.resolve({
           data: response?.data?.data?.list || [],
@@ -494,9 +464,7 @@ const postDataHelper = {
   },
   postPublishDraftPost: async (draftPostId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.postPublishDraftPost(draftPostId),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.postPublishDraftPost(draftPostId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -507,9 +475,7 @@ const postDataHelper = {
   },
   getPostAudience: async (params: IParamGetPostAudiences) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getPostAudiences(params),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.getPostAudiences(params));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -523,9 +489,9 @@ const postDataHelper = {
     params: IRequestGetPostComment,
   ) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getCommentDetail(commentId, params),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.getCommentDetail(
+        commentId, params,
+      ));
       if (response && response?.data && response.data?.data) {
         return Promise.resolve(response.data.data);
       }
@@ -536,11 +502,9 @@ const postDataHelper = {
   },
   getSeenList: async (params: IRequestGetUsersSeenPost) => {
     try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getUsersSeenPost({
-          ...params,
-        }),
-      );
+      const response: any = await makeHttpRequest(postApiConfig.getUsersSeenPost({
+        ...params,
+      }));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
