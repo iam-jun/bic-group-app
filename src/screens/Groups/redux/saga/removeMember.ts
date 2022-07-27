@@ -37,6 +37,6 @@ export default function* removeMember({
       JSON.stringify(err, undefined, 2),
       '\x1b[0m',
     );
-    yield showError(err);
+    yield call(showError, err);
   }
 }

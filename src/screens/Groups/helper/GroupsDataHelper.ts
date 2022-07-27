@@ -639,32 +639,8 @@ const groupsDataHelper = {
   getGroupDetail: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getGroupDetail, groupId),
   editGroupDetail: (groupId: string, data: IGroupDetailEdit) => withHttpRequestPromise(groupsApiConfig.editGroupDetail, groupId, data),
   getJoinableUsers: (groupId: string, params: any) => withHttpRequestPromise(groupsApiConfig.getJoinableUsers, groupId, params),
-  addUsers: async (groupId: string, userIds: string[]) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.addUsers(groupId, userIds),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  removeUsers: async (groupId: string, userIds: string[], type?: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.removeUsers(groupId, userIds, type),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  addUsers: (groupId: string, userIds: string[]) => withHttpRequestPromise(groupsApiConfig.addUsers, groupId, userIds),
+  removeUsers: (groupId: string, userIds: string[], type?: string) => withHttpRequestPromise(groupsApiConfig.removeUsers, groupId, userIds, type),
   joinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.joinGroup, groupId),
   cancelJoinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.cancelJoinGroup, groupId),
   leaveGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.leaveGroup, groupId),

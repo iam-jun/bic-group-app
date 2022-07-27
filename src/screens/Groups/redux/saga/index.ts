@@ -322,7 +322,7 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
   try {
     const { groupId, userIds } = payload;
 
-    yield groupsDataHelper.addUsers(groupId, userIds);
+    yield call(groupsDataHelper.addUsers, groupId, userIds);
 
     // refresh group detail after adding new members
     yield refreshGroupMembers(groupId);
@@ -352,7 +352,7 @@ function* addMembers({ payload }: {type: string; payload: IGroupAddMembers}) {
       JSON.stringify(err, undefined, 2),
       '\x1b[0m',
     );
-    yield showError(err);
+    yield call(showError, err);
   }
 }
 
