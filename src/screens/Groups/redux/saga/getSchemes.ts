@@ -8,7 +8,7 @@ export default function* getSchemes({
   payload,
 }: {
   type: string;
-  payload: {communityId: number | string; isRefreshing?: boolean};
+  payload: {communityId: string; isRefreshing?: boolean};
 }): any {
   try {
     const { communityId, isRefreshing } = payload || {};

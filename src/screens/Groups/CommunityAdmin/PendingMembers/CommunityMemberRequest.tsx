@@ -10,8 +10,8 @@ const CommunityMemberRequest = ({
   requestId,
   organizationId: communityId,
 }: {
-  requestId: number;
-  organizationId: number;
+  requestId: string;
+  organizationId: string;
 }) => {
   const dispatch = useDispatch();
 

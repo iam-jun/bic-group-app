@@ -8,7 +8,7 @@ export default function* getYourGroupsTree({
   payload: communityId,
 }: {
   type: string;
-  payload: number;
+  payload: string;
 }): any {
   try {
     yield put(groupsActions.setYourGroupsTree({ loading: true }));

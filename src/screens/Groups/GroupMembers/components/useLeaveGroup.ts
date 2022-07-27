@@ -10,7 +10,7 @@ import Button from '~/beinComponents/Button';
 import { handleLeaveInnerGroups } from '../../helper';
 
 interface IUseLeaveGroup {
-  groupId: number;
+  groupId: string;
   username: string;
 }
 

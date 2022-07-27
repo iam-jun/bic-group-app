@@ -18,7 +18,7 @@ import spacing from '~/theme/spacing';
 export interface YourGroupsProps {
   route?: {
     params?: {
-      communityId: number;
+      communityId: string;
     };
   };
 }
@@ -46,7 +46,7 @@ const YourGroups: FC<YourGroupsProps> = ({ route }: YourGroupsProps) => {
   const styles = createStyle(theme);
   const translateX = useSharedValue(0);
 
-  const communityId = route?.params?.communityId as number;
+  const communityId = route?.params?.communityId;
 
   if (!communityId) {
     rootNavigation.goBack();

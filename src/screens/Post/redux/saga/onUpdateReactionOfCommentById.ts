@@ -10,7 +10,7 @@ import postActions from '../actions';
 import postKeySelector from '../keySelector';
 
 export default function* onUpdateReactionOfCommentById(
-  commentId:string| number,
+  commentId: string,
   ownReaction: IOwnReaction,
   reactionCounts: IReactionCounts,
   defaultComment?: ICommentData,

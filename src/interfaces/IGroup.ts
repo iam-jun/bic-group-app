@@ -47,7 +47,7 @@ export interface IGroupScheme {
 }
 
 export interface IApplyingGroups {
-  id: number | string;
+  id: string;
   name: string;
   description: string | null;
   icon: string;
@@ -64,15 +64,15 @@ export interface ICategory {
 }
 
 export interface IGroup {
-  id: number;
-  community_id?: number;
+  id: string;
+  community_id?: string;
   name: string;
   user_count?: number;
   parent?: any;
-  parentId?: number;
+  parentId?: string;
   children?: IGroup[];
   icon?: string;
-  parent_id?: number | null;
+  parent_id?: string | null;
   slug?: string;
   description?: string;
   background_img_url?: string | null;
@@ -81,7 +81,7 @@ export interface IGroup {
   verified?: boolean;
   level?: number;
   parents?: number[] | null;
-  owner_id?: number;
+  owner_id?: string;
   created_at?: string;
   updated_at?: string;
   deleted_at?: string | null;
@@ -103,12 +103,12 @@ export interface IParsedGroup extends IGroup {
 }
 
 export interface IGroupDetailEdit {
-  id?: number;
-  parent_id?: number;
+  id?: string;
+  parent_id?: string;
   name?: string;
   description?: string | null;
   level?: number;
-  owner_id?: number;
+  owner_id?: string;
   icon?: string;
   background_img_url?: string;
   group_type?: GROUP_TYPE;
@@ -147,7 +147,7 @@ export interface IParamGetGroupMembers {
 }
 
 export interface IGroupImageUpload {
-  id: number;
+  id: string;
   fieldName: 'icon' | 'background_img_url';
   file: IFilePicked;
   uploadType: IUploadType;
@@ -155,29 +155,29 @@ export interface IGroupImageUpload {
 }
 
 export interface IGroupGetJoinableMembers {
-  groupId: number;
+  groupId: string;
   params?: any;
 }
 
 export interface IGroupGetMembers {
-  groupId: number;
+  groupId: string;
   isRefreshing?: boolean;
   params?: IParamGetGroupMembers;
 }
 
 export interface IGroupAddMembers {
-  groupId: number;
-  userIds: number[];
+  groupId: string;
+  userIds: string[];
 }
 
 export interface IGroupSetAdmin {
-  groupId: number;
-  userIds: number[];
+  groupId: string;
+  userIds: string[];
 }
 
 export interface IGroupRemoveAdmin {
-  groupId: number;
-  userId: number;
+  groupId: string;
+  userId: string;
 }
 
 export interface IGroupSearchPayload {
@@ -188,7 +188,7 @@ export interface IGroupSearchPayload {
 }
 
 export interface IGroupMembers {
-  id?: number;
+  id?: string;
   username?: string;
   fullname?: string;
   avatar?: string;
@@ -199,9 +199,9 @@ export interface IGroupMembers {
 }
 
 export interface IJoiningMember {
-  id: number;
-  user_id: number;
-  group_id: number;
+  id: string;
+  user_id: string;
+  group_id: string;
   created_at: string;
   updated_at: string;
   isCanceled?: boolean;
@@ -209,7 +209,7 @@ export interface IJoiningMember {
 }
 
 export interface IJoiningUserInfo {
-  id: number;
+  id: string;
   username: string;
   fullname: string;
   email: string;
@@ -219,8 +219,8 @@ export interface IJoiningUserInfo {
   phone: string | null;
   country_code: string | null;
   latest_work: {
-    id: number;
-    user_id: number;
+    id: string;
+    user_id: string;
     currently_work_here: boolean;
     end_date: string | null;
     company: string | null;
@@ -229,7 +229,7 @@ export interface IJoiningUserInfo {
 }
 
 export interface IGetYourGroupsSearch {
-  communityId: number;
+  communityId: string;
   key: string;
 }
 
@@ -253,7 +253,7 @@ export interface IGetCommunityGroup {
 }
 
 export interface ICommunityDetailEdit {
-  id: number;
+  id: string;
   name?: string | null;
   description?: string | null;
   icon?: string;
@@ -261,7 +261,7 @@ export interface ICommunityDetailEdit {
   privacy?: COMMUNITY_PRIVACY_TYPE;
 }
 export interface IPayloadGroupSchemeAssignments {
-  communityId: number;
-  data: {groupId: number; schemeId: string}[];
+  communityId: string;
+  data: {groupId: string; schemeId: string}[];
   currentAssignments?: any;
 }

@@ -89,7 +89,7 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const { fullname, avatar } = actor || {};
 
-  const isActor = Number(currentUserId) === actor?.id;
+  const isActor = currentUserId === actor?.id;
 
   const [commentStatus, setCommentStatus] = useState(
     commentData?.status || null,

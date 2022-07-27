@@ -17,7 +17,7 @@ import spacing from '~/theme/spacing';
 
 interface CommunitySearchResultsProps {
   onLoadMore?: () => void;
-  onPressCommunity: (id: number) => void;
+  onPressCommunity: (id: string) => void;
   onRefresh?: () => void;
 }
 

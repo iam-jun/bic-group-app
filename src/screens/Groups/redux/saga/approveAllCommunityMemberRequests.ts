@@ -11,7 +11,7 @@ export default function* approveAllCommunityMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; callback?: () => void};
+  payload: {communityId: string; callback?: () => void};
 }) {
   const { communityId, callback } = payload;
   try {

@@ -15,7 +15,7 @@ export default function* updateCommunityScheme({
   payload,
 }: {
   type: string;
-  payload: {communityId: number | string};
+  payload: {communityId: string};
 }): any {
   try {
     const { communityId } = payload || {};

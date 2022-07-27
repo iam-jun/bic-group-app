@@ -17,8 +17,8 @@ import { useBaseHook } from '~/hooks';
 import spacing from '~/theme/spacing';
 
 export interface MoveGroupTargetsProps {
-  communityId: number;
-  groupId: number;
+  communityId: string;
+  groupId: string;
   targets: any[];
   selecting?: any;
 }

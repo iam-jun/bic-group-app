@@ -12,7 +12,7 @@ export default function* cancelJoinCommunity({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; communityName: string};
+  payload: {communityId: string; communityName: string};
 }) {
   const { communityId, communityName } = payload;
   try {

@@ -134,7 +134,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         postId,
         parentCommentId: replyTargetId || defaultReplyTargetId,
         commentData: { content: content?.trim(), media, giphy: sendData?.giphy },
-        userId: Number(userId),
+        userId,
         onSuccess: _onCommentSuccess,
         isCommentLevel1Screen,
         viewMore,

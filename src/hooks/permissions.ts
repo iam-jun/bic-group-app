@@ -45,7 +45,7 @@ export const useMyPermissions = () => {
 
   const hasPermissionsOnScopeWithId = (
     scope: 'communities' | 'groups',
-    id: number,
+    id: string,
     requiredPermissions: string | string[],
   ) => {
     // CHECK IF CURRENT USER HAS SOME PERMISSION ON A SPECIFIC SCOPE

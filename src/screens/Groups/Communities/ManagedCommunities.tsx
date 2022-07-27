@@ -19,7 +19,7 @@ import actions from '~/screens/Groups/redux/actions';
 import spacing from '~/theme/spacing';
 
 interface ManagedCommunitiesProps {
-  onPressCommunities?: (communityId: number) => void;
+  onPressCommunities?: (communityId: string) => void;
   onPressMenu?: (community?: any) => void;
 }
 

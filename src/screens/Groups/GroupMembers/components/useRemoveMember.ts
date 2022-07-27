@@ -10,7 +10,7 @@ import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 
 interface IUseRemoveMember {
-  groupId: number;
+  groupId: string;
   selectedMember: IGroupMembers;
 }
 
@@ -20,7 +20,7 @@ const useRemoveMember = ({ groupId, selectedMember }: IUseRemoveMember) => {
 
   const { id: userId, fullname } = selectedMember;
 
-  const removeMember = (userId: number, userFullname: string) => {
+  const removeMember = (userId: string, userFullname: string) => {
     dispatch(groupsActions.removeMember({ groupId, userId, userFullname }));
   };
 

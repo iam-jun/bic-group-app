@@ -10,7 +10,7 @@ import { AppConfig } from '~/configs';
 import { IUploadType } from '~/configs/resourceConfig';
 
 export interface IGetFile {
-  id?: number | string;
+  id?: string;
   fileName: string;
   url?: string;
   size?: any;

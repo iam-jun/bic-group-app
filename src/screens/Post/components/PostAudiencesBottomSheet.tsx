@@ -43,7 +43,7 @@ const PostAudiencesBottomSheet = () => {
     });
   };
 
-  const navigateToCommunity = (communityId: number) => {
+  const navigateToCommunity = (communityId: string) => {
     rootNavigation.navigate(mainStack.communityDetail, {
       communityId,
     });
