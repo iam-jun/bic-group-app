@@ -51,7 +51,7 @@ export default function* leaveGroup({
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err) {
     console.error('leaveGroup:', err);
-    yield showError(err);
+    yield call(showError, err);
   }
 }
 

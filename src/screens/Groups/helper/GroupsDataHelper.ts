@@ -604,19 +604,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getUserInnerGroups: async (groupId: string, username: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getUserInnerGroups(groupId, username),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getUserInnerGroups: (groupId: string, username: string) => withHttpRequestPromise(groupsApiConfig.getUserInnerGroups, groupId, username),
   getGroupPosts: async (param: IParamGetGroupPosts) => {
     try {
       const response: any = await makeHttpRequest(
@@ -691,19 +679,7 @@ const groupsDataHelper = {
   },
   joinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.joinGroup, groupId),
   cancelJoinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.cancelJoinGroup, groupId),
-  leaveGroup: async (groupId: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.leaveGroup(groupId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  leaveGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.leaveGroup, groupId),
   setGroupAdmin: async (groupId: string, userIds: string[]) => {
     try {
       const response: any = await makeHttpRequest(
@@ -801,19 +777,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getInnerGroupsLastAdmin: async (groupId: string, userId: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getInnerGroupsLastAdmin(groupId, userId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getInnerGroupsLastAdmin: (groupId: string, userId: string) => withHttpRequestPromise(groupsApiConfig.getInnerGroupsLastAdmin, groupId, userId),
   getDiscoverCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getDiscoverCommunities, params),
   getJoinedCommunities: (params: {
     previewMembers?: boolean;

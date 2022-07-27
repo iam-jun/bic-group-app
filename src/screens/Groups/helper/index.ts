@@ -14,11 +14,12 @@ export const checkLastAdmin = async (
 ) => {
   let testingAdminCount: number; // for testing purpose
   try {
-    const data = await groupsDataHelper.getInnerGroupsLastAdmin(
+    const response = await groupsDataHelper.getInnerGroupsLastAdmin(
       groupId,
       userId,
     );
 
+    const { data } = response;
     if (data === null || data.length === 0) {
       testingAdminCount = 1;
       mainCallback();
@@ -78,7 +79,7 @@ export const handleLeaveInnerGroups = async (
   // Get inner groups info (if any) when user leave/being removed from a group
   try {
     const resp = await groupsDataHelper.getUserInnerGroups(groupId, username);
-    const innerGroups = resp.data.inner_groups.map(
+    const innerGroups = resp.data.innerGroups.map(
       (group: IGroup) => group.name,
     );
     testingFlag = true;
