@@ -211,8 +211,8 @@ export interface IJoiningUserInfo {
   latestWork: {
     id: string;
     userId: string;
-    currently_work_here: boolean;
-    end_date: string | null;
+    currentlyWorkHere: boolean;
+    endDate: string | null;
     company: string | null;
     titlePosition: string | null;
   } | null;

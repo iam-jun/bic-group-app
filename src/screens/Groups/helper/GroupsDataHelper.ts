@@ -957,19 +957,8 @@ const groupsDataHelper = {
   ) => withHttpRequestPromise(groupsApiConfig.getDiscoverGroups, communityId, params),
   joinCommunity: (communityId: string) => withHttpRequestPromise(groupsApiConfig.joinCommunity, communityId),
   cancelJoinCommunity: (communityId: string) => withHttpRequestPromise(groupsApiConfig.cancelJoinCommunity, communityId),
-  getCommunityMemberRequests: async (communityId: string, params: any) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getCommunityMemberRequests(communityId, params),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  // eslint-disable-next-line max-len
+  getCommunityMemberRequests: (communityId: string, params: any) => withHttpRequestPromise(groupsApiConfig.getCommunityMemberRequests, communityId, params),
   approveSingleCommunityMemberRequest: async (
     communityId: string,
     requestId: string,
