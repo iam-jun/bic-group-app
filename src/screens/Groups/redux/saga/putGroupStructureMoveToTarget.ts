@@ -16,7 +16,7 @@ export default function* putGroupStructureMoveToTarget({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; moveId: number; targetId: number};
+  payload: {communityId: string; moveId: string; targetId: string};
 }): any {
   const { communityId, moveId, targetId } = payload || {};
   const { targetGroups, movingGroup, key } = (yield select((state) => state.groups?.groupStructure?.move)) || {};

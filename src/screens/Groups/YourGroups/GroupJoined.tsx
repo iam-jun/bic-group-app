@@ -1,7 +1,11 @@
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import React, { FC, useState } from 'react';
 import {
-  StyleSheet, TouchableOpacity, View,
+  StyleProp,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  ViewStyle,
 } from 'react-native';
 
 import { useDispatch } from 'react-redux';
@@ -16,7 +20,8 @@ import modalActions from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
 
 export interface GroupJoinedProps {
-  communityId: number;
+  style?: StyleProp<ViewStyle>;
+  communityId: string;
   initModeIndex?: number;
 }
 

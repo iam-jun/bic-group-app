@@ -22,7 +22,7 @@ import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
 
 interface PageContentProps {
-  communityId: number;
+  communityId: string;
   getPosts: () => void;
   onScroll: (e: any) => void;
   onButtonLayout: (e: any) => void;

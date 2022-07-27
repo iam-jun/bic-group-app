@@ -13,7 +13,7 @@ export default function* getDiscoverGroups({
 }: {
   type: string;
   payload: {
-    communityId: number;
+    communityId: string;
     isRefreshing?: boolean;
     params?: IParamGetDiscoverGroups;
   };

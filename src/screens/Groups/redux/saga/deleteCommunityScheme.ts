@@ -8,7 +8,7 @@ export default function* deleteCommunityScheme({
   payload,
 }: {
   type: string;
-  payload: {communityId: number | string};
+  payload: {communityId: string};
 }): any {
   const { communityId } = payload || {};
   const { data } = (yield select((state) => state.groups?.permissionScheme?.communityScheme))

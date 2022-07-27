@@ -19,7 +19,7 @@ import CommunityMemberRequest from '../CommunityAdmin/PendingMembers/CommunityMe
 import spacing from '~/theme/spacing';
 
 interface MemberRequestListProps {
-  id?: number;
+  id?: string;
   type: 'community' | 'group';
   onLoadMore: () => void;
   onRefresh: () => void;

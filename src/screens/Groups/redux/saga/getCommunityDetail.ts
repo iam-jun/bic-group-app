@@ -11,7 +11,7 @@ export default function* getCommunityDetail({
 }: {
   type: string;
   payload: {
-    communityId: number;
+    communityId: string;
     loadingPage?: boolean;
     showLoading?: boolean;
   };

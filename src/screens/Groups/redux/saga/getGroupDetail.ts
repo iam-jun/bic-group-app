@@ -10,7 +10,7 @@ export default function* getGroupDetail({
   loadingPage,
 }: {
   type: string;
-  payload: number;
+  payload: string;
   loadingPage: boolean;
 }) {
   try {

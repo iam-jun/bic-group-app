@@ -89,7 +89,7 @@ export const postApiConfig = {
     provider,
     useRetry: true,
   }),
-  getAudienceGroups: (userId: number): HttpApiRequestConfig => ({
+  getAudienceGroups: (userId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.bein.url}users/${userId}/groups-be-in`,
     method: 'get',
     provider: ApiConfig.providers.bein,
@@ -147,7 +147,7 @@ export const postApiConfig = {
       },
     };
   },
-  putMarkAsRead: (postId: string|number): HttpApiRequestConfig => ({
+  putMarkAsRead: (postId: string): HttpApiRequestConfig => ({
     url: `${ApiConfig.providers.beinFeed.url}posts/${postId}/mark-as-read`,
     method: 'put',
     provider: ApiConfig.providers.beinFeed,
@@ -224,7 +224,7 @@ export const postApiConfig = {
   }),
   getCommentDetail: (
     commentId: string,
-    params?: IRequestGetPostComment,
+    params: IRequestGetPostComment,
   ): HttpApiRequestConfig => ({
     url: `${provider.url}comments/${commentId}`,
     method: 'get',
@@ -372,7 +372,7 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  putMarkAsRead: async (postId: string|number) => {
+  putMarkAsRead: async (postId: string) => {
     try {
       const response: any = await makeHttpRequest(
         postApiConfig.putMarkAsRead(postId),
@@ -520,7 +520,7 @@ const postDataHelper = {
   },
   getCommentDetail: async (
     commentId: string,
-    params?: IRequestGetPostComment,
+    params: IRequestGetPostComment,
   ) => {
     try {
       const response: any = await makeHttpRequest(

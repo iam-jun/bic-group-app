@@ -5,8 +5,8 @@ import { IGroup, IRole, IScheme } from '~/interfaces/IGroup';
 import { ROLE_TYPE } from '~/constants/permissionScheme';
 
 export const checkLastAdmin = async (
-  groupId: string | number,
-  userId: number,
+  groupId: string,
+  userId: string,
   dispatch: any,
   mainCallback: () => void,
   onPressRight: () => void,
@@ -15,14 +15,14 @@ export const checkLastAdmin = async (
   let testingAdminCount: number; // for testing purpose
   try {
     const data = await groupsDataHelper.getInnerGroupsLastAdmin(
-      Number(groupId),
+      groupId,
       userId,
     );
 
     if (data === null || data.length === 0) {
       testingAdminCount = 1;
       mainCallback();
-    } else if (data.length === 1 && data[0].id === Number(groupId)) {
+    } else if (data.length === 1 && data[0].id === groupId) {
       testingAdminCount = 2;
       dispatch(
         modalActions.showHideToastMessage({
@@ -68,7 +68,7 @@ export const checkLastAdmin = async (
 };
 
 export const handleLeaveInnerGroups = async (
-  groupId: number,
+  groupId: string,
   username: string,
   dispatch: any,
   callback: (innerGroups: any) => void,
@@ -98,10 +98,10 @@ export const handleLeaveInnerGroups = async (
   return testingFlag;
 };
 
-export const getGroupFromTreeById = (tree: IGroup, groupId: number) => {
+export const getGroupFromTreeById = (tree: IGroup, groupId: string) => {
   let group: IGroup;
 
-  const getGroupInChildren = (parent: IGroup, groupId: number) => {
+  const getGroupInChildren = (parent: IGroup, groupId: string) => {
     if (parent?.id === groupId) {
       group = parent;
     } else if (!isEmpty(parent?.children)) {

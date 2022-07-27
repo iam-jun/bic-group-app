@@ -65,7 +65,7 @@ const AlertAssignGroupConfirmContent = () => {
 };
 
 export const findGroupInAssignmentsById = (
-  groupId: number,
+  groupId: string,
   assignments: any,
 ) => {
   let result: any;

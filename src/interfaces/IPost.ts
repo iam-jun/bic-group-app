@@ -33,7 +33,7 @@ export interface IMarkdownAudience {
 }
 
 export interface IAudience {
-  id?: number | string;
+  id?: string;
   name?: string;
   icon?: string;
   avatar?: string;
@@ -91,7 +91,7 @@ export interface ICommentData {
   loading?: boolean;
   status?: 'pending' | 'success' | 'failed';
   localId?: string | number[]; // from uuid-v4
-  parentCommentId?: string | number; // used when retry/cancel adding new comment
+  parentCommentId?: string; // used when retry/cancel adding new comment
   reactionsOfActor?: IOwnReaction;
   reaction?: IReaction;
   giphy?: IGiphy;
@@ -178,12 +178,12 @@ export interface IPostCreatePost {
   mentions?: any;
   isDraft?: boolean;
 
-  createFromGroupId?: string | number;
+  createFromGroupId?: string;
 }
 
 export interface IPayloadCreatePost {
   data?: IPostCreatePost;
-  createFromGroupId?: string | number;
+  createFromGroupId?: string;
   callback?: any;
 }
 
@@ -191,7 +191,7 @@ export interface IPayloadCreateComment {
   postId: string;
   parentCommentId?: string;
   commentData: ICommentData;
-  userId: string | number;
+  userId: string;
   localId?: string | number[]; // used when retry adding new comment
   preComment?: ICommentData;
   onSuccess?: () => void;
@@ -305,7 +305,7 @@ export interface IReaction {
 }
 
 export interface IGetStreamAudienceUser {
-  id?: number | string;
+  id?: string;
   collection?: string;
   foreign_id: string;
   data?: {
@@ -317,7 +317,7 @@ export interface IGetStreamAudienceUser {
 }
 
 export interface IGetStreamAudienceGroup {
-  id?: number | string;
+  id?: string;
   collection?: string;
   foreign_id: string;
   data?: {
@@ -463,7 +463,7 @@ export interface IPayloadPublishDraftPost {
   onSuccess?: () => void;
   onError?: () => void;
   refreshDraftPosts?: boolean;
-  createFromGroupId?: string | number;
+  createFromGroupId?: string;
 }
 
 export interface IPayloadPutEditDraftPost {
@@ -472,7 +472,7 @@ export interface IPayloadPutEditDraftPost {
   replaceWithDetail?: boolean;
   publishNow: boolean;
   callback?: any;
-  createFromGroupId?: string | number;
+  createFromGroupId?: string;
 }
 
 export interface IPayloadPutEditAutoSave {
@@ -486,7 +486,7 @@ export interface IParamGetPostAudiences {
 }
 
 export interface IPayloadUpdateReaction {
-  userId: number;
+  userId: string;
   data: ISocketReaction;
 }
 

@@ -17,7 +17,7 @@ interface SearchCommunityViewProps {
   placeholder?: string;
   initSearch?: string;
   onClose?: () => void;
-  onPressCommunity: (id: number) => void;
+  onPressCommunity: (id: string) => void;
 }
 
 const SearchCommunityView = ({

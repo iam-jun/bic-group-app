@@ -10,7 +10,7 @@ export default function* editWorkExperience({
   id,
 }: {
   type: string;
-  id: number;
+  id: string;
   payload: IUserAddWorkExperience;
   callback?: () => void;
 }) {

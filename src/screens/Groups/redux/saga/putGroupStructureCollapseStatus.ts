@@ -7,7 +7,7 @@ export default function* putGroupStructureCollapseStatus({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; groupId: number; isCollapse: boolean};
+  payload: {communityId: string; groupId: string; isCollapse: boolean};
 }): any {
   const { communityId, groupId, isCollapse } = payload || {};
   try {

@@ -1,10 +1,7 @@
 import { get } from 'lodash';
 import { call, select } from 'redux-saga/effects';
 
-import {
-  IPayloadReactToPost,
-  IReaction,
-} from '~/interfaces/IPost';
+import { IPayloadReactToPost, IReaction } from '~/interfaces/IPost';
 import showError from '~/store/commonSaga/showError';
 import postDataHelper from '../../helper/PostDataHelper';
 import postKeySelector from '../keySelector';
@@ -41,7 +38,7 @@ export default function* deleteReactToPost({
 }
 
 // function* addReactionLoadingLocal(
-//   id: number,
+//   id: string,
 //   reactionId: string,
 //   ownerReaction: IOwnReaction,
 //   reactionCounts: IReactionCounts,

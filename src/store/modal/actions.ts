@@ -116,7 +116,7 @@ export const setUserProfilePreviewBottomSheet = (payload: IUserPreview) => ({
 });
 
 export const showUserProfilePreviewBottomSheet = (payload: {
-  userId?: number | string;
+  userId?: string;
   params?: IObject<any>;
   position?: {x: number; y: number};
 }) => ({
