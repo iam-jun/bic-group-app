@@ -11,7 +11,9 @@ export const mentionInputInitState = {
   tempSelected: {},
 };
 
-const reducer = (state = mentionInputInitState, action: any = {}) => {
+const reducer = (
+  state = mentionInputInitState, action: any = {},
+) => {
   const { type, payload } = action;
 
   switch (type) {

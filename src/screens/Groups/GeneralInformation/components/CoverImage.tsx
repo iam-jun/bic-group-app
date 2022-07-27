@@ -27,7 +27,9 @@ const CoverImage = ({
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = themeStyles(theme, coverHeight);
+  const styles = themeStyles(
+    theme, coverHeight,
+  );
   const loadingCover = useKeySelector(groupsKeySelector.loadingCover);
 
   const onCoverLayout = (e: any) => {
@@ -76,7 +78,9 @@ const CoverImage = ({
   );
 };
 
-const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
+const themeStyles = (
+  theme: ExtendedTheme, coverHeight: number,
+) => {
   const { colors } = theme;
 
   return StyleSheet.create({

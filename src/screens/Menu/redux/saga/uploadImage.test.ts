@@ -53,7 +53,7 @@ describe('Update User Profile Image Saga', () => {
       type: 'test',
       payload: {
         id: 58,
-        fieldName: 'background_img_url',
+        fieldName: 'backgroundImgUrl',
         uploadType: uploadTypes.userCover,
         file: {
           filename: '04A144B0-F231-421F-B59F-C6AFF0DE0D94.jpg',
@@ -67,16 +67,16 @@ describe('Update User Profile Image Saga', () => {
         },
       },
     };
-    const background_img_url =
+    const backgroundImgUrl =
       'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/4a8c0ce3-0813-4387-9547-eadcd7fee38b.jpg';
     const expectData = {
       id: 58,
-      background_img_url: background_img_url,
+      backgroundImgUrl: backgroundImgUrl,
     };
 
     jest.spyOn(ImageUploader, 'getInstance').mockImplementation(() => {
       return {
-        upload: jest.fn().mockResolvedValue({url: background_img_url}),
+        upload: jest.fn().mockResolvedValue({url: backgroundImgUrl}),
       } as any;
     });
 
@@ -84,7 +84,7 @@ describe('Update User Profile Image Saga', () => {
     //@ts-ignore
     return expectSaga(uploadImage, coverPhotoAction)
       .put(menuActions.setLoadingCover(true))
-      .provide([[matchers.call.fn(fileUploader.upload), background_img_url]])
+      .provide([[matchers.call.fn(fileUploader.upload), backgroundImgUrl]])
       .put(menuActions.editMyProfile(expectData))
       .run();
   });

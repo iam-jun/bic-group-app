@@ -13,14 +13,18 @@ const Stack = createNativeStackNavigator();
 const AuthStack = () => {
   const Stacks: IObject<any> = authStacks;
   const currentUserId = useUserIdAuth();
-  useEffect(() => {
-    if (!currentUserId) {
+  useEffect(
+    () => {
+      if (!currentUserId) {
       // make sure delete push token when user logout (when no internet)
-      initPushTokenMessage()
-        .then((messaging) => messaging().deleteToken())
-        .catch((e) => console.log('error when delete push token at auth stack', e));
-    }
-  }, [currentUserId]);
+        initPushTokenMessage()
+          .then((messaging) => messaging().deleteToken())
+          .catch((e) => console.log(
+            'error when delete push token at auth stack', e,
+          ));
+      }
+    }, [currentUserId],
+  );
   return (
     <Stack.Navigator initialRouteName={authStack.landing}>
       <Stack.Screen

@@ -39,12 +39,12 @@ const MemberList = ({
 
   const renderEmpty = () => (!loading ? <NoSearchResult /> : null);
 
-  const renderSectionHeader = ({ section: { title, user_count } }: any) => (
+  const renderSectionHeader = ({ section: { title, userCount } }: any) => (
     <View style={styles.sectionHeader}>
       <Text.BodyM
         color={colors.neutral80}
       >
-        {`${title} • ${user_count}`}
+        {`${title} • ${userCount}`}
       </Text.BodyM>
     </View>
   );
@@ -80,7 +80,9 @@ const MemberList = ({
       testID="member_list"
       style={styles.content}
       sections={sectionList}
-      keyExtractor={(item, index) => `member_list_${item.id}_${index}`}
+      keyExtractor={(
+        item, index,
+      ) => `member_list_${item.id}_${index}`}
       onEndReached={onLoadMore}
       onEndReachedThreshold={0.1}
       ListEmptyComponent={renderEmpty}

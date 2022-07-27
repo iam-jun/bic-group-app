@@ -35,48 +35,48 @@ const NFSSuggestion: FC<NFSSuggestionProps> = ({
   const { data: listRecentKeywords } = useKeySelector(homeKeySelector.newsfeedSearchRecentKeyword) || {};
 
   const searchText = useKeySelector(homeKeySelector.newsfeedSearch.searchText);
-  const searchInputRef = useKeySelector(
-    homeKeySelector.newsfeedSearch.searchInputRef,
+  const searchInputRef = useKeySelector(homeKeySelector.newsfeedSearch.searchInputRef);
+
+  const ctaText = t('home:newsfeed_search:text_cta_see_result_for_search_text').replace(
+    '%SEARCH_TEXT%', searchText,
   );
 
-  const ctaText = t(
-    'home:newsfeed_search:text_cta_see_result_for_search_text',
-  ).replace('%SEARCH_TEXT%', searchText);
-
-  useEffect(() => {
-    if (isInternetReachable) {
-      if (
-        lossInternet
+  useEffect(
+    () => {
+      if (isInternetReachable) {
+        if (
+          lossInternet
         && (!listRecentKeywords || listRecentKeywords?.length === 0)
-      ) {
-        setLossInternet(false);
-        dispatch(
-          homeActions.getRecentSearchKeywords({
+        ) {
+          setLossInternet(false);
+          dispatch(homeActions.getRecentSearchKeywords({
             target: 'post',
             order: 'DESC',
             limit: 10,
             showLoading: true,
-          }),
-        );
+          }));
+        }
+      } else {
+        setLossInternet(true);
       }
-    } else {
-      setLossInternet(true);
-    }
-  }, [isInternetReachable]);
+    }, [isInternetReachable],
+  );
 
-  useEffect(() => {
+  useEffect(
+    () => {
     // timeout wait animation of header finish to avoid lagging
-    setTimeout(() => {
-      dispatch(
-        homeActions.getRecentSearchKeywords({
-          target: 'post',
-          order: 'DESC',
-          limit: 10,
-          showLoading: false,
-        }),
+      setTimeout(
+        () => {
+          dispatch(homeActions.getRecentSearchKeywords({
+            target: 'post',
+            order: 'DESC',
+            limit: 10,
+            showLoading: false,
+          }));
+        }, 500,
       );
-    }, 500);
-  }, []);
+    }, [],
+  );
 
   const onPressCtaSearch = () => {
     searchInputRef?.current?.blur?.();

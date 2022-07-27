@@ -35,41 +35,55 @@ const TimeView: FC<TimeViewProps> = ({
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
 
-  useEffect(() => {
-    getDisplayTime();
+  useEffect(
+    () => {
+      getDisplayTime();
 
-    // start interval if delta time < 60 mins and type short
-    let interval: any;
-    const date = moment.utc(time).unix();
-    const now = moment().unix();
-    const deltaSecond = Math.max(now - date, date - now);
-    if (deltaSecond < limitInterval && type === 'short') {
-      interval = setInterval(() => {
-        getDisplayTime();
-      }, intervalTime);
-    }
-
-    return () => {
-      if (interval) {
-        clearInterval(interval);
+      // start interval if delta time < 60 mins and type short
+      let interval: any;
+      const date = moment.utc(time).unix();
+      const now = moment().unix();
+      const deltaSecond = Math.max(
+        now - date, date - now,
+      );
+      if (deltaSecond < limitInterval && type === 'short') {
+        interval = setInterval(
+          () => {
+            getDisplayTime();
+          }, intervalTime,
+        );
       }
-    };
-  }, [time, language]);
 
-  const getDisplayTime = useCallback(() => {
-    let result = '';
-    if (!time) {
-      return;
-    }
-    if (type === 'fullDateTime') {
-      result = formatFullTime(time, language);
-    } else if (type === 'dateTime') {
-      result = formatDateTime(time, language);
-    } else {
-      result = formatShortTime(time, language);
-    }
-    setDisplayTime(result);
-  }, [time, language]);
+      return () => {
+        if (interval) {
+          clearInterval(interval);
+        }
+      };
+    }, [time, language],
+  );
+
+  const getDisplayTime = useCallback(
+    () => {
+      let result = '';
+      if (!time) {
+        return;
+      }
+      if (type === 'fullDateTime') {
+        result = formatFullTime(
+          time, language,
+        );
+      } else if (type === 'dateTime') {
+        result = formatDateTime(
+          time, language,
+        );
+      } else {
+        result = formatShortTime(
+          time, language,
+        );
+      }
+      setDisplayTime(result);
+    }, [time, language],
+  );
 
   return (
     <Text.BodyS

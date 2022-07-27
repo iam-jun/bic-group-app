@@ -22,13 +22,17 @@ export default function* signIn({
     yield messaging()
       .deleteToken()
       .catch((e: any) => {
-        console.log('error when delete push token before log in', e);
+        console.log(
+          'error when delete push token before log in', e,
+        );
         return true;
       });
     yield put(notificationsActions.savePushToken(''));
     const { email, password } = payload;
     // handle result in useAuthHub
-    yield Auth.signIn(email, password);
+    yield Auth.signIn(
+      email, password,
+    );
   } catch (error: any) {
     let errorMessage;
     switch (error?.code) {

@@ -54,19 +54,21 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 
   if (!id) return null;
 
-  const itemValue = useKeySelector(
-    notificationSelector.getNotificationById(id),
-  );
+  const itemValue = useKeySelector(notificationSelector.getNotificationById(id));
 
-  const _itemValue = React.useMemo(() => {
-    if (
-      itemValue !== undefined
+  const _itemValue = React.useMemo(
+    () => {
+      if (
+        itemValue !== undefined
       && itemValue !== null
-      && !isEqual(JSON.stringify(itemValue), JSON.stringify(_itemValue))
-    ) {
-      return itemValue;
-    }
-  }, [itemValue, onPress, onPressOption, testID, id]);
+      && !isEqual(
+        JSON.stringify(itemValue), JSON.stringify(_itemValue),
+      )
+      ) {
+        return itemValue;
+      }
+    }, [itemValue, onPress, onPressOption, testID, id],
+  );
   const {
     activities, isRead, updatedAt, extra, verb, actorCount,
   }: any = _itemValue || {};

@@ -51,7 +51,9 @@ const useLeaveGroup = ({ groupId, username }: IUseLeaveGroup) => {
   };
 
   const alertLeaveGroup = () => {
-    handleLeaveInnerGroups(groupId, username, dispatch, getInnerGroupsText);
+    handleLeaveInnerGroups(
+      groupId, username, dispatch, getInnerGroupsText,
+    );
   };
 
   return alertLeaveGroup;

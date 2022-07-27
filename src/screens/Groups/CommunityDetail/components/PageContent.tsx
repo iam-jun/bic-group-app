@@ -40,24 +40,24 @@ const _PageContent = ({
   const styles = createStyles(theme);
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const { join_status, group_id } = infoDetail;
-  const isMember = join_status === groupJoinStatus.member;
+  const { joinStatus, groupId } = infoDetail;
+  const isMember = joinStatus === groupJoinStatus.member;
   const posts = useKeySelector(groupsKeySelector.posts);
-  const refreshingGroupPosts = useKeySelector(
-    groupsKeySelector.refreshingGroupPosts,
-  );
+  const refreshingGroupPosts = useKeySelector(groupsKeySelector.refreshingGroupPosts);
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canCreatePostArticle = hasPermissionsOnScopeWithId(
     'groups',
-    group_id,
+    groupId,
     PERMISSION_KEY.GROUP.CREATE_POST_ARTICLE,
   );
 
   const dispatch = useDispatch();
 
   const onPressDiscover = () => {
-    rootNavigation.navigate(groupStack.discoverGroups, { communityId });
+    rootNavigation.navigate(
+      groupStack.discoverGroups, { communityId },
+    );
   };
 
   const onPressAbout = () => {
@@ -65,17 +65,21 @@ const _PageContent = ({
   };
 
   const onPressMembers = () => {
-    rootNavigation.navigate(groupStack.communityMembers, { communityId });
+    rootNavigation.navigate(
+      groupStack.communityMembers, { communityId },
+    );
   };
 
   const loadMoreData = () => {
     if (posts.extra.length !== 0) {
-      dispatch(actions.mergeExtraGroupPosts(group_id));
+      dispatch(actions.mergeExtraGroupPosts(groupId));
     }
   };
 
   const onPressYourGroups = () => {
-    rootNavigation.navigate(groupStack.yourGroups, { communityId });
+    rootNavigation.navigate(
+      groupStack.yourGroups, { communityId },
+    );
   };
 
   const _onScroll = (e: any) => {
@@ -154,8 +158,8 @@ const _PageContent = ({
       {isMember && canCreatePostArticle && (
       <HeaderCreatePost
         style={styles.createPost}
-        audience={{ ...infoDetail, id: group_id }}
-        createFromGroupId={group_id}
+        audience={{ ...infoDetail, id: groupId }}
+        createFromGroupId={groupId}
       />
       )}
     </>

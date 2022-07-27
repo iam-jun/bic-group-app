@@ -26,12 +26,14 @@ const GroupJoinedList: FC<GroupJoinedListProps> = ({
     dispatch(groupsActions.getYourGroupsList(communityId));
   };
 
-  useEffect(() => {
-    getData();
-    return () => {
-      dispatch(groupsActions.setYourGroupsList({ loading: true, list: [] }));
-    };
-  }, []);
+  useEffect(
+    () => {
+      getData();
+      return () => {
+        dispatch(groupsActions.setYourGroupsList({ loading: true, list: [] }));
+      };
+    }, [],
+  );
 
   const renderEmpty = () => (
     <EmptyScreen

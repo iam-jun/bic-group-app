@@ -27,7 +27,9 @@ const GroupApproveDeclineAllRequests = () => {
 
   const navigateToGroupMembers = () => {
     dispatch(clearToastMessage());
-    rootNavigation.navigate(groupStack.groupMembers, { groupId });
+    rootNavigation.navigate(
+      groupStack.groupMembers, { groupId },
+    );
   };
 
   const alertAction = (
@@ -55,28 +57,32 @@ const GroupApproveDeclineAllRequests = () => {
   const onPressApproveAll = () => {
     alertAction(
       t('groups:text_respond_all_member_requests:title:approve'),
-      t('groups:text_respond_all_member_requests:content:approve', {
-        count: total,
-      }).replace('{0}', name),
+      t(
+        'groups:text_respond_all_member_requests:content:approve', {
+          count: total,
+        },
+      ).replace(
+        '{0}', name,
+      ),
       doApproveAll,
     );
   };
 
   const doApproveAll = () => {
-    dispatch(
-      groupsActions.approveAllGroupMemberRequests({
-        groupId,
-        callback: navigateToGroupMembers,
-      }),
-    );
+    dispatch(groupsActions.approveAllGroupMemberRequests({
+      groupId,
+      callback: navigateToGroupMembers,
+    }));
   };
 
   const onPressDeclineAll = () => {
     alertAction(
       t('groups:text_respond_all_member_requests:title:decline'),
-      t('groups:text_respond_all_member_requests:content:decline', {
-        count: total,
-      }),
+      t(
+        'groups:text_respond_all_member_requests:content:decline', {
+          count: total,
+        },
+      ),
       doDeclineAll,
     );
   };
@@ -104,9 +110,11 @@ const GroupApproveDeclineAllRequests = () => {
     };
     dispatch(modalActions.showHideToastMessage(toastMessage));
 
-    timeOutRef.current = setTimeout(() => {
-      dispatch(groupsActions.declineAllGroupMemberRequests({ groupId }));
-    }, 4500);
+    timeOutRef.current = setTimeout(
+      () => {
+        dispatch(groupsActions.declineAllGroupMemberRequests({ groupId }));
+      }, 4500,
+    );
   };
 
   return (

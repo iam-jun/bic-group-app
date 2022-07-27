@@ -11,19 +11,25 @@ export const useAnimatedValue = (
 
   const _animated = () => {
     Animated.sequence([
-      Animated.timing(animatedValue, {
-        toValue: end,
-        duration,
-        useNativeDriver: false,
-      }),
+      Animated.timing(
+        animatedValue, {
+          toValue: end,
+          duration,
+          useNativeDriver: false,
+        },
+      ),
     ]).start();
   };
 
-  useEffect(() => {
-    const _animate = setTimeout(() => _animated(), startDelay);
+  useEffect(
+    () => {
+      const _animate = setTimeout(
+        () => _animated(), startDelay,
+      );
 
-    return () => clearTimeout(_animate);
-  }, [_animated, startDelay]);
+      return () => clearTimeout(_animate);
+    }, [_animated, startDelay],
+  );
 
   return animatedValue;
 };

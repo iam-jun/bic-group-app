@@ -58,19 +58,21 @@ const _GroupMembers = (props: any) => {
     }
   };
 
-  useEffect(() => {
-    if (!isInternetReachable) {
-      setNeedReloadWhenReconnected(true);
-      return;
-    }
+  useEffect(
+    () => {
+      if (!isInternetReachable) {
+        setNeedReloadWhenReconnected(true);
+        return;
+      }
 
-    const isDataEmpty = offset === 0;
-    if (needReloadWhenReconnected && isDataEmpty) {
-      getMembers();
-      getGroupProfile();
-      setNeedReloadWhenReconnected(false);
-    }
-  }, [isInternetReachable]);
+      const isDataEmpty = offset === 0;
+      if (needReloadWhenReconnected && isDataEmpty) {
+        getMembers();
+        getGroupProfile();
+        setNeedReloadWhenReconnected(false);
+      }
+    }, [isInternetReachable],
+  );
 
   const clearSelectedMember = () => setSelectedMember(undefined);
 
@@ -111,7 +113,9 @@ const _GroupMembers = (props: any) => {
   );
   const goInviteMembers = () => {
     dispatch(groupsActions.clearSelectedUsers());
-    rootNavigation.navigate(groupStack.inviteMembers, { groupId });
+    rootNavigation.navigate(
+      groupStack.inviteMembers, { groupId },
+    );
   };
 
   return (

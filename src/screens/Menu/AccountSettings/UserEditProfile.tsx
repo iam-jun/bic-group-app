@@ -17,7 +17,7 @@ import Button from '~/beinComponents/Button';
 
 import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import genders from '~/constants/genders';
-import relationshipStatus from '~/constants/relationshipStatus';
+import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
 import speakingLanguages from '~/constants/speakingLanguages';
 import { IFilePicked } from '~/interfaces/common';
 import images from '~/resources/images';
@@ -52,7 +52,9 @@ const UserEditProfile = (props: any) => {
 
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = themeStyles(theme, coverHeight);
+  const styles = themeStyles(
+    theme, coverHeight,
+  );
   const dispatch = useDispatch();
 
   const myProfile: any = useKeySelector(menuKeySelector.myProfile);
@@ -63,13 +65,13 @@ const UserEditProfile = (props: any) => {
     fullname,
     gender,
     avatar,
-    background_img_url,
+    backgroundImgUrl,
     birthday,
     language,
-    relationship_status,
+    relationshipStatus,
     email,
     phone,
-    country_code,
+    countryCode,
     country,
     city,
     description,
@@ -89,36 +91,37 @@ const UserEditProfile = (props: any) => {
     if (userId) dispatch(menuActions.getUserProfile({ userId }));
   };
 
-  useEffect(() => {
-    setShowEditButton(
-      userId?.toString?.() === currentUserId?.toString?.()
-        || userId?.toString?.() === currentUsername?.toString?.(),
-    );
-    if (
-      userId?.toString?.() === currentUserId?.toString?.()
+  useEffect(
+    () => {
+      setShowEditButton(userId?.toString?.() === currentUserId?.toString?.()
+        || userId?.toString?.() === currentUsername?.toString?.());
+      if (
+        userId?.toString?.() === currentUserId?.toString?.()
       || userId?.toString?.() === currentUsername?.toString?.()
-    ) {
-      dispatch(homeActions.getHomePosts({ isRefresh: true }));
-      setUserData(myProfile);
-    } else {
-      setUserData(userProfileData);
-    }
-    dispatch(menuActions.getUserWorkExperience(userId));
-  }, [myProfile, userProfileData, userId]);
-
-  useEffect(() => {
-    getUserProfile();
-  }, []);
-
-  useEffect(() => {
-    dispatch(menuActions.getMyWorkExperience());
-  }, []);
-
-  const userLanguageList = language?.map(
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    (code: string) => speakingLanguages[code].name,
+      ) {
+        dispatch(homeActions.getHomePosts({ isRefresh: true }));
+        setUserData(myProfile);
+      } else {
+        setUserData(userProfileData);
+      }
+      dispatch(menuActions.getUserWorkExperience(userId));
+    }, [myProfile, userProfileData, userId],
   );
+
+  useEffect(
+    () => {
+      getUserProfile();
+    }, [],
+  );
+
+  useEffect(
+    () => {
+      dispatch(menuActions.getMyWorkExperience());
+    }, [],
+  );
+
+  // @ts-ignore
+  const userLanguageList = language?.map((code: string) => speakingLanguages[code].name);
   const userLanguages = userLanguageList?.join(', ');
 
   const goToEditInfo = () => rootNavigation.navigate(mainStack.editBasicInfo);
@@ -137,41 +140,45 @@ const UserEditProfile = (props: any) => {
 
   const uploadFile = (
     file: IFilePicked,
-    fieldName: 'avatar' | 'background_img_url',
+    fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
-    dispatch(
-      menuActions.uploadImage({
-        id,
-        file,
-        fieldName,
-        uploadType,
-      }),
-    );
+    dispatch(menuActions.uploadImage({
+      id,
+      file,
+      fieldName,
+      uploadType,
+    }));
   };
 
   // fieldName: field name in group profile to be edited
-  // 'avatar' for avatar and 'background_img_url' for cover
+  // 'avatar' for avatar and 'backgroundImgUrl' for cover
   const _openImagePicker = async (
-    fieldName: 'avatar' | 'background_img_url',
+    fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
-    checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
-      if (canOpenPicker) {
-        ImagePicker.openPickerSingle({
-          ...userProfileImageCropRatio[fieldName],
-          cropping: true,
-          mediaType: 'photo',
-        }).then((file) => {
-          uploadFile(file, fieldName, uploadType);
-        });
-      }
-    });
+    checkPermission(
+      permissionTypes.photo, dispatch, (canOpenPicker) => {
+        if (canOpenPicker) {
+          ImagePicker.openPickerSingle({
+            ...userProfileImageCropRatio[fieldName],
+            cropping: true,
+            mediaType: 'photo',
+          }).then((file) => {
+            uploadFile(
+              file, fieldName, uploadType,
+            );
+          });
+        }
+      },
+    );
   };
 
-  const onEditAvatar = () => _openImagePicker('avatar', uploadTypes.userAvatar);
+  const onEditAvatar = () => _openImagePicker(
+    'avatar', uploadTypes.userAvatar,
+  );
 
-  const onEditCover = () => _openImagePicker('background_img_url', uploadTypes.userCover);
+  const onEditCover = () => _openImagePicker('backgroundImgUrl', uploadTypes.userCover);
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -252,7 +259,7 @@ const UserEditProfile = (props: any) => {
           {!loadingCover ? (
             <Image
               style={styles.cover}
-              source={background_img_url || images.img_cover_default}
+              source={backgroundImgUrl || images.img_cover_default}
             />
           ) : (
             <View style={[styles.cover, styles.imageLoading]}>
@@ -334,7 +341,9 @@ const UserEditProfile = (props: any) => {
         <SettingItem
           title="settings:title_birthday"
           subtitle={
-              formatDate(birthday, 'MMMM DD, YYYY')
+              formatDate(
+                birthday, 'MMMM DD, YYYY',
+              )
               || i18next.t('common:text_not_set')
             }
           leftIcon="Calendar"
@@ -351,7 +360,7 @@ const UserEditProfile = (props: any) => {
           subtitle={
               // eslint-disable-next-line @typescript-eslint/ban-ts-comment
               // @ts-ignore
-              i18next.t(relationshipStatus[relationship_status])
+              i18next.t(RELATIONSHIP_STATUS[relationshipStatus])
               || i18next.t('common:text_not_set')
             }
           leftIcon="Heart"
@@ -391,8 +400,8 @@ const UserEditProfile = (props: any) => {
         <SettingItem
           title="settings:title_phone_number"
           subtitle={
-              country_code && phone
-                ? `(+${country_code}) ${phone}`
+              countryCode && phone
+                ? `(+${countryCode}) ${phone}`
                 : i18next.t('common:text_not_set')
             }
           leftIcon="Phone"
@@ -427,17 +436,15 @@ const UserEditProfile = (props: any) => {
       ContentComponent={(
         <View>
           <Text.ButtonM>
-            {`${item?.titlePosition} ${i18next.t(
-              'common:text_at',
-            )} ${item?.company}`}
+            {`${item?.titlePosition} ${i18next.t('common:text_at')} ${item?.company}`}
           </Text.ButtonM>
           {item?.startDate && (
           <Text>
-            {`${formatDate(item.startDate, 'MMM Do, YYYY')} ${
+            {`${formatDate(
+              item.startDate, 'MMM Do, YYYY',
+            )} ${
               item?.currentlyWorkHere
-                ? `${i18next.t('common:text_to')} ${i18next.t(
-                  'common:text_present',
-                )}`
+                ? `${i18next.t('common:text_to')} ${i18next.t('common:text_present')}`
                 : item?.endDate
                   ? `${i18next.t('common:text_to')} ${formatDate(
                     item.endDate,
@@ -528,7 +535,9 @@ const UserEditProfile = (props: any) => {
 
 export default UserEditProfile;
 
-const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
+const themeStyles = (
+  theme: ExtendedTheme, coverHeight: number,
+) => {
   const { colors } = theme;
 
   return StyleSheet.create({

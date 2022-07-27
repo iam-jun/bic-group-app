@@ -45,7 +45,9 @@ export const SortableItem = ({
       x.value = event.translationX;
       y.value = safeOffsetY.value + event.translationY;
       const offsetY = Math.round(y.value / height) * height;
-      offsets.forEach((o, i) => {
+      offsets.forEach((
+        o, i,
+      ) => {
         if (o.y.value === offsetY && i !== index) {
           const tmp = o.y.value;
           o.y.value = offset.y.value;
@@ -57,9 +59,11 @@ export const SortableItem = ({
       gestureActive.value = false;
       gestureFinishing.value = true;
       x.value = withTiming(0);
-      y.value = withTiming(offset.y.value, {}, () => {
-        gestureFinishing.value = false;
-      });
+      y.value = withTiming(
+        offset.y.value, {}, () => {
+          gestureFinishing.value = false;
+        },
+      );
       !!onEnd && runOnJS(onEnd)();
     },
   });

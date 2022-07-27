@@ -39,16 +39,16 @@ const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
     dispatch(groupsActions.setGroupStructureMoveSelecting(item));
   };
 
-  const onChangeSearch = debounce((key: string) => {
-    dispatch(
-      groupsActions.getGroupStructureMoveTargets({ communityId, groupId, key }),
-    );
-  }, 300);
+  const onChangeSearch = debounce(
+    (key: string) => {
+      dispatch(groupsActions.getGroupStructureMoveTargets({ communityId, groupId, key }));
+    }, 300,
+  );
 
   const renderItem = (item: any) => {
     const isActive = selecting?.id === item?.id;
     return (
-      <Animated.View entering={LightSpeedInLeft} layout={Layout.springify()}>
+      <Animated.View key={`move_group_target_${item?.id}`} entering={LightSpeedInLeft} layout={Layout.springify()}>
         <TouchableOpacity
           style={[
             styles.itemContainer,
@@ -89,9 +89,7 @@ const MoveGroupTargets: FC<MoveGroupTargetsProps> = ({
       <SearchInput
         style={styles.searchInput}
         onChangeText={onChangeSearch}
-        placeholder={t(
-          'communities:group_structure:text_move_group_search_placeholder',
-        )}
+        placeholder={t('communities:group_structure:text_move_group_search_placeholder')}
       />
       <Animated.View>{targets?.map?.(renderItem)}</Animated.View>
     </View>

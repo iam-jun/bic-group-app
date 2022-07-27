@@ -29,7 +29,9 @@ const requestPermission = async (type: permissionTypes) => {
     const result = await request(permissions);
     return result;
   } catch (error) {
-    console.error('>>>>>>>REQUEST PERMISSION ERROR>>>>>', error);
+    console.error(
+      '>>>>>>>REQUEST PERMISSION ERROR>>>>>', error,
+    );
     return false;
   }
 };
@@ -78,7 +80,9 @@ export const checkPermission = async (
       callback(true);
     }
   } catch (error) {
-    console.error('>>>>>>>CHECK PERMISSION ERROR>>>>>', error);
+    console.error(
+      '>>>>>>>CHECK PERMISSION ERROR>>>>>', error,
+    );
     callback(false);
     return false;
   }

@@ -7,7 +7,7 @@ import Button from '~/beinComponents/Button';
 import Divider from '~/beinComponents/Divider';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Text from '~/beinComponents/Text';
-import { formatDateTime } from '~/beinComponents/TimeView';
+import { formatDateTime } from '~/beinComponents/TimeView/helper';
 import { AppContext } from '~/contexts/AppContext';
 import { useBaseHook } from '~/hooks';
 import modalActions from '~/store/modal/actions';
@@ -31,12 +31,8 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
 }: NFSFilterDateProps) => {
   const [selectingStartDate, setSelectingStartDate] = useState(false);
   const [selectingEndDate, setSelectingEndDate] = useState(false);
-  const [selectedStartDate, setSelectedStartDate] = useState<any>(
-    startDate || getDefaultStartDate(),
-  );
-  const [selectedEndDate, setSelectedEndDate] = useState<any>(
-    endDate || getDefaultEndDate(),
-  );
+  const [selectedStartDate, setSelectedStartDate] = useState<any>(startDate || getDefaultStartDate());
+  const [selectedEndDate, setSelectedEndDate] = useState<any>(endDate || getDefaultEndDate());
   const [startDateErr, setStartDateErr] = useState(false);
   const [endDateErr, setEndDateErr] = useState(false);
 
@@ -49,7 +45,9 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
 
   const onPressApply = () => {
     dismissModalOnPress && dispatch(modalActions.hideModal());
-    onSelect?.(selectedStartDate, selectedEndDate);
+    onSelect?.(
+      selectedStartDate, selectedEndDate,
+    );
   };
 
   const onChangeDatePicker = (date?: Date) => {
@@ -58,16 +56,22 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
       setSelectingStartDate(false);
       if (date) {
         setSelectedStartDate(date);
-        isValid = isValidDate(date, selectedEndDate);
+        isValid = isValidDate(
+          date, selectedEndDate,
+        );
         setStartDateErr(!isValid);
         setEndDateErr(false);
       }
     } else if (selectedEndDate) {
       setSelectingEndDate(false);
       if (date) {
-        date.setHours(23, 59, 59);
+        date.setHours(
+          23, 59, 59,
+        );
         setSelectedEndDate(date);
-        isValid = isValidDate(selectedStartDate, date);
+        isValid = isValidDate(
+          selectedStartDate, date,
+        );
         setEndDateErr(!isValid);
         setStartDateErr(false);
       }
@@ -94,7 +98,9 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
             style={startDateErr ? styles.buttonRightErr : styles.buttonRight}
             textColor={startDateErr ? colors.red60 : colors.purple50}
           >
-            {formatDateTime(selectedStartDate, language)}
+            {formatDateTime(
+              selectedStartDate, language,
+            )}
           </Button.Secondary>
         )}
       />
@@ -112,7 +118,9 @@ const NFSFilterDate: FC<NFSFilterDateProps> = ({
             style={endDateErr ? styles.buttonRightErr : styles.buttonRight}
             textColor={endDateErr ? colors.red60 : colors.purple50}
           >
-            {formatDateTime(selectedEndDate, language)}
+            {formatDateTime(
+              selectedEndDate, language,
+            )}
           </Button.Secondary>
         )}
       />

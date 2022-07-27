@@ -22,20 +22,24 @@ const UsersSeenPostBottomSheet = ({ postId }: {postId: string}) => {
   const { rootNavigation } = useRootNavigation();
   const insets = useSafeAreaInsets();
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyle(theme, insets);
+  const styles = createStyle(
+    theme, insets,
+  );
   const { colors } = theme;
   const { t } = useBaseHook();
 
-  React.useEffect(() => {
-    dispatch(postActions.getSeenPost({ postId }));
-    return () => {
-      const payloadSet = {
-        data: [],
-        canLoadMore: true,
+  React.useEffect(
+    () => {
+      dispatch(postActions.getSeenPost({ postId }));
+      return () => {
+        const payloadSet = {
+          data: [],
+          canLoadMore: true,
+        };
+        dispatch(postActions.setSeenPost(payloadSet));
       };
-      dispatch(postActions.setSeenPost(payloadSet));
-    };
-  }, []);
+    }, [],
+  );
 
   const dataList = useKeySelector(postKeySelector.seenPostList.dataList);
   const canLoadMore = useKeySelector(postKeySelector.seenPostList.canLoadMore);
@@ -49,14 +53,18 @@ const UsersSeenPostBottomSheet = ({ postId }: {postId: string}) => {
 
     const itemUserId = item?.item?.id;
     if (itemUserId) {
-      rootNavigation.navigate(mainStack.userProfile, { userId: itemUserId });
+      rootNavigation.navigate(
+        mainStack.userProfile, { userId: itemUserId },
+      );
     } else {
-      rootNavigation.navigate(mainStack.userProfile, {
-        userId: item?.item.username,
-        params: {
-          type: 'username',
+      rootNavigation.navigate(
+        mainStack.userProfile, {
+          userId: item?.item.username,
+          params: {
+            type: 'username',
+          },
         },
-      });
+      );
     }
   };
 
@@ -98,7 +106,9 @@ const UsersSeenPostBottomSheet = ({ postId }: {postId: string}) => {
   );
 };
 
-const createStyle = (theme: ExtendedTheme, insets: any) => {
+const createStyle = (
+  theme: ExtendedTheme, insets: any,
+) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {

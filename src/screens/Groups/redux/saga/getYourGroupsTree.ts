@@ -12,11 +12,12 @@ export default function* getYourGroupsTree({
 }): any {
   try {
     yield put(groupsActions.setYourGroupsTree({ loading: true }));
-    const groups = yield call(
+    const response = yield call(
       groupsDataHelper.getCommunityGroups,
       communityId,
-      { list_by: 'tree' },
+      { listBy: 'tree' },
     );
+    const groups = response.data;
     yield put(
       groupsActions.setYourGroupsTree({ loading: false, list: groups || [] }),
     );

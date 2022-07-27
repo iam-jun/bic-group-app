@@ -18,9 +18,7 @@ export default function* postCreateSchemePermission({
 }): any {
   try {
     const { communityId } = payload || {};
-    const schemeData = yield select(
-      (state) => state?.groups?.permissionScheme?.creatingScheme?.data,
-    ) || {};
+    const schemeData = yield select((state) => state?.groups?.permissionScheme?.creatingScheme?.data) || {};
 
     yield put(groupsActions.setCreatingScheme({ creating: true }));
 
@@ -45,8 +43,12 @@ export default function* postCreateSchemePermission({
       yield put(modalActions.showHideToastMessage(toastMessage));
     }
   } catch (err) {
-    console.error('postCreateSchemePermission error:', err);
+    console.error(
+      'postCreateSchemePermission error:', err,
+    );
     yield put(groupsActions.setCreatingScheme({ creating: false }));
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

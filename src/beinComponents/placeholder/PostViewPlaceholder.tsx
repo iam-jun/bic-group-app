@@ -44,29 +44,37 @@ const PostViewPlaceholder: FC<PostViewPlaceholderProps> = ({
         style={styles.infoContainer}
       >
         <PlaceholderLine
-          width={disableRandom ? 50 : getRandomInt(30, 60)}
+          width={disableRandom ? 50 : getRandomInt(
+            30, 60,
+          )}
           style={styles.marginBottomSmall}
         />
         <PlaceholderLine
-          width={disableRandom ? 60 : getRandomInt(30, 80)}
+          width={disableRandom ? 60 : getRandomInt(
+            30, 80,
+          )}
           style={styles.marginBottomSmall}
         />
         <PlaceholderLine
-          width={disableRandom ? 40 : getRandomInt(30, 50)}
+          width={disableRandom ? 40 : getRandomInt(
+            30, 50,
+          )}
           style={styles.margin0}
         />
       </Placeholder>
       <Placeholder Animation={ShineOverlay} style={styles.contentContainer}>
-        {Array.from(Array(disableRandom ? 3 : getRandomInt(1, 5)).keys()).map(
-          (item) => (
-            <PlaceholderLine
-              key={`line_${item}`}
-              style={styles.marginBottomSmall}
-            />
-          ),
-        )}
+        {Array.from(Array(disableRandom ? 3 : getRandomInt(
+          1, 5,
+        )).keys()).map((item) => (
+          <PlaceholderLine
+            key={`line_${item}`}
+            style={styles.marginBottomSmall}
+          />
+        ))}
         <PlaceholderLine
-          width={disableRandom ? 45 : getRandomInt(20, 80)}
+          width={disableRandom ? 45 : getRandomInt(
+            20, 80,
+          )}
           style={styles.margin0}
         />
       </Placeholder>

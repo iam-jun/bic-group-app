@@ -19,11 +19,9 @@ export default function* getDiscoverCommunities({
     const { isRefreshing, refreshNoLoading } = payload;
     const { ids, items, canLoadMore } = groups.discoverCommunities;
 
-    yield put(
-      groupsActions.setDiscoverCommunities({
-        loading: isRefreshing ? true : ids.length === 0,
-      }),
-    );
+    yield put(groupsActions.setDiscoverCommunities({
+      loading: isRefreshing ? true : ids.length === 0,
+    }));
 
     if (!isRefreshing && !refreshNoLoading && !canLoadMore) return;
 
@@ -53,8 +51,12 @@ export default function* getDiscoverCommunities({
 
     yield put(groupsActions.setDiscoverCommunities(newData));
   } catch (err) {
-    console.error('\x1b[33m', 'getDiscoverCommunities : error', err, '\x1b[0m');
+    console.error(
+      '\x1b[33m', 'getDiscoverCommunities : error', err, '\x1b[0m',
+    );
     yield put(groupsActions.setDiscoverCommunities({ loading: false }));
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

@@ -31,13 +31,11 @@ export default function* declineSingleCommunityMemberRequest({
     const { total, ids, items } = groups.communityMemberRequests;
     const requestItems = { ...items };
     delete requestItems[requestId];
-    yield put(
-      groupsActions.setCommunityMemberRequests({
-        total: total - 1,
-        ids: ids.filter((item: string) => item !== requestId),
-        items: requestItems,
-      }),
-    );
+    yield put(groupsActions.setCommunityMemberRequests({
+      total: total - 1,
+      ids: ids.filter((item: string) => item !== requestId),
+      items: requestItems,
+    }));
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
@@ -49,18 +47,20 @@ export default function* declineSingleCommunityMemberRequest({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log('declineSingleCommunityMemberRequest: ', err);
+    console.log(
+      'declineSingleCommunityMemberRequest: ', err,
+    );
 
     if (err?.code === approveDeclineCode.CANCELED) {
-      yield put(
-        groupsActions.editCommunityMemberRequest({
-          id: requestId,
-          data: { isCanceled: true },
-        }),
-      );
+      yield put(groupsActions.editCommunityMemberRequest({
+        id: requestId,
+        data: { isCanceled: true },
+      }));
       return;
     }
 
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

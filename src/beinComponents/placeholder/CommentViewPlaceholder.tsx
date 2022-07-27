@@ -16,7 +16,10 @@ const CommentViewPlaceholder = () => {
   const renderHeaderText = () => (
     <View style={styles.row}>
       <Placeholder Animation={ShineOverlay} style={styles.contentContainer}>
-        <PlaceholderLine width={getRandomInt(30, 60)} />
+        <PlaceholderLine width={getRandomInt(
+          30, 60,
+        )}
+        />
       </Placeholder>
     </View>
   );

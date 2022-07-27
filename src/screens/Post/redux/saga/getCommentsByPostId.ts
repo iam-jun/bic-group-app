@@ -26,7 +26,7 @@ function* getCommentsByPostId({
   try {
     callbackLoading?.(true);
     const response = yield call(postDataHelper.getCommentsByPostId, params);
-    const { list: newList, meta } = response;
+    const { list: newList, meta } = response?.data || {};
     callbackLoading?.(false);
     if (newList?.length > 0) {
       if (commentId && postId) {
@@ -55,14 +55,14 @@ function* getCommentsByPostId({
         newAllPosts[postId] = { ...post };
 
         yield put(postActions.addToAllComments(newAllComments));
-        yield put(
-          postActions.updateAllCommentsByParentIdsWithComments(payload),
-        );
+        yield put(postActions.updateAllCommentsByParentIdsWithComments(payload));
         yield put(postActions.setAllPosts(newAllPosts));
       }
     }
   } catch (e) {
-    console.error('\x1b[31m🐣️ saga getCommentsByPostId error: ', e, '\x1b[0m');
+    console.error(
+      '\x1b[31m🐣️ saga getCommentsByPostId error: ', e, '\x1b[0m',
+    );
     callbackLoading?.(false);
     yield showError(e);
   }

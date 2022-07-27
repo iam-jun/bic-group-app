@@ -17,9 +17,11 @@ export default function* approveAllGroupMemberRequests({
   try {
     yield put(groupsActions.resetGroupMemberRequests());
 
-    yield call(groupsDataHelper.approveAllGroupMemberRequests, groupId);
+    yield call(
+      groupsDataHelper.approveAllGroupMemberRequests, groupId,
+    );
 
-    // to update user_count
+    // to update userCount
     yield put(groupsActions.getGroupDetail(groupId));
 
     let toastProps: ToastMessageProps;
@@ -45,8 +47,12 @@ export default function* approveAllGroupMemberRequests({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log('approveAllGroupMemberRequests: ', err);
+    console.log(
+      'approveAllGroupMemberRequests: ', err,
+    );
 
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

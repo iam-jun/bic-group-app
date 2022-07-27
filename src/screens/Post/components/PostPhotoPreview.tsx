@@ -47,7 +47,9 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
   }
   const imageRatio = (data?.[0]?.width || 1) / (data?.[0]?.height || 1);
   const isVertical = imageRatio <= 0.5;
-  const dfSize = Math.min(width, dimension.maxNewsfeedWidth);
+  const dfSize = Math.min(
+    width, dimension.maxNewsfeedWidth,
+  );
   const _width = data?.length === 1 ? dfSize : dfSize;
   const _height = data?.length === 1 ? dfSize / imageRatio : dfSize;
 
@@ -88,7 +90,9 @@ const PostPhotoPreview: FC<PostPhotoPreviewProps> = ({
           name: item.origin_name || item.name,
           uri: item.name.includes('http')
             ? item.name
-            : getResourceUrl(uploadType, item.name),
+            : getResourceUrl(
+              uploadType, item.name,
+            ),
         });
       }
     });

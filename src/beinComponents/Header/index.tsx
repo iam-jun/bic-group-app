@@ -127,19 +127,23 @@ const Header: React.FC<HeaderProps> = ({
 
   const { rootNavigation } = useRootNavigation();
 
-  useEffect(() => {
-    const listener = DeviceEventEmitter.addListener('showHeader', (isShow) => {
-      if (isShow) {
-        show();
-      } else {
-        hide();
-      }
-    });
+  useEffect(
+    () => {
+      const listener = DeviceEventEmitter.addListener(
+        'showHeader', (isShow) => {
+          if (isShow) {
+            show();
+          } else {
+            hide();
+          }
+        },
+      );
 
-    return () => {
-      listener?.remove?.();
-    };
-  }, []);
+      return () => {
+        listener?.remove?.();
+      };
+    }, [],
+  );
 
   const _onPressBack = () => {
     if (onPressBack) {
@@ -163,7 +167,9 @@ const Header: React.FC<HeaderProps> = ({
 
   const showSearch = () => {
     setIsShowSearch(true);
-    onShowSearch?.(true, inputRef);
+    onShowSearch?.(
+      true, inputRef,
+    );
   };
 
   const hideSearch = () => {
@@ -175,13 +181,15 @@ const Header: React.FC<HeaderProps> = ({
     headerSearchRef?.current?.setSearchText?.(searchText);
   };
 
-  useImperativeHandle(_headerRef, () => ({
-    hideSearch,
-    showSearch,
-    setSearchText,
-    goBack,
-    setScrollY,
-  }));
+  useImperativeHandle(
+    _headerRef, () => ({
+      hideSearch,
+      showSearch,
+      setSearchText,
+      goBack,
+      setScrollY,
+    }),
+  );
 
   const _onPressSearch = () => {
     if (isShowSearch) {
@@ -192,7 +200,9 @@ const Header: React.FC<HeaderProps> = ({
   };
 
   const _onSearchText = (text: string) => {
-    onSearchText?.(text, inputRef);
+    onSearchText?.(
+      text, inputRef,
+    );
   };
 
   const _onPressButton = debounce(() => {
@@ -211,22 +221,30 @@ const Header: React.FC<HeaderProps> = ({
   }));
 
   const show = (duration = 200) => {
-    showValue.value = withTiming(1, { duration });
+    showValue.value = withTiming(
+      1, { duration },
+    );
   };
 
   const hide = (duration = 200) => {
-    showValue.value = withTiming(0, { duration });
+    showValue.value = withTiming(
+      0, { duration },
+    );
   };
 
   const titleAnimated = useAnimationTitle
     ? useAnimatedStyle(() => ({
-      opacity: interpolate(scrollY.value, [0, 210, 235], [0, 0, 1]),
+      opacity: interpolate(
+        scrollY.value, [0, 210, 235], [0, 0, 1],
+      ),
     }))
     : {};
 
   const avatarAnimated = useAnimationTitle
     ? useAnimatedStyle(() => ({
-      opacity: interpolate(scrollY.value, [0, 210, 235], [0, 0, 1]),
+      opacity: interpolate(
+        scrollY.value, [0, 210, 235], [0, 0, 1],
+      ),
     }))
     : {};
 

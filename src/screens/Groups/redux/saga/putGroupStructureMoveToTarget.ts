@@ -21,14 +21,12 @@ export default function* putGroupStructureMoveToTarget({
   const { communityId, moveId, targetId } = payload || {};
   const { targetGroups, movingGroup, key } = (yield select((state) => state.groups?.groupStructure?.move)) || {};
   try {
-    yield put(
-      actions.setGroupStructureMove({
-        loading: true,
-        key,
-        targetGroups,
-        movingGroup,
-      }),
-    );
+    yield put(actions.setGroupStructureMove({
+      loading: true,
+      key,
+      targetGroups,
+      movingGroup,
+    }));
 
     const response = yield call(
       groupsDataHelper.putGroupStructureMoveToTarget,
@@ -37,12 +35,10 @@ export default function* putGroupStructureMoveToTarget({
       targetId,
     );
     if (response?.code === API_ERROR_CODE.COMMON.SUCCESS) {
-      yield put(
-        actions.getGroupStructureCommunityTree({
-          communityId,
-          showLoading: false,
-        }),
-      );
+      yield put(actions.getGroupStructureCommunityTree({
+        communityId,
+        showLoading: false,
+      }));
       yield timeOut(600); // wait for refresh group tree=
       yield put(actions.setGroupStructureMove({ loading: false }));
       navigation.goBack();
@@ -55,26 +51,27 @@ export default function* putGroupStructureMoveToTarget({
       };
       yield put(modalActions.showHideToastMessage(toastMessage));
     } else {
-      yield put(
-        actions.setGroupStructureMove({
-          loading: false,
-          key,
-          targetGroups,
-          movingGroup,
-        }),
+      yield put(actions.setGroupStructureMove({
+        loading: false,
+        key,
+        targetGroups,
+        movingGroup,
+      }));
+      yield call(
+        showError, response,
       );
-      yield call(showError, response);
     }
   } catch (err: any) {
     yield put(
       actions.setGroupStructureMove({
-        loading: true,
+        loading: false,
         key,
         targetGroups,
         movingGroup,
       }),
     );
-    console.error('putGroupStructureMoveToTarget error:', err);
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

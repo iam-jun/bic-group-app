@@ -35,13 +35,11 @@ const GroupContent = ({
 
   const posts = useKeySelector(groupsKeySelector.posts);
   const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
-  const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
-  const isMember = join_status === groupJoinStatus.member;
+  const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
+  const isMember = joinStatus === groupJoinStatus.member;
   const { id: groupId } = groupData;
   const isPublicGroup = groupData.privacy === groupPrivacy.public;
-  const refreshingGroupPosts = useKeySelector(
-    groupsKeySelector.refreshingGroupPosts,
-  );
+  const refreshingGroupPosts = useKeySelector(groupsKeySelector.refreshingGroupPosts);
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
   const canCreatePostArticle = hasPermissionsOnScopeWithId(
@@ -55,19 +53,27 @@ const GroupContent = ({
   };
 
   const onPressAbout = () => {
-    rootNavigation.navigate(groupStack.groupAbout, { groupId });
+    rootNavigation.navigate(
+      groupStack.groupAbout, { groupId },
+    );
   };
 
   const onPressMembers = () => {
-    rootNavigation.navigate(groupStack.groupMembers, { groupId });
+    rootNavigation.navigate(
+      groupStack.groupMembers, { groupId },
+    );
   };
 
   const onPressFiles = () => {
-    rootNavigation.navigate(groupStack.groupFiles, { groupId });
+    rootNavigation.navigate(
+      groupStack.groupFiles, { groupId },
+    );
   };
 
   const onPressChannel = () => {
-    rootNavigation.navigate(groupStack.groupFiles, { groupId });
+    rootNavigation.navigate(
+      groupStack.groupFiles, { groupId },
+    );
   };
 
   const loadMoreData = () => {

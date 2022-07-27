@@ -7,7 +7,6 @@ import { TextInputProps } from './TextInput';
 
 interface Props extends TextInputProps {
   useFormData: IObject<any>;
-  label: string,
   name: string;
   rules: any;
   loading?: boolean;

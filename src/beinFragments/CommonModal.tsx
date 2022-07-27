@@ -21,11 +21,13 @@ const CommonModal = () => {
     closeOutSide = true,
   } = modal || {};
 
-  useEffect(() => {
-    if (!isOpen) {
-      modalizeRef?.current?.close?.();
-    }
-  }, [isOpen]);
+  useEffect(
+    () => {
+      if (!isOpen) {
+        modalizeRef?.current?.close?.();
+      }
+    }, [isOpen],
+  );
 
   const _onClose = () => {
     closeOutSide && dispatch(modalActions.hideModal());

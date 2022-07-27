@@ -51,10 +51,10 @@ describe('_MentionInput helper', () => {
   });
 
   it(`checkRunSearch should run`, async () => {
-    expect(checkRunSearch('abc @te', ['group_id'], jest.fn)).toBeTruthy();
+    expect(checkRunSearch('abc @te', ['groupId'], jest.fn)).toBeTruthy();
   });
 
   it(`checkRunSearch should not run`, async () => {
-    expect(checkRunSearch('abc te', ['group_id'], jest.fn)).toBeFalsy();
+    expect(checkRunSearch('abc te', ['groupId'], jest.fn)).toBeFalsy();
   });
 });

@@ -29,12 +29,16 @@ const GroupStructureMenu: FC<GroupStructureMenuProps> = ({
   const { colors } = theme || {};
 
   const onPressReorderGroup = () => {
-    rootNavigation.navigate(groupStack.reorderGroup, { group });
+    rootNavigation.navigate(
+      groupStack.reorderGroup, { group },
+    );
     dispatch(modalActions.hideModal());
   };
 
   const onPressMoveGroup = () => {
-    rootNavigation.navigate(groupStack.moveGroup, { group });
+    rootNavigation.navigate(
+      groupStack.moveGroup, { group },
+    );
     dispatch(modalActions.hideModal());
   };
 

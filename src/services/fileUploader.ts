@@ -1,7 +1,6 @@
 /* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable prefer-promise-reject-errors */
-/* eslint-disable no-undef */
 /* eslint-disable class-methods-use-this */
 import i18next from 'i18next';
 import { isEmpty } from 'lodash';
@@ -94,7 +93,9 @@ export default class FileUploader {
     return meta?.errors?.[0]?.message || meta?.message;
   }
 
-  handleError(file: any, data: any, onError: any) {
+  handleError(
+    file: any, data: any, onError: any,
+  ) {
     this.fileUploading[file.name] = false;
     onError?.(data);
     this.callbackError?.[file?.name]?.(data);
@@ -102,9 +103,7 @@ export default class FileUploader {
 
   async requestCreateFileId(uploadType: string) {
     try {
-      const response: any = await makeHttpRequest(
-        ApiConfig.Upload.createFileId(uploadType),
-      );
+      const response: any = await makeHttpRequest(ApiConfig.Upload.createFileId(uploadType));
       const { id } = response?.data?.data || {};
       if (id) {
         return { id, error: '' };
@@ -133,33 +132,31 @@ export default class FileUploader {
     onProgress?: (percent: number) => void,
   ) {
     const formData = new FormData();
-    formData.append('file', file, file.name);
-    formData.append('uploadType', uploadType);
+    formData.append(
+      'file', file, file.name,
+    );
+    formData.append(
+      'uploadType', uploadType,
+    );
 
     const _onUploadProgress = (progressEvent: any) => {
-      const percentCompleted = Math.round(
-        (progressEvent.loaded * 100) / progressEvent.total,
-      );
+      const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
       onProgress?.(percentCompleted);
       this.callbackProgress?.[file.name]?.(percentCompleted);
       // eslint-disable-next-line no-console
-      console.log(
-        `\x1b[36m🐣️ fileUploader _onUploadProgress: ${percentCompleted}\x1b[0m`,
-      );
+      console.log(`\x1b[36m🐣️ fileUploader _onUploadProgress: ${percentCompleted}\x1b[0m`);
     };
 
     try {
       const controller = new AbortController();
       this.fileAbortController[file.name] = controller;
-      const response: any = await makeHttpRequest(
-        ApiConfig.Upload.uploadFile(
-          fileId,
-          uploadType,
-          formData,
-          _onUploadProgress,
-          controller.signal,
-        ),
-      );
+      const response: any = await makeHttpRequest(ApiConfig.Upload.uploadFile(
+        fileId,
+        uploadType,
+        formData,
+        _onUploadProgress,
+        controller.signal,
+      ));
       if (response?.data?.data) {
         const data = response?.data?.data;
         const result: any = {
@@ -181,9 +178,11 @@ export default class FileUploader {
         return {
           error:
               this.getResponseErrMsg(response)
-              || i18next.t('upload:text_upload_response_failed', {
-                file_type: i18next.t('file_type:file'),
-              }),
+              || i18next.t(
+                'upload:text_upload_response_failed', {
+                  file_type: i18next.t('file_type:file'),
+                },
+              ),
         };
       }
       return {
@@ -193,9 +192,11 @@ export default class FileUploader {
       return {
         error:
           this.getResponseErrMsg(e)
-          || i18next.t('upload:text_upload_request_failed', {
-            file_type: i18next.t('file_type:file'),
-          }),
+          || i18next.t(
+            'upload:text_upload_request_failed', {
+              file_type: i18next.t('file_type:file'),
+            },
+          ),
       };
     }
   }
@@ -221,11 +222,15 @@ export default class FileUploader {
         if (createIdResponse?.error === 'canceled') {
           return Promise.resolve(null);
         }
-        this.handleError(file, createIdResponse?.error, onError);
+        this.handleError(
+          file, createIdResponse?.error, onError,
+        );
         return Promise.reject({ meta: { message: createIdResponse?.error || '' } });
       }
     } catch (e: any) {
-      this.handleError(file, e?.error, onError);
+      this.handleError(
+        file, e?.error, onError,
+      );
       return Promise.reject({ meta: { message: e?.error || '' } });
     }
 
@@ -246,11 +251,15 @@ export default class FileUploader {
           return Promise.resolve(null);
         }
 
-        this.handleError(file, uploadResponse?.error, onError);
+        this.handleError(
+          file, uploadResponse?.error, onError,
+        );
         return Promise.reject({ meta: { message: uploadResponse?.error || '' } });
       }
     } catch (e: any) {
-      this.handleError(file, e?.error, onError);
+      this.handleError(
+        file, e?.error, onError,
+      );
       return Promise.reject({ meta: { message: e?.error || '' } });
     }
 
@@ -300,7 +309,9 @@ export default class FileUploader {
       onError?.(error);
       return Promise.reject({ meta: { message: error } });
     }
-    return this.startUpload(file, uploadType, onSuccess, onProgress, onError);
+    return this.startUpload(
+      file, uploadType, onSuccess, onProgress, onError,
+    );
   }
 
   hasUploadingProcess() {

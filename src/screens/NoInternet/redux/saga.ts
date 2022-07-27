@@ -9,7 +9,9 @@ import types from './types';
 import { timeOut } from '~/utils/common';
 
 export default function* noInternetSaga() {
-  yield takeLatest(types.CHECK_IS_INTERNET_REACHABLE, checkIsInternetReachable);
+  yield takeLatest(
+    types.CHECK_IS_INTERNET_REACHABLE, checkIsInternetReachable,
+  );
 
   /**
    * Need to check every showSystemIssue instead of take latest to handle
@@ -20,7 +22,9 @@ export default function* noInternetSaga() {
     types.SHOW_SYSTEM_ISSUE_THEN_LOGOUT,
     showSystemIssueThenLogout,
   );
-  yield takeEvery(types.HIDE_SYSTEM_ISSUE_AND_LOGOUT, hideSystemIssueAndLogout);
+  yield takeEvery(
+    types.HIDE_SYSTEM_ISSUE_AND_LOGOUT, hideSystemIssueAndLogout,
+  );
 }
 
 function* setIsInternetReachable(state: NetInfoState) {
@@ -48,7 +52,9 @@ function* checkIsInternetReachable() {
 
     yield setIsInternetReachable(netInfoState);
   } catch (error) {
-    console.error('Error when checking internet connection', error);
+    console.error(
+      'Error when checking internet connection', error,
+    );
   }
 }
 
@@ -69,7 +75,9 @@ function* showSystemIssueThenLogout() {
     yield timeOut(MODAL_VISIBLE_DURATION);
     yield hideSystemIssueAndLogout();
   } catch (error) {
-    console.error('error', error);
+    console.error(
+      'error', error,
+    );
   }
 }
 

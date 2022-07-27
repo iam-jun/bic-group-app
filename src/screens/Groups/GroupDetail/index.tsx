@@ -37,8 +37,8 @@ const GroupDetail = (props: any) => {
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
   const { privacy } = groupInfo;
 
-  const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
-  const isMember = join_status === groupJoinStatus.member;
+  const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
+  const isMember = joinStatus === groupJoinStatus.member;
   const loadingGroupDetail = useKeySelector(
     groupsKeySelector.loadingGroupDetail,
   );
@@ -53,7 +53,9 @@ const GroupDetail = (props: any) => {
   });
 
   const getGroupDetail = () => {
-    dispatch(groupsActions.getGroupDetail(groupId, true));
+    dispatch(groupsActions.getGroupDetail(
+      groupId, true,
+    ));
   };
 
   const getGroupPosts = () => {
@@ -70,13 +72,17 @@ const GroupDetail = (props: any) => {
     dispatch(groupsActions.getGroupPosts(groupId));
   };
 
-  useEffect(() => {
-    getGroupDetail();
-  }, [groupId]);
+  useEffect(
+    () => {
+      getGroupDetail();
+    }, [groupId],
+  );
 
-  useEffect(() => {
-    getGroupPosts();
-  }, [groupInfo]);
+  useEffect(
+    () => {
+      getGroupPosts();
+    }, [groupInfo],
+  );
 
   const renderGroupContent = () => {
     // visitors can only see "About" of Private group

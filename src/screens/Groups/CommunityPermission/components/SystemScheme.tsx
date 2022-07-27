@@ -31,31 +31,35 @@ const SystemScheme: FC<SystemSchemeProps> = ({ style }: SystemSchemeProps) => {
 
   const { rootNavigation } = useRootNavigation();
 
-  const { data: communityScheme, loading: loadingCommunityScheme } = useKeySelector(groupsKeySelector.permission.communityScheme) || {};
+  const { data: communityScheme, loading: loadingCommunityScheme }
+  = useKeySelector(groupsKeySelector.permission.communityScheme) || {};
+
   const systemScheme = useKeySelector(groupsKeySelector.permission.systemScheme) || {};
 
-  useEffect(() => {
-    if (!systemScheme?.data && !systemScheme?.loading) {
-      dispatch(groupsActions.getSystemScheme());
-    }
-  }, []);
+  useEffect(
+    () => {
+      if (!systemScheme?.data && !systemScheme?.loading) {
+        dispatch(groupsActions.getSystemScheme());
+      }
+    }, [],
+  );
 
   const onPressView = () => {
     if (systemScheme?.data) {
-      rootNavigation.navigate(groupStack.communityPermissionDetail, {
-        scheme: cloneDeep(systemScheme.data),
-      });
+      rootNavigation.navigate(
+        groupStack.communityPermissionDetail, {
+          scheme: cloneDeep(systemScheme.data),
+        },
+      );
     }
   };
 
   const onPressApply = () => {
-    dispatch(
-      modalActions.showAlert({
-        title: t('communities:permission:text_title_apply_system_scheme'),
-        content: t('communities:permission:text_desc_apply_system_scheme'),
-        confirmLabel: t('common:btn_close'),
-      }),
-    );
+    dispatch(modalActions.showAlert({
+      title: t('communities:permission:text_title_apply_system_scheme'),
+      content: t('communities:permission:text_desc_apply_system_scheme'),
+      confirmLabel: t('common:btn_close'),
+    }));
   };
 
   return (

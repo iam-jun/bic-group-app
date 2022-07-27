@@ -37,7 +37,9 @@ const useRemoveAdmin = ({ groupId, selectedMember }: IUseRemoveAdmin) => {
     confirmLabel: i18next.t('groups:modal_confirm_remove_admin:button_confirm'),
     ConfirmBtnComponent: Button.Danger,
   };
-  alertPayload.content = alertPayload.content.replace('{0}', `"${fullname}"`);
+  alertPayload.content = alertPayload.content.replace(
+    '{0}', `"${fullname}"`,
+  );
 
   const alertRemovingAdmin = () => dispatch(modalActions.showAlert(alertPayload));
 

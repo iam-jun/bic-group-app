@@ -79,7 +79,9 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = themeStyles(theme);
 
-  const getSmallestChild = (smallestGroup: IGroup, path: PathData) => {
+  const getSmallestChild = (
+    smallestGroup: IGroup, path: PathData,
+  ) => {
     if (smallestGroup?.children?.[0]) {
       path.total += 1;
       if (path.path?.length < limitLength) {
@@ -90,11 +92,15 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
         path.more += 1;
       }
 
-      getSmallestChild(smallestGroup?.children?.[0], path);
+      getSmallestChild(
+        smallestGroup?.children?.[0], path,
+      );
     } else {
       if (path.path?.length >= limitLength) {
         path.path = `${path.path
-          .substr(0, path.more > 0 ? limitLengthShort : limitLength)
+          .substr(
+            0, path.more > 0 ? limitLengthShort : limitLength,
+          )
           ?.trim()}...`;
       }
       setGroup({ ...smallestGroup });
@@ -102,28 +108,40 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
     }
   };
 
-  const getParentPath = (group: IGroup, path: PathData) => {
+  const getParentPath = (
+    group: IGroup, path: PathData,
+  ) => {
     if (group.parent) {
       path.total += 1;
       path.path = `${group.parent.name}${path.path?.length > 0 ? ' ▸ ' : ''}${
         path.path
       }`;
 
-      getParentPath(group.parent, path);
+      getParentPath(
+        group.parent, path,
+      );
     } else {
       setPath({ ...path });
     }
   };
 
-  useEffect(() => {
-    if (showSmallestChild) {
-      getSmallestChild(props, path);
-    } else {
-      getParentPath(props, path);
-    }
-  }, []);
+  useEffect(
+    () => {
+      if (showSmallestChild) {
+        getSmallestChild(
+          props, path,
+        );
+      } else {
+        getParentPath(
+          props, path,
+        );
+      }
+    }, [],
+  );
 
-  const onCheckedGroup = (group: GroupItemProps, newChecked: boolean) => {
+  const onCheckedGroup = (
+    group: GroupItemProps, newChecked: boolean,
+  ) => {
     if (onChangeCheckedGroups) {
       const callbackData: OnChangeCheckedGroupsData = {};
       callbackData[group.id] = newChecked ? group : false;
@@ -133,20 +151,24 @@ const FlatGroupItem: React.FC<FlatGroupItemProps> = ({
 
   const _onPressGroup = (group: GroupItemProps) => {
     if (onChangeCheckedGroups) {
-      onCheckedGroup(group, !group.isChecked);
+      onCheckedGroup(
+        group, !group.isChecked,
+      );
     } else if (onPressGroup) {
       onPressGroup(group);
     } else if (onPressItem) {
       onPressItem(group);
-    } else if (group.community_id) {
+    } else if (group.communityId) {
       rootNavigation.navigate(mainStack.communityDetail, {
-        communityId: group.community_id,
+        communityId: group.communityId,
       });
     } else {
-      rootNavigation.navigate(groupStack.groupDetail, {
-        groupId: group.id,
-        initial: true,
-      });
+      rootNavigation.navigate(
+        groupStack.groupDetail, {
+          groupId: group.id,
+          initial: true,
+        },
+      );
     }
   };
 

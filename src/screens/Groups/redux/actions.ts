@@ -18,7 +18,6 @@ import {
   IGroupMembers,
   IPermission,
   IScheme,
-  ICommunityDetailEdit,
   IPayloadGroupSchemeAssignments,
 } from '~/interfaces/IGroup';
 import { IUser } from '~/interfaces/IAuth';
@@ -30,6 +29,7 @@ import {
   ISetMembers,
   ISetCommunitySearchMembers,
   IParamGetCommunities,
+  ICommunityDetailEdit,
 } from '~/interfaces/ICommunity';
 
 const groupsActions = {
@@ -288,7 +288,9 @@ const groupsActions = {
     type: groupsTypes.CLEAR_SELECTED_USERS,
   }),
 
-  getGroupDetail: (payload: string, loadingPage = false) => ({
+  getGroupDetail: (
+    payload: string, loadingPage = false,
+  ) => ({
     type: groupsTypes.GET_GROUP_DETAIL,
     payload,
     loadingPage,
@@ -439,7 +441,7 @@ const groupsActions = {
   getManagedCommunities: (payload: {
     isRefreshing?: boolean;
     refreshNoLoading?: boolean;
-    params?: {managed: boolean; preview_members: boolean};
+    params?: {managed: boolean; previewMembers: boolean};
   }) => ({
     type: groupsTypes.GET_MANAGED_COMMUNITIES,
     payload,

@@ -14,7 +14,9 @@ export const authInitState = {
   changePasswordLoading: false,
 };
 
-function authReducer(state = authInitState, action: any = {}) {
+function authReducer(
+  state = authInitState, action: any = {},
+) {
   const { type } = action;
   switch (type) {
     case types.SET_USER:
@@ -60,33 +62,37 @@ function authReducer(state = authInitState, action: any = {}) {
       };
     case ActionTypes.RefreshTokenSuccessBein: {
       const user = state?.user as any;
-      return _.merge({}, state, {
-        user: {
-          signInUserSession: {
-            refreshToken: {
-              token: action.payload.refreshToken,
-            },
-            accessToken: {
-              jwtToken: action.payload.newToken,
-            },
-            idToken: {
-              jwtToken: action.payload.idToken,
-              payload: {
-                ...user?.signInUserSession?.idToken?.payload,
-                exp: action.payload.idTokenExp,
+      return _.merge(
+        {}, state, {
+          user: {
+            signInUserSession: {
+              refreshToken: {
+                token: action.payload.refreshToken,
+              },
+              accessToken: {
+                jwtToken: action.payload.newToken,
+              },
+              idToken: {
+                jwtToken: action.payload.idToken,
+                payload: {
+                  ...user?.signInUserSession?.idToken?.payload,
+                  exp: action.payload.idTokenExp,
+                },
               },
             },
           },
         },
-      });
+      );
     }
     case ActionTypes.SaveAuthTokens: {
-      return _.merge({}, state, {
-        feed: {
-          accessToken: action.payload.feedAccessToken,
-          notiSubscribeToken: action.payload.notiSubscribeToken,
+      return _.merge(
+        {}, state, {
+          feed: {
+            accessToken: action.payload.feedAccessToken,
+            notiSubscribeToken: action.payload.notiSubscribeToken,
+          },
         },
-      });
+      );
     }
     default:
       return state;
