@@ -163,6 +163,7 @@ const _PostView: FC<PostViewProps> = ({
             isPostDetail={isPostDetail}
             isActor={actor?.id == userId}
             isDraftPost={isDraft}
+            getDataPromise={getReactionStatistics}
           />
         ),
       }),
@@ -197,6 +198,7 @@ const _PostView: FC<PostViewProps> = ({
         id: item?.actor?.id,
         avatar: item?.actor?.avatar,
         fullname: item?.actor?.fullname,
+        reactionId: item?.id,
       }));
 
       return Promise.resolve(users || []);

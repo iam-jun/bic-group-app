@@ -7,6 +7,7 @@ import { ReactionType } from '~/constants/reactions';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import LoadingIndicator from '~/beinComponents/LoadingIndicator';
 import spacing from '~/theme/spacing';
+import { IReaction } from '~/interfaces/IPost';
 
 export interface ReactionDetailTabProps {
   reactionType: ReactionType;
@@ -23,13 +24,13 @@ const contentBarHeight = 0.6 * screenHeight;
 
 const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   reactionType,
-  limit = 100,
+  limit = 1,
   height = contentBarHeight,
   onPressItem,
   getDataPromise,
   getDataParam,
 }: ReactionDetailTabProps) => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<IReaction[]>([]);
   const [loading, setLoading] = useState(false);
 
   const getData = () => {
@@ -57,6 +58,21 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
     onPressItem?.(item);
   };
 
+  const onLoadMore = () => {
+    if (getDataPromise && getDataParam && !!data?.[0]) {
+      const param = {
+        ...getDataParam, reactionName: reactionType, limit, latestId: data[data.length - 1].reactionId, order: 'ASC',
+      };
+      getDataPromise?.(param)
+        ?.then?.((_data: any) => {
+          setData(data.concat(_data || []));
+        })
+        .catch((e: any) => {
+          console.log(`\x1b[31m🐣️ ReactionDetailTab get more error ${e}\x1b[0m`);
+        });
+    }
+  }
+
   const renderItem = (item: any) => (
     <PrimaryItem
       testID={`reaction_detail_bottomSheet.${item?.item?.fullname}`}
@@ -78,7 +94,7 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   const renderHeader = () => <View style={styles.header} />;
 
   return (
-    <View style={{ height }}>
+    <View style={{ height: 100 }}>
       <FlatList
         testID="reaction_detail_bottomSheet.list_user"
         style={styles.listContainer}
@@ -86,6 +102,7 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
         renderItem={renderItem}
         ListHeaderComponent={renderHeader}
         ListFooterComponent={renderFooter}
+        onEndReached={onLoadMore}
       />
     </View>
   );

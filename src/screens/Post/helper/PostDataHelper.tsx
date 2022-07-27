@@ -211,7 +211,7 @@ export const postApiConfig = {
       reactionName: param.reactionName,
       targetId: param.targetId,
       target: param.target,
-      order: param?.order || 'DESC',
+      order: param?.order || 'ASC',
       limit: param?.limit || 20,
       latestId: param?.latestId,
     },
@@ -439,6 +439,8 @@ const postDataHelper = {
   },
   getReactionDetail: async (param: IParamGetReactionDetail) => {
     const { reactionName, targetId, target } = param;
+    console.log('latestId', param);
+
     if (reactionName && targetId && target) {
       try {
         const response: any = await makeHttpRequest(
