@@ -515,116 +515,40 @@ const groupsDataHelper = {
     groupId: string,
     key?: string,
   ) => {
-    try {
-      if (!communityId || !groupId) {
-        return Promise.reject(
-          new Error('getCommunityStructureMoveTargets invalid params'),
-        );
-      }
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getCommunityStructureMoveTargets(
-          communityId,
-          groupId,
-          key,
-        ),
+    if (!communityId || !groupId) {
+      return Promise.reject(
+        new Error('getCommunityStructureMoveTargets invalid params'),
       );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
     }
+    return withHttpRequestPromise(groupsApiConfig.getCommunityStructureMoveTargets, communityId, groupId, key)
   },
   putGroupStructureMoveToTarget: async (
     communityId: string,
     moveId: string,
     targetId: string,
   ) => {
-    try {
-      if (!communityId || !moveId || !targetId) {
-        return Promise.reject(new Error('putGroupStructureMoveToTarget invalid params'));
-      }
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.putGroupStructureMoveToTarget(
-          communityId,
-          moveId,
-          targetId,
-        ),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
+    if (!communityId || !moveId || !targetId) {
+      return Promise.reject(new Error('putGroupStructureMoveToTarget invalid params'));
     }
+    return withHttpRequestPromise(groupsApiConfig.putGroupStructureMoveToTarget, communityId, moveId, targetId)
   },
   putGroupStructureCollapseStatus: async (
     communityId: string,
     groupId: string,
     status: boolean,
   ) => {
-    try {
-      if (!communityId || !groupId) {
-        return Promise.reject(new Error('putGroupStructureCollapseStatus invalid params'));
-      }
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.putGroupStructureCollapseStatus(
-          communityId,
-          groupId,
-          status,
-        ),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
+    if (!communityId || !groupId) {
+      return Promise.reject(new Error('putGroupStructureCollapseStatus invalid params'));
     }
+    return withHttpRequestPromise(groupsApiConfig.putGroupStructureCollapseStatus, communityId, groupId, status)
   },
-  getPermissionCategories: async (scope?: 'SYSTEM' | 'COMMUNITY' | 'GROUP') => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getPermissionCategories(scope),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  getSystemScheme: async () => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getSystemScheme(),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getPermissionCategories: async (scope?: 'SYSTEM' | 'COMMUNITY' | 'GROUP') => withHttpRequestPromise(groupsApiConfig.getPermissionCategories, scope),
+  getSystemScheme: () => withHttpRequestPromise(groupsApiConfig.getSystemScheme),
   getCommunityScheme: async (communityId: string) => {
-    try {
-      if (!communityId) {
-        return Promise.reject(new Error('getCommunityScheme invalid communityId'));
-      }
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getCommunityScheme(communityId),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
+    if (!communityId) {
+      return Promise.reject(new Error('getCommunityScheme invalid communityId'));
     }
+    return withHttpRequestPromise(groupsApiConfig.getCommunityScheme, communityId)
   },
   updateCommunityScheme: async (communityId: string, scheme: IScheme) => {
     if (!communityId || !scheme) {
