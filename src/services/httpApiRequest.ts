@@ -260,6 +260,9 @@ const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
   const uuidRegex = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
   // add apis have param in path to this array
   const apisWithParam = [
+    `${ApiConfig.providers.bein.url}users/${uuidRegex}/profile`,
+    `${ApiConfig.providers.bein.url}users/work-experience/${uuidRegex}`,
+    `${ApiConfig.providers.bein.url}users/${uuidRegex}/work-experience`,
     `${ApiConfig.providers.bein.url}communities/${uuidRegex}/group-structure/order`,
     `${ApiConfig.providers.bein.url}communities/${uuidRegex}/group-structure/move-targets/[A-Za-z_$@0-9]*`,
     `${ApiConfig.providers.bein.url}communities/${uuidRegex}/group-structure/move`,
@@ -298,6 +301,8 @@ const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
   });
 
   switch (endPoint) {
+    case `${ApiConfig.providers.bein.url}auth/logout`:
+    case `${ApiConfig.providers.bein.url}users/work-experience`:
     case `${ApiConfig.providers.bein.url}post-audiences`:
     case `${ApiConfig.providers.bein.url}users/mentionable`:
     case `${ApiConfig.providers.bein.url}me/permissions`:
