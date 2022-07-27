@@ -260,9 +260,13 @@ const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
   const uuidRegex = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
   // add apis have param in path to this array
   const apisWithParam = [
-    `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/group-structure`,
-    `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/scheme`,
-    `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/schemes`,
+    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/group-structure/order`,
+    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/group-structure/move-targets/[A-Za-z_$@0-9]*`,
+    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/group-structure/move`,
+    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/group-structure/collapse/[A-Za-z_$@0-9]*`,
+    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/group-structure`,
+    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/scheme`,
+    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/schemes`,
     `${ApiConfig.providers.bein.url}communities/${uuidRegex}`,
     `${ApiConfig.providers.bein.url}groups/${uuidRegex}`,
     `${ApiConfig.providers.bein.url}communities/${uuidRegex}/members`,
@@ -340,7 +344,7 @@ const interceptorsResponseCamelSuccess = (response: AxiosResponse) => {
     && response.headers?.['content-type']?.includes?.('application/json')
   ) {
     response.data = ConvertHelper.camelizeKeys(response.data, {
-      exclude: ['reactions_count'],
+      exclude: ['reactions_count', 'communities', 'groups'],
     });
   }
   return response;
@@ -355,7 +359,7 @@ const interceptorsResponseSuccess = (response: AxiosResponse) => {
       && response.headers?.['content-type']?.includes?.('application/json')
     ) {
       response.data = ConvertHelper.camelizeKeys(response.data, {
-        exclude: ['reactions_count'],
+        exclude: ['reactions_count', 'communities', 'groups'],
       });
     }
     return response;

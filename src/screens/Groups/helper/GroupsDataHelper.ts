@@ -508,19 +508,8 @@ export const groupsApiConfig = {
 const groupsDataHelper = {
   getMyPermissions: () => withHttpRequestPromise(groupsApiConfig.getMyPermissions),
   getCommunityGroupTree: (id: string) => withHttpRequestPromise(groupsApiConfig.getCommunityGroupsTree, id),
-  putGroupStructureReorder: async (communityId: string, data: number[]) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.putGroupStructureReorder(communityId, data),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  // eslint-disable-next-line max-len
+  putGroupStructureReorder: (communityId: string, data: string[]) => withHttpRequestPromise(groupsApiConfig.putGroupStructureReorder, communityId, data),
   getCommunityStructureMoveTargets: async (
     communityId: string,
     groupId: string,
