@@ -255,105 +255,8 @@ const mapResponseSuccessBein = (
   meta: response.data.meta,
 });
 
-const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
-  let result = false;
-  const uuidRegex = '[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}'
-  // add apis have param in path to this array
-  const apisWithParam = [
-    `${ApiConfig.providers.bein.url}users/${uuidRegex}/profile`,
-    `${ApiConfig.providers.bein.url}users/work-experience/${uuidRegex}`,
-    `${ApiConfig.providers.bein.url}users/${uuidRegex}/work-experience`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/group-structure/order`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/group-structure/move-targets/[A-Za-z_$@0-9]*`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/group-structure/move`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/group-structure/collapse/[A-Za-z_$@0-9]*`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/group-structure`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/scheme`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/schemes`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/members`,
-    `${ApiConfig.providers.bein.url}me/communities/${uuidRegex}/groups`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/groups/discover`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/users`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/join`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/cancel-joining-request`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/joining-requests`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/joining-requests/${uuidRegex}/approve`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/joining-requests/${uuidRegex}/decline`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/joining-requests/approve`,
-    `${ApiConfig.providers.bein.url}communities/${uuidRegex}/joining-requests/decline`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/join`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/cancel-joining-request`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/leave`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/inner-groups-have-last-admin/${uuidRegex}`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/inner-groups`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/joinable-users`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/users/add`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/users/remove`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/assign-admin`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/revoke-admin/${uuidRegex}`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/joining-requests`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/joining-requests/${uuidRegex}/approve`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/joining-requests/approve`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/joining-requests/${uuidRegex}/decline`,
-    `${ApiConfig.providers.bein.url}groups/${uuidRegex}/joining-requests/decline`,
-  ];
-  apisWithParam.forEach((api) => {
-    if (new RegExp(api, 'g').test(endPoint || '')) {
-      result = true;
-    }
-  });
-
-  switch (endPoint) {
-    case `${ApiConfig.providers.bein.url}auth/logout`:
-    case `${ApiConfig.providers.bein.url}users/work-experience`:
-    case `${ApiConfig.providers.bein.url}post-audiences`:
-    case `${ApiConfig.providers.bein.url}users/mentionable`:
-    case `${ApiConfig.providers.bein.url}me/permissions`:
-    case `${ApiConfig.providers.bein.url}system-scheme`:
-    case `${ApiConfig.providers.bein.url}permissions/categories`:
-    case `${ApiConfig.providers.bein.url}me/communities`:
-    case `${ApiConfig.providers.bein.url}communities/discover`:
-    case `${ApiConfig.providers.bein.url}communities`:
-    case `${ApiConfig.providers.beinFeed.url}feeds/timeline`:
-    case `${ApiConfig.providers.bein.url}post-audiences/groups`:
-      result = true;
-      break;
-    default:
-      break;
-  }
-  return result;
-};
-
 const interceptorsRequestSuccess = (config: AxiosRequestConfig) => {
   const newConfig = { ...config };
-
-  // apply rule snake camel for each bein group's api
-  // we will remove this check after all apis is updated
-  if (shouldApplyAutoSnakeCamel(config?.url)) {
-    // update data of upload file request will lead to some unknown error
-    if (newConfig.headers?.['Content-Type']?.includes('multipart/form-data')) {
-      return newConfig;
-    }
-
-    if (config.params) {
-      newConfig.params = ConvertHelper.decamelizeKeys(config.params);
-    }
-    if (config.data) {
-      newConfig.data = ConvertHelper.decamelizeKeys(config.data);
-    }
-
-    return newConfig;
-  }
-
-  return newConfig;
-};
-
-const interceptorsRequestSnakeSuccess = (config: AxiosRequestConfig) => {
-  const newConfig = { ...config };
-
-  // update data of upload file request will lead to some unknown error
   if (newConfig.headers?.['Content-Type']?.includes('multipart/form-data')) {
     return newConfig;
   }
@@ -367,7 +270,7 @@ const interceptorsRequestSnakeSuccess = (config: AxiosRequestConfig) => {
   return newConfig;
 };
 
-const interceptorsResponseCamelSuccess = (response: AxiosResponse) => {
+const interceptorsResponseSuccess = (response: AxiosResponse) => {
   if (
     response.data
     && response.headers?.['content-type']?.includes?.('application/json')
@@ -376,24 +279,6 @@ const interceptorsResponseCamelSuccess = (response: AxiosResponse) => {
       excludeValueOfKey: ['reactions_count'],
       excludeKey: [/^[a-f0-9\-]{36}$/i],
     });
-  }
-  return response;
-};
-
-const interceptorsResponseSuccess = (response: AxiosResponse) => {
-  // apply rule snake camel for each bein group's api
-  // we will remove this check after all apis is updated
-  if (shouldApplyAutoSnakeCamel(response?.config?.url)) {
-    if (
-      response.data
-      && response.headers?.['content-type']?.includes?.('application/json')
-    ) {
-      response.data = ConvertHelper.camelizeKeys(response.data, {
-        excludeValueOfKey: ['reactions_count'],
-        excludeKey: [/^[a-f0-9\-]{36}$/i],
-      });
-    }
-    return response;
   }
   return response;
 };
@@ -426,8 +311,8 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
     case ApiConfig.providers.beinFeed.name:
     case ApiConfig.providers.beinNotification.name:
     case ApiConfig.providers.beinUpload.name:
-      interceptorRequestSuccess = interceptorsRequestSnakeSuccess;
-      interceptorResponseSuccess = interceptorsResponseCamelSuccess;
+      interceptorRequestSuccess = interceptorsRequestSuccess;
+      interceptorResponseSuccess = interceptorsResponseSuccess;
       interceptorResponseError = interceptorsResponseError;
       requestConfig.headers = beinHeaders;
       break;
