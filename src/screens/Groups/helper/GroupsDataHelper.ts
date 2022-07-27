@@ -601,23 +601,11 @@ const groupsDataHelper = {
     }
   },
   getUserInnerGroups: (groupId: string, username: string) => withHttpRequestPromise(groupsApiConfig.getUserInnerGroups, groupId, username),
-  getGroupPosts: async (param: IParamGetGroupPosts) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getGroupPosts({
-          offset: param?.offset || 0,
-          limit: param?.limit || appConfig.recordsPerPage,
-          ...param,
-        }),
-      );
-      if (response && response?.data?.data?.list) {
-        return Promise.resolve(response?.data?.data?.list);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getGroupPosts: (param: IParamGetGroupPosts) => withHttpRequestPromise(groupsApiConfig.getGroupPosts, {
+    offset: param?.offset || 0,
+    limit: param?.limit || appConfig.recordsPerPage,
+    ...param,
+  }),
   getInfoGroups: async (ids: string) => {
     try {
       const response: any = await makeHttpRequest(
@@ -642,77 +630,17 @@ const groupsDataHelper = {
   leaveGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.leaveGroup, groupId),
   setGroupAdmin: (groupId: string, userIds: string[]) => withHttpRequestPromise(groupsApiConfig.setGroupAdmin, groupId, userIds),
   removeGroupAdmin: (groupId: string, userId: string) => withHttpRequestPromise(groupsApiConfig.removeGroupAdmin, groupId, userId),
-  getGroupMemberRequests: async (groupId: string, params: any) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getGroupMemberRequests(groupId, params),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  approveSingleGroupMemberRequest: async (
+  getGroupMemberRequests: (groupId: string, params: any) => withHttpRequestPromise(groupsApiConfig.getGroupMemberRequests, groupId, params),
+  approveSingleGroupMemberRequest: (
     groupId: string,
     requestId: string,
-  ) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.approveSingleGroupMemberRequest(groupId, requestId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  approveAllGroupMemberRequests: async (groupId: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.approveAllGroupMemberRequests(groupId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  declineSingleGroupMemberRequest: async (
+  ) => withHttpRequestPromise(groupsApiConfig.approveSingleGroupMemberRequest, groupId, requestId),
+  approveAllGroupMemberRequests: (groupId: string) => withHttpRequestPromise(groupsApiConfig.approveAllGroupMemberRequests, groupId),
+  declineSingleGroupMemberRequest: (
     groupId: string,
     requestId: string,
-  ) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.declineSingleGroupMemberRequest(groupId, requestId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  declineAllGroupMemberRequests: async (groupId: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.declineAllGroupMemberRequests(groupId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  ) => withHttpRequestPromise(groupsApiConfig.declineSingleGroupMemberRequest, groupId, requestId),
+  declineAllGroupMemberRequests: (groupId: string) => withHttpRequestPromise(groupsApiConfig.declineAllGroupMemberRequests, groupId),
   getInnerGroupsLastAdmin: (groupId: string, userId: string) => withHttpRequestPromise(groupsApiConfig.getInnerGroupsLastAdmin, groupId, userId),
   getDiscoverCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getDiscoverCommunities, params),
   getJoinedCommunities: (params: {
