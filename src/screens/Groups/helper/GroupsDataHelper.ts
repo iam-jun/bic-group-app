@@ -510,7 +510,7 @@ const groupsDataHelper = {
   getCommunityGroupTree: (id: string) => withHttpRequestPromise(groupsApiConfig.getCommunityGroupsTree, id),
   // eslint-disable-next-line max-len
   putGroupStructureReorder: (communityId: string, data: string[]) => withHttpRequestPromise(groupsApiConfig.putGroupStructureReorder, communityId, data),
-  getCommunityStructureMoveTargets: async (
+  getCommunityStructureMoveTargets: (
     communityId: string,
     groupId: string,
     key?: string,
@@ -522,7 +522,7 @@ const groupsDataHelper = {
     }
     return withHttpRequestPromise(groupsApiConfig.getCommunityStructureMoveTargets, communityId, groupId, key)
   },
-  putGroupStructureMoveToTarget: async (
+  putGroupStructureMoveToTarget: (
     communityId: string,
     moveId: string,
     targetId: string,
@@ -532,7 +532,7 @@ const groupsDataHelper = {
     }
     return withHttpRequestPromise(groupsApiConfig.putGroupStructureMoveToTarget, communityId, moveId, targetId)
   },
-  putGroupStructureCollapseStatus: async (
+  putGroupStructureCollapseStatus: (
     communityId: string,
     groupId: string,
     status: boolean,
@@ -542,7 +542,7 @@ const groupsDataHelper = {
     }
     return withHttpRequestPromise(groupsApiConfig.putGroupStructureCollapseStatus, communityId, groupId, status)
   },
-  getPermissionCategories: async (scope?: 'SYSTEM' | 'COMMUNITY' | 'GROUP') => withHttpRequestPromise(groupsApiConfig.getPermissionCategories, scope),
+  getPermissionCategories: (scope?: 'SYSTEM' | 'COMMUNITY' | 'GROUP') => withHttpRequestPromise(groupsApiConfig.getPermissionCategories, scope),
   getSystemScheme: () => withHttpRequestPromise(groupsApiConfig.getSystemScheme),
   getCommunityScheme: async (communityId: string) => {
     if (!communityId) {
@@ -550,53 +550,23 @@ const groupsDataHelper = {
     }
     return withHttpRequestPromise(groupsApiConfig.getCommunityScheme, communityId)
   },
-  updateCommunityScheme: async (communityId: string, scheme: IScheme) => {
+  updateCommunityScheme: (communityId: string, scheme: IScheme) => {
     if (!communityId || !scheme) {
       return Promise.reject(new Error('updateCommunityScheme invalid data'));
     }
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.updateCommunityScheme(communityId, scheme),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
+    return withHttpRequestPromise(groupsApiConfig.updateCommunityScheme, communityId, scheme)
   },
-  deleteCommunityScheme: async (communityId: string) => {
-    try {
-      if (!communityId) {
-        return Promise.reject(new Error('deleteCommunityScheme invalid communityId'));
-      }
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.deleteCommunityScheme(communityId),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
+  deleteCommunityScheme: (communityId: string) => {
+    if (!communityId) {
+      return Promise.reject(new Error('deleteCommunityScheme invalid communityId'));
     }
+    return withHttpRequestPromise(groupsApiConfig.deleteCommunityScheme, communityId)
   },
   getSchemes: async (communityId: string) => {
-    try {
-      if (!communityId) {
-        return Promise.reject(new Error('getSchemes invalid communityId'));
-      }
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getSchemes(communityId),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
+    if (!communityId) {
+      return Promise.reject(new Error('getSchemes invalid communityId'));
     }
+    return withHttpRequestPromise(groupsApiConfig.getSchemes, communityId)
   },
   getGroupScheme: async (communityId: string, schemeId: string) => {
     try {
@@ -614,19 +584,7 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getGroupSchemeAssignments: async (communityId: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.getGroupSchemeAssignments(communityId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  getGroupSchemeAssignments: async (communityId: string) => withHttpRequestPromise(groupsApiConfig.getGroupSchemeAssignments, communityId),
   putGroupSchemeAssignments: async (params: IPayloadGroupSchemeAssignments) => {
     try {
       const { communityId, data } = params || {};
@@ -665,17 +623,7 @@ const groupsDataHelper = {
     if (!communityId || !scheme) {
       return Promise.reject(new Error('postCreateSchemePermission invalid data'));
     }
-    try {
-      const response: any = await makeHttpRequest(
-        groupsApiConfig.postCreateSchemePermission(communityId, scheme),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
+    return withHttpRequestPromise(groupsApiConfig.postCreateSchemePermission, communityId, scheme)
   },
   getSearchGroups: async (params?: any) => {
     try {
