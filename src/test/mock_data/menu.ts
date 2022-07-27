@@ -4,14 +4,14 @@ export const USER_PROFILE = {
     'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/avatar/images/original/3849e4fc-941f-4b2a-bce9-9da2069a2e55.jpg',
   backgroundImgUrl:
     'https://bein-entity-attribute-sandbox.s3.ap-southeast-1.amazonaws.com/user/cover/images/original/9b7c23c6-b337-42ac-b084-c52843fceeb5.jpg',
-  bein_staff_role: null,
+  beinStaffRole: null,
   birthday: '1976-03-01T17:00:00.000Z',
-  chat_user_id: 'ryrzufdkg3g4bg3u3b51p7fyrh',
+  chatUserId: 'ryrzufdkg3g4bg3u3b51p7fyrh',
   city: 'Bà Rịa - Vũng Tàu',
   country: 'Việt Nam',
   country_code: '84',
-  created_at: '2022-01-24T08:35:17.801Z',
-  deleted_at: null,
+  createdAt: '2022-01-24T08:35:17.801Z',
+  deletedAt: null,
   description:
     'Aloooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo00qqqqqqqqq7777',
   email: 'thuquyen@tgm.vn',
@@ -22,7 +22,7 @@ export const USER_PROFILE = {
   latest_work: { company: 'testqqqqq', title_position: 'test 145qw' },
   phone: '89871234',
   relationship_status: 'SINGLE',
-  updated_at: '2022-03-14T11:34:45.360Z',
+  updatedAt: '2022-03-14T11:34:45.360Z',
   username: 'thuquyen',
 };
 

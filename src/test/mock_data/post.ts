@@ -225,7 +225,7 @@ export const POST_DETAIL_2 = {
 
 export const GROUP_AUDIENCE = {
   id: 1,
-  parent_id: null,
+  parentId: null,
   name: 'EVOL Community',
   slug: 'evol-community-1641809088',
   description: 'The greatest community ever',
@@ -235,9 +235,9 @@ export const GROUP_AUDIENCE = {
   backgroundImgUrl: null,
   privacy: 'PUBLIC',
   chatId: 'rpq3unai7i8ztprmoz97rdjr7w',
-  created_at: '2022-01-10T10:04:48.685Z',
-  updated_at: '2022-01-10T10:04:48.928Z',
-  deleted_at: null,
+  createdAt: '2022-01-10T10:04:48.685Z',
+  updatedAt: '2022-01-10T10:04:48.928Z',
+  deletedAt: null,
   children: [],
   userCount: '25',
   unique: '7bcef9a5-3474-45b9-a167-a68e7ebcfe9a',

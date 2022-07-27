@@ -43,7 +43,7 @@ describe('InfoHeader component', () => {
     const wrapper = renderWithRedux(<InfoHeader />, store);
     const member = wrapper.getByTestId('info_header.member_count');
     expect(member.props.children).toBe(
-      ` ${communityDetailData.user_count} members`,
+      ` ${communityDetailData.userCount} members`,
     );
   });
 

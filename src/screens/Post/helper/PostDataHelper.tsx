@@ -171,8 +171,8 @@ export const postApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
     params: {
-      group_ids: params.group_ids,
-      user_ids: params.user_ids,
+      group_ids: params.groupIds,
+      user_ids: params.userIds,
       key: params.key ? params.key : undefined,
       offset: params.skip,
       limit: params.take,

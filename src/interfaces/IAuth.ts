@@ -66,10 +66,10 @@ export interface IUserProfile {
   stream_uuid?: string;
   gender?: string;
   birthday?: string;
-  bein_staff_role?: string;
-  created_at?: string;
-  updated_at?: string;
-  deleted_at?: string;
+  beinStaffRole?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: string;
   avatar?: string;
   backgroundImgUrl?: string;
   phone?: string;
