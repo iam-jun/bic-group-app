@@ -104,7 +104,25 @@ declare module '@react-navigation/native' {
       transparent: string;
       transparent1: string;
     };
+    elevations:{
+      e1: elevation,
+      e2: elevation
+      e3: elevation
+      e4: elevation
+      e5: elevation
+      e6: elevation
+    }
   };
+  
+  export type elevation = {
+    shadowColor: string,
+    shadowOffset: {
+      width: number,
+      height: number,
+    },
+    shadowRadius: number,
+    elevation: number,
+  }
   export function useTheme(): ExtendedTheme;
   export type DarkTheme = typeof _DarkTheme;
   export type DefaultTheme = typeof _DefaultTheme;
