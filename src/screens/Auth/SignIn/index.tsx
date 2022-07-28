@@ -12,7 +12,7 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import { ExtendedTheme, useNavigation, useTheme } from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import Animated, {
   Extrapolate,
@@ -48,6 +48,7 @@ import getEnv from '~/utils/env';
 import BackgroundComponent from './BackgroundComponent';
 import spacing from '~/theme/spacing';
 import { APP_ENV } from '~/configs/appConfig';
+import { useRootNavigation } from '~/hooks/navigation';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -58,7 +59,7 @@ const MARGIN_LEFT_LOGO = -(screenWidth / 2 - 24 * 2);
 const SignIn = () => {
   useAuthAmplifyHub();
   const { t } = useBaseHook();
-  const navigation = useNavigation();
+  const { rootNavigation } = useRootNavigation()
   const dispatch = useDispatch();
   const { loading, signingInError } = useAuth();
   const [disableSignIn, setDisableSignIn] = useState(true);
@@ -264,7 +265,7 @@ const SignIn = () => {
     Keyboard.dismiss();
   };
 
-  const goToForgotPassword = () => navigation.navigate(authStack.forgotPassword);
+  const goToForgotPassword = () => rootNavigation.navigate(authStack.forgotPassword);
 
   const logoContainerStyle = useAnimatedStyle(() => ({
     transform: [

@@ -20,6 +20,8 @@ export type TextVariant =
   | 'bodyMMedium'
   | 'bodyS'
   | 'bodySMedium'
+  | 'bodyXS'
+  | 'bodyXSMedium'
   | 'paragraphL'
   | 'paragraphM'
   | 'paragraphS'
@@ -29,6 +31,7 @@ export type TextVariant =
   | 'tabL'
   | 'tabM'
   | 'tabS'
+  | 'tabXS'
   | 'linkM'
   | 'linkS'
   | 'badgeL'
@@ -37,6 +40,7 @@ export type TextVariant =
   | 'badgeXS'
   | 'labelL'
   | 'labelM'
+  | 'labelS'
   | 'dropdownM'
   | 'dropdownS'
   | 'numberM'
@@ -134,6 +138,12 @@ const BodyS = ({ ...props }: TextProps) => (
 const BodySMedium = ({ ...props }: TextProps) => (
   <TextComponent variant="bodySMedium" {...props} />
 );
+const BodyXS = ({ ...props }: TextProps) => (
+  <TextComponent variant="bodyXS" {...props} />
+);
+const BodyXSMedium = ({ ...props }: TextProps) => (
+  <TextComponent variant="bodyXSMedium" {...props} />
+);
 const ParagraphL = ({ ...props }: TextProps) => (
   <TextComponent variant="paragraphL" {...props} />
 );
@@ -161,6 +171,9 @@ const TabM = ({ ...props }: TextProps) => (
 const TabS = ({ ...props }: TextProps) => (
   <TextComponent variant="tabS" {...props} />
 );
+const TabXS = ({ ...props }: TextProps) => (
+  <TextComponent variant="tabXS" {...props} />
+);
 const LinkM = ({ ...props }: TextProps) => (
   <TextComponent variant="linkM" {...props} />
 );
@@ -184,6 +197,9 @@ const LabelL = ({ ...props }: TextProps) => (
 );
 const LabelM = ({ ...props }: TextProps) => (
   <TextComponent variant="labelM" {...props} />
+);
+const LabelS = ({ ...props }: TextProps) => (
+  <TextComponent variant="labelS" {...props} />
 );
 const DropdownM = ({ ...props }: TextProps) => (
   <TextComponent variant="dropdownM" {...props} />
@@ -217,6 +233,8 @@ const Text = Object.assign(
     BodyMMedium,
     BodyS,
     BodySMedium,
+    BodyXS,
+    BodyXSMedium,
     ParagraphL,
     ParagraphM,
     ParagraphS,
@@ -226,6 +244,7 @@ const Text = Object.assign(
     TabL,
     TabM,
     TabS,
+    TabXS,
     LinkM,
     LinkS,
     BadgeL,
@@ -234,6 +253,7 @@ const Text = Object.assign(
     BadgeXS,
     LabelL,
     LabelM,
+    LabelS,
     DropdownM,
     DropdownS,
     NumberM,

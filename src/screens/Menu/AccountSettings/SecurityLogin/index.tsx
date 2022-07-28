@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
 
 import { useBaseHook } from '~/hooks';
+import { useRootNavigation } from '~/hooks/navigation';
 import * as modalActions from '~/store/modal/actions';
 
 import { ISetting } from '~/interfaces/common';
@@ -18,12 +18,12 @@ import spacing from '~/theme/spacing';
 const SecurityLogin = () => {
   const { t } = useBaseHook();
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const { rootNavigation } = useRootNavigation();
 
   const onSecurityLoginPress = (item: ISetting) => {
     switch (item.type) {
       case 'changePassword':
-        return navigation.navigate(menuStack.changePassword);
+        return rootNavigation.navigate(menuStack.changePassword);
 
       default:
         dispatch(modalActions.showAlertNewFeature());

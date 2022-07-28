@@ -92,6 +92,16 @@ export const createTextStyle = (theme: ExtendedTheme) => {
       // lineHeight: lineHeights.bodySMedium,
       color: colors.neutral80,
     },
+    bodyXS: {
+      fontFamily: fontFamilies.BeVietnamProLight,
+      fontSize: sizes.bodyXS,
+      color: colors.neutral80,
+    },
+    bodyXSMedium: {
+      fontFamily: fontFamilies.BeVietnamProMedium,
+      fontSize: sizes.bodyXSMedium,
+      color: colors.neutral80,
+    },
     paragraphL: {
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: sizes.paragraphL,
@@ -140,6 +150,11 @@ export const createTextStyle = (theme: ExtendedTheme) => {
       fontSize: sizes.tabS,
       color: colors.neutral80,
     },
+    tabXS: {
+      fontFamily: fontFamilies.BeVietnamProMedium,
+      fontSize: sizes.tabXS,
+      color: colors.neutral80,
+    },
     linkM: {
       fontFamily: fontFamilies.BeVietnamProMedium,
       fontSize: sizes.linkM,
@@ -178,6 +193,11 @@ export const createTextStyle = (theme: ExtendedTheme) => {
     labelM: {
       fontFamily: fontFamilies.BeVietnamProLight,
       fontSize: sizes.labelM,
+      color: colors.neutral80,
+    },
+    labelS: {
+      fontFamily: fontFamilies.BeVietnamProLight,
+      fontSize: sizes.labelS,
       color: colors.neutral80,
     },
     dropdownM: {
