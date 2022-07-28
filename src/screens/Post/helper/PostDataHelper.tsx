@@ -263,7 +263,6 @@ const postDataHelper = {
   deleteReaction: (param: IParamDeleteReaction) => withHttpRequestPromise(postApiConfig.deleteReaction, param),
   getReactionDetail: async (param: IParamGetReactionDetail) => {
     const { reactionName, targetId, target } = param;
-    console.log('latestId', param);
 
     if (reactionName && targetId && target) {
       try {

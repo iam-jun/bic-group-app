@@ -24,7 +24,7 @@ const contentBarHeight = 0.6 * screenHeight;
 
 const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   reactionType,
-  limit = 1,
+  limit = 100,
   height = contentBarHeight,
   onPressItem,
   getDataPromise,
@@ -96,7 +96,7 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
   const renderHeader = () => <View style={styles.header} />;
 
   return (
-    <View style={{ height: 100 }}>
+    <View style={{ height }}>
       <FlatList
         testID="reaction_detail_bottomSheet.list_user"
         style={styles.listContainer}
