@@ -29,6 +29,7 @@ import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '../redux/keySelector';
 import BottomSheet from '~/beinComponents/BottomSheet';
 import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import images from '~/resources/images';
 
 export interface PostSettingsProps {
   route?: {
@@ -253,7 +254,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
         <PrimaryItem
           title={item?.name}
           showAvatar
-          avatar={item?.icon}
+          avatar={item?.icon || images.img_user_avatar_default}
           height={54}
           titleProps={{ variant: 'subtitleM' }}
         />

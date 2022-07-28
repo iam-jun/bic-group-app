@@ -290,21 +290,8 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     dispatch(postActions.setPostSelectAudienceState(p));
   };
 
-  const handleSearchResult = (data: any) => {
-    const { users = [], groups = [] } = data || {};
-
-    dispatch(postActions.setSearchResultAudienceGroups(groups));
-
-    const newListUsers: any = [];
-    users?.forEach?.((item: any) => {
-      newListUsers.push({
-        id: item.id,
-        type: 'user',
-        name: item.fullname || item.username,
-        avatar: item.avatar,
-      });
-    });
-    dispatch(postActions.setSearchResultAudienceUsers(newListUsers));
+  const handleSearchResult = (data: []) => {
+    dispatch(postActions.setSearchResultAudienceGroups(data));
   };
 
   const onSearch = debounce(
@@ -313,8 +300,8 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
       postDataHelper
         .getSearchAudiences(searchText)
         .then((response) => {
-          if (response && response.data) {
-            handleSearchResult(response.data);
+          if (response && response?.data?.groups) {
+            handleSearchResult(response.data.groups);
           }
           dispatch(postActions.setPostSelectAudienceState({ loading: false }));
         })

@@ -68,7 +68,7 @@ const TagComponent: React.FC<TagProps> = ({
       style={StyleSheet.flatten([styles.container, style])}
       onPress={_onChangeValue}
     >
-      {avatar && <Avatar.Tiny source={avatar} style={styles.avatar} />}
+      {!!avatar && <Avatar.Tiny source={avatar} style={styles.avatar} />}
       <Text style={StyleSheet.flatten([styles.labelText])}>{label}</Text>
       {!disabled && onPressIcon && (
         <Icon
