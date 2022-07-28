@@ -29,10 +29,9 @@ import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import { IFilePicked } from '~/interfaces/common';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import { openLink } from '~/utils/common';
 import homeActions from '~/screens/Home/redux/actions';
 import { checkPermission, permissionTypes } from '~/utils/permission';
-import { formatDMLink } from '~/utils/link';
+import { formatDMLink, openUrl } from '~/utils/link';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import spacing from '~/theme/spacing';
@@ -178,7 +177,7 @@ const UserProfile = (props: any) => {
         joinedCommunities?.[0]?.slug,
         userProfileData.username,
       );
-      openLink(link);
+      openUrl(link);
     } else {
       dispatch(groupsActions.getMyCommunities({ callback: onPressChat }));
     }
