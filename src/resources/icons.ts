@@ -114,10 +114,10 @@ const icons = {
   search: fontAwesomeIcons.MagnifyingGlass,
 
   // PRIVACY
-  iconPublic: fontAwesomeIcons.Globe,
-  iconOpen: fontAwesomeIcons.Eye,
-  iconSecret: fontAwesomeIcons.ShieldHalved,
-  iconPrivate: fontAwesomeIcons.LockKeyhole,
+  iconPublic: fontAwesomeIcons.GlobeSolid,
+  iconOpen: fontAwesomeIcons.EyeSolid,
+  iconSecret: fontAwesomeIcons.ShieldHalvedSolid,
+  iconPrivate: fontAwesomeIcons.LockKeyholeSolid,
 
   // ^ ADD RENAMED ICON HERE
   // IF YOU WANT TO RENAME ICON, ADD TO fontAwesomeIcons FIRST
