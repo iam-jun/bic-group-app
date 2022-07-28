@@ -16,7 +16,6 @@ import PropTypes from 'prop-types';
 import parser from './src/parser';
 import getUniqueID from './src/util/getUniqueID';
 import hasParents from './src/util/hasParents';
-import openUrl from './src/util/openUrl';
 import tokensToAST from './src/util/tokensToAST';
 import renderRules from './src/renderRules';
 import AstRenderer from './src/AstRenderer';
@@ -30,6 +29,7 @@ import emojiShortcuts from '../emoji/shortcuts';
 import emojiDefs from '../emoji/defs';
 import emojiPlugin from '../emoji/plugin';
 import regexPlugin from '../regex/plugin';
+import { openUrl } from '~/utils/link';
 
 export {
   getUniqueID,
