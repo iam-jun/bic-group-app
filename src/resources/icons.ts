@@ -17,12 +17,6 @@ import iconMenuInfo from '../../assets/icons/icon_menu_info.svg';
 import iconMenuLogout from '../../assets/icons/icon_menu_logout.svg';
 import iconMenuMenu from '../../assets/icons/icon_menu_menu.svg';
 import iconSendComment from '../../assets/icons/icon_send_comment.svg';
-// @ts-ignore
-import iconCheckboxSelected from '../../assets/icons/icon_checkbox_selected.png';
-// @ts-ignore
-import iconCheckboxInherited from '../../assets/icons/icon_checkbox_inherited.png';
-// @ts-ignore
-import iconCheckboxUnselected from '../../assets/icons/icon_checkbox_unselected.png';
 import iconCheckboxRestricted from '../../assets/icons/icon_checkbox_retricted.svg';
 
 import iconMenuSetting from '../../assets/icons/icon_menu_setting.svg';
@@ -68,9 +62,9 @@ const icons = {
   iconLanguageEn,
   iconLanguageVi,
   iconCheckbox,
-  iconCheckboxUnselected,
-  iconCheckboxSelected,
-  iconCheckboxInherited,
+  iconCheckboxUnselected: require('../../assets/icons/icon_checkbox_unselected.png'),
+  iconCheckboxSelected: require('../../assets/icons/icon_checkbox_selected.png'),
+  iconCheckboxInherited: require('../../assets/icons/icon_checkbox_inherited.png'),
   iconCheckboxRestricted,
   iconAddSquareDone,
   iconAddGif,
@@ -105,8 +99,6 @@ const icons = {
   iconStar,
   iconReact: fontAwesomeIcons.FaceSmile,
   iconSave: fontAwesomeIcons.FloppyDisk,
-  iconSecret: fontAwesomeIcons.ShieldHalved,
-  iconPrivate: fontAwesomeIcons.LockKeyhole,
   iconSend: fontAwesomeIcons.PaperPlaneTop,
   iconSuitcase: fontAwesomeIcons.Suitcase,
   download: fontAwesomeIcons.CloudArrowDown,
@@ -121,6 +113,13 @@ const icons = {
   menu: fontAwesomeIcons.Ellipsis,
   search: fontAwesomeIcons.MagnifyingGlass,
   iconCheckCircle: fontAwesomeIcons.CircleCheck,
+
+  // PRIVACY
+  iconPublic: fontAwesomeIcons.GlobeSolid,
+  iconOpen: fontAwesomeIcons.EyeSolid,
+  iconSecret: fontAwesomeIcons.ShieldHalvedSolid,
+  iconPrivate: fontAwesomeIcons.LockKeyholeSolid,
+
   // ^ ADD RENAMED ICON HERE
   // IF YOU WANT TO RENAME ICON, ADD TO fontAwesomeIcons FIRST
   ...fontAwesomeIcons,

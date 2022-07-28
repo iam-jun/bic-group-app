@@ -17,8 +17,9 @@ import modalActions, {
   showHideToastMessage,
 } from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
-import { openLink } from '~/utils/common';
-import { formatChannelLink, getLink, LINK_GROUP } from '~/utils/link';
+import {
+  formatChannelLink, getLink, openUrl, LINK_GROUP,
+} from '~/utils/link';
 import HeaderMenu from '../../components/HeaderMenu';
 import useLeaveGroup from '../../GroupMembers/components/useLeaveGroup';
 import { checkLastAdmin } from '../../helper';
@@ -84,16 +85,9 @@ const GroupTopBar = () => {
       LINK_GROUP, groupId,
     );
     try {
-      Share.share({
-        message: groupLink,
-        url: groupLink,
-      }).then((result) => {
-        console.log(
-          '\x1b[35m🐣️ Share group result: ', result, '\x1b[0m',
-        );
-      });
+      Share.share({ message: groupLink, url: groupLink })
     } catch (error) {
-      console.log(`\x1b[31m🐣️ Share group error: ${error}\x1b[0m`);
+      console.error(`\x1b[31m🐣️ Share group error: ${error}\x1b[0m`);
     }
   };
 
@@ -142,7 +136,7 @@ const GroupTopBar = () => {
     const link = formatChannelLink(
       groupInfo.team_name, groupInfo.slug,
     );
-    openLink(link);
+    openUrl(link);
   };
 
   const onPressSearch = () => {

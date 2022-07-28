@@ -17,7 +17,6 @@ import DocumentPicker from '~/beinComponents/DocumentPicker';
 import Icon from '~/beinComponents/Icon';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
-import { tryOpenURL } from '~/beinComponents/Markdown/utils/url.js';
 import Text from '~/beinComponents/Text';
 import appConfig from '~/configs/appConfig';
 import { useBaseHook } from '~/hooks';
@@ -30,7 +29,7 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import { showHideToastMessage } from '~/store/modal/actions';
 
 import spacing from '~/theme/spacing';
-import { getChatDomain } from '~/utils/link';
+import { getChatDomain, openUrl } from '~/utils/link';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import { clearExistingFiles, validateFilesPicker } from '../CreatePost/helper';
 import { getTotalFileSize } from '../redux/selectors';
@@ -211,7 +210,7 @@ const PostToolbar = ({
 
   const onPressHelp = () => {
     const DOMAIN = getChatDomain();
-    tryOpenURL(`${DOMAIN}/help/formatting`);
+    openUrl(`${DOMAIN}/help/formatting`);
   };
 
   const renderToolbarButton = (
