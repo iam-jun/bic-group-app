@@ -73,18 +73,30 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         const _audience = audience.groups.find((audience: IAudienceGroup) => audience?.id === audienceId)
         return _audience;
       })
-      dispatch(
-        modalActions.showAlert({
-          title: t('post:title_delete_audiences_of_post'),
-          children: <AlertDeleteAudiencesConfirmContent data={listAudiences} canDeleteOwnPost={canDeleteOwnPost} />,
-          cancelBtn: true,
-          confirmLabel: canDeleteOwnPost ? t('common:btn_delete') : t('common:btn_close'),
-          onConfirm: () => (canDeleteOwnPost ? dispatch(postActions.removePostAudiences({
-            id: postId,
-            listAudiences: listIdAudiences,
-          })) : null),
-        }),
-      );
+      if (canDeleteOwnPost) {
+        dispatch(
+          modalActions.showAlert({
+            title: t('post:title_delete_audiences_of_post'),
+            children: <AlertDeleteAudiencesConfirmContent data={listAudiences} canDeleteOwnPost={canDeleteOwnPost} />,
+            cancelBtn: true,
+            confirmLabel: t('common:btn_delete'),
+            onConfirm: () => dispatch(postActions.removePostAudiences({
+              id: postId,
+              listAudiences: listIdAudiences,
+            })),
+          }),
+        );
+      } else {
+        dispatch(
+          modalActions.showAlert({
+            title: t('post:title_delete_audiences_of_post'),
+            children: <AlertDeleteAudiencesConfirmContent data={listAudiences} canDeleteOwnPost={canDeleteOwnPost} />,
+            cancelBtn: true,
+            cancelLabel: t('common:btn_close'),
+            onConfirm: null,
+          }),
+        );
+      }
     }
   }
 
