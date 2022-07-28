@@ -84,16 +84,18 @@ function* postCreateNewComment({
 
     let resComment;
     if (parentCommentId) {
-      resComment = yield postDataHelper.postReplyComment({
+      const response = yield postDataHelper.postReplyComment({
         postId,
         parentCommentId,
         data: commentData,
       });
+      resComment = response?.data;
     } else {
-      resComment = yield postDataHelper.postNewComment({
+      const response = yield postDataHelper.postNewComment({
         postId,
         data: commentData,
       });
+      resComment = response?.data;
     }
     onSuccess?.(); // clear content in text input
     if (!!viewMore && !!parentCommentId) {
