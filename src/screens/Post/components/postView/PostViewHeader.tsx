@@ -36,7 +36,9 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const textAudiences = getAudiencesText(audience, t);
+  const textAudiences = getAudiencesText(
+    audience, t,
+  );
 
   const avatar = actor?.avatar;
   const actorName = actor?.fullname;
@@ -106,7 +108,9 @@ const PostViewHeader: FC<PostViewHeaderProps> = ({
   );
 };
 
-const getAudiencesText = (aud?: IPostAudience, t?: any) => {
+const getAudiencesText = (
+  aud?: IPostAudience, t?: any,
+) => {
   const limitLength = 25;
   let result = '';
   const { groups = [], users = [] } = aud || {};
@@ -114,7 +118,9 @@ const getAudiencesText = (aud?: IPostAudience, t?: any) => {
   result = groups?.[0]?.name || users?.[0]?.fullname || '';
   const left = total - 1;
   if (result?.length > limitLength) {
-    result = `${result.substr(0, limitLength)}...`;
+    result = `${result.substr(
+      0, limitLength,
+    )}...`;
   } else if (left > 0) {
     result = `${result},...`;
   }

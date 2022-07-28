@@ -25,11 +25,15 @@ const Toggle: React.FC<ToggleProps> = ({
 }: ToggleProps) => {
   const [checked, setChecked] = useState<boolean>(isChecked);
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(theme, checked);
+  const styles = createStyles(
+    theme, checked,
+  );
 
-  useEffect(() => {
-    setChecked(isChecked);
-  }, [isChecked]);
+  useEffect(
+    () => {
+      setChecked(isChecked);
+    }, [isChecked],
+  );
 
   const _onChangeValue = () => {
     const newValue = !checked;
@@ -54,7 +58,9 @@ const Toggle: React.FC<ToggleProps> = ({
   );
 };
 
-const createStyles = (theme: ExtendedTheme, isChecked: boolean) => {
+const createStyles = (
+  theme: ExtendedTheme, isChecked: boolean,
+) => {
   const { colors } = theme;
 
   return StyleSheet.create({
@@ -72,7 +78,7 @@ const createStyles = (theme: ExtendedTheme, isChecked: boolean) => {
       right: 0,
       borderRadius: 12,
       backgroundColor: colors.white,
-      shadowOffset: {width: 0, height: 1},
+      shadowOffset: { width: 0, height: 1 },
       shadowColor: colors.gray30,
       shadowOpacity: 1,
       shadowRadius: 1,

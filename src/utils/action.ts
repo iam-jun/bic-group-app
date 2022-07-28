@@ -3,7 +3,9 @@ interface ReduxAction {
   payload: unknown;
 }
 
-const createAction = (type: string, payload = {}): ReduxAction => ({
+const createAction = (
+  type: string, payload = {},
+): ReduxAction => ({
   type: `${type}`,
   payload,
 });

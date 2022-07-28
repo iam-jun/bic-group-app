@@ -26,7 +26,9 @@ const PostAudiencesBottomSheet = () => {
   const insets = useSafeAreaInsets();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = createStyle(theme, insets);
+  const styles = createStyle(
+    theme, insets,
+  );
 
   const postAudienceSheetRef = useRef<any>();
   const postAudienceSheet = useKeySelector(postKeySelector.postAudienceSheet);
@@ -38,21 +40,25 @@ const PostAudiencesBottomSheet = () => {
   };
 
   const navigateToGroup = (groupId: any) => {
-    rootNavigation.navigate(mainStack.groupDetail, {
-      groupId,
-    });
+    rootNavigation.navigate(
+      mainStack.groupDetail, {
+        groupId,
+      },
+    );
   };
 
-  const navigateToCommunity = (communityId: number) => {
-    rootNavigation.navigate(mainStack.communityDetail, {
-      communityId,
-    });
+  const navigateToCommunity = (communityId: string) => {
+    rootNavigation.navigate(
+      mainStack.communityDetail, {
+        communityId,
+      },
+    );
   };
 
   const onPressItem = (item: any) => {
-    const { id, community_id } = item || {};
-    if (community_id) {
-      navigateToCommunity(community_id);
+    const { id, communityId } = item || {};
+    if (communityId) {
+      navigateToCommunity(communityId);
     } else {
       navigateToGroup(id);
     }
@@ -62,7 +68,7 @@ const PostAudiencesBottomSheet = () => {
   const renderSectionHeader = () => null;
 
   const renderGroupContentComponent = (item: any) => {
-    const { type, user_count, privacy } = item || {};
+    const { type, userCount, privacy } = item || {};
     const privacyData: any = privacyTypes.find((item) => item?.type === privacy) || {};
     if (type === 'user') {
       return null;
@@ -83,7 +89,7 @@ const PostAudiencesBottomSheet = () => {
           icon="UserGroup"
           tintColor={colors.gray50}
         />
-        <Text.BodyS color={colors.gray50}>{user_count}</Text.BodyS>
+        <Text.BodyS color={colors.gray50}>{userCount}</Text.BodyS>
       </View>
     );
   };
@@ -122,7 +128,9 @@ const PostAudiencesBottomSheet = () => {
         style={styles.sectionContainer}
         showsVerticalScrollIndicator={false}
         sections={data || []}
-        keyExtractor={(item, index) => `section_list_${item}_${index}`}
+        keyExtractor={(
+          item, index,
+        ) => `section_list_${item}_${index}`}
         renderSectionHeader={renderSectionHeader}
         ListHeaderComponent={() => (
           <ViewSpacing height={spacing.margin.small} />
@@ -145,7 +153,9 @@ const PostAudiencesBottomSheet = () => {
   );
 };
 
-const createStyle = (theme: ExtendedTheme, insets: any) => {
+const createStyle = (
+  theme: ExtendedTheme, insets: any,
+) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {

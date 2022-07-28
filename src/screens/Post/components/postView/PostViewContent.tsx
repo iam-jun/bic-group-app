@@ -44,7 +44,9 @@ const PostViewContent: FC<PostViewContentProps> = ({
 
   const onPressMentionAudience = useRef((audience: IMarkdownAudience) => {
     if (audience) {
-      rootNavigation.navigate(mainStack.userProfile, { userId: audience.id });
+      rootNavigation.navigate(
+        mainStack.userProfile, { userId: audience.id },
+      );
     }
   }).current;
 
@@ -64,7 +66,9 @@ const PostViewContent: FC<PostViewContentProps> = ({
         || (imageName
           ? imageName?.includes?.('http')
             ? imageName
-            : getResourceUrl('postImage', imageName)
+            : getResourceUrl(
+              'postImage', imageName,
+            )
           : '');
       return (
         <View testID="post_view_content.lite_container" style={styles.row}>

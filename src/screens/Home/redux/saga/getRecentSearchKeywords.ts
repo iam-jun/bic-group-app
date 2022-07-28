@@ -14,15 +14,17 @@ export default function* getRecentSearchKeywords({
     if (showLoading) {
       yield put(homeActions.setNewsfeedSearchRecentKeywords({ loading: true }));
     }
-    const response = yield call(homeDataHelper.getRecentSearchKeywords, param);
-    yield put(
-      homeActions.setNewsfeedSearchRecentKeywords({
-        data: response?.recentSearches || [],
-        loading: false,
-      }),
+    const response = yield call(
+      homeDataHelper.getRecentSearchKeywords, param,
     );
+    yield put(homeActions.setNewsfeedSearchRecentKeywords({
+      data: response?.recentSearches || [],
+      loading: false,
+    }));
   } catch (e) {
-    console.error('\x1b[31m🐣️ saga getRecentSearch error: ', e, '\x1b[0m');
+    console.error(
+      '\x1b[31m🐣️ saga getRecentSearch error: ', e, '\x1b[0m',
+    );
     yield put(homeActions.setNewsfeedSearchRecentKeywords({ loading: false }));
   }
 }

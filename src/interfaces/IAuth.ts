@@ -58,7 +58,7 @@ export interface IChangePasswordError {
 export type ISignUpResponse = ISignUpResult;
 
 export interface IUserProfile {
-  id: string | number;
+  id: string;
   email?: string;
   fullname?: string;
   username?: string;
@@ -66,45 +66,45 @@ export interface IUserProfile {
   stream_uuid?: string;
   gender?: string;
   birthday?: string;
-  bein_staff_role?: string;
-  created_at?: string;
-  updated_at?: string;
-  deleted_at?: string;
+  beinStaffRole?: string;
+  createdAt?: string;
+  updatedAt?: string;
+  deletedAt?: string;
   avatar?: string;
-  background_img_url?: string;
+  backgroundImgUrl?: string;
   phone?: string;
-  country_code?: string;
+  countryCode?: string;
   address?: string;
   language?: string[];
   description?: string;
-  relationship_status?: string;
+  relationshipStatus?: string;
   city?: string;
   country?: string;
-  latest_work?: {
+  latestWork?: {
     company?: string;
-    title_position?: string;
+    titlePosition?: string;
   };
 }
 
 export interface IGetUserProfile {
-  userId: number;
+  userId: string;
   params?: any;
 }
 
 export interface IUserEdit {
-  id?: number;
+  id?: string;
   email?: string;
   fullname?: string;
   gender?: GENDER_TYPE;
   birthday?: string;
   avatar?: string;
-  background_img_url?: string;
+  backgroundImgUrl?: string;
   phone?: string;
-  country_code?: string|null;
+  countryCode?: string|null;
   address?: string;
   language?: string[];
   description?: string;
-  relationship_status?: RELATIONSHIP_TYPE;
+  relationshipStatus?: RELATIONSHIP_TYPE;
   city?: string;
   country?: string;
 }
@@ -115,7 +115,7 @@ export interface IChangePasswordPayload {
 }
 
 export interface IUserWorkExperience {
-  id: number;
+  id: string;
   company: string;
   titlePosition: string;
   location?: string;

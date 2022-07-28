@@ -27,8 +27,8 @@ const CommunityAdmin = () => {
     id: communityId,
     name,
     icon,
-    can_manage_scheme,
-    can_edit_info,
+    canManageScheme,
+    canEditInfo,
   } = useKeySelector(groupsKeySelector.communityDetail);
   const { total } = useKeySelector(groupsKeySelector.communityMemberRequests);
 
@@ -47,28 +47,34 @@ const CommunityAdmin = () => {
     ],
   );
 
-  useEffect(() => {
-    canManageJoiningRequests
+  useEffect(
+    () => {
+      canManageJoiningRequests
       && dispatch(groupsActions.getCommunityMemberRequests({ communityId }));
 
-    return () => {
-      dispatch(groupsActions.resetCommunityMemberRequests());
-    };
-  }, [communityId]);
+      return () => {
+        dispatch(groupsActions.resetCommunityMemberRequests());
+      };
+    }, [communityId],
+  );
 
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
 
   const onPressPendingMembers = () => {
-    rootNavigation.navigate(groupStack.communityPendingMembers, {
-      id: communityId,
-    });
+    rootNavigation.navigate(
+      groupStack.communityPendingMembers, {
+        id: communityId,
+      },
+    );
   };
 
   const onPressGeneralInfo = () => {
-    rootNavigation.navigate(groupStack.generalInfo, {
-      id: communityId,
-      type: 'community',
-    });
+    rootNavigation.navigate(
+      groupStack.generalInfo, {
+        id: communityId,
+        type: 'community',
+      },
+    );
   };
 
   const onPressPermission = () => {
@@ -140,7 +146,7 @@ const CommunityAdmin = () => {
           onPress={onPressGeneralInfo}
         />
       )}
-      {!!can_edit_info && ( // todo temp use can edit info, should use correct permission when BE update
+      {!!canEditInfo && ( // todo temp use can edit info, should use correct permission when BE update
         <MenuItem
           testID="community_admin.group_structure_settings"
           title="settings:title_group_structure"
@@ -150,7 +156,7 @@ const CommunityAdmin = () => {
           onPress={onPressGroupStructure}
         />
       )}
-      {!!can_manage_scheme && (
+      {!!canManageScheme && (
         <MenuItem
           testID="community_admin.permission_settings"
           title="settings:title_permission_settings"

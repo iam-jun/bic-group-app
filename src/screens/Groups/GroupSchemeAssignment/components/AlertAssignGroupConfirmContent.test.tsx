@@ -8,7 +8,7 @@ import {languages} from '~/test/testUtils';
 describe('AlertAssignGroupConfirmContent', () => {
   it('findGroupInAssignmentsById should return group level 0', () => {
     const assignments = GROUP_ASSIGNMENTS;
-    const groupId = GROUP_ASSIGNMENTS.group_id;
+    const groupId = GROUP_ASSIGNMENTS.groupId;
     expect(findGroupInAssignmentsById(groupId, assignments)).toEqual(
       GROUP_ASSIGNMENTS,
     );
@@ -16,7 +16,7 @@ describe('AlertAssignGroupConfirmContent', () => {
 
   it('findGroupInAssignmentsById should return child group', () => {
     const assignments = GROUP_ASSIGNMENTS;
-    const groupId = GROUP_ASSIGNMENTS.children[0].group_id;
+    const groupId = GROUP_ASSIGNMENTS.children[0].groupId;
     expect(findGroupInAssignmentsById(groupId, assignments)).toEqual(
       GROUP_ASSIGNMENTS.children[0],
     );
@@ -24,13 +24,13 @@ describe('AlertAssignGroupConfirmContent', () => {
 
   it('findGroupInAssignmentsById should return nothing', () => {
     const assignments = GROUP_ASSIGNMENTS;
-    const groupId = 999;
+    const groupId = '999';
     expect(findGroupInAssignmentsById(groupId, assignments)).toBeUndefined();
   });
 
   it('prepareData should return correct result', () => {
     const initAssignments = GROUP_ASSIGNMENTS;
-    const assigningData = [{group_id: 1, scheme_id: 'abcd'}];
+    const assigningData = [{groupId: '1', schemeId: 'abcd'}];
     const allSchemes = {
       abcd: {id: 'abcd', name: 'Scheme ABCD'},
       efgh: {id: 'efgh', name: 'Scheme EFGH'},
@@ -46,7 +46,7 @@ describe('AlertAssignGroupConfirmContent', () => {
 
   it('prepareData should return empty result', () => {
     const initAssignments = GROUP_ASSIGNMENTS;
-    const assigningData = [{group_id: 111, scheme_id: 'abcd'}];
+    const assigningData = [{groupId: '111', schemeId: 'abcd'}];
     const allSchemes = {
       abcd: {id: 'abcd', name: 'Scheme ABCD'},
       efgh: {id: 'efgh', name: 'Scheme EFGH'},
@@ -56,7 +56,7 @@ describe('AlertAssignGroupConfirmContent', () => {
 
   it('prepareData should return correct result with default unknown scheme name', () => {
     const initAssignments = GROUP_ASSIGNMENTS;
-    const assigningData = [{group_id: 1, scheme_id: 'ijkl'}];
+    const assigningData = [{groupId: '1', schemeId: 'ijkl'}];
     const allSchemes = {
       abcd: {id: 'abcd', name: 'Scheme ABCD'},
       efgh: {id: 'efgh', name: 'Scheme EFGH'},
@@ -72,7 +72,7 @@ describe('AlertAssignGroupConfirmContent', () => {
 
   it('prepareData should return correct result with new none group', () => {
     const initAssignments = {...GROUP_ASSIGNMENTS};
-    const assigningData = [{group_id: 1, scheme_id: null}];
+    const assigningData = [{groupId: '1', schemeId: null}];
     const allSchemes = {
       abcd: {id: 'abcd', name: 'Scheme ABCD'},
       efgh: {id: 'efgh', name: 'Scheme EFGH'},
@@ -89,8 +89,8 @@ describe('AlertAssignGroupConfirmContent', () => {
   it('prepareData should return correct result with old none scheme', () => {
     const initAssignments = {...GROUP_ASSIGNMENTS};
     // @ts-ignore
-    initAssignments.scheme_id = null;
-    const assigningData = [{group_id: 1, scheme_id: 'efgh'}];
+    initAssignments.schemeId = null;
+    const assigningData = [{groupId: '1', schemeId: 'efgh'}];
     const allSchemes = {
       abcd: {id: 'abcd', name: 'Scheme ABCD'},
       efgh: {id: 'efgh', name: 'Scheme EFGH'},

@@ -24,6 +24,8 @@ export default function* getUserProfile({
   } catch (err) {
     yield put(menuActions.setUserProfile(null));
     yield put(menuActions.setShowUserNotFound());
-    console.log('getUserProfile error:', err);
+    console.log(
+      'getUserProfile error:', err,
+    );
   }
 }

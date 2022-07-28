@@ -55,9 +55,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
   const myProfile = useKeySelector(menuKeySelector.myProfile);
   const { fullname, avatar, username } = myProfile;
 
-  const replying: IPayloadReplying = useKeySelector(
-    postKeySelector.replyingComment,
-  );
+  const replying: IPayloadReplying = useKeySelector(postKeySelector.replyingComment);
   const replyTargetId = replying?.parentComment?.id || replying?.comment?.id;
   const replyTargetUser = replying?.comment?.actor || replying?.parentComment?.actor;
   const replyTargetUserId = replyTargetUser?.id;
@@ -77,22 +75,26 @@ const CommentInputView: FC<CommentInputViewProps> = ({
     [],
   );
 
-  useEffect(() => {
-    if (replyTargetUserId && replyTargetUser?.username) {
-      let content = `@${replyTargetUser?.username} `;
-      if (replyTargetUserId === userId) {
-        content = '';
+  useEffect(
+    () => {
+      if (replyTargetUserId && replyTargetUser?.username) {
+        let content = `@${replyTargetUser?.username} `;
+        if (replyTargetUserId === userId) {
+          content = '';
+        }
+        mentionInputRef?.current?.setContent(content);
       }
-      mentionInputRef?.current?.setContent(content);
-    }
-  }, [replyTargetName, replyTargetUserId]);
+    }, [replyTargetName, replyTargetUserId],
+  );
 
-  useEffect(() => {
-    if (!content) {
-      _commentInputRef?.current?.clear?.();
-      mentionInputRef?.current?.setContent?.('');
-    }
-  }, [content]);
+  useEffect(
+    () => {
+      if (!content) {
+        _commentInputRef?.current?.clear?.();
+        mentionInputRef?.current?.setContent?.('');
+      }
+    }, [content],
+  );
 
   const _onCommentSuccess = () => {
     _commentInputRef?.current?.clear?.();
@@ -134,7 +136,7 @@ const CommentInputView: FC<CommentInputViewProps> = ({
         postId,
         parentCommentId: replyTargetId || defaultReplyTargetId,
         commentData: { content: content?.trim(), media, giphy: sendData?.giphy },
-        userId: Number(userId),
+        userId,
         onSuccess: _onCommentSuccess,
         isCommentLevel1Screen,
         viewMore,

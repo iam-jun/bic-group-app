@@ -34,9 +34,14 @@ const CommentPlaceholder: React.FC<CommentPlaceholderProps> = ({
         style={styles.infoContainer}
       >
         <Placeholder Animation={ShineOverlay} style={styles.contentContainer}>
-          <PlaceholderLine width={disableRandom ? 50 : getRandomInt(30, 60)} />
+          <PlaceholderLine width={disableRandom ? 50 : getRandomInt(
+            30, 60,
+          )}
+          />
           <PlaceholderLine
-            width={disableRandom ? 60 : getRandomInt(30, 80)}
+            width={disableRandom ? 60 : getRandomInt(
+              30, 80,
+            )}
             style={styles.secondLine}
           />
         </Placeholder>

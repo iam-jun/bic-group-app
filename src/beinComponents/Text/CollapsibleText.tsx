@@ -52,7 +52,9 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
 }: CollapsibleTextProps) => {
   const getShortContent = (c?: string) => {
     if (c && c?.length > limitLength) {
-      return `${c.substr(0, shortLength)}...`;
+      return `${c.substr(
+        0, shortLength,
+      )}...`;
     }
     return '';
   };
@@ -65,12 +67,14 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
 
   const { t } = useBaseHook();
 
-  useEffect(() => {
-    const newShort = getShortContent(content);
-    if (newShort !== shortContent) {
-      setShortContent(newShort);
-    }
-  }, [content]);
+  useEffect(
+    () => {
+      const newShort = getShortContent(content);
+      if (newShort !== shortContent) {
+        setShortContent(newShort);
+      }
+    }, [content],
+  );
 
   const onToggleShowLess = () => setContentShowAll(!contentShowAll);
 
@@ -122,7 +126,9 @@ const _CollapsibleText: FC<CollapsibleTextProps> = ({
   );
 
   const renderContent = () => {
-    console.log('aloooo', textProps);
+    console.log(
+      'aloooo', textProps,
+    );
 
     return (
       <Text style={style}>

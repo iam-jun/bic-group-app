@@ -12,7 +12,7 @@ export default function* declineSingleGroupMemberRequest({
   payload,
 }: {
   type: string;
-  payload: {groupId: number; requestId: number; fullName: string};
+  payload: {groupId: string; requestId: string; fullName: string};
 }) {
   const { groupId, requestId, fullName } = payload;
   try {
@@ -27,13 +27,11 @@ export default function* declineSingleGroupMemberRequest({
     const { total, ids, items } = groups.groupMemberRequests;
     const requestItems = { ...items };
     delete requestItems[requestId];
-    yield put(
-      groupsActions.setGroupMemberRequests({
-        total: total - 1,
-        ids: ids.filter((item: number) => item !== requestId),
-        items: requestItems,
-      }),
-    );
+    yield put(groupsActions.setGroupMemberRequests({
+      total: total - 1,
+      ids: ids.filter((item: string) => item !== requestId),
+      items: requestItems,
+    }));
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_declined_user')} ${fullName}`,
@@ -45,18 +43,20 @@ export default function* declineSingleGroupMemberRequest({
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.log('declineSingleGroupMemberRequest: ', err);
+    console.log(
+      'declineSingleGroupMemberRequest: ', err,
+    );
 
     if (err?.code === approveDeclineCode.CANCELED) {
-      yield put(
-        groupsActions.editGroupMemberRequest({
-          id: requestId,
-          data: { isCanceled: true },
-        }),
-      );
+      yield put(groupsActions.editGroupMemberRequest({
+        id: requestId,
+        data: { isCanceled: true },
+      }));
       return;
     }
 
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

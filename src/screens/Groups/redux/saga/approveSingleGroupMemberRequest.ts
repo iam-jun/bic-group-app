@@ -13,8 +13,8 @@ export default function* approveSingleGroupMemberRequest({
 }: {
   type: string;
   payload: {
-    groupId: number;
-    requestId: number;
+    groupId: string;
+    requestId: string;
     fullName: string;
     callback: () => void;
   };
@@ -34,13 +34,11 @@ export default function* approveSingleGroupMemberRequest({
     const { total, ids, items } = groups.groupMemberRequests;
     const requestItems = { ...items };
     delete requestItems[requestId];
-    yield put(
-      groupsActions.setGroupMemberRequests({
-        total: total - 1,
-        ids: ids.filter((item: number) => item !== requestId),
-        items: requestItems,
-      }),
-    );
+    yield put(groupsActions.setGroupMemberRequests({
+      total: total - 1,
+      ids: ids.filter((item: string) => item !== requestId),
+      items: requestItems,
+    }));
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
@@ -54,20 +52,22 @@ export default function* approveSingleGroupMemberRequest({
       toastType: 'normal',
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.getGroupDetail(groupId)); // to update user_count
+    yield put(groupsActions.getGroupDetail(groupId)); // to update userCount
   } catch (err: any) {
-    console.log('approveSingleGroupMemberRequest: ', err);
+    console.log(
+      'approveSingleGroupMemberRequest: ', err,
+    );
 
     if (err?.code === approveDeclineCode.CANCELED) {
-      yield put(
-        groupsActions.editGroupMemberRequest({
-          id: requestId,
-          data: { isCanceled: true },
-        }),
-      );
+      yield put(groupsActions.editGroupMemberRequest({
+        id: requestId,
+        data: { isCanceled: true },
+      }));
       return;
     }
 
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

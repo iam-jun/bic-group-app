@@ -30,9 +30,7 @@ const InputSchemeInfo: FC<InputSchemeInfoProps> = ({
   const styles = createStyle(theme);
 
   const name = useKeySelector(groupsKeySelector.permission.creatingScheme.name);
-  const description = useKeySelector(
-    groupsKeySelector.permission.creatingScheme.description,
-  );
+  const description = useKeySelector(groupsKeySelector.permission.creatingScheme.description);
 
   const onChangeName = (value: string) => {
     dispatch(groupsActions.setCreatingSchemeData({ name: value, description }));

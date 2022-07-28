@@ -7,7 +7,7 @@ import actions from '~/screens/Groups/redux/actions';
 import { useMyPermissions } from '~/hooks/permissions';
 
 interface MembersContentProps {
-  communityId: number;
+  communityId: string;
   onPressMenu: (item: ICommunityMembers) => void;
 }
 
@@ -23,14 +23,16 @@ const MembersContent = ({ communityId, onPressMenu }: MembersContentProps) => {
     ],
   );
 
-  useEffect(() => {
-    getCommunityDetail();
-    getCommunityMembers();
+  useEffect(
+    () => {
+      getCommunityDetail();
+      getCommunityMembers();
 
-    return () => {
-      resetCommunityMembers();
-    };
-  }, [communityId]);
+      return () => {
+        resetCommunityMembers();
+      };
+    }, [communityId],
+  );
 
   const getCommunityMembers = (isRefreshing?: boolean) => {
     dispatch(actions.getCommunityMembers({ communityId, isRefreshing }));
@@ -41,7 +43,7 @@ const MembersContent = ({ communityId, onPressMenu }: MembersContentProps) => {
   };
 
   const getCommunityDetail = () => {
-    // to update can_manage_member when member role changes
+    // to update canManageMember when member role changes
     dispatch(actions.getCommunityDetail({ communityId }));
   };
 

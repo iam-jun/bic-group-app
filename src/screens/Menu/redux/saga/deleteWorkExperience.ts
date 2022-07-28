@@ -11,7 +11,7 @@ export default function* deleteWorkExperience({
   callback,
 }: {
   type: string;
-  id: number;
+  id: string;
   callback?: () => void;
 }) {
   try {
@@ -21,13 +21,13 @@ export default function* deleteWorkExperience({
     );
 
     if (response?.data) {
-      yield put(
-        menuActions.setMyWorkExperience(mapWorkExperience(response.data)),
-      );
+      yield put(menuActions.setMyWorkExperience(mapWorkExperience(response.data)));
     }
     if (callback) return callback();
   } catch (err) {
-    console.error('deleteWorkExperience:', err);
+    console.error(
+      'deleteWorkExperience:', err,
+    );
     yield showError(err);
   }
 }

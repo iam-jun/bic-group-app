@@ -36,28 +36,36 @@ const GroupAdministration = (props: any) => {
     groupId,
     PERMISSION_KEY.GROUP.APPROVE_REJECT_JOINING_REQUESTS,
   );
-  const canEditProfileInfo = hasPermissionsOnScopeWithId('groups', groupId, [
-    PERMISSION_KEY.GROUP.EDIT_INFORMATION,
-    PERMISSION_KEY.GROUP.EDIT_PRIVACY,
-  ]);
+  const canEditProfileInfo = hasPermissionsOnScopeWithId(
+    'groups', groupId, [
+      PERMISSION_KEY.GROUP.EDIT_INFORMATION,
+      PERMISSION_KEY.GROUP.EDIT_PRIVACY,
+    ],
+  );
 
-  useEffect(() => {
-    canManageJoiningRequests
+  useEffect(
+    () => {
+      canManageJoiningRequests
       && dispatch(groupsActions.getGroupMemberRequests({ groupId }));
 
-    return () => {
-      dispatch(groupsActions.resetGroupMemberRequests());
-    };
-  }, [groupId]);
+      return () => {
+        dispatch(groupsActions.resetGroupMemberRequests());
+      };
+    }, [groupId],
+  );
 
   const displayNewFeature = () => dispatch(modalActions.showAlertNewFeature());
 
   const goToPendingMembers = () => {
-    rootNavigation.navigate(groupStack.groupPendingMembers, { id: groupId });
+    rootNavigation.navigate(
+      groupStack.groupPendingMembers, { id: groupId },
+    );
   };
 
   const goToGeneralInfo = () => {
-    rootNavigation.navigate(groupStack.generalInfo, { id: groupId });
+    rootNavigation.navigate(
+      groupStack.generalInfo, { id: groupId },
+    );
   };
 
   const renderItem = (

@@ -15,13 +15,11 @@ export default function* updateCommunityScheme({
   payload,
 }: {
   type: string;
-  payload: {communityId: number | string};
+  payload: {communityId: string};
 }): any {
   try {
     const { communityId } = payload || {};
-    const schemeData = yield select(
-      (state) => state?.groups?.permissionScheme?.creatingScheme?.data,
-    ) || {};
+    const schemeData = yield select((state) => state?.groups?.permissionScheme?.creatingScheme?.data) || {};
 
     yield put(groupsActions.setCreatingScheme({ creating: true }));
 
@@ -45,8 +43,12 @@ export default function* updateCommunityScheme({
     yield put(groupsActions.setCommunityScheme({ data: dataWithOrderedFixRole }));
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (err: any) {
-    console.error('updateCommunityScheme error:', err);
+    console.error(
+      'updateCommunityScheme error:', err,
+    );
     yield put(groupsActions.setCreatingScheme({ creating: false }));
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

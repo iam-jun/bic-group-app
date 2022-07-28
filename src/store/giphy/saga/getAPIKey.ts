@@ -8,6 +8,8 @@ export default function* getAPIKey() {
     const response: AxiosResponse = yield call(apiConfigs.getAPIKey);
     yield put(actions.setAPIKey(response.data));
   } catch (err) {
-    console.error('getAPIKey', { err });
+    console.error(
+      'getAPIKey', { err },
+    );
   }
 }

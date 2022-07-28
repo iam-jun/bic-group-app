@@ -27,7 +27,9 @@ export default function getTokenTypeByToken(token) {
   let cleanedType = 'unknown';
 
   if (token.type) {
-    cleanedType = token.type.replace(regSelectOpenClose, '');
+    cleanedType = token.type.replace(
+      regSelectOpenClose, '',
+    );
   }
 
   switch (cleanedType) {

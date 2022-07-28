@@ -27,8 +27,12 @@ export const initSentry = () => {
     ],
   });
 
-  Sentry.setTag('app_version', appVersion);
-  Sentry.setTag('app_env', appEnv);
+  Sentry.setTag(
+    'app_version', appVersion,
+  );
+  Sentry.setTag(
+    'app_env', appEnv,
+  );
 };
 
 export const wrapWithSentry = (App: any) => {

@@ -21,20 +21,22 @@ export default function* deleteReactToComment({
     id, comment, reactionId, reactionsCount, ownerReactions,
   } = payload;
   try {
-    const rId = ownerReactions?.find(
-      (item: IReaction) => item?.reactionName === reactionId,
-    )?.id || '';
+    const rId = ownerReactions?.find((item: IReaction) => item?.reactionName === reactionId)?.id || '';
     if (rId) {
       // yield addReactionLoadingLocal(id, reactionId, comment);
 
-      yield call(postDataHelper.deleteReaction, {
-        reactionId: rId,
-        target: 'COMMENT',
-        targetId: id,
-        reactionName: reactionId,
-      });
+      yield call(
+        postDataHelper.deleteReaction, {
+          reactionId: rId,
+          target: 'COMMENT',
+          targetId: id,
+          reactionName: reactionId,
+        },
+      );
 
-      yield removeReactionLocal(id, reactionId, comment);
+      yield removeReactionLocal(
+        id, reactionId, comment,
+      );
     }
   } catch (e) {
     yield onUpdateReactionOfCommentById(
@@ -48,7 +50,7 @@ export default function* deleteReactToComment({
 }
 
 // function* addReactionLoadingLocal(
-//   id: number,
+//   id: string,
 //   reactionId: string,
 //   comment: ICommentData,
 // ): any {
@@ -80,13 +82,13 @@ function* removeReactionLocal(
   reactionId: string,
   comment: ICommentData,
 ): any {
-  const cmt = yield select((s) => get(s, postKeySelector.commentById(id))) || {};
+  const cmt = yield select((s) => get(
+    s, postKeySelector.commentById(id),
+  )) || {};
   const reactionsCount = cmt.reactionsCount || {};
   const ownerReactions = cmt.ownerReactions || [];
 
-  const newOwnerReactions = ownerReactions.filter?.(
-    (or: IReaction) => or?.reactionName !== reactionId,
-  );
+  const newOwnerReactions = ownerReactions.filter?.((or: IReaction) => or?.reactionName !== reactionId);
 
   const newReactionCounts = reactionsCount;
   Object.keys(reactionsCount)?.forEach?.((k) => {
@@ -97,7 +99,9 @@ function* removeReactionLocal(
       newReactionCounts[nextKey] = { [_reactionId]: _reactionCount };
     } else {
       newReactionCounts[nextKey] = {
-        [_reactionId]: Math.max(0, _reactionCount - 1),
+        [_reactionId]: Math.max(
+          0, _reactionCount - 1,
+        ),
       };
     }
   });

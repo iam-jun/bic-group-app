@@ -30,15 +30,15 @@ import spacing from '~/theme/spacing';
 const UserProfilePreviewBottomSheet = () => {
   const theme: ExtendedTheme = useTheme();
   const [coverHeight, setCoverHeight] = useState<number>(210);
-  const styles = themeStyles(theme, coverHeight);
+  const styles = themeStyles(
+    theme, coverHeight,
+  );
   const userPreviewRef: any = useRef();
   const { rootNavigation } = useRootNavigation();
 
   const dispatch = useDispatch();
 
-  const bottomSheetData = useKeySelector(
-    commonKeySelector.userProfilePreviewBottomSheet,
-  );
+  const bottomSheetData = useKeySelector(commonKeySelector.userProfilePreviewBottomSheet);
   const {
     isOpen, userId, params, position,
   } = bottomSheetData || {};
@@ -47,13 +47,11 @@ const UserProfilePreviewBottomSheet = () => {
 
   const userProfileData = useKeySelector(menuKeySelector.userProfile);
   const {
-    fullname, description, avatar, background_img_url, language, phone,
+    fullname, description, avatar, backgroundImgUrl, language, phone,
   } = userProfileData || {};
 
-  const userLanguageList = language?.map(
-    // @ts-ignore
-    (code: string) => speakingLanguages[code].name,
-  );
+  // @ts-ignore
+  const userLanguageList = language?.map((code: string) => speakingLanguages[code].name);
   const userLanguages = userLanguageList?.join(', ');
 
   const showUserBasicInfo = !!phone || !isEmpty(language);
@@ -67,9 +65,11 @@ const UserProfilePreviewBottomSheet = () => {
     if (userId) dispatch(menuActions.getUserProfile({ userId, params }));
   };
 
-  useEffect(() => {
-    isOpen && getUserProfile();
-  }, [userId]);
+  useEffect(
+    () => {
+      isOpen && getUserProfile();
+    }, [userId],
+  );
 
   const renderLoading = () => (
     <View style={styles.container}>
@@ -86,7 +86,9 @@ const UserProfilePreviewBottomSheet = () => {
       if (isNaN(userId) && _params?.type !== 'username') _params.type = 'username';
 
       const payload = { userId, params: _params };
-      rootNavigation.navigate(mainStack.userProfile, payload);
+      rootNavigation.navigate(
+        mainStack.userProfile, payload,
+      );
     }
     userPreviewRef?.current?.close?.();
   };
@@ -102,7 +104,7 @@ const UserProfilePreviewBottomSheet = () => {
     <View onLayout={onCoverLayout}>
       <Image
         style={styles.cover}
-        source={background_img_url || images.img_cover_default}
+        source={backgroundImgUrl || images.img_cover_default}
       />
     </View>
   );
@@ -137,7 +139,9 @@ const UserProfilePreviewBottomSheet = () => {
     </View>
   );
 
-  const renderInfoItem = (icon: IconType, content?: string) => {
+  const renderInfoItem = (
+    icon: IconType, content?: string,
+  ) => {
     if (!content) return null;
 
     return (
@@ -157,8 +161,12 @@ const UserProfilePreviewBottomSheet = () => {
 
   const renderBasicInfo = () => (
     <View style={styles.basicInfoContainer}>
-      {renderInfoItem('Comments', userLanguages)}
-      {renderInfoItem('Phone', phone)}
+      {renderInfoItem(
+        'Comments', userLanguages,
+      )}
+      {renderInfoItem(
+        'Phone', phone,
+      )}
     </View>
   );
 
@@ -185,7 +193,9 @@ const UserProfilePreviewBottomSheet = () => {
   );
 };
 
-const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
+const themeStyles = (
+  theme: ExtendedTheme, coverHeight: number,
+) => {
   const { colors } = theme;
   const containerMinHeight = 330;
 

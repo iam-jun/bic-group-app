@@ -28,19 +28,23 @@ const Checkbox: React.FC<CheckboxProps> = ({
 }: CheckboxProps) => {
   const [checked, setChecked] = useState<boolean>(isChecked);
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(theme, checked);
-  React.useEffect(() => {
-    setChecked(isChecked);
-  }, [isChecked]);
+  const styles = createStyles(
+    theme, checked,
+  );
+  React.useEffect(
+    () => {
+      setChecked(isChecked);
+    }, [isChecked],
+  );
 
   const _onChangeValue = () => {
     const newValue = !checked;
     setChecked(newValue);
 
     if (newValue) {
-      onActionPress(commonActions.checkBox as IAction);
+      onActionPress?.(commonActions.checkBox as IAction);
     } else {
-      onActionPress(commonActions.uncheckBox as IAction);
+      onActionPress?.(commonActions.uncheckBox as IAction);
     }
   };
 
@@ -57,7 +61,9 @@ const Checkbox: React.FC<CheckboxProps> = ({
   );
 };
 
-const createStyles = (theme: ExtendedTheme, isChecked: boolean) => {
+const createStyles = (
+  theme: ExtendedTheme, isChecked: boolean,
+) => {
   const { colors } = theme;
 
   return StyleSheet.create({

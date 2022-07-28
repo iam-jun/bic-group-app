@@ -5,16 +5,22 @@ export default function groupTextTokens(tokens) {
 
   let hasGroup = false;
 
-  tokens.forEach((token, index) => {
+  tokens.forEach((
+    token, index,
+  ) => {
     if (!token.block && !hasGroup) {
       hasGroup = true;
-      result.push(new Token('textgroup', 1));
+      result.push(new Token(
+        'textgroup', 1,
+      ));
       result.push(token);
     } else if (!token.block && hasGroup) {
       result.push(token);
     } else if (token.block && hasGroup) {
       hasGroup = false;
-      result.push(new Token('textgroup', -1));
+      result.push(new Token(
+        'textgroup', -1,
+      ));
       result.push(token);
     } else {
       result.push(token);

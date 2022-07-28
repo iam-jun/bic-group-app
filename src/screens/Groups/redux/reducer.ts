@@ -106,7 +106,6 @@ export const groupInitState = {
     loading: true,
     canLoadMore: true,
     offset: 0, // current fetched data count
-    // group_admin: {}, group_member: {}
   },
   groupSearchMembers: {
     loading: false,
@@ -210,7 +209,9 @@ export const groupInitState = {
   },
 };
 
-function groupsReducer(state = groupInitState, action: any = {}) {
+function groupsReducer(
+  state = groupInitState, action: any = {},
+) {
   const { type, payload } = action;
   const {
     selectedUsers,
@@ -401,12 +402,6 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
 
-    case groupsTypes.SET_PRIVACY_MODAL_OPEN:
-      return {
-        ...state,
-        isPrivacyModalOpen: action.payload,
-      };
-
     case groupsTypes.GET_GROUP_DETAIL:
       return {
         ...state,
@@ -552,9 +547,7 @@ function groupsReducer(state = groupInitState, action: any = {}) {
         },
       };
     case groupsTypes.SELECT_JOINABLE_USERS: {
-      const included = selectedUsers.find(
-        (item: IUser) => payload.id === item.id,
-      );
+      const included = selectedUsers.find((item: IUser) => payload.id === item.id);
       return {
         ...state,
         selectedUsers: !included

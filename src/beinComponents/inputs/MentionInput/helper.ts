@@ -16,7 +16,9 @@ export const getMatchTermForAtMention = (() => {
       const regex = AT_MENTION_REGEX;
       let term = value;
       if (term.startsWith('from: @') || term.startsWith('from:@')) {
-        term = term.replace('@', '');
+        term = term.replace(
+          '@', '',
+        );
       }
 
       const match = term.match(regex);
@@ -35,7 +37,9 @@ export function switchKeyboardForCodeBlocks(
   value: string,
   cursorPosition: number,
 ) {
-  if (Platform.OS === 'ios' && parseInt(Platform.Version, 10) >= 12) {
+  if (Platform.OS === 'ios' && parseInt(
+    Platform.Version, 10,
+  ) >= 12) {
     const regexForCodeBlock = /^```$(.*?)^```$|^```$(.*)/gms;
 
     const matches = [];
@@ -48,10 +52,8 @@ export function switchKeyboardForCodeBlocks(
       });
     }
 
-    const cursorIsInsideCodeBlock = matches.some(
-      (match) => cursorPosition >= match.startOfMatch
-        && cursorPosition <= match.endOfMatch,
-    );
+    const cursorIsInsideCodeBlock = matches.some((match) => cursorPosition >= match.startOfMatch
+        && cursorPosition <= match.endOfMatch);
 
     // 'email-address' keyboardType prevents iOS emdash autocorrect
     if (cursorIsInsideCodeBlock) {
@@ -77,14 +79,20 @@ export const completeMention = ({
     cursorPosition = text.length;
   }
   const mention = item.username;
-  const mentionPart = text.substring(0, cursorPosition);
+  const mentionPart = text.substring(
+    0, cursorPosition,
+  );
 
-  let completedDraft = mentionPart.replace(AT_MENTION_REGEX, `@${mention} `);
+  let completedDraft = mentionPart.replace(
+    AT_MENTION_REGEX, `@${mention} `,
+  );
 
   if (text.length > cursorPosition) {
     completedDraft += text.substring(cursorPosition);
   }
-  DeviceEventEmitter.emit('mention-input-on-complete-mention', completedDraft);
+  DeviceEventEmitter.emit(
+    'mention-input-on-complete-mention', completedDraft,
+  );
   dispatch(actions.setData([]));
 
   dispatch(actions.addTempSelected({ [mention]: { id: item?.id, data: item } }));
@@ -96,14 +104,16 @@ export const completeMention = ({
   };
 };
 
-export const checkRunSearch = (text: string, groupIds: any, dispatch: any) => {
+export const checkRunSearch = (
+  text: string, groupIds: any, dispatch: any,
+) => {
   let flagRun = false;
 
   const _matchTerm = getMatchTermForAtMention(text);
 
   if (_matchTerm !== null && !_matchTerm.endsWith(' ')) {
     flagRun = true;
-    dispatch(actions.runSearch({ group_ids: groupIds, key: _matchTerm }));
+    dispatch(actions.runSearch({ groupIds, key: _matchTerm }));
   } else {
     dispatch(actions.setData([]));
   }

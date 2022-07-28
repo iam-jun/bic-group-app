@@ -8,7 +8,9 @@ import {
 import { getRandomInt } from '~/utils/generator';
 
 const Message = () => {
-  const count = getRandomInt(1, 3); // lines count
+  const count = getRandomInt(
+    1, 3,
+  ); // lines count
 
   return (
     <Placeholder
@@ -30,11 +32,15 @@ const Message = () => {
         />
       )}
     >
-      {Array.from(Array(count).keys()).map((item, index) => (
+      {Array.from(Array(count).keys()).map((
+        item, index,
+      ) => (
         <PlaceholderLine
           key={`loading-message-line-${index}`}
           style={{ marginTop: 1 }}
-          width={getRandomInt(3, 7) * 10}
+          width={getRandomInt(
+            3, 7,
+          ) * 10}
         />
       ))}
     </Placeholder>

@@ -10,7 +10,7 @@ import showError from '~/store/commonSaga/showError';
 describe('getGroupMembers saga', () => {
   const action = {
     type: 'test',
-    payload: {groupId: 1, params: {}},
+    payload: {groupId: '1', params: {}},
   };
 
   it('should get data correctly', async () => {
@@ -22,8 +22,8 @@ describe('getGroupMembers saga', () => {
           loading: false,
           canLoadMore: true,
           offset: 0,
-          group_admin: {data: [], user_count: 0},
-          group_member: {data: [], user_count: 0},
+          groupAdmin: {data: [], userCount: 0},
+          groupMember: {data: [], userCount: 0},
         },
       },
     };
@@ -37,14 +37,14 @@ describe('getGroupMembers saga', () => {
           loading: false,
           canLoadMore: false,
           offset: 7,
-          group_admin: {
+          groupAdmin: {
             data: [adminDetail, adminDetail, adminDetail],
-            user_count: 3,
+            userCount: 3,
             name: 'Admin',
           },
-          group_member: {
+          groupMember: {
             data: [memberDetail, memberDetail, memberDetail, memberDetail],
-            user_count: 4,
+            userCount: 4,
             name: 'Member',
           },
         }),
@@ -62,8 +62,8 @@ describe('getGroupMembers saga', () => {
           loading: false,
           canLoadMore: false,
           offset: 0,
-          group_admin: {data: [], user_count: 0},
-          group_member: {data: [], user_count: 0},
+          groupAdmin: {data: [], userCount: 0},
+          groupMember: {data: [], userCount: 0},
         },
       },
     };
@@ -84,8 +84,8 @@ describe('getGroupMembers saga', () => {
           loading: false,
           canLoadMore: true,
           offset: 0,
-          group_admin: {data: [], user_count: 0},
-          group_member: {data: [], user_count: 0},
+          groupAdmin: {data: [], userCount: 0},
+          groupMember: {data: [], userCount: 0},
         },
       },
     };
@@ -109,7 +109,7 @@ describe('getGroupMembers saga', () => {
   it('should refresh data correctly', async () => {
     const action = {
       type: 'test',
-      payload: {groupId: 1, params: {}, isRefreshing: true},
+      payload: {groupId: '1', params: {}, isRefreshing: true},
     };
 
     const resp = {...memberData};
@@ -119,14 +119,14 @@ describe('getGroupMembers saga', () => {
           loading: false,
           canLoadMore: false,
           offset: 7,
-          group_admin: {
+          groupAdmin: {
             data: [adminDetail, adminDetail, adminDetail],
-            user_count: 3,
+            userCount: 3,
             name: 'Admin',
           },
-          group_member: {
+          groupMember: {
             data: [memberDetail, memberDetail, memberDetail, memberDetail],
-            user_count: 4,
+            userCount: 4,
             name: 'Member',
           },
         },
@@ -142,14 +142,14 @@ describe('getGroupMembers saga', () => {
           loading: false,
           canLoadMore: false,
           offset: 7,
-          group_admin: {
+          groupAdmin: {
             data: [adminDetail, adminDetail, adminDetail],
-            user_count: 3,
+            userCount: 3,
             name: 'Admin',
           },
-          group_member: {
+          groupMember: {
             data: [memberDetail, memberDetail, memberDetail, memberDetail],
-            user_count: 4,
+            userCount: 4,
             name: 'Member',
           },
         }),

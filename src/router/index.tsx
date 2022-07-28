@@ -1,6 +1,6 @@
 import NetInfo from '@react-native-community/netinfo';
 import { NavigationContainer, useTheme } from '@react-navigation/native';
-import { createNativeStackNavigator } from 'react-native-screens/native-stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useEffect } from 'react';
 import { StatusBar, StyleSheet, View } from 'react-native';
 import { Host } from 'react-native-portalize';
@@ -41,19 +41,21 @@ const RootNavigator = (): React.ReactElement => {
 
   const linkingConfig = useNavigationLinkingConfig();
 
-  useEffect(() => {
-    isNavigationRefReady.current = false;
-    dispatch(noInternetActions.setSystemIssue(false));
+  useEffect(
+    () => {
+      isNavigationRefReady.current = false;
+      dispatch(noInternetActions.setSystemIssue(false));
 
-    const unsubscribeNetInfo = NetInfo.addEventListener(() => dispatch(noInternetActions.checkInternetReachable()));
-    if (!user) {
-      makeRemovePushTokenRequest();
-    }
+      const unsubscribeNetInfo = NetInfo.addEventListener(() => dispatch(noInternetActions.checkInternetReachable()));
+      if (!user) {
+        makeRemovePushTokenRequest();
+      }
 
-    return () => {
-      unsubscribeNetInfo();
-    };
-  }, []);
+      return () => {
+        unsubscribeNetInfo();
+      };
+    }, [],
+  );
 
   const navigationTheme = theme.dark ? appTheme.dark : appTheme.light;
 

@@ -72,9 +72,11 @@ const AlertModal: React.FC<AlertModalProps> = ({
   const dispatch = useDispatch();
   const [text, setText] = useState(inputProps?.value || '');
 
-  useEffect(() => {
-    setText(inputProps?.value || '');
-  }, [inputProps]);
+  useEffect(
+    () => {
+      setText(inputProps?.value || '');
+    }, [inputProps],
+  );
 
   const _onDismiss = () => {
     onDismiss && onDismiss();
@@ -94,7 +96,9 @@ const AlertModal: React.FC<AlertModalProps> = ({
   const _onPressContent = () => {};
 
   const optionsStyle = useAnimatedStyle(() => ({
-    opacity: withTiming(visible ? 1 : 0, { duration: 500 }),
+    opacity: withTiming(
+      visible ? 1 : 0, { duration: 500 },
+    ),
   }));
 
   if (!visible) return null;

@@ -17,21 +17,19 @@ const PreviewMembers = () => {
   const theme: ExtendedTheme = useTheme();
 
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
-  const { user_count, members } = infoDetail;
+  const { userCount, members } = infoDetail;
 
   const renderItem = ({ item }: {item: IPreviewMember}) => <Avatar.Small isRounded source={item.avatar} />;
 
   const renderMembersDescription = () => {
     let memberText: string;
     if (members?.length === 1) {
-      memberText = `${members[0]?.fullname} ${i18next.t(
-        'communities:text_is_member',
-      )}`;
+      memberText = `${members[0]?.fullname} ${i18next.t('communities:text_is_member')}`;
     } else {
       memberText = `${members[0]?.fullname} ${i18next.t(
         'post:and',
       )} ${i18next.t('communities:text_other_member', {
-        count: user_count - 1,
+        count: userCount - 1,
       })}`;
     }
 

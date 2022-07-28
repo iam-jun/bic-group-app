@@ -28,9 +28,7 @@ const NFSFilterToolbar = () => {
   const styles = createStyle(theme);
   const userId = useUserIdAuth();
 
-  const filterCreatedBy = useKeySelector(
-    homeKeySelector.newsfeedSearchFilterCreatedBy,
-  );
+  const filterCreatedBy = useKeySelector(homeKeySelector.newsfeedSearchFilterCreatedBy);
   const filterDate = useKeySelector(homeKeySelector.newsfeedSearchFilterDate);
   const { startDate, endDate } = filterDate || {};
 
@@ -48,24 +46,26 @@ const NFSFilterToolbar = () => {
       : `${filterCreatedBy?.name}`
     : t('home:newsfeed_search:filter_created_by');
   const textDate = filterDate
-    ? `${formatDateTime(startDate, language)} - ${formatDateTime(
+    ? `${formatDateTime(
+      startDate, language,
+    )} - ${formatDateTime(
       endDate,
       language,
     )}`
     : t('home:newsfeed_search:filter_date');
 
-  const showModal = (ContentComponent: any, event?: any) => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent,
-        props: {
-          isContextMenu: true,
-          side: 'right',
-          position: { x: event?.pageX, y: event?.pageY },
-        },
-      }),
-    );
+  const showModal = (
+    ContentComponent: any, event?: any,
+  ) => {
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent,
+      props: {
+        isContextMenu: true,
+        side: 'right',
+        position: { x: event?.pageX, y: event?.pageY },
+      },
+    }));
   };
 
   const onPressFilterCreatedBy = (event?: any) => {
@@ -79,11 +79,11 @@ const NFSFilterToolbar = () => {
     );
   };
 
-  const onSelectDate = (startDate?: string, endDate?: string) => {
+  const onSelectDate = (
+    startDate?: string, endDate?: string,
+  ) => {
     if (startDate && endDate) {
-      dispatch(
-        homeActions.setNewsfeedSearchFilter({ date: { startDate, endDate } }),
-      );
+      dispatch(homeActions.setNewsfeedSearchFilter({ date: { startDate, endDate } }));
     }
   };
 

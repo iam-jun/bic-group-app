@@ -3,5 +3,7 @@ import types from '../types';
 import runSearch from './runSearch';
 
 export default function* saga() {
-  yield takeLatest(types.RUN_SEARCH, runSearch);
+  yield takeLatest(
+    types.RUN_SEARCH, runSearch,
+  );
 }

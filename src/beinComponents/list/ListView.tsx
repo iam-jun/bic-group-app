@@ -134,8 +134,12 @@ const ListView: React.FC<ListViewProps> = ({
       <TouchableOpacity
         testID={`list_view.item_wrapper.${index}`}
         disabled={!isInternetReachable || !onItemPress || item.disableClick}
-        onPress={(e: any) => onItemPress && onItemPress(item, e)}
-        onLongPress={(e: any) => onItemLongPress && onItemLongPress(item, e)}
+        onPress={(e: any) => onItemPress && onItemPress(
+          item, e,
+        )}
+        onLongPress={(e: any) => onItemLongPress && onItemLongPress(
+          item, e,
+        )}
       >
         <ItemComponent
           testID={itemTestID ? `${itemTestID}.item.${index}` : undefined}
@@ -222,7 +226,9 @@ const ListView: React.FC<ListViewProps> = ({
         ListEmptyComponent={ListEmptyComponent}
         ItemSeparatorComponent={_renderItemSeparator}
         keyboardShouldPersistTaps={keyboardShouldPersistTaps}
-        keyExtractor={(item, index) => (item.id || item._id
+        keyExtractor={(
+          item, index,
+        ) => (item.id || item._id
           ? `list-${type}-${index}-${item.id || item._id}`
           : _.uniqueId(`list-${type}-${index}`))}
         refreshControl={
@@ -245,10 +251,10 @@ const ListView: React.FC<ListViewProps> = ({
   );
 };
 
-const _ListView = React.forwardRef(
-  (props: ListViewProps, ref?: React.Ref<FlatList>) => (
-    <ListView listRef={ref} {...props} />
-  ),
-);
+const _ListView = React.forwardRef((
+  props: ListViewProps, ref?: React.Ref<FlatList>,
+) => (
+  <ListView listRef={ref} {...props} />
+));
 
 export default React.memo(_ListView);

@@ -33,7 +33,9 @@ export const menuInitState = {
   loadingCover: false,
 };
 
-const menuReducer = (state = menuInitState, action: any = {}) => {
+const menuReducer = (
+  state = menuInitState, action: any = {},
+) => {
   const { type, payload } = action;
   const { countryCodeList, locationList } = state;
 
@@ -90,7 +92,7 @@ const menuReducer = (state = menuInitState, action: any = {}) => {
         myProfile: {
           ...state.myProfile,
           ...payload,
-          country_code: payload.country_code || '84',
+          countryCode: payload.countryCode || '84',
         },
       };
     case menuTypes.SEARCH_COUNTRY_CODE:
@@ -98,11 +100,12 @@ const menuReducer = (state = menuInitState, action: any = {}) => {
         ...state,
         countryCodeList: {
           ...countryCodeList,
-          searchResult: countryCodeList.data.filter(
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            (item: ICountryCodeList) => searchText(payload, item.code) || searchText(payload, item.name),
-          ),
+          // @ts-ignore
+          searchResult: countryCodeList.data.filter((item: ICountryCodeList) => searchText(
+            payload, item.code,
+          ) || searchText(
+            payload, item.name,
+          )),
         },
       };
     case menuTypes.SEARCH_LOCATION:
@@ -110,10 +113,12 @@ const menuReducer = (state = menuInitState, action: any = {}) => {
         ...state,
         locationList: {
           ...locationList,
-          searchResult: locationList.data.filter(
-            (item: ILocation) => searchText(payload, item.name)
-              || searchText(payload, item.country),
-          ),
+          searchResult: locationList.data.filter((item: ILocation) => searchText(
+            payload, item.name,
+          )
+              || searchText(
+                payload, item.country,
+              )),
         },
       };
 

@@ -14,5 +14,9 @@ if (__DEV__) {
 //   console.log('Message handled in the background!', remoteMessage);
 // });
 
-AppRegistry.registerComponent(appName, () => gestureHandlerRootHOC(App));
-Object.defineProperty(exports, '__esModule', { value: true });
+AppRegistry.registerComponent(
+  appName, () => gestureHandlerRootHOC(App),
+);
+Object.defineProperty(
+  exports, '__esModule', { value: true },
+);

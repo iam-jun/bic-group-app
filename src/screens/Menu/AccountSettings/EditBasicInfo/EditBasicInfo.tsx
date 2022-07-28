@@ -9,7 +9,6 @@ import { isEqual } from 'lodash';
 
 import genders from '~/constants/genders';
 import { formatDate } from '~/utils/formatData';
-import relationshipStatus from '~/constants/relationshipStatus';
 import menuActions from '~/screens/Menu/redux/actions';
 import {
   GENDER_TYPE,
@@ -32,6 +31,7 @@ import TitleComponent from '../fragments/TitleComponent';
 import Button from '~/beinComponents/Button';
 import { dataMapping, maxBirthday } from './helper';
 import spacing from '~/theme/spacing';
+import RELATIONSHIP_STATUS from '~/constants/relationshipStatus';
 
 const EditBasicInfo = () => {
   const theme: ExtendedTheme = useTheme();
@@ -43,7 +43,7 @@ const EditBasicInfo = () => {
 
   const myProfileData = useKeySelector(menuKeySelector.myProfile);
   const {
-    id, fullname, gender, birthday, relationship_status, language,
+    id, fullname, gender, birthday, relationshipStatus, language,
   } = myProfileData;
 
   const genderSheetRef = useRef<any>();
@@ -54,7 +54,7 @@ const EditBasicInfo = () => {
   const [selectingDate, setSelectingDate] = useState<boolean>(false);
   const [birthdayState, setBirthdayState] = useState<string>(birthday);
   const [languageState, setLanguageState] = useState<string[]>(language);
-  const [relationshipState, setRelationshipState] = useState<RELATIONSHIP_TYPE>(relationship_status);
+  const [relationshipState, setRelationshipState] = useState<RELATIONSHIP_TYPE>(relationshipStatus);
 
   const [error, setError] = useState<boolean>(false);
 
@@ -72,7 +72,7 @@ const EditBasicInfo = () => {
         || gender !== genderState
         || birthday !== birthdayState
         || !isEqual(language, languageState)
-        || relationship_status !== relationshipState)
+        || relationshipStatus !== relationshipState)
       && nameState?.trim?.()?.length > 0
   );
 
@@ -93,7 +93,7 @@ const EditBasicInfo = () => {
         gender: genderState,
         birthday: birthdayState,
         language: languageState,
-        relationship_status: relationshipState,
+        relationshipStatus: relationshipState,
       }),
     );
     rootNavigation.goBack();
@@ -123,19 +123,17 @@ const EditBasicInfo = () => {
   const _onPressBack = () => {
     if (isValid) {
       Keyboard.dismiss();
-      dispatch(
-        modalActions.showAlert({
-          title: i18next.t('common:label_discard_changes'),
-          showCloseButton: true,
-          cancelBtn: true,
-          isDismissible: false,
-          onConfirm: () => {
-            rootNavigation.goBack();
-          },
-          confirmLabel: i18next.t('common:btn_discard'),
-          content: i18next.t('common:text_not_saved_changes_warning'),
-        }),
-      );
+      dispatch(modalActions.showAlert({
+        title: i18next.t('common:label_discard_changes'),
+        showCloseButton: true,
+        cancelBtn: true,
+        isDismissible: false,
+        onConfirm: () => {
+          rootNavigation.goBack();
+        },
+        confirmLabel: i18next.t('common:btn_discard'),
+        content: i18next.t('common:text_not_saved_changes_warning'),
+      }));
     } else {
       rootNavigation.goBack();
     }
@@ -143,7 +141,9 @@ const EditBasicInfo = () => {
 
   const onGenderEditOpen = (e: any) => {
     Keyboard.dismiss();
-    genderSheetRef?.current?.open?.(e?.pageX, e?.pageY);
+    genderSheetRef?.current?.open?.(
+      e?.pageX, e?.pageY,
+    );
   };
 
   const onDateEditOpen = () => {
@@ -154,7 +154,9 @@ const EditBasicInfo = () => {
 
   const onRelationshipEditOpen = (e: any) => {
     Keyboard.dismiss();
-    relationshipSheetRef?.current?.open?.(e?.pageX, e?.pageY);
+    relationshipSheetRef?.current?.open?.(
+      e?.pageX, e?.pageY,
+    );
   };
 
   const onChangeName = (text: string) => {
@@ -215,7 +217,9 @@ const EditBasicInfo = () => {
           contentStyle={styles.buttonDropDownContent}
           onPress={() => onDateEditOpen()}
         >
-          {formatDate(birthdayState, 'DD/MM/YYYY')
+          {formatDate(
+            birthdayState, 'DD/MM/YYYY',
+          )
             || i18next.t('common:text_not_set')}
         </Button>
         {selectingDate && (
@@ -248,7 +252,7 @@ const EditBasicInfo = () => {
           rightIcon="AngleDown"
           onPress={(e) => onRelationshipEditOpen(e)}
         >
-          {i18next.t(relationshipStatus[relationshipState])
+          {i18next.t(RELATIONSHIP_STATUS[relationshipState])
             || i18next.t('common:text_not_set')}
         </Button>
       </ScrollView>

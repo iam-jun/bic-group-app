@@ -13,22 +13,20 @@ const CommunityPendingMembers = (props: any) => {
   const dispatch = useDispatch();
   const { params } = props.route;
   const { id: communityId } = params || {};
-  const { canLoadMore, ids } = useKeySelector(
-    groupsKeySelector.communityMemberRequests,
+  const { canLoadMore, ids } = useKeySelector(groupsKeySelector.communityMemberRequests);
+
+  useEffect(
+    () => {
+      onRefresh();
+
+      return () => {
+        onRefresh(); // to update the total member requests again on press back
+      };
+    }, [communityId],
   );
 
-  useEffect(() => {
-    onRefresh();
-
-    return () => {
-      onRefresh(); // to update the total member requests again on press back
-    };
-  }, [communityId]);
-
   const getData = (isRefreshing?: boolean) => {
-    dispatch(
-      groupsActions.getCommunityMemberRequests({ communityId, isRefreshing }),
-    );
+    dispatch(groupsActions.getCommunityMemberRequests({ communityId, isRefreshing }));
   };
 
   const onLoadMore = () => {

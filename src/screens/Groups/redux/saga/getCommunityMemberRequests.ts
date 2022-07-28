@@ -11,7 +11,7 @@ export default function* getCommunityMemberRequests({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; isRefreshing?: boolean; params?: any};
+  payload: {communityId: string; isRefreshing?: boolean; params?: any};
 }) {
   try {
     const { groups } = yield select();
@@ -19,11 +19,9 @@ export default function* getCommunityMemberRequests({
     const { communityId, isRefreshing, params } = payload;
     const { ids, items, canLoadMore } = groups.communityMemberRequests || {};
 
-    yield put(
-      groupsActions.setCommunityMemberRequests({
-        loading: isRefreshing ? true : ids.length === 0,
-      }),
-    );
+    yield put(groupsActions.setCommunityMemberRequests({
+      loading: isRefreshing ? true : ids.length === 0,
+    }));
 
     if (!isRefreshing && !canLoadMore) return;
 
@@ -53,7 +51,11 @@ export default function* getCommunityMemberRequests({
 
     yield put(groupsActions.setCommunityMemberRequests(newData));
   } catch (err) {
-    console.error('getCommunityMemberRequests: ', err);
-    yield call(showError, err);
+    console.error(
+      'getCommunityMemberRequests: ', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

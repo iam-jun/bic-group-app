@@ -21,12 +21,12 @@ describe('MemberList component', () => {
       // @ts-ignore
       community_admin: {
         name: 'COMMUNITY_ADMIN',
-        user_count: 1,
+        userCount: 1,
         data: [adminDetail],
       },
       community_member: {
         name: 'COMMUNITY_MEMBER',
-        user_count: 3,
+        userCount: 3,
         data: [memberDetail, memberDetail, memberDetail],
       },
     };
@@ -56,12 +56,12 @@ describe('MemberList component', () => {
       // @ts-ignore
       community_admin: {
         name: 'COMMUNITY_ADMIN',
-        user_count: 1,
+        userCount: 1,
         data: [adminDetail],
       },
       community_member: {
         name: 'COMMUNITY_MEMBER',
-        user_count: 3,
+        userCount: 3,
         data: [memberDetail, memberDetail, memberDetail],
       },
     };
@@ -93,12 +93,12 @@ describe('MemberList component', () => {
       // @ts-ignore
       community_admin: {
         name: 'COMMUNITY_ADMIN',
-        user_count: 1,
+        userCount: 1,
         data: [adminDetail],
       },
       community_member: {
         name: 'COMMUNITY_MEMBER',
-        user_count: 3,
+        userCount: 3,
         data: [memberDetail, memberDetail, memberDetail],
       },
     };

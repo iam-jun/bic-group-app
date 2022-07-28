@@ -1,8 +1,8 @@
-/* eslint-disable @typescript-eslint/ban-ts-comment */
+/* eslint-disable @typescript-eslint/ban-ts-comment,no-useless-escape */
 import { Auth } from 'aws-amplify';
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import i18n from 'i18next';
-import _ from 'lodash';
+import _, { isEmpty } from 'lodash';
 import moment from 'moment';
 import DeviceInfo from 'react-native-device-info';
 import { put } from 'redux-saga/effects';
@@ -31,14 +31,12 @@ const _dispatchLogout = async () => {
 };
 
 const _dispatchSessionExpire = () => {
-  Store.store.dispatch(
-    modalActions.showAlert({
-      title: i18n.t('auth:text_kickout_title'),
-      content: i18n.t('auth:text_kickout_desc'),
-      onConfirm: () => put(modalActions.hideAlert()),
-      confirmLabel: i18n.t('auth:text_kickout_confirm_button'),
-    }),
-  );
+  Store.store.dispatch(modalActions.showAlert({
+    title: i18n.t('auth:text_kickout_title'),
+    content: i18n.t('auth:text_kickout_desc'),
+    onConfirm: () => put(modalActions.hideAlert()),
+    confirmLabel: i18n.t('auth:text_kickout_confirm_button'),
+  }));
 };
 
 const _dispatchRefreshTokenSuccess = (
@@ -47,14 +45,14 @@ const _dispatchRefreshTokenSuccess = (
   idToken: string,
   idTokenExp: number,
 ) => {
-  Store.store.dispatch(
-    createAction(ActionTypes.RefreshTokenSuccessBein, {
+  Store.store.dispatch(createAction(
+    ActionTypes.RefreshTokenSuccessBein, {
       newToken,
       refreshToken,
       idToken,
       idTokenExp,
-    }),
-  );
+    },
+  ));
 };
 
 const refreshFailKickOut = () => {
@@ -113,7 +111,9 @@ const handleRetry = async (error: AxiosError) => {
   //= ================= 401 Unauthorized ==================
 
   // create new promise
-  const newReqPromise = new Promise((resolve, reject) => {
+  const newReqPromise = new Promise((
+    resolve, reject,
+  ) => {
     const newOrgConfig = { ...error.config };
     delete newOrgConfig.headers?.Authorization;
 
@@ -162,7 +162,9 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
       timeEndCountLimit = 0;
     }
     if (countLimitRetry === 1) {
-      timeEndCountLimit = moment(moment.now()).add(1, 'minutes').unix(); // 1 minute from now
+      timeEndCountLimit = moment(moment.now()).add(
+        1, 'minutes',
+      ).unix(); // 1 minute from now
     }
     let isSuccess = true;
 
@@ -179,7 +181,9 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
         isSuccess = false;
         return;
       }
-      _dispatchRefreshTokenSuccess(newToken, refreshToken, idToken, exp);
+      _dispatchRefreshTokenSuccess(
+        newToken, refreshToken, idToken, exp,
+      );
 
       // For sharing data between Group and Chat
       await updateUserFromSharedPreferences({ token: idToken, exp });
@@ -195,9 +199,7 @@ const getTokenAndCallBackBein = async (oldBeinToken: string): Promise<void> => {
   }
 };
 
-const handleResponseError = async (
-  error: AxiosError,
-): Promise<HttpApiResponseFormat | unknown> => {
+const handleResponseError = async (error: AxiosError): Promise<HttpApiResponseFormat | unknown> => {
   // Sometime aws return old id token, using this old id token to refresh token will return 401
   // should reset value isRefreshingToken for refresh later
 
@@ -247,66 +249,14 @@ const handleResponseError = async (
   };
 };
 
-const mapResponseSuccessBein = (
-  response: AxiosResponse,
-): HttpApiResponseFormat => ({
+const mapResponseSuccessBein = (response: AxiosResponse): HttpApiResponseFormat => ({
   code: response.data.code,
   data: response.data.data,
   meta: response.data.meta,
 });
 
-const shouldApplyAutoSnakeCamel = (endPoint?: string) => {
-  let result = false;
-  // add apis have param in path to this array
-  const apisWithParam = [
-    `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/scheme`,
-    `${ApiConfig.providers.bein.url}communities/[A-Za-z_$@0-9]*/schemes`,
-  ];
-  apisWithParam.forEach((api) => {
-    if (new RegExp(api, 'g').test(endPoint || '')) {
-      result = true;
-    }
-  });
-
-  switch (endPoint) {
-    case `${ApiConfig.providers.bein.url}system-scheme`:
-    case `${ApiConfig.providers.bein.url}permissions/categories`:
-      result = true;
-      break;
-    default:
-      break;
-  }
-  return result;
-};
-
 const interceptorsRequestSuccess = (config: AxiosRequestConfig) => {
   const newConfig = { ...config };
-
-  // apply rule snake camel for each bein group's api
-  // we will remove this check after all apis is updated
-  if (shouldApplyAutoSnakeCamel(config?.url)) {
-    // update data of upload file request will lead to some unknown error
-    if (newConfig.headers?.['Content-Type']?.includes('multipart/form-data')) {
-      return newConfig;
-    }
-
-    if (config.params) {
-      newConfig.params = ConvertHelper.decamelizeKeys(config.params);
-    }
-    if (config.data) {
-      newConfig.data = ConvertHelper.decamelizeKeys(config.data);
-    }
-
-    return newConfig;
-  }
-
-  return newConfig;
-};
-
-const interceptorsRequestSnakeSuccess = (config: AxiosRequestConfig) => {
-  const newConfig = { ...config };
-
-  // update data of upload file request will lead to some unknown error
   if (newConfig.headers?.['Content-Type']?.includes('multipart/form-data')) {
     return newConfig;
   }
@@ -320,31 +270,15 @@ const interceptorsRequestSnakeSuccess = (config: AxiosRequestConfig) => {
   return newConfig;
 };
 
-const interceptorsResponseCamelSuccess = (response: AxiosResponse) => {
+const interceptorsResponseSuccess = (response: AxiosResponse) => {
   if (
     response.data
     && response.headers?.['content-type']?.includes?.('application/json')
   ) {
     response.data = ConvertHelper.camelizeKeys(response.data, {
-      exclude: ['reactions_count'],
+      excludeValueOfKey: ['reactions_count'],
+      excludeKey: [/^[a-f0-9\-]{36}$/i],
     });
-  }
-  return response;
-};
-
-const interceptorsResponseSuccess = (response: AxiosResponse) => {
-  // apply rule snake camel for each bein group's api
-  // we will remove this check after all apis is updated
-  if (shouldApplyAutoSnakeCamel(response?.config?.url)) {
-    if (
-      response.data
-      && response.headers?.['content-type']?.includes?.('application/json')
-    ) {
-      response.data = ConvertHelper.camelizeKeys(response.data, {
-        exclude: ['reactions_count'],
-      });
-    }
-    return response;
   }
   return response;
 };
@@ -377,8 +311,8 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
     case ApiConfig.providers.beinFeed.name:
     case ApiConfig.providers.beinNotification.name:
     case ApiConfig.providers.beinUpload.name:
-      interceptorRequestSuccess = interceptorsRequestSnakeSuccess;
-      interceptorResponseSuccess = interceptorsResponseCamelSuccess;
+      interceptorRequestSuccess = interceptorsRequestSuccess;
+      interceptorResponseSuccess = interceptorsResponseSuccess;
       interceptorResponseError = interceptorsResponseError;
       requestConfig.headers = beinHeaders;
       break;
@@ -388,7 +322,9 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
 
   const axiosInstance = axios.create();
   axiosInstance.defaults.timeout = requestConfig.timeout || defaultTimeout;
-  axiosInstance.interceptors.request.use(interceptorRequestSuccess, undefined);
+  axiosInstance.interceptors.request.use(
+    interceptorRequestSuccess, undefined,
+  );
   axiosInstance.interceptors.response.use(
     interceptorResponseSuccess,
     interceptorResponseError,
@@ -400,7 +336,9 @@ const makeHttpRequest = async (requestConfig: HttpApiRequestConfig) => {
 
 const makePushTokenRequest = (deviceToken: string) => {
   const deviceId = DeviceInfo.getUniqueId();
-  return makeHttpRequest(ApiConfig.App.pushToken(deviceToken, deviceId));
+  return makeHttpRequest(ApiConfig.App.pushToken(
+    deviceToken, deviceId,
+  ));
 };
 
 const makeRemovePushTokenRequest = async () => {
@@ -411,10 +349,24 @@ const makeRemovePushTokenRequest = async () => {
   return axiosInstance(requestConfig);
 };
 
+const withHttpRequestPromise = async (fn: Function, ...args: any[]) => {
+  try {
+    const response: any = await makeHttpRequest(isEmpty(args) ? fn() : fn(...args));
+    const isSuccess = response?.data?.data || response?.data?.code === API_ERROR_CODE.COMMON.SUCCESS
+    if (isSuccess) {
+      return Promise.resolve(response?.data);
+    }
+    return Promise.reject(response);
+  } catch (e) {
+    return Promise.reject(e);
+  }
+}
+
 export {
   makeHttpRequest,
   makePushTokenRequest,
   makeRemovePushTokenRequest,
   mapResponseSuccessBein,
   getTokenAndCallBackBein,
+  withHttpRequestPromise,
 };

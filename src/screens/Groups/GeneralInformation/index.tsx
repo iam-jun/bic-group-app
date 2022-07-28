@@ -45,11 +45,11 @@ const GeneralInformation = (props: any) => {
   let canEditPrivacy: boolean;
   let total: number;
   if (type === 'group') {
-    canEditInfo = useKeySelector(groupsKeySelector.groupDetail.can_edit_info) || {};
-    canEditPrivacy = useKeySelector(groupsKeySelector.groupDetail.can_edit_privacy) || {};
+    canEditInfo = useKeySelector(groupsKeySelector.groupDetail.canEditInfo) || {};
+    canEditPrivacy = useKeySelector(groupsKeySelector.groupDetail.canEditPrivacy) || {};
     const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group) || {};
     avatar = groupDetail?.icon || '';
-    backgroundUrl = groupDetail?.background_img_url || '';
+    backgroundUrl = groupDetail?.backgroundImgUrl || '';
     organizationName = groupDetail?.name || '';
     organizationDescription = groupDetail?.description || '';
     organizationPrivacy = groupDetail?.privacy || '';
@@ -57,52 +57,48 @@ const GeneralInformation = (props: any) => {
   } else {
     const communityDetail = useKeySelector(groupsKeySelector.communityDetail) || {};
     avatar = communityDetail?.icon || '';
-    backgroundUrl = communityDetail?.background_img_url || '';
-    canEditInfo = communityDetail?.can_edit_info || false;
+    backgroundUrl = communityDetail?.backgroundImgUrl || '';
+    canEditInfo = communityDetail?.canEditInfo || false;
     organizationName = communityDetail?.name || '';
     organizationDescription = communityDetail?.description || '';
     organizationPrivacy = communityDetail?.privacy || '';
-    canEditPrivacy = communityDetail?.can_edit_privacy || false;
+    canEditPrivacy = communityDetail?.canEditPrivacy || false;
     total = useKeySelector(groupsKeySelector.communityMemberRequests)?.total || 0;
   }
 
-  useEffect(() => {
-    if (type === 'group') {
-      dispatch(groupsActions.getGroupDetail(id));
-    } else {
-      dispatch(groupsActions.getCommunityDetail({ communityId: id }));
-    }
-  }, [id]);
+  useEffect(
+    () => {
+      if (type === 'group') {
+        dispatch(groupsActions.getGroupDetail(id));
+      } else {
+        dispatch(groupsActions.getCommunityDetail({ communityId: id }));
+      }
+    }, [id],
+  );
 
   const helpMessage = () => {
     baseSheetRef.current?.close();
-    dispatch(
-      modalActions.showAlert({
-        title: i18next.t('settings:text_info'),
-        content: i18next.t('settings:text_help_center'),
-        onConfirm: () => dispatch(modalActions.hideAlert()),
-        confirmLabel: i18next.t('settings:text_got_it'),
-      }),
-    );
+    dispatch(modalActions.showAlert({
+      title: i18next.t('settings:text_info'),
+      content: i18next.t('settings:text_help_center'),
+      onConfirm: () => dispatch(modalActions.hideAlert()),
+      confirmLabel: i18next.t('settings:text_got_it'),
+    }));
   };
 
   const openGroupPrivacyModal = () => baseSheetRef?.current?.open?.();
 
   const editPrivacy = (item: any) => {
     if (type === 'group') {
-      dispatch(
-        groupsActions.editGroupDetail({
-          data: { id, privacy: item.type },
-          editFieldName: i18next.t('common:text_privacy'),
-        }),
-      );
+      dispatch(groupsActions.editGroupDetail({
+        data: { id, privacy: item.type },
+        editFieldName: i18next.t('common:text_privacy'),
+      }));
     } else {
-      dispatch(
-        groupsActions.editCommunityDetail({
-          data: { id, privacy: item.type },
-          editFieldName: i18next.t('common:text_privacy'),
-        }),
-      );
+      dispatch(groupsActions.editCommunityDetail({
+        data: { id, privacy: item.type },
+        editFieldName: i18next.t('common:text_privacy'),
+      }));
     }
   };
 
@@ -110,9 +106,7 @@ const GeneralInformation = (props: any) => {
     if (type === 'group') {
       dispatch(groupsActions.approveAllGroupMemberRequests({ groupId: id }));
     } else {
-      dispatch(
-        groupsActions.approveAllCommunityMemberRequests({ communityId: id }),
-      );
+      dispatch(groupsActions.approveAllCommunityMemberRequests({ communityId: id }));
     }
     editPrivacy({ type: groupPrivacy.public });
   };
@@ -121,9 +115,7 @@ const GeneralInformation = (props: any) => {
     if (type === 'group') {
       dispatch(groupsActions.declineAllGroupMemberRequests({ groupId: id }));
     } else {
-      dispatch(
-        groupsActions.declineAllCommunityMemberRequests({ communityId: id }),
-      );
+      dispatch(groupsActions.declineAllCommunityMemberRequests({ communityId: id }));
     }
     editPrivacy({ type: groupPrivacy.secret });
   };
@@ -156,12 +148,14 @@ const GeneralInformation = (props: any) => {
     }
   };
 
-  const onEditAvatar = () => _openImagePicker(dispatch, id, 'icon', uploadTypes.groupAvatar, type);
+  const onEditAvatar = () => _openImagePicker(
+    dispatch, id, 'icon', uploadTypes.groupAvatar, type,
+  );
 
   const onEditCover = () => _openImagePicker(
     dispatch,
     id,
-    'background_img_url',
+    'backgroundImgUrl',
     uploadTypes.groupCover,
     type,
   );
@@ -188,14 +182,12 @@ const GeneralInformation = (props: any) => {
           testID="general_information.avatar"
           onEditAvatar={onEditAvatar}
           canEditInfo={canEditInfo}
-          type={type}
         />
         <CoverImage
           backgroundUrl={backgroundUrl}
           testID="general_information.cover"
           onEditCover={onEditCover}
           canEditInfo={canEditInfo}
-          type={type}
         />
         <InfoView
           id={id}

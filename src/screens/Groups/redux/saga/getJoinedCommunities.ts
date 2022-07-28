@@ -14,20 +14,26 @@ export default function* getJoinedCommunities({
     const { callback } = payload || {};
 
     yield put(groupsActions.setMyCommunities({ loading: true }));
-    const communities: any[] = yield call(groupsDataHelper.getJoinedCommunities, {
-      preview_members: true,
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const response = yield call(groupsDataHelper.getJoinedCommunities, {
+      previewMembers: true,
     });
+
+    const communities = response.data;
     if (communities?.length > 0) {
-      yield put(
-        groupsActions.setMyCommunities({ data: communities, loading: false }),
-      );
+      yield put(groupsActions.setMyCommunities({ data: communities, loading: false }));
     } else {
       yield put(groupsActions.setMyCommunities({ data: [], loading: false }));
     }
     callback && callback();
   } catch (err) {
-    console.error('\x1b[33m', 'getJoinedCommunities : error', err, '\x1b[0m');
+    console.error(
+      '\x1b[33m', 'getJoinedCommunities : error', err, '\x1b[0m',
+    );
     yield put(groupsActions.setMyCommunities({ loading: false }));
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

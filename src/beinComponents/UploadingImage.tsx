@@ -50,7 +50,9 @@ const UploadingImage: FC<UploadingImageProps> = ({
     if (url.includes('http')) {
       setImageUrl(url);
     } else {
-      setImageUrl(getResourceUrl(uploadType, url));
+      setImageUrl(getResourceUrl(
+        uploadType, url,
+      ));
     }
   };
 
@@ -64,31 +66,33 @@ const UploadingImage: FC<UploadingImageProps> = ({
         onSuccess: (data: IGetFile) => {
           setError('');
           _setImageUrl(data.url || '');
-          onUploadSuccess?.(data.url || '', fileName || '');
+          onUploadSuccess?.(
+            data.url || '', fileName || '',
+          );
         },
         onError: (e) => {
-          setError(
-            typeof e === 'string' ? e : t('post:error_upload_photo_failed'),
-          );
+          setError(typeof e === 'string' ? e : t('post:error_upload_photo_failed'));
         },
       };
       try {
         await ImageUploader.getInstance().upload(param);
       } catch (e) {
-        console.log('\x1b[35m🐣️ UploadingImage upload error:', e, '\x1b[0m');
+        console.log(
+          '\x1b[35m🐣️ UploadingImage upload error:', e, '\x1b[0m',
+        );
       }
     } else if (fileName) {
       const result: IGetFile = ImageUploader.getInstance().getFile(
         fileName,
         (data: IGetFile) => {
           _setImageUrl(data.url || '');
-          onUploadSuccess?.(data.url || '', fileName || '');
+          onUploadSuccess?.(
+            data.url || '', fileName || '',
+          );
         },
         undefined,
         (e) => {
-          setError(
-            typeof e === 'string' ? e : t('post:error_upload_photo_failed'),
-          );
+          setError(typeof e === 'string' ? e : t('post:error_upload_photo_failed'));
         },
       );
       if (result?.url) {
@@ -97,9 +101,11 @@ const UploadingImage: FC<UploadingImageProps> = ({
     }
   };
 
-  useEffect(() => {
-    upload();
-  }, [url, fileName, file]);
+  useEffect(
+    () => {
+      upload();
+    }, [url, fileName, file],
+  );
 
   const renderRemove = () => {
     if (!onPressRemove) {
