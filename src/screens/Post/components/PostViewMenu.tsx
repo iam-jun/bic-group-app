@@ -7,6 +7,7 @@ import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useMyPermissions } from '~/hooks/permissions';
 import { useKeySelector } from '~/hooks/selector';
+import { IAudienceGroup } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
@@ -14,6 +15,8 @@ import { showHideToastMessage } from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
 import { getLink, LINK_POST } from '~/utils/link';
 import postKeySelector from '../redux/keySelector';
+import Text from '~/beinComponents/Text';
+import AlertDeleteAudiencesConfirmContent from './AlertDeleteAudiencesConfirmContent';
 
 export interface PostViewMenuProps {
   postId: string;
@@ -55,10 +58,36 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         iconName: 'TrashCan',
         cancelBtn: true,
         confirmLabel: t('common:btn_delete'),
-        onConfirm: () => dispatch(postActions.deletePost({ id: postId, isDraftPost })),
+        onConfirm: () => dispatch(postActions.deletePost({
+          id: postId,
+          isDraftPost,
+          callbackError: handleError,
+        })),
       }),
     );
   };
+
+  const handleError = (listIdAudiences: string[]) => {
+    if (listIdAudiences?.length > 0 && audience?.groups?.length > 0) {
+      const listAudiences = listIdAudiences.map((audienceId) => {
+        const _audience = audience.groups.find((audience: IAudienceGroup) => audience?.id === audienceId)
+        return _audience;
+      })
+      dispatch(
+        modalActions.showAlert({
+          title: t('post:title_delete_audiences_of_post'),
+          children: <AlertDeleteAudiencesConfirmContent data={listAudiences} />,
+          cancelBtn: true,
+          confirmLabel: t('common:btn_delete'),
+          onConfirm: () => dispatch(postActions.deletePost({
+            id: postId,
+            isDraftPost,
+            // callbackError: handleError,
+          })),
+        }),
+      );
+    }
+  }
 
   const onPressEditSettings = () => {
     dispatch(modalActions.hideModal());
