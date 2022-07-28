@@ -60,38 +60,48 @@ const HeaderSearch: FC<HeaderSearchProps> = ({
     opacity: showValue.value,
   }));
   const searchContainerStyle = useAnimatedStyle(() => ({
-    width: `${interpolate(showValue.value, [0, 1], [0, 100])}%`,
+    width: `${interpolate(
+      showValue.value, [0, 1], [0, 100],
+    )}%`,
   }));
 
   const show = () => {
     setIsShow(true);
-    showValue.value = withSpring(1, { mass: 0.8 });
+    showValue.value = withSpring(
+      1, { mass: 0.8 },
+    );
   };
 
   const hide = () => {
     const onHideDone = () => {
       setIsShow(false);
     };
-    showValue.value = withTiming(0, undefined, () => {
-      runOnJS(onHideDone)();
-    });
+    showValue.value = withTiming(
+      0, undefined, () => {
+        runOnJS(onHideDone)();
+      },
+    );
   };
 
-  useEffect(() => {
-    if (isShowSearch) {
-      show();
-    } else {
-      hide();
-    }
-  }, [isShowSearch]);
+  useEffect(
+    () => {
+      if (isShowSearch) {
+        show();
+      } else {
+        hide();
+      }
+    }, [isShowSearch],
+  );
 
   const setSearchText = (searchText: string) => {
     searchInputRef?.current?.setText?.(searchText);
   };
 
-  useImperativeHandle(_headerSearchRef, () => ({
-    setSearchText,
-  }));
+  useImperativeHandle(
+    _headerSearchRef, () => ({
+      setSearchText,
+    }),
+  );
 
   if (!isShow) {
     return null;

@@ -11,9 +11,9 @@ function* markAsSeenAll(): any {
     yield call(notificationsDataHelper.markAsSeenAll);
 
     // get all notifications from store
-    const notifications: any = cloneDeep(
-      yield select((state) => get(state, notificationSelector.notifications)),
-    ) || {};
+    const notifications: any = cloneDeep(yield select((state) => get(
+      state, notificationSelector.notifications,
+    ))) || {};
 
     // then set theirs isSeen field by true
     Object.keys(notifications).forEach((key) => {
@@ -21,14 +21,14 @@ function* markAsSeenAll(): any {
     });
 
     // finally, set notification back to store, and set unseen number to 0 without using Getstream response
-    yield put(
-      notificationsActions.setAllNotifications({
-        notifications: { ...notifications },
-        unseenNumber: 0,
-      }),
-    );
+    yield put(notificationsActions.setAllNotifications({
+      notifications: { ...notifications },
+      unseenNumber: 0,
+    }));
   } catch (err) {
-    console.error('\x1b[33m', 'notification markAsSeenAll error', err, '\x1b[0m');
+    console.error(
+      '\x1b[33m', 'notification markAsSeenAll error', err, '\x1b[0m',
+    );
     yield showError(err);
   }
 }

@@ -26,15 +26,17 @@ const UltraSuperLarge: React.FC<AvatarProps> = (props: AvatarProps) => (
   <AvatarComponent variant="ultraSuperLarge" {...props} />
 );
 
-const Avatar = Object.assign(AvatarComponent, {
-  Tiny,
-  Small,
-  SmallAlt,
-  Medium,
-  Large,
-  LargeAlt,
-  UltraSuperLarge,
-  Group,
-});
+const Avatar = Object.assign(
+  AvatarComponent, {
+    Tiny,
+    Small,
+    SmallAlt,
+    Medium,
+    Large,
+    LargeAlt,
+    UltraSuperLarge,
+    Group,
+  },
+);
 
 export default Avatar;

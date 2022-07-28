@@ -40,10 +40,10 @@ const PasswordInput: React.FC<Props> = ({
   );
 };
 
-const _PasswordInput = React.forwardRef(
-  (props: TextInputProps, ref?: React.Ref<RNTextInput>) => (
-    <PasswordInput passwordInputRef={ref} {...props} />
-  ),
-);
+const _PasswordInput = React.forwardRef((
+  props: TextInputProps, ref?: React.Ref<RNTextInput>,
+) => (
+  <PasswordInput passwordInputRef={ref} {...props} />
+));
 
 export default React.memo(_PasswordInput);

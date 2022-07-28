@@ -30,13 +30,11 @@ export default function* approveSingleCommunityMemberRequest({
     const { total, ids, items } = groups.communityMemberRequests;
     const requestItems = { ...items };
     delete requestItems[requestId];
-    yield put(
-      groupsActions.setCommunityMemberRequests({
-        total: total - 1,
-        ids: ids.filter((item: string) => item !== requestId),
-        items: requestItems,
-      }),
-    );
+    yield put(groupsActions.setCommunityMemberRequests({
+      total: total - 1,
+      ids: ids.filter((item: string) => item !== requestId),
+      items: requestItems,
+    }));
 
     const toastMessage: IToastMessage = {
       content: `${i18next.t('groups:text_approved_user')} ${fullName}`,
@@ -47,20 +45,20 @@ export default function* approveSingleCommunityMemberRequest({
       toastType: 'normal',
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
-    yield put(groupsActions.getCommunityDetail({ communityId })); // to update user_count
+    yield put(groupsActions.getCommunityDetail({ communityId })); // to update userCount
   } catch (err: any) {
-    console.log('approveSingleCommunityMemberRequest: ', err);
+    console.error('approveSingleCommunityMemberRequest: ', err);
 
     if (err?.code === approveDeclineCode.CANCELED) {
-      yield put(
-        groupsActions.editCommunityMemberRequest({
-          id: requestId,
-          data: { isCanceled: true },
-        }),
-      );
+      yield put(groupsActions.editCommunityMemberRequest({
+        id: requestId,
+        data: { isCanceled: true },
+      }));
       return;
     }
 
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

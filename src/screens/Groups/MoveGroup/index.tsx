@@ -35,23 +35,23 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
     loading, targetGroups, movingGroup, selecting,
   } = useKeySelector(groupsKeySelector.groupStructure.move) || {};
 
-  const { user_count } = movingGroup || {};
+  const { userCount } = movingGroup || {};
 
   const getMoveTargets = (key = '') => {
     if (communityId && groupId) {
-      dispatch(
-        groupsActions.getGroupStructureMoveTargets({ communityId, groupId, key }),
-      );
+      dispatch(groupsActions.getGroupStructureMoveTargets({ communityId, groupId, key }));
     }
   };
 
-  useEffect(() => {
-    getMoveTargets();
+  useEffect(
+    () => {
+      getMoveTargets();
 
-    return () => {
-      dispatch(groupsActions.setGroupStructureMove());
-    };
-  }, []);
+      return () => {
+        dispatch(groupsActions.setGroupStructureMove());
+      };
+    }, [],
+  );
 
   const onPressSave = () => {
     if (communityId && groupId && selecting?.id) {
@@ -63,7 +63,7 @@ const MoveGroup: FC<MoveGroupProps> = ({ route }: MoveGroupProps) => {
       const content = t(
         'communities:group_structure:text_desc_confirm_move_group',
       )
-        .replaceAll('%COUNT%', user_count || 0)
+        .replaceAll('%COUNT%', userCount || 0)
         .replaceAll('%MOVING_NAME%', initGroup?.name)
         .replaceAll('%TARGET_NAME%', selecting?.name);
       dispatch(

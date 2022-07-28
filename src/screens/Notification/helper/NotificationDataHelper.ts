@@ -45,24 +45,9 @@ export const notificationApiConfig = {
 };
 
 const notificationsDataHelper = {
-  getDefaultLoadNotiOptions: (userId: string) => {
-    const options: any = {
-      user_id: userId.toString(), // current user is userId, all reaction of userId will return in field own_reactions
-      ownReactions: true,
-      withOwnReactions: true,
-      withOwnChildren: false,
-      withRecentReactions: true, // tra về 10 reaction moi nhat
-      withReactionCounts: true, // đếm số lượng reaction
-      enrich: true, // giữ liệu sẽ được mở rộng ra, lấy thêm được thông tin user và group
-    };
-    return options;
-  },
-
   getNotificationList: async (param: IParamGetNotifications) => {
     try {
-      const response: any = await makeHttpRequest(
-        notificationApiConfig.getNotifications(param),
-      );
+      const response: any = await makeHttpRequest(notificationApiConfig.getNotifications(param));
       if (response && response?.data?.data) {
         return Promise.resolve({
           results: response?.data?.data?.list || [],
@@ -74,38 +59,9 @@ const notificationsDataHelper = {
       return Promise.reject(e);
     }
   },
-
-  /**
-   * Remove current user's activity from a list of notifications then re-calculate unseen
-   * @param userId
-   * @param notificationGroups
-   * @returns
-   */
-  filterCurrentUserNoti: (userId: string, notificationGroups: any) => {
-    let userHisOwnNotiCount = 0;
-    const filteredNotis = notificationGroups.filter((notiGroup: any) => {
-      if (notiGroup.verb === 'post') {
-        const act = notiGroup.activities[0];
-        if (act.actor.id === userId) {
-          // if this is user own create post event and it is not seen
-          // we must minute unseen count by 1
-          // to make unseen number correct after we hide the noti
-          if (!notiGroup.isSeen) {
-            userHisOwnNotiCount += 1;
-          }
-          return false;
-        }
-      }
-      return true;
-    });
-    return { filteredNotis, userHisOwnNotiCount };
-  },
-
   markAsReadAll: async (flag: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        notificationApiConfig.putMarkAllAsRead(flag),
-      );
+      const response: any = await makeHttpRequest(notificationApiConfig.putMarkAllAsRead(flag));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -117,9 +73,7 @@ const notificationsDataHelper = {
 
   markAsSeenAll: async () => {
     try {
-      const response: any = await makeHttpRequest(
-        notificationApiConfig.putMarkAllAsSeen(),
-      );
+      const response: any = await makeHttpRequest(notificationApiConfig.putMarkAllAsSeen());
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -131,9 +85,7 @@ const notificationsDataHelper = {
 
   markAsRead: async (activityId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        notificationApiConfig.putMarkAsReadById(activityId),
-      );
+      const response: any = await makeHttpRequest(notificationApiConfig.putMarkAsReadById(activityId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }
@@ -144,9 +96,7 @@ const notificationsDataHelper = {
   },
   markAsUnRead: async (activityId: string) => {
     try {
-      const response: any = await makeHttpRequest(
-        notificationApiConfig.putMarkAsUnReadById(activityId),
-      );
+      const response: any = await makeHttpRequest(notificationApiConfig.putMarkAsUnReadById(activityId));
       if (response && response?.data) {
         return Promise.resolve(response?.data);
       }

@@ -10,10 +10,10 @@ export default function* getWorkExperience({ id }: {type: string; id: string}) {
       menuDataHelper.getWorkExperience,
       id,
     );
-    yield put(
-      menuActions.setUserWorkExperience(mapWorkExperience(response.data)),
-    );
+    yield put(menuActions.setUserWorkExperience(mapWorkExperience(response.data)));
   } catch (err) {
-    console.error('getWorkExperience error:', err);
+    console.error(
+      'getWorkExperience error:', err,
+    );
   }
 }

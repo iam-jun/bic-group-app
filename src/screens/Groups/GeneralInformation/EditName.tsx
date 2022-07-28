@@ -26,31 +26,29 @@ const EditName = (props: any) => {
     setText(value);
   };
 
-  useEffect(() => {
-    !text && setText(name);
-  }, [name]);
+  useEffect(
+    () => {
+      !text && setText(name);
+    }, [name],
+  );
 
   const onSave = () => {
     if (!text?.trim?.()) return;
     if (type === 'group') {
-      dispatch(
-        groupsActions.editGroupDetail({
-          data: {
-            id,
-            name: text.trim(),
-          },
-          editFieldName: i18next.t('settings:Name'),
-          callback: onNavigateBack,
-        }),
-      );
+      dispatch(groupsActions.editGroupDetail({
+        data: {
+          id,
+          name: text.trim(),
+        },
+        editFieldName: i18next.t('settings:Name'),
+        callback: onNavigateBack,
+      }));
     } else {
-      dispatch(
-        groupsActions.editCommunityDetail({
-          data: { id, name: text.trim() },
-          editFieldName: i18next.t('settings:Name'),
-          callback: onNavigateBack,
-        }),
-      );
+      dispatch(groupsActions.editCommunityDetail({
+        data: { id, name: text.trim() },
+        editFieldName: i18next.t('settings:Name'),
+        callback: onNavigateBack,
+      }));
     }
   };
 

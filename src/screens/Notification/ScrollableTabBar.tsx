@@ -100,7 +100,9 @@ const ScrollableTabBar = ({
         itemTestID="notification.filter.item"
         style={styles.filterStyle}
         data={data}
-        onPress={(item: any, index: number) => {
+        onPress={(
+          item: any, index: number,
+        ) => {
           _onChangeTab(index);
         }}
       />
@@ -116,7 +118,9 @@ const ScrollableTabBar = ({
         scrollEventThrottle={16}
       >
         {(data?.length || 0) > 0
-          && data?.map((item: any, index: number) => (
+          && data?.map((
+            item: any, index: number,
+          ) => (
             <NotificationList
               key={`NOTI_ITEM_SCREEN_${index}${item?.type}`}
               onItemPress={_onItemPress}

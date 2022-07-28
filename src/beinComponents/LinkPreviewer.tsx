@@ -23,16 +23,20 @@ const LinkPreviewer = ({ text }: Props) => {
   const [link, setLink] = useState<string | null | undefined>('');
   const linkPreviews = useKeySelector('app.linkPreviews');
 
-  useEffect(() => {
-    const url = getUrlFromText(text);
-    setLink(url);
-  }, [text]);
+  useEffect(
+    () => {
+      const url = getUrlFromText(text);
+      setLink(url);
+    }, [text],
+  );
 
-  useEffect(() => {
-    if (link && !linkPreviews?.[link]) {
-      dispatch(appActions.getLinkPreview(link));
-    }
-  }, [link]);
+  useEffect(
+    () => {
+      if (link && !linkPreviews?.[link]) {
+        dispatch(appActions.getLinkPreview(link));
+      }
+    }, [link],
+  );
 
   // link preview must have title at least
   if (!link || !linkPreviews?.[link]?.title) return null;

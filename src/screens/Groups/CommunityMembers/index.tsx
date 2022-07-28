@@ -30,9 +30,11 @@ const CommunityMembers = ({ route }: any) => {
     setIsOpen(true);
   };
 
-  const onCloseModal = React.useCallback(() => {
-    setIsOpen(false);
-  }, []);
+  const onCloseModal = React.useCallback(
+    () => {
+      setIsOpen(false);
+    }, [],
+  );
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.white}>

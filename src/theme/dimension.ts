@@ -11,7 +11,7 @@ export const scaleCoverHeight = (widthSize: number) => (widthSize / 25) * 11;
 
 export const groupProfileImageCropRatio = {
   // image crop ratio for cover photo: 25:11
-  background_img_url: {
+  backgroundImgUrl: {
     width: 1080,
     height: 475,
   },
@@ -21,7 +21,7 @@ export const groupProfileImageCropRatio = {
 
 export const userProfileImageCropRatio = {
   // image crop ratio for cover photo: 25:11
-  background_img_url: {
+  backgroundImgUrl: {
     width: 1080,
     height: 475,
   },

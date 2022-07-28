@@ -40,11 +40,15 @@ const Communities: React.FC = () => {
     setIsOpen(true);
   };
 
-  const onCloseSearch = React.useCallback(() => {
-    setIsOpen(false);
-  }, []);
+  const onCloseSearch = React.useCallback(
+    () => {
+      setIsOpen(false);
+    }, [],
+  );
 
-  const onPress = (item: any, index: number) => {
+  const onPress = (
+    item: any, index: number,
+  ) => {
     setSelectedIndex(index);
     translateX.value = index * screenWidth;
   };
@@ -55,7 +59,9 @@ const Communities: React.FC = () => {
   };
 
   const onPressCommunities = (communityId: string) => {
-    rootNavigation.navigate(groupStack.communityDetail, { communityId });
+    rootNavigation.navigate(
+      groupStack.communityDetail, { communityId },
+    );
   };
 
   const renderContent = () => {

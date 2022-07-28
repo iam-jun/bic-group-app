@@ -80,17 +80,21 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
   const isAnimated = isAndroidAnimated();
   const { totalSize } = getTotalFileSize();
 
-  useEffect(() => {
-    if (content !== contentInput && isAnimated) {
-      setContentInput(content);
-    }
-  }, [content]);
+  useEffect(
+    () => {
+      if (content !== contentInput && isAnimated) {
+        setContentInput(content);
+      }
+    }, [content],
+  );
 
-  useEffect(() => {
-    if (isAnimated) {
-      onLayoutAnimated();
-    }
-  }, [photosHeight, isShowToastAutoSave, inputHeight, isKeyboardOpen]);
+  useEffect(
+    () => {
+      if (isAnimated) {
+        onLayoutAnimated();
+      }
+    }, [photosHeight, isShowToastAutoSave, inputHeight, isKeyboardOpen],
+  );
 
   const onChangeText = (text: string) => {
     if (isAnimated) {
@@ -101,12 +105,14 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
 
   const animatedTiming = (height: number) => {
     heightAnimated.stopAnimation();
-    Animated.timing(heightAnimated, {
-      toValue: height,
-      duration: 0,
-      useNativeDriver: false,
-      easing: Easing.ease,
-    }).start();
+    Animated.timing(
+      heightAnimated, {
+        toValue: height,
+        duration: 0,
+        useNativeDriver: false,
+        easing: Easing.ease,
+      },
+    ).start();
     toastRef.current?.startAnimation();
   };
 
@@ -139,14 +145,14 @@ const Content = ({ groupIds, useCreatePostData, inputRef }: Props) => {
   };
 
   const onUploadError = (type: string) => {
-    dispatch(
-      modalActions.showHideToastMessage({
-        content: t('upload:text_upload_error', {
+    dispatch(modalActions.showHideToastMessage({
+      content: t(
+        'upload:text_upload_error', {
           file_type: t(`file_type:${type}`),
-        }),
-        props: { type: 'error' },
-      }),
-    );
+        },
+      ),
+      props: { type: 'error' },
+    }));
   };
 
   const onLayoutCloneText = (e: any) => {

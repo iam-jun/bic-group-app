@@ -21,22 +21,20 @@ const NewsfeedSearch: FC<NewsfeedSearchProps> = ({
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const insets = useSafeAreaInsets();
-  const styles = createStyle(theme, insets);
+  const styles = createStyle(
+    theme, insets,
+  );
 
   const isShow = useKeySelector(homeKeySelector.newsfeedSearch.isShow);
-  const isSuggestion = useKeySelector(
-    homeKeySelector.newsfeedSearch.isSuggestion,
-  );
+  const isSuggestion = useKeySelector(homeKeySelector.newsfeedSearch.isSuggestion);
 
   const onSelectKeyword = (keyword: string) => {
     headerRef?.current?.setSearchText?.(keyword);
-    dispatch(
-      homeActions.setNewsfeedSearch({
-        isSuggestion: false,
-        searchResults: [],
-        searchText: keyword,
-      }),
-    );
+    dispatch(homeActions.setNewsfeedSearch({
+      isSuggestion: false,
+      searchResults: [],
+      searchText: keyword,
+    }));
     Keyboard.dismiss();
   };
 
@@ -55,7 +53,9 @@ const NewsfeedSearch: FC<NewsfeedSearchProps> = ({
   );
 };
 
-const createStyle = (theme: ExtendedTheme, insets: any) => {
+const createStyle = (
+  theme: ExtendedTheme, insets: any,
+) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {

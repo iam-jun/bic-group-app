@@ -145,7 +145,8 @@
     "text_go_to_settings": "Go to Settings",
     "text_help": "Help",
     "text_type_search_keyword": "Type search keyword to see the search results",
-    "text_no_results_found": "No results found"
+    "text_no_results_found": "No results found",
+    "text_more": "+(number) more"
   },
   "auth": {
     "text_kickout_title": "Notice",
@@ -588,7 +589,9 @@
       "title": "This page is not existing.",
       "description": "It might be deleted or you don't have permission to see it",
       "button_text": "Back to News Feed"
-    }
+    },
+    "text_important_warning_1": "Cannot set because you don't have this permission at",
+    "text_important_warning_2": ". Please remove them or contact your admin"
   },
   "comment": {
     "placeholder_comment": "Write a comment...",

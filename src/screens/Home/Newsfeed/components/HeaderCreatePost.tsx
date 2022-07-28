@@ -46,11 +46,13 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
     draftCount = '9+';
   }
 
-  useEffect(() => {
-    if (!avatar && userId) {
-      dispatch(menuActions.getMyProfile({ userId }));
-    }
-  }, [avatar]);
+  useEffect(
+    () => {
+      if (!avatar && userId) {
+        dispatch(menuActions.getMyProfile({ userId }));
+      }
+    }, [avatar],
+  );
 
   const navigateToCreatePost = () => {
     let screen = homeStack.createPost;
@@ -62,7 +64,9 @@ const HeaderCreatePost: React.FC<HeaderCreatePostProps> = ({
       screen = homeStack.postSelectAudience;
       params.isFirstStep = true;
     }
-    rootNavigation.navigate(screen, params as any);
+    rootNavigation.navigate(
+      screen, params as any,
+    );
   };
 
   const onPressCreate = () => {

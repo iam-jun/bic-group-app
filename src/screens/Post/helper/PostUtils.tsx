@@ -5,14 +5,18 @@ export const sortComments = (comments: ICommentData[]) => {
   comments?.forEach?.((cmt: ICommentData) => {
     if (cmt?.child) {
       cmt.child.list = cmt.child?.list
-        ?.sort?.((c1: ICommentData, c2: ICommentData) => (c1?.createdAt
+        ?.sort?.((
+          c1: ICommentData, c2: ICommentData,
+        ) => (c1?.createdAt
            && c2?.createdAt && c1?.createdAt > c2?.createdAt
           ? 1
           : -1));
     }
   });
   newComments = newComments
-    ?.sort?.((c1: ICommentData, c2: ICommentData) => (c1?.createdAt && c2?.createdAt
+    ?.sort?.((
+      c1: ICommentData, c2: ICommentData,
+    ) => (c1?.createdAt && c2?.createdAt
        && c1?.createdAt > c2?.createdAt ? 1 : -1));
   return newComments;
 };

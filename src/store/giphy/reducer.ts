@@ -10,7 +10,9 @@ export const giphyInitState = {
  * @param action
  * @returns {*}
  */
-function reducer(state = giphyInitState, action: any = {}) {
+function reducer(
+  state = giphyInitState, action: any = {},
+) {
   const { type, payload } = action;
 
   switch (type) {

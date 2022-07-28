@@ -120,6 +120,7 @@ const icons = {
   edit: fontAwesomeIcons.PenToSquare,
   menu: fontAwesomeIcons.Ellipsis,
   search: fontAwesomeIcons.MagnifyingGlass,
+  iconCheckCircle: fontAwesomeIcons.CircleCheck,
   // ^ ADD RENAMED ICON HERE
   // IF YOU WANT TO RENAME ICON, ADD TO fontAwesomeIcons FIRST
   ...fontAwesomeIcons,

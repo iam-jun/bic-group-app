@@ -22,17 +22,19 @@ const GroupAboutContent = () => {
   const styles = createStyle(theme);
 
   const groupData = useKeySelector(groupsKeySelector.groupDetail.group) || {};
-  const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
-  const isMember = join_status === groupJoinStatus.member;
+  const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
+  const isMember = joinStatus === groupJoinStatus.member;
 
   const groupId = groupData.id;
-  const { description, user_count, privacy } = groupData;
+  const { description, userCount, privacy } = groupData;
 
   const privacyData = privacyTypes.find((item) => item?.type === privacy) || {};
   const { icon, title, subtitle }: any = privacyData || {};
 
   const onPressMembers = () => {
-    rootNavigation.navigate(groupStack.groupMembers, { groupId });
+    rootNavigation.navigate(
+      groupStack.groupMembers, { groupId },
+    );
   };
 
   const renderContent = () => (
@@ -56,8 +58,8 @@ const GroupAboutContent = () => {
         icon="UserGroup"
         onPress={isMember ? onPressMembers : undefined}
         disabled={!isMember}
-        title={`${user_count} ${i18next.t('groups:text_members', {
-          count: user_count,
+        title={`${userCount} ${i18next.t('groups:text_members', {
+          count: userCount,
         })}`}
         rightSubIcon={isMember ? 'AngleRightSolid' : undefined}
       />

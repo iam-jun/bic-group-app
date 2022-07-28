@@ -71,7 +71,7 @@ const Icon: React.FC<IconProps> = ({
   const styles = StyleSheet.create(createStyles(theme));
   tintColor = tintColor || colors.neutral80;
 
-  let _tintColor = disabled
+  let _tintColor:string|undefined = disabled
     ? isButton
       ? colors.purple60
       : colors.gray30

@@ -31,9 +31,13 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  useEffect(() => {
-    onChangeTab?.(data?.[activeIndex], activeIndex);
-  }, [activeIndex]);
+  useEffect(
+    () => {
+      onChangeTab?.(
+        data?.[activeIndex], activeIndex,
+      );
+    }, [activeIndex],
+  );
 
   const _onPressTab = (index: number) => {
     setActiveIndex(index);
@@ -46,47 +50,57 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
     }
   };
 
-  useEffect(() => {
+  useEffect(
+    () => {
     // wait for set data finish, avoid scroll wrong position of tab
-    setTimeout(() => {
-      if (data?.length > 0 && initReaction) {
-        data.forEach((item: any, index) => {
-          if (item?.reactionType === initReaction) {
-            _onPressTab(index);
+      setTimeout(
+        () => {
+          if (data?.length > 0 && initReaction) {
+            data.forEach((
+              item: any, index,
+            ) => {
+              if (item?.reactionType === initReaction) {
+                _onPressTab(index);
+              }
+            });
+          }
+        }, 300,
+      );
+    }, [data, initReaction],
+  );
+
+  useEffect(
+    () => {
+      if (reactionCounts) {
+        const reaactionCountMap = new Map();
+        const newData: any = [];
+        Object.values(reactionCounts || {})?.forEach((reaction: any) => {
+          const key = Object.keys(reaction || {})?.[0];
+          if (key) {
+            reaactionCountMap.set(
+              key, reaction?.[key],
+            );
           }
         });
-      }
-    }, 300);
-  }, [data, initReaction]);
 
-  useEffect(() => {
-    if (reactionCounts) {
-      const reaactionCountMap = new Map();
-      const newData: any = [];
-      Object.values(reactionCounts || {})?.forEach((reaction: any) => {
-        const key = Object.keys(reaction || {})?.[0];
-        if (key) {
-          reaactionCountMap.set(key, reaction?.[key]);
+        // eslint-disable-next-line no-restricted-syntax
+        for (const [key, value] of reaactionCountMap) {
+          const reactionType = key as ReactionType;
+          if (!blacklistReactions?.[reactionType] && value > 0) {
+            newData.push({
+              reactionType,
+              count: value,
+            });
+          }
         }
-      });
-
-      // eslint-disable-next-line no-restricted-syntax
-      for (const [key, value] of reaactionCountMap) {
-        const reactionType = key as ReactionType;
-        if (!blacklistReactions?.[reactionType] && value > 0) {
-          newData.push({
-            reactionType,
-            count: value,
-          });
-        }
-      }
-      setData(newData);
-    } else {
+        setData(newData);
+      } else {
       // reset
-      setData([]);
-      setActiveIndex(-1);
-    }
-  }, [reactionCounts]);
+        setData([]);
+        setActiveIndex(-1);
+      }
+    }, [reactionCounts],
+  );
 
   const onScrollToIndexFailed = () => {
     console.log('\x1b[31m🐣️ ReactionTabBar onScrollToIndexFailed\x1b[0m');
@@ -127,7 +141,9 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
       data={data}
       // snapToAlignment={'center'}
       showsHorizontalScrollIndicator={false}
-      getItemLayout={(data, index) => ({
+      getItemLayout={(
+        data, index,
+      ) => ({
         length: itemWidth,
         offset: itemWidth * index,
         index,
@@ -136,7 +152,9 @@ const ReactionTabBar: FC<ReactionTabBarProps> = ({
       snapToInterval={itemWidth}
       style={styles.container}
       renderItem={renderItem}
-      keyExtractor={(item, index) => `reaction_tab_${index}`}
+      keyExtractor={(
+        item, index,
+      ) => `reaction_tab_${index}`}
     />
   );
 };

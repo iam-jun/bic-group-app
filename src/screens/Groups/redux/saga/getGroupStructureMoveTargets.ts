@@ -17,14 +17,12 @@ export default function* getGroupStructureMoveTargets({
   const { communityId, groupId, key } = payload || {};
   const { targetGroups, movingGroup } = (yield select((state) => state.groups?.groupStructure?.move)) || {};
   try {
-    yield put(
-      groupsActions.setGroupStructureMove({
-        loading: true,
-        key,
-        targetGroups,
-        movingGroup,
-      }),
-    );
+    yield put(groupsActions.setGroupStructureMove({
+      loading: true,
+      key,
+      targetGroups,
+      movingGroup,
+    }));
 
     const response = yield call(
       groupsDataHelper.getCommunityStructureMoveTargets,
@@ -34,36 +32,30 @@ export default function* getGroupStructureMoveTargets({
     );
 
     if (response?.data) {
-      const newTargetGroups: any = response.data?.target_groups || {};
-      const newMovingGroup = response.data?.moving_group || {};
+      const newTargetGroups: any = response.data?.targetGroups || {};
+      const newMovingGroup = response.data?.movingGroup || {};
 
-      yield put(
-        groupsActions.setGroupStructureMove({
-          loading: false,
-          key,
-          targetGroups: newTargetGroups,
-          movingGroup: newMovingGroup,
-        }),
-      );
+      yield put(groupsActions.setGroupStructureMove({
+        loading: false,
+        key,
+        targetGroups: newTargetGroups,
+        movingGroup: newMovingGroup,
+      }));
     } else {
-      yield put(
-        groupsActions.setGroupStructureMove({
-          loading: false,
-          key,
-          targetGroups,
-          movingGroup,
-        }),
-      );
-    }
-  } catch (err) {
-    yield put(
-      groupsActions.setGroupStructureMove({
-        loading: true,
+      yield put(groupsActions.setGroupStructureMove({
+        loading: false,
         key,
         targetGroups,
         movingGroup,
-      }),
-    );
+      }));
+    }
+  } catch (err) {
+    yield put(groupsActions.setGroupStructureMove({
+      loading: true,
+      key,
+      targetGroups,
+      movingGroup,
+    }));
     yield showError(err);
   }
 }

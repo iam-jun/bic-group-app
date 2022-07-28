@@ -31,26 +31,32 @@ const CommentDetail = (props: any) => {
     rootNavigation.replace(homeStack.newsfeed);
   };
 
-  useEffect(() => () => {
-    dispatch(postActions.setCommentErrorCode(false));
-    dispatch(postActions.setLoadingGetPostDetail(false));
-  }, []);
+  useEffect(
+    () => () => {
+      dispatch(postActions.setCommentErrorCode(false));
+      dispatch(postActions.setLoadingGetPostDetail(false));
+    }, [],
+  );
 
-  useEffect(() => () => {
-    if (copyCommentError === API_ERROR_CODE.POST.commentDeleted) {
-      const params = props?.route?.params;
-      const { postId, commentId } = params || {};
-      dispatch(postActions.removeCommentLevel1Deleted({ postId, commentId }));
-    }
-  }, [copyCommentError]);
+  useEffect(
+    () => () => {
+      if (copyCommentError === API_ERROR_CODE.POST.commentDeleted) {
+        const params = props?.route?.params;
+        const { postId, commentId } = params || {};
+        dispatch(postActions.removeCommentLevel1Deleted({ postId, commentId }));
+      }
+    }, [copyCommentError],
+  );
 
   const onBack = () => {
     if (rootNavigation.canGoBack) {
       rootNavigation.goBack();
     } else {
-      rootNavigation.replace(homeStack.postDetail, {
-        post_id: props?.route?.params?.postId || 0,
-      });
+      rootNavigation.replace(
+        homeStack.postDetail, {
+          post_id: props?.route?.params?.postId || 0,
+        },
+      );
     }
   };
 

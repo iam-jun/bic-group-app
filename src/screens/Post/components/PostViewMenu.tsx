@@ -91,29 +91,33 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
 
   const onPressEditSettings = () => {
     dispatch(modalActions.hideModal());
-    rootNavigation.navigate(homeStack.postSettings, { postId });
+    rootNavigation.navigate(
+      homeStack.postSettings, { postId },
+    );
   };
 
   const onPressEdit = () => {
     dispatch(modalActions.hideModal());
-    rootNavigation.navigate(homeStack.createPost, {
-      postId,
-      replaceWithDetail: !isPostDetail,
-    });
+    rootNavigation.navigate(
+      homeStack.createPost, {
+        postId,
+        replaceWithDetail: !isPostDetail,
+      },
+    );
   };
 
   const onPressCopyLink = () => {
     dispatch(modalActions.hideModal());
-    Clipboard.setString(getLink(LINK_POST, postId));
-    dispatch(
-      showHideToastMessage({
-        content: 'common:text_link_copied_to_clipboard',
-        props: {
-          textProps: { useI18n: true },
-          type: 'success',
-        },
-      }),
-    );
+    Clipboard.setString(getLink(
+      LINK_POST, postId,
+    ));
+    dispatch(showHideToastMessage({
+      content: 'common:text_link_copied_to_clipboard',
+      props: {
+        textProps: { useI18n: true },
+        type: 'success',
+      },
+    }));
   };
 
   return (

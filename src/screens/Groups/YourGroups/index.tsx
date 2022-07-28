@@ -50,12 +50,10 @@ const YourGroups: FC<YourGroupsProps> = ({ route }: YourGroupsProps) => {
 
   if (!communityId) {
     rootNavigation.goBack();
-    dispatch(
-      showHideToastMessage({
-        content: 'common:text_error_message',
-        props: { textProps: { useI18n: true }, type: 'error' },
-      }),
-    );
+    dispatch(showHideToastMessage({
+      content: 'common:text_error_message',
+      props: { textProps: { useI18n: true }, type: 'error' },
+    }));
   }
 
   const onPress = (item: any) => {
@@ -68,11 +66,13 @@ const YourGroups: FC<YourGroupsProps> = ({ route }: YourGroupsProps) => {
     dispatch(groupsActions.setYourGroupsSearch({ showSearch: isShow, key: '' }));
   };
 
-  const onSearchText = debounce((searchText: string) => {
-    dispatch(groupsActions.getYourGroupsSearch({ communityId, key: searchText }));
-  }, 300);
+  const onSearchText = debounce(
+    (searchText: string) => {
+      communityId && dispatch(groupsActions.getYourGroupsSearch({ communityId, key: searchText }));
+    }, 300,
+  );
 
-  const renderContent = () => <GroupJoined communityId={communityId} />;
+  const renderContent = () => (communityId ? <GroupJoined communityId={communityId} /> : null);
 
   return (
     <View style={styles.containerScreen}>

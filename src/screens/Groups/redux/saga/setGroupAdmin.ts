@@ -15,7 +15,9 @@ export default function* setGroupAdmin({
   try {
     const { groupId, userIds } = payload;
 
-    yield call(groupsDataHelper.setGroupAdmin, groupId, userIds);
+    yield call(
+      groupsDataHelper.setGroupAdmin, groupId, userIds,
+    );
 
     const toastMessage: IToastMessage = {
       content: 'groups:modal_confirm_set_admin:success_message',
@@ -27,9 +29,15 @@ export default function* setGroupAdmin({
     yield put(modalActions.showHideToastMessage(toastMessage));
 
     // refresh group detail after adding new admins
-    yield call(refreshGroupMembers, groupId);
+    yield call(
+      refreshGroupMembers, groupId,
+    );
   } catch (err) {
-    console.error('setGroupAdmin: ', err);
-    yield call(showError, err);
+    console.error(
+      'setGroupAdmin: ', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

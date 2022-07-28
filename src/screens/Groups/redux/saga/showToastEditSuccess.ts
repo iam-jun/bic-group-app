@@ -8,9 +8,7 @@ export default function* showToastEditSuccess(editFieldName: string): any {
   try {
     let toastContent: string;
     if (editFieldName) {
-      toastContent = `${editFieldName} ${i18next.t(
-        'common:text_updated_successfully',
-      )}`;
+      toastContent = `${editFieldName} ${i18next.t('common:text_updated_successfully')}`;
     } else {
       toastContent = 'common:text_edit_success';
     }
@@ -24,6 +22,8 @@ export default function* showToastEditSuccess(editFieldName: string): any {
     };
     yield put(modalActions.showHideToastMessage(toastMessage));
   } catch (e) {
-    console.error('\x1b[31m', '🐣️ showToastEditSuccess error: ', e, '\x1b[0m');
+    console.error(
+      '\x1b[31m', '🐣️ showToastEditSuccess error: ', e, '\x1b[0m',
+    );
   }
 }

@@ -56,24 +56,40 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
   const _children = children;
 
   const markdownIt = MarkdownIt({ typographer: false, linkify: true })
-    .use(mark, {})
-    .use(emojiPlugin, {
-      defs: emojiDefs,
-      shortcuts: emojiShortcuts,
-    })
-    .use(regexPlugin, 'audience', audienceRegex, '@')
-    .use(regexPlugin, 'linebreak', /<br>/, '<')
+    .use(
+      mark, {},
+    )
+    .use(
+      emojiPlugin, {
+        defs: emojiDefs,
+        shortcuts: emojiShortcuts,
+      },
+    )
+    .use(
+      regexPlugin, 'audience', audienceRegex, '@',
+    )
+    .use(
+      regexPlugin, 'linebreak', /<br>/, '<',
+    )
     .disable(limitMarkdownTypes ? blacklistLimit : blacklistDefault);
 
   if (debugPrintTree) {
     const html = markdownIt.render(children);
-    const astTree = markdownIt.parse(children, {});
-    console.log('\x1b[34m🐣️ html :', html, '\x1b[0m');
-    console.log('\x1b[35m🐣️ astTree :', astTree, '\x1b[0m');
+    const astTree = markdownIt.parse(
+      children, {},
+    );
+    console.log(
+      '\x1b[34m🐣️ html :', html, '\x1b[0m',
+    );
+    console.log(
+      '\x1b[35m🐣️ astTree :', astTree, '\x1b[0m',
+    );
   }
 
   const rules = {
-    emoji: (node: any, children: any, parent: any, styles: any) => {
+    emoji: (
+      node: any, children: any, parent: any, styles: any,
+    ) => {
       if (node.content) {
         return (
           <Text key={node.key} style={styles.emojiText}>
@@ -88,7 +104,9 @@ const _MarkdownView: FC<MarkdownViewProps> = ({
       );
     },
     regex_linebreak: (node: any) => <Text key={node.key}>{'\n'}</Text>,
-    mark: (node: any, children: any, parent: any, styles: any) => (
+    mark: (
+      node: any, children: any, parent: any, styles: any,
+    ) => (
       <Text key={node.key} style={styles.mark}>
         {children}
       </Text>

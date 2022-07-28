@@ -29,11 +29,13 @@ const SchemeItem = ({ item }: SchemeItemProps) => {
   const isActivated = applyingGroups?.length > 0;
 
   const onPressEdit = () => {
-    rootNavigation.navigate(groupStack.createPermissionScheme, {
-      isEdit: true,
-      initScheme: item,
-      schemeId: item.id,
-    });
+    rootNavigation.navigate(
+      groupStack.createPermissionScheme, {
+        isEdit: true,
+        initScheme: item,
+        schemeId: item.id,
+      },
+    );
   };
 
   const onPressDelete = () => {

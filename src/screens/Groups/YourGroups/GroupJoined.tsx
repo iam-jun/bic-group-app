@@ -55,7 +55,9 @@ const GroupJoined: FC<GroupJoinedProps> = ({
     dispatch(modalActions.hideModal());
   };
 
-  const renderItem = (item: any, index: number) => (
+  const renderItem = (
+    item: any, index: number,
+  ) => (
     <PrimaryItem
       key={`view_mode_${index}`}
       height={48}
@@ -75,26 +77,24 @@ const GroupJoined: FC<GroupJoinedProps> = ({
   );
 
   const onPressShowMenu = () => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        props: {
-          modalStyle: {
-            borderTopRightRadius: spacing.borderRadius.base,
-            borderTopLeftRadius: spacing.borderRadius.base,
-          },
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      props: {
+        modalStyle: {
+          borderTopRightRadius: spacing.borderRadius.base,
+          borderTopLeftRadius: spacing.borderRadius.base,
         },
-        ContentComponent: (
-          <TouchableOpacity activeOpacity={1} style={styles.container}>
-            <Text.H5 style={styles.textHeader}>
-              {t('communities:text_choose_view_mode')}
-            </Text.H5>
-            <Divider />
-            {menuType?.map?.(renderItem)}
-          </TouchableOpacity>
-        ),
-      }),
-    );
+      },
+      ContentComponent: (
+        <TouchableOpacity activeOpacity={1} style={styles.container}>
+          <Text.H5 style={styles.textHeader}>
+            {t('communities:text_choose_view_mode')}
+          </Text.H5>
+          <Divider />
+          {menuType?.map?.(renderItem)}
+        </TouchableOpacity>
+      ),
+    }));
   };
 
   const renderMenuButton = () => {

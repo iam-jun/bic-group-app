@@ -19,11 +19,13 @@ export interface ButtonProps extends ButtonWrapperProps {
 
 const ButtonComponent: React.FC<ButtonProps> = (props: ButtonProps) => <ButtonWrapper {...props} />;
 
-const Button = Object.assign(ButtonComponent, {
-  Primary,
-  Secondary,
-  Danger,
-  Icon,
-});
+const Button = Object.assign(
+  ButtonComponent, {
+    Primary,
+    Secondary,
+    Danger,
+    Icon,
+  },
+);
 
 export default Button;

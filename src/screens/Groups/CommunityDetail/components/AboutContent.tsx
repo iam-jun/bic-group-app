@@ -18,11 +18,11 @@ const AboutContent = () => {
   const styles = createStyle(theme);
   const infoDetail = useKeySelector(groupsKeySelector.communityDetail);
   const {
-    description, user_count, privacy, join_status,
+    description, userCount, privacy, joinStatus,
   } = infoDetail;
   const privacyData = privacyTypes.find((item) => item?.type === privacy) || {};
   const { icon: iconPrivacy, privacyTitle }: any = privacyData || {};
-  const isMember = join_status === groupJoinStatus.member;
+  const isMember = joinStatus === groupJoinStatus.member;
 
   return (
     <View style={styles.container} testID="about_content">
@@ -47,8 +47,8 @@ const AboutContent = () => {
       <MenuItem
         testID="about_content.members"
         icon="UserGroup"
-        title={`${user_count} ${i18next.t('groups:text_members', {
-          count: user_count,
+        title={`${userCount} ${i18next.t('groups:text_members', {
+          count: userCount,
         })}`}
         disabled
         rightSubIcon={

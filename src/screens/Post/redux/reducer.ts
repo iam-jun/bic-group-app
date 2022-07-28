@@ -87,7 +87,9 @@ export const postInitState = {
   },
 };
 
-function postReducer(state = postInitState, action: any = {}) {
+function postReducer(
+  state = postInitState, action: any = {},
+) {
   const { type, payload } = action;
 
   switch (type) {
@@ -319,14 +321,10 @@ function postReducer(state = postInitState, action: any = {}) {
 
       if (parentCommentId) {
         // find parent comment
-        const parentCommentPosition = postComments.findIndex(
-          (item: ICommentData) => item.id === parentCommentId,
-        );
+        const parentCommentPosition = postComments.findIndex((item: ICommentData) => item.id === parentCommentId);
         // find and update target reply comment
         const child = postComments[parentCommentPosition].child.list || [];
-        const targetPosition = child.findIndex(
-          (item: ICommentData) => item?.localId === localId,
-        );
+        const targetPosition = child.findIndex((item: ICommentData) => item?.localId === localId);
         comment = {
           ...child[targetPosition],
           ...resultComment,
@@ -334,9 +332,7 @@ function postReducer(state = postInitState, action: any = {}) {
         };
         child[targetPosition] = comment;
       } else {
-        const position = postComments.findIndex(
-          (item: ICommentData) => item?.localId === localId,
-        );
+        const position = postComments.findIndex((item: ICommentData) => item?.localId === localId);
         comment = { ...postComments[position], ...resultComment, status };
         postComments[position] = comment;
       }
@@ -357,19 +353,17 @@ function postReducer(state = postInitState, action: any = {}) {
 
       if (parentCommentId) {
         // find parent comment
-        const parentCommentPosition = postComments.findIndex(
-          (item: ICommentData) => item.id === parentCommentId,
-        );
+        const parentCommentPosition = postComments.findIndex((item: ICommentData) => item.id === parentCommentId);
         const child = postComments[parentCommentPosition].child || [];
-        const targetPosition = child.findIndex(
-          (item: ICommentData) => item?.localId === localId,
+        const targetPosition = child.findIndex((item: ICommentData) => item?.localId === localId);
+        child.splice(
+          targetPosition, 1,
         );
-        child.splice(targetPosition, 1);
       } else {
-        const position = postComments.findIndex(
-          (item: ICommentData) => item?.localId === localId,
+        const position = postComments.findIndex((item: ICommentData) => item?.localId === localId);
+        postComments.splice(
+          position, 1,
         );
-        postComments.splice(position, 1);
       }
 
       allCommentsByPost[postId] = postComments;
@@ -420,16 +414,12 @@ function postReducer(state = postInitState, action: any = {}) {
 
       if (parentCommentId) {
         // find parent comment
-        const pIndex = postComments.findIndex(
-          (item: ICommentData) => item.id === parentCommentId,
-        );
+        const pIndex = postComments.findIndex((item: ICommentData) => item.id === parentCommentId);
 
         // find and update target reply comment
         if (postComments?.[pIndex]?.child?.list) {
           postComments[pIndex].child = {
-            list: postComments[pIndex].child.list?.filter?.(
-              (cmt: ICommentData) => cmt?.localId !== localId,
-            ),
+            list: postComments[pIndex].child.list?.filter?.((cmt: ICommentData) => cmt?.localId !== localId),
           };
         }
         if (postComments?.[pIndex]?.totalReply) {
@@ -454,9 +444,7 @@ function postReducer(state = postInitState, action: any = {}) {
       const deleteCommentPost = { ...newAllPosts[postId] };
       const postComments = [...allCommentsByPost[postId]];
       if (commentId && postComments) {
-        const pIndexCommentNeedDelete = postComments.findIndex(
-          (item: ICommentData) => item.id === commentId,
-        );
+        const pIndexCommentNeedDelete = postComments.findIndex((item: ICommentData) => item.id === commentId);
 
         deleteCommentPost.commentsCount = Math.max(
           0,
@@ -465,15 +453,11 @@ function postReducer(state = postInitState, action: any = {}) {
             - postComments[pIndexCommentNeedDelete].totalReply,
         );
 
-        const newPostComments = postComments?.filter?.(
-          (cmt: ICommentData) => cmt.id !== commentId,
-        );
+        const newPostComments = postComments?.filter?.((cmt: ICommentData) => cmt.id !== commentId);
         newAllPosts[postId] = { ...deleteCommentPost };
         allCommentsByPost[postId] = newPostComments;
       } else if (localId && postComments) {
-        const pIndexCommentNeedDelete = postComments.findIndex(
-          (item: ICommentData) => item.localId === localId,
-        );
+        const pIndexCommentNeedDelete = postComments.findIndex((item: ICommentData) => item.localId === localId);
 
         deleteCommentPost.commentsCount = Math.max(
           0,
@@ -482,9 +466,7 @@ function postReducer(state = postInitState, action: any = {}) {
             - postComments[pIndexCommentNeedDelete].totalReply,
         );
 
-        const newPostComments = postComments?.filter?.(
-          (cmt: ICommentData) => cmt.localId !== localId,
-        );
+        const newPostComments = postComments?.filter?.((cmt: ICommentData) => cmt.localId !== localId);
         newAllPosts[postId] = { ...deleteCommentPost };
         allCommentsByPost[postId] = newPostComments;
       }

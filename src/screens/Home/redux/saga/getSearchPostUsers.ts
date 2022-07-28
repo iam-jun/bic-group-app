@@ -17,15 +17,13 @@ export default function* getSearchPostUsers({
     let params: IParamsGetUsers | undefined;
     if (payload || payload === '') {
       data = [];
-      yield put(
-        homeActions.setNewsfeedSearchUsers({
-          key: payload,
-          loading: true,
-          canLoadMore: true,
-          offset: 0,
-          data,
-        }),
-      );
+      yield put(homeActions.setNewsfeedSearchUsers({
+        key: payload,
+        loading: true,
+        canLoadMore: true,
+        offset: 0,
+        data,
+      }));
       params = { key: payload, offset: 0, limit: state.limit };
     } else if (state && state.canLoadMore && state.data?.length) {
       params = {
@@ -39,20 +37,20 @@ export default function* getSearchPostUsers({
       const response = yield homeDataHelper.getUsers(params);
       const newData = data.concat(response || []) || [];
       const newCanLoadMore = newData?.length > state.data?.length;
-      yield put(
-        homeActions.setNewsfeedSearchUsers({
-          key: params.key,
-          limit: params.limit,
-          offset: params.offset,
-          data: newData,
-          loading: false,
-          canLoadMore: newCanLoadMore,
-        }),
-      );
+      yield put(homeActions.setNewsfeedSearchUsers({
+        key: params.key,
+        limit: params.limit,
+        offset: params.offset,
+        data: newData,
+        loading: false,
+        canLoadMore: newCanLoadMore,
+      }));
     } else {
       console.warn('\x1b[36m🐣️ saga getSearchPostUsers: cant load more\x1b[0m');
     }
   } catch (e) {
-    console.error('\x1b[31m🐣️ saga getSearchPostUsers error: ', e, '\x1b[0m');
+    console.error(
+      '\x1b[31m🐣️ saga getSearchPostUsers error: ', e, '\x1b[0m',
+    );
   }
 }

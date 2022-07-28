@@ -51,12 +51,8 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
   const schemeId = route?.params?.schemeId;
 
   const { id: communityId } = useKeySelector(groupsKeySelector.communityDetail);
-  const permissionCategories = useKeySelector(
-    groupsKeySelector.permission.categories,
-  );
-  const systemScheme = useKeySelector(
-    groupsKeySelector.permission.systemScheme,
-  );
+  const permissionCategories = useKeySelector(groupsKeySelector.permission.categories);
+  const systemScheme = useKeySelector(groupsKeySelector.permission.systemScheme);
 
   const loading = permissionCategories?.loading || systemScheme?.loading;
   const loadDataFailed = !permissionCategories?.loading
@@ -67,57 +63,55 @@ const CreatePermissionScheme: FC<CreatePermissionSchemeProps> = ({
     translationY.value = event.contentOffset.y;
   });
 
-  const onAnchorRole = (i: number, role: any, anchor: number) => {
+  const onAnchorRole = (
+    i: number, role: any, anchor: number,
+  ) => {
     setAnchorRole({ ...anchorRole, [i]: { role, anchor } });
   };
 
-  useEffect(() => {
-    if (isEdit && initScheme) {
-      const memberRoleIndex = getMemberRoleIndex(cloneDeep(initScheme));
-      dispatch(
-        groupsActions.setCreatingScheme({
+  useEffect(
+    () => {
+      if (isEdit && initScheme) {
+        const memberRoleIndex = getMemberRoleIndex(cloneDeep(initScheme));
+        dispatch(groupsActions.setCreatingScheme({
           data: cloneDeep(initScheme),
           memberRoleIndex,
-        }),
-      );
+        }));
 
-      if (schemeId) {
+        if (schemeId) {
         /**
          * init group scheme doesn't have field `roles`
          * need to get full detail to edit roles
          */
-        dispatch(groupsActions.getGroupScheme({ communityId, schemeId }));
+          dispatch(groupsActions.getGroupScheme({ communityId, schemeId }));
+        }
       }
-    }
-    if (!permissionCategories?.loading) {
-      dispatch(
-        groupsActions.getPermissionCategories(schemeId ? 'GROUP' : 'COMMUNITY'),
-      );
-    }
-    if (!systemScheme?.data && !systemScheme?.loading) {
-      dispatch(groupsActions.getSystemScheme());
-    }
-    return () => {
-      dispatch(groupsActions.setCreatingScheme());
-      dispatch(groupsActions.setGroupScheme());
-    };
-  }, []);
+      if (!permissionCategories?.loading) {
+        dispatch(groupsActions.getPermissionCategories(schemeId ? 'GROUP' : 'COMMUNITY'));
+      }
+      if (!systemScheme?.data && !systemScheme?.loading) {
+        dispatch(groupsActions.getSystemScheme());
+      }
+      return () => {
+        dispatch(groupsActions.setCreatingScheme());
+        dispatch(groupsActions.setGroupScheme());
+      };
+    }, [],
+  );
 
-  useEffect(() => {
-    if (systemScheme?.data && !isEdit) {
-      const { newScheme, memberRoleIndex } = getNewSchemeFromSystemScheme(
-        systemScheme.data,
-      );
-      dispatch(
-        groupsActions.setCreatingScheme({ data: newScheme, memberRoleIndex }),
-      );
-    }
-  }, [systemScheme?.data]);
+  useEffect(
+    () => {
+      if (systemScheme?.data && !isEdit) {
+        const { newScheme, memberRoleIndex } = getNewSchemeFromSystemScheme(systemScheme.data);
+        dispatch(groupsActions.setCreatingScheme({ data: newScheme, memberRoleIndex }));
+      }
+    }, [systemScheme?.data],
+  );
 
-  const onPressPermission = (permission: IPermission, roleIndex: number) => {
-    dispatch(
-      groupsActions.updateCreatingSchemePermission({ permission, roleIndex }),
-    );
+  const onPressPermission = (
+    permission: IPermission, roleIndex: number,
+  ) => {
+    dispatch(groupsActions.updateCreatingSchemePermission({ permission, roleIndex }));
   };
 
   const renderContent = () => {

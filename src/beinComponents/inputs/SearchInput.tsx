@@ -48,13 +48,17 @@ const SearchInput: React.FC<SearchInputProps> = ({
 
   const [text, setText] = useState<string>('');
 
-  useEffect(() => {
-    setText(value || '');
-  }, [value]);
+  useEffect(
+    () => {
+      setText(value || '');
+    }, [value],
+  );
 
-  useImperativeHandle(_searchInputRef, () => ({
-    setText,
-  }));
+  useImperativeHandle(
+    _searchInputRef, () => ({
+      setText,
+    }),
+  );
 
   const _onChangeText = (text: string) => {
     setText(text);

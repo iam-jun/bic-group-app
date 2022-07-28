@@ -18,7 +18,11 @@ export default function* putGroupStructureCollapseStatus({
       isCollapse,
     );
   } catch (err: any) {
-    console.error('putGroupStructureMoveToTarget error:', err);
-    yield call(showError, err);
+    console.error(
+      'putGroupStructureMoveToTarget error:', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

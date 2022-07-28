@@ -4,8 +4,12 @@
  * @param regex - regular expressions for detect content
  * @param startChar - the first match character, e.g: @
  */
-const regexPlugin = (md, name, regex, startChar) => {
-  function parse(state, silent) {
+const regexPlugin = (
+  md, name, regex, startChar,
+) => {
+  function parse(
+    state, silent,
+  ) {
     const start = state.pos;
 
     if (state.src[start] !== startChar) {
@@ -15,13 +19,17 @@ const regexPlugin = (md, name, regex, startChar) => {
       return false;
     }
 
-    const content = state.src.slice(start, state.src.length);
+    const content = state.src.slice(
+      start, state.src.length,
+    );
     const match = regex.exec(content);
     if (match) {
       // move cursor
       state.pos += match[0].length;
 
-      const token = state.push(`regex_${name}`, '', 0);
+      const token = state.push(
+        `regex_${name}`, '', 0,
+      );
       token.meta = { match };
 
       return true;
@@ -29,7 +37,9 @@ const regexPlugin = (md, name, regex, startChar) => {
     return false;
   }
 
-  md.inline.ruler.after('emphasis', `regex_${name}`, parse);
+  md.inline.ruler.after(
+    'emphasis', `regex_${name}`, parse,
+  );
 };
 
 export default regexPlugin;

@@ -26,16 +26,12 @@ export default function* handleChatEvent({
 
 function* handlePostedEvent(payload: any) {
   try {
-    const channels: IObject<any> = yield select(
-      (state: any) => state.chat.unreadChannels,
-    );
-    const myProfile: IObject<any> = yield select(
-      (state: any) => state.menu.myProfile,
-    );
+    const channels: IObject<any> = yield select((state: any) => state.chat.unreadChannels);
+    const myProfile: IObject<any> = yield select((state: any) => state.menu.myProfile);
     const mentions = JSON.parse(payload.data.mentions);
     const post = JSON.parse(payload.data.post);
 
-    if (mentions.includes(myProfile.chat_user_id) && !post.root_id) {
+    if (mentions.includes(myProfile.chatUserId) && !post.root_id) {
       const id = payload.broadcast.channel_id;
       let channel = channels[id];
       if (!channel) {
@@ -46,7 +42,9 @@ function* handlePostedEvent(payload: any) {
       yield put(actions.updateChannelNotificationCount(channel));
     }
   } catch (err: any) {
-    console.error('handlePostedEvent', err);
+    console.error(
+      'handlePostedEvent', err,
+    );
   }
 }
 
@@ -57,7 +55,9 @@ function* handleChannelViewedEvent(payload: any) {
 
     yield put(actions.updateChannelNotificationCount(channel));
   } catch (err: any) {
-    console.error('handlePostedEvent', err);
+    console.error(
+      'handlePostedEvent', err,
+    );
   }
 }
 
@@ -70,6 +70,8 @@ function* handlePostUnreadEvent(payload: any) {
 
     yield put(actions.updateChannelNotificationCount(channel));
   } catch (err: any) {
-    console.error('handlePostUnreadEvent', err);
+    console.error(
+      'handlePostUnreadEvent', err,
+    );
   }
 }

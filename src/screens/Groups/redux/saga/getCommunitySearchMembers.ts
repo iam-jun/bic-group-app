@@ -23,19 +23,22 @@ export default function* getCommunitySearchMembers({
 
     if (!canLoadMore) return;
 
-    const resp: AxiosResponse = yield call(groupsDataHelper.getCommunityMembers, communityId, {
-      limit: appConfig.recordsPerPage,
-      offset: data.length,
-      ...params,
-    });
+    const resp: AxiosResponse = yield call(
+      groupsDataHelper.getCommunityMembers, communityId, {
+        limit: appConfig.recordsPerPage,
+        offset: data.length,
+        ...params,
+      },
+    );
 
     let newDataCount = 0;
     let newDataArr: any = [];
-    Object.keys(resp)?.forEach?.((role: string) => {
+    const members = resp.data;
+    Object.keys(members)?.forEach?.((role: string) => {
       // @ts-ignore
-      newDataCount += resp[role]?.data?.length || 0;
+      newDataCount += members[role]?.data?.length || 0;
       // @ts-ignore
-      newDataArr = [...newDataArr, ...resp[role]?.data || []];
+      newDataArr = [...newDataArr, ...members[role]?.data || []];
     });
 
     // update search results data
@@ -47,7 +50,11 @@ export default function* getCommunitySearchMembers({
 
     yield put(actions.setCommunitySearchMembers(newData));
   } catch (err: any) {
-    console.error('getCommunitySearchMembers error:', err);
-    yield call(showError, err);
+    console.error(
+      'getCommunitySearchMembers error:', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

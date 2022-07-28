@@ -28,7 +28,9 @@ const formatParamsVer2 = (params?: any) : string => {
   const keys = Object.keys(params);
   let result = '';
   if (keys.length > 0) {
-    keys.forEach((item: string, index: number) => {
+    keys.forEach((
+      item: string, index: number,
+    ) => {
       if (params[item]) {
         result += `${(index ? '&' : '') + item}=${params[item]}`;
       }
@@ -38,7 +40,9 @@ const formatParamsVer2 = (params?: any) : string => {
   return result;
 };
 
-const getLink = (linkType: string, id?: string, params?: any): string => {
+const getLink = (
+  linkType: string, id?: string, params?: any,
+): string => {
   switch (linkType) {
     case LINK_POST:
       return `${getEnv('SELF_DOMAIN')}/posts/${id}${formatParams(params)}`;
@@ -66,6 +70,10 @@ export const getChatDomain = () => (
     )
 );
 
-export const formatChannelLink = (teamId: string, channel: string) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/channels/${channel}`;
+export const formatChannelLink = (
+  teamId: string, channel: string,
+) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/channels/${channel}`;
 
-export const formatDMLink = (teamId: string, username: string) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/messages/@${username}`;
+export const formatDMLink = (
+  teamId: string, username: string,
+) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/messages/@${username}`;

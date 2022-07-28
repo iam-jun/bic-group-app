@@ -20,19 +20,25 @@ const ToastAutoSave = ({ viewRef, visible }: Props) => {
   const toastHeightAnimated = useRef(new Animated.Value(0)).current;
   const isAnimated = isAndroidAnimated();
 
-  const startAnimation = (height: number, toastHeight: number) => {
+  const startAnimation = (
+    height: number, toastHeight: number,
+  ) => {
     toastHeightAnimated.stopAnimation();
-    Animated.timing(toastHeightAnimated, {
-      toValue: toastHeight,
-      duration: toastHeight === 0 ? 0 : 50,
-      useNativeDriver: false,
-      easing: Easing.ease,
-    }).start();
+    Animated.timing(
+      toastHeightAnimated, {
+        toValue: toastHeight,
+        duration: toastHeight === 0 ? 0 : 50,
+        useNativeDriver: false,
+        easing: Easing.ease,
+      },
+    ).start();
   };
 
-  useImperativeHandle(viewRef, () => ({
-    startAnimation,
-  }));
+  useImperativeHandle(
+    viewRef, () => ({
+      startAnimation,
+    }),
+  );
 
   return (
     <Animated.View

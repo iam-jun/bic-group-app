@@ -39,7 +39,9 @@ const AlertNewFeatureModal: React.FC<NewFeatureModalProps> = ({
     dispatch(actions.hideAlertNewFeature());
   };
   const optionsStyle = useAnimatedStyle(() => ({
-    opacity: withTiming(visible ? 1 : 0, { duration: 500 }),
+    opacity: withTiming(
+      visible ? 1 : 0, { duration: 500 },
+    ),
   }));
 
   if (!visible) return null;

@@ -54,26 +54,38 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
   const { title = t('common:text_select'), icon } = selectingItem;
 
   const optionsStyle = useAnimatedStyle(() => ({
-    right: interpolate(showOptionsValue.value, [0, 0.2, 1], [-200, 0, 0]),
-    opacity: interpolate(showOptionsValue.value, [0, 0.2, 1], [0, 0, 1]),
+    right: interpolate(
+      showOptionsValue.value, [0, 0.2, 1], [-200, 0, 0],
+    ),
+    opacity: interpolate(
+      showOptionsValue.value, [0, 0.2, 1], [0, 0, 1],
+    ),
   }));
 
   const showOptions = (callback?: () => void) => {
-    showOptionsValue.value = withTiming(1, { duration: 300 }, () => {
-      callback && runOnJS(callback)();
-    });
+    showOptionsValue.value = withTiming(
+      1, { duration: 300 }, () => {
+        callback && runOnJS(callback)();
+      },
+    );
   };
 
   const hideOptions = (callback?: () => void) => {
-    showOptionsValue.value = withTiming(0, { duration: 100 }, () => {
-      callback && runOnJS(callback)();
-    });
+    showOptionsValue.value = withTiming(
+      0, { duration: 100 }, () => {
+        callback && runOnJS(callback)();
+      },
+    );
   };
 
-  const onPressItem = (item: any, index: number) => {
+  const onPressItem = (
+    item: any, index: number,
+  ) => {
     hideOptions(() => {
       setSelectingIndex(index);
-      onChange?.(item, index);
+      onChange?.(
+        item, index,
+      );
     });
   };
 
@@ -96,12 +108,17 @@ const DropDownMenu: FC<DropDownMenuProps> = ({
     </TouchableOpacity>
   );
 
-  const renderItem = (item: any, index: number) => {
+  const renderItem = (
+    item: any, index: number,
+  ) => {
     if (index === selectingIndex) {
       return null;
     }
     return (
-      <TouchableOpacity onPress={() => onPressItem(item, index)}>
+      <TouchableOpacity onPress={() => onPressItem(
+        item, index,
+      )}
+      >
         <View style={styles.row}>
           {!!item?.icon && (
             <Icon

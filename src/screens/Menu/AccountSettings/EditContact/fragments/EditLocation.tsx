@@ -32,7 +32,9 @@ const EditLocation = ({ modalizeRef, onItemPress }: EditLocationProps) => {
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(theme, screenHeight);
+  const styles = createStyles(
+    theme, screenHeight,
+  );
   const dispatch = useDispatch();
   const insets = useSafeAreaInsets();
 
@@ -46,7 +48,9 @@ const EditLocation = ({ modalizeRef, onItemPress }: EditLocationProps) => {
   };
 
   const searchHandler = useCallback(
-    debounce(doSearch, appConfig.searchTriggerTime),
+    debounce(
+      doSearch, appConfig.searchTriggerTime,
+    ),
     [],
   );
 
@@ -103,13 +107,11 @@ const EditLocation = ({ modalizeRef, onItemPress }: EditLocationProps) => {
             style={styles.listView}
             scrollEventThrottle={16}
           >
-            {(searchQuery ? searchResult : data || []).map(
-              (item: ILocation) => (
-                <View key={`${item?.country} ${item?.type} ${item?.name}`}>
-                  {renderItem({ item })}
-                </View>
-              ),
-            )}
+            {(searchQuery ? searchResult : data || []).map((item: ILocation) => (
+              <View key={`${item?.country} ${item?.type} ${item?.name}`}>
+                {renderItem({ item })}
+              </View>
+            ))}
             <ViewSpacing height={insets.bottom + 100} />
             <View style={{ height: keyboard?.keyboardHeight || 0 }} />
           </ScrollView>
@@ -121,7 +123,9 @@ const EditLocation = ({ modalizeRef, onItemPress }: EditLocationProps) => {
 
 export default EditLocation;
 
-const createStyles = (theme: ExtendedTheme, screenHeight: number) => StyleSheet.create({
+const createStyles = (
+  theme: ExtendedTheme, screenHeight: number,
+) => StyleSheet.create({
   searchInput: {
     margin: spacing.margin.base,
   },

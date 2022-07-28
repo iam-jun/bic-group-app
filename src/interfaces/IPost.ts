@@ -28,8 +28,8 @@ export interface IMarkdownAudience {
     username: string;
     avatar?: string;
   };
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IAudience {
@@ -189,7 +189,7 @@ export interface IPayloadCreatePost {
 
 export interface IPayloadCreateComment {
   postId: string;
-  parentCommentId?: string|number;
+  parentCommentId?: string;
   commentData: ICommentData;
   userId: string;
   localId?: string | number[]; // used when retry adding new comment
@@ -244,8 +244,8 @@ export interface IPayloadGetPostDetail extends IParamGetPostDetail {
 export type IReactionKind = 'comment' | 'seen' | ReactionType;
 
 export interface IGetStreamUser {
-  created_at?: string;
-  updated_at?: string;
+  createdAt?: string;
+  updatedAt?: string;
   id?: string | number;
   data?: {
     avatar?: string;
@@ -279,10 +279,10 @@ export interface IRequestGetPostComment {
   childLimit?: number;
 }
 
-export interface IPayloadGetCommentsById {
+export interface IPayloadGetCommentsById{
   isMerge?: boolean;
   position?: string;
-  commentId: string;
+  commentId?: string;
   params?: IRequestGetPostComment,
   callbackLoading?: (loading: boolean, canLoadMore?: boolean) => void;
 }
@@ -297,11 +297,11 @@ export interface IReaction {
   loading?: boolean;
   status?: 'pending' | 'success' | 'failed';
   localId?: string | number[]; // from uuid-v4
-  parentCommentId?: string | number; // used when retry/cancel adding new comment
+  parentCommentId?: string ; // used when retry/cancel adding new comment
   child?: any;
   actor?: IAudienceUser;
   activity_id: string;
-  user_id:string;
+  userId:string;
   data:any
 }
 
@@ -313,8 +313,8 @@ export interface IGetStreamAudienceUser {
     avatar?: string;
     fullname?: string;
   };
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IGetStreamAudienceGroup {
@@ -326,8 +326,8 @@ export interface IGetStreamAudienceGroup {
     icon?: string;
     name?: string;
   };
-  created_at: string;
-  updated_at: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IGetStreamAudience {
@@ -337,8 +337,8 @@ export interface IGetStreamAudience {
 
 export interface IParamSearchMentionAudiences {
   key?: string;
-  group_ids?: string;
-  user_ids?: string;
+  groupIds?: string;
+  userIds?: string;
   skip?: number;
   take?: number;
 }
@@ -349,8 +349,8 @@ export interface IMentionUser {
   email?: string;
   fullname: string;
   avatar: string;
-  bein_staff_role?: string;
-  chat_user_id?: string;
+  beinStaffRole?: string;
+  chatUserId?: string;
 }
 
 export interface IParamGetReactionDetail {
@@ -421,7 +421,7 @@ export interface ICreatePostParams {
   postId?: string;
   replaceWithDetail?: boolean;
   initAudience?: any;
-  createFromGroupId?: string | number;
+  createFromGroupId?: string;
   initAutoSaveDraft?: boolean;
 }
 
@@ -483,7 +483,7 @@ export interface IPayloadPutEditAutoSave {
 
 export interface IParamGetPostAudiences {
   key?: string;
-  group_ids: string;
+  groupIds: string;
 }
 
 export interface IPayloadUpdateReaction {

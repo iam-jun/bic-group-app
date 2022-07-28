@@ -14,35 +14,31 @@ export default function* deleteCommunityScheme({
   const { data } = (yield select((state) => state.groups?.permissionScheme?.communityScheme))
     || {};
   try {
-    yield put(
-      actions.setCommunityScheme({
-        loading: false,
-        deleting: true,
-        data,
-      }),
-    );
+    yield put(actions.setCommunityScheme({
+      loading: false,
+      deleting: true,
+      data,
+    }));
     const response = yield call(
       groupsDataHelper.deleteCommunityScheme,
       communityId,
     );
     if (response?.data) {
-      yield put(
-        actions.setCommunityScheme({
-          loading: false,
-          data: undefined,
-          deleting: false,
-        }),
-      );
+      yield put(actions.setCommunityScheme({
+        loading: false,
+        data: undefined,
+        deleting: false,
+      }));
     } else {
-      yield put(
-        actions.setCommunityScheme({ loading: false, data, deleting: false }),
-      );
+      yield put(actions.setCommunityScheme({ loading: false, data, deleting: false }));
     }
   } catch (err: any) {
-    yield put(
-      actions.setCommunityScheme({ loading: false, data, deleting: false }),
+    yield put(actions.setCommunityScheme({ loading: false, data, deleting: false }));
+    console.error(
+      'getCommunityScheme error:', err,
     );
-    console.error('getCommunityScheme error:', err);
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

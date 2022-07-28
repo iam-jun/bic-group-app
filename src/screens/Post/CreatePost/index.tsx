@@ -110,34 +110,34 @@ const CreatePost: FC<CreatePostProps> = ({ route }: CreatePostProps) => {
 
   useBackPressListener(handleBackPress);
 
-  useEffect(() => {
+  useEffect(
+    () => {
     // disable clear data for flow select audience before create post
     // dispatch(postActions.clearCreatPostData());
     // dispatch(postActions.setSearchResultAudienceGroups([]));
     // dispatch(postActions.setSearchResultAudienceUsers([]));
-    if (screenParams?.initAudience?.id) {
-      dispatch(
-        postActions.setCreatePostChosenAudiences(
-          new Array(screenParams?.initAudience),
-        ),
-      );
-    }
-    return () => {
-      dispatch(postActions.clearCreatPostData());
-      dispatch(postActions.setSearchResultAudienceGroups([]));
-      dispatch(postActions.setSearchResultAudienceUsers([]));
-      dispatch(postActions.setCreatePostImagesDraft([]));
+      if (screenParams?.initAudience?.id) {
+        dispatch(postActions.setCreatePostChosenAudiences(new Array(screenParams?.initAudience)));
+      }
+      return () => {
+        dispatch(postActions.clearCreatPostData());
+        dispatch(postActions.setSearchResultAudienceGroups([]));
+        dispatch(postActions.setSearchResultAudienceUsers([]));
+        dispatch(postActions.setCreatePostImagesDraft([]));
 
-      // clear comment because of comment input view listen emit event change text
-      dispatch(postActions.setCreateComment({ content: '', loading: false }));
-    };
-  }, []);
+        // clear comment because of comment input view listen emit event change text
+        dispatch(postActions.setCreateComment({ content: '', loading: false }));
+      };
+    }, [],
+  );
 
-  useEffect(() => {
-    if (content && !mentionInputRef?.current?.getContent?.()) {
-      mentionInputRef?.current?.setContent?.(content);
-    }
-  }, [content, images]);
+  useEffect(
+    () => {
+      if (content && !mentionInputRef?.current?.getContent?.()) {
+        mentionInputRef?.current?.setContent?.(content);
+      }
+    }, [content, images],
+  );
 
   const onPressBack = () => {
     handleBack(

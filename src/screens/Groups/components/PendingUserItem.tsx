@@ -8,7 +8,7 @@ import Text from '~/beinComponents/Text';
 import Button from '~/beinComponents/Button';
 import { IconType } from '~/resources/icons';
 
-import { formatFullTime } from '~/beinComponents/TimeView';
+import { formatFullTime } from '~/beinComponents/TimeView/helper';
 import { AppContext } from '~/contexts/AppContext';
 import { IJoiningMember } from '~/interfaces/IGroup';
 import { useBaseHook } from '~/hooks';
@@ -30,15 +30,9 @@ const PendingUserItem = ({
   const { t } = useBaseHook();
   const { language } = useContext(AppContext);
 
-  const { user, updated_at: updatedAt, isCanceled } = requestItem || {};
+  const { user, updatedAt, isCanceled } = requestItem || {};
   const {
-    avatar,
-    fullname: fullName,
-    email,
-    country_code: countryCode,
-    phone,
-    latest_work: latestWork,
-    city,
+    avatar, fullname, email, countryCode, phone, latestWork, city,
   } = user || {};
 
   const renderItem = ({
@@ -65,7 +59,7 @@ const PendingUserItem = ({
         <Avatar.Large source={avatar} isRounded />
 
         <View style={styles.textHeader}>
-          <Text.ButtonM>{fullName}</Text.ButtonM>
+          <Text.ButtonM>{fullname}</Text.ButtonM>
           <Text.BodyM color={theme.colors.gray50}>
             {`${t('groups:text_requested_at')} ${formatFullTime(
               updatedAt,
@@ -79,7 +73,7 @@ const PendingUserItem = ({
             icon: 'iconSuitcase',
             title:
               latestWork
-              && `${latestWork?.title_position} ${t('common:text_at')} ${
+              && `${latestWork?.titlePosition} ${t('common:text_at')} ${
                 latestWork?.company
               }`,
           })}

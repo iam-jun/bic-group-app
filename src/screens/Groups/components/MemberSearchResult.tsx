@@ -79,7 +79,9 @@ const MemberSearchResult = ({
       testID="flatlist"
       data={data}
       renderItem={renderItem}
-      keyExtractor={(item, index) => `search_item_${item}_${index}`}
+      keyExtractor={(
+        item, index,
+      ) => `search_item_${item}_${index}`}
       ListHeaderComponent={renderHeaderComponent}
       ListFooterComponent={renderListFooter}
       ListEmptyComponent={renderEmptyComponent}

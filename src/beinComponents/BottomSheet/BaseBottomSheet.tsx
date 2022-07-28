@@ -56,14 +56,18 @@ const BaseBottomSheet: React.FC<BaseBottomSheetProps> = ({
   const renderModalize = () => {
     const insets = useSafeAreaInsets();
 
-    useEffect(() => {
-      if (isOpen) {
-        Keyboard.dismiss();
-        setTimeout(() => {
-          modalizeRef?.current?.open?.();
-        }, 50);
-      }
-    }, [isOpen]);
+    useEffect(
+      () => {
+        if (isOpen) {
+          Keyboard.dismiss();
+          setTimeout(
+            () => {
+              modalizeRef?.current?.open?.();
+            }, 50,
+          );
+        }
+      }, [isOpen],
+    );
 
     const _modalStyle = StyleSheet.flatten([
       {

@@ -18,7 +18,6 @@ const groupStack = {
   reorderGroup: 'reorder-group',
 
   // group
-  groups: 'group-list',
   groupDetail: 'group-detail',
   groupAbout: 'group-about',
   groupMembers: 'group-members',

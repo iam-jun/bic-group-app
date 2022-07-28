@@ -29,11 +29,15 @@ const ReorderGroup: FC<ReorderGroupProps> = ({ route }: ReorderGroupProps) => {
   const initGroup = route?.params?.group;
   const children = initGroup?.children || [];
 
-  const initOrder = useMemo(() => children?.map?.((g) => g.id), children);
+  const initOrder = useMemo(
+    () => children?.map?.((g) => g.id), children,
+  );
 
-  useEffect(() => () => {
-    dispatch(groupsActions.setGroupStructureReorder());
-  }, []);
+  useEffect(
+    () => () => {
+      dispatch(groupsActions.setGroupStructureReorder());
+    }, [],
+  );
 
   const renderItem = (data: IGroup) => <ReorderGroupItem key={`reorder_item_${data?.id}`} group={data} />;
 

@@ -20,7 +20,9 @@ function* loadMore({
     yield put(notificationsActions.setIsLoadingMore({ keyValue, value: true }));
 
     // get all notifications from store
-    const notifications: any[] = (yield select((state) => get(state, notificationSelector.notificationByType(keyValue)))) || [];
+    const notifications: any[] = (yield select((state) => get(
+      state, notificationSelector.notificationByType(keyValue),
+    ))) || [];
 
     const response: IObject<any> = yield call(
       notificationsDataHelper.getNotificationList,
@@ -42,19 +44,19 @@ function* loadMore({
         newData.push(item?.id);
         newResponse[item.id] = { ...item };
       });
-      yield put(
-        notificationsActions.concatNotifications({
-          notifications: newResponse,
-          keyValue,
-          data: newData,
-        }),
-      );
+      yield put(notificationsActions.concatNotifications({
+        notifications: newResponse,
+        keyValue,
+        data: newData,
+      }));
     } else {
       yield put(notificationsActions.setNoMoreNoti({ keyValue, value: true }));
     }
   } catch (err) {
     yield put(notificationsActions.setIsLoadingMore({ keyValue, value: false }));
-    console.error('\x1b[33m', '--- load more : error', err, '\x1b[0m');
+    console.error(
+      '\x1b[33m', '--- load more : error', err, '\x1b[0m',
+    );
   }
 }
 

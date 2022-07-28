@@ -104,9 +104,11 @@ const UploadingFile: FC<UploadingFileProps> = ({
     });
   };
 
-  useEffect(() => {
-    if (!uploading) uploadFile();
-  }, [file]);
+  useEffect(
+    () => {
+      if (!uploading) uploadFile();
+    }, [file],
+  );
 
   if (!file || isEmpty(file)) {
     return null;
@@ -119,23 +121,25 @@ const UploadingFile: FC<UploadingFileProps> = ({
     } else {
       const type = uploadType?.split('_')[1];
 
-      dispatch(
-        modalActions.showAlert({
-          title: t('upload:title_delete_file', {
+      dispatch(modalActions.showAlert({
+        title: t(
+          'upload:title_delete_file', {
             file_type: t(`file_type:${type}`),
-          }),
-          content: t('upload:text_delete_file', {
-            file_type: t(`file_type:${type}`),
-          }),
-          cancelBtn: true,
-          cancelLabel: t('common:btn_cancel'),
-          confirmLabel: t('common:btn_delete'),
-          onConfirm: () => {
-            setError('');
-            onClose?.(file);
           },
-        }),
-      );
+        ),
+        content: t(
+          'upload:text_delete_file', {
+            file_type: t(`file_type:${type}`),
+          },
+        ),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_cancel'),
+        confirmLabel: t('common:btn_delete'),
+        onConfirm: () => {
+          setError('');
+          onClose?.(file);
+        },
+      }));
     }
   };
 

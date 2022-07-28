@@ -7,8 +7,12 @@ import actions from './actions';
 import types from './constants';
 
 export default function* saga() {
-  yield takeLatest(types.GET_CONFIGS, getConfigs);
-  yield takeLatest(types.GET_LINK_PREVIEW, getLinkPreview);
+  yield takeLatest(
+    types.GET_CONFIGS, getConfigs,
+  );
+  yield takeLatest(
+    types.GET_LINK_PREVIEW, getLinkPreview,
+  );
   // yield takeLatest(types.SETUP_PUSH_TOKEN, setupPushToken);
   // yield takeLatest(types.COPY_DEVICE_TOKEN, copyDeviceToken);
 }
@@ -20,7 +24,9 @@ function* getConfigs() {
     // const response: IObject<any> = yield call(api.getConfigs);
     // yield put(actions.setConfigs(response));
   } catch (err) {
-    console.error('getConfigs', { err });
+    console.error(
+      'getConfigs', { err },
+    );
   }
 }
 
@@ -28,12 +34,12 @@ function* getLinkPreview({ payload }: {type: string; payload: string}) {
   try {
     const link = encodeURIComponent(payload);
 
-    const response: AxiosResponse = yield makeHttpRequest(
-      apiConfig.App.getLinkPreview(link),
-    );
+    const response: AxiosResponse = yield makeHttpRequest(apiConfig.App.getLinkPreview(link));
     yield put(actions.setLinkPreview(response.data?.data));
   } catch (err: any) {
-    console.error('getLinkPreview', err);
+    console.error(
+      'getLinkPreview', err,
+    );
   }
 }
 

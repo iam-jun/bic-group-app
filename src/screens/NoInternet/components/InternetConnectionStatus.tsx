@@ -17,26 +17,32 @@ const InternetConnectionStatus = () => {
     setShowBanner(true);
     if (isInternetReachable) {
       timeoutRef.current && clearTimeout(timeoutRef.current);
-      timeoutRef.current = setTimeout(() => {
-        setShowBanner(false);
-      }, 2000);
+      timeoutRef.current = setTimeout(
+        () => {
+          setShowBanner(false);
+        }, 2000,
+      );
     }
   };
 
-  useEffect(() => {
-    if (firstRender.current) {
-      if (!isInternetReachable) doShowBanner();
+  useEffect(
+    () => {
+      if (firstRender.current) {
+        if (!isInternetReachable) doShowBanner();
 
-      firstRender.current = false;
-      return;
-    }
+        firstRender.current = false;
+        return;
+      }
 
-    doShowBanner();
-  }, [isInternetReachable]);
+      doShowBanner();
+    }, [isInternetReachable],
+  );
 
-  useEffect(() => () => {
-    timeoutRef.current && clearTimeout(timeoutRef.current);
-  }, []);
+  useEffect(
+    () => () => {
+      timeoutRef.current && clearTimeout(timeoutRef.current);
+    }, [],
+  );
 
   if (!showBanner) return null;
 

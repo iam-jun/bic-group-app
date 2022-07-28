@@ -30,9 +30,7 @@ const CommunitySearchResults = ({
 
   const {
     loading, canLoadMore, ids, items,
-  } = useKeySelector(
-    groupsKeySelector.communitySearch,
-  );
+  } = useKeySelector(groupsKeySelector.communitySearch);
 
   const renderItem = ({ item }: {item: number}) => {
     const currentItem = items[item];
@@ -80,7 +78,9 @@ const CommunitySearchResults = ({
       testID="flatlist"
       data={ids}
       renderItem={renderItem}
-      keyExtractor={(item, index) => `search_item_${item}?.id_${index}`}
+      keyExtractor={(
+        item, index,
+      ) => `search_item_${item}?.id_${index}`}
       ListHeaderComponent={renderHeaderComponent}
       ListFooterComponent={renderListFooter}
       ListEmptyComponent={renderEmptyComponent}

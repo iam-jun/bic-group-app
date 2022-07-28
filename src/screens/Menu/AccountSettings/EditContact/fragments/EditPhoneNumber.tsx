@@ -52,7 +52,9 @@ const EditPhoneNumber = ({
   const windowDimension = useWindowDimensions();
   const screenHeight = windowDimension.height;
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(theme, screenHeight);
+  const styles = createStyles(
+    theme, screenHeight,
+  );
   const dispatch = useDispatch();
 
   const countryCodeList = useKeySelector(menuKeySelector.countryCodeList);
@@ -62,16 +64,20 @@ const EditPhoneNumber = ({
   const [searchQuery, setSearchQuery] = useState<string>('');
   const countryCodeSheetRef = useRef<any>();
 
-  useEffect(() => {
-    clearAllErrors();
-  }, []);
+  useEffect(
+    () => {
+      clearAllErrors();
+    }, [],
+  );
 
   const doSearch = (searchQuery: string) => {
     searchQuery && dispatch(menuActions.searchCountryCode(searchQuery));
   };
 
   const searchHandler = useCallback(
-    debounce(doSearch, appConfig.searchTriggerTime),
+    debounce(
+      doSearch, appConfig.searchTriggerTime,
+    ),
     [],
   );
 
@@ -122,9 +128,7 @@ const EditPhoneNumber = ({
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.listView}
           >
-            {(searchQuery ? searchResult : data || []).map(
-              (item: ICountryCodeList) => renderItem({ item }),
-            )}
+            {(searchQuery ? searchResult : data || []).map((item: ICountryCodeList) => renderItem({ item }))}
           </ScrollView>
         </View>
         )}
@@ -133,7 +137,9 @@ const EditPhoneNumber = ({
 
   const onOpenCountryCode = (e: any) => {
     Keyboard.dismiss();
-    countryCodeSheetRef?.current?.open?.(e?.pageX, e?.pageY);
+    countryCodeSheetRef?.current?.open?.(
+      e?.pageX, e?.pageY,
+    );
   };
 
   const renderCountryCodeInput = () => (
@@ -207,7 +213,9 @@ const EditPhoneNumber = ({
 
 export default EditPhoneNumber;
 
-const createStyles = (theme: ExtendedTheme, screenHeight: number) => {
+const createStyles = (
+  theme: ExtendedTheme, screenHeight: number,
+) => {
   const { colors } = theme;
 
   return StyleSheet.create({

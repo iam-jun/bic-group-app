@@ -16,8 +16,12 @@ import modalKeySelector from '~/store/modal/keySelector';
 import { timeOut } from '~/utils/common';
 
 export default function* commonSaga() {
-  yield takeLatest(types.SHOW_MODAL, showModal);
-  yield takeLatest(types.SHOW_HIDE_TOAST_MESSAGE, showAndHideToastMessage);
+  yield takeLatest(
+    types.SHOW_MODAL, showModal,
+  );
+  yield takeLatest(
+    types.SHOW_HIDE_TOAST_MESSAGE, showAndHideToastMessage,
+  );
   yield takeLatest(
     types.SHOW_USER_PROFILE_PREVIEW_BOTTOM_SHEET,
     showUserProfilePreviewBottomSheet,
@@ -34,7 +38,9 @@ function* showModal({
   type: string;
   payload: IPayloadShowModal;
 }): any {
-  const modal = yield select((state) => get(state, modalKeySelector.modal));
+  const modal = yield select((state) => get(
+    state, modalKeySelector.modal,
+  ));
   const { isOpen } = modal || {};
   if (isOpen) {
     const payload = { isOpen: false, ContentComponent: undefined };

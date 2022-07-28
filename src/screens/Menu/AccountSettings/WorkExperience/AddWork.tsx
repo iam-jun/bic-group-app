@@ -51,38 +51,30 @@ const AddWork = () => {
   } = selectedWorkItem || {};
 
   const [companyValue, setCompanyValue] = useState<string>(company || '');
-  const [positionValue, setPositionValue] = useState<string>(
-    titlePosition || '',
-  );
+  const [positionValue, setPositionValue] = useState<string>(titlePosition || '');
   const [locationValue, setLocationValue] = useState<string>(location || '');
-  const [descriptionValue, setDescriptionValue] = useState<string>(
-    description || '',
-  );
-  const [isWorkHere, setIsWorkHere] = useState<boolean>(
-    !isEmpty(selectedWorkItem) && currentlyWorkHere !== null
-      ? currentlyWorkHere
-      : true,
-  );
+  const [descriptionValue, setDescriptionValue] = useState<string>(description || '');
+  const [isWorkHere, setIsWorkHere] = useState<boolean>(!isEmpty(selectedWorkItem) && currentlyWorkHere !== null
+    ? currentlyWorkHere
+    : true);
 
-  const [startDateValue, setStartDateValue] = useState<string>(
-    startDate || new Date().toISOString(),
-  );
+  const [startDateValue, setStartDateValue] = useState<string>(startDate || new Date().toISOString());
   const [selectingStartDate, setSelectingStartDate] = useState<boolean>(false);
 
-  const [endDateValue, setEndDateValue] = useState<string | null>(
-    endDate || null,
-  );
+  const [endDateValue, setEndDateValue] = useState<string | null>(endDate || null);
   const [selectingEndDate, setSelectingEndDate] = useState<boolean>(false);
 
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (isWorkHere) {
-      setEndDateValue(null);
-    } else {
-      setEndDateValue(endDate || null);
-    }
-  }, [isWorkHere]);
+  useEffect(
+    () => {
+      if (isWorkHere) {
+        setEndDateValue(null);
+      } else {
+        setEndDateValue(endDate || null);
+      }
+    }, [isWorkHere],
+  );
 
   const navigateBack = () => {
     Keyboard.dismiss();
@@ -131,16 +123,20 @@ const AddWork = () => {
       endDate: endDateValue,
     };
     selectedWorkItem
-      ? dispatch(menuActions.editWorkExperience(id, data, navigateBack))
-      : dispatch(
-        menuActions.addWorkExperience(data, () => {
+      ? dispatch(menuActions.editWorkExperience(
+        id, data, navigateBack,
+      ))
+      : dispatch(menuActions.addWorkExperience(
+        data, () => {
           navigateBack();
-        }),
-      );
+        },
+      ));
   };
 
   const onDelete = () => {
-    dispatch(menuActions.deleteWorkExperience(id, navigateBack));
+    dispatch(menuActions.deleteWorkExperience(
+      id, navigateBack,
+    ));
   };
 
   const onChangeCompany = (text: string) => {
@@ -278,7 +274,9 @@ const AddWork = () => {
           style={styles.calendarIcon}
         />
         <Text.BodyS testID="add_work.start_date" color={colors.gray50}>
-          {formatDate(startDateValue, 'MMMM DD, YYYY')
+          {formatDate(
+            startDateValue, 'MMMM DD, YYYY',
+          )
               || i18next.t('common:text_not_set')}
         </Text.BodyS>
       </ButtonWrapper>
@@ -302,7 +300,9 @@ const AddWork = () => {
           />
 
           <Text.BodyS testID="add_work.end_date" color={colors.gray50}>
-            {(endDateValue && formatDate(endDateValue, 'MMMM DD, YYYY'))
+            {(endDateValue && formatDate(
+              endDateValue, 'MMMM DD, YYYY',
+            ))
               || i18next.t('common:text_not_set')}
           </Text.BodyS>
         </ButtonWrapper>
