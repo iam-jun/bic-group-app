@@ -19,6 +19,7 @@ import { updateUserFromSharedPreferences } from './sharePreferences';
 import API_ERROR_CODE from '~/constants/apiErrorCode';
 import ConvertHelper from '~/utils/convertHelper';
 import groupsActions from '~/screens/Groups/redux/actions';
+import { uuidRegex } from '~/constants/commonRegex';
 
 const defaultTimeout = 10000;
 const commonHeaders = {
@@ -277,7 +278,7 @@ const interceptorsResponseSuccess = (response: AxiosResponse) => {
   ) {
     response.data = ConvertHelper.camelizeKeys(response.data, {
       excludeValueOfKey: ['reactions_count'],
-      excludeKey: [/^[a-f0-9\-]{36}$/i],
+      excludeKey: [uuidRegex],
     });
   }
   return response;

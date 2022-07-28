@@ -26,6 +26,7 @@ import commonKeySelector from '~/store/modal/keySelector';
 import { scaleCoverHeight } from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
+import { uuidRegex } from '~/constants/commonRegex';
 
 const UserProfilePreviewBottomSheet = () => {
   const theme: ExtendedTheme = useTheme();
@@ -83,7 +84,7 @@ const UserProfilePreviewBottomSheet = () => {
       const _params: IObject<unknown> = {
         ...params,
       };
-      if (isNaN(userId) && _params?.type !== 'username') _params.type = 'username';
+      if (!uuidRegex.test(userId) && _params?.type !== 'username') _params.type = 'username';
 
       const payload = { userId, params: _params };
       rootNavigation.navigate(
