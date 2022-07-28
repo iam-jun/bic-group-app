@@ -218,6 +218,12 @@ export interface IPayloadPutEditComment {
 export interface IPayloadDeletePost {
   id: string;
   isDraftPost?: boolean;
+  callbackError?: (listAudiences: string[]) => void;
+}
+
+export interface IPayloadRemoveAudiencesOfPost {
+  id: string;
+  listAudiences: string[];
 }
 
 export interface IParamGetPostDetail {

@@ -10,7 +10,6 @@ import {
   IParamGetPostAudiences,
   IParamGetPostDetail, IPayloadCreateComment,
   IPayloadCreatePost,
-  IPayloadDeletePost,
   IPayloadGetDraftPosts,
   IPayloadGetPostDetail,
   IPayloadPublishDraftPost,
@@ -51,8 +50,10 @@ import putMarkSeenPost from './putMarKSeenPost';
 import putReactionToComment from './putReactionToComment';
 import putReactionToPost from './putReactionToPost';
 import updatePostsContainingVideoInProgress from './updatePostsContainingVideoInProgress';
+import deletePost from './deletePost';
 import updateReactionBySocket from './updateReactionBySocket';
 import updateUnReactionBySocket from './updateUnReactionBySocket';
+import removeAudiencesFromPost from './removeAudiencesFromPost';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -158,6 +159,10 @@ export default function* postSaga() {
     postTypes.UPDATE_POSTS_CONTAINING_VIDEO_IN_PROGRESS,
     updatePostsContainingVideoInProgress,
   );
+  yield takeLatest(
+    postTypes.REMOVE_POST_AUDIENCES,
+    removeAudiencesFromPost,
+  );
 }
 
 function* postCreateNewPost({
@@ -240,69 +245,6 @@ function* postRetryAddComment({
    * only need to update the data from API
    */
   yield postCreateNewComment({ type, payload: currentComment });
-}
-
-function* deletePost({
-  payload,
-}: {
-  type: string;
-  payload: IPayloadDeletePost;
-}): any {
-  if (!payload?.id) {
-    console.log('\x1b[31m🐣️ saga deletePost: id not found\x1b[0m');
-    return;
-  }
-
-  const { id, isDraftPost } = payload;
-
-  try {
-    const response = yield postDataHelper.deletePost(
-      id, isDraftPost,
-    );
-    if (response?.data) {
-      const post = yield select((state) => get(
-        state, postKeySelector.postById(id),
-      ));
-      post.deleted = true;
-      yield put(postActions.addToAllPosts({ data: post }));
-      yield timeOut(500);
-
-      yield put(modalActions.showHideToastMessage({
-        content: 'post:delete_post_complete',
-        props: {
-          textProps: { variant: 'h6', useI18n: true },
-          type: 'success',
-        },
-      }));
-    }
-    console.log(
-      '\x1b[35m🐣️ saga deletePost response', response, '\x1b[0m',
-    );
-  } catch (e: any) {
-    if (e?.meta?.errors?.groups_denied) {
-      // UPDATE POST AUDIENCE, KEEP DENIED AUDIENCE ONLY
-      const groupsDenied: number[] = e?.meta?.errors?.groups_denied;
-      const data = {
-        audience: {
-          userIds: [],
-          groupIds: groupsDenied,
-        },
-      };
-      const response = yield call(
-        postDataHelper.putEditPost, {
-          postId: id,
-          data,
-        } as any,
-      );
-      if (response?.data) {
-        const post = response?.data;
-        yield put(postActions.addToAllPosts({ data: post }));
-      }
-    }
-    yield call(
-      showError, e,
-    );
-  }
 }
 
 function* addToAllComments({
