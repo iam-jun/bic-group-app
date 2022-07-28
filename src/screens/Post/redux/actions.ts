@@ -35,6 +35,7 @@ import {
   ISeenPostListSheet,
   IPayloadPutMarkSeenPost,
   IGetSeenPostListSheet,
+  IPayloadRemoveAudiencesOfPost,
 } from '~/interfaces/IPost';
 import { IGroup } from '~/interfaces/IGroup';
 import { IUser } from '~/interfaces/IAuth';
@@ -345,6 +346,10 @@ const postActions = {
   }),
   updateAllPostContainingVideoInProgress: (payload: any) => ({
     type: postTypes.UPDATE_POSTS_CONTAINING_VIDEO_IN_PROGRESS,
+    payload,
+  }),
+  removePostAudiences: (payload:IPayloadRemoveAudiencesOfPost) => ({
+    type: postTypes.REMOVE_POST_AUDIENCES,
     payload,
   }),
 };

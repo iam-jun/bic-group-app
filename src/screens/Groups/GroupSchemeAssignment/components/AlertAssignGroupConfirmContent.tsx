@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import {
-  View, StyleSheet, ScrollView, Dimensions,
+  View, StyleSheet, ScrollView, Dimensions, TouchableOpacity,
 } from 'react-native';
 
 import i18n from 'i18next';
@@ -60,7 +60,11 @@ const AlertAssignGroupConfirmContent = () => {
         {t('communities:permission:text_desc_assign_group_confirm')}
       </Text.BodyS>
       <View style={styles.contentContainer}>
-        <ScrollView>{data?.map?.(renderItem)}</ScrollView>
+        <ScrollView>
+          <TouchableOpacity>
+            {data?.map?.(renderItem)}
+          </TouchableOpacity>
+        </ScrollView>
       </View>
     </View>
   );

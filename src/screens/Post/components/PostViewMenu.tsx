@@ -7,6 +7,7 @@ import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useMyPermissions } from '~/hooks/permissions';
 import { useKeySelector } from '~/hooks/selector';
+import { IAudienceGroup } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
@@ -14,6 +15,8 @@ import { showHideToastMessage } from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
 import { getLink, LINK_POST } from '~/utils/link';
 import postKeySelector from '../redux/keySelector';
+import Text from '~/beinComponents/Text';
+import AlertDeleteAudiencesConfirmContent from './AlertDeleteAudiencesConfirmContent';
 
 export interface PostViewMenuProps {
   postId: string;
@@ -48,15 +51,42 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
 
   const onPressDelete = () => {
     dispatch(modalActions.hideModal());
-    dispatch(modalActions.showAlert({
-      title: t('post:title_delete_post'),
-      content: t('post:content_delete_post'),
-      iconName: 'TrashCan',
-      cancelBtn: true,
-      confirmLabel: t('common:btn_delete'),
-      onConfirm: () => dispatch(postActions.deletePost({ id: postId, isDraftPost })),
-    }));
+    dispatch(
+      modalActions.showAlert({
+        title: t('post:title_delete_post'),
+        content: t('post:content_delete_post'),
+        iconName: 'TrashCan',
+        cancelBtn: true,
+        confirmLabel: t('common:btn_delete'),
+        onConfirm: () => dispatch(postActions.deletePost({
+          id: postId,
+          isDraftPost,
+          callbackError: handleDeltePostError,
+        })),
+      }),
+    );
   };
+
+  const handleDeltePostError = (listIdAudiences: string[]) => {
+    if (listIdAudiences?.length > 0 && audience?.groups?.length > 0) {
+      const listAudiences = listIdAudiences.map((audienceId) => {
+        const _audience = audience.groups.find((audience: IAudienceGroup) => audience?.id === audienceId)
+        return _audience;
+      })
+      dispatch(
+        modalActions.showAlert({
+          title: t('post:title_delete_audiences_of_post'),
+          children: <AlertDeleteAudiencesConfirmContent data={listAudiences} canDeleteOwnPost={canDeleteOwnPost} />,
+          cancelBtn: true,
+          confirmLabel: canDeleteOwnPost ? t('common:btn_delete') : t('common:btn_close'),
+          onConfirm: () => (canDeleteOwnPost ? dispatch(postActions.removePostAudiences({
+            id: postId,
+            listAudiences: listIdAudiences,
+          })) : null),
+        }),
+      );
+    }
+  }
 
   const onPressEditSettings = () => {
     dispatch(modalActions.hideModal());
@@ -151,7 +181,7 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         title={t('post:post_menu_history')}
         onPress={onPress}
       />
-      {isActor && canDeleteOwnPost && (
+      {isActor && (
         <PrimaryItem
           testID="post_view_menu.delete"
           style={styles.item}

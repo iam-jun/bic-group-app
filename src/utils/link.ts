@@ -1,3 +1,4 @@
+import { Linking } from 'react-native';
 import { chatSchemes } from '~/constants/chat';
 import getEnv from '~/utils/env';
 import { getWebDomain } from './common';
@@ -77,3 +78,22 @@ export const formatChannelLink = (
 export const formatDMLink = (
   teamId: string, username: string,
 ) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/messages/@${username}`;
+
+export function openUrl(url, onError?: (e)=> void, onSuccess?:(e)=> void) {
+  if (url.includes(getEnv('SELF_DOMAIN'))) {
+    const newUrl = url.replace(getEnv('SELF_DOMAIN'), 'bein://');
+    Linking.canOpenURL(newUrl)
+      .then((supported) => {
+        if (supported) {
+          Linking.openURL(newUrl).then(onSuccess).catch(onError);
+        } else {
+          Linking.openURL(url).then(onSuccess).catch(onError);
+        }
+      })
+      .catch((e) => {
+        console.error('error when open link:', e);
+      });
+    return;
+  }
+  Linking.openURL(url).then(onSuccess).catch(onError);
+}

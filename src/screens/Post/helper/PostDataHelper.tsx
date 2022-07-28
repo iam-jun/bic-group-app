@@ -157,7 +157,7 @@ export const postApiConfig = {
     },
   }),
   getPostAudiences: (params: IParamGetPostAudiences): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}post-audiences`,
+    url: `${ApiConfig.providers.bein.url}/post-audiences/groups`,
     method: 'get',
     provider: ApiConfig.providers.bein,
     useRetry: true,

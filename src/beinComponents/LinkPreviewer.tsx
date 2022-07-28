@@ -9,7 +9,8 @@ import appActions from '~/store/app/actions';
 import { scaleSize } from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
-import { getUrlFromText, openLink } from '~/utils/common';
+import { getUrlFromText } from '~/utils/common';
+import { openUrl } from '~/utils/link';
 import ButtonWrapper from './Button/ButtonWrapper';
 
 interface Props {
@@ -42,7 +43,7 @@ const LinkPreviewer = ({ text }: Props) => {
   if (!link || !linkPreviews?.[link]?.title) return null;
 
   const onPress = () => {
-    openLink(link);
+    openUrl(link);
   };
 
   return (

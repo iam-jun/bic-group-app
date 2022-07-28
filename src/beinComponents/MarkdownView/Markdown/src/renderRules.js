@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import FitImage from 'react-native-fit-image';
 
-import openUrl from './util/openUrl';
+import { openUrl } from '~/utils/link';
 import hasParents from './util/hasParents';
 
 import textStyleProps from './data/textStyleProps';

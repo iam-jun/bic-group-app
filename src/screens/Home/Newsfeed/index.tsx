@@ -25,7 +25,7 @@ import menuActions from '~/screens/Menu/redux/actions';
 import postActions from '~/screens/Post/redux/actions';
 import appActions from '~/store/app/actions';
 import spacing from '~/theme/spacing';
-import { openLink } from '~/utils/common';
+import { openUrl } from '~/utils/link';
 import getEnv from '~/utils/env';
 
 const Newsfeed = () => {
@@ -169,7 +169,7 @@ const Newsfeed = () => {
   );
 
   const navigateToChat = () => {
-    openLink(getEnv('BEIN_CHAT_DEEPLINK'));
+    openUrl(getEnv('BEIN_CHAT_DEEPLINK'));
   };
 
   const onEndReach = useCallback(

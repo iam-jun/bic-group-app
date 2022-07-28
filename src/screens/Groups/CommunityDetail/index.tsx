@@ -25,8 +25,7 @@ import PostViewPlaceholder from '~/beinComponents/placeholder/PostViewPlaceholde
 import HeaderCreatePostPlaceholder from '~/beinComponents/placeholder/HeaderCreatePostPlaceholder';
 import GroupProfilePlaceholder from '~/beinComponents/placeholder/GroupProfilePlaceholder';
 import { ICommunity } from '~/interfaces/ICommunity';
-import { formatChannelLink } from '~/utils/link';
-import { openLink } from '~/utils/common';
+import { formatChannelLink, openUrl } from '~/utils/link';
 import { chatSchemes } from '~/constants/chat';
 import modalActions from '~/store/modal/actions';
 import HeaderMenu from '../components/HeaderMenu';
@@ -173,7 +172,7 @@ const CommunityDetail = (props: any) => {
       infoDetail.slug,
       chatSchemes.DEFAULT_CHANNEL,
     );
-    openLink(link);
+    openUrl(link);
   };
 
   const onButtonLayout = useCallback(

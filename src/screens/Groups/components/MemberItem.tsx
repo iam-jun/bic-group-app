@@ -8,8 +8,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
 import images from '~/resources/images';
 import useAuth from '~/hooks/auth';
-import { formatDMLink } from '~/utils/link';
-import { openLink } from '~/utils/common';
+import { formatDMLink, openUrl } from '~/utils/link';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { useKeySelector } from '~/hooks/selector';
@@ -44,7 +43,7 @@ const MemberItem = ({ item, canManageMember, onPressMenu }: MemberItemProps) => 
     const link = formatDMLink(
       communityDetail.slug, username,
     );
-    openLink(link);
+    openUrl(link);
   };
 
   return (
