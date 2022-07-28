@@ -1,4 +1,5 @@
 import { DefaultTheme, DarkTheme, ExtendedTheme } from '@react-navigation/native';
+import elevations from './elevations';
 
 export const light: ExtendedTheme = {
   dark: false,
@@ -100,6 +101,7 @@ export const light: ExtendedTheme = {
     transparent: 'rgba(255,255,255,0)',
     transparent1: 'rgba(17, 21, 26, 0.6)',
   },
+  elevations: elevations.light,
 };
 
 export const dark: ExtendedTheme = {
@@ -202,6 +204,7 @@ export const dark: ExtendedTheme = {
     transparent: 'rgba(255,255,255,0)',
     transparent1: 'rgba(17, 21, 26, 0.6)',
   },
+  elevations: elevations.dark,
 };
 
 export default {

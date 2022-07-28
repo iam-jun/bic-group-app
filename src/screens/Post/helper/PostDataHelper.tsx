@@ -257,7 +257,9 @@ const postDataHelper = {
   putMarkAsRead: (postId: string) => withHttpRequestPromise(postApiConfig.putMarkAsRead, postId),
   putMarkSeenPost: (postId: string) => withHttpRequestPromise(postApiConfig.putMarkSeenPost, postId),
   getSearchAudiences: (key: string) => withHttpRequestPromise(postApiConfig.getSearchAudiences, key),
-  getSearchMentionAudiences: (params: IParamSearchMentionAudiences) => withHttpRequestPromise(postApiConfig.getSearchMentionAudiences, params),
+  getSearchMentionAudiences: (params: IParamSearchMentionAudiences) => withHttpRequestPromise(
+    postApiConfig.getSearchMentionAudiences, params,
+  ),
   deleteReaction: (param: IParamDeleteReaction) => withHttpRequestPromise(postApiConfig.deleteReaction, param),
   getReactionDetail: async (param: IParamGetReactionDetail) => {
     const { reactionName, targetId, target } = param;
@@ -305,9 +307,15 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  postPublishDraftPost: (draftPostId: string) => withHttpRequestPromise(postApiConfig.postPublishDraftPost, draftPostId),
-  getPostAudience: (params: IParamGetPostAudiences) => withHttpRequestPromise(postApiConfig.getPostAudiences, params),
-  getCommentDetail: (commentId: string, params: IRequestGetPostComment) => withHttpRequestPromise(postApiConfig.getCommentDetail, commentId, params),
+  postPublishDraftPost: (draftPostId: string) => withHttpRequestPromise(
+    postApiConfig.postPublishDraftPost, draftPostId,
+  ),
+  getPostAudience: (params: IParamGetPostAudiences) => withHttpRequestPromise(
+    postApiConfig.getPostAudiences, params,
+  ),
+  getCommentDetail: (commentId: string, params: IRequestGetPostComment) => withHttpRequestPromise(
+    postApiConfig.getCommentDetail, commentId, params,
+  ),
   getSeenList: (params: IRequestGetUsersSeenPost) => withHttpRequestPromise(postApiConfig.getUsersSeenPost, params),
 };
 
