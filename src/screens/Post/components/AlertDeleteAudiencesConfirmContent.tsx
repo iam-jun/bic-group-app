@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import {
-  View, StyleSheet, ScrollView, TouchableOpacity,
+  View, StyleSheet, ScrollView, TouchableOpacity, Dimensions,
 } from 'react-native';
 
 import i18n from 'i18next';
 import Text from '~/beinComponents/Text';
 import spacing from '~/theme/spacing';
 
-const AlertDeleteAudiencesConfirmContent = ({ data }: {data: any[]}) => {
+const SCREEN_HEIGHT = Dimensions.get('window').height;
+const contentHeight = SCREEN_HEIGHT * 0.2;
+
+const AlertDeleteAudiencesConfirmContent = ({ data, canDeleteOwnPost }: {data: any[], canDeleteOwnPost:boolean}) => {
   const [showAll, setShowAll] = useState(false);
 
   const renderItem = (item: any, index: number) => (
@@ -23,11 +26,13 @@ const AlertDeleteAudiencesConfirmContent = ({ data }: {data: any[]}) => {
     </View>
   );
 
+  const content = canDeleteOwnPost ? i18n.t('post:content_delete_audiences_of_post') : i18n.t('post:content_not_able_delete_of_post')
+
   if (!data?.length) return null;
   if (data.length > 3 && !showAll) {
     return (
       <View style={styles.container}>
-        <Text.BodyM>{i18n.t('post:content_delete_audiences_of_post')}</Text.BodyM>
+        <Text.BodyM>{content}</Text.BodyM>
         <View style={styles.contentContainer}>
           <ScrollView>
             <TouchableOpacity>
@@ -46,7 +51,7 @@ const AlertDeleteAudiencesConfirmContent = ({ data }: {data: any[]}) => {
   }
   return (
     <View style={styles.container}>
-      <Text.BodyM>{i18n.t('post:content_delete_audiences_of_post')}</Text.BodyM>
+      <Text.BodyM>{content}</Text.BodyM>
       <View style={styles.contentContainer}>
         <ScrollView>
           <TouchableOpacity>
@@ -64,6 +69,7 @@ const styles = StyleSheet.create({
     marginTop: spacing.margin.base,
   },
   contentContainer: {
+    height: contentHeight,
   },
   itemContent: {
     flexDirection: 'row',

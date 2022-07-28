@@ -221,6 +221,11 @@ export interface IPayloadDeletePost {
   callbackError?: (listAudiences: string[]) => void;
 }
 
+export interface IPayloadRemoveAudiencesOfPost {
+  id: string;
+  listAudiences: string[];
+}
+
 export interface IParamGetPostDetail {
   postId: string;
   commentOrder?: 'ASC' | 'DESC';

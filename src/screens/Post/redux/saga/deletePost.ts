@@ -42,21 +42,6 @@ export default function* deletePost({
   } catch (e: any) {
     if (e?.meta?.errors?.groups_denied) {
       callbackError?.(e.meta.errors.groups_denied)
-    //   const groupsDenied: string[] = e?.meta?.errors?.groups_denied;
-    //   const data = {
-    //     audience: {
-    //       userIds: [],
-    //       groupIds: groupsDenied,
-    //     },
-    //   };
-    //   const response = yield call(postDataHelper.putEditPost, {
-    //     postId: id,
-    //     data,
-    //   });
-    //   if (response?.data) {
-    //     const post = response?.data;
-    //     yield put(postActions.addToAllPosts({ data: post }));
-    //   }
     } else yield call(showError, e);
   }
 }

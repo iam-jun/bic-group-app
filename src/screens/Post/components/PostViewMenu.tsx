@@ -61,13 +61,13 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         onConfirm: () => dispatch(postActions.deletePost({
           id: postId,
           isDraftPost,
-          callbackError: handleError,
+          callbackError: handleDeltePostError,
         })),
       }),
     );
   };
 
-  const handleError = (listIdAudiences: string[]) => {
+  const handleDeltePostError = (listIdAudiences: string[]) => {
     if (listIdAudiences?.length > 0 && audience?.groups?.length > 0) {
       const listAudiences = listIdAudiences.map((audienceId) => {
         const _audience = audience.groups.find((audience: IAudienceGroup) => audience?.id === audienceId)
@@ -76,14 +76,13 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
       dispatch(
         modalActions.showAlert({
           title: t('post:title_delete_audiences_of_post'),
-          children: <AlertDeleteAudiencesConfirmContent data={listAudiences} />,
+          children: <AlertDeleteAudiencesConfirmContent data={listAudiences} canDeleteOwnPost={canDeleteOwnPost} />,
           cancelBtn: true,
-          confirmLabel: t('common:btn_delete'),
-          onConfirm: () => dispatch(postActions.deletePost({
+          confirmLabel: canDeleteOwnPost ? t('common:btn_delete') : t('common:btn_close'),
+          onConfirm: () => (canDeleteOwnPost ? dispatch(postActions.removePostAudiences({
             id: postId,
-            isDraftPost,
-            // callbackError: handleError,
-          })),
+            listAudiences: listIdAudiences,
+          })) : null),
         }),
       );
     }
@@ -182,7 +181,7 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         title={t('post:post_menu_history')}
         onPress={onPress}
       />
-      {isActor && canDeleteOwnPost && (
+      {isActor && (
         <PrimaryItem
           testID="post_view_menu.delete"
           style={styles.item}

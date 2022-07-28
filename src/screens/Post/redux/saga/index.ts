@@ -53,6 +53,7 @@ import updatePostsContainingVideoInProgress from './updatePostsContainingVideoIn
 import deletePost from './deletePost';
 import updateReactionBySocket from './updateReactionBySocket';
 import updateUnReactionBySocket from './updateUnReactionBySocket';
+import removeAudiencesFromPost from './removeAudiencesFromPost';
 
 const navigation = withNavigation(rootNavigationRef);
 
@@ -157,6 +158,10 @@ export default function* postSaga() {
   yield takeLatest(
     postTypes.UPDATE_POSTS_CONTAINING_VIDEO_IN_PROGRESS,
     updatePostsContainingVideoInProgress,
+  );
+  yield takeLatest(
+    postTypes.REMOVE_POST_AUDIENCES,
+    removeAudiencesFromPost,
   );
 }
 
