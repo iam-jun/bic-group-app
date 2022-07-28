@@ -15,6 +15,7 @@ declare module '@react-navigation/native' {
       warning: string;
 
       neutral1: string;
+      neutral2: string;
       neutral5: string;
       neutral10: string;
       neutral20: string;
@@ -39,6 +40,7 @@ declare module '@react-navigation/native' {
       gray90: string;
 
       purple1: string;
+      purple2: string;
       purple5: string;
       purple10: string;
       purple20: string;
@@ -48,6 +50,7 @@ declare module '@react-navigation/native' {
       purple60: string;
 
       blue1: string;
+      blue2: string;
       blue5: string;
       blue10: string;
       blue20: string;
@@ -57,6 +60,7 @@ declare module '@react-navigation/native' {
       blue60: string;
 
       red1: string;
+      red2: string;
       red5: string;
       red10: string;
       red20: string;
