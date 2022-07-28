@@ -17,3 +17,5 @@ export const mentionRegex = /@(?![\s​])(?!(?:[^]*\s){3})[^@[\]]{1,24}/g;
 export const audienceRegex = /@\[([^:@]+):([^:@]+):([^@\]]+)]/;
 export const linkRegex = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-/]))?/;
 export const phoneNumberRegex = /^[0-9]+$/;
+// eslint-disable-next-line no-useless-escape
+export const uuidRegex = /^[a-f0-9\-]{36}$/i;

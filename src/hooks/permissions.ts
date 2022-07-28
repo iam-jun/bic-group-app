@@ -75,10 +75,25 @@ export const useMyPermissions = () => {
   ) => (audiences || []).some((audience) => hasPermissionsOnScopeWithId(
     scope, audience.id, requiredPermissions,
   ));
+
+  const getListOfChosenAudiencesWithoutPermission = (
+    scope: 'communities' | 'groups',
+    audiences: any[],
+    requiredPermissions: string | string[],
+  // eslint-disable-next-line array-callback-return
+  ) => (audiences || []).filter((audience) => {
+    if (
+      hasPermissionsOnScopeWithId(scope, audience.id, requiredPermissions)
+    ) {
+      return audience;
+    }
+  });
+
   return {
     hasPermissionsOnScopeWithId,
     hasPermissionsOnEachScope,
     hasPermissionsOnAtLeastOneScope,
     PERMISSION_KEY,
+    getListOfChosenAudiencesWithoutPermission,
   };
 };

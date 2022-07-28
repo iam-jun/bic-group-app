@@ -568,7 +568,9 @@ const groupsDataHelper = {
     }
     return withHttpRequestPromise(groupsApiConfig.getGroupScheme, communityId, schemeId)
   },
-  getGroupSchemeAssignments: (communityId: string) => withHttpRequestPromise(groupsApiConfig.getGroupSchemeAssignments, communityId),
+  getGroupSchemeAssignments: (communityId: string) => withHttpRequestPromise(
+    groupsApiConfig.getGroupSchemeAssignments, communityId,
+  ),
   putGroupSchemeAssignments: (params: IPayloadGroupSchemeAssignments) => {
     const { communityId, data } = params || {};
     return withHttpRequestPromise(groupsApiConfig.putGroupSchemeAssignments, communityId, data)
@@ -598,42 +600,70 @@ const groupsDataHelper = {
       return Promise.reject(e);
     }
   },
-  getUserInnerGroups: (groupId: string, username: string) => withHttpRequestPromise(groupsApiConfig.getUserInnerGroups, groupId, username),
+  getUserInnerGroups: (groupId: string, username: string) => withHttpRequestPromise(
+    groupsApiConfig.getUserInnerGroups, groupId, username,
+  ),
   getGroupPosts: (param: IParamGetGroupPosts) => withHttpRequestPromise(groupsApiConfig.getGroupPosts, {
     offset: param?.offset || 0,
     limit: param?.limit || appConfig.recordsPerPage,
     ...param,
   }),
   getInfoGroups: (groupIds: string) => withHttpRequestPromise(groupsApiConfig.getInfoGroups, groupIds),
-  getGroupMembers: (groupId: string, params: any) => withHttpRequestPromise(groupsApiConfig.getGroupMembers, groupId, params),
-  getGroupDetail: (groupId: string) => withHttpRequestPromise(groupsApiConfig.getGroupDetail, groupId),
-  editGroupDetail: (groupId: string, data: IGroupDetailEdit) => withHttpRequestPromise(groupsApiConfig.editGroupDetail, groupId, data),
-  getJoinableUsers: (groupId: string, params: any) => withHttpRequestPromise(groupsApiConfig.getJoinableUsers, groupId, params),
+  getGroupMembers: (groupId: string, params: any) => withHttpRequestPromise(
+    groupsApiConfig.getGroupMembers, groupId, params,
+  ),
+  getGroupDetail: (groupId: string) => withHttpRequestPromise(
+    groupsApiConfig.getGroupDetail, groupId,
+  ),
+  editGroupDetail: (groupId: string, data: IGroupDetailEdit) => withHttpRequestPromise(
+    groupsApiConfig.editGroupDetail, groupId, data,
+  ),
+  getJoinableUsers: (groupId: string, params: any) => withHttpRequestPromise(
+    groupsApiConfig.getJoinableUsers, groupId, params,
+  ),
   addUsers: (groupId: string, userIds: string[]) => withHttpRequestPromise(groupsApiConfig.addUsers, groupId, userIds),
-  removeUsers: (groupId: string, userIds: string[], type?: string) => withHttpRequestPromise(groupsApiConfig.removeUsers, groupId, userIds, type),
+  removeUsers: (groupId: string, userIds: string[], type?: string) => withHttpRequestPromise(
+    groupsApiConfig.removeUsers, groupId, userIds, type,
+  ),
   joinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.joinGroup, groupId),
   cancelJoinGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.cancelJoinGroup, groupId),
   leaveGroup: (groupId: string) => withHttpRequestPromise(groupsApiConfig.leaveGroup, groupId),
-  setGroupAdmin: (groupId: string, userIds: string[]) => withHttpRequestPromise(groupsApiConfig.setGroupAdmin, groupId, userIds),
-  removeGroupAdmin: (groupId: string, userId: string) => withHttpRequestPromise(groupsApiConfig.removeGroupAdmin, groupId, userId),
-  getGroupMemberRequests: (groupId: string, params: any) => withHttpRequestPromise(groupsApiConfig.getGroupMemberRequests, groupId, params),
+  setGroupAdmin: (groupId: string, userIds: string[]) => withHttpRequestPromise(
+    groupsApiConfig.setGroupAdmin, groupId, userIds,
+  ),
+  removeGroupAdmin: (groupId: string, userId: string) => withHttpRequestPromise(
+    groupsApiConfig.removeGroupAdmin, groupId, userId,
+  ),
+  getGroupMemberRequests: (groupId: string, params: any) => withHttpRequestPromise(
+    groupsApiConfig.getGroupMemberRequests, groupId, params,
+  ),
   approveSingleGroupMemberRequest: (
     groupId: string,
     requestId: string,
   ) => withHttpRequestPromise(groupsApiConfig.approveSingleGroupMemberRequest, groupId, requestId),
-  approveAllGroupMemberRequests: (groupId: string) => withHttpRequestPromise(groupsApiConfig.approveAllGroupMemberRequests, groupId),
+  approveAllGroupMemberRequests: (groupId: string) => withHttpRequestPromise(
+    groupsApiConfig.approveAllGroupMemberRequests, groupId,
+  ),
   declineSingleGroupMemberRequest: (
     groupId: string,
     requestId: string,
   ) => withHttpRequestPromise(groupsApiConfig.declineSingleGroupMemberRequest, groupId, requestId),
-  declineAllGroupMemberRequests: (groupId: string) => withHttpRequestPromise(groupsApiConfig.declineAllGroupMemberRequests, groupId),
-  getInnerGroupsLastAdmin: (groupId: string, userId: string) => withHttpRequestPromise(groupsApiConfig.getInnerGroupsLastAdmin, groupId, userId),
-  getDiscoverCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getDiscoverCommunities, params),
+  declineAllGroupMemberRequests: (groupId: string) => withHttpRequestPromise(
+    groupsApiConfig.declineAllGroupMemberRequests, groupId,
+  ),
+  getInnerGroupsLastAdmin: (groupId: string, userId: string) => withHttpRequestPromise(
+    groupsApiConfig.getInnerGroupsLastAdmin, groupId, userId,
+  ),
+  getDiscoverCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(
+    groupsApiConfig.getDiscoverCommunities, params,
+  ),
   getJoinedCommunities: (params: {
     previewMembers?: boolean;
     managed?: boolean;
   }) => withHttpRequestPromise(groupsApiConfig.getJoinedCommunities, params),
-  getCommunityGroups: (id: string, params: IGetCommunityGroup) => withHttpRequestPromise(groupsApiConfig.getCommunityGroups, id, params),
+  getCommunityGroups: (id: string, params: IGetCommunityGroup) => withHttpRequestPromise(
+    groupsApiConfig.getCommunityGroups, id, params,
+  ),
   getCommunityDetail: (communityId: string) => withHttpRequestPromise(groupsApiConfig.getCommunityDetail, communityId),
   editCommunityDetail: (
     communityId: string,
@@ -647,8 +677,12 @@ const groupsDataHelper = {
     communityId: string,
     params?: IParamGetDiscoverGroups,
   ) => withHttpRequestPromise(groupsApiConfig.getDiscoverGroups, communityId, params),
-  joinCommunity: (communityId: string) => withHttpRequestPromise(groupsApiConfig.joinCommunity, communityId),
-  cancelJoinCommunity: (communityId: string) => withHttpRequestPromise(groupsApiConfig.cancelJoinCommunity, communityId),
+  joinCommunity: (communityId: string) => withHttpRequestPromise(
+    groupsApiConfig.joinCommunity, communityId,
+  ),
+  cancelJoinCommunity: (communityId: string) => withHttpRequestPromise(
+    groupsApiConfig.cancelJoinCommunity, communityId,
+  ),
   // eslint-disable-next-line max-len
   getCommunityMemberRequests: (communityId: string, params: any) => withHttpRequestPromise(groupsApiConfig.getCommunityMemberRequests, communityId, params),
   approveSingleCommunityMemberRequest: (
@@ -667,8 +701,12 @@ const groupsDataHelper = {
     communityId,
     requestId,
   ),
-  approveAllCommunityMemberRequests: (communityId: string) => withHttpRequestPromise(groupsApiConfig.approveAllCommunityMemberRequests, communityId),
-  declineAllCommunityMemberRequests: (communityId: string) => withHttpRequestPromise(groupsApiConfig.declineAllCommunityMemberRequests, communityId),
+  approveAllCommunityMemberRequests: (communityId: string) => withHttpRequestPromise(
+    groupsApiConfig.approveAllCommunityMemberRequests, communityId,
+  ),
+  declineAllCommunityMemberRequests: (communityId: string) => withHttpRequestPromise(
+    groupsApiConfig.declineAllCommunityMemberRequests, communityId,
+  ),
   getCommunities: (params?: IParamGetCommunities) => withHttpRequestPromise(groupsApiConfig.getCommunities, params),
 };
 
