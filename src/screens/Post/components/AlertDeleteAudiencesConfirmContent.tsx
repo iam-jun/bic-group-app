@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import {
   View, StyleSheet, ScrollView, TouchableOpacity, Dimensions,
 } from 'react-native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 
 import i18n from 'i18next';
 import Text from '~/beinComponents/Text';
@@ -11,6 +12,7 @@ const SCREEN_HEIGHT = Dimensions.get('window').height;
 const contentHeight = SCREEN_HEIGHT * 0.2;
 
 const AlertDeleteAudiencesConfirmContent = ({ data, canDeleteOwnPost }: {data: any[], canDeleteOwnPost:boolean}) => {
+  const theme: ExtendedTheme = useTheme();
   const [showAll, setShowAll] = useState(false);
 
   const renderItem = (item: any, index: number) => (
@@ -37,11 +39,15 @@ const AlertDeleteAudiencesConfirmContent = ({ data, canDeleteOwnPost }: {data: a
           <ScrollView>
             <TouchableOpacity>
               {data?.slice(0, 3)?.map?.(renderItem)}
-              <Text.BodyMMedium onPress={() => { setShowAll(true) }}>
-                {' '}
-                •
-                {` +${data.length - 3} ${i18n.t('post:more_group')}`}
-              </Text.BodyMMedium>
+              <View
+                style={styles.itemContainer}
+              >
+                <Text.BodyMMedium onPress={() => { setShowAll(true) }} color={theme.colors.purple50}>
+                  {' '}
+                  •
+                  {` +${data.length - 3} ${i18n.t('post:more_group')}`}
+                </Text.BodyMMedium>
+              </View>
             </TouchableOpacity>
           </ScrollView>
         </View>
