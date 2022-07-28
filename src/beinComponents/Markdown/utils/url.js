@@ -218,22 +218,3 @@ export async function getURLAndMatch(href, serverURL, siteURL) {
 
   return { url, match };
 }
-
-export function tryOpenURL(url, onError = (e) => {}, onSuccess = () => {}) {
-  if (url.includes(getEnv('SELF_DOMAIN'))) {
-    const newUrl = url.replace(getEnv('SELF_DOMAIN'), 'bein://');
-    Linking.canOpenURL(newUrl)
-      .then((supported) => {
-        if (supported) {
-          Linking.openURL(newUrl).then(onSuccess).catch(onError);
-        } else {
-          Linking.openURL(url).then(onSuccess).catch(onError);
-        }
-      })
-      .catch((e) => {
-        console.log('error when open link:', e);
-      });
-    return;
-  }
-  Linking.openURL(url).then(onSuccess).catch(onError);
-}

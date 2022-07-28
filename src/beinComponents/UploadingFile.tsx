@@ -16,7 +16,7 @@ import FileUploader, { IGetFile } from '~/services/fileUploader';
 import { useBaseHook } from '~/hooks';
 import modalActions from '~/store/modal/actions';
 import { supportedTypes } from '~/beinComponents/DocumentPicker';
-import { openLink } from '~/utils/common';
+import { openUrl } from '~/utils/link';
 import { getFileIcons } from '~/configs';
 import { IconType } from '~/resources/icons';
 import spacing from '~/theme/spacing';
@@ -148,7 +148,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
   };
 
   const onPressDownload = () => {
-    openLink(file.url);
+    openUrl(file.url);
   };
 
   const fileExt = fileName?.split('.')?.pop?.()?.toUpperCase?.();
