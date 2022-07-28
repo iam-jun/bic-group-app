@@ -7,24 +7,6 @@ export const authStack = {
   forgotPassword: 'ForgotPassword',
 };
 
-export const hideBottomTabRoutes = [
-  // Post: Post Detail, Comment View
-  'post-detail',
-  'create-post',
-  'create-comment',
-  'comment-view',
-  'add-members',
-  'comment-detail',
-  // Setting: Account setting, Edit account, Security, Privacy
-  'user-edit',
-  'user-profile',
-  'security-and-login',
-  // groups
-  'general-info',
-  'edit-group-description',
-  'pending-members',
-];
-
 export const customBackHandlerRoutes = [
   'home',
   'groups',
@@ -49,62 +31,6 @@ export const bottomTabIconsFocused = {
   communities: 'iconTabCommunitiesBein',
   notification: 'iconTabNotificationBein',
   menus: 'iconTabMenuBein',
-};
-
-export const appScreens = {
-  // Stacks
-  mainStack: 'MainStack',
-  authStack: 'AuthStack',
-  notFound: 'NotFound',
-  home: 'home',
-  groups: 'groups',
-  notification: 'notification',
-  menus: 'menus',
-
-  // Auth
-  login: 'SignIn',
-  signup: 'SignUp',
-  forgotPassword: 'ForgotPassword',
-
-  // Feed
-  newsfeed: 'newsfeed',
-  postDetail: 'post-detail',
-  postCreate: 'create-post',
-  postCreateComment: 'create-comment',
-  postSelectImage: 'post-select-image',
-  postSelectAudience: 'post-select-audience',
-  draftPost: 'draft-post',
-  postSettings: 'post-settings',
-
-  // Group
-  groupList: 'group-list',
-  groupDetail: 'group-detail',
-  groupMembers: 'group-members',
-  groupAbout: 'group-about',
-  groupFiles: 'group-files',
-  groupAdmin: 'group-admin',
-  groupGeneralInfo: 'general-info',
-  groupEditDescription: 'edit-group-description',
-  groupInviteMembers: 'invite-members',
-  groupPendingMembers: 'pending-members',
-
-  // Menu, settings
-  menu: 'menu',
-  settings: 'account-settings',
-  settingAccount: 'user-edit',
-  settingSecurityLogin: 'security-and-login',
-  settingChangePassword: 'change-password',
-  settingEditBasicInfo: 'edit-basic-info',
-  settingEditContact: 'edit-contact',
-  userProfile: 'user-profile',
-  settingCreateWork: 'add-work',
-  settingEditDescription: 'edit-description',
-
-  // Notification
-  notificationEmpty: 'not-select-notification',
-
-  // Components
-  componentCollection: 'component-collection',
 };
 
 export const linkingConfig = {

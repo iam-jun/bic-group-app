@@ -11,9 +11,7 @@ function* getSeenPost({
   payload: IGetSeenPostListSheet;
 }): any {
   try {
-    const { data, canLoadMore } = yield select(
-      (state) => state?.post?.seenPostList,
-    ) || {};
+    const { data, canLoadMore } = yield select((state) => state?.post?.seenPostList) || {};
     const params = {
       postId: payload.postId,
       offset: data.length,
@@ -22,7 +20,9 @@ function* getSeenPost({
     if (!canLoadMore) {
       return;
     }
-    const response = yield call(postDataHelper.getSeenList, params);
+    const response = yield call(
+      postDataHelper.getSeenList, params,
+    );
 
     if (response && response?.data?.list) {
       const newData = response ? response.data : undefined;
@@ -38,7 +38,9 @@ function* getSeenPost({
       return Promise.reject(response);
     }
   } catch (e) {
-    console.error('\x1b[31m🐣️ saga getCommentsByPostId error: ', e, '\x1b[0m');
+    console.error(
+      '\x1b[31m🐣️ saga getCommentsByPostId error: ', e, '\x1b[0m',
+    );
     yield showError(e);
   }
 }

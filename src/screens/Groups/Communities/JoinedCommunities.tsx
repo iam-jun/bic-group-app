@@ -22,7 +22,7 @@ import spacing from '~/theme/spacing';
 
 export interface JoinedCommunitiesProps {
   style?: StyleProp<ViewStyle>;
-  onPressCommunities?: (communityId: number) => void;
+  onPressCommunities?: (communityId: string) => void;
   onPressDiscover?: () => void;
 }
 
@@ -36,18 +36,18 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
 
-  useEffect(() => {
-    getData();
-  }, []);
+  useEffect(
+    () => {
+      getData();
+    }, [],
+  );
 
   const getData = () => {
-    dispatch(
-      groupsActions.getMyCommunities({
-        callback: () => {
-          setRefreshing(false);
-        },
-      }),
-    );
+    dispatch(groupsActions.getMyCommunities({
+      callback: () => {
+        setRefreshing(false);
+      },
+    }));
   };
 
   const onRefresh = () => {
@@ -83,7 +83,9 @@ const JoinedCommunities: FC<JoinedCommunitiesProps> = ({
       testID="flatlist"
       data={myCommunities}
       renderItem={renderItem}
-      keyExtractor={(item, index) => `community_${item}_${index}`}
+      keyExtractor={(
+        item, index,
+      ) => `community_${item}_${index}`}
       ListEmptyComponent={renderEmptyComponent}
       ItemSeparatorComponent={() => (
         <Divider

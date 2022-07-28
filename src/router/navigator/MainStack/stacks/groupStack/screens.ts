@@ -1,4 +1,3 @@
-import Groups from '~/screens/Groups';
 import GroupDetail from '~/screens/Groups/GroupDetail';
 import GroupAbout from '~/screens/Groups/GroupAbout';
 import GroupMembers from '~/screens/Groups/GroupMembers';
@@ -47,7 +46,6 @@ const groupScreens = {
   'reorder-group': ReorderGroup,
 
   // group
-  'group-list': Groups,
   'group-detail': GroupDetail,
   'group-about': GroupAbout,
   'group-members': GroupMembers,

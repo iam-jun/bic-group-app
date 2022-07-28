@@ -29,7 +29,9 @@ const NotificationsBadgeComponent: React.FC<NotificationsBadgeComponentProps> = 
   if (!number) return null;
 
   const theme: ExtendedTheme = useTheme();
-  const styles = themeStyles(theme, variant);
+  const styles = themeStyles(
+    theme, variant,
+  );
   const numberInText = number > maxNumber ? `${maxNumber}+` : `${number}`;
 
   return (
@@ -39,7 +41,9 @@ const NotificationsBadgeComponent: React.FC<NotificationsBadgeComponentProps> = 
   );
 };
 
-const themeStyles = (theme: ExtendedTheme, variant: NotificationsBadgeType) => {
+const themeStyles = (
+  theme: ExtendedTheme, variant: NotificationsBadgeType,
+) => {
   const { colors } = theme;
   const defaultWidth = 20;
 

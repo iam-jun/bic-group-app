@@ -1,5 +1,5 @@
 import ApiConfig, { HttpApiRequestConfig } from '~/configs/apiConfig';
-import { makeHttpRequest } from '~/services/httpApiRequest';
+import { makeHttpRequest, withHttpRequestPromise } from '~/services/httpApiRequest';
 import {
   IParamDeleteReaction,
   ICommentData,
@@ -89,18 +89,6 @@ export const postApiConfig = {
     provider,
     useRetry: true,
   }),
-  getAudienceGroups: (userId: number): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}users/${userId}/groups-be-in`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
-  }),
-  getAudienceUsers: (): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.bein.url}users`,
-    method: 'get',
-    provider: ApiConfig.providers.bein,
-    useRetry: true,
-  }),
   getCommentsByPostId: (
     params: IRequestGetPostComment,
   ): HttpApiRequestConfig => ({
@@ -147,16 +135,16 @@ export const postApiConfig = {
       },
     };
   },
-  putMarkAsRead: (postId: string|number): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}posts/${postId}/mark-as-read`,
+  putMarkAsRead: (postId: string): HttpApiRequestConfig => ({
+    url: `${provider.url}posts/${postId}/mark-as-read`,
     method: 'put',
-    provider: ApiConfig.providers.beinFeed,
+    provider,
     useRetry: true,
   }),
   putMarkSeenPost: (postId: string): HttpApiRequestConfig => ({
-    url: `${ApiConfig.providers.beinFeed.url}feeds/seen/${postId}`,
+    url: `${provider.url}feeds/seen/${postId}`,
     method: 'put',
-    provider: ApiConfig.providers.beinFeed,
+    provider,
     useRetry: true,
   }),
   getSearchAudiences: (key: string): HttpApiRequestConfig => ({
@@ -183,8 +171,8 @@ export const postApiConfig = {
     provider: ApiConfig.providers.bein,
     useRetry: true,
     params: {
-      group_ids: params.group_ids,
-      user_ids: params.user_ids,
+      group_ids: params.groupIds,
+      user_ids: params.userIds,
       key: params.key ? params.key : undefined,
       offset: params.skip,
       limit: params.take,
@@ -224,7 +212,7 @@ export const postApiConfig = {
   }),
   getCommentDetail: (
     commentId: string,
-    params?: IRequestGetPostComment,
+    params: IRequestGetPostComment,
   ): HttpApiRequestConfig => ({
     url: `${provider.url}comments/${commentId}`,
     method: 'get',
@@ -252,191 +240,25 @@ export const postApiConfig = {
 };
 
 const postDataHelper = {
-  postCreateNewPost: async (data: IPostCreatePost) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.postCreateNewPost(data),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  putReaction: async (param: IParamPutReaction) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.putReaction(param),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  putEditPost: async (param: IParamPutEditPost) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.putEditPost(param),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  putEditComment: async (id: string, data: ICommentData) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.putEditComment(id, data),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  deletePost: async (id: string, isDraftPost?: boolean) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.deletePost(id, isDraftPost),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  deleteComment: async (id: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.deleteComment(id),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  getCommentsByPostId: async (params: IRequestGetPostComment) => {
+  postCreateNewPost: (data: IPostCreatePost) => withHttpRequestPromise(postApiConfig.postCreateNewPost, data),
+  putReaction: (param: IParamPutReaction) => withHttpRequestPromise(postApiConfig.putReaction, param),
+  putEditPost: (param: IParamPutEditPost) => withHttpRequestPromise(postApiConfig.putEditPost, param),
+  putEditComment: (id: string, data: ICommentData) => withHttpRequestPromise(postApiConfig.putEditComment, id, data),
+  deletePost: (id: string, isDraftPost?: boolean) => withHttpRequestPromise(postApiConfig.deletePost, id, isDraftPost),
+  deleteComment: (id: string) => withHttpRequestPromise(postApiConfig.deleteComment, id),
+  getCommentsByPostId: (params: IRequestGetPostComment) => {
     if (!params?.postId) {
       return Promise.reject(new Error('Post Id not found'));
     }
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getCommentsByPostId(params),
-      );
-      if (response?.data?.data?.list) {
-        return Promise.resolve(response?.data?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
+    return withHttpRequestPromise(postApiConfig.getCommentsByPostId, params)
   },
-  postNewComment: async (params: IRequestPostComment) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.postNewComment(params),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  postReplyComment: async (params: IRequestReplyComment) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.postReplyComment(params),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  putMarkAsRead: async (postId: string|number) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.putMarkAsRead(postId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  putMarkSeenPost: async (postId: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.putMarkSeenPost(postId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  getSearchAudiences: async (key: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getSearchAudiences(key),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  getSearchMentionAudiences: async (params: IParamSearchMentionAudiences) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getSearchMentionAudiences(params),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  deleteReaction: async (param: IParamDeleteReaction) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.deleteReaction(param),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  postNewComment: (params: IRequestPostComment) => withHttpRequestPromise(postApiConfig.postNewComment, params),
+  postReplyComment: (params: IRequestReplyComment) => withHttpRequestPromise(postApiConfig.postReplyComment, params),
+  putMarkAsRead: (postId: string) => withHttpRequestPromise(postApiConfig.putMarkAsRead, postId),
+  putMarkSeenPost: (postId: string) => withHttpRequestPromise(postApiConfig.putMarkSeenPost, postId),
+  getSearchAudiences: (key: string) => withHttpRequestPromise(postApiConfig.getSearchAudiences, key),
+  getSearchMentionAudiences: (params: IParamSearchMentionAudiences) => withHttpRequestPromise(postApiConfig.getSearchMentionAudiences, params),
+  deleteReaction: (param: IParamDeleteReaction) => withHttpRequestPromise(postApiConfig.deleteReaction, param),
   getReactionDetail: async (param: IParamGetReactionDetail) => {
     const { reactionName, targetId, target } = param;
     if (reactionName && targetId && target) {
@@ -456,22 +278,13 @@ const postDataHelper = {
     }
   },
 
-  getPostDetail: async (params: IParamGetPostDetail) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getPostDetail({
-          commentLimit: 10,
-          withComment: true,
-          ...params,
-        }),
-      );
-      if (response && response?.data?.data) {
-        return Promise.resolve(response?.data?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
+  getPostDetail: (params: IParamGetPostDetail) => {
+    const requestParams = {
+      commentLimit: 10,
+      withComment: true,
+      ...params,
+    };
+    return withHttpRequestPromise(postApiConfig.getPostDetail, requestParams)
   },
   getDraftPosts: async (param: IParamGetDraftPosts) => {
     try {
@@ -492,63 +305,10 @@ const postDataHelper = {
       return Promise.reject(e);
     }
   },
-  postPublishDraftPost: async (draftPostId: string) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.postPublishDraftPost(draftPostId),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  getPostAudience: async (params: IParamGetPostAudiences) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getPostAudiences(params),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  getCommentDetail: async (
-    commentId: string,
-    params?: IRequestGetPostComment,
-  ) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getCommentDetail(commentId, params),
-      );
-      if (response && response?.data && response.data?.data) {
-        return Promise.resolve(response.data.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
-  getSeenList: async (params: IRequestGetUsersSeenPost) => {
-    try {
-      const response: any = await makeHttpRequest(
-        postApiConfig.getUsersSeenPost({
-          ...params,
-        }),
-      );
-      if (response && response?.data) {
-        return Promise.resolve(response?.data);
-      }
-      return Promise.reject(response);
-    } catch (e) {
-      return Promise.reject(e);
-    }
-  },
+  postPublishDraftPost: (draftPostId: string) => withHttpRequestPromise(postApiConfig.postPublishDraftPost, draftPostId),
+  getPostAudience: (params: IParamGetPostAudiences) => withHttpRequestPromise(postApiConfig.getPostAudiences, params),
+  getCommentDetail: (commentId: string, params: IRequestGetPostComment) => withHttpRequestPromise(postApiConfig.getCommentDetail, commentId, params),
+  getSeenList: (params: IRequestGetUsersSeenPost) => withHttpRequestPromise(postApiConfig.getUsersSeenPost, params),
 };
 
 export default postDataHelper;

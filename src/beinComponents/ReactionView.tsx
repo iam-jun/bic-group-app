@@ -38,7 +38,9 @@ const ReactionView: FC<ReactionViewProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const onActionReaction = (reactionId: ReactionType, action: IAction) => {
+  const onActionReaction = (
+    reactionId: ReactionType, action: IAction,
+  ) => {
     if (action === commonActions.selectEmoji) {
       onAddReaction?.(reactionId);
     } else {
@@ -68,29 +70,33 @@ const ReactionView: FC<ReactionViewProps> = ({
     Object.values(reactionsCount || {})?.forEach((reaction: any) => {
       const key = Object.keys(reaction || {})?.[0];
       if (key) {
-        reactionMap.set(key, reaction?.[key]);
+        reactionMap.set(
+          key, reaction?.[key],
+        );
       }
     });
 
     const rendered: React.ReactNode[] = [];
 
-    reactionMap.forEach((value, key) => {
+    reactionMap.forEach((
+      value, key,
+    ) => {
       const react = key as ReactionType;
       if (!blacklistReactions?.[react] && reactionMap.get(key) > 0) {
-        rendered.push(
-          <Reaction
-            testId={`reaction.button.${key}`}
-            key={`${key}`}
-            style={{ margin: 2 }}
-            value={reactionMap.get(key)}
-            icon={key}
-            disableUpdateState
-            onLongPress={() => _onLongPressItem(react)}
-            loading={_ownReactions?.[react]?.loading}
-            selected={!!_ownReactions?.[react]?.id}
-            onActionPress={(action) => onActionReaction(react, action)}
-          />,
-        );
+        rendered.push(<Reaction
+          testId={`reaction.button.${key}`}
+          key={`${key}`}
+          style={{ margin: 2 }}
+          value={reactionMap.get(key)}
+          icon={key}
+          disableUpdateState
+          onLongPress={() => _onLongPressItem(react)}
+          loading={_ownReactions?.[react]?.loading}
+          selected={!!_ownReactions?.[react]?.id}
+          onActionPress={(action) => onActionReaction(
+            react, action,
+          )}
+        />);
       }
     })
 

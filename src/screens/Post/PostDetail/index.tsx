@@ -16,19 +16,21 @@ const PostDetail = (props: any) => {
   const { colors } = theme;
   const styles = createStyle(theme);
 
-  useEffect(() => {
-    // eslint-disable-next-line no-undef
-    const taskId = requestAnimationFrame(() => {
-      setShowContent(true);
-    });
+  useEffect(
+    () => {
+      const taskId = requestAnimationFrame(() => {
+        setShowContent(true);
+      });
 
-    // eslint-disable-next-line no-undef
-    return () => cancelAnimationFrame(taskId);
-  }, []);
+      return () => cancelAnimationFrame(taskId);
+    }, [],
+  );
 
-  const onContentLayout = useCallback(() => {
-    setShowLoading(false);
-  }, []);
+  const onContentLayout = useCallback(
+    () => {
+      setShowLoading(false);
+    }, [],
+  );
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral5}>

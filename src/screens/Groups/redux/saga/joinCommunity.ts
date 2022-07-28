@@ -13,29 +13,29 @@ export default function* joinCommunity({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; communityName: string};
+  payload: {communityId: string; communityName: string};
 }) {
   try {
     const { communityId, communityName } = payload;
 
-    const response: AxiosResponse = yield call(groupsDataHelper.joinCommunity, communityId);
-    const join_status = response?.data?.join_status;
-    const hasRequested = join_status === groupJoinStatus.requested;
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const response = yield call(groupsDataHelper.joinCommunity, communityId);
+    const joinStatus = response?.data?.joinStatus;
+    const hasRequested = joinStatus === groupJoinStatus.requested;
 
     // update button Join/Cancel/View status on Discover communities
     yield put(
       groupsActions.editDiscoverCommunityItem({
         id: communityId,
-        data: { join_status },
+        data: { joinStatus },
       }),
     );
 
     if (hasRequested) {
       yield put(groupsActions.getCommunityDetail({ communityId }));
       const toastMessage: IToastMessage = {
-        content: `${i18next.t(
-          'groups:text_request_join_community',
-        )} ${communityName}`,
+        content: `${i18next.t('groups:text_request_join_community')} ${communityName}`,
         props: {
           type: 'success',
         },
@@ -45,9 +45,7 @@ export default function* joinCommunity({
     }
 
     const toastMessage: IToastMessage = {
-      content: `${i18next.t(
-        'groups:text_successfully_join_community',
-      )} ${communityName}`,
+      content: `${i18next.t('groups:text_successfully_join_community')} ${communityName}`,
       props: {
         type: 'success',
       },
@@ -56,7 +54,11 @@ export default function* joinCommunity({
     yield put(modalActions.showHideToastMessage(toastMessage));
     yield put(groupsActions.getCommunityDetail({ communityId }));
   } catch (err) {
-    console.error('joinCommunity catch', err);
-    yield call(showError, err);
+    console.error(
+      'joinCommunity catch', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

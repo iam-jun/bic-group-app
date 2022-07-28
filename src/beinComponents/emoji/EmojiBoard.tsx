@@ -46,7 +46,9 @@ const EmojiBoard: FC<EmojiBoardProps> = ({
 
   const _onEmojiSelected = (emoji: string) => {
     const emojiResult = NodeEmoji.find(emoji);
-    onEmojiSelected?.(emoji, emojiResult?.key);
+    onEmojiSelected?.(
+      emoji, emojiResult?.key,
+    );
   };
 
   const _onEmojiLongPress = (emoji: string) => {

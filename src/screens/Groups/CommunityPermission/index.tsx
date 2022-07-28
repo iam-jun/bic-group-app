@@ -20,17 +20,19 @@ const CommunityPermission = () => {
 
   const { id: communityId } = useKeySelector(groupsKeySelector.communityDetail) || {};
 
-  useEffect(() => {
-    if (communityId) {
-      dispatch(groupsActions.getSchemes({ communityId }));
-      dispatch(groupsActions.getCommunityScheme({ communityId }));
-    }
+  useEffect(
+    () => {
+      if (communityId) {
+        dispatch(groupsActions.getSchemes({ communityId }));
+        dispatch(groupsActions.getCommunityScheme({ communityId }));
+      }
 
-    return () => {
-      dispatch(groupsActions.setSchemes());
-      dispatch(groupsActions.setCommunityScheme());
-    };
-  }, [communityId]);
+      return () => {
+        dispatch(groupsActions.setSchemes());
+        dispatch(groupsActions.setCommunityScheme());
+      };
+    }, [communityId],
+  );
 
   return (
     <View style={styles.container}>

@@ -11,15 +11,17 @@ export default function* getSystemScheme(): any {
     const response = yield call(groupsDataHelper.getSystemScheme);
     if (response?.data) {
       const dataWithOrderedFixRole = sortFixedRoles(response?.data);
-      yield put(
-        actions.setSystemScheme({ loading: false, data: dataWithOrderedFixRole }),
-      );
+      yield put(actions.setSystemScheme({ loading: false, data: dataWithOrderedFixRole }));
     } else {
       yield put(actions.setSystemScheme({ loading: false }));
     }
   } catch (err) {
     yield put(actions.setSystemScheme({ loading: false }));
-    console.error('getSystemScheme error:', err);
-    yield call(showError, err);
+    console.error(
+      'getSystemScheme error:', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

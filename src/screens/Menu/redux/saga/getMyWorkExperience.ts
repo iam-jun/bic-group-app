@@ -6,13 +6,11 @@ import { mapWorkExperience } from '../helper';
 
 export default function* getMyWorkExperience() {
   try {
-    const response: IResponseData = yield call(
-      menuDataHelper.getMyWorkExperience,
-    );
-    yield put(
-      menuActions.setMyWorkExperience(mapWorkExperience(response?.data)),
-    );
+    const response: IResponseData = yield call(menuDataHelper.getMyWorkExperience);
+    yield put(menuActions.setMyWorkExperience(mapWorkExperience(response?.data)));
   } catch (err) {
-    console.log('getMyWorkExperience error:', err);
+    console.log(
+      'getMyWorkExperience error:', err,
+    );
   }
 }

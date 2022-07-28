@@ -30,32 +30,28 @@ const GroupSchemeAssignment = () => {
 
   const { id: communityId } = useKeySelector(groupsKeySelector.communityDetail);
   const { loadingSchemes, allSchemes } = useKeySelector(groupsKeySelector.permission.schemes) || {};
-  const { loading: loadingAssignments, data: initAssignments } = useKeySelector(
-    groupsKeySelector.permission.assignGroupScheme.assignments,
-  ) || {};
+  const { loading: loadingAssignments, data: initAssignments }
+        = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assignments) || {};
+
   const {
     loading: loadingAssigning,
     data: dataAssigning,
     currentAssignments,
-  } = useKeySelector(
-    groupsKeySelector.permission.assignGroupScheme.assigning,
-  ) || {};
+  } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assigning) || {};
 
   const onPressBack = () => {
     if (!isEmpty(dataAssigning)) {
-      dispatch(
-        modalActions.showAlert({
-          title: t('communities:permission:text_title_discard_create_scheme'),
-          content: t('communities:permission:text_desc_discard_create_scheme'),
-          cancelBtn: true,
-          cancelLabel: t('common:btn_discard'),
-          confirmLabel: t('communities:permission:btn_continue'),
-          cancelBtnProps: {
-            textColor: theme.colors.neutral80,
-          },
-          onCancel: rootNavigation.goBack,
-        }),
-      );
+      dispatch(modalActions.showAlert({
+        title: t('communities:permission:text_title_discard_create_scheme'),
+        content: t('communities:permission:text_desc_discard_create_scheme'),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_discard'),
+        confirmLabel: t('communities:permission:btn_continue'),
+        cancelBtnProps: {
+          textColor: theme.colors.neutral80,
+        },
+        onCancel: rootNavigation.goBack,
+      }));
     } else {
       rootNavigation.goBack();
     }
@@ -68,66 +64,66 @@ const GroupSchemeAssignment = () => {
     || loadingAssigning
     || isEmpty(dataAssigning);
 
-  useEffect(() => {
-    if (!loadingSchemes) {
-      dispatch(groupsActions.getSchemes({ communityId }));
-    }
-    if (!loadingAssignments) {
-      dispatch(groupsActions.getGroupSchemeAssignments({ communityId }));
-    }
-    return () => {
-      dispatch(groupsActions.setGroupSchemeAssignments());
-      dispatch(groupsActions.setGroupSchemeAssigning());
-    };
-  }, []);
+  useEffect(
+    () => {
+      if (!loadingSchemes) {
+        dispatch(groupsActions.getSchemes({ communityId }));
+      }
+      if (!loadingAssignments) {
+        dispatch(groupsActions.getGroupSchemeAssignments({ communityId }));
+      }
+      return () => {
+        dispatch(groupsActions.setGroupSchemeAssignments());
+        dispatch(groupsActions.setGroupSchemeAssigning());
+      };
+    }, [],
+  );
 
-  useEffect(() => {
-    if (initAssignments) {
-      dispatch(
-        groupsActions.setGroupSchemeAssigning({
+  useEffect(
+    () => {
+      if (initAssignments) {
+        dispatch(groupsActions.setGroupSchemeAssigning({
           data: [],
           currentAssignments: cloneDeep(initAssignments),
-        }),
-      );
-    }
-  }, [initAssignments]);
+        }));
+      }
+    }, [initAssignments],
+  );
 
   const putGroupSchemeAssignments = debounce(() => {
-    dispatch(
-      groupsActions.putGroupSchemeAssignments({
-        communityId,
-        data: dataAssigning,
-        currentAssignments,
-      }),
-    );
+    dispatch(groupsActions.putGroupSchemeAssignments({
+      communityId,
+      data: dataAssigning,
+      currentAssignments,
+    }));
   });
 
   const onPressAssign = () => {
     if (communityId && !isEmpty(dataAssigning)) {
-      dispatch(
-        modalActions.showAlert({
-          title: t('communities:permission:text_title_assign_group_confirm'),
-          cancelBtn: true,
-          cancelLabel: t('common:btn_cancel'),
-          confirmLabel: t('communities:permission:btn_assign'),
-          onConfirm: putGroupSchemeAssignments,
-          style: { width: '90%' },
-          children: <AlertAssignGroupConfirmContent />,
-        }),
-      );
+      dispatch(modalActions.showAlert({
+        title: t('communities:permission:text_title_assign_group_confirm'),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_cancel'),
+        confirmLabel: t('communities:permission:btn_assign'),
+        onConfirm: putGroupSchemeAssignments,
+        style: { width: '90%' },
+        children: <AlertAssignGroupConfirmContent />,
+      }));
     }
   };
 
   const onPressGroup = (group: IGroup) => {
-    rootNavigation.navigate(groupStack.groupSchemeAssignSelection, { group });
+    rootNavigation.navigate(
+      groupStack.groupSchemeAssignSelection, { group },
+    );
   };
 
   const renderItemExtraInfo = (group: any) => {
-    const { scheme_id } = group || {};
-    if (!scheme_id) {
+    const { schemeId } = group || {};
+    if (!schemeId) {
       return null;
     }
-    const schemeName = allSchemes?.[scheme_id]?.name;
+    const schemeName = allSchemes?.[schemeId]?.name;
     return (
       <View style={styles.schemeNameContainer}>
         <Text.BodyS numberOfLines={1}>{schemeName}</Text.BodyS>
@@ -190,7 +186,7 @@ const createStyle = (theme: ExtendedTheme) => {
   return StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: colors.gray40,
+      backgroundColor: colors.gray5,
     },
     textHeader: {
       margin: spacing.margin.large,

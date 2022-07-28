@@ -19,11 +19,13 @@ export default function useWindowDimensions() {
     fontScale,
   });
 
-  useEffect(() => {
-    setDimensions((s) => ({
-      ...s, height, width, scale, fontScale,
-    }));
-  }, [height, width, scale, fontScale]);
+  useEffect(
+    () => {
+      setDimensions((s) => ({
+        ...s, height, width, scale, fontScale,
+      }));
+    }, [height, width, scale, fontScale],
+  );
 
   return dimensions;
 }

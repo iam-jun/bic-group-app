@@ -44,7 +44,9 @@ const CommentInputFooter: FC<CommentInputFooterProps> = ({
     position: 'absolute',
     left: 0,
     right: 0,
-    opacity: interpolate(showMentionValue.value, [0, 1], [0, 1]),
+    opacity: interpolate(
+      showMentionValue.value, [0, 1], [0, 1],
+    ),
   }));
 
   const onVisibleMentionBar = (isVisible: boolean) => {

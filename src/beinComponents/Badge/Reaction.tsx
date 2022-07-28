@@ -42,11 +42,15 @@ const Reaction: React.FC<ReactionProps> = ({
   const [isSelected, setIsSelected] = useState<boolean>(selected);
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = createStyles(theme, isSelected, loading);
+  const styles = createStyles(
+    theme, isSelected, loading,
+  );
 
-  useEffect(() => {
-    setIsSelected(selected);
-  }, [selected]);
+  useEffect(
+    () => {
+      setIsSelected(selected);
+    }, [selected],
+  );
 
   const emoji = NodeEmoji.find(icon || '')?.emoji || '';
 

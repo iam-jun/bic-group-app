@@ -22,25 +22,25 @@ export default function* getCommunitySearch({
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const data = yield call(groupsDataHelper.getCommunities, {
+    const response = yield call(groupsDataHelper.getCommunities, {
       limit: appConfig.recordsPerPage,
       offset: ids.length,
       ...payload,
     });
 
-    const newIds = data.map((item: ICommunity) => item.id);
-    const newItems = mapItems(data);
+    const communities = response.data;
+    const newIds = communities.map((item: ICommunity) => item.id);
+    const newItems = mapItems(communities);
 
-    yield put(
-      groupsActions.setCommunitySearch({
-        loading: false,
-        canLoadMore: newIds.length === appConfig.recordsPerPage,
-        ids: [...ids, ...newIds],
-        items: { ...items, ...newItems },
-      }),
-    );
+    yield put(groupsActions.setCommunitySearch({
+      loading: false,
+      canLoadMore: newIds.length === appConfig.recordsPerPage,
+      ids: [...ids, ...newIds],
+      items: { ...items, ...newItems },
+    }));
   } catch (err) {
     console.error('getCommunitySearch error:', err);
+    yield put(groupsActions.setCommunitySearch({ loading: false }));
     yield call(showError, err);
   }
 }

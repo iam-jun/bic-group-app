@@ -69,7 +69,9 @@ const _PostDetailContent = (props: any) => {
   const { rootNavigation } = useRootNavigation();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = useMemo(() => createStyle(theme), [theme]);
+  const styles = useMemo(
+    () => createStyle(theme), [theme],
+  );
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
@@ -80,9 +82,7 @@ const _PostDetailContent = (props: any) => {
   const deleted = useKeySelector(postKeySelector.postDeletedById(id));
   const createdAt = useKeySelector(postKeySelector.postCreatedAtById(id));
   const audience = useKeySelector(postKeySelector.postAudienceById(id));
-  const commentLeft = useKeySelector(
-    postKeySelector.postCommentOnlyCountById(id),
-  );
+  const commentLeft = useKeySelector(postKeySelector.postCommentOnlyCountById(id));
   const commentError = useKeySelector(postKeySelector.commentErrorCode);
 
   const commentList = useKeySelector(postKeySelector.postCommentListById(id));
@@ -96,22 +96,28 @@ const _PostDetailContent = (props: any) => {
   const isFocused = useIsFocused();
 
   const headerTitle = actor?.fullname
-    ? t('post:title_post_detail_of').replace('%NAME%', actor?.fullname)
+    ? t('post:title_post_detail_of').replace(
+      '%NAME%', actor?.fullname,
+    )
     : t('post:title_post_detail');
 
-  useEffect(() => {
-    onPressMarkSeenPost();
-    return () => {
-      dispatch(postActions.setCreatePostInitAudiences());
-      dispatch(postActions.setCommentErrorCode(false));
-    };
-  }, []);
+  useEffect(
+    () => {
+      onPressMarkSeenPost();
+      return () => {
+        dispatch(postActions.setCreatePostInitAudiences());
+        dispatch(postActions.setCommentErrorCode(false));
+      };
+    }, [],
+  );
 
-  useEffect(() => () => {
-    if (commentError === API_ERROR_CODE.POST.postDeleted) {
-      dispatch(postActions.deletePostLocal(id));
-    }
-  }, [commentError]);
+  useEffect(
+    () => () => {
+      if (commentError === API_ERROR_CODE.POST.postDeleted) {
+        dispatch(postActions.deletePostLocal(id));
+      }
+    }, [commentError],
+  );
 
   const onPressMarkSeenPost = () => {
     if (!loading) {
@@ -131,17 +137,15 @@ const _PostDetailContent = (props: any) => {
     const newCommentSelectedImage = commentInputRef?.current?.hasMedia?.();
 
     if (newCommentInput !== '' || newCommentSelectedImage) {
-      dispatch(
-        modalActions.showAlert({
-          title: t('post:title_discard_comment'),
-          content: t('post:text_discard_comment'),
-          showCloseButton: true,
-          cancelBtn: true,
-          cancelLabel: t('post:btn_continue_comment'),
-          confirmLabel: t('post:btn_discard_comment'),
-          onConfirm: () => rootNavigation.goBack(),
-        }),
-      );
+      dispatch(modalActions.showAlert({
+        title: t('post:title_discard_comment'),
+        content: t('post:text_discard_comment'),
+        showCloseButton: true,
+        cancelBtn: true,
+        cancelLabel: t('post:btn_continue_comment'),
+        confirmLabel: t('post:btn_discard_comment'),
+        onConfirm: () => rootNavigation.goBack(),
+      }));
       return;
     }
     if (!rootNavigation.canGoBack) {
@@ -153,91 +157,101 @@ const _PostDetailContent = (props: any) => {
 
   useBackPressListener(onPressBack);
 
-  useEffect(() => {
-    if (!user) {
-      rootNavigation.replace(rootSwitch.authStack);
-    }
-  }, [isFocused, user]);
+  useEffect(
+    () => {
+      if (!user) {
+        rootNavigation.replace(rootSwitch.authStack);
+      }
+    }, [isFocused, user],
+  );
 
-  useEffect(() => {
-    internetReachableRef.current = isInternetReachable;
-  }, [isInternetReachable]);
+  useEffect(
+    () => {
+      internetReachableRef.current = isInternetReachable;
+    }, [isInternetReachable],
+  );
 
-  useEffect(() => {
-    if (id && userId && internetReachableRef.current) {
-      getPostDetail((loading, success) => {
-        if (!loading && !success && internetReachableRef.current) {
+  useEffect(
+    () => {
+      if (id && userId && internetReachableRef.current) {
+        getPostDetail((
+          loading, success,
+        ) => {
+          if (!loading && !success && internetReachableRef.current) {
           // showNotice();
-        }
-      });
-    }
-  }, [id, userId, internetReachableRef]);
+          }
+        });
+      }
+    }, [id, userId, internetReachableRef],
+  );
 
-  useEffect(() => {
-    if (audience?.groups?.length > 0) {
-      const ids: any = [];
-      audience.groups.map((g: IAudienceGroup) => ids.push(g?.id));
-      setGroupIds(ids?.join?.(','));
-    }
-  }, [audience?.groups]);
+  useEffect(
+    () => {
+      if (audience?.groups?.length > 0) {
+        const ids: any = [];
+        audience.groups.map((g: IAudienceGroup) => ids.push(g?.id));
+        setGroupIds(ids?.join?.(','));
+      }
+    }, [audience?.groups],
+  );
 
   const showNotice = (isSetRefreshing?: boolean) => {
     isSetRefreshing && setRefreshing(true);
     setIsEmpty(true);
-    dispatch(
-      modalActions.showAlert({
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        HeaderImageComponent: (
-          <View style={{ alignItems: 'center' }}>
-            <SVGIcon
-              source={CommentNotFoundImg}
-              width={120}
-              height={120}
-              tintColor="none"
-            />
-          </View>
-        ),
-        title: t('post:deleted_post:title'),
-        titleProps: { style: { flex: 1, textAlign: 'center' } },
-        showCloseButton: false,
-        cancelBtn: false,
-        isDismissible: true,
-        onConfirm: () => {
-          rootNavigation.canGoBack && rootNavigation.goBack();
-        },
-        confirmLabel: t('post:deleted_post:button_text'),
-        content: t('post:deleted_post:description'),
-        contentProps: { style: { textAlign: 'center' } },
-        ContentComponent: Text.BodyS,
-        buttonViewStyle: { justifyContent: 'center' },
-        headerStyle: { marginBottom: 0 },
-        onDismiss: () => {
-          rootNavigation.canGoBack && rootNavigation.goBack();
-        },
-      }),
-    );
+    dispatch(modalActions.showAlert({
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      HeaderImageComponent: (
+        <View style={{ alignItems: 'center' }}>
+          <SVGIcon
+            source={CommentNotFoundImg}
+            width={120}
+            height={120}
+            tintColor="none"
+          />
+        </View>
+      ),
+      title: t('post:deleted_post:title'),
+      titleProps: { style: { flex: 1, textAlign: 'center' } },
+      showCloseButton: false,
+      cancelBtn: false,
+      isDismissible: true,
+      onConfirm: () => {
+        rootNavigation.canGoBack && rootNavigation.goBack();
+      },
+      confirmLabel: t('post:deleted_post:button_text'),
+      content: t('post:deleted_post:description'),
+      contentProps: { style: { textAlign: 'center' } },
+      ContentComponent: Text.BodyS,
+      buttonViewStyle: { justifyContent: 'center' },
+      headerStyle: { marginBottom: 0 },
+      onDismiss: () => {
+        rootNavigation.canGoBack && rootNavigation.goBack();
+      },
+    }));
     isSetRefreshing && setRefreshing(false);
   };
 
-  useEffect(() => {
-    if (deleted) {
-      if (noti_id) {
-        rootNavigation.goBack();
-      } else showNotice();
-    }
-  }, [deleted]);
+  useEffect(
+    () => {
+      if (deleted) {
+        if (noti_id) {
+          rootNavigation.goBack();
+        } else showNotice();
+      }
+    }, [deleted],
+  );
 
-  useEffect(() => {
-    if (scrollToLatestItem) {
-      onCommentSuccess(scrollToLatestItem);
-      dispatch(postActions.setScrollToLatestItem(null));
-    }
-  }, [scrollToLatestItem]);
+  useEffect(
+    () => {
+      if (scrollToLatestItem) {
+        onCommentSuccess(scrollToLatestItem);
+        dispatch(postActions.setScrollToLatestItem(null));
+      }
+    }, [scrollToLatestItem],
+  );
 
-  const getPostDetail = (
-    callbackLoading?: (loading: boolean, success: boolean) => void,
-  ) => {
+  const getPostDetail = (callbackLoading?: (loading: boolean, success: boolean) => void) => {
     if (userId && id) {
       const payload: IPayloadGetPostDetail = {
         postId: id,
@@ -259,7 +273,9 @@ const _PostDetailContent = (props: any) => {
     }
   };
 
-  const scrollTo = (sectionIndex = 0, itemIndex = 0) => {
+  const scrollTo = (
+    sectionIndex = 0, itemIndex = 0,
+  ) => {
     if (sectionData.length > 0) {
       if (sectionIndex > sectionData.length - 1 || sectionIndex === -1) {
         sectionIndex = sectionData.length - 1;
@@ -291,24 +307,34 @@ const _PostDetailContent = (props: any) => {
   const onScrollToIndexFailed = () => {
     countRetryScrollToBottom += 1;
     if (countRetryScrollToBottom < 20) {
-      setTimeout(() => {
-        scrollTo(-1, -1);
+      setTimeout(
+        () => {
+          scrollTo(
+            -1, -1,
+          );
         // scrollTo(Math.min(9, sectionData.length - 1), -1);
-      }, 100);
+        }, 100,
+      );
     }
   };
 
-  const onPressComment = useCallback(() => {
-    scrollTo(-1, -1);
-    commentInputRef.current?.focus?.();
-  }, [commentInputRef, sectionData.length]);
+  const onPressComment = useCallback(
+    () => {
+      scrollTo(
+        -1, -1,
+      );
+      commentInputRef.current?.focus?.();
+    }, [commentInputRef, sectionData.length],
+  );
 
   const onCommentSuccess = useCallback(
     ({ parentCommentId }: {newCommentId: string; parentCommentId?: string}) => {
       let sectionIndex;
       let itemIndex = 0;
       if (parentCommentId) {
-        sectionData?.forEach?.((section, index) => {
+        sectionData?.forEach?.((
+          section, index,
+        ) => {
           if (section?.comment?.id === parentCommentId) {
             sectionIndex = index;
             itemIndex = section?.data?.length || 0;
@@ -317,7 +343,9 @@ const _PostDetailContent = (props: any) => {
       } else {
         sectionIndex = sectionData.length - 1;
       }
-      scrollTo(sectionIndex, itemIndex);
+      scrollTo(
+        sectionIndex, itemIndex,
+      );
     },
     [sectionData],
   );
@@ -327,17 +355,21 @@ const _PostDetailContent = (props: any) => {
     replyItem?: any,
     commentParent?: any,
   ) => {
-    rootNavigation.navigate(homeStack.commentDetail, {
-      commentId: commentData?.id || 0,
-      postId: id,
-      replyItem,
-      commentParent,
-    });
+    rootNavigation.navigate(
+      homeStack.commentDetail, {
+        commentId: commentData?.id || 0,
+        postId: id,
+        replyItem,
+        commentParent,
+      },
+    );
   };
 
   const onPressReplySectionHeader = useCallback(
     (commentData) => {
-      navigateToCommentDetailScreen(commentData, commentData);
+      navigateToCommentDetailScreen(
+        commentData, commentData,
+      );
     },
     [sectionData],
   );
@@ -371,7 +403,9 @@ const _PostDetailContent = (props: any) => {
   };
 
   const onPressReplyCommentItem = useCallback(
-    (commentData, section) => {
+    (
+      commentData, section,
+    ) => {
       navigateToCommentDetailScreen(
         section?.comment || {},
         commentData,
@@ -399,20 +433,27 @@ const _PostDetailContent = (props: any) => {
 
   const renderFooter = () => <View style={styles.footer} />;
 
-  const onLayout = useCallback(() => {
-    if (!layoutSet.current) {
-      layoutSet.current = true;
-      if (focus_comment && listComment?.length > 0) {
+  const onLayout = useCallback(
+    () => {
+      if (!layoutSet.current) {
+        layoutSet.current = true;
+        if (focus_comment && listComment?.length > 0) {
         // limit section index to default comment length = 10 to avoid scroll crash.
-        // it happen when init with large amount of comment, then scroll, then reload, result only 10 latest comment, scroll to out of index
-        const sectionIndex = Math.min(9, sectionData.length - 1);
-        scrollTo(sectionIndex, -1);
+        // it happen when init with large amount of comment,
+        // then scroll, then reload, result only 10 latest comment, scroll to out of index
+          const sectionIndex = Math.min(
+            9, sectionData.length - 1,
+          );
+          scrollTo(
+            sectionIndex, -1,
+          );
+        }
+        if (focus_comment) {
+          commentInputRef.current?.focus?.();
+        }
       }
-      if (focus_comment) {
-        commentInputRef.current?.focus?.();
-      }
-    }
-  }, [layoutSet, sectionData.length, focus_comment, listComment?.length]);
+    }, [layoutSet, sectionData.length, focus_comment, listComment?.length],
+  );
 
   const onscroll = () => {
     DeviceEventEmitter.emit('stopAllVideo');
@@ -515,7 +556,9 @@ const PostDetailContentHeader = ({
 
 const getSectionData = (listComment: ICommentData[]) => {
   const result: any[] = [];
-  listComment?.forEach?.((comment, index) => {
+  listComment?.forEach?.((
+    comment, index,
+  ) => {
     const item: any = {};
     const lastChildComment = comment?.child?.list || [];
     const _data = lastChildComment.length > 0

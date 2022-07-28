@@ -41,20 +41,26 @@ const AtMention = ({
 
   const styles = createStyles(theme);
 
-  useEffect(() => {
-    const listener = DeviceEventEmitter.addListener(
-      'autocomplete-on-selection-change',
-      onCursorPositionChange,
-    );
-    return () => {
-      listener?.remove?.();
-    };
-  }, []);
+  useEffect(
+    () => {
+      const listener = DeviceEventEmitter.addListener(
+        'autocomplete-on-selection-change',
+        onCursorPositionChange,
+      );
+      return () => {
+        listener?.remove?.();
+      };
+    }, [],
+  );
 
   const onCursorPositionChange = debounce(
     ({ position, value, groupIds }: ICursorPositionChange) => {
       text.current = value;
-      checkRunSearch(value.substring(0, position), groupIds, dispatch);
+      checkRunSearch(
+        value.substring(
+          0, position,
+        ), groupIds, dispatch,
+      );
     },
     100,
   );

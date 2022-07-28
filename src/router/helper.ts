@@ -28,25 +28,37 @@ export interface Props {
   setParams: (params: any) => void;
 }
 
-export const withNavigation = (
-  navigationRef: RefObject<NavigationContainerRef<any>> | null | undefined,
-): Props => {
+export const withNavigation = (navigationRef: RefObject<NavigationContainerRef<any>> | null | undefined): Props => {
   const canGoBack = navigationRef?.current?.canGoBack();
 
-  const navigate = (name: string, params?: IObject<unknown>): void => {
+  const navigate = (
+    name: string, params?: IObject<unknown>,
+  ): void => {
     if (isNavigationRefReady?.current && navigationRef?.current) {
-      navigationRef?.current?.navigate(name, params);
+      navigationRef?.current?.navigate(
+        name, params,
+      );
     } else {
-      setTimeout(() => navigationRef?.current?.navigate(name, params), 100);
+      setTimeout(
+        () => navigationRef?.current?.navigate(
+          name, params,
+        ), 100,
+      );
     }
   };
 
-  const replace = (name: string, params?: IObject<unknown>): void => {
+  const replace = (
+    name: string, params?: IObject<unknown>,
+  ): void => {
     if (isNavigationRefReady?.current && navigationRef?.current) {
-      navigationRef?.current?.dispatch(StackActions.replace(name, params));
+      navigationRef?.current?.dispatch(StackActions.replace(
+        name, params,
+      ));
     } else {
       setTimeout(
-        () => navigationRef?.current?.dispatch(StackActions.replace(name, params)),
+        () => navigationRef?.current?.dispatch(StackActions.replace(
+          name, params,
+        )),
         100,
       );
     }
@@ -65,10 +77,12 @@ export const withNavigation = (
     name: string,
     params?: IObject<unknown>,
   ): void => {
-    navigationRef?.current?.navigate(parentName, {
-      screen: name,
-      params,
-    });
+    navigationRef?.current?.navigate(
+      parentName, {
+        screen: name,
+        params,
+      },
+    );
   };
 
   const setParams = (params: any) => {
@@ -87,9 +101,7 @@ export const withNavigation = (
   };
 };
 
-export const getActiveRouteState = (
-  route?: NavigationState | PartialState<NavigationState>,
-): string | null => {
+export const getActiveRouteState = (route?: NavigationState | PartialState<NavigationState>): string | null => {
   if (!route || !isNumber(route?.index)) return null;
 
   const currentRoute = route.routes[route.index];

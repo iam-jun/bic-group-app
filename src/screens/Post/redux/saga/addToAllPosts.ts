@@ -43,9 +43,7 @@ function* addToAllPosts({
   });
   if (handleComment) {
     yield put(postActions.addToAllComments(newComments));
-    yield put(
-      postActions.updateAllCommentsByParentIds(newAllCommentByParentId),
-    );
+    yield put(postActions.updateAllCommentsByParentIds(newAllCommentByParentId));
   }
   yield put(postActions.setAllPosts(newAllPosts));
 }

@@ -25,11 +25,13 @@ export const useMyPermissions = () => {
     }
   };
 
-  useEffect(() => {
-    if (timeGetMyPermissions + EXPIRED_TIME <= Date.now()) {
-      getMyPermissions();
-    }
-  }, [timeGetMyPermissions]);
+  useEffect(
+    () => {
+      if (timeGetMyPermissions + EXPIRED_TIME <= Date.now()) {
+        getMyPermissions();
+      }
+    }, [timeGetMyPermissions],
+  );
 
   const hasPermissions = (
     requiredPermissions: string | string[],
@@ -45,13 +47,15 @@ export const useMyPermissions = () => {
 
   const hasPermissionsOnScopeWithId = (
     scope: 'communities' | 'groups',
-    id: number,
+    id: string,
     requiredPermissions: string | string[],
   ) => {
     // CHECK IF CURRENT USER HAS SOME PERMISSION ON A SPECIFIC SCOPE
 
     const currentPermissions: string[] = data?.[scope]?.[id] || [];
-    return hasPermissions(requiredPermissions, currentPermissions);
+    return hasPermissions(
+      requiredPermissions, currentPermissions,
+    );
   };
 
   // CHECK IF CURRENT USER HAS SOME PERMISSION ON EVERY SCOPE
@@ -59,14 +63,18 @@ export const useMyPermissions = () => {
     scope: 'communities' | 'groups',
     audiences: any[],
     requiredPermissions: string | string[],
-  ) => (audiences || []).every((audience) => hasPermissionsOnScopeWithId(scope, audience.id, requiredPermissions));
+  ) => (audiences || []).every((audience) => hasPermissionsOnScopeWithId(
+    scope, audience.id, requiredPermissions,
+  ));
 
   // CHECK IF CURRENT USER HAS SOME PERMISSION ON AT LEAST 1 SCOPE
   const hasPermissionsOnAtLeastOneScope = (
     scope: 'communities' | 'groups',
     audiences: any[],
     requiredPermissions: string | string[],
-  ) => (audiences || []).some((audience) => hasPermissionsOnScopeWithId(scope, audience.id, requiredPermissions));
+  ) => (audiences || []).some((audience) => hasPermissionsOnScopeWithId(
+    scope, audience.id, requiredPermissions,
+  ));
   return {
     hasPermissionsOnScopeWithId,
     hasPermissionsOnEachScope,

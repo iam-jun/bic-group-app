@@ -16,7 +16,9 @@ export default function* removeGroupAdmin({
   try {
     const { groupId, userId } = payload;
 
-    yield call(groupsDataHelper.removeGroupAdmin, groupId, userId);
+    yield call(
+      groupsDataHelper.removeGroupAdmin, groupId, userId,
+    );
 
     const toastMessage: IToastMessage = {
       content: 'groups:modal_confirm_remove_admin:success_message',
@@ -28,9 +30,15 @@ export default function* removeGroupAdmin({
     yield put(modalActions.showHideToastMessage(toastMessage));
 
     // refresh group detail after adding new admins
-    yield call(refreshGroupMembers, groupId);
+    yield call(
+      refreshGroupMembers, groupId,
+    );
   } catch (err) {
-    console.error('setGroupAdmin: ', err);
-    yield call(showError, err);
+    console.error(
+      'setGroupAdmin: ', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

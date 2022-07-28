@@ -9,7 +9,7 @@ export default function* getGroupSchemeAssignments({
 }: {
   type: string;
   payload: {
-    communityId: number;
+    communityId: string;
     showLoading?: boolean;
   };
 }): any {
@@ -25,12 +25,10 @@ export default function* getGroupSchemeAssignments({
     );
 
     if (response?.data) {
-      yield put(
-        groupsActions.setGroupSchemeAssignments({
-          loading: false,
-          data: response.data,
-        }),
-      );
+      yield put(groupsActions.setGroupSchemeAssignments({
+        loading: false,
+        data: response.data,
+      }));
     } else {
       yield put(groupsActions.setGroupSchemeAssignments({ loading: false }));
     }

@@ -78,12 +78,14 @@ const PostInput: React.FC<PostInputProps> = ({
 
   const getFocused = () => refInput.current?.isFocused();
 
-  useImperativeHandle(refInput, () => ({
-    setFocus,
-    setBlur,
-    setClear,
-    getFocused,
-  }));
+  useImperativeHandle(
+    refInput, () => ({
+      setFocus,
+      setBlur,
+      setClear,
+      getFocused,
+    }),
+  );
 
   return (
     <AutoGrowingTextInput

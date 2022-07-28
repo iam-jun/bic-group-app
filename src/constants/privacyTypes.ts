@@ -1,8 +1,6 @@
 export type GROUP_PRIVACY_TYPE = 'PUBLIC' | 'PRIVATE' | 'SECRET' | 'OPEN';
 export type COMMUNITY_PRIVACY_TYPE = 'PUBLIC' | 'PRIVATE' | 'SECRET';
 
-export type GROUP_TYPE = 'GENERIC' | 'COMMUNITY' | 'COMPANY';
-
 export const groupPrivacy = {
   public: 'PUBLIC',
   private: 'PRIVATE',

@@ -14,7 +14,7 @@ import groupsKeySelector from '../../redux/keySelector';
 import MemberSearchResult from '../../components/MemberSearchResult';
 
 interface SearchMemberViewProps {
-  groupId: number;
+  groupId: string;
   isOpen: boolean;
   placeholder?: string;
   initSearch?: string;
@@ -33,18 +33,16 @@ const SearchMemberView = ({
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const [searchText, setSearchText] = useState(initSearch || '');
-  const styles = createStyles();
-  const can_manage_member = useKeySelector(
-    groupsKeySelector.groupDetail.can_manage_member,
+  const styles = createStyles(theme);
+  const canManageMember = useKeySelector(
+    groupsKeySelector.groupDetail.canManageMember,
   );
   const groupSearchMembers = useKeySelector(
     groupsKeySelector.groupSearchMembers,
   );
 
   const getGroupSearchMembers = (searchText: string) => {
-    dispatch(
-      actions.getGroupSearchMembers({ groupId, params: { key: searchText } }),
-    );
+    dispatch(actions.getGroupSearchMembers({ groupId, params: { key: searchText } }));
   };
 
   const onLoadMore = () => {
@@ -58,7 +56,9 @@ const SearchMemberView = ({
   };
 
   const searchHandler = useCallback(
-    debounce(searchMembers, appConfig.searchTriggerTime),
+    debounce(
+      searchMembers, appConfig.searchTriggerTime,
+    ),
     [],
   );
 
@@ -75,7 +75,7 @@ const SearchMemberView = ({
     >
       {searchText ? (
         <MemberSearchResult
-          canManageMember={can_manage_member}
+          canManageMember={canManageMember}
           memberSearchData={groupSearchMembers}
           onLoadMore={onLoadMore}
           onPressMenu={onPressMenu}

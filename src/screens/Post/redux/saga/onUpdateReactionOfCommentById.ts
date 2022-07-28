@@ -10,13 +10,15 @@ import postActions from '../actions';
 import postKeySelector from '../keySelector';
 
 export default function* onUpdateReactionOfCommentById(
-  commentId:string| number,
+  commentId: string,
   ownReaction: IOwnReaction,
   reactionCounts: IReactionCounts,
   defaultComment?: ICommentData,
 ): any {
   try {
-    const allComments = yield select((state) => get(state, postKeySelector.allComments)) || {};
+    const allComments = yield select((state) => get(
+      state, postKeySelector.allComments,
+    )) || {};
     const comment: ICommentData = allComments?.[commentId] || defaultComment || {};
     const newComment = { ...comment };
     newComment.reactionsCount = reactionCounts;
@@ -24,6 +26,8 @@ export default function* onUpdateReactionOfCommentById(
     allComments[commentId] = newComment;
     yield put(postActions.setAllComments(allComments));
   } catch (e) {
-    console.error('\x1b[31m', '🐣️ onUpdateReactionOfPost error: ', e, '\x1b[0m');
+    console.error(
+      '\x1b[31m', '🐣️ onUpdateReactionOfPost error: ', e, '\x1b[0m',
+    );
   }
 }

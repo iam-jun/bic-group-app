@@ -12,7 +12,7 @@ import spacing from '~/theme/spacing';
 
 interface CommunityItemProps {
   item: ICommunity;
-  onPressCommunities?: (communityId: number) => void;
+  onPressCommunities?: (communityId: string) => void;
   onPressMenu?: () => void;
 }
 
@@ -27,7 +27,7 @@ const CommunityItem = ({
   const { t } = useBaseHook();
 
   const {
-    id, name, icon, user_count, privacy,
+    id, name, icon, userCount, privacy,
   } = item || {};
   const privacyData = privacyTypes.find((i) => i?.type === privacy) || {};
   const { icon: privacyIcon, title: privacyTitle }: any = privacyData || {};
@@ -45,15 +45,15 @@ const CommunityItem = ({
       </Text.BodyS>
       <Text.BodyS color={colors.gray50}>{'  •  '}</Text.BodyS>
       <Text.BodyS color={colors.gray50}>
-        {`${user_count} ${t(
+        {`${userCount} ${t(
           'groups:text_members',
           {
-            count: user_count,
+            count: userCount,
           },
         )}`}
       </Text.BodyS>
     </View>
-  );
+  )
 
   return (
     <PrimaryItem

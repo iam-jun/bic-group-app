@@ -6,7 +6,7 @@ import {
 } from './IPost';
 
 export interface IGetStreamNotificationActivity {
-  id: number;
+  id: string;
   actor: IGetStreamUser;
   content?: string;
   media: any;

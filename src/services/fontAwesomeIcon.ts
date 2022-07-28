@@ -336,6 +336,8 @@ export const fontAwesomeIcons = {
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(
-  (acc, cur) => ({ ...acc, [cur]: cur }),
+  (
+    acc, cur,
+  ) => ({ ...acc, [cur]: cur }),
   {},
 );

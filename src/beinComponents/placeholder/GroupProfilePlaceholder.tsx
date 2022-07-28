@@ -37,34 +37,52 @@ const GroupProfilePlaceholder: React.FC<GroupProfilePlaceholderProps> = ({
           Left={(p) => <PlaceholderMedia style={[p.style, styles.avatar]} />}
           style={styles.infoContainer}
         >
-          <PlaceholderLine width={disableRandom ? 50 : getRandomInt(30, 60)} />
+          <PlaceholderLine width={disableRandom ? 50 : getRandomInt(
+            30, 60,
+          )}
+          />
           <View style={styles.infoText}>
-            <PlaceholderLine width={disableRandom ? 4 : getRandomInt(3, 8)} />
+            <PlaceholderLine width={disableRandom ? 4 : getRandomInt(
+              3, 8,
+            )}
+            />
             <PlaceholderLine
-              width={disableRandom ? 12 : getRandomInt(8, 20)}
+              width={disableRandom ? 12 : getRandomInt(
+                8, 20,
+              )}
               style={styles.marginLeft}
             />
             <PlaceholderLine
-              width={disableRandom ? 10 : getRandomInt(10, 20)}
+              width={disableRandom ? 10 : getRandomInt(
+                10, 20,
+              )}
               style={styles.marginLeft}
             />
           </View>
         </Placeholder>
         <View style={styles.tabButton}>
           <PlaceholderLine
-            width={disableRandom ? 25 : getRandomInt(10, 20)}
+            width={disableRandom ? 25 : getRandomInt(
+              10, 20,
+            )}
             style={styles.marginLeft}
           />
           <PlaceholderLine
-            width={disableRandom ? 15 : getRandomInt(10, 20)}
+            width={disableRandom ? 15 : getRandomInt(
+              10, 20,
+            )}
             style={styles.marginLeft}
           />
           <PlaceholderLine
-            width={disableRandom ? 20 : getRandomInt(10, 20)}
+            width={disableRandom ? 20 : getRandomInt(
+              10, 20,
+            )}
             style={styles.marginLeft}
           />
           <PlaceholderLine
-            width={disableRandom ? 22 : getRandomInt(10, 20)}
+            width={disableRandom ? 22 : getRandomInt(
+              10, 20,
+            )}
             style={styles.marginLeft}
           />
         </View>

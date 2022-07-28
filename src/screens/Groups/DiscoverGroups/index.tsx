@@ -30,17 +30,17 @@ const DiscoverGroups = ({ route }: any) => {
 
   const {
     ids, items, loading, canLoadMore,
-  } = useKeySelector(
-    groupsKeySelector.discoverGroups,
-  );
+  } = useKeySelector(groupsKeySelector.discoverGroups);
 
   const getDiscoverGroups = (isRefreshing?: boolean) => {
     dispatch(actions.getDiscoverGroups({ communityId, isRefreshing }));
   };
 
-  useEffect(() => {
-    getDiscoverGroups(true); // refreshing whenever open
-  }, [communityId]);
+  useEffect(
+    () => {
+      getDiscoverGroups(true); // refreshing whenever open
+    }, [communityId],
+  );
 
   const onLoadMore = () => {
     canLoadMore && getDiscoverGroups();
@@ -50,15 +50,21 @@ const DiscoverGroups = ({ route }: any) => {
     getDiscoverGroups(true);
   };
 
-  const onPressGroup = (groupId: number) => {
-    rootNavigation.navigate(groupStack.groupDetail, { groupId });
+  const onPressGroup = (groupId: string) => {
+    rootNavigation.navigate(
+      groupStack.groupDetail, { groupId },
+    );
   };
 
-  const onPressJoin = (groupId: number, groupName: string) => {
+  const onPressJoin = (
+    groupId: string, groupName: string,
+  ) => {
     dispatch(actions.joinNewGroup({ groupId, groupName }));
   };
 
-  const onPressCancel = (groupId: number, groupName: string) => {
+  const onPressCancel = (
+    groupId: string, groupName: string,
+  ) => {
     dispatch(actions.cancelJoinGroup({ groupId, groupName }));
   };
 
@@ -111,7 +117,9 @@ const DiscoverGroups = ({ route }: any) => {
         testID="flatlist"
         data={ids}
         renderItem={renderItem}
-        keyExtractor={(item, index) => `groups_${item}_${index}`}
+        keyExtractor={(
+          item, index,
+        ) => `groups_${item}_${index}`}
         onEndReached={onLoadMore}
         onEndReachedThreshold={0.1}
         ListEmptyComponent={renderEmptyComponent}

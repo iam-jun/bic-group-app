@@ -16,7 +16,9 @@ export default function* getHomePosts({
     const { isRefresh } = payload;
     let homePosts; let
       offset;
-    const { noMoreHomePosts, loadingHomePosts } = yield select((state) => get(state, 'home'));
+    const { noMoreHomePosts, loadingHomePosts } = yield select((state) => get(
+      state, 'home',
+    ));
 
     if ((noMoreHomePosts || loadingHomePosts) && !isRefresh) {
       return;
@@ -28,7 +30,9 @@ export default function* getHomePosts({
       offset = 0;
     } else {
       yield put(homeActions.setLoadingHomePosts(true));
-      homePosts = yield select((state) => get(state, homeKeySelector.homePosts)) || [];
+      homePosts = yield select((state) => get(
+        state, homeKeySelector.homePosts,
+      )) || [];
       offset = homePosts?.length || 0;
     }
 

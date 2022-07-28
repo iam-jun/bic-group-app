@@ -65,7 +65,9 @@ const PermissionsPopupContent: React.FC<PermissionsPopupContentProps> = ({
           {description}
         </Text.BodyS>
       </View>
-      {(steps || []).map((item: PrimaryItemProps, index: number) => (
+      {(steps || []).map((
+        item: PrimaryItemProps, index: number,
+      ) => (
         <View key={`${index}_${item.title}`} style={styles.itemContainer}>
           <PrimaryItem
             title={item.title}

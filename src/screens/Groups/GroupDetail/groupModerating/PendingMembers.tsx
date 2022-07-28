@@ -13,21 +13,21 @@ const GroupPendingMembers = (props: any) => {
   const dispatch = useDispatch();
   const { params } = props.route;
   const { id: groupId } = params || {};
-  const { ids, canLoadMore } = useKeySelector(
-    groupsKeySelector.groupMemberRequests,
-  );
+  const { ids, canLoadMore } = useKeySelector(groupsKeySelector.groupMemberRequests);
 
   const getData = (isRefreshing?: boolean) => {
     dispatch(groupsActions.getGroupMemberRequests({ groupId, isRefreshing }));
   };
 
-  useEffect(() => {
-    onRefresh();
+  useEffect(
+    () => {
+      onRefresh();
 
-    return () => {
-      onRefresh(); // to update the total member requests again on press back
-    };
-  }, [groupId]);
+      return () => {
+        onRefresh(); // to update the total member requests again on press back
+      };
+    }, [groupId],
+  );
 
   const onLoadMore = () => {
     canLoadMore && getData();

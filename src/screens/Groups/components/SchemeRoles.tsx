@@ -29,13 +29,9 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
   const theme: ExtendedTheme = useTheme();
   const styles = createStyle(theme);
 
-  const permissionCategories = useKeySelector(
-    groupsKeySelector.permission.categories,
-  );
+  const permissionCategories = useKeySelector(groupsKeySelector.permission.categories);
 
-  const memberRoleIndex = useKeySelector(
-    groupsKeySelector.permission.creatingScheme.memberRoleIndex,
-  );
+  const memberRoleIndex = useKeySelector(groupsKeySelector.permission.creatingScheme.memberRoleIndex);
 
   if (!roles || !permissionCategories) {
     return null;
@@ -48,7 +44,9 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
   return (
     <>
       {!!title && <Text.BodyM style={styles.title}>{title}</Text.BodyM>}
-      {roles?.map?.((role: any, roleIndex: number) => (
+      {roles?.map?.((
+        role: any, roleIndex: number,
+      ) => (
         <RoleItem
           key={`role_${role?.id || `${role?.type}_${role?.scope}`}`}
           categories={categories}
@@ -67,7 +65,9 @@ const SchemeRoles: FC<SchemeRolesProps> = ({
               layout: { y: anchor },
             },
           }: any) => {
-            onAnchorRole?.(roleIndex, role?.name, anchor);
+            onAnchorRole?.(
+              roleIndex, role?.name, anchor,
+            );
           }}
           onPressPermission={onPressPermission}
         />

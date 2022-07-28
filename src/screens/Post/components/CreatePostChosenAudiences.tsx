@@ -25,11 +25,11 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
 
   const theme: ExtendedTheme = useTheme();
 
-  const chosenAudiences = useKeySelector(
-    postKeySelector.createPost.chosenAudiences,
-  );
+  const chosenAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
 
-  const names = getNames(chosenAudiences, t);
+  const names = getNames(
+    chosenAudiences, t,
+  );
 
   const onPressSelectAudience = () => {
     rootNavigation.navigate(homeStack.postSelectAudience);
@@ -68,15 +68,15 @@ const CreatePostChosenAudiences: React.FC<CreatePostChosenAudiencesProps> = ({
   );
 };
 
-const getNames = (chosenAudiences: IAudience[], t: any) => {
+const getNames = (
+  chosenAudiences: IAudience[], t: any,
+) => {
   let result = '';
   if (chosenAudiences?.length > 0) {
     result = chosenAudiences?.[0]?.name || '';
     const countLeft = chosenAudiences.length - 1;
     if (countLeft > 0) {
-      result = `${result} ${t('post:and')} ${countLeft} ${t(
-        'post:other_places',
-      )}`;
+      result = `${result} ${t('post:and')} ${countLeft} ${t('post:other_places')}`;
     }
   }
   return result;

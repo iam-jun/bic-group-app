@@ -70,7 +70,9 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
 
-  const renderIcon = (iconSource: any, iconProps: IconProps | undefined) => {
+  const renderIcon = (
+    iconSource: any, iconProps: IconProps | undefined,
+  ) => {
     if (iconSource) {
       // @ts-ignore
       const size = textStyles[textVariant].lineHeight;
@@ -128,7 +130,9 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
         ])}
       >
         {renderLoading()}
-        {renderIcon(leftIcon, leftIconProps)}
+        {renderIcon(
+          leftIcon, leftIconProps,
+        )}
         {typeof children === 'string' ? (
           <Text
             variant={textVariant}
@@ -142,7 +146,9 @@ const ButtonWrapper: React.FC<ButtonWrapperProps> = ({
         ) : (
           children
         )}
-        {renderIcon(rightIcon, rightIconProps)}
+        {renderIcon(
+          rightIcon, rightIconProps,
+        )}
       </View>
     </TouchableComponent>
   );

@@ -1,12 +1,16 @@
 import i18next from 'i18next';
 import moment from 'moment';
 
-export const formatShortTime = (time: any, lang: any) => {
+export const formatShortTime = (
+  time: any, lang: any,
+) => {
   moment.locale(lang);
   let result = '';
   const date = moment.utc(time).unix();
   const now = moment().unix();
-  const deltaSecond = Math.max(now - date, date - now);
+  const deltaSecond = Math.max(
+    now - date, date - now,
+  );
   if (deltaSecond < 60) {
     result = i18next.t('common:time:now');
   } else if (deltaSecond < 60 * 60) {
@@ -27,19 +31,25 @@ export const formatShortTime = (time: any, lang: any) => {
     }${i18next.t('common:time:short_week')}`;
   } else {
     const formats = [moment.ISO_8601, 'MM/DD/YYYY'];
-    const d = moment(time, formats, true);
+    const d = moment(
+      time, formats, true,
+    );
     result = d.format(lang === 'vi' ? 'DD/MM/YYYY' : 'MMM DD, YYYY');
   }
   return result;
 };
 
-export const formatFullTime = (time: any, lang: any) => {
+export const formatFullTime = (
+  time: any, lang: any,
+) => {
   moment.locale(lang);
   let result = '';
   const dateUtc = moment.utc(time);
   const localDate = dateUtc.local();
   const formats = [moment.ISO_8601, 'MM/DD/YYYY'];
-  const date = moment(localDate, formats, true);
+  const date = moment(
+    localDate, formats, true,
+  );
   const isSameYear = date?.year?.() === moment().year();
 
   let formatPreviousDay = '';
@@ -51,34 +61,38 @@ export const formatFullTime = (time: any, lang: any) => {
       : 'MMM DD, yyyy';
   }
 
-  result = date.calendar(null, {
-    lastDay: `[${i18next.t('common:time:yesterday')} ${i18next.t(
-      'common:time:at',
-    )}] hh:mm A`,
-    sameDay: `[${i18next.t('common:time:today')} ${i18next.t(
-      'common:time:at',
-    )}] hh:mm A`,
-    lastWeek: formatPreviousDay,
-    sameElse: formatPreviousDay,
-  });
+  result = date.calendar(
+    null, {
+      lastDay: `[${i18next.t('common:time:yesterday')} ${i18next.t('common:time:at')}] hh:mm A`,
+      sameDay: `[${i18next.t('common:time:today')} ${i18next.t('common:time:at')}] hh:mm A`,
+      lastWeek: formatPreviousDay,
+      sameElse: formatPreviousDay,
+    },
+  );
   return result;
 };
 
-export const formatDateTime = (time: any, lang: any) => {
+export const formatDateTime = (
+  time: any, lang: any,
+) => {
   moment.locale(lang);
   let result = '';
   const dateUtc = moment.utc(time);
   const localDate = dateUtc.local();
   const formats = [moment.ISO_8601, 'MM/DD/YYYY'];
-  const date = moment(localDate, formats, true);
+  const date = moment(
+    localDate, formats, true,
+  );
 
   const formatPreviousDay = lang === 'vi' ? 'DD/MM/yyyy' : 'MMM DD, yyyy';
 
-  result = date.calendar(null, {
-    lastDay: `[${i18next.t('common:time:yesterday')}]`,
-    sameDay: `[${i18next.t('common:time:today')}]`,
-    lastWeek: formatPreviousDay,
-    sameElse: formatPreviousDay,
-  });
+  result = date.calendar(
+    null, {
+      lastDay: `[${i18next.t('common:time:yesterday')}]`,
+      sameDay: `[${i18next.t('common:time:today')}]`,
+      lastWeek: formatPreviousDay,
+      sameElse: formatPreviousDay,
+    },
+  );
   return result;
 };

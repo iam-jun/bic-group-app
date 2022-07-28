@@ -113,12 +113,16 @@ export const isAndroidAnimated = () => {
   const isAndroid = Platform.OS === 'android';
   if (isAndroid) {
     const systemVersion = deviceInfoModule.getSystemVersion();
-    deviceVersion = parseInt(systemVersion, 10);
+    deviceVersion = parseInt(
+      systemVersion, 10,
+    );
   }
   return isAndroid && deviceVersion === 8;
 };
 
-export const validateFiles = (selectingFiles: IFilePicked[], t: any) => {
+export const validateFiles = (
+  selectingFiles: IFilePicked[], t: any,
+) => {
   let fileError = '';
   let fileUploading = false;
   const files: IActivityDataFile[] = [];
@@ -173,22 +177,24 @@ export const validateFilesPicker = (
   if (results.length < files.length) toastMessage = i18n.t('upload:text_file_over_size');
 
   if (results.length > remainningFilesCount) {
-    toastMessage = i18n.t('upload:text_file_over_length', {
-      max_files: appConfig.maxFiles,
-    });
+    toastMessage = i18n.t(
+      'upload:text_file_over_length', {
+        max_files: appConfig.maxFiles,
+      },
+    );
 
-    results = results.slice(0, remainningFilesCount);
+    results = results.slice(
+      0, remainningFilesCount,
+    );
   }
 
   if (toastMessage) {
-    dispatch(
-      showHideToastMessage({
-        content: toastMessage,
-        props: {
-          type: 'error',
-        },
-      }),
-    );
+    dispatch(showHideToastMessage({
+      content: toastMessage,
+      props: {
+        type: 'error',
+      },
+    }));
   }
 
   return results;

@@ -113,39 +113,35 @@ const Section2 = () => {
         id: '1',
         name: 'Name Name Name Name Name name 1',
         email: '',
-        avatarUrl: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+        avatar: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
         role: '',
       },
       {
         id: '2',
-        _id: '2',
         name: 'Name Name Name Name Name 2',
         email: '',
-        avatarUrl: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+        avatar: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
         role: '',
       },
       {
         id: '3',
-        _id: '3',
         name: 'Name Name Name Name Name 3',
         email: '',
-        avatarUrl: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+        avatar: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
         role: '',
       },
       {
         id: '4',
-        _id: '4',
         name: 'Name Name Name Name Name 4',
         email: '',
-        avatarUrl: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+        avatar: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
         role: '',
       },
       {
         id: '5',
-        _id: '5',
         name: 'Name Name Name Name Name 5',
         email: '',
-        avatarUrl: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
+        avatar: 'https://i.ibb.co/DW2bMGR/pikachu.jpg',
         role: '',
       },
     ];
@@ -179,19 +175,6 @@ const Section2 = () => {
             Click to show modal
           </Text.H6>
         </TouchableOpacity>
-
-        <MentionInput
-          data={userData}
-          modalPosition="bottom"
-          isMentionModalVisible
-          renderInput={() => (
-            <SearchInput
-              style={{ margin: spacing?.margin.base }}
-              onChangeText={(text: string) => console.log(text)}
-            />
-          )}
-          onPress={() => alert('onPress View')}
-        />
         <Divider
           style={{
             margin: spacing?.margin.base,
@@ -202,124 +185,6 @@ const Section2 = () => {
     );
   };
 
-  const renderTabMenuTag = () => {
-    const data: IMenuItemProps[] = [
-      {
-        routeName: 'All',
-        label: 'All',
-        component: sampleScreen,
-      },
-      {
-        routeName: 'Love',
-        label: '165',
-        iconName: 'iconReactionLove',
-        component: sampleScreen,
-      },
-      {
-        routeName: 'Like',
-        label: '123',
-        iconName: 'iconReactionLike',
-        component: sampleScreen,
-      },
-      {
-        routeName: 'Haha',
-        label: '55',
-        iconName: 'iconReactionHaha',
-        component: sampleScreen,
-      },
-      {
-        routeName: 'Angry',
-        label: '15',
-        iconName: 'iconReactionAngry',
-        component: sampleScreen,
-      },
-    ];
-
-    return (
-      <>
-        <Text.H3 style={{ marginHorizontal: spacing?.margin.base }}>
-          Tab Menu and Tag
-        </Text.H3>
-        <Divider style={{ margin: spacing?.margin.base }} />
-        <Text.H5
-          style={{
-            margin: spacing?.margin.base,
-          }}
-        >
-          {'<Tag/> || <Tag.Medium/>'}
-        </Text.H5>
-        <View style={{ flexDirection: 'row' }}>
-          <Tag
-            avatar="https://i.ibb.co/DW2bMGR/pikachu.jpg"
-            label="Priority"
-            selected
-            icon="iconClose"
-            onPressIcon={() => alert('onPress icon')}
-            onActionPress={_onActionPress}
-            style={{ marginStart: spacing?.margin.small }}
-          />
-          <Tag
-            label="Priority"
-            selected={false}
-            icon="18Plus"
-            onPressIcon={() => alert('onPress icon')}
-            onActionPress={_onActionPress}
-            style={{ marginStart: spacing?.margin.small }}
-          />
-          <Tag
-            label="Priority"
-            selected={false}
-            disabled
-            icon="iconClose"
-            onPressIcon={() => alert('onPress icon')}
-            onActionPress={_onActionPress}
-            style={{ marginStart: spacing?.margin.small }}
-          />
-        </View>
-        <Text.H5
-          style={{ margin: spacing?.margin.base }}
-        >
-          {'<Tag.Small/>'}
-        </Text.H5>
-        <View style={{ flexDirection: 'row' }}>
-          <Tag.Small
-            avatar="https://i.ibb.co/DW2bMGR/pikachu.jpg"
-            label="Priority"
-            selected
-            icon="Globe"
-            onPressIcon={() => alert('onPress icon')}
-            onActionPress={_onActionPress}
-            style={{ marginStart: spacing?.margin.small }}
-          />
-          <Tag.Small
-            label="Priority"
-            selected={false}
-            icon="iconClose"
-            onPressIcon={() => alert('onPress icon')}
-            onActionPress={_onActionPress}
-            style={{ marginStart: spacing?.margin.small }}
-          />
-          <Tag.Small
-            label="Priority"
-            selected={false}
-            disabled
-            icon="iconClose"
-            onPressIcon={() => alert('onPress icon')}
-            onActionPress={_onActionPress}
-            style={{ marginStart: spacing?.margin.small }}
-          />
-        </View>
-        <Text.H5 style={{ margin: spacing?.margin.base }}>Tab Menu</Text.H5>
-
-        <Divider
-          style={{
-            margin: spacing?.margin.base,
-            marginBottom: spacing?.margin.big,
-          }}
-        />
-      </>
-    );
-  };
 
   return (
     <View style={{}}>
@@ -327,7 +192,6 @@ const Section2 = () => {
       {renderBadge()}
       {renderInput()}
       {renderModals()}
-      {renderTabMenuTag()}
     </View>
   );
 };

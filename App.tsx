@@ -25,10 +25,12 @@ initSentry();
 initFatalErrorHandler();
 
 const App = () => {
-  useEffect(() => {
-    initAmplify();
-    initFirebaseMessaging();
-  }, []);
+  useEffect(
+    () => {
+      initAmplify();
+      initFirebaseMessaging();
+    }, [],
+  );
 
   Store.sagaMiddleware.run(rootSaga);
 

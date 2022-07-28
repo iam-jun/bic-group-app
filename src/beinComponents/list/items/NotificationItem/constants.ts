@@ -10,8 +10,8 @@ export const COMMENT_TARGET = {
 
 export const SAMPLE_ACTIVITY_1 = {
   actor: {
-    created_at: '2022-01-14T04:58:45.776555Z',
-    updated_at: '2022-03-01T08:18:56.458626Z',
+    createdAt: '2022-01-14T04:58:45.776555Z',
+    updatedAt: '2022-03-01T08:18:56.458626Z',
     id: '20',
     data: {
       avatar:
@@ -34,8 +34,8 @@ export const SAMPLE_ACTIVITY_1 = {
 
 export const SAMPLE_ACTIVITY_2 = {
   actor: {
-    created_at: '2022-01-14T04:58:45.776555Z',
-    updated_at: '2022-03-01T08:18:56.458626Z',
+    createdAt: '2022-01-14T04:58:45.776555Z',
+    updatedAt: '2022-03-01T08:18:56.458626Z',
     id: '21',
     data: {
       avatar:

@@ -19,6 +19,7 @@ import { AvatarProps } from '~/beinComponents/Avatar/AvatarComponent';
 import { primaryItemHeight } from '~/theme/dimension';
 import spacing from '~/theme/spacing';
 
+type ItemIconProps = Omit<IconProps, 'icon'>
 export interface PrimaryItemProps {
   style?: StyleProp<ViewStyle>;
   testID?: string;
@@ -31,7 +32,7 @@ export interface PrimaryItemProps {
   avatar?: string;
   avatarProps?: AvatarProps;
   leftIcon?: IconType;
-  leftIconProps?: IconProps;
+  leftIconProps?: ItemIconProps;
   isChecked?: boolean;
   checkboxProps?: CheckboxProps;
   toggleChecked?: boolean;

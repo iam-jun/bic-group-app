@@ -19,31 +19,29 @@ import CommunityMemberRequest from '../CommunityAdmin/PendingMembers/CommunityMe
 import spacing from '~/theme/spacing';
 
 interface MemberRequestListProps {
+  id?: string;
   type: 'community' | 'group';
   onLoadMore: () => void;
   onRefresh: () => void;
-  id: number;
 }
 
 const MemberRequestList = ({
+  id,
   type,
   onLoadMore,
   onRefresh,
-  id,
 }: MemberRequestListProps) => {
   const theme: ExtendedTheme = useTheme();
   const { t } = useBaseHook();
 
   const {
     loading, total, ids, canLoadMore,
-  } = useKeySelector(
-    groupsKeySelector[`${type}MemberRequests`],
-  );
+  } = useKeySelector(groupsKeySelector[`${type}MemberRequests`]);
 
-  const renderItem = ({ item }: {item: number}) => {
-    const ItemComponent = type === 'community' ? CommunityMemberRequest : GroupMemberRequest;
+  const renderItem = ({ item }: {item: string}) => {
+    if (id && type === 'community') return <CommunityMemberRequest requestId={id} organizationId={id} />
 
-    return <ItemComponent requestId={item} organizationId={id} />;
+    return <GroupMemberRequest requestId={item} />;
   };
 
   const renderEmpty = () => {
@@ -92,7 +90,9 @@ const MemberRequestList = ({
       style={styles.flatList}
       data={ids}
       renderItem={renderItem}
-      keyExtractor={(item, index) => `requests_${item}_${index}`}
+      keyExtractor={(
+        item, index,
+      ) => `requests_${item}_${index}`}
       ListEmptyComponent={renderEmpty}
       ListHeaderComponent={renderListHeader}
       ListFooterComponent={renderListFooter}

@@ -8,7 +8,9 @@ export interface Props {
 const Clickable: React.FC<Props> = ({ onRightClick, ...props }: Props) => (
   <TouchableWithoutFeedback
     {...props}
-    onLongPress={() => onRightClick?.(-1, -1)}
+    onLongPress={() => onRightClick?.(
+      -1, -1,
+    )}
   />
 );
 

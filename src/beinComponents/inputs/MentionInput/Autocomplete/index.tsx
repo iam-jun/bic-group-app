@@ -96,7 +96,9 @@ const createStyles = (
     ? 80
     : screenHeight - keyboardHeight - minViewableContent;
 
-  const maxModalHeight = Math.min(modalHeight, 300);
+  const maxModalHeight = Math.min(
+    modalHeight, 300,
+  );
 
   let stylePosition = {};
   switch (position) {

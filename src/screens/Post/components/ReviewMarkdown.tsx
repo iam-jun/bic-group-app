@@ -21,12 +21,12 @@ const ReviewMarkdown = ({ onPressDone }: {onPressDone: () => void}) => {
   const screenHeight = windowDimension.height;
 
   const theme: ExtendedTheme = useTheme();
-  const styles = createStyles(theme, screenHeight);
+  const styles = createStyles(
+    theme, screenHeight,
+  );
   const content = useKeySelector(postKeySelector.createPost.content);
   const { fullname, avatar } = useKeySelector(menuKeySelector.myProfile) || {};
-  const chosenAudiences = useKeySelector(
-    postKeySelector.createPost.chosenAudiences,
-  );
+  const chosenAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
 
   const renderTitleHeader = () => (
     <View style={styles.header}>
@@ -88,7 +88,9 @@ const getAudiences = (aud: IAudience[]) => {
   result = aud[0]?.name || '';
   const left = total - 1;
   if (result?.length > limitLength) {
-    result = `${result.substr(0, limitLength)}...`;
+    result = `${result.substr(
+      0, limitLength,
+    )}...`;
   } else if (left > 0) {
     result = `${result}, ...`;
   }
@@ -98,7 +100,9 @@ const getAudiences = (aud: IAudience[]) => {
   return result;
 };
 
-const createStyles = (theme: ExtendedTheme, screenHeight: number) => {
+const createStyles = (
+  theme: ExtendedTheme, screenHeight: number,
+) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {

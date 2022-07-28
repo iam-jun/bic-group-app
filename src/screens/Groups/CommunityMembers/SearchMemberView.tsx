@@ -14,7 +14,7 @@ import { ICommunityMembers } from '~/interfaces/ICommunity';
 import MemberSearchResult from '../components/MemberSearchResult';
 
 interface SearchMemberViewProps {
-  communityId: number;
+  communityId: string;
   isOpen: boolean;
   placeholder?: string;
   initSearch?: string;
@@ -34,18 +34,16 @@ const SearchMemberView = ({
   const theme: ExtendedTheme = useTheme();
   const [searchText, setSearchText] = useState(initSearch || '');
   const styles = createStyles();
-  const { can_manage_member } = useKeySelector(groupsKeySelector.communityDetail);
+  const { canManageMember } = useKeySelector(groupsKeySelector.communityDetail);
   const communitySearchMembers = useKeySelector(
     groupsKeySelector.communitySearchMembers,
   );
 
   const getCommunitySearchMembers = (searchText: string) => {
-    dispatch(
-      actions.getCommunitySearchMembers({
-        communityId,
-        params: { key: searchText },
-      }),
-    );
+    dispatch(actions.getCommunitySearchMembers({
+      communityId,
+      params: { key: searchText },
+    }));
   };
 
   const onLoadMore = () => {
@@ -59,7 +57,9 @@ const SearchMemberView = ({
   };
 
   const searchHandler = useCallback(
-    debounce(searchMember, appConfig.searchTriggerTime),
+    debounce(
+      searchMember, appConfig.searchTriggerTime,
+    ),
     [],
   );
 
@@ -76,7 +76,7 @@ const SearchMemberView = ({
     >
       {searchText ? (
         <MemberSearchResult
-          canManageMember={can_manage_member}
+          canManageMember={canManageMember}
           memberSearchData={communitySearchMembers}
           onLoadMore={onLoadMore}
           onPressMenu={onPressMenu}

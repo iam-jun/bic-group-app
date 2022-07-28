@@ -4,7 +4,9 @@ import { IUser } from '~/interfaces/IAuth';
 /*
   Generate room name by members name incase room has no name.
 */
-export const generateRoomName = (user: IUser, usernames: string[]): string => {
+export const generateRoomName = (
+  user: IUser, usernames: string[],
+): string => {
   let name = '';
   usernames
     .filter((username) => username !== user.name)
@@ -19,7 +21,9 @@ export function capFirst(str: string): string {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
-export function getRandomInt(min: number, max: number): number {
+export function getRandomInt(
+  min: number, max: number,
+): number {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
@@ -48,7 +52,9 @@ export function generateRandomEmail(): string {
   return `${string}@domain.com`;
 }
 
-export function generateRandomWords(min?: number, max?: number): string {
+export function generateRandomWords(
+  min?: number, max?: number,
+): string {
   const words = [
     'monitor',
     'program',
@@ -60,7 +66,9 @@ export function generateRandomWords(min?: number, max?: number): string {
   ];
 
   let str = '';
-  const maxWords = getRandomInt(min || 3, max || 50);
+  const maxWords = getRandomInt(
+    min || 3, max || 50,
+  );
   Array.from(Array(maxWords).keys()).forEach(() => {
     str = `${str ? `${str} ` : ''}${
       words[Math.floor(Math.random() * words.length)]
@@ -2926,8 +2934,12 @@ export function generateRandomName(): string {
     'Lieuwe',
   ];
 
-  const name = `${capFirst(name1[getRandomInt(0, name1.length + 1)])
+  const name = `${capFirst(name1[getRandomInt(
+    0, name1.length + 1,
+  )])
   } ${
-    capFirst(name2[getRandomInt(0, name2.length + 1)])}`;
+    capFirst(name2[getRandomInt(
+      0, name2.length + 1,
+    )])}`;
   return name;
 }

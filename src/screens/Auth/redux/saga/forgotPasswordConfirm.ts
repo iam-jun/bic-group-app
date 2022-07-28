@@ -15,16 +15,16 @@ export default function* forgotPasswordConfirm({
 }) {
   const { code, email, password } = payload;
   try {
-    yield put(
-      actions.setForgotPasswordError({
-        errBox: '',
-        errConfirm: '',
-        errRequest: '',
-      }),
-    );
+    yield put(actions.setForgotPasswordError({
+      errBox: '',
+      errConfirm: '',
+      errRequest: '',
+    }));
     yield put(actions.setForgotPasswordLoading(true));
 
-    yield Auth.forgotPasswordSubmit(email, code, password);
+    yield Auth.forgotPasswordSubmit(
+      email, code, password,
+    );
 
     yield put(actions.setForgotPasswordLoading(false));
     yield put(actions.setForgotPasswordStage(forgotPasswordStages.COMPLETE));
@@ -37,17 +37,13 @@ export default function* forgotPasswordConfirm({
         break;
       case authErrors.LIMIT_EXCEEDED_EXCEPTION:
         errBox = i18n.t('auth:text_err_limit_exceeded');
-        yield put(
-          actions.setForgotPasswordStage(forgotPasswordStages.INPUT_ID),
-        );
+        yield put(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_ID));
         break;
       default:
         errBox = error?.message || '';
     }
 
-    yield put(
-      actions.setForgotPasswordError({ errBox, errConfirm, errRequest: '' }),
-    );
+    yield put(actions.setForgotPasswordError({ errBox, errConfirm, errRequest: '' }));
     if (errBox) yield showErrorWithDefinedMessage(errBox);
     yield put(actions.setForgotPasswordLoading(false));
   }

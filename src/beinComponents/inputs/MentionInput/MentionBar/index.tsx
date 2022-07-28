@@ -48,31 +48,41 @@ const MentionBar: FC<MentionBarProps> = ({
 
   const isShow = !!data?.length;
 
-  useEffect(() => {
-    const listener = DeviceEventEmitter.addListener(
-      'autocomplete-on-selection-change',
-      onCursorPositionChange,
-    );
-    return () => {
-      listener?.remove?.();
-    };
-  }, []);
+  useEffect(
+    () => {
+      const listener = DeviceEventEmitter.addListener(
+        'autocomplete-on-selection-change',
+        onCursorPositionChange,
+      );
+      return () => {
+        listener?.remove?.();
+      };
+    }, [],
+  );
 
-  useEffect(() => {
-    if (data?.length > 0) {
-      listRef?.current?.scrollToOffset?.({ offset: 0, animated: true });
-    }
-  }, [data?.length]);
+  useEffect(
+    () => {
+      if (data?.length > 0) {
+        listRef?.current?.scrollToOffset?.({ offset: 0, animated: true });
+      }
+    }, [data?.length],
+  );
 
-  useEffect(() => {
-    onVisible?.(isShow);
-  }, [isShow]);
+  useEffect(
+    () => {
+      onVisible?.(isShow);
+    }, [isShow],
+  );
 
   const onCursorPositionChange = debounce(
     ({ position, value, groupIds }: ICursorPositionChange) => {
       text.current = value;
       cursorPosition.current = position;
-      checkRunSearch(value.substring(0, position), groupIds, dispatch);
+      checkRunSearch(
+        value.substring(
+          0, position,
+        ), groupIds, dispatch,
+      );
     },
     100,
   );

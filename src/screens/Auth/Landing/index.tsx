@@ -27,15 +27,19 @@ const Landing = () => {
   const { t, navigation } = useBaseHook();
   const dimensions = useWindowDimensions();
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
-  const styles = createStyle(theme, isPhone);
+  const styles = createStyle(
+    theme, isPhone,
+  );
 
   const IMAGE_WIDTH = (dimensions.width * 26) / 39;
   const IMAGE_HEIGHT = (IMAGE_WIDTH * 277) / 260;
   const logo = images.logo_beincomm;
 
-  useEffect(() => {
-    isFocused && user && navigation.replace(rootSwitch.mainStack);
-  }, [isFocused]);
+  useEffect(
+    () => {
+      isFocused && user && navigation.replace(rootSwitch.mainStack);
+    }, [isFocused],
+  );
 
   return (
     <ScreenWrapper isFullView style={styles.root}>
@@ -75,7 +79,9 @@ const Landing = () => {
   );
 };
 
-const createStyle = (theme: ExtendedTheme, isPhone: boolean) => {
+const createStyle = (
+  theme: ExtendedTheme, isPhone: boolean,
+) => {
   const insets = useSafeAreaInsets();
   const { colors } = theme;
 

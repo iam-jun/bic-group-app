@@ -19,7 +19,7 @@ export interface CommentItemProps {
   contentBackgroundColor?: string;
   section?: any;
   index?: number;
-  onPressReply?: (data: IReaction, section?: any, index?: number) => void;
+  onPressReply?: (data: ICommentData, section?: any, index?: number) => void;
   onPressLoadMore?: (data: any) => void;
   isNotReplyingComment?: boolean;
 }
@@ -39,23 +39,29 @@ const CommentItem: React.FC<CommentItemProps> = ({
   const dispatch = useDispatch();
   const { t } = useBaseHook();
   const theme: ExtendedTheme = useTheme();
-  const styles = React.useMemo(() => createStyle(theme), [theme]);
+  const styles = React.useMemo(
+    () => createStyle(theme), [theme],
+  );
 
-  const _onPressReply = useCallback(() => {
-    if (!isNotReplyingComment) {
-      dispatch(
-        postActions.setPostDetailReplyingComment({
+  const _onPressReply = useCallback(
+    () => {
+      if (!isNotReplyingComment) {
+        dispatch(postActions.setPostDetailReplyingComment({
           comment: commentData,
           parentComment: commentParent,
-        }),
+        }));
+      }
+      onPressReply?.(
+        commentData, section, index,
       );
-    }
-    onPressReply?.(commentData, section, index);
-  }, [commentData, commentParent, section, index]);
+    }, [commentData, commentParent, section, index],
+  );
 
-  const _onPressLoadMore = useCallback(() => {
-    onPressLoadMore && onPressLoadMore(commentData);
-  }, [commentData]);
+  const _onPressLoadMore = useCallback(
+    () => {
+      onPressLoadMore && onPressLoadMore(commentData);
+    }, [commentData],
+  );
 
   const childCommentCount = commentData?.totalReply || 0;
 

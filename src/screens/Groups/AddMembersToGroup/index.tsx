@@ -25,10 +25,12 @@ const AddMembersToGroup = (props: any) => {
 
   const [searchText, setSearchText] = useState<string>('');
 
-  useEffect(() => {
-    dispatch(groupsActions.resetJoinableUsers());
-    dispatch(groupsActions.getJoinableUsers({ groupId }));
-  }, []);
+  useEffect(
+    () => {
+      dispatch(groupsActions.resetJoinableUsers());
+      dispatch(groupsActions.getJoinableUsers({ groupId }));
+    }, [],
+  );
 
   const loadMoreData = () => {
     dispatch(groupsActions.mergeExtraJoinableUsers());
@@ -41,13 +43,13 @@ const AddMembersToGroup = (props: any) => {
   const searchUsers = (searchQuery: string) => {
     setSearchText(searchQuery);
     dispatch(groupsActions.resetJoinableUsers());
-    dispatch(
-      groupsActions.getJoinableUsers({ groupId, params: { key: searchQuery } }),
-    );
+    dispatch(groupsActions.getJoinableUsers({ groupId, params: { key: searchQuery } }));
   };
 
   const searchHandler = useCallback(
-    debounce(searchUsers, appConfig.searchTriggerTime),
+    debounce(
+      searchUsers, appConfig.searchTriggerTime,
+    ),
     [],
   );
 

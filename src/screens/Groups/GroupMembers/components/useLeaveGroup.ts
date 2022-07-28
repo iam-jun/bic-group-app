@@ -10,7 +10,7 @@ import Button from '~/beinComponents/Button';
 import { handleLeaveInnerGroups } from '../../helper';
 
 interface IUseLeaveGroup {
-  groupId: number;
+  groupId: string;
   username: string;
 }
 
@@ -51,7 +51,9 @@ const useLeaveGroup = ({ groupId, username }: IUseLeaveGroup) => {
   };
 
   const alertLeaveGroup = () => {
-    handleLeaveInnerGroups(groupId, username, dispatch, getInnerGroupsText);
+    handleLeaveInnerGroups(
+      groupId, username, dispatch, getInnerGroupsText,
+    );
   };
 
   return alertLeaveGroup;

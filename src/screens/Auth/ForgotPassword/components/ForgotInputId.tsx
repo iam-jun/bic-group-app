@@ -50,20 +50,26 @@ const ForgotInputId: React.FC<Props> = ({ useFormData }) => {
     defaultValue: '',
   });
 
-  useEffect(() => {
-    refTextInput.current?.focus();
-  }, []);
+  useEffect(
+    () => {
+      refTextInput.current?.focus();
+    }, [],
+  );
 
-  useEffect(() => {
-    if (errRequest) {
-      setError('email', {
-        type: 'manual',
-        message: errRequest,
-      });
-    } else {
-      clearErrors('email');
-    }
-  }, [errRequest]);
+  useEffect(
+    () => {
+      if (errRequest) {
+        setError(
+          'email', {
+            type: 'manual',
+            message: errRequest,
+          },
+        );
+      } else {
+        clearErrors('email');
+      }
+    }, [errRequest],
+  );
 
   const checkDisableRequest = () => {
     const email = getValues('email');
@@ -79,7 +85,9 @@ const ForgotInputId: React.FC<Props> = ({ useFormData }) => {
   const onRequestForgotPassword = () => {
     const email = getValues('email');
     if (email && !disableRequest) {
-      setValue('code', '', { shouldValidate: false });
+      setValue(
+        'code', '', { shouldValidate: false },
+      );
       clearErrors('code');
       dispatch(actions.forgotPasswordRequest(email));
     }
