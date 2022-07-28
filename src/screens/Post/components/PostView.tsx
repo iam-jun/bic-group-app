@@ -107,19 +107,11 @@ const _PostView: FC<PostViewProps> = ({
     setting = useKeySelector(postKeySelector.postSettingById(postId));
     deleted = useKeySelector(postKeySelector.postDeletedById(postId));
     markedReadPost = useKeySelector(postKeySelector.postMarkedReadById(postId));
-    commentsCount = useKeySelector(
-      postKeySelector.postCommentsCountById(postId),
-    );
+    commentsCount = useKeySelector(postKeySelector.postCommentsCountById(postId));
 
-    ownerReactions = useKeySelector(
-      postKeySelector.postOwnerReactionById(postId),
-    );
-    reactionsCount = useKeySelector(
-      postKeySelector.postReactionCountsById(postId),
-    );
-    totalUsersSeen = useKeySelector(
-      postKeySelector.postTotalUsersSeenById(postId),
-    );
+    ownerReactions = useKeySelector(postKeySelector.postOwnerReactionById(postId));
+    reactionsCount = useKeySelector(postKeySelector.postReactionCountsById(postId));
+    totalUsersSeen = useKeySelector(postKeySelector.postTotalUsersSeenById(postId));
   } else {
     actor = postData?.actor;
     audience = postData?.audience;
@@ -154,20 +146,18 @@ const _PostView: FC<PostViewProps> = ({
 
   const onPressMenu = () => {
     Keyboard.dismiss();
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: (
-          <PostViewMenu
-            postId={postId}
-            isPostDetail={isPostDetail}
-            isActor={actor?.id == userId}
-            isDraftPost={isDraft}
-            getDataPromise={getReactionStatistics}
-          />
-        ),
-      }),
-    );
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent: (
+        <PostViewMenu
+          postId={postId}
+          isPostDetail={isPostDetail}
+          isActor={actor?.id == userId}
+          isDraftPost={isDraft}
+          getDataPromise={getReactionStatistics}
+        />
+      ),
+    }));
   };
 
   const onAddReaction = (reactionId: ReactionType) => {
@@ -219,18 +209,18 @@ const _PostView: FC<PostViewProps> = ({
   };
 
   const onPressSeenBy = () => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: <UsersSeenPostBottomSheet postId={postId} />,
-      }),
-    );
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent: <UsersSeenPostBottomSheet postId={postId} />,
+    }));
   };
   const _onPressHeader = () => {
     if (onPressHeader) {
       onPressHeader?.(postId);
     } else {
-      rootNavigation.navigate(homeStack.postDetail, { post_id: postId });
+      rootNavigation.navigate(
+        homeStack.postDetail, { post_id: postId },
+      );
     }
   };
 
@@ -238,16 +228,20 @@ const _PostView: FC<PostViewProps> = ({
     if (onPressComment) {
       onPressComment?.(postId);
     } else {
-      rootNavigation.navigate(homeStack.postDetail, {
-        post_id: postId,
-        focus_comment: true,
-      });
+      rootNavigation.navigate(
+        homeStack.postDetail, {
+          post_id: postId,
+          focus_comment: true,
+        },
+      );
     }
   };
 
   const _onPress = () => {
     if (pressNavigateToDetail) {
-      rootNavigation.navigate(homeStack.postDetail, { post_id: postId });
+      rootNavigation.navigate(
+        homeStack.postDetail, { post_id: postId },
+      );
     } else {
       onPress?.();
     }
@@ -358,10 +352,16 @@ const createStyle = (theme: ExtendedTheme) => {
   });
 };
 
-function propsAreEqual(prev: any, next: any) {
-  return isEqual(prev, next);
+function propsAreEqual(
+  prev: any, next: any,
+) {
+  return isEqual(
+    prev, next,
+  );
 }
 
-const PostView = memo(_PostView, propsAreEqual);
+const PostView = memo(
+  _PostView, propsAreEqual,
+);
 PostView.whyDidYouRender = true;
 export default PostView;

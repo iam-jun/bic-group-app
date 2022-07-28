@@ -12,7 +12,7 @@ export default function* getCommunityMembers({
 }: {
   type: string;
   payload: {
-    communityId: number;
+    communityId: string;
     isRefreshing?: boolean;
     params?: IParamGetCommunityMembers;
   };
@@ -23,33 +23,34 @@ export default function* getCommunityMembers({
     const { communityMembers } = groups;
     const { canLoadMore, offset } = communityMembers;
 
-    yield put(
-      actions.setCommunityMembers({
-        loading: isRefreshing ? true : offset === 0,
-      }),
-    );
+    yield put(actions.setCommunityMembers({
+      loading: isRefreshing ? true : offset === 0,
+    }));
 
     if (!isRefreshing && !canLoadMore) return;
 
-    const resp:AxiosResponse = yield call(groupsDataHelper.getCommunityMembers, communityId, {
-      limit: appConfig.recordsPerPage,
-      offset: isRefreshing ? 0 : offset,
-      ...params,
-    });
+    const resp:AxiosResponse = yield call(
+      groupsDataHelper.getCommunityMembers, communityId, {
+        limit: appConfig.recordsPerPage,
+        offset: isRefreshing ? 0 : offset,
+        ...params,
+      },
+    );
 
     let newDataCount = 0;
     let newDataObj = {};
 
-    Object.keys(resp)?.forEach?.((role: string) => {
+    const members = resp.data;
+    Object.keys(members)?.forEach?.((role: string) => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const roles = resp[role] || {};
+      const roles = members[role] || {};
       newDataCount += roles.data?.length || 0;
       newDataObj = {
         ...newDataObj,
         [role]: {
-          name: roles.name,
-          user_count: roles.user_count,
+          name: members[role]?.name,
+          userCount: members[role]?.userCount,
           data:
             isRefreshing || !communityMembers?.[role]?.data
               ? [...roles.data]
@@ -67,7 +68,11 @@ export default function* getCommunityMembers({
 
     yield put(actions.setCommunityMembers(newData));
   } catch (err: any) {
-    console.error('getCommunityMembers error:', err);
-    yield call(showError, err);
+    console.error(
+      'getCommunityMembers error:', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

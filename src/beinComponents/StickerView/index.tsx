@@ -31,9 +31,7 @@ const _StickerView = ({ stickerViewRef, onMediaSelect }: Props) => {
   const INITIAL_KEYBOARD_HEIGHT = 336;
   const modalizeRef = useRef<Modalize>();
 
-  const [keyboardHeight, setKeyboardHeight] = React.useState(
-    INITIAL_KEYBOARD_HEIGHT,
-  );
+  const [keyboardHeight, setKeyboardHeight] = React.useState(INITIAL_KEYBOARD_HEIGHT);
   const [searchQuery, setSearchQuery] = React.useState('');
   const [loading, setLoading] = React.useState(true);
   const [modalTopOffset, setModalTopOffset] = React.useState(0);
@@ -49,14 +47,16 @@ const _StickerView = ({ stickerViewRef, onMediaSelect }: Props) => {
   const styles = createStyle(theme);
 
   const keyboard = useKeyboard();
-  useEffect(() => {
-    if (
-      keyboard?.keyboardHeight
+  useEffect(
+    () => {
+      if (
+        keyboard?.keyboardHeight
       && keyboardHeight !== keyboard?.keyboardHeight
-    ) {
-      setKeyboardHeight(keyboard?.keyboardHeight);
-    }
-  }, [keyboard?.keyboardHeight]);
+      ) {
+        setKeyboardHeight(keyboard?.keyboardHeight);
+      }
+    }, [keyboard?.keyboardHeight],
+  );
 
   const animatedStyle = useAnimatedStyle(() => ({
     height: height.value,
@@ -71,21 +71,21 @@ const _StickerView = ({ stickerViewRef, onMediaSelect }: Props) => {
     modalizeRef.current?.close();
   };
 
-  const onChangeText = debounce((value: string) => {
-    setLoading(true);
-    setSearchQuery(value);
-  }, AppConfig.searchTriggerTime);
+  const onChangeText = debounce(
+    (value: string) => {
+      setLoading(true);
+      setSearchQuery(value);
+    }, AppConfig.searchTriggerTime,
+  );
 
   // When content is updated, it means request has been done
   const onContentUpdate = () => {
     setLoading(false);
   };
 
-  const _onMediaSelect = (
-    e: NativeSyntheticEvent<{
+  const _onMediaSelect = (e: NativeSyntheticEvent<{
       media: GiphyMedia;
-    }>,
-  ) => {
+    }>) => {
     onMediaSelect(e.nativeEvent.media);
   };
 
@@ -95,16 +95,22 @@ const _StickerView = ({ stickerViewRef, onMediaSelect }: Props) => {
   };
 
   const onOpen = () => {
-    setTimeout(() => {
-      height.value = withTiming(keyboardHeight, { duration: 400 });
-    }, 200);
+    setTimeout(
+      () => {
+        height.value = withTiming(
+          keyboardHeight, { duration: 400 },
+        );
+      }, 200,
+    );
   };
 
   const onClose = () => {
     // reset position
     onPositionChange('initial');
 
-    height.value = withTiming(0, { duration: 200 });
+    height.value = withTiming(
+      0, { duration: 200 },
+    );
   };
 
   const onSearchFocus = () => {
@@ -118,11 +124,13 @@ const _StickerView = ({ stickerViewRef, onMediaSelect }: Props) => {
     return true;
   };
 
-  useImperativeHandle(_stickerViewRef, () => ({
-    show,
-    hide,
-    onBackPress: hide,
-  }));
+  useImperativeHandle(
+    _stickerViewRef, () => ({
+      show,
+      hide,
+      onBackPress: hide,
+    }),
+  );
 
   return (
     <View testID="sticker_view" style={styles.container}>

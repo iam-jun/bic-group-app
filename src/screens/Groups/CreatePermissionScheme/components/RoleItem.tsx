@@ -63,14 +63,10 @@ const RoleItem: FC<RoleItemProps> = ({
                   <Text.H5 style={styles.subCatName}>{subCat?.name}</Text.H5>
                   {subCat?.permissions?.map((per: IPermission) => {
                     const isChecked = role?.permissions?.includes(per?.key);
-                    const isInherited = inheritedRole?.permissions?.includes(
-                      per?.key,
-                    );
+                    const isInherited = inheritedRole?.permissions?.includes(per?.key);
                     const { fixedForRoles = [] } = per;
                     const isFixed = fixedForRoles?.includes?.(role.type);
-                    const isFixedForCreator = fixedForRoles?.includes?.(
-                      ROLE_TYPE.CREATOR,
-                    );
+                    const isFixedForCreator = fixedForRoles?.includes?.(ROLE_TYPE.CREATOR);
                     if (
                       selectedRolesOnly
                       && !isChecked

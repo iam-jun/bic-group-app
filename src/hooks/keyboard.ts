@@ -13,15 +13,19 @@ export function useKeyboardStatus() {
 
   useEffect(() => {
     // @ts-ignore
-    keyboardShowListener.current = Keyboard.addListener(showEvent, (e: any) => {
-      setHeight(e.endCoordinates?.height);
-      setIsOpen(true);
-    });
+    keyboardShowListener.current = Keyboard.addListener(
+      showEvent, (e: any) => {
+        setHeight(e.endCoordinates?.height);
+        setIsOpen(true);
+      },
+    );
     // @ts-ignore
-    keyboardHideListener.current = Keyboard.addListener(dismissEvent, () => {
-      setHeight(0);
-      setIsOpen(false);
-    });
+    keyboardHideListener.current = Keyboard.addListener(
+      dismissEvent, () => {
+        setHeight(0);
+        setIsOpen(false);
+      },
+    );
 
     return () => {
       // @ts-ignore

@@ -20,32 +20,30 @@ const initFatalErrorHandler = () => {
   console.log('\x1b[32m🐣️ FatalErrorHandler initialized\x1b[0m');
 };
 
-const errorHandler = (e: any, isFatal: boolean) => {
-  console.log(
-    '\x1b[36m🐣️ fatalErrorHandler errorHandler before captureExceptionWithSentry\x1b[0m',
-  );
+const errorHandler = (
+  e: any, isFatal: boolean,
+) => {
+  console.log('\x1b[36m🐣️ fatalErrorHandler errorHandler before captureExceptionWithSentry\x1b[0m');
   captureExceptionWithSentry(e);
   if (isFatal) {
     Clipboard.setString(e.message);
     const content = `Copied error, please send to BIC Devs...
 
 Error: ${isFatal ? 'Fatal:' : ''} ${e.name} ${e.message}`;
-    Store.store.dispatch(
-      modalActions.showAlert({
-        title: '(×﹏×)',
-        isDismissible: false,
-        onConfirm: () => RNRestart.Restart(),
-        confirmLabel: 'Restart',
-        style: { width: '90%' },
-        children: (
-          <View style={{ height: 200 }}>
-            <ScrollView>
-              <Text.SubtitleXS>{content}</Text.SubtitleXS>
-            </ScrollView>
-          </View>
-        ),
-      }),
-    );
+    Store.store.dispatch(modalActions.showAlert({
+      title: '(×﹏×)',
+      isDismissible: false,
+      onConfirm: () => RNRestart.Restart(),
+      confirmLabel: 'Restart',
+      style: { width: '90%' },
+      children: (
+        <View style={{ height: 200 }}>
+          <ScrollView>
+            <Text.SubtitleXS>{content}</Text.SubtitleXS>
+          </ScrollView>
+        </View>
+      ),
+    }));
   } else {
     console.error(e); // So that we can see it in the ADB logs in case of Android if needed
   }

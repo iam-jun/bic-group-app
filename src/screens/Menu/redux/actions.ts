@@ -54,7 +54,7 @@ const menuActions = {
     callback,
   }),
   editWorkExperience: (
-    id: number,
+    id: string,
     payload: IUserAddWorkExperience,
     callback?: () => void,
   ) => ({
@@ -63,7 +63,9 @@ const menuActions = {
     payload,
     callback,
   }),
-  deleteWorkExperience: (id: number, callback?: () => void) => ({
+  deleteWorkExperience: (
+    id: string, callback?: () => void,
+  ) => ({
     type: menuTypes.DELETE_WORK_EXPERIENCE,
     id,
     callback,
@@ -102,7 +104,9 @@ const menuActions = {
     type: menuTypes.SET_PHONE_NUMBER_EDIT_ERROR,
     payload,
   }),
-  uploadImage: (payload: IUserImageUpload, callback?: () => void) => ({
+  uploadImage: (
+    payload: IUserImageUpload, callback?: () => void,
+  ) => ({
     type: menuTypes.UPLOAD_IMAGE,
     payload,
     callback,
@@ -117,7 +121,7 @@ const menuActions = {
     payload,
   }),
 
-  getUserWorkExperience: (id: number) => ({
+  getUserWorkExperience: (id: string) => ({
     type: menuTypes.GET_USER_WORK_EXPERIENCE,
     id,
   }),

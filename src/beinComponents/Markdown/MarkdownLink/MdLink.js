@@ -6,7 +6,6 @@ import { Alert, Text } from 'react-native';
 import urlParse from 'url-parse';
 import { preventDoubleTap } from '../utils/utils';
 import {
-  tryOpenURL,
   normalizeProtocol,
   matchDeepLink,
   PERMALINK_GENERIC_TEAM_NAME_REDIRECT,
@@ -17,6 +16,7 @@ import {
   mmConfig,
   ExperimentalNormalizeMarkdownLinks,
 } from '../utils/config';
+import { openUrl } from '~/utils/link';
 
 export default class MdLink extends PureComponent {
   static propTypes = {
@@ -53,7 +53,7 @@ export default class MdLink extends PureComponent {
     const onError = () => {
       Alert.alert('Error', 'Unable to open the link.');
     };
-    tryOpenURL(url, onError);
+    openUrl(url, onError);
 
     // let serverUrl = serverURL;
     // if (!serverUrl) {
@@ -90,7 +90,7 @@ export default class MdLink extends PureComponent {
     //   const onError = () => {
     //     Alert.alert('Error', 'Unable to open the link.');
     //   };
-    //   tryOpenURL(url, onError);
+    //   openUrl(url, onError);
     // }
   });
 

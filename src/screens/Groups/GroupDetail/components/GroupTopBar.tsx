@@ -17,8 +17,9 @@ import modalActions, {
   showHideToastMessage,
 } from '~/store/modal/actions';
 import spacing from '~/theme/spacing';
-import { openLink } from '~/utils/common';
-import { formatChannelLink, getLink, LINK_GROUP } from '~/utils/link';
+import {
+  formatChannelLink, getLink, openUrl, LINK_GROUP,
+} from '~/utils/link';
 import HeaderMenu from '../../components/HeaderMenu';
 import useLeaveGroup from '../../GroupMembers/components/useLeaveGroup';
 import { checkLastAdmin } from '../../helper';
@@ -30,23 +31,23 @@ const GroupTopBar = () => {
   const theme: ExtendedTheme = useTheme();
   const { rootNavigation } = useRootNavigation();
 
-  const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
+  const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
   const groupInfo = useKeySelector(groupsKeySelector.groupDetail.group);
-  const isMember = join_status === groupJoinStatus.member;
-  const { id: groupId, chat_id: chatId } = groupInfo || {};
+  const isMember = joinStatus === groupJoinStatus.member;
+  const { id: groupId, chatId } = groupInfo || {};
   const { user } = useAuth();
   const userId = useUserIdAuth();
 
   const { hasPermissionsOnScopeWithId, PERMISSION_KEY } = useMyPermissions();
-  const canSetting = hasPermissionsOnScopeWithId('groups', groupId, [
-    PERMISSION_KEY.GROUP.APPROVE_REJECT_JOINING_REQUESTS,
-    PERMISSION_KEY.GROUP.EDIT_INFORMATION,
-    PERMISSION_KEY.GROUP.EDIT_PRIVACY,
-  ]);
-
-  const count = useKeySelector(
-    `chat.unreadChannels.${chatId}.mention_count_root`,
+  const canSetting = hasPermissionsOnScopeWithId(
+    'groups', groupId, [
+      PERMISSION_KEY.GROUP.APPROVE_REJECT_JOINING_REQUESTS,
+      PERMISSION_KEY.GROUP.EDIT_INFORMATION,
+      PERMISSION_KEY.GROUP.EDIT_PRIVACY,
+    ],
   );
+
+  const count = useKeySelector(`chat.unreadChannels.${chatId}.mention_count_root`);
 
   const alertLeaveGroup = useLeaveGroup({
     groupId,
@@ -59,35 +60,34 @@ const GroupTopBar = () => {
 
   const onPressAdminTools = () => {
     dispatch(modalActions.hideModal());
-    rootNavigation.navigate(groupStack.groupAdmin, { groupId });
+    rootNavigation.navigate(
+      groupStack.groupAdmin, { groupId },
+    );
   };
 
   const onPressCopyLink = () => {
     dispatch(modalActions.hideModal());
-    Clipboard.setString(getLink(LINK_GROUP, groupId));
-    dispatch(
-      showHideToastMessage({
-        content: 'common:text_link_copied_to_clipboard',
-        props: {
-          textProps: { useI18n: true },
-          type: 'success',
-        },
-      }),
-    );
+    Clipboard.setString(getLink(
+      LINK_GROUP, groupId,
+    ));
+    dispatch(showHideToastMessage({
+      content: 'common:text_link_copied_to_clipboard',
+      props: {
+        textProps: { useI18n: true },
+        type: 'success',
+      },
+    }));
   };
 
   const onPressShare = () => {
     dispatch(modalActions.hideModal());
-    const groupLink = getLink(LINK_GROUP, groupId);
+    const groupLink = getLink(
+      LINK_GROUP, groupId,
+    );
     try {
-      Share.share({
-        message: groupLink,
-        url: groupLink,
-      }).then((result) => {
-        console.log('\x1b[35m🐣️ Share group result: ', result, '\x1b[0m');
-      });
+      Share.share({ message: groupLink, url: groupLink })
     } catch (error) {
-      console.log(`\x1b[31m🐣️ Share group error: ${error}\x1b[0m`);
+      console.error(`\x1b[31m🐣️ Share group error: ${error}\x1b[0m`);
     }
   };
 
@@ -105,36 +105,38 @@ const GroupTopBar = () => {
 
   const navigateToMembers = () => {
     dispatch(clearToastMessage());
-    rootNavigation.navigate(groupStack.groupMembers, { groupId });
-  };
-
-  const onPressMenu = () => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: (
-          <HeaderMenu
-            type="group"
-            isMember={isMember}
-            canSetting={canSetting}
-            onPressAdminTools={onPressAdminTools}
-            onPressCopyLink={onPressCopyLink}
-            onPressShare={onPressShare}
-            onPressLeave={onPressLeave}
-          />
-        ),
-        props: {
-          isContextMenu: true,
-          menuMinWidth: 280,
-          modalStyle: { borderTopLeftRadius: 20, borderTopRightRadius: 20 },
-        },
-      }),
+    rootNavigation.navigate(
+      groupStack.groupMembers, { groupId },
     );
   };
 
+  const onPressMenu = () => {
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent: (
+        <HeaderMenu
+          type="group"
+          isMember={isMember}
+          canSetting={canSetting}
+          onPressAdminTools={onPressAdminTools}
+          onPressCopyLink={onPressCopyLink}
+          onPressShare={onPressShare}
+          onPressLeave={onPressLeave}
+        />
+      ),
+      props: {
+        isContextMenu: true,
+        menuMinWidth: 280,
+        modalStyle: { borderTopLeftRadius: 20, borderTopRightRadius: 20 },
+      },
+    }));
+  };
+
   const onPressChat = () => {
-    const link = formatChannelLink(groupInfo.team_name, groupInfo.slug);
-    openLink(link);
+    const link = formatChannelLink(
+      groupInfo.team_name, groupInfo.slug,
+    );
+    openUrl(link);
   };
 
   const onPressSearch = () => {

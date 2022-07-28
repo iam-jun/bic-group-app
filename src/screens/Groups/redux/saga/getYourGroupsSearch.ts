@@ -12,21 +12,20 @@ export default function* getYourGroupsSearch({
 }): any {
   const { key, communityId } = payload || {};
   if (!key?.trim?.()) {
-    yield put(
-      groupsActions.setYourGroupsSearch({ loading: false, list: [], key: '' }),
-    );
+    yield put(groupsActions.setYourGroupsSearch({ loading: false, list: [], key: '' }));
     return;
   }
   try {
     yield put(groupsActions.setYourGroupsSearch({ loading: true, key }));
-    const groups = yield call(
+    const response = yield call(
       groupsDataHelper.getCommunityGroups,
       communityId,
-      { key, list_by: 'flat' },
+      { key, listBy: 'flat' },
     );
     const currentKey = yield select(
       (state) => state?.groups?.yourGroupsSearch?.key,
     );
+    const groups = response.data;
     const list = currentKey?.trim?.() ? groups || [] : [];
     yield put(groupsActions.setYourGroupsSearch({ loading: false, list }));
   } catch (err) {

@@ -46,18 +46,10 @@ const _NotificationList = ({
 
   const dispatch = useDispatch();
 
-  const notificationList = useKeySelector(
-    notificationSelector.notificationByType(keyValue),
-  );
-  const isLoadingMore = useKeySelector(
-    notificationSelector.isLoadingMore(keyValue),
-  );
-  const loadingNotifications = useKeySelector(
-    notificationSelector.isLoading(keyValue),
-  );
-  const noMoreNotification = useKeySelector(
-    notificationSelector.noMoreNotification(keyValue),
-  );
+  const notificationList = useKeySelector(notificationSelector.notificationByType(keyValue));
+  const isLoadingMore = useKeySelector(notificationSelector.isLoadingMore(keyValue));
+  const loadingNotifications = useKeySelector(notificationSelector.isLoading(keyValue));
+  const noMoreNotification = useKeySelector(notificationSelector.noMoreNotification(keyValue));
 
   useTabPressListener(
     (tabName: ITabTypes) => {
@@ -68,22 +60,22 @@ const _NotificationList = ({
     [listRef],
   );
 
-  useEffect(() => {
-    if (notificationList?.length < 1 && activeIndex) {
+  useEffect(
+    () => {
+      if (notificationList?.length < 1 && activeIndex) {
       // @ts-ignore
-      dispatch(notificationsActions.getNotifications({ flag: type, keyValue }));
-    }
-  }, [activeIndex]);
+        dispatch(notificationsActions.getNotifications({ flag: type, keyValue }));
+      }
+    }, [activeIndex],
+  );
 
   const refreshListNotification = () => {
-    dispatch(
-      notificationsActions.getNotifications({
-        // @ts-ignore
-        flag: type,
-        keyValue,
-        isRefresh: true,
-      }),
-    );
+    dispatch(notificationsActions.getNotifications({
+      // @ts-ignore
+      flag: type,
+      keyValue,
+      isRefresh: true,
+    }));
   };
 
   // load more notification handler
@@ -156,17 +148,19 @@ const _NotificationList = ({
     return <NoNotificationFound />;
   };
 
-  const _notificationList = React.useMemo(() => {
-    if (
-      notificationList !== undefined
+  const _notificationList = React.useMemo(
+    () => {
+      if (
+        notificationList !== undefined
       && !isEqual(
         JSON.stringify(notificationList),
         JSON.stringify(_notificationList),
       )
-    ) {
-      return notificationList;
-    }
-  }, [notificationList]);
+      ) {
+        return notificationList;
+      }
+    }, [notificationList],
+  );
 
   const keyExtractor = (item: any) => JSON.stringify(item);
 

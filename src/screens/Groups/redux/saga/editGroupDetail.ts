@@ -29,7 +29,9 @@ export default function* editGroupDetail({
     yield put(groupsActions.setGroupDetail(resp?.data));
     if (callback) callback();
   } catch (err) {
-    console.error('\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m');
+    console.error(
+      '\x1b[33m', 'editGroupDetail : error', err, '\x1b[0m',
+    );
     yield showError(err);
     // just in case there is some error regarding editing images url
     yield put(groupsActions.setLoadingAvatar(false));

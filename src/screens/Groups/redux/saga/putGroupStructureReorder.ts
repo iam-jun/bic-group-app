@@ -15,7 +15,7 @@ export default function* putGroupStructureReorder({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; newOrder: number[]};
+  payload: {communityId: string; newOrder: number[]};
 }): any {
   const { communityId, newOrder } = payload || {};
   try {
@@ -30,12 +30,10 @@ export default function* putGroupStructureReorder({
       newOrder,
     );
     if (response?.data) {
-      yield put(
-        actions.getGroupStructureCommunityTree({
-          communityId,
-          showLoading: false,
-        }),
-      );
+      yield put(actions.getGroupStructureCommunityTree({
+        communityId,
+        showLoading: false,
+      }));
       yield timeOut(600); // wait for refresh group tree
       yield put(actions.setGroupStructureReorder({ loading: false }));
       navigation.goBack();
@@ -49,11 +47,17 @@ export default function* putGroupStructureReorder({
       yield put(modalActions.showHideToastMessage(toastMessage));
     } else {
       yield put(actions.setGroupStructureReorder({ loading: false, newOrder }));
-      yield call(showError, response);
+      yield call(
+        showError, response,
+      );
     }
   } catch (err: any) {
     yield put(actions.setGroupStructureReorder({ loading: false, newOrder }));
-    console.error('putGroupStructureReorder error:', err);
-    yield call(showError, err);
+    console.error(
+      'putGroupStructureReorder error:', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

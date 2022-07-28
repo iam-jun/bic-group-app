@@ -23,19 +23,21 @@ export default function* editMyProfile({
     const userId = payload.id;
     delete payload.id; // edit data should not contain user's id
 
-    const result: IResponseData = yield call(menuDataHelper.editMyProfile, {
-      userId,
-      data: payload,
-    });
+    const result: IResponseData = yield call(
+      menuDataHelper.editMyProfile, {
+        userId,
+        data: payload,
+      },
+    );
 
     // checking if uploading avatar/cover image
     // to use different toast message content
-    const { avatar, background_img_url } = payload;
+    const { avatar, backgroundImgUrl } = payload;
     let toastContent: string;
 
     if (avatar) {
       toastContent = 'common:avatar_changed';
-    } else if (background_img_url) {
+    } else if (!!backgroundImgUrl) {
       toastContent = 'common:cover_changed';
     } else {
       // this field is used to indicate which parts of
@@ -55,25 +57,19 @@ export default function* editMyProfile({
 
     if (callback) return callback();
   } catch (err:any) {
-    console.error('\x1b[33m', 'editMyProfile : error', err, '\x1b[0m');
+    console.error(
+      '\x1b[33m', 'editMyProfile : error', err, '\x1b[0m',
+    );
 
     const errorMessage: string = err?.meta?.message;
 
     switch (errorMessage) {
       case 'This Email is used':
-        yield put(
-          menuActions.setEmailEditError(
-            i18next.t('settings:text_email_is_used'),
-          ),
-        );
+        yield put(menuActions.setEmailEditError(i18next.t('settings:text_email_is_used')));
         break;
 
       case 'This phone number is used':
-        yield put(
-          menuActions.setPhoneNumberEditError(
-            i18next.t('settings:text_phone_number_is_used'),
-          ),
-        );
+        yield put(menuActions.setPhoneNumberEditError(i18next.t('settings:text_phone_number_is_used')));
         break;
 
       default:

@@ -32,16 +32,20 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
   const { forgotPasswordError, forgotPasswordLoading } = useAuth();
   const { errConfirm }: IForgotPasswordError = forgotPasswordError || {};
 
-  useEffect(() => {
-    if (errConfirm) {
-      setError('code', {
-        type: 'manual',
-        message: errConfirm,
-      });
-    } else {
-      clearErrors('code');
-    }
-  }, [errConfirm]);
+  useEffect(
+    () => {
+      if (errConfirm) {
+        setError(
+          'code', {
+            type: 'manual',
+            message: errConfirm,
+          },
+        );
+      } else {
+        clearErrors('code');
+      }
+    }, [errConfirm],
+  );
 
   const {
     getValues,
@@ -89,16 +93,16 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
       && newPassword === confirmPassword
       && !disableConfirm
     ) {
-      dispatch(
-        actions.forgotPasswordConfirm({ email, code, password: newPassword }),
-      );
+      dispatch(actions.forgotPasswordConfirm({ email, code, password: newPassword }));
     }
   };
 
   const onRequestForgotPassword = () => {
     const email = getValues('email');
     if (email && !disableRequest) {
-      setValue('code', '', { shouldValidate: false });
+      setValue(
+        'code', '', { shouldValidate: false },
+      );
       clearErrors('code');
       dispatch(actions.forgotPasswordRequest(email));
     }
@@ -115,10 +119,12 @@ const ForgotInputCodePw: React.FC<Props> = ({ useFormData }) => {
   const validateConfirmPassword = async () => {
     await trigger('confirmPassword');
     if (getValues('newPassword') !== getValues('confirmPassword')) {
-      setError('confirmPassword', {
-        type: 'manual',
-        message: t('auth:text_err_confirm_password_not_matched'),
-      });
+      setError(
+        'confirmPassword', {
+          type: 'manual',
+          message: t('auth:text_err_confirm_password_not_matched'),
+        },
+      );
     }
   };
 

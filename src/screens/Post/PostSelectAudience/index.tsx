@@ -61,12 +61,8 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   } = state;
 
   const isInternetReachable = useKeySelector('noInternet.isInternetReachable');
-  const initAudiences = useKeySelector(
-    postKeySelector.createPost.initAudiences,
-  );
-  const savedAudiences = useKeySelector(
-    postKeySelector.createPost.chosenAudiences,
-  );
+  const initAudiences = useKeySelector(postKeySelector.createPost.initAudiences);
+  const savedAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
 
   const isEditAudience = !!initAudiences;
 
@@ -125,70 +121,86 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     dispatch(postActions.setPostSelectAudienceState(p));
   };
 
-  useEffect(() => {
-    if (isFirstStep) {
-      dispatch(postActions.clearCreatPostData());
-      dispatch(postActions.setSearchResultAudienceGroups([]));
-      dispatch(postActions.setSearchResultAudienceUsers([]));
-    }
-    if (initAudiences) {
-      handleSearchResult(initAudiences);
-      dispatch(postActions.setPostSelectAudienceState({ loading: false }));
-    } else if (sectionListData.length === 0 || isFirstStep) {
-      onSearch('');
-    } else {
-      dispatch(postActions.setPostSelectAudienceState({ loading: false }));
-    }
-
-    setTimeout(() => {
-      // emit event show header to avoid case quick scroll then press create, lead to missing header
-      DeviceEventEmitter.emit('showHeader', true);
-      DeviceEventEmitter.emit('showBottomBar', true);
-    }, 2000);
-
-    return () => {
-      dispatch(postActions.setPostSelectAudienceState());
-    };
-  }, []);
-
-  useEffect(() => {
-    if (isInternetReachable) {
-      if (lossInternet && sectionListData.length === 0) {
-        setLossInternet(false);
-        onSearch('');
+  useEffect(
+    () => {
+      if (isFirstStep) {
+        dispatch(postActions.clearCreatPostData());
+        dispatch(postActions.setSearchResultAudienceGroups([]));
+        dispatch(postActions.setSearchResultAudienceUsers([]));
       }
-    } else {
-      setLossInternet(true);
-    }
-  }, [isInternetReachable]);
+      if (initAudiences) {
+        handleSearchResult(initAudiences);
+        dispatch(postActions.setPostSelectAudienceState({ loading: false }));
+      } else if (sectionListData.length === 0 || isFirstStep) {
+        onSearch('');
+      } else {
+        dispatch(postActions.setPostSelectAudienceState({ loading: false }));
+      }
 
-  useEffect(() => {
-    if (selectingAudiences?.length === 0) {
-      const newSelectingUsers: any = {};
-      const newSelectingGroups: any = {};
-      chosenAudiences?.forEach?.((item: any) => {
-        if (item && item?.type === 'user') {
-          newSelectingUsers[item.id] = item;
-        } else {
-          newSelectingGroups[item.id] = item;
-        }
-      });
+      setTimeout(
+        () => {
+          // emit event show header to avoid case quick scroll then press create, lead to missing header
+          DeviceEventEmitter.emit(
+            'showHeader', true,
+          );
+          DeviceEventEmitter.emit(
+            'showBottomBar', true,
+          );
+        }, 2000,
+      );
 
-      const p = {
-        selectingUsers: newSelectingUsers,
-        selectingGroups: newSelectingGroups,
+      return () => {
+        dispatch(postActions.setPostSelectAudienceState());
       };
-      dispatch(postActions.setPostSelectAudienceState(p));
-    }
-  }, [chosenAudiences]);
+    }, [],
+  );
 
-  useEffect(() => {
-    updateSelectingAudiences();
-  }, [selectingGroups]);
+  useEffect(
+    () => {
+      if (isInternetReachable) {
+        if (lossInternet && sectionListData.length === 0) {
+          setLossInternet(false);
+          onSearch('');
+        }
+      } else {
+        setLossInternet(true);
+      }
+    }, [isInternetReachable],
+  );
 
-  useEffect(() => {
-    updateSelectingAudiences();
-  }, [selectingUsers]);
+  useEffect(
+    () => {
+      if (selectingAudiences?.length === 0) {
+        const newSelectingUsers: any = {};
+        const newSelectingGroups: any = {};
+        chosenAudiences?.forEach?.((item: any) => {
+          if (item && item?.type === 'user') {
+            newSelectingUsers[item.id] = item;
+          } else {
+            newSelectingGroups[item.id] = item;
+          }
+        });
+
+        const p = {
+          selectingUsers: newSelectingUsers,
+          selectingGroups: newSelectingGroups,
+        };
+        dispatch(postActions.setPostSelectAudienceState(p));
+      }
+    }, [chosenAudiences],
+  );
+
+  useEffect(
+    () => {
+      updateSelectingAudiences();
+    }, [selectingGroups],
+  );
+
+  useEffect(
+    () => {
+      updateSelectingAudiences();
+    }, [selectingUsers],
+  );
 
   const onPressSave = () => {
     // first step in flow select audience before create post
@@ -198,25 +210,23 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
         ...createPostParams,
         initAutoSaveDraft: true,
       };
-      rootNavigation.replace(homeStack.createPost, params as any);
+      rootNavigation.replace(
+        homeStack.createPost, params as any,
+      );
     } else if (isEditAudience) {
       if (isAudiencesHasChanged) {
-        dispatch(
-          modalActions.showAlert({
-            title: t('post:create_post:title_audience_changed'),
-            content: t('post:create_post:text_discard_change_audience'),
-            showCloseButton: true,
-            cancelBtn: true,
-            cancelLabel: t('common:btn_discard'),
-            confirmLabel: t('post:create_post:btn_save_change'),
-            onConfirm: () => {
-              dispatch(
-                postActions.setCreatePostChosenAudiences(selectingAudiences),
-              );
-              rootNavigation.goBack();
-            },
-          }),
-        );
+        dispatch(modalActions.showAlert({
+          title: t('post:create_post:title_audience_changed'),
+          content: t('post:create_post:text_discard_change_audience'),
+          showCloseButton: true,
+          cancelBtn: true,
+          cancelLabel: t('common:btn_discard'),
+          confirmLabel: t('post:create_post:btn_save_change'),
+          onConfirm: () => {
+            dispatch(postActions.setCreatePostChosenAudiences(selectingAudiences));
+            rootNavigation.goBack();
+          },
+        }));
       } else {
         dispatch(postActions.setCreatePostChosenAudiences(selectingAudiences));
         rootNavigation.goBack();
@@ -230,33 +240,29 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
   const onPressBack = () => {
     if (isFirstStep) {
       if (isAudiencesHasChanged) {
-        dispatch(
-          modalActions.showAlert({
-            title: t('post:create_post:title_discard_audience'),
-            content: t('post:create_post:text_discard_audience'),
-            showCloseButton: true,
-            cancelBtn: true,
-            cancelLabel: t('common:btn_discard'),
-            confirmLabel: t('post:create_post:btn_keep_selecting'),
-            onCancel: () => rootNavigation.goBack(),
-          }),
-        );
+        dispatch(modalActions.showAlert({
+          title: t('post:create_post:title_discard_audience'),
+          content: t('post:create_post:text_discard_audience'),
+          showCloseButton: true,
+          cancelBtn: true,
+          cancelLabel: t('common:btn_discard'),
+          confirmLabel: t('post:create_post:btn_keep_selecting'),
+          onCancel: () => rootNavigation.goBack(),
+        }));
       } else {
         rootNavigation.goBack();
       }
     } else if (isEditAudience || isFirstStep) {
       if (isAudiencesHasChanged) {
-        dispatch(
-          modalActions.showAlert({
-            title: t('post:create_post:title_audience_changed'),
-            content: t('post:create_post:text_discard_change'),
-            showCloseButton: true,
-            cancelBtn: true,
-            cancelLabel: t('common:btn_discard'),
-            confirmLabel: t('post:create_post:btn_keep_edit'),
-            onCancel: () => rootNavigation.goBack(),
-          }),
-        );
+        dispatch(modalActions.showAlert({
+          title: t('post:create_post:title_audience_changed'),
+          content: t('post:create_post:text_discard_change'),
+          showCloseButton: true,
+          cancelBtn: true,
+          cancelLabel: t('common:btn_discard'),
+          confirmLabel: t('post:create_post:btn_keep_edit'),
+          onCancel: () => rootNavigation.goBack(),
+        }));
       } else {
         rootNavigation.goBack();
       }
@@ -284,38 +290,29 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
     dispatch(postActions.setPostSelectAudienceState(p));
   };
 
-  const handleSearchResult = (data: any) => {
-    const { users = [], groups = [] } = data || {};
-
-    dispatch(postActions.setSearchResultAudienceGroups(groups));
-
-    const newListUsers: any = [];
-    users?.forEach?.((item: any) => {
-      newListUsers.push({
-        id: item.id,
-        type: 'user',
-        name: item.fullname || item.username,
-        avatar: item.avatar,
-      });
-    });
-    dispatch(postActions.setSearchResultAudienceUsers(newListUsers));
+  const handleSearchResult = (data: []) => {
+    dispatch(postActions.setSearchResultAudienceGroups(data));
   };
 
-  const onSearch = debounce((searchText: string) => {
-    dispatch(postActions.setPostSelectAudienceState({ loading: true }));
-    postDataHelper
-      .getSearchAudiences(searchText)
-      .then((response) => {
-        if (response && response.data) {
-          handleSearchResult(response.data);
-        }
-        dispatch(postActions.setPostSelectAudienceState({ loading: false }));
-      })
-      .catch((e) => {
-        dispatch(postActions.setPostSelectAudienceState({ loading: false }));
-        console.error('\x1b[31m', '🐣️ getSearchAudiences |  : ', e, '\x1b[0m');
-      });
-  }, 500);
+  const onSearch = debounce(
+    (searchText: string) => {
+      dispatch(postActions.setPostSelectAudienceState({ loading: true }));
+      postDataHelper
+        .getSearchAudiences(searchText)
+        .then((response) => {
+          if (response && response?.data?.groups) {
+            handleSearchResult(response.data.groups);
+          }
+          dispatch(postActions.setPostSelectAudienceState({ loading: false }));
+        })
+        .catch((e) => {
+          dispatch(postActions.setPostSelectAudienceState({ loading: false }));
+          console.error(
+            '\x1b[31m', '🐣️ getSearchAudiences |  : ', e, '\x1b[0m',
+          );
+        });
+    }, 500,
+  );
 
   const onChangeTextSearch = (text: string) => {
     onSearch(text);
@@ -439,7 +436,9 @@ const PostSelectAudience: FC<PostSelectAudienceProps> = ({
         <SectionList
           style={{ paddingHorizontal: spacing?.padding.large }}
           sections={sectionListData}
-          keyExtractor={(item, index) => item?.unique || `section_list_${item}_${index}`}
+          keyExtractor={(
+            item, index,
+          ) => item?.unique || `section_list_${item}_${index}`}
           ListHeaderComponent={renderListHeader}
           ListFooterComponent={renderListFooter}
           ListEmptyComponent={renderEmpty}

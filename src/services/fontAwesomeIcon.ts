@@ -26,13 +26,16 @@ import { faCheck as faCheckSolid } from '@fortawesome/pro-solid-svg-icons/faChec
 import { faObjectExclude } from '@fortawesome/pro-regular-svg-icons/faObjectExclude';
 import { faLayerGroup } from '@fortawesome/pro-regular-svg-icons/faLayerGroup';
 import { faEye } from '@fortawesome/pro-regular-svg-icons/faEye';
+import { faEye as faEyeSolid } from '@fortawesome/pro-solid-svg-icons/faEye';
 import { faEyeSlash } from '@fortawesome/pro-regular-svg-icons/faEyeSlash';
 import { faCopy } from '@fortawesome/pro-regular-svg-icons/faCopy';
 import { faCircleUser } from '@fortawesome/pro-regular-svg-icons/faCircleUser';
 import { faCamera } from '@fortawesome/pro-regular-svg-icons/faCamera';
 import { faLock } from '@fortawesome/pro-regular-svg-icons/faLock';
 import { faLockKeyhole } from '@fortawesome/pro-regular-svg-icons/faLockKeyhole';
+import { faLockKeyhole as faLockKeyholeSolid } from '@fortawesome/pro-solid-svg-icons/faLockKeyhole';
 import { faGlobe } from '@fortawesome/pro-regular-svg-icons/faGlobe';
+import { faGlobe as faGlobeSolid } from '@fortawesome/pro-solid-svg-icons/faGlobe';
 import { faCalendar } from '@fortawesome/pro-regular-svg-icons/faCalendar';
 import { faUserXmark } from '@fortawesome/pro-regular-svg-icons/faUserXmark';
 import { faSquareUser } from '@fortawesome/pro-regular-svg-icons/faSquareUser';
@@ -94,6 +97,7 @@ import { faShieldCheck } from '@fortawesome/pro-regular-svg-icons/faShieldCheck'
 import { faDesktop } from '@fortawesome/pro-regular-svg-icons/faDesktop';
 import { faCoins } from '@fortawesome/pro-regular-svg-icons/faCoins';
 import { faShieldHalved } from '@fortawesome/pro-regular-svg-icons/faShieldHalved';
+import { faShieldHalved as faShieldHalvedSolid } from '@fortawesome/pro-solid-svg-icons/faShieldHalved';
 import { faFloppyDisk } from '@fortawesome/pro-regular-svg-icons/faFloppyDisk';
 import { faListUl } from '@fortawesome/pro-regular-svg-icons/faListUl';
 import { faFaceSmile } from '@fortawesome/pro-regular-svg-icons/faFaceSmile';
@@ -145,13 +149,16 @@ export const initFontAwesomeIcon = () => {
     faObjectExclude,
     faLayerGroup,
     faEye,
+    faEyeSolid,
     faEyeSlash,
     faCopy,
     faCircleUser,
     faCamera,
     faLock,
     faLockKeyhole,
+    faLockKeyholeSolid,
     faGlobe,
+    faGlobeSolid,
     faCalendar,
     faUserXmark,
     faSquareUser,
@@ -213,6 +220,7 @@ export const initFontAwesomeIcon = () => {
     faDesktop,
     faCoins,
     faShieldHalved,
+    faShieldHalvedSolid,
     faFloppyDisk,
     faListUl,
     faFaceSmile,
@@ -248,13 +256,16 @@ export const fontAwesomeIcons = {
   ObjectExclude: 'fa-regular fa-object-exclude',
   LayerGroup: 'fa-regular fa-layer-group',
   Eye: 'fa-regular fa-eye',
+  EyeSolid: 'fa-solid fa-eye',
   EyeSlash: 'fa-regular fa-eye-slash',
   Copy: 'fa-regular fa-copy',
   CircleUser: 'fa-regular fa-circle-user',
   Camera: 'fa-regular fa-camera',
   Lock: 'fa-regular fa-lock',
   LockKeyhole: 'fa-regular fa-lock-keyhole',
+  LockKeyholeSolid: 'fa-solid fa-lock-keyhole',
   Globe: 'fa-regular fa-globe',
+  GlobeSolid: 'fa-solid fa-globe',
   Calendar: 'fa-regular fa-calendar',
   UserXmark: 'fa-regular fa-user-xmark',
   SquareUser: 'fa-regular fa-square-user',
@@ -317,6 +328,7 @@ export const fontAwesomeIcons = {
   Monitor: 'fa-regular fa-desktop',
   Coins: 'fa-regular fa-coins',
   ShieldHalved: 'fa-regular fa-shield-halved',
+  ShieldHalvedSolid: 'fa-solid fa-shield-halved',
   FloppyDisk: 'fa-regular fa-floppy-disk',
   ListUl: 'fa-regular fa-list-ul',
   FaceSmile: 'fa-regular fa-face-smile',
@@ -324,6 +336,8 @@ export const fontAwesomeIcons = {
 };
 
 export const fontAwesomeIconValues = Object.values(fontAwesomeIcons).reduce(
-  (acc, cur) => ({ ...acc, [cur]: cur }),
+  (
+    acc, cur,
+  ) => ({ ...acc, [cur]: cur }),
   {},
 );

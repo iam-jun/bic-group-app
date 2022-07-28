@@ -39,15 +39,23 @@ const FilesView = ({
   const { t } = useBaseHook();
   const styles = themeStyles(theme);
   const [collapsed, setCollaped] = useState(true);
-  const topData = files.slice(0, 5);
+  const topData = files.slice(
+    0, 5,
+  );
 
-  const bottomData = files.length > 5 ? files.slice(5, files.length - 1) : [];
+  const bottomData = files.length > 5 ? files.slice(
+    5, files.length - 1,
+  ) : [];
 
   const toggleCollapse = () => {
     setCollaped(!collapsed);
   };
 
-  const renderFiles = (data: any[], position: 'top' | 'bottom') => data.map((item: any, index: number) => (
+  const renderFiles = (
+    data: any[], position: 'top' | 'bottom',
+  ) => data.map((
+    item: any, index: number,
+  ) => (
     <View key={`create-post-file-${position}-${index}`}>
       <UploadingFile
         file={item}
@@ -64,11 +72,15 @@ const FilesView = ({
 
   return (
     <View style={{ flex: 1 }}>
-      {renderFiles(data, 'top')}
+      {renderFiles(
+        data, 'top',
+      )}
       {collapsible && files.length > 5 && (
         <View style={{}}>
           <Collapsible collapsed={collapsed}>
-            {renderFiles(bottomData, 'bottom')}
+            {renderFiles(
+              bottomData, 'bottom',
+            )}
           </Collapsible>
 
           <ButtonWrapper onPress={toggleCollapse}>
@@ -81,10 +93,12 @@ const FilesView = ({
 
       {isNumber(remainingSize) && (
         <Text.BodyS style={styles.remainingText}>
-          {t('upload:text_file_remainning', {
-            max_files: appConfig.maxFiles,
-            remaining_size: formatBytes(remainingSize),
-          })}
+          {t(
+            'upload:text_file_remainning', {
+              max_files: appConfig.maxFiles,
+              remaining_size: formatBytes(remainingSize),
+            },
+          )}
         </Text.BodyS>
       )}
     </View>

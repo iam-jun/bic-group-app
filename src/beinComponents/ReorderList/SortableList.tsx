@@ -15,21 +15,25 @@ export const SortableList = ({
   item: { height, width },
   onChange,
 }: SortableListProps) => {
-  const offsets = children.map((item: any, index: number) => ({
+  const offsets = children.map((
+    item: any, index: number,
+  ) => ({
     y: useSharedValue(index * height),
     index,
   }));
 
   const onEnd = () => {
-    const sortedOffsets = offsets.sort(
-      (a: any, b: any) => (a.y?.value || 0) - (b.y?.value || 0),
-    );
+    const sortedOffsets = offsets.sort((
+      a: any, b: any,
+    ) => (a.y?.value || 0) - (b.y?.value || 0));
     const newIndex = sortedOffsets.map((o: any) => o.index);
     onChange?.(newIndex);
   };
   return (
     <ScrollView contentContainerStyle={{ height: height * children.length }}>
-      {children.map((child: any, index: number) => (
+      {children.map((
+        child: any, index: number,
+      ) => (
         <SortableItem
           key={index}
           {...{ offsets, index, item: { height, width } }}

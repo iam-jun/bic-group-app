@@ -10,7 +10,7 @@ export default function* getCommunityScheme({
   payload,
 }: {
   type: string;
-  payload: {communityId: number | string};
+  payload: {communityId: string};
 }): any {
   try {
     const { communityId } = payload || {};
@@ -21,20 +21,22 @@ export default function* getCommunityScheme({
     );
     if (response?.data) {
       const dataWithOrderedFixRole = sortFixedRoles(response?.data);
-      yield put(
-        actions.setCommunityScheme({
-          loading: false,
-          data: dataWithOrderedFixRole,
-        }),
-      );
+      yield put(actions.setCommunityScheme({
+        loading: false,
+        data: dataWithOrderedFixRole,
+      }));
     } else {
       yield put(actions.setCommunityScheme({ loading: false }));
     }
   } catch (err: any) {
     yield put(actions.setCommunityScheme({ loading: false }));
-    console.error('getCommunityScheme error:', err);
+    console.error(
+      'getCommunityScheme error:', err,
+    );
     if (err?.code !== API_ERROR_CODE.GROUP.SCHEME_NOT_FOUND) {
-      yield call(showError, err);
+      yield call(
+        showError, err,
+      );
     }
   }
 }

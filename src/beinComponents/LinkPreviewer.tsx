@@ -9,7 +9,8 @@ import appActions from '~/store/app/actions';
 import { scaleSize } from '~/theme/dimension';
 
 import spacing from '~/theme/spacing';
-import { getUrlFromText, openLink } from '~/utils/common';
+import { getUrlFromText } from '~/utils/common';
+import { openUrl } from '~/utils/link';
 import ButtonWrapper from './Button/ButtonWrapper';
 
 interface Props {
@@ -23,22 +24,26 @@ const LinkPreviewer = ({ text }: Props) => {
   const [link, setLink] = useState<string | null | undefined>('');
   const linkPreviews = useKeySelector('app.linkPreviews');
 
-  useEffect(() => {
-    const url = getUrlFromText(text);
-    setLink(url);
-  }, [text]);
+  useEffect(
+    () => {
+      const url = getUrlFromText(text);
+      setLink(url);
+    }, [text],
+  );
 
-  useEffect(() => {
-    if (link && !linkPreviews?.[link]) {
-      dispatch(appActions.getLinkPreview(link));
-    }
-  }, [link]);
+  useEffect(
+    () => {
+      if (link && !linkPreviews?.[link]) {
+        dispatch(appActions.getLinkPreview(link));
+      }
+    }, [link],
+  );
 
   // link preview must have title at least
   if (!link || !linkPreviews?.[link]?.title) return null;
 
   const onPress = () => {
-    openLink(link);
+    openUrl(link);
   };
 
   return (

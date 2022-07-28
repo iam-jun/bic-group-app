@@ -17,7 +17,6 @@ import DocumentPicker from '~/beinComponents/DocumentPicker';
 import Icon from '~/beinComponents/Icon';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import KeyboardSpacer from '~/beinComponents/KeyboardSpacer';
-import { tryOpenURL } from '~/beinComponents/Markdown/utils/url.js';
 import Text from '~/beinComponents/Text';
 import appConfig from '~/configs/appConfig';
 import { useBaseHook } from '~/hooks';
@@ -30,7 +29,7 @@ import postKeySelector from '~/screens/Post/redux/keySelector';
 import { showHideToastMessage } from '~/store/modal/actions';
 
 import spacing from '~/theme/spacing';
-import { getChatDomain } from '~/utils/link';
+import { getChatDomain, openUrl } from '~/utils/link';
 import { checkPermission, permissionTypes } from '~/utils/permission';
 import { clearExistingFiles, validateFilesPicker } from '../CreatePost/helper';
 import { getTotalFileSize } from '../redux/selectors';
@@ -68,20 +67,22 @@ const PostToolbar = ({
   const styles = createStyle(theme);
   const modalizeRef = useRef<any>();
 
-  const selectedImage: ICreatePostImage[] = useKeySelector(
-    postKeySelector.createPost.images,
-  );
+  const selectedImage: ICreatePostImage[] = useKeySelector(postKeySelector.createPost.images);
   const content = useKeySelector(postKeySelector.createPost.content);
   const selectedFiles = useKeySelector(postKeySelector.createPost.files);
   const { totalFiles, totalSize } = getTotalFileSize();
 
   const [isOpen, setIsOpen] = useState(false);
 
-  const openModal = throttle((e?: any) => {
-    Keyboard.dismiss();
-    setIsOpen(true);
-    modalizeRef?.current?.open?.(e?.pageX, e?.pageY);
-  }, 500);
+  const openModal = throttle(
+    (e?: any) => {
+      Keyboard.dismiss();
+      setIsOpen(true);
+      modalizeRef?.current?.open?.(
+        e?.pageX, e?.pageY,
+      );
+    }, 500,
+  );
 
   const closeModal = () => {
     setIsOpen(false);
@@ -97,11 +98,13 @@ const PostToolbar = ({
     return true;
   };
 
-  useImperativeHandle(toolbarRef, () => ({
-    openModal,
-    closeModal,
-    goBack,
-  }));
+  useImperativeHandle(
+    toolbarRef, () => ({
+      openModal,
+      closeModal,
+      goBack,
+    }),
+  );
 
   const handleGesture = (event: GestureEvent<any>) => {
     const { nativeEvent } = event;
@@ -116,20 +119,24 @@ const PostToolbar = ({
 
   const _onPressSelectImage = () => {
     modalizeRef?.current?.close?.();
-    checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
-      if (canOpenPicker) {
-        openGallery();
-      }
-    });
+    checkPermission(
+      permissionTypes.photo, dispatch, (canOpenPicker) => {
+        if (canOpenPicker) {
+          openGallery();
+        }
+      },
+    );
   };
 
   const _onPressSelectVideo = () => {
     modalizeRef?.current?.close?.();
-    checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
-      if (canOpenPicker) {
-        openSingleVideoPicker();
-      }
-    });
+    checkPermission(
+      permissionTypes.photo, dispatch, (canOpenPicker) => {
+        if (canOpenPicker) {
+          openSingleVideoPicker();
+        }
+      },
+    );
   };
 
   const openSingleVideoPicker = () => {
@@ -139,7 +146,9 @@ const PostToolbar = ({
         dispatch(postActions.setCreatePostVideo(data));
       })
       .catch((e) => {
-        console.error('\x1b[36m🐣️ openSingleVideoPicker error: \x1b[0m', e);
+        console.error(
+          '\x1b[36m🐣️ openSingleVideoPicker error: \x1b[0m', e,
+        );
       });
   };
 
@@ -152,23 +161,25 @@ const PostToolbar = ({
         });
         let newImageDraft = [...selectedImage, ...newImages];
         if (newImageDraft.length > appConfig.postPhotoLimit) {
-          newImageDraft = newImageDraft.slice(0, appConfig.postPhotoLimit);
+          newImageDraft = newImageDraft.slice(
+            0, appConfig.postPhotoLimit,
+          );
           const errorContent = t('post:error_reach_upload_photo_limit').replace(
             '%LIMIT%',
             appConfig.postPhotoLimit,
           );
-          dispatch(
-            showHideToastMessage({
-              content: errorContent,
-              props: { textProps: { useI18n: true }, type: 'error' },
-            }),
-          );
+          dispatch(showHideToastMessage({
+            content: errorContent,
+            props: { textProps: { useI18n: true }, type: 'error' },
+          }));
         }
         dispatch(postActions.setCreatePostImagesDraft(newImageDraft));
         rootNavigation.navigate(homeStack.postSelectImage);
       })
       .catch((e) => {
-        console.error('\x1b[36m🐣️ openPickerMultiple error: \x1b[0m', e);
+        console.error(
+          '\x1b[36m🐣️ openPickerMultiple error: \x1b[0m', e,
+        );
       });
   };
 
@@ -183,7 +194,9 @@ const PostToolbar = ({
       );
       if (validFiles.length === 0) return;
 
-      const newFiles = clearExistingFiles(selectedFiles, validFiles);
+      const newFiles = clearExistingFiles(
+        selectedFiles, validFiles,
+      );
       if (isEmpty(newFiles)) return;
 
       dispatch(postActions.addCreatePostFiles(newFiles));
@@ -197,7 +210,7 @@ const PostToolbar = ({
 
   const onPressHelp = () => {
     const DOMAIN = getChatDomain();
-    tryOpenURL(`${DOMAIN}/help/formatting`);
+    openUrl(`${DOMAIN}/help/formatting`);
   };
 
   const renderToolbarButton = (

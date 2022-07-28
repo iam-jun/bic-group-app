@@ -11,7 +11,7 @@ import GroupItem from '~/beinComponents/list/items/GroupItem';
 import spacing from '~/theme/spacing';
 
 export interface GroupJoinedListProps {
-  communityId: number;
+  communityId: string;
 }
 
 const GroupJoinedList: FC<GroupJoinedListProps> = ({
@@ -26,12 +26,14 @@ const GroupJoinedList: FC<GroupJoinedListProps> = ({
     dispatch(groupsActions.getYourGroupsList(communityId));
   };
 
-  useEffect(() => {
-    getData();
-    return () => {
-      dispatch(groupsActions.setYourGroupsList({ loading: true, list: [] }));
-    };
-  }, []);
+  useEffect(
+    () => {
+      getData();
+      return () => {
+        dispatch(groupsActions.setYourGroupsList({ loading: true, list: [] }));
+      };
+    }, [],
+  );
 
   const renderEmpty = () => (
     <EmptyScreen

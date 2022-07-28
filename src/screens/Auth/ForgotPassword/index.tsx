@@ -38,16 +38,20 @@ const ForgotPassword = () => {
 
   const dimensions = useWindowDimensions();
   const isPhone = dimensions.width < deviceDimensions.smallTablet;
-  const styles = themeStyles(theme, isPhone);
+  const styles = themeStyles(
+    theme, isPhone,
+  );
 
   const { forgotPasswordStage, forgotPasswordError } = useAuth();
   const { errBox }: IForgotPasswordError = forgotPasswordError || {};
 
   const useFormData = useForm();
 
-  useEffect(() => {
-    dispatch(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_ID));
-  }, []);
+  useEffect(
+    () => {
+      dispatch(actions.setForgotPasswordStage(forgotPasswordStages.INPUT_ID));
+    }, [],
+  );
 
   const imgMaxWidth = 500;
   const imgPadding = 67;
@@ -122,7 +126,9 @@ const ForgotPassword = () => {
   );
 };
 
-const themeStyles = (theme: ExtendedTheme, isPhone: boolean) => {
+const themeStyles = (
+  theme: ExtendedTheme, isPhone: boolean,
+) => {
   const insets = useSafeAreaInsets();
   const { colors } = theme;
   return StyleSheet.create({

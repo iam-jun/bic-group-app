@@ -20,6 +20,8 @@ export type TextVariant =
   | 'bodyMMedium'
   | 'bodyS'
   | 'bodySMedium'
+  | 'bodyXS'
+  | 'bodyXSMedium'
   | 'paragraphL'
   | 'paragraphM'
   | 'paragraphS'
@@ -29,6 +31,7 @@ export type TextVariant =
   | 'tabL'
   | 'tabM'
   | 'tabS'
+  | 'tabXS'
   | 'linkM'
   | 'linkS'
   | 'badgeL'
@@ -37,6 +40,7 @@ export type TextVariant =
   | 'badgeXS'
   | 'labelL'
   | 'labelM'
+  | 'labelS'
   | 'dropdownM'
   | 'dropdownS'
   | 'numberM'
@@ -75,12 +79,15 @@ const TextComponent: React.FC<TextProps> = ({
     && maxLength < content.length
     && typeof content === 'string'
   ) {
-    content = `${content.substring(0, maxLength)}...`;
+    content = `${content.substring(
+      0, maxLength,
+    )}...`;
   }
 
   return (
     <TextRN
-      // allowFontScaling={false} disable block font scaling because somewhere not set fontSize (markdown, input) still use scale size
+      // allowFontScaling={false} disable block font scaling because
+      // somewhere not set fontSize (markdown, input) still use scale size
       {...props}
       style={[textStyle, color ? { color } : {}, style]}
     >
@@ -131,6 +138,12 @@ const BodyS = ({ ...props }: TextProps) => (
 const BodySMedium = ({ ...props }: TextProps) => (
   <TextComponent variant="bodySMedium" {...props} />
 );
+const BodyXS = ({ ...props }: TextProps) => (
+  <TextComponent variant="bodyXS" {...props} />
+);
+const BodyXSMedium = ({ ...props }: TextProps) => (
+  <TextComponent variant="bodyXSMedium" {...props} />
+);
 const ParagraphL = ({ ...props }: TextProps) => (
   <TextComponent variant="paragraphL" {...props} />
 );
@@ -158,6 +171,9 @@ const TabM = ({ ...props }: TextProps) => (
 const TabS = ({ ...props }: TextProps) => (
   <TextComponent variant="tabS" {...props} />
 );
+const TabXS = ({ ...props }: TextProps) => (
+  <TextComponent variant="tabXS" {...props} />
+);
 const LinkM = ({ ...props }: TextProps) => (
   <TextComponent variant="linkM" {...props} />
 );
@@ -182,6 +198,9 @@ const LabelL = ({ ...props }: TextProps) => (
 const LabelM = ({ ...props }: TextProps) => (
   <TextComponent variant="labelM" {...props} />
 );
+const LabelS = ({ ...props }: TextProps) => (
+  <TextComponent variant="labelS" {...props} />
+);
 const DropdownM = ({ ...props }: TextProps) => (
   <TextComponent variant="dropdownM" {...props} />
 );
@@ -198,43 +217,49 @@ const CaptionS = ({ ...props }: TextProps) => (
   <TextComponent variant="captionS" {...props} />
 );
 
-const Text = Object.assign(TextComponent, {
-  H1,
-  H2,
-  H3,
-  H4,
-  H5,
-  H6,
-  SubtitleL,
-  SubtitleM,
-  SubtitleS,
-  SubtitleXS,
-  BodyM,
-  BodyMMedium,
-  BodyS,
-  BodySMedium,
-  ParagraphL,
-  ParagraphM,
-  ParagraphS,
-  ButtonL,
-  ButtonM,
-  ButtonS,
-  TabL,
-  TabM,
-  TabS,
-  LinkM,
-  LinkS,
-  BadgeL,
-  BadgeM,
-  BadgeS,
-  BadgeXS,
-  LabelL,
-  LabelM,
-  DropdownM,
-  DropdownS,
-  NumberM,
-  NumberS,
-  CaptionS,
-});
+const Text = Object.assign(
+  TextComponent, {
+    H1,
+    H2,
+    H3,
+    H4,
+    H5,
+    H6,
+    SubtitleL,
+    SubtitleM,
+    SubtitleS,
+    SubtitleXS,
+    BodyM,
+    BodyMMedium,
+    BodyS,
+    BodySMedium,
+    BodyXS,
+    BodyXSMedium,
+    ParagraphL,
+    ParagraphM,
+    ParagraphS,
+    ButtonL,
+    ButtonM,
+    ButtonS,
+    TabL,
+    TabM,
+    TabS,
+    TabXS,
+    LinkM,
+    LinkS,
+    BadgeL,
+    BadgeM,
+    BadgeS,
+    BadgeXS,
+    LabelL,
+    LabelM,
+    LabelS,
+    DropdownM,
+    DropdownS,
+    NumberM,
+    NumberS,
+    CaptionS,
+  },
+);
 
 export default Text;

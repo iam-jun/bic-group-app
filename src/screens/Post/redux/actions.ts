@@ -35,6 +35,7 @@ import {
   ISeenPostListSheet,
   IPayloadPutMarkSeenPost,
   IGetSeenPostListSheet,
+  IPayloadRemoveAudiencesOfPost,
 } from '~/interfaces/IPost';
 import { IGroup } from '~/interfaces/IGroup';
 import { IUser } from '~/interfaces/IAuth';
@@ -181,9 +182,7 @@ const postActions = {
     type: postTypes.UPDATE_COMMENT_API,
     payload,
   }),
-  setScrollToLatestItem: (
-    payload: null | {parentCommentId?: string | number},
-  ) => ({
+  setScrollToLatestItem: (payload: null | {parentCommentId?: string | number}) => ({
     type: postTypes.SET_SCROLL_TO_LATEST_ITEM,
     payload,
   }),
@@ -250,9 +249,7 @@ const postActions = {
     type: postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS,
     payload,
   }),
-  updateAllCommentsByParentIdsWithComments: (
-    payload: IPayloadUpdateCommentsById,
-  ) => ({
+  updateAllCommentsByParentIdsWithComments: (payload: IPayloadUpdateCommentsById) => ({
     type: postTypes.UPDATE_ALL_COMMENTS_BY_PARENT_IDS_WITH_COMMENTS,
     payload,
   }),
@@ -349,6 +346,10 @@ const postActions = {
   }),
   updateAllPostContainingVideoInProgress: (payload: any) => ({
     type: postTypes.UPDATE_POSTS_CONTAINING_VIDEO_IN_PROGRESS,
+    payload,
+  }),
+  removePostAudiences: (payload:IPayloadRemoveAudiencesOfPost) => ({
+    type: postTypes.REMOVE_POST_AUDIENCES,
     payload,
   }),
 };

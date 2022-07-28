@@ -89,30 +89,36 @@ const _CommentView: React.FC<CommentViewProps> = ({
 
   const { fullname, avatar } = actor || {};
 
-  const isActor = Number(currentUserId) === actor?.id;
+  const isActor = currentUserId === actor?.id;
 
-  const [commentStatus, setCommentStatus] = useState(
-    commentData?.status || null,
-  );
+  const [commentStatus, setCommentStatus] = useState(commentData?.status || null);
   const isActive = commentStatus === 'success' || commentStatus === null;
 
   const progress = useSharedValue(1);
   const animatedStyle = useAnimatedStyle(() => ({ opacity: progress.value }));
 
-  useEffect(() => {
-    if (isActive) {
-      showComment(1);
-    } else if (commentStatus === 'pending') {
-      showComment(0.5);
-    }
-  }, [commentStatus]);
+  useEffect(
+    () => {
+      if (isActive) {
+        showComment(1);
+      } else if (commentStatus === 'pending') {
+        showComment(0.5);
+      }
+    }, [commentStatus],
+  );
 
-  useEffect(() => {
-    setCommentStatus(commentData?.status || null);
-  }, [commentData?.status]);
+  useEffect(
+    () => {
+      setCommentStatus(commentData?.status || null);
+    }, [commentData?.status],
+  );
 
-  const showComment = (value: number, duration = 300) => {
-    progress.value = withTiming(value, { duration });
+  const showComment = (
+    value: number, duration = 300,
+  ) => {
+    progress.value = withTiming(
+      value, { duration },
+    );
   };
 
   const onPressUser = (e?: any) => {
@@ -126,10 +132,14 @@ const _CommentView: React.FC<CommentViewProps> = ({
     dispatch(modalActions.showUserProfilePreviewBottomSheet(payload));
   };
 
-  const onPressAudience = useCallback((audience: IMarkdownAudience) => {
-    if (!audience) return;
-    rootNavigation.navigate(mainStack.userProfile, { userId: audience.id });
-  }, []);
+  const onPressAudience = useCallback(
+    (audience: IMarkdownAudience) => {
+      if (!audience) return;
+      rootNavigation.navigate(
+        mainStack.userProfile, { userId: audience.id },
+      );
+    }, [],
+  );
 
   const onAddReaction = (reactionId: ReactionType) => {
     if (id) {
@@ -161,7 +171,9 @@ const _CommentView: React.FC<CommentViewProps> = ({
     }
   };
 
-  const onEmojiSelected = (emoji: string, key?: string) => {
+  const onEmojiSelected = (
+    emoji: string, key?: string,
+  ) => {
     dispatch(modalActions.hideModal());
     if (key) {
       onAddReaction?.(key);
@@ -190,11 +202,9 @@ const _CommentView: React.FC<CommentViewProps> = ({
   const _onPressReply = () => {
     const actor: any = commentData?.actor || {};
     const username = actor?.data?.username || actor?.username || '';
-    dispatch(
-      actions.addTempSelected({
-        [username]: { id: actor?.id, ...actor },
-      }),
-    );
+    dispatch(actions.addTempSelected({
+      [username]: { id: actor?.id, ...actor },
+    }));
     onPressReply?.(commentData);
   };
 
@@ -222,29 +232,27 @@ const _CommentView: React.FC<CommentViewProps> = ({
   };
 
   const onLongPress = (event?: any) => {
-    dispatch(
-      modalActions.showModal({
-        isOpen: true,
-        ContentComponent: (
-          <CommentViewMenu
-            commentId={id}
-            parentCommentId={parentCommentId}
-            content={content}
-            groupIds={groupIds}
-            postId={postId}
-            isActor={isActor}
-            onPressMoreReaction={onPressReact}
-            onAddReaction={onAddReaction}
-            onPressReply={_onPressReply}
-            onPressDelete={_onPressDelete}
-          />
-        ),
-        props: {
-          isContextMenu: true,
-          position: { x: event?.pageX, y: event?.pageY },
-        },
-      }),
-    );
+    dispatch(modalActions.showModal({
+      isOpen: true,
+      ContentComponent: (
+        <CommentViewMenu
+          commentId={id}
+          parentCommentId={parentCommentId}
+          content={content}
+          groupIds={groupIds}
+          postId={postId}
+          isActor={isActor}
+          onPressMoreReaction={onPressReact}
+          onAddReaction={onAddReaction}
+          onPressReply={_onPressReply}
+          onPressDelete={_onPressDelete}
+        />
+      ),
+      props: {
+        isContextMenu: true,
+        position: { x: event?.pageX, y: event?.pageY },
+      },
+    }));
   };
 
   const getReactionStatistics = async (param: any) => {

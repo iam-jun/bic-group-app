@@ -8,8 +8,7 @@ import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
 import Icon from '~/beinComponents/Icon';
 import images from '~/resources/images';
 import useAuth from '~/hooks/auth';
-import { formatDMLink } from '~/utils/link';
-import { openLink } from '~/utils/common';
+import { formatDMLink, openUrl } from '~/utils/link';
 import { useRootNavigation } from '~/hooks/navigation';
 import mainStack from '~/router/navigator/MainStack/stack';
 import { useKeySelector } from '~/hooks/selector';
@@ -34,13 +33,17 @@ const MemberItem = ({ item, canManageMember, onPressMenu }: MemberItemProps) => 
   } = item || {};
 
   const goToUserProfile = () => {
-    rootNavigation.navigate(mainStack.userProfile, { userId: id });
+    rootNavigation.navigate(
+      mainStack.userProfile, { userId: id },
+    );
   };
 
   const onPressChat = () => {
     if (!username) return;
-    const link = formatDMLink(communityDetail.slug, username);
-    openLink(link);
+    const link = formatDMLink(
+      communityDetail.slug, username,
+    );
+    openUrl(link);
   };
 
   return (

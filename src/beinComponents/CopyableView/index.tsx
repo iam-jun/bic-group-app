@@ -40,7 +40,9 @@ const CopyableView = ({
   const [tooltopPosition, setTooltipPosition] = useState({ left: 0, top: 0 });
   const tooltipSize = useRef({ width: 50, height: 40 });
 
-  const showTooltip = (left: number, top: number) => {
+  const showTooltip = (
+    left: number, top: number,
+  ) => {
     setTooltipVisible(true);
     setTooltipPosition({ left, top });
   };
@@ -48,15 +50,13 @@ const CopyableView = ({
 
   const copyContent = () => {
     Clipboard.setString(content);
-    dispatch(
-      showHideToastMessage({
-        content: 'common:text_copied_to_clipboard',
-        props: {
-          textProps: { useI18n: true },
-          type: 'success',
-        },
-      }),
-    );
+    dispatch(showHideToastMessage({
+      content: 'common:text_copied_to_clipboard',
+      props: {
+        textProps: { useI18n: true },
+        type: 'success',
+      },
+    }));
     hideTooltip();
   };
 

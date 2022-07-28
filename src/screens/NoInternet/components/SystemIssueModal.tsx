@@ -19,7 +19,9 @@ const SystemIssueModal = () => {
 
   const systemIssue = useKeySelector(noInternetKeySelector.systemIssue);
   const optionsStyle = useAnimatedStyle(() => ({
-    opacity: withTiming(systemIssue ? 1 : 0, { duration: 500 }),
+    opacity: withTiming(
+      systemIssue ? 1 : 0, { duration: 500 },
+    ),
   }));
 
   if (!systemIssue) return null;

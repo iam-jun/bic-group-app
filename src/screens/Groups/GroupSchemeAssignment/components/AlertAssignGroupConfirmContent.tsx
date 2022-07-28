@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import {
-  View, StyleSheet, ScrollView, Dimensions,
+  View, StyleSheet, ScrollView, Dimensions, TouchableOpacity,
 } from 'react-native';
 
 import i18n from 'i18next';
@@ -19,18 +19,20 @@ const AlertAssignGroupConfirmContent = () => {
   const { t } = useBaseHook();
 
   const { allSchemes } = useKeySelector(groupsKeySelector.permission.schemes) || {};
-  const { data: initAssignments } = useKeySelector(
-    groupsKeySelector.permission.assignGroupScheme.assignments,
-  ) || {};
+  const { data: initAssignments } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assignments) || {};
   const { data: dataAssigning } = useKeySelector(groupsKeySelector.permission.assignGroupScheme.assigning)
     || {};
 
   const data = useMemo(
-    () => prepareData(initAssignments, dataAssigning, allSchemes),
+    () => prepareData(
+      initAssignments, dataAssigning, allSchemes,
+    ),
     [initAssignments, dataAssigning, allSchemes],
   );
 
-  const renderItem = (item: any, index: number) => {
+  const renderItem = (
+    item: any, index: number,
+  ) => {
     const { groupName, oldSchemeName, newSchemeName } = item || {};
     return (
       <View
@@ -58,19 +60,23 @@ const AlertAssignGroupConfirmContent = () => {
         {t('communities:permission:text_desc_assign_group_confirm')}
       </Text.BodyS>
       <View style={styles.contentContainer}>
-        <ScrollView>{data?.map?.(renderItem)}</ScrollView>
+        <ScrollView>
+          <TouchableOpacity>
+            {data?.map?.(renderItem)}
+          </TouchableOpacity>
+        </ScrollView>
       </View>
     </View>
   );
 };
 
 export const findGroupInAssignmentsById = (
-  groupId: number,
+  groupId: string,
   assignments: any,
 ) => {
   let result: any;
   const findGroup = (group: any) => {
-    if (group?.group_id === groupId) {
+    if (group?.groupId === groupId) {
       result = group;
     } else {
       group?.children?.map(findGroup);
@@ -87,15 +93,15 @@ export const prepareData = (
 ) => {
   const result: any = [];
   assigning?.forEach?.((item: any) => {
-    const { scheme_id, group_id } = item || {};
-    const group = findGroupInAssignmentsById(group_id, assignments);
+    const { schemeId, groupId } = item || {};
+    const group = findGroupInAssignmentsById(groupId, assignments);
     const groupName = group?.name;
-    const oldSchemeName = allSchemes?.[group?.scheme_id]?.name
-      || (group?.scheme_id
+    const oldSchemeName = allSchemes?.[group?.schemeId]?.name
+      || (group?.schemeId
         ? i18n.t('communities:permission:text_unknown_scheme')
         : i18n.t('communities:permission:text_none_scheme'));
-    const newSchemeName = allSchemes?.[scheme_id]?.name
-      || (scheme_id
+    const newSchemeName = allSchemes?.[schemeId]?.name
+      || (schemeId
         ? i18n.t('communities:permission:text_unknown_scheme')
         : i18n.t('communities:permission:text_none_scheme'));
     if (group) {

@@ -51,7 +51,6 @@ const TextInputController: React.FC<Props> = ({
   return (
     <TextInput
       testID={testID}
-      label={label}
       placeholder={placeholder}
       error={errors?.code}
       value={value}

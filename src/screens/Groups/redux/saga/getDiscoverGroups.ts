@@ -13,7 +13,7 @@ export default function* getDiscoverGroups({
 }: {
   type: string;
   payload: {
-    communityId: number;
+    communityId: string;
     isRefreshing?: boolean;
     params?: IParamGetDiscoverGroups;
   };
@@ -23,19 +23,19 @@ export default function* getDiscoverGroups({
     const { communityId, params, isRefreshing } = payload;
     const { ids, items, canLoadMore } = groups.discoverGroups;
 
-    yield put(
-      actions.setDiscoverGroups({
-        loading: isRefreshing ? true : ids.length === 0,
-      }),
-    );
+    yield put(actions.setDiscoverGroups({
+      loading: isRefreshing ? true : ids.length === 0,
+    }));
 
     if (!isRefreshing && !canLoadMore) return;
 
-    const resp: AxiosResponse = yield call(groupsDataHelper.getDiscoverGroups, communityId, {
-      limit: appConfig.recordsPerPage,
-      offset: isRefreshing ? 0 : ids.length,
-      ...params,
-    });
+    const resp: AxiosResponse = yield call(
+      groupsDataHelper.getDiscoverGroups, communityId, {
+        limit: appConfig.recordsPerPage,
+        offset: isRefreshing ? 0 : ids.length,
+        ...params,
+      },
+    );
 
     const respData = resp.data;
     const newIds = respData.map((item: any) => item.id);
@@ -50,8 +50,12 @@ export default function* getDiscoverGroups({
 
     yield put(actions.setDiscoverGroups(newData));
   } catch (err) {
-    console.error('getDiscoverGroups error:', err);
+    console.error(
+      'getDiscoverGroups error:', err,
+    );
     yield put(actions.setDiscoverGroups({ loading: false }));
-    yield call(showError, err);
+    yield call(
+      showError, err,
+    );
   }
 }

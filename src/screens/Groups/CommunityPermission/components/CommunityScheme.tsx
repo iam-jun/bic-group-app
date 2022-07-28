@@ -43,24 +43,24 @@ const CommunityScheme: FC<CommunitySchemeProps> = ({
   const { id: communityId } = useKeySelector(groupsKeySelector.communityDetail) || {};
 
   const onPressEdit = () => {
-    rootNavigation.navigate(groupStack.createPermissionScheme, {
-      isEdit: true,
-      initScheme: communityScheme,
-    });
+    rootNavigation.navigate(
+      groupStack.createPermissionScheme, {
+        isEdit: true,
+        initScheme: communityScheme,
+      },
+    );
   };
 
   const onPressDelete = () => {
-    dispatch(
-      modalActions.showAlert({
-        title: t('communities:permission:text_title_delete_community_scheme'),
-        content: t('communities:permission:text_desc_delete_community_scheme'),
-        showCloseButton: true,
-        cancelBtn: true,
-        cancelLabel: t('common:btn_cancel'),
-        confirmLabel: t('common:btn_delete'),
-        onConfirm: () => dispatch(groupsActions.deleteCommunityScheme({ communityId })),
-      }),
-    );
+    dispatch(modalActions.showAlert({
+      title: t('communities:permission:text_title_delete_community_scheme'),
+      content: t('communities:permission:text_desc_delete_community_scheme'),
+      showCloseButton: true,
+      cancelBtn: true,
+      cancelLabel: t('common:btn_cancel'),
+      confirmLabel: t('common:btn_delete'),
+      onConfirm: () => dispatch(groupsActions.deleteCommunityScheme({ communityId })),
+    }));
   };
 
   const renderButtons = () => {

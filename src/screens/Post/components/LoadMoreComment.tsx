@@ -47,50 +47,66 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   const dispatch = useDispatch();
   const theme: ExtendedTheme = useTheme();
   const { colors } = theme;
-  const styles = createStyle(theme, commentId);
+  const styles = createStyle(
+    theme, commentId,
+  );
 
   const progress = useSharedValue(0);
   const animatedStyle = useAnimatedStyle(() => ({
     height: progress.value,
   }));
 
-  useEffect(() => {
-    if (loadingMore) {
-      progress.value = withTiming(150, {
-        duration: 400,
-        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
-      });
-    } else {
-      progress.value = withTiming(0, {
-        duration: 1000,
-        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
-      });
-    }
-  }, [loadingMore]);
-
-  const onPressLoadMore = useCallback(() => {
-    if (onPress) {
-      onPress();
-      return;
-    }
-    if (idLessThan || idGreaterThan) {
-      setLoadingMore(true);
-      setTimeout(() => {
-        dispatch(
-          postActions.getCommentsByPostId({
-            postId,
-            order: 'DESC',
-            idLt: idLessThan,
-            idGt: idGreaterThan,
-            parentId: commentId,
-            limit: 10,
-            isMerge: true,
-            callbackLoading: (loading) => setLoadingMore(loading),
-          }),
+  useEffect(
+    () => {
+      if (loadingMore) {
+        progress.value = withTiming(
+          150, {
+            duration: 400,
+            easing: Easing.bezier(
+              0.25, 0.1, 0.25, 1,
+            ),
+          },
         );
-      }, 150);
-    }
-  }, [commentId, idLessThan, idGreaterThan]);
+      } else {
+        progress.value = withTiming(
+          0, {
+            duration: 1000,
+            easing: Easing.bezier(
+              0.25, 0.1, 0.25, 1,
+            ),
+          },
+        );
+      }
+    }, [loadingMore],
+  );
+
+  const onPressLoadMore = useCallback(
+    () => {
+      if (onPress) {
+        onPress();
+        return;
+      }
+      if (idLessThan || idGreaterThan) {
+        setLoadingMore(true);
+        setTimeout(
+          () => {
+            dispatch(postActions.getCommentsByPostId({
+              params: {
+                postId,
+                order: 'DESC',
+                idLt: idLessThan,
+                idGt: idGreaterThan,
+                parentId: commentId,
+                limit: 10,
+              },
+              isMerge: true,
+              callbackLoading: (loading) => setLoadingMore(loading),
+            }));
+          }, 150,
+        );
+      }
+    }, [commentId, idLessThan, idGreaterThan],
+  );
 
   return (
     <View>
@@ -110,7 +126,9 @@ const _LoadMoreComment: FC<LoadMoreCommentProps> = ({
   );
 };
 
-const createStyle = (theme: ExtendedTheme, commentId?: string) => {
+const createStyle = (
+  theme: ExtendedTheme, commentId?: string,
+) => {
   const { colors } = theme;
   return StyleSheet.create({
     container: {

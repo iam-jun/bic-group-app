@@ -39,15 +39,15 @@ const Image: React.FC<ImageProps> = ({
 }: ImageProps) => {
   const [layoutSizeStyle, setLayoutSizeStyle] = useState({ width: 0, height: 0 });
 
-  const placeholderContainerOpacity = React.useRef(
-    new Animated.Value(1),
-  ).current;
+  const placeholderContainerOpacity = React.useRef(new Animated.Value(1)).current;
 
   const [_source, setSource] = useState(source || placeholderSource);
 
-  useEffect(() => {
-    updateSource(source || placeholderSource);
-  }, [source]);
+  useEffect(
+    () => {
+      updateSource(source || placeholderSource);
+    }, [source],
+  );
 
   const _onError = (error: any) => {
     if (onError) return onError(error);
@@ -70,11 +70,13 @@ const Image: React.FC<ImageProps> = ({
     const minimumWait = 0;
     const staggerNonce = 5 * Math.random();
     setTimeout(
-      () => Animated.timing(placeholderContainerOpacity, {
-        toValue: 0,
-        duration: 250,
-        useNativeDriver: true,
-      }).start(),
+      () => Animated.timing(
+        placeholderContainerOpacity, {
+          toValue: 0,
+          duration: 250,
+          useNativeDriver: true,
+        },
+      ).start(),
       minimumWait + staggerNonce,
     );
   };

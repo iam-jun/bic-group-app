@@ -19,25 +19,27 @@ export const useTabPressListener = (
   callback: (tabName: ITabTypes) => void,
   deps: any[],
 ) => {
-  useEffect(() => {
-    const listener = DeviceEventEmitter.addListener(
-      'onTabPress',
-      (tabName: ITabTypes) => {
-        callback?.(tabName);
-      },
-    );
-    return () => {
-      listener?.remove?.();
-    };
-  }, deps);
+  useEffect(
+    () => {
+      const listener = DeviceEventEmitter.addListener(
+        'onTabPress',
+        (tabName: ITabTypes) => {
+          callback?.(tabName);
+        },
+      );
+      return () => {
+        listener?.remove?.();
+      };
+    }, deps,
+  );
 };
 /**
  * SHOULD ADD SCREEN TO `customBackHandlerRoutes` FOR USE THIS HOOK
  * @param callback
  */
 export const useBackPressListener = (callback: () => void) => {
-  useFocusEffect(
-    useCallback(() => {
+  useFocusEffect(useCallback(
+    () => {
       const backEventListener = DeviceEventEmitter.addListener(
         NAVIGATION_BACK_PRESSED,
         callback,
@@ -46,6 +48,6 @@ export const useBackPressListener = (callback: () => void) => {
       return () => {
         backEventListener?.remove?.();
       };
-    }, [callback]),
-  );
+    }, [callback],
+  ));
 };

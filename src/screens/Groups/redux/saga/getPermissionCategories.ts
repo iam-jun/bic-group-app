@@ -11,23 +11,23 @@ export default function* getPermissionCategories({
   payload?: 'SYSTEM' | 'COMMUNITY' | 'GROUP';
 }): any {
   try {
-    yield put(
-      actions.setPermissionCategories({ loading: true, data: undefined }),
-    );
+    yield put(actions.setPermissionCategories({ loading: true, data: undefined }));
     const response = yield call(
       groupsDataHelper.getPermissionCategories,
       payload,
     );
     if (response?.data) {
-      yield put(
-        actions.setPermissionCategories({ loading: false, data: response?.data }),
-      );
+      yield put(actions.setPermissionCategories({ loading: false, data: response?.data }));
     } else {
       yield put(actions.setPermissionCategories({ loading: false }));
     }
   } catch (err) {
     yield put(actions.setPermissionCategories({ loading: false }));
-    console.error('getPermissionCategories error:', err);
-    yield call(showError, err);
+    console.error(
+      'getPermissionCategories error:', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

@@ -13,7 +13,9 @@ export const appInitState = {
  * @param action
  * @returns {*}
  */
-function reducer(state = appInitState, action: any = {}) {
+function reducer(
+  state = appInitState, action: any = {},
+) {
   const { type, payload } = action;
   const { configs } = state;
 

@@ -57,7 +57,9 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
     : t('home:newsfeed_search:label_anyone');
 
   const textDate = date
-    ? `${formatDateTime(startDate, language)} - ${formatDateTime(
+    ? `${formatDateTime(
+      startDate, language,
+    )} - ${formatDateTime(
       endDate,
       language,
     )}`
@@ -72,7 +74,9 @@ const NFSFilterOptionMenu: FC<NFSFilterOptionMenuProps> = ({
     setStage(Stage.FILTER_DATE);
   };
 
-  const _onSelectDate = (startDate?: string, endDate?: string) => {
+  const _onSelectDate = (
+    startDate?: string, endDate?: string,
+  ) => {
     if (startDate && endDate) {
       setDate({ startDate, endDate });
     }

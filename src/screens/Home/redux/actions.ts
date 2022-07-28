@@ -45,9 +45,7 @@ const homeActions = {
     type: homeTypes.SET_NEWSFEED_SEARCH_USERS,
     payload,
   }),
-  setNewsfeedSearchRecentKeywords: (
-    payload: IPayloadSetNewsfeedSearchRecentKeywords,
-  ) => ({
+  setNewsfeedSearchRecentKeywords: (payload: IPayloadSetNewsfeedSearchRecentKeywords) => ({
     type: homeTypes.SET_NEWSFEED_SEARCH_RECENT_KEYWORDS,
     payload,
   }),

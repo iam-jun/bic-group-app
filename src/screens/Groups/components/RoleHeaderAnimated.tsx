@@ -31,17 +31,19 @@ const RoleHeaderAnimated: FC<RoleHeaderAnimatedProps> = ({
 
   const title = useSharedValue(roles?.[0] || '');
 
-  useDerivedValue(() => {
-    let newTitle;
-    for (let i = anchors.length; i >= 0; i--) {
-      if (sharedValue.value > anchors[i]) {
-        title.value = roles[i];
-        newTitle = roles[i];
-        break;
+  useDerivedValue(
+    () => {
+      let newTitle;
+      for (let i = anchors.length; i >= 0; i--) {
+        if (sharedValue.value > anchors[i]) {
+          title.value = roles[i];
+          newTitle = roles[i];
+          break;
+        }
       }
-    }
-    title.value = newTitle;
-  }, [sharedValue.value, anchors]);
+      title.value = newTitle;
+    }, [sharedValue.value, anchors],
+  );
 
   const h = permissionRoleSectionHeaderHeight + 8;
   const x = -300;
@@ -78,7 +80,9 @@ const RoleHeaderAnimated: FC<RoleHeaderAnimatedProps> = ({
       position: 'absolute',
       left: 0,
       right: 0,
-      top: interpolate(sharedValue.value, inputRange, outputRange),
+      top: interpolate(
+        sharedValue.value, inputRange, outputRange,
+      ),
       backgroundColor: colors.white,
     }),
     [inputRange, outputRange],

@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react';
-import { ScrollView, StyleSheet, View } from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import {
+  FlatList, ScrollView, StyleSheet, View,
+} from 'react-native';
 import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
+import { isEmpty } from 'lodash';
 import { fontFamilies } from '~/theme/fonts';
 
 import Header from '~/beinComponents/Header';
@@ -24,6 +27,9 @@ import spacing from '~/theme/spacing';
 import { useMyPermissions } from '~/hooks/permissions';
 import { useKeySelector } from '~/hooks/selector';
 import postKeySelector from '../redux/keySelector';
+import BottomSheet from '~/beinComponents/BottomSheet';
+import PrimaryItem from '~/beinComponents/list/items/PrimaryItem';
+import images from '~/resources/images';
 
 export interface PostSettingsProps {
   route?: {
@@ -39,40 +45,41 @@ const PostSettings = ({ route }: PostSettingsProps) => {
   const { colors } = theme;
   const styles = createStyle(theme);
 
+  const modalizeRef = useRef<any>();
+
   let chosenAudiences: any[];
   const screenParams = route?.params || {};
   const { postId } = screenParams;
   if (postId) {
     useCreatePost({ screenParams });
-    chosenAudiences = useKeySelector(
-      postKeySelector.postAudienceById(postId),
-    )?.groups;
+    chosenAudiences = useKeySelector(postKeySelector.postAudienceById(postId))?.groups;
   } else {
-    chosenAudiences = useKeySelector(
-      postKeySelector.createPost.chosenAudiences,
-    );
+    chosenAudiences = useKeySelector(postKeySelector.createPost.chosenAudiences);
   }
 
-  const { hasPermissionsOnEachScope, PERMISSION_KEY } = useMyPermissions();
-  const canCreateImportantPost = hasPermissionsOnEachScope(
+  const { getListOfChosenAudiencesWithoutPermission, PERMISSION_KEY } = useMyPermissions();
+  const listAudiencesWithoutPermission = getListOfChosenAudiencesWithoutPermission(
     'groups',
     chosenAudiences,
     PERMISSION_KEY.GROUP.CREATE_IMPORTANT_POST,
   );
 
-  useEffect(() => () => {
-    if (postId) {
-      dispatch(postActions.clearCreatPostData());
-      dispatch(postActions.setSearchResultAudienceGroups([]));
-      dispatch(postActions.setSearchResultAudienceUsers([]));
-    }
-  }, []);
+  useEffect(
+    () => () => {
+      if (postId) {
+        dispatch(postActions.clearCreatPostData());
+        dispatch(postActions.setSearchResultAudienceGroups([]));
+        dispatch(postActions.setSearchResultAudienceUsers([]));
+      }
+    }, [],
+  );
 
   const {
     sImportant,
     selectingDate,
     selectingTime,
     disableButtonSave,
+    showWarning,
     setSelectingDate,
     setSelectingTime,
     handlePressSave,
@@ -81,25 +88,72 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     handleChangeTimePicker,
     getMinDate,
     getMaxDate,
-  } = usePostSettings({ postId });
+  } = usePostSettings({ postId, listAudiencesWithoutPermission });
 
   const onPressBack = () => {
     if (disableButtonSave) {
       rootNavigation.goBack();
     } else {
-      dispatch(
-        modalActions.showAlert({
-          title: t('common:label_discard_changes'),
-          content: t('common:text_discard_warning'),
-          showCloseButton: true,
-          cancelBtn: true,
-          cancelLabel: t('common:btn_continue_editing'),
-          confirmLabel: t('common:btn_discard'),
-          onConfirm: () => {
-            rootNavigation.goBack();
-          },
-        }),
-      );
+      dispatch(modalActions.showAlert({
+        title: t('common:label_discard_changes'),
+        content: t('common:text_discard_warning'),
+        showCloseButton: true,
+        cancelBtn: true,
+        cancelLabel: t('common:btn_continue_editing'),
+        confirmLabel: t('common:btn_discard'),
+        onConfirm: () => {
+          rootNavigation.goBack();
+        },
+      }));
+    }
+  };
+
+  const onPressAudiences = () => {
+    modalizeRef.current?.open?.();
+  };
+
+  const renderListAudienceWithoutPermission = (list: any[]) => {
+    if (!Array.isArray(list) || isEmpty(list)) {
+      return null;
+    }
+    switch (list?.length) {
+      case 1:
+        return (
+          <Text.BodyS color={colors.danger}>{` ${list[0]?.name}`}</Text.BodyS>
+        );
+      case 2:
+        return (
+          <Text.BodyS
+            color={
+              colors.danger
+            }
+          >
+            {` ${list[0]?.name}, ${list[1]?.name}`}
+          </Text.BodyS>
+        );
+      case 3:
+        return (
+          <Text.BodyS
+            color={
+              colors.danger
+            }
+          >
+            {` ${list[0]?.name}, ${list[1]?.name}, ${list[2]?.name}`}
+          </Text.BodyS>
+        );
+      default:
+        return (
+          <Text.BodyS color={colors.danger}>
+            {` ${list[0]?.name}, ${list[1]?.name}, ${t('post:and')} `}
+            <Text.BodySMedium
+              color={colors.danger}
+              style={{ textDecorationLine: 'underline' }}
+              onPress={onPressAudiences}
+            >
+              {`${t('common:text_more').replace('(number)', list.length - 2)}`}
+            </Text.BodySMedium>
+          </Text.BodyS>
+        );
     }
   };
 
@@ -109,8 +163,12 @@ const PostSettings = ({ route }: PostSettingsProps) => {
     let time = t('common:text_set_time');
 
     if (expires_time) {
-      date = formatDate(expires_time, 'MMM Do, YYYY');
-      time = formatDate(expires_time, 'hh:mm A', undefined, 9999);
+      date = formatDate(
+        expires_time, 'MMM Do, YYYY',
+      );
+      time = formatDate(
+        expires_time, 'hh:mm A', undefined, 9999,
+      );
     }
 
     return (
@@ -173,10 +231,36 @@ const PostSettings = ({ route }: PostSettingsProps) => {
             onActionPress={handleToggleImportant}
           />
         </View>
-        {!!active && renderImportantDate()}
+        {!!showWarning && listAudiencesWithoutPermission?.length > 0 ? (
+          <Text.BodyS color={colors.danger} style={styles.warningText}>
+            {`${t('post:text_important_warning_1')}`}
+            {renderListAudienceWithoutPermission(listAudiencesWithoutPermission)}
+            {`${t('post:text_important_warning_2')}`}
+          </Text.BodyS>
+        ) : null}
+        {!!active && listAudiencesWithoutPermission?.length < 1 && renderImportantDate()}
       </View>
     );
   };
+
+  const keyExtractor = (item: any) => JSON.stringify(item);
+
+  const renderBottomSheetContent = () => (
+    <FlatList
+      style={{ flex: 1, paddingVertical: spacing.padding.tiny, height: 400 }}
+      data={listAudiencesWithoutPermission.slice(2)}
+      keyExtractor={keyExtractor}
+      renderItem={({ item }:any) => (
+        <PrimaryItem
+          title={item?.name}
+          showAvatar
+          avatar={item?.icon || images.img_user_avatar_default}
+          height={54}
+          titleProps={{ variant: 'subtitleM' }}
+        />
+      )}
+    />
+  )
 
   return (
     <ScreenWrapper isFullView backgroundColor={colors.neutral1}>
@@ -195,7 +279,7 @@ const PostSettings = ({ route }: PostSettingsProps) => {
       />
       <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          {!!canCreateImportantPost && renderImportant()}
+          {renderImportant()}
         </ScrollView>
         <View style={{ position: 'absolute', alignSelf: 'center' }}>
           {selectingDate && (
@@ -232,6 +316,10 @@ const PostSettings = ({ route }: PostSettingsProps) => {
           )}
         </View>
       </View>
+      <BottomSheet
+        modalizeRef={modalizeRef}
+        ContentComponent={renderBottomSheetContent()}
+      />
     </ScreenWrapper>
   );
 };
@@ -265,6 +353,9 @@ const createStyle = (theme: ExtendedTheme) => {
       flex: 1,
       backgroundColor: colors.gray10,
       padding: spacing.padding.base,
+    },
+    warningText: {
+      marginTop: spacing.padding.base,
     },
   });
 };

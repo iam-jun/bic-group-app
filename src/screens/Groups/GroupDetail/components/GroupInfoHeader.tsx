@@ -23,20 +23,22 @@ const GroupInfoHeader = () => {
   const [coverHeight, setCoverHeight] = useState<number>(210);
 
   const theme: ExtendedTheme = useTheme();
-  const styles = themeStyles(theme, coverHeight);
+  const styles = themeStyles(
+    theme, coverHeight,
+  );
   const dispatch = useDispatch();
   const { t } = useBaseHook();
 
   const groupDetail = useKeySelector(groupsKeySelector.groupDetail.group);
-  const join_status = useKeySelector(groupsKeySelector.groupDetail.join_status);
-  const isMember = join_status === groupJoinStatus.member;
-  const hasRequested = join_status === groupJoinStatus.requested;
+  const joinStatus = useKeySelector(groupsKeySelector.groupDetail.joinStatus);
+  const isMember = joinStatus === groupJoinStatus.member;
+  const hasRequested = joinStatus === groupJoinStatus.requested;
   const {
     id: groupId,
     name: groupName,
-    user_count,
+    userCount,
     icon,
-    background_img_url,
+    backgroundImgUrl,
     privacy,
   } = groupDetail;
 
@@ -54,7 +56,7 @@ const GroupInfoHeader = () => {
     <View onLayout={onCoverLayout} testID="group_info_header.cover">
       <Image
         style={styles.cover}
-        source={background_img_url || images.img_cover_default}
+        source={backgroundImgUrl || images.img_cover_default}
       />
     </View>
   );
@@ -76,11 +78,11 @@ const GroupInfoHeader = () => {
         </Text.BodyS>
         <Text.BodyS> • </Text.BodyS>
         <Text.BodySMedium testID="group_info_header.member_count">
-          {user_count}
+          {userCount}
         </Text.BodySMedium>
         <Text.BodyS>
           {` ${t('groups:text_members', {
-            count: user_count,
+            count: userCount,
           })}`}
         </Text.BodyS>
       </View>
@@ -147,7 +149,9 @@ const GroupInfoHeader = () => {
 
 export default GroupInfoHeader;
 
-const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
+const themeStyles = (
+  theme: ExtendedTheme, coverHeight: number,
+) => {
   const { colors } = theme;
   return StyleSheet.create({
     infoContainer: {

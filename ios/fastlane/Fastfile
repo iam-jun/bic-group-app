@@ -83,7 +83,9 @@ platform :ios do
         \n **Bein Dev iOS**
         \n Tải tại: TestFlight.
         \n **Git Branch**: #{git_branch}
-        \n **Git Commit**: #{git_mess}", [9,14,19], 72)
+        \n **Git Commit**: #{git_mess}",
+        ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+        '65864708-d4e6-4360-aa89-32fef3cd1b9a')
   end
 
   lane :deploy_staging do
@@ -114,7 +116,9 @@ platform :ios do
         \n **BIC Group Staging iOS**
         \n Tải tại: TestFlight.
         \n **Git Branch**: #{git_branch}
-        \n **Git Commit**: #{git_mess}", [9,14,19], 72)
+        \n **Git Commit**: #{git_mess}",
+        ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+        '65864708-d4e6-4360-aa89-32fef3cd1b9a')
   end
 
     lane :deploy_production do
@@ -143,7 +147,9 @@ platform :ios do
             \n **BIC Group Production iOS**
             \n Tải tại: TestFlight.
             \n **Git Branch**: #{git_branch}
-            \n **Git Commit**: #{git_mess}", [9,14,19], 72)
+            \n **Git Commit**: #{git_mess}",
+            ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+            '65864708-d4e6-4360-aa89-32fef3cd1b9a')
     end
 
     lane :deploy_staging_ci do
@@ -189,7 +195,9 @@ platform :ios do
               \n **BIC Group Staging iOS**
               \n Tải tại: TestFlight.
               \n **Git Branch**: #{git_branch}
-              \n **Git Commit**: #{git_mess}", [9,14,19], 72)
+              \n **Git Commit**: #{git_mess}",
+              ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+              '65864708-d4e6-4360-aa89-32fef3cd1b9a')
         end
 
     lane :deploy_production_ci do
@@ -236,6 +244,8 @@ platform :ios do
                   \n **BIC Group iOS**
                   \n Tải tại: TestFlight.
                   \n **Git Branch**: #{git_branch}
-                  \n **Git Commit**: #{git_mess}", [9,14,19], 72)
+                  \n **Git Commit**: #{git_mess}",
+                  ['8b311540-9bb3-4b60-abfe-83b9ce20959c','cbb27290-f61c-46e2-a0ce-0c67d02c7411','5b2939a5-302c-4332-af78-663083e97c6d'],
+                  '65864708-d4e6-4360-aa89-32fef3cd1b9a')
   end
 end

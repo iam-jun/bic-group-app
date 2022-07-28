@@ -30,6 +30,8 @@ export default function* getMyProfile({
     yield put(menuActions.setMyProfile(mapProfile(response.data)));
   } catch (err) {
     yield put(menuActions.setMyProfile(myProfile));
-    console.error('getMyProfile error:', err);
+    console.error(
+      'getMyProfile error:', err,
+    );
   }
 }

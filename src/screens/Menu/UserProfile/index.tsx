@@ -29,10 +29,9 @@ import { IUploadType, uploadTypes } from '~/configs/resourceConfig';
 import ImagePicker from '~/beinComponents/ImagePicker';
 import { IFilePicked } from '~/interfaces/common';
 import ButtonWrapper from '~/beinComponents/Button/ButtonWrapper';
-import { openLink } from '~/utils/common';
 import homeActions from '~/screens/Home/redux/actions';
 import { checkPermission, permissionTypes } from '~/utils/permission';
-import { formatDMLink } from '~/utils/link';
+import { formatDMLink, openUrl } from '~/utils/link';
 import groupsKeySelector from '~/screens/Groups/redux/keySelector';
 import groupsActions from '~/screens/Groups/redux/actions';
 import spacing from '~/theme/spacing';
@@ -42,7 +41,7 @@ const UserProfile = (props: any) => {
 
   const userProfileData = useKeySelector(menuKeySelector.userProfile);
   const {
-    fullname, description, avatar, background_img_url, username,
+    fullname, description, avatar, backgroundImgUrl, username,
   } = userProfileData || {};
   const loadingUserProfile = useKeySelector(menuKeySelector.loadingUserProfile);
 
@@ -53,11 +52,13 @@ const UserProfile = (props: any) => {
 
   const [coverHeight, setCoverHeight] = useState<number>(210);
   const [avatarState, setAvatarState] = useState<string>(avatar);
-  const [bgImgState, setBgImgState] = useState<string>(background_img_url);
+  const [bgImgState, setBgImgState] = useState<string>(backgroundImgUrl);
   const [isChangeImg, setIsChangeImg] = useState<string>('');
 
   const theme: ExtendedTheme = useTheme();
-  const styles = themeStyles(theme, coverHeight);
+  const styles = themeStyles(
+    theme, coverHeight,
+  );
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
 
@@ -73,12 +74,12 @@ const UserProfile = (props: any) => {
 
   useEffect(() => {
     setAvatarState(userProfileData?.avatar);
-    setBgImgState(userProfileData?.background_img_url);
+    setBgImgState(userProfileData?.backgroundImgUrl);
   }, [userProfileData]);
 
   useEffect(() => {
     isFocused && getUserProfile();
-    const { avatar: _avatar, background_img_url: _bgIm } = myProfileData;
+    const { avatar: _avatar, backgroundImgUrl: _bgIm } = myProfileData;
     if (
       userId?.toString?.() === currentUserId?.toString?.()
       || userId?.toString?.() === currentUsername?.toString?.()
@@ -90,62 +91,70 @@ const UserProfile = (props: any) => {
     }
   }, [isFocused, userId]);
 
-  useEffect(() => {
-    if (
-      userId?.toString?.() === currentUserId?.toString?.()
+  useEffect(
+    () => {
+      if (
+        userId?.toString?.() === currentUserId?.toString?.()
       || userId?.toString?.() === currentUsername?.toString?.()
-    ) {
-      if (isChangeImg === 'avatar') {
-        dispatch(homeActions.getHomePosts({ isRefresh: true }));
-        setAvatarState(myProfileData?.avatar);
-      } else if (isChangeImg === 'background_img_url') {
-        setBgImgState(myProfileData?.background_img_url);
+      ) {
+        if (isChangeImg === 'avatar') {
+          dispatch(homeActions.getHomePosts({ isRefresh: true }));
+          setAvatarState(myProfileData?.avatar);
+        } else if (isChangeImg === 'backgroundImgUrl') {
+          setBgImgState(myProfileData?.backgroundImgUrl);
+        }
       }
-    }
-  }, [myProfileData]);
+    }, [myProfileData],
+  );
 
-  const onEditProfileButton = () => rootNavigation.navigate(mainStack.userEdit, { userId });
+  const onEditProfileButton = () => rootNavigation.navigate(
+    mainStack.userEdit, { userId },
+  );
 
   const uploadFile = (
     file: IFilePicked,
-    fieldName: 'avatar' | 'background_img_url',
+    fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
-    dispatch(
-      menuActions.uploadImage(
-        {
-          id,
-          file,
-          fieldName,
-          uploadType,
-        },
-        () => {
-          setIsChangeImg(fieldName);
-        },
-      ),
-    );
+    dispatch(menuActions.uploadImage(
+      {
+        id,
+        file,
+        fieldName,
+        uploadType,
+      },
+      () => {
+        setIsChangeImg(fieldName);
+      },
+    ));
   };
 
   const _openImagePicker = async (
-    fieldName: 'avatar' | 'background_img_url',
+    fieldName: 'avatar' | 'backgroundImgUrl',
     uploadType: IUploadType,
   ) => {
-    checkPermission(permissionTypes.photo, dispatch, (canOpenPicker) => {
-      if (canOpenPicker) {
-        ImagePicker.openPickerSingle({
-          ...userProfileImageCropRatio[fieldName],
-          cropping: true,
-          mediaType: 'photo',
-        }).then((file) => {
-          uploadFile(file, fieldName, uploadType);
-        });
-      }
-    });
+    checkPermission(
+      permissionTypes.photo, dispatch, (canOpenPicker) => {
+        if (canOpenPicker) {
+          ImagePicker.openPickerSingle({
+            ...userProfileImageCropRatio[fieldName],
+            cropping: true,
+            mediaType: 'photo',
+          }).then((file) => {
+            uploadFile(
+              file, fieldName, uploadType,
+            );
+          });
+        }
+      },
+    );
   };
 
-  const onEditAvatar = () => _openImagePicker('avatar', uploadTypes.userAvatar);
+  const onEditAvatar = () => _openImagePicker(
+    'avatar', uploadTypes.userAvatar,
+  );
 
-  const onEditCover = () => _openImagePicker('background_img_url', uploadTypes.userCover);
+  const onEditCover = () => _openImagePicker('backgroundImgUrl', uploadTypes.userCover);
 
   const onCoverLayout = (e: any) => {
     if (!e?.nativeEvent?.layout?.width) return;
@@ -155,9 +164,11 @@ const UserProfile = (props: any) => {
   };
 
   const onSeeMore = () => {
-    rootNavigation.navigate(mainStack.userEdit, {
-      userId,
-    });
+    rootNavigation.navigate(
+      mainStack.userEdit, {
+        userId,
+      },
+    );
   };
 
   const onPressChat = () => {
@@ -166,13 +177,15 @@ const UserProfile = (props: any) => {
         joinedCommunities?.[0]?.slug,
         userProfileData.username,
       );
-      openLink(link);
+      openUrl(link);
     } else {
       dispatch(groupsActions.getMyCommunities({ callback: onPressChat }));
     }
   };
 
-  const renderEditButton = (style: any, onPress: any, testID: string) => (userId == currentUserId || userId == currentUsername ? (
+  const renderEditButton = (
+    style: any, onPress: any, testID: string,
+  ) => (userId == currentUserId || userId == currentUsername ? (
     <ButtonWrapper
       testID={testID}
       style={[styles.editButton, style]}
@@ -290,7 +303,9 @@ const UserProfile = (props: any) => {
 
 export default UserProfile;
 
-const themeStyles = (theme: ExtendedTheme, coverHeight: number) => {
+const themeStyles = (
+  theme: ExtendedTheme, coverHeight: number,
+) => {
   const { colors } = theme;
 
   return StyleSheet.create({

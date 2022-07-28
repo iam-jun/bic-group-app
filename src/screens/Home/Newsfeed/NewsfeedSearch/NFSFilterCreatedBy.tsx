@@ -46,17 +46,15 @@ const NFSFilterCreatedBy: FC<NFSFilterCreatedByProps> = ({
       onPressSelectSpecific?.();
     } else {
       dismissModalOnPress && dispatch(modalActions.hideModal());
-      dispatch(
-        modalActions.showModal({
-          isOpen: true,
-          ContentComponent: (
-            <NFSFilterCreateBySpecific
-              onSelect={_onSelect}
-              dismissModalOnPress
-            />
-          ),
-        }),
-      );
+      dispatch(modalActions.showModal({
+        isOpen: true,
+        ContentComponent: (
+          <NFSFilterCreateBySpecific
+            onSelect={_onSelect}
+            dismissModalOnPress
+          />
+        ),
+      }));
     }
   };
 

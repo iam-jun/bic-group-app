@@ -49,10 +49,12 @@ const ReactionDetailTab: FC<ReactionDetailTabProps> = ({
     }
   };
 
-  useEffect(() => {
-    setData([]);
-    getData();
-  }, [reactionType]);
+  useEffect(
+    () => {
+      setData([]);
+      getData();
+    }, [reactionType],
+  );
 
   const _onPressItem = (item: any) => {
     onPressItem?.(item);

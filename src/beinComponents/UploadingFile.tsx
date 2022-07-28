@@ -16,7 +16,7 @@ import FileUploader, { IGetFile } from '~/services/fileUploader';
 import { useBaseHook } from '~/hooks';
 import modalActions from '~/store/modal/actions';
 import { supportedTypes } from '~/beinComponents/DocumentPicker';
-import { openLink } from '~/utils/common';
+import { openUrl } from '~/utils/link';
 import { getFileIcons } from '~/configs';
 import { IconType } from '~/resources/icons';
 import spacing from '~/theme/spacing';
@@ -104,9 +104,11 @@ const UploadingFile: FC<UploadingFileProps> = ({
     });
   };
 
-  useEffect(() => {
-    if (!uploading) uploadFile();
-  }, [file]);
+  useEffect(
+    () => {
+      if (!uploading) uploadFile();
+    }, [file],
+  );
 
   if (!file || isEmpty(file)) {
     return null;
@@ -119,23 +121,25 @@ const UploadingFile: FC<UploadingFileProps> = ({
     } else {
       const type = uploadType?.split('_')[1];
 
-      dispatch(
-        modalActions.showAlert({
-          title: t('upload:title_delete_file', {
+      dispatch(modalActions.showAlert({
+        title: t(
+          'upload:title_delete_file', {
             file_type: t(`file_type:${type}`),
-          }),
-          content: t('upload:text_delete_file', {
-            file_type: t(`file_type:${type}`),
-          }),
-          cancelBtn: true,
-          cancelLabel: t('common:btn_cancel'),
-          confirmLabel: t('common:btn_delete'),
-          onConfirm: () => {
-            setError('');
-            onClose?.(file);
           },
-        }),
-      );
+        ),
+        content: t(
+          'upload:text_delete_file', {
+            file_type: t(`file_type:${type}`),
+          },
+        ),
+        cancelBtn: true,
+        cancelLabel: t('common:btn_cancel'),
+        confirmLabel: t('common:btn_delete'),
+        onConfirm: () => {
+          setError('');
+          onClose?.(file);
+        },
+      }));
     }
   };
 
@@ -144,7 +148,7 @@ const UploadingFile: FC<UploadingFileProps> = ({
   };
 
   const onPressDownload = () => {
-    openLink(file.url);
+    openUrl(file.url);
   };
 
   const fileExt = fileName?.split('.')?.pop?.()?.toUpperCase?.();

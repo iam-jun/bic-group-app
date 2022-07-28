@@ -1,3 +1,4 @@
+import { Linking } from 'react-native';
 import { chatSchemes } from '~/constants/chat';
 import getEnv from '~/utils/env';
 import { getWebDomain } from './common';
@@ -28,7 +29,9 @@ const formatParamsVer2 = (params?: any) : string => {
   const keys = Object.keys(params);
   let result = '';
   if (keys.length > 0) {
-    keys.forEach((item: string, index: number) => {
+    keys.forEach((
+      item: string, index: number,
+    ) => {
       if (params[item]) {
         result += `${(index ? '&' : '') + item}=${params[item]}`;
       }
@@ -39,9 +42,7 @@ const formatParamsVer2 = (params?: any) : string => {
 };
 
 const getLink = (
-  linkType: string,
-  id?: number | string,
-  params?: any,
+  linkType: string, id?: string, params?: any,
 ): string => {
   switch (linkType) {
     case LINK_POST:
@@ -70,6 +71,29 @@ export const getChatDomain = () => (
     )
 );
 
-export const formatChannelLink = (teamId: string, channel: string) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/channels/${channel}`;
+export const formatChannelLink = (
+  teamId: string, channel: string,
+) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/channels/${channel}`;
 
-export const formatDMLink = (teamId: string, username: string) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/messages/@${username}`;
+export const formatDMLink = (
+  teamId: string, username: string,
+) => `${getEnv('BEIN_CHAT_DEEPLINK')}${teamId}/messages/@${username}`;
+
+export function openUrl(url, onError?: (e)=> void, onSuccess?:(e)=> void) {
+  if (url.includes(getEnv('SELF_DOMAIN'))) {
+    const newUrl = url.replace(getEnv('SELF_DOMAIN'), 'bein://');
+    Linking.canOpenURL(newUrl)
+      .then((supported) => {
+        if (supported) {
+          Linking.openURL(newUrl).then(onSuccess).catch(onError);
+        } else {
+          Linking.openURL(url).then(onSuccess).catch(onError);
+        }
+      })
+      .catch((e) => {
+        console.error('error when open link:', e);
+      });
+    return;
+  }
+  Linking.openURL(url).then(onSuccess).catch(onError);
+}

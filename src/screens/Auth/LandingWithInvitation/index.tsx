@@ -29,10 +29,14 @@ const LandingWithInvitation = () => {
   const logo = images.logo_bein;
 
   const title = groupName
-    ? t('auth:text_landing_title_group').replace('{0}', groupName)
+    ? t('auth:text_landing_title_group').replace(
+      '{0}', groupName,
+    )
     : t('auth:text_landing_title');
   const desc = groupName
-    ? t('auth:text_landing_desc_group').replace('{0}', groupName)
+    ? t('auth:text_landing_desc_group').replace(
+      '{0}', groupName,
+    )
     : '';
 
   const imgMaxWidth = 500;

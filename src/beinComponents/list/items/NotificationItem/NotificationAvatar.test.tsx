@@ -22,7 +22,7 @@ describe('NotificationAvatar component', () => {
     storeData = {...initialState};
     const user = {
       signInUserSession: {
-        idToken: {payload: {'custom:bein_user_id': USER_PROFILE.id}},
+        idToken: {payload: {'custom:user_uuid': USER_PROFILE.id}},
       },
     };
 

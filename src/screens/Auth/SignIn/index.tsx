@@ -12,7 +12,7 @@ import {
   Dimensions,
   ScrollView,
 } from 'react-native';
-import { ExtendedTheme, useNavigation, useTheme } from '@react-navigation/native';
+import { ExtendedTheme, useTheme } from '@react-navigation/native';
 import { useDispatch } from 'react-redux';
 import Animated, {
   Extrapolate,
@@ -48,6 +48,7 @@ import getEnv from '~/utils/env';
 import BackgroundComponent from './BackgroundComponent';
 import spacing from '~/theme/spacing';
 import { APP_ENV } from '~/configs/appConfig';
+import { useRootNavigation } from '~/hooks/navigation';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -58,7 +59,7 @@ const MARGIN_LEFT_LOGO = -(screenWidth / 2 - 24 * 2);
 const SignIn = () => {
   useAuthAmplifyHub();
   const { t } = useBaseHook();
-  const navigation = useNavigation();
+  const { rootNavigation } = useRootNavigation()
   const dispatch = useDispatch();
   const { loading, signingInError } = useAuth();
   const [disableSignIn, setDisableSignIn] = useState(true);
@@ -83,100 +84,124 @@ const SignIn = () => {
     setValue,
   } = useFormData;
 
-  useEffect(() => {
-    checkAuthSessions();
-    // avoid taking old loading state from store
-    dispatch(actions.setLoading(false));
-    dispatch(actions.setSigningInError(''));
-    checkDisableSignIn();
-    setDisableSignIn(true);
+  useEffect(
+    () => {
+      checkAuthSessions();
+      // avoid taking old loading state from store
+      dispatch(actions.setLoading(false));
+      dispatch(actions.setSigningInError(''));
+      checkDisableSignIn();
+      setDisableSignIn(true);
 
-    const appStateChangeEvent = AppState.addEventListener(
-      'change',
-      checkAuthSessions,
-    );
+      const appStateChangeEvent = AppState.addEventListener(
+        'change',
+        checkAuthSessions,
+      );
 
-    return () => {
-      appStateChangeEvent.remove();
-    };
-  }, []);
+      return () => {
+        appStateChangeEvent.remove();
+      };
+    }, [],
+  );
 
-  useEffect(() => {
-    setDisableSignIn(loading);
-    if (loading) Keyboard.dismiss();
-  }, [loading]);
+  useEffect(
+    () => {
+      setDisableSignIn(loading);
+      if (loading) Keyboard.dismiss();
+    }, [loading],
+  );
 
-  useEffect(() => {
-    if (signingInError) {
-      setError('password', {
-        type: 'validate',
-        message: signingInError,
-      });
-      setError('email', {
-        type: 'validate',
-        message: signingInError,
-      });
-    } else {
-      clearAllErrors();
-    }
-    checkDisableSignIn();
-  }, [signingInError]);
+  useEffect(
+    () => {
+      if (signingInError) {
+        setError(
+          'password', {
+            type: 'validate',
+            message: signingInError,
+          },
+        );
+        setError(
+          'email', {
+            type: 'validate',
+            message: signingInError,
+          },
+        );
+      } else {
+        clearAllErrors();
+      }
+      checkDisableSignIn();
+    }, [signingInError],
+  );
 
   const showEvent = Platform.OS === 'android' ? 'keyboardDidShow' : 'keyboardWillShow';
 
   const dismissEvent = Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide';
 
-  useEffect(() => {
-    const keyboardWillShowListener = Keyboard.addListener(showEvent, (event) => {
-      if (event.endCoordinates?.height) {
-        keyboardHeightValue.value = withTiming(
-          1,
-          {
-            duration: 200,
-          },
-          // eslint-disable-next-line @typescript-eslint/no-empty-function
-          () => {},
-        );
-      }
-    });
-    const keyboardWillHideListener = Keyboard.addListener(dismissEvent, () => {
-      keyboardHeightValue.value = withTiming(
-        0,
-        {
-          duration: 200,
+  useEffect(
+    () => {
+      const keyboardWillShowListener = Keyboard.addListener(
+        showEvent, (event) => {
+          if (event.endCoordinates?.height) {
+            keyboardHeightValue.value = withTiming(
+              1,
+              {
+                duration: 200,
+              },
+              // eslint-disable-next-line @typescript-eslint/no-empty-function
+              () => {},
+            );
+          }
         },
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
-        () => {},
       );
-    });
+      const keyboardWillHideListener = Keyboard.addListener(
+        dismissEvent, () => {
+          keyboardHeightValue.value = withTiming(
+            0,
+            {
+              duration: 200,
+            },
+            // eslint-disable-next-line @typescript-eslint/no-empty-function
+            () => {},
+          );
+        },
+      );
 
-    return () => {
-      keyboardWillHideListener.remove();
-      keyboardWillShowListener.remove();
-    };
-  }, []);
+      return () => {
+        keyboardWillHideListener.remove();
+        keyboardWillShowListener.remove();
+      };
+    }, [],
+  );
 
-  useEffect(() => {
-    if (
-      keyboard?.keyboardHeight
+  useEffect(
+    () => {
+      if (
+        keyboard?.keyboardHeight
       && keyboardHeight !== keyboard?.keyboardHeight
-    ) {
-      setKeyboardHeight(keyboard?.keyboardHeight);
-    }
-  }, [keyboard?.keyboardHeight]);
+      ) {
+        setKeyboardHeight(keyboard?.keyboardHeight);
+      }
+    }, [keyboard?.keyboardHeight],
+  );
 
-  useEffect(() => {
-    inputEmailRef.current?.focus();
-  }, []);
+  useEffect(
+    () => {
+      inputEmailRef.current?.focus();
+    }, [],
+  );
 
   const checkAuthSessions = async () => {
     const isInstalled = await isAppInstalled();
     if (isInstalled) {
       const user = await getUserFromSharedPreferences();
-      setValue('email', user?.email);
+      setValue(
+        'email', user?.email,
+      );
       setAuthSessions(user);
     } else {
-      setValue('email', '');
+      setValue(
+        'email', '',
+      );
       setAuthSessions(null);
     }
   };
@@ -240,7 +265,7 @@ const SignIn = () => {
     Keyboard.dismiss();
   };
 
-  const goToForgotPassword = () => navigation.navigate(authStack.forgotPassword);
+  const goToForgotPassword = () => rootNavigation.navigate(authStack.forgotPassword);
 
   const logoContainerStyle = useAnimatedStyle(() => ({
     transform: [
@@ -268,7 +293,9 @@ const SignIn = () => {
   }));
 
   const optionsStyle = useAnimatedStyle(() => ({
-    opacity: withTiming(loading ? 1 : 0, { duration: 500 }),
+    opacity: withTiming(
+      loading ? 1 : 0, { duration: 500 },
+    ),
   }));
   const renderLoading = () => {
     if (!loading) return null;
@@ -308,7 +335,7 @@ const SignIn = () => {
                 auth:input_label_email
               </Text.BodyM>
               <TextInputController
-                ref={inputEmailRef}
+                textInputRef={inputEmailRef}
                 testID="sign_in.input_email"
                 autoFocus
                 useFormData={useFormData}

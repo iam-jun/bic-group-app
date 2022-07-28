@@ -20,6 +20,7 @@ const Markdown = ({ value, ...rest }) => {
   const baseTextStyle = {
     color: '#282E53',
     fontFamily: fontFamilies.BeVietnamProLight,
+    fontSize: sizes.paragraphM,
   };
   const textStyles = {
     code: {

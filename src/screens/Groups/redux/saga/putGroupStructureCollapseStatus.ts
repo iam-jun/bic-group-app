@@ -7,7 +7,7 @@ export default function* putGroupStructureCollapseStatus({
   payload,
 }: {
   type: string;
-  payload: {communityId: number; groupId: number; isCollapse: boolean};
+  payload: {communityId: string; groupId: string; isCollapse: boolean};
 }): any {
   const { communityId, groupId, isCollapse } = payload || {};
   try {
@@ -18,7 +18,11 @@ export default function* putGroupStructureCollapseStatus({
       isCollapse,
     );
   } catch (err: any) {
-    console.error('putGroupStructureMoveToTarget error:', err);
-    yield call(showError, err);
+    console.error(
+      'putGroupStructureMoveToTarget error:', err,
+    );
+    yield call(
+      showError, err,
+    );
   }
 }

@@ -56,7 +56,9 @@ export const modalInitState = {
   },
 };
 
-function commonReducer(state = modalInitState, action: any = {}) {
+function commonReducer(
+  state = modalInitState, action: any = {},
+) {
   const { type, payload } = action;
   switch (type) {
     case actions.SET_MODAL:
