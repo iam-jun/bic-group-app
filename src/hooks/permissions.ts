@@ -83,7 +83,7 @@ export const useMyPermissions = () => {
   // eslint-disable-next-line array-callback-return
   ) => (audiences || []).filter((audience) => {
     if (
-      hasPermissionsOnScopeWithId(scope, audience.id, requiredPermissions)
+      !hasPermissionsOnScopeWithId(scope, audience.id, requiredPermissions)
     ) {
       return audience;
     }

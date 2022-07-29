@@ -1,4 +1,5 @@
 import Clipboard from '@react-native-clipboard/clipboard';
+import { isEmpty } from 'lodash';
 import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
@@ -7,7 +8,8 @@ import { useBaseHook } from '~/hooks';
 import { useRootNavigation } from '~/hooks/navigation';
 import { useMyPermissions } from '~/hooks/permissions';
 import { useKeySelector } from '~/hooks/selector';
-import { IAudienceGroup } from '~/interfaces/IPost';
+import { IPayloadReactionDetailBottomSheet } from '~/interfaces/IModal';
+import { IReaction, IAudienceGroup } from '~/interfaces/IPost';
 import homeStack from '~/router/navigator/MainStack/stacks/homeStack/stack';
 import postActions from '~/screens/Post/redux/actions';
 import * as modalActions from '~/store/modal/actions';
@@ -23,6 +25,7 @@ export interface PostViewMenuProps {
   isPostDetail: boolean;
   isActor: boolean;
   isDraftPost?: boolean;
+  getDataPromise?:(params: any)=>void;
 }
 
 const PostViewMenu: FC<PostViewMenuProps> = ({
@@ -30,13 +33,14 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
   isPostDetail,
   isActor,
   isDraftPost,
+  getDataPromise,
 }: PostViewMenuProps) => {
   const dispatch = useDispatch();
   const { rootNavigation } = useRootNavigation();
   const { t } = useBaseHook();
 
   const postData = useKeySelector(postKeySelector.postById(postId));
-  const { audience } = postData || {};
+  const { audience, reactionsCount } = postData || {};
   const { hasPermissionsOnAtLeastOneScope, PERMISSION_KEY } = useMyPermissions();
   const canDeleteOwnPost = hasPermissionsOnAtLeastOneScope(
     'groups',
@@ -73,18 +77,30 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         const _audience = audience.groups.find((audience: IAudienceGroup) => audience?.id === audienceId)
         return _audience;
       })
-      dispatch(
-        modalActions.showAlert({
-          title: t('post:title_delete_audiences_of_post'),
-          children: <AlertDeleteAudiencesConfirmContent data={listAudiences} canDeleteOwnPost={canDeleteOwnPost} />,
-          cancelBtn: true,
-          confirmLabel: canDeleteOwnPost ? t('common:btn_delete') : t('common:btn_close'),
-          onConfirm: () => (canDeleteOwnPost ? dispatch(postActions.removePostAudiences({
-            id: postId,
-            listAudiences: listIdAudiences,
-          })) : null),
-        }),
-      );
+      if (canDeleteOwnPost) {
+        dispatch(
+          modalActions.showAlert({
+            title: t('post:title_delete_audiences_of_post'),
+            children: <AlertDeleteAudiencesConfirmContent data={listAudiences} canDeleteOwnPost={canDeleteOwnPost} />,
+            cancelBtn: true,
+            confirmLabel: t('common:btn_delete'),
+            onConfirm: () => dispatch(postActions.removePostAudiences({
+              id: postId,
+              listAudiences: listIdAudiences,
+            })),
+          }),
+        );
+      } else {
+        dispatch(
+          modalActions.showAlert({
+            title: t('post:title_delete_audiences_of_post'),
+            children: <AlertDeleteAudiencesConfirmContent data={listAudiences} canDeleteOwnPost={canDeleteOwnPost} />,
+            cancelBtn: true,
+            cancelLabel: t('common:btn_close'),
+            onConfirm: null,
+          }),
+        );
+      }
     }
   }
 
@@ -118,6 +134,22 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
       },
     }));
   };
+
+  const onPressViewReactions = () => {
+    dispatch(modalActions.hideModal());
+    const firstReact = Object.values(reactionsCount)[0] as IReaction;
+    if (!!firstReact && !isEmpty(firstReact)) {
+      const initReaction = Object.keys(firstReact)[0];
+      const payload: IPayloadReactionDetailBottomSheet = {
+        isOpen: true,
+        reactionCounts: reactionsCount,
+        initReaction,
+        getDataParam: { target: 'POST', targetId: postId },
+        getDataPromise,
+      };
+      dispatch(modalActions.showReactionDetailBottomSheet(payload));
+    }
+  }
 
   return (
     <View style={styles.container}>
@@ -157,14 +189,17 @@ const PostViewMenu: FC<PostViewMenuProps> = ({
         title={t('post:post_menu_save')}
         onPress={onPress}
       />
+      {!!Object.keys(reactionsCount)?.[0]
+      && (
       <PrimaryItem
         testID="post_view_menu.insights"
         style={styles.item}
-        leftIcon="GaugeHigh"
-        leftIconProps={{ icon: 'GaugeHigh', size: 24 }}
-        title={t('post:post_menu_view_insights')}
-        onPress={onPress}
+        leftIcon="iconReact"
+        leftIconProps={{ icon: 'iconReact', size: 24 }}
+        title={t('post:post_menu_view_reactions')}
+        onPress={onPressViewReactions}
       />
+      )}
       <PrimaryItem
         testID="post_view_menu.noti"
         style={styles.item}

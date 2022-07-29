@@ -547,7 +547,7 @@ function* getCreatePostInitAudiences({
   try {
     const response = yield postDataHelper.getPostAudience(payload);
     if (response?.data) {
-      yield put(postActions.setCreatePostInitAudiences(response.data as IPostAudience));
+      yield put(postActions.setCreatePostInitAudiences(response.data));
     }
   } catch (e: any) {
     console.log(
